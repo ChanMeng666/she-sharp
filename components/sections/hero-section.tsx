@@ -7,8 +7,8 @@ import GridDistortion from "@/components/effects/grid-distortion";
 
 const heroImages = [
   {
-    src: "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/670c6faa065093d7fd557a81_66b08c577a2a3900c4c635f8_GEC23%20%281%29.jpg",
-    alt: "She Sharp networking event with women in tech",
+    src: "/img/mesh-578.png",
+    alt: "She Sharp hero background - geometric mesh pattern",
     caption: "THRIVE: Your Career, Your Story",
   },
   {
@@ -30,7 +30,7 @@ const heroImages = [
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[80vh] sm:min-h-[85vh] flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen flex items-center justify-center overflow-hidden -mt-16">
       {/* Background Grid Distortion */}
       <div className="absolute inset-0">
         <GridDistortion
@@ -41,16 +41,15 @@ export function HeroSection() {
           relaxation={0.85}
           className="w-full h-full"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/80 via-navy-dark/40 to-transparent pointer-events-none" />
+
       </div>
       
-      {/* Content Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-dark/20 via-transparent to-periwinkle-dark/20 pointer-events-none" />
+
 
       <Container className="relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           {/* Main heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-12 animate-fade-in-up leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-12 animate-fade-in-up leading-tight drop-shadow-lg">
             CONNECTING{" "}
             <span className="bg-gradient-to-r from-purple-light to-periwinkle-light bg-clip-text text-transparent">
               women in technology

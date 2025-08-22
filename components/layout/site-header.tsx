@@ -91,8 +91,8 @@ export function SiteHeader() {
 
   return (
     <header className={cn(
-      "fixed top-0 z-50 w-full border-b bg-white transition-all duration-150",
-      scrolled ? "shadow-sm" : "",
+      "fixed top-0 z-50 w-full border-b backdrop-blur-md bg-white/70 transition-all duration-150",
+      scrolled ? "shadow-sm bg-white/80" : "",
       visible ? "translate-y-0" : "-translate-y-full"
     )}>
       <div className="flex h-16 items-center px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
@@ -142,7 +142,7 @@ export function SiteHeader() {
                         {item.title}
                       </span>
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent className="nav-dropdown-enter nav-dropdown-enter-active">
+                    <NavigationMenuContent className="nav-dropdown-enter nav-dropdown-enter-active backdrop-blur-md bg-white/80 border border-white/20 shadow-lg">
                       <div className="flex w-[800px]">
                         {/* Left side - Navigation links */}
                         <div className="flex-1 p-6">
@@ -255,10 +255,10 @@ export function SiteHeader() {
           </SheetTrigger>
           <SheetContent 
             side="right" 
-            className="w-[300px] sm:w-[400px] p-0 overflow-y-auto"
+            className="w-[300px] sm:w-[400px] p-0 overflow-y-auto backdrop-blur-md bg-white/80 border-l border-white/20"
           >
             {/* Mobile Header */}
-            <div className="bg-gradient-to-br from-purple-dark to-purple-mid p-6 relative overflow-hidden">
+            <div className="backdrop-blur-md bg-gradient-to-br from-purple-dark/80 to-purple-mid/80 p-6 relative overflow-hidden border-b border-white/20">
               <SheetTitle className="text-white text-xl font-bold relative z-10">
                 Menu
               </SheetTitle>
