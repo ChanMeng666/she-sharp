@@ -38,8 +38,18 @@ const impactStats = [
 
 export function ImpactSection() {
   return (
-    <Section bgColor="light">
-      <Container>
+    <Section bgColor="light" className="relative overflow-hidden">
+      {/* Background Pattern */}
+      <div 
+        className="absolute inset-0 opacity-10 md:opacity-15 lg:opacity-20"
+        style={{
+          backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'repeat'
+        }}
+      />
+      <Container className="relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-4">
             Our Impact in Numbers

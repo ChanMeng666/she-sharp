@@ -63,11 +63,21 @@ const commitments = [
 
 export function CommitmentsSection() {
   return (
-    <Section bgColor="light">
-      <Container size="wide">
+    <Section bgColor="light" className="relative overflow-hidden">
+      {/* Background Pattern */}
+      <div 
+        className="absolute inset-0 opacity-5 md:opacity-10 lg:opacity-15"
+        style={{
+          backgroundImage: 'url(/img/bauhaus-1755865025052.svg)',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'repeat'
+        }}
+      />
+      <Container size="wide" className="relative z-10">
         <div className="text-center mb-8 sm:mb-12">
           {/* Logo */}
-          <div className="mb-6 flex justify-center">
+          {/* <div className="mb-6 flex justify-center">
             <div className="relative w-16 h-16 opacity-20">
               <Image
                 src="/logos/she-sharp-logo-purple-mid-130x130.svg"
@@ -77,7 +87,7 @@ export function CommitmentsSection() {
                 className="object-contain"
               />
             </div>
-          </div>
+          </div> */}
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy-dark mb-4">
             Our commitments
           </h2>
