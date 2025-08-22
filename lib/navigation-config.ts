@@ -29,7 +29,7 @@ export const navigationConfig: {
       href: "/about",
       icon: Users,
       image: {
-        src: "/images/nav/about-team.jpg",
+        src: "/img/mesh-570.png",
         alt: "Our team at She Sharp",
         href: "/about#team",
       },
@@ -59,7 +59,7 @@ export const navigationConfig: {
       href: "/events",
       icon: Calendar,
       image: {
-        src: "/images/nav/programs-mentorship.jpg",
+        src: "/img/mesh-954.png",
         alt: "Mentorship program in action",
         href: "/mentorship",
       },
@@ -101,7 +101,7 @@ export const navigationConfig: {
       href: "/join-our-team",
       icon: HandHeart,
       image: {
-        src: "/images/nav/get-involved-volunteer.jpg",
+        src: "/img/mesh-152.png",
         alt: "Join our volunteer team",
         href: "/join-our-team",
       },
@@ -137,7 +137,7 @@ export const navigationConfig: {
       href: "/media",
       icon: BookOpen,
       image: {
-        src: "/images/nav/resources-podcast.jpg",
+        src: "/img/mesh-437.png",
         alt: "She Sharp Podcast",
         href: "/media/podcasts",
       },

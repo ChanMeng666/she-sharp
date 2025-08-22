@@ -184,10 +184,14 @@ export function SiteHeader() {
                             className="relative w-80 overflow-hidden bg-gray-light/10 group"
                           >
                             <div className="absolute inset-0 bg-gradient-to-br from-purple-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-                            <div className="relative h-full bg-purple-light/20 transition-transform duration-300 group-hover:scale-105">
-                              <div className="flex h-full items-center justify-center">
-                                <span className="text-sm text-gray">Featured Image</span>
-                              </div>
+                            <div className="relative h-full transition-transform duration-300 group-hover:scale-105">
+                              <Image
+                                src={item.image.src}
+                                alt={item.image.alt}
+                                fill
+                                sizes="320px"
+                                className="object-cover"
+                              />
                             </div>
                           </Link>
                         )}
