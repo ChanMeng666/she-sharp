@@ -244,7 +244,6 @@ export default function MyDownloadsPage() {
           <Button 
             variant="outline"
             onClick={() => window.location.href = `/dashboard/resources/${download.resourceId}`}
-            variant="outline"
             className="min-w-[120px]"
             size="sm"
           >
