@@ -21,6 +21,9 @@ export function HeroSection() {
         />
         {/* Subtle overlay for text readability - 更轻柔的覆盖层 */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/3 via-transparent to-black/8" />
+        
+        {/* White frosted glass effect for better transition - 白色毛玻璃效果 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/15 to-white/25 backdrop-blur-sm" />
       </div>
       
 
