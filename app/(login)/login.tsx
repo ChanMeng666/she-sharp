@@ -6,9 +6,10 @@ import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { PasswordInput } from '@/components/ui/password-strength';
 import { OAuthButtons } from '@/components/ui/oauth-buttons';
-import { CircleIcon, Loader2 } from 'lucide-react';
+import { Loader2, Shield, Sparkles } from 'lucide-react';
 import { signIn, signUp } from './actions';
 import { ActionState } from '@/lib/auth/middleware';
 
@@ -23,173 +24,186 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
   );
 
   return (
-    <div className="min-h-[calc(100vh-64px)] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-light/30 to-periwinkle-light/30">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <CircleIcon className="h-12 w-12 text-purple-dark" />
-        </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-navy-dark">
-          {mode === 'signin'
-            ? 'Sign in to your account'
-            : 'Create your account'}
-        </h2>
+    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-light/20 via-periwinkle-light/10 to-mint-light/15">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-dark/5 to-periwinkle-dark/5 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-mint-dark/5 to-purple-light/10 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <form className="space-y-6" action={formAction}>
+      <div className="w-full max-w-md relative z-10">
+        <Card className="border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+          <CardHeader className="space-y-4 text-center pb-8">
+            <div className="flex justify-center">
+              <div className="p-4 bg-gradient-to-br from-purple-dark to-periwinkle-dark rounded-2xl shadow-lg">
+                {mode === 'signin' ? (
+                  <Shield className="h-8 w-8 text-white" />
+                ) : (
+                  <Sparkles className="h-8 w-8 text-white" />
+                )}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <CardTitle className="text-2xl font-bold text-navy-dark">
+                {mode === 'signin' ? 'Welcome back' : 'Join She Sharp'}
+              </CardTitle>
+              <CardDescription className="text-gray text-base">
+                {mode === 'signin'
+                  ? 'Sign in to continue your journey'
+                  : 'Create your account and start empowering your tech career'}
+              </CardDescription>
+            </div>
+          </CardHeader>
+
+          <CardContent className="space-y-6">
+            <form className="space-y-5" action={formAction}>
           <input type="hidden" name="redirect" value={redirect || ''} />
           <input type="hidden" name="priceId" value={priceId || ''} />
           <input type="hidden" name="inviteId" value={inviteId || ''} />
-          <div>
-            <Label
-              htmlFor="email"
-              className="block text-sm font-medium text-navy-dark"
-            >
-              Email
-            </Label>
-            <div className="mt-1">
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                defaultValue={state.email}
-                required
-                maxLength={50}
-                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-purple-light placeholder-gray text-navy-dark focus:outline-none focus:ring-purple-dark focus:border-purple-dark focus:z-10 sm:text-sm"
-                placeholder="Enter your email"
-              />
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-center justify-between">
-              <Label
-                htmlFor="password"
-                className="block text-sm font-medium text-navy-dark"
-              >
-                Password
-              </Label>
-              {mode === 'signin' && (
-                <Link
-                  href="/forgot-password"
-                  className="text-sm text-purple-dark hover:text-purple-mid hover:underline"
+              <div className="space-y-2">
+                <Label
+                  htmlFor="email"
+                  className="text-sm font-semibold text-navy-dark"
                 >
-                  Forgot password?
+                  Email Address
+                </Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  defaultValue={state.email}
+                  required
+                  maxLength={50}
+                  className="h-11 px-4 rounded-xl border-2 border-periwinkle-light bg-white/80 backdrop-blur-sm text-navy-dark placeholder:text-gray focus:border-purple-dark focus:ring-4 focus:ring-purple-dark/10 transition-all duration-200"
+                  placeholder="you@example.com"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label
+                    htmlFor="password"
+                    className="text-sm font-semibold text-navy-dark"
+                  >
+                    Password
+                  </Label>
+                  {mode === 'signin' && (
+                    <Link
+                      href="/forgot-password"
+                      className="text-sm text-purple-dark hover:text-purple-mid hover:underline transition-colors"
+                    >
+                      Forgot password?
+                    </Link>
+                  )}
+                </div>
+                <PasswordInput
+                  id="password"
+                  name="password"
+                  autoComplete={
+                    mode === 'signin' ? 'current-password' : 'new-password'
+                  }
+                  defaultValue={state.password}
+                  required
+                  minLength={8}
+                  maxLength={100}
+                  className="h-11 px-4 rounded-xl border-2 border-periwinkle-light bg-white/80 backdrop-blur-sm text-navy-dark placeholder:text-gray focus:border-purple-dark focus:ring-4 focus:ring-purple-dark/10 transition-all duration-200"
+                  placeholder="Enter your password"
+                  showStrength={mode === 'signup'}
+                  showToggle={true}
+                />
+              </div>
+
+              {mode === 'signin' && (
+                <div className="flex items-center space-x-3 p-4 bg-periwinkle-light/30 rounded-xl">
+                  <input
+                    type="checkbox"
+                    id="rememberMe"
+                    name="rememberMe"
+                    value="on"
+                    className="h-4 w-4 rounded border-2 border-purple-dark text-purple-dark focus:ring-purple-dark focus:ring-2 transition-all"
+                  />
+                  <Label
+                    htmlFor="rememberMe"
+                    className="text-sm font-medium text-navy-dark cursor-pointer select-none"
+                  >
+                    Remember me for 30 days
+                  </Label>
+                </div>
+              )}
+
+              {state?.error && (
+                <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
+                  <div className="text-red-700 text-sm font-medium">{state.error}</div>
+                </div>
+              )}
+
+              <Button
+                type="submit"
+                variant="gradient"
+                size="lg"
+                className="w-full h-12 rounded-xl shadow-lg shadow-purple-dark/25 hover:shadow-xl hover:shadow-purple-dark/30 transition-all duration-300"
+                disabled={pending}
+              >
+                {pending ? (
+                  <>
+                    <Loader2 className="animate-spin mr-2 h-5 w-5" />
+                    Processing...
+                  </>
+                ) : mode === 'signin' ? (
+                  'Sign in to your account'
+                ) : (
+                  'Create your account'
+                )}
+              </Button>
+            </form>
+
+            <div className="space-y-6">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-periwinkle-light/50" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-4 bg-white text-gray font-medium">
+                    Or continue with
+                  </span>
+                </div>
+              </div>
+
+              <OAuthButtons mode={mode} />
+
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-periwinkle-light/50" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-4 bg-white text-gray font-medium">
+                    {mode === 'signin'
+                      ? 'New to She Sharp?'
+                      : 'Already have an account?'}
+                  </span>
+                </div>
+              </div>
+
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="w-full h-12 rounded-xl border-2 border-purple-dark/20 hover:border-purple-dark hover:bg-purple-light/30 transition-all duration-300"
+              >
+                <Link
+                  href={`${mode === 'signin' ? '/sign-up' : '/sign-in'}${
+                    redirect ? `?redirect=${redirect}` : ''
+                  }${priceId ? `&priceId=${priceId}` : ''}`}
+                >
+                  {mode === 'signin'
+                    ? 'Create a new account'
+                    : 'Sign in to existing account'}
                 </Link>
-              )}
+              </Button>
             </div>
-            <div className="mt-1">
-              <PasswordInput
-                id="password"
-                name="password"
-                autoComplete={
-                  mode === 'signin' ? 'current-password' : 'new-password'
-                }
-                defaultValue={state.password}
-                required
-                minLength={8}
-                maxLength={100}
-                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-purple-light placeholder-gray text-navy-dark focus:outline-none focus:ring-purple-dark focus:border-purple-dark focus:z-10 sm:text-sm"
-                placeholder="Enter your password"
-                showStrength={mode === 'signup'}
-                showToggle={true}
-              />
-            </div>
-          </div>
-
-          {mode === 'signin' && (
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="rememberMe"
-                name="rememberMe"
-                value="on"
-                className="h-4 w-4 rounded border-gray-300 text-purple-dark focus:ring-purple-dark"
-              />
-              <Label
-                htmlFor="rememberMe"
-                className="text-sm font-medium leading-none cursor-pointer select-none"
-              >
-                Remember me for 30 days
-              </Label>
-            </div>
-          )}
-
-          {state?.error && (
-            <div className="text-red-500 text-sm">{state.error}</div>
-          )}
-
-          <div>
-            <Button
-              type="submit"
-              variant="default"
-              size="lg"
-              className="w-full rounded-full"
-              disabled={pending}
-            >
-              {pending ? (
-                <>
-                  <Loader2 className="animate-spin mr-2 h-4 w-4" />
-                  Loading...
-                </>
-              ) : mode === 'signin' ? (
-                'Sign in'
-              ) : (
-                'Sign up'
-              )}
-            </Button>
-          </div>
-        </form>
-
-        <div className="mt-6">
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray">
-                Or continue with
-              </span>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <OAuthButtons mode={mode} />
-          </div>
-
-          <div className="relative mt-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray">
-                {mode === 'signin'
-                  ? 'New to our platform?'
-                  : 'Already have an account?'}
-              </span>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="w-full rounded-full"
-            >
-              <Link
-                href={`${mode === 'signin' ? '/sign-up' : '/sign-in'}${
-                  redirect ? `?redirect=${redirect}` : ''
-                }${priceId ? `&priceId=${priceId}` : ''}`}
-              >
-                {mode === 'signin'
-                  ? 'Create an account'
-                  : 'Sign in to existing account'}
-              </Link>
-            </Button>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

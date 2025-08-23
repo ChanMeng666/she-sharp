@@ -6,9 +6,9 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { ArrowLeft, Mail } from 'lucide-react';
+import { ArrowLeft, Mail, Shield, CheckCircle } from 'lucide-react';
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -48,73 +48,115 @@ export default function ForgotPasswordPage() {
 
   if (isSubmitted) {
     return (
-      <div className="flex min-h-[calc(100vh-64px)] items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50 p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-              <Mail className="h-8 w-8 text-green-600" />
+      <div className="min-h-[calc(100vh-64px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-light/20 via-periwinkle-light/10 to-mint-light/15">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-mint-dark/5 to-periwinkle-dark/5 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-purple-dark/5 to-mint-light/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+          <CardHeader className="space-y-6 text-center pb-8">
+            <div className="flex justify-center">
+              <div className="p-6 bg-gradient-to-br from-mint-dark to-mint-dark/80 rounded-3xl shadow-lg">
+                <CheckCircle className="h-12 w-12 text-white" />
+              </div>
             </div>
-            <CardTitle>Check Your Email</CardTitle>
-            <CardDescription className="mt-2">
-              We've sent password reset instructions to <strong>{email}</strong>
-            </CardDescription>
+            <div className="space-y-3">
+              <CardTitle className="text-2xl font-bold text-navy-dark">
+                Check Your Email
+              </CardTitle>
+              <CardDescription className="text-gray text-base leading-relaxed">
+                We've sent password reset instructions to<br />
+                <span className="font-semibold text-navy-dark">{email}</span>
+              </CardDescription>
+            </div>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <Alert className="border-blue-200 bg-blue-50">
-              <AlertDescription>
+          
+          <CardContent className="space-y-6">
+            <div className="p-4 bg-mint-light/50 border border-mint-dark/20 rounded-xl">
+              <p className="text-sm text-navy-dark leading-relaxed">
                 Please check your email inbox and follow the instructions to reset your password.
-                The link will expire in 1 hour.
-              </AlertDescription>
-            </Alert>
-            <div className="text-center text-sm text-gray-600">
-              Didn't receive the email? Check your spam folder or{' '}
+                The link will expire in <span className="font-semibold">1 hour</span>.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <p className="text-sm text-gray mb-3">
+                Didn't receive the email? Check your spam folder or
+              </p>
               <button
                 onClick={() => {
                   setIsSubmitted(false);
                   setEmail('');
                 }}
-                className="font-medium text-purple-600 hover:underline"
+                className="text-sm font-semibold text-purple-dark hover:text-purple-mid underline transition-colors"
               >
-                try again
+                Try again
               </button>
             </div>
-          </CardContent>
-          <CardFooter>
-            <Link href="/sign-in" className="w-full">
-              <Button variant="outline" className="w-full">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Sign In
+
+            <div className="space-y-3">
+              <Button
+                asChild
+                variant="gradient"
+                size="lg"
+                className="w-full h-12 rounded-xl shadow-lg shadow-purple-dark/25"
+              >
+                <Link href="/sign-in">
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back to Sign In
+                </Link>
               </Button>
-            </Link>
-          </CardFooter>
+            </div>
+          </CardContent>
         </Card>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-64px)] items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Forgot Password?</CardTitle>
-          <CardDescription>
-            Enter your email address and we'll send you instructions to reset your password.
-          </CardDescription>
+    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-light/20 via-periwinkle-light/10 to-mint-light/15">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-dark/5 to-periwinkle-dark/5 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-mint-dark/5 to-purple-light/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+        <CardHeader className="space-y-4 text-center pb-8">
+          <div className="flex justify-center">
+            <div className="p-4 bg-gradient-to-br from-purple-dark to-periwinkle-dark rounded-2xl shadow-lg">
+              <Shield className="h-8 w-8 text-white" />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <CardTitle className="text-2xl font-bold text-navy-dark">
+              Reset Your Password
+            </CardTitle>
+            <CardDescription className="text-gray text-base">
+              Enter your email address and we'll send you instructions to reset your password.
+            </CardDescription>
+          </div>
         </CardHeader>
-        <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
+
+        <CardContent className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
+              <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
+                <div className="text-red-700 text-sm font-medium">{error}</div>
+              </div>
             )}
             {message && (
-              <Alert>
-                <AlertDescription>{message}</AlertDescription>
-              </Alert>
+              <div className="p-4 bg-mint-light/50 border border-mint-dark/20 rounded-xl">
+                <div className="text-navy-dark text-sm font-medium">{message}</div>
+              </div>
             )}
+            
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email" className="text-sm font-semibold text-navy-dark">
+                Email Address
+              </Label>
               <Input
                 id="email"
                 type="email"
@@ -123,28 +165,33 @@ export default function ForgotPasswordPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={isLoading}
-                className="w-full"
+                className="h-11 px-4 rounded-xl border-2 border-periwinkle-light bg-white/80 backdrop-blur-sm text-navy-dark placeholder:text-gray focus:border-purple-dark focus:ring-4 focus:ring-purple-dark/10 transition-all duration-200"
               />
             </div>
-          </CardContent>
-          <CardFooter className="flex flex-col space-y-2">
+
             <Button 
               type="submit" 
-              variant="default"
+              variant="gradient"
               size="lg"
-              className="w-full"
+              className="w-full h-12 rounded-xl shadow-lg shadow-purple-dark/25 hover:shadow-xl hover:shadow-purple-dark/30 transition-all duration-300"
               disabled={isLoading}
             >
-              {isLoading ? 'Sending...' : 'Send Reset Instructions'}
+              {isLoading ? 'Sending Instructions...' : 'Send Reset Instructions'}
             </Button>
-            <Link href="/sign-in" className="w-full">
-              <Button type="button" variant="ghost" className="w-full">
+
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="w-full h-12 rounded-xl border-2 border-purple-dark/20 hover:border-purple-dark hover:bg-purple-light/30 transition-all duration-300"
+            >
+              <Link href="/sign-in">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Sign In
-              </Button>
-            </Link>
-          </CardFooter>
-        </form>
+              </Link>
+            </Button>
+          </form>
+        </CardContent>
       </Card>
     </div>
   );
