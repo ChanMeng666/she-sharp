@@ -169,30 +169,29 @@ export function Chatbot() {
             transition={{ duration: 0.2 }}
             className="h-full w-full"
           >
-            <Card className="flex flex-col overflow-hidden shadow-2xl border-purple-200 h-full">
-              <div className="flex items-center justify-between bg-gradient-to-r from-purple-600 to-purple-700 p-3 sm:p-4 text-white flex-shrink-0">
-                <div className="flex items-center gap-2">
-                  <MessageSquare size={20} />
-                  <h3 className="font-semibold">She Sharp Assistant</h3>
+            <Card className="flex flex-col overflow-hidden shadow-2xl border-purple-dark/20 h-full bg-white p-0">
+              <div className="flex items-center justify-between bg-gradient-to-r from-purple-dark to-periwinkle-dark p-4 text-white flex-shrink-0">
+                <div className="flex items-center gap-3">
+                  <MessageSquare size={22} />
+                  <h3 className="font-semibold text-lg">She Sharp Assistant</h3>
                 </div>
-                <div className="flex items-center gap-1">
-                  <span className="text-xs opacity-70 mr-2">⌘K</span>
+                <div className="flex items-center gap-2">
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="h-8 w-8 text-white hover:bg-white/20"
+                    className="h-9 w-9 text-white hover:bg-white/20 transition-colors"
                     onClick={clearHistory}
                     title="Clear chat history"
                   >
-                    <Trash2 size={16} />
+                    <Trash2 size={18} />
                   </Button>
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="h-8 w-8 text-white hover:bg-white/20"
+                    className="h-9 w-9 text-white hover:bg-white/20 transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
-                    <X size={16} />
+                    <X size={18} />
                   </Button>
                 </div>
               </div>
@@ -226,24 +225,24 @@ export function Chatbot() {
                     <QuickActions onSelectQuestion={handlePresetQuestion} />
                   </div>
 
-                  <form onSubmit={handleFormSubmit} className="border-t p-4 flex-shrink-0">
-                    <div className="flex gap-2">
+                  <form onSubmit={handleFormSubmit} className="border-t border-purple-dark/10 p-5 flex-shrink-0 bg-white">
+                    <div className="flex gap-3">
                       <Textarea
                         ref={textareaRef}
                         value={input}
                         onChange={handleInputChange}
                         onKeyDown={handleKeyDown}
-                        placeholder="Type your message... (Shift+Enter for new line)"
-                        className="min-h-[80px] max-h-[150px] resize-none"
+                        placeholder="Type your message..."
+                        className="min-h-[60px] max-h-[120px] resize-none border-purple-dark/20 focus:border-purple-dark focus:ring-purple-dark/20 rounded-xl"
                         disabled={isLoading}
                       />
                       <Button
                         type="submit"
                         size="icon"
                         disabled={isLoading || !input.trim()}
-                        className="bg-purple-600 hover:bg-purple-700 flex-shrink-0 h-[80px]"
+                        className="bg-purple-dark hover:bg-purple-mid flex-shrink-0 h-[60px] w-[60px] rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
                       >
-                        <Send size={20} />
+                        <Send size={22} />
                       </Button>
                     </div>
                   </form>
@@ -264,13 +263,10 @@ export function Chatbot() {
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg hover:shadow-xl transition-shadow"
+          className="relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-purple-dark to-periwinkle-dark text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
         >
-          <MessageSquare size={24} />
+          <MessageSquare size={26} />
         </button>
-        <div className="absolute bottom-16 right-0 bg-white rounded-lg shadow-md p-2 text-xs text-gray-600 opacity-0 hover:opacity-100 transition-opacity">
-          Press ⌘K to open
-        </div>
       </motion.div>
     </>
   );
