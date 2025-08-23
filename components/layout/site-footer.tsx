@@ -74,21 +74,6 @@ export function SiteFooter() {
       <div className="footer-pattern" />
 
       <div className="relative px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 py-12 md:py-16 lg:py-20">
-        {/* Stats Section */}
-        <div className="grid grid-cols-3 gap-4 md:gap-8 lg:gap-12 max-w-4xl mx-auto mb-12 lg:mb-16">
-          {footerConfig.stats.map((stat, index) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-purple-mid mb-1 md:mb-2">
-                {stat.value}
-              </div>
-              <div className="text-xs md:text-sm text-white/70">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <Separator className="mb-12 lg:mb-16 bg-white/20 max-w-4xl mx-auto" />
 
         {/* Top Section - Newsletter */}
         <div className="mb-12 lg:mb-16">
