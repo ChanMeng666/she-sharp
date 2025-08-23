@@ -217,7 +217,6 @@ export default function NotificationsPage() {
               <Button 
                 variant="outline"
                 onClick={markAllAsRead}
-                variant="outline"
                 size="sm"
               >
                 <CheckCircle className="h-4 w-4 mr-2" />

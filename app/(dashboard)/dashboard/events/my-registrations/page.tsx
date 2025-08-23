@@ -208,7 +208,8 @@ export default function MyRegistrationsPage() {
               {registration.event.locationDetails?.meetingLink && (
                 <Button 
                   onClick={() => window.open(registration.event.locationDetails.meetingLink, '_blank')}
-                  variant="default" className="min-w-[100px]"
+                  variant="default" 
+                  className="min-w-[100px]"
                   size="sm"
                 >
                   Join Meeting
@@ -233,7 +234,8 @@ export default function MyRegistrationsPage() {
               {registration.certificateUrl && (
                 <Button 
                   onClick={() => window.open(registration.certificateUrl!, '_blank')}
-                  variant="default" className="min-w-[100px]"
+                  variant="default" 
+                  className="min-w-[100px]"
                   size="sm"
                 >
                   <Download className="h-4 w-4 mr-2" />
