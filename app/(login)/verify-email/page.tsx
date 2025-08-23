@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CheckCircle2, XCircle, Mail, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 
 function VerifyEmailContent() {
   const searchParams = useSearchParams();
@@ -84,13 +84,23 @@ function VerifyEmailContent() {
   if (token) {
     if (isVerifying) {
       return (
-        <div className="flex min-h-[calc(100vh-64px)] items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50 p-4">
-          <Card className="w-full max-w-md">
-            <CardHeader className="text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100">
-                <RefreshCw className="h-8 w-8 text-purple-600 animate-spin" />
+        <div 
+          className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4 relative"
+          style={{
+            backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          {/* Background overlay for better readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/70 to-white/60 backdrop-blur-sm"></div>
+          <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+            <CardHeader className="text-center space-y-4 pb-8">
+              <div className="flex justify-center">
+                <RefreshCw className="h-12 w-12 text-purple-dark animate-spin" />
               </div>
-              <CardTitle>Verifying Your Email</CardTitle>
+              <CardTitle className="text-3xl font-bold text-navy-dark">Verifying Your Email</CardTitle>
               <CardDescription className="mt-2">
                 Please wait while we verify your email address...
               </CardDescription>
@@ -101,17 +111,20 @@ function VerifyEmailContent() {
     }
 
     return (
-      <div className="flex min-h-[calc(100vh-64px)] items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50 p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-              {verificationStatus === 'success' ? (
-                <CheckCircle2 className="h-8 w-8 text-green-600" />
-              ) : (
-                <XCircle className="h-8 w-8 text-red-600" />
-              )}
-            </div>
-            <CardTitle>
+      <div 
+        className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4 relative"
+        style={{
+          backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Background overlay for better readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/70 to-white/60 backdrop-blur-sm"></div>
+        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+          <CardHeader className="text-center space-y-4 pb-8">
+            <CardTitle className="text-3xl font-bold text-navy-dark">
               {verificationStatus === 'success' ? 'Email Verified!' : 'Verification Failed'}
             </CardTitle>
             <CardDescription className="mt-2">{message}</CardDescription>
@@ -124,12 +137,12 @@ function VerifyEmailContent() {
             ) : (
               <>
                 <Link href="/sign-up" className="w-full">
-                  <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                  <Button variant="neumorphism" size="lg" className="w-full h-12 rounded-xl font-semibold">
                     Sign Up Again
                   </Button>
                 </Link>
                 <Link href="/sign-in" className="w-full">
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline-thick" size="lg" className="w-full h-12 rounded-xl font-medium">
                     Go to Sign In
                   </Button>
                 </Link>
@@ -143,13 +156,20 @@ function VerifyEmailContent() {
 
   // If no token, show the email verification pending page
   return (
-    <div className="flex min-h-[calc(100vh-64px)] items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
-            <Mail className="h-8 w-8 text-blue-600" />
-          </div>
-          <CardTitle>Verify Your Email</CardTitle>
+    <div 
+      className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4 relative"
+      style={{
+        backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Background overlay for better readability */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/70 to-white/60 backdrop-blur-sm"></div>
+      <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+        <CardHeader className="text-center space-y-4 pb-8">
+          <CardTitle className="text-3xl font-bold text-navy-dark">Verify Your Email</CardTitle>
           <CardDescription className="mt-2">
             We've sent a verification link to your email address
             {email && (
@@ -181,8 +201,9 @@ function VerifyEmailContent() {
             <Button
               onClick={resendVerification}
               disabled={isResending || !email}
-              variant="outline"
-              className="w-full"
+              variant="neumorphism"
+              size="lg"
+              className="w-full h-12 rounded-xl font-semibold"
             >
               {isResending ? (
                 <>
@@ -191,7 +212,6 @@ function VerifyEmailContent() {
                 </>
               ) : (
                 <>
-                  <Mail className="mr-2 h-4 w-4" />
                   Resend Verification Email
                 </>
               )}
@@ -200,7 +220,7 @@ function VerifyEmailContent() {
         </CardContent>
         <CardFooter>
           <Link href="/sign-in" className="w-full">
-            <Button variant="ghost" className="w-full">
+            <Button variant="outline-thick" size="lg" className="w-full h-12 rounded-xl font-medium">
               Back to Sign In
             </Button>
           </Link>

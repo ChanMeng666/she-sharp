@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CheckCircle2, XCircle, Eye, EyeOff, Lock } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 
 function ResetPasswordForm() {
   const router = useRouter();
@@ -113,25 +113,32 @@ function ResetPasswordForm() {
 
   if (!isTokenValid) {
     return (
-      <div className="flex min-h-[calc(100vh-64px)] items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50 p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
-              <XCircle className="h-8 w-8 text-red-600" />
-            </div>
-            <CardTitle>Invalid Reset Link</CardTitle>
+      <div 
+        className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4 relative"
+        style={{
+          backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Background overlay for better readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/70 to-white/60 backdrop-blur-sm"></div>
+        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+          <CardHeader className="text-center space-y-4 pb-8">
+            <CardTitle className="text-3xl font-bold text-navy-dark">Invalid Reset Link</CardTitle>
             <CardDescription className="mt-2">
               {error || 'This password reset link is invalid or has expired.'}
             </CardDescription>
           </CardHeader>
           <CardFooter className="flex flex-col space-y-2">
             <Link href="/forgot-password" className="w-full">
-              <Button className="w-full bg-purple-600 hover:bg-purple-700">
+              <Button variant="neumorphism" size="lg" className="w-full h-12 rounded-xl font-semibold">
                 Request New Reset Link
               </Button>
             </Link>
             <Link href="/sign-in" className="w-full">
-              <Button variant="outline" className="w-full">
+              <Button variant="outline-thick" size="lg" className="w-full h-12 rounded-xl font-medium">
                 Back to Sign In
               </Button>
             </Link>
@@ -143,13 +150,20 @@ function ResetPasswordForm() {
 
   if (success) {
     return (
-      <div className="flex min-h-[calc(100vh-64px)] items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50 p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-              <CheckCircle2 className="h-8 w-8 text-green-600" />
-            </div>
-            <CardTitle>Password Reset Successful!</CardTitle>
+      <div 
+        className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4 relative"
+        style={{
+          backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Background overlay for better readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/70 to-white/60 backdrop-blur-sm"></div>
+        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+          <CardHeader className="text-center space-y-4 pb-8">
+            <CardTitle className="text-3xl font-bold text-navy-dark">Password Reset Successful!</CardTitle>
             <CardDescription className="mt-2">
               Your password has been reset successfully. Redirecting to sign in...
             </CardDescription>
@@ -160,13 +174,20 @@ function ResetPasswordForm() {
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-64px)] items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
-            <Lock className="h-6 w-6 text-purple-600" />
-          </div>
-          <CardTitle className="text-center">Reset Your Password</CardTitle>
+    <div 
+      className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4 relative"
+      style={{
+        backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Background overlay for better readability */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/70 to-white/60 backdrop-blur-sm"></div>
+      <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+        <CardHeader className="space-y-4 text-center pb-8">
+          <CardTitle className="text-3xl font-bold text-navy-dark">Reset Your Password</CardTitle>
           <CardDescription className="text-center">
             Enter your new password below
           </CardDescription>
@@ -229,11 +250,11 @@ function ResetPasswordForm() {
                 <ul className="space-y-1">
                   {passwordRequirements.map((req, index) => (
                     <li key={index} className="flex items-center text-sm">
-                      {req.met ? (
-                        <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
-                      ) : (
-                        <XCircle className="mr-2 h-4 w-4 text-gray-300" />
-                      )}
+                      <div className={`mr-2 h-4 w-4 rounded-full border-2 flex items-center justify-center ${
+                        req.met ? 'bg-green-500 border-green-500' : 'border-gray-300'
+                      }`}>
+                        {req.met && <span className="text-white text-xs">✓</span>}
+                      </div>
                       <span className={req.met ? 'text-green-700' : 'text-gray-500'}>
                         {req.label}
                       </span>
@@ -252,15 +273,15 @@ function ResetPasswordForm() {
           <CardFooter className="flex flex-col space-y-2">
             <Button 
               type="submit" 
-              variant="default"
+              variant="neumorphism"
               size="lg"
-              className="w-full"
+              className="w-full h-12 rounded-xl font-semibold text-lg"
               disabled={isLoading || !passwordRequirements.every(req => req.met) || password !== confirmPassword}
             >
               {isLoading ? 'Resetting...' : 'Reset Password'}
             </Button>
             <Link href="/sign-in" className="w-full">
-              <Button type="button" variant="ghost" className="w-full">
+              <Button type="button" variant="outline-thick" size="lg" className="w-full h-12 rounded-xl font-medium">
                 Cancel
               </Button>
             </Link>
