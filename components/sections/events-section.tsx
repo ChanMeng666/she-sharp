@@ -62,7 +62,7 @@ export function EventsSection() {
           color={brandColors.eventsMinty}
           mouseReact={false}
           amplitude={0.08}
-          speed={0.7}
+          speed={0.2}
           className="w-full h-full"
         />
       </div>

@@ -71,7 +71,7 @@ export function CommitmentsSection() {
           color={brandColors.commitmentsLavender}
           mouseReact={false}
           amplitude={0.10}
-          speed={0.8}
+          speed={0.25}
           className="w-full h-full"
         />
       </div>

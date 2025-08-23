@@ -267,7 +267,7 @@ export function SmartCTASection({
           color={brandColors.ctaSoftMint}
           mouseReact={false}
           amplitude={0.12}
-          speed={0.9}
+          speed={0.3}
           className="w-full h-full"
         />
       </div>

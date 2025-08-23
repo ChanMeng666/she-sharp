@@ -28,7 +28,7 @@ export function TestimonialsSection() {
           color={brandColors.testimonialsBlush}
           mouseReact={false}
           amplitude={0.06}
-          speed={0.6}
+          speed={0.15}
           className="w-full h-full"
         />
       </div>

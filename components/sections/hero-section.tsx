@@ -16,7 +16,7 @@ export function HeroSection() {
           color={brandColors.heroPeriwinkle}
           mouseReact={false}
           amplitude={0.18}
-          speed={1.2}
+          speed={0.4}
           className="w-full h-full"
         />
         {/* Subtle overlay for text readability - 更轻柔的覆盖层 */}
