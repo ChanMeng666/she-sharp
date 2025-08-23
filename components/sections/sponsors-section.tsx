@@ -64,10 +64,10 @@ export function SponsorsSection() {
       <Container size="full">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy-dark mb-4">
-            Our Amazing Sponsors
+            Trusted Partners
           </h2>
           <p className="text-base sm:text-lg text-gray max-w-2xl mx-auto px-4">
-            Thank you to these forward-thinking companies for investing in the future of women in technology
+            Industry-leading organizations that share our vision and invest in advancing women in technology
           </p>
         </div>
 
@@ -150,17 +150,17 @@ export function SponsorsSection() {
         {/* CTA */}
         <div className="text-center bg-gradient-to-r from-purple-light to-periwinkle-light rounded-lg p-6 sm:p-8">
           <h3 className="text-xl sm:text-2xl font-bold text-navy-dark mb-4">
-            Join Our Mission
+            Become a Strategic Partner
           </h3>
           <p className="text-sm sm:text-base text-gray mb-6 max-w-xl mx-auto">
-            Partner with us to create meaningful change in the tech industry and support the next generation of women leaders
+            Collaborate with us to drive meaningful change in the tech industry and cultivate the next generation of women leaders
           </p>
           <Button
             asChild
             size="lg"
             className="bg-purple-dark hover:bg-purple-mid"
           >
-            <Link href="/sponsors/corporate-sponsorship">Partnership Opportunities</Link>
+            <Link href="/sponsors/corporate-sponsorship">Explore Partnership</Link>
           </Button>
         </div>
       </Container>

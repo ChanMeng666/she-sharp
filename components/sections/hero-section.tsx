@@ -15,7 +15,7 @@ export function HeroSection() {
         <Iridescence
           color={brandColors.heroPeriwinkle}
           mouseReact={false}
-          amplitude={0.18}
+          amplitude={0.15}
           speed={0.4}
           className="w-full h-full"
         />
@@ -46,7 +46,7 @@ export function HeroSection() {
               asChild
               className="text-lg font-semibold"
             >
-              <Link href="/events">Explore Events</Link>
+              <Link href="/events">Discover Opportunities</Link>
             </Button>
           </div>
         </div>

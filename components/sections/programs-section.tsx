@@ -92,11 +92,11 @@ export function ProgramsSection() {
   return (
     <Section className="relative bg-gradient-to-b from-white to-gray-50 py-16 md:py-20">
       {/* Background effect */}
-      <div className="absolute inset-0 opacity-15">
+      <div className="absolute inset-0 opacity-10">
         <Iridescence
           color={brandColors.eventsMinty}
           mouseReact={false}
-          amplitude={0.06}
+          amplitude={0.05}
           speed={0.2}
           className="w-full h-full"
         />
@@ -106,11 +106,11 @@ export function ProgramsSection() {
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
-            How We Support You
+            Your Path to Success
           </h2>
           <p className="text-lg text-gray max-w-3xl mx-auto">
-            Three comprehensive programs designed to accelerate your tech career through 
-            networking, guidance, and skill development.
+            Three proven pathways designed to accelerate your career advancement through 
+            strategic networking, expert guidance, and continuous skill development.
           </p>
         </div>
 
@@ -198,7 +198,7 @@ export function ProgramsSection() {
                   
                   <div className="text-center">
                     <span className="text-sm text-gray italic">
-                      Learn more about our programs at upcoming events
+                      Discover these programs through our regular activities
                     </span>
                   </div>
                 </CardContent>

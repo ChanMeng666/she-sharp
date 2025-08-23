@@ -9,6 +9,7 @@ import { Section } from "@/components/layout/section";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { ExternalLink, Play, Newspaper, Mic, Camera } from "lucide-react";
+import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
 // 精选的重点媒体内容 - 去除tab分类，只展示最重要的
 const featuredMedia = {
@@ -61,15 +62,26 @@ const mediaHighlights = [
 
 export function MediaSection() {
   return (
-    <Section className="bg-white py-16 md:py-20">
-      <Container size="wide">
+    <Section className="relative bg-white py-16 md:py-20 overflow-hidden">
+      {/* Subtle background effect for media content */}
+      <div className="absolute inset-0 opacity-12">
+        <Iridescence
+          color={brandColors.testimonialsSky}
+          mouseReact={false}
+          amplitude={0.06}
+          speed={0.25}
+          className="w-full h-full"
+        />
+      </div>
+      
+      <Container size="wide" className="relative z-10">
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
-            She Sharp in the Media
+            Recognition & Coverage
           </h2>
           <p className="text-lg text-gray max-w-2xl mx-auto">
-            Our story is making headlines across New Zealand and inspiring change in the tech industry.
+            Leading media outlets recognize our impact and share our story of transformation in technology.
           </p>
         </div>
 

@@ -5,8 +5,6 @@ import { ProgramsSection } from "@/components/sections/programs-section";
 import { CommunityStoriesSection } from "@/components/sections/community-stories-section";
 import { MediaSection } from "@/components/sections/media-section";
 import { SponsorsSection } from "@/components/sections/sponsors-section";
-import { SmartCTASection } from "@/components/sections/shared/smart-cta-section";
-
 export default function HomePage() {
   return (
     <>
@@ -16,7 +14,6 @@ export default function HomePage() {
       <CommunityStoriesSection />
       <MediaSection />
       <SponsorsSection />
-      <SmartCTASection title="Get Involved" />
     </>
   );
 }

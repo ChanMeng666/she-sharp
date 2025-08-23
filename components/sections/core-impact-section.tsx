@@ -3,11 +3,8 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Users, Building2, Calendar, TrendingUp, Target, Heart, Rocket, ArrowRight } from "lucide-react";
-import Link from "next/link";
-import Iridescence, { brandColors } from "@/components/effects/iridescence";
+import { Users, Building2, Calendar, TrendingUp, Target, Heart, Rocket } from "lucide-react";
 
 // 统一的核心数据 - 解决数据不一致问题
 const coreStats = [
@@ -68,30 +65,19 @@ const coreValues = [
 
 export function CoreImpactSection() {
   return (
-    <Section className="relative bg-white py-16 md:py-20">
-      {/* Subtle background effect */}
-      <div className="absolute inset-0 opacity-20">
-        <Iridescence
-          color={brandColors.commitmentsLavender}
-          mouseReact={false}
-          amplitude={0.08}
-          speed={0.25}
-          className="w-full h-full"
-        />
-      </div>
-      
-      <Container className="relative z-10">
+    <Section className="bg-white py-16 md:py-20">
+      <Container>
         {/* Hero Text */}
         <div className="text-center mb-12 md:mb-16">
           <Badge className="mb-4 bg-purple-light text-purple-dark border-purple-mid">
-            Our Impact
+            Proven Results
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
-            Transforming Tech Together
+            A Decade of Measurable Impact
           </h2>
           <p className="text-lg text-gray max-w-3xl mx-auto">
-            For over a decade, we've been creating pathways where women in technology 
-            connect, grow, and thrive. Here's the impact we're making together.
+            Since 2014, we've built a track record of success. These numbers represent 
+            real lives transformed and careers accelerated.
           </p>
         </div>
 
@@ -155,25 +141,15 @@ export function CoreImpactSection() {
           })}
         </div>
 
-        {/* Call to Action */}
+        {/* Impact Summary */}
         <div className="text-center bg-gradient-to-r from-purple-light/10 via-periwinkle-light/10 to-mint-light/10 rounded-2xl p-8 md:p-12">
           <h3 className="text-2xl md:text-3xl font-bold text-navy-dark mb-4">
-            Ready to join our community?
+            Creating Lasting Change
           </h3>
-          <p className="text-lg text-gray mb-8 max-w-2xl mx-auto">
-            Connect with women who are transforming their careers and 
-            shaping the future of technology together.
+          <p className="text-lg text-gray max-w-2xl mx-auto">
+            Every number represents a life touched, a career transformed, 
+            and a step forward in building a more inclusive tech industry.
           </p>
-          <Button
-            asChild
-            size="lg"
-            className="bg-purple-dark hover:bg-purple-mid transition-colors"
-          >
-            <Link href="/events">
-              Join Our Next Event
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </Link>
-          </Button>
         </div>
       </Container>
     </Section>

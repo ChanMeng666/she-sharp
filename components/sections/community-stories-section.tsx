@@ -19,7 +19,6 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { Quote, Calendar, Clock, MapPin, Users, ArrowRight, Sparkles } from "lucide-react";
 import { testimonialsByPage } from "@/lib/data/testimonials";
-import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
 // 精选成功故事（从testimonials中选择最有代表性的）
 const featuredStories = testimonialsByPage.home.filter(story => 
@@ -54,19 +53,8 @@ const upcomingHighlights = [
 
 export function CommunityStoriesSection() {
   return (
-    <Section className="relative bg-white py-16 md:py-20">
-      {/* Background effect */}
-      <div className="absolute inset-0 opacity-15">
-        <Iridescence
-          color={brandColors.testimonialsBlush}
-          mouseReact={false}
-          amplitude={0.05}
-          speed={0.15}
-          className="w-full h-full"
-        />
-      </div>
-      
-      <Container size="wide" className="relative z-10">
+    <Section className="bg-white py-16 md:py-20">
+      <Container size="wide">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
@@ -232,14 +220,11 @@ export function CommunityStoriesSection() {
               ))}
             </div>
 
-            {/* View All Events */}
+            {/* Event Info */}
             <div className="mt-6 text-center">
-              <Button variant="outline" size="lg" asChild>
-                <Link href="/events">
-                  View All Events
-                  <Calendar className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
+              <p className="text-sm text-gray italic">
+                Explore more events through our main navigation
+              </p>
             </div>
           </div>
         </div>
@@ -247,11 +232,11 @@ export function CommunityStoriesSection() {
         {/* Bottom CTA Section */}
         <div className="mt-16 bg-gradient-to-r from-purple-light/10 via-periwinkle-light/10 to-mint-light/10 rounded-2xl p-8 md:p-12 text-center">
           <h3 className="text-2xl md:text-3xl font-bold text-navy-dark mb-4">
-            Your story could be next
+            Write your success story
           </h3>
           <p className="text-lg text-gray mb-8 max-w-2xl mx-auto">
-            Join a community of women who are breaking barriers, building careers, 
-            and supporting each other every step of the way.
+            Become part of a network where women break barriers, advance careers, 
+            and support each other's growth in technology.
           </p>
           <Button
             asChild
@@ -259,7 +244,7 @@ export function CommunityStoriesSection() {
             className="bg-purple-dark hover:bg-purple-mid transition-colors"
           >
             <Link href="/join-our-team">
-              Join Our Community
+              Start Your Journey
               <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
           </Button>
