@@ -243,7 +243,7 @@ export default function MyRegistrationsPage() {
               {!registration.feedbackSubmitted && (
                 <Button 
                   variant="outline" 
-                  variant="outline" className="min-w-[100px]"
+                  className="min-w-[100px]"
                   size="sm"
                 >
                   <MessageSquare className="h-4 w-4 mr-2" />
