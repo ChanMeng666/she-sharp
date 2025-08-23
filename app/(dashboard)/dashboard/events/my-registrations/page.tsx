@@ -218,7 +218,7 @@ export default function MyRegistrationsPage() {
               <Button 
                 variant="outline" 
                 onClick={() => handleCancelRegistration(registration.event.id)}
-                variant="outline" className="min-w-[100px]"
+                className="min-w-[100px]"
                 size="sm"
               >
                 <XCircle className="h-4 w-4 mr-2" />
