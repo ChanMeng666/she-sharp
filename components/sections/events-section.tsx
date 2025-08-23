@@ -118,9 +118,8 @@ export function EventsSection() {
               </h3>
               <Button
                 asChild
-                variant="ghost"
+                variant="link"
                 size="sm"
-                className="text-purple-dark hover:text-purple-mid"
               >
                 <Link href="/events">View All Events →</Link>
               </Button>
@@ -185,8 +184,9 @@ export function EventsSection() {
 
                     <Button
                       asChild
+                      variant="default"
                       size="sm"
-                      className="w-full bg-purple-dark hover:bg-purple-mid transition-colors duration-150"
+                      className="w-full"
                     >
                       <Link href={`/events/${event.id}`}>Register</Link>
                     </Button>
@@ -199,9 +199,8 @@ export function EventsSection() {
             <div className="text-center pt-6">
               <Button
                 asChild
-                size="lg"
                 variant="outline"
-                className="border-purple-dark text-purple-dark hover:bg-purple-light transition-colors duration-150"
+                size="lg"
               >
                 <Link href="/events">Explore All Events</Link>
               </Button>

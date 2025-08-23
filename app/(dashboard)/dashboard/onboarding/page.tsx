@@ -498,7 +498,7 @@ function OnboardingContent() {
             <Button
               onClick={handleNext}
               disabled={isLoading}
-              className="bg-purple-dark text-white hover:bg-purple-mid"
+              variant="default"
             >
               {isLoading ? (
                 <>

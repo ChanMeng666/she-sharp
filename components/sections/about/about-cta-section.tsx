@@ -101,9 +101,9 @@ export function AboutCTASection() {
                   <Button
                     asChild
                     size="lg"
-                    variant="secondary"
+                    variant="white"
                     className={cn(
-                      "bg-white text-gray-900 hover:bg-gray-100 transition-all duration-300",
+                      "transition-all duration-300",
                       isHovered ? "scale-110" : ""
                     )}
                   >

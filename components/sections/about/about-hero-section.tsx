@@ -108,8 +108,9 @@ export function AboutHeroSection() {
             <Dialog>
               <DialogTrigger asChild>
                 <Button
+                  variant="gradient"
                   size="lg"
-                  className="mt-8 w-full gap-2 bg-gradient-to-r from-purple-dark to-purple-mid hover:from-purple-dark/90 hover:to-purple-mid/90 sm:w-auto"
+                  className="mt-8 w-full gap-2 sm:w-auto"
                 >
                   <PlayCircle className="h-5 w-5" />
                   Watch Our Story

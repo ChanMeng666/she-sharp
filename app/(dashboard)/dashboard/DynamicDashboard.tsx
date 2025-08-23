@@ -137,7 +137,7 @@ export default function DynamicDashboard() {
             <Link key={index} href={action.href}>
               <Button
                 variant="outline"
-                className="w-full h-full justify-start border-purple-dark text-purple-dark hover:bg-purple-light"
+                className="w-full h-full justify-start"
               >
                 {getIcon(action.icon)}
                 <span className="ml-2">{action.label}</span>
@@ -323,7 +323,7 @@ export default function DynamicDashboard() {
                   <Users className="h-12 w-12 text-gray mx-auto mb-4" />
                   <p className="text-gray mb-4">You don't have any mentors yet</p>
                   <Link href="/dashboard/mentors">
-                    <Button className="bg-periwinkle-dark text-white hover:bg-periwinkle-mid">
+                    <Button variant="secondary">
                       Find a Mentor
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>

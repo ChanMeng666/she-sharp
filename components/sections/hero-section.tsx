@@ -38,9 +38,10 @@ export function HeroSection() {
           {/* CTA Button */}
           <div className="animate-fade-in-up animation-delay-200">
             <Button
-              size="lg"
+              variant="gradient"
+              size="xl"
               asChild
-              className="bg-purple-dark hover:bg-purple-mid text-white shadow-lg px-8 py-6 text-lg"
+              className="text-lg font-semibold"
             >
               <Link href="/events">Explore Events</Link>
             </Button>

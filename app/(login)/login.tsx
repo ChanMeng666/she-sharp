@@ -123,7 +123,9 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
           <div>
             <Button
               type="submit"
-              className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-purple-dark hover:bg-purple-mid focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-dark"
+              variant="default"
+              size="lg"
+              className="w-full rounded-full"
               disabled={pending}
             >
               {pending ? (
@@ -170,16 +172,22 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
           </div>
 
           <div className="mt-6">
-            <Link
-              href={`${mode === 'signin' ? '/sign-up' : '/sign-in'}${
-                redirect ? `?redirect=${redirect}` : ''
-              }${priceId ? `&priceId=${priceId}` : ''}`}
-              className="w-full flex justify-center py-2 px-4 border border-purple-dark rounded-full shadow-sm text-sm font-medium text-purple-dark bg-white hover:bg-purple-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-dark"
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="w-full rounded-full"
             >
-              {mode === 'signin'
-                ? 'Create an account'
-                : 'Sign in to existing account'}
-            </Link>
+              <Link
+                href={`${mode === 'signin' ? '/sign-up' : '/sign-in'}${
+                  redirect ? `?redirect=${redirect}` : ''
+                }${priceId ? `&priceId=${priceId}` : ''}`}
+              >
+                {mode === 'signin'
+                  ? 'Create an account'
+                  : 'Sign in to existing account'}
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

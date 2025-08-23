@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import UserManagement from '@/components/admin/UserManagement';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
 
 export default function UsersPage() {
   return (
@@ -17,9 +18,9 @@ export default function UsersPage() {
           <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
             Import Users
           </button>
-          <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+          <Button variant="default">
             Export Users
-          </button>
+          </Button>
         </div>
       </div>
 

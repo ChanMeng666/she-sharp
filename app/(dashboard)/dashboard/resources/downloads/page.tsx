@@ -234,7 +234,8 @@ export default function MyDownloadsPage() {
       <CardFooter className="border-t border-gray-100 bg-gray-50/50 flex flex-wrap gap-2 p-4">
           <Button 
             onClick={() => handleRedownload(download.resource)}
-            className="min-w-[120px] bg-purple-dark hover:bg-purple-mid text-white transition-all"
+            variant="default"
+            className="min-w-[120px]"
             size="sm"
           >
             <Download className="h-4 w-4 mr-2" />
@@ -243,7 +244,8 @@ export default function MyDownloadsPage() {
           <Button 
             variant="outline"
             onClick={() => window.location.href = `/dashboard/resources/${download.resourceId}`}
-            className="min-w-[120px] border-purple-mid/30 text-purple-dark hover:bg-purple-light hover:border-purple-mid transition-all"
+            variant="outline"
+            className="min-w-[120px]"
             size="sm"
           >
             View Details
@@ -301,7 +303,7 @@ export default function MyDownloadsPage() {
             </p>
             <Button 
               onClick={() => window.location.href = '/dashboard/resources'}
-              className="bg-purple-dark hover:bg-purple-mid text-white transition-all"
+              variant="default"
               size="sm"
             >
               Browse Resources

@@ -16,6 +16,7 @@ import {
   CheckCircle,
   XCircle,
   AlertCircle,
+  Palette,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -243,7 +244,7 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
           <CardDescription>Common administrative tasks</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             <Link
               href="/dashboard/admin/mentors/applications"
               className="flex flex-col items-center justify-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
@@ -279,6 +280,18 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
             >
               <TrendingUp className="w-8 h-8 text-orange-600 mb-2" />
               <span className="text-sm font-medium text-gray-900">View Analytics</span>
+            </Link>
+
+            <Link
+              href="/components-showcase"
+              className="flex flex-col items-center justify-center p-4 bg-pink-50 rounded-lg hover:bg-pink-100 transition-colors"
+              target="_blank"
+            >
+              <Palette className="w-8 h-8 text-pink-600 mb-2" />
+              <span className="text-sm font-medium text-gray-900">UI Components</span>
+              <Badge variant="secondary" className="mt-1 text-xs bg-pink-100 text-pink-700">
+                New
+              </Badge>
             </Link>
           </div>
         </CardContent>

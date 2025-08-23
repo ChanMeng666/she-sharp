@@ -212,7 +212,8 @@ export default function EventsPage() {
               <Button 
                 variant="outline" 
                 onClick={() => handleCancelRegistration(event.id)}
-                className="min-w-[130px] border-purple-mid/30 text-purple-dark hover:bg-purple-light hover:border-purple-mid transition-all"
+                variant="outline"
+                className="min-w-[130px]"
                 size="sm"
               >
                 Cancel Registration
@@ -220,7 +221,8 @@ export default function EventsPage() {
             ) : (
               <Button 
                 onClick={() => handleRegister(event.id)}
-                className="min-w-[130px] bg-purple-dark hover:bg-purple-mid text-white transition-all"
+                variant="default"
+                className="min-w-[130px]"
                 size="sm"
               >
                 Register Now

@@ -252,7 +252,9 @@ function ResetPasswordForm() {
           <CardFooter className="flex flex-col space-y-2">
             <Button 
               type="submit" 
-              className="w-full bg-purple-600 hover:bg-purple-700"
+              variant="default"
+              size="lg"
+              className="w-full"
               disabled={isLoading || !passwordRequirements.every(req => req.met) || password !== confirmPassword}
             >
               {isLoading ? 'Resetting...' : 'Reset Password'}

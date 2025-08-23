@@ -195,7 +195,8 @@ export default function ResourcesPage() {
       <CardFooter className="border-t border-gray-100 bg-gray-50/50 p-4">
         <Button 
           onClick={() => handleDownload(resource)}
-          className="w-full bg-purple-dark hover:bg-purple-mid text-white transition-all"
+          variant="default"
+          className="w-full"
           size="sm"
         >
           <Download className="h-4 w-4 mr-2" />

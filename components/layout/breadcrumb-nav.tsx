@@ -52,6 +52,7 @@ export function BreadcrumbNav() {
         'newsletters': 'Newsletters',
         'gallery': 'Gallery',
         'press': 'Press',
+        'components-showcase': 'Components Showcase',
       };
 
       label = labelMap[path] || path.charAt(0).toUpperCase() + path.slice(1).replace(/-/g, ' ');

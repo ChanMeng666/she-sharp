@@ -119,12 +119,12 @@ function UserMenu() {
     return (
       <>
         <Link href="/sign-in">
-          <Button variant="ghost" size="sm" className="text-purple-dark hover:text-purple-mid">
+          <Button variant="ghost" size="sm">
             Sign In
           </Button>
         </Link>
         <Link href="/sign-up">
-          <Button size="sm" className="bg-purple-dark hover:bg-purple-mid text-white rounded-full px-6">
+          <Button variant="default" size="sm" className="rounded-full px-6">
             Get Started
           </Button>
         </Link>
@@ -147,7 +147,7 @@ function UserMenu() {
   return (
     <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative flex items-center gap-2 px-2 hover:bg-purple-light transition-colors">
+        <Button variant="ghost" className="relative flex items-center gap-2 px-2">
           <Avatar className="h-8 w-8">
             <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} />
             <AvatarFallback className="bg-gradient-to-br from-purple-dark to-periwinkle-dark text-white text-xs">

@@ -217,7 +217,7 @@ export default function NotificationsPage() {
               <Button 
                 variant="outline"
                 onClick={markAllAsRead}
-                className="border-purple-mid/30 text-purple-dark hover:bg-purple-light hover:border-purple-mid"
+                variant="outline"
                 size="sm"
               >
                 <CheckCircle className="h-4 w-4 mr-2" />

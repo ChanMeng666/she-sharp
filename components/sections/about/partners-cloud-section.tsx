@@ -222,7 +222,6 @@ export function PartnersCloudSection() {
             asChild 
             size="lg" 
             variant="outline"
-            className="border-purple-dark text-purple-dark hover:bg-purple-dark hover:text-white"
           >
             <Link href="/sponsors">
               Become a Partner

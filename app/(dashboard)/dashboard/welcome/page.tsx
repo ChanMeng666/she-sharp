@@ -171,8 +171,9 @@ export default function WelcomePage() {
 
                 {!role.isActive && (
                   <Button 
-                    className={`w-full bg-gradient-to-r ${role.color} text-white hover:opacity-90 transition-opacity`}
+                    variant={role.id === 'mentor' ? 'default' : role.id === 'mentee' ? 'secondary' : 'accent'}
                     size="lg"
+                    className="w-full"
                   >
                     Get Started
                     <ArrowRight className="ml-2 h-4 w-4" />

@@ -122,7 +122,7 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
         <div className="text-center mt-12">
           <Button
             variant="outline"
-            className="border-purple-dark text-purple-dark hover:bg-purple-light/10 transition-colors duration-150"
+            size="lg"
           >
             View All Past Events
           </Button>
@@ -148,17 +148,17 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
                 {selectedEvent.images.length > 1 && (
                   <>
                     <Button
-                      variant="ghost"
+                      variant="glass"
                       size="icon"
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-white"
                       onClick={handlePrevImage}
                     >
                       <ChevronLeft className="w-6 h-6" />
                     </Button>
                     <Button
-                      variant="ghost"
+                      variant="glass"
                       size="icon"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white"
                       onClick={handleNextImage}
                     >
                       <ChevronRight className="w-6 h-6" />
@@ -193,12 +193,12 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
                   </p>
                 )}
                 {selectedEvent.id === 'thrive-july-2025' && (
-                  <Button asChild variant="outline" className="gap-2">
-                    <Link href="/events/thrive-your-career-your-story">
-                      View Event Details
-                      <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </Button>
+                                  <Button asChild variant="accent" size="sm" className="gap-2">
+                  <Link href="/events/thrive-your-career-your-story">
+                    View Event Details
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </Button>
                 )}
               </div>
             </div>

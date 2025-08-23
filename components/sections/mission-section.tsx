@@ -123,8 +123,8 @@ export function MissionSection() {
 
                   <Button
                     asChild
+                    variant="default"
                     size="lg"
-                    className="bg-purple-dark hover:bg-purple-mid"
                   >
                     <Link href="/about">Learn More About Us</Link>
                   </Button>
@@ -163,7 +163,6 @@ export function MissionSection() {
             <Button
               asChild
               variant="outline"
-              className="border-purple-dark text-purple-dark hover:bg-purple-light"
             >
               <Link href="/join-our-team">Become a member</Link>
             </Button>

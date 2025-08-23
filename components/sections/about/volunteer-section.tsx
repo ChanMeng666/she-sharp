@@ -194,8 +194,8 @@ export function VolunteerSection() {
                           
                           <Button 
                             size="sm" 
-                            variant="ghost" 
-                            className="w-full group-hover:bg-purple-light group-hover:text-purple-dark"
+                            variant="ghost"
+                            className="w-full"
                           >
                             Learn More
                             <ArrowRight className="ml-2 h-4 w-4" />
@@ -266,7 +266,7 @@ export function VolunteerSection() {
           <p className="text-gray-600 mb-6">
             Don't see a role that fits? We're always open to new ideas and contributions!
           </p>
-          <Button asChild size="lg" className="bg-gradient-to-r from-purple-dark to-purple-mid hover:from-purple-dark/90 hover:to-purple-mid/90">
+          <Button asChild variant="gradient" size="lg">
             <Link href="/join-our-team">
               Apply to Volunteer
               <ArrowRight className="ml-2 h-5 w-5" />

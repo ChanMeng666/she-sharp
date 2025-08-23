@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { isUserAdmin } from '@/lib/auth/permissions';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
 
 export default async function AdminPage() {
   const user = await getUser();
@@ -34,9 +35,9 @@ export default async function AdminPage() {
           <span className="text-sm text-gray-500">
             Last updated: {new Date().toLocaleTimeString()}
           </span>
-          <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+          <Button variant="default">
             Export Report
-          </button>
+          </Button>
         </div>
       </div>
 

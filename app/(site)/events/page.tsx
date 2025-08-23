@@ -295,9 +295,10 @@ export default function EventsPage() {
                 {/* Load More */}
                 <div className="text-center mt-12">
                   <Button
+                    variant="default"
+                    size="lg"
                     onClick={handleLoadMore}
                     disabled={isLoading}
-                    className="bg-purple-dark hover:bg-purple-mid text-white transition-colors duration-150"
                   >
                     {isLoading ? (
                       <>

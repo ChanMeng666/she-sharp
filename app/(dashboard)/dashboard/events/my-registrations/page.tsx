@@ -208,7 +208,7 @@ export default function MyRegistrationsPage() {
               {registration.event.locationDetails?.meetingLink && (
                 <Button 
                   onClick={() => window.open(registration.event.locationDetails.meetingLink, '_blank')}
-                  className="min-w-[100px] bg-purple-dark hover:bg-purple-mid text-white transition-all"
+                  variant="default" className="min-w-[100px]"
                   size="sm"
                 >
                   Join Meeting
@@ -218,7 +218,7 @@ export default function MyRegistrationsPage() {
               <Button 
                 variant="outline" 
                 onClick={() => handleCancelRegistration(registration.event.id)}
-                className="min-w-[100px] border-purple-mid/30 text-purple-dark hover:bg-purple-light hover:border-purple-mid transition-all"
+                variant="outline" className="min-w-[100px]"
                 size="sm"
               >
                 <XCircle className="h-4 w-4 mr-2" />
@@ -233,7 +233,7 @@ export default function MyRegistrationsPage() {
               {registration.certificateUrl && (
                 <Button 
                   onClick={() => window.open(registration.certificateUrl!, '_blank')}
-                  className="min-w-[100px] bg-purple-dark hover:bg-purple-mid text-white transition-all"
+                  variant="default" className="min-w-[100px]"
                   size="sm"
                 >
                   <Download className="h-4 w-4 mr-2" />
@@ -243,7 +243,7 @@ export default function MyRegistrationsPage() {
               {!registration.feedbackSubmitted && (
                 <Button 
                   variant="outline" 
-                  className="min-w-[100px] border-purple-mid/30 text-purple-dark hover:bg-purple-light hover:border-purple-mid transition-all"
+                  variant="outline" className="min-w-[100px]"
                   size="sm"
                 >
                   <MessageSquare className="h-4 w-4 mr-2" />
@@ -333,7 +333,7 @@ export default function MyRegistrationsPage() {
                 <p className="text-gray mb-6">You haven't registered for any upcoming events yet</p>
                 <Button 
                   onClick={() => window.location.href = '/dashboard/events'}
-                  className="bg-purple-dark hover:bg-purple-mid text-white transition-all"
+                  variant="default"
                   size="sm"
                 >
                   Browse Events

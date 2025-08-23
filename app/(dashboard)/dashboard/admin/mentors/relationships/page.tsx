@@ -234,7 +234,7 @@ export default function MentorRelationshipsPage() {
             <Download className="w-4 h-4 mr-2" />
             Export Report
           </Button>
-          <Button className="bg-purple-600 hover:bg-purple-700">
+          <Button variant="default">
             <Link2 className="w-4 h-4 mr-2" />
             New Pairing
           </Button>
