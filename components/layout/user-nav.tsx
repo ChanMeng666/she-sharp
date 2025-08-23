@@ -121,16 +121,11 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
   if (!user) {
     if (variant === 'mobile') {
       return (
-        <div className="flex flex-col gap-2 pt-4 border-t border-gray-200">
+        <div className="pt-4 border-t border-gray-200">
           <Link href="/sign-in" className="w-full">
-            <Button variant="outline" className="w-full justify-start">
+            <Button className="w-full justify-start bg-purple-dark hover:bg-purple-mid text-white">
               <User className="mr-2 h-4 w-4" />
               Sign In
-            </Button>
-          </Link>
-          <Link href="/sign-up" className="w-full">
-            <Button className="w-full justify-start bg-purple-dark hover:bg-purple-mid">
-              Get Started
             </Button>
           </Link>
         </div>
@@ -138,15 +133,10 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
     }
 
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center">
         <Link href="/sign-in">
-          <Button variant="ghost" size="sm">
+          <Button size="sm" className="bg-purple-dark hover:bg-purple-mid text-white">
             Sign In
-          </Button>
-        </Link>
-        <Link href="/sign-up">
-          <Button size="sm" className="bg-purple-dark hover:bg-purple-mid">
-            Get Started
           </Button>
         </Link>
       </div>
