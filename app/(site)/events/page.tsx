@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { EventsTimelineHero } from '@/components/events/events-timeline-hero';
 import { EventsFilter } from '@/components/events/events-filter';
 import { EventsCalendarView } from '@/components/events/events-calendar-view';
+import { GoogleCalendarSection } from '@/components/events/google-calendar-section';
 import { EventTicketCard } from '@/components/events/event-ticket-card';
 import { EventMiniCard } from '@/components/events/event-mini-card';
 import { PastEventsGallery } from '@/components/events/past-events-gallery';
@@ -11,7 +12,7 @@ import { Container } from '@/components/layout/container';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { CalendarDays, Grid3X3, Loader2 } from 'lucide-react';
+import { CalendarDays, Grid3X3, Loader2, Calendar } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { toast } from 'sonner';
@@ -144,7 +145,7 @@ const locations = ['Auckland CBD', 'Wellington Tech Hub', 'Christchurch Conventi
 
 export default function EventsPage() {
   const router = useRouter();
-  const [viewMode, setViewMode] = useState<'grid' | 'calendar'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'calendar' | 'google-calendar'>('grid');
   const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState({
     type: 'all',
@@ -236,7 +237,7 @@ export default function EventsPage() {
 
           {/* View Mode Toggle */}
           <div className="flex justify-center mb-8">
-            <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as 'grid' | 'calendar')}>
+            <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as 'grid' | 'calendar' | 'google-calendar')}>
               <TabsList className="bg-muted text-muted-foreground p-1">
                 <TabsTrigger value="grid" className="gap-2">
                   <Grid3X3 className="w-4 h-4" />
@@ -246,15 +247,21 @@ export default function EventsPage() {
                   <CalendarDays className="w-4 h-4" />
                   Calendar View
                 </TabsTrigger>
+                <TabsTrigger value="google-calendar" className="gap-2">
+                  <Calendar className="w-4 h-4" />
+                  Official Calendar
+                </TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
 
           {/* Filters */}
-          <EventsFilter 
-            onFilterChange={setFilters}
-            locations={locations}
-          />
+          {viewMode !== 'google-calendar' && (
+            <EventsFilter 
+              onFilterChange={setFilters}
+              locations={locations}
+            />
+          )}
 
           {/* Events Display */}
           <div className="mt-8">
@@ -334,7 +341,7 @@ export default function EventsPage() {
                   </Button>
                 </div>
               </>
-            ) : (
+            ) : viewMode === 'calendar' ? (
               /* Calendar View */
               <EventsCalendarView 
                 events={filteredEvents.map(e => ({
@@ -347,11 +354,16 @@ export default function EventsPage() {
                 }))}
                 onEventClick={handleEventClick}
               />
+            ) : (
+              /* Google Calendar View */
+              <div className="mx-auto max-w-none">
+                <GoogleCalendarSection />
+              </div>
             )}
           </div>
 
           {/* No Results */}
-          {filteredEvents.length === 0 && (
+          {filteredEvents.length === 0 && viewMode !== 'google-calendar' && (
             <div className="text-center py-16">
               <p className="text-gray-500 dark:text-gray-400 text-lg">
                 No events found matching your filters.

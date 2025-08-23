@@ -1,10 +1,8 @@
 import "./hero-animations.css";
 import { HeroSection } from "@/components/sections/hero-section";
-import { MissionSection } from "@/components/sections/mission-section";
-import { ImpactSection } from "@/components/sections/impact-section";
-import { CommitmentsSection } from "@/components/sections/commitments-section";
-import { EventsSection } from "@/components/sections/events-section";
-import { TestimonialsSection } from "@/components/sections/testimonials-section";
+import { CoreImpactSection } from "@/components/sections/core-impact-section";
+import { ProgramsSection } from "@/components/sections/programs-section";
+import { CommunityStoriesSection } from "@/components/sections/community-stories-section";
 import { MediaSection } from "@/components/sections/media-section";
 import { SponsorsSection } from "@/components/sections/sponsors-section";
 import { SmartCTASection } from "@/components/sections/shared/smart-cta-section";
@@ -13,11 +11,9 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <ImpactSection />
-      <MissionSection />
-      <CommitmentsSection />
-      <EventsSection />
-      <TestimonialsSection />
+      <CoreImpactSection />
+      <ProgramsSection />
+      <CommunityStoriesSection />
       <MediaSection />
       <SponsorsSection />
       <SmartCTASection title="Get Involved" />
