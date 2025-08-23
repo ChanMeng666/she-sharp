@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { PasswordInput } from '@/components/ui/password-strength';
 import { OAuthButtons } from '@/components/ui/oauth-buttons';
-import { Loader2, Shield, Sparkles } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { signIn, signUp } from './actions';
 import { ActionState } from '@/lib/auth/middleware';
 
@@ -24,27 +24,23 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
   );
 
   return (
-    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-light/20 via-periwinkle-light/10 to-mint-light/15">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-dark/5 to-periwinkle-dark/5 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-mint-dark/5 to-purple-light/10 rounded-full blur-3xl"></div>
-      </div>
+    <div 
+      className="min-h-[calc(100vh-64px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative"
+      style={{
+        backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Background overlay for better readability */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/70 to-white/60 backdrop-blur-sm"></div>
 
       <div className="w-full max-w-md relative z-10">
         <Card className="border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
           <CardHeader className="space-y-4 text-center pb-8">
-            <div className="flex justify-center">
-              <div className="p-4 bg-gradient-to-br from-purple-dark to-periwinkle-dark rounded-2xl shadow-lg">
-                {mode === 'signin' ? (
-                  <Shield className="h-8 w-8 text-white" />
-                ) : (
-                  <Sparkles className="h-8 w-8 text-white" />
-                )}
-              </div>
-            </div>
             <div className="space-y-2">
-              <CardTitle className="text-2xl font-bold text-navy-dark">
+              <CardTitle className="text-3xl font-bold text-navy-dark">
                 {mode === 'signin' ? 'Welcome back' : 'Join She Sharp'}
               </CardTitle>
               <CardDescription className="text-gray text-base">
@@ -140,9 +136,9 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
 
               <Button
                 type="submit"
-                variant="gradient"
+                variant="neumorphism"
                 size="lg"
-                className="w-full h-12 rounded-xl shadow-lg shadow-purple-dark/25 hover:shadow-xl hover:shadow-purple-dark/30 transition-all duration-300"
+                className="w-full h-12 rounded-xl font-semibold text-lg transition-all duration-300"
                 disabled={pending}
               >
                 {pending ? (
@@ -187,9 +183,9 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
 
               <Button
                 asChild
-                variant="outline"
+                variant="outline-thick"
                 size="lg"
-                className="w-full h-12 rounded-xl border-2 border-purple-dark/20 hover:border-purple-dark hover:bg-purple-light/30 transition-all duration-300"
+                className="w-full h-12 rounded-xl font-medium transition-all duration-300"
               >
                 <Link
                   href={`${mode === 'signin' ? '/sign-up' : '/sign-in'}${

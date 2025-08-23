@@ -14,12 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
-const authNavItems = [
-  { title: "About", href: "/about" },
-  { title: "Events", href: "/events" },
-  { title: "Mentorship", href: "/mentorship" },
-  { title: "Contact", href: "/contact" },
-];
+const authNavItems: { title: string; href: string }[] = [];
 
 export function AuthHeader() {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,8 +32,8 @@ export function AuthHeader() {
   return (
     <header
       className={cn(
-        "fixed top-0 z-50 w-full border-b bg-white/95 backdrop-blur transition-all duration-150",
-        scrolled ? "shadow-sm" : ""
+        "fixed top-0 z-50 w-full border-b border-white/20 bg-white/10 backdrop-blur-xl shadow-lg transition-all duration-300",
+        scrolled ? "bg-white/20 shadow-xl" : ""
       )}
     >
       <div className="mx-auto px-4 md:px-6 max-w-7xl flex h-16 items-center">
@@ -78,26 +73,6 @@ export function AuthHeader() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6 ml-auto">
-          {authNavItems.map((item) => (
-            <Link
-              key={item.title}
-              href={item.href}
-              className="text-sm font-medium text-gray-700 hover:text-purple-dark transition-colors duration-150"
-            >
-              {item.title}
-            </Link>
-          ))}
-          <div className="ml-4 pl-4 border-l border-gray-200">
-            <Link href="/sign-in">
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-purple-dark text-purple-dark hover:bg-purple-light"
-              >
-                Sign In
-              </Button>
-            </Link>
-          </div>
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -126,26 +101,6 @@ export function AuthHeader() {
 
             {/* Mobile Navigation */}
             <nav className="flex flex-col p-6">
-              {authNavItems.map((item) => (
-                <Link
-                  key={item.title}
-                  href={item.href}
-                  className="py-3 text-base font-medium text-navy-dark hover:text-purple-dark transition-colors border-b border-gray-100 last:border-0"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.title}
-                </Link>
-              ))}
-              <div className="mt-6 pt-6 border-t border-gray-200">
-                <Link href="/sign-in" onClick={() => setIsOpen(false)}>
-                  <Button
-                    variant="outline"
-                    className="w-full border-purple-dark text-purple-dark hover:bg-purple-light"
-                  >
-                    Sign In
-                  </Button>
-                </Link>
-              </div>
             </nav>
           </SheetContent>
         </Sheet>
