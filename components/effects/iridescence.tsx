@@ -76,6 +76,12 @@ export const brandColors = {
   ctaSoftMint: [0.930, 0.990, 0.980] as [number, number, number],       // #edfcf7 - 极浅薄荷白
   ctaDreamyPurple: [0.940, 0.930, 0.980] as [number, number, number],   // #f0edf9 - 梦幻浅紫
   
+  // 导航下拉框专用配色 - 基于项目品牌色彩系统的协调搭配
+  navAbout: [0.784, 0.275, 0.671] as [number, number, number],          // #c846ab - 品牌紫色中调，团队和使命感
+  navPrograms: [0.537, 0.510, 1.0] as [number, number, number],         // #8982ff - 长春花蓝，教育和活动感  
+  navGetInvolved: [0.694, 0.965, 0.914] as [number, number, number],    // #b1f6e9 - 薄荷绿，参与和行动感
+  navResources: [0.075, 0.471, 0.820] as [number, number, number],      // #1378d1 - 功能蓝色，资源和知识感
+  
   // 原有颜色保留（兼容性）
   purpleBright: [0.784, 0.275, 0.671] as [number, number, number],
   periwinkleBright: [0.647, 0.620, 1.0] as [number, number, number],

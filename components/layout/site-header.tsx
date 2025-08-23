@@ -30,7 +30,39 @@ import {
 import { cn } from "@/lib/utils";
 import { navigationConfig } from "@/lib/navigation-config";
 import { UserNav } from "./user-nav";
+import Iridescence, { brandColors } from "@/components/effects/iridescence";
 import "./navigation-styles.css";
+
+// 获取导航项目对应的配色方案和动画参数
+const getNavigationColor = (title: string): [number, number, number] => {
+  switch (title) {
+    case "About":
+      return brandColors.navAbout;
+    case "Programs":
+      return brandColors.navPrograms;
+    case "Get Involved":
+      return brandColors.navGetInvolved;
+    case "Resources":
+      return brandColors.navResources;
+    default:
+      return brandColors.ctaSoftMint;
+  }
+};
+
+const getNavigationAnimationParams = (title: string) => {
+  switch (title) {
+    case "About":
+      return { amplitude: 0.10, speed: 0.25 }; // 温和稳重的团队感
+    case "Programs":
+      return { amplitude: 0.15, speed: 0.35 }; // 活跃的教育活动感
+    case "Get Involved":
+      return { amplitude: 0.18, speed: 0.4 }; // 最活跃的参与行动感
+    case "Resources":
+      return { amplitude: 0.12, speed: 0.3 }; // 知识流动的智慧感
+    default:
+      return { amplitude: 0.12, speed: 0.3 };
+  }
+};
 
 export function SiteHeader() {
   const router = useRouter();
@@ -177,21 +209,36 @@ export function SiteHeader() {
                           </ul>
                         </div>
                         
-                        {/* Right side - Featured image */}
+                        {/* Right side - Iridescence Background */}
                         {item.image && (
                           <Link 
                             href={item.image.href}
-                            className="relative w-80 overflow-hidden bg-gray-light/10 group"
+                            className="relative w-80 overflow-hidden group"
                           >
-                            <div className="absolute inset-0 bg-gradient-to-br from-purple-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-                            <div className="relative h-full transition-transform duration-300 group-hover:scale-105">
-                              <Image
-                                src={item.image.src}
-                                alt={item.image.alt}
-                                fill
-                                sizes="320px"
-                                className="object-cover"
+                            {/* Iridescence 动态背景 */}
+                            <div className="absolute inset-0">
+                              <Iridescence
+                                color={getNavigationColor(item.title)}
+                                mouseReact={false}
+                                amplitude={getNavigationAnimationParams(item.title).amplitude}
+                                speed={getNavigationAnimationParams(item.title).speed}
+                                className="w-full h-full"
                               />
+                            </div>
+                            
+                            {/* 内容覆盖层 */}
+                            <div className="relative h-full flex items-center justify-center bg-white/40 backdrop-blur-sm group-hover:bg-white/60 transition-all duration-300">
+                              <div className="text-center p-6">
+                                <div className="text-sm font-medium text-navy-dark/80 mb-1">
+                                  Featured
+                                </div>
+                                <div className="text-lg font-bold text-navy-dark">
+                                  {item.image.alt}
+                                </div>
+                                <div className="mt-2 text-sm text-purple-dark opacity-75 group-hover:opacity-100 transition-opacity duration-300">
+                                  Explore →
+                                </div>
+                              </div>
                             </div>
                           </Link>
                         )}
