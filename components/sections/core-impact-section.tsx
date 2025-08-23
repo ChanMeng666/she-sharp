@@ -90,7 +90,7 @@ export function CoreImpactSection() {
             Transforming Tech Together
           </h2>
           <p className="text-lg text-gray max-w-3xl mx-auto">
-            For over a decade, we've been building a community where women in technology 
+            For over a decade, we've been creating pathways where women in technology 
             connect, grow, and thrive. Here's the impact we're making together.
           </p>
         </div>
@@ -158,32 +158,22 @@ export function CoreImpactSection() {
         {/* Call to Action */}
         <div className="text-center bg-gradient-to-r from-purple-light/10 via-periwinkle-light/10 to-mint-light/10 rounded-2xl p-8 md:p-12">
           <h3 className="text-2xl md:text-3xl font-bold text-navy-dark mb-4">
-            Ready to be part of the change?
+            Ready to join our community?
           </h3>
           <p className="text-lg text-gray mb-8 max-w-2xl mx-auto">
-            Join thousands of women who are already transforming their careers and 
-            shaping the future of technology.
+            Connect with women who are transforming their careers and 
+            shaping the future of technology together.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="bg-purple-dark hover:bg-purple-mid transition-colors"
-            >
-              <Link href="/events">
-                Explore Events
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-purple-dark text-purple-dark hover:bg-purple-light"
-            >
-              <Link href="/about">Learn More</Link>
-            </Button>
-          </div>
+          <Button
+            asChild
+            size="lg"
+            className="bg-purple-dark hover:bg-purple-mid transition-colors"
+          >
+            <Link href="/events">
+              Join Our Next Event
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </Link>
+          </Button>
         </div>
       </Container>
     </Section>

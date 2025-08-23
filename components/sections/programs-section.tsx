@@ -36,7 +36,7 @@ const programs = [
       { icon: MessageCircle, text: "Industry panel discussions" },
       { icon: Calendar, text: "Annual THRIVE conference" }
     ],
-    stats: { primary: "84+", secondary: "Events hosted" },
+    stats: { primary: "Monthly", secondary: "Events hosted" },
     cta: { text: "View Upcoming Events", href: "/events" },
     highlight: "Next event: March 15"
   },
@@ -53,7 +53,7 @@ const programs = [
       { icon: Calendar, text: "Structured 6-month programs" },
       { icon: Briefcase, text: "Career transition support" }
     ],
-    stats: { primary: "500+", secondary: "Success stories" },
+    stats: { primary: "6-Month", secondary: "Programs" },
     cta: { text: "Apply for Mentorship", href: "/mentorship" },
     highlight: "Applications open"
   },
@@ -70,7 +70,7 @@ const programs = [
       { icon: GraduationCap, text: "Professional development" },
       { icon: Users, text: "Peer learning groups" }
     ],
-    stats: { primary: "50+", secondary: "Skills workshops" },
+    stats: { primary: "Weekly", secondary: "Workshops" },
     cta: { text: "Explore Workshops", href: "/events?type=workshop" },
     highlight: "New courses monthly"
   }
@@ -110,7 +110,7 @@ export function ProgramsSection() {
           </h2>
           <p className="text-lg text-gray max-w-3xl mx-auto">
             Three comprehensive programs designed to accelerate your tech career through 
-            community, mentorship, and continuous learning.
+            networking, guidance, and skill development.
           </p>
         </div>
 
@@ -196,19 +196,11 @@ export function ProgramsSection() {
                     })}
                   </ul>
                   
-                  <Button
-                    asChild
-                    className={`w-full ${
-                      program.color === "purple" ? "bg-purple-dark hover:bg-purple-mid" :
-                      program.color === "periwinkle" ? "bg-periwinkle-dark hover:bg-periwinkle-mid" :
-                      "bg-mint-dark hover:bg-mint-mid"
-                    }`}
-                  >
-                    <Link href={program.cta.href}>
-                      {program.cta.text}
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </Link>
-                  </Button>
+                  <div className="text-center">
+                    <span className="text-sm text-gray italic">
+                      Learn more about our programs at upcoming events
+                    </span>
+                  </div>
                 </CardContent>
               </Card>
             );

@@ -44,7 +44,7 @@ const sponsorBenefits = [
   {
     icon: Handshake,
     title: "Brand Visibility",
-    description: "Connect with 2200+ talented women in tech"
+    description: "Connect with our thriving community of women in tech"
   },
   {
     icon: Heart,
@@ -155,23 +155,13 @@ export function SponsorsSection() {
           <p className="text-sm sm:text-base text-gray mb-6 max-w-xl mx-auto">
             Partner with us to create meaningful change in the tech industry and support the next generation of women leaders
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="bg-purple-dark hover:bg-purple-mid"
-            >
-              <Link href="/sponsors/corporate-sponsorship">Become a Sponsor</Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-purple-dark text-purple-dark hover:bg-white/50"
-            >
-              <Link href="/sponsors/corporate-sponsorship">Sponsorship Info</Link>
-            </Button>
-          </div>
+          <Button
+            asChild
+            size="lg"
+            className="bg-purple-dark hover:bg-purple-mid"
+          >
+            <Link href="/sponsors/corporate-sponsorship">Partnership Opportunities</Link>
+          </Button>
         </div>
       </Container>
     </Section>

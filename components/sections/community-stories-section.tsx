@@ -74,7 +74,7 @@ export function CommunityStoriesSection() {
           </h2>
           <p className="text-lg text-gray max-w-3xl mx-auto">
             Real stories from women who've transformed their careers, plus upcoming opportunities 
-            to connect and grow with our community.
+            to connect and grow through our network.
           </p>
         </div>
 
@@ -222,18 +222,11 @@ export function CommunityStoriesSection() {
                       {event.description}
                     </p>
 
-                    <Button
-                      asChild
-                      size="sm"
-                      className={`w-full ${
-                        event.type === "Conference" ? "bg-purple-dark hover:bg-purple-mid" : "bg-periwinkle-dark hover:bg-periwinkle-mid"
-                      }`}
-                    >
-                      <Link href={`/events/${event.id}`}>
-                        {index === 0 ? "Register Now" : "Learn More"}
-                        <ArrowRight className="ml-2 w-4 h-4" />
-                      </Link>
-                    </Button>
+                    <div className="text-center pt-2">
+                      <span className="text-xs text-gray italic">
+                        Click "View All Events" below for registration
+                      </span>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
@@ -260,26 +253,16 @@ export function CommunityStoriesSection() {
             Join a community of women who are breaking barriers, building careers, 
             and supporting each other every step of the way.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="bg-purple-dark hover:bg-purple-mid transition-colors"
-            >
-              <Link href="/join-our-team">
-                Join Our Community
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-purple-dark text-purple-dark hover:bg-purple-light"
-            >
-              <Link href="/mentorship">Explore Mentorship</Link>
-            </Button>
-          </div>
+          <Button
+            asChild
+            size="lg"
+            className="bg-purple-dark hover:bg-purple-mid transition-colors"
+          >
+            <Link href="/join-our-team">
+              Join Our Community
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </Link>
+          </Button>
         </div>
       </Container>
     </Section>
