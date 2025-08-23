@@ -179,12 +179,11 @@ export const navigationConfig: {
       href: "/contact",
       icon: Mail,
     },
-  ],
-  buttons: [
     {
       title: "Support Us",
       href: "/donate",
-      variant: "ghost",
+      icon: HandHeart,
     },
   ],
+  buttons: [],
 };
