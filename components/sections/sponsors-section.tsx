@@ -7,8 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Card, CardContent } from "@/components/ui/card";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
 import { Handshake, Heart, Award } from "lucide-react";
 
 const sponsors = {
@@ -16,29 +14,28 @@ const sponsors = {
     { 
       name: "HCLTech", 
       logo: "/logos/hcltech-logo.svg",
-      description: "Technology that makes a difference"
+      description: "Technology that makes a difference",
+      scale: "scale-90" // Reduced size as requested
     },
     { 
       name: "Fonterra", 
       logo: "/logos/fonterra-logo.svg",
-      description: "Innovation in every byte"
+      description: "Innovation in every byte",
+      scale: "scale-100" // Maintaining good balance
+    },
+    { 
+      name: "MYOB", 
+      logo: "/logos/myob-logo.svg",
+      description: "Business solutions for growth",
+      scale: "scale-105" // Reduced size as requested
     },
   ],
   bronze: [
     { 
-      name: "MYOB", 
-      logo: "/logos/myob-logo.svg",
-      description: "Business solutions for growth"
-    },
-    { 
       name: "Fisher & Paykel Healthcare", 
       logo: "/logos/FPHcare-logo.svg",
-      description: "Healthcare innovation"
-    },
-    { 
-      name: "FlexWare", 
-      logo: "/logos/flexware-logo.svg",
-      description: "Flexible software solutions"
+      description: "Healthcare innovation",
+      scale: "scale-125" // Increased size as requested for more prominence
     },
   ],
 };
@@ -93,9 +90,7 @@ export function SponsorsSection() {
                     src={sponsor.logo}
                     alt={sponsor.name}
                     fill
-                    className={`object-contain transition-all duration-300 group-hover:scale-110 ${
-                      sponsor.name === 'Fonterra' ? 'scale-125' : ''
-                    }`}
+                    className={`object-contain transition-all duration-300 group-hover:scale-110 ${sponsor.scale || 'scale-100'}`}
                   />
                 </div>
                 <p className="text-center text-sm text-gray mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -106,46 +101,28 @@ export function SponsorsSection() {
           </div>
         </div>
 
-        {/* Bronze Sponsors - Carousel */}
-        <div className="mb-12 sm:mb-16 overflow-hidden">
+        {/* Bronze Sponsors */}
+        <div className="mb-12 sm:mb-16">
           <div className="text-center mb-8">
             <h3 className="text-sm font-medium text-gray mb-2 tracking-wide">BRONZE SPONSORS</h3>
             <div className="w-20 h-[1px] bg-gradient-to-r from-transparent via-gray/20 to-transparent mx-auto"></div>
           </div>
-          <div className="max-w-4xl mx-auto relative px-12">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              plugins={[
-                Autoplay({
-                  delay: 3000,
-                }),
-              ]}
-              className="w-full"
-            >
-              <CarouselContent>
-                {sponsors.bronze.map((sponsor) => (
-                  <CarouselItem key={sponsor.name} className="basis-1/2 sm:basis-1/2 md:basis-1/3">
-                    <div className="p-2">
-                      <div className="group">
-                        <div className="relative h-16 sm:h-20 flex items-center justify-center">
-                          <Image
-                            src={sponsor.logo}
-                            alt={sponsor.name}
-                            fill
-                            className="object-contain transition-all duration-300 group-hover:scale-110"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="left-0 sm:left-2 md:-left-12 h-8 w-8 sm:h-10 sm:w-10 bg-white/80 hover:bg-white/90" />
-              <CarouselNext className="right-0 sm:right-2 md:-right-12 h-8 w-8 sm:h-10 sm:w-10 bg-white/80 hover:bg-white/90" />
-            </Carousel>
+          <div className="flex justify-center max-w-2xl mx-auto">
+            {sponsors.bronze.map((sponsor) => (
+              <div key={sponsor.name} className="group">
+                <div className="relative h-24 sm:h-28 flex items-center justify-center px-6">
+                  <Image
+                    src={sponsor.logo}
+                    alt={sponsor.name}
+                    fill
+                    className={`object-contain transition-all duration-300 group-hover:scale-110 ${sponsor.scale || 'scale-100'}`}
+                  />
+                </div>
+                <p className="text-center text-sm text-gray mt-3 opacity-0 group-hover:opacity-100 transition-opacity px-4">
+                  {sponsor.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 

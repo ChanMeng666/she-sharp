@@ -100,11 +100,11 @@ Keynote speakers, panels, workshops, networking events, hackathons and more! Whe
 
 ###### SILVER
 
-![HCLTech Logo](https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/6470185f85072710b161d610_hcltech-logo.svg)![Woolworths Logo](https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/65e50fc6d2f01ad68fb15688_fonterra.png)
+![HCLTech Logo](https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/6470185f85072710b161d610_hcltech-logo.svg)![Fonterra Logo](https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/65e50fc6d2f01ad68fb15688_fonterra.png)![MYOB logo](https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/64701860f27305f34ecc8b66_myob-logo.svg)
 
 ###### BRONZE
 
-![Myob logo](https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/64701860f27305f34ecc8b66_myob-logo.svg)![Fiserv Logo](https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/65d80a4331c46a8a017e669f_PNG%20-%20for%20web%2C%20video%2C%20%26%20MS%20Office_F%26P_HEALTHCARE-BLACK.png)![FlexWare logo](https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/64701860e14f0a2ee9a10f8a_flexware-logo.svg)
+![Fisher & Paykel Healthcare Logo](https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/65d80a4331c46a8a017e669f_PNG%20-%20for%20web%2C%20video%2C%20%26%20MS%20Office_F%26P_HEALTHCARE-BLACK.png)
 
 [Become a sponsor](https://www.shesharp.org.nz/sponsors/corporate-sponsorship)
 

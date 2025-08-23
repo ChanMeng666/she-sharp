@@ -29,6 +29,7 @@ interface Sponsor {
   industry: string;
   joinedYear: number;
   description?: string;
+  scale?: string;
 }
 
 const sponsors: Sponsor[] = [
@@ -39,6 +40,7 @@ const sponsors: Sponsor[] = [
     industry: "Technology",
     joinedYear: 2021,
     description: "Global technology company empowering enterprises with next-gen solutions.",
+    scale: "scale-90" // Reduced size as requested
   },
   {
     name: "Fonterra",
@@ -47,14 +49,16 @@ const sponsors: Sponsor[] = [
     industry: "Agriculture",
     joinedYear: 2022,
     description: "Leading dairy nutrition company committed to diversity and innovation.",
+    scale: "scale-100" // Maintaining good balance
   },
   {
     name: "MYOB",
     logo: "https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/64701860f27305f34ecc8b66_myob-logo.svg",
-    level: "bronze",
+    level: "silver",
     industry: "Technology",
     joinedYear: 2020,
     description: "Business management platform supporting SMEs across New Zealand.",
+    scale: "scale-105" // Reduced size as requested
   },
   {
     name: "Fisher & Paykel Healthcare",
@@ -63,14 +67,7 @@ const sponsors: Sponsor[] = [
     industry: "Healthcare",
     joinedYear: 2023,
     description: "Medical device manufacturer improving care and outcomes globally.",
-  },
-  {
-    name: "FlexWare",
-    logo: "https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/64701860e14f0a2ee9a10f8a_flexware-logo.svg",
-    level: "bronze",
-    industry: "Technology",
-    joinedYear: 2019,
-    description: "Innovation consultancy driving digital transformation.",
+    scale: "scale-125" // Increased size as requested for more prominence
   },
 ];
 
@@ -234,7 +231,7 @@ export function CurrentSponsorsSection() {
                             src={sponsor.logo}
                             alt={sponsor.name}
                             fill
-                            className="object-contain object-left"
+                            className={`object-contain object-left ${sponsor.scale || 'scale-100'}`}
                           />
                         </div>
                         <Badge className={`${levelColors[sponsor.level]} text-xs`}>
@@ -266,7 +263,7 @@ export function CurrentSponsorsSection() {
                             src={sponsor.logo}
                             alt={sponsor.name}
                             fill
-                            className="object-contain object-left"
+                            className={`object-contain object-left ${sponsor.scale || 'scale-100'}`}
                           />
                         </div>
                         <div className="flex-1 min-w-0">
