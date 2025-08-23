@@ -88,12 +88,6 @@ export function EventsSection() {
         <div className="space-y-12">
           {/* Google Calendar Card */}
           <Card className="border-purple-light overflow-hidden">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <CalendarDays className="w-5 h-5 text-purple-dark" />
-                Event Calendar
-              </CardTitle>
-            </CardHeader>
             <CardContent className="p-0">
               <div className="w-full">
                 <iframe
