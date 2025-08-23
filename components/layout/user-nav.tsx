@@ -129,7 +129,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
             </Button>
           </Link>
           <Link href="/sign-up" className="w-full">
-            <Button className="w-full justify-start bg-purple-600 hover:bg-purple-700">
+            <Button className="w-full justify-start bg-purple-dark hover:bg-purple-mid">
               Get Started
             </Button>
           </Link>
@@ -145,7 +145,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
           </Button>
         </Link>
         <Link href="/sign-up">
-          <Button size="sm" className="bg-purple-600 hover:bg-purple-700">
+          <Button size="sm" className="bg-purple-dark hover:bg-purple-mid">
             Get Started
           </Button>
         </Link>

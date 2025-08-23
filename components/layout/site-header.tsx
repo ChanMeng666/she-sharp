@@ -286,7 +286,7 @@ export function SiteHeader() {
           ))}
           
           {/* User Navigation */}
-          <div className="ml-2 pl-2 border-l border-gray-200">
+          <div className="ml-2">
             <UserNav variant="desktop" />
           </div>
         </div>
