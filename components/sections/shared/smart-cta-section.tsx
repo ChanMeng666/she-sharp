@@ -262,18 +262,21 @@ export function SmartCTASection({
   return (
     <Section className={cn("relative bg-white py-16 md:py-20", className)}>
       {/* Iridescence Background for CTA */}
-      <div className="absolute inset-0 opacity-30">
+      <div className="absolute inset-0 opacity-35">
         <Iridescence
-          color={[0.800, 0.980, 0.941]}
+          color={brandColors.ctaSoftMint}
           mouseReact={false}
-          amplitude={0.10}
-          speed={0.8}
+          amplitude={0.12}
+          speed={0.9}
           className="w-full h-full"
         />
       </div>
       
-      {/* 向下过渡到 Footer */}
-      <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-b from-mint-light/30 to-transparent" />
+      {/* 向上过渡渐变 - 与上一个板块的柔和连接 */}
+      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-t from-transparent via-white/20 to-white" />
+      
+      {/* 向下过渡到 Footer - 更柔和的收尾 */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent via-mint-light/20 to-mint-light/10" />
       
       <Container className="relative z-10">
         <div className="text-center mb-12">

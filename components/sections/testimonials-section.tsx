@@ -15,7 +15,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { Quote } from "lucide-react";
 import { testimonialsByPage } from "@/lib/data/testimonials";
-import Iridescence from "@/components/effects/iridescence";
+import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
 export function TestimonialsSection() {
   const testimonials = testimonialsByPage.home;
@@ -23,18 +23,21 @@ export function TestimonialsSection() {
   return (
     <Section className="relative bg-white py-16 md:py-20 overflow-hidden">
       {/* Iridescence 动态背景 */}
-      <div className="absolute inset-0 opacity-15">
+      <div className="absolute inset-0 opacity-20">
         <Iridescence
-          color={[0.694, 0.965, 0.914]}
+          color={brandColors.testimonialsBlush}
           mouseReact={false}
-          amplitude={0.05}
-          speed={0.5}
+          amplitude={0.06}
+          speed={0.6}
           className="w-full h-full"
         />
       </div>
       
-      {/* 向上过渡渐变 */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-t from-transparent to-mint-light/15" />
+      {/* 向上过渡渐变 - 与上一个板块的温和连接 */}
+      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-t from-transparent via-white/35 to-white" />
+      
+      {/* 向下过渡渐变 - 为下一个板块准备 */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent via-white/25 to-white" />
       
       <Container size="full" className="relative z-10">
         <div className="text-center mb-8 sm:mb-12">

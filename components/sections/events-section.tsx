@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { CalendarDays, Clock, MapPin, Users, Video, Sparkles } from "lucide-react";
 import { layoutSystem, layoutClasses } from "@/lib/layout-system";
-import Iridescence from "@/components/effects/iridescence";
+import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
 const upcomingEvents = [
   {
@@ -57,21 +57,21 @@ export function EventsSection() {
   return (
     <Section className="relative bg-white py-16 md:py-20">
       {/* Iridescence 动态背景 */}
-      <div className="absolute inset-0 opacity-20">
+      <div className="absolute inset-0 opacity-25">
         <Iridescence
-          color={[0.694, 0.965, 0.914]}
+          color={brandColors.eventsMinty}
           mouseReact={false}
-          amplitude={0.06}
-          speed={0.6}
+          amplitude={0.08}
+          speed={0.7}
           className="w-full h-full"
         />
       </div>
       
-      {/* 向上过渡渐变 */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-t from-transparent to-periwinkle-light/20" />
+      {/* 向上过渡渐变 - 与上一个板块的柔和连接 */}
+      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-t from-transparent via-white/30 to-white" />
       
-      {/* 向下过渡渐变 */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white" />
+      {/* 向下过渡渐变 - 更柔和的过渡 */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent via-white/40 to-white" />
       
       <Container size="wide" className="relative z-10">
         <div className="text-center mb-8 sm:mb-12">

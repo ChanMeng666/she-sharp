@@ -54,32 +54,35 @@ interface IridescenceProps {
   className?: string;
 }
 
-// She Sharp 品牌色彩预设 - 明亮活泼版本
+// She Sharp 品牌色彩预设 - 明亮活泼浅色调版本
 export const brandColors = {
-  // 明亮活泼的紫色系
-  purpleBright: [0.784, 0.275, 0.671] as [number, number, number],     // #c846ab - 明亮紫色
-  purpleVibrant: [0.847, 0.408, 0.741] as [number, number, number],    // #d868bd - 活力紫色
+  // 超明亮浅色调紫色系 - Hero 主色调
+  heroPeriwinkle: [0.890, 0.870, 1.0] as [number, number, number],     // #e3deff - 超浅长春花蓝，明亮活泼
+  heroPurpleLight: [0.950, 0.890, 0.940] as [number, number, number],   // #f2e3f0 - 超浅紫色，温柔明亮
   
-  // 明亮的长春花蓝
-  periwinkleBright: [0.647, 0.620, 1.0] as [number, number, number],   // #a59eff - 明亮长春花蓝
-  periwinkleVibrant: [0.749, 0.722, 1.0] as [number, number, number],  // #bfb8ff - 活力长春花蓝
+  // 明亮中等色调 - 次要板块
+  commitmentsPastel: [0.850, 0.920, 1.0] as [number, number, number],   // #d9ebff - 浅蓝白色调
+  commitmentsLavender: [0.920, 0.890, 1.0] as [number, number, number], // #ebe3ff - 浅薰衣草色
   
-  // 明亮的薄荷绿
-  mintBright: [0.694, 0.965, 0.914] as [number, number, number],       // #b1f6e9 - 明亮薄荷绿
-  mintVibrant: [0.800, 0.980, 0.941] as [number, number, number],      // #ccfaf0 - 活力薄荷绿
+  // 清新薄荷系 - 活力板块
+  eventsMinty: [0.880, 0.980, 0.950] as [number, number, number],       // #e0faf2 - 超浅薄荷绿
+  eventsSoftGreen: [0.900, 0.985, 0.965] as [number, number, number],   // #e6fbf6 - 极浅绿色
   
-  // 明亮的蓝色系
-  blueBright: [0.408, 0.722, 0.949] as [number, number, number],       // #68b8f2 - 明亮蓝色
-  blueVibrant: [0.510, 0.800, 1.0] as [number, number, number],        // #82ccff - 活力蓝色
+  // 温和粉彩系 - 温馨板块  
+  testimonialsBlush: [0.970, 0.920, 0.950] as [number, number, number], // #f7ebf2 - 浅粉调
+  testimonialsSky: [0.920, 0.950, 0.990] as [number, number, number],   // #ebf2fd - 浅天空蓝
   
-  // 渐变组合 - 明亮活泼
-  gradientPurplePeriwinkle: [0.784, 0.275, 0.671] as [number, number, number],  // 紫色到长春花蓝
-  gradientMintBlue: [0.694, 0.965, 0.914] as [number, number, number],          // 薄荷绿到蓝色
+  // CTA 区域 - 柔和但有存在感
+  ctaSoftMint: [0.930, 0.990, 0.980] as [number, number, number],       // #edfcf7 - 极浅薄荷白
+  ctaDreamyPurple: [0.940, 0.930, 0.980] as [number, number, number],   // #f0edf9 - 梦幻浅紫
   
-  // 保留一些原始颜色用于对比
-  purpleDark: [0.608, 0.180, 0.514] as [number, number, number],       // #9b2e83
-  purpleMid: [0.784, 0.275, 0.671] as [number, number, number],        // #c846ab
-  periwinkleDark: [0.537, 0.510, 1.0] as [number, number, number],     // #8982ff
+  // 原有颜色保留（兼容性）
+  purpleBright: [0.784, 0.275, 0.671] as [number, number, number],
+  periwinkleBright: [0.647, 0.620, 1.0] as [number, number, number],
+  mintBright: [0.694, 0.965, 0.914] as [number, number, number],
+  purpleDark: [0.608, 0.180, 0.514] as [number, number, number],
+  purpleMid: [0.784, 0.275, 0.671] as [number, number, number],
+  periwinkleDark: [0.537, 0.510, 1.0] as [number, number, number],
 };
 
 export default function Iridescence({

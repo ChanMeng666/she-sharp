@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Users, Lightbulb, Rocket, ArrowRight, Calendar, BookOpen, Briefcase } from "lucide-react";
 import Link from "next/link";
 import { layoutSystem, layoutClasses } from "@/lib/layout-system";
-import Iridescence from "@/components/effects/iridescence";
+import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
 const commitments = [
   {
@@ -66,18 +66,18 @@ export function CommitmentsSection() {
   return (
     <Section className="relative bg-white py-16 md:py-20">
       {/* Iridescence 动态背景 */}
-      <div className="absolute inset-0 opacity-25">
+      <div className="absolute inset-0 opacity-30">
         <Iridescence
-          color={[0.749, 0.722, 1.0]}
+          color={brandColors.commitmentsLavender}
           mouseReact={false}
-          amplitude={0.08}
-          speed={0.7}
+          amplitude={0.10}
+          speed={0.8}
           className="w-full h-full"
         />
       </div>
       
-      {/* 向下过渡渐变 */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white" />
+      {/* 向下过渡渐变 - 更柔和的过渡 */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent via-white/50 to-white" />
       
       <Container size="wide" className="relative z-10">
         <div className="text-center mb-8 sm:mb-12">

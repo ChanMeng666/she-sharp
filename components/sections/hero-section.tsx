@@ -13,14 +13,14 @@ export function HeroSection() {
       {/* Brand Color Iridescence Background */}
       <div className="absolute inset-0">
         <Iridescence
-          color={brandColors.periwinkleBright}
-          mouseReact={true}
-          amplitude={0.15}
-          speed={1.0}
+          color={brandColors.heroPeriwinkle}
+          mouseReact={false}
+          amplitude={0.18}
+          speed={1.2}
           className="w-full h-full"
         />
-        {/* Subtle overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/15" />
+        {/* Subtle overlay for text readability - 更轻柔的覆盖层 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/3 via-transparent to-black/8" />
       </div>
       
 
