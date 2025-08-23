@@ -193,14 +193,14 @@ export function MediaSection() {
 
         {/* Media Categories */}
         <Tabs defaultValue="news" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-6 sm:mb-8 bg-purple-light/10 p-1.5 rounded-lg h-auto">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-6 sm:mb-8 bg-muted text-muted-foreground rounded-lg p-1 h-auto">
             {Object.entries(mediaCategories).map(([key, category]) => {
               const Icon = category.icon;
               return (
                 <TabsTrigger
                   key={key}
                   value={key}
-                  className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-3 sm:py-4 data-[state=active]:bg-purple-dark data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-150 rounded-md h-full"
+                  className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-3 sm:py-4 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-md h-full transition-all"
                 >
                   <Icon className="w-4 h-4" />
                   <span className="text-xs sm:text-sm font-medium">{category.label}</span>

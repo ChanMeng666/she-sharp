@@ -227,12 +227,12 @@ export function PodcastsListSection() {
           <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-8">All Episodes</h2>
           
           <Tabs defaultValue="All Episodes" value={selectedCategory} onValueChange={setSelectedCategory}>
-            <TabsList className="w-full justify-start flex-wrap h-auto p-1 mb-8 bg-periwinkle-light/50">
+            <TabsList className="w-full justify-start flex-wrap h-auto p-1 mb-8 bg-muted text-muted-foreground">
               {categories.map((category) => (
                 <TabsTrigger 
                   key={category} 
                   value={category}
-                  className="data-[state=active]:bg-periwinkle-dark data-[state=active]:text-white"
+                  className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
                 >
                   {category}
                 </TabsTrigger>

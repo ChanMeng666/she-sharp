@@ -256,10 +256,10 @@ export default function ResourcesPage() {
 
       {/* Tabs Section */}
       <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="space-y-6">
-        <TabsList className="flex flex-wrap h-auto bg-purple-light/20 p-1 gap-1">
+        <TabsList className="flex flex-wrap h-auto bg-muted text-muted-foreground p-1">
           <TabsTrigger 
             value="all" 
-            className="gap-2 data-[state=active]:bg-white data-[state=active]:text-purple-dark data-[state=active]:shadow-sm"
+            className="gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           >
             <Folder className="h-4 w-4" />
             All ({resources.length})
@@ -268,7 +268,7 @@ export default function ResourcesPage() {
             <TabsTrigger 
               key={cat.category} 
               value={cat.category} 
-              className="gap-2 data-[state=active]:bg-white data-[state=active]:text-purple-dark data-[state=active]:shadow-sm"
+              className="gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
               <Folder className="h-4 w-4" />
               {cat.category} ({cat.count})

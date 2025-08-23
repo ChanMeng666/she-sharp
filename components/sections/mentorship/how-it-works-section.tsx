@@ -170,7 +170,7 @@ export function HowItWorksSection() {
         {/* Journey Path Selector */}
         <div className="flex justify-center mb-8">
           <Tabs value={selectedPath} onValueChange={(v) => setSelectedPath(v as 'mentee' | 'mentor')}>
-            <TabsList className="bg-white dark:bg-gray-900 shadow-md">
+            <TabsList className="bg-muted text-muted-foreground p-1">
               <TabsTrigger value="mentee" className="gap-2">
                 <Target className="w-4 h-4" />
                 Mentee Journey

@@ -82,12 +82,12 @@ export function MenteeResponsibilitiesSection() {
             
             {/* Tabs for different views */}
             <Tabs defaultValue="responsibilities" className="mb-8">
-              <TabsList className="grid w-full grid-cols-2 bg-purple-light/30">
-                <TabsTrigger value="responsibilities" className="data-[state=active]:bg-white">
+              <TabsList className="grid w-full grid-cols-2 bg-muted text-muted-foreground p-1">
+                <TabsTrigger value="responsibilities" className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">
                   <Users className="w-4 h-4 mr-2" />
                   Responsibilities
                 </TabsTrigger>
-                <TabsTrigger value="timeline" className="data-[state=active]:bg-white">
+                <TabsTrigger value="timeline" className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">
                   <Calendar className="w-4 h-4 mr-2" />
                   Journey Timeline
                 </TabsTrigger>

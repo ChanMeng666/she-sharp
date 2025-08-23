@@ -237,7 +237,7 @@ export default function EventsPage() {
           {/* View Mode Toggle */}
           <div className="flex justify-center mb-8">
             <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as 'grid' | 'calendar')}>
-              <TabsList className="bg-gray-100 dark:bg-gray-800">
+              <TabsList className="bg-muted text-muted-foreground p-1">
                 <TabsTrigger value="grid" className="gap-2">
                   <Grid3X3 className="w-4 h-4" />
                   Grid View

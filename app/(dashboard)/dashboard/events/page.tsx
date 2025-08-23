@@ -282,22 +282,22 @@ export default function EventsPage() {
 
       {/* Tabs Section */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full max-w-md grid-cols-3 bg-purple-light/20 p-1">
+        <TabsList className="grid w-full max-w-md grid-cols-3 bg-muted text-muted-foreground p-1">
           <TabsTrigger 
             value="upcoming" 
-            className="data-[state=active]:bg-white data-[state=active]:text-purple-dark data-[state=active]:shadow-sm"
+            className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           >
             Upcoming ({events.upcoming.length})
           </TabsTrigger>
           <TabsTrigger 
             value="ongoing"
-            className="data-[state=active]:bg-white data-[state=active]:text-purple-dark data-[state=active]:shadow-sm"
+            className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           >
             Ongoing ({events.ongoing.length})
           </TabsTrigger>
           <TabsTrigger 
             value="past"
-            className="data-[state=active]:bg-white data-[state=active]:text-purple-dark data-[state=active]:shadow-sm"
+            className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           >
             Past ({events.past.length})
           </TabsTrigger>

@@ -120,12 +120,12 @@ export function MentorsListSection() {
           />
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="w-full flex-wrap h-auto p-1 bg-gray-100 gap-2">
+            <TabsList className="w-full flex-wrap h-auto p-1 bg-muted text-muted-foreground">
               {mentorCategories.map((category) => (
                 <TabsTrigger
                   key={category.id}
                   value={category.id}
-                  className="data-[state=active]:bg-purple-dark data-[state=active]:text-white flex items-center gap-2"
+                  className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm flex items-center gap-2"
                 >
                   {category.icon && <span>{category.icon}</span>}
                   <span>{category.name}</span>

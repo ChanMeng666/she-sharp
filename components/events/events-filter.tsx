@@ -80,7 +80,7 @@ export function EventsFilter({ onFilterChange, locations }: EventsFilterProps) {
           setEventType(value);
           handleFilterChange();
         }}>
-          <TabsList className="grid w-full grid-cols-4 bg-gray-100 dark:bg-gray-800">
+          <TabsList className="grid w-full grid-cols-4 bg-muted text-muted-foreground p-1">
             <TabsTrigger value="all">All Events</TabsTrigger>
             <TabsTrigger value="in-person">In Person</TabsTrigger>
             <TabsTrigger value="online">Online</TabsTrigger>

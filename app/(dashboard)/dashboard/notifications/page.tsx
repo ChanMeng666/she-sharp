@@ -248,16 +248,16 @@ export default function NotificationsPage() {
 
       {/* Tabs Section */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full max-w-xs grid-cols-2 bg-purple-light/20 p-1">
+        <TabsList className="grid w-full max-w-xs grid-cols-2 bg-muted text-muted-foreground p-1">
           <TabsTrigger 
             value="all"
-            className="data-[state=active]:bg-white data-[state=active]:text-purple-dark data-[state=active]:shadow-sm"
+            className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           >
             All ({notifications.length})
           </TabsTrigger>
           <TabsTrigger 
             value="unread"
-            className="data-[state=active]:bg-white data-[state=active]:text-purple-dark data-[state=active]:shadow-sm relative"
+            className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm relative"
           >
             Unread ({unreadCount})
             {unreadCount > 0 && (
