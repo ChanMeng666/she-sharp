@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { CalendarDays, Clock, MapPin, Users, Video, Sparkles } from "lucide-react";
 import { layoutSystem, layoutClasses } from "@/lib/layout-system";
+import Iridescence from "@/components/effects/iridescence";
 
 const upcomingEvents = [
   {
@@ -54,8 +55,25 @@ const upcomingEvents = [
 
 export function EventsSection() {
   return (
-    <Section className="bg-white">
-      <Container size="wide">
+    <Section className="relative bg-white py-16 md:py-20">
+      {/* Iridescence 动态背景 */}
+      <div className="absolute inset-0 opacity-20">
+        <Iridescence
+          color={[0.694, 0.965, 0.914]}
+          mouseReact={false}
+          amplitude={0.06}
+          speed={0.6}
+          className="w-full h-full"
+        />
+      </div>
+      
+      {/* 向上过渡渐变 */}
+      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-t from-transparent to-periwinkle-light/20" />
+      
+      {/* 向下过渡渐变 */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white" />
+      
+      <Container size="wide" className="relative z-10">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy-dark mb-4">
             Events that connect, engage, and inspire

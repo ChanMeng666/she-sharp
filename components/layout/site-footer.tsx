@@ -63,7 +63,10 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="relative bg-navy-dark text-white mt-20 overflow-hidden">
+    <footer className="relative bg-navy-dark text-white -mt-12 pt-16 overflow-hidden">
+      {/* 向上过渡渐变 */}
+      <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-t from-navy-dark to-transparent" />
+      
       {/* Wave Decoration */}
       <div className="footer-wave" />
       

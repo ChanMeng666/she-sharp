@@ -260,17 +260,21 @@ export function SmartCTASection({
   const ctaItems = pageConfigs[pathname as keyof typeof pageConfigs] || defaultCTA;
   
   return (
-    <Section className={cn("bg-white relative py-16 md:py-24", className)}>
+    <Section className={cn("relative bg-white py-16 md:py-20", className)}>
       {/* Iridescence Background for CTA */}
       <div className="absolute inset-0 opacity-30">
         <Iridescence
-          color={brandColors.mintVibrant}
-          mouseReact={true}
+          color={[0.800, 0.980, 0.941]}
+          mouseReact={false}
           amplitude={0.10}
           speed={0.8}
           className="w-full h-full"
         />
       </div>
+      
+      {/* 向下过渡到 Footer */}
+      <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-b from-mint-light/30 to-transparent" />
+      
       <Container className="relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-navy-dark">
