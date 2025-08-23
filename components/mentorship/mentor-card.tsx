@@ -10,7 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Star, Mail, Linkedin, Users, Calendar } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
 interface MentorCardProps {
   mentor: Mentor;
@@ -18,6 +19,26 @@ interface MentorCardProps {
 
 export function MentorCard({ mentor }: MentorCardProps) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [userLoading, setUserLoading] = useState(true);
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    try {
+      const response = await fetch('/api/user');
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch user:', error);
+    } finally {
+      setUserLoading(false);
+    }
+  };
 
   const getAvailabilityColor = (status: string) => {
     switch (status) {
@@ -231,12 +252,33 @@ export function MentorCard({ mentor }: MentorCardProps) {
             </div>
 
             <div className="flex gap-3 pt-4">
-              <Button 
-                className="flex-1 bg-purple-dark hover:bg-purple-mid"
-                disabled={mentor.availability === 'unavailable'}
-              >
-                Request Mentorship
-              </Button>
+              {!userLoading && (
+                user ? (
+                  <Button 
+                    className="flex-1 bg-purple-dark hover:bg-purple-mid"
+                    disabled={mentor.availability === 'unavailable'}
+                    asChild
+                  >
+                    <Link href="/dashboard/mentorship">
+                      Request Mentorship
+                    </Link>
+                  </Button>
+                ) : (
+                  <div className="flex-1 space-y-2">
+                    <Button 
+                      className="w-full bg-purple-dark hover:bg-purple-mid"
+                      asChild
+                    >
+                      <Link href="/sign-up">
+                        Join to Request Mentorship
+                      </Link>
+                    </Button>
+                    <p className="text-xs text-gray text-center">
+                      Already have an account? <Link href="/sign-in" className="text-purple-dark hover:underline">Sign in</Link>
+                    </p>
+                  </div>
+                )
+              )}
               <Button variant="outline" size="icon" asChild>
                 <a href={mentor.linkedIn} target="_blank" rel="noopener noreferrer">
                   <Linkedin className="h-4 w-4" />

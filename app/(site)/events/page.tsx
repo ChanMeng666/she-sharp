@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { CalendarDays, Grid3X3, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { toast } from 'sonner';
 import { layoutSystem, layoutClasses } from '@/lib/layout-system';
 
@@ -209,6 +210,28 @@ export default function EventsPage() {
             <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               Discover workshops, networking events, and learning opportunities designed for women in tech.
             </p>
+          </div>
+
+          {/* Member Benefits CTA */}
+          <div className="bg-gradient-to-r from-purple-light/40 to-mint-light/40 border border-purple-mid/20 rounded-xl p-6 mb-8 max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center gap-4">
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-lg font-semibold text-navy-dark mb-2">
+                  Want to register for events and track your bookings?
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Join She Sharp to register for events, connect with mentors, and access exclusive member resources.
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <Button asChild variant="default" className="bg-purple-dark hover:bg-purple-mid">
+                  <Link href="/sign-up">Join Now</Link>
+                </Button>
+                <Button asChild variant="outline" className="border-purple-mid text-purple-dark hover:bg-purple-light/30">
+                  <Link href="/sign-in">Sign In</Link>
+                </Button>
+              </div>
+            </div>
           </div>
 
           {/* View Mode Toggle */}

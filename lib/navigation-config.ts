@@ -82,18 +82,6 @@ export const navigationConfig: {
           description: "Connect with mentors and grow your career",
           icon: Users,
         },
-        {
-          title: "Browse Mentors",
-          href: "/dashboard/mentors",
-          description: "Find and connect with experienced mentors",
-          icon: Sparkles,
-        },
-        {
-          title: "View All Events",
-          href: "/dashboard/events",
-          description: "Browse and register for upcoming events",
-          icon: Calendar,
-        },
       ],
     },
     {
