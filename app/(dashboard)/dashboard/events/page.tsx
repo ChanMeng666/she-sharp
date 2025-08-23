@@ -212,7 +212,6 @@ export default function EventsPage() {
               <Button 
                 variant="outline" 
                 onClick={() => handleCancelRegistration(event.id)}
-                variant="outline"
                 className="min-w-[130px]"
                 size="sm"
               >
