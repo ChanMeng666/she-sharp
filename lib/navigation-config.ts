@@ -182,14 +182,9 @@ export const navigationConfig: {
   ],
   buttons: [
     {
-      title: "Upcoming Events",
-      href: "/events",
-      variant: "outline",
-    },
-    {
       title: "Support Us",
       href: "/donate",
-      variant: "default",
+      variant: "ghost",
     },
   ],
 };

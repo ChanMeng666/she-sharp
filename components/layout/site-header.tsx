@@ -273,8 +273,11 @@ export function SiteHeader() {
               asChild
               className={cn(
                 "transition-all duration-150",
+                // 仅为特定样式添加自定义样式覆盖
                 button.variant === "default" 
                   ? "bg-purple-dark text-white hover:bg-purple-mid" 
+                  : button.variant === "white" || button.variant === "glass" || button.variant === "glassmorphism" || button.variant === "ghost"
+                  ? "" // 特殊效果样式使用预设效果，不添加额外覆盖
                   : "border-2 border-purple-dark text-purple-dark hover:bg-purple-light"
               )}
             >
@@ -397,8 +400,11 @@ export function SiteHeader() {
                     asChild
                     className={cn(
                       "w-full transition-all duration-150",
+                      // 仅为特定样式添加自定义样式覆盖
                       button.variant === "default" 
                         ? "bg-purple-dark text-white hover:bg-purple-mid" 
+                        : button.variant === "white" || button.variant === "glass" || button.variant === "glassmorphism" || button.variant === "ghost"
+                        ? "" // 特殊效果样式使用预设效果，不添加额外覆盖
                         : "border-2 border-purple-dark text-purple-dark hover:bg-purple-light"
                     )}
                     onClick={() => setIsOpen(false)}

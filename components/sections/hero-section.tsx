@@ -41,7 +41,7 @@ export function HeroSection() {
           {/* CTA Button */}
           <div className="animate-fade-in-up animation-delay-200">
             <Button
-              variant="gradient"
+              variant="glassmorphism"
               size="xl"
               asChild
               className="text-lg font-semibold"
