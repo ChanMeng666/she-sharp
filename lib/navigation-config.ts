@@ -16,7 +16,32 @@ export interface NavigationItem {
 export interface NavigationButton {
   title: string;
   href: string;
-  variant: "default" | "outline" | "ghost";
+  variant: 
+    | "default" 
+    | "secondary" 
+    | "accent" 
+    | "navy"
+    | "glass" 
+    | "gradient" 
+    | "glassmorphism" 
+    | "neumorphism"
+    | "outline" 
+    | "outline-thick" 
+    | "outline-dashed" 
+    | "outline-gradient"
+    | "ghost" 
+    | "link" 
+    | "minimal" 
+    | "text"
+    | "black" 
+    | "white" 
+    | "dark" 
+    | "light"
+    | "success" 
+    | "warning" 
+    | "danger" 
+    | "info"
+    | "destructive";
 }
 
 export const navigationConfig: {
