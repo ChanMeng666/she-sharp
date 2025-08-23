@@ -20,7 +20,7 @@ export function TestimonialsSection() {
   const testimonials = testimonialsByPage.home;
   
   return (
-    <Section bgColor="white" className="overflow-hidden">
+    <Section className="bg-white overflow-hidden">
       <Container size="full">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy-dark mb-4">

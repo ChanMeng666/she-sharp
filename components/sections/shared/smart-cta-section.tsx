@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Heart, Calendar, Users, Briefcase, Mail, BookOpen, Mic, GraduationCap, UserPlus } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
 // Define page-specific CTA configurations
 const pageConfigs = {
@@ -259,8 +260,18 @@ export function SmartCTASection({
   const ctaItems = pageConfigs[pathname as keyof typeof pageConfigs] || defaultCTA;
   
   return (
-    <Section bgColor={bgColor} className={cn("py-16 md:py-24", className)}>
-      <Container>
+    <Section className={cn("bg-white relative py-16 md:py-24", className)}>
+      {/* Iridescence Background for CTA */}
+      <div className="absolute inset-0 opacity-30">
+        <Iridescence
+          color={brandColors.mintVibrant}
+          mouseReact={true}
+          amplitude={0.10}
+          speed={0.8}
+          className="w-full h-full"
+        />
+      </div>
+      <Container className="relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-navy-dark">
             {title}

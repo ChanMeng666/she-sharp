@@ -63,18 +63,8 @@ const commitments = [
 
 export function CommitmentsSection() {
   return (
-    <Section bgColor="light" className="relative overflow-hidden">
-      {/* Background Pattern */}
-      <div 
-        className="absolute inset-0 opacity-5 md:opacity-10 lg:opacity-15"
-        style={{
-          backgroundImage: 'url(/img/bauhaus-1755865025052.svg)',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'repeat'
-        }}
-      />
-      <Container size="wide" className="relative z-10">
+    <Section className="bg-purple-light/30">
+      <Container size="wide">
         <div className="text-center mb-8 sm:mb-12">
           {/* Logo */}
           {/* <div className="mb-6 flex justify-center">

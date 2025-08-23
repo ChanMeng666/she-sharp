@@ -51,7 +51,7 @@ const missionTabs = [
 
 export function MissionSection() {
   return (
-    <Section bgColor="white">
+    <Section className="bg-white">
       <Container>
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy-dark mb-4">

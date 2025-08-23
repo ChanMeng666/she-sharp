@@ -3,45 +3,24 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
-import GridDistortion from "@/components/effects/grid-distortion";
+import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
-const heroImages = [
-  {
-    src: "/img/mesh-578.png",
-    alt: "She Sharp hero background - geometric mesh pattern",
-    caption: "THRIVE: Your Career, Your Story",
-  },
-  {
-    src: "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/670c6faa065093d7fd557a81_66b08c577a2a3900c4c635f8_GEC23%20%281%29.jpg",
-    alt: "Women participating in tech workshop",
-    caption: "Hands-on Technical Workshops",
-  },
-  {
-    src: "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/670c6faa065093d7fd557a81_66b08c577a2a3900c4c635f8_GEC23%20%281%29.jpg",
-    alt: "Mentorship session at She Sharp",
-    caption: "1-on-1 Mentorship Programs",
-  },
-  {
-    src: "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/670c6faa065093d7fd557a81_66b08c577a2a3900c4c635f8_GEC23%20%281%29.jpg",
-    alt: "She Sharp community gathering",
-    caption: "Building a Supportive Community",
-  },
-];
+// Hero images removed for minimalist design approach
 
 export function HeroSection() {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden -mt-16">
-      {/* Background Grid Distortion */}
+      {/* Brand Color Iridescence Background */}
       <div className="absolute inset-0">
-        <GridDistortion
-          imageSrc={heroImages[0].src}
-          grid={12}
-          mouse={0.12}
-          strength={0.18}
-          relaxation={0.85}
+        <Iridescence
+          color={brandColors.periwinkleBright}
+          mouseReact={true}
+          amplitude={0.15}
+          speed={1.0}
           className="w-full h-full"
         />
-
+        {/* Subtle overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/15" />
       </div>
       
 
