@@ -3,7 +3,7 @@ import { Section } from "@/components/layout/section";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { layoutSystem, layoutClasses } from "@/lib/layout-system";
-import { Download, TrendingUp, Users, Calendar, Award } from "lucide-react";
+import { Download, Users, Calendar, Award } from "lucide-react";
 
 export const metadata = {
   title: "Impact Report | She Sharp",
@@ -16,10 +16,10 @@ export default function ImpactReportPage() {
       <Container size="content">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-navy-dark mb-6">
-            Impact Report
+            Impact Report 2024
           </h1>
           <p className="text-xl text-gray max-w-3xl mx-auto">
-            Discover the transformative impact She Sharp has made in empowering women in STEM fields.
+            Our annual progress and measurable outcomes empowering women in STEM.
           </p>
         </div>
 
@@ -37,84 +37,40 @@ export default function ImpactReportPage() {
             </p>
             <Button size="lg" className="bg-purple-dark hover:bg-purple-dark/90">
               <Download className="mr-2 h-5 w-5" />
-              Download 2024 Report (PDF)
+              Download Impact Report (PDF)
             </Button>
           </CardContent>
         </Card>
 
-        {/* Key Metrics Grid */}
-        <div className={layoutClasses(
-          "grid mb-12",
-          layoutSystem.grids.content.cols1,
-          layoutSystem.grids.content.cols2,
-          layoutSystem.grids.content.gap
-        )}>
-          <Card className="hover:shadow-lg transition-shadow">
-            <CardContent className="p-8">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-mint-light rounded-full">
-                  <TrendingUp className="h-6 w-6 text-navy-dark" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-navy-dark mb-4">
-                    Key Achievements
-                  </h3>
-                  <ul className="space-y-3 text-gray">
-                    <li className="flex items-start gap-2">
-                      <span className="text-purple-dark">•</span>
-                      <span>2200+ active members in our community</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-purple-dark">•</span>
-                      <span>84+ events organized since 2014</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-purple-dark">•</span>
-                      <span>50+ corporate sponsors supporting our mission</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-purple-dark">•</span>
-                      <span>150+ successful mentorship matches</span>
-                    </li>
-                  </ul>
-                </div>
+        {/* Core Metrics removed to avoid repeating homepage section */}
+
+        {/* Highlights */}
+        <Card className="hover:shadow-lg transition-shadow mb-12">
+          <CardContent className="p-8">
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-periwinkle-light rounded-full">
+                <Award className="h-6 w-6 text-periwinkle-dark" />
               </div>
-            </CardContent>
-          </Card>
-          
-          <Card className="hover:shadow-lg transition-shadow">
-            <CardContent className="p-8">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-periwinkle-light rounded-full">
-                  <Award className="h-6 w-6 text-periwinkle-dark" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-navy-dark mb-4">
-                    Program Highlights
-                  </h3>
-                  <ul className="space-y-3 text-gray">
-                    <li className="flex items-start gap-2">
-                      <span className="text-periwinkle-dark">•</span>
-                      <span>THRIVE: Career development program launch</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-periwinkle-dark">•</span>
-                      <span>Google Educator Conference success</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-periwinkle-dark">•</span>
-                      <span>Expanded mentorship program</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-periwinkle-dark">•</span>
-                      <span>New podcast series launch</span>
-                    </li>
-                  </ul>
-                </div>
+              <div className="flex-1">
+                <h3 className="text-xl font-bold text-navy-dark mb-4">Highlights</h3>
+                <ul className="space-y-3 text-gray">
+                  <li className="flex items-start gap-2">
+                    <span className="text-periwinkle-dark">•</span>
+                    <span>Launched THRIVE career program with strong participant outcomes</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-periwinkle-dark">•</span>
+                    <span>Expanded mentorship matching and strategic partnerships</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-periwinkle-dark">•</span>
+                    <span>Hosted Google Educator Conference with record attendance</span>
+                  </li>
+                </ul>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Looking Ahead Section */}
         <Card className="bg-mint-light border-mint-dark">
@@ -128,9 +84,8 @@ export default function ImpactReportPage() {
                   Looking Ahead
                 </h3>
                 <p className="text-navy-dark leading-relaxed">
-                  As we move forward, She Sharp remains committed to expanding our reach and impact. 
-                  Our goals for the coming year include launching new initiatives, expanding our mentorship 
-                  program, and creating more opportunities for women to thrive in STEM careers.
+                  We will expand mentorship and launch new initiatives to accelerate career growth.
+                  We’ll also deepen partnerships to create more opportunities across STEM.
                 </p>
               </div>
             </div>
@@ -154,7 +109,7 @@ export default function ImpactReportPage() {
                 className="border-purple-dark text-purple-dark hover:bg-purple-light"
               >
                 <Calendar className="mr-2 h-4 w-4" />
-                {year} Report
+                {year} Impact Report (PDF)
               </Button>
             ))}
           </div>

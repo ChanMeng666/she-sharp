@@ -119,43 +119,18 @@ export default function MediaHubPage() {
       <Section bgColor="white">
         <Container size="content">
           <Card className="overflow-hidden bg-purple-light/5">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="grid gap-8 items-center">
               <div className="p-8 md:p-12">
                 <h2 className="text-2xl sm:text-3xl font-bold text-navy-dark mb-4">
                   Annual Impact Report
                 </h2>
-                <p className="text-gray mb-6">
-                  Discover how She Sharp is making a difference in the lives of women in STEM. 
-                  Our comprehensive impact report showcases our achievements, growth, and the 
-                  positive change we're creating in the tech community.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button
-                    asChild
-                    className="bg-purple-mid hover:bg-purple-dark transition-colors duration-150"
-                  >
-                    <Link href="/media/impact-report">
-                      View Impact Report
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="border-purple-mid text-purple-mid hover:bg-purple-mid/10 transition-colors duration-150"
-                  >
-                    <Link href="/about">
-                      Learn About Our Mission
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-              <div className="relative h-64 md:h-full bg-purple-mid">
-                <div className="absolute inset-0 flex items-center justify-center text-white">
-                  <div className="text-center">
-                    <div className="text-4xl md:text-5xl font-bold mb-2">2200+</div>
-                    <div className="text-lg">Members Strong</div>
-                  </div>
-                </div>
+                <p className="text-gray mb-6">Read our annual impact and outcomes. Download the latest report.</p>
+                <Button
+                  asChild
+                  className="bg-purple-mid hover:bg-purple-dark transition-colors duration-150"
+                >
+                  <Link href="/media/impact-report">View Impact Report</Link>
+                </Button>
               </div>
             </div>
           </Card>
