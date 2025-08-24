@@ -3,9 +3,7 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -94,7 +92,7 @@ export function TeamSection() {
   const [selectedMember, setSelectedMember] = useState<typeof teamMembers[0] | null>(null);
 
   return (
-    <Section bgColor="light">
+    <Section bgColor="light" className="pt-0">
       <Container size="wide">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-navy-dark">Meet Our People</h2>
@@ -115,7 +113,7 @@ export function TeamSection() {
             <Card
               key={member.name}
               className={cn(
-                "group relative overflow-hidden cursor-pointer transition-all hover:shadow-lg"
+                "relative overflow-hidden cursor-pointer"
               )}
               onClick={() => setSelectedMember(member)}
             >
@@ -127,33 +125,19 @@ export function TeamSection() {
                   alt={member.name}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-150 group-hover:scale-105"
+                  className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <CardContent className="relative p-4 sm:p-5">
-                <div className="flex flex-wrap gap-1 mb-2 sm:mb-3">
-                  {member.roles.map((role) => (
-                    <Badge 
-                      key={role} 
-                      variant={role.includes("Trustee") ? "default" : "secondary"}
-                      className={cn(
-                        "text-xs",
-                        role.includes("Trustee") && "bg-purple-dark hover:bg-purple-dark/90",
-                        role.includes("Founder") && "bg-gradient-to-r from-purple-dark to-periwinkle text-white"
-                      )}
-                    >
-                      {role}
-                    </Badge>
-                  ))}
-                </div>
                 <h3 className={cn(
                   "font-semibold text-navy-dark text-base sm:text-lg"
                 )}>
                   {member.name}
                 </h3>
+                <p className="mt-1 text-sm text-gray truncate">
+                  {member.roles.join(", ")}
+                </p>
               </CardContent>
-              <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-purple-dark to-periwinkle transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
             </Card>
           ))}
         </div>
@@ -177,28 +161,12 @@ export function TeamSection() {
                 </div>
                 <DialogHeader className="px-4 sm:px-6 pt-4">
                   <DialogTitle className="text-xl sm:text-2xl text-navy">{selectedMember.name}</DialogTitle>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {selectedMember.roles.map((role) => (
-                      <Badge 
-                        key={role} 
-                        variant={role.includes("Trustee") ? "default" : "secondary"}
-                        className={cn(
-                          "text-xs",
-                          role.includes("Trustee") && "bg-purple-dark hover:bg-purple-dark/90",
-                          role.includes("Founder") && "bg-gradient-to-r from-purple-dark to-periwinkle text-white"
-                        )}
-                      >
-                        {role}
-                      </Badge>
-                    ))}
-                  </div>
+                  <p className="text-sm text-gray mt-1">{selectedMember.roles.join(", ")}</p>
                 </DialogHeader>
                 <div className="px-4 sm:px-6 pb-6">
-                  <ScrollArea className="max-h-[50vh]">
-                    <div className="pr-2 text-sm sm:text-base leading-relaxed text-gray-700 whitespace-pre-wrap">
-                      {selectedMember.description}
-                    </div>
-                  </ScrollArea>
+                  <div className="pr-2 text-sm sm:text-base leading-relaxed text-gray-700 whitespace-pre-wrap">
+                    {selectedMember.description}
+                  </div>
                 </div>
               </>
             )}

@@ -2,7 +2,6 @@
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Card } from "@/components/ui/card";
 import { Calendar, Users, Trophy, Rocket } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { layoutSystem } from "@/lib/layout-system";
@@ -26,31 +25,28 @@ export function TimelineSection() {
           </p>
         </div>
 
-        {/* Simple vertical timeline */}
+        {/* Compact vertical timeline */}
         <div className="relative pl-6 sm:pl-8">
-          <div className="absolute left-2 sm:left-3 top-0 bottom-0 w-0.5 bg-navy-light" />
-          <div className="space-y-6 sm:space-y-8">
+          <div className="absolute left-2 sm:left-3 top-0 bottom-0 w-px bg-navy-light" />
+          <ul className="space-y-4 sm:space-y-5">
             {milestones.map((m) => {
               const Icon = m.icon;
               return (
-                <div key={m.year} className="relative">
-                  <div className="absolute -left-1.5 sm:-left-2 top-1.5 h-3 w-3 rounded-full bg-purple-light border-2 border-white" />
-                  <Card className="ml-4 sm:ml-6 p-4 sm:p-6">
-                    <div className="flex items-start gap-3 sm:gap-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-light/30 text-purple-dark">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-purple-dark">{m.year}</p>
-                        <h3 className="text-lg sm:text-xl font-bold text-navy-dark">{m.title}</h3>
-                        <p className="mt-1 text-gray">{m.description}</p>
-                      </div>
+                <li key={m.year} className="relative ml-2 sm:ml-4">
+                  <div className="absolute -left-3 sm:-left-4 top-1 h-2.5 w-2.5 rounded-full bg-purple-light border border-white" />
+                  <div className="flex items-start gap-3">
+                    <div className="mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full bg-purple-light/30 text-purple-dark">
+                      <Icon className="h-4 w-4" />
                     </div>
-                  </Card>
-                </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-semibold text-navy-dark">{m.year} · {m.title}</div>
+                      <p className="text-sm text-gray truncate sm:whitespace-normal sm:truncate-none">{m.description}</p>
+                    </div>
+                  </div>
+                </li>
               );
             })}
-          </div>
+          </ul>
         </div>
       </Container>
     </Section>

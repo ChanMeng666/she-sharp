@@ -73,10 +73,12 @@ export function BreadcrumbNav() {
   // Don't render if only home
   if (breadcrumbs.length <= 1) return null;
 
+  const paddingClass = pathname.startsWith('/about') ? 'py-0' : 'py-2';
+
   return (
     <nav 
       aria-label="Breadcrumb"
-      className="flex items-center space-x-1 text-sm text-gray-600 py-2 px-4 md:px-6 max-w-7xl mx-auto"
+      className={`flex items-center space-x-1 text-sm text-gray-600 ${paddingClass} px-4 md:px-6 max-w-7xl mx-auto`}
     >
       {breadcrumbs.map((item, index) => (
         <div key={index} className="flex items-center">
