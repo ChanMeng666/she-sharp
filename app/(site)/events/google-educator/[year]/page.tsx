@@ -9,11 +9,12 @@ import { getGoogleEducatorEvent } from '@/lib/data/events/google-educator'
 import { notFound } from 'next/navigation'
 
 type PageProps = {
-  params: { year: string }
+  params: Promise<{ year: string }>
 }
 
-export default function GoogleEducatorYearPage({ params }: PageProps) {
-  const event = getGoogleEducatorEvent(params.year)
+export default async function GoogleEducatorYearPage({ params }: PageProps) {
+  const { year } = await params
+  const event = getGoogleEducatorEvent(year)
   if (!event) return notFound()
 
   return (
