@@ -2,20 +2,34 @@
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Users, Sparkles, Target } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, Users } from "lucide-react";
 import Link from "next/link";
+import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
 export function MentorshipHeroSection() {
   return (
-    <Section className="relative overflow-hidden bg-gradient-to-br from-white to-periwinkle-light/20 dark:from-gray-950 dark:to-periwinkle-dark/10">
-      <Container>
-        <div className="py-16 md:py-24">
+    <section className="relative h-[85vh] sm:h-[90vh] md:h-screen flex items-center justify-center overflow-hidden">
+      {/* Iridescence Background */}
+      <div className="absolute inset-0">
+        <Iridescence
+          color={brandColors.heroPeriwinkle}
+          mouseReact={false}
+          amplitude={0.15}
+          speed={0.4}
+          className="w-full h-full"
+        />
+        {/* Subtle overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/3 via-transparent to-black/8" />
+        
+        {/* White frosted glass effect for better transition */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/15 to-white/25 backdrop-blur-sm" />
+      </div>
+      
+      <Container className="relative z-10">
+        <div className="max-w-4xl mx-auto text-center">
           {/* Title and CTA */}
-          <div className="text-center max-w-3xl mx-auto">
+          <div className="text-center">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-navy dark:text-white mb-4">
               MENTORSHIP
               <span className="block text-purple-dark dark:text-purple-mid">PROGRAM</span>
@@ -40,6 +54,6 @@ export function MentorshipHeroSection() {
           </div>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }
