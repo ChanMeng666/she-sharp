@@ -94,7 +94,7 @@ export function EventsTimelineHero() {
               Starts Here
             </span>
           </h1>
-          <p className="text-lg text-gray max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto">
             Connect, learn, and grow with She Sharp&apos;s upcoming events. 
             From workshops to networking sessions, find your next opportunity.
           </p>
@@ -104,7 +104,7 @@ export function EventsTimelineHero() {
         <div className="relative max-w-4xl mx-auto">
           {/* Timeline line */}
           <div className={cn(
-            "absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-mint-light",
+            "absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-mint-light z-0",
             layoutSystem.patterns.timeline.line
           )} />
 
@@ -125,8 +125,8 @@ export function EventsTimelineHero() {
                 <Link
                   href={event.href}
                   className={cn(
-                    "group relative w-full md:w-5/12 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-150 p-6",
-                    "border border-gray hover:border-mint-dark",
+                    "group relative w-full md:w-5/12 rounded-xl shadow-lg hover:shadow-xl transition-all duration-150 p-6 backdrop-blur-md bg-white/60 dark:bg-gray-900/40",
+                    "border border-white/40 dark:border-gray-700/50 hover:border-mint-dark",
                     index % 2 === 0 ? "md:mr-auto" : "md:ml-auto"
                   )}
                 >
@@ -176,7 +176,7 @@ export function EventsTimelineHero() {
           </div>
 
           {/* View all events button */}
-          <div className="text-center mt-12">
+          <div className="text-center mt-12 relative z-20">
             <Link
               href="#official-calendar"
               className="inline-flex items-center gap-2 px-6 py-3 bg-mint-dark text-white rounded-lg hover:bg-mint-mid transition-colors duration-150"
@@ -188,7 +188,7 @@ export function EventsTimelineHero() {
         </div>
 
         {/* Live clock */}
-        <div className="text-center mt-8 text-sm text-gray">
+        <div className="text-center mt-8 text-sm text-white">
           Current time: {currentTime.toLocaleTimeString('en-NZ', { 
             hour: '2-digit', 
             minute: '2-digit',
