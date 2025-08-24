@@ -19,7 +19,7 @@ import {
   BookOpen,
   Briefcase
 } from "lucide-react";
-import Iridescence, { brandColors } from "@/components/effects/iridescence";
+// Removed animated background for calmer reading experience
 
 // 三大核心项目
 const programs = [
@@ -76,33 +76,12 @@ const programs = [
   }
 ];
 
-// 即将举行的重点活动（从原EventsSection提取核心内容）
-const nextEvent = {
-  title: "THRIVE: Your Career, Your Story",
-  date: "March 15, 2025",
-  time: "6:00 PM - 8:30 PM", 
-  location: "Auckland CBD",
-  type: "Networking",
-  attendees: 150,
-  image: "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/670c6faa065093d7fd557a81_66b08c577a2a3900c4c635f8_GEC23%20%281%29.jpg",
-  description: "An evening of inspiring stories and career insights from women leaders in tech."
-};
+// Removed internal Next Event to avoid duplication with highlight section
 
 export function ProgramsSection() {
   return (
-    <Section className="relative bg-gradient-to-b from-white to-gray-50 py-16 md:py-20">
-      {/* Background effect */}
-      <div className="absolute inset-0 opacity-10">
-        <Iridescence
-          color={brandColors.eventsMinty}
-          mouseReact={false}
-          amplitude={0.05}
-          speed={0.2}
-          className="w-full h-full"
-        />
-      </div>
-      
-      <Container size="wide" className="relative z-10">
+    <Section>
+      <Container size="wide">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
@@ -115,7 +94,7 @@ export function ProgramsSection() {
         </div>
 
         {/* Programs Grid */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid lg:grid-cols-3 gap-8">
           {programs.map((program, index) => {
             const Icon = program.icon;
             const isLarge = index === 0; // First program gets featured treatment
@@ -207,57 +186,7 @@ export function ProgramsSection() {
           })}
         </div>
 
-        {/* Featured Next Event */}
-        <Card className="overflow-hidden border-2 border-purple-light shadow-lg">
-          <div className="grid md:grid-cols-2 gap-0">
-            <div className="relative">
-              <AspectRatio ratio={16/10}>
-                <Image
-                  src={nextEvent.image}
-                  alt={nextEvent.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </AspectRatio>
-            </div>
-            <div className="p-6 md:p-8 flex flex-col justify-center">
-              <Badge className="w-fit mb-3 bg-purple-dark text-white">
-                🎉 Next Event
-              </Badge>
-              <h3 className="text-xl md:text-2xl font-bold text-navy-dark mb-2">
-                {nextEvent.title}
-              </h3>
-              <div className="space-y-1 text-sm text-gray mb-4">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  {nextEvent.date}
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  {nextEvent.time}
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4" />
-                  {nextEvent.location}
-                </div>
-              </div>
-              <p className="text-gray mb-6">
-                {nextEvent.description}
-              </p>
-              <Button
-                asChild
-                size="lg"
-                className="w-fit bg-purple-dark hover:bg-purple-mid"
-              >
-                <Link href="/events/1">
-                  Register Now
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </Card>
+        {/* Next event moved to UpcomingEventSection to avoid duplication */}
       </Container>
     </Section>
   );

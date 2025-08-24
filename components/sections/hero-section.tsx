@@ -9,7 +9,7 @@ import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
 export function HeroSection() {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden -mt-16">
+    <section className="relative h-[85vh] sm:h-[90vh] md:h-screen flex items-center justify-center overflow-hidden -mt-12 sm:-mt-16">
       {/* Brand Color Iridescence Background */}
       <div className="absolute inset-0">
         <Iridescence
@@ -46,7 +46,7 @@ export function HeroSection() {
               asChild
               className="text-lg font-semibold"
             >
-              <Link href="/events">Discover Opportunities</Link>
+              <Link href="#upcoming-event">Attend next event</Link>
             </Button>
           </div>
         </div>

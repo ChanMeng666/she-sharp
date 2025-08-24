@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Card, CardContent } from "@/components/ui/card";
-import { Handshake, Heart, Award } from "lucide-react";
 
 const sponsors = {
   silver: [
@@ -40,30 +39,14 @@ const sponsors = {
   ],
 };
 
-const sponsorBenefits = [
-  {
-    icon: Handshake,
-    title: "Brand Visibility",
-    description: "Connect with our thriving community of women in tech"
-  },
-  {
-    icon: Heart,
-    title: "Social Impact",
-    description: "Support diversity and inclusion in STEM"
-  },
-  {
-    icon: Award,
-    title: "Talent Pipeline",
-    description: "Access to top female tech talent"
-  },
-];
+// Benefits removed for brevity on homepage
 
 export function SponsorsSection() {
   return (
-    <Section className="bg-white py-16 md:py-20 overflow-hidden">
+    <Section className="overflow-hidden">
       <Container size="full">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-4">
             Trusted Partners
           </h2>
           <p className="text-base sm:text-lg text-gray max-w-2xl mx-auto px-4">
@@ -126,41 +109,12 @@ export function SponsorsSection() {
           </div>
         </div>
 
-        {/* Sponsor Benefits */}
-        <div className="bg-white rounded-lg p-6 sm:p-8 mb-8 sm:mb-12">
-          <h3 className="text-lg sm:text-xl font-semibold text-navy-dark text-center mb-6">
-            Why Partner With She Sharp?
-          </h3>
-          <div className="grid sm:grid-cols-3 gap-4 sm:gap-6">
-            {sponsorBenefits.map((benefit) => {
-              const Icon = benefit.icon;
-              return (
-                <div key={benefit.title} className="text-center">
-                  <div className="inline-flex p-2 sm:p-3 rounded-full bg-purple-light/20 mb-3">
-                    <Icon className="w-5 sm:w-6 h-5 sm:h-6 text-purple-dark" />
-                  </div>
-                  <h4 className="text-sm sm:text-base font-semibold text-navy-dark mb-1">{benefit.title}</h4>
-                  <p className="text-xs sm:text-sm text-gray">{benefit.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        {/* Benefits removed to keep homepage concise */}
 
-        {/* CTA */}
-        <div className="text-center bg-gradient-to-r from-purple-light to-periwinkle-light rounded-lg p-6 sm:p-8">
-          <h3 className="text-xl sm:text-2xl font-bold text-navy-dark mb-4">
-            Become a Strategic Partner
-          </h3>
-          <p className="text-sm sm:text-base text-gray mb-6 max-w-xl mx-auto">
-            Collaborate with us to drive meaningful change in the tech industry and cultivate the next generation of women leaders
-          </p>
-          <Button
-            asChild
-            size="lg"
-            className="bg-purple-dark hover:bg-purple-mid"
-          >
-            <Link href="/sponsors/corporate-sponsorship">Explore Partnership</Link>
+        {/* Minimal link instead of full CTA block */}
+        <div className="text-center">
+          <Button variant="link" asChild>
+            <Link href="/sponsors/corporate-sponsorship">Become a sponsor</Link>
           </Button>
         </div>
       </Container>

@@ -5,6 +5,9 @@ import { Section } from "@/components/layout/section";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users, Building2, Calendar, TrendingUp, Target, Heart, Rocket } from "lucide-react";
+import Iridescence, { brandColors } from "@/components/effects/iridescence";
+import { useInView } from "@/hooks/use-in-view";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 // 统一的核心数据 - 解决数据不一致问题
 const coreStats = [
@@ -64,25 +67,36 @@ const coreValues = [
 ];
 
 export function CoreImpactSection() {
+  const { ref, inView } = useInView();
+  const reduceMotion = usePrefersReducedMotion();
   return (
-    <Section className="bg-white py-16 md:py-20">
-      <Container>
-        {/* Hero Text */}
-        <div className="text-center mb-12 md:mb-16">
-          <Badge className="mb-4 bg-purple-light text-purple-dark border-purple-mid">
+    <Section>
+      <div ref={ref} className="relative">
+        {inView && !reduceMotion && (
+          <div className="absolute inset-0 opacity-15 pointer-events-none">
+            <Iridescence
+              color={brandColors.testimonialsSky}
+              mouseReact={false}
+              amplitude={0.04}
+              speed={0.2}
+              className="w-full h-full"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/40 to-white/60" />
+          </div>
+        )}
+        <Container>
+        {/* Header */}
+        <div className="text-center mb-8 md:mb-12">
+          <Badge className="mb-3 bg-purple-light text-purple-dark border-purple-mid">
             Proven Results
           </Badge>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark">
             A Decade of Measurable Impact
           </h2>
-          <p className="text-lg text-gray max-w-3xl mx-auto">
-            Since 2014, we've built a track record of success. These numbers represent 
-            real lives transformed and careers accelerated.
-          </p>
         </div>
 
         {/* Core Statistics */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {coreStats.map((stat) => {
             const Icon = stat.icon;
             return (
@@ -121,37 +135,9 @@ export function CoreImpactSection() {
           })}
         </div>
 
-        {/* Core Values */}
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {coreValues.map((value) => {
-            const Icon = value.icon;
-            return (
-              <div key={value.title} className="text-center">
-                <div className={`inline-flex p-4 rounded-full mb-4 ${value.bgColor}`}>
-                  <Icon className={`w-8 h-8 ${value.color}`} />
-                </div>
-                <h3 className="text-xl font-bold text-navy-dark mb-3">
-                  {value.title}
-                </h3>
-                <p className="text-gray leading-relaxed">
-                  {value.description}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Impact Summary */}
-        <div className="text-center bg-gradient-to-r from-purple-light/10 via-periwinkle-light/10 to-mint-light/10 rounded-2xl p-8 md:p-12">
-          <h3 className="text-2xl md:text-3xl font-bold text-navy-dark mb-4">
-            Creating Lasting Change
-          </h3>
-          <p className="text-lg text-gray max-w-2xl mx-auto">
-            Every number represents a life touched, a career transformed, 
-            and a step forward in building a more inclusive tech industry.
-          </p>
-        </div>
-      </Container>
+        {/* Values and long summary removed to keep section focused on metrics */}
+        </Container>
+      </div>
     </Section>
   );
 }
