@@ -123,6 +123,12 @@ export default function Iridescence({
       }
     }
     window.addEventListener("resize", resize, false);
+    // Observe element size changes to ensure canvas always fills container
+    let ro: ResizeObserver | undefined;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(() => resize());
+      ro.observe(ctn);
+    }
     resize();
 
     const geometry = new Triangle(gl);
@@ -171,6 +177,7 @@ export default function Iridescence({
     return () => {
       cancelAnimationFrame(animateId);
       window.removeEventListener("resize", resize);
+      ro?.disconnect();
       if (mouseReact) {
         ctn.removeEventListener("mousemove", handleMouseMove);
       }

@@ -10,23 +10,24 @@ import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
 export function AboutHeroSection() {
   return (
-    <Section noPadding className="relative overflow-hidden bg-white">
-      <div className="relative min-h-[70vh] flex items-center">
-        {/* Iridescence dynamic background (About variant) */}
-        <div className="absolute inset-0 z-0">
-          <Iridescence
-            color={brandColors.navAbout}
-            mouseReact={false}
-            amplitude={0.10}
-            speed={0.25}
-            className="w-full h-full"
-          />
-          {/* Subtle overlay to improve text legibility */}
-          <div className="absolute inset-0 bg-white/10" />
-        </div>
+    <Section noPadding className="relative h-[85vh] sm:h-[90vh] md:h-screen flex items-center overflow-hidden bg-white -mt-12 sm:-mt-16">
+      {/* Iridescence dynamic background (About variant) */}
+      <div className="absolute inset-0 z-0">
+        <Iridescence
+          color={brandColors.navAbout}
+          mouseReact={false}
+          amplitude={0.10}
+          speed={0.25}
+          className="w-full h-full"
+        />
+        {/* Subtle overlay for text readability - 更轻柔的覆盖层 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/3 via-transparent to-black/8" />
+        {/* White frosted glass effect for better transition - 白色毛玻璃效果 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/15 to-white/25 backdrop-blur-sm" />
+      </div>
 
-        <Container>
-          <div className="relative z-10 mx-auto max-w-3xl text-center text-white px-6 sm:px-0 py-8">
+      <Container>
+        <div className="relative z-10 mx-auto max-w-3xl text-center text-white px-6 sm:px-0 py-8">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
               Changing the ratio in STEM
             </h1>
@@ -72,9 +73,8 @@ export function AboutHeroSection() {
                 </div>
               </DialogContent>
             </Dialog>
-          </div>
-        </Container>
-      </div>
+        </div>
+      </Container>
     </Section>
   );
 }
