@@ -49,14 +49,11 @@ const industryLogos = [
 
 export function IndustryLogosSection() {
   return (
-    <Section className="py-16">
+    <Section className="py-12">
       <Container>
-        <h3 className="text-xl font-semibold text-navy text-center mb-8 uppercase">
-          Some of the Industries Where Our Mentors Work
-        </h3>
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-          {industryLogos.map((logo) => (
-            <div key={logo.name} className="relative h-10 w-auto">
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-70">
+          {industryLogos.slice(0,5).map((logo) => (
+            <div key={logo.name} className="relative h-10 w-auto grayscale">
               <Image
                 src={logo.src}
                 alt={logo.name}

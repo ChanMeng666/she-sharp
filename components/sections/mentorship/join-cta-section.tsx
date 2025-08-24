@@ -113,7 +113,7 @@ export function JoinCTASection() {
             Want to contribute as a mentor?
           </p>
           <Button asChild variant="outline" className="border-purple-dark text-purple-dark hover:bg-purple-light dark:border-purple-mid dark:text-purple-mid">
-            <Link href="/mentorship/mentor-application">
+            <Link href="/mentorship/mentors">
               Apply to Become a Mentor
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>

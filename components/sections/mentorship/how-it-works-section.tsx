@@ -3,113 +3,49 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { FileText, Users, Coffee, Calendar, PartyPopper, ChevronRight, Clock, Target, Handshake } from "lucide-react";
-import { useState } from "react";
+import { ChevronRight, Clock, Target, Handshake, Calendar } from "lucide-react";
 import Link from "next/link";
 
 const steps = [
   {
     number: "1",
-    title: "Expression of Interest",
-    icon: FileText,
+    title: "Apply",
+    icon: Calendar,
     duration: "5 minutes",
-    description: "Tell us about your goals and what you're looking for in a mentor or mentee.",
-    details: [
-      "Complete a brief online form",
-      "Share your professional background",
-      "Outline your mentorship goals",
-      "Specify your preferred meeting frequency"
-    ],
-    color: "purple"
+    description: "Tell us your goals and preferences.",
+    details: ["Brief online form", "Your background", "Your mentorship goals"],
+    color: "purple",
   },
   {
     number: "2",
-    title: "Induction Session",
-    icon: Users,
-    duration: "1.5 hours",
-    description: "Join our welcome session to meet the cohort and learn program expectations.",
-    details: [
-      "Meet other participants",
-      "Learn about program guidelines",
-      "Get tips for successful mentorship",
-      "Network with the She Sharp community"
-    ],
-    color: "periwinkle"
+    title: "Get Paired",
+    icon: Handshake,
+    duration: "~1 week",
+    description: "We match you based on goals and industry.",
+    details: ["Goal alignment", "Industry & expertise", "Introductions"],
+    color: "mint",
   },
   {
     number: "3",
-    title: "Get Paired",
-    icon: Handshake,
-    duration: "1 week",
-    description: "We match you with the perfect mentor or mentee based on your goals and interests.",
-    details: [
-      "AI-powered matching algorithm",
-      "Consider industry and expertise",
-      "Align career goals and interests",
-      "Mutual introduction facilitated"
-    ],
-    color: "mint"
-  },
-  {
-    number: "4",
-    title: "Coffee Catchups",
-    icon: Coffee,
+    title: "Meet & Grow",
+    icon: Target,
     duration: "3 months",
-    description: "Meet regularly with your mentor/mentee to work towards your goals.",
-    details: [
-      "Minimum 3 meetings over 3 months",
-      "Flexible format (in-person or virtual)",
-      "Goal-oriented discussions",
-      "Progress tracking and support"
-    ],
-    color: "navy"
+    description: "Regular catchups focused on outcomes.",
+    details: ["Min. 3 meetings", "Virtual or in-person", "Progress support"],
+    color: "periwinkle",
   },
-  {
-    number: "5",
-    title: "Celebration",
-    icon: PartyPopper,
-    duration: "Evening event",
-    description: "Celebrate your achievements and the connections you've made.",
-    details: [
-      "Graduation ceremony",
-      "Share success stories",
-      "Network with alumni",
-      "Plan next steps in your journey"
-    ],
-    color: "purple"
-  }
 ];
 
-const journeyPaths = {
-  mentee: {
-    title: "Mentee Journey",
-    icon: Target,
-    highlights: [
-      "Get matched with experienced professionals",
-      "Receive career guidance and support",
-      "Expand your professional network",
-      "Accelerate your career growth"
-    ]
-  },
-  mentor: {
-    title: "Mentor Journey",
-    icon: Users,
-    highlights: [
-      "Share your expertise and experience",
-      "Develop leadership skills",
-      "Give back to the community",
-      "Fresh perspectives from mentees"
-    ]
-  }
-};
+const journeyHighlights = [
+  "Expert matching",
+  "Guided check-ins",
+  "Community support",
+  "Career momentum",
+];
 
 export function HowItWorksSection() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [selectedPath, setSelectedPath] = useState<'mentee' | 'mentor'>('mentee');
 
   const getColorClasses = (color: string) => {
     switch (color) {
@@ -152,7 +88,7 @@ export function HowItWorksSection() {
   };
 
   return (
-    <Section className="py-16 md:py-24 bg-gradient-to-br from-mint-light/20 via-white to-periwinkle-light/20 dark:from-mint-dark/5 dark:via-gray-950 dark:to-periwinkle-dark/5">
+    <Section className="py-16 md:py-24 bg-white dark:bg-gray-950">
       <Container>
         <div className="text-center mb-12">
           <Badge className="mb-4 bg-mint-dark/10 text-navy dark:text-mint-dark border-mint-dark">
@@ -166,167 +102,30 @@ export function HowItWorksSection() {
             A structured journey designed to create meaningful connections and drive real career impact
           </p>
         </div>
-
-        {/* Journey Path Selector */}
-        <div className="flex justify-center mb-8">
-          <Tabs value={selectedPath} onValueChange={(v) => setSelectedPath(v as 'mentee' | 'mentor')}>
-            <TabsList className="bg-muted text-muted-foreground p-1">
-              <TabsTrigger value="mentee" className="gap-2">
-                <Target className="w-4 h-4" />
-                Mentee Journey
-              </TabsTrigger>
-              <TabsTrigger value="mentor" className="gap-2">
-                <Users className="w-4 h-4" />
-                Mentor Journey
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
-
-        {/* Desktop Timeline View */}
-        <div className="hidden lg:block mb-12">
-          <div className="relative">
-            {/* Progress Line */}
-            <div className="absolute top-20 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-700">
-              <div 
-                className="h-full bg-purple-dark transition-all duration-500"
-                style={{ width: `${(activeStep + 1) * 20}%` }}
-              />
-            </div>
-            
-            {/* Steps */}
-            <div className="grid grid-cols-5 gap-4 relative">
-              {steps.map((step, index) => {
-                const Icon = step.icon;
-                const colors = getColorClasses(step.color);
-                const isActive = index === activeStep;
-                const isCompleted = index < activeStep;
-                
-                return (
-                  <button
-                    key={step.number}
-                    onClick={() => setActiveStep(index)}
-                    className="text-center relative group"
-                  >
-                    <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 relative z-10 transition-all duration-300 ${
-                      isActive ? 'scale-110 shadow-lg' : ''
-                    } ${
-                      isCompleted ? 'bg-purple-dark text-white' : colors.bg + ' ' + colors.border + ' border-2'
-                    } group-hover:scale-105`}>
-                      <Icon className={`w-6 h-6 ${isCompleted ? 'text-white' : colors.text}`} />
-                    </div>
-                    <h3 className={`text-sm font-semibold transition-colors ${
-                      isActive ? 'text-purple-dark dark:text-purple-mid' : 'text-navy dark:text-gray-300'
-                    }`}>
-                      {step.title}
-                    </h3>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      {step.duration}
-                    </p>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-          
-          {/* Active Step Details */}
-          <Card className="mt-8 overflow-hidden">
-            <CardHeader className={`${getColorClasses(steps[activeStep].color).bg}`}>
-              <CardTitle className="flex items-center gap-3">
-                <span className={`${getColorClasses(steps[activeStep].color).badge} px-3 py-1 rounded-full text-sm`}>
-                  Step {steps[activeStep].number}
-                </span>
-                {steps[activeStep].title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                {steps[activeStep].description}
-              </p>
-              <ul className="space-y-2">
-                {steps[activeStep].details.map((detail, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 text-purple-dark mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">{detail}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Mobile Carousel View */}
-        <div className="lg:hidden">
-          <Carousel className="w-full max-w-xs mx-auto">
-            <CarouselContent>
-              {steps.map((step, index) => {
-                const Icon = step.icon;
-                const colors = getColorClasses(step.color);
-                
-                return (
-                  <CarouselItem key={step.number}>
-                    <Card className="overflow-hidden">
-                      <CardHeader className={colors.bg}>
-                        <div className="flex items-center justify-between">
-                          <Badge className={colors.badge}>
-                            Step {step.number}
-                          </Badge>
-                          <Icon className={`w-8 h-8 ${colors.text}`} />
-                        </div>
-                        <CardTitle className="mt-4">{step.title}</CardTitle>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          {step.duration}
-                        </p>
-                      </CardHeader>
-                      <CardContent className="pt-6">
-                        <p className="text-gray-600 dark:text-gray-400 mb-4">
-                          {step.description}
-                        </p>
-                        <ul className="space-y-2">
-                          {step.details.map((detail, i) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <ChevronRight className="w-4 h-4 text-purple-dark mt-0.5 flex-shrink-0" />
-                              <span className="text-sm text-gray-700 dark:text-gray-300">{detail}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>
-                );
-              })}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
-
-        {/* Journey Highlights */}
-        <div className="mt-12 grid md:grid-cols-2 gap-6">
-          {Object.entries(journeyPaths).map(([key, journey]) => {
-            const Icon = journey.icon;
-            const isSelected = key === selectedPath;
-            
+        {/* Steps - simplified single layout */}
+        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
+          {steps.map((step) => {
+            const Icon = step.icon;
+            const colors = getColorClasses(step.color);
             return (
-              <Card 
-                key={key} 
-                className={`cursor-pointer transition-all duration-300 ${
-                  isSelected ? 'ring-2 ring-purple-dark shadow-lg' : 'hover:shadow-md'
-                }`}
-                onClick={() => setSelectedPath(key as 'mentee' | 'mentor')}
-              >
-                <CardHeader>
+              <Card key={step.number} className="overflow-hidden">
+                <CardHeader className={colors.bg}>
                   <CardTitle className="flex items-center gap-3">
-                    <Icon className="w-6 h-6 text-purple-dark" />
-                    {journey.title}
+                    <span className={`${colors.badge} px-3 py-1 rounded-full text-sm`}>Step {step.number}</span>
+                    {step.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-2 text-gray-500 mb-2">
+                    <Icon className={`w-5 h-5 ${colors.text}`} />
+                    <span className="text-sm">{step.duration}</span>
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4">{step.description}</p>
                   <ul className="space-y-2">
-                    {journey.highlights.map((highlight, i) => (
+                    {step.details.slice(0, 2).map((detail, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <ChevronRight className="w-4 h-4 text-mint-dark mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-gray-700 dark:text-gray-300">{highlight}</span>
+                        <ChevronRight className="w-4 h-4 text-purple-dark mt-0.5 flex-shrink-0" />
+                        <span className="text-sm text-gray-700 dark:text-gray-300">{detail}</span>
                       </li>
                     ))}
                   </ul>
@@ -336,11 +135,19 @@ export function HowItWorksSection() {
           })}
         </div>
 
+        {/* Highlights removed for extra simplicity */}
+
         {/* CTA */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-12 flex flex-col sm:flex-row gap-4 justify-center">
           <Button asChild size="lg" className="bg-purple-dark hover:bg-purple-mid text-white">
-            <Link href={selectedPath === 'mentee' ? '/mentorship/mentee' : '/mentorship/mentor-application'}>
-              Start Your {selectedPath === 'mentee' ? 'Mentee' : 'Mentor'} Journey
+            <Link href="/mentorship/mentee">
+              Start Your Mentee Journey
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+          <Button asChild variant="outline" size="lg" className="border-purple-dark text-purple-dark hover:bg-purple-light dark:border-purple-mid dark:text-purple-mid">
+            <Link href="/mentorship/mentors">
+              Become a Mentor
               <ChevronRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>

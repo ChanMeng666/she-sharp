@@ -3,44 +3,34 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserPlus, Users, Target, Rocket, Heart, Award, Calendar, Globe } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Users, Heart, Calendar, Globe, GraduationCap, TrendingUp } from "lucide-react";
+import { pageStats } from "@/lib/data/stats";
 import { layoutSystem, layoutClasses } from "@/lib/layout-system";
 
 const programFeatures = [
   {
     icon: Calendar,
     title: "3-Month Journey",
-    description: "Structured program with clear milestones and regular check-ins"
+    description: "Structured program with clear milestones and regular check-ins",
   },
   {
     icon: Users,
     title: "Expert Matching",
-    description: "AI-powered pairing based on goals, industry, and compatibility"
+    description: "Pairing based on goals, industry, and compatibility",
   },
   {
     icon: Globe,
-    title: "Global Network",
-    description: "Connect with professionals across New Zealand and beyond"
+    title: "Community Support",
+    description: "Join events, workshops, and a supportive network",
   },
-  {
-    icon: Award,
-    title: "Certification",
-    description: "Receive recognition upon successful program completion"
-  }
 ];
 
-const impactMetrics = [
-  { value: "500+", label: "Successful Matches" },
-  { value: "92%", label: "Satisfaction Rate" },
-  { value: "85%", label: "Career Advancement" },
-  { value: "150+", label: "Active Mentors" }
-];
+const iconMap: Record<string, any> = {
+  Users,
+  GraduationCap,
+  TrendingUp,
+};
 
 export function ProgramOverviewSection() {
   return (
@@ -58,15 +48,10 @@ export function ProgramOverviewSection() {
                 Empowering Women in Tech
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
-                Empowering Women in STEM Through Mentoring
+                Mentorship that moves careers forward
               </h2>
               <p className="text-lg text-gray leading-relaxed">
-                Our mentorship program facilitates supportive relationships between our 
-                mentors and mentees. Through sharing knowledge, advice, and encouragement, 
-                we help mentees navigate careers, overcome challenges, and achieve 
-                interpersonal goals. Whether you're looking to advance your career or 
-                give back to the community, our program provides the structure and 
-                support you need.
+                We connect women in STEM with mentors for structured 1:1 guidance. Gain clarity, overcome challenges, and grow with a supportive community.
               </p>
             </div>
 
@@ -89,145 +74,34 @@ export function ProgramOverviewSection() {
                 );
               })}
             </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="bg-purple-dark hover:bg-purple-mid text-white transition-colors duration-150">
-                <Link href="/mentorship/mentee">
-                  <UserPlus className="mr-2 h-4 w-4" />
-                  Join as Mentee
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-purple-dark text-purple-dark hover:bg-purple-light transition-colors duration-150">
-                <Link href="/mentorship/mentor-application">
-                  <Rocket className="mr-2 h-4 w-4" />
-                  Become a Mentor
-                </Link>
-              </Button>
-            </div>
           </div>
 
-          {/* Right Content - Tabs */}
+          {/* Right Content - Key Metrics (single source) */}
           <div className={layoutSystem.patterns.splitLayout.right}>
-            <Tabs defaultValue="overview" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="overview">Program Overview</TabsTrigger>
-                <TabsTrigger value="impact">Our Impact</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="overview" className="mt-6">
-                <Card className="overflow-hidden">
-                  <CardHeader className="bg-periwinkle-light">
-                    <CardTitle className="text-navy-dark">What You'll Experience</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-6">
-                    <div className="space-y-4">
-                      <div className="flex items-start gap-3">
-                        <Target className="w-5 h-5 text-purple-dark mt-0.5 flex-shrink-0" />
+            <Card className="overflow-hidden">
+              <CardHeader className="bg-periwinkle-light">
+                <CardTitle className="text-navy-dark">Program Snapshot</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <div className="grid grid-cols-2 gap-4">
+                  {pageStats.mentorship.overview.map((item) => {
+                    const Icon = iconMap[item.icon] || Users;
+                    const displayValue = `${item.value}${item.suffix || ""}`;
+                    return (
+                      <div key={item.label} className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-purple-light/50">
+                          <Icon className="w-5 h-5 text-purple-dark" />
+                        </div>
                         <div>
-                          <h4 className="font-semibold text-navy-dark mb-1">
-                            Goal-Oriented Matching
-                          </h4>
-                          <p className="text-sm text-gray">
-                            We pair you based on your career goals, industry experience, and personal interests
-                          </p>
+                          <div className="text-xl font-bold text-navy-dark dark:text-white">{displayValue}</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-400">{item.label}</div>
                         </div>
                       </div>
-                      
-                      <div className="flex items-start gap-3">
-                        <Users className="w-5 h-5 text-periwinkle-dark mt-0.5 flex-shrink-0" />
-                        <div>
-                          <h4 className="font-semibold text-navy-dark mb-1">
-                            Community Support
-                          </h4>
-                          <p className="text-sm text-gray">
-                            Join a vibrant community of women in tech through events, workshops, and online forums
-                          </p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start gap-3">
-                        <Award className="w-5 h-5 text-mint-dark mt-0.5 flex-shrink-0" />
-                        <div>
-                          <h4 className="font-semibold text-navy-dark mb-1">
-                            Professional Growth
-                          </h4>
-                          <p className="text-sm text-gray">
-                            Develop leadership skills, expand your network, and accelerate your career trajectory
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Image */}
-                    <div className="mt-6">
-                      <AspectRatio ratio={16/9}>
-                        <Image
-                          src="https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/64726ecc86b113a812fc9ee2_SHE%23%202023-178.jpg"
-                          alt="Mentorship program workshop"
-                          fill
-                          className="object-cover rounded-lg"
-                        />
-                      </AspectRatio>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="impact" className="mt-6">
-                <Card className="overflow-hidden">
-                  <CardHeader className="bg-mint-light">
-                    <CardTitle className="text-navy dark:text-white">Program Impact</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-6">
-                    {/* Impact Metrics */}
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                      {impactMetrics.map((metric) => (
-                        <div key={metric.label} className="text-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
-                          <div className="text-3xl font-bold text-purple-dark dark:text-purple-mid mb-1">
-                            {metric.value}
-                          </div>
-                          <p className="text-sm text-gray">
-                            {metric.label}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    {/* Success Stories */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-navy dark:text-white">Success Highlights</h4>
-                      <ul className="space-y-2">
-                        <li className="flex items-start gap-2">
-                          <span className="text-purple-dark mt-1">•</span>
-                          <span className="text-sm text-gray-600 dark:text-gray-400">
-                            85% of mentees report increased confidence in their career path
-                          </span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-purple-dark mt-1">•</span>
-                          <span className="text-sm text-gray-600 dark:text-gray-400">
-                            6x more likely to receive promotions within 2 years
-                          </span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-purple-dark mt-1">•</span>
-                          <span className="text-sm text-gray-600 dark:text-gray-400">
-                            90% of participants expand their professional network
-                          </span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-purple-dark mt-1">•</span>
-                          <span className="text-sm text-gray-600 dark:text-gray-400">
-                            Featured in NZ Tech Women Awards for community impact
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </Container>

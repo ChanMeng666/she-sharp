@@ -50,30 +50,11 @@ const testimonials = [
     },
     highlights: ["Leadership Skills", "Product Strategy", "Confidence Building"]
   },
-  {
-    id: 3,
-    quote: "The mentorship program gave me the confidence to transition into a leadership role and taught me invaluable skills I use daily.",
-    fullStory: "When I joined the She Sharp mentorship program, I was at a crossroads in my career. My mentor helped me identify my strengths and areas for growth. Through our regular sessions, I gained the confidence to apply for a team lead position - something I never thought I'd be ready for. The program gave me practical tools for managing teams, communicating effectively, and driving technical projects. Six months later, I'm leading a team of 8 engineers and loving every challenge that comes my way.",
-    mentee: {
-      name: "Lisa Chen",
-      role: "Engineering Team Lead",
-      company: "CloudTech Solutions",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Lisa",
-      journey: "Promoted during program"
-    },
-    mentor: {
-      name: "Sarah Thompson",
-      role: "VP Engineering",
-      company: "TechCorp International",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah"
-    },
-    highlights: ["Leadership Transition", "Team Management", "Technical Excellence"]
-  }
+  // trimmed to two quotes for lighter section
 ];
 
 export function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedTestimonial, setSelectedTestimonial] = useState<typeof testimonials[0] | null>(null);
 
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
@@ -155,15 +136,7 @@ export function TestimonialsSection() {
                 ))}
               </div>
               
-              {/* Read Full Story Button */}
-              <Button
-                onClick={() => setSelectedTestimonial(current)}
-                variant="link"
-                className="text-purple-dark hover:text-purple-mid p-0"
-              >
-                Read Full Story
-                <ExternalLink className="ml-2 h-4 w-4" />
-              </Button>
+              {/* Read more removed for simplicity */}
             </CardContent>
           </Card>
           
@@ -204,71 +177,7 @@ export function TestimonialsSection() {
         </div>
       </Container>
       
-      {/* Full Story Dialog */}
-      <Dialog open={!!selectedTestimonial} onOpenChange={() => setSelectedTestimonial(null)}>
-        {selectedTestimonial && (
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-bold text-navy dark:text-white">Mentorship Journey</DialogTitle>
-              <DialogDescription className="text-gray-600 dark:text-gray-400">
-                {selectedTestimonial.mentee.name}'s transformation with {selectedTestimonial.mentor.name}
-              </DialogDescription>
-            </DialogHeader>
-            
-            <div className="space-y-6 mt-6">
-              {/* Participants */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <Card className="p-4 bg-purple-light/20 dark:bg-purple-dark/10 border-purple-dark/20">
-                  <div className="flex items-center gap-3">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage src={selectedTestimonial.mentee.image} />
-                      <AvatarFallback>{selectedTestimonial.mentee.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-xs text-gray-500">Mentee</p>
-                      <p className="font-semibold">{selectedTestimonial.mentee.name}</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{selectedTestimonial.mentee.role}</p>
-                    </div>
-                  </div>
-                </Card>
-                
-                <Card className="p-4 bg-periwinkle-light/20 dark:bg-periwinkle-dark/10 border-periwinkle-dark/20">
-                  <div className="flex items-center gap-3">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage src={selectedTestimonial.mentor.image} />
-                      <AvatarFallback>{selectedTestimonial.mentor.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-xs text-gray-500">Mentor</p>
-                      <p className="font-semibold">{selectedTestimonial.mentor.name}</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{selectedTestimonial.mentor.role}</p>
-                    </div>
-                  </div>
-                </Card>
-              </div>
-              
-              {/* Full Story */}
-              <div className="prose prose-gray dark:prose-invert max-w-none">
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  {selectedTestimonial.fullStory}
-                </p>
-              </div>
-              
-              {/* Key Outcomes */}
-              <div>
-                <h3 className="font-semibold text-navy dark:text-white mb-3">Key Outcomes</h3>
-                <div className="flex flex-wrap gap-2">
-                  {selectedTestimonial.highlights.map((highlight) => (
-                    <Badge key={highlight} className="bg-mint-light text-navy dark:bg-mint-dark/20 dark:text-mint-dark border-mint-dark/20">
-                      {highlight}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </DialogContent>
-        )}
-      </Dialog>
+      {/* Full story dialog removed for simplicity */}
     </Section>
   );
 }

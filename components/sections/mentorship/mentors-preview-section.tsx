@@ -5,10 +5,8 @@ import { Section } from "@/components/layout/section";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { Building2, Briefcase, Star, ArrowRight, Users, Sparkles } from "lucide-react";
+import { Building2, ArrowRight, Users, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -66,13 +64,7 @@ const mentors = [
 ];
 
 export function MentorsPreviewSection() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hoveredMentor, setHoveredMentor] = useState<number | null>(null);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  const [isLoading] = useState(false);
 
   return (
     <Section className="py-16 md:py-24 bg-gradient-to-b from-white to-purple-light/10 dark:from-gray-950 dark:to-purple-dark/5">
@@ -90,27 +82,13 @@ export function MentorsPreviewSection() {
           </p>
         </div>
         
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {mentors.map((mentor, index) => (
-            <div
-              key={mentor.id}
-              className="relative"
-              onMouseEnter={() => setHoveredMentor(mentor.id)}
-              onMouseLeave={() => setHoveredMentor(null)}
-            >
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 max-w-6xl mx-auto">
+          {mentors.slice(0, 3).map((mentor, index) => (
+            <div key={mentor.id} className="relative">
               {isLoading ? (
-                <Card className="overflow-hidden">
-                  <Skeleton className="aspect-square" />
-                  <CardContent className="p-4">
-                    <Skeleton className="h-4 w-3/4 mb-2" />
-                    <Skeleton className="h-6 w-full mb-2" />
-                    <Skeleton className="h-12 w-full" />
-                  </CardContent>
-                </Card>
+                <Card className="overflow-hidden aspect-square" />
               ) : (
-                <HoverCard>
-                  <HoverCardTrigger asChild>
-                    <Card className={`overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${mentor.featured ? 'ring-2 ring-purple-dark' : ''}`}>
+                <Card className={`overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${mentor.featured ? 'ring-2 ring-purple-dark' : ''}`}>
                       {mentor.featured && (
                         <Badge className="absolute top-4 right-4 z-10 bg-purple-dark text-white">
                           <Sparkles className="w-3 h-3 mr-1" />
@@ -125,18 +103,7 @@ export function MentorsPreviewSection() {
                           fill
                           className="object-cover"
                         />
-                        {hoveredMentor === mentor.id && (
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end p-4">
-                            <div className="text-white">
-                              <div className="flex items-center gap-2 mb-1">
-                                <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                <span className="text-sm font-medium">{mentor.rating}</span>
-                                <span className="text-sm">({mentor.mentees} mentees)</span>
-                              </div>
-                              <p className="text-sm">{mentor.experience} experience</p>
-                            </div>
-                          </div>
-                        )}
+                        {/* overlays removed for simplicity */}
                       </AspectRatio>
                       
                       <CardContent className="p-4">
@@ -160,69 +127,10 @@ export function MentorsPreviewSection() {
                                 {skill}
                               </Badge>
                             ))}
-                            {mentor.expertise.length > 2 && (
-                              <Badge variant="secondary" className="text-xs bg-gray-100 dark:bg-gray-800 border-0">
-                                +{mentor.expertise.length - 2}
-                              </Badge>
-                            )}
                           </div>
                         </div>
                       </CardContent>
                     </Card>
-                  </HoverCardTrigger>
-                  
-                  <HoverCardContent className="w-80" align="center">
-                    <div className="space-y-3">
-                      <div className="flex items-start gap-3">
-                        <Image
-                          src={mentor.image}
-                          alt={mentor.name}
-                          width={60}
-                          height={60}
-                          className="rounded-full object-cover"
-                        />
-                        <div className="flex-1">
-                          <h4 className="font-semibold">{mentor.name}</h4>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">{mentor.role}</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-500">{mentor.company}</p>
-                        </div>
-                      </div>
-                      
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {mentor.description}
-                      </p>
-                      
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-gray-500">Experience</span>
-                          <span className="font-medium">{mentor.experience}</span>
-                        </div>
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-gray-500">Active Mentees</span>
-                          <span className="font-medium">{mentor.mentees}</span>
-                        </div>
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-gray-500">Rating</span>
-                          <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                            <span className="font-medium">{mentor.rating}</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <p className="text-xs text-gray-500 mb-2">Areas of Expertise</p>
-                        <div className="flex flex-wrap gap-1">
-                          {mentor.expertise.map((skill) => (
-                            <Badge key={skill} variant="secondary" className="text-xs">
-                              {skill}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
               )}
             </div>
           ))}
@@ -234,12 +142,6 @@ export function MentorsPreviewSection() {
               <Link href="/mentorship/mentors">
                 View All Mentors
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="border-purple-dark text-purple-dark hover:bg-purple-light dark:border-purple-mid dark:text-purple-mid">
-              <Link href="/mentorship/mentor-application">
-                Become a Mentor
-                <Briefcase className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </div>

@@ -1,10 +1,10 @@
 import { MentorshipHeroSection } from "@/components/sections/mentorship/mentorship-hero-section";
 import { ProgramOverviewSection } from "@/components/sections/mentorship/program-overview-section";
-import { StatsSection } from "@/components/sections/mentorship/stats-section";
+// removed StatsSection (metrics will live inside ProgramOverviewSection)
 import { TestimonialsSection } from "@/components/sections/mentorship/testimonials-section";
 import { HowItWorksSection } from "@/components/sections/mentorship/how-it-works-section";
 import { MentorsPreviewSection } from "@/components/sections/mentorship/mentors-preview-section";
-import { BenefitsSection } from "@/components/sections/mentorship/benefits-section";
+// removed BenefitsSection (merged into ProgramOverviewSection content)
 import { IndustryLogosSection } from "@/components/sections/mentorship/industry-logos-section";
 import { SmartCTASection } from "@/components/sections/shared/smart-cta-section";
 
@@ -13,12 +13,10 @@ export default function MentorshipPage() {
     <>
       <MentorshipHeroSection />
       <ProgramOverviewSection />
-      <StatsSection />
-      <TestimonialsSection />
       <HowItWorksSection />
       <MentorsPreviewSection />
-      <BenefitsSection />
       <IndustryLogosSection />
+      <TestimonialsSection />
       <SmartCTASection title="Start Your Mentorship Journey" />
     </>
   );
