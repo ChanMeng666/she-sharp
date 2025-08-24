@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export function GoogleCalendarSection() {
   return (
-    <Section className="bg-white py-12 md:py-16">
+    <Section className="bg-white py-12 md:py-16" id="official-calendar">
       <Container>
         {/* Section Header */}
         <div className="text-center mb-8">

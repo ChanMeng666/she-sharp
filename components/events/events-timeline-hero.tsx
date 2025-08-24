@@ -7,6 +7,7 @@ import { Calendar, Clock, MapPin, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { layoutSystem, layoutClasses } from '@/lib/layout-system';
+import Iridescence, { brandColors } from '@/components/effects/iridescence';
 
 interface UpcomingEvent {
   id: string;
@@ -16,36 +17,40 @@ interface UpcomingEvent {
   location: string;
   type: 'online' | 'in-person' | 'workshop';
   daysUntil: number;
+  href: string;
 }
 
 // Mock data - replace with actual data
 const upcomingEvents: UpcomingEvent[] = [
   {
-    id: '1',
+    id: 'thrive-your-career-your-story',
     title: 'THRIVE: Your Career, Your Story',
     date: 'March 15, 2025',
     time: '6:00 PM - 8:30 PM',
     location: 'Auckland CBD',
     type: 'in-person',
-    daysUntil: 7
+    daysUntil: 7,
+    href: '/events/thrive-your-career-your-story'
   },
   {
-    id: '2',
+    id: 'tech-talk-ai-healthcare',
     title: 'Tech Talk: AI in Healthcare',
     date: 'March 22, 2025',
     time: '12:00 PM - 1:00 PM',
     location: 'Online via Zoom',
     type: 'online',
-    daysUntil: 14
+    daysUntil: 14,
+    href: '#official-calendar'
   },
   {
-    id: '3',
+    id: 'coding-workshop-react-fundamentals',
     title: 'Coding Workshop: React Fundamentals',
     date: 'March 29, 2025',
     time: '10:00 AM - 2:00 PM',
     location: 'Wellington Tech Hub',
     type: 'workshop',
-    daysUntil: 21
+    daysUntil: 21,
+    href: '#official-calendar'
   }
 ];
 
@@ -62,12 +67,22 @@ export function EventsTimelineHero() {
 
   return (
     <section className="relative bg-white overflow-hidden">
+      {/* Iridescence dynamic background */}
+      <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
+        <Iridescence 
+          color={brandColors.navPrograms}
+          mouseReact={false}
+          amplitude={0.15}
+          speed={0.35}
+          className="w-full h-full"
+        />
+      </div>
       {/* Background decoration */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 opacity-5 z-0">
         <div className="absolute top-20 left-10 w-64 h-64 bg-mint-light rounded-full blur-3xl" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-mint-light rounded-full blur-3xl" />
       </div>
-
+      <div className="relative z-10">
       <Container size="content" className="relative py-16 md:py-24">
         <div className="text-center mb-12">
           <Badge className="mb-4 bg-mint-dark text-white border-0">
@@ -108,7 +123,7 @@ export function EventsTimelineHero() {
 
                 {/* Event card */}
                 <Link
-                  href={`/events/${event.id}`}
+                  href={event.href}
                   className={cn(
                     "group relative w-full md:w-5/12 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-150 p-6",
                     "border border-gray hover:border-mint-dark",
@@ -163,7 +178,7 @@ export function EventsTimelineHero() {
           {/* View all events button */}
           <div className="text-center mt-12">
             <Link
-              href="#all-events"
+              href="#official-calendar"
               className="inline-flex items-center gap-2 px-6 py-3 bg-mint-dark text-white rounded-lg hover:bg-mint-mid transition-colors duration-150"
             >
               View All Events
@@ -181,6 +196,7 @@ export function EventsTimelineHero() {
           })} NZDT
         </div>
       </Container>
+      </div>
     </section>
   );
 }
