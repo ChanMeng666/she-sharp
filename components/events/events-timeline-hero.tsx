@@ -85,9 +85,6 @@ export function EventsTimelineHero() {
       <div className="relative z-10">
       <Container size="content" className="relative py-16 md:py-24">
         <div className="text-center mb-12">
-          <Badge className="mb-4 bg-mint-dark text-white border-0">
-            Upcoming Events
-          </Badge>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy-dark dark:text-white mb-4">
             Your Next Tech Journey
             <span className="block text-3xl md:text-4xl lg:text-5xl text-mint-dark mt-2">

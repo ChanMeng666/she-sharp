@@ -117,16 +117,6 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
             })
           )}
         </div>
-
-        {/* View More Button */}
-        <div className="text-center mt-12">
-          <Button
-            variant="outline"
-            size="lg"
-          >
-            View All Past Events
-          </Button>
-        </div>
       </div>
 
       {/* Lightbox Dialog */}

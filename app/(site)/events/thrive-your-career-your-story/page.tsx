@@ -9,10 +9,10 @@ import { Calendar, Clock, MapPin, ExternalLink } from 'lucide-react';
 
 export default function ThriveYourCareerYourStoryPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
+    <div className="min-h-screen bg-white dark:bg-gray-950 pb-24 md:pb-32">
       <section className="py-16 md:py-24">
         <Container size="content">
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-10 md:gap-12 md:grid-cols-2">
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-periwinkle-light dark:border-periwinkle-dark/30">
               <Image
                 src="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/670c6faa065093d7fd557a81_66b08c577a2a3900c4c635f8_GEC23%20%281%29.jpg"
@@ -54,7 +54,7 @@ export default function ThriveYourCareerYourStoryPage() {
                   <Link href="#registration">Register</Link>
                 </Button>
                 <Button asChild variant="outline">
-                  <Link href="#official-calendar">View in Official Calendar</Link>
+                  <Link href="https://calendar.google.com/calendar/u/0?cid=YmUwYTEzZGM2YTI4NjdmN2RhMTE0NGQ0MzcwZWYyMjJjZTZhYWYzYjE1YjA2MmZhMzVlNzlmNjBjOGVkMjJiYUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" rel="noopener noreferrer">View in Official Calendar</Link>
                 </Button>
               </div>
 
@@ -69,7 +69,7 @@ export default function ThriveYourCareerYourStoryPage() {
         </Container>
       </section>
 
-      <section id="registration" className="py-12">
+      <section id="registration" className="py-12 scroll-mt-24 md:scroll-mt-28">
         <Container size="content">
           <div className="rounded-xl border border-periwinkle-light dark:border-periwinkle-dark/30 p-6">
             <h2 className="text-xl font-semibold text-navy-dark dark:text-white mb-2">Register</h2>
@@ -82,14 +82,6 @@ export default function ThriveYourCareerYourStoryPage() {
               </Link>
             </Button>
           </div>
-        </Container>
-      </section>
-
-      <section className="py-8">
-        <Container size="content">
-          <Button asChild variant="ghost">
-            <Link href="/events">← Back to Events</Link>
-          </Button>
         </Container>
       </section>
     </div>
