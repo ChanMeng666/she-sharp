@@ -2,9 +2,7 @@
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { PlayCircle } from "lucide-react";
+ 
  
 import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
@@ -49,30 +47,6 @@ export function AboutHeroSection() {
                 </p>
               </div>
             </div>
-
-            {/* Video Dialog Trigger */}
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant="gradient"
-                  size="lg"
-                  className="mt-8 w-full gap-2 sm:w-auto"
-                >
-                  <PlayCircle className="h-5 w-5" />
-                  Watch Our Story
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-4xl p-0">
-                <div className="aspect-video">
-                  <video
-                    className="h-full w-full"
-                    src="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/6494eca97a143f705f5a5436_Home%20Vid%201-1%20Placeholder-transcode.mp4"
-                    controls
-                    autoPlay
-                  />
-                </div>
-              </DialogContent>
-            </Dialog>
         </div>
       </Container>
     </Section>
