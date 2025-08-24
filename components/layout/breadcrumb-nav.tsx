@@ -78,26 +78,26 @@ export function BreadcrumbNav() {
   return (
     <nav 
       aria-label="Breadcrumb"
-      className={`flex items-center space-x-1 text-sm text-gray-600 ${paddingClass} px-4 md:px-6 max-w-7xl mx-auto`}
+      className={`flex items-center space-x-1 text-sm text-gray ${paddingClass} px-4 md:px-6 max-w-7xl mx-auto`}
     >
       {breadcrumbs.map((item, index) => (
         <div key={index} className="flex items-center">
           {index > 0 && (
-            <ChevronRight className="h-4 w-4 mx-1 text-gray-400" />
+            <ChevronRight aria-hidden="true" className="h-4 w-4 mx-1 text-periwinkle-dark opacity-70" />
           )}
           {item.href ? (
             <Link
               href={item.href}
               className={cn(
-                "hover:text-purple-600 transition-colors",
+                "text-blue hover:text-purple-dark hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-periwinkle-dark focus-visible:ring-offset-2 rounded-sm transition-colors",
                 index === 0 && "flex items-center gap-1"
               )}
             >
-              {index === 0 && <Home className="h-3 w-3" />}
+              {index === 0 && <Home aria-hidden="true" className="h-3 w-3" />}
               {item.label}
             </Link>
           ) : (
-            <span className="text-gray-900 font-medium">
+            <span aria-current="page" className="text-navy-dark font-semibold">
               {item.label}
             </span>
           )}
