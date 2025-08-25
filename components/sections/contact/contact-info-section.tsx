@@ -7,8 +7,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "hello@shesharp.co.nz",
-    href: "mailto:hello@shesharp.co.nz"
+    value: "hello@shesharp.org.nz",
+    href: "mailto:hello@shesharp.org.nz"
   },
   {
     icon: MapPin,

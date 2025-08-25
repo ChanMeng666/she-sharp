@@ -450,8 +450,8 @@ export default function PrivacyPolicyPage() {
                   <h3 className="!mt-0 text-lg">How to Request</h3>
                   <p className="mb-0">
                     To request a copy or update of your information, please contact us at 
-                    <a href="mailto:info@shesharp.co.nz" className="text-purple-dark hover:text-purple-mid ml-1">
-                      info@shesharp.co.nz
+                    <a href="mailto:info@shesharp.org.nz" className="text-purple-dark hover:text-purple-mid ml-1">
+                      info@shesharp.org.nz
                     </a>
                   </p>
                 </div>
@@ -505,15 +505,15 @@ export default function PrivacyPolicyPage() {
             <div className="grid sm:grid-cols-2 gap-6">
               <div>
                 <h4 className="font-semibold text-navy-dark mb-2">Email Us</h4>
-                <a href="mailto:info@shesharp.co.nz" className="text-purple-dark hover:text-purple-mid transition-colors">
-                  info@shesharp.co.nz
+                <a href="mailto:info@shesharp.org.nz" className="text-purple-dark hover:text-purple-mid transition-colors">
+                  info@shesharp.org.nz
                 </a>
               </div>
               
               <div>
                 <h4 className="font-semibold text-navy-dark mb-2">Website</h4>
-                <a href="https://www.shesharp.co.nz" className="text-purple-dark hover:text-purple-mid transition-colors">
-                  www.shesharp.co.nz
+                <a href="https://www.shesharp.org.nz" className="text-purple-dark hover:text-purple-mid transition-colors">
+                  www.shesharp.org.nz
                 </a>
               </div>
             </div>

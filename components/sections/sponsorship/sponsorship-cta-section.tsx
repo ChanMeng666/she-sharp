@@ -53,7 +53,7 @@ export function SponsorshipCTASection() {
   };
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText("partnerships@shesharp.co.nz");
+    navigator.clipboard.writeText("partnerships@shesharp.org.nz");
     toast.success("Email copied to clipboard!");
   };
 
@@ -99,7 +99,7 @@ export function SponsorshipCTASection() {
                     onClick={handleCopyEmail}
                     className="text-purple-dark hover:text-purple-mid flex items-center gap-2 mt-1 transition-colors"
                   >
-                    partnerships@shesharp.co.nz
+                    partnerships@shesharp.org.nz
                     <Copy className="h-4 w-4" />
                   </button>
                 </div>
