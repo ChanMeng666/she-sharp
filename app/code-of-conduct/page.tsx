@@ -37,7 +37,7 @@ export default function CodeOfConductPage() {
         <section className="legal-section">
           <h2>Our Core Values</h2>
           
-          <div className="grid md:grid-cols-3 gap-4 mb-8">
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
             {[
               {
                 icon: Sparkles,
@@ -60,7 +60,7 @@ export default function CodeOfConductPage() {
             ].map((value) => (
               <div
                 key={value.title}
-                className={`text-center p-6 rounded-xl ${
+                className={`text-center p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 ${
                   value.color === "purple"
                     ? "bg-gradient-to-br from-purple-light/20 to-purple-mid/10"
                     : value.color === "periwinkle"
@@ -233,7 +233,7 @@ export default function CodeOfConductPage() {
         <section className="legal-section">
           <h2>Commitment to Diversity</h2>
           
-          <div className="bg-gradient-to-br from-purple-light/20 to-mint-light/20 rounded-xl p-8">
+          <div className="bg-gradient-to-br from-purple-light/20 to-mint-light/20 rounded-2xl p-10 shadow-lg">
             <p className="mb-6">
               We explicitly honor diversity in:
             </p>

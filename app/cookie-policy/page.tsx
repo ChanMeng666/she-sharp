@@ -26,6 +26,14 @@ export default function CookiePolicyPage() {
             <p className="text-sm text-navy-dark/80 mb-0">
               This policy explains what cookies are, how we use them, and how you can manage your cookie preferences.
             </p>
+            <div className="mt-6 p-4 bg-white/50 rounded-xl border border-purple-light/20">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 bg-purple-dark rounded-full animate-pulse"></div>
+                <p className="text-sm text-navy-dark mb-0 font-medium">
+                  <strong>Quick Tip:</strong> You can control your cookie preferences at any time using our cookie banner or browser settings.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -35,7 +43,7 @@ export default function CookiePolicyPage() {
           
           <div className="space-y-6">
             {/* Necessary Cookies */}
-            <div className="bg-gradient-to-r from-mint-light/30 to-mint-dark/10 rounded-xl p-6 border border-mint-dark/20">
+            <div className="bg-gradient-to-r from-mint-light/30 to-mint-dark/10 rounded-2xl p-8 border border-mint-dark/20 shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-white rounded-lg shadow-sm">
                   <Shield className="h-6 w-6 text-mint-dark" />
@@ -82,7 +90,7 @@ export default function CookiePolicyPage() {
             </div>
 
             {/* Analytics Cookies */}
-            <div className="bg-gradient-to-r from-periwinkle-light/30 to-purple-light/20 rounded-xl p-6 border border-periwinkle-dark/20">
+            <div className="bg-gradient-to-r from-periwinkle-light/30 to-purple-light/20 rounded-2xl p-8 border border-periwinkle-dark/20 shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-white rounded-lg shadow-sm">
                   <BarChart className="h-6 w-6 text-periwinkle-dark" />
@@ -129,7 +137,7 @@ export default function CookiePolicyPage() {
             </div>
 
             {/* Marketing Cookies */}
-            <div className="bg-gradient-to-r from-purple-light/30 to-purple-mid/10 rounded-xl p-6 border border-purple-mid/20">
+            <div className="bg-gradient-to-r from-purple-light/30 to-purple-mid/10 rounded-2xl p-8 border border-purple-mid/20 shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-white rounded-lg shadow-sm">
                   <Megaphone className="h-6 w-6 text-purple-dark" />
@@ -207,7 +215,7 @@ export default function CookiePolicyPage() {
             </div>
           </div>
 
-          <div id="browser-settings" className="bg-gray-50 rounded-xl p-6">
+          <div id="browser-settings" className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 shadow-lg">
             <h3 className="text-lg mb-4">Browser-Specific Instructions</h3>
             <div className="grid sm:grid-cols-2 gap-4">
               {[

@@ -35,8 +35,8 @@ export default function TermsOfServicePage() {
         <section className="legal-section">
           <h2>About She Sharp</h2>
           
-          <div className="grid md:grid-cols-3 gap-4 mb-8">
-            <div className="text-center p-6 bg-gradient-to-br from-purple-light/20 to-periwinkle-light/20 rounded-xl">
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <div className="text-center p-8 bg-gradient-to-br from-purple-light/20 to-periwinkle-light/20 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <div className="mx-auto w-16 h-16 bg-purple-dark/10 rounded-full flex items-center justify-center mb-4">
                 <Users className="h-8 w-8 text-purple-dark" />
               </div>
@@ -46,7 +46,7 @@ export default function TermsOfServicePage() {
               </p>
             </div>
             
-            <div className="text-center p-6 bg-gradient-to-br from-periwinkle-light/20 to-mint-light/20 rounded-xl">
+            <div className="text-center p-8 bg-gradient-to-br from-periwinkle-light/20 to-mint-light/20 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <div className="mx-auto w-16 h-16 bg-periwinkle-dark/10 rounded-full flex items-center justify-center mb-4">
                 <Briefcase className="h-8 w-8 text-periwinkle-dark" />
               </div>
@@ -56,7 +56,7 @@ export default function TermsOfServicePage() {
               </p>
             </div>
             
-            <div className="text-center p-6 bg-gradient-to-br from-mint-light/20 to-purple-light/20 rounded-xl">
+            <div className="text-center p-8 bg-gradient-to-br from-mint-light/20 to-purple-light/20 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <div className="mx-auto w-16 h-16 bg-mint-dark/10 rounded-full flex items-center justify-center mb-4">
                 <Calendar className="h-8 w-8 text-mint-dark" />
               </div>

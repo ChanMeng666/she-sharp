@@ -37,8 +37,8 @@ export default function SecurityPolicyPage() {
         <section className="legal-section">
           <h2>Security Measures We Implement</h2>
           
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-gradient-to-br from-purple-light/20 to-periwinkle-light/20 rounded-xl p-6">
+          <div className="grid md:grid-cols-2 gap-8 mb-8">
+            <div className="bg-gradient-to-br from-purple-light/20 to-periwinkle-light/20 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-purple-dark/10 rounded-lg">
                   <Lock className="h-6 w-6 text-purple-dark" />
@@ -63,7 +63,7 @@ export default function SecurityPolicyPage() {
               </div>
             </div>
             
-            <div className="bg-gradient-to-br from-periwinkle-light/20 to-mint-light/20 rounded-xl p-6">
+            <div className="bg-gradient-to-br from-periwinkle-light/20 to-mint-light/20 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-periwinkle-dark/10 rounded-lg">
                   <UserCheck className="h-6 w-6 text-periwinkle-dark" />

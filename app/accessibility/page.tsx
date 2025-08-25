@@ -38,7 +38,7 @@ export default function AccessibilityPage() {
         <section className="legal-section">
           <h2>Accessibility Features</h2>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {[
               {
                 icon: Monitor,
@@ -79,7 +79,7 @@ export default function AccessibilityPage() {
             ].map((feature) => (
               <div
                 key={feature.title}
-                className={`p-6 rounded-xl border transition-all hover:shadow-md ${
+                className={`p-8 rounded-2xl border transition-all hover:shadow-xl hover:scale-105 ${
                   feature.color === "purple"
                     ? "bg-purple-light/10 border-purple-light/30 hover:border-purple-mid"
                     : feature.color === "periwinkle"
