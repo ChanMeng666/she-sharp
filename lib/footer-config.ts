@@ -110,6 +110,7 @@ export const footerConfig = {
     { name: "Accessibility", href: "/accessibility" },
     { name: "Security Policy", href: "/security-policy" },
     { name: "Code of Conduct", href: "/code-of-conduct" },
+    { name: "Ambassador Code of Conduct", href: "/volunteers/code-of-conduct" },
   ] as FooterLink[],
 
   charityInfo: {

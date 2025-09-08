@@ -1,4 +1,4 @@
-import { Heart, Users, Sparkles, HandshakeIcon, AlertCircle, Flag, CheckCircle, Ban, MessageSquare, Shield } from "lucide-react";
+import { Heart, Users, Sparkles, HandshakeIcon, AlertCircle, Flag, CheckCircle, Ban, MessageSquare, Shield, FileText } from "lucide-react";
 import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/components/legal-page-styles.css";
 
@@ -429,6 +429,31 @@ export default function CodeOfConductPage() {
               This code also applies when an individual is representing She Sharp in public spaces 
               or when behavior could negatively impact the community's safety and well-being.
             </p>
+          </div>
+        </section>
+
+        {/* Related Documents */}
+        <section className="legal-section">
+          <h2>Related Documents</h2>
+          
+          <div className="bg-gradient-to-br from-periwinkle-light/20 to-mint-light/20 rounded-xl p-6">
+            <div className="flex items-start gap-4">
+              <FileText className="h-6 w-6 text-periwinkle-dark mt-1" />
+              <div className="flex-1">
+                <h3 className="!mt-0 text-lg mb-2">For Volunteers & Ambassadors</h3>
+                <p className="text-sm text-gray mb-4">
+                  If you're volunteering with She Sharp or serving as an ambassador, please also review our 
+                  formal volunteer code of conduct which outlines additional responsibilities and standards.
+                </p>
+                <a 
+                  href="/volunteers/code-of-conduct" 
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-periwinkle-dark text-white rounded-lg hover:bg-periwinkle-mid transition-colors"
+                >
+                  <Users className="h-4 w-4" />
+                  <span className="text-sm font-semibold">Ambassador Code of Conduct</span>
+                </a>
+              </div>
+            </div>
           </div>
         </section>
 

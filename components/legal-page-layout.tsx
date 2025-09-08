@@ -57,6 +57,12 @@ const legalPages: LegalNavItem[] = [
     icon: <Users className="h-5 w-5" />,
     description: "Community guidelines",
   },
+  {
+    title: "Ambassador Code of Conduct",
+    href: "/volunteers/code-of-conduct",
+    icon: <FileText className="h-5 w-5" />,
+    description: "Volunteer & ambassador standards",
+  },
 ];
 
 export function LegalPageLayout({ 
