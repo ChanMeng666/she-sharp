@@ -197,7 +197,7 @@ Founder/Director - She Sharp
 
 
 
-Dr Mahsa McCauley is a Senior Lecturer and Director of Women in Tech in AUT’s School of Computer, Engineering, and...
+Dr Mahsa McCauley is a Senior Lecturer in AUT’s School of Computer, Engineering, and...
 
 Learn more
 

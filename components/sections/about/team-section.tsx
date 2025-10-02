@@ -14,7 +14,7 @@ const teamMembers = [
     name: "Mahsa McCauley (Mohaghegh)",
     roles: ["Trustee", "Ambassador", "Founder and Chair"],
     image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64811ab760ae807f1dc87e65_Team_1_Masha.png",
-    description: "Dr Mahsa McCauley is a Senior Lecturer and Director of Women in Tech in AUT's School of Computer, Engineering, and...",
+    description: "Dr Mahsa McCauley is a Senior Lecturer in AUT's School of Computer, Engineering, and...",
     featured: true
   },
   {

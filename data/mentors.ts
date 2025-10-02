@@ -113,7 +113,7 @@ export const mentors: Mentor[] = [
     role: 'Founder/Director',
     company: 'She Sharp',
     image: 'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65f0a4636161c0e53f5267ee_Mahsa%20Photo%20(3).jpg',
-    description: 'Dr Mahsa McCauley is a Senior Lecturer and Director of Women in Tech in AUT\'s School of Computer, Engineering, and Mathematical Sciences.',
+    description: 'Dr Mahsa McCauley is a Senior Lecturer in AUT\'s School of Computer, Engineering, and Mathematical Sciences.',
     expertise: ['Leadership', 'Women in Tech', 'Education', 'Research', 'Community Building'],
     industry: 'Education',
     yearsOfExperience: 15,
