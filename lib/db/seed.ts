@@ -4,6 +4,11 @@ import { users, teams, teamMembers, userMemberships, userRoles, adminPermissions
 import { hashPassword } from '@/lib/auth/session';
 
 async function createStripeProducts() {
+  if (!stripe) {
+    console.log('Stripe integration is disabled, skipping Stripe product creation.');
+    return;
+  }
+
   console.log('Creating Stripe products and prices...');
 
   const baseProduct = await stripe.products.create({
