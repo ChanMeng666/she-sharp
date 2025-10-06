@@ -123,7 +123,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
       return (
         <div className="pt-4 border-t border-gray-200">
           <Link href="/sign-in" className="w-full">
-            <Button variant="gradient" className="w-full justify-start">
+            <Button variant="default" className="w-full justify-start">
               <User className="mr-2 h-4 w-4" />
               Sign In
             </Button>
@@ -135,7 +135,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
     return (
       <div className="flex items-center">
         <Link href="/sign-in">
-          <Button size="sm" variant="gradient">
+          <Button size="lg" variant="default">
             Sign In
           </Button>
         </Link>

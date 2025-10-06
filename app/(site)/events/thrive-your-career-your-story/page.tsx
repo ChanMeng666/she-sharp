@@ -9,7 +9,7 @@ import { Calendar, Clock, MapPin, ExternalLink } from 'lucide-react';
 
 export default function ThriveYourCareerYourStoryPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 pb-24 md:pb-32">
+    <div className="min-h-screen bg-background pb-24 md:pb-32">
       <section className="py-16 md:py-24">
         <Container size="content">
           <div className="grid gap-10 md:gap-12 md:grid-cols-2">

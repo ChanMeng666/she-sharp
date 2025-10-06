@@ -31,7 +31,7 @@ export function HeroSection() {
       <Container className="relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           {/* Main heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-12 animate-fade-in-up leading-tight drop-shadow-lg">
+          <h1 className="text-5xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-12 animate-fade-in-up leading-tight drop-shadow-lg">
             CONNECTING{" "}
             <span className="bg-gradient-to-r from-purple-light to-periwinkle-light bg-clip-text text-transparent">
               women in technology

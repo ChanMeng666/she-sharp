@@ -1,11 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 @import "tailwindcss";
+
+/* Polysans Trial Median Font */
+@font-face {
+  font-family: 'Polysans Trial Median';
+  src: url('/fonts/polysanstrial-median.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 /*
   ---break---
 */
 @custom-variant dark (&:is(.dark *));
 
 /* @import "tw-animate-css"; */
-
+@theme{
+  --font-sans: "DM Sans", sans-serif;
+  --font-heading: "Polysans Trial Median", "DM Sans", sans-serif;
+}
 /* Text size utilities for Tailwind CSS v4 */
 @layer utilities {
   .text-xs { font-size: var(--font-size-xs); }
@@ -211,7 +224,17 @@
 
 @layer utilities {
   body {
-    font-family: "Manrope", Arial, Helvetica, sans-serif;
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+  }
+  
+  /* Heading font utilities */
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+  
+  /* Apply Polysans to all heading elements */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
   }
 }
 
@@ -219,7 +242,7 @@
   :root {
     /* She Sharp Color System */
     --background: 0 0% 100%; /* white */
-    --foreground: 241 25% 21%; /* navy-dark */
+    --foreground: 242 39% 19%; /* navy-dark #1f1e44 */
     --card: 216 12% 97%; /* navy-light */
     --card-foreground: 241 25% 21%; /* navy-dark */
     --popover: 0 0% 100%; /* white */
@@ -319,7 +342,7 @@
 
 :root {
   --background: hsl(0 0% 100%);
-  --foreground: hsl(240 10% 3.9%);
+  --foreground: hsl(242 39% 19%); /* navy-dark #1f1e44 */
   --card: hsl(0 0% 100%);
   --card-foreground: hsl(240 10% 3.9%);
   --popover: hsl(0 0% 100%);

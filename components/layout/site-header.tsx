@@ -123,11 +123,10 @@ export function SiteHeader() {
 
   return (
     <header className={cn(
-      "fixed top-0 z-50 w-full border-b backdrop-blur-md bg-white/70 transition-all duration-150",
-      scrolled ? "shadow-sm bg-white/80" : "",
-      visible ? "translate-y-0" : "-translate-y-full"
+      "fixed top-0 z-50 w-full border-b backdrop-blur-md bg-[#F7E5F3]/70 transition-all duration-150 translate-y-0 py-2",
+      scrolled ? "shadow-sm bg-[#F7E5F3]/80" : ""
     )}>
-      <div className="flex h-16 items-center px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
+      <div className="flex h-16 items-center px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 max-w-7xl mx-auto">
         {/* Logo */}
         <Link 
           href="/" 
