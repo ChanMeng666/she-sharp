@@ -41,7 +41,7 @@ export function MentorshipCTASection() {
                 <p className="text-gray-600 mb-6">
                   {item.description}
                 </p>
-                <Button asChild variant="outline" className="text-purple-dark border-purple-dark hover:bg-purple-light">
+                <Button asChild variant="outline" size="lg" className="text-purple-dark border-purple-dark hover:bg-purple-light">
                   <Link href={item.href}>{item.buttonText}</Link>
                 </Button>
               </CardContent>

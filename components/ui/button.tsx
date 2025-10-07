@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-purple-dark active:scale-95 transform",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-purple-dark active:scale-95 transform",
   {
     variants: {
       variant: {
@@ -37,7 +37,7 @@ const buttonVariants = cva(
         "outline-dashed":
           "border-2 border-dashed border-purple-dark bg-transparent text-purple-dark hover:bg-purple-light hover:border-solid",
         "outline-gradient":
-          "bg-gradient-to-r from-purple-dark to-periwinkle-dark p-[2px] text-transparent bg-clip-text hover:from-purple-mid hover:to-periwinkle-dark [&>*]:bg-white [&>*]:rounded-[calc(theme(borderRadius.md)-2px)] [&>*]:px-4 [&>*]:py-2 [&>*]:text-purple-dark",
+          "bg-gradient-to-r from-purple-dark to-periwinkle-dark p-[2px] text-transparent bg-clip-text hover:from-purple-mid hover:to-periwinkle-dark [&>*]:bg-white [&>*]:rounded-[18px] [&>*]:px-4 [&>*]:py-2 [&>*]:text-purple-dark",
         
         // Minimal Variants
         ghost:

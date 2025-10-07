@@ -94,7 +94,7 @@ export function JoinCTASection() {
                     ))}
                   </ul>
                   
-                  <Button asChild className={`w-full ${colorClasses} text-white`}>
+                  <Button asChild size="lg" className={`w-full ${colorClasses} text-white`}>
                     <Link href={option.href}>
                       <Icon className="mr-2 h-4 w-4" />
                       {option.title}
@@ -112,7 +112,7 @@ export function JoinCTASection() {
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             Want to contribute as a mentor?
           </p>
-          <Button asChild variant="outline" className="border-purple-dark text-purple-dark hover:bg-purple-light dark:border-purple-mid dark:text-purple-mid">
+          <Button asChild variant="outline" size="lg" className="border-purple-dark text-purple-dark hover:bg-purple-light dark:border-purple-mid dark:text-purple-mid">
             <Link href="/mentorship/mentors">
               Apply to Become a Mentor
               <ArrowRight className="ml-2 h-4 w-4" />

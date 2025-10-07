@@ -1,13 +1,20 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, X, Calendar, Users, ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
+import { useState } from "react";
+import Image from "next/image";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  ChevronLeft,
+  ChevronRight,
+  X,
+  Calendar,
+  Users,
+  ArrowRight,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface PastEvent {
   id: string;
@@ -28,7 +35,7 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
 
   const handlePrevImage = () => {
     if (selectedEvent) {
-      setSelectedImageIndex((prev) => 
+      setSelectedImageIndex((prev) =>
         prev === 0 ? selectedEvent.images.length - 1 : prev - 1
       );
     }
@@ -36,7 +43,7 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
 
   const handleNextImage = () => {
     if (selectedEvent) {
-      setSelectedImageIndex((prev) => 
+      setSelectedImageIndex((prev) =>
         prev === selectedEvent.images.length - 1 ? 0 : prev + 1
       );
     }
@@ -45,12 +52,12 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
   // Create a masonry-style layout
   const getGridSpan = (index: number) => {
     const patterns = [
-      'col-span-1 row-span-1',
-      'col-span-2 row-span-1',
-      'col-span-1 row-span-2',
-      'col-span-1 row-span-1',
-      'col-span-1 row-span-1',
-      'col-span-2 row-span-2',
+      "col-span-1 row-span-1",
+      "col-span-2 row-span-1",
+      "col-span-1 row-span-2",
+      "col-span-1 row-span-1",
+      "col-span-1 row-span-1",
+      "col-span-2 row-span-2",
     ];
     return patterns[index % patterns.length];
   };
@@ -66,13 +73,14 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
             Memories from Our Community
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Explore the amazing moments from our past events. Join us to be part of the next chapter!
+            Explore the amazing moments from our past events. Join us to be part
+            of the next chapter!
           </p>
         </div>
 
         {/* Masonry Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
-          {events.flatMap((event, eventIndex) => 
+          {events.flatMap((event, eventIndex) =>
             event.images.slice(0, 2).map((image, imageIndex) => {
               const uniqueIndex = eventIndex * 2 + imageIndex;
               return (
@@ -94,13 +102,15 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
                     className="object-cover transition-opacity duration-150"
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   />
-                  
+
                   {/* Overlay */}
                   <div className="absolute inset-0 bg-navy-dark/60 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                  
+
                   {/* Event Info */}
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-                    <h3 className="font-semibold text-sm mb-1 line-clamp-1">{event.title}</h3>
+                    <h3 className="font-semibold text-sm mb-1 line-clamp-1">
+                      {event.title}
+                    </h3>
                     <div className="flex items-center gap-3 text-xs">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
@@ -120,7 +130,10 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
       </div>
 
       {/* Lightbox Dialog */}
-      <Dialog open={!!selectedEvent} onOpenChange={() => setSelectedEvent(null)}>
+      <Dialog
+        open={!!selectedEvent}
+        onOpenChange={() => setSelectedEvent(null)}
+      >
         <DialogContent className="max-w-4xl p-0 overflow-hidden">
           {selectedEvent && (
             <div className="relative">
@@ -133,7 +146,7 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
                   className="object-contain"
                   sizes="(max-width: 1200px) 100vw, 1200px"
                 />
-                
+
                 {/* Navigation */}
                 {selectedEvent.images.length > 1 && (
                   <>
@@ -155,13 +168,13 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
                     </Button>
                   </>
                 )}
-                
+
                 {/* Image Counter */}
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
                   {selectedImageIndex + 1} / {selectedEvent.images.length}
                 </div>
               </div>
-              
+
               {/* Event Details */}
               <div className="p-6 bg-white dark:bg-gray-900">
                 <h3 className="text-xl font-semibold text-navy-dark dark:text-white mb-2">
@@ -182,13 +195,13 @@ export function PastEventsGallery({ events }: PastEventsGalleryProps) {
                     {selectedEvent.description}
                   </p>
                 )}
-                {selectedEvent.id === 'thrive-july-2025' && (
-                                  <Button asChild variant="accent" size="sm" className="gap-2">
-                  <Link href="/events/thrive-your-career-your-story">
-                    View Event Details
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </Button>
+                {selectedEvent.id === "thrive-july-2025" && (
+                  <Button asChild variant="accent" size="lg" className="gap-2">
+                    <Link href="/events/thrive-your-career-your-story">
+                      View Event Details
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </Button>
                 )}
               </div>
             </div>

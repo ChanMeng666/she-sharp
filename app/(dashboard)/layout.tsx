@@ -119,12 +119,12 @@ function UserMenu() {
     return (
       <>
         <Link href="/sign-in">
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="lg">
             Sign In
           </Button>
         </Link>
         <Link href="/sign-up">
-          <Button variant="default" size="sm" className="rounded-full px-6">
+          <Button variant="default" size="lg" className="rounded-full px-6">
             Get Started
           </Button>
         </Link>

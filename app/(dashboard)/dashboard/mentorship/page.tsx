@@ -299,15 +299,15 @@ export default function MentorshipDashboard() {
                   )}
 
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline">
+                    <Button size="lg" variant="outline">
                       <Mail className="h-3 w-3 mr-1" />
                       Message
                     </Button>
-                    <Button size="sm" variant="outline">
+                    <Button size="lg" variant="outline">
                       <Calendar className="h-3 w-3 mr-1" />
                       Schedule
                     </Button>
-                    <Button size="sm" variant="outline">
+                    <Button size="lg" variant="outline">
                       View Details
                     </Button>
                   </div>

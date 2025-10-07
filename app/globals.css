@@ -241,7 +241,7 @@
 @layer base {
   :root {
     /* She Sharp Color System */
-    --background: 0 0% 100%; /* white */
+    --background: 218 100% 97%; /* #EFF5FF */
     --foreground: 242 39% 19%; /* navy-dark #1f1e44 */
     --card: 216 12% 97%; /* navy-light */
     --card-foreground: 241 25% 21%; /* navy-dark */
