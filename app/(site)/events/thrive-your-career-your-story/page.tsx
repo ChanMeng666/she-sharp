@@ -82,7 +82,7 @@ export default function ThriveYourCareerYourStoryPage() {
               </Link>
             </Button>
           </div>
-        </Container>人      
+        </Container>
       </section>
     </div>
   );
