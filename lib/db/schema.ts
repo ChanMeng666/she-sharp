@@ -273,8 +273,6 @@ export const userMemberships = pgTable('user_memberships', {
   userId: integer('user_id').notNull().unique().references(() => users.id, { onDelete: 'cascade' }),
   tier: membershipTierEnum('tier').notNull().default('free'),
   expiresAt: timestamp('expires_at'),
-  stripeSubscriptionId: text('stripe_subscription_id').unique(),
-  stripeCustomerId: text('stripe_customer_id'),
   featuresAccess: jsonb('features_access').$type<Record<string, boolean>>(),
   
   // Billing
@@ -716,11 +714,6 @@ export const teams = pgTable('teams', {
   name: varchar('name', { length: 100 }).notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
-  stripeCustomerId: text('stripe_customer_id').unique(),
-  stripeSubscriptionId: text('stripe_subscription_id').unique(),
-  stripeProductId: text('stripe_product_id'),
-  planName: varchar('plan_name', { length: 50 }),
-  subscriptionStatus: varchar('subscription_status', { length: 20 }),
 });
 
 export const teamMembers = pgTable('team_members', {

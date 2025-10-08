@@ -22,7 +22,6 @@ import {
 import { comparePasswords, hashPassword, setSession } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-// import { createCheckoutSession } from '@/lib/payments/stripe'; // Stripe integration disabled
 import { getUser, getUserWithTeam } from '@/lib/db/queries';
 import {
   validatedAction,
@@ -140,11 +139,6 @@ export const signIn = validatedAction(signInSchema, async (data, formData) => {
   ]);
 
   const redirectTo = formData.get('redirect') as string | null;
-  // Stripe checkout integration disabled
-  // if (redirectTo === 'checkout') {
-  //   const priceId = formData.get('priceId') as string;
-  //   return createCheckoutSession({ team: foundTeam, priceId });
-  // }
 
   // Check if user has activated any roles
   const hasRoles = await hasActiveRoles(foundUser.id);
@@ -294,14 +288,6 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
 
   // Don't set session immediately - redirect to verification page
   const redirectTo = formData.get('redirect') as string | null;
-  // Stripe checkout integration disabled
-  // if (redirectTo === 'checkout') {
-  //   // For checkout flow, we might want to handle differently
-  //   // Set session but mark as unverified
-  //   await setSession(createdUser);
-  //   const priceId = formData.get('priceId') as string;
-  //   return createCheckoutSession({ team: createdTeam, priceId });
-  // }
 
   // Set session for the new user
   await setSession(createdUser);
