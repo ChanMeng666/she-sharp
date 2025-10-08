@@ -40,11 +40,12 @@ pnpm start            # Start production server
 ### Technology Stack
 - **Framework**: Next.js 15.4.0 with App Router
 - **Language**: TypeScript with strict mode
-- **Database**: PostgreSQL with Drizzle ORM
-- **Authentication**: Custom JWT-based implementation using `@node-rs/argon2`
-- **Payments**: Stripe integration for donations and sponsorships
+- **Database**: PostgreSQL (Neon) with Drizzle ORM
+- **Authentication**: NextAuth (OAuth) + Custom JWT using bcrypt
 - **UI**: shadcn/ui components with custom Tailwind CSS v4 theme
 - **Styling**: Tailwind CSS with PostCSS and custom brand colors
+- **AI**: Google Gemini for intelligent chatbot assistant
+- **Email**: Resend for transactional emails
 
 ### Core Architecture Patterns
 
@@ -59,13 +60,20 @@ pnpm start            # Start production server
    - Activity logging tracks all team-related actions
 
 3. **Database Schema** (`/lib/db/schema.ts`):
-   - Core tables: `users`, `teams`, `teamMembers`, `activityLogs`, `invitations`
-   - Uses Drizzle ORM with type-safe queries in `/lib/db/queries.ts`
+   - **Total**: 28 tables supporting comprehensive platform features
+   - **User System**: `users`, `user_roles`, `user_memberships`
+   - **Mentorship**: `mentor_profiles`, `mentee_profiles`, `mentorship_relationships`, `meetings`
+   - **Events**: `events`, `event_registrations`, `event_role_assignments`
+   - **Resources**: `resources`, `resource_access_logs`
+   - **Admin**: `admin_permissions`, `activity_logs`
+   - **Auth**: NextAuth tables (`account`, `session`, `verification_token`)
+   - **Legacy**: `teams`, `teamMembers` (kept for backward compatibility)
+   - See detailed documentation: `docs/database/DATABASE_SCHEMA.md`
 
-4. **Payment Integration** (`/lib/payments/`):
-   - Stripe customer creation on user signup
-   - Subscription management with webhooks
-   - Customer portal for self-service
+4. **Multi-Role System**:
+   - Users can activate multiple roles independently (mentor, mentee, admin)
+   - Role-specific profiles and permissions
+   - Dynamic dashboard based on active roles
 
 5. **Route Protection**:
    - Public routes: Most content pages (about, events, mentorship, media, support, contact)
@@ -83,17 +91,22 @@ pnpm start            # Start production server
 ### Environment Configuration
 
 Required environment variables (see `.env.example`):
-- `DATABASE_URL`: PostgreSQL connection string
-- `STRIPE_SECRET_KEY`: Stripe API key
-- `STRIPE_WEBHOOK_SECRET`: For webhook validation
+- `DATABASE_URL`: Neon PostgreSQL connection string
+- `AUTH_SECRET`: For JWT encryption and NextAuth
+- `AUTH_GOOGLE_ID` / `AUTH_GOOGLE_SECRET`: Google OAuth credentials
+- `AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET`: GitHub OAuth credentials
+- `GOOGLE_GENERATIVE_AI_API_KEY`: For AI chatbot
+- `RESEND_API_KEY`: For email service
 - `BASE_URL`: Application URL for redirects
-- `AUTH_SECRET`: For JWT encryption
 
 ### Common Modifications
 
-1. **Adding new database tables**: 
+1. **Adding new database tables**:
    - Define schema in `/lib/db/schema.ts`
-   - Run `pnpm db:generate` then `pnpm db:migrate`
+   - Run `pnpm db:generate` to create migration
+   - Run `pnpm db:migrate` to apply to database
+   - Consider creating a snapshot: `pnpm db:snapshot "description"`
+   - See full guide: `docs/database/DATABASE_VERSION_CONTROL.md`
 
 2. **Adding new public pages**:
    - Create under `/app/` following existing page structure
@@ -102,12 +115,19 @@ Required environment variables (see `.env.example`):
 3. **Adding new protected/admin features**:
    - Create under `/app/(dashboard)/`
    - Routes automatically protected by middleware
+   - Check user roles and permissions in Server Components
 
-4. **Modifying authentication**:
-   - Core logic in `/lib/auth/session.ts`
+4. **Working with user roles**:
+   - Check active roles: `await hasActiveRoles(userId)`
+   - Verify specific role: check `user_roles` table
+   - Role-based UI: conditionally render based on active roles
+
+5. **Modifying authentication**:
+   - NextAuth config in `/lib/auth/auth.config.ts`
+   - Custom session logic in `/lib/auth/session.ts`
    - Update middleware for route protection rules
 
-5. **Adding new UI components**:
+6. **Adding new UI components**:
    - Use shadcn/ui CLI or manually add to `/components/ui/`
    - Follow existing component patterns and brand colors
 
