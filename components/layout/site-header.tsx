@@ -123,9 +123,8 @@ export function SiteHeader() {
 
   return (
     <header className={cn(
-      "fixed top-0 z-50 w-full border-b backdrop-blur-md bg-white/70 transition-all duration-150",
-      scrolled ? "shadow-sm bg-white/80" : "",
-      visible ? "translate-y-0" : "-translate-y-full"
+      "fixed top-0 z-50 border-b backdrop-blur-md bg-[#F7E5F3]/70 transition-all duration-150 translate-y-0 py-1 mt-2 rounded-full left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] max-w-7xl",
+      scrolled ? "shadow-sm bg-[#F7E5F3]/80" : ""
     )}>
       <div className="flex h-16 items-center px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* Logo */}
@@ -265,11 +264,12 @@ export function SiteHeader() {
         </NavigationMenu>
 
         {/* Desktop CTA Buttons and User Navigation */}
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3 xl:-mr-8">
           {navigationConfig.buttons.map((button) => (
             <Button
               key={button.title}
               variant={button.variant}
+              size="lg"
               asChild
               className={cn(
                 "transition-all duration-150",
@@ -296,7 +296,7 @@ export function SiteHeader() {
           <SheetTrigger asChild className="ml-auto lg:hidden">
             <Button 
               variant="ghost" 
-              size="icon"
+              size="lg"
               className="hover:bg-purple-light/50 hover:text-purple-dark transition-colors"
             >
               {isOpen ? (
@@ -397,6 +397,7 @@ export function SiteHeader() {
                   <Button
                     key={button.title}
                     variant={button.variant}
+                    size="lg"
                     asChild
                     className={cn(
                       "w-full transition-all duration-150",

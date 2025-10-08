@@ -1,11 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 @import "tailwindcss";
+
+/* Polysans Trial Median Font */
+@font-face {
+  font-family: 'Polysans Trial Median';
+  src: url('/fonts/polysanstrial-median.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 /*
   ---break---
 */
 @custom-variant dark (&:is(.dark *));
 
 /* @import "tw-animate-css"; */
-
+@theme{
+  --font-sans: "DM Sans", sans-serif;
+  --font-heading: "Polysans Trial Median", "DM Sans", sans-serif;
+}
 /* Text size utilities for Tailwind CSS v4 */
 @layer utilities {
   .text-xs { font-size: var(--font-size-xs); }
@@ -107,9 +120,12 @@
   --color-purple-mid: #c846ab;
   --color-purple-light: #f7e5f3;
   
+  /* Additional brand colors */
+  --color-indigo-deep: #454180; /* deep indigo */
   --color-periwinkle-dark: #8982ff;
+  --color-periwinkle-soft: #c4c1ff; /* soft periwinkle */
   --color-periwinkle-light: #f4f4fa;
-  
+
   --color-navy-dark: #1f1e44;
   --color-navy-light: #eaf2ff;
   
@@ -211,15 +227,25 @@
 
 @layer utilities {
   body {
-    font-family: "Manrope", Arial, Helvetica, sans-serif;
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+  }
+  
+  /* Heading font utilities */
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+  
+  /* Apply Polysans to all heading elements */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
   }
 }
 
 @layer base {
   :root {
     /* She Sharp Color System */
-    --background: 0 0% 100%; /* white */
-    --foreground: 241 25% 21%; /* navy-dark */
+    --background: 218 100% 97%; /* #EFF5FF */
+    --foreground: 242 39% 19%; /* navy-dark #1f1e44 */
     --card: 216 12% 97%; /* navy-light */
     --card-foreground: 241 25% 21%; /* navy-dark */
     --popover: 0 0% 100%; /* white */
@@ -244,6 +270,9 @@
     --purple-light: 315 60% 95%;
     --periwinkle-dark: 244 100% 76%;
     --periwinkle-light: 248 33% 97%;
+    /* New brand tokens (HSL) */
+    --indigo-deep: 244 33% 38%; /* #454180 */
+    --periwinkle-soft: 243 100% 88%; /* #C4C1FF */
     --navy-dark: 241 25% 21%;
     --navy-light: 216 12% 97%;
     --mint-dark: 168 86% 83%;
@@ -319,7 +348,7 @@
 
 :root {
   --background: hsl(0 0% 100%);
-  --foreground: hsl(240 10% 3.9%);
+  --foreground: hsl(242 39% 19%); /* navy-dark #1f1e44 */
   --card: hsl(0 0% 100%);
   --card-foreground: hsl(240 10% 3.9%);
   --popover: hsl(0 0% 100%);

@@ -123,7 +123,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
       return (
         <div className="pt-4 border-t border-gray-200">
           <Link href="/sign-in" className="w-full">
-            <Button variant="gradient" className="w-full justify-start">
+            <Button variant="default" size="lg" className="w-full justify-start">
               <User className="mr-2 h-4 w-4" />
               Sign In
             </Button>
@@ -135,7 +135,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
     return (
       <div className="flex items-center">
         <Link href="/sign-in">
-          <Button size="sm" variant="gradient">
+          <Button size="lg" variant="default">
             Sign In
           </Button>
         </Link>
@@ -166,14 +166,14 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
         </div>
         
         <Link href="/dashboard" className="w-full">
-          <Button variant="ghost" className="w-full justify-start">
+          <Button variant="ghost" size="lg" className="w-full justify-start">
             <LayoutDashboard className="mr-2 h-4 w-4" />
             Dashboard
           </Button>
         </Link>
         
         <Link href="/dashboard/settings/account" className="w-full">
-          <Button variant="ghost" className="w-full justify-start">
+          <Button variant="ghost" size="lg" className="w-full justify-start">
             <Settings className="mr-2 h-4 w-4" />
             Account Settings
           </Button>
@@ -181,6 +181,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
         
         <Button 
           variant="ghost" 
+          size="lg"
           className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
           onClick={handleSignOut}
           disabled={isSigningOut}
@@ -198,6 +199,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
+          size="lg"
           className="relative flex items-center gap-2 px-2 hover:bg-purple-50"
         >
           <Avatar className="h-8 w-8">

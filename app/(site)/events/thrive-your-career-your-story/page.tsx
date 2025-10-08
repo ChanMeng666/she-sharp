@@ -9,7 +9,7 @@ import { Calendar, Clock, MapPin, ExternalLink } from 'lucide-react';
 
 export default function ThriveYourCareerYourStoryPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 pb-24 md:pb-32">
+    <div className="min-h-screen bg-background pb-24 md:pb-32">
       <section className="py-16 md:py-24">
         <Container size="content">
           <div className="grid gap-10 md:gap-12 md:grid-cols-2">
@@ -50,10 +50,10 @@ export default function ThriveYourCareerYourStoryPage() {
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Button asChild>
+                <Button asChild size="lg">
                   <Link href="#registration">Register</Link>
                 </Button>
-                <Button asChild variant="outline">
+                <Button asChild variant="outline" size="lg">
                   <Link href="https://calendar.google.com/calendar/u/0?cid=YmUwYTEzZGM2YTI4NjdmN2RhMTE0NGQ0MzcwZWYyMjJjZTZhYWYzYjE1YjA2MmZhMzVlNzlmNjBjOGVkMjJiYUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" rel="noopener noreferrer">View in Official Calendar</Link>
                 </Button>
               </div>
@@ -76,7 +76,7 @@ export default function ThriveYourCareerYourStoryPage() {
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
               Registration details will be announced soon. Check back later or subscribe to the calendar.
             </p>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" size="lg">
               <Link href="https://calendar.google.com/calendar/u/0?cid=YmUwYTEzZGM2YTI4NjdmN2RhMTE0NGQ0MzcwZWYyMjJjZTZhYWYzYjE1YjA2MmZhMzVlNzlmNjBjOGVkMjJiYUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="w-4 h-4 mr-2" /> Open in Google Calendar
               </Link>

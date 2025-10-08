@@ -59,7 +59,7 @@ const mockPastEvents = [
 
 export default function EventsPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
+    <div className="min-h-screen bg-background">
       <EventsTimelineHero />
       <GoogleCalendarSection />
       <PastEventsGallery events={mockPastEvents} />

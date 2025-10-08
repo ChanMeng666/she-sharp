@@ -28,11 +28,26 @@ export default async function PricingPage() {
     getStripeProducts(),
   ]);
 
-  const basePlan = products.find((product) => product.name === 'Base');
-  const plusPlan = products.find((product) => product.name === 'Plus');
+  // Use fallback values when Stripe is not configured
+  const basePlan = products.find((product) => product.name === 'Base') || { id: 'base', name: 'Base' };
+  const plusPlan = products.find((product) => product.name === 'Plus') || { id: 'plus', name: 'Plus' };
 
-  const basePrice = prices.find((price) => price.productId === basePlan?.id);
-  const plusPrice = prices.find((price) => price.productId === plusPlan?.id);
+  const basePrice = prices.find((price) => price.productId === basePlan?.id) || { 
+    id: 'base-price', 
+    productId: 'base', 
+    unitAmount: 800, 
+    currency: 'usd', 
+    interval: 'month' as const,
+    trialPeriodDays: 7 
+  };
+  const plusPrice = prices.find((price) => price.productId === plusPlan?.id) || { 
+    id: 'plus-price', 
+    productId: 'plus', 
+    unitAmount: 1200, 
+    currency: 'usd', 
+    interval: 'month' as const,
+    trialPeriodDays: 7 
+  };
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -47,7 +62,7 @@ export default async function PricingPage() {
             'Unlimited Workspace Members',
             'Email Support',
           ]}
-          priceId={basePrice?.id}
+          priceId={basePrice?.id || 'base-price'}
         />
         <PricingCard
           name={plusPlan?.name || 'Plus'}
@@ -59,7 +74,7 @@ export default async function PricingPage() {
             'Early Access to New Features',
             '24/7 Support + Slack Access',
           ]}
-          priceId={plusPrice?.id}
+          priceId={plusPrice?.id || 'plus-price'}
         />
       </div>
     </main>

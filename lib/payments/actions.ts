@@ -1,23 +1,21 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { createCheckoutSession, createCustomerPortalSession } from './stripe';
+// import { createCheckoutSession, createCustomerPortalSession } from './stripe';
 import { withTeam } from '@/lib/auth/middleware';
 
-const STRIPE_ENABLED = !!(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_WEBHOOK_SECRET);
-
 export const checkoutAction = withTeam(async (formData, team) => {
-  if (!STRIPE_ENABLED) {
-    throw new Error('Stripe integration is not configured');
-  }
-  const priceId = formData.get('priceId') as string;
-  await createCheckoutSession({ team: team, priceId });
+  // Temporarily disabled - Stripe not configured
+  throw new Error('Stripe checkout is temporarily disabled. Please configure STRIPE_SECRET_KEY environment variable.');
+  
+  // const priceId = formData.get('priceId') as string;
+  // await createCheckoutSession({ team: team, priceId });
 });
 
 export const customerPortalAction = withTeam(async (_, team) => {
-  if (!STRIPE_ENABLED) {
-    throw new Error('Stripe integration is not configured');
-  }
-  const portalSession = await createCustomerPortalSession(team);
-  redirect(portalSession.url);
+  // Temporarily disabled - Stripe not configured
+  throw new Error('Stripe customer portal is temporarily disabled. Please configure STRIPE_SECRET_KEY environment variable.');
+  
+  // const portalSession = await createCustomerPortalSession(team);
+  // redirect(portalSession.url);
 });

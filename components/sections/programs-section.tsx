@@ -12,9 +12,6 @@ import {
   Calendar, 
   Users, 
   GraduationCap, 
-  ArrowRight, 
-  Clock, 
-  MapPin,
   MessageCircle,
   BookOpen,
   Briefcase
@@ -83,7 +80,7 @@ export function ProgramsSection() {
     <Section>
       <Container size="wide">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
+        <div className="text-center mb-12 md:mb-16 ">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
             Your Path to Success
           </h2>

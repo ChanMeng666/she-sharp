@@ -11,10 +11,10 @@ export const layoutSystem = {
   // Consistent spacing system
   spacing: {
     section: {
-      base: "py-16",
-      md: "md:py-20",
-      lg: "lg:py-24",
-      combined: "py-16 md:py-20 lg:py-24",
+      base: "py-24",
+      md: "md:py-32",
+      lg: "lg:py-40",
+      combined: "py-24 md:py-32 lg:py-40",
     },
     component: {
       base: "py-8",
