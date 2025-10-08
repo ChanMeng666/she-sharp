@@ -120,9 +120,12 @@
   --color-purple-mid: #c846ab;
   --color-purple-light: #f7e5f3;
   
+  /* Additional brand colors */
+  --color-indigo-deep: #454180; /* deep indigo */
   --color-periwinkle-dark: #8982ff;
+  --color-periwinkle-soft: #c4c1ff; /* soft periwinkle */
   --color-periwinkle-light: #f4f4fa;
-  
+
   --color-navy-dark: #1f1e44;
   --color-navy-light: #eaf2ff;
   
@@ -267,6 +270,9 @@
     --purple-light: 315 60% 95%;
     --periwinkle-dark: 244 100% 76%;
     --periwinkle-light: 248 33% 97%;
+    /* New brand tokens (HSL) */
+    --indigo-deep: 244 33% 38%; /* #454180 */
+    --periwinkle-soft: 243 100% 88%; /* #C4C1FF */
     --navy-dark: 241 25% 21%;
     --navy-light: 216 12% 97%;
     --mint-dark: 168 86% 83%;
