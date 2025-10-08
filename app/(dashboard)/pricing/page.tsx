@@ -6,7 +6,23 @@ import { SubmitButton } from './submit-button';
 // Prices are fresh for one hour max
 export const revalidate = 3600;
 
+const STRIPE_ENABLED = !!(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_WEBHOOK_SECRET);
+
 export default async function PricingPage() {
+  // If Stripe is not configured, show a message
+  if (!STRIPE_ENABLED) {
+    return (
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-navy-dark mb-4">Pricing</h1>
+          <p className="text-gray-600">
+            Pricing features are currently unavailable. Please contact support for more information.
+          </p>
+        </div>
+      </main>
+    );
+  }
+
   const [prices, products] = await Promise.all([
     getStripePrices(),
     getStripeProducts(),

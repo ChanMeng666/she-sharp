@@ -7,17 +7,22 @@ import { auth } from '@/lib/auth/auth.config';
 
 export async function getUser() {
   // First check for NextAuth session
-  const nextAuthSession = await auth();
-  if (nextAuthSession?.user?.id) {
-    const user = await db
-      .select()
-      .from(users)
-      .where(and(eq(users.id, parseInt(nextAuthSession.user.id)), isNull(users.deletedAt)))
-      .limit(1);
-    
-    if (user.length > 0) {
-      return user[0];
+  try {
+    const nextAuthSession = await auth();
+    if (nextAuthSession?.user?.id) {
+      const user = await db
+        .select()
+        .from(users)
+        .where(and(eq(users.id, parseInt(nextAuthSession.user.id)), isNull(users.deletedAt)))
+        .limit(1);
+
+      if (user.length > 0) {
+        return user[0];
+      }
     }
+  } catch (error) {
+    // If NextAuth session is invalid or corrupted, log and continue to fallback
+    console.warn('NextAuth session error (likely invalid cookie), falling back to custom session:', error);
   }
 
   // Fall back to custom session
