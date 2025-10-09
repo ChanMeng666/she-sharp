@@ -61,13 +61,13 @@ export const footerConfig = {
         { name: "In the Press", href: "/media/news-and-press" },
       ],
     },
-    {
-      title: "Connect",
-      links: [
-        { name: "Contact Us", href: "/contact" },
-        { name: "Support Us", href: "/donate" },
-      ],
-    },
+    // {
+    //   title: "Connect",
+    //   links: [
+    //     { name: "Contact Us", href: "/contact" },
+    //     { name: "Support Us", href: "/donate" },
+    //   ],
+    // },
   ] as FooterSection[],
 
   socialLinks: [
@@ -107,10 +107,10 @@ export const footerConfig = {
     { name: "Privacy Policy", href: "/privacy-policy" },
     { name: "Cookie Policy", href: "/cookie-policy" },
     { name: "Terms of Service", href: "/terms-of-service" },
-    { name: "Accessibility", href: "/accessibility" },
-    { name: "Security Policy", href: "/security-policy" },
-    { name: "Code of Conduct", href: "/code-of-conduct" },
-    { name: "Ambassador Code of Conduct", href: "/volunteers/code-of-conduct" },
+    // { name: "Accessibility", href: "/accessibility" },
+    // { name: "Security Policy", href: "/security-policy" },
+    // { name: "Code of Conduct", href: "/code-of-conduct" },
+    // { name: "Ambassador Code of Conduct", href: "/volunteers/code-of-conduct" },
   ] as FooterLink[],
 
   charityInfo: {
