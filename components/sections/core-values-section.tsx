@@ -33,7 +33,7 @@ const coreValues: CoreValue[] = [
 export function CoreValuesSection() {
   return (
     <section className="relative py-14 sm:py-16 md:py-20 bg-periwinkle-soft/50">
-      <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center mb-10 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading text-navy-dark">
             Our Core Values
@@ -44,13 +44,19 @@ export function CoreValuesSection() {
         </div>
 
         <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
-          <div>
+          <div className="relative">
+            {/* Background div with slight tilt */}
+            <div 
+              className="absolute bg-purple-dark rounded-4xl transform rotate-4 translate-x-[-10px] translate-y-[-10px]"
+              style={{ width: '700px', height: '480px' }}
+            ></div>
+            {/* Image positioned on top */}
             <Image
               src="/img/yourcareer.png"
               alt="Core Values"
               width={1000}
               height={1000}
-              className="rounded-4xl"
+              className="rounded-4xl relative z-10"
             />
           </div>
           <div>
@@ -58,7 +64,7 @@ export function CoreValuesSection() {
               {coreValues.map((value) => (
                 <li
                   key={value.title}
-                  className="rounded-2xl border border-border/50 backdrop-blur-sm p-5 sm:p-6 md:p-7transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-periwinkle-dark/25"
+                  className="rounded-2xl border border-border/50 backdrop-blur-sm p-5 sm:p-6 md:p-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-periwinkle-dark/25"
                 >
                   <div className="flex items-start gap-4">
                     <div className="inline-flex w-30 aspect-square items-center justify-center rounded-xl bg-white/70">

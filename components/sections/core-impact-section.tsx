@@ -1,149 +1,152 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Card, CardContent } from "@/components/ui/card";
-//import { Badge } from "@/components/ui/badge";
-import { Users, Building2, Calendar, TrendingUp } from "lucide-react";
-//import Iridescence, { brandColors } from "@/components/effects/iridescence";
 import { useInView } from "@/hooks/use-in-view";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
-// 统一的核心数据 - 解决数据不一致问题
-const coreStats = [
+type ImpactItem = {
+  title: string;
+  value: string;  
+  desc: string;
+};
+
+
+const impactData: ImpactItem[] = [
   {
+    title: "Active Members",
     value: "2200+",
-    label: "Active Members",
-
-    color: "purple",
+    desc: "Women in tech building connections and advancing careers.",
   },
   {
+    title: "Events Since 2014",
     value: "84+",
-    label: "Events Since 2014",
-
-    color: "periwinkle",
+    desc: "Workshops and conferences empowering women in tech.",
   },
   {
+    title: "Partner Companies",
     value: "50+",
-    label: "Partner Companies",
-
-    color: "mint",
+    desc: "Leading tech companies supporting our mission.",
   },
   {
+    title: "Career Success Stories",
     value: "500+",
-    label: "Career Success Stories",
-    color: "navy",
+    desc: "Women advancing careers through mentorship and networking.",
   },
 ];
+
+
+
+const parseTargetValue = (
+  value: string
+): { target: number; suffix: string } => {
+  const digits = value.match(/\d+/g);
+  const target = digits ? Number(digits.join("")) : 0;
+  const suffix = value.replace(/\d/g, "");
+  return { target, suffix };
+};
+
+const formatNumber = (num: number) =>
+  new Intl.NumberFormat(undefined).format(num);
+
+
+const AnimatedNumber: React.FC<{ target: number; animate: boolean }> = ({
+  target,
+  animate,
+}) => {
+  const [current, setCurrent] = React.useState(animate ? 0 : target);
+
+  React.useEffect(() => {
+    if (!animate) {
+      setCurrent(target);
+      return;
+    }
+    let raf = 0;
+    const durationMs = 2400; // a touch snappier
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / durationMs);
+      const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+      setCurrent(Math.round(target * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [animate, target]);
+
+  return <>{formatNumber(current)}</>;
+};
+
+
+function StatCard({
+  item,
+  animate,
+}: {
+  item: ImpactItem;
+  animate: boolean;
+}) {
+  return (
+    <div
+      role="group"
+      tabIndex={0}
+      className="rounded-2xl overflow-hidden bg-white border-1 border-navy-dark hover:bg-periwinkle-soft/50 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-within:-translate-y-0.5 focus-within:shadow-lg"
+    >
+       <div className="p-5 w-full h-80 flex flex-col justify-between text-navy-dark">
+        <h3 className="text-lg font-bold">{item.title}</h3>
+
+        <div className="text-right">
+          <div className="text-6xl font-extrabold tabular-nums tracking-tight mb-4 text-navy-dark">
+            {(() => {
+              const { target, suffix } = parseTargetValue(item.value);
+              return (
+                <>
+                  <AnimatedNumber target={target} animate={animate} />
+                  {" "}{suffix}
+                </>
+              );
+            })()}
+          </div>
+          <div className="h-px w-full mb-4 bg-navy-dark/90" />
+          <p className="text-navy-dark/80 text-sm leading-relaxed">
+            {item.desc}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 
 export function CoreImpactSection() {
   const { ref, inView } = useInView();
   const reduceMotion = usePrefersReducedMotion();
 
-  const parseTargetValue = (
-    value: string
-  ): { target: number; suffix: string } => {
-    const digitMatch = value.match(/\d+/g);
-    const target = digitMatch ? Number(digitMatch.join("")) : 0;
-    const suffix = value.replace(/\d/g, "");
-    return { target, suffix };
-  };
-
-  const formatNumber = (num: number): string => {
-    return new Intl.NumberFormat().format(num);
-  };
-
-  const AnimatedNumber = ({
-    target,
-    animate,
-  }: {
-    target: number;
-    animate: boolean;
-  }) => {
-    const [current, setCurrent] = React.useState(animate ? 0 : target);
-    React.useEffect(() => {
-      if (!animate) {
-        setCurrent(target);
-        return;
-      }
-      let raf = 0;
-      const durationMs = 3000;
-      const startTs = performance.now();
-      const tick = (now: number) => {
-        const elapsed = now - startTs;
-        const t = Math.min(1, elapsed / durationMs);
-        // easeOutCubic
-        const eased = 1 - Math.pow(1 - t, 3);
-        const next = Math.round(target * eased);
-        setCurrent(next);
-        if (t < 1) raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
-      return () => cancelAnimationFrame(raf);
-    }, [animate, target]);
-    return <>{formatNumber(current)}</>;
-  };
   return (
     <Section>
       <div ref={ref} className="relative">
-        {/* {inView && !reduceMotion && (
-          <div className="absolute inset-0 opacity-15 pointer-events-none">
-            <Iridescence
-              color={brandColors.testimonialsSky}
-              mouseReact={false}
-              amplitude={0.04}
-              speed={0.2}
-              className="w-full h-full"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/40 to-white/60" />
-          </div>
-        )} */}
         <Container size="full">
           {/* Header */}
           <div className="text-center mb-8 md:mb-20">
-            {/* <Badge className="mb-3 bg-purple-light text-purple-dark border-purple-mid">
-            Proven Results
-          </Badge> */}
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark">
               A Decade of Measurable Impact
             </h2>
           </div>
 
-          {/* Core Statistics */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {coreStats.map((stat) => {
-              return (
-                <Card
-                  key={stat.label}
-                  className="relative overflow-hidden group border border-[#454180]/50"
-                >
-                  <CardContent className="py-16 px-6 hover:bg-periwinkle-soft/50 transition-all duration-300" >
-                    <div className="text-3xl md:text-4xl font-bold text-navy-dark mb-10 font-heading">
-                      {(() => {
-                        const { target, suffix } = parseTargetValue(stat.value);
-                        const shouldAnimate = inView && !reduceMotion;
-                        return (
-                          <>
-                            <AnimatedNumber
-                              target={target}
-                              animate={shouldAnimate}
-                            />
-                            {suffix}
-                          </>
-                        );
-                      })()}
-                    </div>
-                    <div className="text-lg font-semibold text-navy-dark">
-                      {stat.label}
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
+           {/* Grid */}
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {impactData.map((item, i) => (
+              <StatCard
+                key={i}
+                item={item}
+                animate={inView && !reduceMotion}
+              />
+            ))}
           </div>
-
-          {/* Values and long summary removed to keep section focused on metrics */}
         </Container>
       </div>
     </Section>
