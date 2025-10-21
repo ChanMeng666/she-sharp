@@ -89,14 +89,14 @@ export function ProgramsSection() {
       <Section>
         <Container size="full">
           {/* Section Header */}
-          <div className="text-center mb-12 md:mb-16">
+          <div className="text-center mb-8 sm:mb-20">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
               Your Path to Success
             </h2>
           </div>
 
           {/* Accordion Layout */}
-          <div className="grid lg:grid-cols-2 gap-8 items-start">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
             {/* Left Column - Accordion */}
             <div className="space-y-4">
               {programs.map((program, index) => {
@@ -209,8 +209,13 @@ export function ProgramsSection() {
             </div>
 
             {/* Right Column - Image */}
-            <div className="relative">
-              <div className="relative w-full h-[600px] rounded-2xl overflow-hidden">
+            <div className="relative w-4/5 mx-auto">
+              {/* Background div with slight tilt */}
+              <div 
+                className="absolute bg-mint-dark rounded-2xl transform rotate-[-10deg] translate-x-[-10px] translate-y-[-10px]"
+                style={{ width: '100%', height: '500px' }}
+              ></div>
+              <div className="relative w-full h-[500px] rounded-2xl overflow-hidden z-10">
                 <Image
                   src={programs[lastSelectedProgram].image}
                   alt={programs[lastSelectedProgram].title}

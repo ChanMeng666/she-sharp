@@ -122,10 +122,10 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
     if (variant === 'mobile') {
       return (
         <div className="pt-4 border-t border-gray-200">
-          <Link href="/sign-in" className="w-full">
+          <Link href="/sign-up" className="w-full">
             <Button variant="default" size="lg" className="w-full justify-start">
               <User className="mr-2 h-4 w-4" />
-              Sign In
+              Membership
             </Button>
           </Link>
         </div>
@@ -134,9 +134,9 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
 
     return (
       <div className="flex items-center">
-        <Link href="/sign-in">
+        <Link href="/sign-up">
           <Button size="lg" variant="default">
-            Sign In
+            Membership
           </Button>
         </Link>
       </div>

@@ -14,7 +14,7 @@ export function UpcomingEventSection() {
   return (
     <Section id="upcoming-event" className="bg-mint-light">
         <div className="mx-auto max-w-7xl">
-          <div className="text-center mb-10 md:mb-16">
+          <div className="text-center mb-8 sm:mb-20">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark">
               Upcoming Event
             </h2>
@@ -42,11 +42,11 @@ export function UpcomingEventSection() {
 
             {/* Right side - Text content */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center">
-              <h3 className="text-2xl md:text-3xl font-bold text-navy-dark mb-6">
+              <h3 className="text-2xl font-bold text-navy-dark mb-12">
                 {upcomingEventDefault.title}
               </h3>
               
-              <div className="space-y-2 text-sm text-navy-dark/70 mb-6">
+              <div className="space-y-2 text-navy-dark mb-6">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   {upcomingEventDefault.date}
@@ -61,7 +61,7 @@ export function UpcomingEventSection() {
                 </div>
               </div>
 
-              <p className="text-navy-dark/70 text-base leading-relaxed mb-8">
+              <p className="text-navy-dark text-base leading-relaxed mb-8">
                 {upcomingEventDefault.description}
               </p>
 
