@@ -5,6 +5,7 @@ import { CoreValuesSection } from "@/components/sections/core-values-section";
 import { ProgramsSection } from "@/components/sections/programs-section";
 import { UpcomingEventSection } from "@/components/sections/upcoming-event-section";
 import { CommunityStoriesSection } from "@/components/sections/community-stories-section";
+import { CTASection } from "@/components/sections/cta-section";
 import { SponsorsSection } from "@/components/sections/sponsors-section";
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
       <ProgramsSection />
       <UpcomingEventSection />
       <CommunityStoriesSection />
+      <CTASection />
       <SponsorsSection />
     </>
   );

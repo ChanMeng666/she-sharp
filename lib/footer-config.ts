@@ -39,8 +39,8 @@ export const footerConfig = {
       title: "Programs",
       links: [
         { name: "All Events", href: "/events" },
-        { name: "Google Educator Conference", href: "/events/google-educator" },
         { name: "Mentorship Program", href: "/mentorship" },
+        { name: "Google Educator Conference", href: "/events/google-educator" },
       ],
     },
     {

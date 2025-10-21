@@ -3,188 +3,247 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Badge } from "@/components/ui/badge";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { 
-  Calendar, 
-  Users, 
-  GraduationCap, 
+import {
+  Calendar,
+  Users,
+  GraduationCap,
   MessageCircle,
   BookOpen,
-  Briefcase
+  Briefcase,
+  Plus,
+  Minus,
 } from "lucide-react";
-// Removed animated background for calmer reading experience
+import { useState } from "react";
 
 // 三大核心项目
 const programs = [
   {
     id: "events",
     title: "Events & Networking",
-    subtitle: "Connect with peers and industry leaders",
-    description: "Join our monthly events, workshops, and conferences designed to build meaningful professional relationships and expand your network in the tech industry.",
+    subtitle: "Connect with peers and leaders",
+    description:
+      "Join monthly events and workshops to build your network and learn from industry experts.",
     icon: Calendar,
     color: "purple",
-    image: "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/670c6faa065093d7fd557a81_66b08c577a2a3900c4c635f8_GEC23%20%281%29.jpg",
+    image:
+      "/img/security-event.jpg",
     features: [
-      { icon: Users, text: "Monthly networking meetups" },
-      { icon: MessageCircle, text: "Industry panel discussions" },
-      { icon: Calendar, text: "Annual THRIVE conference" }
+      { icon: Users, text: "Monthly meetups" },
+      { icon: MessageCircle, text: "Expert panels" },
+      { icon: Calendar, text: "Annual conference" },
     ],
-    stats: { primary: "Monthly", secondary: "Events hosted" },
+    stats: { primary: "Monthly", secondary: "Events" },
     cta: { text: "View Upcoming Events", href: "/events" },
-    highlight: "Next event: March 15"
+    highlight: "Next event: March 15",
   },
   {
     id: "mentorship",
     title: "Mentorship Program",
-    subtitle: "Accelerate your career with guidance",
-    description: "Get paired with experienced professionals who understand your journey. Our structured mentorship program provides personalized guidance for career advancement.",
+    subtitle: "Get career guidance",
+    description:
+      "Connect with experienced professionals for personalized career support and growth.",
     icon: Users,
-    color: "periwinkle", 
-    image: "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/670c6faa065093d7fd557a81_66b08c577a2a3900c4c635f8_GEC23%20%281%29.jpg",
+    color: "periwinkle",
+    image:
+      "/img/mentorship.jpg",
     features: [
       { icon: Users, text: "1-on-1 mentor matching" },
       { icon: Calendar, text: "Structured 6-month programs" },
-      { icon: Briefcase, text: "Career transition support" }
+      { icon: Briefcase, text: "Career transition support" },
     ],
     stats: { primary: "6-Month", secondary: "Programs" },
-    cta: { text: "Apply for Mentorship", href: "/mentorship" },
-    highlight: "Applications open"
+    cta: { text: "Apply Now", href: "/mentorship" },
+    highlight: "Applications open",
   },
   {
     id: "skills",
     title: "Skills Development",
-    subtitle: "Build expertise through hands-on learning",
-    description: "Enhance your technical and professional skills through workshops, online courses, and hands-on projects designed specifically for women in tech.",
+    subtitle: "Learn by doing",
+    description:
+      "Build technical and leadership skills through hands-on workshops and peer learning.",
     icon: GraduationCap,
     color: "mint",
-    image: "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/670c6faa065093d7fd557a81_66b08c577a2a3900c4c635f8_GEC23%20%281%29.jpg",
+    image:
+      "/img/AI.jpg",
     features: [
       { icon: BookOpen, text: "Technical workshops" },
       { icon: GraduationCap, text: "Professional development" },
-      { icon: Users, text: "Peer learning groups" }
+      { icon: Users, text: "Peer learning groups" },
     ],
     stats: { primary: "Weekly", secondary: "Workshops" },
     cta: { text: "Explore Workshops", href: "/events?type=workshop" },
-    highlight: "New courses monthly"
-  }
+    highlight: "New courses monthly",
+  },
 ];
 
 // Removed internal Next Event to avoid duplication with highlight section
 
 export function ProgramsSection() {
-  return (
-    <Section>
-      <Container size="wide">
-        {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16 ">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
-            Your Path to Success
-          </h2>
-          <p className="text-lg text-gray max-w-3xl mx-auto">
-            Three proven pathways designed to accelerate your career advancement through 
-            strategic networking, expert guidance, and continuous skill development.
-          </p>
-        </div>
+  const [activeProgram, setActiveProgram] = useState(0);
+  const [lastSelectedProgram, setLastSelectedProgram] = useState(0);
 
-        {/* Programs Grid */}
-        <div className="grid lg:grid-cols-3 gap-8">
-          {programs.map((program, index) => {
-            const Icon = program.icon;
-            const isLarge = index === 0; // First program gets featured treatment
-            
-            return (
-              <Card 
-                key={program.id}
-                className={`overflow-hidden hover:shadow-xl transition-all duration-300 group ${
-                  isLarge ? "lg:col-span-2 lg:row-span-1" : ""
-                }`}
-              >
-                {/* Program Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <AspectRatio ratio={isLarge ? 3/2 : 4/3}>
-                    <Image
-                      src={program.image}
-                      alt={program.title}
-                      fill
-                      sizes={isLarge ? "(max-width: 1024px) 100vw, 67vw" : "(max-width: 1024px) 100vw, 33vw"}
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </AspectRatio>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  
-                  {/* Highlight badge */}
-                  {program.highlight && (
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-white/90 text-navy-dark border-0">
-                        {program.highlight}
-                      </Badge>
+  return (
+    <>
+      <Section>
+        <Container size="full">
+          {/* Section Header */}
+          <div className="text-center mb-8 sm:mb-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
+              Your Path to Success
+            </h2>
+          </div>
+
+          {/* Accordion Layout */}
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            {/* Left Column - Accordion */}
+            <div className="space-y-4">
+              {programs.map((program, index) => {
+                const isActive = activeProgram === index;
+                const Icon = program.icon;
+
+                return (
+                  <div
+                    key={program.id}
+                    className={`rounded-2xl overflow-hidden transition-all duration-300 relative ${
+                      isActive
+                        ? "bg-navy-dark"
+                        : "bg-mint-dark/50 border border-mint-dark"
+                    }`}
+                  >
+                    {/* Accordion Header */}
+                    <button
+                      onClick={() => {
+                        if (isActive) {
+                          return;
+                        } else {
+                          setActiveProgram(index);
+                          setLastSelectedProgram(index);
+                        }
+                      }}
+                      className={`w-full p-6 text-left flex items-center justify-between transition-colors duration-200 ${
+                        isActive ? "text-white" : "text-navy-dark"
+                      }`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div
+                          className={`p-2.5 lg:p-3 border rounded-full bg-white/10 transition-all ${
+                            isActive
+                              ? "border-white"
+                              : "border-navy-dark"
+                          }`}
+                        >
+                          <Icon
+                            className={`h-5 w-5 ${
+                              isActive
+                                ? "text-white"
+                                : "text-navy-dark"
+                            }`}
+                          />
+                        </div>
+                        <div >
+                          <h3 className="text-2xl font-bold">{program.title}</h3>
+                          <p className={`${
+                            isActive ? "text-white" : "text-navy-dark/70"
+                          }`}>
+                            {program.subtitle}
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                          isActive
+                            ? "bg-white/20"
+                            : "bg-navy-dark"
+                        }`}
+                      >
+                        {isActive ? (
+                          <Minus className="w-4 h-4 text-white opacity-50" />
+                        ) : (
+                          <Plus className="w-4 h-4 text-white" />
+                        )}
+                      </div>
+                    </button>
+
+                    {/* Accordion Content */}
+                    <div 
+                      className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                        isActive ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                      }`}
+                    >
+                      <div className="px-6 pb-6 text-white">
+                        <p className="text-white/90 mb-6 leading-relaxed">
+                          {program.description}
+                        </p>
+
+                        {/* Features */}
+                        <ul className="space-y-3 mb-6">
+                          {program.features.map((feature, featureIndex) => {
+                            const FeatureIcon = feature.icon;
+                            return (
+                              <li
+                                key={featureIndex}
+                                className="flex items-center gap-3"
+                              >
+                                <FeatureIcon className="w-4 h-4 text-white/80 flex-shrink-0" />
+                                <span className="text-sm text-white/90">
+                                  {feature.text}
+                                </span>
+                              </li>
+                            );
+                          })}
+                        </ul>
+
+                        {/* CTA Button */}
+                        <Link href={program.cta.href}>
+                          <Button className="bg-white text-navy-dark hover:bg-white/90 hover:shadow-mint-dark/20" size="lg">
+                            {program.cta.text}
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
-                  )}
-                  
-                  {/* Stats overlay */}
-                  <div className="absolute bottom-4 right-4 text-right">
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Right Column - Image */}
+            <div className="relative w-4/5 mx-auto">
+              {/* Background div with slight tilt */}
+              <div 
+                className="absolute bg-mint-dark rounded-2xl transform rotate-[-10deg] translate-x-[-10px] translate-y-[-10px]"
+                style={{ width: '100%', height: '500px' }}
+              ></div>
+              <div className="relative w-full h-[500px] rounded-2xl overflow-hidden z-10">
+                <Image
+                  src={programs[lastSelectedProgram].image}
+                  alt={programs[lastSelectedProgram].title}
+                  fill
+                  className="object-cover transition-opacity duration-200 ease-in-out"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                
+                
+                {/* Image overlay content */}
+                <div className="absolute bottom-6 left-6 z-10 transition-all duration-500 ease-in-out">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg">
                     <div className="text-white">
-                      <div className="text-2xl font-bold">{program.stats.primary}</div>
-                      <div className="text-sm opacity-90">{program.stats.secondary}</div>
+                      <div className="text-3xl font-bold mb-1 transition-all duration-300">
+                        {programs[lastSelectedProgram].stats.primary}
+                      </div>
+                      <div className="text-lg opacity-90 transition-all duration-300">
+                        {programs[lastSelectedProgram].stats.secondary}
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                <CardHeader>
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className={`p-2 rounded-full ${
-                      program.color === "purple" ? "bg-purple-light/20" :
-                      program.color === "periwinkle" ? "bg-periwinkle-light/20" :
-                      "bg-mint-light/20"
-                    }`}>
-                      <Icon className={`w-5 h-5 ${
-                        program.color === "purple" ? "text-purple-dark" :
-                        program.color === "periwinkle" ? "text-periwinkle-dark" :
-                        "text-mint-dark"
-                      }`} />
-                    </div>
-                    <div>
-                      <CardTitle className="text-xl">{program.title}</CardTitle>
-                      <CardDescription className="text-sm">{program.subtitle}</CardDescription>
-                    </div>
-                  </div>
-                </CardHeader>
-                
-                <CardContent>
-                  <p className="text-gray mb-4 leading-relaxed">
-                    {program.description}
-                  </p>
-                  
-                  {/* Features */}
-                  <ul className="space-y-2 mb-6">
-                    {program.features.map((feature, featureIndex) => {
-                      const FeatureIcon = feature.icon;
-                      return (
-                        <li key={featureIndex} className="flex items-center gap-2">
-                          <FeatureIcon className="w-4 h-4 text-gray flex-shrink-0" />
-                          <span className="text-sm text-gray">{feature.text}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  
-                  <div className="text-center">
-                    <span className="text-sm text-gray italic">
-                      Discover these programs through our regular activities
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* Next event moved to UpcomingEventSection to avoid duplication */}
-      </Container>
-    </Section>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+    </>
   );
 }

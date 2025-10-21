@@ -44,7 +44,7 @@ export function SponsorsSection() {
     <Section className="overflow-hidden bg-mint-light ">
       <Container size="full">
         <div className="text-center mb-8 sm:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark">
             Thanks to Our Sponsors
           </h2>
           {/* <p className="text-base sm:text-lg text-gray max-w-2xl mx-auto px-4">

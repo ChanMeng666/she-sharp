@@ -96,16 +96,16 @@ export const navigationConfig: {
           icon: Calendar,
         },
         {
-          title: "Google Educator Conference",
-          href: "/events/google-educator",
-          description: "Annual education technology conference",
-          icon: Award,
-        },
-        {
           title: "Mentorship Program",
           href: "/mentorship",
           description: "Connect with mentors and grow your career",
           icon: Users,
+        },
+        {
+          title: "Google Educator Conference",
+          href: "/events/google-educator",
+          description: "Annual education technology conference",
+          icon: Award,
         },
       ],
     },
