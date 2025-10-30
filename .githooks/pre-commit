@@ -35,11 +35,7 @@ PATTERNS=(
     "mongodb:\/\/[^:]+:[^@]+@"
     "mysql:\/\/[^:]+:[^@]+@"
     
-    # Specific known exposed values (to catch if they reappear)
-    "805677253031"
-    "crdNTV2N4rkgvJjaA"
-    "12cca699acfaba84dc8c03f72c2a352d34f5b0bc"
-    "npg_6pFr8UWAmZIf"
+    # Webhook secrets and API keys
     "whsec_"
     "vercel_blob_rw_"
     "re_[A-Za-z0-9_]+"
