@@ -338,6 +338,7 @@
     @apply border-border;
   }
   body {
+    margin: 0;
     @apply bg-background text-foreground;
   }
 }
@@ -347,7 +348,7 @@
 */
 
 :root {
-  --background: hsl(0 0% 100%);
+  --background: var(--navy-light);
   --foreground: hsl(242 39% 19%); /* navy-dark #1f1e44 */
   --card: hsl(0 0% 100%);
   --card-foreground: hsl(240 10% 3.9%);

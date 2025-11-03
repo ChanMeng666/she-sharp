@@ -154,7 +154,7 @@ export function Chatbot() {
             className={cn(
               'fixed z-50',
               // Mobile layout (default) - fullscreen with margins
-              'top-4 right-4 bottom-4 left-4',
+              'top-4 right-4 bottom-0 left-4',
               // Desktop layout (sm and up) - positioned dialog
               'sm:top-auto sm:left-auto',
               'sm:bottom-4 sm:right-4',
@@ -169,13 +169,13 @@ export function Chatbot() {
             transition={{ duration: 0.2 }}
             className="h-full w-full"
           >
-            <Card className="flex flex-col overflow-hidden shadow-2xl border-purple-dark/20 h-full bg-white p-0">
+            <Card className="flex flex-col overflow-hidden shadow-2xl border-purple-dark/20 h-full bg-white">
               <div className="flex items-center justify-between bg-gradient-to-r from-purple-dark to-periwinkle-dark p-4 text-white flex-shrink-0">
                 <div className="flex items-center gap-3">
                   <MessageSquare size={22} />
                   <h3 className="font-semibold text-lg">She Sharp Assistant</h3>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center ">
                   <Button
                     size="icon"
                     variant="ghost"

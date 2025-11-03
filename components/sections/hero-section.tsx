@@ -10,7 +10,7 @@ import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
 export function HeroSection() {
   return (
-    <section className="relative h-[85vh] sm:h-[90vh] md:h-[92vh] rounded-b-[100px] flex items-center overflow-hidden -mt-12 sm:-mt-16 pt-32 md:pt-18">
+    <section className="relative h-[85vh] sm:h-[90vh] md:h-[92vh] rounded-b-[100px] flex items-center overflow-hidden pt-20">
       {/* Brand Color Iridescence Background */}
       <div className="absolute inset-0">
         <Iridescence

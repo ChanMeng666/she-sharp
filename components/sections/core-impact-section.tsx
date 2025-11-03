@@ -85,15 +85,17 @@ const AnimatedNumber: React.FC<{ target: number; animate: boolean }> = ({
 function StatCard({
   item,
   animate,
+  className,
 }: {
   item: ImpactItem;
   animate: boolean;
+  className?: string;
 }) {
   return (
     <div
       role="group"
       tabIndex={0}
-      className="rounded-2xl overflow-hidden bg-white border-1 border-navy-dark/20 shadow-lg shadow-periwinkle-soft/50  hover:border-navy-dark/10 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-within:-translate-y-0.5 focus-within:shadow-lg"
+      className={`rounded-2xl overflow-hidden bg-white border-1 border-navy-dark/20 shadow-lg shadow-periwinkle-soft/50  hover:border-navy-dark/10 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-within:-translate-y-0.5 focus-within:shadow-lg ${className ?? ""}`}
     >
        <div className="p-5 w-full h-80 flex flex-col justify-between text-navy-dark">
         <h3 className="text-lg font-bold">{item.title}</h3>
@@ -144,6 +146,7 @@ export function CoreImpactSection() {
                 key={i}
                 item={item}
                 animate={inView && !reduceMotion}
+                className="hover:scale-105 hover:bg-periwinkle-soft/50 transition-all duration-300"
               />
             ))}
           </div>
