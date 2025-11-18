@@ -37,7 +37,7 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
             </div>
           </div>
         </header>
-        <div className="h-full p-4 md:p-6">
+        <div className="h-full p-3 sm:p-4 md:p-6 lg:p-8">
           <BreadcrumbNav />
           {children}
         </div>

@@ -276,7 +276,7 @@ export default function MentorApplications() {
                       </div>
 
                       {/* Additional Info */}
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <p className="text-sm font-medium text-gray-700 mb-1">Years of Experience</p>
                           <p className="text-sm text-gray-600">{application.yearsExperience} years</p>

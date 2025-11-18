@@ -166,7 +166,7 @@ export default function EventManagement() {
     <div className="space-y-6">
       {/* Tabs for different views */}
       <Tabs defaultValue="list" className="w-full">
-        <TabsList className="grid w-full max-w-md grid-cols-3">
+        <TabsList className="grid w-full max-w-full sm:max-w-md grid-cols-3">
           <TabsTrigger value="list">List View</TabsTrigger>
           <TabsTrigger value="calendar">Calendar</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>

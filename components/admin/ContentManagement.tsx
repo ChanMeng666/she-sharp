@@ -279,7 +279,7 @@ export default function ContentManagement() {
 
       {/* Content Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full max-w-md grid-cols-4">
+        <TabsList className="grid w-full max-w-full sm:max-w-md grid-cols-4">
           <TabsTrigger value="resources">Resources</TabsTrigger>
           <TabsTrigger value="media">Media</TabsTrigger>
           <TabsTrigger value="newsletters">Newsletters</TabsTrigger>
