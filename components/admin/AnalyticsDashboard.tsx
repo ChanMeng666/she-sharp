@@ -347,7 +347,7 @@ export default function AnalyticsDashboard() {
           </CardAction>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={userGrowthConfig} className="h-[350px] w-full">
+          <ChartContainer config={userGrowthConfig} className="h-[250px] sm:h-[300px] lg:h-[350px] w-full">
             <AreaChart data={userGrowthData}>
               <defs>
                 <linearGradient id="fillUsers" x1="0" y1="0" x2="0" y2="1">
@@ -410,7 +410,7 @@ export default function AnalyticsDashboard() {
             <CardDescription>Breakdown of events by type</CardDescription>
           </CardHeader>
           <CardContent>
-            <ChartContainer config={eventConfig} className="h-[300px] w-full">
+            <ChartContainer config={eventConfig} className="h-[200px] sm:h-[250px] lg:h-[300px] w-full">
               <PieChart>
                 <ChartTooltip content={<ChartTooltipContent hideLabel />} />
                 <Pie
@@ -439,7 +439,7 @@ export default function AnalyticsDashboard() {
             <CardDescription>Meeting statistics and engagement</CardDescription>
           </CardHeader>
           <CardContent>
-            <ChartContainer config={engagementConfig} className="h-[300px] w-full">
+            <ChartContainer config={engagementConfig} className="h-[200px] sm:h-[250px] lg:h-[300px] w-full">
               <BarChart data={engagementData}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis
@@ -475,7 +475,7 @@ export default function AnalyticsDashboard() {
                 <tr className="border-b">
                   <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Category</th>
                   <th className="text-right py-3 px-4 text-sm font-medium text-muted-foreground">Current</th>
-                  <th className="text-right py-3 px-4 text-sm font-medium text-muted-foreground">Period</th>
+                  <th className="text-right py-3 px-4 text-sm font-medium text-muted-foreground hidden sm:table-cell">Period</th>
                   <th className="text-right py-3 px-4 text-sm font-medium text-muted-foreground">Change</th>
                 </tr>
               </thead>
@@ -506,7 +506,7 @@ export default function AnalyticsDashboard() {
                       <td className="text-right py-3 px-4 text-sm font-semibold tabular-nums">
                         {row.current.toLocaleString()}
                       </td>
-                      <td className="text-right py-3 px-4 text-sm text-muted-foreground tabular-nums">
+                      <td className="text-right py-3 px-4 text-sm text-muted-foreground tabular-nums hidden sm:table-cell">
                         {row.period.toLocaleString()}
                       </td>
                       <td className="text-right py-3 px-4">

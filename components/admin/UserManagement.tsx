@@ -196,8 +196,8 @@ export default function UserManagement() {
       </CardHeader>
       <CardContent>
         {/* Filters and Search */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
-          <div className="flex-1 relative">
+        <div className="flex flex-col gap-4 mb-6">
+          <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <Input
               type="search"
@@ -208,10 +208,10 @@ export default function UserManagement() {
               className="pl-10"
             />
           </div>
-          
-          <div className="flex gap-2">
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:gap-2 gap-2">
             <Select value={roleFilter} onValueChange={setRoleFilter}>
-              <SelectTrigger className="w-32">
+              <SelectTrigger className="w-full lg:w-32">
                 <SelectValue placeholder="All Roles" />
               </SelectTrigger>
               <SelectContent>
@@ -223,7 +223,7 @@ export default function UserManagement() {
             </Select>
 
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-32">
+              <SelectTrigger className="w-full lg:w-32">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent>
@@ -235,7 +235,7 @@ export default function UserManagement() {
             </Select>
 
             <Select value={membershipFilter} onValueChange={setMembershipFilter}>
-              <SelectTrigger className="w-32">
+              <SelectTrigger className="w-full lg:w-32">
                 <SelectValue placeholder="All Tiers" />
               </SelectTrigger>
               <SelectContent>
@@ -246,7 +246,7 @@ export default function UserManagement() {
               </SelectContent>
             </Select>
 
-            <Button variant="outline" size="icon">
+            <Button variant="outline" size="icon" className="col-span-2 md:col-span-1">
               <Filter className="w-4 h-4" />
             </Button>
           </div>
@@ -288,8 +288,120 @@ export default function UserManagement() {
           </div>
         )}
 
-        {/* Users Table */}
-        <div className="overflow-x-auto">
+        {/* Mobile Card View */}
+        <div className="block lg:hidden space-y-3">
+          {users.map((user) => (
+            <Card key={user.id} className="p-4">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-start space-x-3 flex-1">
+                  <Checkbox
+                    checked={selectedUsers.includes(user.id)}
+                    onCheckedChange={(checked) => handleSelectUser(user.id, checked as boolean)}
+                  />
+                  <Avatar className="w-12 h-12">
+                    <AvatarImage src={user.image || undefined} alt={user.name || ''} />
+                    <AvatarFallback className="bg-purple-100 text-purple-700">
+                      {getInitials(user.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-gray-900 truncate">{user.name || 'Unknown User'}</p>
+                    <p className="text-sm text-gray-500 truncate">{user.email}</p>
+                  </div>
+                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <MoreVertical className="w-4 h-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <Eye className="w-4 h-4 mr-2" />
+                      View Details
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Edit className="w-4 h-4 mr-2" />
+                      Edit User
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Shield className="w-4 h-4 mr-2" />
+                      Manage Permissions
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Mail className="w-4 h-4 mr-2" />
+                      Send Email
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="text-red-600">
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Delete User
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">Roles:</span>
+                  <div className="flex flex-wrap gap-1 justify-end">
+                    {user.roles.map((role) => (
+                      <Badge
+                        key={role}
+                        variant="secondary"
+                        className={cn('text-xs', getRoleBadgeColor(role))}
+                      >
+                        {role}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">Membership:</span>
+                  <Badge
+                    variant="secondary"
+                    className={cn('text-xs', getMembershipBadgeColor(user.membershipTier))}
+                  >
+                    {user.membershipTier}
+                  </Badge>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">Status:</span>
+                  <Badge
+                    variant={user.status === 'active' ? 'default' : 'secondary'}
+                    className={cn(
+                      'text-xs',
+                      user.status === 'active' && 'bg-green-100 text-green-700',
+                      user.status === 'inactive' && 'bg-gray-100 text-gray-700',
+                      user.status === 'suspended' && 'bg-red-100 text-red-700'
+                    )}
+                  >
+                    {user.status}
+                  </Badge>
+                </div>
+
+                <div className="flex items-center justify-between pt-2 border-t">
+                  <span className="text-gray-500">Joined:</span>
+                  <span className="text-gray-700">{new Date(user.createdAt).toLocaleDateString()}</span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">Last Active:</span>
+                  <span className="text-gray-700">
+                    {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}
+                  </span>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden lg:block overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>

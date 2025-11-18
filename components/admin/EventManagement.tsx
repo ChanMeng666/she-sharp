@@ -176,8 +176,8 @@ export default function EventManagement() {
           {/* Filters and Actions */}
           <Card>
             <CardContent className="p-6">
-              <div className="flex flex-col md:flex-row gap-4">
-                <div className="flex-1 relative">
+              <div className="flex flex-col gap-4">
+                <div className="relative w-full">
                   <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <Input
                     type="search"
@@ -187,10 +187,10 @@ export default function EventManagement() {
                     className="pl-10"
                   />
                 </div>
-                
-                <div className="flex gap-2">
+
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:gap-2 gap-2">
                   <Select value={typeFilter} onValueChange={setTypeFilter}>
-                    <SelectTrigger className="w-40">
+                    <SelectTrigger className="w-full lg:w-40">
                       <SelectValue placeholder="Event Type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -204,7 +204,7 @@ export default function EventManagement() {
                   </Select>
 
                   <Select value={statusFilter} onValueChange={setStatusFilter}>
-                    <SelectTrigger className="w-40">
+                    <SelectTrigger className="w-full lg:w-40">
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>
                     <SelectContent>
@@ -216,12 +216,12 @@ export default function EventManagement() {
                     </SelectContent>
                   </Select>
 
-                  <Button variant="outline" size="icon">
+                  <Button variant="outline" size="icon" className="col-span-2 md:col-span-1">
                     <Filter className="w-4 h-4" />
                   </Button>
 
-                  <Link href="/dashboard/admin/events/new">
-                    <Button className="bg-purple-600 hover:bg-purple-700">
+                  <Link href="/dashboard/admin/events/new" className="col-span-2 md:col-span-3 lg:col-span-1">
+                    <Button className="bg-purple-600 hover:bg-purple-700 w-full">
                       <Plus className="w-4 h-4 mr-2" />
                       Create Event
                     </Button>
@@ -240,7 +240,119 @@ export default function EventManagement() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="overflow-x-auto">
+              {/* Mobile Card View */}
+              <div className="block lg:hidden space-y-3">
+                {filteredEvents.map((event) => {
+                  const percentage = getRegistrationPercentage(
+                    event.currentRegistrations,
+                    event.capacity
+                  );
+
+                  return (
+                    <Card key={event.id} className="p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <Badge
+                              variant="secondary"
+                              className={cn('text-xs', getEventTypeColor(event.eventType))}
+                            >
+                              {event.eventType}
+                            </Badge>
+                            <span className={cn('text-xs font-medium', getStatusColor(event.status))}>
+                              {event.status}
+                            </span>
+                          </div>
+                          <h3 className="font-medium text-gray-900 mb-1">{event.title}</h3>
+                          <p className="text-sm text-gray-500 line-clamp-2">{event.description}</p>
+                        </div>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                              <MoreVertical className="w-4 h-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                              <Eye className="w-4 h-4 mr-2" />
+                              View Details
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <Edit className="w-4 h-4 mr-2" />
+                              Edit Event
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <Users className="w-4 h-4 mr-2" />
+                              Manage Registrations
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <Download className="w-4 h-4 mr-2" />
+                              Export Attendees
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className="text-red-600">
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              Cancel Event
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+
+                      <div className="space-y-2 text-sm border-t pt-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1 text-gray-600">
+                            <CalendarClock className="w-4 h-4" />
+                            <span>{new Date(event.startTime).toLocaleDateString()}</span>
+                          </div>
+                          <div className="flex items-center gap-1 text-gray-500">
+                            <Clock className="w-4 h-4" />
+                            <span>
+                              {new Date(event.startTime).toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-gray-600">
+                          {getLocationIcon(event.locationType)}
+                          <div>
+                            <span className="capitalize">{event.locationType.replace('_', ' ')}</span>
+                            {event.locationDetails.venue && (
+                              <span className="text-gray-500"> • {event.locationDetails.venue}</span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="space-y-1 pt-2">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-gray-500">Registration:</span>
+                            <span className="font-medium">
+                              {event.currentRegistrations}/{event.capacity} ({percentage}%)
+                            </span>
+                          </div>
+                          <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className={cn(
+                                'h-full transition-all',
+                                percentage >= 90 ? 'bg-red-500' :
+                                percentage >= 70 ? 'bg-yellow-500' : 'bg-green-500'
+                              )}
+                              style={{ width: `${percentage}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+
+              {/* Desktop Table View */}
+              <div className="hidden lg:block overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -259,7 +371,7 @@ export default function EventManagement() {
                         event.currentRegistrations,
                         event.capacity
                       );
-                      
+
                       return (
                         <TableRow key={event.id}>
                           <TableCell>
@@ -318,7 +430,7 @@ export default function EventManagement() {
                                 <div
                                   className={cn(
                                     'h-full transition-all',
-                                    percentage >= 90 ? 'bg-red-500' : 
+                                    percentage >= 90 ? 'bg-red-500' :
                                     percentage >= 70 ? 'bg-yellow-500' : 'bg-green-500'
                                   )}
                                   style={{ width: `${percentage}%` }}

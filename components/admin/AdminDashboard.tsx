@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import {
   Users,
+  User,
   UserCheck,
   Calendar,
   TrendingUp,
@@ -69,6 +70,8 @@ interface DashboardMetrics {
 export default function AdminDashboard({ userId }: AdminDashboardProps) {
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [recentActivity, setRecentActivity] = useState<any[]>([]);
+  const [pendingTasks, setPendingTasks] = useState<any[]>([]);
+  const [totalTasksCount, setTotalTasksCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -77,9 +80,10 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
 
   const fetchDashboardData = async () => {
     try {
-      const [metricsRes, activityRes] = await Promise.all([
+      const [metricsRes, activityRes, tasksRes] = await Promise.all([
         fetch('/api/admin/dashboard'),
-        fetch('/api/admin/activity?limit=10'),
+        fetch('/api/admin/activity?limit=5'),
+        fetch('/api/admin/tasks/pending'),
       ]);
 
       if (metricsRes.ok) {
@@ -91,10 +95,59 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
         const activityData = await activityRes.json();
         setRecentActivity(activityData.activities || []);
       }
+
+      if (tasksRes.ok) {
+        const tasksData = await tasksRes.json();
+        setPendingTasks(tasksData.tasks || []);
+        setTotalTasksCount(tasksData.totalCount || 0);
+      }
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Helper function to get icon and type based on activity action
+  const getActivityDisplay = (action: string) => {
+    const lowerAction = action.toLowerCase();
+
+    if (lowerAction.includes('user') && lowerAction.includes('register')) {
+      return { icon: User, type: 'success' as const };
+    } else if (lowerAction.includes('mentor') && lowerAction.includes('appli')) {
+      return { icon: GraduationCap, type: 'warning' as const };
+    } else if (lowerAction.includes('mentor') && lowerAction.includes('approv')) {
+      return { icon: CheckCircle, type: 'success' as const };
+    } else if (lowerAction.includes('mentor') && lowerAction.includes('reject')) {
+      return { icon: XCircle, type: 'error' as const };
+    } else if (lowerAction.includes('event')) {
+      return { icon: Calendar, type: 'info' as const };
+    } else if (lowerAction.includes('mentorship') && lowerAction.includes('complet')) {
+      return { icon: Award, type: 'success' as const };
+    } else if (lowerAction.includes('login') && lowerAction.includes('fail')) {
+      return { icon: AlertCircle, type: 'error' as const };
+    } else {
+      return { icon: Activity, type: 'info' as const };
+    }
+  };
+
+  // Helper function to format relative time
+  const getRelativeTime = (timestamp: string) => {
+    const now = new Date();
+    const activityTime = new Date(timestamp);
+    const diffInSeconds = Math.floor((now.getTime() - activityTime.getTime()) / 1000);
+
+    if (diffInSeconds < 60) {
+      return 'Just now';
+    } else if (diffInSeconds < 3600) {
+      const minutes = Math.floor(diffInSeconds / 60);
+      return `${minutes}m ago`;
+    } else if (diffInSeconds < 86400) {
+      const hours = Math.floor(diffInSeconds / 3600);
+      return `${hours}h ago`;
+    } else {
+      const days = Math.floor(diffInSeconds / 86400);
+      return `${days}d ago`;
     }
   };
 
@@ -244,7 +297,7 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
           <CardDescription>Common administrative tasks</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             <Link
               href="/dashboard/admin/mentors/applications"
               className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-accent transition-colors group"
@@ -323,38 +376,46 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              {[
-                { icon: UserCheck, action: 'New user registered', user: 'Emily Chen', time: '2m ago', type: 'success' },
-                { icon: GraduationCap, action: 'Mentor application', user: 'Sarah Johnson', time: '15m ago', type: 'warning' },
-                { icon: Calendar, action: 'Event created', user: 'THRIVE Workshop', time: '1h ago', type: 'info' },
-                { icon: Award, action: 'Mentorship completed', user: 'Alex & Jamie', time: '3h ago', type: 'success' },
-                { icon: AlertCircle, action: 'Failed login', user: 'unknown@email.com', time: '5h ago', type: 'error' },
-              ].map((activity, idx) => (
-                <div key={idx} className="flex items-start gap-3 p-2 rounded-lg hover:bg-accent transition-colors">
-                  <div className={cn(
-                    "p-2 rounded-lg shrink-0",
-                    activity.type === 'success' && "bg-green-500/10",
-                    activity.type === 'warning' && "bg-yellow-500/10",
-                    activity.type === 'info' && "bg-blue-500/10",
-                    activity.type === 'error' && "bg-red-500/10"
-                  )}>
-                    <activity.icon className={cn(
-                      "w-4 h-4",
-                      activity.type === 'success' && "text-green-600 dark:text-green-400",
-                      activity.type === 'warning' && "text-yellow-600 dark:text-yellow-400",
-                      activity.type === 'info' && "text-blue-600 dark:text-blue-400",
-                      activity.type === 'error' && "text-red-600 dark:text-red-400"
-                    )} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium">{activity.action}</p>
-                    <p className="text-xs text-muted-foreground truncate">{activity.user}</p>
-                  </div>
-                  <span className="text-xs text-muted-foreground shrink-0">{activity.time}</span>
-                </div>
-              ))}
-            </div>
+            {recentActivity.length > 0 ? (
+              <div className="space-y-3">
+                {recentActivity.map((activity) => {
+                  const { icon: Icon, type } = getActivityDisplay(activity.action);
+                  return (
+                    <div key={activity.id} className="flex items-start gap-3 p-2 rounded-lg hover:bg-accent transition-colors">
+                      <div className={cn(
+                        "p-2 rounded-lg shrink-0",
+                        type === 'success' && "bg-green-500/10",
+                        type === 'warning' && "bg-yellow-500/10",
+                        type === 'info' && "bg-blue-500/10",
+                        type === 'error' && "bg-red-500/10"
+                      )}>
+                        <Icon className={cn(
+                          "w-4 h-4",
+                          type === 'success' && "text-green-600 dark:text-green-400",
+                          type === 'warning' && "text-yellow-600 dark:text-yellow-400",
+                          type === 'info' && "text-blue-600 dark:text-blue-400",
+                          type === 'error' && "text-red-600 dark:text-red-400"
+                        )} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium">{activity.action.replace(/_/g, ' ')}</p>
+                        <p className="text-xs text-muted-foreground truncate">
+                          {activity.userName || activity.userEmail || 'System'}
+                        </p>
+                      </div>
+                      <span className="text-xs text-muted-foreground shrink-0">
+                        {getRelativeTime(activity.timestamp)}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <Activity className="h-12 w-12 text-muted-foreground/50 mb-3" />
+                <p className="text-sm text-muted-foreground">No recent activity</p>
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -363,38 +424,39 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Pending Tasks</CardTitle>
-              <Badge variant="outline">{data.mentorship.pendingApplications + 20} tasks</Badge>
+              <Badge variant="outline">{totalTasksCount} tasks</Badge>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2">
-              {[
-                { task: 'Review mentor applications', count: data.mentorship.pendingApplications, priority: 'high', href: '/dashboard/admin/mentors/applications' },
-                { task: 'Approve event registrations', count: 12, priority: 'medium', href: '/dashboard/admin/events/registrations' },
-                { task: 'Moderate content', count: 3, priority: 'low', href: '/dashboard/admin/content/resources' },
-                { task: 'Process membership upgrades', count: 5, priority: 'medium', href: '/dashboard/admin/settings/membership' },
-                { task: 'Review system logs', count: 1, priority: 'low', href: '/dashboard/admin/settings/audit' },
-              ].map((task, idx) => (
-                <Link
-                  key={idx}
-                  href={task.href}
-                  className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent transition-colors group"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={cn(
-                      "w-2 h-2 rounded-full shrink-0",
-                      task.priority === 'high' && "bg-red-500",
-                      task.priority === 'medium' && "bg-yellow-500",
-                      task.priority === 'low' && "bg-green-500"
-                    )} />
-                    <span className="text-sm font-medium">{task.task}</span>
-                  </div>
-                  <Badge variant="secondary" className="text-xs">
-                    {task.count}
-                  </Badge>
-                </Link>
-              ))}
-            </div>
+            {pendingTasks.length > 0 ? (
+              <div className="space-y-2">
+                {pendingTasks.map((task, idx) => (
+                  <Link
+                    key={idx}
+                    href={task.href}
+                    className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent transition-colors group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={cn(
+                        "w-2 h-2 rounded-full shrink-0",
+                        task.priority === 'high' && "bg-red-500",
+                        task.priority === 'medium' && "bg-yellow-500",
+                        task.priority === 'low' && "bg-green-500"
+                      )} />
+                      <span className="text-sm font-medium">{task.task}</span>
+                    </div>
+                    <Badge variant="secondary" className="text-xs">
+                      {task.count}
+                    </Badge>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <CheckCircle className="h-12 w-12 text-muted-foreground/50 mb-3" />
+                <p className="text-sm text-muted-foreground">No pending tasks</p>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
