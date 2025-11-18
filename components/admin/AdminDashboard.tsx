@@ -185,7 +185,7 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
         <Card className="@container/card">
           <CardHeader>
             <CardDescription>Total Users</CardDescription>
-            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+            <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
               {data.users.total.toLocaleString()}
             </CardTitle>
             <CardAction>
@@ -218,7 +218,7 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
         <Card className="@container/card">
           <CardHeader>
             <CardDescription>Mentorship Program</CardDescription>
-            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+            <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
               {data.mentorship.activePairs}
             </CardTitle>
             <CardAction>
@@ -243,7 +243,7 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
         <Card className="@container/card">
           <CardHeader>
             <CardDescription>Events</CardDescription>
-            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+            <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
               {data.events.upcoming}
             </CardTitle>
             <CardAction>
@@ -268,7 +268,7 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
         <Card className="@container/card">
           <CardHeader>
             <CardDescription>Content Library</CardDescription>
-            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+            <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
               {data.content.resources + data.content.blogPosts}
             </CardTitle>
             <CardAction>

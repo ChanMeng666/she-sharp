@@ -281,7 +281,7 @@ export default function AnalyticsDashboard() {
           <Card key={stat.metric} className="@container/card">
             <CardHeader>
               <CardDescription>{stat.metric}</CardDescription>
-              <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+              <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
                 {stat.metric === 'Average Meetings' ? stat.value.toFixed(1) : stat.value.toLocaleString()}
                 {stat.metric === 'Event Attendance' && '%'}
               </CardTitle>

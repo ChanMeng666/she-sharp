@@ -155,7 +155,7 @@ export default function DynamicDashboard() {
             <Card className="@container/card">
               <CardHeader>
                 <CardDescription>Current Mentees</CardDescription>
-                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
                   {mentor.currentMentees}/{mentor.maxMentees}
                 </CardTitle>
                 <CardAction>
@@ -188,7 +188,7 @@ export default function DynamicDashboard() {
             <Card className="@container/card">
               <CardHeader>
                 <CardDescription>Total Meetings</CardDescription>
-                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
                   {stats.totalMeetings}
                 </CardTitle>
                 <CardAction>
@@ -213,7 +213,7 @@ export default function DynamicDashboard() {
             <Card className="@container/card">
               <CardHeader>
                 <CardDescription>Meeting Hours</CardDescription>
-                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
                   {stats.totalMeetingHours}h
                 </CardTitle>
                 <CardAction>
@@ -238,7 +238,7 @@ export default function DynamicDashboard() {
             <Card className="@container/card">
               <CardHeader>
                 <CardDescription>Resources Shared</CardDescription>
-                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
                   {stats.resourcesUploaded}
                 </CardTitle>
                 <CardAction>
@@ -299,7 +299,7 @@ export default function DynamicDashboard() {
             <Card className="@container/card">
               <CardHeader>
                 <CardDescription>Active Mentors</CardDescription>
-                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
                   {mentee.mentors.length}
                 </CardTitle>
                 <CardAction>
@@ -322,7 +322,7 @@ export default function DynamicDashboard() {
             <Card className="@container/card">
               <CardHeader>
                 <CardDescription>Sessions Attended</CardDescription>
-                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
                   {stats.completedMeetings}
                 </CardTitle>
                 <CardAction>
@@ -345,7 +345,7 @@ export default function DynamicDashboard() {
             <Card className="@container/card">
               <CardHeader>
                 <CardDescription>Events Registered</CardDescription>
-                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
                   {stats.eventsRegistered}
                 </CardTitle>
                 <CardAction>
@@ -368,7 +368,7 @@ export default function DynamicDashboard() {
             <Card className="@container/card">
               <CardHeader>
                 <CardDescription>Resources Accessed</CardDescription>
-                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
                   {stats.resourcesAccessed}
                 </CardTitle>
                 <CardAction>
