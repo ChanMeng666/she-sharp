@@ -72,77 +72,17 @@ export default function MentorApplications() {
     try {
       setLoading(true);
       const response = await fetch(`/api/admin/mentors/applications?status=${filter}`);
-      
+
       if (response.ok) {
         const data = await response.json();
         setApplications(data.applications || []);
       }
     } catch (error) {
       console.error('Failed to fetch mentor applications:', error);
-      // Use mock data for demonstration
-      setApplications(generateMockApplications());
+      setApplications([]);
     } finally {
       setLoading(false);
     }
-  };
-
-  const generateMockApplications = (): MentorApplication[] => {
-    return [
-      {
-        id: 1,
-        userId: 101,
-        user: {
-          name: 'Dr. Sarah Johnson',
-          email: 'sarah.johnson@techcorp.com',
-          image: null,
-        },
-        expertiseAreas: ['Machine Learning', 'Data Science', 'Python'],
-        yearsExperience: 8,
-        company: 'TechCorp Inc.',
-        jobTitle: 'Senior Data Scientist',
-        bio: 'Passionate about mentoring women in STEM. I have been working in data science for 8 years and love helping others navigate their career paths. My expertise includes machine learning, deep learning, and statistical analysis.',
-        linkedinUrl: 'https://linkedin.com/in/sarahjohnson',
-        availabilityHoursPerMonth: 10,
-        submittedAt: '2024-12-18T10:30:00Z',
-        status: 'pending',
-      },
-      {
-        id: 2,
-        userId: 102,
-        user: {
-          name: 'Emily Chen',
-          email: 'emily.chen@innovate.io',
-          image: null,
-        },
-        expertiseAreas: ['Frontend Development', 'React', 'UI/UX Design'],
-        yearsExperience: 6,
-        company: 'Innovate.io',
-        jobTitle: 'Lead Frontend Engineer',
-        bio: 'Frontend engineer with a passion for creating beautiful and accessible user interfaces. I want to help other women break into tech and advance their careers in web development.',
-        linkedinUrl: 'https://linkedin.com/in/emilychen',
-        availabilityHoursPerMonth: 8,
-        submittedAt: '2024-12-17T14:20:00Z',
-        status: 'pending',
-      },
-      {
-        id: 3,
-        userId: 103,
-        user: {
-          name: 'Jessica Martinez',
-          email: 'jessica.m@cloudtech.com',
-          image: null,
-        },
-        expertiseAreas: ['Cloud Architecture', 'AWS', 'DevOps'],
-        yearsExperience: 10,
-        company: 'CloudTech Solutions',
-        jobTitle: 'Principal Cloud Architect',
-        bio: 'With over a decade of experience in cloud computing and DevOps, I am excited to share my knowledge and help the next generation of women engineers succeed in cloud technologies.',
-        linkedinUrl: 'https://linkedin.com/in/jessicamartinez',
-        availabilityHoursPerMonth: 12,
-        submittedAt: '2024-12-16T09:15:00Z',
-        status: 'under_review',
-      },
-    ];
   };
 
   const toggleExpanded = (id: number) => {

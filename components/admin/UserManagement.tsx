@@ -94,7 +94,7 @@ export default function UserManagement() {
       if (searchQuery) params.append('search', searchQuery);
 
       const response = await fetch(`/api/admin/users?${params}`);
-      
+
       if (response.ok) {
         const data = await response.json();
         setUsers(data.users || []);
@@ -102,72 +102,11 @@ export default function UserManagement() {
       }
     } catch (error) {
       console.error('Failed to fetch users:', error);
-      // Use mock data for demonstration
-      setUsers(generateMockUsers());
-      setTotalPages(5);
+      setUsers([]);
+      setTotalPages(1);
     } finally {
       setLoading(false);
     }
-  };
-
-  const generateMockUsers = (): User[] => {
-    return [
-      {
-        id: 1,
-        name: 'Sarah Johnson',
-        email: 'sarah.johnson@example.com',
-        image: null,
-        roles: ['mentor', 'admin'],
-        membershipTier: 'premium',
-        status: 'active',
-        createdAt: '2024-01-15',
-        lastLoginAt: '2024-12-20',
-      },
-      {
-        id: 2,
-        name: 'Emily Chen',
-        email: 'emily.chen@example.com',
-        image: null,
-        roles: ['mentee'],
-        membershipTier: 'basic',
-        status: 'active',
-        createdAt: '2024-02-20',
-        lastLoginAt: '2024-12-19',
-      },
-      {
-        id: 3,
-        name: 'Jessica Martinez',
-        email: 'jessica.martinez@example.com',
-        image: null,
-        roles: ['mentor'],
-        membershipTier: 'premium',
-        status: 'active',
-        createdAt: '2024-03-10',
-        lastLoginAt: '2024-12-18',
-      },
-      {
-        id: 4,
-        name: 'Alex Thompson',
-        email: 'alex.thompson@example.com',
-        image: null,
-        roles: ['mentee'],
-        membershipTier: 'free',
-        status: 'inactive',
-        createdAt: '2024-04-05',
-        lastLoginAt: '2024-11-30',
-      },
-      {
-        id: 5,
-        name: 'Maria Rodriguez',
-        email: 'maria.rodriguez@example.com',
-        image: null,
-        roles: ['mentor'],
-        membershipTier: 'basic',
-        status: 'active',
-        createdAt: '2024-05-12',
-        lastLoginAt: '2024-12-20',
-      },
-    ];
   };
 
   const handleSelectAll = (checked: boolean) => {

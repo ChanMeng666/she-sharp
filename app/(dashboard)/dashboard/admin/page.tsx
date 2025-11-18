@@ -22,18 +22,18 @@ export default async function AdminPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
+    <div className="@container/main flex flex-col gap-6">
       {/* Page Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Platform Overview</h1>
-          <p className="text-gray-600 mt-2">
-            Monitor and manage the She Sharp platform from your admin dashboard.
+          <h1 className="text-3xl font-bold">Platform Overview</h1>
+          <p className="text-muted-foreground mt-1">
+            Monitor and manage the She Sharp platform
           </p>
         </div>
-        <div className="flex items-center space-x-3">
-          <span className="text-sm text-gray-500">
-            Last updated: {new Date().toLocaleTimeString()}
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-muted-foreground">
+            {new Date().toLocaleTimeString()}
           </span>
           <Button variant="default">
             Export Report

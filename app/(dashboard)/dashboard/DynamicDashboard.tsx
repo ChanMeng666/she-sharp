@@ -2,7 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -17,6 +25,7 @@ import {
   Target,
   Award,
   TrendingUp,
+  TrendingDown,
   MessageSquare,
   FileText,
   Video,
@@ -109,15 +118,15 @@ export default function DynamicDashboard() {
   const { user, stats, mentor, mentee, upcomingEvents, recentResources, quickActions } = data;
 
   return (
-    <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8 max-w-7xl">
+    <div className="@container/main flex flex-col gap-6">
       {/* Welcome Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-navy-dark mb-2">
+      <div>
+        <h1 className="text-3xl font-bold mb-2">
           Welcome back, {user.name || 'there'}!
         </h1>
         <div className="flex items-center gap-2 flex-wrap">
           {user.roles.map(role => (
-            <Badge key={role} variant="secondary" className="bg-purple-light text-purple-dark">
+            <Badge key={role} variant="secondary">
               {role.charAt(0).toUpperCase() + role.slice(1)}
             </Badge>
           ))}
@@ -130,293 +139,387 @@ export default function DynamicDashboard() {
         </div>
       </div>
 
-      {/* Quick Actions */}
-      {quickActions.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          {quickActions.map((action: any, index: number) => (
-            <Link key={index} href={action.href}>
-              <Button
-                variant="outline"
-                className="w-full h-full justify-start"
-              >
-                {getIcon(action.icon)}
-                <span className="ml-2">{action.label}</span>
-              </Button>
-            </Link>
-          ))}
+      {/* Role-specific Sections */}
+      {/* Mentor Section */}
+      {mentor && (
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-semibold">Mentor Dashboard</h2>
+            <Badge variant={mentor.isAcceptingMentees ? 'default' : 'secondary'}>
+              {mentor.isAcceptingMentees ? 'Accepting Mentees' : 'Not Accepting'}
+            </Badge>
+          </div>
+
+          {/* Mentor Stats */}
+          <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+            <Card className="@container/card">
+              <CardHeader>
+                <CardDescription>Current Mentees</CardDescription>
+                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                  {mentor.currentMentees}/{mentor.maxMentees}
+                </CardTitle>
+                <CardAction>
+                  <Badge variant="outline">
+                    {mentor.currentMentees >= mentor.maxMentees ? (
+                      <>
+                        <Target className="h-3 w-3" />
+                        At capacity
+                      </>
+                    ) : (
+                      <>
+                        <Users className="h-3 w-3" />
+                        {mentor.maxMentees - mentor.currentMentees} spots
+                      </>
+                    )}
+                  </Badge>
+                </CardAction>
+              </CardHeader>
+              <CardFooter className="flex-col items-start gap-1.5 text-sm">
+                <Progress
+                  value={(mentor.currentMentees / mentor.maxMentees) * 100}
+                  className="h-2 w-full"
+                />
+                <div className="text-muted-foreground">
+                  {Math.round((mentor.currentMentees / mentor.maxMentees) * 100)}% capacity
+                </div>
+              </CardFooter>
+            </Card>
+
+            <Card className="@container/card">
+              <CardHeader>
+                <CardDescription>Total Meetings</CardDescription>
+                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                  {stats.totalMeetings}
+                </CardTitle>
+                <CardAction>
+                  <Badge variant="outline">
+                    <CheckCircle2 className="h-3 w-3" />
+                    {stats.completedMeetings} done
+                  </Badge>
+                </CardAction>
+              </CardHeader>
+              <CardFooter className="flex-col items-start gap-1.5 text-sm">
+                <div className="flex gap-2 font-medium">
+                  Completion rate: {stats.totalMeetings > 0
+                    ? Math.round((stats.completedMeetings / stats.totalMeetings) * 100)
+                    : 0}%
+                </div>
+                <div className="text-muted-foreground">
+                  {stats.completedMeetings} completed sessions
+                </div>
+              </CardFooter>
+            </Card>
+
+            <Card className="@container/card">
+              <CardHeader>
+                <CardDescription>Meeting Hours</CardDescription>
+                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                  {stats.totalMeetingHours}h
+                </CardTitle>
+                <CardAction>
+                  <Badge variant="outline">
+                    <Clock className="h-3 w-3" />
+                    Mentoring time
+                  </Badge>
+                </CardAction>
+              </CardHeader>
+              <CardFooter className="flex-col items-start gap-1.5 text-sm">
+                <div className="flex gap-2 font-medium">
+                  Total mentoring impact
+                </div>
+                <div className="text-muted-foreground">
+                  Avg {stats.totalMeetings > 0
+                    ? (stats.totalMeetingHours / stats.totalMeetings).toFixed(1)
+                    : 0}h per session
+                </div>
+              </CardFooter>
+            </Card>
+
+            <Card className="@container/card">
+              <CardHeader>
+                <CardDescription>Resources Shared</CardDescription>
+                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                  {stats.resourcesUploaded}
+                </CardTitle>
+                <CardAction>
+                  <Badge variant="outline">
+                    <BookOpen className="h-3 w-3" />
+                    Materials
+                  </Badge>
+                </CardAction>
+              </CardHeader>
+              <CardFooter className="flex-col items-start gap-1.5 text-sm">
+                <div className="flex gap-2 font-medium">
+                  Knowledge sharing
+                </div>
+                <div className="text-muted-foreground">
+                  Uploaded by you
+                </div>
+              </CardFooter>
+            </Card>
+          </div>
+
+          {/* Active Mentees */}
+          {mentor.mentees.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Your Mentees</CardTitle>
+                <CardDescription>Currently mentoring {mentor.mentees.length} mentee(s)</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {mentor.mentees.map((mentee: any) => (
+                    <div key={mentee.relationshipId} className="flex items-center justify-between p-3 rounded-lg border transition-colors hover:bg-accent">
+                      <div>
+                        <p className="font-medium">{mentee.name}</p>
+                        <p className="text-sm text-muted-foreground">{mentee.email}</p>
+                      </div>
+                      {mentee.nextMeeting && (
+                        <Badge variant="outline">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          {new Date(mentee.nextMeeting).toLocaleDateString()}
+                        </Badge>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       )}
 
-      {/* Role-specific Sections */}
-      <div className="grid gap-8">
-        {/* Mentor Section */}
-        {mentor && (
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-navy-dark">Mentor Dashboard</h2>
-              <Badge className={mentor.isAcceptingMentees ? 'bg-mint-dark text-white' : 'bg-gray text-white'}>
-                {mentor.isAcceptingMentees ? 'Accepting Mentees' : 'Not Accepting'}
-              </Badge>
-            </div>
+      {/* Mentee Section */}
+      {mentee && (
+        <div className="flex flex-col gap-6">
+          <h2 className="text-2xl font-semibold">Mentee Dashboard</h2>
 
-            {/* Mentor Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardDescription>Current Mentees</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-purple-dark">
-                    {mentor.currentMentees}/{mentor.maxMentees}
-                  </div>
-                  <Progress 
-                    value={(mentor.currentMentees / mentor.maxMentees) * 100} 
-                    className="mt-2 h-2"
-                  />
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardDescription>Total Meetings</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-purple-dark">{stats.totalMeetings}</div>
-                  <p className="text-xs text-gray mt-1">
-                    {stats.completedMeetings} completed
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardDescription>Meeting Hours</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-purple-dark">{stats.totalMeetingHours}h</div>
-                  <p className="text-xs text-gray mt-1">Total mentoring time</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardDescription>Resources Shared</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-purple-dark">{stats.resourcesUploaded}</div>
-                  <p className="text-xs text-gray mt-1">Uploaded by you</p>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Active Mentees */}
-            {mentor.mentees.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Your Mentees</CardTitle>
-                  <CardDescription>Currently mentoring {mentor.mentees.length} mentee(s)</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {mentor.mentees.map((mentee: any) => (
-                      <div key={mentee.relationshipId} className="flex items-center justify-between p-3 rounded-lg bg-purple-light/20">
-                        <div>
-                          <p className="font-medium text-navy-dark">{mentee.name}</p>
-                          <p className="text-sm text-gray">{mentee.email}</p>
-                        </div>
-                        {mentee.nextMeeting && (
-                          <Badge variant="outline">
-                            <Calendar className="h-3 w-3 mr-1" />
-                            Next: {new Date(mentee.nextMeeting).toLocaleDateString()}
-                          </Badge>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        )}
-
-        {/* Mentee Section */}
-        {mentee && (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-navy-dark">Mentee Dashboard</h2>
-
-            {/* Mentee Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardDescription>Active Mentors</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-periwinkle-dark">
-                    {mentee.mentors.length}
-                  </div>
-                  <p className="text-xs text-gray mt-1">Currently connected</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardDescription>Sessions Attended</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-periwinkle-dark">{stats.completedMeetings}</div>
-                  <p className="text-xs text-gray mt-1">Of {stats.totalMeetings} scheduled</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardDescription>Events Registered</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-periwinkle-dark">{stats.eventsRegistered}</div>
-                  <p className="text-xs text-gray mt-1">{stats.eventsAttended} attended</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardDescription>Resources Accessed</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-periwinkle-dark">{stats.resourcesAccessed}</div>
-                  <p className="text-xs text-gray mt-1">Learning materials</p>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Active Mentors */}
-            {mentee.mentors.length > 0 ? (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Your Mentors</CardTitle>
-                  <CardDescription>Currently learning from {mentee.mentors.length} mentor(s)</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {mentee.mentors.map((mentor: any) => (
-                      <div key={mentor.relationshipId} className="flex items-center justify-between p-3 rounded-lg bg-periwinkle-light/20">
-                        <div>
-                          <p className="font-medium text-navy-dark">{mentor.name}</p>
-                          <p className="text-sm text-gray">
-                            {mentor.title} {mentor.company && `at ${mentor.company}`}
-                          </p>
-                        </div>
-                        {mentor.nextMeeting && (
-                          <Badge variant="outline">
-                            <Calendar className="h-3 w-3 mr-1" />
-                            Next: {new Date(mentor.nextMeeting).toLocaleDateString()}
-                          </Badge>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <Card>
-                <CardContent className="py-8 text-center">
-                  <Users className="h-12 w-12 text-gray mx-auto mb-4" />
-                  <p className="text-gray mb-4">You don't have any mentors yet</p>
-                  <Link href="/dashboard/mentors">
-                    <Button variant="secondary">
-                      Find a Mentor
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        )}
-
-
-        {/* Common Sections */}
-        {/* Upcoming Events */}
-        {upcomingEvents.length > 0 && (
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Upcoming Events</CardTitle>
-                  <CardDescription>Don't miss these opportunities</CardDescription>
+          {/* Mentee Stats */}
+          <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+            <Card className="@container/card">
+              <CardHeader>
+                <CardDescription>Active Mentors</CardDescription>
+                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                  {mentee.mentors.length}
+                </CardTitle>
+                <CardAction>
+                  <Badge variant="outline">
+                    <Users className="h-3 w-3" />
+                    Connected
+                  </Badge>
+                </CardAction>
+              </CardHeader>
+              <CardFooter className="flex-col items-start gap-1.5 text-sm">
+                <div className="flex gap-2 font-medium">
+                  Active relationships
                 </div>
-                <Link href="/dashboard/events">
-                  <Button variant="ghost" size="sm">
-                    View all
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {upcomingEvents.slice(0, 3).map((event: any) => (
-                  <div key={event.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50">
-                    <div className="flex-1">
-                      <p className="font-medium text-navy-dark">{event.title}</p>
-                      <p className="text-sm text-gray">
-                        {new Date(event.startTime).toLocaleDateString()} at {new Date(event.startTime).toLocaleTimeString()}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {event.isRegistered && (
-                        <Badge variant="secondary" className="bg-mint-light text-navy-dark">
-                          <CheckCircle2 className="h-3 w-3 mr-1" />
-                          Registered
+                <div className="text-muted-foreground">
+                  Currently learning from {mentee.mentors.length} mentor{mentee.mentors.length !== 1 ? 's' : ''}
+                </div>
+              </CardFooter>
+            </Card>
+
+            <Card className="@container/card">
+              <CardHeader>
+                <CardDescription>Sessions Attended</CardDescription>
+                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                  {stats.completedMeetings}
+                </CardTitle>
+                <CardAction>
+                  <Badge variant="outline">
+                    <CheckCircle2 className="h-3 w-3" />
+                    {Math.round((stats.completedMeetings / Math.max(stats.totalMeetings, 1)) * 100)}%
+                  </Badge>
+                </CardAction>
+              </CardHeader>
+              <CardFooter className="flex-col items-start gap-1.5 text-sm">
+                <div className="flex gap-2 font-medium">
+                  {stats.completedMeetings} of {stats.totalMeetings} scheduled
+                </div>
+                <div className="text-muted-foreground">
+                  Strong attendance record
+                </div>
+              </CardFooter>
+            </Card>
+
+            <Card className="@container/card">
+              <CardHeader>
+                <CardDescription>Events Registered</CardDescription>
+                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                  {stats.eventsRegistered}
+                </CardTitle>
+                <CardAction>
+                  <Badge variant="outline">
+                    <Calendar className="h-3 w-3" />
+                    {stats.eventsAttended} attended
+                  </Badge>
+                </CardAction>
+              </CardHeader>
+              <CardFooter className="flex-col items-start gap-1.5 text-sm">
+                <div className="flex gap-2 font-medium">
+                  Community engagement
+                </div>
+                <div className="text-muted-foreground">
+                  {Math.round((stats.eventsAttended / Math.max(stats.eventsRegistered, 1)) * 100)}% attendance rate
+                </div>
+              </CardFooter>
+            </Card>
+
+            <Card className="@container/card">
+              <CardHeader>
+                <CardDescription>Resources Accessed</CardDescription>
+                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                  {stats.resourcesAccessed}
+                </CardTitle>
+                <CardAction>
+                  <Badge variant="outline">
+                    <BookOpen className="h-3 w-3" />
+                    Materials
+                  </Badge>
+                </CardAction>
+              </CardHeader>
+              <CardFooter className="flex-col items-start gap-1.5 text-sm">
+                <div className="flex gap-2 font-medium">
+                  Learning progress
+                </div>
+                <div className="text-muted-foreground">
+                  Knowledge resources
+                </div>
+              </CardFooter>
+            </Card>
+          </div>
+
+          {/* Active Mentors */}
+          {mentee.mentors.length > 0 ? (
+            <Card>
+              <CardHeader>
+                <CardTitle>Your Mentors</CardTitle>
+                <CardDescription>Currently learning from {mentee.mentors.length} mentor(s)</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {mentee.mentors.map((mentor: any) => (
+                    <div key={mentor.relationshipId} className="flex items-center justify-between p-3 rounded-lg border transition-colors hover:bg-accent">
+                      <div>
+                        <p className="font-medium">{mentor.name}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {mentor.title} {mentor.company && `at ${mentor.company}`}
+                        </p>
+                      </div>
+                      {mentor.nextMeeting && (
+                        <Badge variant="outline">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          {new Date(mentor.nextMeeting).toLocaleDateString()}
                         </Badge>
                       )}
-                      <Badge variant="outline">{event.eventType}</Badge>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Recent Resources */}
-        {recentResources.length > 0 && (
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Recent Resources</CardTitle>
-                  <CardDescription>Latest learning materials</CardDescription>
+                  ))}
                 </div>
-                <Link href="/dashboard/resources">
-                  <Button variant="ghost" size="sm">
-                    View all
+              </CardContent>
+            </Card>
+          ) : (
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center py-12">
+                <Users className="h-12 w-12 text-muted-foreground mb-4" />
+                <p className="text-lg font-medium mb-1">No mentors yet</p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Connect with experienced professionals to guide your journey
+                </p>
+                <Link href="/dashboard/mentors">
+                  <Button>
+                    Find a Mentor
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      )}
+
+
+      {/* Common Sections */}
+      {/* Upcoming Events */}
+      {upcomingEvents.length > 0 && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Upcoming Events</CardTitle>
+                <CardDescription>Don't miss these opportunities</CardDescription>
               </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {recentResources.slice(0, 3).map((resource: any) => (
-                  <div key={resource.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-light">
-                        {getResourceIcon(resource.resourceType)}
-                      </div>
-                      <div>
-                        <p className="font-medium text-navy-dark">{resource.title}</p>
-                        <p className="text-sm text-gray">{resource.description}</p>
-                      </div>
-                    </div>
-                    <Badge variant="outline">{resource.accessLevel}</Badge>
+              <Link href="/dashboard/events">
+                <Button variant="ghost" size="sm">
+                  View all
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {upcomingEvents.slice(0, 3).map((event: any) => (
+                <div key={event.id} className="flex items-center justify-between p-3 rounded-lg border transition-colors hover:bg-accent">
+                  <div className="flex-1">
+                    <p className="font-medium">{event.title}</p>
+                    <p className="text-sm text-muted-foreground flex items-center gap-1">
+                      <Calendar className="h-3 w-3" />
+                      {new Date(event.startTime).toLocaleDateString()} at {new Date(event.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </p>
                   </div>
-                ))}
+                  <div className="flex items-center gap-2">
+                    {event.isRegistered && (
+                      <Badge variant="default">
+                        <CheckCircle2 className="h-3 w-3 mr-1" />
+                        Registered
+                      </Badge>
+                    )}
+                    <Badge variant="outline">{event.eventType}</Badge>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Recent Resources */}
+      {recentResources.length > 0 && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Recent Resources</CardTitle>
+                <CardDescription>Latest learning materials</CardDescription>
               </div>
-            </CardContent>
-          </Card>
-        )}
-      </div>
+              <Link href="/dashboard/resources">
+                <Button variant="ghost" size="sm">
+                  View all
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {recentResources.slice(0, 3).map((resource: any) => (
+                <div key={resource.id} className="flex items-center justify-between p-3 rounded-lg border transition-colors hover:bg-accent">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                      {getResourceIcon(resource.resourceType)}
+                    </div>
+                    <div>
+                      <p className="font-medium">{resource.title}</p>
+                      <p className="text-sm text-muted-foreground line-clamp-1">{resource.description}</p>
+                    </div>
+                  </div>
+                  <Badge variant="outline">{resource.accessLevel}</Badge>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
@@ -435,12 +538,12 @@ function getIcon(iconName: string) {
 function getResourceIcon(type: string) {
   switch (type) {
     case 'document':
-      return <FileText className="h-5 w-5 text-purple-dark" />;
+      return <FileText className="h-5 w-5 text-primary" />;
     case 'video':
-      return <Video className="h-5 w-5 text-purple-dark" />;
+      return <Video className="h-5 w-5 text-primary" />;
     case 'link':
-      return <MessageSquare className="h-5 w-5 text-purple-dark" />;
+      return <MessageSquare className="h-5 w-5 text-primary" />;
     default:
-      return <BookOpen className="h-5 w-5 text-purple-dark" />;
+      return <BookOpen className="h-5 w-5 text-primary" />;
   }
 }

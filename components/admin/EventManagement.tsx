@@ -90,7 +90,7 @@ export default function EventManagement() {
       const params = new URLSearchParams();
       if (typeFilter !== 'all') params.append('type', typeFilter);
       if (statusFilter !== 'all') params.append('status', statusFilter);
-      
+
       const response = await fetch(`/api/admin/events?${params}`);
       if (response.ok) {
         const data = await response.json();
@@ -98,74 +98,10 @@ export default function EventManagement() {
       }
     } catch (error) {
       console.error('Failed to fetch events:', error);
-      // Use mock data for demonstration
-      setEvents(generateMockEvents());
+      setEvents([]);
     } finally {
       setLoading(false);
     }
-  };
-
-  const generateMockEvents = (): Event[] => {
-    return [
-      {
-        id: 1,
-        title: 'Introduction to Machine Learning Workshop',
-        description: 'A beginner-friendly workshop on ML fundamentals',
-        eventType: 'workshop',
-        startTime: '2024-12-28T14:00:00Z',
-        endTime: '2024-12-28T17:00:00Z',
-        locationType: 'hybrid',
-        locationDetails: {
-          venue: 'Tech Hub Seattle',
-          address: '123 Innovation Way, Seattle, WA',
-          meetingLink: 'https://zoom.us/j/123456789',
-        },
-        capacity: 50,
-        currentRegistrations: 42,
-        registrationDeadline: '2024-12-27T23:59:59Z',
-        status: 'upcoming',
-        isMembersOnly: false,
-        createdBy: 'Sarah Johnson',
-      },
-      {
-        id: 2,
-        title: 'Women in Tech Networking Event',
-        description: 'Connect with fellow women in technology',
-        eventType: 'networking',
-        startTime: '2024-12-30T18:00:00Z',
-        endTime: '2024-12-30T20:00:00Z',
-        locationType: 'in_person',
-        locationDetails: {
-          venue: 'Downtown Conference Center',
-          address: '456 Main St, Seattle, WA',
-        },
-        capacity: 100,
-        currentRegistrations: 78,
-        registrationDeadline: '2024-12-29T23:59:59Z',
-        status: 'upcoming',
-        isMembersOnly: true,
-        createdBy: 'Emily Chen',
-      },
-      {
-        id: 3,
-        title: 'THRIVE 2025 - Annual Conference',
-        description: 'Our flagship annual conference for women in STEM',
-        eventType: 'thrive',
-        startTime: '2025-01-15T09:00:00Z',
-        endTime: '2025-01-16T18:00:00Z',
-        locationType: 'in_person',
-        locationDetails: {
-          venue: 'Seattle Convention Center',
-          address: '789 Convention Pl, Seattle, WA',
-        },
-        capacity: 500,
-        currentRegistrations: 324,
-        registrationDeadline: '2025-01-10T23:59:59Z',
-        status: 'upcoming',
-        isMembersOnly: false,
-        createdBy: 'Admin Team',
-      },
-    ];
   };
 
   const getEventTypeColor = (type: string) => {

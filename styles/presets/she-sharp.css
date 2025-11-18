@@ -1,0 +1,105 @@
+/*
+label: She Sharp
+value: she-sharp
+description: She Sharp brand theme with purple and periwinkle colors
+*/
+
+:root[data-theme-preset="she-sharp"] {
+  --radius: 0.625rem;
+
+  /* She Sharp Brand Colors in OKLCH */
+  --card: oklch(1 0 0); /* white */
+  --card-foreground: oklch(0.3211 0.108 289.676); /* purple-dark-ish */
+  --popover: oklch(1 0 0); /* white */
+  --popover-foreground: oklch(0.3211 0.108 289.676);
+  --primary: oklch(0.488 0.243 315.322); /* purple-dark #9b2e83 */
+  --primary-foreground: oklch(1 0 0); /* white */
+  --secondary: oklch(0.7572 0.2015 279.882); /* periwinkle-dark #8982ff */
+  --secondary-foreground: oklch(1 0 0); /* white */
+  --muted: oklch(0.9651 0.026 280.427); /* periwinkle-light #f4f4fa */
+  --muted-foreground: oklch(0.6534 0 0); /* gray */
+  --accent: oklch(0.8576 0.1742 168.045); /* mint-dark #b1f6e9 */
+  --accent-foreground: oklch(0.2945 0.108 263.299); /* navy-dark */
+  --destructive: oklch(0.5693 0.2245 27.325); /* error #d72f40 */
+  --border: oklch(0.9651 0.026 280.427); /* periwinkle-light */
+  --input: oklch(0.9651 0.026 280.427); /* periwinkle-light */
+  --ring: oklch(0.488 0.243 315.322); /* purple-dark */
+
+  /* Chart colors using She Sharp palette */
+  --chart-1: oklch(0.488 0.243 315.322); /* purple-dark */
+  --chart-2: oklch(0.7572 0.2015 279.882); /* periwinkle-dark */
+  --chart-3: oklch(0.8576 0.1742 168.045); /* mint-dark */
+  --chart-4: oklch(0.6489 0.1870 315.827); /* purple-mid */
+  --chart-5: oklch(0.5635 0.2408 207.598); /* blue */
+
+  /* Sidebar colors */
+  --sidebar: oklch(0.9651 0.026 280.427); /* periwinkle-light */
+  --sidebar-foreground: oklch(0.2945 0.108 263.299); /* navy-dark */
+  --sidebar-primary: oklch(0.488 0.243 315.322); /* purple-dark */
+  --sidebar-primary-foreground: oklch(1 0 0); /* white */
+  --sidebar-accent: oklch(0.8576 0.1742 168.045); /* mint-dark */
+  --sidebar-accent-foreground: oklch(0.2945 0.108 263.299); /* navy-dark */
+  --sidebar-border: oklch(0.6534 0 0); /* gray */
+  --sidebar-ring: oklch(0.7572 0.2015 279.882); /* periwinkle-dark */
+
+  --background: oklch(0.9780 0.0095 265.755); /* #EFF5FF light blue */
+  --foreground: oklch(0.2945 0.108 263.299); /* navy-dark */
+
+  /* Default soft shadows */
+  --shadow-2xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05), 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.dark:root[data-theme-preset="she-sharp"] {
+  --background: oklch(0.2945 0.108 263.299); /* navy-dark */
+  --foreground: oklch(1 0 0); /* white */
+  --card: oklch(0.3477 0.108 263.299); /* navy-dark lightened */
+  --card-foreground: oklch(1 0 0); /* white */
+  --popover: oklch(0.3477 0.108 263.299); /* navy-dark lightened */
+  --popover-foreground: oklch(1 0 0); /* white */
+  --primary: oklch(0.6489 0.1870 315.827); /* purple-mid lighter */
+  --primary-foreground: oklch(1 0 0); /* white */
+  --secondary: oklch(0.7572 0.2015 279.882); /* periwinkle-dark */
+  --secondary-foreground: oklch(0.2945 0.108 263.299); /* navy-dark */
+  --muted: oklch(0.4295 0.108 263.299); /* navy-dark lighter */
+  --muted-foreground: oklch(0.7921 0 0); /* gray lighter */
+  --accent: oklch(0.8576 0.1742 168.045); /* mint-dark */
+  --accent-foreground: oklch(0.2945 0.108 263.299); /* navy-dark */
+  --destructive: oklch(0.5693 0.2245 27.325); /* error */
+  --border: oklch(0.4295 0.108 263.299); /* navy-dark lighter */
+  --input: oklch(0.4295 0.108 263.299); /* navy-dark lighter */
+  --ring: oklch(0.7572 0.2015 279.882); /* periwinkle-dark */
+
+  /* Chart colors for dark mode */
+  --chart-1: oklch(0.6489 0.1870 315.827); /* purple-mid */
+  --chart-2: oklch(0.7572 0.2015 279.882); /* periwinkle-dark */
+  --chart-3: oklch(0.8576 0.1742 168.045); /* mint-dark */
+  --chart-4: oklch(0.488 0.243 315.322); /* purple-dark */
+  --chart-5: oklch(0.5635 0.2408 207.598); /* blue */
+
+  /* Sidebar colors for dark mode */
+  --sidebar: oklch(0.2155 0.108 263.299); /* navy-dark darker */
+  --sidebar-foreground: oklch(1 0 0); /* white */
+  --sidebar-primary: oklch(0.6489 0.1870 315.827); /* purple-mid */
+  --sidebar-primary-foreground: oklch(1 0 0); /* white */
+  --sidebar-accent: oklch(0.8576 0.1742 168.045); /* mint-dark */
+  --sidebar-accent-foreground: oklch(0.2945 0.108 263.299); /* navy-dark */
+  --sidebar-border: oklch(0.4295 0.108 263.299); /* navy-dark lighter */
+  --sidebar-ring: oklch(0.7572 0.2015 279.882); /* periwinkle-dark */
+
+  /* Dark mode shadows */
+  --shadow-2xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3), 0 1px 3px 0 rgb(0 0 0 / 0.2);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.2);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.2), 0 8px 10px -6px rgb(0 0 0 / 0.2);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+}
