@@ -188,7 +188,7 @@ function MentorsContent() {
                     <AvatarFallback>{getInitials(mentor.name)}</AvatarFallback>
                   </Avatar>
                   {mentor.verifiedAt && (
-                    <Badge variant="secondary" className="bg-green-100 text-green-800">
+                    <Badge variant="secondary">
                       Verified
                     </Badge>
                   )}
@@ -246,7 +246,7 @@ function MentorsContent() {
                     </span>
                   </div>
                   {mentor.isAcceptingMentees ? (
-                    <Badge className="bg-green-100 text-green-800">
+                    <Badge variant="secondary">
                       Accepting
                     </Badge>
                   ) : (
@@ -254,7 +254,7 @@ function MentorsContent() {
                   )}
                 </div>
               </CardContent>
-              <CardFooter className="border-t border-gray-100 bg-gray-50/50 p-4">
+              <CardFooter className="border-t p-4">
                 <Link href={`/dashboard/mentors/${mentor.id}`} className="block w-full">
                   <Button className="w-full" variant={mentor.isAcceptingMentees ? 'default' : 'outline'}>
                     View Profile

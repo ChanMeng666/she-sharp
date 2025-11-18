@@ -8,13 +8,13 @@ export default function AnalyticsPage() {
       {/* Page Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-3xl font-bold text-foreground">Analytics Dashboard</h1>
+          <p className="text-muted-foreground mt-2">
             Platform insights and performance metrics
           </p>
         </div>
         <div className="flex items-center space-x-3">
-          <select className="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+          <select className="px-3 py-2 border border-border rounded-lg text-sm">
             <option value="7d">Last 7 days</option>
             <option value="30d">Last 30 days</option>
             <option value="90d">Last 90 days</option>

@@ -149,12 +149,12 @@ export default function MentorApplications() {
       case 'rejected':
         return 'bg-red-100 text-red-700';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-accent text-foreground';
     }
   };
 
   const getExperienceLevel = (years: number) => {
-    if (years >= 10) return { label: 'Senior', color: 'text-purple-600' };
+    if (years >= 10) return { label: 'Senior', color: 'text-primary' };
     if (years >= 5) return { label: 'Mid-level', color: 'text-blue-600' };
     return { label: 'Junior', color: 'text-green-600' };
   };
@@ -162,7 +162,7 @@ export default function MentorApplications() {
   return (
     <>
       {/* Filter Tabs */}
-      <div className="flex space-x-1 mb-6 bg-gray-100 p-1 rounded-lg w-fit">
+      <div className="flex space-x-1 mb-6 bg-accent p-1 rounded-lg w-fit">
         {[
           { value: 'pending', label: 'Pending', count: applications.filter(a => a.status === 'pending').length },
           { value: 'under_review', label: 'Under Review', count: applications.filter(a => a.status === 'under_review').length },
@@ -174,8 +174,8 @@ export default function MentorApplications() {
             className={cn(
               'px-4 py-2 rounded-md transition-colors text-sm font-medium',
               filter === tab.value
-                ? 'bg-white text-purple-600 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-white text-primary shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
             )}
           >
             {tab.label}
@@ -193,8 +193,8 @@ export default function MentorApplications() {
         {applications.length === 0 ? (
           <Card>
             <CardContent className="text-center py-12">
-              <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-500">No mentor applications found</p>
+              <AlertCircle className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">No mentor applications found</p>
             </CardContent>
           </Card>
         ) : (
@@ -209,13 +209,13 @@ export default function MentorApplications() {
                     <div className="flex items-start space-x-4">
                       <Avatar className="w-12 h-12">
                         <AvatarImage src={application.user.image || undefined} />
-                        <AvatarFallback className="bg-purple-100 text-purple-700">
+                        <AvatarFallback className="bg-muted text-purple-700">
                           {getInitials(application.user.name)}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1">
                         <div className="flex items-center space-x-3">
-                          <h3 className="text-lg font-semibold text-gray-900">
+                          <h3 className="text-lg font-semibold text-foreground">
                             {application.user.name}
                           </h3>
                           <Badge variant="secondary" className={getStatusColor(application.status)}>
@@ -225,8 +225,8 @@ export default function MentorApplications() {
                             {experienceLevel.label}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-500 mt-1">{application.user.email}</p>
-                        <div className="flex items-center space-x-4 mt-2 text-sm text-gray-600">
+                        <p className="text-sm text-muted-foreground mt-1">{application.user.email}</p>
+                        <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
                           <span className="flex items-center">
                             <Briefcase className="w-4 h-4 mr-1" />
                             {application.jobTitle} at {application.company}
@@ -239,7 +239,7 @@ export default function MentorApplications() {
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-500">
+                      <span className="text-sm text-muted-foreground">
                         {new Date(application.submittedAt).toLocaleDateString()}
                       </span>
                       <Button
@@ -256,7 +256,7 @@ export default function MentorApplications() {
                 <CardContent className="pt-0">
                   {/* Expertise Areas */}
                   <div className="mb-4">
-                    <p className="text-sm font-medium text-gray-700 mb-2">Expertise Areas</p>
+                    <p className="text-sm font-medium text-foreground mb-2">Expertise Areas</p>
                     <div className="flex flex-wrap gap-2">
                       {application.expertiseAreas.map((area) => (
                         <Badge key={area} variant="outline">
@@ -271,23 +271,23 @@ export default function MentorApplications() {
                     <div className="space-y-4 pt-4 border-t">
                       {/* Bio */}
                       <div>
-                        <p className="text-sm font-medium text-gray-700 mb-2">Bio</p>
-                        <p className="text-sm text-gray-600 leading-relaxed">{application.bio}</p>
+                        <p className="text-sm font-medium text-foreground mb-2">Bio</p>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{application.bio}</p>
                       </div>
 
                       {/* Additional Info */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <p className="text-sm font-medium text-gray-700 mb-1">Years of Experience</p>
-                          <p className="text-sm text-gray-600">{application.yearsExperience} years</p>
+                          <p className="text-sm font-medium text-foreground mb-1">Years of Experience</p>
+                          <p className="text-sm text-muted-foreground">{application.yearsExperience} years</p>
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-gray-700 mb-1">LinkedIn Profile</p>
+                          <p className="text-sm font-medium text-foreground mb-1">LinkedIn Profile</p>
                           <a
                             href={application.linkedinUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm text-purple-600 hover:text-purple-700 flex items-center"
+                            className="text-sm text-primary hover:text-purple-700 flex items-center"
                           >
                             <Globe className="w-4 h-4 mr-1" />
                             View Profile
@@ -297,9 +297,9 @@ export default function MentorApplications() {
 
                       {/* Review Notes (if any) */}
                       {application.reviewNotes && (
-                        <div className="p-3 bg-gray-50 rounded-lg">
-                          <p className="text-sm font-medium text-gray-700 mb-1">Review Notes</p>
-                          <p className="text-sm text-gray-600">{application.reviewNotes}</p>
+                        <div className="p-3 bg-accent rounded-lg">
+                          <p className="text-sm font-medium text-foreground mb-1">Review Notes</p>
+                          <p className="text-sm text-muted-foreground">{application.reviewNotes}</p>
                         </div>
                       )}
 
@@ -358,7 +358,7 @@ export default function MentorApplications() {
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <label htmlFor="review-notes" className="text-sm font-medium text-gray-700">
+              <label htmlFor="review-notes" className="text-sm font-medium text-foreground">
                 Review Notes {reviewAction === 'reject' && '(Required)'}
               </label>
               <Textarea

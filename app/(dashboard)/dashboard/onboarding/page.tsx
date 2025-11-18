@@ -217,7 +217,7 @@ function OnboardingContent() {
                             updateFormData('expertiseAreas', areas.filter((a: string) => a !== area));
                           }
                         }}
-                        className="rounded border-purple-dark text-purple-dark focus:ring-purple-dark"
+                        className="rounded border-primary text-primary focus:ring-purple-dark"
                       />
                       <span className="text-sm">{area}</span>
                     </label>
@@ -343,7 +343,7 @@ function OnboardingContent() {
                             updateFormData('learningGoals', goals.filter((g: string) => g !== goal));
                           }
                         }}
-                        className="rounded border-purple-dark text-purple-dark focus:ring-purple-dark"
+                        className="rounded border-primary text-primary focus:ring-purple-dark"
                       />
                       <span className="text-sm">{goal}</span>
                     </label>
@@ -385,7 +385,7 @@ function OnboardingContent() {
                             updateFormData('preferredExpertiseAreas', areas.filter((a: string) => a !== area));
                           }
                         }}
-                        className="rounded border-purple-dark text-purple-dark focus:ring-purple-dark"
+                        className="rounded border-primary text-primary focus:ring-purple-dark"
                       />
                       <span className="text-sm">{area}</span>
                     </label>
@@ -455,7 +455,7 @@ function OnboardingContent() {
           <span className="text-sm text-gray">
             Step {currentStep + 1} of {allSteps.length}
           </span>
-          <Badge variant="secondary" className="bg-purple-light text-purple-dark">
+          <Badge variant="secondary" className="bg-purple-light text-primary">
             {currentRole === 'mentor' ? 'Mentor Setup' : 'Mentee Setup'}
           </Badge>
         </div>
@@ -467,7 +467,7 @@ function OnboardingContent() {
         <CardHeader>
           <div className="flex items-center gap-4 mb-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-light">
-              <Icon className="h-6 w-6 text-purple-dark" />
+              <Icon className="h-6 w-6 text-primary" />
             </div>
             <div>
               <CardTitle className="text-2xl text-navy-dark">
@@ -489,7 +489,7 @@ function OnboardingContent() {
               variant="outline"
               onClick={handleBack}
               disabled={currentStep === 0}
-              className="border-purple-dark text-purple-dark"
+              className="border-primary text-primary"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
@@ -527,7 +527,7 @@ function OnboardingContent() {
           <Button
             variant="ghost"
             onClick={() => router.push('/dashboard')}
-            className="text-gray hover:text-purple-dark"
+            className="text-gray hover:text-primary"
           >
             Skip for now and complete later
           </Button>
@@ -541,7 +541,7 @@ export default function OnboardingPage() {
   return (
     <Suspense fallback={
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-dark"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     }>
       <OnboardingContent />

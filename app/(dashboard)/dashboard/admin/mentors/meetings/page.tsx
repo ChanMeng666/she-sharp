@@ -193,14 +193,14 @@ export default function MentorMeetingsPage() {
 
   const getMeetingTypeIcon = (type: string) => {
     const icons = {
-      video: { icon: Video, color: 'text-purple-600' },
+      video: { icon: Video, color: 'text-primary' },
       phone: { icon: PhoneCall, color: 'text-blue-600' },
       in_person: { icon: Users, color: 'text-green-600' },
-      chat: { icon: MessageSquare, color: 'text-gray-600' },
+      chat: { icon: MessageSquare, color: 'text-muted-foreground' },
     };
     const config = icons[type as keyof typeof icons];
     const Icon = config?.icon || Video;
-    return <Icon className={`w-4 h-4 ${config?.color || 'text-gray-600'}`} />;
+    return <Icon className={`w-4 h-4 ${config?.color || 'text-muted-foreground'}`} />;
   };
 
   const filteredMeetings = mockMeetings.filter(meeting => {
@@ -214,20 +214,20 @@ export default function MentorMeetingsPage() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
-      <div className="flex justify-between items-center">
+    <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8 space-y-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Meeting Analytics</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Meeting Analytics</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-2">
             Track and analyze mentorship meeting patterns and outcomes
           </p>
         </div>
-        <div className="flex space-x-3">
-          <Button variant="outline">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+          <Button variant="outline" className="text-sm sm:text-base">
             <Download className="w-4 h-4 mr-2" />
             Export Data
           </Button>
-          <Button className="bg-purple-600 hover:bg-purple-700">
+          <Button className="bg-purple-600 hover:bg-purple-700 text-sm sm:text-base">
             <Calendar className="w-4 h-4 mr-2" />
             Schedule Meeting
           </Button>
@@ -235,10 +235,10 @@ export default function MentorMeetingsPage() {
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Total Meetings</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Total Meetings</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">342</p>
@@ -251,17 +251,17 @@ export default function MentorMeetingsPage() {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Avg Duration</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Avg Duration</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">52 min</p>
-            <p className="text-xs text-gray-500 mt-2">Target: 45-60 min</p>
+            <p className="text-xs text-muted-foreground mt-2">Target: 45-60 min</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Completion Rate</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Completion Rate</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold text-green-600">94%</p>
@@ -271,20 +271,20 @@ export default function MentorMeetingsPage() {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Avg Rating</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Avg Rating</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center space-x-2">
               <p className="text-2xl font-bold">4.7</p>
               <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
             </div>
-            <p className="text-xs text-gray-500 mt-2">From 298 reviews</p>
+            <p className="text-xs text-muted-foreground mt-2">From 298 reviews</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <Card>
           <CardHeader>
             <CardTitle>Meeting Trends</CardTitle>
@@ -354,7 +354,7 @@ export default function MentorMeetingsPage() {
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input
                 type="search"
                 placeholder="Search by participants or topics..."
@@ -418,33 +418,34 @@ export default function MentorMeetingsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Participants</TableHead>
-                <TableHead>Date & Time</TableHead>
-                <TableHead>Topics</TableHead>
-                <TableHead>Duration & Type</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Rating</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Participants</TableHead>
+                  <TableHead>Date & Time</TableHead>
+                  <TableHead>Topics</TableHead>
+                  <TableHead>Duration & Type</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Rating</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
               {filteredMeetings.map((meeting) => (
                 <TableRow key={meeting.id}>
                   <TableCell>
                     <div className="space-y-1">
                       <p className="text-sm font-medium">{meeting.mentor}</p>
-                      <p className="text-xs text-gray-500">with {meeting.mentee}</p>
+                      <p className="text-xs text-muted-foreground">with {meeting.mentee}</p>
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center space-x-2">
-                      <Calendar className="w-4 h-4 text-gray-400" />
+                      <Calendar className="w-4 h-4 text-muted-foreground" />
                       <div>
                         <p className="text-sm">{new Date(meeting.date).toLocaleDateString()}</p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-muted-foreground">
                           {new Date(meeting.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </p>
                       </div>
@@ -466,7 +467,7 @@ export default function MentorMeetingsPage() {
                         <span className="text-sm capitalize">{meeting.type.replace('_', ' ')}</span>
                       </div>
                       {meeting.duration > 0 && (
-                        <div className="flex items-center space-x-1 text-xs text-gray-500">
+                        <div className="flex items-center space-x-1 text-xs text-muted-foreground">
                           <Timer className="w-3 h-3" />
                           <span>{meeting.duration} min</span>
                         </div>
@@ -483,7 +484,7 @@ export default function MentorMeetingsPage() {
                         <span className="text-sm font-medium">{meeting.rating}</span>
                       </div>
                     ) : (
-                      <span className="text-sm text-gray-400">N/A</span>
+                      <span className="text-sm text-muted-foreground">N/A</span>
                     )}
                   </TableCell>
                   <TableCell>
@@ -526,8 +527,9 @@ export default function MentorMeetingsPage() {
                   </TableCell>
                 </TableRow>
               ))}
-            </TableBody>
-          </Table>
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

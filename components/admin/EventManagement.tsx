@@ -111,13 +111,13 @@ export default function EventManagement() {
       case 'networking':
         return 'bg-green-100 text-green-700';
       case 'training':
-        return 'bg-purple-100 text-purple-700';
+        return 'bg-muted text-purple-700';
       case 'social':
         return 'bg-pink-100 text-pink-700';
       case 'thrive':
         return 'bg-gradient-to-r from-purple-500 to-purple-700 text-white';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-accent text-foreground';
     }
   };
 
@@ -141,11 +141,11 @@ export default function EventManagement() {
       case 'ongoing':
         return 'text-green-600';
       case 'completed':
-        return 'text-gray-600';
+        return 'text-muted-foreground';
       case 'cancelled':
         return 'text-red-600';
       default:
-        return 'text-gray-600';
+        return 'text-muted-foreground';
     }
   };
 
@@ -178,7 +178,7 @@ export default function EventManagement() {
             <CardContent className="p-6">
               <div className="flex flex-col gap-4">
                 <div className="relative w-full">
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                   <Input
                     type="search"
                     placeholder="Search events..."
@@ -263,8 +263,8 @@ export default function EventManagement() {
                               {event.status}
                             </span>
                           </div>
-                          <h3 className="font-medium text-gray-900 mb-1">{event.title}</h3>
-                          <p className="text-sm text-gray-500 line-clamp-2">{event.description}</p>
+                          <h3 className="font-medium text-foreground mb-1">{event.title}</h3>
+                          <p className="text-sm text-muted-foreground line-clamp-2">{event.description}</p>
                         </div>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
@@ -302,11 +302,11 @@ export default function EventManagement() {
 
                       <div className="space-y-2 text-sm border-t pt-3">
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1 text-gray-600">
+                          <div className="flex items-center gap-1 text-muted-foreground">
                             <CalendarClock className="w-4 h-4" />
                             <span>{new Date(event.startTime).toLocaleDateString()}</span>
                           </div>
-                          <div className="flex items-center gap-1 text-gray-500">
+                          <div className="flex items-center gap-1 text-muted-foreground">
                             <Clock className="w-4 h-4" />
                             <span>
                               {new Date(event.startTime).toLocaleTimeString([], {
@@ -317,19 +317,19 @@ export default function EventManagement() {
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2 text-gray-600">
+                        <div className="flex items-center gap-2 text-muted-foreground">
                           {getLocationIcon(event.locationType)}
                           <div>
                             <span className="capitalize">{event.locationType.replace('_', ' ')}</span>
                             {event.locationDetails.venue && (
-                              <span className="text-gray-500"> • {event.locationDetails.venue}</span>
+                              <span className="text-muted-foreground"> • {event.locationDetails.venue}</span>
                             )}
                           </div>
                         </div>
 
                         <div className="space-y-1 pt-2">
                           <div className="flex items-center justify-between text-xs">
-                            <span className="text-gray-500">Registration:</span>
+                            <span className="text-muted-foreground">Registration:</span>
                             <span className="font-medium">
                               {event.currentRegistrations}/{event.capacity} ({percentage}%)
                             </span>
@@ -376,8 +376,8 @@ export default function EventManagement() {
                         <TableRow key={event.id}>
                           <TableCell>
                             <div>
-                              <p className="font-medium text-gray-900">{event.title}</p>
-                              <p className="text-sm text-gray-500 line-clamp-1">
+                              <p className="font-medium text-foreground">{event.title}</p>
+                              <p className="text-sm text-muted-foreground line-clamp-1">
                                 {event.description}
                               </p>
                             </div>
@@ -393,10 +393,10 @@ export default function EventManagement() {
                           <TableCell>
                             <div className="text-sm">
                               <div className="flex items-center space-x-1">
-                                <CalendarClock className="w-4 h-4 text-gray-400" />
+                                <CalendarClock className="w-4 h-4 text-muted-foreground" />
                                 <span>{new Date(event.startTime).toLocaleDateString()}</span>
                               </div>
-                              <div className="flex items-center space-x-1 text-gray-500">
+                              <div className="flex items-center space-x-1 text-muted-foreground">
                                 <Clock className="w-4 h-4" />
                                 <span>
                                   {new Date(event.startTime).toLocaleTimeString([], {
@@ -413,7 +413,7 @@ export default function EventManagement() {
                               <div>
                                 <p className="text-sm capitalize">{event.locationType.replace('_', ' ')}</p>
                                 {event.locationDetails.venue && (
-                                  <p className="text-xs text-gray-500">{event.locationDetails.venue}</p>
+                                  <p className="text-xs text-muted-foreground">{event.locationDetails.venue}</p>
                                 )}
                               </div>
                             </div>
@@ -424,7 +424,7 @@ export default function EventManagement() {
                                 <span className="text-sm">
                                   {event.currentRegistrations}/{event.capacity}
                                 </span>
-                                <span className="text-xs text-gray-500">{percentage}%</span>
+                                <span className="text-xs text-muted-foreground">{percentage}%</span>
                               </div>
                               <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
                                 <div
@@ -490,7 +490,7 @@ export default function EventManagement() {
         <TabsContent value="calendar">
           <Card>
             <CardContent className="p-6">
-              <p className="text-gray-500">Calendar view coming soon...</p>
+              <p className="text-muted-foreground">Calendar view coming soon...</p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -499,29 +499,29 @@ export default function EventManagement() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gray-600">Total Events</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Total Events</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-bold">{events.length}</p>
-                <p className="text-xs text-gray-500">This month</p>
+                <p className="text-xs text-muted-foreground">This month</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gray-600">Total Registrations</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Total Registrations</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-bold">
                   {events.reduce((sum, e) => sum + e.currentRegistrations, 0)}
                 </p>
-                <p className="text-xs text-gray-500">Across all events</p>
+                <p className="text-xs text-muted-foreground">Across all events</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gray-600">Average Attendance</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Average Attendance</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-bold">
@@ -530,19 +530,19 @@ export default function EventManagement() {
                     events.length
                   )}%
                 </p>
-                <p className="text-xs text-gray-500">Registration rate</p>
+                <p className="text-xs text-muted-foreground">Registration rate</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gray-600">Upcoming Events</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Upcoming Events</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-bold">
                   {events.filter(e => e.status === 'upcoming').length}
                 </p>
-                <p className="text-xs text-gray-500">Next 30 days</p>
+                <p className="text-xs text-muted-foreground">Next 30 days</p>
               </CardContent>
             </Card>
           </div>

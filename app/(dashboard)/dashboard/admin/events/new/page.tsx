@@ -55,8 +55,8 @@ export default function CreateEventPage() {
     <div className="container mx-auto px-4 py-8 space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Create New Event</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-3xl font-bold text-foreground">Create New Event</h1>
+          <p className="text-muted-foreground mt-2">
             Set up a new event for the community
           </p>
         </div>
@@ -256,7 +256,7 @@ export default function CreateEventPage() {
               <div className="space-y-2">
                 <Label htmlFor="price">Price (USD)</Label>
                 <Input id="price" type="number" placeholder="0" step="0.01" />
-                <p className="text-xs text-gray-500">Leave as 0 for free events</p>
+                <p className="text-xs text-muted-foreground">Leave as 0 for free events</p>
               </div>
             </div>
 
@@ -264,7 +264,7 @@ export default function CreateEventPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label>Members Only</Label>
-                  <p className="text-sm text-gray-500">Restrict to registered members</p>
+                  <p className="text-sm text-muted-foreground">Restrict to registered members</p>
                 </div>
                 <Switch checked={isMembersOnly} onCheckedChange={setIsMembersOnly} />
               </div>
@@ -272,7 +272,7 @@ export default function CreateEventPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label>Enable Waitlist</Label>
-                  <p className="text-sm text-gray-500">Allow waitlist when event is full</p>
+                  <p className="text-sm text-muted-foreground">Allow waitlist when event is full</p>
                 </div>
                 <Switch checked={enableWaitlist} onCheckedChange={setEnableWaitlist} />
               </div>

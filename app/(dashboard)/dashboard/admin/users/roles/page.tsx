@@ -33,7 +33,7 @@ import {
 } from '@/components/ui/dialog';
 
 const roles = [
-  { id: 'admin', name: 'Administrator', description: 'Full system access', color: 'bg-purple-100 text-purple-700', icon: Shield, userCount: 3 },
+  { id: 'admin', name: 'Administrator', description: 'Full system access', color: 'bg-muted text-purple-700', icon: Shield, userCount: 3 },
   { id: 'mentor', name: 'Mentor', description: 'Can mentor students and access mentorship features', color: 'bg-green-100 text-green-700', icon: GraduationCap, userCount: 184 },
   { id: 'mentee', name: 'Mentee', description: 'Can receive mentorship and access learning resources', color: 'bg-blue-100 text-blue-700', icon: Users, userCount: 492 },
   { id: 'moderator', name: 'Moderator', description: 'Can moderate content and verify mentors', color: 'bg-orange-100 text-orange-700', icon: UserPlus, userCount: 5 },
@@ -61,17 +61,17 @@ export default function RoleManagementPage() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
-      <div className="flex justify-between items-center">
+    <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8 space-y-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Role Management</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Role Management</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-2">
             Manage user roles and permissions across the platform
           </p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-purple-600 hover:bg-purple-700">
+            <Button className="bg-purple-600 hover:bg-purple-700 text-sm sm:text-base">
               <Plus className="w-4 h-4 mr-2" />
               Create Role
             </Button>
@@ -104,7 +104,7 @@ export default function RoleManagementPage() {
       </div>
 
       {/* Role Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {roles.map((role) => {
           const Icon = role.icon;
           return (
@@ -112,7 +112,7 @@ export default function RoleManagementPage() {
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Icon className="w-5 h-5 text-purple-600" />
+                    <Icon className="w-5 h-5 text-primary" />
                     <CardTitle className="text-sm font-medium">{role.name}</CardTitle>
                   </div>
                   <Badge variant="secondary" className={role.color}>
@@ -121,7 +121,7 @@ export default function RoleManagementPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-xs text-gray-500">{role.description}</p>
+                <p className="text-xs text-muted-foreground">{role.description}</p>
               </CardContent>
             </Card>
           );
@@ -131,14 +131,14 @@ export default function RoleManagementPage() {
       {/* User Role Assignments */}
       <Card>
         <CardHeader>
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <div>
               <CardTitle>User Role Assignments</CardTitle>
               <CardDescription>Assign and manage roles for users</CardDescription>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
               <Select value={selectedRole} onValueChange={setSelectedRole}>
-                <SelectTrigger className="w-40">
+                <SelectTrigger className="w-full sm:w-40 text-sm sm:text-base">
                   <SelectValue placeholder="Filter by role" />
                 </SelectTrigger>
                 <SelectContent>
@@ -148,36 +148,37 @@ export default function RoleManagementPage() {
                   ))}
                 </SelectContent>
               </Select>
-              <div className="relative w-64">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <div className="relative w-full sm:w-64">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                 <Input
                   type="search"
                   placeholder="Search users..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9"
+                  className="pl-9 text-sm sm:text-base"
                 />
               </div>
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>User</TableHead>
-                <TableHead>Current Roles</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>User</TableHead>
+                  <TableHead>Current Roles</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
               {filteredUsers.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell>
                     <div>
                       <p className="font-medium">{user.name}</p>
-                      <p className="text-sm text-gray-500">{user.email}</p>
+                      <p className="text-sm text-muted-foreground">{user.email}</p>
                     </div>
                   </TableCell>
                   <TableCell>
@@ -210,8 +211,9 @@ export default function RoleManagementPage() {
                   </TableCell>
                 </TableRow>
               ))}
-            </TableBody>
-          </Table>
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
 
@@ -225,35 +227,35 @@ export default function RoleManagementPage() {
           <div className="space-y-4">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2 p-3 bg-purple-50 rounded-lg">
-                <Shield className="w-5 h-5 text-purple-600" />
+                <Shield className="w-5 h-5 text-primary" />
                 <span className="font-medium">Administrator</span>
               </div>
-              <span className="text-gray-400">→</span>
-              <span className="text-sm text-gray-600">Has all permissions</span>
+              <span className="text-muted-foreground">→</span>
+              <span className="text-sm text-muted-foreground">Has all permissions</span>
             </div>
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2 p-3 bg-orange-50 rounded-lg">
                 <UserPlus className="w-5 h-5 text-orange-600" />
                 <span className="font-medium">Moderator</span>
               </div>
-              <span className="text-gray-400">→</span>
-              <span className="text-sm text-gray-600">Can moderate content and verify users</span>
+              <span className="text-muted-foreground">→</span>
+              <span className="text-sm text-muted-foreground">Can moderate content and verify users</span>
             </div>
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2 p-3 bg-green-50 rounded-lg">
                 <GraduationCap className="w-5 h-5 text-green-600" />
                 <span className="font-medium">Mentor</span>
               </div>
-              <span className="text-gray-400">→</span>
-              <span className="text-sm text-gray-600">Can mentor students</span>
+              <span className="text-muted-foreground">→</span>
+              <span className="text-sm text-muted-foreground">Can mentor students</span>
             </div>
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2 p-3 bg-blue-50 rounded-lg">
                 <Users className="w-5 h-5 text-blue-600" />
                 <span className="font-medium">Mentee</span>
               </div>
-              <span className="text-gray-400">→</span>
-              <span className="text-sm text-gray-600">Can access learning resources</span>
+              <span className="text-muted-foreground">→</span>
+              <span className="text-sm text-muted-foreground">Can access learning resources</span>
             </div>
           </div>
         </CardContent>

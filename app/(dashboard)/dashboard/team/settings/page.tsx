@@ -192,7 +192,7 @@ export default function TeamSettingsPage() {
 
   return (
     <section className="flex-1 p-4 lg:p-8">
-      <h1 className="text-lg lg:text-2xl font-medium text-gray-900 mb-6">
+      <h1 className="text-lg lg:text-2xl font-medium text-foreground mb-6">
         Team Settings
       </h1>
 
@@ -230,11 +230,11 @@ export default function TeamSettingsPage() {
             {teamMembers.map((member) => (
               <div
                 key={member.id}
-                className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent transition-colors"
               >
                 <div className="flex items-center space-x-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-100">
-                    <Users className="h-5 w-5 text-purple-600" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
+                    <Users className="h-5 w-5 text-primary" />
                   </div>
                   <div>
                     <div className="flex items-center space-x-2">
@@ -243,7 +243,7 @@ export default function TeamSettingsPage() {
                         <Badge variant="outline" className="text-xs">You</Badge>
                       )}
                     </div>
-                    <p className="text-sm text-gray-500">{member.user.email}</p>
+                    <p className="text-sm text-muted-foreground">{member.user.email}</p>
                     <div className="flex items-center space-x-2 mt-1">
                       <Badge variant={getRoleBadgeVariant(member.role)}>
                         {getRoleIcon(member.role)}
@@ -359,8 +359,8 @@ export default function TeamSettingsPage() {
                   className="flex items-center justify-between p-4 border rounded-lg"
                 >
                   <div className="flex items-center space-x-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
-                      <Mail className="h-5 w-5 text-gray-600" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent">
+                      <Mail className="h-5 w-5 text-muted-foreground" />
                     </div>
                     <div>
                       <p className="font-medium">{invitation.email}</p>
@@ -374,7 +374,7 @@ export default function TeamSettingsPage() {
                           <span className="ml-1 capitalize">{invitation.status}</span>
                         </Badge>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-muted-foreground mt-1">
                         Invited {new Date(invitation.invitedAt).toLocaleDateString()}
                       </p>
                     </div>

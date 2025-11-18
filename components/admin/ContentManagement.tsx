@@ -235,7 +235,7 @@ export default function ContentManagement() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Total Resources</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Total Resources</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-2xl font-bold">{stats.totalResources}</p>
@@ -244,7 +244,7 @@ export default function ContentManagement() {
           
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Total Downloads</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Total Downloads</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-2xl font-bold">{stats.totalDownloads.toLocaleString()}</p>
@@ -253,7 +253,7 @@ export default function ContentManagement() {
           
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Total Views</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Total Views</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-2xl font-bold">{stats.totalViews.toLocaleString()}</p>
@@ -262,7 +262,7 @@ export default function ContentManagement() {
           
           <Card className="md:col-span-2">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Storage Usage</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Storage Usage</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
@@ -292,7 +292,7 @@ export default function ContentManagement() {
             <CardContent className="p-6">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                   <Input
                     type="search"
                     placeholder="Search resources..."
@@ -350,8 +350,8 @@ export default function ContentManagement() {
                         resource.type === 'document' && "bg-blue-100",
                         resource.type === 'video' && "bg-red-100",
                         resource.type === 'template' && "bg-green-100",
-                        resource.type === 'guide' && "bg-purple-100",
-                        resource.type === 'link' && "bg-gray-100"
+                        resource.type === 'guide' && "bg-muted",
+                        resource.type === 'link' && "bg-accent"
                       )}>
                         {getTypeIcon(resource.type)}
                       </div>
@@ -406,7 +406,7 @@ export default function ContentManagement() {
                     </div>
 
                     {/* Metadata */}
-                    <div className="grid grid-cols-2 gap-2 text-xs text-gray-500">
+                    <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
                       <div className="flex items-center space-x-1">
                         {getAccessIcon(resource.accessLevel)}
                         <span className="capitalize">{resource.accessLevel}</span>
@@ -427,7 +427,7 @@ export default function ContentManagement() {
 
                     {/* File Size or Rating */}
                     <div className="flex justify-between items-center pt-2 border-t">
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-muted-foreground">
                         {resource.fileSize ? formatFileSize(resource.fileSize) : 'External'}
                       </span>
                       <div className="flex items-center space-x-1">
@@ -445,7 +445,7 @@ export default function ContentManagement() {
         <TabsContent value="media">
           <Card>
             <CardContent className="p-6">
-              <p className="text-gray-500">Media gallery management coming soon...</p>
+              <p className="text-muted-foreground">Media gallery management coming soon...</p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -453,7 +453,7 @@ export default function ContentManagement() {
         <TabsContent value="newsletters">
           <Card>
             <CardContent className="p-6">
-              <p className="text-gray-500">Newsletter management coming soon...</p>
+              <p className="text-muted-foreground">Newsletter management coming soon...</p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -461,7 +461,7 @@ export default function ContentManagement() {
         <TabsContent value="blog">
           <Card>
             <CardContent className="p-6">
-              <p className="text-gray-500">Blog post management coming soon...</p>
+              <p className="text-muted-foreground">Blog post management coming soon...</p>
             </CardContent>
           </Card>
         </TabsContent>

@@ -114,7 +114,7 @@ export default function MyRegistrationsPage() {
   const getEventTypeColor = (eventType: string) => {
     switch (eventType) {
       case 'workshop':
-        return 'bg-purple-light text-purple-dark border-purple-mid/20';
+        return 'bg-purple-light text-primary border-purple-mid/20';
       case 'networking':
         return 'bg-mint-light text-mint-dark border-mint-dark/20';
       case 'mentorship':
@@ -122,18 +122,18 @@ export default function MyRegistrationsPage() {
       case 'conference':
         return 'bg-navy-light text-navy-dark border-navy-dark/20';
       case 'social':
-        return 'bg-purple-light text-purple-dark border-purple-mid/20';
+        return 'bg-purple-light text-primary border-purple-mid/20';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-300';
+        return 'bg-accent text-foreground border-border';
     }
   };
 
   const RegistrationCard = ({ registration }: { registration: EventRegistration }) => (
-    <Card className="group hover:shadow-xl transition-all duration-300 border-gray-200 hover:border-purple-mid/30 bg-white h-full overflow-hidden">
+    <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-purple-mid/30 bg-white h-full overflow-hidden">
       <CardHeader>
         <div className="flex justify-between items-start">
           <div className="space-y-2 flex-1">
-            <CardTitle className="text-lg font-semibold text-navy-dark group-hover:text-purple-dark transition-colors line-clamp-2">
+            <CardTitle className="text-lg font-semibold text-navy-dark group-hover:text-primary transition-colors line-clamp-2">
               {registration.event.title}
             </CardTitle>
             <div className="flex flex-wrap gap-2">
@@ -156,7 +156,7 @@ export default function MyRegistrationsPage() {
           </div>
           {registration.certificateIssued && (
             <div className="flex-shrink-0 ml-2">
-              <Badge className="bg-purple-light text-purple-dark border-purple-mid/20 text-xs">
+              <Badge className="bg-purple-light text-primary border-purple-mid/20 text-xs">
                 <Award className="h-3 w-3 mr-1" />
                 Certificate
               </Badge>
@@ -173,20 +173,20 @@ export default function MyRegistrationsPage() {
         
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-sm text-gray">
-            <Calendar className="h-4 w-4 text-purple-dark" />
+            <Calendar className="h-4 w-4 text-primary" />
             <span className="font-medium text-navy-dark">
               {format(new Date(registration.event.startTime), 'PPP')}
             </span>
           </div>
           <div className="flex items-center gap-2 text-sm text-gray">
-            <Clock className="h-4 w-4 text-purple-dark" />
+            <Clock className="h-4 w-4 text-primary" />
             <span>
               {format(new Date(registration.event.startTime), 'p')} - {format(new Date(registration.event.endTime), 'p')}
               {registration.event.timezone && ` (${registration.event.timezone})`}
             </span>
           </div>
           <div className="flex items-center gap-2 text-sm text-gray">
-            <span className="text-purple-dark">{getLocationIcon(registration.event.locationType)}</span>
+            <span className="text-primary">{getLocationIcon(registration.event.locationType)}</span>
             <span className="capitalize">{registration.event.locationType}</span>
             {registration.event.locationDetails?.venue && (
               <span className="text-navy-dark font-medium">• {registration.event.locationDetails.venue}</span>
@@ -194,14 +194,14 @@ export default function MyRegistrationsPage() {
           </div>
         </div>
 
-        <div className="pt-2 border-t border-gray-100">
+        <div className="pt-2 border-t border-border">
           <div className="flex items-center gap-2 text-xs text-gray">
-            <Ticket className="h-3.5 w-3.5 text-purple-dark" />
+            <Ticket className="h-3.5 w-3.5 text-primary" />
             <span>Registered on {format(new Date(registration.registeredAt), 'PPP')}</span>
           </div>
         </div>
       </CardContent>
-      <CardFooter className="border-t border-gray-100 bg-gray-50/50 flex flex-wrap gap-2 p-4">
+      <CardFooter className="border-t border-border bg-accent/50 flex flex-wrap gap-2 p-4">
           {/* Actions for upcoming events */}
           {new Date(registration.event.startTime) > new Date() && (
             <>
@@ -257,7 +257,7 @@ export default function MyRegistrationsPage() {
 
           <Button 
             variant="outline" 
-            className="min-w-[100px] border-gray-300 hover:border-purple-mid/30 hover:bg-purple-light/30 transition-all"
+            className="min-w-[100px] border-border hover:border-purple-mid/30 hover:bg-purple-light/30 transition-all"
             size="sm"
           >
             View Details
@@ -270,7 +270,7 @@ export default function MyRegistrationsPage() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-dark mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           <p className="mt-4 text-gray">Loading your registrations...</p>
         </div>
       </div>
@@ -282,7 +282,7 @@ export default function MyRegistrationsPage() {
       {/* Header Section */}
       <div className="mb-6 sm:mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
-          <Ticket className="h-5 w-5 sm:h-6 sm:w-6 text-purple-dark flex-shrink-0" />
+          <Ticket className="h-5 w-5 sm:h-6 sm:w-6 text-primary flex-shrink-0" />
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-dark to-purple-mid bg-clip-text text-transparent">
             My Event Registrations
           </h1>
@@ -295,7 +295,7 @@ export default function MyRegistrationsPage() {
       {/* Info Alert */}
       {registrations.upcoming.length > 0 && (
         <Alert className="mb-6 sm:mb-8 border-purple-mid/20 bg-purple-light/20">
-          <Info className="h-4 w-4 text-purple-dark" />
+          <Info className="h-4 w-4 text-primary" />
           <AlertDescription className="text-navy-dark">
             <strong className="font-semibold">You have {registrations.upcoming.length} upcoming event{registrations.upcoming.length !== 1 ? 's' : ''}!</strong>
             <span className="block sm:inline"> Don't forget to mark your calendar and prepare for your registered events.</span>

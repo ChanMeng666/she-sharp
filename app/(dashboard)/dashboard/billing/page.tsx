@@ -170,38 +170,38 @@ export default function BillingPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-dark"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-6xl">
+    <div className="container mx-auto py-6 md:py-8 px-4 md:px-6 lg:px-8 max-w-6xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-purple-dark">Billing & Subscription</h1>
-        <p className="text-gray-600 mt-2">Manage your subscription plan and billing information</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-primary">Billing & Subscription</h1>
+        <p className="text-sm sm:text-base text-muted-foreground mt-2">Manage your subscription plan and billing information</p>
       </div>
 
       {/* Current Plan */}
       <Card className="mb-8">
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <CardTitle>Current Plan</CardTitle>
               <CardDescription>You are currently on the Pro plan</CardDescription>
             </div>
-            <Badge className="bg-purple-dark text-white text-lg px-4 py-1">
+            <Badge variant="default" className="text-lg px-4 py-1 w-fit">
               Pro Plan
             </Badge>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <p className="text-3xl font-bold">$29<span className="text-lg font-normal text-gray-500">/month</span></p>
-              <p className="text-sm text-gray-500">Next billing date: April 1, 2024</p>
+              <p className="text-2xl sm:text-3xl font-bold">$29<span className="text-base sm:text-lg font-normal text-muted-foreground">/month</span></p>
+              <p className="text-xs sm:text-sm text-muted-foreground">Next billing date: April 1, 2024</p>
             </div>
-            <Button variant="outline" onClick={handleManagePayment}>
+            <Button variant="outline" onClick={handleManagePayment} className="text-sm sm:text-base">
               <CreditCard className="mr-2 h-4 w-4" />
               Manage Payment Method
             </Button>
@@ -210,7 +210,7 @@ export default function BillingPage() {
       </Card>
 
       {/* Usage Statistics */}
-      <div className="grid gap-4 md:grid-cols-3 mb-8">
+      <div className="grid gap-4 md:grid-cols-3 mb-8 md:gap-6">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">Team Members</CardTitle>
@@ -219,11 +219,11 @@ export default function BillingPage() {
             <div className="text-2xl font-bold mb-2">
               {usage.members.current} / {usage.members.limit}
             </div>
-            <Progress 
-              value={(usage.members.current / usage.members.limit) * 100} 
+            <Progress
+              value={(usage.members.current / usage.members.limit) * 100}
               className="h-2"
             />
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-muted-foreground mt-2">
               {usage.members.limit - usage.members.current} members remaining
             </p>
           </CardContent>
@@ -236,11 +236,11 @@ export default function BillingPage() {
             <div className="text-2xl font-bold mb-2">
               {usage.storage.current} GB / {usage.storage.limit} GB
             </div>
-            <Progress 
-              value={(usage.storage.current / usage.storage.limit) * 100} 
+            <Progress
+              value={(usage.storage.current / usage.storage.limit) * 100}
               className="h-2"
             />
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-muted-foreground mt-2">
               {(usage.storage.limit - usage.storage.current).toFixed(1)} GB available
             </p>
           </CardContent>
@@ -253,11 +253,11 @@ export default function BillingPage() {
             <div className="text-2xl font-bold mb-2">
               {usage.apiCalls.current.toLocaleString()} / {usage.apiCalls.limit.toLocaleString()}
             </div>
-            <Progress 
-              value={(usage.apiCalls.current / usage.apiCalls.limit) * 100} 
+            <Progress
+              value={(usage.apiCalls.current / usage.apiCalls.limit) * 100}
               className="h-2"
             />
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-muted-foreground mt-2">
               Resets in 15 days
             </p>
           </CardContent>
@@ -271,16 +271,16 @@ export default function BillingPage() {
           <CardDescription>Choose the plan that best fits your needs</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3 md:gap-6">
             {plans.map((plan) => (
               <div
                 key={plan.id}
                 className={`relative rounded-lg border p-6 ${
-                  plan.highlighted ? 'border-purple-dark shadow-lg' : 'border-gray-200'
-                } ${currentPlan === plan.id ? 'bg-purple-light/10' : ''}`}
+                  plan.highlighted ? 'border-primary shadow-lg' : 'border-border'
+                } ${currentPlan === plan.id ? 'bg-muted/50' : ''}`}
               >
                 {plan.highlighted && (
-                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-dark text-white">
+                  <Badge variant="default" className="absolute -top-3 left-1/2 -translate-x-1/2">
                     Most Popular
                   </Badge>
                 )}
@@ -293,7 +293,7 @@ export default function BillingPage() {
                   <h3 className="text-lg font-semibold">{plan.name}</h3>
                   <p className="text-3xl font-bold mt-2">
                     ${plan.price}
-                    <span className="text-lg font-normal text-gray-500">/{plan.interval}</span>
+                    <span className="text-lg font-normal text-muted-foreground">/{plan.interval}</span>
                   </p>
                 </div>
                 <ul className="space-y-2 mb-6">
@@ -310,9 +310,7 @@ export default function BillingPage() {
                   </Button>
                 ) : (
                   <Button
-                    className={`w-full ${
-                      plan.highlighted ? 'bg-purple-dark hover:bg-purple-mid' : ''
-                    }`}
+                    className="w-full"
                     variant={plan.highlighted ? 'default' : 'outline'}
                     onClick={() => handleUpgrade(plan.id)}
                   >
@@ -332,7 +330,7 @@ export default function BillingPage() {
           <CardDescription>Download your past invoices and receipts</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="rounded-md border">
+          <div className="rounded-md border overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -347,7 +345,7 @@ export default function BillingPage() {
               <TableBody>
                 {invoices.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                    <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                       No invoices found
                     </TableCell>
                   </TableRow>
@@ -395,9 +393,9 @@ export default function BillingPage() {
       </Card>
 
       {/* Billing Support */}
-      <Alert className="mt-8 border-purple-200 bg-purple-50">
-        <HeadphonesIcon className="h-4 w-4 text-purple-dark" />
-        <AlertDescription className="text-purple-900">
+      <Alert className="mt-8 border-primary/20 bg-muted">
+        <HeadphonesIcon className="h-4 w-4 text-primary" />
+        <AlertDescription className="text-foreground">
           Need help with billing? Contact our support team at{' '}
           <a href="mailto:billing@shesharp.org" className="font-medium underline">
             billing@shesharp.org

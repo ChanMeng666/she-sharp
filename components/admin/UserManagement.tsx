@@ -159,13 +159,13 @@ export default function UserManagement() {
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'admin':
-        return 'bg-purple-100 text-purple-700';
+        return 'bg-muted text-purple-700';
       case 'mentor':
         return 'bg-green-100 text-green-700';
       case 'mentee':
         return 'bg-blue-100 text-blue-700';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-accent text-foreground';
     }
   };
 
@@ -176,9 +176,9 @@ export default function UserManagement() {
       case 'basic':
         return 'bg-gradient-to-r from-gray-400 to-gray-600 text-white';
       case 'free':
-        return 'bg-gray-200 text-gray-700';
+        return 'bg-gray-200 text-foreground';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-accent text-foreground';
     }
   };
 
@@ -188,7 +188,7 @@ export default function UserManagement() {
         <div className="flex justify-between items-center">
           <CardTitle>All Users</CardTitle>
           <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-muted-foreground">
               {selectedUsers.length > 0 && `${selectedUsers.length} selected`}
             </span>
           </div>
@@ -198,7 +198,7 @@ export default function UserManagement() {
         {/* Filters and Search */}
         <div className="flex flex-col gap-4 mb-6">
           <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
             <Input
               type="search"
               placeholder="Search by name or email..."
@@ -300,13 +300,13 @@ export default function UserManagement() {
                   />
                   <Avatar className="w-12 h-12">
                     <AvatarImage src={user.image || undefined} alt={user.name || ''} />
-                    <AvatarFallback className="bg-purple-100 text-purple-700">
+                    <AvatarFallback className="bg-muted text-purple-700">
                       {getInitials(user.name)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-gray-900 truncate">{user.name || 'Unknown User'}</p>
-                    <p className="text-sm text-gray-500 truncate">{user.email}</p>
+                    <p className="font-medium text-foreground truncate">{user.name || 'Unknown User'}</p>
+                    <p className="text-sm text-muted-foreground truncate">{user.email}</p>
                   </div>
                 </div>
                 <DropdownMenu>
@@ -345,7 +345,7 @@ export default function UserManagement() {
 
               <div className="space-y-2 text-sm">
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Roles:</span>
+                  <span className="text-muted-foreground">Roles:</span>
                   <div className="flex flex-wrap gap-1 justify-end">
                     {user.roles.map((role) => (
                       <Badge
@@ -360,7 +360,7 @@ export default function UserManagement() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Membership:</span>
+                  <span className="text-muted-foreground">Membership:</span>
                   <Badge
                     variant="secondary"
                     className={cn('text-xs', getMembershipBadgeColor(user.membershipTier))}
@@ -370,13 +370,13 @@ export default function UserManagement() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Status:</span>
+                  <span className="text-muted-foreground">Status:</span>
                   <Badge
                     variant={user.status === 'active' ? 'default' : 'secondary'}
                     className={cn(
                       'text-xs',
                       user.status === 'active' && 'bg-green-100 text-green-700',
-                      user.status === 'inactive' && 'bg-gray-100 text-gray-700',
+                      user.status === 'inactive' && 'bg-accent text-foreground',
                       user.status === 'suspended' && 'bg-red-100 text-red-700'
                     )}
                   >
@@ -385,13 +385,13 @@ export default function UserManagement() {
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t">
-                  <span className="text-gray-500">Joined:</span>
-                  <span className="text-gray-700">{new Date(user.createdAt).toLocaleDateString()}</span>
+                  <span className="text-muted-foreground">Joined:</span>
+                  <span className="text-foreground">{new Date(user.createdAt).toLocaleDateString()}</span>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Last Active:</span>
-                  <span className="text-gray-700">
+                  <span className="text-muted-foreground">Last Active:</span>
+                  <span className="text-foreground">
                     {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}
                   </span>
                 </div>
@@ -433,13 +433,13 @@ export default function UserManagement() {
                     <div className="flex items-center space-x-3">
                       <Avatar className="w-10 h-10">
                         <AvatarImage src={user.image || undefined} alt={user.name || ''} />
-                        <AvatarFallback className="bg-purple-100 text-purple-700">
+                        <AvatarFallback className="bg-muted text-purple-700">
                           {getInitials(user.name)}
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="font-medium text-gray-900">{user.name || 'Unknown User'}</p>
-                        <p className="text-sm text-gray-500">{user.email}</p>
+                        <p className="font-medium text-foreground">{user.name || 'Unknown User'}</p>
+                        <p className="text-sm text-muted-foreground">{user.email}</p>
                       </div>
                     </div>
                   </TableCell>
@@ -470,17 +470,17 @@ export default function UserManagement() {
                       className={cn(
                         'text-xs',
                         user.status === 'active' && 'bg-green-100 text-green-700',
-                        user.status === 'inactive' && 'bg-gray-100 text-gray-700',
+                        user.status === 'inactive' && 'bg-accent text-foreground',
                         user.status === 'suspended' && 'bg-red-100 text-red-700'
                       )}
                     >
                       {user.status}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-sm text-gray-500">
+                  <TableCell className="text-sm text-muted-foreground">
                     {new Date(user.createdAt).toLocaleDateString()}
                   </TableCell>
-                  <TableCell className="text-sm text-gray-500">
+                  <TableCell className="text-sm text-muted-foreground">
                     {user.lastLoginAt
                       ? new Date(user.lastLoginAt).toLocaleDateString()
                       : 'Never'}
@@ -527,7 +527,7 @@ export default function UserManagement() {
 
         {/* Pagination */}
         <div className="flex items-center justify-between mt-6">
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-muted-foreground">
             Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
             {Math.min(currentPage * itemsPerPage, users.length * totalPages)} of{' '}
             {users.length * totalPages} users
