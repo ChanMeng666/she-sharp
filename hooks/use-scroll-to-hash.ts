@@ -6,7 +6,7 @@ export function useScrollToHash() {
 
   useEffect(() => {
     const scrollToElement = (element: Element) => {
-      const yOffset = -80; // Navigation bar height
+      const yOffset = -20; // Small offset for spacing
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     };

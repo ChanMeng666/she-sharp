@@ -4,7 +4,7 @@ import { layoutSystem } from "@/lib/layout-system";
 
 export function ContactHeroSection() {
   return (
-    <Section bgColor="white" noPadding className="pt-32 pb-20">
+    <Section bgColor="white" noPadding className="pt-16 pb-20">
       <Container size="narrow">
         <div className="text-center">
           <h1 className="text-5xl font-light tracking-tight text-navy-dark sm:text-6xl md:text-7xl">

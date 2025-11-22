@@ -69,13 +69,13 @@ export function EventsTimelineHero() {
     <section className="relative bg-white overflow-hidden">
       {/* Iridescence dynamic background */}
       <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
-        <Iridescence 
+        {/* <Iridescence 
           color={brandColors.navPrograms}
           mouseReact={false}
           amplitude={0.15}
           speed={0.35}
           className="w-full h-full"
-        />
+        /> */}
       </div>
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5 z-0">

@@ -65,13 +65,13 @@ export function MediaSection() {
     <Section className="relative bg-white py-16 md:py-20 overflow-hidden">
       {/* Subtle background effect for media content */}
       <div className="absolute inset-0 opacity-12">
-        <Iridescence
+        {/* <Iridescence
           color={brandColors.testimonialsSky}
           mouseReact={false}
           amplitude={0.06}
           speed={0.25}
           className="w-full h-full"
-        />
+        /> */}
       </div>
       
       <Container size="wide" className="relative z-10">

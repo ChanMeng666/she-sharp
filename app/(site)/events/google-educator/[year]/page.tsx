@@ -20,7 +20,7 @@ export default async function GoogleEducatorYearPage({ params }: PageProps) {
   return (
     <>
       {/* Back Navigation */}
-      <Section bgColor="white" noPadding className="pt-24">
+      <Section bgColor="white" noPadding className="pt-12">
         <Container size="content">
           <Button asChild variant="ghost" className="mb-8 -ml-4">
             <Link href="/events/google-educator">

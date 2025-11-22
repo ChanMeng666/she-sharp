@@ -263,13 +263,13 @@ export function SmartCTASection({
     <Section className={cn("relative bg-white py-16 md:py-20", className)}>
       {/* Iridescence Background for CTA */}
       <div className="absolute inset-0 opacity-35">
-        <Iridescence
+        {/* <Iridescence
           color={brandColors.ctaSoftMint}
           mouseReact={false}
           amplitude={0.12}
           speed={0.3}
           className="w-full h-full"
-        />
+        /> */}
       </div>
       
       {/* 向上过渡渐变 - 与上一个板块的柔和连接 */}

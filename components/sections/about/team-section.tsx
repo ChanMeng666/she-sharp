@@ -145,13 +145,21 @@ export function TeamSection() {
             layoutSystem.grids.content.gap
           )}
         >
-          {teamMembers.map((member, index) => (
+          {teamMembers.map((member) => (
             <Card
               key={member.name}
-              className={cn("relative overflow-hidden cursor-pointer")}
+              className={cn(
+                "group relative cursor-pointer rounded-3xl border border-white/40 bg-white/80 backdrop-blur-md",
+                "shadow-[0_5px_5px_rgba(196,193,255,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_15px_20px_rgba(196,193,255,0.35)]"
+              )}
               onClick={() => setSelectedMember(member)}
             >
-              <div className={cn("relative aspect-square")}>
+              {/* Top image */}
+              <div
+                className={cn(
+                  "relative aspect-[16/10] overflow-hidden rounded-t-3xl"
+                )}
+              >
                 <Image
                   src={member.image}
                   alt={member.name}
@@ -160,15 +168,13 @@ export function TeamSection() {
                   className="object-cover"
                 />
               </div>
-              <CardContent className="relative p-4 sm:p-5">
-                <h3
-                  className={cn(
-                    "font-semibold text-navy-dark text-base sm:text-lg"
-                  )}
-                >
+
+              {/* Content panel */}
+              <CardContent className="relative rounded-b-3xl p-6 sm:p-7 md:p-8 text-center">
+                <h3 className="font-bold text-navy-dark text-lg leading-snug">
                   {member.name}
                 </h3>
-                <p className="mt-1 text-sm text-gray truncate">
+                <p className="mt-1 text-sm text-gray">
                   {member.roles.join(", ")}
                 </p>
               </CardContent>

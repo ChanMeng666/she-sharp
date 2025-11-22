@@ -82,7 +82,7 @@ export function SiteHeader() {
       e.preventDefault();
       const element = document.querySelector(hash);
       if (element) {
-        const yOffset = -80; // 导航栏高度偏移
+        const yOffset = -20; // Small offset for spacing
         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
@@ -123,8 +123,8 @@ export function SiteHeader() {
 
   return (
     <header className={cn(
-      "fixed top-0 z-50 border-b backdrop-blur-md bg-[#F7E5F3]/70 transition-all duration-150 translate-y-0 py-1 mt-2 rounded-full left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] max-w-7xl",
-      scrolled ? "shadow-sm bg-[#F7E5F3]/80" : ""
+      "relative z-50 border border-white/20 backdrop-blur-md bg-white/40 transition-all duration-150 py-1 mt-2 mb-4 rounded-full mx-auto w-[calc(100%-2rem)] max-w-7xl",
+      scrolled ? "shadow-lg bg-white/80" : "shadow-sm"
     )}>
       <div className="flex h-16 items-center px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* Logo */}
@@ -173,7 +173,7 @@ export function SiteHeader() {
                         {item.title}
                       </span>
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent className="nav-dropdown-enter nav-dropdown-enter-active backdrop-blur-md bg-white/80 border border-white/20 shadow-lg">
+                    <NavigationMenuContent className="nav-dropdown-enter nav-dropdown-enter-active backdrop-blur-xl bg-white/70 border-2 border-white/40 shadow-2xl rounded-2xl">
                       <div className="flex w-[800px]">
                         {/* Left side - Navigation links */}
                         <div className="flex-1 p-6">
@@ -184,7 +184,7 @@ export function SiteHeader() {
                                   <Link
                                     href={child.href}
                                     onClick={(e) => handleSmoothScroll(e, child.href)}
-                                    className="flex items-start gap-3 rounded-lg p-3 transition-all duration-150 hover:bg-purple-light/30 focus:bg-purple-light/30 group"
+                                    className="flex items-start gap-3 rounded-lg p-3 transition-all duration-150 hover:bg-white/60 hover:backdrop-blur-sm focus:bg-white/60 group"
                                   >
                                     {child.icon && (
                                       <div className="mt-0.5">
@@ -216,17 +216,17 @@ export function SiteHeader() {
                           >
                             {/* Iridescence 动态背景 */}
                             <div className="absolute inset-0">
-                              <Iridescence
+                              {/* <Iridescence
                                 color={getNavigationColor(item.title)}
                                 mouseReact={false}
                                 amplitude={getNavigationAnimationParams(item.title).amplitude}
                                 speed={getNavigationAnimationParams(item.title).speed}
                                 className="w-full h-full"
-                              />
+                              /> */}
                             </div>
                             
                             {/* 内容覆盖层 */}
-                            <div className="relative h-full flex items-center justify-center bg-white/40 backdrop-blur-sm group-hover:bg-white/60 transition-all duration-300">
+                            <div className="relative h-full flex items-center justify-center bg-white/60 backdrop-blur-lg group-hover:bg-white/80 transition-all duration-300">
                               <div className="text-center p-6">
                                 <div className="text-sm font-medium text-navy-dark/80 mb-1">
                                   Featured
@@ -309,7 +309,7 @@ export function SiteHeader() {
           </SheetTrigger>
           <SheetContent 
             side="right" 
-            className="w-[300px] sm:w-[400px] p-0 overflow-y-auto backdrop-blur-md bg-white/80 border-l border-white/20"
+            className="w-[300px] sm:w-[400px] p-0 overflow-y-auto backdrop-blur-lg bg-white/75 border-l border-white/30"
           >
             {/* Mobile Header */}
             <div className="backdrop-blur-md bg-gradient-to-br from-purple-dark/80 to-purple-mid/80 p-6 relative overflow-hidden border-b border-white/20">

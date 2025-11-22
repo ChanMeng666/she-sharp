@@ -14,7 +14,7 @@ export function useSmoothScroll() {
       e.preventDefault();
       const element = document.querySelector(hash);
       if (element) {
-        const yOffset = -80; // 导航栏高度偏移
+        const yOffset = -20; // Small offset for spacing
         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }

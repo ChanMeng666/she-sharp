@@ -43,7 +43,7 @@ const socialLinks = [
 
 export function SocialMediaSection() {
   return (
-    <Section className="pt-32 pb-40">
+    <Section className="pt-16 pb-40">
       <Container>
         <div className="flex justify-center gap-6">
           {socialLinks.map((social) => (
