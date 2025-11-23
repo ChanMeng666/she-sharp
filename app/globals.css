@@ -135,9 +135,11 @@
   --color-gray: #9b9b9b;
   --color-blue: #1378d1;
   --color-error: #d72f40;
+  --color-ghost-white: #f3f3f1;
+  --color-light-pink: #F5D7E3;
   
   /* System Colors */
-  --color-background: hsl(var(--background));
+  --color-background: #f3f3f1;
   --color-foreground: hsl(var(--foreground));
 
   --color-card: hsl(var(--card));
@@ -243,25 +245,25 @@
 
 @layer base {
   :root {
-    /* She Sharp Color System */
-    --background: 218 100% 97%; /* #EFF5FF */
-    --foreground: 242 39% 19%; /* navy-dark #1f1e44 */
-    --card: 216 12% 97%; /* navy-light */
-    --card-foreground: 241 25% 21%; /* navy-dark */
-    --popover: 0 0% 100%; /* white */
-    --popover-foreground: 241 25% 21%; /* navy-dark */
+    /* She Sharp Color System - Dark Theme */
+    --background: 241 25% 8%; /* dark navy - kept as HSL for hsl() function usage */
+    --foreground: 0 0% 98%; /* near white for text */
+    --card: 241 25% 12%; /* dark card background */
+    --card-foreground: 0 0% 98%; /* light text on cards */
+    --popover: 241 25% 12%; /* dark popover */
+    --popover-foreground: 0 0% 98%; /* light text */
     --primary: 316 53% 38%; /* purple-dark */
     --primary-foreground: 0 0% 100%; /* white */
     --secondary: 244 100% 76%; /* periwinkle-dark */
     --secondary-foreground: 0 0% 100%; /* white */
-    --muted: 248 33% 97%; /* periwinkle-light */
-    --muted-foreground: 0 0% 61%; /* gray */
-    --accent: 168 86% 83%; /* mint-dark */
-    --accent-foreground: 241 25% 21%; /* navy-dark */
+    --muted: 241 25% 15%; /* dark muted background */
+    --muted-foreground: 0 0% 70%; /* light gray text */
+    --accent: 168 86% 83%; /* mint-dark - brand color */
+    --accent-foreground: 241 25% 8%; /* dark text on accent */
     --destructive: 354 70% 54%; /* error */
     --destructive-foreground: 0 0% 100%; /* white */
-    --border: 248 33% 97%; /* periwinkle-light */
-    --input: 248 33% 97%; /* periwinkle-light */
+    --border: 241 25% 25%; /* dark border */
+    --input: 241 25% 15%; /* dark input background */
     --ring: 316 53% 38%; /* purple-dark */
     
     /* She Sharp specific colors */
@@ -337,9 +339,13 @@
   * {
     @apply border-border;
   }
+  html {
+    background-color: #f3f3f1;
+  }
   body {
     margin: 0;
-    @apply bg-background text-foreground;
+    background-color: #f3f3f1;
+    @apply text-foreground;
   }
 }
 
@@ -348,7 +354,7 @@
 */
 
 :root {
-  --background: var(--navy-light);
+  --background: 60 3% 95%; /* #f3f3f1 */
   --foreground: hsl(242 39% 19%); /* navy-dark #1f1e44 */
   --card: hsl(0 0% 100%);
   --card-foreground: hsl(240 10% 3.9%);
@@ -411,7 +417,7 @@
 */
 
 @theme inline {
-  --color-background: var(--background);
+  --color-background: #f3f3f1;
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -450,7 +456,9 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    background: linear-gradient(to bottom, #0f0e1f, #1a1929, #0a0914);
+    @apply text-foreground;
+    min-height: 100vh;
   }
 }
 
@@ -482,5 +490,125 @@
   
   .animate-in\:scale-100 {
     transform: scale(1);
+  }
+  
+  /* Matt Glass Effect - Reusable frosted glass style */
+  .matt-glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+  
+  .matt-glass-effect-hover {
+    transition: all 0.3s ease;
+  }
+  
+  .matt-glass-effect-hover:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+}
+
+/* Scroll-triggered entrance animations */
+@layer utilities {
+  /* Base animation class - elements start hidden/transformed */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  /* Visible state - triggered when element enters viewport */
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Animation variants */
+  .animate-on-scroll-fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll-fade-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .animate-on-scroll-fade-down {
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll-fade-down.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .animate-on-scroll-fade-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll-fade-left.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .animate-on-scroll-fade-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll-fade-right.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .animate-on-scroll-scale {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll-scale.is-visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .animate-on-scroll-fade {
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+  }
+
+  .animate-on-scroll-fade.is-visible {
+    opacity: 1;
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-on-scroll,
+    .animate-on-scroll-fade-up,
+    .animate-on-scroll-fade-down,
+    .animate-on-scroll-fade-left,
+    .animate-on-scroll-fade-right,
+    .animate-on-scroll-scale,
+    .animate-on-scroll-fade {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
   }
 }

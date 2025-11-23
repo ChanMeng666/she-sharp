@@ -16,6 +16,7 @@ import {
   Minus,
 } from "lucide-react";
 import { useState } from "react";
+import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 // 三大核心项目
 const programs = [
@@ -86,14 +87,14 @@ export function ProgramsSection() {
 
   return (
     <>
-      <Section>
+      <Section className="bg-gradient-to-b from-black/95 via-gray-950/95 to-black/95">
         <Container size="full">
           {/* Section Header */}
-          <div className="text-center mb-8 sm:mb-20">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
+          <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ghost-white mb-6">
               Your Path to Success
             </h2>
-          </div>
+          </AnimateOnScroll>
 
           {/* Accordion Layout */}
           <div className="grid lg:grid-cols-2 gap-8 items-center">
@@ -104,12 +105,16 @@ export function ProgramsSection() {
                 const Icon = program.icon;
 
                 return (
-                  <div
+                  <AnimateOnScroll
                     key={program.id}
-                    className={`rounded-2xl overflow-hidden transition-all duration-300 relative ${
+                    variant="fade-up"
+                    delay={index * 100}
+                  >
+                  <div
+                    className={`rounded-2xl overflow-hidden transition-all duration-300 relative border ${
                       isActive
-                        ? "bg-navy-dark"
-                        : "bg-mint-dark/50 border border-mint-dark"
+                        ? "bg-purple-dark border-purple-dark/50"
+                        : "bg-gray-800/40 border-gray-700/50 hover:border-purple-dark/50"
                     }`}
                   >
                     {/* Accordion Header */}
@@ -123,7 +128,7 @@ export function ProgramsSection() {
                         }
                       }}
                       className={`w-full p-6 text-left flex items-center justify-between transition-colors duration-200 ${
-                        isActive ? "text-white" : "text-navy-dark"
+                        isActive ? "text-ghost-white" : "text-ghost-white"
                       }`}
                     >
                       <div className="flex items-center gap-4">
@@ -131,21 +136,21 @@ export function ProgramsSection() {
                           className={`p-2.5 lg:p-3 border rounded-full bg-white/10 transition-all ${
                             isActive
                               ? "border-white"
-                              : "border-navy-dark"
+                              : "border-purple-dark/50 bg-purple-dark/20"
                           }`}
                         >
                           <Icon
                             className={`h-5 w-5 ${
                               isActive
-                                ? "text-white"
-                                : "text-navy-dark"
+                                ? "text-ghost-white"
+                                : "text-purple-dark"
                             }`}
                           />
                         </div>
                         <div >
-                          <h3 className="text-2xl font-bold">{program.title}</h3>
+                          <h3 className="text-2xl font-bold text-ghost-white">{program.title}</h3>
                           <p className={`${
-                            isActive ? "text-white" : "text-navy-dark/70"
+                            isActive ? "text-ghost-white/90" : "text-gray-300"
                           }`}>
                             {program.subtitle}
                           </p>
@@ -155,13 +160,13 @@ export function ProgramsSection() {
                         className={`w-8 h-8 rounded-full flex items-center justify-center ${
                           isActive
                             ? "bg-white/20"
-                            : "bg-navy-dark"
+                            : "bg-purple-dark/30"
                         }`}
                       >
                         {isActive ? (
-                          <Minus className="w-4 h-4 text-white opacity-50" />
+                          <Minus className="w-4 h-4 text-ghost-white opacity-50" />
                         ) : (
-                          <Plus className="w-4 h-4 text-white" />
+                          <Plus className="w-4 h-4 text-ghost-white" />
                         )}
                       </div>
                     </button>
@@ -172,8 +177,8 @@ export function ProgramsSection() {
                         isActive ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                       }`}
                     >
-                      <div className="px-6 pb-6 text-white">
-                        <p className="text-white/90 mb-6 leading-relaxed">
+                      <div className="px-6 pb-6 text-ghost-white">
+                        <p className="text-ghost-white/90 mb-6 leading-relaxed">
                           {program.description}
                         </p>
 
@@ -186,8 +191,8 @@ export function ProgramsSection() {
                                 key={featureIndex}
                                 className="flex items-center gap-3"
                               >
-                                <FeatureIcon className="w-4 h-4 text-white/80 flex-shrink-0" />
-                                <span className="text-sm text-white/90">
+                                <FeatureIcon className="w-4 h-4 text-ghost-white/80 flex-shrink-0" />
+                                <span className="text-sm text-ghost-white/90">
                                   {feature.text}
                                 </span>
                               </li>
@@ -197,22 +202,23 @@ export function ProgramsSection() {
 
                         {/* CTA Button */}
                         <Link href={program.cta.href}>
-                          <Button className="bg-white text-navy-dark hover:bg-white/90 hover:shadow-mint-dark/20" size="lg">
+                          <Button className="bg-ghost-white text-navy-dark hover:bg-ghost-white/90 hover:shadow-mint-dark/20" size="lg">
                             {program.cta.text}
                           </Button>
                         </Link>
                       </div>
                     </div>
                   </div>
+                  </AnimateOnScroll>
                 );
               })}
             </div>
 
             {/* Right Column - Image */}
-            <div className="relative w-4/5 mx-auto">
+            <AnimateOnScroll variant="fade-left" className="relative w-4/5 mx-auto">
               {/* Background div with slight tilt */}
               <div 
-                className="absolute bg-mint-dark rounded-2xl transform rotate-[-10deg] translate-x-[-10px] translate-y-[-10px]"
+                className="absolute bg-purple-dark/30 rounded-2xl transform rotate-[-10deg] translate-x-[-10px] translate-y-[-10px]"
                 style={{ width: '100%', height: '500px' }}
               ></div>
               <div className="relative w-full h-[500px] rounded-2xl overflow-hidden z-10">
@@ -223,13 +229,13 @@ export function ProgramsSection() {
                   className="object-cover transition-opacity duration-200 ease-in-out"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
                 
                 
                 {/* Image overlay content */}
                 <div className="absolute bottom-6 left-6 z-10 transition-all duration-500 ease-in-out">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg">
-                    <div className="text-white">
+                  <div className="bg-ghost-white/20 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg">
+                    <div className="text-ghost-white">
                       <div className="text-3xl font-bold mb-1 transition-all duration-300">
                         {programs[lastSelectedProgram].stats.primary}
                       </div>
@@ -240,7 +246,7 @@ export function ProgramsSection() {
                   </div>
                 </div>
               </div>
-            </div>
+            </AnimateOnScroll>
           </div>
         </Container>
       </Section>

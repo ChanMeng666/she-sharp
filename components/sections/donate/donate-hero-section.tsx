@@ -1,6 +1,9 @@
+"use client";
+
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import Image from "next/image";
+import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 export function DonateHeroSection() {
   return (
@@ -16,14 +19,14 @@ export function DonateHeroSection() {
         <div className="absolute inset-0 bg-purple-dark/70" />
       </div>
       <Container className="relative z-10">
-        <div className="py-24 md:py-32">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+        <AnimateOnScroll variant="fade-up" className="py-24 md:py-32">
+          <h1 className="text-4xl font-bold tracking-tight text-ghost-white sm:text-5xl md:text-6xl">
             Donate to
           </h1>
-          <h2 className="text-5xl font-bold text-white mt-2 sm:text-6xl md:text-7xl">
+          <h2 className="text-5xl font-bold text-ghost-white mt-2 sm:text-6xl md:text-7xl">
             She Sharp
           </h2>
-        </div>
+        </AnimateOnScroll>
       </Container>
     </Section>
   );

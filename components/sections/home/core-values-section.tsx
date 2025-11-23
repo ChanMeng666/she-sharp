@@ -2,6 +2,7 @@
 
 import { Heart, Rocket, Target } from "lucide-react";
 import Image from "next/image";
+import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 type CoreValue = {
   icon: React.ElementType;
@@ -32,57 +33,58 @@ const coreValues: CoreValue[] = [
 
 export function CoreValuesSection() {
   return (
-    <section className="relative py-14 sm:py-16 md:py-20 bg-periwinkle-soft/50">
-      <div className="mx-auto max-w-7xl">
-        <div className="mx-auto max-w-3xl text-center mb-10 md:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading text-navy-dark">
-            Our Core Values
-          </h2>
-          {/* <p className="mt-3 text-base sm:text-lg text-gray">
-            What drives our community forward every day.
-          </p> */}
+    <section className="relative flex min-h-[600px] md:min-h-[700px]">
+      {/* Left side - Image (2/3 width) */}
+      <AnimateOnScroll variant="fade-right" className="relative w-2/3 overflow-hidden">
+        <div className="relative w-full h-full">
+          <Image
+            src="/img/yourcareer.png"
+            alt="Core Values"
+            fill
+            className="object-cover"
+            sizes="66vw"
+          />
+          {/* Gradient overlay for smooth transition to dark */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-950/50 to-black/70 pointer-events-none" />
         </div>
+      </AnimateOnScroll>
 
-        <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
-          <div className="relative">
-            {/* Background div with slight tilt */}
-            <div 
-              className="absolute bg-purple-dark rounded-4xl transform rotate-4 translate-x-[-10px] translate-y-[-10px]"
-              style={{ width: '700px', height: '480px' }}
-            ></div>
-            {/* Image positioned on top */}
-            <Image
-              src="/img/yourcareer.png"
-              alt="Core Values"
-              width={1000}
-              height={1000}
-              className="rounded-4xl relative z-10"
-            />
-          </div>
-          <div>
-            <ul className="flex flex-col gap-4 sm:gap-6 md:gap-8">
-              {coreValues.map((value) => (
-                <li
-                  key={value.title}
-                  className="rounded-2xl border border-border/50 backdrop-blur-sm p-5 sm:p-6 md:p-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-periwinkle-dark/25"
-                >
+      {/* Right side - Content with dark background (1/3 width) */}
+      <div className="w-1/3 bg-gradient-to-b from-gray-950/95 via-black/95 to-gray-950/95 flex items-center py-14 sm:py-16 md:py-20 relative">
+        {/* Gradient overlay from left for smooth transition */}
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-transparent to-gray-950/95 pointer-events-none z-0" />
+        <div className="px-6 sm:px-8 md:px-10 lg:px-12 w-full relative z-10">
+          <AnimateOnScroll variant="fade-up" className="mb-10 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading text-ghost-white relative z-20">
+              Our Core Values
+            </h2>
+          </AnimateOnScroll>
+
+          <ul className="flex flex-col gap-4 sm:gap-6 md:gap-8">
+            {coreValues.map((value, index) => (
+              <AnimateOnScroll
+                key={value.title}
+                variant="fade-up"
+                delay={index * 100}
+              >
+                <li className="rounded-2xl border border-purple-dark/30 backdrop-blur-sm p-5 sm:p-6 md:p-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-dark/30 hover:border-purple-dark/60 bg-gray-800/40">
                   <div className="flex items-start gap-4">
-                    <div className="inline-flex w-30 aspect-square items-center justify-center rounded-xl bg-white/70">
-                      <value.icon className="h-5 w-5" />
+                    <div className="inline-flex w-30 aspect-square items-center justify-center rounded-xl bg-purple-dark/20 border border-purple-dark/40">
+                      <value.icon className="h-5 w-5 text-purple-dark" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-semibold text-navy-dark font-heading">
+                      <h3 className="text-2xl font-semibold text-ghost-white font-heading">
                         {value.title}
                       </h3>
-                      <p className="mt-1.5 text-sm sm:text-base text-navy-dark/70">
+                      <p className="mt-1.5 text-sm sm:text-base text-gray-300">
                         {value.description}
                       </p>
                     </div>
                   </div>
                 </li>
-              ))}
-            </ul>
-          </div>
+              </AnimateOnScroll>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

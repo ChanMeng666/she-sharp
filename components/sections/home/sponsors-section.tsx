@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 const sponsors = {
   silver: [
@@ -41,26 +42,31 @@ const sponsors = {
 
 export function SponsorsSection() {
   return (
-    <Section className="overflow-hidden bg-mint-light ">
+    <Section className="overflow-hidden bg-gradient-to-b from-gray-950/95 via-black/95 to-gray-950/95">
       <Container size="full">
-        <div className="text-center mb-8 sm:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark">
+        <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ghost-white">
             Thanks to Our Sponsors
           </h2>
           {/* <p className="text-base sm:text-lg text-gray max-w-2xl mx-auto px-4">
             Industry-leading organizations that share our vision and invest in advancing women in technology
           </p> */}
-        </div>
+        </AnimateOnScroll>
 
         {/* Silver Sponsors */}
         <div className="mb-20">
-          <div className="text-center mb-12">
+          <AnimateOnScroll variant="fade-up" className="text-center mb-12">
             <h3 className="text-3xl text-purple-dark font-bold tracking-wider flex items-center justify-center gap-2">
               SILVER
             </h3>
-          </div>
+          </AnimateOnScroll>
           <div className="grid md:grid-cols-3 gap-16 max-w-3xl mx-auto">
-            {sponsors.silver.map((sponsor) => (
+            {sponsors.silver.map((sponsor, index) => (
+              <AnimateOnScroll
+                key={sponsor.name}
+                variant="fade-up"
+                delay={index * 100}
+              >
               <a
                 key={sponsor.name}
                 href={sponsor.url}
@@ -79,22 +85,26 @@ export function SponsorsSection() {
                   />
                 </div>
               </a>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
 
         {/* Bronze Sponsors */}
         <div className="mb-12 sm:mb-16">
-          <div className="text-center mb-12">
+          <AnimateOnScroll variant="fade-up" className="text-center mb-12">
             <h3 className="text-3xl text-purple-dark font-bold tracking-wider flex items-center justify-center gap-2">
               BRONZE
             </h3>
-          </div>
+          </AnimateOnScroll>
 
           <div className="flex justify-center max-w-2xl mx-auto">
             {sponsors.bronze.map((sponsor) => (
-              <a
+              <AnimateOnScroll
                 key={sponsor.name}
+                variant="fade-up"
+              >
+              <a
                 href={sponsor.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -111,6 +121,7 @@ export function SponsorsSection() {
                   />
                 </div>
               </a>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
@@ -118,11 +129,11 @@ export function SponsorsSection() {
         {/* Benefits removed to keep homepage concise */}
 
         {/* CTA */}
-        <div className="text-center">
+        <AnimateOnScroll variant="fade-up" className="text-center">
           <Button asChild size="lg">
             <Link href="/sponsors/corporate-sponsorship">Become a sponsor</Link>
           </Button>
-        </div>
+        </AnimateOnScroll>
       </Container>
     </Section>
   );
