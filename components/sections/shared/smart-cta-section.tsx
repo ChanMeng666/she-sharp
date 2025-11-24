@@ -9,6 +9,7 @@ import { Heart, Calendar, Users, Briefcase, Mail, BookOpen, Mic, GraduationCap, 
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Iridescence, { brandColors } from "@/components/effects/iridescence";
+import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 // Define page-specific CTA configurations
 const pageConfigs = {
@@ -260,30 +261,30 @@ export function SmartCTASection({
   const ctaItems = pageConfigs[pathname as keyof typeof pageConfigs] || defaultCTA;
   
   return (
-    <Section className={cn("relative bg-white py-16 md:py-20", className)}>
+    <Section className={cn("relative bg-gradient-to-b from-gray-950/95 via-black/95 to-gray-950/95 py-16 md:py-20", className)}>
       {/* Iridescence Background for CTA */}
       <div className="absolute inset-0 opacity-35">
-        <Iridescence
+        {/* <Iridescence
           color={brandColors.ctaSoftMint}
           mouseReact={false}
           amplitude={0.12}
           speed={0.3}
           className="w-full h-full"
-        />
+        /> */}
       </div>
       
       {/* 向上过渡渐变 - 与上一个板块的柔和连接 */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-t from-transparent via-white/20 to-white" />
+      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-t from-transparent via-gray-950/20 to-gray-950/95" />
       
       {/* 向下过渡到 Footer - 更柔和的收尾 */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent via-mint-light/20 to-mint-light/10" />
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent via-gray-950/20 to-gray-950/95" />
       
       <Container className="relative z-10">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark">
+        <AnimateOnScroll variant="fade-up" className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-ghost-white">
             {title}
           </h2>
-        </div>
+        </AnimateOnScroll>
         
         <div className={cn(
           "grid gap-8",
@@ -292,7 +293,12 @@ export function SmartCTASection({
           {ctaItems.map((item, index) => {
             const Icon = item.icon;
             return (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-150">
+              <AnimateOnScroll
+                key={index}
+                variant="fade-up"
+                delay={index * 100}
+              >
+              <Card className="text-center hover:shadow-lg hover:shadow-purple-dark/20 transition-shadow duration-150 bg-gray-800/40 backdrop-blur-sm border border-gray-700/50 hover:border-purple-dark/50">
                 <CardContent className="p-8">
                   <div className={cn(
                     "w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center",
@@ -300,10 +306,10 @@ export function SmartCTASection({
                   )}>
                     <Icon className={cn("w-8 h-8", item.iconColor)} />
                   </div>
-                  <h3 className="text-xl font-semibold text-navy-dark mb-4">
+                  <h3 className="text-xl font-semibold text-ghost-white mb-4">
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-gray-300 mb-6">
                     {item.description}
                   </p>
                   <Button
@@ -315,6 +321,7 @@ export function SmartCTASection({
                   </Button>
                 </CardContent>
               </Card>
+              </AnimateOnScroll>
             );
           })}
         </div>

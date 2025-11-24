@@ -15,13 +15,13 @@ export default function AboutPage() {
     <div className="relative overflow-hidden">
       {/* Page-level Iridescence background (About-specific color) */}
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-30">
-        <Iridescence
+        {/* <Iridescence
           color={brandColors.navAbout}
           mouseReact={false}
           amplitude={0.10}
           speed={0.25}
           className="w-full h-full"
-        />
+        /> */}
       </div>
 
       {/* Subtle top/bottom gradient fades to improve text contrast */}

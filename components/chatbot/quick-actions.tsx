@@ -14,11 +14,11 @@ interface QuickActionsProps {
 }
 
 const categoryColors = {
-  about: 'bg-periwinkle-light text-periwinkle-dark border-periwinkle-dark/30',
-  events: 'bg-mint-light text-navy-dark border-mint-dark/30',
-  mentorship: 'bg-purple-light text-purple-dark border-purple-dark/30',
-  support: 'bg-navy-light text-navy-dark border-navy-dark/30',
-  general: 'bg-gray/10 text-gray border-gray/30'
+  about: 'bg-periwinkle-light text-black border-periwinkle-dark/30',
+  events: 'bg-mint-light text-black border-mint-dark/30',
+  mentorship: 'bg-purple-light text-black border-purple-dark/30',
+  support: 'bg-navy-light text-black border-navy-dark/30',
+  general: 'bg-gray/10 text-black border-gray/30'
 };
 
 export function QuickActions({ onSelectQuestion }: QuickActionsProps) {
@@ -51,26 +51,26 @@ export function QuickActions({ onSelectQuestion }: QuickActionsProps) {
             className="overflow-hidden"
           >
             <ScrollArea className="h-44 px-4 pb-4">
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {presetQuestions.map((preset) => (
                   <Button
                     key={preset.id}
                     variant="outline"
                     size="sm"
-                    className="w-full justify-start text-left h-auto py-3 px-4 border-purple-dark/20 hover:bg-purple-light/50 hover:border-purple-dark/40 transition-all duration-200"
+                    className="w-full justify-start text-left h-auto py-2 px-4 border-purple-dark/20 border-[1px] hover:bg-purple-light/30 transition-colors"
                     onClick={() => {
                       onSelectQuestion(preset.question, preset.answer);
                       setIsExpanded(false);
                     }}
                   >
-                    <div className="flex items-start gap-3 w-full">
+                    <div className="flex items-start gap-2 w-full">
                       <Badge 
                         variant="secondary" 
                         className={cn('text-xs flex-shrink-0 border', categoryColors[preset.category])}
                       >
                         {preset.category}
                       </Badge>
-                      <span className="text-sm text-navy-dark leading-relaxed flex-1">{preset.question}</span>
+                      <span className="text-sm text-navy-dark leading-snug flex-1">{preset.question}</span>
                     </div>
                   </Button>
                 ))}

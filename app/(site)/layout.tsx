@@ -8,7 +8,7 @@ export default function SiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-gradient-to-b from-gray-950 via-black to-gray-950">
       <SiteHeader />
       <div className="pt-16">
         <BreadcrumbNav />

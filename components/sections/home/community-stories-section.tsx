@@ -24,6 +24,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { Quote, ArrowRight, Sparkles } from "lucide-react";
 import { testimonialsByPage } from "@/lib/data/testimonials";
+import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 // 精选成功故事（从testimonials中选择最有代表性的）
 const featuredStories = testimonialsByPage.home
@@ -37,29 +38,29 @@ const featuredStories = testimonialsByPage.home
 
 export function CommunityStoriesSection() {
   return (
-    <Section>
+    <Section className="bg-gradient-to-b from-black/95 via-gray-950/95 to-black/95">
       <Container size="full">
         {/* Section Header */}
-        <div className="text-center mb-8 sm:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark">
+        <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ghost-white">
             Community in Action
           </h2>
-        </div>
+        </AnimateOnScroll>
 
         {/* Success Stories with Left Side Content */}
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-16 lg:justify-evenly">
             {/* Left side - Description and CTA */}
-            <div className="w-full lg:w-1/3 flex flex-col justify-between h-full">
+            <AnimateOnScroll variant="fade-right" className="w-full lg:w-1/3 flex flex-col justify-between h-full">
               <div>
                 <div className="flex items-center gap-3 mb-8">
                   <Sparkles className="w-6 h-6 text-purple-dark" />
-                  <h3 className="text-2xl font-semibold text-navy-dark">
+                  <h3 className="text-2xl font-semibold text-ghost-white">
                     Success Stories
                   </h3>
                 </div>
 
-                <p className="text-lg text-navy-dark leading-relaxed">
+                <p className="text-lg text-gray-200 leading-relaxed">
                   Real stories from women who've transformed their careers, plus
                   upcoming opportunities to connect and grow through our
                   network.
@@ -75,10 +76,10 @@ export function CommunityStoriesSection() {
               >
                 <Link href="/about#testimonials">Read More Stories</Link>
               </Button>
-            </div>
+            </AnimateOnScroll>
 
             {/* Right side - Carousel */}
-            <div className="w-full lg:w-2/5">
+            <AnimateOnScroll variant="fade-left" className="w-full lg:w-2/5">
               <Carousel
                 opts={{
                   align: "start",
@@ -94,12 +95,12 @@ export function CommunityStoriesSection() {
                 <CarouselContent>
                   {featuredStories.map((story) => (
                     <CarouselItem key={story.id}>
-                      <Card className="border-2 border-purple-dark">
+                      <Card className="border-2 border-purple-dark/50 bg-gray-800/40 backdrop-blur-sm">
                         <CardContent className="p-10">
                           {/* Story Text */}
                           <div className="relative">
                             <Quote className="absolute -top-2 -left-2 w-6 h-6 text-purple-dark rotate-180" />
-                            <blockquote className="text-navy-dark italic text-lg mb-12 leading-relaxed pl-8">
+                            <blockquote className="text-ghost-white italic text-lg mb-12 leading-relaxed pl-8">
                               {story.quote}
                             </blockquote>
                             <Quote className="absolute -bottom-2 -right-2 w-6 h-6 text-purple-dark" />
@@ -122,10 +123,10 @@ export function CommunityStoriesSection() {
                               </AvatarFallback>
                             </Avatar>
                             <div>
-                              <div className="font-semibold text-navy-dark text-lg">
+                              <div className="font-semibold text-ghost-white text-lg">
                                 {story.name}
                               </div>
-                              <div className="text-navy-dark/70">
+                              <div className="text-gray-300">
                                 {story.role} at {story.company}
                               </div>
                             </div>
@@ -137,7 +138,7 @@ export function CommunityStoriesSection() {
                               <Badge
                                 key={tag}
                                 variant="secondary"
-                                className="text-xs bg-white  bg-purple-dark/20 text-navy-dark px-3 py-1"
+                                className="text-xs bg-purple-dark/30 text-ghost-white border border-purple-dark/50 px-3 py-1"
                               >
                                 {tag}
                               </Badge>
@@ -148,10 +149,10 @@ export function CommunityStoriesSection() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="-left-16 h-10 w-10 bg-white/90 hover:bg-white border-2 border-purple-dark text-purple-dark" />
-                <CarouselNext className="-right-16 h-10 w-10 bg-white/90 hover:bg-white border-2 border-purple-dark text-purple-dark" />
+                <CarouselPrevious className="-left-16 h-10 w-10 bg-gray-800/90 hover:bg-gray-800 border-2 border-purple-dark/50 text-purple-dark" />
+                <CarouselNext className="-right-16 h-10 w-10 bg-gray-800/90 hover:bg-gray-800 border-2 border-purple-dark/50 text-purple-dark" />
               </Carousel>
-            </div>
+            </AnimateOnScroll>
           </div>
         </div>
 

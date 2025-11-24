@@ -5,75 +5,76 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Heart, DollarSign, ArrowRight } from "lucide-react";
+import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 export function CTASection() {
   return (
-    <Section className="bg-[#F4F4FA]">
+    <Section className="bg-gradient-to-b from-gray-950/95 via-black/95 to-gray-950/95">
       <Container size="full">
-        <div className="max-w-7xl mx-auto bg-navy-dark rounded-4xl p-8">
+        <AnimateOnScroll variant="scale" className="max-w-7xl mx-auto bg-navy-dark rounded-4xl p-8">
           <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8 p-8">
             {/* Left side - Main heading */}
-            <div className="w-full lg:w-2/5">
+            <AnimateOnScroll variant="fade-right" className="w-full lg:w-2/5">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-mint-dark leading-tight">
                 BRIDGE THE<br />
                 GENDER GAP<br />
                 IN STEM<br />
                 WITH US
               </h2>
-            </div>
+            </AnimateOnScroll>
 
             {/* Right side - CTA blocks */}
             <div className="w-full lg:w-2/3 flex flex-col lg:flex-row gap-6">
               {/* Donate CTA */}
-              <div className="flex-1 max-w-lg mx-auto text-left flex flex-col items-start">
-                <div className="w-18 h-18 bg-white rounded-full flex items-center justify-center mb-4">
+              <AnimateOnScroll variant="fade-up" delay={100} className="flex-1 max-w-lg mx-auto text-left flex flex-col items-start">
+                <div className="w-18 h-18 bg-ghost-white rounded-full flex items-center justify-center mb-4">
                   <DollarSign className="w-8 h-8 text-navy-dark" />
                 </div>
-                <h3 className="text-2xl font-semibold text-white mb-3">
+                <h3 className="text-2xl font-semibold text-ghost-white mb-3">
                   Donate to She Sharp
                 </h3>
-                <p className="text-white/80 leading-relaxed mb-6">
+                <p className="text-ghost-white/80 leading-relaxed mb-6">
                   Help us empower more young women to pursue careers in STEM through events and networking opportunities.
                 </p>
                 <Button 
                   variant="outline" 
                   size="lg" 
                   asChild 
-                  className="border border-white text-white bg-transparent hover:bg-white/10"
+                  className="border border-ghost-white text-ghost-white bg-transparent hover:bg-ghost-white/10"
                 >
                   <Link href="/donate">
                     Make a donation
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
                 </Button>
-              </div>
+              </AnimateOnScroll>
 
               {/* Event CTA */}
-              <div className="flex-1 max-w-lg mx-auto text-left flex flex-col items-start">
-                <div className="w-18 h-18 bg-white rounded-full flex items-center justify-center mb-4">
+              <AnimateOnScroll variant="fade-up" delay={200} className="flex-1 max-w-lg mx-auto text-left flex flex-col items-start">
+                <div className="w-18 h-18 bg-ghost-white rounded-full flex items-center justify-center mb-4">
                   <Heart className="w-8 h-8 text-navy-dark" />
                 </div>
-                <h3 className="text-2xl font-semibold text-white mb-3">
+                <h3 className="text-2xl font-semibold text-ghost-white mb-3">
                   Come to an event
                 </h3>
-                <p className="text-white/80 leading-relaxed mb-6">
+                <p className="text-ghost-white/80 leading-relaxed mb-6">
                   Meet new people, network with companies, engage in workshops and learn more about working in STEM!
                 </p>
                 <Button 
                   variant="outline" 
                   size="lg" 
                   asChild 
-                  className="border border-white text-white bg-transparent hover:bg-white/10"
+                  className="border border-ghost-white text-ghost-white bg-transparent hover:bg-ghost-white/10"
                 >
                   <Link href="/events">
                     Explore Events
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
                 </Button>
-              </div>
+              </AnimateOnScroll>
             </div>
           </div>
-        </div>
+        </AnimateOnScroll>
       </Container>
     </Section>
   );
