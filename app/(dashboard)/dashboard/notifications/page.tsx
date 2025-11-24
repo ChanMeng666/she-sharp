@@ -148,7 +148,7 @@ export default function NotificationsPage() {
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'event':
-        return 'bg-purple-light text-purple-dark';
+        return 'bg-purple-light text-primary';
       case 'mentorship':
         return 'bg-periwinkle-light text-periwinkle-dark';
       case 'resource':
@@ -156,7 +156,7 @@ export default function NotificationsPage() {
       case 'system':
         return 'bg-navy-light text-navy-dark';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-accent text-foreground';
     }
   };
 
@@ -189,7 +189,7 @@ export default function NotificationsPage() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-dark mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           <p className="mt-4 text-gray">Loading notifications...</p>
         </div>
       </div>
@@ -203,7 +203,7 @@ export default function NotificationsPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
-              <Bell className="h-5 w-5 sm:h-6 sm:w-6 text-purple-dark flex-shrink-0" />
+              <Bell className="h-5 w-5 sm:h-6 sm:w-6 text-primary flex-shrink-0" />
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-dark to-purple-mid bg-clip-text text-transparent">
                 Notifications
               </h1>
@@ -225,7 +225,7 @@ export default function NotificationsPage() {
             )}
             <Button 
               variant="outline"
-              className="border-gray-300 hover:border-purple-mid/30 hover:bg-purple-light/30"
+              className="border-border hover:border-purple-mid/30 hover:bg-purple-light/30"
               size="sm"
             >
               <Settings className="h-4 w-4 mr-2" />
@@ -238,7 +238,7 @@ export default function NotificationsPage() {
       {/* Unread Alert */}
       {unreadCount > 0 && (
         <Alert className="mb-6 sm:mb-8 border-purple-mid/20 bg-purple-light/20">
-          <Bell className="h-4 w-4 text-purple-dark" />
+          <Bell className="h-4 w-4 text-primary" />
           <AlertDescription className="text-navy-dark">
             <strong className="font-semibold">You have {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}!</strong>
             <span className="block sm:inline"> Stay informed about your activities and updates.</span>
@@ -261,7 +261,7 @@ export default function NotificationsPage() {
           >
             Unread ({unreadCount})
             {unreadCount > 0 && (
-              <span className="absolute top-1 right-1 h-2 w-2 bg-purple-dark rounded-full animate-pulse"></span>
+              <span className="absolute top-1 right-1 h-2 w-2 bg-primary rounded-full animate-pulse"></span>
             )}
           </TabsTrigger>
         </TabsList>
@@ -289,7 +289,7 @@ export default function NotificationsPage() {
                   className={`group hover:shadow-lg transition-all duration-300 ${
                     !notification.read 
                       ? 'border-purple-mid/30 bg-gradient-to-r from-purple-light/10 to-periwinkle-light/10' 
-                      : 'border-gray-200 bg-white'
+                      : 'border-border bg-white'
                   }`}
                 >
                   <CardContent className="p-4 sm:p-6">
@@ -306,8 +306,8 @@ export default function NotificationsPage() {
                               </h3>
                               {!notification.read && (
                                 <span className="flex h-2 w-2">
-                                  <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-purple-dark opacity-75"></span>
-                                  <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-dark"></span>
+                                  <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-primary opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                                 </span>
                               )}
                             </div>
@@ -325,7 +325,7 @@ export default function NotificationsPage() {
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => markAsRead(notification.id)}
-                                className="text-purple-dark hover:bg-purple-light"
+                                className="text-primary hover:bg-purple-light"
                               >
                                 <CheckCircle className="h-4 w-4" />
                               </Button>
@@ -343,7 +343,7 @@ export default function NotificationsPage() {
                         {notification.actionUrl && (
                           <Button
                             variant="link"
-                            className="p-0 h-auto text-purple-dark hover:text-purple-mid mt-3 text-sm font-medium"
+                            className="p-0 h-auto text-primary hover:text-purple-mid mt-3 text-sm font-medium"
                             onClick={() => window.location.href = notification.actionUrl!}
                           >
                             {notification.actionLabel || 'View'}

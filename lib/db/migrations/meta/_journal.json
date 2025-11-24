@@ -43,6 +43,41 @@
       "when": 1754551711361,
       "tag": "0005_add_entity_type_column",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1754551800000,
+      "tag": "0008_add_notifications_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1754551900000,
+      "tag": "0009_add_statistics_and_features",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1754552000000,
+      "tag": "0010_update_meetings_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1754552100000,
+      "tag": "0011_fix_resources_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1754552200000,
+      "tag": "0012_fix_admin_permissions",
+      "breakpoints": true
     }
   ]
 }

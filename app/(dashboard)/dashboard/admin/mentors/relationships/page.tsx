@@ -190,7 +190,7 @@ export default function MentorRelationshipsPage() {
     const variants = {
       active: { text: 'Active', className: 'bg-green-100 text-green-800', icon: CheckCircle },
       at_risk: { text: 'At Risk', className: 'bg-yellow-100 text-yellow-800', icon: AlertCircle },
-      paused: { text: 'Paused', className: 'bg-gray-100 text-gray-800', icon: Clock },
+      paused: { text: 'Paused', className: 'bg-accent text-foreground', icon: Clock },
       completed: { text: 'Completed', className: 'bg-blue-100 text-blue-800', icon: Target },
     };
     const variant = variants[status as keyof typeof variants];
@@ -221,20 +221,20 @@ export default function MentorRelationshipsPage() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
-      <div className="flex justify-between items-center">
+    <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8 space-y-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Mentorship Relationships</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Mentorship Relationships</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-2">
             Track and manage active mentor-mentee pairings
           </p>
         </div>
-        <div className="flex space-x-3">
-          <Button variant="outline">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+          <Button variant="outline" className="text-sm sm:text-base">
             <Download className="w-4 h-4 mr-2" />
             Export Report
           </Button>
-          <Button variant="default">
+          <Button variant="default" className="text-sm sm:text-base">
             <Link2 className="w-4 h-4 mr-2" />
             New Pairing
           </Button>
@@ -242,10 +242,10 @@ export default function MentorRelationshipsPage() {
       </div>
 
       {/* Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-6">
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Total Active</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Total Active</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">127</p>
@@ -258,17 +258,17 @@ export default function MentorRelationshipsPage() {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">At Risk</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">At Risk</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold text-yellow-600">8</p>
-            <p className="text-xs text-gray-500 mt-2">Need attention</p>
+            <p className="text-xs text-muted-foreground mt-2">Need attention</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Avg Progress</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Avg Progress</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">58%</p>
@@ -278,21 +278,21 @@ export default function MentorRelationshipsPage() {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Satisfaction</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Satisfaction</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">4.6</p>
-            <p className="text-xs text-gray-500 mt-2">Out of 5.0</p>
+            <p className="text-xs text-muted-foreground mt-2">Out of 5.0</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Sessions/Month</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Sessions/Month</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">342</p>
-            <p className="text-xs text-gray-500 mt-2">Avg 2.7 per pair</p>
+            <p className="text-xs text-muted-foreground mt-2">Avg 2.7 per pair</p>
           </CardContent>
         </Card>
       </div>
@@ -302,7 +302,7 @@ export default function MentorRelationshipsPage() {
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input
                 type="search"
                 placeholder="Search by mentor or mentee name/email..."
@@ -353,18 +353,19 @@ export default function MentorRelationshipsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Mentor</TableHead>
-                <TableHead>Mentee</TableHead>
-                <TableHead>Progress & Goals</TableHead>
-                <TableHead>Activity</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Mentor</TableHead>
+                  <TableHead>Mentee</TableHead>
+                  <TableHead>Progress & Goals</TableHead>
+                  <TableHead>Activity</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
               {filteredRelationships.map((relationship) => (
                 <TableRow key={relationship.id}>
                   <TableCell>
@@ -377,7 +378,7 @@ export default function MentorRelationshipsPage() {
                       </Avatar>
                       <div>
                         <p className="font-medium text-sm">{relationship.mentor.name}</p>
-                        <p className="text-xs text-gray-500">{relationship.mentor.expertise}</p>
+                        <p className="text-xs text-muted-foreground">{relationship.mentor.expertise}</p>
                       </div>
                     </div>
                   </TableCell>
@@ -391,7 +392,7 @@ export default function MentorRelationshipsPage() {
                       </Avatar>
                       <div>
                         <p className="font-medium text-sm">{relationship.mentee.name}</p>
-                        <p className="text-xs text-gray-500">{relationship.mentee.level}</p>
+                        <p className="text-xs text-muted-foreground">{relationship.mentee.level}</p>
                       </div>
                     </div>
                   </TableCell>
@@ -404,7 +405,7 @@ export default function MentorRelationshipsPage() {
                         />
                         <span className="text-xs font-medium">{relationship.progress}%</span>
                       </div>
-                      <div className="flex items-center space-x-2 text-xs text-gray-600">
+                      <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                         <Target className="w-3 h-3" />
                         <span>{relationship.sessionsCompleted}/{relationship.totalSessions} sessions</span>
                       </div>
@@ -424,11 +425,11 @@ export default function MentorRelationshipsPage() {
                   </TableCell>
                   <TableCell>
                     <div className="space-y-1 text-sm">
-                      <div className="flex items-center space-x-1 text-gray-600">
+                      <div className="flex items-center space-x-1 text-muted-foreground">
                         <Calendar className="w-3 h-3" />
                         <span className="text-xs">Started {new Date(relationship.startDate).toLocaleDateString()}</span>
                       </div>
-                      <div className="flex items-center space-x-1 text-gray-600">
+                      <div className="flex items-center space-x-1 text-muted-foreground">
                         <Clock className="w-3 h-3" />
                         <span className="text-xs">{relationship.communicationFrequency}</span>
                       </div>
@@ -446,8 +447,8 @@ export default function MentorRelationshipsPage() {
                     <div className="space-y-2">
                       {getStatusBadge(relationship.status)}
                       <div className="flex items-center space-x-1 text-xs">
-                        <BarChart className="w-3 h-3 text-gray-400" />
-                        <span className="text-gray-600">Score: {relationship.satisfactionScore}</span>
+                        <BarChart className="w-3 h-3 text-muted-foreground" />
+                        <span className="text-muted-foreground">Score: {relationship.satisfactionScore}</span>
                       </div>
                     </div>
                   </TableCell>
@@ -485,8 +486,9 @@ export default function MentorRelationshipsPage() {
                   </TableCell>
                 </TableRow>
               ))}
-            </TableBody>
-          </Table>
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

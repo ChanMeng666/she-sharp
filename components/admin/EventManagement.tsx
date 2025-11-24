@@ -90,7 +90,7 @@ export default function EventManagement() {
       const params = new URLSearchParams();
       if (typeFilter !== 'all') params.append('type', typeFilter);
       if (statusFilter !== 'all') params.append('status', statusFilter);
-      
+
       const response = await fetch(`/api/admin/events?${params}`);
       if (response.ok) {
         const data = await response.json();
@@ -98,74 +98,10 @@ export default function EventManagement() {
       }
     } catch (error) {
       console.error('Failed to fetch events:', error);
-      // Use mock data for demonstration
-      setEvents(generateMockEvents());
+      setEvents([]);
     } finally {
       setLoading(false);
     }
-  };
-
-  const generateMockEvents = (): Event[] => {
-    return [
-      {
-        id: 1,
-        title: 'Introduction to Machine Learning Workshop',
-        description: 'A beginner-friendly workshop on ML fundamentals',
-        eventType: 'workshop',
-        startTime: '2024-12-28T14:00:00Z',
-        endTime: '2024-12-28T17:00:00Z',
-        locationType: 'hybrid',
-        locationDetails: {
-          venue: 'Tech Hub Seattle',
-          address: '123 Innovation Way, Seattle, WA',
-          meetingLink: 'https://zoom.us/j/123456789',
-        },
-        capacity: 50,
-        currentRegistrations: 42,
-        registrationDeadline: '2024-12-27T23:59:59Z',
-        status: 'upcoming',
-        isMembersOnly: false,
-        createdBy: 'Sarah Johnson',
-      },
-      {
-        id: 2,
-        title: 'Women in Tech Networking Event',
-        description: 'Connect with fellow women in technology',
-        eventType: 'networking',
-        startTime: '2024-12-30T18:00:00Z',
-        endTime: '2024-12-30T20:00:00Z',
-        locationType: 'in_person',
-        locationDetails: {
-          venue: 'Downtown Conference Center',
-          address: '456 Main St, Seattle, WA',
-        },
-        capacity: 100,
-        currentRegistrations: 78,
-        registrationDeadline: '2024-12-29T23:59:59Z',
-        status: 'upcoming',
-        isMembersOnly: true,
-        createdBy: 'Emily Chen',
-      },
-      {
-        id: 3,
-        title: 'THRIVE 2025 - Annual Conference',
-        description: 'Our flagship annual conference for women in STEM',
-        eventType: 'thrive',
-        startTime: '2025-01-15T09:00:00Z',
-        endTime: '2025-01-16T18:00:00Z',
-        locationType: 'in_person',
-        locationDetails: {
-          venue: 'Seattle Convention Center',
-          address: '789 Convention Pl, Seattle, WA',
-        },
-        capacity: 500,
-        currentRegistrations: 324,
-        registrationDeadline: '2025-01-10T23:59:59Z',
-        status: 'upcoming',
-        isMembersOnly: false,
-        createdBy: 'Admin Team',
-      },
-    ];
   };
 
   const getEventTypeColor = (type: string) => {
@@ -175,13 +111,13 @@ export default function EventManagement() {
       case 'networking':
         return 'bg-green-100 text-green-700';
       case 'training':
-        return 'bg-purple-100 text-purple-700';
+        return 'bg-muted text-purple-700';
       case 'social':
         return 'bg-pink-100 text-pink-700';
       case 'thrive':
         return 'bg-gradient-to-r from-purple-500 to-purple-700 text-white';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-accent text-foreground';
     }
   };
 
@@ -205,11 +141,11 @@ export default function EventManagement() {
       case 'ongoing':
         return 'text-green-600';
       case 'completed':
-        return 'text-gray-600';
+        return 'text-muted-foreground';
       case 'cancelled':
         return 'text-red-600';
       default:
-        return 'text-gray-600';
+        return 'text-muted-foreground';
     }
   };
 
@@ -230,7 +166,7 @@ export default function EventManagement() {
     <div className="space-y-6">
       {/* Tabs for different views */}
       <Tabs defaultValue="list" className="w-full">
-        <TabsList className="grid w-full max-w-md grid-cols-3">
+        <TabsList className="grid w-full max-w-full sm:max-w-md grid-cols-3">
           <TabsTrigger value="list">List View</TabsTrigger>
           <TabsTrigger value="calendar">Calendar</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
@@ -240,9 +176,9 @@ export default function EventManagement() {
           {/* Filters and Actions */}
           <Card>
             <CardContent className="p-6">
-              <div className="flex flex-col md:flex-row gap-4">
-                <div className="flex-1 relative">
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <div className="flex flex-col gap-4">
+                <div className="relative w-full">
+                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                   <Input
                     type="search"
                     placeholder="Search events..."
@@ -251,10 +187,10 @@ export default function EventManagement() {
                     className="pl-10"
                   />
                 </div>
-                
-                <div className="flex gap-2">
+
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:gap-2 gap-2">
                   <Select value={typeFilter} onValueChange={setTypeFilter}>
-                    <SelectTrigger className="w-40">
+                    <SelectTrigger className="w-full lg:w-40">
                       <SelectValue placeholder="Event Type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -268,7 +204,7 @@ export default function EventManagement() {
                   </Select>
 
                   <Select value={statusFilter} onValueChange={setStatusFilter}>
-                    <SelectTrigger className="w-40">
+                    <SelectTrigger className="w-full lg:w-40">
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>
                     <SelectContent>
@@ -280,12 +216,12 @@ export default function EventManagement() {
                     </SelectContent>
                   </Select>
 
-                  <Button variant="outline" size="icon">
+                  <Button variant="outline" size="icon" className="col-span-2 md:col-span-1">
                     <Filter className="w-4 h-4" />
                   </Button>
 
-                  <Link href="/dashboard/admin/events/new">
-                    <Button className="bg-purple-600 hover:bg-purple-700">
+                  <Link href="/dashboard/admin/events/new" className="col-span-2 md:col-span-3 lg:col-span-1">
+                    <Button className="bg-purple-600 hover:bg-purple-700 w-full">
                       <Plus className="w-4 h-4 mr-2" />
                       Create Event
                     </Button>
@@ -304,7 +240,119 @@ export default function EventManagement() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="overflow-x-auto">
+              {/* Mobile Card View */}
+              <div className="block lg:hidden space-y-3">
+                {filteredEvents.map((event) => {
+                  const percentage = getRegistrationPercentage(
+                    event.currentRegistrations,
+                    event.capacity
+                  );
+
+                  return (
+                    <Card key={event.id} className="p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <Badge
+                              variant="secondary"
+                              className={cn('text-xs', getEventTypeColor(event.eventType))}
+                            >
+                              {event.eventType}
+                            </Badge>
+                            <span className={cn('text-xs font-medium', getStatusColor(event.status))}>
+                              {event.status}
+                            </span>
+                          </div>
+                          <h3 className="font-medium text-foreground mb-1">{event.title}</h3>
+                          <p className="text-sm text-muted-foreground line-clamp-2">{event.description}</p>
+                        </div>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                              <MoreVertical className="w-4 h-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                              <Eye className="w-4 h-4 mr-2" />
+                              View Details
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <Edit className="w-4 h-4 mr-2" />
+                              Edit Event
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <Users className="w-4 h-4 mr-2" />
+                              Manage Registrations
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <Download className="w-4 h-4 mr-2" />
+                              Export Attendees
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className="text-red-600">
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              Cancel Event
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+
+                      <div className="space-y-2 text-sm border-t pt-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1 text-muted-foreground">
+                            <CalendarClock className="w-4 h-4" />
+                            <span>{new Date(event.startTime).toLocaleDateString()}</span>
+                          </div>
+                          <div className="flex items-center gap-1 text-muted-foreground">
+                            <Clock className="w-4 h-4" />
+                            <span>
+                              {new Date(event.startTime).toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          {getLocationIcon(event.locationType)}
+                          <div>
+                            <span className="capitalize">{event.locationType.replace('_', ' ')}</span>
+                            {event.locationDetails.venue && (
+                              <span className="text-muted-foreground"> • {event.locationDetails.venue}</span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="space-y-1 pt-2">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-muted-foreground">Registration:</span>
+                            <span className="font-medium">
+                              {event.currentRegistrations}/{event.capacity} ({percentage}%)
+                            </span>
+                          </div>
+                          <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className={cn(
+                                'h-full transition-all',
+                                percentage >= 90 ? 'bg-red-500' :
+                                percentage >= 70 ? 'bg-yellow-500' : 'bg-green-500'
+                              )}
+                              style={{ width: `${percentage}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+
+              {/* Desktop Table View */}
+              <div className="hidden lg:block overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -323,13 +371,13 @@ export default function EventManagement() {
                         event.currentRegistrations,
                         event.capacity
                       );
-                      
+
                       return (
                         <TableRow key={event.id}>
                           <TableCell>
                             <div>
-                              <p className="font-medium text-gray-900">{event.title}</p>
-                              <p className="text-sm text-gray-500 line-clamp-1">
+                              <p className="font-medium text-foreground">{event.title}</p>
+                              <p className="text-sm text-muted-foreground line-clamp-1">
                                 {event.description}
                               </p>
                             </div>
@@ -345,10 +393,10 @@ export default function EventManagement() {
                           <TableCell>
                             <div className="text-sm">
                               <div className="flex items-center space-x-1">
-                                <CalendarClock className="w-4 h-4 text-gray-400" />
+                                <CalendarClock className="w-4 h-4 text-muted-foreground" />
                                 <span>{new Date(event.startTime).toLocaleDateString()}</span>
                               </div>
-                              <div className="flex items-center space-x-1 text-gray-500">
+                              <div className="flex items-center space-x-1 text-muted-foreground">
                                 <Clock className="w-4 h-4" />
                                 <span>
                                   {new Date(event.startTime).toLocaleTimeString([], {
@@ -365,7 +413,7 @@ export default function EventManagement() {
                               <div>
                                 <p className="text-sm capitalize">{event.locationType.replace('_', ' ')}</p>
                                 {event.locationDetails.venue && (
-                                  <p className="text-xs text-gray-500">{event.locationDetails.venue}</p>
+                                  <p className="text-xs text-muted-foreground">{event.locationDetails.venue}</p>
                                 )}
                               </div>
                             </div>
@@ -376,13 +424,13 @@ export default function EventManagement() {
                                 <span className="text-sm">
                                   {event.currentRegistrations}/{event.capacity}
                                 </span>
-                                <span className="text-xs text-gray-500">{percentage}%</span>
+                                <span className="text-xs text-muted-foreground">{percentage}%</span>
                               </div>
                               <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
                                 <div
                                   className={cn(
                                     'h-full transition-all',
-                                    percentage >= 90 ? 'bg-red-500' : 
+                                    percentage >= 90 ? 'bg-red-500' :
                                     percentage >= 70 ? 'bg-yellow-500' : 'bg-green-500'
                                   )}
                                   style={{ width: `${percentage}%` }}
@@ -442,7 +490,7 @@ export default function EventManagement() {
         <TabsContent value="calendar">
           <Card>
             <CardContent className="p-6">
-              <p className="text-gray-500">Calendar view coming soon...</p>
+              <p className="text-muted-foreground">Calendar view coming soon...</p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -451,29 +499,29 @@ export default function EventManagement() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gray-600">Total Events</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Total Events</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-bold">{events.length}</p>
-                <p className="text-xs text-gray-500">This month</p>
+                <p className="text-xs text-muted-foreground">This month</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gray-600">Total Registrations</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Total Registrations</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-bold">
                   {events.reduce((sum, e) => sum + e.currentRegistrations, 0)}
                 </p>
-                <p className="text-xs text-gray-500">Across all events</p>
+                <p className="text-xs text-muted-foreground">Across all events</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gray-600">Average Attendance</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Average Attendance</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-bold">
@@ -482,19 +530,19 @@ export default function EventManagement() {
                     events.length
                   )}%
                 </p>
-                <p className="text-xs text-gray-500">Registration rate</p>
+                <p className="text-xs text-muted-foreground">Registration rate</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gray-600">Upcoming Events</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Upcoming Events</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-bold">
                   {events.filter(e => e.status === 'upcoming').length}
                 </p>
-                <p className="text-xs text-gray-500">Next 30 days</p>
+                <p className="text-xs text-muted-foreground">Next 30 days</p>
               </CardContent>
             </Card>
           </div>

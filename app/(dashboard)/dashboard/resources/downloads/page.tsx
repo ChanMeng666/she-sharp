@@ -121,20 +121,20 @@ export default function MyDownloadsPage() {
   const getResourceTypeColor = (type: string) => {
     switch (type) {
       case 'document':
-        return 'bg-purple-light text-purple-dark';
+        return 'bg-purple-light text-primary';
       case 'video':
         return 'bg-periwinkle-light text-periwinkle-dark';
       case 'image':
         return 'bg-mint-light text-mint-dark';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-accent text-foreground';
     }
   };
 
   const getCategoryColor = (category: string) => {
     const categoryLower = category.toLowerCase();
     if (categoryLower.includes('programming') || categoryLower.includes('code')) {
-      return 'bg-purple-light text-purple-dark border-purple-mid/20';
+      return 'bg-purple-light text-primary border-purple-mid/20';
     } else if (categoryLower.includes('data') || categoryLower.includes('science')) {
       return 'bg-periwinkle-light text-periwinkle-dark border-periwinkle-dark/20';
     } else if (categoryLower.includes('cloud') || categoryLower.includes('devops')) {
@@ -142,7 +142,7 @@ export default function MyDownloadsPage() {
     } else if (categoryLower.includes('design') || categoryLower.includes('ui')) {
       return 'bg-navy-light text-navy-dark border-navy-dark/20';
     }
-    return 'bg-gray-100 text-gray-800 border-gray-300';
+    return 'bg-accent text-foreground border-border';
   };
 
   const formatFileSize = (bytes: number) => {
@@ -191,7 +191,7 @@ export default function MyDownloadsPage() {
   };
 
   const DownloadCard = ({ download }: { download: DownloadedResource }) => (
-    <Card className="group hover:shadow-xl transition-all duration-300 border-gray-200 hover:border-purple-mid/30 bg-white h-full overflow-hidden">
+    <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-purple-mid/30 bg-white h-full overflow-hidden">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
@@ -199,7 +199,7 @@ export default function MyDownloadsPage() {
               {getResourceIcon(download.resource.resourceType)}
             </div>
             <div className="flex-1 min-w-0">
-              <CardTitle className="text-lg font-semibold text-navy-dark group-hover:text-purple-dark transition-colors line-clamp-1">
+              <CardTitle className="text-lg font-semibold text-navy-dark group-hover:text-primary transition-colors line-clamp-1">
                 {download.resource.title}
               </CardTitle>
               <div className="flex flex-wrap items-center gap-2 mt-2">
@@ -209,7 +209,7 @@ export default function MyDownloadsPage() {
                 <span className="text-xs text-gray">
                   {formatFileSize(download.resource.fileSize)}
                 </span>
-                <span className="text-xs text-purple-dark font-medium">
+                <span className="text-xs text-primary font-medium">
                   • {getTimeAgo(download.downloadedAt)}
                 </span>
               </div>
@@ -224,14 +224,14 @@ export default function MyDownloadsPage() {
           </CardDescription>
         )}
         
-        <div className="pt-2 border-t border-gray-100">
+        <div className="pt-2 border-t border-border">
           <div className="flex items-center gap-2 text-xs text-gray">
-            <Download className="h-3.5 w-3.5 text-purple-dark" />
+            <Download className="h-3.5 w-3.5 text-primary" />
             <span>Downloaded on {format(new Date(download.downloadedAt), 'PPP')} at {format(new Date(download.downloadedAt), 'p')}</span>
           </div>
         </div>
       </CardContent>
-      <CardFooter className="border-t border-gray-100 bg-gray-50/50 flex flex-wrap gap-2 p-4">
+      <CardFooter className="border-t border-border bg-accent/50 flex flex-wrap gap-2 p-4">
           <Button 
             onClick={() => handleRedownload(download.resource)}
             variant="default"
@@ -258,7 +258,7 @@ export default function MyDownloadsPage() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-dark mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           <p className="mt-4 text-gray">Loading your downloads...</p>
         </div>
       </div>
@@ -270,7 +270,7 @@ export default function MyDownloadsPage() {
       {/* Header Section */}
       <div className="mb-6 sm:mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
-          <FolderOpen className="h-5 w-5 sm:h-6 sm:w-6 text-purple-dark flex-shrink-0" />
+          <FolderOpen className="h-5 w-5 sm:h-6 sm:w-6 text-primary flex-shrink-0" />
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-dark to-purple-mid bg-clip-text text-transparent">
             My Downloads
           </h1>

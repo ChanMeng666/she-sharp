@@ -94,7 +94,7 @@ export default function UserManagement() {
       if (searchQuery) params.append('search', searchQuery);
 
       const response = await fetch(`/api/admin/users?${params}`);
-      
+
       if (response.ok) {
         const data = await response.json();
         setUsers(data.users || []);
@@ -102,72 +102,11 @@ export default function UserManagement() {
       }
     } catch (error) {
       console.error('Failed to fetch users:', error);
-      // Use mock data for demonstration
-      setUsers(generateMockUsers());
-      setTotalPages(5);
+      setUsers([]);
+      setTotalPages(1);
     } finally {
       setLoading(false);
     }
-  };
-
-  const generateMockUsers = (): User[] => {
-    return [
-      {
-        id: 1,
-        name: 'Sarah Johnson',
-        email: 'sarah.johnson@example.com',
-        image: null,
-        roles: ['mentor', 'admin'],
-        membershipTier: 'premium',
-        status: 'active',
-        createdAt: '2024-01-15',
-        lastLoginAt: '2024-12-20',
-      },
-      {
-        id: 2,
-        name: 'Emily Chen',
-        email: 'emily.chen@example.com',
-        image: null,
-        roles: ['mentee'],
-        membershipTier: 'basic',
-        status: 'active',
-        createdAt: '2024-02-20',
-        lastLoginAt: '2024-12-19',
-      },
-      {
-        id: 3,
-        name: 'Jessica Martinez',
-        email: 'jessica.martinez@example.com',
-        image: null,
-        roles: ['mentor'],
-        membershipTier: 'premium',
-        status: 'active',
-        createdAt: '2024-03-10',
-        lastLoginAt: '2024-12-18',
-      },
-      {
-        id: 4,
-        name: 'Alex Thompson',
-        email: 'alex.thompson@example.com',
-        image: null,
-        roles: ['mentee'],
-        membershipTier: 'free',
-        status: 'inactive',
-        createdAt: '2024-04-05',
-        lastLoginAt: '2024-11-30',
-      },
-      {
-        id: 5,
-        name: 'Maria Rodriguez',
-        email: 'maria.rodriguez@example.com',
-        image: null,
-        roles: ['mentor'],
-        membershipTier: 'basic',
-        status: 'active',
-        createdAt: '2024-05-12',
-        lastLoginAt: '2024-12-20',
-      },
-    ];
   };
 
   const handleSelectAll = (checked: boolean) => {
@@ -220,13 +159,13 @@ export default function UserManagement() {
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'admin':
-        return 'bg-purple-100 text-purple-700';
+        return 'bg-muted text-purple-700';
       case 'mentor':
         return 'bg-green-100 text-green-700';
       case 'mentee':
         return 'bg-blue-100 text-blue-700';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-accent text-foreground';
     }
   };
 
@@ -237,9 +176,9 @@ export default function UserManagement() {
       case 'basic':
         return 'bg-gradient-to-r from-gray-400 to-gray-600 text-white';
       case 'free':
-        return 'bg-gray-200 text-gray-700';
+        return 'bg-gray-200 text-foreground';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-accent text-foreground';
     }
   };
 
@@ -249,7 +188,7 @@ export default function UserManagement() {
         <div className="flex justify-between items-center">
           <CardTitle>All Users</CardTitle>
           <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-muted-foreground">
               {selectedUsers.length > 0 && `${selectedUsers.length} selected`}
             </span>
           </div>
@@ -257,9 +196,9 @@ export default function UserManagement() {
       </CardHeader>
       <CardContent>
         {/* Filters and Search */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+        <div className="flex flex-col gap-4 mb-6">
+          <div className="relative w-full">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
             <Input
               type="search"
               placeholder="Search by name or email..."
@@ -269,10 +208,10 @@ export default function UserManagement() {
               className="pl-10"
             />
           </div>
-          
-          <div className="flex gap-2">
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:gap-2 gap-2">
             <Select value={roleFilter} onValueChange={setRoleFilter}>
-              <SelectTrigger className="w-32">
+              <SelectTrigger className="w-full lg:w-32">
                 <SelectValue placeholder="All Roles" />
               </SelectTrigger>
               <SelectContent>
@@ -284,7 +223,7 @@ export default function UserManagement() {
             </Select>
 
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-32">
+              <SelectTrigger className="w-full lg:w-32">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent>
@@ -296,7 +235,7 @@ export default function UserManagement() {
             </Select>
 
             <Select value={membershipFilter} onValueChange={setMembershipFilter}>
-              <SelectTrigger className="w-32">
+              <SelectTrigger className="w-full lg:w-32">
                 <SelectValue placeholder="All Tiers" />
               </SelectTrigger>
               <SelectContent>
@@ -307,7 +246,7 @@ export default function UserManagement() {
               </SelectContent>
             </Select>
 
-            <Button variant="outline" size="icon">
+            <Button variant="outline" size="icon" className="col-span-2 md:col-span-1">
               <Filter className="w-4 h-4" />
             </Button>
           </div>
@@ -349,8 +288,120 @@ export default function UserManagement() {
           </div>
         )}
 
-        {/* Users Table */}
-        <div className="overflow-x-auto">
+        {/* Mobile Card View */}
+        <div className="block lg:hidden space-y-3">
+          {users.map((user) => (
+            <Card key={user.id} className="p-4">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-start space-x-3 flex-1">
+                  <Checkbox
+                    checked={selectedUsers.includes(user.id)}
+                    onCheckedChange={(checked) => handleSelectUser(user.id, checked as boolean)}
+                  />
+                  <Avatar className="w-12 h-12">
+                    <AvatarImage src={user.image || undefined} alt={user.name || ''} />
+                    <AvatarFallback className="bg-muted text-purple-700">
+                      {getInitials(user.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-foreground truncate">{user.name || 'Unknown User'}</p>
+                    <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+                  </div>
+                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <MoreVertical className="w-4 h-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <Eye className="w-4 h-4 mr-2" />
+                      View Details
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Edit className="w-4 h-4 mr-2" />
+                      Edit User
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Shield className="w-4 h-4 mr-2" />
+                      Manage Permissions
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Mail className="w-4 h-4 mr-2" />
+                      Send Email
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="text-red-600">
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Delete User
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Roles:</span>
+                  <div className="flex flex-wrap gap-1 justify-end">
+                    {user.roles.map((role) => (
+                      <Badge
+                        key={role}
+                        variant="secondary"
+                        className={cn('text-xs', getRoleBadgeColor(role))}
+                      >
+                        {role}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Membership:</span>
+                  <Badge
+                    variant="secondary"
+                    className={cn('text-xs', getMembershipBadgeColor(user.membershipTier))}
+                  >
+                    {user.membershipTier}
+                  </Badge>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Status:</span>
+                  <Badge
+                    variant={user.status === 'active' ? 'default' : 'secondary'}
+                    className={cn(
+                      'text-xs',
+                      user.status === 'active' && 'bg-green-100 text-green-700',
+                      user.status === 'inactive' && 'bg-accent text-foreground',
+                      user.status === 'suspended' && 'bg-red-100 text-red-700'
+                    )}
+                  >
+                    {user.status}
+                  </Badge>
+                </div>
+
+                <div className="flex items-center justify-between pt-2 border-t">
+                  <span className="text-muted-foreground">Joined:</span>
+                  <span className="text-foreground">{new Date(user.createdAt).toLocaleDateString()}</span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Last Active:</span>
+                  <span className="text-foreground">
+                    {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}
+                  </span>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden lg:block overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -382,13 +433,13 @@ export default function UserManagement() {
                     <div className="flex items-center space-x-3">
                       <Avatar className="w-10 h-10">
                         <AvatarImage src={user.image || undefined} alt={user.name || ''} />
-                        <AvatarFallback className="bg-purple-100 text-purple-700">
+                        <AvatarFallback className="bg-muted text-purple-700">
                           {getInitials(user.name)}
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="font-medium text-gray-900">{user.name || 'Unknown User'}</p>
-                        <p className="text-sm text-gray-500">{user.email}</p>
+                        <p className="font-medium text-foreground">{user.name || 'Unknown User'}</p>
+                        <p className="text-sm text-muted-foreground">{user.email}</p>
                       </div>
                     </div>
                   </TableCell>
@@ -419,17 +470,17 @@ export default function UserManagement() {
                       className={cn(
                         'text-xs',
                         user.status === 'active' && 'bg-green-100 text-green-700',
-                        user.status === 'inactive' && 'bg-gray-100 text-gray-700',
+                        user.status === 'inactive' && 'bg-accent text-foreground',
                         user.status === 'suspended' && 'bg-red-100 text-red-700'
                       )}
                     >
                       {user.status}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-sm text-gray-500">
+                  <TableCell className="text-sm text-muted-foreground">
                     {new Date(user.createdAt).toLocaleDateString()}
                   </TableCell>
-                  <TableCell className="text-sm text-gray-500">
+                  <TableCell className="text-sm text-muted-foreground">
                     {user.lastLoginAt
                       ? new Date(user.lastLoginAt).toLocaleDateString()
                       : 'Never'}
@@ -476,7 +527,7 @@ export default function UserManagement() {
 
         {/* Pagination */}
         <div className="flex items-center justify-between mt-6">
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-muted-foreground">
             Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
             {Math.min(currentPage * itemsPerPage, users.length * totalPages)} of{' '}
             {users.length * totalPages} users

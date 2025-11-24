@@ -71,3 +71,6 @@ lib/db/checkpoints/
 
 # Email preview files
 tmp/emails/
+
+# Reference/Example projects
+reference-next-shadcn-admin-dashboard/

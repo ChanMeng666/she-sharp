@@ -73,10 +73,10 @@ const iconMap: Record<string, LucideIcon> = {
 const actionColors: Record<string, string> = {
   SIGN_UP: 'bg-green-100 text-green-600',
   SIGN_IN: 'bg-blue-100 text-blue-600',
-  SIGN_OUT: 'bg-gray-100 text-gray-600',
+  SIGN_OUT: 'bg-accent text-muted-foreground',
   UPDATE_PASSWORD: 'bg-orange-100 text-orange-600',
   DELETE_ACCOUNT: 'bg-red-100 text-red-600',
-  UPDATE_ACCOUNT: 'bg-purple-100 text-purple-600',
+  UPDATE_ACCOUNT: 'bg-muted text-primary',
   VERIFY_EMAIL: 'bg-green-100 text-green-600',
   REQUEST_PASSWORD_RESET: 'bg-yellow-100 text-yellow-600',
   RESET_PASSWORD: 'bg-orange-100 text-orange-600',
@@ -86,19 +86,19 @@ const actionColors: Record<string, string> = {
   ACTIVATE_MENTEE_ROLE: 'bg-indigo-100 text-indigo-600',
   UPDATE_MENTOR_PROFILE: 'bg-indigo-100 text-indigo-600',
   UPDATE_MENTEE_PROFILE: 'bg-indigo-100 text-indigo-600',
-  REQUEST_MENTOR: 'bg-purple-100 text-purple-600',
+  REQUEST_MENTOR: 'bg-muted text-primary',
   ACCEPT_MENTEE: 'bg-green-100 text-green-600',
   REJECT_MENTEE: 'bg-red-100 text-red-600',
-  END_MENTORSHIP: 'bg-gray-100 text-gray-600',
+  END_MENTORSHIP: 'bg-accent text-muted-foreground',
   SCHEDULE_MEETING: 'bg-blue-100 text-blue-600',
   COMPLETE_MEETING: 'bg-green-100 text-green-600',
   CANCEL_MEETING: 'bg-red-100 text-red-600',
-  REGISTER_EVENT: 'bg-purple-100 text-purple-600',
+  REGISTER_EVENT: 'bg-muted text-primary',
   ATTEND_EVENT: 'bg-green-100 text-green-600',
   UPLOAD_RESOURCE: 'bg-blue-100 text-blue-600',
   ACCESS_RESOURCE: 'bg-cyan-100 text-cyan-600',
   UPGRADE_MEMBERSHIP: 'bg-yellow-100 text-yellow-600',
-  CANCEL_MEMBERSHIP: 'bg-gray-100 text-gray-600',
+  CANCEL_MEMBERSHIP: 'bg-accent text-muted-foreground',
 };
 
 interface ActivityLog {
@@ -352,11 +352,11 @@ export default function ActivityPageClient() {
         <div className="space-y-6">
           {Object.entries(groupedLogs).map(([date, dayLogs]) => (
             <div key={date}>
-              <h3 className="text-sm font-medium text-gray-600 mb-3">{date}</h3>
+              <h3 className="text-sm font-medium text-muted-foreground mb-3">{date}</h3>
               <div className="space-y-2">
                 {dayLogs.map((log) => {
                   const Icon = iconMap[log.action] || Settings;
-                  const colorClass = actionColors[log.action] || 'bg-gray-100 text-gray-600';
+                  const colorClass = actionColors[log.action] || 'bg-accent text-muted-foreground';
                   
                   return (
                     <Card key={log.id}>
@@ -367,7 +367,7 @@ export default function ActivityPageClient() {
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center gap-2">
-                              <p className="text-sm font-medium text-gray-900">
+                              <p className="text-sm font-medium text-foreground">
                                 {formatAction(log.action)}
                               </p>
                               {log.entityType && (
@@ -377,16 +377,16 @@ export default function ActivityPageClient() {
                               )}
                             </div>
                             <div className="flex items-center gap-4 mt-1">
-                              <p className="text-xs text-gray-500">
+                              <p className="text-xs text-muted-foreground">
                                 {getRelativeTime(new Date(log.timestamp))}
                               </p>
                               {log.ipAddress && (
-                                <p className="text-xs text-gray-400">
+                                <p className="text-xs text-muted-foreground">
                                   IP: {log.ipAddress}
                                 </p>
                               )}
                               {scope !== 'personal' && log.userName && (
-                                <p className="text-xs text-gray-500">
+                                <p className="text-xs text-muted-foreground">
                                   by {log.userName}
                                 </p>
                               )}
@@ -404,11 +404,11 @@ export default function ActivityPageClient() {
       ) : (
         <Card>
           <CardContent className="text-center py-12">
-            <AlertCircle className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <AlertCircle className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+            <h3 className="text-lg font-semibold text-foreground mb-2">
               No activity found
             </h3>
-            <p className="text-sm text-gray-500 max-w-sm mx-auto">
+            <p className="text-sm text-muted-foreground max-w-sm mx-auto">
               {dateFilter !== 'all' 
                 ? 'Try adjusting your date filter to see more activity'
                 : 'Activity logs will appear here as actions are performed'}

@@ -185,7 +185,7 @@ export default function MeetingsPage() {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex items-center gap-4 text-sm text-gray-600">
+        <div className="flex items-center gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
             {meeting.durationMinutes} min
@@ -205,7 +205,7 @@ export default function MeetingsPage() {
         {meeting.topicsDiscussed && meeting.topicsDiscussed.length > 0 && (
           <div>
             <p className="text-sm font-medium mb-1">Topics Discussed:</p>
-            <ul className="text-sm text-gray-600 list-disc list-inside">
+            <ul className="text-sm text-muted-foreground list-disc list-inside">
               {meeting.topicsDiscussed.map((topic, i) => (
                 <li key={i}>{topic}</li>
               ))}
@@ -216,7 +216,7 @@ export default function MeetingsPage() {
         {meeting.goalsSet && meeting.goalsSet.length > 0 && (
           <div>
             <p className="text-sm font-medium mb-1">Goals Set:</p>
-            <ul className="text-sm text-gray-600 list-disc list-inside">
+            <ul className="text-sm text-muted-foreground list-disc list-inside">
               {meeting.goalsSet.map((goal, i) => (
                 <li key={i}>{goal}</li>
               ))}
@@ -293,7 +293,7 @@ export default function MeetingsPage() {
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-3xl font-bold">Meetings</h1>
-          <p className="text-gray-600 mt-2">Manage your mentorship meetings</p>
+          <p className="text-muted-foreground mt-2">Manage your mentorship meetings</p>
         </div>
         {relationships.length > 0 && (
           <Dialog open={showScheduleDialog} onOpenChange={setShowScheduleDialog}>
@@ -412,10 +412,10 @@ export default function MeetingsPage() {
           ) : (
             <Card>
               <CardContent className="text-center py-12">
-                <Calendar className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                <p className="text-gray-600">No upcoming meetings</p>
+                <Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                <p className="text-muted-foreground">No upcoming meetings</p>
                 {relationships.length > 0 && (
-                  <p className="text-sm text-gray-500 mt-2">
+                  <p className="text-sm text-muted-foreground mt-2">
                     Schedule a meeting with your mentor or mentee
                   </p>
                 )}
@@ -434,8 +434,8 @@ export default function MeetingsPage() {
           ) : (
             <Card>
               <CardContent className="text-center py-12">
-                <Clock className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                <p className="text-gray-600">No past meetings</p>
+                <Clock className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                <p className="text-muted-foreground">No past meetings</p>
               </CardContent>
             </Card>
           )}
@@ -451,8 +451,8 @@ export default function MeetingsPage() {
           ) : (
             <Card>
               <CardContent className="text-center py-12">
-                <XCircle className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                <p className="text-gray-600">No cancelled meetings</p>
+                <XCircle className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                <p className="text-muted-foreground">No cancelled meetings</p>
               </CardContent>
             </Card>
           )}

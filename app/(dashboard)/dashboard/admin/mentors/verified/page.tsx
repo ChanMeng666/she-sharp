@@ -158,7 +158,7 @@ export default function VerifiedMentorsPage() {
     const variants = {
       active: { text: 'Active', className: 'bg-green-100 text-green-800' },
       busy: { text: 'Busy', className: 'bg-yellow-100 text-yellow-800' },
-      paused: { text: 'Paused', className: 'bg-gray-100 text-gray-800' },
+      paused: { text: 'Paused', className: 'bg-accent text-foreground' },
     };
     const variant = variants[status as keyof typeof variants];
     return <Badge className={variant.className}>{variant.text}</Badge>;
@@ -176,20 +176,20 @@ export default function VerifiedMentorsPage() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
-      <div className="flex justify-between items-center">
+    <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8 space-y-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Verified Mentors</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Verified Mentors</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-2">
             Manage and monitor verified mentors in the program
           </p>
         </div>
-        <div className="flex space-x-3">
-          <Button variant="outline">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+          <Button variant="outline" className="text-sm sm:text-base">
             <Download className="w-4 h-4 mr-2" />
             Export
           </Button>
-          <Button className="bg-purple-600 hover:bg-purple-700">
+          <Button className="bg-purple-600 hover:bg-purple-700 text-sm sm:text-base">
             <Mail className="w-4 h-4 mr-2" />
             Send Announcement
           </Button>
@@ -197,56 +197,56 @@ export default function VerifiedMentorsPage() {
       </div>
 
       {/* Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Total Verified</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Total Verified</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
               <p className="text-2xl font-bold">85</p>
-              <Shield className="w-8 h-8 text-purple-600" />
+              <Shield className="w-8 h-8 text-primary" />
             </div>
-            <p className="text-xs text-gray-500 mt-2">+5 this month</p>
+            <p className="text-xs text-muted-foreground mt-2">+5 this month</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Active Mentors</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Active Mentors</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
               <p className="text-2xl font-bold text-green-600">72</p>
               <CheckCircle className="w-8 h-8 text-green-600" />
             </div>
-            <p className="text-xs text-gray-500 mt-2">84.7% active rate</p>
+            <p className="text-xs text-muted-foreground mt-2">84.7% active rate</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Avg Rating</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Avg Rating</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
               <p className="text-2xl font-bold">4.8</p>
               <Star className="w-8 h-8 text-yellow-500 fill-yellow-500" />
             </div>
-            <p className="text-xs text-gray-500 mt-2">From 1,247 reviews</p>
+            <p className="text-xs text-muted-foreground mt-2">From 1,247 reviews</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Total Sessions</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Total Sessions</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
               <p className="text-2xl font-bold">3,842</p>
               <MessageSquare className="w-8 h-8 text-blue-600" />
             </div>
-            <p className="text-xs text-gray-500 mt-2">This year</p>
+            <p className="text-xs text-muted-foreground mt-2">This year</p>
           </CardContent>
         </Card>
       </div>
@@ -256,7 +256,7 @@ export default function VerifiedMentorsPage() {
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input
                 type="search"
                 placeholder="Search by name, email, or company..."
@@ -320,18 +320,19 @@ export default function VerifiedMentorsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Mentor</TableHead>
-                <TableHead>Contact</TableHead>
-                <TableHead>Expertise</TableHead>
-                <TableHead>Metrics</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Mentor</TableHead>
+                  <TableHead>Contact</TableHead>
+                  <TableHead>Expertise</TableHead>
+                  <TableHead>Metrics</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
               {filteredMentors.map((mentor) => (
                 <TableRow key={mentor.id}>
                   <TableCell>
@@ -344,22 +345,22 @@ export default function VerifiedMentorsPage() {
                       </Avatar>
                       <div>
                         <p className="font-medium">{mentor.name}</p>
-                        <p className="text-sm text-gray-500">{mentor.role}</p>
-                        <p className="text-xs text-gray-400">{mentor.company}</p>
+                        <p className="text-sm text-muted-foreground">{mentor.role}</p>
+                        <p className="text-xs text-muted-foreground">{mentor.company}</p>
                       </div>
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="space-y-1 text-sm">
-                      <div className="flex items-center space-x-1 text-gray-600">
+                      <div className="flex items-center space-x-1 text-muted-foreground">
                         <Mail className="w-3 h-3" />
                         <span className="text-xs">{mentor.email}</span>
                       </div>
-                      <div className="flex items-center space-x-1 text-gray-600">
+                      <div className="flex items-center space-x-1 text-muted-foreground">
                         <Phone className="w-3 h-3" />
                         <span className="text-xs">{mentor.phone}</span>
                       </div>
-                      <div className="flex items-center space-x-1 text-gray-600">
+                      <div className="flex items-center space-x-1 text-muted-foreground">
                         <MapPin className="w-3 h-3" />
                         <span className="text-xs">{mentor.location}</span>
                       </div>
@@ -385,11 +386,11 @@ export default function VerifiedMentorsPage() {
                         <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
                         <span className="font-medium">{mentor.rating}</span>
                       </div>
-                      <div className="flex items-center space-x-2 text-gray-600">
+                      <div className="flex items-center space-x-2 text-muted-foreground">
                         <Users className="w-3 h-3" />
                         <span className="text-xs">{mentor.activeMentees} active / {mentor.totalMentees} total</span>
                       </div>
-                      <div className="flex items-center space-x-2 text-gray-600">
+                      <div className="flex items-center space-x-2 text-muted-foreground">
                         <Clock className="w-3 h-3" />
                         <span className="text-xs">{mentor.responseTime}</span>
                       </div>
@@ -398,7 +399,7 @@ export default function VerifiedMentorsPage() {
                   <TableCell>
                     <div className="space-y-2">
                       {getStatusBadge(mentor.status)}
-                      <div className="flex items-center space-x-1 text-xs text-gray-500">
+                      <div className="flex items-center space-x-1 text-xs text-muted-foreground">
                         <Award className="w-3 h-3" />
                         <span>Since {new Date(mentor.verifiedDate).toLocaleDateString()}</span>
                       </div>
@@ -434,8 +435,9 @@ export default function VerifiedMentorsPage() {
                   </TableCell>
                 </TableRow>
               ))}
-            </TableBody>
-          </Table>
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

@@ -45,11 +45,11 @@ import { cn } from '@/lib/utils';
 
 const activityTypes = {
   login: { icon: LogIn, color: 'text-green-600', bg: 'bg-green-100' },
-  logout: { icon: LogOut, color: 'text-gray-600', bg: 'bg-gray-100' },
+  logout: { icon: LogOut, color: 'text-muted-foreground', bg: 'bg-accent' },
   create: { icon: UserPlus, color: 'text-blue-600', bg: 'bg-blue-100' },
   update: { icon: Edit, color: 'text-yellow-600', bg: 'bg-yellow-100' },
   delete: { icon: Trash2, color: 'text-red-600', bg: 'bg-red-100' },
-  security: { icon: Shield, color: 'text-purple-600', bg: 'bg-purple-100' },
+  security: { icon: Shield, color: 'text-primary', bg: 'bg-muted' },
 };
 
 const mockActivities = [
@@ -93,59 +93,59 @@ export default function ActivityLogsPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
-      <div className="flex justify-between items-center">
+    <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8 space-y-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Activity Logs</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Activity Logs</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-2">
             Monitor user activities and system events
           </p>
         </div>
-        <Button className="bg-purple-600 hover:bg-purple-700">
+        <Button className="bg-purple-600 hover:bg-purple-700 text-sm sm:text-base">
           <Download className="w-4 h-4 mr-2" />
           Export Logs
         </Button>
       </div>
 
       {/* Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Total Activities</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Total Activities</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">1,247</p>
-            <p className="text-xs text-gray-500">Last 7 days</p>
+            <p className="text-xs text-muted-foreground">Last 7 days</p>
           </CardContent>
         </Card>
         
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Active Users</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Active Users</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">342</p>
-            <p className="text-xs text-gray-500">Unique users</p>
+            <p className="text-xs text-muted-foreground">Unique users</p>
           </CardContent>
         </Card>
         
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Security Events</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Security Events</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold text-yellow-600">12</p>
-            <p className="text-xs text-gray-500">Requires attention</p>
+            <p className="text-xs text-muted-foreground">Requires attention</p>
           </CardContent>
         </Card>
         
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Success Rate</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Success Rate</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold text-green-600">98.5%</p>
-            <p className="text-xs text-gray-500">Successful actions</p>
+            <p className="text-xs text-muted-foreground">Successful actions</p>
           </CardContent>
         </Card>
       </div>
@@ -155,7 +155,7 @@ export default function ActivityLogsPage() {
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input
                 type="search"
                 placeholder="Search by user, email, or action..."
@@ -220,18 +220,19 @@ export default function ActivityLogsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>User</TableHead>
-                <TableHead>Action</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Device/Location</TableHead>
-                <TableHead>Timestamp</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>User</TableHead>
+                  <TableHead>Action</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Device/Location</TableHead>
+                  <TableHead>Timestamp</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
               {filteredActivities.map((activity) => {
                 const actionType = activityTypes[activity.action as keyof typeof activityTypes];
                 const Icon = actionType?.icon || Activity;
@@ -241,7 +242,7 @@ export default function ActivityLogsPage() {
                     <TableCell>
                       <div>
                         <p className="font-medium">{activity.user}</p>
-                        <p className="text-sm text-gray-500">{activity.email}</p>
+                        <p className="text-sm text-muted-foreground">{activity.email}</p>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -259,7 +260,7 @@ export default function ActivityLogsPage() {
                           {getDeviceIcon(activity.device)}
                           <span>{activity.browser}</span>
                         </div>
-                        <div className="flex items-center space-x-1 text-gray-500">
+                        <div className="flex items-center space-x-1 text-muted-foreground">
                           <Globe className="w-3 h-3" />
                           <span className="text-xs">{activity.ipAddress}</span>
                         </div>
@@ -268,10 +269,10 @@ export default function ActivityLogsPage() {
                     <TableCell>
                       <div className="flex flex-col space-y-1 text-sm">
                         <div className="flex items-center space-x-1">
-                          <Calendar className="w-3 h-3 text-gray-400" />
+                          <Calendar className="w-3 h-3 text-muted-foreground" />
                           <span>{new Date(activity.timestamp).toLocaleDateString()}</span>
                         </div>
-                        <div className="flex items-center space-x-1 text-gray-500">
+                        <div className="flex items-center space-x-1 text-muted-foreground">
                           <Clock className="w-3 h-3" />
                           <span className="text-xs">
                             {new Date(activity.timestamp).toLocaleTimeString()}
@@ -295,8 +296,9 @@ export default function ActivityLogsPage() {
                   </TableRow>
                 );
               })}
-            </TableBody>
-          </Table>
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

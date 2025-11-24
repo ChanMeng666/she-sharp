@@ -273,15 +273,17 @@ export const userMemberships = pgTable('user_memberships', {
   userId: integer('user_id').notNull().unique().references(() => users.id, { onDelete: 'cascade' }),
   tier: membershipTierEnum('tier').notNull().default('free'),
   expiresAt: timestamp('expires_at'),
-  stripeSubscriptionId: text('stripe_subscription_id').unique(),
-  stripeCustomerId: text('stripe_customer_id'),
   featuresAccess: jsonb('features_access').$type<Record<string, boolean>>(),
-  
+
   // Billing
   lastPaymentAt: timestamp('last_payment_at'),
   nextBillingDate: timestamp('next_billing_date'),
   cancelledAt: timestamp('cancelled_at'),
-  
+
+  // Legacy Stripe fields (no longer used, kept for backward compatibility)
+  stripeSubscriptionId: text('stripe_subscription_id').unique(),
+  stripeCustomerId: text('stripe_customer_id'),
+
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 }, (table) => ({
@@ -292,6 +294,7 @@ export const userMemberships = pgTable('user_memberships', {
 // Activity logs (keeping for audit trail)
 export const activityLogs = pgTable('activity_logs', {
   id: serial('id').primaryKey(),
+  teamId: integer('team_id'), // Legacy field, kept for backward compatibility
   userId: integer('user_id').references(() => users.id),
   action: text('action').notNull(),
   entityType: varchar('entity_type', { length: 50 }), // user, relationship, event, resource
@@ -716,6 +719,7 @@ export const teams = pgTable('teams', {
   name: varchar('name', { length: 100 }).notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  // Legacy Stripe fields (no longer used, kept for backward compatibility)
   stripeCustomerId: text('stripe_customer_id').unique(),
   stripeSubscriptionId: text('stripe_subscription_id').unique(),
   stripeProductId: text('stripe_product_id'),

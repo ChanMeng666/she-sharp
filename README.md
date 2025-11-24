@@ -25,7 +25,7 @@ Supports mentorship programs, networking events, and career development with AI-
 [![Next.js](https://img.shields.io/badge/Next.js-15.4.0-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
-[![Stripe](https://img.shields.io/badge/Stripe-Integrated-purple?style=flat-square&logo=stripe)](https://stripe.com/)
+[![Neon](https://img.shields.io/badge/Database-Neon-green?style=flat-square)](https://neon.tech/)
 [![Gemini AI](https://img.shields.io/badge/AI-Gemini-orange?style=flat-square&logo=google)](https://ai.google.dev/)
 
 **Share Project Repository**
@@ -93,9 +93,9 @@ She Sharp is a comprehensive mentorship platform dedicated to bridging the gende
 
 > [!NOTE]
 > - Node.js >= 20.0 required
-> - PostgreSQL database required for data storage
-> - Stripe account required for payment processing
+> - PostgreSQL database required for data storage (Neon recommended)
 > - Google Gemini API key required for AI features
+> - All payment features have been removed for security reasons
 
 | [![Demo](https://img.shields.io/badge/TRY%20DEMO-ONLINE-9b2e83?labelColor=black&logo=vercel&style=for-the-badge)](https://she-sharp.vercel.app/) | Experience our platform without installation! |
 | :--- | :--- |
@@ -166,14 +166,8 @@ We are committed to creating an inclusive environment where women in STEM can:
 #### 💼 **Dashboard & Admin**
 - **Team Management** - Invite members, manage roles and permissions
 - **Activity Tracking** - Monitor team engagement and participation
-- **Subscription Management** - Handle billing and payment details
-- **Analytics** - Track impact metrics and ROI
-
-#### 💳 **Payment Integration**
-- **Stripe Integration** - Secure payment processing
-- **Subscription Plans** - Flexible pricing tiers for organizations
-- **Donation Processing** - Multiple donation options with tax receipts
-- **Customer Portal** - Self-service billing management
+- **User Management** - Comprehensive user administration
+- **Analytics** - Track impact metrics and engagement
 
 ### For Developers
 
@@ -185,9 +179,9 @@ We are committed to creating an inclusive environment where women in STEM can:
 - **Advanced Database Management** - Migration versioning, automatic snapshots, rollback capabilities
 - **Real-time Features** - Dynamic dashboards with live data synchronization
 - **Component Architecture** - shadcn/ui with custom design system and Radix UI primitives
-- **Payment Integration** - Full Stripe implementation for subscriptions and donations
 - **AI Integration** - Google Gemini-powered intelligent assistant
 - **Performance Optimization** - Edge deployment with CDN and intelligent caching
+- **Security-First Design** - No payment processing, focus on core community features
 
 ## 🛠️ Tech Stack
 
@@ -211,8 +205,8 @@ We are committed to creating an inclusive environment where women in STEM can:
         <br>PostgreSQL 16
       </td>
       <td align="center" width="96">
-        <img src="https://cdn.simpleicons.org/stripe/008CDD" width="48" height="48" alt="Stripe" />
-        <br>Stripe
+        <img src="https://cdn.simpleicons.org/drizzle/C5F74F" width="48" height="48" alt="Drizzle" />
+        <br>Drizzle ORM
       </td>
       <td align="center" width="96">
         <img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" width="48" height="48" alt="Tailwind" />
@@ -235,11 +229,11 @@ We are committed to creating an inclusive environment where women in STEM can:
 
 **Backend Stack:**
 - **Runtime**: Node.js with Next.js API Routes
-- **Database**: PostgreSQL with Drizzle ORM
+- **Database**: PostgreSQL (Neon) with Drizzle ORM
 - **Database Version Control**: Migration snapshots and checkpoints
-- **Authentication**: JWT-based with @node-rs/argon2
-- **Payments**: Stripe Checkout & Subscriptions
+- **Authentication**: JWT-based with bcrypt + NextAuth (OAuth)
 - **AI Integration**: Google Gemini API
+- **Email**: Resend for transactional emails
 
 **DevOps & Monitoring:**
 - **Deployment**: Vercel Edge Network
@@ -315,26 +309,23 @@ Before you begin, ensure you have the following installed:
 Create a `.env.local` file with the following variables:
 
 ```env
-# Database
-POSTGRES_URL="postgresql://user:password@localhost:5432/shesharp"
-POSTGRES_PRISMA_URL="postgresql://user:password@localhost:5432/shesharp"
-POSTGRES_URL_NO_SSL="postgresql://user:password@localhost:5432/shesharp"
-POSTGRES_URL_NON_POOLING="postgresql://user:password@localhost:5432/shesharp"
-POSTGRES_USER="user"
-POSTGRES_HOST="localhost"
-POSTGRES_PASSWORD="password"
-POSTGRES_DATABASE="shesharp"
+# Database (Neon PostgreSQL)
+DATABASE_URL="postgresql://user:password@your-neon-host.neon.tech/neondb?sslmode=require"
 
 # Authentication
 AUTH_SECRET="your-auth-secret-key-min-32-chars"
 
-# Stripe
-STRIPE_SECRET_KEY="sk_test_..."
-STRIPE_WEBHOOK_SECRET="whsec_..."
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_..."
+# OAuth (NextAuth)
+AUTH_GOOGLE_ID="your-google-oauth-client-id"
+AUTH_GOOGLE_SECRET="your-google-oauth-client-secret"
+AUTH_GITHUB_ID="your-github-oauth-client-id"
+AUTH_GITHUB_SECRET="your-github-oauth-client-secret"
 
 # Google AI
 GOOGLE_GENERATIVE_AI_API_KEY="your-gemini-api-key"
+
+# Email Service (Resend)
+RESEND_API_KEY="re_..."
 
 # Application
 BASE_URL="http://localhost:3000"
@@ -920,13 +911,13 @@ Send message to AI assistant
 }
 ```
 
-### Payment Processing
+### Admin Endpoints
 
-#### POST `/api/stripe/checkout`
-Create Stripe checkout session for membership upgrade
+#### GET `/api/admin/analytics`
+Get platform analytics (admin only)
 
-#### POST `/api/stripe/webhook`
-Handle Stripe webhook events for subscription management
+#### GET `/api/admin/permissions`
+Manage admin permissions (admin only)
 
 ## 💾 Database Schema
 
@@ -1040,8 +1031,9 @@ erDiagram
         int user_id FK
         enum tier "free|basic|premium"
         datetime expires_at
-        string stripe_subscription_id
         json features_access
+        datetime last_payment_at
+        datetime next_billing_date
     }
 ```
 
@@ -1175,10 +1167,12 @@ CREATE TABLE user_memberships (
   user_id INTEGER UNIQUE REFERENCES users(id) ON DELETE CASCADE,
   tier membership_tier DEFAULT 'free', -- 'free', 'basic', 'premium'
   expires_at TIMESTAMP,
-  stripe_subscription_id TEXT UNIQUE,
   features_access JSONB, -- Dynamic feature permissions
   last_payment_at TIMESTAMP,
-  next_billing_date TIMESTAMP
+  next_billing_date TIMESTAMP,
+  cancelled_at TIMESTAMP,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
 );
 ```
 
@@ -1568,13 +1562,8 @@ A: Update the colors in `tailwind.config.ts`, replace logos in `/public/logos`, 
 **Q: Is the AI chatbot required?**
 A: No, the chatbot is optional. You can disable it by removing the `<Chatbot />` component from the layout.
 
-**Q: How do I set up Stripe payments?**
-A: 
-1. Create a Stripe account
-2. Get your API keys from the Stripe dashboard
-3. Add them to your `.env.local` file
-4. Configure your products in Stripe
-5. Update the price IDs in your code
+**Q: Does this project support payments?**
+A: Payment features have been removed from the codebase for security reasons. The platform focuses on community features, mentorship, and events. If you need payment functionality, you can integrate your own payment provider following Next.js best practices.
 
 **Q: What's the difference between membership tiers?**
 A: 

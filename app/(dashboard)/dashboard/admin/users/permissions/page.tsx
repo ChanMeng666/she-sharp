@@ -60,24 +60,24 @@ export default function AccessControlPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
-      <div className="flex justify-between items-center">
+    <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8 space-y-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Access Control</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Access Control</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-2">
             Configure access permissions for different user roles
           </p>
         </div>
       </div>
 
       {/* Permission Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {['Data Access', 'User Management', 'Mentorship', 'Content'].map((category) => {
           const categoryPerms = permissions.filter(p => p.category === category);
           return (
             <Card key={category}>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-gray-600">{category}</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">{category}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
@@ -85,8 +85,8 @@ export default function AccessControlPage() {
                     const Icon = perm.icon;
                     return (
                       <div key={perm.id} className="flex items-center space-x-2">
-                        <Icon className="w-4 h-4 text-purple-600" />
-                        <span className="text-xs text-gray-700">{perm.name}</span>
+                        <Icon className="w-4 h-4 text-primary" />
+                        <span className="text-xs text-foreground">{perm.name}</span>
                       </div>
                     );
                   })}
@@ -100,34 +100,35 @@ export default function AccessControlPage() {
       {/* User Permissions Table */}
       <Card>
         <CardHeader>
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <div>
               <CardTitle>User Permissions</CardTitle>
               <CardDescription>Manage individual user access rights</CardDescription>
             </div>
-            <div className="relative w-64">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
               <Input
                 type="search"
                 placeholder="Search users..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9"
+                className="pl-9 text-sm sm:text-base"
               />
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>User</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Permissions</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>User</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead>Permissions</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
               {filteredUsers.map((user) => {
                 const isEditing = editingUser === user.id;
                 const currentPermissions = getUserPermissions(user.id);
@@ -137,11 +138,11 @@ export default function AccessControlPage() {
                     <TableCell>
                       <div>
                         <p className="font-medium">{user.name}</p>
-                        <p className="text-sm text-gray-500">{user.email}</p>
+                        <p className="text-sm text-muted-foreground">{user.email}</p>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="secondary" className="bg-purple-100 text-purple-700">
+                      <Badge variant="secondary">
                         {user.role}
                       </Badge>
                     </TableCell>
@@ -205,8 +206,9 @@ export default function AccessControlPage() {
                   </TableRow>
                 );
               })}
-            </TableBody>
-          </Table>
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

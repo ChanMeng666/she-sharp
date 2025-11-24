@@ -3,9 +3,11 @@
 import { useState, useEffect } from 'react';
 import {
   Users,
+  User,
   UserCheck,
   Calendar,
   TrendingUp,
+  TrendingDown,
   ArrowUp,
   ArrowDown,
   Activity,
@@ -17,10 +19,20 @@ import {
   XCircle,
   AlertCircle,
   Palette,
+  ArrowRight,
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  CardDescription
+} from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -58,6 +70,8 @@ interface DashboardMetrics {
 export default function AdminDashboard({ userId }: AdminDashboardProps) {
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [recentActivity, setRecentActivity] = useState<any[]>([]);
+  const [pendingTasks, setPendingTasks] = useState<any[]>([]);
+  const [totalTasksCount, setTotalTasksCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -66,17 +80,26 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
 
   const fetchDashboardData = async () => {
     try {
-      const [metricsRes, activityRes] = await Promise.all([
-        fetch('/api/admin/analytics'),
-        fetch('/api/admin/activity?limit=10'),
+      const [metricsRes, activityRes, tasksRes] = await Promise.all([
+        fetch('/api/admin/dashboard'),
+        fetch('/api/admin/activity?limit=5'),
+        fetch('/api/admin/tasks/pending'),
       ]);
 
-      if (metricsRes.ok && activityRes.ok) {
+      if (metricsRes.ok) {
         const metricsData = await metricsRes.json();
-        const activityData = await activityRes.json();
-        
         setMetrics(metricsData);
+      }
+
+      if (activityRes.ok) {
+        const activityData = await activityRes.json();
         setRecentActivity(activityData.activities || []);
+      }
+
+      if (tasksRes.ok) {
+        const tasksData = await tasksRes.json();
+        setPendingTasks(tasksData.tasks || []);
+        setTotalTasksCount(tasksData.totalCount || 0);
       }
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error);
@@ -85,155 +108,185 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
     }
   };
 
-  if (loading) {
-    return <div>Loading dashboard...</div>;
-  }
+  // Helper function to get icon and type based on activity action
+  const getActivityDisplay = (action: string) => {
+    const lowerAction = action.toLowerCase();
 
-  // Mock data for demonstration
-  const mockMetrics: DashboardMetrics = {
-    users: {
-      total: 2247,
-      active: 1823,
-      new: 156,
-      change: 12.5,
-    },
-    mentorship: {
-      mentors: 184,
-      mentees: 492,
-      activePairs: 143,
-      pendingApplications: 8,
-    },
-    events: {
-      upcoming: 12,
-      totalRegistrations: 384,
-      thisMonth: 5,
-      attendanceRate: 87.3,
-    },
-    content: {
-      resources: 256,
-      newsletters: 48,
-      blogPosts: 92,
-      mediaFiles: 384,
-    },
+    if (lowerAction.includes('user') && lowerAction.includes('register')) {
+      return { icon: User, type: 'success' as const };
+    } else if (lowerAction.includes('mentor') && lowerAction.includes('appli')) {
+      return { icon: GraduationCap, type: 'warning' as const };
+    } else if (lowerAction.includes('mentor') && lowerAction.includes('approv')) {
+      return { icon: CheckCircle, type: 'success' as const };
+    } else if (lowerAction.includes('mentor') && lowerAction.includes('reject')) {
+      return { icon: XCircle, type: 'error' as const };
+    } else if (lowerAction.includes('event')) {
+      return { icon: Calendar, type: 'info' as const };
+    } else if (lowerAction.includes('mentorship') && lowerAction.includes('complet')) {
+      return { icon: Award, type: 'success' as const };
+    } else if (lowerAction.includes('login') && lowerAction.includes('fail')) {
+      return { icon: AlertCircle, type: 'error' as const };
+    } else {
+      return { icon: Activity, type: 'info' as const };
+    }
   };
 
-  const data = metrics || mockMetrics;
+  // Helper function to format relative time
+  const getRelativeTime = (timestamp: string) => {
+    const now = new Date();
+    const activityTime = new Date(timestamp);
+    const diffInSeconds = Math.floor((now.getTime() - activityTime.getTime()) / 1000);
+
+    if (diffInSeconds < 60) {
+      return 'Just now';
+    } else if (diffInSeconds < 3600) {
+      const minutes = Math.floor(diffInSeconds / 60);
+      return `${minutes}m ago`;
+    } else if (diffInSeconds < 86400) {
+      const hours = Math.floor(diffInSeconds / 3600);
+      return `${hours}h ago`;
+    } else {
+      const days = Math.floor(diffInSeconds / 86400);
+      return `${days}d ago`;
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!metrics) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center">
+          <AlertCircle className="h-12 w-12 text-destructive mx-auto mb-4" />
+          <p className="text-lg font-medium mb-2">Failed to load dashboard</p>
+          <p className="text-sm text-muted-foreground mb-4">Please try refreshing the page</p>
+          <Button onClick={fetchDashboardData}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const data = metrics;
 
   return (
-    <div className="space-y-6">
+    <div className="@container/main flex flex-col gap-6">
       {/* Key Metrics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
         {/* Total Users Card */}
-        <Card className="border-l-4 border-l-purple-600">
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-sm font-medium text-gray-600">Total Users</CardTitle>
-              <Users className="w-5 h-5 text-purple-600" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-baseline justify-between">
-              <p className="text-3xl font-bold text-gray-900">{data.users.total.toLocaleString()}</p>
-              <div className={cn(
-                "flex items-center text-sm font-medium",
-                data.users.change > 0 ? "text-green-600" : "text-red-600"
-              )}>
-                {data.users.change > 0 ? <ArrowUp className="w-4 h-4 mr-1" /> : <ArrowDown className="w-4 h-4 mr-1" />}
-                {Math.abs(data.users.change)}%
-              </div>
-            </div>
-            <div className="mt-3 flex items-center justify-between text-sm">
-              <span className="text-gray-500">Active: {data.users.active.toLocaleString()}</span>
-              <Badge variant="secondary" className="text-xs">
-                +{data.users.new} this month
+        <Card className="@container/card">
+          <CardHeader>
+            <CardDescription>Total Users</CardDescription>
+            <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
+              {data.users.total.toLocaleString()}
+            </CardTitle>
+            <CardAction>
+              <Badge variant="outline">
+                {data.users.change > 0 ? (
+                  <>
+                    <TrendingUp className="h-3 w-3" />
+                    +{data.users.change}%
+                  </>
+                ) : (
+                  <>
+                    <TrendingDown className="h-3 w-3" />
+                    {data.users.change}%
+                  </>
+                )}
               </Badge>
+            </CardAction>
+          </CardHeader>
+          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+            <div className="flex gap-2 font-medium">
+              {data.users.active.toLocaleString()} active users
             </div>
-          </CardContent>
+            <div className="text-muted-foreground">
+              +{data.users.new} new this month
+            </div>
+          </CardFooter>
         </Card>
 
         {/* Mentorship Card */}
-        <Card className="border-l-4 border-l-green-600">
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-sm font-medium text-gray-600">Mentorship Program</CardTitle>
-              <GraduationCap className="w-5 h-5 text-green-600" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-baseline justify-between">
-              <p className="text-3xl font-bold text-gray-900">{data.mentorship.activePairs}</p>
-              <Badge variant="destructive" className="text-xs">
+        <Card className="@container/card">
+          <CardHeader>
+            <CardDescription>Mentorship Program</CardDescription>
+            <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
+              {data.mentorship.activePairs}
+            </CardTitle>
+            <CardAction>
+              <Badge variant={data.mentorship.pendingApplications > 0 ? 'destructive' : 'outline'}>
+                <GraduationCap className="h-3 w-3" />
                 {data.mentorship.pendingApplications} pending
               </Badge>
+            </CardAction>
+          </CardHeader>
+          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+            <div className="flex w-full justify-between font-medium">
+              <span>{data.mentorship.mentors} mentors</span>
+              <span>{data.mentorship.mentees} mentees</span>
             </div>
-            <div className="mt-3 space-y-1">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Mentors</span>
-                <span className="font-medium">{data.mentorship.mentors}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Mentees</span>
-                <span className="font-medium">{data.mentorship.mentees}</span>
-              </div>
+            <div className="text-muted-foreground">
+              Active mentorship pairs
             </div>
-          </CardContent>
+          </CardFooter>
         </Card>
 
         {/* Events Card */}
-        <Card className="border-l-4 border-l-blue-600">
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-sm font-medium text-gray-600">Events</CardTitle>
-              <Calendar className="w-5 h-5 text-blue-600" />
-            </div>
+        <Card className="@container/card">
+          <CardHeader>
+            <CardDescription>Events</CardDescription>
+            <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
+              {data.events.upcoming}
+            </CardTitle>
+            <CardAction>
+              <Badge variant="outline">
+                <Calendar className="h-3 w-3" />
+                Upcoming
+              </Badge>
+            </CardAction>
           </CardHeader>
-          <CardContent>
-            <div className="flex items-baseline justify-between">
-              <p className="text-3xl font-bold text-gray-900">{data.events.upcoming}</p>
-              <span className="text-sm text-gray-500">upcoming</span>
+          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+            <div className="flex gap-2 font-medium items-center">
+              <Progress value={data.events.attendanceRate} className="h-2 flex-1" />
+              <span>{data.events.attendanceRate}%</span>
             </div>
-            <div className="mt-3 space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Registrations</span>
-                <span className="font-medium">{data.events.totalRegistrations}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-500">Attendance</span>
-                <div className="flex items-center space-x-2">
-                  <Progress value={data.events.attendanceRate} className="w-16 h-2" />
-                  <span className="text-sm font-medium">{data.events.attendanceRate}%</span>
-                </div>
-              </div>
+            <div className="text-muted-foreground">
+              {data.events.totalRegistrations} total registrations
             </div>
-          </CardContent>
+          </CardFooter>
         </Card>
 
         {/* Content Card */}
-        <Card className="border-l-4 border-l-orange-600">
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-sm font-medium text-gray-600">Content Library</CardTitle>
-              <BookOpen className="w-5 h-5 text-orange-600" />
-            </div>
+        <Card className="@container/card">
+          <CardHeader>
+            <CardDescription>Content Library</CardDescription>
+            <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
+              {data.content.resources + data.content.blogPosts}
+            </CardTitle>
+            <CardAction>
+              <Badge variant="outline">
+                <BookOpen className="h-3 w-3" />
+                Items
+              </Badge>
+            </CardAction>
           </CardHeader>
-          <CardContent>
-            <div className="flex items-baseline justify-between">
-              <p className="text-3xl font-bold text-gray-900">
-                {data.content.resources + data.content.blogPosts}
-              </p>
-              <span className="text-sm text-gray-500">total items</span>
+          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+            <div className="flex w-full justify-between font-medium">
+              <span>{data.content.resources} resources</span>
+              <span>{data.content.blogPosts} posts</span>
             </div>
-            <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
-              <div>
-                <span className="text-gray-500">Resources</span>
-                <p className="font-medium">{data.content.resources}</p>
-              </div>
-              <div>
-                <span className="text-gray-500">Blog Posts</span>
-                <p className="font-medium">{data.content.blogPosts}</p>
-              </div>
+            <div className="text-muted-foreground">
+              Published content
             </div>
-          </CardContent>
+          </CardFooter>
         </Card>
       </div>
 
@@ -244,52 +297,62 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
           <CardDescription>Common administrative tasks</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             <Link
               href="/dashboard/admin/mentors/applications"
-              className="flex flex-col items-center justify-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
+              className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-accent transition-colors group"
             >
-              <UserCheck className="w-8 h-8 text-purple-600 mb-2" />
-              <span className="text-sm font-medium text-gray-900">Verify Mentors</span>
+              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors mb-2">
+                <UserCheck className="w-6 h-6 text-primary" />
+              </div>
+              <span className="text-sm font-medium text-center">Verify Mentors</span>
               {data.mentorship.pendingApplications > 0 && (
-                <Badge variant="destructive" className="mt-1 text-xs">
-                  {data.mentorship.pendingApplications} pending
+                <Badge variant="destructive" className="mt-2 text-xs">
+                  {data.mentorship.pendingApplications}
                 </Badge>
               )}
             </Link>
 
             <Link
               href="/dashboard/admin/events/new"
-              className="flex flex-col items-center justify-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+              className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-accent transition-colors group"
             >
-              <Calendar className="w-8 h-8 text-blue-600 mb-2" />
-              <span className="text-sm font-medium text-gray-900">Create Event</span>
+              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors mb-2">
+                <Calendar className="w-6 h-6 text-primary" />
+              </div>
+              <span className="text-sm font-medium text-center">Create Event</span>
             </Link>
 
             <Link
-              href="/dashboard/admin/content/newsletters/new"
-              className="flex flex-col items-center justify-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
+              href="/dashboard/admin/content/newsletters"
+              className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-accent transition-colors group"
             >
-              <BookOpen className="w-8 h-8 text-green-600 mb-2" />
-              <span className="text-sm font-medium text-gray-900">Send Newsletter</span>
+              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors mb-2">
+                <BookOpen className="w-6 h-6 text-primary" />
+              </div>
+              <span className="text-sm font-medium text-center">Newsletters</span>
             </Link>
 
             <Link
               href="/dashboard/admin/analytics"
-              className="flex flex-col items-center justify-center p-4 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors"
+              className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-accent transition-colors group"
             >
-              <TrendingUp className="w-8 h-8 text-orange-600 mb-2" />
-              <span className="text-sm font-medium text-gray-900">View Analytics</span>
+              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors mb-2">
+                <TrendingUp className="w-6 h-6 text-primary" />
+              </div>
+              <span className="text-sm font-medium text-center">Analytics</span>
             </Link>
 
             <Link
               href="/components-showcase"
-              className="flex flex-col items-center justify-center p-4 bg-pink-50 rounded-lg hover:bg-pink-100 transition-colors"
+              className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-accent transition-colors group"
               target="_blank"
             >
-              <Palette className="w-8 h-8 text-pink-600 mb-2" />
-              <span className="text-sm font-medium text-gray-900">UI Components</span>
-              <Badge variant="secondary" className="mt-1 text-xs bg-pink-100 text-pink-700">
+              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors mb-2">
+                <Palette className="w-6 h-6 text-primary" />
+              </div>
+              <span className="text-sm font-medium text-center">Components</span>
+              <Badge variant="secondary" className="mt-2 text-xs">
                 New
               </Badge>
             </Link>
@@ -304,44 +367,55 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Recent Activity</CardTitle>
-              <Link href="/dashboard/admin/users/activity" className="text-sm text-purple-600 hover:text-purple-700">
-                View all
+              <Link href="/dashboard/admin/users/activity">
+                <Button variant="ghost" size="sm">
+                  View all
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
               </Link>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {[
-                { icon: UserCheck, action: 'New user registered', user: 'Emily Chen', time: '2 minutes ago', type: 'success' },
-                { icon: GraduationCap, action: 'Mentor application submitted', user: 'Sarah Johnson', time: '15 minutes ago', type: 'warning' },
-                { icon: Calendar, action: 'Event created', user: 'THRIVE Workshop 2024', time: '1 hour ago', type: 'info' },
-                { icon: Award, action: 'Mentorship completed', user: 'Alex & Jamie', time: '3 hours ago', type: 'success' },
-                { icon: AlertCircle, action: 'Failed login attempt', user: 'unknown@email.com', time: '5 hours ago', type: 'error' },
-              ].map((activity, idx) => (
-                <div key={idx} className="flex items-start space-x-3">
-                  <div className={cn(
-                    "p-2 rounded-lg",
-                    activity.type === 'success' && "bg-green-100",
-                    activity.type === 'warning' && "bg-yellow-100",
-                    activity.type === 'info' && "bg-blue-100",
-                    activity.type === 'error' && "bg-red-100"
-                  )}>
-                    <activity.icon className={cn(
-                      "w-4 h-4",
-                      activity.type === 'success' && "text-green-600",
-                      activity.type === 'warning' && "text-yellow-600",
-                      activity.type === 'info' && "text-blue-600",
-                      activity.type === 'error' && "text-red-600"
-                    )} />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900">{activity.action}</p>
-                    <p className="text-xs text-gray-500">{activity.user}</p>
-                  </div>
-                  <span className="text-xs text-gray-400">{activity.time}</span>
-                </div>
-              ))}
-            </div>
+            {recentActivity.length > 0 ? (
+              <div className="space-y-3">
+                {recentActivity.map((activity) => {
+                  const { icon: Icon, type } = getActivityDisplay(activity.action);
+                  return (
+                    <div key={activity.id} className="flex items-start gap-3 p-2 rounded-lg hover:bg-accent transition-colors">
+                      <div className={cn(
+                        "p-2 rounded-lg shrink-0",
+                        type === 'success' && "bg-green-500/10",
+                        type === 'warning' && "bg-yellow-500/10",
+                        type === 'info' && "bg-blue-500/10",
+                        type === 'error' && "bg-red-500/10"
+                      )}>
+                        <Icon className={cn(
+                          "w-4 h-4",
+                          type === 'success' && "text-green-600 dark:text-green-400",
+                          type === 'warning' && "text-yellow-600 dark:text-yellow-400",
+                          type === 'info' && "text-blue-600 dark:text-blue-400",
+                          type === 'error' && "text-red-600 dark:text-red-400"
+                        )} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium">{activity.action.replace(/_/g, ' ')}</p>
+                        <p className="text-xs text-muted-foreground truncate">
+                          {activity.userName || activity.userEmail || 'System'}
+                        </p>
+                      </div>
+                      <span className="text-xs text-muted-foreground shrink-0">
+                        {getRelativeTime(activity.timestamp)}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <Activity className="h-12 w-12 text-muted-foreground/50 mb-3" />
+                <p className="text-sm text-muted-foreground">No recent activity</p>
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -350,38 +424,39 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Pending Tasks</CardTitle>
-              <Badge variant="outline">{data.mentorship.pendingApplications + 3} tasks</Badge>
+              <Badge variant="outline">{totalTasksCount} tasks</Badge>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              {[
-                { task: 'Review mentor applications', count: data.mentorship.pendingApplications, priority: 'high', href: '/dashboard/admin/mentors/applications' },
-                { task: 'Approve event registrations', count: 12, priority: 'medium', href: '/dashboard/admin/events/registrations' },
-                { task: 'Moderate content submissions', count: 3, priority: 'low', href: '/dashboard/admin/content/review' },
-                { task: 'Process membership upgrades', count: 5, priority: 'medium', href: '/dashboard/admin/users/membership' },
-                { task: 'Review system logs', count: 1, priority: 'low', href: '/dashboard/admin/settings/audit' },
-              ].map((task, idx) => (
-                <Link
-                  key={idx}
-                  href={task.href}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className={cn(
-                      "w-2 h-2 rounded-full",
-                      task.priority === 'high' && "bg-red-500",
-                      task.priority === 'medium' && "bg-yellow-500",
-                      task.priority === 'low' && "bg-green-500"
-                    )} />
-                    <span className="text-sm font-medium text-gray-900">{task.task}</span>
-                  </div>
-                  <Badge variant="secondary" className="text-xs">
-                    {task.count}
-                  </Badge>
-                </Link>
-              ))}
-            </div>
+            {pendingTasks.length > 0 ? (
+              <div className="space-y-2">
+                {pendingTasks.map((task, idx) => (
+                  <Link
+                    key={idx}
+                    href={task.href}
+                    className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent transition-colors group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={cn(
+                        "w-2 h-2 rounded-full shrink-0",
+                        task.priority === 'high' && "bg-red-500",
+                        task.priority === 'medium' && "bg-yellow-500",
+                        task.priority === 'low' && "bg-green-500"
+                      )} />
+                      <span className="text-sm font-medium">{task.task}</span>
+                    </div>
+                    <Badge variant="secondary" className="text-xs">
+                      {task.count}
+                    </Badge>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <CheckCircle className="h-12 w-12 text-muted-foreground/50 mb-3" />
+                <p className="text-sm text-muted-foreground">No pending tasks</p>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

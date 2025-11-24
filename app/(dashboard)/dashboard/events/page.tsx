@@ -127,7 +127,7 @@ export default function EventsPage() {
   const getEventTypeColor = (eventType: string) => {
     switch (eventType) {
       case "workshop":
-        return "bg-purple-light text-purple-dark border-purple-mid/20";
+        return "bg-purple-light text-primary border-purple-mid/20";
       case "networking":
         return "bg-mint-light text-mint-dark border-mint-dark/20";
       case "mentorship":
@@ -135,18 +135,18 @@ export default function EventsPage() {
       case "conference":
         return "bg-navy-light text-navy-dark border-navy-dark/20";
       case "social":
-        return "bg-purple-light text-purple-dark border-purple-mid/20";
+        return "bg-purple-light text-primary border-purple-mid/20";
       default:
-        return "bg-gray-100 text-gray-800 border-gray-300";
+        return "bg-accent text-foreground border-border";
     }
   };
 
   const EventCard = ({ event }: { event: Event }) => (
-    <Card className="group hover:shadow-xl transition-all duration-300 border-gray-200 hover:border-purple-mid/30 bg-white h-full overflow-hidden">
+    <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-purple-mid/30 bg-white h-full overflow-hidden">
       <CardHeader>
         <div className="flex justify-between items-start mb-2">
           <div className="space-y-2 flex-1">
-            <CardTitle className="text-lg font-semibold text-navy-dark group-hover:text-purple-dark transition-colors line-clamp-2">
+            <CardTitle className="text-lg font-semibold text-navy-dark group-hover:text-primary transition-colors line-clamp-2">
               {event.title}
             </CardTitle>
             <div className="flex flex-wrap gap-2">
@@ -156,7 +156,7 @@ export default function EventsPage() {
                 {event.eventType}
               </Badge>
               {event.isMembersOnly && (
-                <Badge className="bg-purple-light/50 text-purple-dark border-purple-mid/20 text-xs">
+                <Badge className="bg-purple-light/50 text-primary border-purple-mid/20 text-xs">
                   Members Only
                 </Badge>
               )}
@@ -198,13 +198,13 @@ export default function EventsPage() {
 
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-sm text-gray">
-            <Calendar className="h-4 w-4 text-purple-dark" />
+            <Calendar className="h-4 w-4 text-primary" />
             <span className="font-medium text-navy-dark">
               {format(new Date(event.startTime), "PPP")}
             </span>
           </div>
           <div className="flex items-center gap-2 text-sm text-gray">
-            <Clock className="h-4 w-4 text-purple-dark" />
+            <Clock className="h-4 w-4 text-primary" />
             <span>
               {format(new Date(event.startTime), "p")} -{" "}
               {format(new Date(event.endTime), "p")}
@@ -212,7 +212,7 @@ export default function EventsPage() {
             </span>
           </div>
           <div className="flex items-center gap-2 text-sm text-gray">
-            <span className="text-purple-dark">
+            <span className="text-primary">
               {getLocationIcon(event.locationType)}
             </span>
             <span className="capitalize">{event.locationType}</span>
@@ -224,7 +224,7 @@ export default function EventsPage() {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="border-t border-gray-100 bg-gray-50/50 flex flex-wrap gap-2 p-4">
+      <CardFooter className="border-t border-border bg-accent/50 flex flex-wrap gap-2 p-4">
         {event.isUpcoming &&
           !event.isFull &&
           (event.isRegistered ? (
@@ -254,7 +254,7 @@ export default function EventsPage() {
         )}
         <Button
           variant="outline"
-          className="min-w-[100px] border-gray-300 hover:border-purple-mid/30 hover:bg-purple-light/30 transition-all"
+          className="min-w-[100px] border-border hover:border-purple-mid/30 hover:bg-purple-light/30 transition-all"
           size="lg"
         >
           View Details
@@ -267,7 +267,7 @@ export default function EventsPage() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-dark mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           <p className="mt-4 text-gray">Loading events...</p>
         </div>
       </div>
@@ -279,7 +279,7 @@ export default function EventsPage() {
       {/* Header Section */}
       <div className="mb-6 sm:mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
-          <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-purple-dark flex-shrink-0" />
+          <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-primary flex-shrink-0" />
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-dark to-purple-mid bg-clip-text text-transparent">
             Events & Workshops
           </h1>
@@ -291,7 +291,7 @@ export default function EventsPage() {
 
       {/* Info Alert */}
       <Alert className="mb-6 sm:mb-8 border-purple-mid/20 bg-purple-light/20">
-        <Info className="h-4 w-4 text-purple-dark" />
+        <Info className="h-4 w-4 text-primary" />
         <AlertDescription className="text-navy-dark">
           <strong className="font-semibold">Join our community events!</strong>
           <span className="block sm:inline">

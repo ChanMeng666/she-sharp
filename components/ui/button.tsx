@@ -5,73 +5,73 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-purple-dark active:scale-95 transform",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring active:scale-95 transform",
   {
     variants: {
       variant: {
         // Primary Variants
         default:
-          "bg-purple-dark text-white shadow-lg hover:bg-purple-mid hover:shadow-xl hover:shadow-purple-dark/25 hover:-translate-y-0.5",
+          "bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-0.5",
         secondary:
-          "bg-periwinkle-dark text-white shadow-lg hover:bg-periwinkle-dark/90 hover:shadow-xl hover:shadow-periwinkle-dark/25 hover:-translate-y-0.5",
+          "bg-secondary text-secondary-foreground shadow-lg hover:bg-secondary/90 hover:shadow-xl hover:shadow-secondary/25 hover:-translate-y-0.5",
         accent:
-          "bg-mint-dark text-navy-dark shadow-lg hover:bg-mint-dark/90 hover:shadow-xl hover:shadow-mint-dark/25 hover:-translate-y-0.5",
+          "bg-accent text-accent-foreground shadow-lg hover:bg-accent/90 hover:shadow-xl hover:shadow-accent/25 hover:-translate-y-0.5",
         navy:
-          "bg-navy-dark text-white shadow-lg hover:bg-navy-dark/90 hover:shadow-xl hover:shadow-navy-dark/25 hover:-translate-y-0.5",
-        
+          "bg-foreground text-background shadow-lg hover:bg-foreground/90 hover:shadow-xl hover:shadow-foreground/25 hover:-translate-y-0.5",
+
         // Special Effects
         glass:
-          "backdrop-blur-md bg-white/20 border border-white/20 text-navy-dark shadow-xl hover:bg-white/30 hover:shadow-2xl",
+          "backdrop-blur-md bg-background/20 border border-border text-foreground shadow-xl hover:bg-background/30 hover:shadow-2xl",
         gradient:
-          "bg-gradient-to-r from-purple-dark to-periwinkle-dark text-white shadow-lg hover:shadow-xl hover:shadow-purple-mid/25 hover:scale-105",
+          "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-lg hover:shadow-xl hover:shadow-primary/25 hover:scale-105",
         glassmorphism:
-          "backdrop-blur-xl bg-gradient-to-r from-white/10 to-white/5 border border-white/20 text-navy-dark shadow-2xl hover:from-white/20 hover:to-white/10",
+          "backdrop-blur-xl bg-gradient-to-r from-background/10 to-background/5 border border-border text-foreground shadow-2xl hover:from-background/20 hover:to-background/10",
         neumorphism:
-          "bg-gray-100 text-navy-dark shadow-[8px_8px_16px_#d1d1d1,_-8px_-8px_16px_#ffffff] hover:shadow-[4px_4px_8px_#d1d1d1,_-4px_-4px_8px_#ffffff]",
-        
+          "bg-accent text-foreground shadow-[8px_8px_16px_hsl(var(--muted)),_-8px_-8px_16px_hsl(var(--background))] hover:shadow-[4px_4px_8px_hsl(var(--muted)),_-4px_-4px_8px_hsl(var(--background))]",
+
         // Border Variants
         outline:
-          "border-2 border-purple-dark bg-transparent text-purple-dark shadow-md hover:bg-purple-light hover:shadow-lg hover:-translate-y-0.5",
+          "border-2 border-primary bg-transparent text-primary shadow-md hover:bg-muted hover:shadow-lg hover:-translate-y-0.5",
         "outline-thick":
-          "border-4 border-purple-dark bg-transparent text-purple-dark hover:border-purple-mid hover:bg-purple-light/50 hover:-translate-y-1 shadow-lg",
+          "border-4 border-primary bg-transparent text-primary hover:border-primary/70 hover:bg-muted/50 hover:-translate-y-1 shadow-lg",
         "outline-dashed":
-          "border-2 border-dashed border-purple-dark bg-transparent text-purple-dark hover:bg-purple-light hover:border-solid",
+          "border-2 border-dashed border-primary bg-transparent text-primary hover:bg-muted hover:border-solid",
         "outline-gradient":
-          "bg-gradient-to-r from-purple-dark to-periwinkle-dark p-[2px] text-transparent bg-clip-text hover:from-purple-mid hover:to-periwinkle-dark [&>*]:bg-white [&>*]:rounded-[18px] [&>*]:px-4 [&>*]:py-2 [&>*]:text-purple-dark",
-        
+          "bg-gradient-to-r from-primary to-secondary p-[2px] text-transparent bg-clip-text hover:from-primary/70 hover:to-secondary [&>*]:bg-background [&>*]:rounded-[18px] [&>*]:px-4 [&>*]:py-2 [&>*]:text-primary",
+
         // Minimal Variants
         ghost:
-          "hover:bg-purple-light hover:text-purple-dark transition-colors duration-200",
+          "hover:bg-muted hover:text-foreground transition-colors duration-200",
         link:
-          "text-blue underline-offset-4 hover:underline hover:text-purple-dark transition-colors duration-200",
+          "text-primary underline-offset-4 hover:underline hover:text-primary/70 transition-colors duration-200",
         minimal:
-          "text-purple-dark hover:text-purple-mid transition-colors duration-200",
+          "text-primary hover:text-primary/70 transition-colors duration-200",
         text:
-          "text-gray hover:text-navy-dark hover:bg-gray-50 rounded transition-all duration-200",
-        
+          "text-muted-foreground hover:text-foreground hover:bg-accent rounded transition-all duration-200",
+
         // Monochrome Variants
         black:
-          "bg-black text-white shadow-lg hover:bg-gray-800 hover:shadow-xl hover:-translate-y-0.5",
+          "bg-foreground text-background shadow-lg hover:bg-foreground/90 hover:shadow-xl hover:-translate-y-0.5",
         white:
-          "bg-white text-navy-dark border border-gray-200 shadow-md hover:shadow-lg hover:-translate-y-0.5",
+          "bg-background text-foreground border border-border shadow-md hover:shadow-lg hover:-translate-y-0.5",
         dark:
-          "bg-navy-dark text-white shadow-lg hover:bg-navy-dark/90 hover:shadow-xl hover:-translate-y-0.5",
+          "bg-foreground text-background shadow-lg hover:bg-foreground/90 hover:shadow-xl hover:-translate-y-0.5",
         light:
-          "bg-gray-50 text-navy-dark border border-gray-200 hover:bg-white hover:shadow-md hover:-translate-y-0.5",
-        
+          "bg-accent text-foreground border border-border hover:bg-background hover:shadow-md hover:-translate-y-0.5",
+
         // State Variants
         success:
-          "bg-mint-dark text-navy-dark shadow-lg hover:bg-mint-dark/90 hover:shadow-xl hover:shadow-mint-dark/25 hover:-translate-y-0.5",
+          "bg-accent text-accent-foreground shadow-lg hover:bg-accent/90 hover:shadow-xl hover:shadow-accent/25 hover:-translate-y-0.5",
         warning:
           "bg-yellow-500 text-white shadow-lg hover:bg-yellow-600 hover:shadow-xl hover:shadow-yellow-500/25 hover:-translate-y-0.5",
         danger:
           "bg-red-500 text-white shadow-lg hover:bg-red-600 hover:shadow-xl hover:shadow-red-500/25 hover:-translate-y-0.5",
         info:
-          "bg-blue text-white shadow-lg hover:bg-blue/90 hover:shadow-xl hover:shadow-blue/25 hover:-translate-y-0.5",
-        
+          "bg-secondary text-secondary-foreground shadow-lg hover:bg-secondary/90 hover:shadow-xl hover:shadow-secondary/25 hover:-translate-y-0.5",
+
         // Legacy compatibility
         destructive:
-          "bg-red-500 text-white shadow-lg hover:bg-red-600 hover:shadow-xl hover:shadow-red-500/25 hover:-translate-y-0.5"
+          "bg-destructive text-destructive-foreground shadow-lg hover:bg-destructive/90 hover:shadow-xl hover:shadow-destructive/25 hover:-translate-y-0.5"
       },
       size: {
         xs: "h-6 px-2 text-xs gap-1 has-[>svg]:px-1.5",

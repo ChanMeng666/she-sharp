@@ -99,7 +99,7 @@ export default function WelcomePage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-dark"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -114,12 +114,12 @@ export default function WelcomePage() {
     <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8 max-w-6xl">
       {/* Welcome Header */}
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-dark to-purple-mid bg-clip-text text-transparent mb-4">
+        <h1 className="text-4xl font-bold text-primary mb-4">
           Welcome to She Sharp!
         </h1>
-        <p className="text-xl text-gray max-w-3xl mx-auto">
+        <p className="text-xl text-foreground max-w-3xl mx-auto">
           {user?.name ? `Hello ${user.name}! ` : ''}
-          Choose how you'd like to participate in our mentorship program. 
+          Choose how you'd like to participate in our mentorship program.
           You can always add more roles later.
         </p>
       </div>
@@ -142,7 +142,7 @@ export default function WelcomePage() {
               {/* Active Badge */}
               {role.isActive && (
                 <div className="absolute top-4 right-4">
-                  <div className="flex items-center gap-1 bg-mint-light text-navy-dark px-2 py-1 rounded-full text-xs font-semibold">
+                  <div className="flex items-center gap-1 bg-accent text-foreground px-2 py-1 rounded-full text-xs font-semibold">
                     <Check className="h-3 w-3" />
                     Active
                   </div>
@@ -150,11 +150,11 @@ export default function WelcomePage() {
               )}
 
               <CardHeader className="relative">
-                <div className={`flex h-14 w-14 items-center justify-center rounded-lg ${role.bgColor} mb-4`}>
-                  <Icon className={`h-8 w-8 bg-gradient-to-br ${role.color} bg-clip-text text-transparent`} />
+                <div className={`flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10 mb-4`}>
+                  <Icon className={`h-8 w-8 text-primary`} />
                 </div>
-                <CardTitle className="text-2xl text-navy-dark">{role.title}</CardTitle>
-                <CardDescription className="text-gray mt-2">
+                <CardTitle className="text-2xl">{role.title}</CardTitle>
+                <CardDescription className="mt-2">
                   {role.description}
                 </CardDescription>
               </CardHeader>
@@ -163,8 +163,8 @@ export default function WelcomePage() {
                 <ul className="space-y-2 mb-6">
                   {role.features.map((feature, index) => (
                     <li key={index} className="flex items-start gap-2">
-                      <Check className="h-4 w-4 text-mint-dark mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-navy-dark">{feature}</span>
+                      <Check className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-foreground">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -186,9 +186,9 @@ export default function WelcomePage() {
       </div>
 
       {/* Additional Information */}
-      <div className="bg-purple-light/30 rounded-lg p-6 text-center">
-        <h3 className="text-lg font-semibold text-navy-dark mb-2">Not Sure Which to Choose?</h3>
-        <p className="text-gray mb-4">
+      <div className="bg-accent rounded-lg p-6 text-center">
+        <h3 className="text-lg font-semibold text-foreground mb-2">Not Sure Which to Choose?</h3>
+        <p className="text-muted-foreground mb-4">
           Many of our members are both mentors and mentees. You can start with one role and add another later as you grow.
         </p>
         <div className="flex flex-wrap justify-center gap-4">

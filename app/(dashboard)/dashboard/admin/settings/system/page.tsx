@@ -10,8 +10,8 @@ export default function SystemSettingsPage() {
   return (
     <div className="container mx-auto px-4 py-8 space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">System Configuration</h1>
-        <p className="text-gray-600 mt-2">
+        <h1 className="text-3xl font-bold text-foreground">System Configuration</h1>
+        <p className="text-muted-foreground mt-2">
           Configure platform settings and preferences
         </p>
       </div>
@@ -119,7 +119,7 @@ export default function SystemSettingsPage() {
         <TabsContent value="email">
           <Card>
             <CardContent className="p-6">
-              <p className="text-gray-500">Email configuration coming soon...</p>
+              <p className="text-muted-foreground">Email configuration coming soon...</p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -127,7 +127,7 @@ export default function SystemSettingsPage() {
         <TabsContent value="database">
           <Card>
             <CardContent className="p-6">
-              <p className="text-gray-500">Database configuration coming soon...</p>
+              <p className="text-muted-foreground">Database configuration coming soon...</p>
             </CardContent>
           </Card>
         </TabsContent>

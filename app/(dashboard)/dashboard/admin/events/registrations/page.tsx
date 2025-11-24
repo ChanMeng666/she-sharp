@@ -182,7 +182,7 @@ export default function EventRegistrationsPage() {
       confirmed: { text: 'Confirmed', className: 'bg-green-100 text-green-800' },
       waitlist: { text: 'Waitlist', className: 'bg-yellow-100 text-yellow-800' },
       cancelled: { text: 'Cancelled', className: 'bg-red-100 text-red-800' },
-      pending: { text: 'Pending', className: 'bg-gray-100 text-gray-800' },
+      pending: { text: 'Pending', className: 'bg-accent text-foreground' },
     };
     const variant = variants[status as keyof typeof variants];
     return <Badge className={variant?.className}>{variant?.text || status}</Badge>;
@@ -192,7 +192,7 @@ export default function EventRegistrationsPage() {
     const variants = {
       paid: { text: 'Paid', className: 'bg-green-100 text-green-800', icon: CheckCircle },
       pending: { text: 'Pending', className: 'bg-yellow-100 text-yellow-800', icon: Clock },
-      refunded: { text: 'Refunded', className: 'bg-gray-100 text-gray-800', icon: XCircle },
+      refunded: { text: 'Refunded', className: 'bg-accent text-foreground', icon: XCircle },
       free: { text: 'Free', className: 'bg-blue-100 text-blue-800', icon: Ticket },
     };
     const variant = variants[status as keyof typeof variants];
@@ -230,24 +230,24 @@ export default function EventRegistrationsPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
-      <div className="flex justify-between items-center">
+    <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8 space-y-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Event Registrations</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Event Registrations</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-2">
             Manage attendee registrations and check-ins
           </p>
         </div>
-        <div className="flex space-x-3">
-          <Button variant="outline">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+          <Button variant="outline" className="text-sm sm:text-base">
             <Upload className="w-4 h-4 mr-2" />
             Import
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" className="text-sm sm:text-base">
             <Download className="w-4 h-4 mr-2" />
             Export
           </Button>
-          <Button className="bg-purple-600 hover:bg-purple-700">
+          <Button className="bg-purple-600 hover:bg-purple-700 text-sm sm:text-base">
             <QrCode className="w-4 h-4 mr-2" />
             Check-In Mode
           </Button>
@@ -255,7 +255,7 @@ export default function EventRegistrationsPage() {
       </div>
 
       {/* Upcoming Events Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         {upcomingEvents.map((event) => (
           <Card key={event.name}>
             <CardHeader className="pb-3">
@@ -268,11 +268,11 @@ export default function EventRegistrationsPage() {
             <CardContent>
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Registrations</span>
+                  <span className="text-sm text-muted-foreground">Registrations</span>
                   <span className="text-sm font-medium">{event.registrations}/{event.capacity}</span>
                 </div>
                 <Progress value={(event.registrations / event.capacity) * 100} className="h-2" />
-                <div className="flex justify-between text-xs text-gray-500">
+                <div className="flex justify-between text-xs text-muted-foreground">
                   <span>{event.capacity - event.registrations} spots left</span>
                   <span>{Math.round((event.registrations / event.capacity) * 100)}% full</span>
                 </div>
@@ -283,44 +283,44 @@ export default function EventRegistrationsPage() {
       </div>
 
       {/* Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Total Registrations</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Total Registrations</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">487</p>
-            <p className="text-xs text-gray-500 mt-2">Across 12 events</p>
+            <p className="text-xs text-muted-foreground mt-2">Across 12 events</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Check-In Rate</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Check-In Rate</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold text-green-600">78%</p>
-            <p className="text-xs text-gray-500 mt-2">Last 30 days</p>
+            <p className="text-xs text-muted-foreground mt-2">Last 30 days</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Waitlist</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Waitlist</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold text-yellow-600">23</p>
-            <p className="text-xs text-gray-500 mt-2">Pending confirmation</p>
+            <p className="text-xs text-muted-foreground mt-2">Pending confirmation</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Revenue</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">$8,450</p>
-            <p className="text-xs text-gray-500 mt-2">This month</p>
+            <p className="text-xs text-muted-foreground mt-2">This month</p>
           </CardContent>
         </Card>
       </div>
@@ -330,7 +330,7 @@ export default function EventRegistrationsPage() {
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input
                 type="search"
                 placeholder="Search by name, email, or event..."
@@ -402,25 +402,26 @@ export default function EventRegistrationsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-12">
-                  <Checkbox 
-                    checked={selectedRegistrations.length === filteredRegistrations.length}
-                    onCheckedChange={toggleAllRegistrations}
-                  />
-                </TableHead>
-                <TableHead>Registration ID</TableHead>
-                <TableHead>Attendee</TableHead>
-                <TableHead>Event</TableHead>
-                <TableHead>Registration</TableHead>
-                <TableHead>Payment</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-12">
+                    <Checkbox
+                      checked={selectedRegistrations.length === filteredRegistrations.length}
+                      onCheckedChange={toggleAllRegistrations}
+                    />
+                  </TableHead>
+                  <TableHead>Registration ID</TableHead>
+                  <TableHead>Attendee</TableHead>
+                  <TableHead>Event</TableHead>
+                  <TableHead>Registration</TableHead>
+                  <TableHead>Payment</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
               {filteredRegistrations.map((registration) => (
                 <TableRow key={registration.id}>
                   <TableCell>
@@ -450,7 +451,7 @@ export default function EventRegistrationsPage() {
                       </Avatar>
                       <div>
                         <p className="font-medium text-sm">{registration.attendee.name}</p>
-                        <div className="flex items-center space-x-2 text-xs text-gray-500">
+                        <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                           <Mail className="w-3 h-3" />
                           <span>{registration.attendee.email}</span>
                         </div>
@@ -463,11 +464,11 @@ export default function EventRegistrationsPage() {
                   <TableCell>
                     <div className="space-y-1">
                       <p className="font-medium text-sm">{registration.eventName}</p>
-                      <div className="flex items-center space-x-2 text-xs text-gray-500">
+                      <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                         <Calendar className="w-3 h-3" />
                         <span>{new Date(registration.eventDate).toLocaleDateString()}</span>
                       </div>
-                      <div className="flex items-center space-x-2 text-xs text-gray-500">
+                      <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                         <MapPin className="w-3 h-3" />
                         <span>{registration.eventLocation}</span>
                       </div>
@@ -476,7 +477,7 @@ export default function EventRegistrationsPage() {
                   <TableCell>
                     <div className="space-y-1">
                       <p className="text-sm">{registration.ticketType}</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-muted-foreground">
                         {new Date(registration.registrationDate).toLocaleDateString()}
                       </p>
                       {(registration.dietaryRestrictions || registration.specialNeeds) && (
@@ -539,8 +540,9 @@ export default function EventRegistrationsPage() {
                   </TableCell>
                 </TableRow>
               ))}
-            </TableBody>
-          </Table>
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

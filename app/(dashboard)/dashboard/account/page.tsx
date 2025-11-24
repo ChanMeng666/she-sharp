@@ -325,7 +325,7 @@ function AccountPageContent() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-dark"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -333,8 +333,8 @@ function AccountPageContent() {
   return (
     <div className="container mx-auto py-8 px-4 max-w-5xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-purple-dark">Account Settings</h1>
-        <p className="text-gray-600 mt-2">Manage your account settings and preferences</p>
+        <h1 className="text-3xl font-bold text-primary">Account Settings</h1>
+        <p className="text-muted-foreground mt-2">Manage your account settings and preferences</p>
       </div>
 
       {message && (
@@ -444,7 +444,7 @@ function AccountPageContent() {
                     <button
                       type="button"
                       onClick={() => setShowPasswords(!showPasswords)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showPasswords ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
@@ -476,17 +476,17 @@ function AccountPageContent() {
                 </div>
 
                 {newPassword && (
-                  <div className="space-y-2 rounded-lg bg-purple-light/20 p-3">
-                    <p className="text-sm font-medium text-gray-700">Password Requirements:</p>
+                  <div className="space-y-2 rounded-lg bg-muted p-3">
+                    <p className="text-sm font-medium text-foreground">Password Requirements:</p>
                     <ul className="space-y-1">
                       {passwordRequirements.map((req, index) => (
                         <li key={index} className="flex items-center text-sm">
                           {req.met ? (
                             <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
                           ) : (
-                            <XCircle className="mr-2 h-4 w-4 text-gray-300" />
+                            <XCircle className="mr-2 h-4 w-4 text-muted-foreground" />
                           )}
-                          <span className={req.met ? 'text-green-700' : 'text-gray-500'}>
+                          <span className={req.met ? 'text-green-700' : 'text-muted-foreground'}>
                             {req.label}
                           </span>
                         </li>
@@ -525,7 +525,7 @@ function AccountPageContent() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-muted-foreground">
                 Once you delete your account, there is no going back. All your data will be permanently removed.
               </p>
             </CardContent>
@@ -552,10 +552,10 @@ function AccountPageContent() {
             <CardContent className="space-y-4">
               {isLoadingSessions ? (
                 <div className="flex items-center justify-center py-8">
-                  <RefreshCw className="h-8 w-8 animate-spin text-purple-dark" />
+                  <RefreshCw className="h-8 w-8 animate-spin text-primary" />
                 </div>
               ) : sessions.length === 0 ? (
-                <p className="text-center text-gray-500 py-8">No active sessions found</p>
+                <p className="text-center text-muted-foreground py-8">No active sessions found</p>
               ) : (
                 <div className="space-y-4">
                   {sessions.map((session) => (
@@ -570,10 +570,10 @@ function AccountPageContent() {
                               {session.browser} on {session.os}
                             </p>
                             {session.isCurrent && (
-                              <Badge className="bg-green-100 text-green-700">Current</Badge>
+                              <Badge variant="secondary">Current</Badge>
                             )}
                           </div>
-                          <div className="flex items-center gap-4 text-sm text-gray-500">
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
                             <div className="flex items-center gap-1">
                               <Globe className="h-3 w-3" />
                               {session.ipAddress}
@@ -637,7 +637,7 @@ function AccountPageContent() {
                     </div>
                     <div>
                       <p className="font-medium">Email Verified</p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-muted-foreground">
                         Your email address has been verified
                       </p>
                     </div>
@@ -649,7 +649,7 @@ function AccountPageContent() {
                     </div>
                     <div className="flex-1">
                       <p className="font-medium">Email Not Verified</p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-muted-foreground">
                         Please verify your email address to access all features
                       </p>
                     </div>
@@ -740,7 +740,6 @@ function AccountPageContent() {
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => sessionToRevoke && handleRevokeSession(sessionToRevoke)}
-              className="bg-purple-dark hover:bg-purple-mid"
             >
               Revoke Session
             </AlertDialogAction>
