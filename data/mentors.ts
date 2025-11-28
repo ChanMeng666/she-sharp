@@ -1,4 +1,4 @@
-import { Mentor } from '@/types/mentor';
+import { Mentor, MentorCategory, Industry, INDUSTRIES, CATEGORY_ICONS } from '@/types/mentor';
 
 export const mentors: Mentor[] = [
   {
@@ -273,3 +273,154 @@ export const mentors: Mentor[] = [
     rating: 4.6,
   },
 ];
+
+// ============================================
+// Helper Functions for Mentor Data Management
+// ============================================
+
+/**
+ * Get mentor by ID
+ */
+export function getMentorById(id: string): Mentor | undefined {
+  return mentors.find(mentor => mentor.id === id);
+}
+
+/**
+ * Get mentors by industry
+ */
+export function getMentorsByIndustry(industry: Industry): Mentor[] {
+  return mentors.filter(mentor => mentor.industry === industry);
+}
+
+/**
+ * Get mentors by expertise area
+ */
+export function getMentorsByExpertise(expertise: string): Mentor[] {
+  return mentors.filter(mentor =>
+    mentor.expertise.some(e => e.toLowerCase().includes(expertise.toLowerCase()))
+  );
+}
+
+/**
+ * Search mentors by name, role, company, or expertise
+ */
+export function searchMentors(query: string): Mentor[] {
+  const searchLower = query.toLowerCase();
+  return mentors.filter(mentor =>
+    mentor.name.toLowerCase().includes(searchLower) ||
+    mentor.role.toLowerCase().includes(searchLower) ||
+    mentor.company.toLowerCase().includes(searchLower) ||
+    mentor.expertise.some(e => e.toLowerCase().includes(searchLower))
+  );
+}
+
+/**
+ * Get all unique expertise areas from mentor data
+ */
+export function getAllExpertiseAreas(): string[] {
+  const expertiseSet = new Set<string>();
+  mentors.forEach(mentor => {
+    mentor.expertise.forEach(e => expertiseSet.add(e));
+  });
+  return Array.from(expertiseSet).sort();
+}
+
+/**
+ * Get all industries from the INDUSTRIES constant
+ */
+export function getIndustries(): readonly string[] {
+  return INDUSTRIES;
+}
+
+/**
+ * Get available mentors
+ */
+export function getAvailableMentors(): Mentor[] {
+  return mentors.filter(mentor => mentor.availability === 'available');
+}
+
+/**
+ * Get mentor categories with dynamically calculated counts
+ */
+export function getMentorCategories(): MentorCategory[] {
+  const industryCount = new Map<string, number>();
+
+  mentors.forEach(mentor => {
+    industryCount.set(
+      mentor.industry,
+      (industryCount.get(mentor.industry) || 0) + 1
+    );
+  });
+
+  const categories: MentorCategory[] = [
+    { id: 'all', name: 'All Mentors', mentorCount: mentors.length },
+  ];
+
+  // Add categories for industries that have mentors
+  if (industryCount.get('Technology')) {
+    categories.push({
+      id: 'technology',
+      name: 'Technology',
+      icon: CATEGORY_ICONS['technology'],
+      mentorCount: industryCount.get('Technology') || 0,
+    });
+  }
+  if (industryCount.get('Business & Management')) {
+    categories.push({
+      id: 'business',
+      name: 'Business & Management',
+      icon: CATEGORY_ICONS['business'],
+      mentorCount: industryCount.get('Business & Management') || 0,
+    });
+  }
+  if (industryCount.get('Healthcare')) {
+    categories.push({
+      id: 'healthcare',
+      name: 'Healthcare',
+      icon: CATEGORY_ICONS['healthcare'],
+      mentorCount: industryCount.get('Healthcare') || 0,
+    });
+  }
+  if (industryCount.get('Education')) {
+    categories.push({
+      id: 'education',
+      name: 'Education',
+      icon: CATEGORY_ICONS['education'],
+      mentorCount: industryCount.get('Education') || 0,
+    });
+  }
+  if (industryCount.get('Consulting')) {
+    categories.push({
+      id: 'consulting',
+      name: 'Consulting',
+      icon: CATEGORY_ICONS['consulting'],
+      mentorCount: industryCount.get('Consulting') || 0,
+    });
+  }
+
+  return categories;
+}
+
+/**
+ * Get mentor statistics
+ */
+export function getMentorStats() {
+  const byIndustry: Record<string, number> = {};
+  let totalExperience = 0;
+  let availableCount = 0;
+
+  mentors.forEach(mentor => {
+    byIndustry[mentor.industry] = (byIndustry[mentor.industry] || 0) + 1;
+    totalExperience += mentor.yearsOfExperience;
+    if (mentor.availability === 'available') {
+      availableCount++;
+    }
+  });
+
+  return {
+    total: mentors.length,
+    available: availableCount,
+    byIndustry,
+    averageExperience: Math.round(totalExperience / mentors.length),
+  };
+}

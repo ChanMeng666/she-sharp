@@ -8,8 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { MentorCard } from "@/components/mentorship/mentor-card";
 import { MentorCardMobile } from "@/components/mentorship/mentor-card-mobile";
 import { MentorFilters, FilterState } from "@/components/mentorship/mentor-filters";
-import { mentors } from "@/data/mentors";
-import { mentorCategories } from "@/types/mentor";
+import { mentors, getMentorCategories } from "@/data/mentors";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
@@ -121,7 +120,7 @@ export function MentorsListSection() {
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="w-full flex-wrap h-auto p-1 bg-muted text-muted-foreground">
-              {mentorCategories.map((category) => (
+              {getMentorCategories().map((category) => (
                 <TabsTrigger
                   key={category.id}
                   value={category.id}

@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Search, X, Filter, ChevronDown } from "lucide-react";
-import { mentorshipIndustries, expertiseAreas } from "@/types/mentor";
+import { getIndustries, getAllExpertiseAreas } from "@/data/mentors";
 
 interface MentorFiltersProps {
   onFiltersChange: (filters: FilterState) => void;
@@ -80,7 +80,7 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Industries</SelectItem>
-            {mentorshipIndustries.map(industry => (
+            {getIndustries().map(industry => (
               <SelectItem key={industry} value={industry}>{industry}</SelectItem>
             ))}
           </SelectContent>
@@ -101,7 +101,7 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
               <CommandList>
                 <CommandEmpty>No expertise found.</CommandEmpty>
                 <CommandGroup>
-                  {expertiseAreas.map(expertise => {
+                  {getAllExpertiseAreas().map(expertise => {
                     const isSelected = filters.expertise.includes(expertise);
                     return (
                       <CommandItem

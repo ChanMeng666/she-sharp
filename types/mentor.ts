@@ -1,3 +1,20 @@
+// Industry types - strictly typed for compile-time validation
+export const INDUSTRIES = [
+  'Technology',
+  'Business & Management',
+  'Healthcare',
+  'Education',
+  'Consulting',
+  'Finance',
+  'Engineering',
+  'Research & Development',
+] as const;
+
+export type Industry = (typeof INDUSTRIES)[number];
+
+// Availability types
+export type MentorAvailability = 'available' | 'busy' | 'unavailable';
+
 export interface Mentor {
   id: string;
   name: string;
@@ -6,7 +23,7 @@ export interface Mentor {
   image: string;
   description: string;
   expertise: string[];
-  industry: string;
+  industry: Industry;
   yearsOfExperience: number;
   languages: string[];
   linkedIn?: string;
@@ -15,7 +32,7 @@ export interface Mentor {
   achievements?: string[];
   menteeCount?: number;
   rating?: number;
-  availability?: 'available' | 'busy' | 'unavailable';
+  availability?: MentorAvailability;
 }
 
 export interface MentorCategory {
@@ -25,37 +42,14 @@ export interface MentorCategory {
   mentorCount: number;
 }
 
-export const mentorCategories: MentorCategory[] = [
-  { id: 'all', name: 'All Mentors', mentorCount: 18 },
-  { id: 'technology', name: 'Technology', icon: '💻', mentorCount: 8 },
-  { id: 'business', name: 'Business & Management', icon: '💼', mentorCount: 5 },
-  { id: 'healthcare', name: 'Healthcare', icon: '🏥', mentorCount: 2 },
-  { id: 'education', name: 'Education', icon: '📚', mentorCount: 2 },
-  { id: 'consulting', name: 'Consulting', icon: '🤝', mentorCount: 3 },
-];
-
-export const mentorshipIndustries = [
-  'Technology',
-  'Business & Management',
-  'Healthcare',
-  'Education',
-  'Consulting',
-  'Finance',
-  'Engineering',
-  'Research & Development',
-];
-
-export const expertiseAreas = [
-  'Cloud Computing',
-  'Product Management',
-  'Human Resources',
-  'Software Development',
-  'Data Science',
-  'Cybersecurity',
-  'Digital Transformation',
-  'Leadership',
-  'Strategy',
-  'Innovation',
-  'Risk Management',
-  'Project Management',
-];
+// Category icon mapping for dynamic generation
+export const CATEGORY_ICONS: Record<string, string> = {
+  'technology': '💻',
+  'business': '💼',
+  'healthcare': '🏥',
+  'education': '📚',
+  'consulting': '🤝',
+  'finance': '💰',
+  'engineering': '⚙️',
+  'research': '🔬',
+};
