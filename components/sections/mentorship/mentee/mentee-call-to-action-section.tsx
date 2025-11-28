@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { ExternalLink, Clock, CheckCircle2, Users, BookOpen, Target, Info } from "lucide-react";
+import { ArrowRight, Clock, CheckCircle2, Users, BookOpen, Target, Info, CreditCard } from "lucide-react";
+import Link from "next/link";
 
 export function MenteeCallToActionSection() {
   // Mock data - replace with actual data
@@ -13,9 +14,9 @@ export function MenteeCallToActionSection() {
   const progressPercentage = ((totalSpots - spotsRemaining) / totalSpots) * 100;
   
   const applicationSteps = [
-    { step: "1", title: "Submit Application", description: "Complete the online form with your details and goals" },
-    { step: "2", title: "Review Process", description: "Our team will review your application within 5-7 days" },
-    { step: "3", title: "Get Matched", description: "We'll match you with a mentor based on your interests and needs" },
+    { step: "1", title: "Join the Program", description: "Pay the annual membership fee to get started" },
+    { step: "2", title: "Create Account", description: "Use your invitation code to register and complete your profile" },
+    { step: "3", title: "AI Matching", description: "Our AI matches you with mentors based on your goals and personality" },
     { step: "4", title: "Start Journey", description: "Begin your mentorship journey with your matched mentor" }
   ];
   
@@ -106,24 +107,22 @@ export function MenteeCallToActionSection() {
               
               {/* CTA Button */}
               <div className="text-center pt-4">
-                <Button 
-                  asChild 
-                  size="lg" 
+                <Button
+                  asChild
+                  size="lg"
                   className="bg-purple-dark hover:bg-purple-mid text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                 >
-                  <a 
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSeiNe0btTXNLsJeIsMape05630fK1SLdldO9Ty3x8QbLd6B6w/viewform?usp=sf_link" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/mentorship/join"
                     className="inline-flex items-center gap-2"
                   >
-                    Apply to Become a Mentee
-                    <ExternalLink className="h-5 w-5" />
-                  </a>
+                    Join the Program - $100 NZD/year
+                    <ArrowRight className="h-5 w-5" />
+                  </Link>
                 </Button>
                 <p className="text-sm text-gray-600 mt-3">
-                  <CheckCircle2 className="w-4 h-4 inline mr-1 text-green-600" />
-                  No application fee required
+                  <CreditCard className="w-4 h-4 inline mr-1 text-purple-dark" />
+                  Secure payment via Stripe. Cancel anytime.
                 </p>
               </div>
             </CardContent>

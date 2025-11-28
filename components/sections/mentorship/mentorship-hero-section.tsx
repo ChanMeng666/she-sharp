@@ -26,15 +26,15 @@ export function MentorshipHeroSection() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-purple-dark hover:bg-purple-mid text-ghost-white">
-                <Link href="/mentorship/mentee">
-                  Become a Mentee
+                <Link href="/mentorship/join">
+                  Join as Mentee
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-purple-dark text-purple-dark hover:bg-purple-light dark:border-purple-mid dark:text-purple-mid">
-                <Link href="/mentorship/mentors">
-                  View Our Mentors
-                  <Users className="ml-2 h-4 w-4" />
+              <Button asChild size="lg" variant="outline" className="border-ghost-white/30 text-ghost-white hover:bg-ghost-white/10">
+                <Link href="/mentorship/become-a-mentor">
+                  Apply as Mentor
+                  <Sparkles className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>

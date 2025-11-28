@@ -44,18 +44,19 @@ export function MenteeHeroSection() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link 
-                href="#apply-now" 
+              <Link
+                href="/mentorship/join"
                 className="inline-flex items-center justify-center px-6 py-3 bg-purple-dark text-white rounded-lg hover:bg-purple-mid transition-colors font-semibold"
               >
-                Apply Now
+                Join the Program
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
-              <Link 
-                href="#learn-more" 
+              <Link
+                href="/mentorship/mentors"
                 className="inline-flex items-center justify-center px-6 py-3 border-2 border-purple-dark text-purple-dark rounded-lg hover:bg-purple-light transition-colors font-semibold"
               >
-                Learn More
+                <Users className="mr-2 w-4 h-4" />
+                Meet Our Mentors
               </Link>
             </div>
           </div>

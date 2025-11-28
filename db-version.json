@@ -1,6 +1,0 @@
-{
-  "lastSnapshot": "2025-08-08T14-25-19",
-  "migrationsApplied": 11,
-  "latestMigration": "0012_fix_admin_permissions.sql",
-  "description": "Admin dashboard implementation complete"
-}

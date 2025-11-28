@@ -33,7 +33,8 @@ import { cn } from '@/lib/utils';
 
 interface MentorApplication {
   id: number;
-  userId: number;
+  userId: number | null;
+  isPublicApplication: boolean;
   user: {
     name: string;
     email: string;
@@ -46,7 +47,12 @@ interface MentorApplication {
   bio: string;
   linkedinUrl: string;
   availabilityHoursPerMonth: number;
+  maxMentees: number;
+  mbtiType?: string;
+  expectedMenteeGoals?: string;
+  programExpectations?: string;
   submittedAt: string;
+  reviewedAt?: string;
   status: 'pending' | 'under_review' | 'approved' | 'rejected';
   reviewNotes?: string;
 }
@@ -214,16 +220,26 @@ export default function MentorApplications() {
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1">
-                        <div className="flex items-center space-x-3">
+                        <div className="flex items-center space-x-3 flex-wrap gap-2">
                           <h3 className="text-lg font-semibold text-foreground">
                             {application.user.name}
                           </h3>
+                          {application.isPublicApplication && (
+                            <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                              Public Application
+                            </Badge>
+                          )}
                           <Badge variant="secondary" className={getStatusColor(application.status)}>
                             {application.status.replace('_', ' ')}
                           </Badge>
                           <span className={cn('text-sm font-medium', experienceLevel.color)}>
                             {experienceLevel.label}
                           </span>
+                          {application.mbtiType && (
+                            <Badge variant="outline" className="text-purple-600 border-purple-200">
+                              {application.mbtiType}
+                            </Badge>
+                          )}
                         </div>
                         <p className="text-sm text-muted-foreground mt-1">{application.user.email}</p>
                         <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
@@ -276,24 +292,59 @@ export default function MentorApplications() {
                       </div>
 
                       {/* Additional Info */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                           <p className="text-sm font-medium text-foreground mb-1">Years of Experience</p>
                           <p className="text-sm text-muted-foreground">{application.yearsExperience} years</p>
                         </div>
                         <div>
+                          <p className="text-sm font-medium text-foreground mb-1">Max Mentees</p>
+                          <p className="text-sm text-muted-foreground">{application.maxMentees} mentees</p>
+                        </div>
+                        <div>
                           <p className="text-sm font-medium text-foreground mb-1">LinkedIn Profile</p>
-                          <a
-                            href={application.linkedinUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm text-primary hover:text-purple-700 flex items-center"
-                          >
-                            <Globe className="w-4 h-4 mr-1" />
-                            View Profile
-                          </a>
+                          {application.linkedinUrl ? (
+                            <a
+                              href={application.linkedinUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-sm text-primary hover:text-purple-700 flex items-center"
+                            >
+                              <Globe className="w-4 h-4 mr-1" />
+                              View Profile
+                            </a>
+                          ) : (
+                            <span className="text-sm text-muted-foreground">Not provided</span>
+                          )}
                         </div>
                       </div>
+
+                      {/* Mentoring Goals */}
+                      {application.expectedMenteeGoals && (
+                        <div>
+                          <p className="text-sm font-medium text-foreground mb-2">Goals for Mentees</p>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{application.expectedMenteeGoals}</p>
+                        </div>
+                      )}
+
+                      {/* Program Expectations */}
+                      {application.programExpectations && (
+                        <div>
+                          <p className="text-sm font-medium text-foreground mb-2">Program Expectations</p>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{application.programExpectations}</p>
+                        </div>
+                      )}
+
+                      {/* Public Application Notice */}
+                      {application.isPublicApplication && (
+                        <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                          <p className="text-sm font-medium text-blue-900 mb-1">Public Application</p>
+                          <p className="text-sm text-blue-700">
+                            This applicant has not yet created an account. Upon approval, an invitation
+                            code will be generated and sent to their email address.
+                          </p>
+                        </div>
+                      )}
 
                       {/* Review Notes (if any) */}
                       {application.reviewNotes && (

@@ -46,8 +46,8 @@ export const footerConfig = {
     {
       title: "Get Involved",
       links: [
-        { name: "Become a Mentor", href: "/mentorship/mentors" },
-        { name: "Join as Mentee", href: "/mentorship/mentee" },
+        { name: "Become a Mentee", href: "/mentorship/join" },
+        { name: "Apply as Mentor", href: "/mentorship/become-a-mentor" },
         { name: "Volunteer with Us", href: "/join-our-team" },
         { name: "Corporate Partnership", href: "/sponsors/corporate-sponsorship" },
       ],

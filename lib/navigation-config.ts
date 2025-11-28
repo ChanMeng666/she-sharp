@@ -1,4 +1,4 @@
-import { LucideIcon, Calendar, Users, Briefcase, Heart, Mic, Mail, Camera, FileText, Award, BookOpen, Sparkles, HandHeart, Building2, FolderOpen, Bell } from "lucide-react";
+import { LucideIcon, Calendar, Users, Briefcase, Heart, Mic, Mail, Camera, FileText, Award, BookOpen, Sparkles, HandHeart, Building2, FolderOpen, Bell, GraduationCap, UserPlus } from "lucide-react";
 
 export interface NavigationItem {
   title: string;
@@ -16,30 +16,30 @@ export interface NavigationItem {
 export interface NavigationButton {
   title: string;
   href: string;
-  variant: 
-    | "default" 
-    | "secondary" 
-    | "accent" 
+  variant:
+    | "default"
+    | "secondary"
+    | "accent"
     | "navy"
-    | "glass" 
-    | "gradient" 
-    | "glassmorphism" 
+    | "glass"
+    | "gradient"
+    | "glassmorphism"
     | "neumorphism"
-    | "outline" 
-    | "outline-thick" 
-    | "outline-dashed" 
+    | "outline"
+    | "outline-thick"
+    | "outline-dashed"
     | "outline-gradient"
-    | "ghost" 
-    | "link" 
-    | "minimal" 
+    | "ghost"
+    | "link"
+    | "minimal"
     | "text"
-    | "black" 
-    | "white" 
-    | "dark" 
+    | "black"
+    | "white"
+    | "dark"
     | "light"
-    | "success" 
-    | "warning" 
-    | "danger" 
+    | "success"
+    | "warning"
+    | "danger"
     | "info"
     | "destructive";
 }
@@ -80,13 +80,49 @@ export const navigationConfig: {
       ],
     },
     {
-      title: "Programs",
-      href: "/events",
-      icon: Calendar,
+      title: "Mentorship",
+      href: "/mentorship",
+      icon: GraduationCap,
       image: {
         src: "/img/mesh-954.png",
         alt: "Mentorship program in action",
         href: "/mentorship",
+      },
+      children: [
+        {
+          title: "About the Program",
+          href: "/mentorship",
+          description: "Learn about our mentorship program",
+          icon: BookOpen,
+        },
+        {
+          title: "Become a Mentee",
+          href: "/mentorship/join",
+          description: "Join the program and get matched with a mentor",
+          icon: GraduationCap,
+        },
+        {
+          title: "Become a Mentor",
+          href: "/mentorship/become-a-mentor",
+          description: "Apply to share your expertise and guide others",
+          icon: Award,
+        },
+        {
+          title: "Meet Our Mentors",
+          href: "/mentorship/mentors",
+          description: "Browse our experienced mentor community",
+          icon: Users,
+        },
+      ],
+    },
+    {
+      title: "Events",
+      href: "/events",
+      icon: Calendar,
+      image: {
+        src: "/img/mesh-152.png",
+        alt: "She Sharp Events",
+        href: "/events",
       },
       children: [
         {
@@ -96,16 +132,16 @@ export const navigationConfig: {
           icon: Calendar,
         },
         {
-          title: "Mentorship Program",
-          href: "/mentorship",
-          description: "Connect with mentors and grow your career",
-          icon: Users,
-        },
-        {
           title: "Google Educator Conference",
           href: "/events/google-educator",
           description: "Annual education technology conference",
           icon: Award,
+        },
+        {
+          title: "THRIVE Program",
+          href: "/events/thrive",
+          description: "Empowering women in technology",
+          icon: Sparkles,
         },
       ],
     },
@@ -120,18 +156,6 @@ export const navigationConfig: {
       },
       children: [
         {
-          title: "Become a Mentor",
-          href: "/mentorship/mentors",
-          description: "Share your expertise and guide others",
-          icon: Award,
-        },
-        {
-          title: "Join as Mentee",
-          href: "/mentorship/mentee",
-          description: "Apply to join our mentorship program",
-          icon: BookOpen,
-        },
-        {
           title: "Volunteer with Us",
           href: "/join-our-team",
           description: "Join our team and make a difference",
@@ -142,6 +166,12 @@ export const navigationConfig: {
           href: "/sponsors/corporate-sponsorship",
           description: "Partner with us to support women in STEM",
           icon: Building2,
+        },
+        {
+          title: "Donate",
+          href: "/donate",
+          description: "Support our mission with a donation",
+          icon: HandHeart,
         },
       ],
     },
@@ -179,12 +209,6 @@ export const navigationConfig: {
           description: "Media coverage and press releases",
           icon: FileText,
         },
-        {
-          title: "Resource Library",
-          href: "/dashboard/resources",
-          description: "Access learning materials and resources",
-          icon: FolderOpen,
-        },
       ],
     },
     {
@@ -192,11 +216,12 @@ export const navigationConfig: {
       href: "/contact",
       icon: Mail,
     },
+  ],
+  buttons: [
     {
-      title: "Support Us",
-      href: "/donate",
-      icon: HandHeart,
+      title: "Join Program",
+      href: "/mentorship/join",
+      variant: "default",
     },
   ],
-  buttons: [],
 };

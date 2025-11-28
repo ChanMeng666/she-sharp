@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getUser } from '@/lib/db/queries';
 import { db } from '@/lib/db/drizzle';
-import { 
-  userRoles, 
-  mentorProfiles, 
+import {
+  userRoles,
+  mentorProfiles,
   menteeProfiles,
   mentorshipRelationships,
   meetings,
@@ -11,9 +11,12 @@ import {
   eventRegistrations,
   resources,
   userMentorshipStats,
-  adminPermissions
+  adminPermissions,
+  mentorFormSubmissions,
+  menteeFormSubmissions,
 } from '@/lib/db/schema';
 import { eq, and, or, desc, gte, sql } from 'drizzle-orm';
+import { getUserPoints, getUserLevelDetails } from '@/lib/points/service';
 
 export async function GET() {
   try {
@@ -65,6 +68,22 @@ export async function GET() {
         .returning();
     }
 
+    // Get points and level data
+    const levelDetails = await getUserLevelDetails(user.id);
+
+    // Get form submission status
+    const [mentorForm] = await db
+      .select()
+      .from(mentorFormSubmissions)
+      .where(eq(mentorFormSubmissions.userId, user.id))
+      .limit(1);
+
+    const [menteeForm] = await db
+      .select()
+      .from(menteeFormSubmissions)
+      .where(eq(menteeFormSubmissions.userId, user.id))
+      .limit(1);
+
     const dashboardData: any = {
       user: {
         id: user.id,
@@ -83,6 +102,29 @@ export async function GET() {
         eventsRegistered: stats.eventsRegistered,
         resourcesUploaded: stats.resourcesUploaded,
         resourcesAccessed: stats.resourcesAccessed
+      },
+      points: {
+        current: levelDetails.currentPoints,
+        lifetime: levelDetails.lifetimePoints,
+        level: levelDetails.currentLevel.level,
+        levelName: levelDetails.currentLevel.name,
+        progressToNextLevel: levelDetails.progressToNextLevel,
+        nextLevel: levelDetails.nextLevel ? {
+          name: levelDetails.nextLevel.name,
+          minPoints: levelDetails.nextLevel.minPoints
+        } : null
+      },
+      formStatus: {
+        mentor: mentorForm ? {
+          status: mentorForm.status,
+          submittedAt: mentorForm.submittedAt,
+          reviewedAt: mentorForm.reviewedAt
+        } : null,
+        mentee: menteeForm ? {
+          status: menteeForm.status,
+          submittedAt: menteeForm.submittedAt,
+          reviewedAt: menteeForm.reviewedAt
+        } : null
       },
       quickActions: [],
       sections: []
