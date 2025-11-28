@@ -139,7 +139,7 @@ export const navigationConfig: {
         },
         {
           title: "THRIVE Program",
-          href: "/events/thrive",
+          href: "/events/thrive-your-career-your-story",
           description: "Empowering women in technology",
           icon: Sparkles,
         },
