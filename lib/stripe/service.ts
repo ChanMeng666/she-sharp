@@ -85,25 +85,28 @@ export async function handleSuccessfulPayment(
   const userId = metadata?.userId ? parseInt(metadata.userId) : null;
 
   // Get subscription details
-  const subResponse = typeof subscription === 'string'
-    ? await stripe.subscriptions.retrieve(subscription)
-    : subscription;
+  let subResponse;
+  if (typeof subscription === 'string') {
+    subResponse = await stripe.subscriptions.retrieve(subscription);
+  } else if (subscription) {
+    subResponse = subscription;
+  } else {
+    throw new Error('Subscription not found in checkout session');
+  }
 
   if (!subResponse) {
     throw new Error('Subscription not found');
   }
 
-  // Access subscription data
-  const sub = subResponse as unknown as {
-    id: string;
-    current_period_start: number;
-    current_period_end: number;
-    cancel_at_period_end: boolean;
-    status: string;
-  };
+  // Access subscription data with proper type handling
+  const sub = subResponse as Stripe.Subscription;
 
-  const periodStart = new Date(sub.current_period_start * 1000);
-  const periodEnd = new Date(sub.current_period_end * 1000);
+  // Safely extract period timestamps with fallbacks
+  const currentPeriodStart = sub.current_period_start || Math.floor(Date.now() / 1000);
+  const currentPeriodEnd = sub.current_period_end || Math.floor(Date.now() / 1000) + (365 * 24 * 60 * 60);
+
+  const periodStart = new Date(currentPeriodStart * 1000);
+  const periodEnd = new Date(currentPeriodEnd * 1000);
   const amountPaid = session.amount_total ? (session.amount_total / 100).toFixed(2) : '100.00';
 
   // Create purchase record
