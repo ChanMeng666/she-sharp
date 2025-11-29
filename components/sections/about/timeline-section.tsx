@@ -61,7 +61,7 @@ export function TimelineSection() {
           <div className="rounded-xl overflow-hidden border border-gray-200 bg-black/5 shadow-sm flex items-center justify-center p-0">
             <video
               className="max-w-full h-auto"
-              src="/video/about.mp4"
+              src="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/6494eca97a143f705f5a5436_Home%20Vid%201-1%20Placeholder-transcode.mp4"
               autoPlay
               muted
               loop
