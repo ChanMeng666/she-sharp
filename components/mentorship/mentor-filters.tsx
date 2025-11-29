@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Search, X, Filter, ChevronDown } from "lucide-react";
-import { getIndustries, getAllExpertiseAreas } from "@/data/mentors";
+import { getIndustries, getAllExpertiseAreas } from "@/lib/data/mentors";
 
 interface MentorFiltersProps {
   onFiltersChange: (filters: FilterState) => void;

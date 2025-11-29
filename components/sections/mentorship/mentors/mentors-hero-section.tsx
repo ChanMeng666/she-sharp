@@ -6,7 +6,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Button } from "@/components/ui/button";
 import { Users, Star, Award } from "lucide-react";
 import Image from "next/image";
-import { mentors } from "@/data/mentors";
+import { mentors } from "@/lib/data/mentors";
 import Autoplay from "embla-carousel-autoplay";
 
 export function MentorsHeroSection() {

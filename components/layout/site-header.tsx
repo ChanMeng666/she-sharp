@@ -28,7 +28,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
-import { navigationConfig } from "@/lib/navigation-config";
+import { navigationConfig } from "@/lib/config/navigation";
 import { UserNav } from "./user-nav";
 import Iridescence, { brandColors } from "@/components/effects/iridescence";
 import "./navigation-styles.css";

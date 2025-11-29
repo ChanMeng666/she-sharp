@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { MentorCard } from "@/components/mentorship/mentor-card";
 import { MentorCardMobile } from "@/components/mentorship/mentor-card-mobile";
 import { MentorFilters, FilterState } from "@/components/mentorship/mentor-filters";
-import { mentors, getMentorCategories } from "@/data/mentors";
+import { mentors, getMentorCategories } from "@/lib/data/mentors";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
