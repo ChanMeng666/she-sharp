@@ -5,6 +5,7 @@ import {
   userMemberships,
   users,
   activityLogs,
+  menteeFormSubmissions,
   type NewMembershipPurchase,
   ActivityType,
 } from '@/lib/db/schema';
@@ -21,8 +22,9 @@ export async function createCheckoutSession(params: {
   successUrl: string;
   cancelUrl: string;
   userId?: number;
+  formSubmissionId?: number;
 }): Promise<{ sessionId: string; url: string }> {
-  const { email, successUrl, cancelUrl, userId } = params;
+  const { email, successUrl, cancelUrl, userId, formSubmissionId } = params;
 
   // Check for existing customer
   const existingCustomers = await stripe.customers.list({ email, limit: 1 });
@@ -49,11 +51,13 @@ export async function createCheckoutSession(params: {
       userId: userId?.toString() || '',
       email,
       membershipType: 'annual',
+      formSubmissionId: formSubmissionId?.toString() || '',
     },
     subscription_data: {
       metadata: {
         userId: userId?.toString() || '',
         email,
+        formSubmissionId: formSubmissionId?.toString() || '',
       },
     },
     allow_promotion_codes: true,
@@ -83,6 +87,7 @@ export async function handleSuccessfulPayment(
   const { customer, subscription, metadata, customer_details } = session;
   const email = metadata?.email || customer_details?.email || '';
   const userId = metadata?.userId ? parseInt(metadata.userId) : null;
+  const formSubmissionId = metadata?.formSubmissionId ? parseInt(metadata.formSubmissionId) : null;
 
   // Get subscription details
   let subResponse;
@@ -132,13 +137,32 @@ export async function handleSuccessfulPayment(
     metadata: {
       checkoutSessionId: session.id,
       email,
+      formSubmissionId: formSubmissionId?.toString() || '',
     },
   };
 
   const [purchase] = await db.insert(membershipPurchases).values(purchaseData).returning();
 
-  // Generate invitation code
-  const invitationCode = await createPaymentInvitationCode(purchase.id, email);
+  // Generate invitation code with link to form submission
+  const invitationCode = await createPaymentInvitationCode(
+    purchase.id,
+    email,
+    formSubmissionId || undefined
+  );
+
+  // Update mentee form submission with payment info
+  if (formSubmissionId) {
+    await db
+      .update(menteeFormSubmissions)
+      .set({
+        paymentCompleted: true,
+        paymentCompletedAt: new Date(),
+        purchaseId: purchase.id,
+        invitationCodeId: invitationCode.id,
+        updatedAt: new Date(),
+      })
+      .where(eq(menteeFormSubmissions.id, formSubmissionId));
+  }
 
   // Update user membership if user exists
   if (userId) {
@@ -174,6 +198,7 @@ export async function handleSuccessfulPayment(
       metadata: {
         amount: amountPaid,
         subscriptionId: sub.id,
+        formSubmissionId: formSubmissionId?.toString() || '',
       },
     });
   }

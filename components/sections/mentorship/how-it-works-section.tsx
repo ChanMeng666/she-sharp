@@ -140,14 +140,14 @@ export function HowItWorksSection() {
         {/* CTA */}
         <div className="text-center mt-12 flex flex-col sm:flex-row gap-4 justify-center">
           <Button asChild size="lg" className="bg-purple-dark hover:bg-purple-mid text-white">
-            <Link href="/mentorship/mentee">
-              Start Your Mentee Journey
+            <Link href="/mentorship/join">
+              Join as Mentee
               <ChevronRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
           <Button asChild variant="outline" size="lg" className="border-purple-dark text-purple-dark hover:bg-purple-light dark:border-purple-mid dark:text-purple-mid">
-            <Link href="/mentorship/mentors">
-              Become a Mentor
+            <Link href="/mentorship/become-a-mentor">
+              Apply as Mentor
               <ChevronRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>

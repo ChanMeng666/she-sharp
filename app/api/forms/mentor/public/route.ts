@@ -8,19 +8,33 @@ const publicMentorFormSchema = z.object({
   email: z.string().email('Invalid email address'),
   phone: z.string().min(8, 'Phone number must be at least 8 characters'),
   gender: z.string().optional(),
-  mbtiType: z.string().optional(),
+  // Location fields for matching
+  city: z.string().optional(),
+  preferredMeetingFormat: z.string().optional(),
+  // Professional info
   jobTitle: z.string().min(2, 'Job title is required'),
   company: z.string().min(2, 'Company is required'),
   yearsExperience: z.number().min(1, 'Years of experience is required'),
   linkedinUrl: z.string().url().optional().or(z.literal('')),
-  bio: z.string().min(50, 'Bio must be at least 50 characters'),
+  // Bio
+  bioMethod: z.string().optional(),
+  bio: z.string().optional(),
+  photoUrl: z.string().optional(),
+  // Skills
+  softSkillsBasic: z.array(z.string()).optional(),
   softSkillsExpert: z.array(z.string()).min(2, 'Select at least 2 soft skills'),
+  industrySkillsBasic: z.array(z.string()).optional(),
   industrySkillsExpert: z.array(z.string()).min(2, 'Select at least 2 industry skills'),
-  maxMentees: z.number().min(1).max(10),
-  availabilityHoursPerMonth: z.number().min(1).max(40),
-  expectedMenteeGoalsLongTerm: z.string().min(20, 'Please describe what goals you want to help mentees achieve'),
+  // Goals and preferences
+  expectedMenteeGoalsLongTerm: z.string().min(20, 'Please describe long-term goals'),
+  expectedMenteeGoalsShortTerm: z.string().min(20, 'Please describe short-term goals'),
   programExpectations: z.string().optional(),
   preferredMenteeTypes: z.array(z.string()).optional(),
+  preferredIndustries: z.array(z.string()).optional(),
+  // Personality
+  mbtiType: z.string().optional(),
+  maxMentees: z.number().min(1).max(10),
+  availabilityHoursPerMonth: z.number().min(1).max(40),
 });
 
 /**

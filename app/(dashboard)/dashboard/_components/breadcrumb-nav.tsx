@@ -44,8 +44,6 @@ const routeLabels: Record<string, string> = {
   billing: "Billing",
   team: "Team",
   members: "Members",
-  onboarding: "Onboarding",
-  welcome: "Welcome",
 };
 
 export function BreadcrumbNav() {

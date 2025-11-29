@@ -181,6 +181,7 @@ export async function reviewMentorForm(
       const invitationCode = await createMentorApprovalCode(
         form.email,
         reviewerId,
+        form.id,  // Link to mentor form submission
         notes
       );
 
@@ -508,19 +509,33 @@ export interface PublicMentorFormData {
   email: string;
   phone: string;
   gender?: string;
-  mbtiType?: string;
+  // Location fields for matching
+  city?: string;
+  preferredMeetingFormat?: string;
+  // Professional info
   jobTitle: string;
   company: string;
   yearsExperience: number;
   linkedinUrl?: string;
-  bio: string;
+  // Bio
+  bioMethod?: string;
+  bio?: string;
+  photoUrl?: string;
+  // Skills
+  softSkillsBasic?: string[];
   softSkillsExpert: string[];
+  industrySkillsBasic?: string[];
   industrySkillsExpert: string[];
-  maxMentees: number;
-  availabilityHoursPerMonth: number;
+  // Goals and preferences
   expectedMenteeGoalsLongTerm: string;
+  expectedMenteeGoalsShortTerm: string;
   programExpectations?: string;
   preferredMenteeTypes?: string[];
+  preferredIndustries?: string[];
+  // Personality
+  mbtiType?: string;
+  maxMentees: number;
+  availabilityHoursPerMonth: number;
 }
 
 /**
@@ -553,19 +568,27 @@ export async function submitPublicMentorForm(
             fullName: data.fullName,
             phone: data.phone,
             gender: data.gender as any,
+            city: data.city,
+            preferredMeetingFormat: data.preferredMeetingFormat as any,
             mbtiType: data.mbtiType as any,
             jobTitle: data.jobTitle,
             company: data.company,
             yearsExperience: data.yearsExperience,
             linkedinUrl: data.linkedinUrl,
+            bioMethod: data.bioMethod as 'self_written' | 'ai_generated' | 'already_sent' | undefined,
             bio: data.bio,
+            photoUrl: data.photoUrl,
+            softSkillsBasic: data.softSkillsBasic,
             softSkillsExpert: data.softSkillsExpert,
+            industrySkillsBasic: data.industrySkillsBasic,
             industrySkillsExpert: data.industrySkillsExpert,
             maxMentees: data.maxMentees,
             availabilityHoursPerMonth: data.availabilityHoursPerMonth,
             expectedMenteeGoalsLongTerm: data.expectedMenteeGoalsLongTerm,
+            expectedMenteeGoalsShortTerm: data.expectedMenteeGoalsShortTerm,
             programExpectations: data.programExpectations,
             preferredMenteeTypes: data.preferredMenteeTypes,
+            preferredIndustries: data.preferredIndustries,
             status: 'submitted',
             submittedAt: new Date(),
             reviewedAt: null,
@@ -587,19 +610,27 @@ export async function submitPublicMentorForm(
         fullName: data.fullName,
         phone: data.phone,
         gender: data.gender as any,
+        city: data.city,
+        preferredMeetingFormat: data.preferredMeetingFormat as any,
         mbtiType: data.mbtiType as any,
         jobTitle: data.jobTitle,
         company: data.company,
         yearsExperience: data.yearsExperience,
         linkedinUrl: data.linkedinUrl,
+        bioMethod: data.bioMethod as 'self_written' | 'ai_generated' | 'already_sent' | undefined,
         bio: data.bio,
+        photoUrl: data.photoUrl,
+        softSkillsBasic: data.softSkillsBasic,
         softSkillsExpert: data.softSkillsExpert,
+        industrySkillsBasic: data.industrySkillsBasic,
         industrySkillsExpert: data.industrySkillsExpert,
         maxMentees: data.maxMentees,
         availabilityHoursPerMonth: data.availabilityHoursPerMonth,
         expectedMenteeGoalsLongTerm: data.expectedMenteeGoalsLongTerm,
+        expectedMenteeGoalsShortTerm: data.expectedMenteeGoalsShortTerm,
         programExpectations: data.programExpectations,
         preferredMenteeTypes: data.preferredMenteeTypes,
+        preferredIndustries: data.preferredIndustries,
         status: 'submitted',
         submittedAt: new Date(),
       })
@@ -622,6 +653,188 @@ export async function getPublicMentorFormByEmail(
     .select()
     .from(mentorFormSubmissions)
     .where(eq(mentorFormSubmissions.email, email))
+    .limit(1);
+
+  return form || null;
+}
+
+// =======================
+// PUBLIC MENTEE FORM (Pre-registration)
+// =======================
+
+export interface PublicMenteeFormData {
+  email: string;
+  fullName: string;
+  phone: string;
+  gender?: string;
+  age?: number;
+  bio?: string;
+  // Location fields for matching
+  city?: string;
+  preferredMeetingFormat?: string;
+  // Career fields
+  currentStage?: string;
+  currentJobTitle?: string;
+  currentIndustry?: string;
+  preferredIndustries?: string[];
+  // Skills
+  softSkillsBasic?: string[];
+  industrySkillsBasic?: string[];
+  softSkillsExpert?: string[];
+  industrySkillsExpert?: string[];
+  // Goals
+  longTermGoals: string;
+  shortTermGoals: string;
+  whyMentor?: string;
+  programExpectations?: string;
+  // Personality
+  mbtiType?: string;
+  preferredMeetingFrequency?: string;
+  photoUrl?: string;
+}
+
+/**
+ * Submits a public mentee application (no authentication required).
+ * Creates a form submission with email instead of userId.
+ * User will pay after form submission.
+ */
+export async function submitPublicMenteeForm(
+  data: PublicMenteeFormData
+): Promise<{ success: boolean; submissionId?: number; error?: string }> {
+  try {
+    // Check if email already has a submission
+    const [existing] = await db
+      .select()
+      .from(menteeFormSubmissions)
+      .where(eq(menteeFormSubmissions.email, data.email))
+      .limit(1);
+
+    if (existing) {
+      // If payment already completed, don't allow resubmission
+      if (existing.paymentCompleted) {
+        return { success: false, error: 'An application with this email has already been paid for' };
+      }
+      if (existing.status === 'approved') {
+        return { success: false, error: 'An application with this email has already been approved' };
+      }
+      // Allow update if in progress or rejected
+      await db
+        .update(menteeFormSubmissions)
+        .set({
+          fullName: data.fullName,
+          phone: data.phone,
+          gender: data.gender as any,
+          age: data.age,
+          bio: data.bio,
+          city: data.city,
+          preferredMeetingFormat: data.preferredMeetingFormat as any,
+          currentStage: data.currentStage as any,
+          currentJobTitle: data.currentJobTitle,
+          currentIndustry: data.currentIndustry,
+          preferredIndustries: data.preferredIndustries,
+          softSkillsBasic: data.softSkillsBasic,
+          industrySkillsBasic: data.industrySkillsBasic,
+          softSkillsExpert: data.softSkillsExpert,
+          industrySkillsExpert: data.industrySkillsExpert,
+          longTermGoals: data.longTermGoals,
+          shortTermGoals: data.shortTermGoals,
+          whyMentor: data.whyMentor,
+          programExpectations: data.programExpectations,
+          mbtiType: data.mbtiType as any,
+          preferredMeetingFrequency: data.preferredMeetingFrequency,
+          photoUrl: data.photoUrl,
+          status: 'submitted',
+          submittedAt: new Date(),
+          reviewedAt: null,
+          reviewedBy: null,
+          reviewNotes: null,
+          updatedAt: new Date(),
+        })
+        .where(eq(menteeFormSubmissions.id, existing.id));
+
+      return { success: true, submissionId: existing.id };
+    }
+
+    // Create new submission
+    const [submission] = await db
+      .insert(menteeFormSubmissions)
+      .values({
+        email: data.email,
+        fullName: data.fullName,
+        phone: data.phone,
+        gender: data.gender as any,
+        age: data.age,
+        bio: data.bio,
+        city: data.city,
+        preferredMeetingFormat: data.preferredMeetingFormat as any,
+        currentStage: data.currentStage as any,
+        currentJobTitle: data.currentJobTitle,
+        currentIndustry: data.currentIndustry,
+        preferredIndustries: data.preferredIndustries,
+        softSkillsBasic: data.softSkillsBasic,
+        industrySkillsBasic: data.industrySkillsBasic,
+        softSkillsExpert: data.softSkillsExpert,
+        industrySkillsExpert: data.industrySkillsExpert,
+        longTermGoals: data.longTermGoals,
+        shortTermGoals: data.shortTermGoals,
+        whyMentor: data.whyMentor,
+        programExpectations: data.programExpectations,
+        mbtiType: data.mbtiType as any,
+        preferredMeetingFrequency: data.preferredMeetingFrequency,
+        photoUrl: data.photoUrl,
+        status: 'submitted',
+        submittedAt: new Date(),
+        paymentCompleted: false,
+      })
+      .returning();
+
+    return { success: true, submissionId: submission.id };
+  } catch (error) {
+    console.error('Error submitting public mentee form:', error);
+    return { success: false, error: 'Failed to submit application' };
+  }
+}
+
+/**
+ * Gets a public mentee form submission by email.
+ */
+export async function getPublicMenteeFormByEmail(
+  email: string
+): Promise<MenteeFormSubmission | null> {
+  const [form] = await db
+    .select()
+    .from(menteeFormSubmissions)
+    .where(eq(menteeFormSubmissions.email, email))
+    .limit(1);
+
+  return form || null;
+}
+
+/**
+ * Gets a mentee form submission by ID.
+ */
+export async function getMenteeFormById(
+  id: number
+): Promise<MenteeFormSubmission | null> {
+  const [form] = await db
+    .select()
+    .from(menteeFormSubmissions)
+    .where(eq(menteeFormSubmissions.id, id))
+    .limit(1);
+
+  return form || null;
+}
+
+/**
+ * Gets a mentor form submission by ID.
+ */
+export async function getMentorFormById(
+  id: number
+): Promise<MentorFormSubmission | null> {
+  const [form] = await db
+    .select()
+    .from(mentorFormSubmissions)
+    .where(eq(mentorFormSubmissions.id, id))
     .limit(1);
 
   return form || null;

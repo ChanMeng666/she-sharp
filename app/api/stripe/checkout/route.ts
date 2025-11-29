@@ -9,7 +9,7 @@ import { getUser } from '@/lib/db/queries';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email } = body;
+    const { email, formSubmissionId } = body;
 
     if (!email) {
       return NextResponse.json(
@@ -25,8 +25,11 @@ export async function POST(request: NextRequest) {
     const session = await createCheckoutSession({
       email,
       userId: user?.id,
+      formSubmissionId,
       successUrl: `${baseUrl}/mentorship/join/success`,
-      cancelUrl: `${baseUrl}/mentorship/join`,
+      cancelUrl: formSubmissionId
+        ? `${baseUrl}/mentorship/join/payment?id=${formSubmissionId}`
+        : `${baseUrl}/mentorship/join`,
     });
 
     return NextResponse.json({

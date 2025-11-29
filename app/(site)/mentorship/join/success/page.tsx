@@ -11,16 +11,17 @@ import Link from 'next/link';
 function PaymentSuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
+  const alreadyPaid = searchParams.get('already_paid');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Verify session if needed
-    if (sessionId) {
+    if (sessionId || alreadyPaid) {
       setLoading(false);
     } else {
       setLoading(false);
     }
-  }, [sessionId]);
+  }, [sessionId, alreadyPaid]);
 
   if (loading) {
     return (
@@ -30,7 +31,7 @@ function PaymentSuccessContent() {
     );
   }
 
-  if (!sessionId) {
+  if (!sessionId && !alreadyPaid) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-16">
         <div className="container mx-auto px-4 max-w-lg">

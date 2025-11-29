@@ -39,6 +39,10 @@ export interface CreateInvitationCodeParams {
   generatedFor?: string;
   notes?: string;
   metadata?: Record<string, unknown>;
+  // New fields for role-based registration
+  targetRole?: 'mentor' | 'mentee' | 'admin';
+  linkedFormId?: number;
+  linkedFormType?: 'mentor' | 'mentee';
 }
 
 /**
@@ -55,6 +59,9 @@ export async function createInvitationCode(params: CreateInvitationCodeParams): 
     generatedFor,
     notes,
     metadata,
+    targetRole,
+    linkedFormId,
+    linkedFormType,
   } = params;
 
   // Generate unique code, retry if collision
@@ -95,6 +102,9 @@ export async function createInvitationCode(params: CreateInvitationCodeParams): 
     generatedFor,
     notes,
     metadata,
+    targetRole,
+    linkedFormId,
+    linkedFormType,
   };
 
   const [created] = await db.insert(invitationCodes).values(newCode).returning();
@@ -379,11 +389,12 @@ export async function cleanupExpiredCodes(): Promise<number> {
 
 /**
  * Creates invitation code after successful payment.
- * Links code to purchase record.
+ * Links code to purchase record and mentee form.
  */
 export async function createPaymentInvitationCode(
   purchaseId: number,
-  recipientEmail: string
+  recipientEmail: string,
+  linkedFormId?: number
 ): Promise<InvitationCode> {
   // Get purchase details
   const [purchase] = await db
@@ -408,15 +419,21 @@ export async function createPaymentInvitationCode(
       amountPaid: purchase.amountPaid,
       stripePaymentIntentId: purchase.stripePaymentIntentId,
     },
+    // Role-based registration fields
+    targetRole: 'mentee',
+    linkedFormId,
+    linkedFormType: linkedFormId ? 'mentee' : undefined,
   });
 }
 
 /**
  * Creates invitation code after mentor application approval.
+ * Links code to mentor form submission.
  */
 export async function createMentorApprovalCode(
   mentorEmail: string,
   approvedBy: number,
+  linkedFormId: number,
   notes?: string
 ): Promise<InvitationCode> {
   return createInvitationCode({
@@ -425,11 +442,16 @@ export async function createMentorApprovalCode(
     generatedBy: approvedBy,
     generatedFor: mentorEmail,
     notes: notes || 'Generated after mentor application approval',
+    // Role-based registration fields
+    targetRole: 'mentor',
+    linkedFormId,
+    linkedFormType: 'mentor',
   });
 }
 
 /**
  * Creates admin-generated invitation code.
+ * Can optionally specify a target role for the invitation.
  */
 export async function createAdminCode(
   adminUserId: number,
@@ -438,6 +460,7 @@ export async function createAdminCode(
     expiresAt?: Date;
     recipientEmail?: string;
     notes?: string;
+    targetRole?: 'mentor' | 'mentee' | 'admin';
   }
 ): Promise<InvitationCode> {
   return createInvitationCode({
@@ -447,6 +470,7 @@ export async function createAdminCode(
     generatedBy: adminUserId,
     generatedFor: options.recipientEmail,
     notes: options.notes || 'Admin-generated invitation code',
+    targetRole: options.targetRole,
   });
 }
 

@@ -39,6 +39,7 @@ export const subscriptionStatusEnum = pgEnum('subscription_status', ['active', '
 export const mbtiTypeEnum = pgEnum('mbti_type', ['INTJ', 'INTP', 'ENTJ', 'ENTP', 'INFJ', 'INFP', 'ENFJ', 'ENFP', 'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ', 'ISTP', 'ISFP', 'ESTP', 'ESFP']);
 export const genderEnum = pgEnum('gender', ['female', 'male', 'non_binary', 'prefer_not_to_say', 'other']);
 export const skillCategoryEnum = pgEnum('skill_category', ['soft_basic', 'soft_expert', 'industry_basic', 'industry_expert']);
+export const meetingFormatEnum = pgEnum('meeting_format', ['online', 'in_person', 'hybrid']);
 
 // Core user table (simplified - no role field)
 export const users = pgTable('users', {
@@ -779,6 +780,10 @@ export const invitationCodes = pgTable('invitation_codes', {
   purchaseId: integer('purchase_id'), // FK to membershipPurchases
   generatedBy: integer('generated_by').references(() => users.id),
   generatedFor: varchar('generated_for', { length: 255 }), // Expected recipient email
+  // New fields for role-based registration
+  targetRole: userRoleEnum('target_role'), // Role to assign on registration: 'mentor', 'mentee', 'admin'
+  linkedFormId: integer('linked_form_id'), // Link to form submission (mentor or mentee)
+  linkedFormType: varchar('linked_form_type', { length: 20 }), // 'mentor' or 'mentee'
   notes: text('notes'),
   metadata: jsonb('metadata').$type<Record<string, unknown>>(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
@@ -787,6 +792,7 @@ export const invitationCodes = pgTable('invitation_codes', {
   codeIdx: index('invitation_codes_code_idx').on(table.code),
   statusIdx: index('invitation_codes_status_idx').on(table.status),
   expiresAtIdx: index('invitation_codes_expires_at_idx').on(table.expiresAt),
+  targetRoleIdx: index('invitation_codes_target_role_idx').on(table.targetRole),
 }));
 
 // Invitation code usage records
@@ -891,6 +897,9 @@ export const mentorFormSubmissions = pgTable('mentor_form_submissions', {
   company: varchar('company', { length: 200 }),
   photoUrl: varchar('photo_url', { length: 500 }),
   photoUploadedAt: timestamp('photo_uploaded_at'),
+  // Location (for matching)
+  city: varchar('city', { length: 100 }),
+  preferredMeetingFormat: meetingFormatEnum('preferred_meeting_format'),
   // Bio
   bioMethod: bioMethodEnum('bio_method'),
   bio: text('bio'),
@@ -932,14 +941,23 @@ export const menteeFormSubmissions = pgTable('mentee_form_submissions', {
   reviewedAt: timestamp('reviewed_at'),
   reviewedBy: integer('reviewed_by').references(() => users.id),
   reviewNotes: text('review_notes'),
+  // Payment tracking (for pre-registration flow)
+  paymentCompleted: boolean('payment_completed').default(false),
+  paymentCompletedAt: timestamp('payment_completed_at'),
+  purchaseId: integer('purchase_id'), // FK to membershipPurchases
+  invitationCodeId: integer('invitation_code_id'), // FK to invitationCodes
   // Personal info
   fullName: varchar('full_name', { length: 200 }),
+  gender: genderEnum('gender'),
   age: integer('age'),
   phone: varchar('phone', { length: 50 }),
   currentStage: careerStageEnum('current_stage'),
   photoUrl: varchar('photo_url', { length: 500 }),
   photoUploadedAt: timestamp('photo_uploaded_at'),
   bio: text('bio'),
+  // Location (for matching)
+  city: varchar('city', { length: 100 }),
+  preferredMeetingFormat: meetingFormatEnum('preferred_meeting_format'),
   // Professional background
   currentJobTitle: varchar('current_job_title', { length: 200 }),
   currentIndustry: varchar('current_industry', { length: 200 }),
@@ -963,6 +981,7 @@ export const menteeFormSubmissions = pgTable('mentee_form_submissions', {
   userIdIdx: index('mentee_form_submissions_user_id_idx').on(table.userId),
   statusIdx: index('mentee_form_submissions_status_idx').on(table.status),
   emailIdx: index('mentee_form_submissions_email_idx').on(table.email),
+  paymentIdx: index('mentee_form_submissions_payment_idx').on(table.paymentCompleted),
 }));
 
 // User points balance

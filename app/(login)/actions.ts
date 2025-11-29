@@ -10,11 +10,15 @@ import {
   teamMembers,
   activityLogs,
   userMemberships,
+  userRoles,
+  menteeFormSubmissions,
+  mentorFormSubmissions,
   type NewUser,
   type NewTeam,
   type NewTeamMember,
   type NewActivityLog,
   type NewUserMembership,
+  type NewUserRole,
   ActivityType,
   invitations,
   emailVerifications,
@@ -34,7 +38,6 @@ import { sendVerificationEmail, sendInvitationEmail } from '@/lib/email/service'
 import { isAccountLocked, recordFailedLoginAttempt, clearLoginAttempts } from '@/lib/auth/account-lock';
 import { setRememberMeCookie } from '@/lib/auth/remember-me';
 import { updatePasswordWithHistory } from '@/lib/auth/password-history';
-import { hasActiveRoles } from '@/lib/auth/check-user-roles';
 
 async function logActivity(
   teamId: number | null | undefined,
@@ -142,15 +145,8 @@ export const signIn = validatedAction(signInSchema, async (data, formData) => {
 
   const redirectTo = formData.get('redirect') as string | null;
 
-  // Check if user has activated any roles
-  const hasRoles = await hasActiveRoles(foundUser.id);
-  
-  // If user has no active roles, redirect to welcome page
-  if (!hasRoles) {
-    redirect('/dashboard/welcome');
-  } else {
-    redirect('/dashboard');
-  }
+  // Redirect to dashboard (roles are now auto-assigned during registration)
+  redirect(redirectTo || '/dashboard');
 });
 
 const signUpSchema = z.object({
@@ -258,6 +254,41 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
 
   await db.insert(userMemberships).values(newMembership);
 
+  // Auto-assign role based on invitation code's targetRole
+  const targetRole = codeValidation.code?.targetRole;
+  if (targetRole) {
+    const newRole: NewUserRole = {
+      userId: createdUser.id,
+      roleType: targetRole,
+      isActive: true,
+    };
+    await db.insert(userRoles).values(newRole);
+
+    // Link form submission to user if applicable
+    const linkedFormId = codeValidation.code?.linkedFormId;
+    const linkedFormType = codeValidation.code?.linkedFormType;
+
+    if (linkedFormId && linkedFormType === 'mentee') {
+      await db
+        .update(menteeFormSubmissions)
+        .set({
+          userId: createdUser.id,
+          status: 'approved',
+          updatedAt: new Date(),
+        })
+        .where(eq(menteeFormSubmissions.id, linkedFormId));
+    } else if (linkedFormId && linkedFormType === 'mentor') {
+      await db
+        .update(mentorFormSubmissions)
+        .set({
+          userId: createdUser.id,
+          status: 'approved',
+          updatedAt: new Date(),
+        })
+        .where(eq(mentorFormSubmissions.id, linkedFormId));
+    }
+  }
+
   // Log activity
   await db.insert(activityLogs).values({
     userId: createdUser.id,
@@ -267,6 +298,7 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
     metadata: {
       invitationCodeType: codeValidation.code?.codeType,
       membershipTier,
+      autoAssignedRole: targetRole || null,
     },
   });
 
@@ -281,8 +313,8 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
   // Set session for the new user
   await setSession(createdUser);
 
-  // Redirect to welcome page for role selection
-  redirect('/dashboard/welcome');
+  // Redirect to dashboard (roles are auto-assigned based on invitation code)
+  redirect('/dashboard');
 });
 
 export async function signOut() {

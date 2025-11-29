@@ -10,7 +10,7 @@ export const presetQuestions: PresetQuestion[] = [
   {
     id: '2',
     question: 'How can I join the mentorship program?',
-    answer: 'Our mentorship program connects experienced women in STEM with those looking to grow their careers. To join as a mentee, visit our Mentorship page and browse through our mentor profiles. You can apply directly through the application form on each mentor\'s profile page. The program is designed to provide personalized guidance and support for your career journey.',
+    answer: 'To join as a mentee: 1) Visit /mentorship/join and complete the application form, 2) Pay the $100 NZD annual membership fee, 3) Receive your invitation code via email, 4) Use the code to register and create your account. Once registered, you\'ll be matched with a mentor based on your goals and preferences.',
     category: 'mentorship'
   },
   {
@@ -39,14 +39,14 @@ export const presetQuestions: PresetQuestion[] = [
   },
   {
     id: '7',
-    question: 'Is membership free?',
-    answer: 'Yes! Basic membership to She Sharp is completely free. This includes access to our community forums, event notifications, and job board. Some special programs or workshops may have nominal fees to cover costs, but we strive to keep our resources accessible to all women in STEM.',
+    question: 'What does membership cost?',
+    answer: 'Mentee membership is $100 NZD per year, which includes 1-on-1 mentor sessions, AI-powered mentor matching, access to all events, premium learning resources, and networking opportunities. Mentor applications are free - experienced professionals can apply to become mentors and give back to the community.',
     category: 'general'
   },
   {
     id: '8',
     question: 'How can I get involved as a mentor?',
-    answer: 'If you\'re an experienced professional in STEM and want to mentor others, we\'d love to have you! Visit our Mentorship page and click on "Become a Mentor". You\'ll need to create a profile highlighting your expertise, experience, and areas where you can guide mentees. Our team will review your application and help you get started.',
+    answer: 'To become a mentor: 1) Visit /mentorship/become-a-mentor and complete the application form, 2) Our team will review your application within 5-7 business days, 3) If approved, you\'ll receive an invitation code via email, 4) Use the code to register and create your mentor account. You\'ll then be matched with mentees based on your expertise and their goals.',
     category: 'mentorship'
   }
 ];
