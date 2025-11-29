@@ -99,7 +99,11 @@ export async function handleSuccessfulPayment(
   }
 
   // Access subscription data with proper type handling
-  const sub = subResponse as Stripe.Subscription;
+  const sub = subResponse as unknown as {
+    id: string;
+    current_period_start?: number;
+    current_period_end?: number;
+  };
 
   // Safely extract period timestamps with fallbacks
   const currentPeriodStart = sub.current_period_start || Math.floor(Date.now() / 1000);
