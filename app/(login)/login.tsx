@@ -157,6 +157,33 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                   />
                 </div>
 
+                {mode === "signup" && (
+                  <div className="space-y-2">
+                    <Label
+                      htmlFor="invitationCode"
+                      className="text-sm font-medium text-navy-dark"
+                    >
+                      Invitation Code
+                    </Label>
+                    <Input
+                      id="invitationCode"
+                      name="invitationCode"
+                      type="text"
+                      defaultValue={state.invitationCode || searchParams.get("code") || ""}
+                      required
+                      maxLength={20}
+                      className="h-10 px-3 rounded-md border border-gray-300 focus:border-purple-dark focus:ring-2 focus:ring-purple-dark/20 uppercase"
+                      placeholder="SHP-XXXX-XXXX-XXXX"
+                    />
+                    <p className="text-xs text-gray-500">
+                      Don&apos;t have an invitation code?{" "}
+                      <Link href="/mentorship/join" className="text-purple-dark hover:underline">
+                        Apply for membership
+                      </Link>
+                    </p>
+                  </div>
+                )}
+
                 {mode === "signin" && (
                   <div className="flex items-center space-x-2">
                     <input

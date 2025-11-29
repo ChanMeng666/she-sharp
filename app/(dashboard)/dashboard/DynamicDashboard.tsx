@@ -54,6 +54,29 @@ interface DashboardData {
     resourcesUploaded: number;
     resourcesAccessed: number;
   };
+  points: {
+    current: number;
+    lifetime: number;
+    level: number;
+    levelName: string;
+    progressToNextLevel: number;
+    nextLevel: {
+      name: string;
+      minPoints: number;
+    } | null;
+  };
+  formStatus: {
+    mentor: {
+      status: string;
+      submittedAt: string | null;
+      reviewedAt: string | null;
+    } | null;
+    mentee: {
+      status: string;
+      submittedAt: string | null;
+      reviewedAt: string | null;
+    } | null;
+  };
   mentor?: {
     profile: any;
     isAcceptingMentees: boolean;
@@ -115,7 +138,7 @@ export default function DynamicDashboard() {
     );
   }
 
-  const { user, stats, mentor, mentee, upcomingEvents, recentResources, quickActions } = data;
+  const { user, stats, points, formStatus, mentor, mentee, upcomingEvents, recentResources, quickActions } = data;
 
   return (
     <div className="@container/main flex flex-col gap-6">
@@ -138,6 +161,83 @@ export default function DynamicDashboard() {
           )}
         </div>
       </div>
+
+      {/* Points & Level Card */}
+      {points && (
+        <Card className="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 border-purple-200 dark:border-purple-800">
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-full flex items-center justify-center">
+                  <Award className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                </div>
+                <div>
+                  <CardDescription>Experience Level</CardDescription>
+                  <CardTitle className="text-xl">
+                    Level {points.level}: {points.levelName}
+                  </CardTitle>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{points.current}</p>
+                <p className="text-sm text-muted-foreground">Points Available</p>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>{points.lifetime} lifetime points</span>
+                {points.nextLevel && (
+                  <span>{points.nextLevel.minPoints - points.lifetime} to {points.nextLevel.name}</span>
+                )}
+              </div>
+              <Progress value={points.progressToNextLevel} className="h-2" />
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Form Status Alerts */}
+      {formStatus?.mentee?.status && formStatus.mentee.status !== 'approved' && (
+        <Alert className={formStatus.mentee.status === 'rejected' ? 'border-red-200 bg-red-50' : 'border-blue-200 bg-blue-50'}>
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            {formStatus.mentee.status === 'not_started' && (
+              <>Your mentee application form has not been started. <Link href="/dashboard/mentee-profile" className="font-medium underline">Complete your profile</Link> to get matched with a mentor.</>
+            )}
+            {formStatus.mentee.status === 'in_progress' && (
+              <>Your mentee application is in progress. <Link href="/dashboard/mentee-profile" className="font-medium underline">Continue your application</Link> to submit.</>
+            )}
+            {formStatus.mentee.status === 'submitted' && (
+              <>Your mentee application is under review. We&apos;ll notify you once it&apos;s processed.</>
+            )}
+            {formStatus.mentee.status === 'rejected' && (
+              <>Your mentee application was not approved. Please <Link href="/contact" className="font-medium underline">contact support</Link> for more information.</>
+            )}
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {formStatus?.mentor?.status && formStatus.mentor.status !== 'approved' && (
+        <Alert className={formStatus.mentor.status === 'rejected' ? 'border-red-200 bg-red-50' : 'border-amber-200 bg-amber-50'}>
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            {formStatus.mentor.status === 'not_started' && (
+              <>Your mentor application form has not been started. <Link href="/dashboard/mentor-profile" className="font-medium underline">Apply to become a mentor</Link>.</>
+            )}
+            {formStatus.mentor.status === 'in_progress' && (
+              <>Your mentor application is in progress. <Link href="/dashboard/mentor-profile" className="font-medium underline">Continue your application</Link>.</>
+            )}
+            {formStatus.mentor.status === 'submitted' && (
+              <>Your mentor application is awaiting admin review. We&apos;ll notify you once approved.</>
+            )}
+            {formStatus.mentor.status === 'rejected' && (
+              <>Your mentor application was not approved. Please <Link href="/contact" className="font-medium underline">contact support</Link> for feedback.</>
+            )}
+          </AlertDescription>
+        </Alert>
+      )}
 
       {/* Role-specific Sections */}
       {/* Mentor Section */}

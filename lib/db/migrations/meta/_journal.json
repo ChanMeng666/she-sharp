@@ -78,6 +78,13 @@
       "when": 1754552200000,
       "tag": "0012_fix_admin_permissions",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1764316625819,
+      "tag": "0013_furry_famine",
+      "breakpoints": true
     }
   ]
 }

@@ -26,6 +26,20 @@ export const locationTypeEnum = pgEnum('location_type', ['online', 'in_person', 
 export const resourceTypeEnum = pgEnum('resource_type', ['document', 'video', 'link', 'template', 'guide']);
 export const resourceAccessLevelEnum = pgEnum('resource_access_level', ['public', 'member', 'premium']);
 
+// New enums for business logic update
+export const invitationCodeStatusEnum = pgEnum('invitation_code_status', ['active', 'used', 'expired', 'revoked']);
+export const invitationCodeTypeEnum = pgEnum('invitation_code_type', ['payment', 'mentor_approved', 'admin_generated']);
+export const formStatusEnum = pgEnum('form_status', ['not_started', 'in_progress', 'submitted', 'approved', 'rejected']);
+export const bioMethodEnum = pgEnum('bio_method', ['self_written', 'ai_generated', 'already_sent']);
+export const careerStageEnum = pgEnum('career_stage', ['undergraduate', 'postgraduate', 'early_career', 'mid_career', 'senior', 'career_transition']);
+export const menteeTypePreferenceEnum = pgEnum('mentee_type_preference', ['undergraduate', 'postgraduate', 'professional']);
+export const pointsTransactionTypeEnum = pgEnum('points_transaction_type', ['event_attendance', 'meeting_completed', 'referral_bonus', 'milestone_reward', 'redemption', 'admin_adjustment']);
+export const matchStatusEnum = pgEnum('match_status', ['pending_review', 'approved', 'rejected', 'active', 'expired']);
+export const subscriptionStatusEnum = pgEnum('subscription_status', ['active', 'past_due', 'canceled', 'incomplete', 'trialing', 'unpaid']);
+export const mbtiTypeEnum = pgEnum('mbti_type', ['INTJ', 'INTP', 'ENTJ', 'ENTP', 'INFJ', 'INFP', 'ENFJ', 'ENFP', 'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ', 'ISTP', 'ISFP', 'ESTP', 'ESFP']);
+export const genderEnum = pgEnum('gender', ['female', 'male', 'non_binary', 'prefer_not_to_say', 'other']);
+export const skillCategoryEnum = pgEnum('skill_category', ['soft_basic', 'soft_expert', 'industry_basic', 'industry_expert']);
+
 // Core user table (simplified - no role field)
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
@@ -41,6 +55,11 @@ export const users = pgTable('users', {
   lastLoginAt: timestamp('last_login_at'),
   loginAttempts: integer('login_attempts').default(0),
   lockedUntil: timestamp('locked_until'),
+  // New fields for business logic update
+  gender: genderEnum('gender'),
+  phone: varchar('phone', { length: 50 }),
+  age: integer('age'),
+  registeredViaInviteCode: integer('registered_via_invite_code'), // FK added after invitationCodes table
 });
 
 // User roles activation table
@@ -75,6 +94,10 @@ export const mentorProfiles = pgTable('mentor_profiles', {
   profileCompletedAt: timestamp('profile_completed_at'),
   verifiedAt: timestamp('verified_at'),
   verifiedBy: integer('verified_by').references(() => users.id),
+  // New fields for business logic update
+  mbtiType: mbtiTypeEnum('mbti_type'),
+  photoUrl: varchar('photo_url', { length: 500 }),
+  formSubmissionId: integer('form_submission_id'), // FK added after mentorFormSubmissions table
 }, (table) => ({
   userIdIdx: index('mentor_profiles_user_id_idx').on(table.userId),
 }));
@@ -90,6 +113,10 @@ export const menteeProfiles = pgTable('mentee_profiles', {
   bio: text('bio'),
   currentChallenge: text('current_challenge'),
   profileCompletedAt: timestamp('profile_completed_at'),
+  // New fields for business logic update
+  mbtiType: mbtiTypeEnum('mbti_type'),
+  photoUrl: varchar('photo_url', { length: 500 }),
+  formSubmissionId: integer('form_submission_id'), // FK added after menteeFormSubmissions table
 }, (table) => ({
   userIdIdx: index('mentee_profiles_user_id_idx').on(table.userId),
 }));
@@ -202,19 +229,25 @@ export const eventRegistrations = pgTable('event_registrations', {
   userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   registeredAt: timestamp('registered_at').notNull().defaultNow(),
   roleInEvent: varchar('role_in_event', { length: 50 }), // speaker, volunteer, attendee
-  
+
   // Attendance tracking
   checkedInAt: timestamp('checked_in_at'),
   checkedOutAt: timestamp('checked_out_at'),
   attendanceDuration: integer('attendance_duration'), // in minutes
-  
+
   // Feedback
   feedbackSubmitted: boolean('feedback_submitted').default(false),
   feedbackScore: integer('feedback_score'),
   feedbackComments: text('feedback_comments'),
-  
+
   certificateIssued: boolean('certificate_issued').default(false),
   certificateUrl: varchar('certificate_url', { length: 500 }),
+
+  // New fields for attendance confirmation and points
+  attendanceConfirmed: boolean('attendance_confirmed').default(false),
+  attendanceConfirmedBy: integer('attendance_confirmed_by').references(() => users.id),
+  attendanceConfirmedAt: timestamp('attendance_confirmed_at'),
+  pointsAwarded: integer('points_awarded').default(0),
 }, (table) => ({
   eventUserUnique: unique().on(table.eventId, table.userId),
   eventIdx: index('registrations_event_idx').on(table.eventId),
@@ -280,9 +313,13 @@ export const userMemberships = pgTable('user_memberships', {
   nextBillingDate: timestamp('next_billing_date'),
   cancelledAt: timestamp('cancelled_at'),
 
-  // Legacy Stripe fields (no longer used, kept for backward compatibility)
+  // Stripe integration fields
   stripeSubscriptionId: text('stripe_subscription_id').unique(),
   stripeCustomerId: text('stripe_customer_id'),
+  currentPurchaseId: integer('current_purchase_id'), // FK added after membershipPurchases table
+
+  // New membership benefits
+  eventPriorityAccess: boolean('event_priority_access').default(false),
 
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
@@ -711,7 +748,572 @@ export enum ActivityType {
   ACCESS_RESOURCE = 'ACCESS_RESOURCE',
   UPGRADE_MEMBERSHIP = 'UPGRADE_MEMBERSHIP',
   CANCEL_MEMBERSHIP = 'CANCEL_MEMBERSHIP',
+  // New activity types for business logic update
+  SUBMIT_MENTOR_FORM = 'SUBMIT_MENTOR_FORM',
+  SUBMIT_MENTEE_FORM = 'SUBMIT_MENTEE_FORM',
+  REVIEW_APPLICATION = 'REVIEW_APPLICATION',
+  GENERATE_INVITATION_CODE = 'GENERATE_INVITATION_CODE',
+  USE_INVITATION_CODE = 'USE_INVITATION_CODE',
+  AWARD_POINTS = 'AWARD_POINTS',
+  REDEEM_REWARD = 'REDEEM_REWARD',
+  AI_MATCH_GENERATED = 'AI_MATCH_GENERATED',
+  AI_MATCH_CONFIRMED = 'AI_MATCH_CONFIRMED',
+  PAYMENT_COMPLETED = 'PAYMENT_COMPLETED',
+  SUBSCRIPTION_CREATED = 'SUBSCRIPTION_CREATED',
+  SUBSCRIPTION_CANCELLED = 'SUBSCRIPTION_CANCELLED',
 }
+
+// ============================================================================
+// NEW TABLES FOR BUSINESS LOGIC UPDATE
+// ============================================================================
+
+// Invitation codes system
+export const invitationCodes = pgTable('invitation_codes', {
+  id: serial('id').primaryKey(),
+  code: varchar('code', { length: 32 }).notNull().unique(),
+  codeType: invitationCodeTypeEnum('code_type').notNull().default('payment'),
+  status: invitationCodeStatusEnum('status').notNull().default('active'),
+  maxUses: integer('max_uses').default(1),
+  currentUses: integer('current_uses').default(0).notNull(),
+  expiresAt: timestamp('expires_at'),
+  purchaseId: integer('purchase_id'), // FK to membershipPurchases
+  generatedBy: integer('generated_by').references(() => users.id),
+  generatedFor: varchar('generated_for', { length: 255 }), // Expected recipient email
+  notes: text('notes'),
+  metadata: jsonb('metadata').$type<Record<string, unknown>>(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  codeIdx: index('invitation_codes_code_idx').on(table.code),
+  statusIdx: index('invitation_codes_status_idx').on(table.status),
+  expiresAtIdx: index('invitation_codes_expires_at_idx').on(table.expiresAt),
+}));
+
+// Invitation code usage records
+export const invitationCodeUsages = pgTable('invitation_code_usages', {
+  id: serial('id').primaryKey(),
+  codeId: integer('code_id').notNull().references(() => invitationCodes.id),
+  usedByUserId: integer('used_by_user_id').notNull().references(() => users.id),
+  usedAt: timestamp('used_at').notNull().defaultNow(),
+  ipAddress: varchar('ip_address', { length: 45 }),
+  userAgent: text('user_agent'),
+}, (table) => ({
+  codeIdIdx: index('invitation_code_usages_code_id_idx').on(table.codeId),
+  userIdIdx: index('invitation_code_usages_user_id_idx').on(table.usedByUserId),
+}));
+
+// Membership purchases (Stripe integration)
+export const membershipPurchases = pgTable('membership_purchases', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').references(() => users.id, { onDelete: 'set null' }),
+  stripeCustomerId: varchar('stripe_customer_id', { length: 255 }),
+  stripeSubscriptionId: varchar('stripe_subscription_id', { length: 255 }).unique(),
+  stripePaymentIntentId: varchar('stripe_payment_intent_id', { length: 255 }),
+  stripePriceId: varchar('stripe_price_id', { length: 255 }),
+  amountPaid: decimal('amount_paid', { precision: 10, scale: 2 }).notNull(),
+  currency: varchar('currency', { length: 3 }).default('NZD').notNull(),
+  membershipTier: membershipTierEnum('membership_tier').notNull(),
+  periodStart: timestamp('period_start').notNull(),
+  periodEnd: timestamp('period_end').notNull(),
+  subscriptionStatus: subscriptionStatusEnum('subscription_status').notNull(),
+  autoRenew: boolean('auto_renew').default(true),
+  canceledAt: timestamp('canceled_at'),
+  cancelReason: text('cancel_reason'),
+  invoiceUrl: varchar('invoice_url', { length: 500 }),
+  receiptUrl: varchar('receipt_url', { length: 500 }),
+  metadata: jsonb('metadata').$type<Record<string, unknown>>(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  userIdIdx: index('membership_purchases_user_id_idx').on(table.userId),
+  stripeSubIdx: index('membership_purchases_stripe_sub_idx').on(table.stripeSubscriptionId),
+  statusIdx: index('membership_purchases_status_idx').on(table.subscriptionStatus),
+  periodEndIdx: index('membership_purchases_period_end_idx').on(table.periodEnd),
+}));
+
+// Membership benefits configuration
+export const membershipBenefits = pgTable('membership_benefits', {
+  id: serial('id').primaryKey(),
+  tier: membershipTierEnum('tier').notNull(),
+  benefitKey: varchar('benefit_key', { length: 100 }).notNull(),
+  benefitName: varchar('benefit_name', { length: 200 }).notNull(),
+  description: text('description'),
+  isIncluded: boolean('is_included').default(false),
+  quantityLimit: integer('quantity_limit'),
+  sortOrder: integer('sort_order').default(0),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+}, (table) => ({
+  tierBenefitUnique: unique().on(table.tier, table.benefitKey),
+}));
+
+// Skill options (predefined + custom)
+export const skillOptions = pgTable('skill_options', {
+  id: serial('id').primaryKey(),
+  category: skillCategoryEnum('category').notNull(),
+  name: varchar('name', { length: 200 }).notNull(),
+  description: text('description'),
+  isSystemDefined: boolean('is_system_defined').default(true),
+  usageCount: integer('usage_count').default(0),
+  createdBy: integer('created_by').references(() => users.id),
+  isActive: boolean('is_active').default(true),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+}, (table) => ({
+  categoryNameUnique: unique().on(table.category, table.name),
+  categoryIdx: index('skill_options_category_idx').on(table.category),
+}));
+
+// Industry options
+export const industryOptions = pgTable('industry_options', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 200 }).notNull().unique(),
+  description: text('description'),
+  isActive: boolean('is_active').default(true),
+  sortOrder: integer('sort_order').default(0),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+// Mentor form submissions
+export const mentorFormSubmissions = pgTable('mentor_form_submissions', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').unique().references(() => users.id, { onDelete: 'cascade' }),
+  email: varchar('email', { length: 255 }), // For pre-registration submissions
+  status: formStatusEnum('status').notNull().default('not_started'),
+  lastSavedAt: timestamp('last_saved_at'),
+  submittedAt: timestamp('submitted_at'),
+  reviewedAt: timestamp('reviewed_at'),
+  reviewedBy: integer('reviewed_by').references(() => users.id),
+  reviewNotes: text('review_notes'),
+  // Personal info
+  fullName: varchar('full_name', { length: 200 }),
+  gender: genderEnum('gender'),
+  phone: varchar('phone', { length: 50 }),
+  jobTitle: varchar('job_title', { length: 200 }),
+  company: varchar('company', { length: 200 }),
+  photoUrl: varchar('photo_url', { length: 500 }),
+  photoUploadedAt: timestamp('photo_uploaded_at'),
+  // Bio
+  bioMethod: bioMethodEnum('bio_method'),
+  bio: text('bio'),
+  // Skills (JSONB for flexibility)
+  softSkillsBasic: jsonb('soft_skills_basic').$type<string[]>(),
+  industrySkillsBasic: jsonb('industry_skills_basic').$type<string[]>(),
+  softSkillsExpert: jsonb('soft_skills_expert').$type<string[]>(),
+  industrySkillsExpert: jsonb('industry_skills_expert').$type<string[]>(),
+  // Goals and expectations
+  expectedMenteeGoalsLongTerm: text('expected_mentee_goals_long_term'),
+  expectedMenteeGoalsShortTerm: text('expected_mentee_goals_short_term'),
+  programExpectations: text('program_expectations'),
+  // Preferences
+  preferredMenteeTypes: jsonb('preferred_mentee_types').$type<string[]>(),
+  preferredIndustries: jsonb('preferred_industries').$type<string[]>(),
+  // MBTI
+  mbtiType: mbtiTypeEnum('mbti_type'),
+  // Other
+  yearsExperience: integer('years_experience'),
+  linkedinUrl: varchar('linkedin_url', { length: 500 }),
+  availabilityHoursPerMonth: integer('availability_hours_per_month'),
+  maxMentees: integer('max_mentees').default(3),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  userIdIdx: index('mentor_form_submissions_user_id_idx').on(table.userId),
+  statusIdx: index('mentor_form_submissions_status_idx').on(table.status),
+  emailIdx: index('mentor_form_submissions_email_idx').on(table.email),
+}));
+
+// Mentee form submissions
+export const menteeFormSubmissions = pgTable('mentee_form_submissions', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').unique().references(() => users.id, { onDelete: 'cascade' }),
+  email: varchar('email', { length: 255 }), // For pre-registration submissions
+  status: formStatusEnum('status').notNull().default('not_started'),
+  lastSavedAt: timestamp('last_saved_at'),
+  submittedAt: timestamp('submitted_at'),
+  reviewedAt: timestamp('reviewed_at'),
+  reviewedBy: integer('reviewed_by').references(() => users.id),
+  reviewNotes: text('review_notes'),
+  // Personal info
+  fullName: varchar('full_name', { length: 200 }),
+  age: integer('age'),
+  phone: varchar('phone', { length: 50 }),
+  currentStage: careerStageEnum('current_stage'),
+  photoUrl: varchar('photo_url', { length: 500 }),
+  photoUploadedAt: timestamp('photo_uploaded_at'),
+  bio: text('bio'),
+  // Professional background
+  currentJobTitle: varchar('current_job_title', { length: 200 }),
+  currentIndustry: varchar('current_industry', { length: 200 }),
+  preferredIndustries: jsonb('preferred_industries').$type<string[]>(),
+  // Skills
+  softSkillsBasic: jsonb('soft_skills_basic').$type<string[]>(),
+  industrySkillsBasic: jsonb('industry_skills_basic').$type<string[]>(),
+  softSkillsExpert: jsonb('soft_skills_expert').$type<string[]>(),
+  industrySkillsExpert: jsonb('industry_skills_expert').$type<string[]>(),
+  // Goals
+  longTermGoals: text('long_term_goals'),
+  shortTermGoals: text('short_term_goals'),
+  whyMentor: text('why_mentor'),
+  programExpectations: text('program_expectations'),
+  // MBTI
+  mbtiType: mbtiTypeEnum('mbti_type'),
+  preferredMeetingFrequency: varchar('preferred_meeting_frequency', { length: 50 }),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  userIdIdx: index('mentee_form_submissions_user_id_idx').on(table.userId),
+  statusIdx: index('mentee_form_submissions_status_idx').on(table.status),
+  emailIdx: index('mentee_form_submissions_email_idx').on(table.email),
+}));
+
+// User points balance
+export const userPoints = pgTable('user_points', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull().unique().references(() => users.id, { onDelete: 'cascade' }),
+  currentPoints: integer('current_points').default(0).notNull(),
+  lifetimePoints: integer('lifetime_points').default(0).notNull(),
+  experienceLevel: integer('experience_level').default(1).notNull(),
+  experienceLevelName: varchar('experience_level_name', { length: 100 }).default('Newcomer'),
+  eventsAttended: integer('events_attended').default(0).notNull(),
+  meetingsCompleted: integer('meetings_completed').default(0).notNull(),
+  lastMilestoneAchieved: varchar('last_milestone_achieved', { length: 100 }),
+  nextMilestoneTarget: integer('next_milestone_target'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  userIdIdx: index('user_points_user_id_idx').on(table.userId),
+  levelIdx: index('user_points_level_idx').on(table.experienceLevel),
+}));
+
+// Points transactions
+export const pointsTransactions = pgTable('points_transactions', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  transactionType: pointsTransactionTypeEnum('transaction_type').notNull(),
+  points: integer('points').notNull(),
+  balanceAfter: integer('balance_after').notNull(),
+  sourceEntityType: varchar('source_entity_type', { length: 50 }),
+  sourceEntityId: integer('source_entity_id'),
+  description: text('description'),
+  confirmedBy: integer('confirmed_by').references(() => users.id),
+  confirmedAt: timestamp('confirmed_at'),
+  expiresAt: timestamp('expires_at'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+}, (table) => ({
+  userIdIdx: index('points_transactions_user_id_idx').on(table.userId),
+  typeIdx: index('points_transactions_type_idx').on(table.transactionType),
+  sourceIdx: index('points_transactions_source_idx').on(table.sourceEntityType, table.sourceEntityId),
+}));
+
+// Experience levels configuration
+export const experienceLevels = pgTable('experience_levels', {
+  id: serial('id').primaryKey(),
+  level: integer('level').notNull().unique(),
+  name: varchar('name', { length: 100 }).notNull(),
+  minPoints: integer('min_points').notNull(),
+  maxPoints: integer('max_points'),
+  badgeImageUrl: varchar('badge_image_url', { length: 500 }),
+  benefits: jsonb('benefits').$type<string[]>(),
+  color: varchar('color', { length: 20 }),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+// Points rules configuration
+export const pointsRules = pgTable('points_rules', {
+  id: serial('id').primaryKey(),
+  transactionType: pointsTransactionTypeEnum('transaction_type').notNull(),
+  eventType: eventTypeEnum('event_type'),
+  pointsAmount: integer('points_amount').notNull(),
+  description: text('description'),
+  isActive: boolean('is_active').default(true),
+  validFrom: timestamp('valid_from'),
+  validUntil: timestamp('valid_until'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+// Milestones definition
+export const milestones = pgTable('milestones', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 200 }).notNull(),
+  description: text('description'),
+  milestoneType: varchar('milestone_type', { length: 50 }).notNull(),
+  targetValue: integer('target_value').notNull(),
+  rewardPoints: integer('reward_points').default(0),
+  badgeImageUrl: varchar('badge_image_url', { length: 500 }),
+  isActive: boolean('is_active').default(true),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+// User milestones achievements
+export const userMilestones = pgTable('user_milestones', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  milestoneId: integer('milestone_id').notNull().references(() => milestones.id),
+  achievedAt: timestamp('achieved_at').notNull().defaultNow(),
+  pointsAwarded: integer('points_awarded'),
+}, (table) => ({
+  userMilestoneUnique: unique().on(table.userId, table.milestoneId),
+}));
+
+// Rewards catalog
+export const rewards = pgTable('rewards', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 200 }).notNull(),
+  description: text('description'),
+  pointsCost: integer('points_cost').notNull(),
+  imageUrl: varchar('image_url', { length: 500 }),
+  category: varchar('category', { length: 100 }),
+  quantityAvailable: integer('quantity_available'),
+  quantityRedeemed: integer('quantity_redeemed').default(0),
+  isActive: boolean('is_active').default(true),
+  validFrom: timestamp('valid_from'),
+  validUntil: timestamp('valid_until'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+// Reward redemptions
+export const rewardRedemptions = pgTable('reward_redemptions', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull().references(() => users.id),
+  rewardId: integer('reward_id').notNull().references(() => rewards.id),
+  pointsSpent: integer('points_spent').notNull(),
+  status: varchar('status', { length: 50 }).default('pending').notNull(),
+  fulfilledAt: timestamp('fulfilled_at'),
+  fulfilledBy: integer('fulfilled_by').references(() => users.id),
+  notes: text('notes'),
+  redeemedAt: timestamp('redeemed_at').notNull().defaultNow(),
+});
+
+// AI match results
+export const aiMatchResults = pgTable('ai_match_results', {
+  id: serial('id').primaryKey(),
+  mentorUserId: integer('mentor_user_id').notNull().references(() => users.id),
+  menteeUserId: integer('mentee_user_id').notNull().references(() => users.id),
+  overallScore: decimal('overall_score', { precision: 5, scale: 2 }).notNull(),
+  mbtiCompatibilityScore: decimal('mbti_compatibility_score', { precision: 5, scale: 2 }),
+  skillMatchScore: decimal('skill_match_score', { precision: 5, scale: 2 }),
+  goalAlignmentScore: decimal('goal_alignment_score', { precision: 5, scale: 2 }),
+  industryMatchScore: decimal('industry_match_score', { precision: 5, scale: 2 }),
+  matchingFactors: jsonb('matching_factors').$type<{
+    mbti?: { mentorType: string; menteeType: string; compatibilityReason: string };
+    skills?: { matchedSkills: string[]; complementarySkills: string[] };
+    goals?: { alignedGoals: string[]; mentorCanHelp: string[] };
+    industry?: { mentorIndustries: string[]; menteePreferred: string[]; overlap: string[] };
+  }>(),
+  aiModelVersion: varchar('ai_model_version', { length: 50 }),
+  matchingAlgorithm: varchar('matching_algorithm', { length: 100 }),
+  status: matchStatusEnum('status').notNull().default('pending_review'),
+  reviewedBy: integer('reviewed_by').references(() => users.id),
+  reviewedAt: timestamp('reviewed_at'),
+  reviewNotes: text('review_notes'),
+  relationshipId: integer('relationship_id').references(() => mentorshipRelationships.id),
+  expiresAt: timestamp('expires_at'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  mentorMenteeUnique: unique().on(table.mentorUserId, table.menteeUserId),
+  mentorIdx: index('ai_match_results_mentor_idx').on(table.mentorUserId),
+  menteeIdx: index('ai_match_results_mentee_idx').on(table.menteeUserId),
+  statusIdx: index('ai_match_results_status_idx').on(table.status),
+  scoreIdx: index('ai_match_results_score_idx').on(table.overallScore),
+}));
+
+// AI matching runs (batch records)
+export const aiMatchingRuns = pgTable('ai_matching_runs', {
+  id: serial('id').primaryKey(),
+  runType: varchar('run_type', { length: 50 }).notNull(),
+  status: varchar('status', { length: 50 }).notNull().default('running'),
+  menteesProcessed: integer('mentees_processed').default(0),
+  matchesGenerated: integer('matches_generated').default(0),
+  startedAt: timestamp('started_at').notNull().defaultNow(),
+  completedAt: timestamp('completed_at'),
+  triggeredBy: integer('triggered_by').references(() => users.id),
+  summary: jsonb('summary').$type<{
+    totalMentees: number;
+    totalMentors: number;
+    matchesCreated: number;
+    averageScore: number;
+    errors: string[];
+  }>(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+// ============================================================================
+// RELATIONS FOR NEW TABLES
+// ============================================================================
+
+export const invitationCodesRelations = relations(invitationCodes, ({ one, many }) => ({
+  generatedBy: one(users, {
+    fields: [invitationCodes.generatedBy],
+    references: [users.id],
+  }),
+  usages: many(invitationCodeUsages),
+}));
+
+export const invitationCodeUsagesRelations = relations(invitationCodeUsages, ({ one }) => ({
+  code: one(invitationCodes, {
+    fields: [invitationCodeUsages.codeId],
+    references: [invitationCodes.id],
+  }),
+  user: one(users, {
+    fields: [invitationCodeUsages.usedByUserId],
+    references: [users.id],
+  }),
+}));
+
+export const membershipPurchasesRelations = relations(membershipPurchases, ({ one }) => ({
+  user: one(users, {
+    fields: [membershipPurchases.userId],
+    references: [users.id],
+  }),
+}));
+
+export const mentorFormSubmissionsRelations = relations(mentorFormSubmissions, ({ one }) => ({
+  user: one(users, {
+    fields: [mentorFormSubmissions.userId],
+    references: [users.id],
+  }),
+  reviewer: one(users, {
+    fields: [mentorFormSubmissions.reviewedBy],
+    references: [users.id],
+    relationName: 'mentorFormReviewer',
+  }),
+}));
+
+export const menteeFormSubmissionsRelations = relations(menteeFormSubmissions, ({ one }) => ({
+  user: one(users, {
+    fields: [menteeFormSubmissions.userId],
+    references: [users.id],
+  }),
+  reviewer: one(users, {
+    fields: [menteeFormSubmissions.reviewedBy],
+    references: [users.id],
+    relationName: 'menteeFormReviewer',
+  }),
+}));
+
+export const userPointsRelations = relations(userPoints, ({ one }) => ({
+  user: one(users, {
+    fields: [userPoints.userId],
+    references: [users.id],
+  }),
+}));
+
+export const pointsTransactionsRelations = relations(pointsTransactions, ({ one }) => ({
+  user: one(users, {
+    fields: [pointsTransactions.userId],
+    references: [users.id],
+  }),
+  confirmer: one(users, {
+    fields: [pointsTransactions.confirmedBy],
+    references: [users.id],
+    relationName: 'pointsConfirmer',
+  }),
+}));
+
+export const userMilestonesRelations = relations(userMilestones, ({ one }) => ({
+  user: one(users, {
+    fields: [userMilestones.userId],
+    references: [users.id],
+  }),
+  milestone: one(milestones, {
+    fields: [userMilestones.milestoneId],
+    references: [milestones.id],
+  }),
+}));
+
+export const milestonesRelations = relations(milestones, ({ many }) => ({
+  userMilestones: many(userMilestones),
+}));
+
+export const rewardsRelations = relations(rewards, ({ many }) => ({
+  redemptions: many(rewardRedemptions),
+}));
+
+export const rewardRedemptionsRelations = relations(rewardRedemptions, ({ one }) => ({
+  user: one(users, {
+    fields: [rewardRedemptions.userId],
+    references: [users.id],
+  }),
+  reward: one(rewards, {
+    fields: [rewardRedemptions.rewardId],
+    references: [rewards.id],
+  }),
+  fulfiller: one(users, {
+    fields: [rewardRedemptions.fulfilledBy],
+    references: [users.id],
+    relationName: 'rewardFulfiller',
+  }),
+}));
+
+export const aiMatchResultsRelations = relations(aiMatchResults, ({ one }) => ({
+  mentor: one(users, {
+    fields: [aiMatchResults.mentorUserId],
+    references: [users.id],
+    relationName: 'matchedMentor',
+  }),
+  mentee: one(users, {
+    fields: [aiMatchResults.menteeUserId],
+    references: [users.id],
+    relationName: 'matchedMentee',
+  }),
+  reviewer: one(users, {
+    fields: [aiMatchResults.reviewedBy],
+    references: [users.id],
+    relationName: 'matchReviewer',
+  }),
+  relationship: one(mentorshipRelationships, {
+    fields: [aiMatchResults.relationshipId],
+    references: [mentorshipRelationships.id],
+  }),
+}));
+
+export const aiMatchingRunsRelations = relations(aiMatchingRuns, ({ one }) => ({
+  triggeredBy: one(users, {
+    fields: [aiMatchingRuns.triggeredBy],
+    references: [users.id],
+  }),
+}));
+
+// ============================================================================
+// TYPE EXPORTS FOR NEW TABLES
+// ============================================================================
+
+export type InvitationCode = typeof invitationCodes.$inferSelect;
+export type NewInvitationCode = typeof invitationCodes.$inferInsert;
+export type InvitationCodeUsage = typeof invitationCodeUsages.$inferSelect;
+export type NewInvitationCodeUsage = typeof invitationCodeUsages.$inferInsert;
+export type MembershipPurchase = typeof membershipPurchases.$inferSelect;
+export type NewMembershipPurchase = typeof membershipPurchases.$inferInsert;
+export type MembershipBenefit = typeof membershipBenefits.$inferSelect;
+export type NewMembershipBenefit = typeof membershipBenefits.$inferInsert;
+export type SkillOption = typeof skillOptions.$inferSelect;
+export type NewSkillOption = typeof skillOptions.$inferInsert;
+export type IndustryOption = typeof industryOptions.$inferSelect;
+export type NewIndustryOption = typeof industryOptions.$inferInsert;
+export type MentorFormSubmission = typeof mentorFormSubmissions.$inferSelect;
+export type NewMentorFormSubmission = typeof mentorFormSubmissions.$inferInsert;
+export type MenteeFormSubmission = typeof menteeFormSubmissions.$inferSelect;
+export type NewMenteeFormSubmission = typeof menteeFormSubmissions.$inferInsert;
+export type UserPoint = typeof userPoints.$inferSelect;
+export type NewUserPoint = typeof userPoints.$inferInsert;
+export type PointsTransaction = typeof pointsTransactions.$inferSelect;
+export type NewPointsTransaction = typeof pointsTransactions.$inferInsert;
+export type ExperienceLevel = typeof experienceLevels.$inferSelect;
+export type NewExperienceLevel = typeof experienceLevels.$inferInsert;
+export type PointsRule = typeof pointsRules.$inferSelect;
+export type NewPointsRule = typeof pointsRules.$inferInsert;
+export type Milestone = typeof milestones.$inferSelect;
+export type NewMilestone = typeof milestones.$inferInsert;
+export type UserMilestone = typeof userMilestones.$inferSelect;
+export type NewUserMilestone = typeof userMilestones.$inferInsert;
+export type Reward = typeof rewards.$inferSelect;
+export type NewReward = typeof rewards.$inferInsert;
+export type RewardRedemption = typeof rewardRedemptions.$inferSelect;
+export type NewRewardRedemption = typeof rewardRedemptions.$inferInsert;
+export type AiMatchResult = typeof aiMatchResults.$inferSelect;
+export type NewAiMatchResult = typeof aiMatchResults.$inferInsert;
+export type AiMatchingRun = typeof aiMatchingRuns.$inferSelect;
+export type NewAiMatchingRun = typeof aiMatchingRuns.$inferInsert;
 
 // Legacy team-related tables (to be removed in future migration)
 export const teams = pgTable('teams', {

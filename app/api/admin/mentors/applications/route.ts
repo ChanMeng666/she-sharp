@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
-import { mentorProfiles, users, userRoles } from '@/lib/db/schema';
-import { eq, and, isNull, isNotNull, desc, sql } from 'drizzle-orm';
+import { mentorFormSubmissions, users } from '@/lib/db/schema';
+import { eq, and, or, desc, sql, isNotNull } from 'drizzle-orm';
 
-// Admin-only mentor applications endpoint
+/**
+ * GET /api/admin/mentors/applications
+ * Fetches mentor applications from form submissions (including public submissions).
+ */
 export const GET = withRoles(
   {
     requiredRoles: ['admin'],
@@ -15,82 +18,129 @@ export const GET = withRoles(
       const { searchParams } = new URL(req.url);
       const statusFilter = searchParams.get('status') || 'pending';
 
-      let conditions = [];
-
-      // Filter based on verification status
-      if (statusFilter === 'pending') {
-        conditions.push(isNull(mentorProfiles.verifiedAt));
+      // Build status conditions
+      let statusCondition;
+      if (statusFilter === 'pending' || statusFilter === 'submitted') {
+        statusCondition = eq(mentorFormSubmissions.status, 'submitted');
       } else if (statusFilter === 'under_review') {
-        // For this simple implementation, treat under_review same as pending
-        // In a real system, you might have a separate field for this
-        conditions.push(isNull(mentorProfiles.verifiedAt));
+        statusCondition = eq(mentorFormSubmissions.status, 'in_progress');
       } else if (statusFilter === 'approved') {
-        conditions.push(isNotNull(mentorProfiles.verifiedAt));
+        statusCondition = eq(mentorFormSubmissions.status, 'approved');
+      } else if (statusFilter === 'rejected') {
+        statusCondition = eq(mentorFormSubmissions.status, 'rejected');
+      } else {
+        // 'all' - fetch all non-draft submissions
+        statusCondition = or(
+          eq(mentorFormSubmissions.status, 'submitted'),
+          eq(mentorFormSubmissions.status, 'approved'),
+          eq(mentorFormSubmissions.status, 'rejected')
+        );
       }
 
-      // Fetch mentor profiles with user information
-      const applications = await db
+      // Fetch form submissions (left join with users for public submissions)
+      const submissions = await db
         .select({
-          id: mentorProfiles.id,
-          userId: mentorProfiles.userId,
+          id: mentorFormSubmissions.id,
+          userId: mentorFormSubmissions.userId,
+          email: mentorFormSubmissions.email,
+          status: mentorFormSubmissions.status,
+          fullName: mentorFormSubmissions.fullName,
+          gender: mentorFormSubmissions.gender,
+          phone: mentorFormSubmissions.phone,
+          mbtiType: mentorFormSubmissions.mbtiType,
+          jobTitle: mentorFormSubmissions.jobTitle,
+          company: mentorFormSubmissions.company,
+          bio: mentorFormSubmissions.bio,
+          photoUrl: mentorFormSubmissions.photoUrl,
+          yearsExperience: mentorFormSubmissions.yearsExperience,
+          linkedinUrl: mentorFormSubmissions.linkedinUrl,
+          availabilityHoursPerMonth: mentorFormSubmissions.availabilityHoursPerMonth,
+          maxMentees: mentorFormSubmissions.maxMentees,
+          softSkillsExpert: mentorFormSubmissions.softSkillsExpert,
+          industrySkillsExpert: mentorFormSubmissions.industrySkillsExpert,
+          expectedMenteeGoalsLongTerm: mentorFormSubmissions.expectedMenteeGoalsLongTerm,
+          programExpectations: mentorFormSubmissions.programExpectations,
+          submittedAt: mentorFormSubmissions.submittedAt,
+          reviewedAt: mentorFormSubmissions.reviewedAt,
+          reviewedBy: mentorFormSubmissions.reviewedBy,
+          reviewNotes: mentorFormSubmissions.reviewNotes,
+          createdAt: mentorFormSubmissions.createdAt,
+          // User fields (may be null for public submissions)
           userName: users.name,
           userEmail: users.email,
           userImage: users.image,
-          expertiseAreas: mentorProfiles.expertiseAreas,
-          yearsExperience: mentorProfiles.yearsExperience,
-          company: mentorProfiles.company,
-          jobTitle: mentorProfiles.jobTitle,
-          bio: mentorProfiles.bio,
-          linkedinUrl: mentorProfiles.linkedinUrl,
-          availabilityHoursPerMonth: mentorProfiles.availabilityHoursPerMonth,
-          profileCompletedAt: mentorProfiles.profileCompletedAt,
-          verifiedAt: mentorProfiles.verifiedAt,
         })
-        .from(mentorProfiles)
-        .innerJoin(users, eq(mentorProfiles.userId, users.id))
-        .where(
-          conditions.length > 0
-            ? and(
-                ...conditions,
-                sql`${users.deletedAt} IS NULL`
-              )
-            : sql`${users.deletedAt} IS NULL`
-        )
-        .orderBy(desc(mentorProfiles.profileCompletedAt));
+        .from(mentorFormSubmissions)
+        .leftJoin(users, eq(mentorFormSubmissions.userId, users.id))
+        .where(statusCondition)
+        .orderBy(desc(mentorFormSubmissions.submittedAt));
 
       // Transform to match expected interface
-      const formattedApplications = applications.map(app => {
-        let status: 'pending' | 'under_review' | 'approved' | 'rejected';
+      const formattedApplications = submissions.map(app => {
+        // Combine soft skills and industry skills as expertise areas
+        const expertiseAreas = [
+          ...(app.softSkillsExpert as string[] || []),
+          ...(app.industrySkillsExpert as string[] || []),
+        ];
 
-        if (app.verifiedAt) {
-          status = 'approved';
-        } else {
-          status = 'pending';
+        // Map form status to UI status
+        let uiStatus: 'pending' | 'under_review' | 'approved' | 'rejected';
+        switch (app.status) {
+          case 'submitted':
+            uiStatus = 'pending';
+            break;
+          case 'in_progress':
+            uiStatus = 'under_review';
+            break;
+          case 'approved':
+            uiStatus = 'approved';
+            break;
+          case 'rejected':
+            uiStatus = 'rejected';
+            break;
+          default:
+            uiStatus = 'pending';
         }
 
         return {
           id: app.id,
           userId: app.userId,
+          isPublicApplication: !app.userId,
           user: {
-            name: app.userName || 'Unknown User',
-            email: app.userEmail,
-            image: app.userImage,
+            name: app.fullName || app.userName || 'Unknown',
+            email: app.email || app.userEmail || 'No email',
+            image: app.photoUrl || app.userImage,
           },
-          expertiseAreas: (app.expertiseAreas as string[]) || [],
+          expertiseAreas,
           yearsExperience: app.yearsExperience || 0,
           company: app.company || '',
           jobTitle: app.jobTitle || '',
           bio: app.bio || '',
           linkedinUrl: app.linkedinUrl || '',
           availabilityHoursPerMonth: app.availabilityHoursPerMonth || 0,
-          submittedAt: app.profileCompletedAt?.toISOString() || new Date().toISOString(),
-          status,
+          maxMentees: app.maxMentees || 3,
+          mbtiType: app.mbtiType,
+          expectedMenteeGoals: app.expectedMenteeGoalsLongTerm || '',
+          programExpectations: app.programExpectations || '',
+          submittedAt: app.submittedAt?.toISOString() || app.createdAt.toISOString(),
+          reviewedAt: app.reviewedAt?.toISOString(),
+          reviewNotes: app.reviewNotes,
+          status: uiStatus,
         };
       });
 
+      // Calculate stats
+      const stats = {
+        pending: submissions.filter(s => s.status === 'submitted').length,
+        underReview: submissions.filter(s => s.status === 'in_progress').length,
+        approved: submissions.filter(s => s.status === 'approved').length,
+        rejected: submissions.filter(s => s.status === 'rejected').length,
+      };
+
       return NextResponse.json({
         applications: formattedApplications,
-        total: formattedApplications.length
+        total: formattedApplications.length,
+        stats,
       });
     } catch (error) {
       console.error('Error fetching mentor applications:', error);

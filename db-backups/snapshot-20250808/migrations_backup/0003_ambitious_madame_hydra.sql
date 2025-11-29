@@ -1,1 +1,0 @@
-ALTER TABLE "activity_logs" ALTER COLUMN "team_id" DROP NOT NULL;

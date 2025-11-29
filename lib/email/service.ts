@@ -359,3 +359,231 @@ If you didn't expect this invitation, you can safely ignore this email.
     text,
   });
 }
+
+/**
+ * Send payment confirmation email with invitation code
+ */
+export async function sendPaymentConfirmationEmail(
+  email: string,
+  details: {
+    invitationCode: string;
+    membershipTier: string;
+    expiresAt: Date;
+    amount: string;
+  }
+) {
+  const baseUrl = process.env.NODE_ENV === 'development' && process.env.BASE_URL?.includes('vercel.app')
+    ? 'http://localhost:3000'
+    : (process.env.BASE_URL || 'http://localhost:3000');
+  const signUpUrl = `${baseUrl}/sign-up?code=${details.invitationCode}`;
+  const expiryDate = new Date(details.expiresAt).toLocaleDateString('en-NZ', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>Payment Confirmation - She Sharp</title>
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #9b2e83 0%, #5a1968 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+        .content { background: #f9f9f9; padding: 30px; border: 1px solid #e0e0e0; border-top: none; }
+        .button { display: inline-block; padding: 12px 30px; background: #9b2e83; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+        .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
+        .code-box { background: #e8f5e9; border: 2px dashed #4caf50; padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0; }
+        .code { font-size: 24px; font-weight: bold; color: #2e7d32; letter-spacing: 2px; font-family: monospace; }
+        .details-box { background: #fff; border: 1px solid #e0e0e0; padding: 15px; border-radius: 5px; margin: 15px 0; }
+        .success-badge { background: #4caf50; color: white; padding: 8px 16px; border-radius: 20px; display: inline-block; margin-bottom: 20px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>🎉 Payment Successful!</h1>
+        </div>
+        <div class="content">
+          <div style="text-align: center;">
+            <span class="success-badge">✓ Payment Confirmed</span>
+          </div>
+
+          <h2>Welcome to She Sharp Mentorship Program!</h2>
+          <p>Thank you for your payment of <strong>$${details.amount} NZD</strong> for the ${details.membershipTier.charAt(0).toUpperCase() + details.membershipTier.slice(1)} Membership.</p>
+
+          <div class="code-box">
+            <p style="margin: 0 0 10px 0; color: #666;">Your Invitation Code:</p>
+            <div class="code">${details.invitationCode}</div>
+            <p style="margin: 10px 0 0 0; font-size: 12px; color: #666;">Use this code to complete your registration</p>
+          </div>
+
+          <div class="details-box">
+            <h3 style="margin-top: 0;">Membership Details</h3>
+            <p><strong>Tier:</strong> ${details.membershipTier.charAt(0).toUpperCase() + details.membershipTier.slice(1)}</p>
+            <p><strong>Valid Until:</strong> ${expiryDate}</p>
+            <p><strong>Benefits:</strong></p>
+            <ul style="margin: 0; padding-left: 20px;">
+              <li>Priority access to mentorship matching</li>
+              <li>Exclusive networking events</li>
+              <li>Premium learning resources</li>
+              <li>1-on-1 mentor sessions</li>
+            </ul>
+          </div>
+
+          <p>Click the button below to complete your registration:</p>
+          <div style="text-align: center;">
+            <a href="${signUpUrl}" class="button" style="color: white;">Complete Registration</a>
+          </div>
+
+          <p style="color: #666; font-size: 14px;">Or copy your invitation code and use it during sign-up at:</p>
+          <div style="background: #f0f0f0; padding: 10px; border-radius: 5px; word-break: break-all; margin: 10px 0;">
+            <code style="font-size: 12px;">${baseUrl}/sign-up</code>
+          </div>
+
+          <p style="color: #999; font-size: 12px;">Note: This invitation code is valid for 30 days and can only be used once.</p>
+        </div>
+        <div class="footer">
+          <p>© 2025 She Sharp. Empowering women in STEM.</p>
+          <p>Questions? Contact us at support@shesharp.org</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  const text = `
+Payment Confirmation - She Sharp
+
+🎉 Payment Successful!
+
+Thank you for your payment of $${details.amount} NZD for the ${details.membershipTier} Membership.
+
+YOUR INVITATION CODE: ${details.invitationCode}
+
+Membership Details:
+- Tier: ${details.membershipTier}
+- Valid Until: ${expiryDate}
+
+Benefits include:
+- Priority access to mentorship matching
+- Exclusive networking events
+- Premium learning resources
+- 1-on-1 mentor sessions
+
+Complete your registration at:
+${signUpUrl}
+
+Or use your invitation code during sign-up at:
+${baseUrl}/sign-up
+
+Note: This invitation code is valid for 30 days and can only be used once.
+
+© 2025 She Sharp. Empowering women in STEM.
+Questions? Contact us at support@shesharp.org
+  `;
+
+  return sendEmail({
+    to: email,
+    subject: '🎉 Payment Confirmed - Your She Sharp Invitation Code',
+    html,
+    text,
+  });
+}
+
+/**
+ * Send invitation code email (for mentor approval or admin-generated codes)
+ */
+export async function sendInvitationCodeEmail(
+  email: string,
+  details: {
+    invitationCode: string;
+    codeType: 'mentor_approved' | 'admin_generated';
+    expiresAt?: Date;
+    message?: string;
+  }
+) {
+  const baseUrl = process.env.NODE_ENV === 'development' && process.env.BASE_URL?.includes('vercel.app')
+    ? 'http://localhost:3000'
+    : (process.env.BASE_URL || 'http://localhost:3000');
+  const signUpUrl = `${baseUrl}/sign-up?code=${details.invitationCode}`;
+
+  const isApproval = details.codeType === 'mentor_approved';
+  const title = isApproval ? 'Your Mentor Application is Approved!' : 'Your She Sharp Invitation';
+  const greeting = isApproval
+    ? 'Congratulations! Your application to become a mentor at She Sharp has been approved.'
+    : 'You have been invited to join She Sharp!';
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>${title} - She Sharp</title>
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #9b2e83 0%, #5a1968 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+        .content { background: #f9f9f9; padding: 30px; border: 1px solid #e0e0e0; border-top: none; }
+        .button { display: inline-block; padding: 12px 30px; background: #9b2e83; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+        .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
+        .code-box { background: #e3f2fd; border: 2px dashed #2196f3; padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0; }
+        .code { font-size: 24px; font-weight: bold; color: #1565c0; letter-spacing: 2px; font-family: monospace; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>${isApproval ? '🎉' : '✉️'} ${title}</h1>
+        </div>
+        <div class="content">
+          <p>${greeting}</p>
+          ${details.message ? `<p>${details.message}</p>` : ''}
+
+          <div class="code-box">
+            <p style="margin: 0 0 10px 0; color: #666;">Your Invitation Code:</p>
+            <div class="code">${details.invitationCode}</div>
+          </div>
+
+          <p>Click the button below to complete your registration:</p>
+          <div style="text-align: center;">
+            <a href="${signUpUrl}" class="button" style="color: white;">Complete Registration</a>
+          </div>
+
+          <p style="color: #666; font-size: 14px;">Or use your invitation code at: ${baseUrl}/sign-up</p>
+          ${details.expiresAt ? `<p style="color: #999; font-size: 12px;">This code expires on ${new Date(details.expiresAt).toLocaleDateString('en-NZ')}.</p>` : ''}
+        </div>
+        <div class="footer">
+          <p>© 2025 She Sharp. Empowering women in STEM.</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  const text = `
+${title}
+
+${greeting}
+${details.message || ''}
+
+YOUR INVITATION CODE: ${details.invitationCode}
+
+Complete your registration at:
+${signUpUrl}
+
+Or use your invitation code at: ${baseUrl}/sign-up
+${details.expiresAt ? `This code expires on ${new Date(details.expiresAt).toLocaleDateString('en-NZ')}.` : ''}
+
+© 2025 She Sharp. Empowering women in STEM.
+  `;
+
+  return sendEmail({
+    to: email,
+    subject: `${isApproval ? '🎉 ' : ''}${title} - She Sharp`,
+    html,
+    text,
+  });
+}

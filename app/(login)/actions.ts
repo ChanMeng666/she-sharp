@@ -17,8 +17,10 @@ import {
   type NewUserMembership,
   ActivityType,
   invitations,
-  emailVerifications
+  emailVerifications,
+  invitationCodes,
 } from '@/lib/db/schema';
+import { validateInvitationCode, useInvitationCode } from '@/lib/invitations/service';
 import { comparePasswords, hashPassword, setSession } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
@@ -154,11 +156,34 @@ export const signIn = validatedAction(signInSchema, async (data, formData) => {
 const signUpSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
-  inviteId: z.string().optional()
+  invitationCode: z.string().min(1, 'Invitation code is required'),
+  inviteId: z.string().optional() // Legacy field for backward compatibility
 });
 
 export const signUp = validatedAction(signUpSchema, async (data, formData) => {
-  const { email, password, inviteId } = data;
+  const { email, password, invitationCode } = data;
+
+  // Validate invitation code first
+  const codeValidation = await validateInvitationCode(invitationCode);
+  if (!codeValidation.valid) {
+    return {
+      error: codeValidation.error || 'Invalid invitation code.',
+      email,
+      password: '',
+      invitationCode
+    };
+  }
+
+  // Check if invitation code is for specific email
+  if (codeValidation.code?.generatedFor &&
+      codeValidation.code.generatedFor.toLowerCase() !== email.toLowerCase()) {
+    return {
+      error: 'This invitation code is not valid for this email address.',
+      email,
+      password: '',
+      invitationCode
+    };
+  }
 
   const existingUser = await db
     .select()
@@ -170,7 +195,8 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
     return {
       error: 'An account with this email already exists. Please sign in or use a different email.',
       email,
-      password: '' // Don't return password for security
+      password: '',
+      invitationCode
     };
   }
 
@@ -178,8 +204,8 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
 
   const newUser: NewUser = {
     email,
-    passwordHash
-    // Removed role field - using new role activation system
+    passwordHash,
+    registeredViaInviteCode: codeValidation.code?.id
   };
 
   const [createdUser] = await db.insert(users).values(newUser).returning();
@@ -188,94 +214,61 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
     return {
       error: 'Failed to create user. Please try again.',
       email,
-      password
+      password: '',
+      invitationCode
     };
   }
 
-  // Create default free membership for new user
+  // Use the invitation code
+  const useResult = await useInvitationCode(
+    invitationCode,
+    createdUser.id,
+    formData.get('ip') as string | undefined,
+    formData.get('userAgent') as string | undefined
+  );
+
+  if (!useResult.success) {
+    // Rollback user creation on code use failure
+    await db.delete(users).where(eq(users.id, createdUser.id));
+    return {
+      error: useResult.error || 'Failed to use invitation code.',
+      email,
+      password: '',
+      invitationCode
+    };
+  }
+
+  // Determine membership tier based on code type
+  const membershipTier = codeValidation.code?.codeType === 'payment' ? 'premium' : 'free';
+
+  // Create membership for new user
   const newMembership: NewUserMembership = {
     userId: createdUser.id,
-    tier: 'free',
+    tier: membershipTier,
     featuresAccess: {
-      maxMentorApplications: true,  // Changed to boolean
+      maxMentorApplications: true,
       accessBasicResources: true,
       joinFreeEvents: true,
-      viewMentorProfiles: true
-    }
+      viewMentorProfiles: true,
+      priorityEventAccess: membershipTier === 'premium',
+      accessPremiumResources: membershipTier === 'premium',
+    },
+    eventPriorityAccess: membershipTier === 'premium',
   };
-  
+
   await db.insert(userMemberships).values(newMembership);
 
-  let teamId: number;
-  let userRole: string;
-  let createdTeam: typeof teams.$inferSelect | null = null;
-
-  if (inviteId) {
-    // Check if there's a valid invitation
-    const [invitation] = await db
-      .select()
-      .from(invitations)
-      .where(
-        and(
-          eq(invitations.id, parseInt(inviteId)),
-          eq(invitations.email, email),
-          eq(invitations.status, 'pending')
-        )
-      )
-      .limit(1);
-
-    if (invitation) {
-      teamId = invitation.teamId;
-      userRole = invitation.role;
-
-      await db
-        .update(invitations)
-        .set({ status: 'accepted' })
-        .where(eq(invitations.id, invitation.id));
-
-      await logActivity(teamId, createdUser.id, ActivityType.SIGN_UP);
-
-      [createdTeam] = await db
-        .select()
-        .from(teams)
-        .where(eq(teams.id, teamId))
-        .limit(1);
-    } else {
-      return { error: 'Invalid or expired invitation.', email, password };
-    }
-  } else {
-    // Create a new team if there's no invitation
-    const newTeam: NewTeam = {
-      name: `${email}'s Team`
-    };
-
-    [createdTeam] = await db.insert(teams).values(newTeam).returning();
-
-    if (!createdTeam) {
-      return {
-        error: 'Failed to create team. Please try again.',
-        email,
-        password
-      };
-    }
-
-    teamId = createdTeam.id;
-    userRole = 'owner';
-
-    await logActivity(teamId, createdUser.id, ActivityType.SIGN_UP);
-  }
-
-  const newTeamMember: NewTeamMember = {
+  // Log activity
+  await db.insert(activityLogs).values({
     userId: createdUser.id,
-    teamId: teamId,
-    role: userRole
-  };
-
-  // Create team member and log activity
-  await Promise.all([
-    db.insert(teamMembers).values(newTeamMember),
-    logActivity(teamId, createdUser.id, ActivityType.SIGN_UP)
-  ]);
+    action: ActivityType.SIGN_UP,
+    entityType: 'user',
+    entityId: createdUser.id,
+    metadata: {
+      invitationCodeType: codeValidation.code?.codeType,
+      membershipTier,
+    },
+  });
 
   // Create email verification token and send email
   try {
@@ -283,15 +276,11 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
     await sendVerificationEmail(createdUser.email, verification.token);
   } catch (error) {
     console.error('Failed to send verification email:', error);
-    // Continue with registration even if email fails
   }
-
-  // Don't set session immediately - redirect to verification page
-  const redirectTo = formData.get('redirect') as string | null;
 
   // Set session for the new user
   await setSession(createdUser);
-  
+
   // Redirect to welcome page for role selection
   redirect('/dashboard/welcome');
 });
