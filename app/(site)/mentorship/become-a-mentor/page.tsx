@@ -108,8 +108,8 @@ const menteeTypeOptions = [
 ];
 
 const bioMethodOptions = [
-  { value: 'create_own', label: 'Create my own bio' },
-  { value: 'team_create', label: 'Have it created for you. Our team will email it to you for preview' },
+  { value: 'self_written', label: 'Create my own bio' },
+  { value: 'ai_generated', label: 'Have it created for you. Our team will email it to you for preview' },
   { value: 'already_sent', label: 'I have already sent one' },
 ];
 
@@ -236,7 +236,7 @@ export default function BecomeMentorPage() {
       if (!formData.company.trim()) newErrors.company = 'Company is required';
       if (!formData.yearsExperience) newErrors.yearsExperience = 'Please select years of experience';
       if (!formData.bioMethod) newErrors.bioMethod = 'Please select bio option';
-      if (formData.bioMethod === 'create_own' && (!formData.bio.trim() || formData.bio.length < 50)) {
+      if (formData.bioMethod === 'self_written' && (!formData.bio.trim() || formData.bio.length < 50)) {
         newErrors.bio = 'Please provide a bio (at least 50 characters)';
       }
     }
@@ -554,7 +554,7 @@ export default function BecomeMentorPage() {
               {errors.bioMethod && <p className="text-sm text-red-500">{errors.bioMethod}</p>}
             </div>
 
-            {formData.bioMethod === 'create_own' && (
+            {formData.bioMethod === 'self_written' && (
               <div className="space-y-2">
                 <Label htmlFor="bio">Your Bio *</Label>
                 <Textarea

@@ -16,7 +16,7 @@ export const GET = withRoles(
   },
   async (req: NextRequest, context: any) => {
     try {
-      const now = new Date();
+      const now = new Date().toISOString();
 
       // Get pending mentor applications count
       const [{ pendingMentors }] = await db
@@ -31,7 +31,7 @@ export const GET = withRoles(
         .from(events)
         .innerJoin(eventRegistrations, sql`${eventRegistrations.eventId} = ${events.id}`)
         .where(
-          sql`${events.startTime} >= ${now} AND ${events.currentRegistrations} > 0`
+          sql`${events.startTime} >= ${now}::timestamp AND ${events.currentRegistrations} > 0`
         );
 
       // For content moderation, we'll use a placeholder count
