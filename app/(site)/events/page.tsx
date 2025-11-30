@@ -259,33 +259,6 @@ export default function EventsPage() {
         </section>
       )}
 
-      {/* CTA Section */}
-      <section className="py-16 bg-foreground text-background">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Never Miss an Event
-          </h2>
-          <p className="text-background/90 max-w-2xl mx-auto mb-8">
-            Subscribe to our newsletter and get notified about upcoming events,
-            workshops, and networking opportunities.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="bg-background text-foreground hover:bg-background/90"
-            >
-              Subscribe to Newsletter
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-background/30 text-background hover:bg-background/10"
-            >
-              Add to Calendar
-            </Button>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

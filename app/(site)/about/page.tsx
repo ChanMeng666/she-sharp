@@ -3,7 +3,6 @@
 import { AboutHeroSection } from "@/components/sections/about/about-hero-section";
 import { TeamSection } from "@/components/sections/about/team-section";
 import { TimelineSection } from "@/components/sections/about/timeline-section";
-import { SmartCTASection } from "@/components/sections/shared/smart-cta-section";
 import { useScrollToHash } from "@/hooks/use-scroll-to-hash";
 
 export default function AboutPage() {
@@ -34,8 +33,6 @@ export default function AboutPage() {
       </div>
 
       <TimelineSection />
-
-      <SmartCTASection title="Ways to get involved" />
     </div>
   );
 }

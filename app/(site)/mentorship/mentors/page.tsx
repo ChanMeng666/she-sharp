@@ -5,7 +5,6 @@ import { MentorJourneySection } from "@/components/sections/mentorship/mentors/m
 import { MentorCommunitySection } from "@/components/sections/mentorship/mentors/mentor-community-section";
 import { MentorBenefitsSection } from "@/components/sections/mentorship/mentors/mentor-benefits-section";
 import { PageTestimonialsSection } from "@/components/sections/shared/page-testimonials-section";
-import { SmartCTASection } from "@/components/sections/shared/smart-cta-section";
 
 export default function MeetOurMentorsPage() {
   return (
@@ -16,12 +15,11 @@ export default function MeetOurMentorsPage() {
       <MentorJourneySection />
       <MentorCommunitySection />
       <MentorBenefitsSection />
-      <PageTestimonialsSection 
+      <PageTestimonialsSection
         title="Stories from Our Mentors"
         subtitle="Hear from mentors who are making a difference in the lives of women in STEM"
         pageKey="mentorship"
       />
-      <SmartCTASection title="Ready to Inspire?" bgColor="accent" />
     </>
   );
 }

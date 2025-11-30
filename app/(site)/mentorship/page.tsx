@@ -6,7 +6,6 @@ import { HowItWorksSection } from "@/components/sections/mentorship/how-it-works
 import { MentorsPreviewSection } from "@/components/sections/mentorship/mentors-preview-section";
 // removed BenefitsSection (merged into ProgramOverviewSection content)
 import { IndustryLogosSection } from "@/components/sections/mentorship/industry-logos-section";
-import { SmartCTASection } from "@/components/sections/shared/smart-cta-section";
 
 export default function MentorshipPage() {
   return (
@@ -17,7 +16,6 @@ export default function MentorshipPage() {
       <MentorsPreviewSection />
       <IndustryLogosSection />
       <TestimonialsSection />
-      <SmartCTASection title="Start Your Mentorship Journey" />
     </>
   );
 }

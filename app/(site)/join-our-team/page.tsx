@@ -4,7 +4,6 @@ import { VolunteerOptionsSection } from "@/components/sections/join-team/volunte
 import { TeamGallerySection } from "@/components/sections/join-team/team-gallery-section";
 import { AnniversarySection } from "@/components/sections/join-team/anniversary-section";
 import { TeamTestimonialsSection } from "@/components/sections/join-team/team-testimonials-section";
-import { JoinTeamCTASection } from "@/components/sections/join-team/join-team-cta-section";
 
 export default function JoinOurTeamPage() {
   return (
@@ -15,7 +14,6 @@ export default function JoinOurTeamPage() {
       <TeamGallerySection />
       <AnniversarySection />
       <TeamTestimonialsSection />
-      <JoinTeamCTASection />
     </>
   );
 }

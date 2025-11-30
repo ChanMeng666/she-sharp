@@ -6,7 +6,6 @@ import { Section } from "@/components/layout/section";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Mic, Mail, Camera, FileText, ArrowRight, Sparkles } from "lucide-react";
-import { SmartCTASection } from "@/components/sections/shared/smart-cta-section";
 
 export default function MediaHubPage() {
   const mediaCategories = [
@@ -136,9 +135,6 @@ export default function MediaHubPage() {
           </Card>
         </Container>
       </Section>
-
-      {/* Smart CTA Section */}
-      <SmartCTASection title="Stay Connected" />
     </>
   );
 }
