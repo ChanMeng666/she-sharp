@@ -1,6 +1,6 @@
 import { Heart, Eye, Keyboard, Monitor, Headphones, Globe, CheckCircle, AlertCircle, Mail } from "lucide-react";
 import { LegalPageLayout } from "@/components/legal-page-layout";
-import "@/components/legal-page-styles.css";
+import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Accessibility Statement | She Sharp",

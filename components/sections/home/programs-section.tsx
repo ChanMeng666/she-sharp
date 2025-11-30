@@ -215,13 +215,12 @@ export function ProgramsSection() {
             </div>
 
             {/* Right Column - Image */}
-            <AnimateOnScroll variant="fade-left" className="relative w-4/5 mx-auto">
-              {/* Background div with slight tilt */}
+            <AnimateOnScroll variant="fade-left" className="relative w-full md:w-4/5 mx-auto">
+              {/* Background div with slight tilt - responsive */}
               <div
-                className="absolute bg-muted-foreground/20 rounded-2xl transform rotate-[-10deg] translate-x-[-10px] translate-y-[-10px]"
-                style={{ width: '100%', height: '500px' }}
+                className="absolute inset-0 bg-muted-foreground/20 rounded-2xl transform rotate-0 md:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
               ></div>
-              <div className="relative w-full h-[500px] rounded-2xl overflow-hidden z-10">
+              <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden z-10">
                 <Image
                   src={programs[lastSelectedProgram].image}
                   alt={programs[lastSelectedProgram].title}

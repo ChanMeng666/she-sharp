@@ -2,8 +2,25 @@
 
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { AlertCircle } from 'lucide-react';
 import { Suspense } from 'react';
+
+function LogoHeader() {
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 p-4 md:p-6">
+      <Link href="/" className="inline-block">
+        <Image
+          src="/logos/she-sharp-logo.svg"
+          alt="She Sharp"
+          width={120}
+          height={40}
+          className="h-8 md:h-10 w-auto"
+        />
+      </Link>
+    </header>
+  );
+}
 
 function AuthErrorContent() {
   const searchParams = useSearchParams();
@@ -41,8 +58,10 @@ function AuthErrorContent() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-16 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8">
+    <div className="flex min-h-screen flex-col bg-background">
+      <LogoHeader />
+      <div className="flex flex-1 items-center justify-center px-4 py-16 sm:px-6 lg:px-8">
+        <div className="w-full max-w-md space-y-8">
         <div className="text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
             <AlertCircle className="h-6 w-6 text-red-600" />
@@ -81,6 +100,7 @@ function AuthErrorContent() {
           >
             Go to Homepage
           </Link>
+        </div>
         </div>
       </div>
     </div>

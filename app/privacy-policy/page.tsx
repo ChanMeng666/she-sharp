@@ -1,6 +1,6 @@
 import { Shield, Lock, Eye, Users, Database, Mail, Globe, AlertCircle, Info, CheckCircle } from "lucide-react";
 import { LegalPageLayout } from "@/components/legal-page-layout";
-import "@/components/legal-page-styles.css";
+import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Privacy Policy | She Sharp",

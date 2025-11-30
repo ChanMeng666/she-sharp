@@ -16,7 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 import { footerConfig } from "@/lib/config/footer";
 import { socialIcons } from "@/components/ui/social-icons";
-import "./footer-styles.css";
+import "@/styles/components/footer.css";
 
 export function SiteFooter() {
   const router = useRouter();

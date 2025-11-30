@@ -1,6 +1,6 @@
 import { Heart, Users, Sparkles, HandshakeIcon, AlertCircle, Flag, CheckCircle, Ban, MessageSquare, Shield, FileText } from "lucide-react";
 import { LegalPageLayout } from "@/components/legal-page-layout";
-import "@/components/legal-page-styles.css";
+import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Code of Conduct | She Sharp",

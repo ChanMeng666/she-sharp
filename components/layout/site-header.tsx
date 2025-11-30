@@ -30,7 +30,6 @@ import {
 import { cn } from "@/lib/utils";
 import { navigationConfig } from "@/lib/config/navigation";
 import { UserNav } from "./user-nav";
-import "./navigation-styles.css";
 
 export function SiteHeader() {
   const router = useRouter();

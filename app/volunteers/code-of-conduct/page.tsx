@@ -1,6 +1,6 @@
 import { FileText, Users, Shield, Lock, AlertTriangle, CheckCircle, Pen, Calendar, Mail } from "lucide-react";
 import { LegalPageLayout } from "@/components/legal-page-layout";
-import "@/components/legal-page-styles.css";
+import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Ambassador Code of Conduct | She Sharp",

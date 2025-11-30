@@ -1,6 +1,6 @@
 import { Cookie, Settings, Shield, BarChart, Megaphone, CheckCircle, Chrome, Globe } from "lucide-react";
 import { LegalPageLayout } from "@/components/legal-page-layout";
-import "@/components/legal-page-styles.css";
+import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Cookie Policy | She Sharp",

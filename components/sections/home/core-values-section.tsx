@@ -33,24 +33,24 @@ const coreValues: CoreValue[] = [
 
 export function CoreValuesSection() {
   return (
-    <section className="relative flex min-h-[600px] md:min-h-[700px]">
-      {/* Left side - Image (2/3 width) */}
-      <AnimateOnScroll variant="fade-right" className="relative w-2/3 overflow-hidden">
+    <section className="relative flex flex-col md:flex-row min-h-[auto] md:min-h-[600px] lg:min-h-[700px]">
+      {/* Left side - Image (full width on mobile, 2/3 on desktop) */}
+      <AnimateOnScroll variant="fade-right" className="relative w-full md:w-2/3 h-[300px] md:h-auto overflow-hidden">
         <div className="relative w-full h-full">
           <Image
             src="/img/yourcareer.png"
             alt="Core Values"
             fill
             className="object-cover"
-            sizes="66vw"
+            sizes="(max-width: 768px) 100vw, 66vw"
           />
           {/* Simple overlay for smooth transition */}
           <div className="absolute inset-0 bg-white/30 pointer-events-none" />
         </div>
       </AnimateOnScroll>
 
-      {/* Right side - Content with muted background (1/3 width) */}
-      <div className="w-1/3 bg-muted flex items-center py-14 sm:py-16 md:py-20 relative">
+      {/* Right side - Content with muted background (full width on mobile, 1/3 on desktop) */}
+      <div className="w-full md:w-1/3 bg-muted flex items-center py-14 sm:py-16 md:py-20 relative">
         <div className="px-6 sm:px-8 md:px-10 lg:px-12 w-full relative z-10">
           <AnimateOnScroll variant="fade-up" className="mb-10 md:mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading text-foreground relative z-20">

@@ -1,4 +1,4 @@
-import "./hero-animations.css";
+import "@/styles/animations/hero.css";
 import { HeroSection } from "@/components/sections/home/hero-section";
 import { CoreImpactSection } from "@/components/sections/home/core-impact-section";
 import { CoreValuesSection } from "@/components/sections/home/core-values-section";

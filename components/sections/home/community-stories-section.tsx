@@ -149,8 +149,8 @@ export function CommunityStoriesSection() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="-left-16 h-10 w-10 bg-muted hover:bg-muted/80 border-border text-foreground" />
-                <CarouselNext className="-right-16 h-10 w-10 bg-muted hover:bg-muted/80 border-border text-foreground" />
+                <CarouselPrevious className="hidden md:flex -left-16 h-10 w-10 bg-muted hover:bg-muted/80 border-border text-foreground" />
+                <CarouselNext className="hidden md:flex -right-16 h-10 w-10 bg-muted hover:bg-muted/80 border-border text-foreground" />
               </Carousel>
             </AnimateOnScroll>
           </div>
