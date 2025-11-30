@@ -13,97 +13,19 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Calendar, Download, Eye, ArrowRight, Filter } from "lucide-react";
 import { layoutSystem, layoutClasses } from "@/lib/layout-system";
+import {
+  newsletters,
+  getFeaturedNewsletters,
+  getAllNewsletterYears,
+} from "@/lib/data/newsletters";
+import type { Newsletter } from "@/types/newsletter";
 
-const newsletters = [
-  {
-    id: 1,
-    month: "May",
-    year: "2025",
-    image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685b86a4122d34ad5ed64dae_2025_Newsletters%20may.png",
-    href: "#",
-    highlights: ["AI in Education", "Women Tech Leaders Summit", "Career Growth Tips"],
-    featured: true
-  },
-  {
-    id: 2,
-    month: "April",
-    year: "2025",
-    image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685b85f36c4d1ad7379ee334_2025_Newsletters%20april.png",
-    href: "#",
-    highlights: ["Cybersecurity Special", "Mentorship Programs", "Tech Trends 2025"],
-    featured: true
-  },
-  {
-    id: 3,
-    month: "March",
-    year: "2025",
-    image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685b844d30bd2eb9475f129c_2025_Newsletters%20march.png",
-    href: "#",
-    highlights: ["International Women's Day", "STEM Scholarships", "Industry Insights"],
-    featured: false
-  },
-  {
-    id: 4,
-    month: "January",
-    year: "2025",
-    image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67c3676dc0772575629f95cd_2025_Newsletters%20feb.png",
-    href: "#",
-    highlights: ["New Year Tech Resolutions", "2025 Predictions", "Community Highlights"],
-    featured: false
-  },
-  {
-    id: 5,
-    month: "December",
-    year: "2024",
-    image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67c13b51a3357846351d1e3c_2024_Newsletters%20dec.png",
-    href: "#",
-    highlights: ["Year in Review", "Holiday Tech Guide", "Success Stories"],
-    featured: false
-  },
-  {
-    id: 6,
-    month: "November",
-    year: "2024",
-    image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67c13bf0b7ff2cc5c326e3f1_2024_Newsletters%20nov.png",
-    href: "#",
-    highlights: ["Tech Conference Recap", "Career Advancement", "Innovation Spotlight"],
-    featured: false
-  },
-  {
-    id: 7,
-    month: "October",
-    year: "2024",
-    image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67230bb566a23c809666d347_2024_Newsletters%20oct.png",
-    href: "#",
-    highlights: ["10th Anniversary Special", "Alumni Stories", "Future of Tech"],
-    featured: false
-  },
-  {
-    id: 8,
-    month: "September",
-    year: "2024",
-    image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66fa574d673d6538804201b6_2024_Newsletters%20sept.png",
-    href: "#",
-    highlights: ["Back to School Tech", "Emerging Technologies", "Mentor Spotlight"],
-    featured: false
-  },
-  {
-    id: 9,
-    month: "August",
-    year: "2024",
-    image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66d7dbadf304d0a9becc2d75_2024_Newsletters%20aug.png",
-    href: "#",
-    highlights: ["Summer Internships", "Tech Skills Workshop", "Community Events"],
-    featured: false
-  }
-];
-
-const years = ["2025", "2024", "2023"];
+const years = getAllNewsletterYears();
 
 export function NewslettersGridSection() {
   const [selectedYear, setSelectedYear] = useState("All Years");
   const [loading, setLoading] = useState(true);
-  const [selectedNewsletter, setSelectedNewsletter] = useState<typeof newsletters[0] | null>(null);
+  const [selectedNewsletter, setSelectedNewsletter] = useState<Newsletter | null>(null);
 
   useEffect(() => {
     // Simulate loading
@@ -111,11 +33,11 @@ export function NewslettersGridSection() {
     return () => clearTimeout(timer);
   }, []);
 
-  const filteredNewsletters = selectedYear === "All Years" 
-    ? newsletters 
+  const filteredNewsletters = selectedYear === "All Years"
+    ? newsletters
     : newsletters.filter(n => n.year === selectedYear);
 
-  const featuredNewsletters = newsletters.filter(n => n.featured);
+  const featuredNewsletters = getFeaturedNewsletters();
 
   return (
     <Section bgColor="white">
@@ -151,14 +73,14 @@ export function NewslettersGridSection() {
               layoutSystem.grids.content.gap
             )}>
               {featuredNewsletters.map((newsletter) => (
-                <Card key={newsletter.id} className="group overflow-hidden border-2 border-navy-light hover:border-navy-dark transition-all">
+                <Card key={newsletter.slug} className="group overflow-hidden border-2 border-navy-light hover:border-navy-dark transition-all">
                   <div className="relative">
                     <AspectRatio ratio={3/4}>
                       {loading ? (
                         <Skeleton className="w-full h-full" />
                       ) : (
                         <Image
-                          src={newsletter.image}
+                          src={newsletter.coverImage}
                           alt={`${newsletter.month} ${newsletter.year} Newsletter`}
                           fill
                           className="object-cover"
@@ -216,7 +138,7 @@ export function NewslettersGridSection() {
                           <div className="mt-6 space-y-6">
                             <AspectRatio ratio={3/4}>
                               <Image
-                                src={selectedNewsletter?.image || ""}
+                                src={selectedNewsletter?.coverImage || ""}
                                 alt="Newsletter preview"
                                 fill
                                 className="object-cover rounded-lg"
@@ -234,7 +156,7 @@ export function NewslettersGridSection() {
                               </ul>
                             </div>
                             <Button asChild className="w-full bg-navy-dark hover:bg-navy-dark/90">
-                              <a href={selectedNewsletter?.href} target="_blank" rel="noopener noreferrer">
+                              <a href={selectedNewsletter?.webUrl} target="_blank" rel="noopener noreferrer">
                                 <Download className="h-4 w-4 mr-2" />
                                 Download Full Newsletter
                               </a>
@@ -244,7 +166,7 @@ export function NewslettersGridSection() {
                       </Sheet>
                       
                       <Button asChild className="flex-1 bg-navy-dark hover:bg-navy-dark/90 text-white">
-                        <a href={newsletter.href} target="_blank" rel="noopener noreferrer">
+                        <a href={newsletter.webUrl} target="_blank" rel="noopener noreferrer">
                           Read Now
                           <ArrowRight className="h-4 w-4 ml-2" />
                         </a>
@@ -264,8 +186,8 @@ export function NewslettersGridSection() {
           "space-y-6"
         )}>
           {filteredNewsletters.map((newsletter, index) => (
-            <Card 
-              key={newsletter.id} 
+            <Card
+              key={newsletter.slug} 
               className={`break-inside-avoid group overflow-hidden hover:shadow-xl transition-all border-2 hover:border-navy-dark ${
                 index % 3 === 0 ? 'border-purple-light' : 
                 index % 3 === 1 ? 'border-periwinkle-light' : 
@@ -278,31 +200,31 @@ export function NewslettersGridSection() {
                     <Skeleton className="w-full h-full" />
                   ) : (
                     <Image
-                      src={newsletter.image}
+                      src={newsletter.coverImage}
                       alt={`${newsletter.month} ${newsletter.year} Newsletter`}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-150"
                     />
                   )}
                 </AspectRatio>
-                
+
                 <div className="absolute top-4 left-4">
                   <Badge className="bg-white/90 text-navy-dark">
                     {newsletter.month} {newsletter.year}
                   </Badge>
                 </div>
               </div>
-              
+
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-navy-dark mb-3 group-hover:text-purple-dark transition-colors">
                   {newsletter.month} {newsletter.year} Issue
                 </h3>
-                
+
                 <div className="space-y-3">
                   <Sheet>
                     <SheetTrigger asChild>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         className="w-full border-navy-dark/30 text-navy-dark hover:bg-navy-light"
                         onClick={() => setSelectedNewsletter(newsletter)}
                       >
@@ -311,9 +233,9 @@ export function NewslettersGridSection() {
                       </Button>
                     </SheetTrigger>
                   </Sheet>
-                  
+
                   <Button asChild className="w-full bg-navy-dark hover:bg-navy-dark/90 text-white">
-                    <a href={newsletter.href} className="inline-flex items-center justify-center">
+                    <a href={newsletter.webUrl} className="inline-flex items-center justify-center">
                       Read Full Issue
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </a>

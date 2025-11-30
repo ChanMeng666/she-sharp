@@ -5,79 +5,12 @@ import { Section } from "@/components/layout/section";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Calendar, 
-  Clock, 
-  TrendingUp, 
-  Lightbulb,
-  Users,
-  BookOpen,
-  ArrowRight,
-  Sparkles
-} from "lucide-react";
+import { Clock, ArrowRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-
-const recentIssues = [
-  {
-    edition: "November 2024",
-    title: "Breaking Barriers: Women Leading AI Innovation",
-    highlights: [
-      "Interview with Dr. Sarah Chen on ethical AI",
-      "5 AI tools every developer should know",
-      "Community spotlight: Auckland AI meetup recap"
-    ],
-    readTime: "5 min read",
-    category: "Technology",
-    icon: TrendingUp
-  },
-  {
-    edition: "October 2024",
-    title: "Career Transitions: From Teacher to Tech Leader",
-    highlights: [
-      "Success story: Maria's journey to Product Management",
-      "Top skills for career changers",
-      "Free resources for learning to code"
-    ],
-    readTime: "7 min read",
-    category: "Career",
-    icon: Lightbulb
-  },
-  {
-    edition: "September 2024",
-    title: "Building Your Personal Brand in Tech",
-    highlights: [
-      "LinkedIn optimization tips",
-      "How to start technical blogging",
-      "Networking strategies that actually work"
-    ],
-    readTime: "6 min read",
-    category: "Professional Development",
-    icon: Users
-  }
-];
-
-const newsletterTopics = [
-  {
-    icon: TrendingUp,
-    title: "Industry Insights",
-    description: "Latest trends and innovations in tech"
-  },
-  {
-    icon: Users,
-    title: "Community Stories",
-    description: "Inspiring journeys from our members"
-  },
-  {
-    icon: BookOpen,
-    title: "Learning Resources",
-    description: "Curated tools and tutorials"
-  },
-  {
-    icon: Calendar,
-    title: "Event Highlights",
-    description: "Recap of recent events and upcoming opportunities"
-  }
-];
+import {
+  newsletterTopics,
+  recentIssues,
+} from "@/lib/data/newsletters";
 
 export function NewsletterPreviewSection() {
   return (
