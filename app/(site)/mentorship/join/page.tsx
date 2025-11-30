@@ -835,7 +835,7 @@ export default function MenteeApplicationPage() {
 
   return (
     <div className="min-h-screen bg-muted">
-      <section className="py-12 md:py-16">
+      <section className="pt-24 md:pt-32 pb-12 md:pb-16">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-8">
             <div className="inline-flex items-center gap-2 bg-muted-foreground/10 text-foreground px-4 py-2 rounded-full mb-4">

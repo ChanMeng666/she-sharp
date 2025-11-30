@@ -9,7 +9,7 @@ import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 export function HeroSection() {
   return (
-    <section className="relative -mt-16 sm:-mt-20 lg:-mt-24 h-[85vh] sm:h-[90vh] md:h-[95vh] flex items-center overflow-hidden pt-20 sm:pt-24">
+    <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Video */}
       <div className="absolute inset-0">
         <video

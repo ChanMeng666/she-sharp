@@ -74,7 +74,7 @@ export default function EventsPage() {
     <div className="min-h-screen bg-background">
       {/* Hero Section with Featured Event */}
       {featuredEvent && (
-        <section className="relative bg-foreground text-background overflow-hidden">
+        <section className="relative min-h-screen flex items-center bg-foreground text-background overflow-hidden">
           <div className="container mx-auto px-4 py-16 md:py-24 relative">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left: Event Info */}

@@ -17,7 +17,7 @@ export function NewslettersHeroSection() {
       </div>
 
       <Container className="relative z-10">
-        <div className="py-24 md:py-32">
+        <div className="py-12 md:py-16">
           <div className="max-w-4xl">
             <Badge className="mb-4 bg-muted text-background border-0">
               Monthly Publication

@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export function SponsorshipHeroSection() {
   return (
-    <Section className="pt-8 pb-16 md:pt-12 md:pb-24">
+    <Section className="min-h-screen flex items-center">
       <Container>
         <div className="space-y-8">
 

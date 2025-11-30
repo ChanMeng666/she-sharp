@@ -18,7 +18,7 @@ export function NewsHeroSection() {
       <div className="absolute inset-0 bg-muted/5" />
 
       <Container className="relative z-10">
-        <div className="py-20 md:py-28">
+        <div className="py-12 md:py-16">
           <div className="text-center max-w-4xl mx-auto mb-16">
             <Badge className="mb-4 bg-foreground text-background border-0">
               Making Headlines

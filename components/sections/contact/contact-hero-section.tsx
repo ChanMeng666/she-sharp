@@ -4,9 +4,9 @@ import { layoutSystem } from "@/lib/layout-system";
 
 export function ContactHeroSection() {
   return (
-    <Section bgColor="white" noPadding className="pt-16 pb-20">
+    <Section bgColor="white" noPadding className="min-h-screen flex items-center">
       <Container size="narrow">
-        <div className="text-center">
+        <div className="text-center py-16">
           <h1 className="text-5xl font-light tracking-tight text-foreground sm:text-6xl md:text-7xl">
             Get in Touch
           </h1>

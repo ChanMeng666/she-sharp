@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function JoinTeamHeroSection() {
   return (
-    <Section className="bg-white pt-16 pb-20">
+    <Section className="bg-white min-h-screen flex items-center">
       <Container>
         <div className="mx-auto max-w-6xl">
           {/* Title Section */}

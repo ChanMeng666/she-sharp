@@ -4,12 +4,12 @@ import { layoutSystem } from "@/lib/layout-system";
 
 export function PodcastsHeroSection() {
   return (
-    <Section bgColor="dark" noPadding className="relative overflow-hidden bg-foreground">
+    <Section bgColor="dark" noPadding className="relative min-h-screen flex items-center overflow-hidden bg-foreground">
       {/* Simple background pattern */}
       <div className="absolute inset-0 bg-muted/10" />
 
       <Container size="content" className="relative z-10">
-        <div className="py-20 md:py-28">
+        <div className="py-20 md:py-28 w-full">
           <div className="flex flex-col items-center text-center">
             {/* Audio wave visualization */}
             <div className="mb-8 flex items-center gap-1">

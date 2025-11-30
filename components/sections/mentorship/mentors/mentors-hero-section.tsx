@@ -24,7 +24,7 @@ export function MentorsHeroSection() {
       <div className="absolute top-0 right-0 w-1/2 h-full bg-muted/10 transform skew-x-12" />
       
       <Container className="relative z-10">
-        <div className="py-24">
+        <div className="py-12 md:py-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <div>

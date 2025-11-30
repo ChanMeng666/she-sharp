@@ -75,14 +75,14 @@ export function LegalPageLayout({
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
-      <main className="flex-1 pt-16">
+      <main className="flex-1">
         <div className="min-h-screen bg-white">
           {/* Hero Section */}
-          <div className="relative overflow-hidden bg-foreground">
+          <div className="relative min-h-[50vh] flex items-center overflow-hidden bg-foreground">
         <div className="absolute inset-0 bg-black/20" />
         <div className="absolute inset-0 opacity-10" />
-        
-        <div className={cn("relative py-24 md:py-32", getContainer("content"))}>
+
+        <div className={cn("relative py-16 md:py-20 w-full", getContainer("content"))}>
           <div className="max-w-4xl mx-auto text-center">
             {icon && (
               <div className="flex justify-center mb-6">

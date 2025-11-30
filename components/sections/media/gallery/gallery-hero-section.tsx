@@ -24,7 +24,7 @@ export function GalleryHeroSection() {
   }, []);
 
   return (
-    <Section noPadding className="relative h-[70vh] min-h-[500px] overflow-hidden">
+    <Section noPadding className="relative min-h-screen overflow-hidden">
       {/* Full-screen image carousel */}
       <div className="absolute inset-0">
         {heroImages.map((image, index) => (

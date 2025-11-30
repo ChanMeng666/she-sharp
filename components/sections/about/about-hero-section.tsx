@@ -8,7 +8,7 @@ export function AboutHeroSection() {
   return (
     <Section
       noPadding
-      className="relative h-[85vh] sm:h-[90vh] md:h-screen flex items-center overflow-hidden bg-muted -mt-12 sm:-mt-16"
+      className="relative min-h-screen flex items-center overflow-hidden bg-muted"
     >
       <Container>
         <AnimateOnScroll variant="fade-up" className="relative z-10 mx-auto max-w-3xl text-center px-6 sm:px-0 py-8">
