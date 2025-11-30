@@ -36,20 +36,21 @@ export const footerConfig = {
       ],
     },
     {
-      title: "Programs",
+      title: "Mentorship",
       links: [
-        { name: "All Events", href: "/events" },
-        { name: "Mentorship Program", href: "/mentorship" },
-        { name: "THRIVE Program", href: "/events/thrive-your-career-your-story-2025" },
+        { name: "About the Program", href: "/mentorship" },
+        { name: "Meet Our Mentors", href: "/mentorship/mentors" },
+        { name: "Become a Mentee", href: "/mentorship/join" },
+        { name: "Become a Mentor", href: "/mentorship/become-a-mentor" },
       ],
     },
     {
       title: "Get Involved",
       links: [
-        { name: "Become a Mentee", href: "/mentorship/join" },
-        { name: "Apply as Mentor", href: "/mentorship/become-a-mentor" },
+        { name: "All Events", href: "/events" },
         { name: "Volunteer with Us", href: "/join-our-team" },
         { name: "Corporate Partnership", href: "/sponsors/corporate-sponsorship" },
+        { name: "Donate", href: "/donate" },
       ],
     },
     {
@@ -59,15 +60,9 @@ export const footerConfig = {
         { name: "Newsletters", href: "/media/newsletters" },
         { name: "Photo Gallery", href: "/media/photo-gallery" },
         { name: "In the Press", href: "/media/news-and-press" },
+        { name: "Contact Us", href: "/contact" },
       ],
     },
-    // {
-    //   title: "Connect",
-    //   links: [
-    //     { name: "Contact Us", href: "/contact" },
-    //     { name: "Support Us", href: "/donate" },
-    //   ],
-    // },
   ] as FooterSection[],
 
   socialLinks: [
