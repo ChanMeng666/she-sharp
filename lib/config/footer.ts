@@ -40,7 +40,7 @@ export const footerConfig = {
       links: [
         { name: "All Events", href: "/events" },
         { name: "Mentorship Program", href: "/mentorship" },
-        { name: "Google Educator Conference", href: "/events/google-educator" },
+        { name: "THRIVE Program", href: "/events/thrive-your-career-your-story-2025" },
       ],
     },
     {
