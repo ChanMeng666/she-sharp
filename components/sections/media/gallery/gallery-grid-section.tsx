@@ -147,12 +147,12 @@ export function GalleryGridSection() {
       <Container size="full">
         {/* Tabs for categories */}
         <Tabs defaultValue="all" value={selectedCategory} onValueChange={setSelectedCategory} className="mb-12">
-          <TabsList className="w-full justify-start flex-wrap h-auto p-1 bg-mint-light/50">
+          <TabsList className="w-full justify-start flex-wrap h-auto p-1 bg-muted">
             {categories.map((category) => (
-              <TabsTrigger 
-                key={category.value} 
+              <TabsTrigger
+                key={category.value}
                 value={category.value}
-                className="data-[state=active]:bg-mint-dark data-[state=active]:text-navy-dark flex items-center gap-2"
+                className="data-[state=active]:bg-background data-[state=active]:text-foreground flex items-center gap-2"
               >
                 <category.icon className="h-4 w-4" />
                 {category.label}
@@ -189,19 +189,19 @@ export function GalleryGridSection() {
                           className="object-cover transition-opacity duration-150"
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         />
-                        
+
                         {/* Overlay on hover */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                        <div className="absolute inset-0 bg-foreground/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="absolute bottom-0 left-0 right-0 p-4 text-background">
                             <div className="flex gap-2 mb-2">
                               {item.tags.map((tag) => (
-                                <Badge key={tag} className="bg-mint-dark text-navy-dark text-xs">
+                                <Badge key={tag} className="bg-muted text-foreground text-xs">
                                   {tag}
                                 </Badge>
                               ))}
                             </div>
                             <h3 className="font-semibold text-lg mb-1 line-clamp-2">{item.title}</h3>
-                            <div className="flex items-center gap-2 text-sm text-white/80">
+                            <div className="flex items-center gap-2 text-sm text-background/80">
                               <CalendarDays className="h-3 w-3" />
                               <span>{item.date}</span>
                             </div>
@@ -227,7 +227,7 @@ export function GalleryGridSection() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute top-4 right-4 z-50 text-white hover:bg-white/20"
+                className="absolute top-4 right-4 z-50 text-background hover:bg-background/20"
                 onClick={() => setSelectedImage(null)}
               >
                 <X className="h-5 w-5" />
@@ -237,7 +237,7 @@ export function GalleryGridSection() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-50 text-white hover:bg-white/20"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-50 text-background hover:bg-background/20"
                 onClick={handlePrevious}
               >
                 <ChevronLeft className="h-6 w-6" />
@@ -245,7 +245,7 @@ export function GalleryGridSection() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-50 text-white hover:bg-white/20"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-50 text-background hover:bg-background/20"
                 onClick={handleNext}
               >
                 <ChevronRight className="h-6 w-6" />
@@ -266,17 +266,17 @@ export function GalleryGridSection() {
 
               {/* Image details */}
               {selectedImage && (
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-8 text-white">
+                <div className="absolute bottom-0 left-0 right-0 bg-foreground/90 p-8 text-background">
                   <div className="flex gap-2 mb-3">
                     {selectedImage.tags.map((tag) => (
-                      <Badge key={tag} className="bg-mint-dark text-navy-dark">
+                      <Badge key={tag} className="bg-muted text-foreground">
                         {tag}
                       </Badge>
                     ))}
                   </div>
                   <h3 className="text-2xl font-bold mb-2">{selectedImage.title}</h3>
-                  <p className="text-white/80 mb-2">{selectedImage.description}</p>
-                  <div className="flex items-center gap-2 text-sm text-white/60">
+                  <p className="text-background/80 mb-2">{selectedImage.description}</p>
+                  <div className="flex items-center gap-2 text-sm text-background/60">
                     <CalendarDays className="h-4 w-4" />
                     <span>{selectedImage.date}</span>
                   </div>

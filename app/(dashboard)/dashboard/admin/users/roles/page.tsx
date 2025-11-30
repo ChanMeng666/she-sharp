@@ -33,7 +33,7 @@ import {
 } from '@/components/ui/dialog';
 
 const roles = [
-  { id: 'admin', name: 'Administrator', description: 'Full system access', color: 'bg-muted text-purple-700', icon: Shield, userCount: 3 },
+  { id: 'admin', name: 'Administrator', description: 'Full system access', color: 'bg-muted text-foreground', icon: Shield, userCount: 3 },
   { id: 'mentor', name: 'Mentor', description: 'Can mentor students and access mentorship features', color: 'bg-green-100 text-green-700', icon: GraduationCap, userCount: 184 },
   { id: 'mentee', name: 'Mentee', description: 'Can receive mentorship and access learning resources', color: 'bg-blue-100 text-blue-700', icon: Users, userCount: 492 },
   { id: 'moderator', name: 'Moderator', description: 'Can moderate content and verify mentors', color: 'bg-orange-100 text-orange-700', icon: UserPlus, userCount: 5 },
@@ -71,7 +71,7 @@ export default function RoleManagementPage() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-purple-600 hover:bg-purple-700 text-sm sm:text-base">
+            <Button className="text-sm sm:text-base">
               <Plus className="w-4 h-4 mr-2" />
               Create Role
             </Button>
@@ -95,7 +95,7 @@ export default function RoleManagementPage() {
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
-              <Button className="bg-purple-600 hover:bg-purple-700" onClick={() => setIsDialogOpen(false)}>
+              <Button onClick={() => setIsDialogOpen(false)}>
                 Create Role
               </Button>
             </DialogFooter>
@@ -226,7 +226,7 @@ export default function RoleManagementPage() {
         <CardContent>
           <div className="space-y-4">
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2 p-3 bg-purple-50 rounded-lg">
+              <div className="flex items-center space-x-2 p-3 bg-muted rounded-lg">
                 <Shield className="w-5 h-5 text-primary" />
                 <span className="font-medium">Administrator</span>
               </div>

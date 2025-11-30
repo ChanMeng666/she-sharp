@@ -319,7 +319,7 @@ export default function CreateEventPage() {
           <Button variant="outline" type="button">
             Save as Draft
           </Button>
-          <Button type="submit" className="bg-purple-600 hover:bg-purple-700">
+          <Button type="submit">
             Create Event
           </Button>
         </div>

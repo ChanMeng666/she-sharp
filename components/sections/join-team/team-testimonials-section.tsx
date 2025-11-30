@@ -75,23 +75,23 @@ export function TeamTestimonialsSection() {
           {/* Section Header with more spacing */}
           <div className="text-center mb-24 space-y-6">
             <div className="inline-flex items-center justify-center mb-4">
-              <Sparkles className="w-6 h-6 text-purple-dark mr-2" />
-              <span className="text-sm font-medium text-purple-dark uppercase tracking-wider">
+              <Sparkles className="w-6 h-6 text-foreground mr-2" />
+              <span className="text-sm font-medium text-foreground uppercase tracking-wider">
                 Volunteer Stories
               </span>
-              <Sparkles className="w-6 h-6 text-purple-dark ml-2" />
+              <Sparkles className="w-6 h-6 text-foreground ml-2" />
             </div>
             
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-navy-dark leading-tight">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
               Voices from Our
-              <span className="block text-purple-dark mt-2">Community</span>
+              <span className="block text-foreground mt-2">Community</span>
             </h2>
             
             <div className="max-w-3xl mx-auto space-y-4">
               <p className="text-xl md:text-2xl text-gray leading-relaxed">
                 Hear from the amazing volunteers who make She Sharp&apos;s mission possible
               </p>
-              <Separator className="w-24 mx-auto bg-purple-light" />
+              <Separator className="w-24 mx-auto bg-border" />
             </div>
           </div>
 
@@ -119,18 +119,12 @@ export function TeamTestimonialsSection() {
                       }`}
                     >
                       {/* Color accent bar */}
-                      <div className={`h-1 ${
-                        testimonial.theme === 'purple' ? 'bg-purple-dark' : 'bg-periwinkle-dark'
-                      }`} />
+                      <div className="h-1 bg-border" />
                       
                       <CardContent className="p-10 flex flex-col h-full space-y-6">
                         {/* Quote Icon with breathing room */}
-                        <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full ${
-                          testimonial.theme === 'purple' ? 'bg-purple-light/10' : 'bg-periwinkle-light/10'
-                        } transition-colors duration-150`}>
-                          <Quote className={`w-8 h-8 ${
-                            testimonial.theme === 'purple' ? 'text-purple-dark' : 'text-periwinkle-dark'
-                          }`} />
+                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted transition-colors duration-150">
+                          <Quote className="w-8 h-8 text-foreground" />
                         </div>
 
                         {/* Quote Text with improved typography */}
@@ -145,9 +139,7 @@ export function TeamTestimonialsSection() {
                         {/* Author Info with better spacing */}
                         <div className="space-y-3">
                           <div>
-                            <p className={`font-semibold text-xl ${
-                              testimonial.theme === 'purple' ? 'text-purple-dark' : 'text-periwinkle-dark'
-                            }`}>
+                            <p className="font-semibold text-xl text-foreground">
                               {testimonial.name}
                             </p>
                             <p className="text-sm text-gray-600 mt-1">
@@ -158,14 +150,10 @@ export function TeamTestimonialsSection() {
                           {/* Highlights with refined style */}
                           <div className="flex flex-wrap gap-2 pt-2">
                             {testimonial.highlights.map((highlight) => (
-                              <Badge 
-                                key={highlight} 
+                              <Badge
+                                key={highlight}
                                 variant="outline"
-                                className={`text-xs font-normal border ${
-                                  testimonial.theme === 'purple'
-                                    ? 'border-purple-light text-purple-dark' 
-                                    : 'border-periwinkle-light text-periwinkle-dark'
-                                }`}
+                                className="text-xs font-normal"
                               >
                                 {highlight}
                               </Badge>
@@ -184,26 +172,26 @@ export function TeamTestimonialsSection() {
 
           {/* Impact Statistics with generous spacing */}
           <div className="mt-32 relative">
-            <div className="absolute inset-0 bg-mint-light/10 rounded-3xl" />
+            <div className="absolute inset-0 bg-muted rounded-3xl" />
             <div className="relative bg-white rounded-3xl shadow-lg p-12 md:p-16">
-              <h3 className="text-2xl font-bold text-navy-dark text-center mb-12">
+              <h3 className="text-2xl font-bold text-foreground text-center mb-12">
                 Our Collective Impact
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
                 <div className="text-center space-y-3">
-                  <div className="text-4xl md:text-5xl font-bold text-purple-dark">200+</div>
+                  <div className="text-4xl md:text-5xl font-bold text-foreground">200+</div>
                   <div className="text-base text-gray-600">Active Volunteers</div>
                 </div>
                 <div className="text-center space-y-3">
-                  <div className="text-4xl md:text-5xl font-bold text-periwinkle-dark">95%</div>
+                  <div className="text-4xl md:text-5xl font-bold text-foreground">95%</div>
                   <div className="text-base text-gray-600">Would Recommend</div>
                 </div>
                 <div className="text-center space-y-3">
-                  <div className="text-4xl md:text-5xl font-bold text-purple-dark">2200+</div>
+                  <div className="text-4xl md:text-5xl font-bold text-foreground">2200+</div>
                   <div className="text-base text-gray-600">Volunteer Hours</div>
                 </div>
                 <div className="text-center space-y-3">
-                  <div className="text-4xl md:text-5xl font-bold text-periwinkle-dark">10</div>
+                  <div className="text-4xl md:text-5xl font-bold text-foreground">10</div>
                   <div className="text-base text-gray-600">Years of Impact</div>
                 </div>
               </div>

@@ -78,14 +78,14 @@ export default async function EventPage({ params }: EventPageProps) {
             {/* Event Photos Gallery (for past events) */}
             {event.photos && event.photos.length > 0 && (
               <section className="space-y-4">
-                <h2 className="text-xl font-semibold text-navy-dark">
+                <h2 className="text-xl font-semibold text-foreground">
                   Event Photos
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {event.photos.map((photo, index) => (
                     <div
                       key={index}
-                      className="aspect-square rounded-lg overflow-hidden bg-gray-100"
+                      className="aspect-square rounded-lg overflow-hidden bg-muted"
                     >
                       <img
                         src={photo}
@@ -109,8 +109,8 @@ export default async function EventPage({ params }: EventPageProps) {
 
         {/* Related Events */}
         {relatedEvents.length > 0 && (
-          <section className="mt-16 pt-8 border-t border-gray-200">
-            <h2 className="text-2xl font-bold text-navy-dark mb-6">
+          <section className="mt-16 pt-8 border-t border-border">
+            <h2 className="text-2xl font-bold text-foreground mb-6">
               Other Upcoming Events
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

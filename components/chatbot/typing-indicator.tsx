@@ -11,18 +11,18 @@ export function TypingIndicator() {
       transition={{ duration: 0.3 }}
       className="flex gap-3 px-6 py-4"
     >
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full shadow-sm bg-purple-dark text-white">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full shadow-sm bg-foreground text-background">
         <Bot size={18} />
       </div>
-      
+
       <div className="flex flex-col items-start">
-        <div className="bg-purple-light border border-purple-dark/20 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
+        <div className="bg-muted border border-border rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
           <div className="flex items-center gap-2">
             <div className="flex gap-1">
               {[0, 1, 2].map((i) => (
                 <motion.div
                   key={i}
-                  className="h-2 w-2 rounded-full bg-mint-dark"
+                  className="h-2 w-2 rounded-full bg-foreground"
                   initial={{ scale: 0.8, opacity: 0.6 }}
                   animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.6, 1, 0.6] }}
                   transition={{
@@ -36,8 +36,8 @@ export function TypingIndicator() {
             </div>
           </div>
         </div>
-        
-        <span className="text-xs text-gray mt-1 px-2">
+
+        <span className="text-xs text-muted-foreground mt-1 px-2">
           She Sharp Assistant is typing...
         </span>
       </div>

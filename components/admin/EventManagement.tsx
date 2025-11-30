@@ -111,11 +111,11 @@ export default function EventManagement() {
       case 'networking':
         return 'bg-green-100 text-green-700';
       case 'training':
-        return 'bg-muted text-purple-700';
+        return 'bg-muted text-foreground';
       case 'social':
         return 'bg-pink-100 text-pink-700';
       case 'thrive':
-        return 'bg-gradient-to-r from-purple-500 to-purple-700 text-white';
+        return 'bg-foreground text-background';
       default:
         return 'bg-accent text-foreground';
     }
@@ -221,7 +221,7 @@ export default function EventManagement() {
                   </Button>
 
                   <Link href="/dashboard/admin/events/new" className="col-span-2 md:col-span-3 lg:col-span-1">
-                    <Button className="bg-purple-600 hover:bg-purple-700 w-full">
+                    <Button className="w-full">
                       <Plus className="w-4 h-4 mr-2" />
                       Create Event
                     </Button>

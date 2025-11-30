@@ -79,25 +79,25 @@ export function SponsorshipCTASection() {
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Ready to Make an Impact?
               </h2>
-              <p className="text-lg text-gray">
-                Join us in creating more opportunities for women in STEM. 
+              <p className="text-lg text-muted-foreground">
+                Join us in creating more opportunities for women in STEM.
                 Let's discuss how your organization can make a difference.
               </p>
             </div>
 
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-purple-light rounded-full flex items-center justify-center flex-shrink-0">
-                  <Mail className="h-5 w-5 text-purple-dark" />
+                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
+                  <Mail className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-navy-dark">Email Us</h3>
+                  <h3 className="font-semibold text-foreground">Email Us</h3>
                   <button
                     onClick={handleCopyEmail}
-                    className="text-purple-dark hover:text-purple-mid flex items-center gap-2 mt-1 transition-colors"
+                    className="text-foreground hover:text-foreground/90 flex items-center gap-2 mt-1 transition-colors"
                   >
                     partnerships@shesharp.org.nz
                     <Copy className="h-4 w-4" />
@@ -106,22 +106,22 @@ export function SponsorshipCTASection() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-purple-light rounded-full flex items-center justify-center flex-shrink-0">
-                  <Phone className="h-5 w-5 text-purple-dark" />
+                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
+                  <Phone className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-navy-dark">Call Us</h3>
-                  <p className="text-gray mt-1">+64 21 123 456</p>
+                  <h3 className="font-semibold text-foreground">Call Us</h3>
+                  <p className="text-muted-foreground mt-1">+64 21 123 456</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-purple-light rounded-full flex items-center justify-center flex-shrink-0">
-                  <MapPin className="h-5 w-5 text-purple-dark" />
+                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
+                  <MapPin className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-navy-dark">Visit Us</h3>
-                  <p className="text-gray mt-1">
+                  <h3 className="font-semibold text-foreground">Visit Us</h3>
+                  <p className="text-muted-foreground mt-1">
                     Auckland, New Zealand<br />
                     (Events held nationwide)
                   </p>
@@ -129,19 +129,19 @@ export function SponsorshipCTASection() {
               </div>
             </div>
 
-            <Card className="bg-mint-light/20 border-mint-dark/20">
+            <Card className="bg-muted border-border">
               <CardContent className="p-6">
-                <h3 className="font-semibold text-navy-dark mb-3">
+                <h3 className="font-semibold text-foreground mb-3">
                   Download Our Sponsorship Guide
                 </h3>
-                <p className="text-sm text-gray mb-4">
-                  Get detailed information about partnership opportunities, 
+                <p className="text-sm text-muted-foreground mb-4">
+                  Get detailed information about partnership opportunities,
                   benefits, and success stories.
                 </p>
                 <Button
                   onClick={handleDownloadGuide}
                   variant="outline"
-                  className="w-full border-purple-dark text-purple-dark hover:bg-purple-light"
+                  className="w-full border-border text-foreground hover:bg-muted"
                 >
                   <Download className="mr-2 h-4 w-4" />
                   Download 2025 Guide (PDF)
@@ -222,7 +222,7 @@ export function SponsorshipCTASection() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-purple-dark hover:bg-purple-mid"
+                  className="w-full bg-foreground hover:bg-foreground/90"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (

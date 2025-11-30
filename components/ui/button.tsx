@@ -23,9 +23,9 @@ const buttonVariants = cva(
         glass:
           "backdrop-blur-md bg-background/20 border border-border text-foreground shadow-xl hover:bg-background/30 hover:shadow-2xl",
         gradient:
-          "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-lg hover:shadow-xl hover:shadow-primary/25 hover:scale-105",
+          "bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/25 hover:scale-105",
         glassmorphism:
-          "backdrop-blur-xl bg-gradient-to-r from-background/10 to-background/5 border border-border text-foreground shadow-2xl hover:from-background/20 hover:to-background/10",
+          "backdrop-blur-xl bg-background/10 border border-border text-foreground shadow-2xl hover:bg-background/20",
         neumorphism:
           "bg-accent text-foreground shadow-[8px_8px_16px_hsl(var(--muted)),_-8px_-8px_16px_hsl(var(--background))] hover:shadow-[4px_4px_8px_hsl(var(--muted)),_-4px_-4px_8px_hsl(var(--background))]",
 
@@ -37,7 +37,7 @@ const buttonVariants = cva(
         "outline-dashed":
           "border-2 border-dashed border-primary bg-transparent text-primary hover:bg-muted hover:border-solid",
         "outline-gradient":
-          "bg-gradient-to-r from-primary to-secondary p-[2px] text-transparent bg-clip-text hover:from-primary/70 hover:to-secondary [&>*]:bg-background [&>*]:rounded-[18px] [&>*]:px-4 [&>*]:py-2 [&>*]:text-primary",
+          "border-2 border-primary bg-transparent text-primary hover:bg-muted hover:shadow-lg hover:-translate-y-0.5",
 
         // Minimal Variants
         ghost:

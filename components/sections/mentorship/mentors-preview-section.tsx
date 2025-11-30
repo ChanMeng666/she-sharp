@@ -67,17 +67,17 @@ export function MentorsPreviewSection() {
   const [isLoading] = useState(false);
 
   return (
-    <Section className="py-16 md:py-24 bg-gradient-to-b from-white to-purple-light/10 dark:from-gray-950 dark:to-purple-dark/5">
+    <Section className="py-16 md:py-24 bg-background">
       <Container>
         <div className="text-center mb-12">
-          <Badge className="mb-4 bg-purple-dark/10 text-purple-dark border-purple-dark">
+          <Badge className="mb-4 bg-muted text-foreground border-border">
             <Users className="w-3 h-3 mr-1" />
             150+ Expert Mentors
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Meet Some of Our Mentors
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Industry leaders committed to guiding the next generation of women in tech
           </p>
         </div>
@@ -88,9 +88,9 @@ export function MentorsPreviewSection() {
               {isLoading ? (
                 <Card className="overflow-hidden aspect-square" />
               ) : (
-                <Card className={`overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${mentor.featured ? 'ring-2 ring-purple-dark' : ''}`}>
+                <Card className={`overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${mentor.featured ? 'ring-2 ring-border' : ''}`}>
                       {mentor.featured && (
-                        <Badge className="absolute top-4 right-4 z-10 bg-purple-dark text-white">
+                        <Badge className="absolute top-4 right-4 z-10 bg-foreground text-background">
                           <Sparkles className="w-3 h-3 mr-1" />
                           Featured
                         </Badge>
@@ -109,13 +109,13 @@ export function MentorsPreviewSection() {
                       <CardContent className="p-4">
                         <div className="space-y-2">
                           <div>
-                            <h3 className="font-semibold text-navy dark:text-white line-clamp-1">
+                            <h3 className="font-semibold text-foreground line-clamp-1">
                               {mentor.name}
                             </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-1">
+                            <p className="text-sm text-muted-foreground line-clamp-1">
                               {mentor.role}
                             </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-500 flex items-center gap-1 mt-1">
+                            <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
                               <Building2 className="w-3 h-3" />
                               {mentor.company}
                             </p>
@@ -123,7 +123,7 @@ export function MentorsPreviewSection() {
                           
                           <div className="flex flex-wrap gap-1">
                             {mentor.expertise.slice(0, 2).map((skill) => (
-                              <Badge key={skill} variant="secondary" className="text-xs bg-periwinkle-light/50 text-navy dark:bg-periwinkle-dark/20 dark:text-periwinkle-light border-0">
+                              <Badge key={skill} variant="secondary" className="text-xs bg-muted text-foreground border-0">
                                 {skill}
                               </Badge>
                             ))}
@@ -138,7 +138,7 @@ export function MentorsPreviewSection() {
         
         <div className="text-center space-y-4">
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button asChild size="lg" className="bg-purple-dark hover:bg-purple-mid text-white">
+            <Button asChild size="lg" className="bg-foreground hover:bg-foreground/90 text-background">
               <Link href="/mentorship/mentors">
                 View All Mentors
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -146,7 +146,7 @@ export function MentorsPreviewSection() {
             </Button>
           </div>
           
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-muted-foreground">
             Can't find the right mentor? We'll help match you with the perfect guide for your journey.
           </p>
         </div>

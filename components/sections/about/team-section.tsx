@@ -23,7 +23,7 @@ export function TeamSection() {
     <Section className="pt-0">
       <Container size="wide">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
             Meet Our People
           </h2>
           <p className="mt-3 sm:mt-4 text-base sm:text-lg max-w-2xl mx-auto px-4 sm:px-0">
@@ -68,7 +68,7 @@ export function TeamSection() {
 
               {/* Content panel */}
               <CardContent className="relative rounded-b-3xl p-6 sm:p-7 md:p-8 text-center">
-                <h3 className="font-bold text-navy-dark text-lg leading-snug">
+                <h3 className="font-bold text-foreground text-lg leading-snug">
                   {member.name}
                 </h3>
                 <p className="mt-1 text-sm text-gray">
@@ -97,10 +97,10 @@ export function TeamSection() {
                     sizes="(max-width: 768px) 100vw, 640px"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute inset-0 bg-foreground/50" />
                 </div>
                 <DialogHeader className="px-4 sm:px-6 pt-4">
-                  <DialogTitle className="text-xl sm:text-2xl text-navy">
+                  <DialogTitle className="text-xl sm:text-2xl text-foreground">
                     {selectedMember.name}
                   </DialogTitle>
                   <p className="text-sm text-gray mt-1">

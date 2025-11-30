@@ -91,7 +91,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
           <Card className="border border-gray-300 shadow-lg">
             <CardContent className="p-8">
               <div className="mb-6">
-                <h2 className="text-lg font-medium text-navy-dark mb-2">
+                <h2 className="text-lg font-medium text-foreground mb-2">
                   {mode === "signin"
                     ? "Welcome back"
                     : "Create your account and start empowering your tech career"}
@@ -106,7 +106,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                 <div className="space-y-2">
                   <Label
                     htmlFor="email"
-                    className="text-sm font-medium text-navy-dark"
+                    className="text-sm font-medium text-foreground"
                   >
                     Email
                   </Label>
@@ -118,7 +118,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                     defaultValue={state.email}
                     required
                     maxLength={50}
-                    className="h-10 px-3 rounded-md border border-gray-300 focus:border-purple-dark focus:ring-2 focus:ring-purple-dark/20"
+                    className="h-10 px-3 rounded-md border border-border focus:border-border focus:ring-2 focus:ring-border/20"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -127,14 +127,14 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                   <div className="flex items-center justify-between">
                     <Label
                       htmlFor="password"
-                      className="text-sm font-medium text-navy-dark"
+                      className="text-sm font-medium text-foreground"
                     >
                       Password
                     </Label>
                     {mode === "signin" && (
                       <Link
                         href="/forgot-password"
-                        className="text-sm text-purple-dark hover:underline"
+                        className="text-sm text-foreground hover:underline"
                       >
                         Forgot password?
                       </Link>
@@ -150,7 +150,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                     required
                     minLength={8}
                     maxLength={100}
-                    className="h-10 px-3 rounded-md border border-gray-300 focus:border-purple-dark focus:ring-2 focus:ring-purple-dark/20"
+                    className="h-10 px-3 rounded-md border border-border focus:border-border focus:ring-2 focus:ring-border/20"
                     placeholder="Enter your password"
                     showStrength={mode === "signup"}
                     showToggle={true}
@@ -161,7 +161,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                   <div className="space-y-2">
                     <Label
                       htmlFor="invitationCode"
-                      className="text-sm font-medium text-navy-dark"
+                      className="text-sm font-medium text-foreground"
                     >
                       Invitation Code
                     </Label>
@@ -172,12 +172,12 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                       defaultValue={state.invitationCode || searchParams.get("code") || ""}
                       required
                       maxLength={20}
-                      className="h-10 px-3 rounded-md border border-gray-300 focus:border-purple-dark focus:ring-2 focus:ring-purple-dark/20 uppercase"
+                      className="h-10 px-3 rounded-md border border-border focus:border-border focus:ring-2 focus:ring-border/20 uppercase"
                       placeholder="SHP-XXXX-XXXX-XXXX"
                     />
                     <p className="text-xs text-gray-500">
                       Don&apos;t have an invitation code?{" "}
-                      <Link href="/mentorship/join" className="text-purple-dark hover:underline">
+                      <Link href="/mentorship/join" className="text-foreground hover:underline">
                         Apply for membership
                       </Link>
                     </p>
@@ -191,11 +191,11 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                       id="rememberMe"
                       name="rememberMe"
                       value="on"
-                      className="h-4 w-4 rounded border-gray-300 text-purple-dark focus:ring-purple-dark"
+                      className="h-4 w-4 rounded border-border text-foreground focus:ring-border"
                     />
                     <Label
                       htmlFor="rememberMe"
-                      className="text-sm text-navy-dark"
+                      className="text-sm text-foreground"
                     >
                       Remember me for 30 days
                     </Label>
@@ -210,7 +210,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
 
                 <Button
                   type="submit"
-                  className="w-full h-10 bg-purple-dark hover:bg-purple-dark/90 text-white rounded-md font-medium"
+                  className="w-full h-10 bg-foreground hover:bg-foreground/90 text-background rounded-md font-medium"
                   disabled={pending}
                 >
                   {pending ? (
@@ -229,7 +229,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
               <div className="mt-6">
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-300" />
+                    <div className="w-full border-t border-border" />
                   </div>
                   <div className="relative flex justify-center text-sm">
                     <span className="px-2 bg-white text-gray-500">
@@ -255,7 +255,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
             backgroundImage: "url(/img/theme-bg.png)",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-foreground/20" />
       </div>
     </div>
   );

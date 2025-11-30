@@ -14,30 +14,30 @@ interface QuickActionsProps {
 }
 
 const categoryColors = {
-  about: 'bg-periwinkle-light text-black border-periwinkle-dark/30',
-  events: 'bg-mint-light text-black border-mint-dark/30',
-  mentorship: 'bg-purple-light text-black border-purple-dark/30',
-  support: 'bg-navy-light text-black border-navy-dark/30',
-  general: 'bg-gray/10 text-black border-gray/30'
+  about: 'bg-muted text-foreground border-border',
+  events: 'bg-muted text-foreground border-border',
+  mentorship: 'bg-muted text-foreground border-border',
+  support: 'bg-muted text-foreground border-border',
+  general: 'bg-muted text-foreground border-border'
 };
 
 export function QuickActions({ onSelectQuestion }: QuickActionsProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="border-t border-purple-dark/10 bg-white">
+    <div className="border-t border-border bg-background">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between p-4 hover:bg-purple-light/30 transition-colors group"
+        className="w-full flex items-center justify-between p-4 hover:bg-muted transition-colors group"
       >
         <div className="flex items-center gap-3">
-          <HelpCircle size={18} className="text-purple-dark group-hover:text-purple-mid transition-colors" />
-          <span className="text-sm font-medium text-navy-dark">Quick Questions</span>
+          <HelpCircle size={18} className="text-foreground group-hover:text-foreground/80 transition-colors" />
+          <span className="text-sm font-medium text-foreground">Quick Questions</span>
         </div>
         {isExpanded ? (
-          <ChevronUp size={18} className="text-purple-dark" />
+          <ChevronUp size={18} className="text-foreground" />
         ) : (
-          <ChevronDown size={18} className="text-purple-dark" />
+          <ChevronDown size={18} className="text-foreground" />
         )}
       </button>
       
@@ -57,7 +57,7 @@ export function QuickActions({ onSelectQuestion }: QuickActionsProps) {
                     key={preset.id}
                     variant="outline"
                     size="sm"
-                    className="w-full justify-start text-left h-auto py-2 px-4 border-purple-dark/20 border-[1px] hover:bg-purple-light/30 transition-colors"
+                    className="w-full justify-start text-left h-auto py-2 px-4 border-border border-[1px] hover:bg-muted transition-colors"
                     onClick={() => {
                       onSelectQuestion(preset.question, preset.answer);
                       setIsExpanded(false);
@@ -70,7 +70,7 @@ export function QuickActions({ onSelectQuestion }: QuickActionsProps) {
                       >
                         {preset.category}
                       </Badge>
-                      <span className="text-sm text-navy-dark leading-snug flex-1">{preset.question}</span>
+                      <span className="text-sm text-foreground leading-snug flex-1">{preset.question}</span>
                     </div>
                   </Button>
                 ))}

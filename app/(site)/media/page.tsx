@@ -15,8 +15,8 @@ export default function MediaHubPage() {
       description: "Listen to inspiring stories from women in STEM",
       icon: Mic,
       href: "/media/podcasts",
-      color: "bg-purple-mid/10",
-      iconColor: "text-purple-mid",
+      color: "bg-muted",
+      iconColor: "text-foreground",
       featured: true,
       stats: "20+ Episodes",
     },
@@ -25,8 +25,8 @@ export default function MediaHubPage() {
       description: "Stay updated with our monthly newsletter",
       icon: Mail,
       href: "/media/newsletters",
-      color: "bg-mint-light/20",
-      iconColor: "text-mint-dark",
+      color: "bg-muted",
+      iconColor: "text-foreground",
       stats: "Monthly Updates",
     },
     {
@@ -34,8 +34,8 @@ export default function MediaHubPage() {
       description: "Browse event highlights and memorable moments",
       icon: Camera,
       href: "/media/photo-gallery",
-      color: "bg-periwinkle-light/20",
-      iconColor: "text-periwinkle-dark",
+      color: "bg-muted",
+      iconColor: "text-foreground",
       stats: "500+ Photos",
     },
     {
@@ -43,8 +43,8 @@ export default function MediaHubPage() {
       description: "Read about our impact in media coverage",
       icon: FileText,
       href: "/media/news-and-press",
-      color: "bg-navy-light/20",
-      iconColor: "text-navy-dark",
+      color: "bg-muted",
+      iconColor: "text-foreground",
       stats: "Latest Coverage",
     },
   ];
@@ -56,10 +56,10 @@ export default function MediaHubPage() {
         <Container size="full">
           <div className="text-center max-w-4xl mx-auto px-4">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Sparkles className="w-6 h-6 text-purple-mid" />
-              <span className="text-purple-mid font-semibold">Resources Hub</span>
+              <Sparkles className="w-6 h-6 text-foreground" />
+              <span className="text-foreground font-semibold">Resources Hub</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6">
               Media & Resources
             </h1>
             <p className="text-lg sm:text-xl text-gray">
@@ -90,7 +90,7 @@ export default function MediaHubPage() {
                     </div>
                     <span className="text-sm text-gray">{category.stats}</span>
                   </div>
-                  <CardTitle className="text-xl sm:text-2xl text-navy-dark">
+                  <CardTitle className="text-xl sm:text-2xl text-foreground">
                     {category.title}
                   </CardTitle>
                   <CardDescription className="text-gray">
@@ -101,7 +101,7 @@ export default function MediaHubPage() {
                   <Button
                     asChild
                     variant="ghost"
-                    className="group p-0 h-auto font-semibold text-purple-mid hover:text-purple-dark transition-colors duration-150"
+                    className="group p-0 h-auto font-semibold text-foreground transition-colors duration-150"
                   >
                     <Link href={category.href}>
                       Explore {category.title}
@@ -118,16 +118,16 @@ export default function MediaHubPage() {
       {/* Impact Report Special Section */}
       <Section bgColor="white">
         <Container size="content">
-          <Card className="overflow-hidden bg-purple-light/5">
+          <Card className="overflow-hidden bg-muted">
             <div className="grid gap-8 items-center">
               <div className="p-8 md:p-12">
-                <h2 className="text-2xl sm:text-3xl font-bold text-navy-dark mb-4">
+                <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
                   Annual Impact Report
                 </h2>
                 <p className="text-gray mb-6">Read our annual impact and outcomes. Download the latest report.</p>
                 <Button
                   asChild
-                  className="bg-purple-mid hover:bg-purple-dark transition-colors duration-150"
+                  className="bg-foreground transition-colors duration-150"
                 >
                   <Link href="/media/impact-report">View Impact Report</Link>
                 </Button>

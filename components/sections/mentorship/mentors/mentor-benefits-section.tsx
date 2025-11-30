@@ -12,22 +12,22 @@ const benefits = [
     icon: Heart,
     title: "Personal Fulfillment",
     description: "Find satisfaction in witnessing the growth and success of your mentee. Knowing you've played a part in their journey is genuinely rewarding.",
-    color: "text-purple-dark",
-    bgColor: "bg-purple-light"
+    color: "text-foreground",
+    bgColor: "bg-muted"
   },
   {
     icon: Target,
     title: "Leave a positive mark",
     description: "Leave behind a positive impact that lasts long after your interactions. It's about making a difference, one mentee at a time!",
-    color: "text-periwinkle-dark",
-    bgColor: "bg-periwinkle-light"
+    color: "text-foreground",
+    bgColor: "bg-muted"
   },
   {
     icon: TrendingUp,
     title: "Grow as you guide",
     description: "Develop strong leadership and communication abilities as you support your mentee. It's a win-win: they flourish, and you thrive right alongside them.",
-    color: "text-mint-dark",
-    bgColor: "bg-mint-light"
+    color: "text-foreground",
+    bgColor: "bg-muted"
   }
 ];
 
@@ -57,10 +57,10 @@ export function MentorBenefitsSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             BENEFITS OF BECOMING A MENTOR
           </h2>
-          <p className="text-lg text-gray max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Join our mentorship program and make a lasting impact while growing your own skills
           </p>
         </motion.div>
@@ -79,14 +79,14 @@ export function MentorBenefitsSection() {
         >
           {benefits.map((benefit, index) => (
             <motion.div key={benefit.title} variants={item}>
-              <Card className="h-full p-8 text-center hover:shadow-xl transition-all duration-150 group cursor-pointer border-gray/20">
+              <Card className="h-full p-8 text-center hover:shadow-xl transition-all duration-150 group cursor-pointer border-border">
                 <div className={`inline-flex p-4 rounded-full ${benefit.bgColor} mb-6 group-hover:scale-110 transition-transform duration-150`}>
                   <benefit.icon className={`h-8 w-8 ${benefit.color}`} />
                 </div>
-                <h3 className="text-xl font-semibold text-navy-dark mb-4">
+                <h3 className="text-xl font-semibold text-foreground mb-4">
                   {benefit.title}
                 </h3>
-                <p className="text-gray leading-relaxed">{benefit.description}</p>
+                <p className="text-muted-foreground leading-relaxed">{benefit.description}</p>
               </Card>
             </motion.div>
           ))}

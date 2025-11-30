@@ -48,18 +48,18 @@ export function EventCard({
           />
 
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+          <div className="absolute inset-0 bg-foreground/30" />
 
           {/* Top Badges */}
           <div className="absolute top-3 left-3 right-3 flex justify-between items-start">
             {/* Price Badge */}
             {event.registration?.isFree && (
-              <Badge className="bg-mint-dark text-white border-0 shadow-md">
+              <Badge className="bg-green-500 text-white border-0 shadow-md">
                 Free
               </Badge>
             )}
             {event.registration?.price && event.registration.price.amount > 0 && (
-              <Badge className="bg-purple-dark text-white border-0 shadow-md">
+              <Badge className="bg-foreground text-background border-0 shadow-md">
                 ${event.registration.price.amount}
               </Badge>
             )}
@@ -70,8 +70,8 @@ export function EventCard({
               className={cn(
                 'shadow-md ml-auto',
                 isOnline && 'bg-blue-500 text-white',
-                isHybrid && 'bg-purple-500 text-white',
-                !isOnline && !isHybrid && 'bg-white/90 text-navy-dark'
+                isHybrid && 'bg-foreground text-background',
+                !isOnline && !isHybrid && 'bg-white/90 text-foreground'
               )}
             >
               {isOnline ? (
@@ -90,7 +90,7 @@ export function EventCard({
           {/* Past Event Overlay */}
           {isPast && (
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-              <Badge variant="secondary" className="bg-white/90 text-navy-dark">
+              <Badge variant="secondary" className="bg-white/90 text-foreground">
                 Past Event
               </Badge>
             </div>
@@ -99,7 +99,7 @@ export function EventCard({
 
         <CardContent className="p-4 space-y-3">
           {/* Date & Time */}
-          <div className="flex items-center gap-2 text-sm text-purple-dark font-medium">
+          <div className="flex items-center gap-2 text-sm text-foreground font-medium">
             <Calendar className="w-4 h-4" />
             <span>
               {formatEventDate(event, 'short')} · {event.startTime}
@@ -109,8 +109,8 @@ export function EventCard({
           {/* Title */}
           <h3
             className={cn(
-              'font-semibold text-navy-dark line-clamp-2',
-              'group-hover:text-purple-dark transition-colors',
+              'font-semibold text-foreground line-clamp-2',
+              'group-hover:text-foreground/80 transition-colors',
               variant === 'compact' ? 'text-base' : 'text-lg'
             )}
           >
@@ -118,7 +118,7 @@ export function EventCard({
           </h3>
 
           {/* Location */}
-          <div className="flex items-center gap-2 text-sm text-gray-600">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
             {isOnline ? (
               <>
                 <Video className="w-4 h-4 text-blue-500" />
@@ -126,7 +126,7 @@ export function EventCard({
               </>
             ) : (
               <>
-                <MapPin className="w-4 h-4 text-gray-400" />
+                <MapPin className="w-4 h-4 text-muted-foreground" />
                 <span className="truncate">
                   {event.location.venueName || event.location.city}
                 </span>
@@ -136,7 +136,7 @@ export function EventCard({
 
           {/* Organizer */}
           {event.organizer && variant !== 'compact' && (
-            <p className="text-sm text-gray-500 truncate">
+            <p className="text-sm text-muted-foreground truncate">
               Hosted by {event.organizer.company || event.organizer.name}
             </p>
           )}
@@ -154,7 +154,7 @@ export function EventCard({
                         className="w-6 h-6 border-2 border-white"
                       >
                         <AvatarImage src={avatar} alt="Attendee" />
-                        <AvatarFallback className="text-xs bg-purple-100 text-purple-dark">
+                        <AvatarFallback className="text-xs bg-muted text-foreground">
                           {index + 1}
                         </AvatarFallback>
                       </Avatar>
@@ -163,7 +163,7 @@ export function EventCard({
                 )}
 
                 {/* Attendee Count */}
-                <div className="flex items-center gap-1 text-sm text-gray-500">
+                <div className="flex items-center gap-1 text-sm text-muted-foreground">
                   <Users className="w-4 h-4" />
                   <span>{event.registration.attendeeCount} attending</span>
                 </div>
@@ -175,16 +175,16 @@ export function EventCard({
             event.registration?.capacity &&
             event.registration?.attendeeCount && (
               <div className="pt-2">
-                <div className="flex justify-between text-xs text-gray-500 mb-1">
+                <div className="flex justify-between text-xs text-muted-foreground mb-1">
                   <span>Registration</span>
                   <span>
                     {event.registration.attendeeCount} /{' '}
                     {event.registration.capacity}
                   </span>
                 </div>
-                <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-1.5 bg-muted rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-purple-dark rounded-full transition-all"
+                    className="h-full bg-foreground rounded-full transition-all"
                     style={{
                       width: `${Math.min(100, (event.registration.attendeeCount / event.registration.capacity) * 100)}%`,
                     }}

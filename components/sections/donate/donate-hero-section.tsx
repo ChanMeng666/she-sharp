@@ -16,14 +16,14 @@ export function DonateHeroSection() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-purple-dark/70" />
+        <div className="absolute inset-0 bg-foreground/70" />
       </div>
       <Container className="relative z-10">
         <AnimateOnScroll variant="fade-up" className="py-24 md:py-32">
-          <h1 className="text-4xl font-bold tracking-tight text-ghost-white sm:text-5xl md:text-6xl">
+          <h1 className="text-4xl font-bold tracking-tight text-background sm:text-5xl md:text-6xl">
             Donate to
           </h1>
-          <h2 className="text-5xl font-bold text-ghost-white mt-2 sm:text-6xl md:text-7xl">
+          <h2 className="text-5xl font-bold text-background mt-2 sm:text-6xl md:text-7xl">
             She Sharp
           </h2>
         </AnimateOnScroll>

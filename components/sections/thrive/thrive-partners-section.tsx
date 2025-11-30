@@ -27,7 +27,7 @@ export function ThrivePartnersSection() {
     <Section bgColor="accent">
       <Container size="content">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark dark:text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Event Partners
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -40,7 +40,7 @@ export function ThrivePartnersSection() {
             <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
                 <CardTitle className="text-xl">{partner.name}</CardTitle>
-                <p className="text-sm text-purple-dark dark:text-purple-mid font-medium">
+                <p className="text-sm text-foreground font-medium">
                   {partner.role}
                 </p>
               </CardHeader>

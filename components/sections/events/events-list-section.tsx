@@ -18,7 +18,7 @@ export function EventsListSection() {
   return (
     <Section className="py-16 bg-gray-50">
       <Container>
-        <h2 className="text-3xl font-bold text-navy mb-8">Find an Event</h2>
+        <h2 className="text-3xl font-bold text-foreground mb-8">Find an Event</h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {displayedEvents.map((event) => (
             <Card key={event.slug} className="overflow-hidden hover:shadow-lg transition-shadow">
@@ -42,7 +42,7 @@ export function EventsListSection() {
                       <span>{event.registration.attendeeCount} attendees</span>
                     </div>
                   )}
-                  <h3 className="font-semibold text-lg text-navy line-clamp-2">
+                  <h3 className="font-semibold text-lg text-foreground line-clamp-2">
                     {event.title}
                   </h3>
                 </CardContent>
@@ -56,7 +56,6 @@ export function EventsListSection() {
               variant="outline"
               size="lg"
               onClick={() => setShowMore(true)}
-              className="text-purple-dark border-purple-dark hover:bg-purple-light"
             >
               Load more
             </Button>

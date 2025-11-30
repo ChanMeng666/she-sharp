@@ -78,9 +78,9 @@ export function LegalPageLayout({
       <main className="flex-1 pt-16">
         <div className="min-h-screen bg-white">
           {/* Hero Section */}
-          <div className="relative overflow-hidden bg-navy-dark">
+          <div className="relative overflow-hidden bg-foreground">
         <div className="absolute inset-0 bg-black/20" />
-        <div className="absolute inset-0 bg-purple-light/10" />
+        <div className="absolute inset-0 opacity-10" />
         
         <div className={cn("relative py-24 md:py-32", getContainer("content"))}>
           <div className="max-w-4xl mx-auto text-center">
@@ -91,10 +91,10 @@ export function LegalPageLayout({
                 </div>
               </div>
             )}
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-background mb-6">
               {title}
             </h1>
-            <p className="text-lg text-white/80">
+            <p className="text-lg text-background/80">
               Last Updated: {lastUpdated.toLocaleDateString('en-NZ', { 
                 year: 'numeric', 
                 month: 'long', 
@@ -124,37 +124,37 @@ export function LegalPageLayout({
                   href={page.href}
                   className={cn(
                     "group relative p-4 rounded-xl transition-all duration-150",
-                    isActive 
-                      ? "bg-purple-dark text-white shadow-md" 
-                      : "bg-white hover:bg-purple-light/20 border border-purple-light/20 hover:border-purple-mid"
+                    isActive
+                      ? "bg-foreground text-background shadow-md"
+                      : "bg-background hover:bg-muted border border-border hover:border-foreground"
                   )}
                 >
                   <div className="flex items-start gap-3">
                     <div className={cn(
                       "p-2 rounded-lg transition-colors",
-                      isActive ? "bg-white/20" : "bg-purple-light/30 group-hover:bg-purple-mid/20"
+                      isActive ? "bg-background/20" : "bg-muted group-hover:bg-muted/50"
                     )}>
-                      <div className={isActive ? "text-white" : "text-purple-dark"}>
+                      <div className={isActive ? "text-background" : "text-foreground"}>
                         {page.icon}
                       </div>
                     </div>
                     <div className="flex-1">
                       <h3 className={cn(
                         "font-semibold text-sm mb-1",
-                        isActive ? "text-white" : "text-navy-dark"
+                        isActive ? "text-background" : "text-foreground"
                       )}>
                         {page.title}
                       </h3>
                       <p className={cn(
                         "text-xs",
-                        isActive ? "text-white/80" : "text-gray"
+                        isActive ? "text-background/80" : "text-muted-foreground"
                       )}>
                         {page.description}
                       </p>
                     </div>
                   </div>
                   {!isActive && (
-                    <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-purple-dark opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+                    <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
                   )}
                 </Link>
               );
@@ -167,14 +167,14 @@ export function LegalPageLayout({
       <div className={cn("pb-24", getContainer("narrow"))}>
         <div>
           <div className={cn(
-            "bg-white rounded-2xl shadow-sm border border-gray p-8 md:p-12",
+            "bg-background rounded-2xl shadow-sm border border-border p-8 md:p-12",
             "prose prose-gray max-w-none",
-            "prose-headings:text-navy-dark",
-            "prose-p:text-gray prose-p:leading-relaxed",
-            "prose-a:text-purple-dark prose-a:no-underline hover:prose-a:underline",
-            "prose-strong:text-navy-dark",
-            "prose-ul:text-gray prose-ol:text-gray",
-            "prose-li:marker:text-purple-dark"
+            "prose-headings:text-foreground",
+            "prose-p:text-muted-foreground prose-p:leading-relaxed",
+            "prose-a:text-foreground prose-a:no-underline hover:prose-a:underline",
+            "prose-strong:text-foreground",
+            "prose-ul:text-muted-foreground prose-ol:text-muted-foreground",
+            "prose-li:marker:text-foreground"
           )}>
             {children}
           </div>

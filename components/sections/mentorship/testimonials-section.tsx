@@ -67,16 +67,16 @@ export function TestimonialsSection() {
   const current = testimonials[currentIndex];
 
   return (
-    <Section className="py-16 md:py-24 bg-gradient-to-br from-periwinkle-light/20 via-white to-mint-light/20 dark:from-periwinkle-dark/5 dark:via-gray-950 dark:to-mint-dark/5">
+    <Section className="py-16 md:py-24 bg-background">
       <Container>
         <div className="text-center mb-12">
-          <Badge className="mb-4 bg-purple-dark/10 text-purple-dark border-purple-dark">
+          <Badge className="mb-4 bg-muted text-foreground border-border">
             Success Stories
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Hear From Our Community
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Real stories from mentees and mentors who've transformed their careers through our program
           </p>
         </div>
@@ -87,20 +87,20 @@ export function TestimonialsSection() {
               <div className="flex flex-col md:flex-row gap-6 items-start">
                 {/* Mentee Info */}
                 <div className="flex items-center gap-4 flex-1">
-                  <Avatar className="h-16 w-16 border-2 border-purple-dark/20">
+                  <Avatar className="h-16 w-16 border-2 border-border">
                     <AvatarImage src={current.mentee.image} alt={current.mentee.name} />
                     <AvatarFallback>{current.mentee.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Mentee</p>
-                    <h3 className="font-semibold text-navy dark:text-white">{current.mentee.name}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{current.mentee.role}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-500">{current.mentee.company}</p>
+                    <p className="text-sm text-muted-foreground">Mentee</p>
+                    <h3 className="font-semibold text-foreground">{current.mentee.name}</h3>
+                    <p className="text-sm text-muted-foreground">{current.mentee.role}</p>
+                    <p className="text-xs text-muted-foreground">{current.mentee.company}</p>
                   </div>
                 </div>
                 
                 {/* Journey Badge */}
-                <Badge variant="outline" className="border-mint-dark text-navy dark:text-mint-dark">
+                <Badge variant="outline" className="border-border text-foreground">
                   <Calendar className="w-3 h-3 mr-1" />
                   {current.mentee.journey}
                 </Badge>
@@ -108,12 +108,12 @@ export function TestimonialsSection() {
                 {/* Mentor Info */}
                 <div className="flex items-center gap-4 flex-1 md:justify-end">
                   <div className="text-right">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Mentor</p>
-                    <h3 className="font-semibold text-navy dark:text-white">{current.mentor.name}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{current.mentor.role}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-500">{current.mentor.company}</p>
+                    <p className="text-sm text-muted-foreground">Mentor</p>
+                    <h3 className="font-semibold text-foreground">{current.mentor.name}</h3>
+                    <p className="text-sm text-muted-foreground">{current.mentor.role}</p>
+                    <p className="text-xs text-muted-foreground">{current.mentor.company}</p>
                   </div>
-                  <Avatar className="h-16 w-16 border-2 border-periwinkle-dark/20">
+                  <Avatar className="h-16 w-16 border-2 border-border">
                     <AvatarImage src={current.mentor.image} alt={current.mentor.name} />
                     <AvatarFallback>{current.mentor.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                   </Avatar>
@@ -122,15 +122,15 @@ export function TestimonialsSection() {
             </CardHeader>
             
             <CardContent className="pt-6">
-              <Quote className="w-12 h-12 text-purple-light dark:text-purple-dark/30 mb-4" />
-              <blockquote className="text-lg text-gray-700 dark:text-gray-300 mb-6 italic leading-relaxed">
+              <Quote className="w-12 h-12 text-muted mb-4" />
+              <blockquote className="text-lg text-foreground mb-6 italic leading-relaxed">
                 {current.quote}
               </blockquote>
               
               {/* Highlights */}
               <div className="flex flex-wrap gap-2 mb-6">
                 {current.highlights.map((highlight) => (
-                  <Badge key={highlight} variant="secondary" className="bg-purple-light/50 text-purple-dark border-purple-dark/20">
+                  <Badge key={highlight} variant="secondary" className="bg-muted text-foreground border-border">
                     {highlight}
                   </Badge>
                 ))}
@@ -146,7 +146,7 @@ export function TestimonialsSection() {
               onClick={prevTestimonial}
               variant="outline"
               size="icon"
-              className="rounded-full border-purple-dark/20 hover:bg-purple-light"
+              className="rounded-full border-border hover:bg-muted"
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
@@ -157,9 +157,9 @@ export function TestimonialsSection() {
                   key={index}
                   onClick={() => setCurrentIndex(index)}
                   className={`h-2 transition-all duration-300 rounded-full ${
-                    index === currentIndex 
-                      ? "w-8 bg-purple-dark" 
-                      : "w-2 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400"
+                    index === currentIndex
+                      ? "w-8 bg-foreground"
+                      : "w-2 bg-muted hover:bg-muted/80"
                   }`}
                 />
               ))}
@@ -169,7 +169,7 @@ export function TestimonialsSection() {
               onClick={nextTestimonial}
               variant="outline"
               size="icon"
-              className="rounded-full border-purple-dark/20 hover:bg-purple-light"
+              className="rounded-full border-border hover:bg-muted"
             >
               <ChevronRight className="h-4 w-4" />
             </Button>

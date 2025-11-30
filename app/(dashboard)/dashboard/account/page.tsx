@@ -333,7 +333,7 @@ function AccountPageContent() {
   return (
     <div className="container mx-auto py-8 px-4 max-w-5xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-primary">Account Settings</h1>
+        <h1 className="text-3xl font-bold text-foreground">Account Settings</h1>
         <p className="text-muted-foreground mt-2">Manage your account settings and preferences</p>
       </div>
 
@@ -401,7 +401,7 @@ function AccountPageContent() {
                 <Button 
                   type="submit" 
                   disabled={isUpdating}
-                  className="bg-purple-dark hover:bg-purple-mid"
+                  className=""
                 >
                   {isUpdating ? (
                     <>
@@ -499,7 +499,7 @@ function AccountPageContent() {
                 <Button 
                   type="submit" 
                   disabled={isUpdating || !passwordRequirements.every(req => req.met) || newPassword !== confirmPassword}
-                  className="bg-purple-dark hover:bg-purple-mid"
+                  className=""
                 >
                   {isUpdating ? (
                     <>

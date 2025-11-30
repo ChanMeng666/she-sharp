@@ -47,7 +47,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
               <Link href={isAdmin ? "/dashboard/admin" : "/dashboard"}>
                 <div className="relative w-8 h-8 flex items-center justify-center">
-                  <Heart className="w-6 h-6 fill-purple-dark text-purple-dark" />
+                  <Heart className="w-6 h-6 fill-foreground text-foreground" />
                 </div>
                 <span className="text-base font-semibold">She Sharp</span>
               </Link>

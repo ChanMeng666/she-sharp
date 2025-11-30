@@ -46,10 +46,10 @@ export function DonationOptionsSection() {
                     className="object-contain"
                   />
                 </div>
-                <h3 className="text-3xl font-bold text-purple-dark mb-4">
+                <h3 className="text-3xl font-bold text-foreground mb-4">
                   {option.amount}
                 </h3>
-                <Button asChild className="w-full bg-purple-dark hover:bg-purple-mid transition-colors duration-150">
+                <Button asChild className="w-full bg-foreground hover:bg-foreground/90 transition-colors duration-150">
                   <Link href="/donate">Donate Now</Link>
                 </Button>
               </CardContent>

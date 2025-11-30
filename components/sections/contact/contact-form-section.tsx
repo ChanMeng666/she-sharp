@@ -42,13 +42,13 @@ export function ContactFormSection() {
 
   return (
     <div className="space-y-8">
-      <h2 className="text-2xl font-light text-navy-dark">Send us a message</h2>
+      <h2 className="text-2xl font-light text-foreground">Send us a message</h2>
       
       {isSuccess && (
-        <div className="flex items-center gap-3 p-4 bg-mint-light border border-mint-dark rounded-lg">
-          <CheckCircle className="h-5 w-5 text-navy-dark" />
+        <div className="flex items-center gap-3 p-4 bg-muted border border-border rounded-lg">
+          <CheckCircle className="h-5 w-5 text-foreground" />
           <div>
-            <p className="font-medium text-navy-dark">Message sent!</p>
+            <p className="font-medium text-foreground">Message sent!</p>
             <p className="text-sm text-gray">We'll get back to you within 48 hours.</p>
           </div>
         </div>
@@ -56,7 +56,7 @@ export function ContactFormSection() {
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="fullName" className="text-navy-dark font-normal">
+          <Label htmlFor="fullName" className="text-foreground font-normal">
             Your Name
           </Label>
           <Input
@@ -66,13 +66,13 @@ export function ContactFormSection() {
             required
             value={formData.fullName}
             onChange={handleChange}
-            className="h-12 border-gray/20 focus:border-purple-dark transition-colors"
+            className="h-12 border-border focus:border-foreground transition-colors"
             placeholder="Jane Doe"
           />
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-navy-dark font-normal">
+          <Label htmlFor="email" className="text-foreground font-normal">
             Email Address
           </Label>
           <Input
@@ -82,13 +82,13 @@ export function ContactFormSection() {
             required
             value={formData.email}
             onChange={handleChange}
-            className="h-12 border-gray/20 focus:border-purple-dark transition-colors"
+            className="h-12 border-border focus:border-foreground transition-colors"
             placeholder="jane@example.com"
           />
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="message" className="text-navy-dark font-normal">
+          <Label htmlFor="message" className="text-foreground font-normal">
             Message
           </Label>
           <Textarea
@@ -98,7 +98,7 @@ export function ContactFormSection() {
             required
             value={formData.message}
             onChange={handleChange}
-            className="min-h-[200px] border-gray/20 focus:border-purple-dark transition-colors resize-none"
+            className="min-h-[200px] border-border focus:border-foreground transition-colors resize-none"
             placeholder="Tell us what's on your mind..."
           />
         </div>
@@ -106,7 +106,7 @@ export function ContactFormSection() {
         <Button 
           type="submit" 
           size="lg" 
-          className="w-full bg-purple-dark hover:bg-purple-mid transition-colors h-12 text-base font-normal"
+          className="w-full bg-foreground hover:bg-foreground/90 transition-colors h-12 text-base font-normal"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Sending..." : "Send Message"}

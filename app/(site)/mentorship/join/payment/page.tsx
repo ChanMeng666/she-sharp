@@ -114,9 +114,9 @@ function PaymentContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-50 to-white">
+      <div className="min-h-screen flex items-center justify-center bg-muted">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-purple-dark mx-auto mb-4" />
+          <Loader2 className="h-8 w-8 animate-spin text-foreground mx-auto mb-4" />
           <p className="text-gray-600">Loading your application...</p>
         </div>
       </div>
@@ -125,15 +125,15 @@ function PaymentContent() {
 
   if (error && !formData) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-16">
+      <div className="min-h-screen bg-muted py-16">
         <div className="container mx-auto px-4 max-w-lg">
           <Card className="border-orange-200 bg-orange-50">
             <CardContent className="pt-6 text-center">
               <AlertCircle className="h-12 w-12 text-orange-500 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-navy-dark mb-2">Application Not Found</h2>
+              <h2 className="text-xl font-semibold text-foreground mb-2">Application Not Found</h2>
               <p className="text-gray-600 mb-6">{error}</p>
               <Link href="/mentorship/join">
-                <Button className="w-full bg-purple-dark hover:bg-purple-dark/90">
+                <Button className="w-full bg-foreground">
                   <ChevronLeft className="h-4 w-4 mr-2" />
                   Start New Application
                 </Button>
@@ -146,14 +146,14 @@ function PaymentContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-12">
+    <div className="min-h-screen bg-muted py-12">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-2 bg-purple-100 text-purple-dark px-4 py-2 rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 bg-muted text-foreground px-4 py-2 rounded-full mb-4">
             <Sparkles className="h-4 w-4" />
             <span className="text-sm font-medium">Complete Your Registration</span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-navy-dark mb-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
             Payment
           </h1>
           <p className="text-gray-600">
@@ -188,12 +188,12 @@ function PaymentContent() {
           )}
 
           {/* Payment Card */}
-          <Card className="border-2 border-purple-dark shadow-lg">
+          <Card className="border-2 border-border shadow-lg">
             <CardHeader className="text-center pb-2">
-              <div className="bg-purple-dark text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3 mx-auto">
+              <div className="bg-foreground text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3 mx-auto">
                 ANNUAL MEMBERSHIP
               </div>
-              <CardTitle className="text-3xl font-bold text-navy-dark">
+              <CardTitle className="text-3xl font-bold text-foreground">
                 $100 <span className="text-lg font-normal text-gray-500">NZD/year</span>
               </CardTitle>
               <CardDescription className="text-gray-600">
@@ -223,7 +223,7 @@ function PaymentContent() {
               <Button
                 onClick={handleCheckout}
                 disabled={checkoutLoading || !formData}
-                className="w-full h-12 bg-purple-dark hover:bg-purple-dark/90 text-white font-semibold"
+                className="w-full h-12 bg-foreground text-white font-semibold"
               >
                 {checkoutLoading ? (
                   <>
@@ -250,7 +250,7 @@ function PaymentContent() {
           <div className="text-center mt-6">
             <Link
               href="/mentorship/join"
-              className="text-gray-600 hover:text-purple-dark inline-flex items-center"
+              className="text-gray-600 hover:text-foreground inline-flex items-center"
             >
               <ChevronLeft className="h-4 w-4 mr-1" />
               Back to application form
@@ -266,8 +266,8 @@ export default function PaymentPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-50 to-white">
-          <Loader2 className="h-8 w-8 animate-spin text-purple-dark" />
+        <div className="min-h-screen flex items-center justify-center bg-muted">
+          <Loader2 className="h-8 w-8 animate-spin text-foreground" />
         </div>
       }
     >

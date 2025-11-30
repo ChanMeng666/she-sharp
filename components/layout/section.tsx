@@ -19,10 +19,10 @@ export function Section({
   ...props
 }: SectionProps) {
   const bgClasses = {
-    white: "bg-gradient-to-b from-gray-950/90 to-black/90 text-ghost-white",
-    light: "bg-gradient-to-b from-gray-900/90 via-navy-dark/90 to-gray-950/90 text-ghost-white",
-    accent: "bg-gradient-to-b from-purple-dark/20 via-gray-900/90 to-black/90 text-ghost-white",
-    dark: "bg-gradient-to-b from-black to-gray-950 text-ghost-white",
+    white: "bg-background text-foreground",
+    light: "bg-muted text-foreground",
+    accent: "bg-muted text-foreground",
+    dark: "bg-foreground text-background",
   };
 
   return (

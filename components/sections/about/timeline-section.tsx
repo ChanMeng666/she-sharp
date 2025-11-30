@@ -19,7 +19,7 @@ export function TimelineSection() {
     <Section bgColor="white">
       <Container size="content">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-navy-dark">Our Journey</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground">Our Journey</h2>
           <p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray max-w-2xl mx-auto px-4 sm:px-0">
             From a small group of advocates to a thriving community
           </p>
@@ -29,21 +29,21 @@ export function TimelineSection() {
           {/* Left: Enhanced timeline with better hierarchy and spacing */}
           <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-5 sm:p-6 lg:p-8 lg:self-stretch">
             <div className="relative pl-6 sm:pl-8">
-              <div className="absolute left-2 sm:left-3 top-0 bottom-0 w-px bg-navy-light" />
+              <div className="absolute left-2 sm:left-3 top-0 bottom-0 w-px bg-border" />
               <ul className="space-y-5 sm:space-y-6">
                 {milestones.map((m) => {
                   const Icon = m.icon;
                   return (
                     <li key={m.year} className="relative ml-2 sm:ml-4">
-                      <div className="absolute -left-3 sm:-left-4 top-1.5 h-2.5 w-2.5 rounded-full bg-purple-light ring-2 ring-white" />
+                      <div className="absolute -left-3 sm:-left-4 top-1.5 h-2.5 w-2.5 rounded-full bg-muted ring-2 ring-background" />
                       <div className="flex items-start gap-3 sm:gap-4">
-                        <div className="mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-full bg-purple-light/30 text-purple-dark">
+                        <div className="mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-full bg-muted text-foreground">
                           <Icon className="h-4 w-4" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                            <span className="text-base font-semibold text-navy-dark">{m.year}</span>
-                            <span className="text-base font-medium text-navy-dark">{m.title}</span>
+                            <span className="text-base font-semibold text-foreground">{m.year}</span>
+                            <span className="text-base font-medium text-foreground">{m.title}</span>
                           </div>
                           <p className="mt-1 text-sm leading-relaxed text-gray-700 sm:text-[15px]">
                             {m.description}

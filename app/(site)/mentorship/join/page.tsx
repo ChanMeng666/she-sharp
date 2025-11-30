@@ -551,7 +551,7 @@ export default function MenteeApplicationPage() {
                     type="button"
                     variant={formData.softSkillsBasic.includes(skill) ? 'default' : 'outline'}
                     size="sm"
-                    className={`justify-start text-xs ${formData.softSkillsBasic.includes(skill) ? 'bg-purple-dark' : ''}`}
+                    className={`justify-start text-xs ${formData.softSkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
                     onClick={() => toggleArrayItem('softSkillsBasic', skill)}
                   >
                     {skill}
@@ -571,7 +571,7 @@ export default function MenteeApplicationPage() {
                     type="button"
                     variant={formData.industrySkillsBasic.includes(skill) ? 'default' : 'outline'}
                     size="sm"
-                    className={`justify-start text-xs ${formData.industrySkillsBasic.includes(skill) ? 'bg-purple-dark' : ''}`}
+                    className={`justify-start text-xs ${formData.industrySkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
                     onClick={() => toggleArrayItem('industrySkillsBasic', skill)}
                   >
                     {skill}
@@ -591,7 +591,7 @@ export default function MenteeApplicationPage() {
                     type="button"
                     variant={formData.softSkillsExpert.includes(skill) ? 'default' : 'outline'}
                     size="sm"
-                    className={`justify-start text-xs ${formData.softSkillsExpert.includes(skill) ? 'bg-green-600' : ''}`}
+                    className={`justify-start text-xs ${formData.softSkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
                     onClick={() => toggleArrayItem('softSkillsExpert', skill)}
                   >
                     {skill}
@@ -610,7 +610,7 @@ export default function MenteeApplicationPage() {
                     type="button"
                     variant={formData.industrySkillsExpert.includes(skill) ? 'default' : 'outline'}
                     size="sm"
-                    className={`justify-start text-xs ${formData.industrySkillsExpert.includes(skill) ? 'bg-green-600' : ''}`}
+                    className={`justify-start text-xs ${formData.industrySkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
                     onClick={() => toggleArrayItem('industrySkillsExpert', skill)}
                   >
                     {skill}
@@ -684,7 +684,7 @@ export default function MenteeApplicationPage() {
                   href="https://www.16personalities.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-purple-dark hover:underline inline-flex items-center"
+                  className="text-foreground hover:underline inline-flex items-center"
                 >
                   16personalities.com
                   <ExternalLink className="h-3 w-3 ml-1" />
@@ -697,7 +697,7 @@ export default function MenteeApplicationPage() {
                     type="button"
                     variant={formData.mbtiType === type ? 'default' : 'outline'}
                     size="sm"
-                    className={formData.mbtiType === type ? 'bg-purple-dark' : ''}
+                    className={formData.mbtiType === type ? 'bg-foreground' : ''}
                     onClick={() => updateField('mbtiType', type)}
                   >
                     {type}
@@ -730,7 +730,7 @@ export default function MenteeApplicationPage() {
           <div className="space-y-6">
             {/* Photo & Personal Info */}
             <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-              <h3 className="font-semibold text-navy-dark flex items-center gap-2">
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
                 <User className="h-4 w-4" /> Personal Information
               </h3>
               <div className="flex gap-4">
@@ -752,7 +752,7 @@ export default function MenteeApplicationPage() {
 
             {/* Location & Background */}
             <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-              <h3 className="font-semibold text-navy-dark flex items-center gap-2">
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
                 <MapPin className="h-4 w-4" /> Location & Background
               </h3>
               <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
@@ -771,7 +771,7 @@ export default function MenteeApplicationPage() {
 
             {/* Skills */}
             <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-              <h3 className="font-semibold text-navy-dark flex items-center gap-2">
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
                 <Target className="h-4 w-4" /> Skills
               </h3>
               <div className="space-y-3">
@@ -790,7 +790,7 @@ export default function MenteeApplicationPage() {
                     <div className="text-gray-500 text-sm mb-1">Learning (Technical):</div>
                     <div className="flex flex-wrap gap-1">
                       {formData.industrySkillsBasic.map(s => (
-                        <span key={s} className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs">{s}</span>
+                        <span key={s} className="bg-muted text-foreground px-2 py-0.5 rounded text-xs">{s}</span>
                       ))}
                     </div>
                   </div>
@@ -800,7 +800,7 @@ export default function MenteeApplicationPage() {
 
             {/* Goals */}
             <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-              <h3 className="font-semibold text-navy-dark">Goals & Personality</h3>
+              <h3 className="font-semibold text-foreground">Goals & Personality</h3>
               <div className="text-sm space-y-2">
                 <div>
                   <span className="text-gray-500">Long-term Goal:</span>
@@ -820,8 +820,8 @@ export default function MenteeApplicationPage() {
             </div>
 
             {/* Payment Info */}
-            <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-              <h3 className="font-semibold text-purple-dark mb-2">Next Step: Payment</h3>
+            <div className="bg-muted border border-border rounded-lg p-4">
+              <h3 className="font-semibold text-foreground mb-2">Next Step: Payment</h3>
               <p className="text-sm text-gray-600">
                 After submitting, you&apos;ll be redirected to complete your membership payment of{' '}
                 <span className="font-semibold">$100 NZD/year</span>. Upon successful payment, you&apos;ll receive an
@@ -834,30 +834,30 @@ export default function MenteeApplicationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
+    <div className="min-h-screen bg-muted">
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-8">
-            <div className="inline-flex items-center gap-2 bg-purple-100 text-purple-dark px-4 py-2 rounded-full mb-4">
+            <div className="inline-flex items-center gap-2 bg-muted-foreground/10 text-foreground px-4 py-2 rounded-full mb-4">
               <Sparkles className="h-4 w-4" />
               <span className="text-sm font-medium">Mentorship Program 2026</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Join She Sharp Mentorship Program
             </h1>
-            <p className="text-gray-600">
+            <p className="text-muted-foreground">
               Connect with experienced professionals and accelerate your career growth.
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-4xl mx-auto">
             {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm">
-                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <benefit.icon className="h-5 w-5 text-purple-dark" />
+              <div key={index} className="flex items-center gap-3 p-3 bg-background rounded-lg shadow-sm">
+                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
+                  <benefit.icon className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-navy-dark text-sm">{benefit.title}</h3>
+                  <h3 className="font-medium text-foreground text-sm">{benefit.title}</h3>
                 </div>
               </div>
             ))}
@@ -872,15 +872,15 @@ export default function MenteeApplicationPage() {
                       <div
                         key={step.id}
                         className={`flex items-center gap-1.5 text-xs ${
-                          currentStep >= step.id ? 'text-purple-dark' : 'text-gray-400'
+                          currentStep >= step.id ? 'text-foreground' : 'text-gray-400'
                         }`}
                       >
                         <div
                           className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
                             currentStep > step.id
-                              ? 'bg-purple-dark text-white'
+                              ? 'bg-foreground text-white'
                               : currentStep === step.id
-                              ? 'bg-purple-100 text-purple-dark border-2 border-purple-dark'
+                              ? 'bg-muted text-foreground border-2 border-purple-dark'
                               : 'bg-gray-100 text-gray-400'
                           }`}
                         >
@@ -917,7 +917,7 @@ export default function MenteeApplicationPage() {
                   )}
 
                   {currentStep < 5 ? (
-                    <Button onClick={handleNext} className="bg-purple-dark hover:bg-purple-dark/90">
+                    <Button onClick={handleNext} className="bg-foreground hover:bg-foreground/90">
                       Next
                       <ChevronRight className="h-4 w-4 ml-1" />
                     </Button>
@@ -925,7 +925,7 @@ export default function MenteeApplicationPage() {
                     <Button
                       onClick={handleSubmit}
                       disabled={loading}
-                      className="bg-purple-dark hover:bg-purple-dark/90"
+                      className="bg-foreground hover:bg-foreground/90"
                     >
                       {loading ? (
                         <>
@@ -947,13 +947,13 @@ export default function MenteeApplicationPage() {
             <div className="text-center mt-6 space-y-2">
               <p className="text-gray-600">
                 Already have an invitation code?{' '}
-                <Link href="/sign-up" className="text-purple-dark hover:underline font-medium">
+                <Link href="/sign-up" className="text-foreground hover:underline font-medium">
                   Sign up here
                 </Link>
               </p>
               <p className="text-gray-600">
                 Want to become a mentor?{' '}
-                <Link href="/mentorship/become-a-mentor" className="text-purple-dark hover:underline font-medium">
+                <Link href="/mentorship/become-a-mentor" className="text-foreground hover:underline font-medium">
                   Apply to mentor
                 </Link>
               </p>

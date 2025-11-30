@@ -68,7 +68,7 @@ export function VolunteerOptionsSection() {
         <div className="mx-auto max-w-6xl">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-navy-dark mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Choose Your Way to Make an Impact
             </h2>
             <p className="text-xl text-gray max-w-3xl mx-auto">
@@ -88,18 +88,14 @@ export function VolunteerOptionsSection() {
                 <div className="grid lg:grid-cols-2 gap-12">
                   {/* Left Column - Overview */}
                   <div>
-                    <Card className={`border-2 ${path.color === 'purple' ? 'border-purple-light' : 'border-periwinkle-light'}`}>
+                    <Card className="border-2 border-border">
                       <CardContent className="p-8">
                         <div className="flex items-start gap-4 mb-6">
-                          <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full ${
-                            path.color === 'purple' ? 'bg-purple-light/20' : 'bg-periwinkle-light/20'
-                          }`}>
-                            <path.icon className={`w-6 h-6 ${
-                              path.color === 'purple' ? 'text-purple-dark' : 'text-periwinkle-dark'
-                            }`} />
+                          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-muted">
+                            <path.icon className="w-6 h-6 text-foreground" />
                           </div>
                           <div>
-                            <h3 className="text-2xl font-bold text-navy-dark mb-2">{path.title}</h3>
+                            <h3 className="text-2xl font-bold text-foreground mb-2">{path.title}</h3>
                             <Badge variant="secondary" className="font-normal">
                               <Clock className="w-3 h-3 mr-1" />
                               {path.commitment}
@@ -110,17 +106,13 @@ export function VolunteerOptionsSection() {
                         <div className="space-y-3 mb-6">
                           {path.highlights.map((highlight, index) => (
                             <div key={index} className="flex items-center gap-3">
-                              <Heart className={`w-4 h-4 ${
-                                path.color === 'purple' ? 'text-purple-dark' : 'text-periwinkle-dark'
-                              }`} />
+                              <Heart className="w-4 h-4 text-foreground" />
                               <span className="text-gray-700">{highlight}</span>
                             </div>
                           ))}
                         </div>
 
-                        <div className={`p-4 rounded-lg ${
-                          path.color === 'purple' ? 'bg-purple-light/10' : 'bg-periwinkle-light/10'
-                        }`}>
+                        <div className="p-4 rounded-lg bg-muted">
                           <p className="text-sm text-gray-600">
                             {path.id === 'events' 
                               ? 'Applications open year-round. Join us for our next event!'
@@ -135,13 +127,11 @@ export function VolunteerOptionsSection() {
                   <div className="space-y-8">
                     {/* Responsibilities */}
                     <div>
-                      <h4 className="text-xl font-semibold text-navy-dark mb-4">What You&apos;ll Do</h4>
+                      <h4 className="text-xl font-semibold text-foreground mb-4">What You&apos;ll Do</h4>
                       <ul className="space-y-2">
                         {path.responsibilities.map((item, index) => (
                           <li key={index} className="flex items-start gap-3">
-                            <div className={`w-1.5 h-1.5 rounded-full mt-2 ${
-                              path.color === 'purple' ? 'bg-purple-dark' : 'bg-periwinkle-dark'
-                            }`} />
+                            <div className="w-1.5 h-1.5 rounded-full mt-2 bg-foreground" />
                             <span className="text-gray-700">{item}</span>
                           </li>
                         ))}
@@ -150,13 +140,11 @@ export function VolunteerOptionsSection() {
 
                     {/* Benefits */}
                     <div>
-                      <h4 className="text-xl font-semibold text-navy-dark mb-4">What You&apos;ll Gain</h4>
+                      <h4 className="text-xl font-semibold text-foreground mb-4">What You&apos;ll Gain</h4>
                       <ul className="space-y-2">
                         {path.benefits.map((item, index) => (
                           <li key={index} className="flex items-start gap-3">
-                            <div className={`w-1.5 h-1.5 rounded-full mt-2 ${
-                              path.color === 'purple' ? 'bg-purple-dark' : 'bg-periwinkle-dark'
-                            }`} />
+                            <div className="w-1.5 h-1.5 rounded-full mt-2 bg-foreground" />
                             <span className="text-gray-700">{item}</span>
                           </li>
                         ))}

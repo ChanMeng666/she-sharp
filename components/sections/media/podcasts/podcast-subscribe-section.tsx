@@ -65,10 +65,10 @@ export function PodcastSubscribeSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <Badge className="mb-4 bg-purple-light text-purple-dark border-purple-dark/20">
+          <Badge className="mb-4 bg-muted text-foreground border-border">
             Never Miss an Episode
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Subscribe to She Sharp Talks
           </h2>
           <p className="text-lg text-gray max-w-3xl mx-auto">
@@ -87,7 +87,7 @@ export function PodcastSubscribeSection() {
         >
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="text-3xl font-bold text-purple-dark">{stat.value}</div>
+              <div className="text-3xl font-bold text-foreground">{stat.value}</div>
               <div className="text-gray-600">{stat.label}</div>
             </div>
           ))}
@@ -108,10 +108,10 @@ export function PodcastSubscribeSection() {
             >
               <Card className="h-full hover:shadow-lg transition-shadow duration-300 cursor-pointer group">
                 <CardContent className="p-6 text-center">
-                  <div className="inline-flex p-4 rounded-full bg-purple-light/20 mb-4 group-hover:scale-110 transition-transform duration-150">
-                    <platform.icon className="h-8 w-8 text-purple-dark" />
+                  <div className="inline-flex p-4 rounded-full bg-muted mb-4 group-hover:scale-110 transition-transform duration-150">
+                    <platform.icon className="h-8 w-8 text-foreground" />
                   </div>
-                  <h3 className="font-semibold text-navy-dark mb-2">
+                  <h3 className="font-semibold text-foreground mb-2">
                     {platform.name}
                   </h3>
                   <p className="text-sm text-gray mb-4">
@@ -140,20 +140,20 @@ export function PodcastSubscribeSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="bg-purple-dark rounded-2xl p-8 lg:p-12 text-white text-center"
+          className="bg-foreground rounded-2xl p-8 lg:p-12 text-background text-center"
         >
           <Globe className="h-12 w-12 mx-auto mb-4" />
           <h3 className="text-2xl font-bold mb-4">
             Get Episode Highlights in Your Inbox
           </h3>
-          <p className="text-white/90 mb-6 max-w-2xl mx-auto">
+          <p className="text-background/90 mb-6 max-w-2xl mx-auto">
             Can't listen to full episodes? Subscribe to our newsletter for key takeaways, 
             inspiring quotes, and actionable insights from each episode.
           </p>
-          <Button 
+          <Button
             size="lg"
             variant="secondary"
-            className="bg-white text-purple-dark hover:bg-gray-100"
+            className="bg-background text-foreground hover:bg-background/90"
           >
             Subscribe to Newsletter
           </Button>

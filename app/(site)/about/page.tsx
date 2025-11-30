@@ -5,7 +5,6 @@ import { TeamSection } from "@/components/sections/about/team-section";
 import { TimelineSection } from "@/components/sections/about/timeline-section";
 import { SmartCTASection } from "@/components/sections/shared/smart-cta-section";
 import { useScrollToHash } from "@/hooks/use-scroll-to-hash";
-import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
 export default function AboutPage() {
   // 使用自定义 hook 处理 hash 滚动
@@ -25,8 +24,8 @@ export default function AboutPage() {
       </div>
 
       {/* Subtle top/bottom gradient fades to improve text contrast */}
-      <div className="pointer-events-none absolute top-0 left-0 right-0 h-16 bg-gradient-to-t from-transparent via-white/30 to-white" />
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent via-white/30 to-white" />
+      <div className="pointer-events-none absolute top-0 left-0 right-0 h-16" />
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16" />
 
       <AboutHeroSection />
 

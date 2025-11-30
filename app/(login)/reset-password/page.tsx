@@ -104,7 +104,7 @@ function ResetPasswordForm() {
     return (
       <div className="flex min-h-[calc(100vh-64px)] items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground mx-auto"></div>
           <p className="mt-4 text-gray-600">Validating reset link...</p>
         </div>
       </div>
@@ -123,10 +123,10 @@ function ResetPasswordForm() {
         }}
       >
         {/* Background overlay for better readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/70 to-white/60 backdrop-blur-sm"></div>
-        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
           <CardHeader className="text-center space-y-4 pb-8">
-            <CardTitle className="text-3xl font-bold text-navy-dark">Invalid Reset Link</CardTitle>
+            <CardTitle className="text-3xl font-bold text-foreground">Invalid Reset Link</CardTitle>
             <CardDescription className="mt-2">
               {error || 'This password reset link is invalid or has expired.'}
             </CardDescription>
@@ -160,10 +160,10 @@ function ResetPasswordForm() {
         }}
       >
         {/* Background overlay for better readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/70 to-white/60 backdrop-blur-sm"></div>
-        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
           <CardHeader className="text-center space-y-4 pb-8">
-            <CardTitle className="text-3xl font-bold text-navy-dark">Password Reset Successful!</CardTitle>
+            <CardTitle className="text-3xl font-bold text-foreground">Password Reset Successful!</CardTitle>
             <CardDescription className="mt-2">
               Your password has been reset successfully. Redirecting to sign in...
             </CardDescription>
@@ -184,10 +184,10 @@ function ResetPasswordForm() {
       }}
     >
       {/* Background overlay for better readability */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/70 to-white/60 backdrop-blur-sm"></div>
-      <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+      <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
         <CardHeader className="space-y-4 text-center pb-8">
-          <CardTitle className="text-3xl font-bold text-navy-dark">Reset Your Password</CardTitle>
+          <CardTitle className="text-3xl font-bold text-foreground">Reset Your Password</CardTitle>
           <CardDescription className="text-center">
             Enter your new password below
           </CardDescription>
@@ -296,7 +296,7 @@ export default function ResetPasswordPage() {
   return (
     <Suspense fallback={
       <div className="flex min-h-[calc(100vh-64px)] items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground"></div>
       </div>
     }>
       <ResetPasswordForm />

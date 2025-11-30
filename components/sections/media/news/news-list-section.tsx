@@ -121,9 +121,9 @@ const categories = [
 ];
 
 const categoryColors: Record<string, string> = {
-  awards: "bg-purple-dark text-white",
-  media: "bg-periwinkle-dark text-white",
-  events: "bg-mint-dark text-navy-dark"
+  awards: "bg-foreground text-background",
+  media: "bg-foreground text-background",
+  events: "bg-muted text-foreground"
 };
 
 export function NewsListSection() {
@@ -147,7 +147,7 @@ export function NewsListSection() {
       <Container size="content">
         {/* Filter Section */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-navy-dark mb-6">Filter by Category</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-6">Filter by Category</h2>
           <RadioGroup value={selectedCategory} onValueChange={setSelectedCategory}>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {categories.map((category) => (
@@ -159,7 +159,7 @@ export function NewsListSection() {
                   />
                   <Label
                     htmlFor={category.value}
-                    className="flex items-center justify-center gap-2 rounded-lg border-2 border-gray-200 p-4 hover:border-purple-mid cursor-pointer peer-data-[state=checked]:border-purple-mid peer-data-[state=checked]:bg-purple-light/20 transition-colors duration-150"
+                    className="flex items-center justify-center gap-2 rounded-lg border-2 border-border p-4 hover:border-border cursor-pointer peer-data-[state=checked]:border-border peer-data-[state=checked]:bg-muted transition-colors duration-150"
                   >
                     <category.icon className="h-5 w-5" />
                     <span className="font-medium">{category.label}</span>
@@ -174,7 +174,7 @@ export function NewsListSection() {
         <div className="relative">
           {/* Timeline line */}
           <div className={layoutClasses(
-            "absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-purple-light",
+            "absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-muted",
             layoutSystem.patterns.timeline.line
           )} />
 
@@ -182,8 +182,8 @@ export function NewsListSection() {
             <div key={year} className="mb-16">
               {/* Year marker */}
               <div className="relative flex items-center justify-center mb-8">
-                <div className="absolute left-8 md:left-1/2 w-4 h-4 bg-purple-mid rounded-full" />
-                <Badge className="bg-navy-dark text-white text-lg px-4 py-2">
+                <div className="absolute left-8 md:left-1/2 w-4 h-4 bg-muted rounded-full" />
+                <Badge className="bg-foreground text-background text-lg px-4 py-2">
                   {year}
                 </Badge>
               </div>
@@ -198,13 +198,13 @@ export function NewsListSection() {
                     }`}
                   >
                     {/* Timeline dot */}
-                    <div className="absolute left-8 md:left-1/2 w-3 h-3 bg-white border-2 border-purple-mid rounded-full z-10" />
+                    <div className="absolute left-8 md:left-1/2 w-3 h-3 bg-background border-2 border-muted rounded-full z-10" />
 
                     {/* Empty space for alternating layout */}
                     <div className="hidden md:block md:w-1/2" />
 
                     {/* Content card */}
-                    <Card className="flex-1 ml-16 md:ml-0 md:w-1/2 hover:shadow-lg transition-shadow duration-150 border-2 hover:border-purple-light">
+                    <Card className="flex-1 ml-16 md:ml-0 md:w-1/2 hover:shadow-lg transition-shadow duration-150 border-2 hover:border-border">
                       <CardHeader className="pb-4">
                         <div className="flex flex-col md:flex-row gap-4">
                           {item.image && (
@@ -224,12 +224,12 @@ export function NewsListSection() {
                                 <Badge className={`mb-2 ${categoryColors[item.category]}`}>
                                   {categories.find(c => c.value === item.category)?.label}
                                 </Badge>
-                                <h3 className="text-xl font-semibold text-navy-dark">
+                                <h3 className="text-xl font-semibold text-foreground">
                                   {item.title}
                                 </h3>
                               </div>
                               {item.featured && (
-                                <Award className="h-5 w-5 text-purple-dark flex-shrink-0" />
+                                <Award className="h-5 w-5 text-foreground flex-shrink-0" />
                               )}
                             </div>
                             
@@ -253,7 +253,7 @@ export function NewsListSection() {
                               }}
                             >
                               <AccordionItem value={item.id.toString()} className="border-0">
-                                <AccordionTrigger className="text-purple-dark hover:text-purple-mid py-0">
+                                <AccordionTrigger className="text-foreground hover:text-foreground/80 py-0">
                                   Read full story
                                 </AccordionTrigger>
                                 <AccordionContent className="pt-4">

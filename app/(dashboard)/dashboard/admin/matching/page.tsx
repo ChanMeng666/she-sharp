@@ -176,7 +176,7 @@ export default function MatchingManagementPage() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-6 flex justify-center items-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 animate-spin text-purple-dark" />
+        <Loader2 className="h-8 w-8 animate-spin text-foreground" />
       </div>
     );
   }
@@ -205,7 +205,6 @@ export default function MatchingManagementPage() {
           <Button
             onClick={runBatchMatching}
             disabled={isRunning}
-            className="bg-purple-dark hover:bg-purple-dark/90"
           >
             {isRunning ? (
               <>
@@ -273,8 +272,8 @@ export default function MatchingManagementPage() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <Users className="h-5 w-5 text-purple-600" />
+              <div className="p-2 bg-muted rounded-lg">
+                <Users className="h-5 w-5 text-foreground" />
               </div>
               <div>
                 <p className="text-2xl font-bold">{stats?.activeRelationships || 0}</p>
@@ -304,7 +303,7 @@ export default function MatchingManagementPage() {
           <TabsTrigger value="pending">
             Pending Matches
             {pendingMatches.length > 0 && (
-              <Badge variant="secondary" className="ml-2 bg-yellow-100 text-yellow-700">
+              <Badge variant="secondary" className="ml-2">
                 {pendingMatches.length}
               </Badge>
             )}
@@ -337,15 +336,15 @@ export default function MatchingManagementPage() {
                       <div className="flex-1">
                         <div className="flex items-center gap-4 mb-2">
                           <div className="flex items-center gap-2">
-                            <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                              <Users className="h-5 w-5 text-purple-600" />
+                            <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+                              <Users className="h-5 w-5 text-foreground" />
                             </div>
                             <div>
                               <p className="font-semibold">{match.mentorName}</p>
                               <p className="text-xs text-muted-foreground">Mentor</p>
                             </div>
                           </div>
-                          <div className="text-purple-dark font-bold">→</div>
+                          <div className="text-foreground font-bold">→</div>
                           <div className="flex items-center gap-2">
                             <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                               <Users className="h-5 w-5 text-blue-600" />
@@ -382,7 +381,7 @@ export default function MatchingManagementPage() {
                         {match.mbtiScore !== undefined && (
                           <div className="p-3 bg-gray-50 rounded-lg">
                             <div className="flex items-center gap-2 mb-1">
-                              <Brain className="h-4 w-4 text-purple-600" />
+                              <Brain className="h-4 w-4 text-foreground" />
                               <span className="text-sm font-medium">MBTI</span>
                             </div>
                             <p className="text-lg font-bold">{match.mbtiScore.toFixed(0)}%</p>
@@ -511,8 +510,8 @@ export default function MatchingManagementPage() {
                       className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="p-2 bg-purple-100 rounded-lg">
-                          <Sparkles className="h-5 w-5 text-purple-600" />
+                        <div className="p-2 bg-muted rounded-lg">
+                          <Sparkles className="h-5 w-5 text-foreground" />
                         </div>
                         <div>
                           <p className="font-medium">

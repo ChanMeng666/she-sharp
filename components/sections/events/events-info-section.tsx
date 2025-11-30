@@ -24,13 +24,13 @@ export function EventsInfoSection() {
     <Section className="py-16">
       <Container>
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-navy">Message to the Community</h2>
+          <h2 className="text-3xl font-bold text-foreground">Message to the Community</h2>
         </div>
         <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
           {infoItems.map((item) => (
             <div key={item.title} className="text-center">
               <div className="text-5xl mb-4">{item.icon}</div>
-              <h3 className="text-xl font-semibold text-navy mb-4">{item.title}</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-4">{item.title}</h3>
               <p className="text-gray-600">{item.description}</p>
             </div>
           ))}

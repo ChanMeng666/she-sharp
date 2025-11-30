@@ -155,10 +155,10 @@ export default function TeamMembersPage() {
     <div className="container mx-auto py-6 md:py-8 px-4 md:px-6 lg:px-8 max-w-6xl">
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-2">
-          <h1 className="text-2xl sm:text-3xl font-bold text-primary">Team Members</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Team Members</h1>
           {userRole === 'owner' && (
             <Link href="/dashboard/team/settings">
-              <Button className="bg-primary hover:bg-purple-mid text-sm sm:text-base">
+              <Button className="text-sm sm:text-base">
                 <UserPlus className="mr-2 h-4 w-4" />
                 Invite Members
               </Button>
@@ -173,7 +173,7 @@ export default function TeamMembersPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Members</CardTitle>
-            <Users className="h-4 w-4 text-primary" />
+            <Users className="h-4 w-4 text-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{members.length}</div>
@@ -257,7 +257,7 @@ export default function TeamMembersPage() {
                         <div className="flex items-center gap-3">
                           <Avatar>
                             <AvatarImage src={member.avatar} />
-                            <AvatarFallback className="bg-gradient-to-br from-purple-dark to-periwinkle-dark text-white">
+                            <AvatarFallback className="bg-foreground text-background">
                               {getUserInitials(member.name)}
                             </AvatarFallback>
                           </Avatar>
@@ -272,7 +272,7 @@ export default function TeamMembersPage() {
                           {member.role === 'owner' ? (
                             <>
                               <Crown className="h-4 w-4 text-amber-500" />
-                              <Badge variant="outline" className="border-amber-500 text-amber-700">
+                              <Badge variant="outline">
                                 Owner
                               </Badge>
                             </>
@@ -286,12 +286,12 @@ export default function TeamMembersPage() {
                       </TableCell>
                       <TableCell>
                         {member.status === 'active' ? (
-                          <Badge className="bg-green-100 text-green-700">
+                          <Badge className="bg-muted text-foreground">
                             <CheckCircle2 className="mr-1 h-3 w-3" />
                             Active
                           </Badge>
                         ) : (
-                          <Badge className="bg-amber-100 text-amber-700">
+                          <Badge className="bg-muted text-foreground">
                             <Clock className="mr-1 h-3 w-3" />
                             Pending
                           </Badge>

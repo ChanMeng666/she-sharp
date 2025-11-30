@@ -26,7 +26,7 @@ export function DonateCTASection() {
     <Section className="py-16">
       <Container>
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-navy uppercase">
+          <h2 className="text-3xl font-bold text-foreground uppercase">
             Bridge the Gender Gap in STEM with Us
           </h2>
         </div>
@@ -35,13 +35,13 @@ export function DonateCTASection() {
             <Card key={item.title} className="text-center">
               <CardContent className="p-8">
                 <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-semibold text-navy mb-4">
+                <h3 className="text-xl font-semibold text-foreground mb-4">
                   {item.title}
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-muted-foreground mb-6">
                   {item.description}
                 </p>
-                <Button asChild variant="outline" className="text-purple-dark border-purple-dark hover:bg-purple-light">
+                <Button asChild variant="outline" className="text-foreground border-border hover:bg-muted">
                   <Link href={item.href}>{item.buttonText}</Link>
                 </Button>
               </CardContent>

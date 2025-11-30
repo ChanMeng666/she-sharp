@@ -146,18 +146,7 @@ export default function NotificationsPage() {
   };
 
   const getTypeColor = (type: string) => {
-    switch (type) {
-      case 'event':
-        return 'bg-purple-light text-primary';
-      case 'mentorship':
-        return 'bg-periwinkle-light text-periwinkle-dark';
-      case 'resource':
-        return 'bg-mint-light text-mint-dark';
-      case 'system':
-        return 'bg-navy-light text-navy-dark';
-      default:
-        return 'bg-accent text-foreground';
-    }
+    return 'bg-muted text-foreground';
   };
 
   const getTimeAgo = (date: string) => {
@@ -190,7 +179,7 @@ export default function NotificationsPage() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-gray">Loading notifications...</p>
+          <p className="mt-4 text-muted-foreground">Loading notifications...</p>
         </div>
       </div>
     );
@@ -203,12 +192,12 @@ export default function NotificationsPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
-              <Bell className="h-5 w-5 sm:h-6 sm:w-6 text-primary flex-shrink-0" />
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-dark to-purple-mid bg-clip-text text-transparent">
+              <Bell className="h-5 w-5 sm:h-6 sm:w-6 text-foreground flex-shrink-0" />
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
                 Notifications
               </h1>
             </div>
-            <p className="text-gray text-base sm:text-lg">
+            <p className="text-muted-foreground text-base sm:text-lg">
               Stay updated with your events, mentorship, and resources
             </p>
           </div>
@@ -223,9 +212,9 @@ export default function NotificationsPage() {
                 Mark all read
               </Button>
             )}
-            <Button 
+            <Button
               variant="outline"
-              className="border-border hover:border-purple-mid/30 hover:bg-purple-light/30"
+              className="border-border"
               size="sm"
             >
               <Settings className="h-4 w-4 mr-2" />
@@ -237,9 +226,9 @@ export default function NotificationsPage() {
 
       {/* Unread Alert */}
       {unreadCount > 0 && (
-        <Alert className="mb-6 sm:mb-8 border-purple-mid/20 bg-purple-light/20">
-          <Bell className="h-4 w-4 text-primary" />
-          <AlertDescription className="text-navy-dark">
+        <Alert className="mb-6 sm:mb-8 border-border bg-muted">
+          <Bell className="h-4 w-4 text-foreground" />
+          <AlertDescription className="text-foreground">
             <strong className="font-semibold">You have {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}!</strong>
             <span className="block sm:inline"> Stay informed about your activities and updates.</span>
           </AlertDescription>
@@ -268,13 +257,13 @@ export default function NotificationsPage() {
 
         <TabsContent value={activeTab} className="space-y-4">
           {filteredNotifications.length === 0 ? (
-            <Card className="border-purple-light shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="text-center py-12">
-                <Sparkles className="h-12 w-12 text-purple-mid mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-navy-dark mb-2">
+                <Sparkles className="h-12 w-12 text-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-foreground mb-2">
                   {activeTab === 'unread' ? 'All caught up!' : 'No notifications'}
                 </h3>
-                <p className="text-gray">
+                <p className="text-muted-foreground">
                   {activeTab === 'unread' 
                     ? 'You\'ve read all your notifications' 
                     : 'Notifications will appear here when you have updates'}
@@ -287,9 +276,9 @@ export default function NotificationsPage() {
                 <Card 
                   key={notification.id} 
                   className={`group hover:shadow-lg transition-all duration-300 ${
-                    !notification.read 
-                      ? 'border-purple-mid/30 bg-gradient-to-r from-purple-light/10 to-periwinkle-light/10' 
-                      : 'border-border bg-white'
+                    !notification.read
+                      ? 'border-border bg-muted'
+                      : 'border-border bg-background'
                   }`}
                 >
                   <CardContent className="p-4 sm:p-6">
@@ -301,7 +290,7 @@ export default function NotificationsPage() {
                         <div className="flex items-start justify-between gap-4">
                           <div className="space-y-1 flex-1">
                             <div className="flex items-center gap-2">
-                              <h3 className="font-semibold text-navy-dark">
+                              <h3 className="font-semibold text-foreground">
                                 {notification.title}
                               </h3>
                               {!notification.read && (
@@ -311,10 +300,10 @@ export default function NotificationsPage() {
                                 </span>
                               )}
                             </div>
-                            <p className="text-sm text-gray">
+                            <p className="text-sm text-muted-foreground">
                               {notification.message}
                             </p>
-                            <div className="flex items-center gap-2 text-xs text-gray pt-1">
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground pt-1">
                               <Clock className="h-3 w-3" />
                               <span>{getTimeAgo(notification.createdAt)}</span>
                             </div>
@@ -325,7 +314,7 @@ export default function NotificationsPage() {
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => markAsRead(notification.id)}
-                                className="text-primary hover:bg-purple-light"
+                                className=""
                               >
                                 <CheckCircle className="h-4 w-4" />
                               </Button>
@@ -334,7 +323,7 @@ export default function NotificationsPage() {
                               variant="ghost"
                               size="sm"
                               onClick={() => deleteNotification(notification.id)}
-                              className="text-gray hover:text-error hover:bg-error/10"
+                              className="text-muted-foreground hover:text-destructive"
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
@@ -343,7 +332,7 @@ export default function NotificationsPage() {
                         {notification.actionUrl && (
                           <Button
                             variant="link"
-                            className="p-0 h-auto text-primary hover:text-purple-mid mt-3 text-sm font-medium"
+                            className="p-0 h-auto text-foreground mt-3 text-sm font-medium"
                             onClick={() => window.location.href = notification.actionUrl!}
                           >
                             {notification.actionLabel || 'View'}

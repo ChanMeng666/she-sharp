@@ -25,8 +25,8 @@ export default function AccessibilityPage() {
               accessibility standards.
             </p>
             <div className="flex items-center gap-4 p-4 bg-white/50 rounded-lg">
-              <CheckCircle className="h-6 w-6 text-purple-dark flex-shrink-0" />
-              <p className="text-sm text-navy-dark mb-0">
+              <CheckCircle className="h-6 w-6 text-foreground flex-shrink-0" />
+              <p className="text-sm text-foreground mb-0">
                 <strong>Our Goal:</strong> Conform to WCAG 2.1 Level AA standards to ensure our content 
                 is accessible to a wide range of people with disabilities.
               </p>
@@ -81,19 +81,19 @@ export default function AccessibilityPage() {
                 key={feature.title}
                 className={`p-8 rounded-2xl border transition-all hover:shadow-xl hover:scale-105 ${
                   feature.color === "purple"
-                    ? "bg-purple-light/10 border-purple-light/30 hover:border-purple-mid"
+                    ? "bg-muted border-border hover:border-border"
                     : feature.color === "periwinkle"
-                    ? "bg-periwinkle-light/10 border-periwinkle-light/30 hover:border-periwinkle-dark"
-                    : "bg-mint-light/10 border-mint-light/30 hover:border-mint-dark"
+                    ? "bg-muted border-border hover:border-border"
+                    : "bg-muted border-border hover:border-border"
                 }`}
               >
                 <feature.icon
                   className={`h-8 w-8 mb-3 ${
                     feature.color === "purple"
-                      ? "text-purple-dark"
+                      ? "text-foreground"
                       : feature.color === "periwinkle"
-                      ? "text-periwinkle-dark"
-                      : "text-mint-dark"
+                      ? "text-foreground"
+                      : "text-foreground"
                   }`}
                 />
                 <h3 className="!mt-0 text-lg mb-2">{feature.title}</h3>
@@ -107,29 +107,29 @@ export default function AccessibilityPage() {
             <div className="grid sm:grid-cols-2 gap-6">
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-purple-dark mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-foreground mt-0.5 flex-shrink-0" />
                   <span className="text-sm">Form labels and error messages</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-purple-dark mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-foreground mt-0.5 flex-shrink-0" />
                   <span className="text-sm">Skip navigation links</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-purple-dark mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-foreground mt-0.5 flex-shrink-0" />
                   <span className="text-sm">Focus indicators</span>
                 </li>
               </ul>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-periwinkle-dark mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-foreground mt-0.5 flex-shrink-0" />
                   <span className="text-sm">Consistent heading structure</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-periwinkle-dark mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-foreground mt-0.5 flex-shrink-0" />
                   <span className="text-sm">Descriptive link text</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-periwinkle-dark mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-foreground mt-0.5 flex-shrink-0" />
                   <span className="text-sm">ARIA landmarks</span>
                 </li>
               </ul>
@@ -141,7 +141,7 @@ export default function AccessibilityPage() {
         <section className="legal-section">
           <h2>Assistive Technology Compatibility</h2>
           
-          <div className="bg-gradient-to-br from-periwinkle-light/20 to-mint-light/20 rounded-xl p-8">
+          <div className="bg-muted rounded-xl p-8">
             <p className="mb-6">
               Our website is designed to be compatible with the following assistive technologies:
             </p>
@@ -151,19 +151,19 @@ export default function AccessibilityPage() {
                 <h3 className="!mt-0 text-lg mb-4">Screen Readers</h3>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
-                    <div className="w-2 h-2 bg-mint-dark rounded-full"></div>
+                    <div className="w-2 h-2 bg-foreground rounded-full"></div>
                     <span>JAWS (Windows)</span>
                   </li>
                   <li className="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
-                    <div className="w-2 h-2 bg-mint-dark rounded-full"></div>
+                    <div className="w-2 h-2 bg-foreground rounded-full"></div>
                     <span>NVDA (Windows)</span>
                   </li>
                   <li className="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
-                    <div className="w-2 h-2 bg-mint-dark rounded-full"></div>
+                    <div className="w-2 h-2 bg-foreground rounded-full"></div>
                     <span>VoiceOver (macOS/iOS)</span>
                   </li>
                   <li className="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
-                    <div className="w-2 h-2 bg-mint-dark rounded-full"></div>
+                    <div className="w-2 h-2 bg-foreground rounded-full"></div>
                     <span>TalkBack (Android)</span>
                   </li>
                 </ul>
@@ -173,19 +173,19 @@ export default function AccessibilityPage() {
                 <h3 className="!mt-0 text-lg mb-4">Other Technologies</h3>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
-                    <div className="w-2 h-2 bg-periwinkle-dark rounded-full"></div>
+                    <div className="w-2 h-2 bg-foreground rounded-full"></div>
                     <span>Screen magnification software</span>
                   </li>
                   <li className="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
-                    <div className="w-2 h-2 bg-periwinkle-dark rounded-full"></div>
+                    <div className="w-2 h-2 bg-foreground rounded-full"></div>
                     <span>Speech recognition software</span>
                   </li>
                   <li className="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
-                    <div className="w-2 h-2 bg-periwinkle-dark rounded-full"></div>
+                    <div className="w-2 h-2 bg-foreground rounded-full"></div>
                     <span>Keyboard-only navigation</span>
                   </li>
                   <li className="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
-                    <div className="w-2 h-2 bg-periwinkle-dark rounded-full"></div>
+                    <div className="w-2 h-2 bg-foreground rounded-full"></div>
                     <span>Voice control systems</span>
                   </li>
                 </ul>
@@ -200,7 +200,7 @@ export default function AccessibilityPage() {
           
           <div className="legal-warning-box">
             <h3 className="!mt-0 flex items-center gap-3">
-              <AlertCircle className="h-6 w-6 text-mint-dark" />
+              <AlertCircle className="h-6 w-6 text-foreground" />
               Areas We're Working On
             </h3>
             <p className="mb-4">
@@ -209,31 +209,31 @@ export default function AccessibilityPage() {
             
             <div className="space-y-4">
               <div className="p-4 bg-white/50 rounded-lg">
-                <h4 className="font-semibold text-navy-dark mb-2">Third-Party Content</h4>
+                <h4 className="font-semibold text-foreground mb-2">Third-Party Content</h4>
                 <p className="text-sm text-gray mb-2">
                   Embedded videos and social media content may not fully meet accessibility standards.
                 </p>
-                <p className="text-sm text-purple-dark">
+                <p className="text-sm text-foreground">
                   <strong>Solution:</strong> We're working with providers to improve accessibility.
                 </p>
               </div>
               
               <div className="p-4 bg-white/50 rounded-lg">
-                <h4 className="font-semibold text-navy-dark mb-2">Legacy Documents</h4>
+                <h4 className="font-semibold text-foreground mb-2">Legacy Documents</h4>
                 <p className="text-sm text-gray mb-2">
                   Some older PDF documents may not be fully accessible.
                 </p>
-                <p className="text-sm text-purple-dark">
+                <p className="text-sm text-foreground">
                   <strong>Solution:</strong> We're converting documents to accessible formats.
                 </p>
               </div>
               
               <div className="p-4 bg-white/50 rounded-lg">
-                <h4 className="font-semibold text-navy-dark mb-2">User-Generated Content</h4>
+                <h4 className="font-semibold text-foreground mb-2">User-Generated Content</h4>
                 <p className="text-sm text-gray mb-2">
                   Community-submitted content may not always meet guidelines.
                 </p>
-                <p className="text-sm text-purple-dark">
+                <p className="text-sm text-foreground">
                   <strong>Solution:</strong> We provide accessibility guidelines to contributors.
                 </p>
               </div>
@@ -247,7 +247,7 @@ export default function AccessibilityPage() {
           
           <div className="grid md:grid-cols-2 gap-8">
             <div className="legal-highlight-box">
-              <Mail className="h-8 w-8 text-purple-dark mb-4" />
+              <Mail className="h-8 w-8 text-foreground mb-4" />
               <h3 className="!mt-0">Report an Issue</h3>
               <p className="mb-4">
                 Encountered an accessibility barrier? We want to hear from you.
@@ -261,7 +261,7 @@ export default function AccessibilityPage() {
               </ul>
               <a
                 href="mailto:accessibility@shesharp.org.nz"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-purple-dark text-white rounded-lg hover:bg-purple-mid transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-foreground text-background rounded-lg hover:bg-foreground/90 transition-colors"
               >
                 <Mail className="h-4 w-4" />
                 Email Us
@@ -269,26 +269,26 @@ export default function AccessibilityPage() {
             </div>
             
             <div className="legal-highlight-box">
-              <Heart className="h-8 w-8 text-periwinkle-dark mb-4" />
+              <Heart className="h-8 w-8 text-foreground mb-4" />
               <h3 className="!mt-0">Our Promise</h3>
               <p className="mb-4">
                 We are committed to making our website accessible to all members of our community.
               </p>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-mint-dark mt-0.5" />
+                  <CheckCircle className="h-5 w-5 text-foreground mt-0.5" />
                   <span className="text-sm">Response within 2 business days</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-mint-dark mt-0.5" />
+                  <CheckCircle className="h-5 w-5 text-foreground mt-0.5" />
                   <span className="text-sm">Regular accessibility audits</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-mint-dark mt-0.5" />
+                  <CheckCircle className="h-5 w-5 text-foreground mt-0.5" />
                   <span className="text-sm">Ongoing staff training</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-mint-dark mt-0.5" />
+                  <CheckCircle className="h-5 w-5 text-foreground mt-0.5" />
                   <span className="text-sm">User feedback implementation</span>
                 </div>
               </div>
@@ -300,7 +300,7 @@ export default function AccessibilityPage() {
         <section className="legal-section">
           <h2>Accessibility Resources</h2>
           
-          <div className="bg-gradient-to-br from-purple-light/10 to-periwinkle-light/10 rounded-xl p-8">
+          <div className="bg-muted rounded-xl p-8">
             <p className="mb-6">
               Learn more about web accessibility and assistive technologies:
             </p>
@@ -328,9 +328,9 @@ export default function AccessibilityPage() {
                   href={resource.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block p-4 bg-white rounded-lg border border-purple-light/20 hover:border-purple-mid transition-all hover:shadow-sm"
+                  className="block p-4 bg-white rounded-lg border border-border hover:border-border transition-all hover:shadow-sm"
                 >
-                  <h4 className="font-semibold text-navy-dark mb-1">{resource.name}</h4>
+                  <h4 className="font-semibold text-foreground mb-1">{resource.name}</h4>
                   <p className="text-sm text-gray">{resource.desc}</p>
                 </a>
               ))}
@@ -349,7 +349,7 @@ export default function AccessibilityPage() {
                 Accessibility is not just about compliance—it's about ensuring everyone in our 
                 community can participate fully in our mission to empower women in STEM.
               </p>
-              <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-purple-dark to-periwinkle-dark text-white rounded-lg">
+              <div className="inline-flex items-center gap-3 px-6 py-3 bg-foreground text-white rounded-lg">
                 <Heart className="h-5 w-5" />
                 <span className="font-semibold">Thank you for helping us improve</span>
               </div>

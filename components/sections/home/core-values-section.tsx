@@ -44,18 +44,16 @@ export function CoreValuesSection() {
             className="object-cover"
             sizes="66vw"
           />
-          {/* Gradient overlay for smooth transition to dark */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-950/50 to-black/70 pointer-events-none" />
+          {/* Simple overlay for smooth transition */}
+          <div className="absolute inset-0 bg-white/30 pointer-events-none" />
         </div>
       </AnimateOnScroll>
 
-      {/* Right side - Content with dark background (1/3 width) */}
-      <div className="w-1/3 bg-gradient-to-b from-gray-950/95 via-black/95 to-gray-950/95 flex items-center py-14 sm:py-16 md:py-20 relative">
-        {/* Gradient overlay from left for smooth transition */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-transparent to-gray-950/95 pointer-events-none z-0" />
+      {/* Right side - Content with muted background (1/3 width) */}
+      <div className="w-1/3 bg-muted flex items-center py-14 sm:py-16 md:py-20 relative">
         <div className="px-6 sm:px-8 md:px-10 lg:px-12 w-full relative z-10">
           <AnimateOnScroll variant="fade-up" className="mb-10 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading text-ghost-white relative z-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading text-foreground relative z-20">
               Our Core Values
             </h2>
           </AnimateOnScroll>
@@ -67,16 +65,16 @@ export function CoreValuesSection() {
                 variant="fade-up"
                 delay={index * 100}
               >
-                <li className="rounded-2xl border border-purple-dark/30 backdrop-blur-sm p-5 sm:p-6 md:p-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-dark/30 hover:border-purple-dark/60 bg-gray-800/40">
+                <li className="rounded-2xl border border-border p-5 sm:p-6 md:p-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-foreground/30 bg-background">
                   <div className="flex items-start gap-4">
-                    <div className="inline-flex w-30 aspect-square items-center justify-center rounded-xl bg-purple-dark/20 border border-purple-dark/40">
-                      <value.icon className="h-5 w-5 text-purple-dark" />
+                    <div className="inline-flex w-30 aspect-square items-center justify-center rounded-xl bg-muted border border-border">
+                      <value.icon className="h-5 w-5 text-foreground" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-semibold text-ghost-white font-heading">
+                      <h3 className="text-2xl font-semibold text-foreground font-heading">
                         {value.title}
                       </h3>
-                      <p className="mt-1.5 text-sm sm:text-base text-gray-300">
+                      <p className="mt-1.5 text-sm sm:text-base text-muted-foreground">
                         {value.description}
                       </p>
                     </div>

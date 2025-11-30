@@ -151,12 +151,12 @@ const eventBenefits = [
 function BenefitCell({ value }: { value: boolean | string }) {
   if (typeof value === "boolean") {
     return value ? (
-      <Check className="h-5 w-5 text-mint-dark mx-auto" />
+      <Check className="h-5 w-5 text-foreground mx-auto" />
     ) : (
-      <X className="h-5 w-5 text-gray/30 mx-auto" />
+      <X className="h-5 w-5 text-muted-foreground/30 mx-auto" />
     );
   }
-  return <span className="text-sm text-navy-dark">{value}</span>;
+  return <span className="text-sm text-foreground">{value}</span>;
 }
 
 export function SponsorshipPackagesSection() {
@@ -164,15 +164,15 @@ export function SponsorshipPackagesSection() {
   const benefits = sponsorshipType === "annual" ? annualBenefits : eventBenefits;
 
   return (
-    <Section id="packages" className="py-20 bg-navy-light">
+    <Section id="packages" className="py-20 bg-muted">
       <Container>
         <div className="space-y-12">
           {/* Section Header */}
           <div className="text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-navy-dark">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Partnership Packages
             </h2>
-            <p className="text-lg text-gray max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Choose the partnership level that aligns with your organization's goals and commitment to diversity in STEM.
             </p>
           </div>
@@ -195,38 +195,38 @@ export function SponsorshipPackagesSection() {
           </div>
 
           {/* Benefits Table */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray/10 overflow-hidden">
+          <div className="bg-background rounded-xl shadow-sm border border-border overflow-hidden">
             <ScrollArea className="w-full">
               <div className="min-w-[640px]">
                 <Table>
                   <TableHeader>
                     <TableRow className="border-b-2">
-                      <TableHead className="w-[280px] bg-gray-50 font-semibold text-navy-dark">
+                      <TableHead className="w-[280px] bg-muted font-semibold text-foreground">
                         Benefits & Features
                       </TableHead>
-                      <TableHead className="text-center bg-gray-50">
+                      <TableHead className="text-center bg-muted">
                         <div className="space-y-1">
-                          <div className="font-semibold text-navy-dark">Bronze</div>
+                          <div className="font-semibold text-foreground">Bronze</div>
                           <Badge variant="outline" className="text-xs">Entry Level</Badge>
                         </div>
                       </TableHead>
-                      <TableHead className="text-center bg-gray-50">
+                      <TableHead className="text-center bg-muted">
                         <div className="space-y-1">
-                          <div className="font-semibold text-navy-dark">Silver</div>
+                          <div className="font-semibold text-foreground">Silver</div>
                           <Badge variant="outline" className="text-xs">Popular</Badge>
                         </div>
                       </TableHead>
-                      <TableHead className="text-center bg-gray-50">
+                      <TableHead className="text-center bg-muted">
                         <div className="space-y-1">
-                          <div className="font-semibold text-navy-dark">Gold</div>
-                          <Badge className="bg-mint-dark text-navy-dark hover:bg-mint-dark/90 text-xs">
+                          <div className="font-semibold text-foreground">Gold</div>
+                          <Badge className="bg-foreground text-background hover:bg-foreground/90 text-xs">
                             Recommended
                           </Badge>
                         </div>
                       </TableHead>
-                      <TableHead className="text-center bg-gray-50">
+                      <TableHead className="text-center bg-muted">
                         <div className="space-y-1">
-                          <div className="font-semibold text-navy-dark">Platinum</div>
+                          <div className="font-semibold text-foreground">Platinum</div>
                           <Badge variant="outline" className="text-xs">Premium</Badge>
                         </div>
                       </TableHead>
@@ -238,13 +238,13 @@ export function SponsorshipPackagesSection() {
                         key={index}
                         className={
                           row.benefit.includes("Investment amount")
-                            ? "bg-periwinkle-light/30 font-semibold"
+                            ? "bg-muted font-semibold"
                             : index % 2 === 0
-                            ? "bg-gray-50/30"
+                            ? "bg-muted/30"
                             : ""
                         }
                       >
-                        <TableCell className="font-medium text-navy-dark">
+                        <TableCell className="font-medium text-foreground">
                           {row.benefit}
                         </TableCell>
                         <TableCell className="text-center">
@@ -253,7 +253,7 @@ export function SponsorshipPackagesSection() {
                         <TableCell className="text-center">
                           <BenefitCell value={row.silver} />
                         </TableCell>
-                        <TableCell className="text-center bg-mint-light/10">
+                        <TableCell className="text-center bg-muted/50">
                           <BenefitCell value={row.gold} />
                         </TableCell>
                         <TableCell className="text-center">
@@ -270,12 +270,12 @@ export function SponsorshipPackagesSection() {
 
           {/* CTA */}
           <div className="text-center pt-8">
-            <p className="text-sm text-gray mb-4">
+            <p className="text-sm text-muted-foreground mb-4">
               All packages are customizable to meet your specific objectives
             </p>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-purple-dark text-white hover:bg-purple-mid h-11 px-8"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-foreground text-background hover:bg-foreground/90 h-11 px-8"
             >
               Discuss Partnership Options
             </a>

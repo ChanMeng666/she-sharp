@@ -44,12 +44,12 @@ export function NewslettersGridSection() {
       <Container size="wide">
         {/* Filter Section */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark">Browse Archive</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">Browse Archive</h2>
           
           <div className="flex items-center gap-4">
             <Filter className="h-5 w-5 text-gray" />
             <Select value={selectedYear} onValueChange={setSelectedYear}>
-              <SelectTrigger className="w-[180px] border-navy-dark/20 focus:border-navy-dark">
+              <SelectTrigger className="w-[180px] border-border focus:border-border">
                 <SelectValue placeholder="Filter by year" />
               </SelectTrigger>
               <SelectContent>
@@ -65,7 +65,7 @@ export function NewslettersGridSection() {
         {/* Featured Section */}
         {selectedYear === "All Years" && (
           <div className="mb-16">
-            <Badge className="mb-4 bg-navy-dark text-white">Latest Issues</Badge>
+            <Badge className="mb-4 bg-foreground text-background">Latest Issues</Badge>
             <div className={layoutClasses(
               "grid",
               layoutSystem.grids.content.cols1,
@@ -73,7 +73,7 @@ export function NewslettersGridSection() {
               layoutSystem.grids.content.gap
             )}>
               {featuredNewsletters.map((newsletter) => (
-                <Card key={newsletter.slug} className="group overflow-hidden border-2 border-navy-light hover:border-navy-dark transition-all">
+                <Card key={newsletter.slug} className="group overflow-hidden border-2 border-border hover:border-border transition-all">
                   <div className="relative">
                     <AspectRatio ratio={3/4}>
                       {loading ? (
@@ -87,13 +87,13 @@ export function NewslettersGridSection() {
                         />
                       )}
                     </AspectRatio>
-                    <div className="absolute inset-0 bg-navy-dark/80 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                    <div className="absolute inset-0 bg-foreground/80 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
                       <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <h3 className="text-2xl font-bold text-white mb-2">
+                        <h3 className="text-2xl font-bold text-background mb-2">
                           {newsletter.month} {newsletter.year}
                         </h3>
                         <div className="flex gap-2 mb-4">
-                          <Badge variant="secondary" className="bg-white/20 text-white border-0">
+                          <Badge variant="secondary" className="bg-background/20 text-background border-0">
                             Featured Issue
                           </Badge>
                         </div>
@@ -106,12 +106,12 @@ export function NewslettersGridSection() {
                       <Calendar className="h-4 w-4" />
                       <span>{newsletter.month} {newsletter.year}</span>
                     </div>
-                    
-                    <h4 className="font-semibold text-lg text-navy-dark mb-3">In This Issue:</h4>
+
+                    <h4 className="font-semibold text-lg text-foreground mb-3">In This Issue:</h4>
                     <ul className="space-y-1 mb-4">
                       {newsletter.highlights.map((highlight, idx) => (
                         <li key={idx} className="text-sm text-gray-600 flex items-start gap-2">
-                          <span className="text-purple-dark mt-1">•</span>
+                          <span className="text-foreground mt-1">•</span>
                           <span>{highlight}</span>
                         </li>
                       ))}
@@ -120,9 +120,9 @@ export function NewslettersGridSection() {
                     <div className="flex gap-3">
                       <Sheet>
                         <SheetTrigger asChild>
-                          <Button 
-                            variant="outline" 
-                            className="flex-1 border-navy-dark text-navy-dark hover:bg-navy-light"
+                          <Button
+                            variant="outline"
+                            className="flex-1 border-border text-foreground hover:bg-muted"
                             onClick={() => setSelectedNewsletter(newsletter)}
                           >
                             <Eye className="h-4 w-4 mr-2" />
@@ -131,7 +131,7 @@ export function NewslettersGridSection() {
                         </SheetTrigger>
                         <SheetContent className="w-full sm:max-w-xl">
                           <SheetHeader>
-                            <SheetTitle className="text-2xl font-bold text-navy-dark">
+                            <SheetTitle className="text-2xl font-bold text-foreground">
                               {selectedNewsletter?.month} {selectedNewsletter?.year} Newsletter
                             </SheetTitle>
                           </SheetHeader>
@@ -149,13 +149,13 @@ export function NewslettersGridSection() {
                               <ul className="space-y-2">
                                 {selectedNewsletter?.highlights.map((highlight, idx) => (
                                   <li key={idx} className="flex items-start gap-2">
-                                    <span className="text-purple-dark">→</span>
+                                    <span className="text-foreground">→</span>
                                     <span>{highlight}</span>
                                   </li>
                                 ))}
                               </ul>
                             </div>
-                            <Button asChild className="w-full bg-navy-dark hover:bg-navy-dark/90">
+                            <Button asChild className="w-full bg-foreground hover:bg-foreground/90">
                               <a href={selectedNewsletter?.webUrl} target="_blank" rel="noopener noreferrer">
                                 <Download className="h-4 w-4 mr-2" />
                                 Download Full Newsletter
@@ -164,8 +164,8 @@ export function NewslettersGridSection() {
                           </div>
                         </SheetContent>
                       </Sheet>
-                      
-                      <Button asChild className="flex-1 bg-navy-dark hover:bg-navy-dark/90 text-white">
+
+                      <Button asChild className="flex-1 bg-foreground hover:bg-foreground/90 text-background">
                         <a href={newsletter.webUrl} target="_blank" rel="noopener noreferrer">
                           Read Now
                           <ArrowRight className="h-4 w-4 ml-2" />
@@ -187,11 +187,11 @@ export function NewslettersGridSection() {
         )}>
           {filteredNewsletters.map((newsletter, index) => (
             <Card
-              key={newsletter.slug} 
-              className={`break-inside-avoid group overflow-hidden hover:shadow-xl transition-all border-2 hover:border-navy-dark ${
-                index % 3 === 0 ? 'border-purple-light' : 
-                index % 3 === 1 ? 'border-periwinkle-light' : 
-                'border-mint-light'
+              key={newsletter.slug}
+              className={`break-inside-avoid group overflow-hidden hover:shadow-xl transition-all border-2 hover:border-border ${
+                index % 3 === 0 ? 'border-border' :
+                index % 3 === 1 ? 'border-border' :
+                'border-border'
               }`}
             >
               <div className="relative">
@@ -209,14 +209,14 @@ export function NewslettersGridSection() {
                 </AspectRatio>
 
                 <div className="absolute top-4 left-4">
-                  <Badge className="bg-white/90 text-navy-dark">
+                  <Badge className="bg-background/90 text-foreground">
                     {newsletter.month} {newsletter.year}
                   </Badge>
                 </div>
               </div>
 
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-navy-dark mb-3 group-hover:text-purple-dark transition-colors">
+                <h3 className="text-xl font-semibold text-foreground mb-3 group-hover:text-foreground transition-colors">
                   {newsletter.month} {newsletter.year} Issue
                 </h3>
 
@@ -225,7 +225,7 @@ export function NewslettersGridSection() {
                     <SheetTrigger asChild>
                       <Button
                         variant="outline"
-                        className="w-full border-navy-dark/30 text-navy-dark hover:bg-navy-light"
+                        className="w-full border-border text-foreground hover:bg-muted"
                         onClick={() => setSelectedNewsletter(newsletter)}
                       >
                         <Eye className="h-4 w-4 mr-2" />
@@ -234,7 +234,7 @@ export function NewslettersGridSection() {
                     </SheetTrigger>
                   </Sheet>
 
-                  <Button asChild className="w-full bg-navy-dark hover:bg-navy-dark/90 text-white">
+                  <Button asChild className="w-full bg-foreground hover:bg-foreground/90 text-background">
                     <a href={newsletter.webUrl} className="inline-flex items-center justify-center">
                       Read Full Issue
                       <ArrowRight className="h-4 w-4 ml-2" />

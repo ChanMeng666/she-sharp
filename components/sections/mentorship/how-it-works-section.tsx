@@ -50,55 +50,31 @@ export function HowItWorksSection() {
   const getColorClasses = (color: string) => {
     switch (color) {
       case "purple":
-        return {
-          bg: "bg-purple-light/50 dark:bg-purple-dark/10",
-          border: "border-purple-dark/20",
-          text: "text-purple-dark",
-          badge: "bg-purple-dark text-white"
-        };
       case "periwinkle":
-        return {
-          bg: "bg-periwinkle-light/50 dark:bg-periwinkle-dark/10",
-          border: "border-periwinkle-dark/20",
-          text: "text-periwinkle-dark",
-          badge: "bg-periwinkle-dark text-white"
-        };
       case "mint":
-        return {
-          bg: "bg-mint-light dark:bg-mint-dark/10",
-          border: "border-mint-dark/20",
-          text: "text-navy dark:text-mint-dark",
-          badge: "bg-mint-dark text-navy"
-        };
       case "navy":
-        return {
-          bg: "bg-navy-light dark:bg-navy-dark/10",
-          border: "border-navy-dark/20",
-          text: "text-navy-dark dark:text-navy-light",
-          badge: "bg-navy-dark text-white dark:bg-navy-light dark:text-navy-dark"
-        };
       default:
         return {
-          bg: "bg-gray-100",
-          border: "border-gray-200",
-          text: "text-gray-700",
-          badge: "bg-gray-700 text-white"
+          bg: "bg-muted",
+          border: "border-border",
+          text: "text-foreground",
+          badge: "bg-foreground text-background"
         };
     }
   };
 
   return (
-    <Section className="py-16 md:py-24 bg-white dark:bg-gray-950">
+    <Section className="py-16 md:py-24 bg-background">
       <Container>
         <div className="text-center mb-12">
-          <Badge className="mb-4 bg-mint-dark/10 text-navy dark:text-mint-dark border-mint-dark">
+          <Badge className="mb-4 bg-muted text-foreground border-border">
             <Clock className="w-3 h-3 mr-1" />
             3-Month Program
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             How the Program Works
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             A structured journey designed to create meaningful connections and drive real career impact
           </p>
         </div>
@@ -120,12 +96,12 @@ export function HowItWorksSection() {
                     <Icon className={`w-5 h-5 ${colors.text}`} />
                     <span className="text-sm">{step.duration}</span>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">{step.description}</p>
+                  <p className="text-muted-foreground mb-4">{step.description}</p>
                   <ul className="space-y-2">
                     {step.details.slice(0, 2).map((detail, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <ChevronRight className="w-4 h-4 text-purple-dark mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-gray-700 dark:text-gray-300">{detail}</span>
+                        <ChevronRight className="w-4 h-4 text-foreground mt-0.5 flex-shrink-0" />
+                        <span className="text-sm text-muted-foreground">{detail}</span>
                       </li>
                     ))}
                   </ul>
@@ -139,13 +115,13 @@ export function HowItWorksSection() {
 
         {/* CTA */}
         <div className="text-center mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-          <Button asChild size="lg" className="bg-purple-dark hover:bg-purple-mid text-white">
+          <Button asChild size="lg" className="bg-foreground hover:bg-foreground/90 text-background">
             <Link href="/mentorship/join">
               Join as Mentee
               <ChevronRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="border-purple-dark text-purple-dark hover:bg-purple-light dark:border-purple-mid dark:text-purple-mid">
+          <Button asChild variant="outline" size="lg" className="border-border text-foreground hover:bg-muted">
             <Link href="/mentorship/become-a-mentor">
               Apply as Mentor
               <ChevronRight className="ml-2 h-4 w-4" />

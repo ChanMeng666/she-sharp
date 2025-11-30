@@ -80,11 +80,11 @@ export function PhotoGallerySection() {
         <div>
           {/* Section Header */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Experience She Sharp Events
             </h2>
-            <p className="text-lg text-gray max-w-2xl mx-auto">
-              From intimate workshops to large-scale conferences, our events create meaningful 
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              From intimate workshops to large-scale conferences, our events create meaningful
               connections and learning opportunities.
             </p>
           </div>
@@ -98,7 +98,7 @@ export function PhotoGallerySection() {
                   <TabsTrigger
                     key={key}
                     value={key}
-                    className="flex items-center gap-2 data-[state=active]:bg-purple-dark data-[state=active]:text-white"
+                    className="flex items-center gap-2 data-[state=active]:bg-foreground data-[state=active]:text-background"
                   >
                     <Icon className="h-4 w-4" />
                     <span className="hidden sm:inline">{category.title}</span>
@@ -111,9 +111,9 @@ export function PhotoGallerySection() {
               <TabsContent key={key} value={key} className="mt-0">
                 <div className="space-y-6">
                   {/* Category Description */}
-                  <Card className="border-purple-dark/10 bg-white/50">
+                  <Card className="border-border bg-background/50">
                     <CardContent className="p-6">
-                      <p className="text-gray text-center">
+                      <p className="text-muted-foreground text-center">
                         {category.description}
                       </p>
                     </CardContent>
@@ -147,8 +147,8 @@ export function PhotoGallerySection() {
                                   sizes="(max-width: 768px) 100vw, 50vw"
                                 />
                               </AspectRatio>
-                              <div className="p-4 bg-gradient-to-t from-navy-dark/90 to-transparent absolute bottom-0 left-0 right-0">
-                                <p className="text-white text-sm font-medium">
+                              <div className="p-4 bg-foreground/90 absolute bottom-0 left-0 right-0">
+                                <p className="text-background text-sm font-medium">
                                   {photo.caption}
                                 </p>
                               </div>
@@ -168,26 +168,26 @@ export function PhotoGallerySection() {
           {/* CTA Section */}
           <div className="mt-12 text-center space-y-4">
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                asChild 
-                className="bg-purple-dark hover:bg-purple-mid text-white"
+              <Button
+                asChild
+                className="bg-foreground hover:bg-foreground/90 text-background"
               >
                 <Link href="/media/photo-gallery">
                   Explore Full Gallery
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button 
-                asChild 
-                variant="outline" 
-                className="border-purple-dark text-purple-dark hover:bg-purple-light"
+              <Button
+                asChild
+                variant="outline"
+                className="border-border text-foreground hover:bg-muted"
               >
                 <Link href="/events">
                   Join Our Next Event
                 </Link>
               </Button>
             </div>
-            <p className="text-sm text-gray">
+            <p className="text-sm text-muted-foreground">
               See how our sponsors help create these impactful experiences
             </p>
           </div>

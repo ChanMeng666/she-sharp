@@ -70,7 +70,7 @@ export function EventSection({
     <section className={cn('space-y-6', className)}>
       <div className="flex items-end justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-navy-dark">{title}</h2>
+          <h2 className="text-2xl font-bold text-foreground">{title}</h2>
           {description && (
             <p className="mt-1 text-gray-600">{description}</p>
           )}
@@ -78,7 +78,7 @@ export function EventSection({
         {showSeeAll && seeAllHref && (
           <a
             href={seeAllHref}
-            className="text-purple-dark hover:text-purple-mid font-medium text-sm flex items-center gap-1"
+            className="text-foreground hover:text-foreground/80 font-medium text-sm flex items-center gap-1"
           >
             {seeAllLabel}
             <span aria-hidden="true">→</span>

@@ -11,25 +11,25 @@ export function ThriveFeaturesSection() {
       icon: <Briefcase className="h-6 w-6" />,
       title: 'CV Reviews',
       description: 'Get personalized feedback on your CV from industry professionals',
-      color: 'bg-purple-light/20 text-purple-dark dark:bg-purple-dark/20 dark:text-purple-mid'
+      color: 'bg-muted text-foreground'
     },
     {
       icon: <MessageSquare className="h-6 w-6" />,
       title: 'Mock Interviews',
       description: 'Practice interview skills with experienced mentors',
-      color: 'bg-mint-light/20 text-mint-dark dark:bg-mint-dark/20 dark:text-mint-light'
+      color: 'bg-muted text-foreground'
     },
     {
       icon: <Users className="h-6 w-6" />,
       title: 'Speed Mentoring',
       description: 'Connect with multiple mentors in quick, focused sessions',
-      color: 'bg-periwinkle-light/20 text-periwinkle-dark dark:bg-periwinkle-dark/20 dark:text-periwinkle-light'
+      color: 'bg-muted text-foreground'
     },
     {
       icon: <Trophy className="h-6 w-6" />,
       title: 'Career Insights',
       description: 'Learn from successful professionals across various industries',
-      color: 'bg-navy-light/20 text-navy-dark dark:bg-navy-dark/20 dark:text-navy-light'
+      color: 'bg-muted text-foreground'
     }
   ]
 
@@ -37,7 +37,7 @@ export function ThriveFeaturesSection() {
     <Section bgColor="white">
       <Container>
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark dark:text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             What Attendees Experienced
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">

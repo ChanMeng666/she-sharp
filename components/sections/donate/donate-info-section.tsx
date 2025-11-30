@@ -4,11 +4,11 @@ import Image from "next/image";
 
 export function DonateInfoSection() {
   return (
-    <Section className="py-16 bg-purple-light">
+    <Section className="py-16 bg-muted">
       <Container>
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-3xl font-bold text-navy mb-6">
+            <h2 className="text-3xl font-bold text-foreground mb-6">
               She Sharp is an independent nonprofit making a difference in the STEM industry
             </h2>
             <div className="space-y-4 text-gray-700">

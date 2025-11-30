@@ -1,0 +1,166 @@
+/**
+ * She Sharp 配色系统
+ *
+ * 所有颜色定义集中在此文件
+ * 修改这里的值会自动影响整个项目
+ *
+ * 颜色格式：HSL（色相 饱和度% 亮度%）
+ * 示例：0 0% 100% = hsl(0, 0%, 100%) = #ffffff
+ */
+
+:root {
+  /* ========================================
+     语义化颜色（shadcn/ui 标准）
+     ======================================== */
+
+  /* 背景与前景 */
+  --background: 0 0% 100%;           /* #ffffff 白色背景 */
+  --foreground: 0 0% 0%;             /* #000000 黑色文字 */
+
+  /* 卡片 */
+  --card: 0 0% 100%;                 /* #ffffff */
+  --card-foreground: 0 0% 0%;        /* #000000 */
+
+  /* 弹出层 */
+  --popover: 0 0% 100%;              /* #ffffff */
+  --popover-foreground: 0 0% 0%;     /* #000000 */
+
+  /* 主色（黑色） */
+  --primary: 0 0% 0%;                /* #000000 */
+  --primary-foreground: 0 0% 100%;   /* #ffffff */
+
+  /* 次色（浅灰背景） */
+  --secondary: 0 0% 96%;             /* #f5f5f5 */
+  --secondary-foreground: 0 0% 0%;   /* #000000 */
+
+  /* 中性色 */
+  --muted: 0 0% 96%;                 /* #f5f5f5 */
+  --muted-foreground: 0 0% 45%;      /* #737373 */
+
+  /* 强调色 */
+  --accent: 0 0% 96%;                /* #f5f5f5 */
+  --accent-foreground: 0 0% 0%;      /* #000000 */
+
+  /* 破坏性操作 */
+  --destructive: 0 0% 0%;            /* #000000 */
+  --destructive-foreground: 0 0% 100%; /* #ffffff */
+
+  /* UI 元素 */
+  --border: 0 0% 90%;                /* #e5e5e5 */
+  --input: 0 0% 90%;                 /* #e5e5e5 */
+  --ring: 0 0% 0%;                   /* #000000 */
+
+  /* 图表颜色（灰度层次） */
+  --chart-1: 0 0% 0%;                /* 黑 */
+  --chart-2: 0 0% 25%;               /* 深灰 */
+  --chart-3: 0 0% 45%;               /* 中灰 */
+  --chart-4: 0 0% 65%;               /* 浅灰 */
+  --chart-5: 0 0% 85%;               /* 极浅灰 */
+
+  /* ========================================
+     侧边栏颜色
+     ======================================== */
+  --sidebar-background: 0 0% 98%;    /* #fafafa */
+  --sidebar-foreground: 0 0% 0%;     /* #000000 */
+  --sidebar-primary: 0 0% 0%;        /* #000000 */
+  --sidebar-primary-foreground: 0 0% 100%; /* #ffffff */
+  --sidebar-accent: 0 0% 96%;        /* #f5f5f5 */
+  --sidebar-accent-foreground: 0 0% 0%; /* #000000 */
+  --sidebar-border: 0 0% 90%;        /* #e5e5e5 */
+  --sidebar-ring: 0 0% 0%;           /* #000000 */
+
+  /* ========================================
+     圆角
+     ======================================== */
+  --radius: 0.5rem;
+
+  /* ========================================
+     旧品牌颜色兼容性映射（全部改为灰度）
+     便于逐步迁移到语义化颜色
+     ======================================== */
+
+  /* Purple 系列 → 黑/深灰 */
+  --color-purple-dark: #000000;
+  --color-purple-mid: #404040;
+  --color-purple-light: #f5f5f5;
+
+  /* Periwinkle 系列 → 灰色 */
+  --color-periwinkle-dark: #525252;
+  --color-periwinkle-soft: #d4d4d4;
+  --color-periwinkle-light: #fafafa;
+
+  /* Navy 系列 → 黑/浅灰 */
+  --color-navy-dark: #000000;
+  --color-navy-light: #f5f5f5;
+
+  /* Mint 系列 → 灰色 */
+  --color-mint-dark: #a3a3a3;
+  --color-mint-light: #fafafa;
+
+  /* 其他颜色 */
+  --color-indigo-deep: #171717;
+  --color-gray: #737373;
+  --color-blue: #404040;
+  --color-error: #000000;
+  --color-ghost-white: #fafafa;
+  --color-light-pink: #e5e5e5;
+}
+
+/* ==========================================
+   深色模式
+   ========================================== */
+.dark {
+  /* 背景与前景（反转） */
+  --background: 0 0% 0%;             /* #000000 */
+  --foreground: 0 0% 100%;           /* #ffffff */
+
+  /* 卡片 */
+  --card: 0 0% 5%;                   /* #0d0d0d */
+  --card-foreground: 0 0% 100%;      /* #ffffff */
+
+  /* 弹出层 */
+  --popover: 0 0% 5%;                /* #0d0d0d */
+  --popover-foreground: 0 0% 100%;   /* #ffffff */
+
+  /* 主色（反转为白色） */
+  --primary: 0 0% 100%;              /* #ffffff */
+  --primary-foreground: 0 0% 0%;     /* #000000 */
+
+  /* 次色 */
+  --secondary: 0 0% 15%;             /* #262626 */
+  --secondary-foreground: 0 0% 100%; /* #ffffff */
+
+  /* 中性色 */
+  --muted: 0 0% 15%;                 /* #262626 */
+  --muted-foreground: 0 0% 65%;      /* #a3a3a3 */
+
+  /* 强调色 */
+  --accent: 0 0% 15%;                /* #262626 */
+  --accent-foreground: 0 0% 100%;    /* #ffffff */
+
+  /* 破坏性操作 */
+  --destructive: 0 0% 100%;          /* #ffffff */
+  --destructive-foreground: 0 0% 0%; /* #000000 */
+
+  /* UI 元素 */
+  --border: 0 0% 20%;                /* #333333 */
+  --input: 0 0% 20%;                 /* #333333 */
+  --ring: 0 0% 100%;                 /* #ffffff */
+
+  /* 图表颜色（深色模式） */
+  --chart-1: 0 0% 100%;              /* 白 */
+  --chart-2: 0 0% 75%;               /* 浅灰 */
+  --chart-3: 0 0% 55%;               /* 中灰 */
+  --chart-4: 0 0% 35%;               /* 深灰 */
+  --chart-5: 0 0% 15%;               /* 极深灰 */
+
+  /* 侧边栏 */
+  --sidebar-background: 0 0% 5%;     /* #0d0d0d */
+  --sidebar-foreground: 0 0% 100%;   /* #ffffff */
+  --sidebar-primary: 0 0% 100%;      /* #ffffff */
+  --sidebar-primary-foreground: 0 0% 0%; /* #000000 */
+  --sidebar-accent: 0 0% 15%;        /* #262626 */
+  --sidebar-accent-foreground: 0 0% 100%; /* #ffffff */
+  --sidebar-border: 0 0% 20%;        /* #333333 */
+  --sidebar-ring: 0 0% 100%;         /* #ffffff */
+}

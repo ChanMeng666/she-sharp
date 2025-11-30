@@ -87,11 +87,11 @@ export function ProgramsSection() {
 
   return (
     <>
-      <Section className="bg-gradient-to-b from-black/95 via-gray-950/95 to-black/95">
+      <Section className="bg-background">
         <Container size="full">
           {/* Section Header */}
           <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ghost-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6">
               Your Path to Success
             </h2>
           </AnimateOnScroll>
@@ -113,8 +113,8 @@ export function ProgramsSection() {
                   <div
                     className={`rounded-2xl overflow-hidden transition-all duration-300 relative border ${
                       isActive
-                        ? "bg-purple-dark border-purple-dark/50"
-                        : "bg-gray-800/40 border-gray-700/50 hover:border-purple-dark/50"
+                        ? "bg-foreground border-foreground/50"
+                        : "bg-muted border-border hover:border-foreground/50"
                     }`}
                   >
                     {/* Accordion Header */}
@@ -128,29 +128,29 @@ export function ProgramsSection() {
                         }
                       }}
                       className={`w-full p-6 text-left flex items-center justify-between transition-colors duration-200 ${
-                        isActive ? "text-ghost-white" : "text-ghost-white"
+                        isActive ? "text-background" : "text-foreground"
                       }`}
                     >
                       <div className="flex items-center gap-4">
                         <div
-                          className={`p-2.5 lg:p-3 border rounded-full bg-white/10 transition-all ${
+                          className={`p-2.5 lg:p-3 border rounded-full transition-all ${
                             isActive
-                              ? "border-white"
-                              : "border-purple-dark/50 bg-purple-dark/20"
+                              ? "border-background bg-background/10"
+                              : "border-foreground/30 bg-foreground/10"
                           }`}
                         >
                           <Icon
                             className={`h-5 w-5 ${
                               isActive
-                                ? "text-ghost-white"
-                                : "text-purple-dark"
+                                ? "text-background"
+                                : "text-foreground"
                             }`}
                           />
                         </div>
                         <div >
-                          <h3 className="text-2xl font-bold text-ghost-white">{program.title}</h3>
+                          <h3 className={`text-2xl font-bold ${isActive ? "text-background" : "text-foreground"}`}>{program.title}</h3>
                           <p className={`${
-                            isActive ? "text-ghost-white/90" : "text-gray-300"
+                            isActive ? "text-background/90" : "text-muted-foreground"
                           }`}>
                             {program.subtitle}
                           </p>
@@ -159,26 +159,26 @@ export function ProgramsSection() {
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center ${
                           isActive
-                            ? "bg-white/20"
-                            : "bg-purple-dark/30"
+                            ? "bg-background/20"
+                            : "bg-foreground/10"
                         }`}
                       >
                         {isActive ? (
-                          <Minus className="w-4 h-4 text-ghost-white opacity-50" />
+                          <Minus className={`w-4 h-4 ${isActive ? "text-background" : "text-foreground"} opacity-50`} />
                         ) : (
-                          <Plus className="w-4 h-4 text-ghost-white" />
+                          <Plus className="w-4 h-4 text-foreground" />
                         )}
                       </div>
                     </button>
 
                     {/* Accordion Content */}
-                    <div 
+                    <div
                       className={`overflow-hidden transition-all duration-500 ease-in-out ${
                         isActive ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                       }`}
                     >
-                      <div className="px-6 pb-6 text-ghost-white">
-                        <p className="text-ghost-white/90 mb-6 leading-relaxed">
+                      <div className="px-6 pb-6 text-background">
+                        <p className="text-background/90 mb-6 leading-relaxed">
                           {program.description}
                         </p>
 
@@ -191,8 +191,8 @@ export function ProgramsSection() {
                                 key={featureIndex}
                                 className="flex items-center gap-3"
                               >
-                                <FeatureIcon className="w-4 h-4 text-ghost-white/80 flex-shrink-0" />
-                                <span className="text-sm text-ghost-white/90">
+                                <FeatureIcon className="w-4 h-4 text-background/80 flex-shrink-0" />
+                                <span className="text-sm text-background/90">
                                   {feature.text}
                                 </span>
                               </li>
@@ -202,7 +202,7 @@ export function ProgramsSection() {
 
                         {/* CTA Button */}
                         <Link href={program.cta.href}>
-                          <Button className="bg-ghost-white text-navy-dark hover:bg-ghost-white/90 hover:shadow-mint-dark/20" size="lg">
+                          <Button className="bg-background text-foreground hover:bg-background/90" size="lg">
                             {program.cta.text}
                           </Button>
                         </Link>
@@ -217,8 +217,8 @@ export function ProgramsSection() {
             {/* Right Column - Image */}
             <AnimateOnScroll variant="fade-left" className="relative w-4/5 mx-auto">
               {/* Background div with slight tilt */}
-              <div 
-                className="absolute bg-purple-dark/30 rounded-2xl transform rotate-[-10deg] translate-x-[-10px] translate-y-[-10px]"
+              <div
+                className="absolute bg-muted-foreground/20 rounded-2xl transform rotate-[-10deg] translate-x-[-10px] translate-y-[-10px]"
                 style={{ width: '100%', height: '500px' }}
               ></div>
               <div className="relative w-full h-[500px] rounded-2xl overflow-hidden z-10">
@@ -229,13 +229,12 @@ export function ProgramsSection() {
                   className="object-cover transition-opacity duration-200 ease-in-out"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
-                
-                
+                <div className="absolute inset-0 bg-black/30" />
+
                 {/* Image overlay content */}
                 <div className="absolute bottom-6 left-6 z-10 transition-all duration-500 ease-in-out">
-                  <div className="bg-ghost-white/20 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg">
-                    <div className="text-ghost-white">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg">
+                    <div className="text-white">
                       <div className="text-3xl font-bold mb-1 transition-all duration-300">
                         {programs[lastSelectedProgram].stats.primary}
                       </div>

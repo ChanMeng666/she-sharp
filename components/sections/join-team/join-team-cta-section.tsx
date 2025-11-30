@@ -15,38 +15,38 @@ export function JoinTeamCTASection() {
         <div>
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-navy-dark mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Ready to Make Your Impact?
             </h2>
-            <p className="text-xl text-gray max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Join our community of changemakers and help shape the future of women in technology
             </p>
           </div>
 
           {/* Primary CTA Card */}
-          <Card className="mb-12 border-2 border-purple-dark shadow-xl">
+          <Card className="mb-12 border-2 border-border shadow-xl">
             <CardContent className="p-12 text-center">
-              <Badge className="mb-6 bg-purple-dark text-white px-4 py-2 text-sm">
+              <Badge className="mb-6 bg-foreground text-background px-4 py-2 text-sm">
                 <Calendar className="w-4 h-4 mr-2" />
                 Applications Open Year-Round
               </Badge>
-              
-              <h3 className="text-3xl font-bold text-navy-dark mb-4">
+
+              <h3 className="text-3xl font-bold text-foreground mb-4">
                 Become a She Sharp Volunteer
               </h3>
-              
-              <p className="text-lg text-gray mb-8 max-w-2xl mx-auto">
+
+              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Whether you can spare a few hours for events or want to join our ambassador team, 
                 we have the perfect opportunity for you to contribute to our mission.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="bg-mint-dark hover:bg-mint-dark/90 text-navy-dark transition-colors duration-150">
+                <Button size="lg" className="bg-foreground hover:bg-foreground/90 text-background transition-colors duration-150">
                   <Users className="w-5 h-5 mr-2" />
                   Apply Now
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
-                <Button size="lg" variant="outline" className="border-2 border-mint-dark text-mint-dark hover:bg-mint-light/20 transition-colors duration-150">
+                <Button size="lg" variant="outline" className="border-2 border-border text-foreground hover:bg-muted transition-colors duration-150">
                   <Mail className="w-5 h-5 mr-2" />
                   Get Updates
                 </Button>
@@ -55,10 +55,10 @@ export function JoinTeamCTASection() {
           </Card>
 
           {/* Ambassador Recruitment Notice */}
-          <Alert className="mb-12 border-periwinkle-dark bg-periwinkle-light/20">
-            <Calendar className="h-5 w-5 text-periwinkle-dark" />
+          <Alert className="mb-12 border-border bg-muted">
+            <Calendar className="h-5 w-5 text-foreground" />
             <AlertDescription className="text-base">
-              <strong className="text-navy-dark">Ambassador Applications:</strong> Our next ambassador recruitment 
+              <strong className="text-foreground">Ambassador Applications:</strong> Our next ambassador recruitment 
               opens in February 2025. Register your interest now to be notified when applications open!
             </AlertDescription>
           </Alert>
@@ -72,16 +72,16 @@ export function JoinTeamCTASection() {
           )}>
             <Card className="group hover:shadow-lg transition-shadow duration-150">
               <CardContent className="p-8 text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-light/20 rounded-full mb-6 group-hover:bg-purple-light/30 transition-colors duration-150">
-                  <Heart className="w-8 h-8 text-purple-dark" />
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-muted rounded-full mb-6 group-hover:bg-muted/80 transition-colors duration-150">
+                  <Heart className="w-8 h-8 text-foreground" />
                 </div>
-                <h4 className="text-xl font-semibold text-navy-dark mb-3">
+                <h4 className="text-xl font-semibold text-foreground mb-3">
                   Support Our Mission
                 </h4>
-                <p className="text-gray mb-6">
+                <p className="text-muted-foreground mb-6">
                   Your donation helps us create more opportunities for women in STEM
                 </p>
-                <Button asChild variant="link" className="text-purple-dark p-0">
+                <Button asChild variant="link" className="text-foreground p-0">
                   <Link href="/donate">
                     Make a Donation
                     <ArrowRight className="w-4 h-4 ml-1" />
@@ -92,16 +92,16 @@ export function JoinTeamCTASection() {
 
             <Card className="group hover:shadow-lg transition-shadow duration-150">
               <CardContent className="p-8 text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-periwinkle-light/20 rounded-full mb-6 group-hover:bg-periwinkle-light/30 transition-colors duration-150">
-                  <Calendar className="w-8 h-8 text-periwinkle-dark" />
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-muted rounded-full mb-6 group-hover:bg-muted/80 transition-colors duration-150">
+                  <Calendar className="w-8 h-8 text-foreground" />
                 </div>
-                <h4 className="text-xl font-semibold text-navy-dark mb-3">
+                <h4 className="text-xl font-semibold text-foreground mb-3">
                   Attend Our Events
                 </h4>
-                <p className="text-gray mb-6">
+                <p className="text-muted-foreground mb-6">
                   Connect with the community at our workshops and networking events
                 </p>
-                <Button asChild variant="link" className="text-periwinkle-dark p-0">
+                <Button asChild variant="link" className="text-foreground p-0">
                   <Link href="/events">
                     Explore Events
                     <ArrowRight className="w-4 h-4 ml-1" />
@@ -112,16 +112,16 @@ export function JoinTeamCTASection() {
 
             <Card className="group hover:shadow-lg transition-shadow duration-150">
               <CardContent className="p-8 text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-mint-light/20 rounded-full mb-6 group-hover:bg-mint-light/30 transition-colors duration-150">
-                  <Mail className="w-8 h-8 text-navy-dark" />
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-muted rounded-full mb-6 group-hover:bg-muted/80 transition-colors duration-150">
+                  <Mail className="w-8 h-8 text-foreground" />
                 </div>
-                <h4 className="text-xl font-semibold text-navy-dark mb-3">
+                <h4 className="text-xl font-semibold text-foreground mb-3">
                   Stay Connected
                 </h4>
-                <p className="text-gray mb-6">
+                <p className="text-muted-foreground mb-6">
                   Get the latest updates on volunteer opportunities and events
                 </p>
-                <Button asChild variant="link" className="text-navy-dark p-0">
+                <Button asChild variant="link" className="text-foreground p-0">
                   <Link href="/contact">
                     Contact Us
                     <ArrowRight className="w-4 h-4 ml-1" />

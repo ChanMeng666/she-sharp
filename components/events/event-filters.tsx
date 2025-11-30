@@ -69,7 +69,7 @@ export function EventFiltersBar({
             className={cn(
               'rounded-md px-4',
               filters.format === 'all' &&
-                'bg-white shadow-sm text-purple-dark'
+                'bg-white shadow-sm text-foreground'
             )}
             onClick={() => handleFormatChange('all')}
           >
@@ -81,7 +81,7 @@ export function EventFiltersBar({
             className={cn(
               'rounded-md px-4',
               filters.format === 'in_person' &&
-                'bg-white shadow-sm text-purple-dark'
+                'bg-white shadow-sm text-foreground'
             )}
             onClick={() => handleFormatChange('in_person')}
           >
@@ -93,7 +93,7 @@ export function EventFiltersBar({
             className={cn(
               'rounded-md px-4',
               filters.format === 'online' &&
-                'bg-white shadow-sm text-purple-dark'
+                'bg-white shadow-sm text-foreground'
             )}
             onClick={() => handleFormatChange('online')}
           >
@@ -171,7 +171,7 @@ export function EventFiltersBar({
             variant="ghost"
             size="sm"
             onClick={clearFilters}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-muted-foreground hover:text-foreground"
           >
             Clear all
           </Button>
@@ -180,12 +180,12 @@ export function EventFiltersBar({
 
       {/* Expanded Filters */}
       {isExpanded && (
-        <div className="p-4 bg-gray-50 rounded-lg space-y-4">
+        <div className="p-4 bg-muted rounded-lg space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Category Filter (if not shown above) */}
             {!showCategory && (
               <div>
-                <label className="text-sm font-medium text-gray-700 mb-1 block">
+                <label className="text-sm font-medium text-muted-foreground mb-1 block">
                   Category
                 </label>
                 <Select
@@ -223,7 +223,7 @@ export function EventFiltersBar({
               {filters.format.replace(/_/g, ' ')}
               <button
                 onClick={() => handleFormatChange('all')}
-                className="ml-1 hover:bg-gray-300 rounded-full p-0.5"
+                className="ml-1 hover:bg-muted rounded-full p-0.5"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -237,7 +237,7 @@ export function EventFiltersBar({
               {filters.category.replace(/-/g, ' ')}
               <button
                 onClick={() => handleCategoryChange('all')}
-                className="ml-1 hover:bg-gray-300 rounded-full p-0.5"
+                className="ml-1 hover:bg-muted rounded-full p-0.5"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -251,7 +251,7 @@ export function EventFiltersBar({
               Search: {filters.search}
               <button
                 onClick={() => handleSearchChange('')}
-                className="ml-1 hover:bg-gray-300 rounded-full p-0.5"
+                className="ml-1 hover:bg-muted rounded-full p-0.5"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -282,7 +282,7 @@ export function EventFormatTabs({
           size="sm"
           className={cn(
             'rounded-md px-4 capitalize',
-            value === format && 'bg-white shadow-sm text-purple-dark'
+            value === format && 'bg-white shadow-sm text-foreground'
           )}
           onClick={() => onChange(format)}
         >

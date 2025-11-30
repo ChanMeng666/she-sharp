@@ -207,7 +207,7 @@ export class NotificationService {
               box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             .header {
-              background: linear-gradient(135deg, #9b2e83 0%, #c75fa8 100%);
+              background: #000000;
               color: white;
               padding: 30px;
               text-align: center;
@@ -227,7 +227,7 @@ export class NotificationService {
             .button {
               display: inline-block;
               padding: 12px 24px;
-              background: #9b2e83;
+              background: #000000;
               color: white;
               text-decoration: none;
               border-radius: 4px;
@@ -245,7 +245,7 @@ export class NotificationService {
               color: #777;
             }
             .footer a {
-              color: #9b2e83;
+              color: #000000;
               text-decoration: none;
             }
           </style>

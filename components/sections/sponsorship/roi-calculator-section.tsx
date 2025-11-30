@@ -73,15 +73,15 @@ export function ROICalculatorSection() {
     <Section bgColor="white">
       <Container size="content">
         <div>
-          <Card className="border-2 border-purple-dark/10">
+          <Card className="border-2 border-border">
             <CardHeader className="text-center pb-8">
-              <div className="mx-auto w-12 h-12 bg-purple-light rounded-full flex items-center justify-center mb-4">
-                <Calculator className="h-6 w-6 text-purple-dark" />
+              <div className="mx-auto w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-4">
+                <Calculator className="h-6 w-6 text-foreground" />
               </div>
-              <CardTitle className="text-2xl md:text-3xl font-bold text-navy-dark">
+              <CardTitle className="text-2xl md:text-3xl font-bold text-foreground">
                 Partnership ROI Calculator
               </CardTitle>
-              <CardDescription className="text-lg text-gray mt-2">
+              <CardDescription className="text-lg text-muted-foreground mt-2">
                 Discover the value and impact of partnering with She Sharp
               </CardDescription>
             </CardHeader>
@@ -89,7 +89,7 @@ export function ROICalculatorSection() {
             <CardContent className="space-y-8">
               {/* Package Selection */}
               <div className="space-y-4">
-                <Label className="text-base font-semibold text-navy-dark">
+                <Label className="text-base font-semibold text-foreground">
                   Select Your Partnership Level
                 </Label>
                 <RadioGroup
@@ -100,33 +100,33 @@ export function ROICalculatorSection() {
                     "md:grid-cols-2"
                   )}
                 >
-                  <div className="flex items-start space-x-3 p-4 rounded-lg border-2 hover:border-purple-dark/50 transition-colors cursor-pointer">
+                  <div className="flex items-start space-x-3 p-4 rounded-lg border-2 hover:border-border transition-colors cursor-pointer">
                     <RadioGroupItem value="bronze" id="bronze" className="mt-1" />
                     <Label htmlFor="bronze" className="cursor-pointer flex-1">
-                      <div className="font-semibold text-navy-dark">Bronze Partnership</div>
-                      <div className="text-sm text-gray mt-1">$5,000 annual investment</div>
+                      <div className="font-semibold text-foreground">Bronze Partnership</div>
+                      <div className="text-sm text-muted-foreground mt-1">$5,000 annual investment</div>
                     </Label>
                   </div>
-                  <div className="flex items-start space-x-3 p-4 rounded-lg border-2 hover:border-purple-dark/50 transition-colors cursor-pointer">
+                  <div className="flex items-start space-x-3 p-4 rounded-lg border-2 hover:border-border transition-colors cursor-pointer">
                     <RadioGroupItem value="silver" id="silver" className="mt-1" />
                     <Label htmlFor="silver" className="cursor-pointer flex-1">
-                      <div className="font-semibold text-navy-dark">Silver Partnership</div>
-                      <div className="text-sm text-gray mt-1">$10,000 annual investment</div>
+                      <div className="font-semibold text-foreground">Silver Partnership</div>
+                      <div className="text-sm text-muted-foreground mt-1">$10,000 annual investment</div>
                     </Label>
                   </div>
-                  <div className="flex items-start space-x-3 p-4 rounded-lg border-2 hover:border-purple-dark/50 transition-colors cursor-pointer bg-mint-light/20">
+                  <div className="flex items-start space-x-3 p-4 rounded-lg border-2 hover:border-border transition-colors cursor-pointer bg-muted">
                     <RadioGroupItem value="gold" id="gold" className="mt-1" />
                     <Label htmlFor="gold" className="cursor-pointer flex-1">
-                      <div className="font-semibold text-navy-dark">Gold Partnership</div>
-                      <div className="text-sm text-gray mt-1">$20,000 annual investment</div>
-                      <div className="text-xs text-mint-dark font-medium mt-1">RECOMMENDED</div>
+                      <div className="font-semibold text-foreground">Gold Partnership</div>
+                      <div className="text-sm text-muted-foreground mt-1">$20,000 annual investment</div>
+                      <div className="text-xs text-foreground font-medium mt-1">RECOMMENDED</div>
                     </Label>
                   </div>
-                  <div className="flex items-start space-x-3 p-4 rounded-lg border-2 hover:border-purple-dark/50 transition-colors cursor-pointer">
+                  <div className="flex items-start space-x-3 p-4 rounded-lg border-2 hover:border-border transition-colors cursor-pointer">
                     <RadioGroupItem value="platinum" id="platinum" className="mt-1" />
                     <Label htmlFor="platinum" className="cursor-pointer flex-1">
-                      <div className="font-semibold text-navy-dark">Platinum Partnership</div>
-                      <div className="text-sm text-gray mt-1">$50,000+ annual investment</div>
+                      <div className="font-semibold text-foreground">Platinum Partnership</div>
+                      <div className="text-sm text-muted-foreground mt-1">$50,000+ annual investment</div>
                     </Label>
                   </div>
                 </RadioGroup>
@@ -134,7 +134,7 @@ export function ROICalculatorSection() {
 
               {/* Company Goals */}
               <div className="space-y-4">
-                <Label htmlFor="goals" className="text-base font-semibold text-navy-dark">
+                <Label htmlFor="goals" className="text-base font-semibold text-foreground">
                   What are your diversity & inclusion goals?
                 </Label>
                 <Textarea
@@ -151,7 +151,7 @@ export function ROICalculatorSection() {
                 <Button
                   onClick={handleCalculate}
                   size="lg"
-                  className="bg-purple-dark hover:bg-purple-mid"
+                  className="bg-foreground hover:bg-foreground/90"
                   disabled={!companyGoals}
                 >
                   <TrendingUp className="mr-2 h-4 w-4" />
@@ -161,9 +161,9 @@ export function ROICalculatorSection() {
 
               {/* Results */}
               {showResults && metrics && (
-                <Alert className="bg-periwinkle-light border-periwinkle-dark/20">
-                  <Target className="h-5 w-5 text-periwinkle-dark" />
-                  <AlertTitle className="text-lg font-semibold text-navy-dark mb-4">
+                <Alert className="bg-muted border-border">
+                  <Target className="h-5 w-5 text-foreground" />
+                  <AlertTitle className="text-lg font-semibold text-foreground mb-4">
                     Your Expected Partnership ROI
                   </AlertTitle>
                   <AlertDescription className="space-y-4">
@@ -172,48 +172,48 @@ export function ROICalculatorSection() {
                       "md:grid-cols-2"
                     )}>
                       <div className="flex items-start gap-3">
-                        <Users className="h-5 w-5 text-purple-dark mt-0.5" />
+                        <Users className="h-5 w-5 text-foreground mt-0.5" />
                         <div>
-                          <div className="font-medium text-navy-dark">Brand Exposure</div>
-                          <div className="text-sm text-gray">{metrics.brandExposure}</div>
+                          <div className="font-medium text-foreground">Brand Exposure</div>
+                          <div className="text-sm text-muted-foreground">{metrics.brandExposure}</div>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <Calendar className="h-5 w-5 text-purple-dark mt-0.5" />
+                        <Calendar className="h-5 w-5 text-foreground mt-0.5" />
                         <div>
-                          <div className="font-medium text-navy-dark">Networking Events</div>
-                          <div className="text-sm text-gray">{metrics.networkingEvents} events per year</div>
+                          <div className="font-medium text-foreground">Networking Events</div>
+                          <div className="text-sm text-muted-foreground">{metrics.networkingEvents} events per year</div>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <Award className="h-5 w-5 text-purple-dark mt-0.5" />
+                        <Award className="h-5 w-5 text-foreground mt-0.5" />
                         <div>
-                          <div className="font-medium text-navy-dark">Talent Pipeline</div>
-                          <div className="text-sm text-gray">{metrics.talentPipeline}</div>
+                          <div className="font-medium text-foreground">Talent Pipeline</div>
+                          <div className="text-sm text-muted-foreground">{metrics.talentPipeline}</div>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <TrendingUp className="h-5 w-5 text-purple-dark mt-0.5" />
+                        <TrendingUp className="h-5 w-5 text-foreground mt-0.5" />
                         <div>
-                          <div className="font-medium text-navy-dark">Speaking Opportunities</div>
-                          <div className="text-sm text-gray">{metrics.speakingOpportunities}</div>
+                          <div className="font-medium text-foreground">Speaking Opportunities</div>
+                          <div className="text-sm text-muted-foreground">{metrics.speakingOpportunities}</div>
                         </div>
                       </div>
                     </div>
-                    
+
                     {metrics.customWorkshops > 0 && (
-                      <div className="pt-2 border-t border-periwinkle-dark/10">
-                        <div className="font-medium text-navy-dark mb-1">Additional Benefits:</div>
-                        <ul className="text-sm text-gray space-y-1">
+                      <div className="pt-2 border-t border-border">
+                        <div className="font-medium text-foreground mb-1">Additional Benefits:</div>
+                        <ul className="text-sm text-muted-foreground space-y-1">
                           <li>• {metrics.customWorkshops} custom diversity workshop{metrics.customWorkshops > 1 ? 's' : ''} per year</li>
                           <li>• {metrics.mediaReach}</li>
                           <li>• Priority access to She Sharp talent network</li>
                         </ul>
                       </div>
                     )}
-                    
-                    <div className="mt-4 pt-4 border-t border-periwinkle-dark/10">
-                      <p className="text-sm text-navy-dark font-medium">
+
+                    <div className="mt-4 pt-4 border-t border-border">
+                      <p className="text-sm text-foreground font-medium">
                         Based on your goals, this partnership level can help you achieve measurable impact
                         in diversity hiring, employer branding, and community engagement.
                       </p>
@@ -225,14 +225,14 @@ export function ROICalculatorSection() {
               {/* Next Steps */}
               {showResults && (
                 <div className="text-center space-y-4 pt-4">
-                  <p className="text-gray">
+                  <p className="text-muted-foreground">
                     Ready to make a difference in women's representation in STEM?
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                    <Button asChild className="bg-purple-dark hover:bg-purple-mid">
+                    <Button asChild className="bg-foreground hover:bg-foreground/90">
                       <a href="#contact">Schedule a Partnership Discussion</a>
                     </Button>
-                    <Button asChild variant="outline" className="border-purple-dark text-purple-dark hover:bg-purple-light">
+                    <Button asChild variant="outline" className="border-border text-foreground hover:bg-muted">
                       <a href="/docs/sponsorship-guide-2025.pdf" download>Download Full Guide</a>
                     </Button>
                   </div>

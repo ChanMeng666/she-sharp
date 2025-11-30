@@ -181,7 +181,7 @@ export default function TeamSettingsPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground"></div>
       </div>
     );
   }
@@ -323,7 +323,6 @@ export default function TeamSettingsPage() {
               <Button
                 type="submit"
                 disabled={isInviting}
-                className="bg-purple-600 hover:bg-purple-700"
               >
                 {isInviting ? (
                   <>

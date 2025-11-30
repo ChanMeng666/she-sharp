@@ -67,7 +67,7 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray" />
         <Input
           placeholder="Search mentors by name, role, or expertise..."
-          className="pl-10 pr-4 h-12 text-base border-gray/30 focus:border-purple-dark"
+          className="pl-10 pr-4 h-12 text-base border-border focus:border-foreground"
           value={filters.search}
           onChange={(e) => updateFilter("search", e.target.value)}
         />
@@ -75,7 +75,7 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
 
       <div className="flex flex-wrap gap-3">
         <Select value={filters.industry} onValueChange={(value) => updateFilter("industry", value)}>
-          <SelectTrigger className="w-full sm:w-48 border-gray/30">
+          <SelectTrigger className="w-full sm:w-48 border-border">
             <SelectValue placeholder="Industry" />
           </SelectTrigger>
           <SelectContent>
@@ -88,7 +88,7 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
 
         <Popover open={expertiseOpen} onOpenChange={setExpertiseOpen}>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="w-full sm:w-48 justify-between border-gray/30">
+            <Button variant="outline" className="w-full sm:w-48 justify-between border-border">
               <span className="truncate">
                 {filters.expertise.length === 0 ? "Expertise" : `${filters.expertise.length} selected`}
               </span>
@@ -114,8 +114,8 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
                           }
                         }}
                       >
-                        <div className={`mr-2 h-4 w-4 border rounded ${isSelected ? 'bg-purple-dark border-purple-dark' : 'border-gray'}`}>
-                          {isSelected && <span className="text-white text-xs">✓</span>}
+                        <div className={`mr-2 h-4 w-4 border rounded ${isSelected ? 'bg-foreground border-foreground' : 'border-border'}`}>
+                          {isSelected && <span className="text-background text-xs">✓</span>}
                         </div>
                         {expertise}
                       </CommandItem>
@@ -128,7 +128,7 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
         </Popover>
 
         <Select value={filters.experience} onValueChange={(value) => updateFilter("experience", value)}>
-          <SelectTrigger className="w-full sm:w-48 border-gray/30">
+          <SelectTrigger className="w-full sm:w-48 border-border">
             <SelectValue placeholder="Experience" />
           </SelectTrigger>
           <SelectContent>
@@ -141,7 +141,7 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
         </Select>
 
         <Select value={filters.availability} onValueChange={(value) => updateFilter("availability", value)}>
-          <SelectTrigger className="w-full sm:w-48 border-gray/30">
+          <SelectTrigger className="w-full sm:w-48 border-border">
             <SelectValue placeholder="Availability" />
           </SelectTrigger>
           <SelectContent>
@@ -157,7 +157,7 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
             variant="ghost"
             size="sm"
             onClick={clearFilters}
-            className="text-gray hover:text-navy-dark"
+            className="text-muted-foreground hover:text-foreground"
           >
             Clear filters
             <X className="h-4 w-4 ml-1" />
@@ -171,7 +171,7 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
             <Badge
               key={skill}
               variant="secondary"
-              className="bg-purple-light text-purple-dark cursor-pointer hover:bg-purple-mid hover:text-white transition-colors"
+              className="bg-muted text-foreground cursor-pointer hover:bg-muted/80 transition-colors"
               onClick={() => removeExpertise(skill)}
             >
               {skill}
@@ -182,10 +182,10 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
       )}
 
       <div className="flex items-center justify-between text-sm">
-        <p className="text-gray">
-          Showing <span className="font-semibold text-navy-dark">{totalResults}</span> mentors
+        <p className="text-muted-foreground">
+          Showing <span className="font-semibold text-foreground">{totalResults}</span> mentors
         </p>
-        <div className="flex items-center gap-1 text-gray">
+        <div className="flex items-center gap-1 text-muted-foreground">
           <Filter className="h-4 w-4" />
           <span>Filters applied</span>
         </div>

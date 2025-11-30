@@ -52,7 +52,7 @@ export function SocialMediaSection() {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray hover:text-purple-dark transition-colors"
+              className="text-foreground hover:text-foreground/80 transition-colors"
               aria-label={social.name}
             >
               {social.icon}
