@@ -1,4 +1,4 @@
-import { LucideIcon, Calendar, Users, Heart, Mic, Mail, FileText, Award, BookOpen, HandHeart, Building2, GraduationCap } from "lucide-react";
+import { LucideIcon, Calendar, Users, Heart, Mic, Mail, FileText, Award, BookOpen, HandHeart, Building2, GraduationCap, Newspaper, Sparkles, Library, MessageCircle, UserPlus } from "lucide-react";
 
 export interface NavigationItem {
   title: string;
@@ -68,7 +68,7 @@ export const navigationConfig: {
           title: "Become a Mentee",
           href: "/mentorship/join",
           description: "Join the program and get matched with a mentor",
-          icon: GraduationCap,
+          icon: Sparkles,
         },
         {
           title: "Become a Mentor",
@@ -97,7 +97,7 @@ export const navigationConfig: {
           title: "Volunteer with Us",
           href: "/join-our-team",
           description: "Join our team and make a difference",
-          icon: Heart,
+          icon: UserPlus,
         },
         {
           title: "Corporate Partnership",
@@ -110,7 +110,7 @@ export const navigationConfig: {
     {
       title: "Resources",
       href: "/media",
-      icon: BookOpen,
+      icon: Library,
       image: {
         src: "/img/mesh-437.png",
         alt: "Photo Gallery",
@@ -133,14 +133,14 @@ export const navigationConfig: {
           title: "In the Press",
           href: "/media/news-and-press",
           description: "Media coverage and press releases",
-          icon: FileText,
+          icon: Newspaper,
         },
       ],
     },
     {
       title: "Contact",
       href: "/contact",
-      icon: Mail,
+      icon: MessageCircle,
     },
   ],
   buttons: [

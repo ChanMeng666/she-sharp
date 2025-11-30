@@ -122,7 +122,7 @@ export function SiteHeader() {
               <NavigationMenuItem key={item.title}>
                 {item.children ? (
                   <>
-                    <NavigationMenuTrigger className="bg-transparent text-foreground hover:bg-muted data-[state=open]:bg-muted transition-all duration-150 rounded-lg px-3 py-2">
+                    <NavigationMenuTrigger className="bg-transparent text-foreground hover:bg-muted data-[state=open]:bg-muted transition-all duration-150 rounded-full px-3 py-2">
                       <span className="flex items-center gap-1">
                         {item.title}
                       </span>
@@ -138,7 +138,7 @@ export function SiteHeader() {
                                   <Link
                                     href={child.href}
                                     onClick={(e) => handleSmoothScroll(e, child.href)}
-                                    className="flex items-start gap-3 rounded-lg p-3 transition-all duration-150 hover:bg-muted focus:bg-muted group"
+                                    className="flex items-start gap-3 rounded-full p-3 transition-all duration-150 hover:bg-muted focus:bg-muted group"
                                   >
                                     {child.icon && (
                                       <div className="mt-0.5">
@@ -194,7 +194,7 @@ export function SiteHeader() {
                       onClick={(e) => handleSmoothScroll(e, item.href)}
                       className={cn(
                         navigationMenuTriggerStyle(),
-                        "bg-transparent text-foreground hover:bg-muted transition-all duration-150 rounded-lg px-3 py-2"
+                        "bg-transparent text-foreground hover:bg-muted transition-all duration-150 rounded-full px-3 py-2"
                       )}
                     >
                       {item.title}
