@@ -1,4 +1,4 @@
-import { LucideIcon, Calendar, Users, Briefcase, Heart, Mic, Mail, Camera, FileText, Award, BookOpen, Sparkles, HandHeart, Building2, FolderOpen, Bell, GraduationCap, UserPlus } from "lucide-react";
+import { LucideIcon, Calendar, Users, Briefcase, Heart, Mic, Mail, Camera, FileText, Award, BookOpen, HandHeart, Building2, FolderOpen, Bell, GraduationCap, UserPlus } from "lucide-react";
 
 export interface NavigationItem {
   title: string;
@@ -119,31 +119,6 @@ export const navigationConfig: {
       title: "Events",
       href: "/events",
       icon: Calendar,
-      image: {
-        src: "/img/mesh-152.png",
-        alt: "She Sharp Events",
-        href: "/events",
-      },
-      children: [
-        {
-          title: "All Events",
-          href: "/events",
-          description: "Explore our upcoming events and workshops",
-          icon: Calendar,
-        },
-        {
-          title: "THRIVE: Your Career, Your Story",
-          href: "/events/thrive-your-career-your-story-2025",
-          description: "Inspiring career stories from women leaders",
-          icon: Sparkles,
-        },
-        {
-          title: "Google Educator Conference",
-          href: "/events/google-educator-conference-2024",
-          description: "Annual education technology conference",
-          icon: Award,
-        },
-      ],
     },
     {
       title: "Get Involved",
