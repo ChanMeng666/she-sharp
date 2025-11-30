@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Calendar, Clock, MapPin, Video, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/layout/section";
+import { Container } from "@/components/layout/container";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 import { getFeaturedEvent, getUpcomingEvents, formatEventDate, formatEventTime } from "@/lib/data/events";
 
@@ -22,7 +23,7 @@ export function UpcomingEventSection() {
 
   return (
     <Section id="upcoming-event" className="bg-muted">
-        <div className="mx-auto max-w-7xl">
+        <Container size="full">
           <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
               Upcoming Event
@@ -86,7 +87,7 @@ export function UpcomingEventSection() {
               </div>
             </AnimateOnScroll>
           </div>
-        </div>
+        </Container>
     </Section>
   );
 }

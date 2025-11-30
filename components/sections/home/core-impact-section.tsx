@@ -83,51 +83,40 @@ const AnimatedNumber: React.FC<{ target: number; animate: boolean }> = ({
   return <>{formatNumber(current)}</>;
 };
 
-function StatCard({
+function StatItem({
   item,
   animate,
-  className,
 }: {
   item: ImpactItem;
   animate: boolean;
-  className?: string;
 }) {
   return (
-    <div
-      role="group"
-      tabIndex={0}
-      className={`rounded-xl overflow-hidden border border-border hover:border-foreground/50 transition-transform duration-200 hover:-translate-y-0.5 shadow-md hover:shadow-lg focus-within:-translate-y-0.5 focus-within:shadow-lg ${className ?? ""}`}
-    >
-      <div className="p-5 w-full h-80 flex flex-col justify-between text-foreground">
-        <div className="relative w-10 h-10 flex-shrink-0">
-          <Image
-            src={item.icon}
-            alt={`${item.title} icon`}
-            fill
-            className="object-contain"
-          />
-        </div>
-
-        <div>
-          <div className="text-6xl font-extrabold tabular-nums tracking-tight mb-4 text-foreground">
-            {(() => {
-              const { target, suffix } = parseTargetValue(item.value);
-              return (
-                <>
-                  <AnimatedNumber target={target} animate={animate} /> {suffix}
-                </>
-              );
-            })()}
-          </div>
-          <div className="flex items-center gap-3">
-            <h3 className="text-lg font-bold text-foreground">{item.title}</h3>
-          </div>
-          <div className="h-px w-full mb-4 bg-border" />
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            {item.desc}
-          </p>
-        </div>
+    <div className="flex flex-col">
+      <div className="relative w-10 h-10 mb-4">
+        <Image
+          src={item.icon}
+          alt={`${item.title} icon`}
+          fill
+          className="object-contain"
+        />
       </div>
+
+      <div className="text-5xl sm:text-6xl font-extrabold tabular-nums tracking-tight mb-2 text-foreground">
+        {(() => {
+          const { target, suffix } = parseTargetValue(item.value);
+          return (
+            <>
+              <AnimatedNumber target={target} animate={animate} />{suffix}
+            </>
+          );
+        })()}
+      </div>
+
+      <h3 className="text-lg font-bold text-foreground mb-2">{item.title}</h3>
+
+      <p className="text-muted-foreground text-sm leading-relaxed">
+        {item.desc}
+      </p>
     </div>
   );
 }
@@ -148,17 +137,16 @@ export function CoreImpactSection() {
           </AnimateOnScroll>
 
           {/* Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-16 max-w-7xl mx-auto">
             {impactData.map((item, i) => (
               <AnimateOnScroll
                 key={i}
                 variant="fade-up"
                 delay={i * 100}
               >
-                <StatCard
+                <StatItem
                   item={item}
                   animate={inView && !reduceMotion}
-                  className="bg-background hover:scale-105 hover:border-foreground/50 transition-all duration-300"
                 />
               </AnimateOnScroll>
             ))}

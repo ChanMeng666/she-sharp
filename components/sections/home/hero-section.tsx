@@ -1,9 +1,6 @@
-"use client";
-
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
-import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 // Hero images removed for minimalist design approach
 
@@ -29,7 +26,7 @@ export function HeroSection() {
       <Container className="relative z-10 w-full max-w-7xl">
         <div className="relative mx-auto flex items-center justify-start">
           {/* Left: Content area with heading and CTA */}
-          <AnimateOnScroll variant="fade-up" className="max-w-xl p-6 sm:p-8 md:p-10 text-center lg:text-left">
+          <div className="max-w-xl p-6 sm:p-8 md:p-10 text-center lg:text-left">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-extrabold leading-tight tracking-tight uppercase text-white">
               CONNECTING WOMEN IN
               <br />
@@ -40,7 +37,7 @@ export function HeroSection() {
                 <Link href="#upcoming-event">Attend next event</Link>
               </Button>
             </div>
-          </AnimateOnScroll>
+          </div>
 
           {/* Right Image */}
           {/* <Image

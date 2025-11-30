@@ -95,15 +95,15 @@ export function CommunityStoriesSection() {
                 <CarouselContent>
                   {featuredStories.map((story) => (
                     <CarouselItem key={story.id}>
-                      <Card className="border-border bg-muted backdrop-blur-sm">
+                      <Card className="border-border bg-background">
                         <CardContent className="p-10">
                           {/* Story Text */}
                           <div className="relative">
-                            <Quote className="absolute -top-2 -left-2 w-6 h-6 text-foreground rotate-180" />
-                            <blockquote className="text-background italic text-lg mb-12 leading-relaxed pl-8">
+                            <Quote className="absolute -top-2 -left-2 w-6 h-6 text-muted-foreground rotate-180" />
+                            <blockquote className="text-foreground italic text-lg mb-12 leading-relaxed pl-8">
                               {story.quote}
                             </blockquote>
-                            <Quote className="absolute -bottom-2 -right-2 w-6 h-6 text-foreground" />
+                            <Quote className="absolute -bottom-2 -right-2 w-6 h-6 text-muted-foreground" />
                           </div>
 
                           {/* Author Info */}
@@ -123,10 +123,10 @@ export function CommunityStoriesSection() {
                               </AvatarFallback>
                             </Avatar>
                             <div>
-                              <div className="font-semibold text-background text-lg">
+                              <div className="font-semibold text-foreground text-lg">
                                 {story.name}
                               </div>
-                              <div className="text-gray-300">
+                              <div className="text-muted-foreground">
                                 {story.role} at {story.company}
                               </div>
                             </div>
@@ -138,7 +138,7 @@ export function CommunityStoriesSection() {
                               <Badge
                                 key={tag}
                                 variant="secondary"
-                                className="text-xs bg-muted text-background border border-border px-3 py-1"
+                                className="text-xs bg-muted text-foreground border border-border px-3 py-1"
                               >
                                 {tag}
                               </Badge>

@@ -58,26 +58,24 @@ export function CoreValuesSection() {
             </h2>
           </AnimateOnScroll>
 
-          <ul className="flex flex-col gap-4 sm:gap-6 md:gap-8">
+          <ul className="flex flex-col gap-8 sm:gap-10 md:gap-12">
             {coreValues.map((value, index) => (
               <AnimateOnScroll
                 key={value.title}
                 variant="fade-up"
                 delay={index * 100}
               >
-                <li className="rounded-2xl border border-border p-5 sm:p-6 md:p-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:border-foreground/30 bg-background">
-                  <div className="flex items-start gap-4">
-                    <div className="inline-flex w-30 aspect-square items-center justify-center rounded-xl bg-muted border border-border">
-                      <value.icon className="h-5 w-5 text-foreground" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-semibold text-foreground font-heading">
-                        {value.title}
-                      </h3>
-                      <p className="mt-1.5 text-sm sm:text-base text-muted-foreground">
-                        {value.description}
-                      </p>
-                    </div>
+                <li className="flex items-start gap-4">
+                  <div className="inline-flex w-10 h-10 flex-shrink-0 items-center justify-center rounded-lg bg-foreground/10">
+                    <value.icon className="h-5 w-5 text-foreground" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-semibold text-foreground font-heading">
+                      {value.title}
+                    </h3>
+                    <p className="mt-1.5 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      {value.description}
+                    </p>
                   </div>
                 </li>
               </AnimateOnScroll>
