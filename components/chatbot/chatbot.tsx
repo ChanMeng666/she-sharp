@@ -178,8 +178,8 @@ export function Chatbot() {
                 <div className="flex items-center ">
                   <Button
                     size="icon"
-                    variant="ghost"
-                    className="h-9 w-9 text-background hover:bg-background/20 transition-colors"
+                    variant="outline"
+                    className="h-9 w-9 text-background hover:bg-background/20"
                     onClick={clearHistory}
                     title="Clear chat history"
                   >
@@ -187,8 +187,8 @@ export function Chatbot() {
                   </Button>
                   <Button
                     size="icon"
-                    variant="ghost"
-                    className="h-9 w-9 text-background hover:bg-background/20 transition-colors"
+                    variant="outline"
+                    className="h-9 w-9 text-background hover:bg-background/20"
                     onClick={() => setIsOpen(false)}
                   >
                     <X size={18} />

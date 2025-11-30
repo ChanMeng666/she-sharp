@@ -99,7 +99,7 @@ export default function ForgotPasswordPage() {
             <div className="space-y-3">
               <Button
                 asChild
-                variant="neumorphism"
+                variant="default"
                 size="lg"
                 className="w-full h-12 rounded-xl font-semibold"
               >
@@ -169,11 +169,11 @@ export default function ForgotPasswordPage() {
               />
             </div>
 
-            <Button 
-              type="submit" 
-              variant="neumorphism"
+            <Button
+              type="submit"
+              variant="default"
               size="lg"
-              className="w-full h-12 rounded-xl font-semibold text-lg transition-all duration-300"
+              className="w-full h-12 rounded-xl font-semibold text-lg"
               disabled={isLoading}
             >
               {isLoading ? 'Sending Instructions...' : 'Send Reset Instructions'}
@@ -181,9 +181,9 @@ export default function ForgotPasswordPage() {
 
             <Button
               asChild
-              variant="outline-thick"
+              variant="outline"
               size="lg"
-              className="w-full h-12 rounded-xl font-medium transition-all duration-300"
+              className="w-full h-12 rounded-xl font-medium"
             >
               <Link href="/sign-in">
                 <ArrowLeft className="mr-2 h-4 w-4" />

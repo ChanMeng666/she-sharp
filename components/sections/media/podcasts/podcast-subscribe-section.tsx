@@ -152,7 +152,7 @@ export function PodcastSubscribeSection() {
           </p>
           <Button
             size="lg"
-            variant="secondary"
+            variant="outline"
             className="bg-background text-foreground hover:bg-background/90"
           >
             Subscribe to Newsletter

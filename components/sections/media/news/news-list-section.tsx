@@ -265,7 +265,7 @@ export function NewsListSection() {
                                         View Source
                                       </Link>
                                     </Button>
-                                    <Button variant="ghost" size="icon">
+                                    <Button variant="outline" size="icon">
                                       <Share2 className="h-4 w-4" />
                                     </Button>
                                   </div>

@@ -171,7 +171,7 @@ export function MediaSection() {
                   <CardDescription className="mb-4">
                     {item.excerpt}
                   </CardDescription>
-                  <Button variant="ghost" size="lg" className="w-full" asChild>
+                  <Button variant="outline" size="lg" className="w-full" asChild>
                     <Link href={item.link} target="_blank" rel="noopener noreferrer">
                       Read More
                       <ExternalLink className="ml-2 w-4 h-4" />

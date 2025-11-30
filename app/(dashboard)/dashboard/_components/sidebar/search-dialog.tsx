@@ -106,7 +106,7 @@ export function SearchDialog() {
   return (
     <>
       <Button
-        variant="ghost"
+        variant="outline"
         size="sm"
         className="h-8 gap-2 text-muted-foreground"
         onClick={() => setOpen(true)}

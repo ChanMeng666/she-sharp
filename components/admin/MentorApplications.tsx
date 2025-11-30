@@ -259,7 +259,7 @@ export default function MentorApplications() {
                         {new Date(application.submittedAt).toLocaleDateString()}
                       </span>
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => toggleExpanded(application.id)}
                       >

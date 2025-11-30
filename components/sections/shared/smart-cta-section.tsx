@@ -21,7 +21,6 @@ const pageConfigs = {
       description: "Help us empower more young women to pursue careers in STEM",
       buttonText: "Donate Now",
       buttonVariant: "default" as const,
-      buttonClass: "",
       href: "/donate",
     },
     {
@@ -31,8 +30,7 @@ const pageConfigs = {
       title: "Join Our Events",
       description: "Network with professionals and learn new skills",
       buttonText: "Explore Events",
-      buttonVariant: "accent" as const,
-      buttonClass: "",
+      buttonVariant: "default" as const,
       href: "/events",
     },
     {
@@ -42,8 +40,7 @@ const pageConfigs = {
       title: "Become a Volunteer",
       description: "Share your expertise and make a difference",
       buttonText: "Join Our Team",
-      buttonVariant: "secondary" as const,
-      buttonClass: "",
+      buttonVariant: "outline" as const,
       href: "/join-our-team",
     },
   ],
@@ -56,7 +53,6 @@ const pageConfigs = {
       description: "Be part of our journey to empower women in STEM",
       buttonText: "Become a Volunteer",
       buttonVariant: "default" as const,
-      buttonClass: "",
       href: "/join-our-team",
     },
     {
@@ -66,8 +62,7 @@ const pageConfigs = {
       title: "Partner With Us",
       description: "Support diversity in tech through corporate partnership",
       buttonText: "Explore Partnership",
-      buttonVariant: "accent" as const,
-      buttonClass: "",
+      buttonVariant: "default" as const,
       href: "/sponsors/corporate-sponsorship",
     },
   ],
@@ -80,7 +75,6 @@ const pageConfigs = {
       description: "Partner with us to create impactful STEM events",
       buttonText: "Become a Sponsor",
       buttonVariant: "default" as const,
-      buttonClass: "",
       href: "/sponsors/corporate-sponsorship",
     },
     {
@@ -90,8 +84,7 @@ const pageConfigs = {
       title: "Never Miss an Event",
       description: "Subscribe to get notified about upcoming events",
       buttonText: "Subscribe Now",
-      buttonVariant: "accent" as const,
-      buttonClass: "",
+      buttonVariant: "default" as const,
       href: "/media/newsletters",
     },
   ],
@@ -104,7 +97,6 @@ const pageConfigs = {
       description: "Join the program and get matched with a mentor.",
       buttonText: "Join as Mentee",
       buttonVariant: "default" as const,
-      buttonClass: "bg-foreground text-background hover:bg-foreground/90",
       href: "/mentorship/join",
     },
     {
@@ -115,7 +107,6 @@ const pageConfigs = {
       description: "Share your experience and guide others.",
       buttonText: "Apply as Mentor",
       buttonVariant: "outline" as const,
-      buttonClass: "border-border text-foreground hover:bg-muted",
       href: "/mentorship/become-a-mentor",
     },
   ],
@@ -128,7 +119,6 @@ const pageConfigs = {
       description: "Join our community of inspiring mentors",
       buttonText: "Apply as Mentor",
       buttonVariant: "default" as const,
-      buttonClass: "bg-foreground text-background hover:bg-foreground/90",
       href: "/mentorship/become-a-mentor",
     },
     {
@@ -139,7 +129,6 @@ const pageConfigs = {
       description: "Join the program to get matched",
       buttonText: "Join as Mentee",
       buttonVariant: "outline" as const,
-      buttonClass: "border-border text-foreground hover:bg-muted",
       href: "/mentorship/join",
     },
   ],
@@ -152,7 +141,6 @@ const pageConfigs = {
       description: "Take the first step towards your career goals",
       buttonText: "Join the Program",
       buttonVariant: "default" as const,
-      buttonClass: "bg-foreground text-background hover:bg-foreground/90",
       href: "/mentorship/join",
     },
     {
@@ -163,7 +151,6 @@ const pageConfigs = {
       description: "Explore our diverse community of industry experts",
       buttonText: "View Mentors",
       buttonVariant: "outline" as const,
-      buttonClass: "border-border text-foreground hover:bg-muted",
       href: "/mentorship/mentors",
     },
   ],
@@ -176,7 +163,6 @@ const pageConfigs = {
       description: "See who you could be matched with",
       buttonText: "View Mentors",
       buttonVariant: "default" as const,
-      buttonClass: "bg-foreground text-background hover:bg-foreground/90",
       href: "/mentorship/mentors",
     },
     {
@@ -187,7 +173,6 @@ const pageConfigs = {
       description: "Discover how the program works",
       buttonText: "Program Overview",
       buttonVariant: "outline" as const,
-      buttonClass: "border-border text-foreground hover:bg-muted",
       href: "/mentorship",
     },
   ],
@@ -200,7 +185,6 @@ const pageConfigs = {
       description: "See our current mentor community",
       buttonText: "View Mentors",
       buttonVariant: "default" as const,
-      buttonClass: "bg-foreground text-background hover:bg-foreground/90",
       href: "/mentorship/mentors",
     },
     {
@@ -211,7 +195,6 @@ const pageConfigs = {
       description: "Learn how our mentorship works",
       buttonText: "Learn More",
       buttonVariant: "outline" as const,
-      buttonClass: "border-border text-foreground hover:bg-muted",
       href: "/mentorship",
     },
   ],
@@ -224,7 +207,6 @@ const pageConfigs = {
       description: "Get the latest updates and inspiring stories",
       buttonText: "Subscribe to Newsletter",
       buttonVariant: "default" as const,
-      buttonClass: "bg-foreground text-background hover:bg-foreground/90",
       href: "/media/newsletters",
     },
     {
@@ -235,7 +217,6 @@ const pageConfigs = {
       description: "Be featured in our podcast or media coverage",
       buttonText: "Contact Us",
       buttonVariant: "outline" as const,
-      buttonClass: "border-border text-foreground hover:bg-muted",
       href: "/contact",
     },
   ],
@@ -248,7 +229,6 @@ const pageConfigs = {
       description: "Join us at our next event to see your donation in action",
       buttonText: "View Events",
       buttonVariant: "default" as const,
-      buttonClass: "",
       href: "/events",
     },
     {
@@ -258,8 +238,7 @@ const pageConfigs = {
       title: "Corporate Giving",
       description: "Explore partnership opportunities for greater impact",
       buttonText: "Learn More",
-      buttonVariant: "accent" as const,
-      buttonClass: "",
+      buttonVariant: "default" as const,
       href: "/sponsors/corporate-sponsorship",
     },
   ],
@@ -275,7 +254,6 @@ const defaultCTA = [
     description: "Help us empower women in STEM",
     buttonText: "Donate Now",
     buttonVariant: "default" as const,
-    buttonClass: "",
     href: "/donate",
   },
   {
@@ -285,8 +263,7 @@ const defaultCTA = [
     title: "Join Our Community",
     description: "Attend events and connect with like-minded women",
     buttonText: "Explore Events",
-    buttonVariant: "accent" as const,
-    buttonClass: "",
+    buttonVariant: "default" as const,
     href: "/events",
   },
 ];
@@ -356,7 +333,6 @@ export function SmartCTASection({
                   <Button
                     asChild
                     variant={item.buttonVariant}
-                    className={item.buttonClass}
                   >
                     <Link href={item.href}>{item.buttonText}</Link>
                   </Button>

@@ -228,9 +228,9 @@ export function SiteHeader() {
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className="ml-auto lg:hidden">
             <Button
-              variant="ghost"
+              variant="outline"
               size="lg"
-              className="text-foreground hover:bg-muted transition-all duration-150 rounded-lg"
+              className="text-foreground hover:bg-muted rounded-lg"
             >
               {isOpen ? (
                 <X className="h-5 w-5" />

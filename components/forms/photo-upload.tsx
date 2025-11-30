@@ -125,8 +125,9 @@ export function PhotoUpload({
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <Button
               type="button"
-              variant="destructive"
+              variant="outline"
               size="sm"
+              className="text-red-600 hover:text-white hover:bg-red-600 border-red-200 hover:border-red-600"
               onClick={handleRemove}
               disabled={uploading}
             >

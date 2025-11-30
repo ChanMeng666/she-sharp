@@ -365,7 +365,7 @@ export default function MatchingManagementPage() {
                         </div>
                       </div>
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => toggleExpanded(match.id)}
                       >

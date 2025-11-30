@@ -184,7 +184,7 @@ export function GalleryHighlightsSection() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   size="lg"
-                  variant="secondary"
+                  variant="outline"
                   className="bg-background text-foreground hover:bg-background/90"
                 >
                   <Share2 className="mr-2 h-5 w-5" />

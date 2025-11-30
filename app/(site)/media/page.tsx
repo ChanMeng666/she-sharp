@@ -100,7 +100,7 @@ export default function MediaHubPage() {
                 <CardContent>
                   <Button
                     asChild
-                    variant="ghost"
+                    variant="outline"
                     className="group p-0 h-auto font-semibold text-foreground transition-colors duration-150"
                   >
                     <Link href={category.href}>

@@ -55,9 +55,9 @@ export default function NotFound() {
             <div className="space-y-4 pt-4">
               <Button
                 asChild
-                variant="gradient"
+                variant="default"
                 size="lg"
-                className="w-full h-12 rounded-xl shadow-lg shadow-foreground/25 hover:shadow-xl hover:shadow-foreground/30"
+                className="w-full h-12 rounded-xl"
               >
                 <Link href="/">
                   <Home className="mr-2 h-5 w-5" />

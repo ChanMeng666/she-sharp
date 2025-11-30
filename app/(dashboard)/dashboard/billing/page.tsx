@@ -376,7 +376,7 @@ export default function BillingPage() {
                       </TableCell>
                       <TableCell className="text-right">
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="sm"
                           onClick={() => handleDownloadInvoice(invoice.id)}
                         >

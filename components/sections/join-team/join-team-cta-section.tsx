@@ -81,7 +81,7 @@ export function JoinTeamCTASection() {
                 <p className="text-muted-foreground mb-6">
                   Your donation helps us create more opportunities for women in STEM
                 </p>
-                <Button asChild variant="link" className="text-foreground p-0">
+                <Button asChild variant="outline" className="text-foreground p-0 underline-offset-4 hover:underline">
                   <Link href="/donate">
                     Make a Donation
                     <ArrowRight className="w-4 h-4 ml-1" />
@@ -101,7 +101,7 @@ export function JoinTeamCTASection() {
                 <p className="text-muted-foreground mb-6">
                   Connect with the community at our workshops and networking events
                 </p>
-                <Button asChild variant="link" className="text-foreground p-0">
+                <Button asChild variant="outline" className="text-foreground p-0 underline-offset-4 hover:underline">
                   <Link href="/events">
                     Explore Events
                     <ArrowRight className="w-4 h-4 ml-1" />
@@ -121,7 +121,7 @@ export function JoinTeamCTASection() {
                 <p className="text-muted-foreground mb-6">
                   Get the latest updates on volunteer opportunities and events
                 </p>
-                <Button asChild variant="link" className="text-foreground p-0">
+                <Button asChild variant="outline" className="text-foreground p-0 underline-offset-4 hover:underline">
                   <Link href="/contact">
                     Contact Us
                     <ArrowRight className="w-4 h-4 ml-1" />

@@ -120,7 +120,7 @@ export function MentorCommunitySection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
-              variant="secondary"
+              variant="outline"
               className="bg-background text-foreground hover:bg-muted"
             >
               <Users className="mr-2 h-5 w-5" />

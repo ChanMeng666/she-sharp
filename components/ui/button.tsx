@@ -1,91 +1,58 @@
 import * as React from "react";
-import { Slot as SlotPrimitive } from "radix-ui";;
+import { Slot as SlotPrimitive } from "radix-ui";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Button Variants - 按钮样式设计系统
+ *
+ * 设计原则：
+ * - 简洁：仅保留 2 个核心变体
+ * - 高对比：悬停时颜色反转
+ * - 粗边框：2px 边框增强视觉层次
+ * - 无动画：仅颜色过渡，无 translate、scale、shadow 动画
+ *
+ * 变体说明：
+ * - default: 黑底白字 → 悬停白底黑字
+ * - outline: 透明底黑字 → 悬停黑底白字
+ */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring active:scale-95 transform",
+  // 基础样式
+  [
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap",
+    "rounded-full font-medium border-2",
+    "transition-colors duration-200",
+    "disabled:pointer-events-none disabled:opacity-50",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+    "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 shrink-0",
+  ].join(" "),
   {
     variants: {
       variant: {
-        // Primary Variants
-        default:
-          "bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-0.5",
-        secondary:
-          "bg-secondary text-secondary-foreground shadow-lg hover:bg-secondary/90 hover:shadow-xl hover:shadow-secondary/25 hover:-translate-y-0.5",
-        accent:
-          "bg-accent text-accent-foreground shadow-lg hover:bg-accent/90 hover:shadow-xl hover:shadow-accent/25 hover:-translate-y-0.5",
-        navy:
-          "bg-foreground text-background shadow-lg hover:bg-foreground/90 hover:shadow-xl hover:shadow-foreground/25 hover:-translate-y-0.5",
+        // 主按钮：黑底白字黑边 → 悬停白底黑字黑边
+        default: [
+          "bg-foreground text-background border-foreground",
+          "hover:bg-background hover:text-foreground",
+        ].join(" "),
 
-        // Special Effects
-        glass:
-          "backdrop-blur-md bg-background/20 border border-border text-foreground shadow-xl hover:bg-background/30 hover:shadow-2xl",
-        gradient:
-          "bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/25 hover:scale-105",
-        glassmorphism:
-          "backdrop-blur-xl bg-background/10 border border-border text-foreground shadow-2xl hover:bg-background/20",
-        neumorphism:
-          "bg-accent text-foreground shadow-[8px_8px_16px_hsl(var(--muted)),_-8px_-8px_16px_hsl(var(--background))] hover:shadow-[4px_4px_8px_hsl(var(--muted)),_-4px_-4px_8px_hsl(var(--background))]",
-
-        // Border Variants
-        outline:
-          "border-2 border-primary bg-transparent text-primary shadow-md hover:bg-muted hover:shadow-lg hover:-translate-y-0.5",
-        "outline-thick":
-          "border-4 border-primary bg-transparent text-primary hover:border-primary/70 hover:bg-muted/50 hover:-translate-y-1 shadow-lg",
-        "outline-dashed":
-          "border-2 border-dashed border-primary bg-transparent text-primary hover:bg-muted hover:border-solid",
-        "outline-gradient":
-          "border-2 border-primary bg-transparent text-primary hover:bg-muted hover:shadow-lg hover:-translate-y-0.5",
-
-        // Minimal Variants
-        ghost:
-          "hover:bg-muted hover:text-foreground transition-colors duration-200",
-        link:
-          "text-primary underline-offset-4 hover:underline hover:text-primary/70 transition-colors duration-200",
-        minimal:
-          "text-primary hover:text-primary/70 transition-colors duration-200",
-        text:
-          "text-muted-foreground hover:text-foreground hover:bg-accent rounded transition-all duration-200",
-
-        // Monochrome Variants
-        black:
-          "bg-foreground text-background shadow-lg hover:bg-foreground/90 hover:shadow-xl hover:-translate-y-0.5",
-        white:
-          "bg-background text-foreground border border-border shadow-md hover:shadow-lg hover:-translate-y-0.5",
-        dark:
-          "bg-foreground text-background shadow-lg hover:bg-foreground/90 hover:shadow-xl hover:-translate-y-0.5",
-        light:
-          "bg-accent text-foreground border border-border hover:bg-background hover:shadow-md hover:-translate-y-0.5",
-
-        // State Variants
-        success:
-          "bg-accent text-accent-foreground shadow-lg hover:bg-accent/90 hover:shadow-xl hover:shadow-accent/25 hover:-translate-y-0.5",
-        warning:
-          "bg-yellow-500 text-white shadow-lg hover:bg-yellow-600 hover:shadow-xl hover:shadow-yellow-500/25 hover:-translate-y-0.5",
-        danger:
-          "bg-red-500 text-white shadow-lg hover:bg-red-600 hover:shadow-xl hover:shadow-red-500/25 hover:-translate-y-0.5",
-        info:
-          "bg-secondary text-secondary-foreground shadow-lg hover:bg-secondary/90 hover:shadow-xl hover:shadow-secondary/25 hover:-translate-y-0.5",
-
-        // Legacy compatibility
-        destructive:
-          "bg-destructive text-destructive-foreground shadow-lg hover:bg-destructive/90 hover:shadow-xl hover:shadow-destructive/25 hover:-translate-y-0.5"
+        // 轮廓按钮：透明底黑字黑边 → 悬停黑底白字黑边
+        outline: [
+          "bg-transparent text-foreground border-foreground",
+          "hover:bg-foreground hover:text-background",
+        ].join(" "),
       },
       size: {
-        xs: "h-6 px-2 text-xs gap-1 has-[>svg]:px-1.5",
-        sm: "h-8 px-3 text-sm gap-1.5 has-[>svg]:px-2.5",
-        default: "h-10 px-4 py-2 has-[>svg]:px-3",
+        sm: "h-8 px-3 text-sm has-[>svg]:px-2",
+        default: "h-10 px-4 text-sm has-[>svg]:px-3",
         lg: "h-12 px-6 text-base has-[>svg]:px-4",
-        xl: "h-14 px-8 text-lg has-[>svg]:px-6",
-        icon: "size-10 p-0"
-      }
+        icon: "size-10 p-0",
+      },
     },
     defaultVariants: {
       variant: "default",
-      size: "default"
-    }
+      size: "default",
+    },
   }
 );
 

@@ -311,19 +311,18 @@ export default function NotificationsPage() {
                           <div className="flex items-center gap-1">
                             {!notification.read && (
                               <Button
-                                variant="ghost"
+                                variant="outline"
                                 size="sm"
                                 onClick={() => markAsRead(notification.id)}
-                                className=""
                               >
                                 <CheckCircle className="h-4 w-4" />
                               </Button>
                             )}
                             <Button
-                              variant="ghost"
+                              variant="outline"
                               size="sm"
                               onClick={() => deleteNotification(notification.id)}
-                              className="text-muted-foreground hover:text-destructive"
+                              className="text-muted-foreground hover:text-red-600"
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
@@ -331,7 +330,7 @@ export default function NotificationsPage() {
                         </div>
                         {notification.actionUrl && (
                           <Button
-                            variant="link"
+                            variant="outline"
                             className="p-0 h-auto text-foreground mt-3 text-sm font-medium"
                             onClick={() => window.location.href = notification.actionUrl!}
                           >

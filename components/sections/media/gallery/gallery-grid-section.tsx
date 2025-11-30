@@ -225,7 +225,7 @@ export function GalleryGridSection() {
             <div className="relative">
               {/* Close button */}
               <Button
-                variant="ghost"
+                variant="outline"
                 size="icon"
                 className="absolute top-4 right-4 z-50 text-background hover:bg-background/20"
                 onClick={() => setSelectedImage(null)}
@@ -235,7 +235,7 @@ export function GalleryGridSection() {
 
               {/* Navigation buttons */}
               <Button
-                variant="ghost"
+                variant="outline"
                 size="icon"
                 className="absolute left-4 top-1/2 -translate-y-1/2 z-50 text-background hover:bg-background/20"
                 onClick={handlePrevious}
@@ -243,7 +243,7 @@ export function GalleryGridSection() {
                 <ChevronLeft className="h-6 w-6" />
               </Button>
               <Button
-                variant="ghost"
+                variant="outline"
                 size="icon"
                 className="absolute right-4 top-1/2 -translate-y-1/2 z-50 text-background hover:bg-background/20"
                 onClick={handleNext}

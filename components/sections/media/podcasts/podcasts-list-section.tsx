@@ -85,7 +85,7 @@ export function PodcastsListSection() {
                         <div className="flex items-center justify-between">
                           <Button
                             size="sm"
-                            variant="ghost"
+                            variant="outline"
                             className="text-foreground hover:text-foreground/80"
                             onClick={() => setPlayingSlug(playingSlug === podcast.slug ? null : podcast.slug)}
                           >
@@ -171,7 +171,7 @@ export function PodcastsListSection() {
 
                             <HoverCard>
                               <HoverCardTrigger asChild>
-                                <Button size="icon" variant="ghost" className="flex-shrink-0">
+                                <Button size="icon" variant="outline" className="flex-shrink-0">
                                   <Info className="h-4 w-4" />
                                 </Button>
                               </HoverCardTrigger>

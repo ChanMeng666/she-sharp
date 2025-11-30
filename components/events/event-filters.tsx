@@ -64,7 +64,7 @@ export function EventFiltersBar({
         {/* Format Toggle Buttons */}
         <div className="flex items-center bg-gray-100 rounded-lg p-1">
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             className={cn(
               'rounded-md px-4',
@@ -76,7 +76,7 @@ export function EventFiltersBar({
             All
           </Button>
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             className={cn(
               'rounded-md px-4',
@@ -88,7 +88,7 @@ export function EventFiltersBar({
             In Person
           </Button>
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             className={cn(
               'rounded-md px-4',
@@ -168,7 +168,7 @@ export function EventFiltersBar({
         {/* Clear Filters */}
         {hasActiveFilters && (
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             onClick={clearFilters}
             className="text-muted-foreground hover:text-foreground"
@@ -278,7 +278,7 @@ export function EventFormatTabs({
       {(['all', 'in_person', 'online'] as const).map((format) => (
         <Button
           key={format}
-          variant="ghost"
+          variant="outline"
           size="sm"
           className={cn(
             'rounded-md px-4 capitalize',

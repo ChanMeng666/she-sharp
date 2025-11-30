@@ -79,9 +79,9 @@ export function AuthHeader() {
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className="ml-auto md:hidden">
             <Button
-              variant="ghost"
+              variant="outline"
               size="icon"
-              className="hover:bg-muted hover:text-foreground transition-colors"
+              className="hover:bg-muted hover:text-foreground"
             >
               {isOpen ? (
                 <X className="h-5 w-5" />

@@ -319,7 +319,7 @@ export default function CreateEventPage() {
           <Button variant="outline" type="button">
             Save as Draft
           </Button>
-          <Button type="submit">
+          <Button variant="default" type="submit">
             Create Event
           </Button>
         </div>

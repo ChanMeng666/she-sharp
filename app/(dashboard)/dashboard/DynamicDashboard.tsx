@@ -549,7 +549,7 @@ export default function DynamicDashboard() {
                 <CardDescription>Don't miss these opportunities</CardDescription>
               </div>
               <Link href="/dashboard/events">
-                <Button variant="ghost" size="sm">
+                <Button variant="outline" size="sm">
                   View all
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -593,7 +593,7 @@ export default function DynamicDashboard() {
                 <CardDescription>Latest learning materials</CardDescription>
               </div>
               <Link href="/dashboard/resources">
-                <Button variant="ghost" size="sm">
+                <Button variant="outline" size="sm">
                   View all
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

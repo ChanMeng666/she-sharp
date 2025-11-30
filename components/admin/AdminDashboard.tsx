@@ -368,7 +368,7 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
             <div className="flex items-center justify-between">
               <CardTitle>Recent Activity</CardTitle>
               <Link href="/dashboard/admin/users/activity">
-                <Button variant="ghost" size="sm">
+                <Button variant="outline" size="sm">
                   View all
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

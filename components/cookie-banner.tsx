@@ -99,7 +99,7 @@ export function CookieBanner() {
             
             <div className="flex flex-wrap items-center gap-3">
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
                 onClick={() => setShowSettings(true)}
                 className="text-foreground hover:bg-muted"

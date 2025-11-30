@@ -154,7 +154,7 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
 
         {hasActiveFilters && (
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             onClick={clearFilters}
             className="text-muted-foreground hover:text-foreground"

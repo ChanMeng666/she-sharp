@@ -97,9 +97,9 @@ export function NewsletterPreviewSection() {
                       </div>
                     ))}
                   </div>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     className="w-full group"
                   >
                     Read This Issue
