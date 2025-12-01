@@ -33,7 +33,7 @@ export function HeroSection() {
               TECHNOLOGY
             </h1>
             <div className="mt-12 flex justify-center lg:justify-start">
-              <Button variant="default" size="lg" asChild className="px-6">
+              <Button variant="brand" size="lg" asChild className="px-6">
                 <Link href="#upcoming-event">Attend next event</Link>
               </Button>
             </div>

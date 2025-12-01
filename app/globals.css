@@ -64,6 +64,9 @@
   --color-accent-foreground: hsl(var(--accent-foreground));
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-brand: hsl(var(--brand));
+  --color-brand-foreground: hsl(var(--brand-foreground));
+  --color-brand-hover: hsl(var(--brand-hover));
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
@@ -193,6 +196,16 @@
   /* Heading font */
   .font-heading {
     font-family: var(--font-heading);
+  }
+
+  /* Logo hover effect - black to brand purple (#9b2e83) */
+  .logo-hover {
+    filter: brightness(0);
+    transition: filter 0.2s ease;
+  }
+
+  .logo-hover:hover {
+    filter: brightness(0) saturate(100%) invert(28%) sepia(50%) saturate(1500%) hue-rotate(290deg) brightness(95%) contrast(95%);
   }
 
   /* Scrollbar hide */

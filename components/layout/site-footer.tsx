@@ -69,7 +69,7 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="relative bg-foreground text-background -mt-12 pt-16 overflow-hidden rounded-t-[50px]">
+    <footer className="relative bg-brand text-background -mt-12 pt-16 overflow-hidden rounded-t-[50px]">
 
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:justify-between gap-8 lg:gap-12 xl:gap-16">
@@ -103,9 +103,10 @@ export function SiteFooter() {
                     </div>
                     <Button
                       type="submit"
+                      variant="default"
                       size="lg"
                       disabled={newsletterStatus === "loading"}
-                      className="bg-background text-foreground hover:bg-background/90 transition-colors duration-150 h-12 px-8"
+                      className="h-12 px-8"
                     >
                       {newsletterStatus === "loading"
                         ? "Subscribing..."

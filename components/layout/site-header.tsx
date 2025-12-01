@@ -99,8 +99,8 @@ export function SiteHeader() {
     )}>
       <div className="flex h-16 items-center px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* Logo */}
-        <Link 
-          href="/" 
+        <Link
+          href="/"
           className="flex items-center space-x-2 transition-all duration-200 group hover:opacity-80"
         >
           <div className="relative w-32 h-10">
@@ -109,7 +109,7 @@ export function SiteHeader() {
               alt="She Sharp"
               fill
               sizes="128px"
-              className="object-contain transition-all duration-200 group-hover:opacity-70 group-active:scale-95"
+              className="object-contain logo-hover"
               priority
             />
           </div>

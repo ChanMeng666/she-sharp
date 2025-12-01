@@ -41,9 +41,14 @@
   --accent: 0 0% 96%;                /* #f5f5f5 */
   --accent-foreground: 0 0% 0%;      /* #000000 */
 
-  /* 破坏性操作 */
-  --destructive: 0 0% 0%;            /* #000000 */
-  --destructive-foreground: 0 0% 100%; /* #ffffff */
+  /* 品牌色（She Sharp 紫色） */
+  --brand: 312 54% 40%;              /* #9b2e83 品牌紫 */
+  --brand-foreground: 0 0% 100%;     /* #ffffff 白色文字 */
+  --brand-hover: 312 54% 31%;        /* #7a2468 深紫hover */
+
+  /* 破坏性操作（红色） */
+  --destructive: 0 84% 50%;          /* #dc2626 红色 */
+  --destructive-foreground: 0 0% 100%; /* #ffffff 白色文字 */
 
   /* UI 元素 */
   --border: 0 0% 90%;                /* #e5e5e5 */
@@ -101,7 +106,7 @@
   --color-indigo-deep: #171717;
   --color-gray: #737373;
   --color-blue: #404040;
-  --color-error: #000000;
+  --color-error: #dc2626;           /* 更新为红色 */
   --color-ghost-white: #fafafa;
   --color-light-pink: #e5e5e5;
 }
@@ -138,9 +143,14 @@
   --accent: 0 0% 15%;                /* #262626 */
   --accent-foreground: 0 0% 100%;    /* #ffffff */
 
-  /* 破坏性操作 */
-  --destructive: 0 0% 100%;          /* #ffffff */
-  --destructive-foreground: 0 0% 0%; /* #000000 */
+  /* 品牌色（深色模式保持不变） */
+  --brand: 312 54% 40%;              /* #9b2e83 */
+  --brand-foreground: 0 0% 100%;     /* #ffffff */
+  --brand-hover: 312 54% 31%;        /* #7a2468 */
+
+  /* 破坏性操作（红色，深色模式保持） */
+  --destructive: 0 84% 50%;          /* #dc2626 */
+  --destructive-foreground: 0 0% 100%; /* #ffffff */
 
   /* UI 元素 */
   --border: 0 0% 20%;                /* #333333 */

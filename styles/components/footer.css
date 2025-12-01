@@ -72,13 +72,13 @@
   overflow: hidden;
 }
 
-/* Legal Links Hover */
+/* Legal Links Hover - 白色悬停效果，在紫色背景上可见 */
 .legal-link {
   transition: color 0.15s ease;
 }
 
 .legal-link:hover {
-  color: #404040;
+  color: #ffffff;
 }
 
 /* Removed all animations, gradients, and complex effects */
