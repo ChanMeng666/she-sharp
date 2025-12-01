@@ -12,7 +12,7 @@ import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 export function MentorshipHeroSection() {
   return (
-    <Section className="relative overflow-hidden bg-muted">
+    <Section className="relative overflow-hidden bg-surface-purple">
       <Container>
         <div className="py-16 md:py-24">
           {/* Title and CTA */}
@@ -25,7 +25,7 @@ export function MentorshipHeroSection() {
               Match with experts. Grow faster. Advance with purpose.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg">
+              <Button asChild size="lg" variant="brand">
                 <Link href="/mentorship/join">
                   Join as Mentee
                   <ArrowRight className="ml-2 h-4 w-4" />

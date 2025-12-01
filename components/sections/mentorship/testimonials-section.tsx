@@ -122,7 +122,7 @@ export function TestimonialsSection() {
             </CardHeader>
             
             <CardContent className="pt-6">
-              <Quote className="w-12 h-12 text-muted mb-4" />
+              <Quote className="w-12 h-12 text-brand/30 mb-4" />
               <blockquote className="text-lg text-foreground mb-6 italic leading-relaxed">
                 {current.quote}
               </blockquote>
@@ -158,7 +158,7 @@ export function TestimonialsSection() {
                   onClick={() => setCurrentIndex(index)}
                   className={`h-2 transition-all duration-300 rounded-full ${
                     index === currentIndex
-                      ? "w-8 bg-foreground"
+                      ? "w-8 bg-brand"
                       : "w-2 bg-muted hover:bg-muted/80"
                   }`}
                 />
