@@ -136,7 +136,7 @@ export function SiteHeader() {
                         {item.title}
                       </span>
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent className="nav-dropdown-enter nav-dropdown-enter-active bg-white/20 backdrop-blur-sm border border-white/30 shadow-lg rounded-xl">
+                    <NavigationMenuContent className="nav-dropdown-enter nav-dropdown-enter-active">
                       <div className="flex w-[800px]">
                         {/* Left side - Navigation links */}
                         <div className="flex-1 p-6">
