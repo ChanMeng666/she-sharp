@@ -67,6 +67,10 @@
   --color-brand: hsl(var(--brand));
   --color-brand-foreground: hsl(var(--brand-foreground));
   --color-brand-hover: hsl(var(--brand-hover));
+  --color-surface-purple: hsl(var(--surface-purple));
+  --color-surface-periwinkle: hsl(var(--surface-periwinkle));
+  --color-navy: hsl(var(--navy));
+  --color-navy-foreground: hsl(var(--navy-foreground));
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));

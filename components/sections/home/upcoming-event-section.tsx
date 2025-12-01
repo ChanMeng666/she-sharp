@@ -22,7 +22,7 @@ export function UpcomingEventSection() {
     : `${featuredEvent.location.venueName || ''}, ${featuredEvent.location.city || ''}`;
 
   return (
-    <Section id="upcoming-event" className="bg-muted">
+    <Section id="upcoming-event" className="bg-surface-periwinkle">
         <Container size="full">
           <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">

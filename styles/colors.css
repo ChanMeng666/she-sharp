@@ -46,8 +46,16 @@
   --brand-foreground: 0 0% 100%;     /* #ffffff 白色文字 */
   --brand-hover: 312 54% 31%;        /* #7a2468 深紫hover */
 
+  /* 浅色背景色（用于区块交替） */
+  --surface-purple: 312 50% 93%;     /* #f7e5f3 浅紫背景 */
+  --surface-periwinkle: 240 30% 97%; /* #f4f4fa 浅蓝紫背景 */
+
+  /* 深色背景色（Navy） */
+  --navy: 242 38% 19%;               /* #1f1e44 深海军蓝 */
+  --navy-foreground: 0 0% 100%;      /* #ffffff 白色文字 */
+
   /* 破坏性操作（红色） */
-  --destructive: 0 84% 50%;          /* #dc2626 红色 */
+  --destructive: 354 70% 51%;        /* #d72f40 错误红 */
   --destructive-foreground: 0 0% 100%; /* #ffffff 白色文字 */
 
   /* UI 元素 */
@@ -148,8 +156,16 @@
   --brand-foreground: 0 0% 100%;     /* #ffffff */
   --brand-hover: 312 54% 31%;        /* #7a2468 */
 
+  /* 浅色背景色（深色模式调整） */
+  --surface-purple: 312 30% 15%;     /* 深紫背景 */
+  --surface-periwinkle: 240 20% 12%; /* 深蓝紫背景 */
+
+  /* 深色背景色（Navy - 深色模式反转） */
+  --navy: 242 38% 85%;               /* 浅色 */
+  --navy-foreground: 0 0% 0%;        /* 黑色文字 */
+
   /* 破坏性操作（红色，深色模式保持） */
-  --destructive: 0 84% 50%;          /* #dc2626 */
+  --destructive: 354 70% 51%;        /* #d72f40 */
   --destructive-foreground: 0 0% 100%; /* #ffffff */
 
   /* UI 元素 */

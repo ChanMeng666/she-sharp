@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
  * - default: 黑底白字黑边 → 悬停白底黑字黑边（主要操作）
  * - outline: 透明底黑字黑边 → 悬停黑底白字黑边（次要操作）
  * - brand: 紫底白字紫边 → 悬停深紫底白字深紫边（关键CTA）
+ * - secondary: 深蓝底白字深蓝边 → 悬停略浅深蓝（次要CTA）
  * - destructive: 红底白字红边 → 悬停深红底白字深红边（危险操作）
  * - ghost: 白底黑字灰边 → 悬停浅灰底黑字灰边（工具栏/导航）
  */
@@ -48,6 +49,12 @@ const buttonVariants = cva(
         brand: [
           "bg-brand text-brand-foreground border-brand",
           "hover:bg-brand-hover hover:border-brand-hover",
+        ].join(" "),
+
+        // 次要按钮：深蓝底白字深蓝边 → 悬停略浅深蓝
+        secondary: [
+          "bg-navy text-navy-foreground border-navy",
+          "hover:bg-navy/80 hover:border-navy/80",
         ].join(" "),
 
         // 破坏性按钮：红底白字红边 → 悬停深红底白字深红边
