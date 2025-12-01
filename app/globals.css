@@ -364,20 +364,54 @@
     }
   }
 
-  /* Navigation Glass Effect */
+  /* Navigation Glass Effect - Frosted glass */
   .nav-glass {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
   }
 
-  /* Dropdown Glass Effect */
+  /* Dropdown Glass Effect - Frosted glass */
   .dropdown-glass {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(28px) saturate(200%);
+    -webkit-backdrop-filter: blur(28px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      0 2px 8px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  /* Navigation hover/active states with brand purple */
+  .nav-item-hover:hover,
+  .nav-item-hover:focus {
+    background: rgba(247, 229, 243, 0.8); /* Purple Light #f7e5f3 */
+  }
+
+  .nav-item-active,
+  .nav-item-hover[data-state="open"] {
+    background: rgba(247, 229, 243, 0.9); /* Purple Light #f7e5f3 */
+  }
+
+  /* Featured section background variants */
+  .featured-bg-purple {
+    background: linear-gradient(135deg, #f7e5f3 0%, #fdf2fa 100%);
+  }
+
+  .featured-bg-periwinkle {
+    background: linear-gradient(135deg, #f4f4fa 0%, #f8f8ff 100%);
+  }
+
+  .featured-bg-navy {
+    background: linear-gradient(135deg, #eaf2ff 0%, #f5f8ff 100%);
+  }
+
+  .featured-bg-mint {
+    background: linear-gradient(135deg, #effefb 0%, #f7fffd 100%);
   }
 }
