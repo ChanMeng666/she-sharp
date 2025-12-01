@@ -383,7 +383,7 @@ export default function EventRegistrationsPage() {
                   <UserCheck className="w-4 h-4 mr-2" />
                   Confirm
                 </Button>
-                <Button size="sm" variant="outline" className="text-red-600">
+                <Button size="sm" variant="outline" className="text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300">
                   <UserX className="w-4 h-4 mr-2" />
                   Cancel
                 </Button>

@@ -81,7 +81,7 @@ export function UpcomingEventSection() {
               </Button>
 
               <div className="mt-4">
-                <Button variant="outline" className="underline-offset-4 hover:underline" asChild>
+                <Button variant="outline" asChild>
                   <Link href="/events">View all events</Link>
                 </Button>
               </div>

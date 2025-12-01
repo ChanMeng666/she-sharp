@@ -202,7 +202,7 @@ export function ProgramsSection() {
 
                         {/* CTA Button */}
                         <Link href={program.cta.href}>
-                          <Button className="bg-background text-foreground hover:bg-background/90" size="lg">
+                          <Button variant="ghost" size="lg">
                             {program.cta.text}
                           </Button>
                         </Link>

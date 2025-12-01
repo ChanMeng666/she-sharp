@@ -232,7 +232,7 @@ export function SiteHeader() {
             <Button
               variant="outline"
               size="lg"
-              className="text-foreground hover:bg-muted rounded-lg"
+              className="rounded-lg"
             >
               {isOpen ? (
                 <X className="h-5 w-5" />

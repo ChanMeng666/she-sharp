@@ -1017,7 +1017,7 @@ export default function MenteeApplicationPage() {
 
                 <div className="flex justify-between mt-10 pt-6 border-t">
                   {currentStep > 1 ? (
-                    <Button variant="outline" onClick={handleBack} disabled={loading} className="hover:bg-[#f7e5f3] hover:border-[#9b2e83]">
+                    <Button variant="outline" onClick={handleBack} disabled={loading}>
                       <ChevronLeft className="h-4 w-4 mr-1" />
                       Back
                     </Button>

@@ -204,7 +204,7 @@ export default function RoleManagementPage() {
                       <Button size="sm" variant="outline" onClick={() => setEditingUser(user)}>
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
+                      <Button size="sm" variant="outline" className="text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300">
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
