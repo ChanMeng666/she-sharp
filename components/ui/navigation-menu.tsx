@@ -113,7 +113,6 @@ function NavigationMenuViewport({
         data-slot="navigation-menu-viewport"
         className={cn(
           "origin-top-center data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full rounded-xl md:w-[var(--radix-navigation-menu-viewport-width)]",
-          "bg-white/70 backdrop-blur-md border border-white/30 shadow-lg",
           className
         )}
         {...props}
