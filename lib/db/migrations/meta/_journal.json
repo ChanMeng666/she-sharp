@@ -99,6 +99,13 @@
       "when": 1764383560467,
       "tag": "0015_overjoyed_nico_minoru",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1764593373436,
+      "tag": "0016_purple_wendigo",
+      "breakpoints": true
     }
   ]
 }

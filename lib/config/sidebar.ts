@@ -28,6 +28,7 @@ import {
   Cog,
   MessageSquare,
   FileSearch,
+  BrainCircuit,
   type LucideIcon,
 } from "lucide-react";
 
@@ -170,6 +171,7 @@ export const adminSidebarItems: NavGroup[] = [
         title: "Mentorship",
         icon: GraduationCap,
         subItems: [
+          { title: "AI Matching", url: "/dashboard/admin/matching", icon: BrainCircuit },
           { title: "Mentor Applications", url: "/dashboard/admin/mentors/applications", icon: UserPlus },
           { title: "Verified Mentors", url: "/dashboard/admin/mentors/verified", icon: CheckCircle },
           { title: "Active Relationships", url: "/dashboard/admin/mentors/relationships", icon: Users },

@@ -40,6 +40,8 @@ export const mbtiTypeEnum = pgEnum('mbti_type', ['INTJ', 'INTP', 'ENTJ', 'ENTP',
 export const genderEnum = pgEnum('gender', ['female', 'male', 'non_binary', 'prefer_not_to_say', 'other']);
 export const skillCategoryEnum = pgEnum('skill_category', ['soft_basic', 'soft_expert', 'industry_basic', 'industry_expert']);
 export const meetingFormatEnum = pgEnum('meeting_format', ['online', 'in_person', 'hybrid']);
+export const queueStatusEnum = pgEnum('queue_status', ['waiting', 'matching_in_progress', 'matched', 'expired', 'cancelled']);
+export const confidenceLevelEnum = pgEnum('confidence_level', ['high', 'medium', 'low']);
 
 // Core user table (simplified - no role field)
 export const users = pgTable('users', {
@@ -1102,6 +1104,28 @@ export const rewardRedemptions = pgTable('reward_redemptions', {
   redeemedAt: timestamp('redeemed_at').notNull().defaultNow(),
 });
 
+// Mentee waiting queue for AI matching
+export const menteeWaitingQueue = pgTable('mentee_waiting_queue', {
+  id: serial('id').primaryKey(),
+  menteeUserId: integer('mentee_user_id').notNull().unique().references(() => users.id, { onDelete: 'cascade' }),
+  joinedAt: timestamp('joined_at').notNull().defaultNow(),
+  status: queueStatusEnum('status').notNull().default('waiting'),
+  priority: integer('priority').default(0),
+  bestMatchScore: decimal('best_match_score', { precision: 5, scale: 2 }),
+  matchAttempts: integer('match_attempts').default(0),
+  lastMatchAttemptAt: timestamp('last_match_attempt_at'),
+  notifiedAt: timestamp('notified_at'),
+  expiresAt: timestamp('expires_at'),
+  notes: text('notes'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  menteeUserIdIdx: index('waiting_queue_mentee_user_id_idx').on(table.menteeUserId),
+  statusIdx: index('waiting_queue_status_idx').on(table.status),
+  priorityIdx: index('waiting_queue_priority_idx').on(table.priority),
+  bestScoreIdx: index('waiting_queue_best_score_idx').on(table.bestMatchScore),
+}));
+
 // AI match results
 export const aiMatchResults = pgTable('ai_match_results', {
   id: serial('id').primaryKey(),
@@ -1112,11 +1136,23 @@ export const aiMatchResults = pgTable('ai_match_results', {
   skillMatchScore: decimal('skill_match_score', { precision: 5, scale: 2 }),
   goalAlignmentScore: decimal('goal_alignment_score', { precision: 5, scale: 2 }),
   industryMatchScore: decimal('industry_match_score', { precision: 5, scale: 2 }),
+  // New fields for OpenAI integration
+  logisticsScore: decimal('logistics_score', { precision: 5, scale: 2 }),
+  aiExplanation: text('ai_explanation'),
+  aiRecommendation: text('ai_recommendation'),
+  confidenceLevel: confidenceLevelEnum('confidence_level'),
+  potentialChallenges: jsonb('potential_challenges').$type<string[]>(),
+  suggestedFocusAreas: jsonb('suggested_focus_areas').$type<string[]>(),
+  processingTimeMs: integer('processing_time_ms'),
+  tokenUsage: jsonb('token_usage').$type<{ prompt: number; completion: number; total: number }>(),
   matchingFactors: jsonb('matching_factors').$type<{
     mbti?: { mentorType: string; menteeType: string; compatibilityReason: string };
     skills?: { matchedSkills: string[]; complementarySkills: string[] };
     goals?: { alignedGoals: string[]; mentorCanHelp: string[] };
     industry?: { mentorIndustries: string[]; menteePreferred: string[]; overlap: string[] };
+    strengths?: string[];
+    challenges?: string[];
+    growthOpportunities?: string[];
   }>(),
   aiModelVersion: varchar('ai_model_version', { length: 50 }),
   matchingAlgorithm: varchar('matching_algorithm', { length: 100 }),
@@ -1139,18 +1175,26 @@ export const aiMatchResults = pgTable('ai_match_results', {
 // AI matching runs (batch records)
 export const aiMatchingRuns = pgTable('ai_matching_runs', {
   id: serial('id').primaryKey(),
-  runType: varchar('run_type', { length: 50 }).notNull(),
-  status: varchar('status', { length: 50 }).notNull().default('running'),
+  runType: varchar('run_type', { length: 50 }).notNull(), // 'on_demand' | 'batch' | 'queue_processing'
+  status: varchar('status', { length: 50 }).notNull().default('running'), // 'running' | 'completed' | 'failed'
   menteesProcessed: integer('mentees_processed').default(0),
   matchesGenerated: integer('matches_generated').default(0),
   startedAt: timestamp('started_at').notNull().defaultNow(),
   completedAt: timestamp('completed_at'),
   triggeredBy: integer('triggered_by').references(() => users.id),
+  // New fields for enhanced tracking
+  menteeUserId: integer('mentee_user_id').references(() => users.id), // For on-demand single mentee runs
+  totalApiCalls: integer('total_api_calls').default(0),
+  totalTokensUsed: integer('total_tokens_used').default(0),
+  averageProcessingTimeMs: integer('average_processing_time_ms'),
+  errorDetails: jsonb('error_details').$type<{ errors: Array<{ menteeId: number; error: string; timestamp: string }> }>(),
   summary: jsonb('summary').$type<{
     totalMentees: number;
     totalMentors: number;
     matchesCreated: number;
     averageScore: number;
+    queueUpdates?: number;
+    cacheHits?: number;
     errors: string[];
   }>(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
@@ -1291,6 +1335,18 @@ export const aiMatchingRunsRelations = relations(aiMatchingRuns, ({ one }) => ({
     fields: [aiMatchingRuns.triggeredBy],
     references: [users.id],
   }),
+  mentee: one(users, {
+    fields: [aiMatchingRuns.menteeUserId],
+    references: [users.id],
+    relationName: 'matchingRunMentee',
+  }),
+}));
+
+export const menteeWaitingQueueRelations = relations(menteeWaitingQueue, ({ one }) => ({
+  mentee: one(users, {
+    fields: [menteeWaitingQueue.menteeUserId],
+    references: [users.id],
+  }),
 }));
 
 // ============================================================================
@@ -1333,6 +1389,8 @@ export type AiMatchResult = typeof aiMatchResults.$inferSelect;
 export type NewAiMatchResult = typeof aiMatchResults.$inferInsert;
 export type AiMatchingRun = typeof aiMatchingRuns.$inferSelect;
 export type NewAiMatchingRun = typeof aiMatchingRuns.$inferInsert;
+export type MenteeWaitingQueue = typeof menteeWaitingQueue.$inferSelect;
+export type NewMenteeWaitingQueue = typeof menteeWaitingQueue.$inferInsert;
 
 // Legacy team-related tables (to be removed in future migration)
 export const teams = pgTable('teams', {

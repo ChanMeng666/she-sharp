@@ -40,7 +40,7 @@ export async function GET() {
 
     // If no suggestions, try to generate new ones
     if (suggestions.length === 0) {
-      const newMatches = await generateMatchesForMentee(user.id, 5);
+      const newMatches = await generateMatchesForMentee(user.id, { maxCandidatesPerMentee: 5 });
 
       // Return the generated matches (they'll be saved and shown as suggestions)
       return NextResponse.json({

@@ -1,8 +1,45 @@
 import { NextResponse } from 'next/server';
 import { getUser } from '@/lib/db/queries';
 import { db } from '@/lib/db/drizzle';
-import { userRoles, activityLogs, ActivityType } from '@/lib/db/schema';
+import { userRoles, activityLogs, ActivityType, mentorProfiles, menteeProfiles } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
+
+/**
+ * Ensure profile exists for the given role
+ * Creates mentor_profile or mentee_profile if it doesn't exist
+ */
+async function ensureProfileExists(userId: number, roleType: string): Promise<void> {
+  if (roleType === 'mentor') {
+    const [existingProfile] = await db
+      .select()
+      .from(mentorProfiles)
+      .where(eq(mentorProfiles.userId, userId))
+      .limit(1);
+
+    if (!existingProfile) {
+      await db.insert(mentorProfiles).values({
+        userId,
+        maxMentees: 3,
+        currentMenteesCount: 0,
+        isAcceptingMentees: true,
+      });
+      console.log(`[Auto-Profile] Created mentor profile for user ${userId}`);
+    }
+  } else if (roleType === 'mentee') {
+    const [existingProfile] = await db
+      .select()
+      .from(menteeProfiles)
+      .where(eq(menteeProfiles.userId, userId))
+      .limit(1);
+
+    if (!existingProfile) {
+      await db.insert(menteeProfiles).values({
+        userId,
+      });
+      console.log(`[Auto-Profile] Created mentee profile for user ${userId}`);
+    }
+  }
+}
 
 export async function GET() {
   try {
@@ -76,7 +113,7 @@ export async function POST(request: Request) {
       if (!existingRole[0].isActive) {
         await db
           .update(userRoles)
-          .set({ 
+          .set({
             isActive: true,
             activatedAt: new Date()
           })
@@ -87,10 +124,13 @@ export async function POST(request: Request) {
             )
           );
       }
-      
-      return NextResponse.json({ 
+
+      // Ensure profile exists (for both new and reactivated roles)
+      await ensureProfileExists(user.id, roleType);
+
+      return NextResponse.json({
         message: 'Role already active',
-        roleType 
+        roleType
       });
     }
 
@@ -104,6 +144,9 @@ export async function POST(request: Request) {
         activationStep: 0
       })
       .returning();
+
+    // Auto-create profile for the new role
+    await ensureProfileExists(user.id, roleType);
 
     // Log activity
     const activityType = roleType === 'mentor' 

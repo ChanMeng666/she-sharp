@@ -1,4 +1,7 @@
-'use server';
+/**
+ * AI-Powered Mentor-Mentee Matching Service
+ * Integrates OpenAI GPT-4o-mini for intelligent compatibility analysis
+ */
 
 import { db } from '@/lib/db/drizzle';
 import {
@@ -13,181 +16,75 @@ import {
   ActivityType,
   activityLogs,
 } from '@/lib/db/schema';
-import { eq, and, ne, notInArray, desc, sql, type InferSelectModel } from 'drizzle-orm';
+import { eq, and, ne, notInArray, desc, sql, asc } from 'drizzle-orm';
+import type {
+  MentorMatchInput,
+  MenteeMatchInput,
+  MatchResult,
+  PreFilterResult,
+  BatchMatchingOptions,
+  BatchMatchingResult,
+  MatchingStats,
+  MatchSuggestionWithDetails,
+  MentorWithCandidates,
+} from './types';
+import { generateAIMatchWithFallback, isOpenAIConfigured } from './openai-service';
+import {
+  addToWaitingQueue,
+  removeFromQueue,
+  getQueueStats,
+  getAvailableMentorCapacity,
+  getQueueForProcessing,
+  incrementMatchAttempts,
+  updateQueuePriority,
+  getWaitingQueue,
+  isInQueue,
+  getQueuePosition,
+  getEstimatedWaitTime,
+} from './queue-service';
+import {
+  sendMatchApprovalNotifications,
+  sendAddedToQueueNotification,
+  sendBatchMatchingSummaryToAdmin,
+} from './email-service';
+import {
+  getCachedMentorProfiles,
+  setCachedMentorProfiles,
+  invalidateStatsCache,
+  invalidateAllMatchCaches,
+} from './cache';
 
-// MBTI Compatibility Matrix (higher score = better match)
-const MBTI_COMPATIBILITY: Record<string, Record<string, number>> = {
-  // Analysts
-  INTJ: { ENFP: 95, ENTP: 90, INFJ: 85, INFP: 80, ENTJ: 75, INTJ: 70, INTP: 65, ENFJ: 60 },
-  INTP: { ENTJ: 95, ESTJ: 90, INFJ: 85, INTJ: 80, ENTP: 75, INTP: 70, ENFP: 65, INFP: 60 },
-  ENTJ: { INTP: 95, INFP: 90, INTJ: 85, ENTP: 80, ENFJ: 75, ENTJ: 70, INFJ: 65, ISTP: 60 },
-  ENTP: { INFJ: 95, INTJ: 90, ENFJ: 85, INTP: 80, ENTP: 75, ENTJ: 70, INFP: 65, ENFP: 60 },
-  // Diplomats
-  INFJ: { ENTP: 95, ENFP: 90, INTJ: 85, INFP: 80, ENFJ: 75, INFJ: 70, INTP: 65, ENTJ: 60 },
-  INFP: { ENFJ: 95, ENTJ: 90, INFJ: 85, ENFP: 80, INFP: 75, INTJ: 70, ENTP: 65, INTP: 60 },
-  ENFJ: { INFP: 95, ISFP: 90, ENTP: 85, INFJ: 80, ENFJ: 75, ENFP: 70, INTJ: 65, ENTJ: 60 },
-  ENFP: { INTJ: 95, INFJ: 90, ENFJ: 85, ENTP: 80, ENFP: 75, INFP: 70, ENTJ: 65, INTP: 60 },
-  // Sentinels
-  ISTJ: { ESFP: 95, ESTP: 90, ISFJ: 85, ESTJ: 80, ISTJ: 75, ISTP: 70, ISFP: 65, ENTJ: 60 },
-  ISFJ: { ESTP: 95, ESFP: 90, ISTJ: 85, ESFJ: 80, ISFJ: 75, ISFP: 70, ISTP: 65, ENFJ: 60 },
-  ESTJ: { ISTP: 95, INTP: 90, ISTJ: 85, ESFJ: 80, ESTJ: 75, ESTP: 70, ISFJ: 65, ENTJ: 60 },
-  ESFJ: { ISFP: 95, ISTP: 90, ISFJ: 85, ESTJ: 80, ESFJ: 75, ESFP: 70, ISTJ: 65, ENFJ: 60 },
-  // Explorers
-  ISTP: { ESFJ: 95, ESTJ: 90, ESTP: 85, ISFP: 80, ISTP: 75, ISTJ: 70, ESFP: 65, ENTJ: 60 },
-  ISFP: { ENFJ: 95, ESFJ: 90, ESTP: 85, ISTP: 80, ISFP: 75, ISFJ: 70, ESFP: 65, INFJ: 60 },
-  ESTP: { ISFJ: 95, ISTJ: 90, ISTP: 85, ESFP: 80, ESTP: 75, ESTJ: 70, ISFP: 65, ENTJ: 60 },
-  ESFP: { ISTJ: 95, ISFJ: 90, ISFP: 85, ESTP: 80, ESFP: 75, ESFJ: 70, ISTP: 65, ENFJ: 60 },
-};
+// Pre-filter threshold (skip AI for pairs below this score)
+const PRE_FILTER_THRESHOLD = parseInt(process.env.MATCHING_PRE_FILTER_THRESHOLD || '30');
 
-// Get default compatibility if not in matrix
-function getMBTICompatibility(mentor: string | null, mentee: string | null): number {
-  if (!mentor || !mentee) return 50; // Default if no MBTI available
-  const mentorUpper = mentor.toUpperCase();
-  const menteeUpper = mentee.toUpperCase();
-  return MBTI_COMPATIBILITY[mentorUpper]?.[menteeUpper] || 50;
-}
-
-// Calculate skill overlap score
-function calculateSkillMatch(
-  mentorSkills: string[] | null,
-  menteeDesiredSkills: string[] | null
-): number {
-  if (!mentorSkills?.length || !menteeDesiredSkills?.length) return 50;
-
-  const mentorSet = new Set(mentorSkills.map(s => s.toLowerCase()));
-  let matchCount = 0;
-
-  for (const skill of menteeDesiredSkills) {
-    if (mentorSet.has(skill.toLowerCase())) {
-      matchCount++;
-    }
-  }
-
-  // Score based on percentage of mentee's desired skills that mentor has
-  return Math.round((matchCount / menteeDesiredSkills.length) * 100);
-}
-
-// Calculate goal alignment score
-function calculateGoalAlignment(
-  mentorExpectations: string | null,
-  menteeGoals: string | null
-): number {
-  if (!mentorExpectations || !menteeGoals) return 50;
-
-  // Simple keyword matching for now
-  const mentorKeywords = extractKeywords(mentorExpectations);
-  const menteeKeywords = extractKeywords(menteeGoals);
-
-  if (!mentorKeywords.length || !menteeKeywords.length) return 50;
-
-  const mentorSet = new Set(mentorKeywords);
-  let matchCount = 0;
-
-  for (const keyword of menteeKeywords) {
-    if (mentorSet.has(keyword)) {
-      matchCount++;
-    }
-  }
-
-  return Math.round((matchCount / menteeKeywords.length) * 100);
-}
-
-// Extract keywords from text
-function extractKeywords(text: string): string[] {
-  const stopWords = new Set([
-    'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
-    'of', 'with', 'by', 'from', 'as', 'is', 'was', 'are', 'were', 'be',
-    'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will',
-    'would', 'could', 'should', 'may', 'might', 'must', 'i', 'you', 'he',
-    'she', 'it', 'we', 'they', 'my', 'your', 'his', 'her', 'its', 'our',
-    'their', 'this', 'that', 'these', 'those', 'want', 'like', 'need',
-  ]);
-
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s]/g, '')
-    .split(/\s+/)
-    .filter(word => word.length > 3 && !stopWords.has(word));
-}
-
-// Calculate industry match score
-function calculateIndustryMatch(
-  mentorIndustry: string | null,
-  menteePreferredIndustries: string[] | null
-): number {
-  if (!mentorIndustry || !menteePreferredIndustries?.length) return 50;
-
-  const mentorIndustryLower = mentorIndustry.toLowerCase();
-
-  for (const industry of menteePreferredIndustries) {
-    if (industry.toLowerCase() === mentorIndustryLower) {
-      return 100;
-    }
-    // Partial match
-    if (industry.toLowerCase().includes(mentorIndustryLower) ||
-        mentorIndustryLower.includes(industry.toLowerCase())) {
-      return 80;
-    }
-  }
-
-  return 30;
-}
-
-interface MatchResult {
-  mentorUserId: number;
-  menteeUserId: number;
-  overallScore: number;
-  mbtiScore: number;
-  skillScore: number;
-  goalScore: number;
-  industryScore: number;
-  matchingFactors: {
-    mbti?: { mentorType: string; menteeType: string; compatibilityReason: string };
-    skills?: { matchedSkills: string[]; complementarySkills: string[] };
-    goals?: { alignedGoals: string[]; mentorCanHelp: string[] };
-    industry?: { mentorIndustries: string[]; menteePreferred: string[]; overlap: string[] };
-  };
-}
+// Minimum score to create a match suggestion
+const MIN_MATCH_SCORE = parseInt(process.env.MATCHING_MIN_SCORE || '50');
 
 /**
- * Generate AI matches for a specific mentee
+ * Get available mentor profiles with form data
  */
-export async function generateMatchesForMentee(
-  menteeUserId: number,
-  limit: number = 5
-): Promise<MatchResult[]> {
-  // Get mentee profile and form data
-  const [menteeProfile] = await db
-    .select()
-    .from(menteeProfiles)
-    .where(eq(menteeProfiles.userId, menteeUserId))
-    .limit(1);
-
-  const [menteeForm] = await db
-    .select()
-    .from(menteeFormSubmissions)
-    .where(eq(menteeFormSubmissions.userId, menteeUserId))
-    .limit(1);
-
-  if (!menteeProfile && !menteeForm) {
-    return [];
+async function getAvailableMentors(): Promise<MentorMatchInput[]> {
+  // Check cache first
+  const cached = await getCachedMentorProfiles<MentorMatchInput>();
+  if (cached) {
+    console.log(`[AI Matching] Using cached mentors: ${cached.length}`);
+    return cached;
   }
 
-  // Get existing relationships for this mentee
-  const existingRelationships = await db
-    .select({ mentorId: mentorshipRelationships.mentorUserId })
-    .from(mentorshipRelationships)
-    .where(
-      and(
-        eq(mentorshipRelationships.menteeUserId, menteeUserId),
-        ne(mentorshipRelationships.status, 'rejected')
-      )
-    );
+  // Debug: Check all mentor profiles first
+  const [allMentors] = await db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(mentorProfiles);
+  console.log(`[AI Matching] All mentor profiles: ${allMentors?.count || 0}`);
 
-  const excludeMentorIds = existingRelationships.map(r => r.mentorId);
+  // Check accepting mentees
+  const [acceptingMentors] = await db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(mentorProfiles)
+    .where(eq(mentorProfiles.isAcceptingMentees, true));
+  console.log(`[AI Matching] Mentors accepting mentees: ${acceptingMentors?.count || 0}`);
 
-  // Get all available mentors (accepting mentees and not at capacity)
-  const availableMentors = await db
+  const mentors = await db
     .select({
       profile: mentorProfiles,
       form: mentorFormSubmissions,
@@ -199,99 +96,276 @@ export async function generateMatchesForMentee(
     .where(
       and(
         eq(mentorProfiles.isAcceptingMentees, true),
-        sql`${mentorProfiles.currentMenteesCount} < ${mentorProfiles.maxMentees}`,
-        excludeMentorIds.length > 0
-          ? notInArray(mentorProfiles.userId, excludeMentorIds)
-          : undefined
+        sql`${mentorProfiles.currentMenteesCount} < ${mentorProfiles.maxMentees}`
       )
     );
 
-  if (!availableMentors.length) {
+  console.log(`[AI Matching] Available mentors (accepting & has capacity): ${mentors.length}`);
+
+  const result: MentorMatchInput[] = mentors.map(m => ({
+    userId: m.profile.userId,
+    name: m.userName || 'Unknown Mentor',
+    mbtiType: m.profile.mbtiType || m.form?.mbtiType || null,
+    company: m.form?.company || m.profile.company || null,
+    jobTitle: m.form?.jobTitle || m.profile.jobTitle || null,
+    yearsExperience: m.form?.yearsExperience ?? m.profile.yearsExperience ?? null,
+    softSkillsExpert: (m.form?.softSkillsExpert as string[]) || [],
+    industrySkillsExpert: (m.form?.industrySkillsExpert as string[]) || [],
+    softSkillsBasic: (m.form?.softSkillsBasic as string[]) || [],
+    industrySkillsBasic: (m.form?.industrySkillsBasic as string[]) || [],
+    expectedMenteeGoalsLongTerm: m.form?.expectedMenteeGoalsLongTerm || null,
+    expectedMenteeGoalsShortTerm: m.form?.expectedMenteeGoalsShortTerm || null,
+    preferredMenteeTypes: (m.form?.preferredMenteeTypes as string[]) || [],
+    preferredIndustries: (m.form?.preferredIndustries as string[]) || [],
+    city: m.form?.city || null,
+    preferredMeetingFormat: m.form?.preferredMeetingFormat || null,
+    maxMentees: m.profile.maxMentees || 3,
+    currentMenteesCount: m.profile.currentMenteesCount || 0,
+  }));
+
+  // Cache for 5 minutes
+  await setCachedMentorProfiles(result);
+  return result;
+}
+
+/**
+ * Get mentee profile with form data
+ */
+async function getMenteeProfile(menteeUserId: number): Promise<MenteeMatchInput | null> {
+  const [menteeData] = await db
+    .select({
+      profile: menteeProfiles,
+      form: menteeFormSubmissions,
+      userName: users.name,
+    })
+    .from(menteeProfiles)
+    .innerJoin(users, eq(menteeProfiles.userId, users.id))
+    .leftJoin(menteeFormSubmissions, eq(menteeProfiles.userId, menteeFormSubmissions.userId))
+    .where(eq(menteeProfiles.userId, menteeUserId))
+    .limit(1);
+
+  if (!menteeData) return null;
+
+  return {
+    userId: menteeData.profile.userId,
+    name: menteeData.userName || 'Unknown Mentee',
+    mbtiType: menteeData.profile.mbtiType || menteeData.form?.mbtiType || null,
+    currentStage: menteeData.form?.currentStage || null,
+    currentJobTitle: menteeData.form?.currentJobTitle || null,
+    currentIndustry: menteeData.form?.currentIndustry || null,
+    softSkillsBasic: (menteeData.form?.softSkillsBasic as string[]) || [],
+    industrySkillsBasic: (menteeData.form?.industrySkillsBasic as string[]) || [],
+    softSkillsExpert: (menteeData.form?.softSkillsExpert as string[]) || [],
+    industrySkillsExpert: (menteeData.form?.industrySkillsExpert as string[]) || [],
+    longTermGoals: menteeData.form?.longTermGoals || null,
+    shortTermGoals: menteeData.form?.shortTermGoals || null,
+    whyMentor: menteeData.form?.whyMentor || null,
+    preferredIndustries: (menteeData.form?.preferredIndustries as string[]) || [],
+    city: menteeData.form?.city || null,
+    preferredMeetingFormat: menteeData.form?.preferredMeetingFormat || null,
+  };
+}
+
+/**
+ * Deterministic pre-filter to reduce OpenAI API calls
+ * Returns pairs that pass the minimum compatibility threshold
+ */
+function preFilterCandidates(
+  mentor: MentorMatchInput,
+  mentee: MenteeMatchInput
+): PreFilterResult {
+  let score = 0;
+  let capacityPenalty = 0;
+
+  // Capacity check (mentors closer to capacity get lower priority)
+  const capacityRatio = mentor.currentMenteesCount / mentor.maxMentees;
+  if (capacityRatio >= 0.8) {
+    capacityPenalty = 15;
+  } else if (capacityRatio >= 0.5) {
+    capacityPenalty = 5;
+  }
+
+  // MBTI check (quick compatibility check)
+  if (mentor.mbtiType && mentee.mbtiType) {
+    score += 15;
+  }
+
+  // Skill overlap check
+  const mentorSkills = new Set([
+    ...mentor.softSkillsExpert.map(s => s.toLowerCase()),
+    ...mentor.industrySkillsExpert.map(s => s.toLowerCase()),
+  ]);
+  const menteeDesiredSkills = [
+    ...mentee.softSkillsBasic.map(s => s.toLowerCase()),
+    ...mentee.industrySkillsBasic.map(s => s.toLowerCase()),
+  ];
+
+  if (mentorSkills.size > 0 && menteeDesiredSkills.length > 0) {
+    const matchCount = menteeDesiredSkills.filter(s => mentorSkills.has(s)).length;
+    const matchRatio = matchCount / menteeDesiredSkills.length;
+    score += Math.round(matchRatio * 40);
+  } else {
+    score += 20; // Default when skills not specified
+  }
+
+  // Industry preference check
+  if (mentor.preferredIndustries.length > 0 && mentee.preferredIndustries.length > 0) {
+    const hasOverlap = mentor.preferredIndustries.some(i =>
+      mentee.preferredIndustries.some(p =>
+        p.toLowerCase().includes(i.toLowerCase()) ||
+        i.toLowerCase().includes(p.toLowerCase())
+      )
+    );
+    score += hasOverlap ? 20 : 5;
+  } else {
+    score += 10; // Default when industries not specified
+  }
+
+  // Location/meeting format check
+  if (mentor.preferredMeetingFormat === 'online' || mentee.preferredMeetingFormat === 'online') {
+    score += 15; // Online meetings are always compatible
+  } else if (mentor.city && mentee.city) {
+    if (mentor.city.toLowerCase() === mentee.city.toLowerCase()) {
+      score += 15;
+    } else {
+      score += 5;
+    }
+  } else {
+    score += 10;
+  }
+
+  // Goals specified check
+  if (mentee.longTermGoals || mentee.shortTermGoals) {
+    score += 10;
+  }
+
+  const preScore = Math.max(0, score - capacityPenalty);
+
+  return {
+    mentorUserId: mentor.userId,
+    menteeUserId: mentee.userId,
+    preScore,
+    passesFilter: preScore >= PRE_FILTER_THRESHOLD,
+    capacityPenalty,
+    reason: preScore < PRE_FILTER_THRESHOLD
+      ? `Pre-filter score (${preScore}) below threshold (${PRE_FILTER_THRESHOLD})`
+      : undefined,
+  };
+}
+
+/**
+ * Generate AI-powered matches for a specific mentee
+ */
+export async function generateMatchesForMentee(
+  menteeUserId: number,
+  options: BatchMatchingOptions = {}
+): Promise<MatchResult[]> {
+  const { maxCandidatesPerMentee = 5, preFilterThreshold = PRE_FILTER_THRESHOLD } = options;
+
+  const mentee = await getMenteeProfile(menteeUserId);
+  if (!mentee) {
+    console.warn(`Mentee profile not found for user ${menteeUserId}`);
+    return [];
+  }
+
+  // Get existing relationships to exclude
+  const existingRelationships = await db
+    .select({ mentorId: mentorshipRelationships.mentorUserId })
+    .from(mentorshipRelationships)
+    .where(
+      and(
+        eq(mentorshipRelationships.menteeUserId, menteeUserId),
+        ne(mentorshipRelationships.status, 'rejected')
+      )
+    );
+
+  const excludeMentorIds = new Set(existingRelationships.map(r => r.mentorId));
+
+  // Get available mentors
+  const availableMentors = await getAvailableMentors();
+  const eligibleMentors = availableMentors.filter(m => !excludeMentorIds.has(m.userId));
+
+  if (eligibleMentors.length === 0) {
+    return [];
+  }
+
+  // Pre-filter candidates
+  const preFilterResults = eligibleMentors.map(mentor =>
+    preFilterCandidates(mentor, mentee)
+  );
+
+  // Sort by pre-filter score and take top candidates for AI analysis
+  const topCandidates = preFilterResults
+    .filter(r => r.passesFilter || r.preScore >= preFilterThreshold)
+    .sort((a, b) => b.preScore - a.preScore)
+    .slice(0, maxCandidatesPerMentee * 2); // Get extra for better AI selection
+
+  if (topCandidates.length === 0) {
     return [];
   }
 
   const matches: MatchResult[] = [];
+  let totalTokens = 0;
+  let cacheHits = 0;
 
-  for (const mentor of availableMentors) {
-    // Calculate individual scores
-    const mentorMbti = mentor.profile.mbtiType || mentor.form?.mbtiType || null;
-    const menteeMbti = menteeProfile?.mbtiType || menteeForm?.mbtiType || null;
-    const mbtiScore = getMBTICompatibility(mentorMbti, menteeMbti);
+  // Generate AI matches for top candidates
+  for (const candidate of topCandidates) {
+    const mentor = eligibleMentors.find(m => m.userId === candidate.mentorUserId);
+    if (!mentor) continue;
 
-    const mentorSkills = [
-      ...(mentor.form?.softSkillsExpert || []),
-      ...(mentor.form?.industrySkillsExpert || []),
-    ];
-    const menteeDesiredSkills = [
-      ...(menteeForm?.softSkillsBasic || []),
-      ...(menteeForm?.industrySkillsBasic || []),
-    ];
-    const skillScore = calculateSkillMatch(mentorSkills, menteeDesiredSkills);
+    try {
+      const { result: aiResult, usage, fromCache, processingTime } =
+        await generateAIMatchWithFallback(mentor, mentee);
 
-    const goalScore = calculateGoalAlignment(
-      mentor.form?.expectedMenteeGoalsLongTerm || null,
-      menteeForm?.longTermGoals || null
-    );
+      if (fromCache) cacheHits++;
+      totalTokens += usage.total;
 
-    const mentorIndustry = mentor.form?.company || mentor.profile.company || null;
-    const menteeIndustries = menteeForm?.preferredIndustries as string[] | null;
-    const industryScore = calculateIndustryMatch(mentorIndustry, menteeIndustries);
+      // Only include matches above minimum score
+      if (aiResult.overallScore >= MIN_MATCH_SCORE) {
+        matches.push({
+          mentorUserId: mentor.userId,
+          menteeUserId: mentee.userId,
+          overallScore: aiResult.overallScore,
+          mbtiScore: aiResult.scores.mbtiCompatibility,
+          skillScore: aiResult.scores.skillAlignment,
+          goalScore: aiResult.scores.goalAlignment,
+          industryScore: aiResult.scores.industryMatch,
+          logisticsScore: aiResult.scores.logistics,
+          aiExplanation: aiResult.explanation,
+          aiRecommendation: aiResult.recommendation,
+          confidenceLevel: aiResult.confidenceLevel,
+          matchingFactors: {
+            strengths: aiResult.matchingFactors.strengths,
+            challenges: aiResult.matchingFactors.challenges,
+            growthOpportunities: aiResult.matchingFactors.growthOpportunities,
+          },
+          tokenUsage: usage,
+          processingTimeMs: processingTime,
+          preFilterScore: candidate.preScore,
+          fromCache,
+        });
+      }
+    } catch (error) {
+      console.error(`AI matching failed for mentor ${mentor.userId}:`, error);
+    }
 
-    // Calculate weighted overall score
-    const overallScore = Math.round(
-      mbtiScore * 0.25 +
-      skillScore * 0.35 +
-      goalScore * 0.25 +
-      industryScore * 0.15
-    );
-
-    const matchedSkills = mentorSkills.filter(s =>
-      menteeDesiredSkills.some(d => d.toLowerCase() === s.toLowerCase())
-    );
-
-    matches.push({
-      mentorUserId: mentor.profile.userId,
-      menteeUserId,
-      overallScore,
-      mbtiScore,
-      skillScore,
-      goalScore,
-      industryScore,
-      matchingFactors: {
-        mbti: {
-          mentorType: mentorMbti || 'Unknown',
-          menteeType: menteeMbti || 'Unknown',
-          compatibilityReason: mbtiScore > 70 ? 'High compatibility' : mbtiScore > 40 ? 'Moderate compatibility' : 'Complementary types',
-        },
-        skills: {
-          matchedSkills,
-          complementarySkills: mentorSkills.filter(s => !matchedSkills.includes(s)),
-        },
-        goals: {
-          alignedGoals: goalScore > 70 ? ['Strong alignment'] : goalScore > 40 ? ['Moderate alignment'] : ['Exploring common ground'],
-          mentorCanHelp: goalScore > 50 ? ['Career guidance', 'Skill development'] : ['General mentorship'],
-        },
-        industry: {
-          mentorIndustries: mentorIndustry ? [mentorIndustry] : [],
-          menteePreferred: menteeIndustries || [],
-          overlap: industryScore === 100 ? ['Exact match'] : industryScore > 60 ? ['Related field'] : [],
-        },
-      },
-    });
+    // Stop early if we have enough high-quality matches
+    if (matches.length >= maxCandidatesPerMentee) break;
   }
 
-  // Sort by overall score and return top matches
-  return matches
-    .sort((a, b) => b.overallScore - a.overallScore)
-    .slice(0, limit);
+  // Sort by overall score
+  return matches.sort((a, b) => b.overallScore - a.overallScore);
 }
 
 /**
- * Run matching algorithm for all unmatched mentees
+ * Run batch matching for all unmatched mentees or queue processing
  */
 export async function runBatchMatching(
-  triggeredBy?: number
-): Promise<{ runId: number; matchesGenerated: number }> {
+  triggeredBy?: number,
+  options: BatchMatchingOptions = {}
+): Promise<BatchMatchingResult> {
+  const { limit = 50, notifyOnMatch = false } = options;
+
   // Create matching run record
   const [run] = await db
     .insert(aiMatchingRuns)
@@ -301,62 +375,168 @@ export async function runBatchMatching(
       triggeredBy,
       menteesProcessed: 0,
       matchesGenerated: 0,
+      totalApiCalls: 0,
+      totalTokensUsed: 0,
     })
     .returning();
 
+  const errors: string[] = [];
+  let totalProcessed = 0;
+  let totalMatches = 0;
+  let queueUpdates = 0;
+  let cacheHits = 0;
+  let totalTokens = 0;
+  let totalApiCalls = 0;
+  let processingTimes: number[] = [];
+  let scores: number[] = [];
+
   try {
-    // Get all mentees without active mentors
-    const menteesWithoutMentors = await db
-      .select({ userId: menteeProfiles.userId })
-      .from(menteeProfiles)
-      .where(
-        sql`NOT EXISTS (
-          SELECT 1 FROM ${mentorshipRelationships}
-          WHERE ${mentorshipRelationships.menteeUserId} = ${menteeProfiles.userId}
-          AND ${mentorshipRelationships.status} IN ('pending', 'active')
-        )`
-      );
+    // Debug: Check total mentee and mentor profiles
+    const [menteeCount] = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(menteeProfiles);
+    const [mentorCount] = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(mentorProfiles);
+    console.log(`[AI Matching] Total mentee profiles: ${menteeCount?.count || 0}`);
+    console.log(`[AI Matching] Total mentor profiles: ${mentorCount?.count || 0}`);
 
-    let totalMatches = 0;
-    let processed = 0;
+    // Get mentees to process (from queue or unmatched)
+    const queueMenteeIds = await getQueueForProcessing(limit);
+    console.log(`[AI Matching] Queue mentees: ${queueMenteeIds.length}`);
 
-    for (const mentee of menteesWithoutMentors) {
-      const matches = await generateMatchesForMentee(mentee.userId, 3);
+    let menteesToProcess: number[] = [];
 
-      for (const match of matches) {
-        // Check if match already exists
-        const [existing] = await db
-          .select()
-          .from(aiMatchResults)
-          .where(
-            and(
-              eq(aiMatchResults.mentorUserId, match.mentorUserId),
-              eq(aiMatchResults.menteeUserId, match.menteeUserId)
-            )
-          )
-          .limit(1);
+    if (queueMenteeIds.length > 0) {
+      menteesToProcess = queueMenteeIds;
+    } else {
+      // Get unmatched mentees not in queue
+      const unmatched = await db
+        .select({ userId: menteeProfiles.userId })
+        .from(menteeProfiles)
+        .where(
+          sql`NOT EXISTS (
+            SELECT 1 FROM ${mentorshipRelationships}
+            WHERE ${mentorshipRelationships.menteeUserId} = ${menteeProfiles.userId}
+            AND ${mentorshipRelationships.status} IN ('pending', 'active')
+          )`
+        )
+        .limit(limit);
 
-        if (!existing) {
-          await db.insert(aiMatchResults).values({
-            mentorUserId: match.mentorUserId,
-            menteeUserId: match.menteeUserId,
-            overallScore: match.overallScore.toString(),
-            mbtiCompatibilityScore: match.mbtiScore.toString(),
-            skillMatchScore: match.skillScore.toString(),
-            goalAlignmentScore: match.goalScore.toString(),
-            industryMatchScore: match.industryScore.toString(),
-            matchingFactors: match.matchingFactors,
-            aiModelVersion: 'v1.0',
-            matchingAlgorithm: 'weighted-composite',
-            status: 'pending_review',
-            expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
-          });
-          totalMatches++;
-        }
-      }
-
-      processed++;
+      menteesToProcess = unmatched.map(m => m.userId);
+      console.log(`[AI Matching] Unmatched mentees found: ${menteesToProcess.length}`);
     }
+
+    console.log(`[AI Matching] Mentees to process: ${menteesToProcess.length}`);
+
+    // Check available mentor capacity
+    const { availableSlots } = await getAvailableMentorCapacity();
+    console.log(`[AI Matching] Available mentor slots: ${availableSlots}`);
+
+    for (const menteeUserId of menteesToProcess) {
+      try {
+        const matches = await generateMatchesForMentee(menteeUserId, options);
+        totalProcessed++;
+
+        // Track metrics
+        for (const match of matches) {
+          if (match.tokenUsage) totalTokens += match.tokenUsage.total;
+          if (match.processingTimeMs) processingTimes.push(match.processingTimeMs);
+          if (match.fromCache) cacheHits++;
+          else totalApiCalls++;
+          scores.push(match.overallScore);
+        }
+
+        if (matches.length === 0) {
+          // No matches found, add to queue
+          const bestScore = 0;
+          const { queuePosition } = await addToWaitingQueue(menteeUserId, bestScore, 'No compatible mentors found');
+          queueUpdates++;
+
+          // Get mentee info for notification
+          const [menteeUser] = await db
+            .select({ name: users.name, email: users.email })
+            .from(users)
+            .where(eq(users.id, menteeUserId))
+            .limit(1);
+
+          if (notifyOnMatch && menteeUser?.email) {
+            const estimatedWait = await getEstimatedWaitTime(menteeUserId);
+            await sendAddedToQueueNotification(
+              menteeUser.email,
+              menteeUser.name || 'Mentee',
+              queuePosition,
+              estimatedWait
+            );
+          }
+          continue;
+        }
+
+        // Save matches to database
+        for (const match of matches) {
+          // Check if match already exists
+          const [existing] = await db
+            .select()
+            .from(aiMatchResults)
+            .where(
+              and(
+                eq(aiMatchResults.mentorUserId, match.mentorUserId),
+                eq(aiMatchResults.menteeUserId, match.menteeUserId)
+              )
+            )
+            .limit(1);
+
+          if (!existing) {
+            await db.insert(aiMatchResults).values({
+              mentorUserId: match.mentorUserId,
+              menteeUserId: match.menteeUserId,
+              overallScore: match.overallScore.toString(),
+              mbtiCompatibilityScore: match.mbtiScore.toString(),
+              skillMatchScore: match.skillScore.toString(),
+              goalAlignmentScore: match.goalScore.toString(),
+              industryMatchScore: match.industryScore.toString(),
+              logisticsScore: match.logisticsScore?.toString(),
+              aiExplanation: match.aiExplanation,
+              aiRecommendation: match.aiRecommendation,
+              confidenceLevel: match.confidenceLevel,
+              potentialChallenges: match.matchingFactors.challenges,
+              suggestedFocusAreas: match.matchingFactors.growthOpportunities,
+              matchingFactors: match.matchingFactors,
+              processingTimeMs: match.processingTimeMs,
+              tokenUsage: match.tokenUsage,
+              aiModelVersion: isOpenAIConfigured() ? 'gpt-4o-mini' : 'fallback-v1',
+              matchingAlgorithm: 'ai-weighted-composite',
+              status: 'pending_review',
+              expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+            });
+            totalMatches++;
+          }
+        }
+
+        // Update queue priority with best match score
+        const bestScore = matches[0]?.overallScore || 0;
+        if (await isInQueue(menteeUserId)) {
+          await updateQueuePriority(menteeUserId, bestScore);
+          await incrementMatchAttempts(menteeUserId);
+          queueUpdates++;
+        } else if (availableSlots <= 0) {
+          // Add to queue if no slots available
+          await addToWaitingQueue(menteeUserId, bestScore, 'Added during batch processing');
+          queueUpdates++;
+        }
+
+      } catch (error) {
+        errors.push(`Mentee ${menteeUserId}: ${String(error)}`);
+      }
+    }
+
+    // Calculate averages
+    const averageScore = scores.length > 0
+      ? scores.reduce((a, b) => a + b, 0) / scores.length
+      : 0;
+    const avgProcessingTime = processingTimes.length > 0
+      ? processingTimes.reduce((a, b) => a + b, 0) / processingTimes.length
+      : 0;
 
     // Update run status
     await db
@@ -364,14 +544,26 @@ export async function runBatchMatching(
       .set({
         status: 'completed',
         completedAt: new Date(),
-        menteesProcessed: processed,
+        menteesProcessed: totalProcessed,
         matchesGenerated: totalMatches,
+        totalApiCalls,
+        totalTokensUsed: totalTokens,
+        averageProcessingTimeMs: Math.round(avgProcessingTime),
+        errorDetails: errors.length > 0 ? {
+          errors: errors.map(e => ({
+            menteeId: parseInt(e.match(/Mentee (\d+)/)?.[1] || '0'),
+            error: e.replace(/^Mentee \d+: /, ''),
+            timestamp: new Date().toISOString(),
+          }))
+        } : null,
         summary: {
-          totalMentees: processed,
-          totalMentors: 0, // Could be calculated if needed
+          totalMentees: totalProcessed,
+          totalMentors: 0,
           matchesCreated: totalMatches,
-          averageScore: 0, // Could be calculated from actual scores
-          errors: [],
+          averageScore: Math.round(averageScore * 10) / 10,
+          errors,
+          cacheHits,
+          queueUpdates,
         },
       })
       .where(eq(aiMatchingRuns.id, run.id));
@@ -383,11 +575,44 @@ export async function runBatchMatching(
         action: ActivityType.AI_MATCH_GENERATED,
         entityType: 'ai_matching_run',
         entityId: run.id,
-        metadata: { matchesGenerated: totalMatches, menteesProcessed: processed },
+        metadata: { matchesGenerated: totalMatches, menteesProcessed: totalProcessed },
       });
+
+      // Send summary to admin
+      const [admin] = await db
+        .select({ email: users.email })
+        .from(users)
+        .where(eq(users.id, triggeredBy))
+        .limit(1);
+
+      if (admin?.email) {
+        await sendBatchMatchingSummaryToAdmin(admin.email, {
+          totalProcessed,
+          matchesGenerated: totalMatches,
+          queueUpdates,
+          averageScore,
+          errors,
+          runId: run.id,
+        });
+      }
     }
 
-    return { runId: run.id, matchesGenerated: totalMatches };
+    // Invalidate caches
+    await invalidateStatsCache();
+
+    return {
+      runId: run.id,
+      totalProcessed,
+      matchesGenerated: totalMatches,
+      queueUpdates,
+      cacheHits,
+      errors,
+      averageScore,
+      totalApiCalls,
+      totalTokensUsed: totalTokens,
+      averageProcessingTimeMs: Math.round(avgProcessingTime),
+    };
+
   } catch (error) {
     // Update run status on error
     await db
@@ -395,10 +620,17 @@ export async function runBatchMatching(
       .set({
         status: 'failed',
         completedAt: new Date(),
+        errorDetails: {
+          errors: [{
+            menteeId: 0,
+            error: String(error),
+            timestamp: new Date().toISOString(),
+          }]
+        },
         summary: {
-          totalMentees: 0,
+          totalMentees: totalProcessed,
           totalMentors: 0,
-          matchesCreated: 0,
+          matchesCreated: totalMatches,
           averageScore: 0,
           errors: [String(error)],
         },
@@ -407,6 +639,16 @@ export async function runBatchMatching(
 
     throw error;
   }
+}
+
+/**
+ * Process waiting queue (for cron job)
+ */
+export async function processWaitingQueue(): Promise<BatchMatchingResult> {
+  return runBatchMatching(undefined, {
+    limit: 20,
+    notifyOnMatch: true,
+  });
 }
 
 /**
@@ -443,10 +685,26 @@ export async function reviewMatchSuggestion(
 ): Promise<{ success: boolean; relationshipId?: number; error?: string }> {
   try {
     const [match] = await db
-      .select()
+      .select({
+        match: aiMatchResults,
+        mentorUserName: sql<string>`(SELECT name FROM users WHERE id = ${aiMatchResults.mentorUserId})`,
+        mentorUserEmail: sql<string>`(SELECT email FROM users WHERE id = ${aiMatchResults.mentorUserId})`,
+        menteeUserName: sql<string>`(SELECT name FROM users WHERE id = ${aiMatchResults.menteeUserId})`,
+        menteeUserEmail: sql<string>`(SELECT email FROM users WHERE id = ${aiMatchResults.menteeUserId})`,
+        mentorForm: mentorFormSubmissions,
+        menteeForm: menteeFormSubmissions,
+      })
       .from(aiMatchResults)
+      .leftJoin(mentorFormSubmissions, eq(aiMatchResults.mentorUserId, mentorFormSubmissions.userId))
+      .leftJoin(menteeFormSubmissions, eq(aiMatchResults.menteeUserId, menteeFormSubmissions.userId))
       .where(eq(aiMatchResults.id, matchId))
       .limit(1);
+
+    // Get names from form submissions first, then fall back to users table
+    const mentorName = match?.mentorForm?.fullName || match?.mentorUserName || 'Mentor';
+    const mentorEmail = match?.mentorForm?.email || match?.mentorUserEmail || '';
+    const menteeName = match?.menteeForm?.fullName || match?.menteeUserName || 'Mentee';
+    const menteeEmail = match?.menteeForm?.email || match?.menteeUserEmail || '';
 
     if (!match) {
       return { success: false, error: 'Match not found' };
@@ -464,13 +722,13 @@ export async function reviewMatchSuggestion(
       })
       .where(eq(aiMatchResults.id, matchId));
 
-    // If approved, create mentorship relationship
+    // If approved, create mentorship relationship and send notifications
     if (decision === 'approved') {
       const [relationship] = await db
         .insert(mentorshipRelationships)
         .values({
-          mentorUserId: match.mentorUserId,
-          menteeUserId: match.menteeUserId,
+          mentorUserId: match.match.mentorUserId,
+          menteeUserId: match.match.menteeUserId,
           status: 'pending',
         })
         .returning();
@@ -484,6 +742,30 @@ export async function reviewMatchSuggestion(
         })
         .where(eq(aiMatchResults.id, matchId));
 
+      // Update mentor's mentee count
+      await db
+        .update(mentorProfiles)
+        .set({
+          currentMenteesCount: sql`${mentorProfiles.currentMenteesCount} + 1`,
+        })
+        .where(eq(mentorProfiles.userId, match.match.mentorUserId));
+
+      // Remove mentee from queue if present
+      await removeFromQueue(match.match.menteeUserId);
+
+      // Send notifications
+      if (mentorEmail && menteeEmail) {
+        await sendMatchApprovalNotifications({
+          mentorName,
+          mentorEmail,
+          menteeName,
+          menteeEmail,
+          matchScore: parseFloat(match.match.overallScore) || 0,
+          aiRecommendation: match.match.aiRecommendation,
+          focusAreas: (match.match.suggestedFocusAreas as string[]) || [],
+        });
+      }
+
       // Log activity
       await db.insert(activityLogs).values({
         userId: reviewerId,
@@ -492,6 +774,9 @@ export async function reviewMatchSuggestion(
         entityId: matchId,
         metadata: { decision, relationshipId: relationship.id },
       });
+
+      // Invalidate caches
+      await invalidateAllMatchCaches();
 
       return { success: true, relationshipId: relationship.id };
     }
@@ -513,18 +798,136 @@ export async function reviewMatchSuggestion(
 }
 
 /**
- * Get pending matches for admin review
+ * Get pending matches for admin review with detailed information
  */
-export async function getPendingMatches() {
-  return db
+export async function getPendingMatches(): Promise<MatchSuggestionWithDetails[]> {
+  const results = await db
     .select({
       match: aiMatchResults,
+      // User basic info
       mentorName: sql<string>`(SELECT name FROM users WHERE id = ${aiMatchResults.mentorUserId})`,
+      mentorEmail: sql<string>`(SELECT email FROM users WHERE id = ${aiMatchResults.mentorUserId})`,
+      mentorImage: sql<string>`(SELECT image FROM users WHERE id = ${aiMatchResults.mentorUserId})`,
       menteeName: sql<string>`(SELECT name FROM users WHERE id = ${aiMatchResults.menteeUserId})`,
+      menteeEmail: sql<string>`(SELECT email FROM users WHERE id = ${aiMatchResults.menteeUserId})`,
+      menteeImage: sql<string>`(SELECT image FROM users WHERE id = ${aiMatchResults.menteeUserId})`,
+      // Mentor profile
+      mentorProfile: mentorProfiles,
+      // Mentor form
+      mentorForm: mentorFormSubmissions,
+      // Mentee profile
+      menteeProfile: menteeProfiles,
+      // Mentee form
+      menteeForm: menteeFormSubmissions,
     })
     .from(aiMatchResults)
+    .leftJoin(mentorProfiles, eq(aiMatchResults.mentorUserId, mentorProfiles.userId))
+    .leftJoin(mentorFormSubmissions, eq(aiMatchResults.mentorUserId, mentorFormSubmissions.userId))
+    .leftJoin(menteeProfiles, eq(aiMatchResults.menteeUserId, menteeProfiles.userId))
+    .leftJoin(menteeFormSubmissions, eq(aiMatchResults.menteeUserId, menteeFormSubmissions.userId))
     .where(eq(aiMatchResults.status, 'pending_review'))
     .orderBy(desc(sql`CAST(${aiMatchResults.overallScore} AS DECIMAL)`));
+
+  return results.map(r => ({
+    id: r.match.id,
+    mentorUserId: r.match.mentorUserId,
+    menteeUserId: r.match.menteeUserId,
+    // Priority: form fullName > users.name > 'Unknown'
+    mentorName: r.mentorForm?.fullName || r.mentorName || 'Unknown',
+    mentorEmail: r.mentorForm?.email || r.mentorEmail || '',
+    // Priority: form photoUrl > profile photoUrl > users.image
+    mentorImage: r.mentorForm?.photoUrl || r.mentorProfile?.photoUrl || r.mentorImage || null,
+    // Priority: form fullName > users.name > 'Unknown'
+    menteeName: r.menteeForm?.fullName || r.menteeName || 'Unknown',
+    menteeEmail: r.menteeForm?.email || r.menteeEmail || '',
+    // Priority: form photoUrl > profile photoUrl > users.image
+    menteeImage: r.menteeForm?.photoUrl || r.menteeProfile?.photoUrl || r.menteeImage || null,
+    overallScore: parseFloat(r.match.overallScore) || 0,
+    mbtiCompatibilityScore: r.match.mbtiCompatibilityScore ? parseFloat(r.match.mbtiCompatibilityScore) : null,
+    skillMatchScore: r.match.skillMatchScore ? parseFloat(r.match.skillMatchScore) : null,
+    goalAlignmentScore: r.match.goalAlignmentScore ? parseFloat(r.match.goalAlignmentScore) : null,
+    industryMatchScore: r.match.industryMatchScore ? parseFloat(r.match.industryMatchScore) : null,
+    logisticsScore: r.match.logisticsScore ? parseFloat(r.match.logisticsScore) : null,
+    aiExplanation: r.match.aiExplanation,
+    aiRecommendation: r.match.aiRecommendation,
+    confidenceLevel: r.match.confidenceLevel,
+    potentialChallenges: r.match.potentialChallenges as string[] | null,
+    suggestedFocusAreas: r.match.suggestedFocusAreas as string[] | null,
+    matchingFactors: r.match.matchingFactors as MatchResult['matchingFactors'] | null,
+    status: r.match.status as 'pending_review',
+    createdAt: r.match.createdAt,
+    // Detailed mentor profile
+    mentorProfile: {
+      bio: r.mentorProfile?.bio || null,
+      mbtiType: r.mentorProfile?.mbtiType || r.mentorForm?.mbtiType || null,
+      company: r.mentorProfile?.company || r.mentorForm?.company || null,
+      jobTitle: r.mentorProfile?.jobTitle || r.mentorForm?.jobTitle || null,
+      yearsExperience: r.mentorProfile?.yearsExperience || r.mentorForm?.yearsExperience || null,
+      city: r.mentorForm?.city || null,
+      maxMentees: r.mentorProfile?.maxMentees || 3,
+      currentMenteesCount: r.mentorProfile?.currentMenteesCount || 0,
+      expertiseAreas: r.mentorProfile?.expertiseAreas as string[] || [],
+      softSkillsExpert: r.mentorForm?.softSkillsExpert as string[] || [],
+      industrySkillsExpert: r.mentorForm?.industrySkillsExpert as string[] || [],
+      preferredIndustries: r.mentorForm?.preferredIndustries as string[] || [],
+      preferredMeetingFormat: r.mentorForm?.preferredMeetingFormat || null,
+    },
+    // Detailed mentee profile
+    menteeProfile: {
+      bio: r.menteeProfile?.bio || null,
+      mbtiType: r.menteeProfile?.mbtiType || r.menteeForm?.mbtiType || null,
+      careerStage: r.menteeProfile?.careerStage || r.menteeForm?.currentStage || null,
+      currentJobTitle: r.menteeForm?.currentJobTitle || null,
+      currentIndustry: r.menteeForm?.currentIndustry || null,
+      city: r.menteeForm?.city || null,
+      learningGoals: r.menteeProfile?.learningGoals as string[] || [],
+      softSkillsBasic: r.menteeForm?.softSkillsBasic as string[] || [],
+      industrySkillsBasic: r.menteeForm?.industrySkillsBasic as string[] || [],
+      preferredIndustries: r.menteeForm?.preferredIndustries as string[] || [],
+      longTermGoals: r.menteeForm?.longTermGoals || null,
+      shortTermGoals: r.menteeForm?.shortTermGoals || null,
+      whyMentor: r.menteeForm?.whyMentor || null,
+      preferredMeetingFormat: r.menteeForm?.preferredMeetingFormat || null,
+      currentChallenge: r.menteeProfile?.currentChallenge || null,
+    },
+  }));
+}
+
+/**
+ * Get matches grouped by mentor for multi-mentee assignment view
+ */
+export async function getMentorWithCandidates(): Promise<MentorWithCandidates[]> {
+  const pendingMatches = await getPendingMatches();
+
+  // Group by mentor
+  const mentorMap = new Map<number, MentorWithCandidates>();
+
+  for (const match of pendingMatches) {
+    if (!mentorMap.has(match.mentorUserId)) {
+      mentorMap.set(match.mentorUserId, {
+        mentorUserId: match.mentorUserId,
+        mentorName: match.mentorName,
+        mentorEmail: match.mentorEmail,
+        company: match.mentorProfile?.company || null,
+        jobTitle: match.mentorProfile?.jobTitle || null,
+        currentMentees: match.mentorProfile?.currentMenteesCount || 0,
+        maxMentees: match.mentorProfile?.maxMentees || 3,
+        availableSlots: (match.mentorProfile?.maxMentees || 3) - (match.mentorProfile?.currentMenteesCount || 0),
+        candidates: [],
+      });
+    }
+
+    mentorMap.get(match.mentorUserId)!.candidates.push(match);
+  }
+
+  // Sort by available slots (ascending) then by total candidates (descending)
+  return Array.from(mentorMap.values())
+    .sort((a, b) => {
+      if (a.availableSlots !== b.availableSlots) {
+        return a.availableSlots - b.availableSlots; // Fewer slots first
+      }
+      return b.candidates.length - a.candidates.length; // More candidates first
+    });
 }
 
 /**
@@ -539,26 +942,26 @@ export async function getMatchingRunHistory(limit: number = 10) {
 }
 
 /**
- * Get matching statistics
+ * Get comprehensive matching statistics
  */
-export async function getMatchingStats() {
+export async function getMatchingStats(): Promise<MatchingStats> {
   const [pendingCount] = await db
-    .select({ count: sql<number>`count(*)` })
+    .select({ count: sql<number>`count(*)::int` })
     .from(aiMatchResults)
     .where(eq(aiMatchResults.status, 'pending_review'));
 
   const [approvedCount] = await db
-    .select({ count: sql<number>`count(*)` })
+    .select({ count: sql<number>`count(*)::int` })
     .from(aiMatchResults)
     .where(eq(aiMatchResults.status, 'approved'));
 
   const [rejectedCount] = await db
-    .select({ count: sql<number>`count(*)` })
+    .select({ count: sql<number>`count(*)::int` })
     .from(aiMatchResults)
     .where(eq(aiMatchResults.status, 'rejected'));
 
   const [activeRelationships] = await db
-    .select({ count: sql<number>`count(*)` })
+    .select({ count: sql<number>`count(*)::int` })
     .from(mentorshipRelationships)
     .where(eq(mentorshipRelationships.status, 'active'));
 
@@ -567,11 +970,26 @@ export async function getMatchingStats() {
     .from(aiMatchResults)
     .where(eq(aiMatchResults.status, 'approved'));
 
+  const queueStats = await getQueueStats();
+
   return {
-    pendingMatches: Number(pendingCount?.count) || 0,
-    approvedMatches: Number(approvedCount?.count) || 0,
-    rejectedMatches: Number(rejectedCount?.count) || 0,
-    activeRelationships: Number(activeRelationships?.count) || 0,
-    averageMatchScore: Number(avgScore?.avg) || 0,
+    pendingMatches: pendingCount?.count || 0,
+    approvedMatches: approvedCount?.count || 0,
+    rejectedMatches: rejectedCount?.count || 0,
+    activeRelationships: activeRelationships?.count || 0,
+    averageMatchScore: avgScore?.avg ? Math.round(avgScore.avg * 10) / 10 : 0,
+    queueLength: queueStats.totalWaiting,
+    averageWaitDays: queueStats.averageWaitDays,
+    highPriorityCount: queueStats.highPriorityCount,
   };
 }
+
+// Re-export queue service functions for convenience
+export {
+  getWaitingQueue,
+  getQueueStats,
+  getAvailableMentorCapacity,
+  isInQueue,
+  getQueuePosition,
+  getEstimatedWaitTime,
+};

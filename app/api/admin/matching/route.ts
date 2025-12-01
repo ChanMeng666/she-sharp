@@ -4,14 +4,51 @@ import { isUserAdmin } from '@/lib/auth/permissions';
 import {
   runBatchMatching,
   getPendingMatches,
+  getMentorWithCandidates,
   getMatchingRunHistory,
   getMatchingStats,
   reviewMatchSuggestion,
+  getWaitingQueue,
+  getAvailableMentorCapacity,
 } from '@/lib/matching/service';
+import { isOpenAIConfigured } from '@/lib/matching/openai-service';
+import { isRedisAvailable, getCacheInfo } from '@/lib/matching/cache';
+
+/**
+ * Helper to safely serialize data for JSON response
+ * Converts Date objects to ISO strings recursively before JSON.stringify
+ */
+function safeSerialize<T>(obj: T): T {
+  function convertDates(value: unknown): unknown {
+    if (value === null || value === undefined) {
+      return value;
+    }
+    if (value instanceof Date) {
+      return value.toISOString();
+    }
+    if (Array.isArray(value)) {
+      return value.map(convertDates);
+    }
+    if (typeof value === 'object' && value !== null) {
+      const result: Record<string, unknown> = {};
+      for (const key of Object.keys(value)) {
+        result[key] = convertDates((value as Record<string, unknown>)[key]);
+      }
+      return result;
+    }
+    return value;
+  }
+
+  return convertDates(obj) as T;
+}
 
 /**
  * GET /api/admin/matching
- * Gets pending matches, matching history, and stats for admin review.
+ * Gets pending matches, matching history, stats, and queue information for admin review.
+ *
+ * Query parameters:
+ * - view: 'list' (default) | 'grouped' - How to display matches
+ * - includeQueue: 'true' | 'false' - Include queue statistics
  */
 export async function GET(request: NextRequest) {
   try {
@@ -25,36 +62,103 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    const [pendingMatchesRaw, runHistory, stats] = await Promise.all([
-      getPendingMatches(),
-      getMatchingRunHistory(10),
-      getMatchingStats(),
-    ]);
+    const { searchParams } = new URL(request.url);
+    const view = searchParams.get('view') || 'list';
+    const includeQueue = searchParams.get('includeQueue') === 'true';
 
-    // Format pending matches for the UI
-    const pendingMatches = pendingMatchesRaw.map(item => ({
-      id: item.match.id,
-      mentorUserId: item.match.mentorUserId,
-      menteeUserId: item.match.menteeUserId,
-      mentorName: item.mentorName || 'Unknown Mentor',
-      mentorEmail: '',
-      menteeName: item.menteeName || 'Unknown Mentee',
-      menteeEmail: '',
-      overallScore: parseFloat(item.match.overallScore || '0'),
-      mbtiScore: item.match.mbtiCompatibilityScore ? parseFloat(item.match.mbtiCompatibilityScore) : undefined,
-      skillScore: item.match.skillMatchScore ? parseFloat(item.match.skillMatchScore) : undefined,
-      goalScore: item.match.goalAlignmentScore ? parseFloat(item.match.goalAlignmentScore) : undefined,
-      industryScore: item.match.industryMatchScore ? parseFloat(item.match.industryMatchScore) : undefined,
-      matchingFactors: item.match.matchingFactors || {},
-      status: item.match.status,
-      createdAt: item.match.createdAt?.toISOString() || new Date().toISOString(),
-    }));
+    console.log('Fetching matching data...');
 
-    return NextResponse.json({
-      pendingMatches,
+    // Fetch core data in parallel
+    let stats, runHistory, capacity;
+    try {
+      [stats, runHistory, capacity] = await Promise.all([
+        getMatchingStats(),
+        getMatchingRunHistory(10),
+        getAvailableMentorCapacity(),
+      ]);
+      console.log('Core data fetched successfully');
+    } catch (error) {
+      console.error('Error fetching core data:', error);
+      throw error;
+    }
+
+    // Fetch matches based on view preference
+    let matchesData;
+    try {
+      if (view === 'grouped') {
+        console.log('Fetching grouped matches...');
+        const mentorsWithCandidates = await getMentorWithCandidates();
+        matchesData = {
+          type: 'grouped',
+          mentors: mentorsWithCandidates,
+          totalMentors: mentorsWithCandidates.length,
+          totalCandidates: mentorsWithCandidates.reduce((sum, m) => sum + m.candidates.length, 0),
+        };
+      } else {
+        console.log('Fetching pending matches...');
+        const pendingMatches = await getPendingMatches();
+        console.log('Pending matches fetched:', pendingMatches.length);
+        matchesData = {
+          type: 'list',
+          matches: pendingMatches,
+          total: pendingMatches.length,
+        };
+      }
+    } catch (error) {
+      console.error('Error fetching matches:', error);
+      throw error;
+    }
+
+    // Optionally include queue information
+    let queueData = null;
+    if (includeQueue) {
+      try {
+        console.log('Fetching queue data...');
+        const { entries, total } = await getWaitingQueue(20, 0);
+        console.log('Queue data fetched:', entries.length);
+        queueData = {
+          entries,
+          total,
+          stats: {
+            totalWaiting: stats.queueLength,
+            averageWaitDays: stats.averageWaitDays,
+            highPriorityCount: stats.highPriorityCount,
+          },
+        };
+      } catch (error) {
+        console.error('Error fetching queue:', error);
+        throw error;
+      }
+    }
+
+    // System status
+    const systemStatus = {
+      openaiConfigured: isOpenAIConfigured(),
+      redisAvailable: isRedisAvailable(),
+      cacheInfo: await getCacheInfo(),
+    };
+
+    console.log('Serializing response...');
+    // Serialize all Date objects before returning JSON
+    const responseData = {
+      matches: matchesData,
+      stats: {
+        ...stats,
+        mentorCapacity: capacity,
+      },
       runHistory,
-      stats,
-    });
+      queue: queueData,
+      systemStatus,
+    };
+
+    try {
+      const serialized = safeSerialize(responseData);
+      console.log('Serialization successful');
+      return NextResponse.json(serialized);
+    } catch (error) {
+      console.error('Serialization error:', error);
+      throw error;
+    }
   } catch (error) {
     console.error('Error fetching matching data:', error);
     return NextResponse.json(
@@ -66,7 +170,13 @@ export async function GET(request: NextRequest) {
 
 /**
  * POST /api/admin/matching
- * Runs the batch matching algorithm.
+ * Runs the batch matching algorithm with optional configuration.
+ *
+ * Request body:
+ * - limit?: number - Maximum mentees to process (default: 50)
+ * - maxCandidatesPerMentee?: number - Max mentor candidates per mentee (default: 5)
+ * - notifyOnMatch?: boolean - Send email notifications (default: false)
+ * - preFilterThreshold?: number - Minimum pre-filter score (default: 30)
  */
 export async function POST(request: NextRequest) {
   try {
@@ -80,12 +190,40 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    const result = await runBatchMatching(user.id);
+    // Parse optional configuration from request body
+    let options = {};
+    try {
+      const body = await request.json();
+      options = {
+        limit: body.limit,
+        maxCandidatesPerMentee: body.maxCandidatesPerMentee,
+        notifyOnMatch: body.notifyOnMatch,
+        preFilterThreshold: body.preFilterThreshold,
+      };
+      // Remove undefined values
+      Object.keys(options).forEach(key => {
+        if ((options as Record<string, unknown>)[key] === undefined) {
+          delete (options as Record<string, unknown>)[key];
+        }
+      });
+    } catch {
+      // Empty body is fine, use defaults
+    }
+
+    const result = await runBatchMatching(user.id, options);
 
     return NextResponse.json({
       success: true,
       runId: result.runId,
       matchesGenerated: result.matchesGenerated,
+      totalProcessed: result.totalProcessed,
+      queueUpdates: result.queueUpdates,
+      cacheHits: result.cacheHits,
+      averageScore: result.averageScore,
+      totalApiCalls: result.totalApiCalls,
+      totalTokensUsed: result.totalTokensUsed,
+      averageProcessingTimeMs: result.averageProcessingTimeMs,
+      errors: result.errors.length > 0 ? result.errors : undefined,
     });
   } catch (error) {
     console.error('Error running batch matching:', error);
@@ -99,6 +237,11 @@ export async function POST(request: NextRequest) {
 /**
  * PUT /api/admin/matching
  * Reviews a match suggestion (approve/reject).
+ *
+ * Request body:
+ * - matchId: number - The ID of the match to review
+ * - decision: 'approved' | 'rejected' - The review decision
+ * - notes?: string - Optional review notes
  */
 export async function PUT(request: NextRequest) {
   try {
@@ -138,11 +281,67 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({
       success: true,
       relationshipId: result.relationshipId,
+      message: decision === 'approved'
+        ? 'Match approved! Email notifications have been sent to both parties.'
+        : 'Match rejected.',
     });
   } catch (error) {
     console.error('Error reviewing match:', error);
     return NextResponse.json(
       { error: 'Failed to process match review' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * DELETE /api/admin/matching
+ * Bulk reject multiple matches.
+ *
+ * Request body:
+ * - matchIds: number[] - Array of match IDs to reject
+ * - reason?: string - Optional rejection reason
+ */
+export async function DELETE(request: NextRequest) {
+  try {
+    const user = await getUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const isAdmin = await isUserAdmin(user.id);
+    if (!isAdmin) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
+    const body = await request.json();
+    const { matchIds, reason } = body;
+
+    if (!matchIds || !Array.isArray(matchIds) || matchIds.length === 0) {
+      return NextResponse.json(
+        { error: 'matchIds array is required' },
+        { status: 400 }
+      );
+    }
+
+    const results = await Promise.all(
+      matchIds.map(id => reviewMatchSuggestion(id, 'rejected', user.id, reason))
+    );
+
+    const successful = results.filter(r => r.success).length;
+    const failed = results.filter(r => !r.success).length;
+
+    return NextResponse.json({
+      success: true,
+      processed: matchIds.length,
+      successful,
+      failed,
+      message: `Rejected ${successful} match(es)${failed > 0 ? `, ${failed} failed` : ''}.`,
+    });
+  } catch (error) {
+    console.error('Error bulk rejecting matches:', error);
+    return NextResponse.json(
+      { error: 'Failed to process bulk rejection' },
       { status: 500 }
     );
   }
