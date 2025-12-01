@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Progress } from '@/components/ui/progress';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { HintIcon } from '@/components/ui/hint-icon';
 import { PhotoUpload } from '@/components/forms/photo-upload';
 import {
   Check,
@@ -28,6 +29,7 @@ import {
   MapPin,
   ExternalLink,
   CheckCircle2,
+  Lightbulb,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -278,11 +280,13 @@ export default function BecomeMentorPage() {
   const handleNext = () => {
     if (validateStep(currentStep)) {
       setCurrentStep((prev) => Math.min(prev + 1, 5));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleBack = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSubmit = async () => {
@@ -357,59 +361,82 @@ export default function BecomeMentorPage() {
     switch (currentStep) {
       case 1:
         return (
-          <div className="space-y-6">
-            <PhotoUpload
-              value={formData.photoUrl}
-              onChange={(url) => updateField('photoUrl', url || '')}
-              type="mentor"
-              email={formData.email}
-              label="Your Photo"
-              description="Upload a recent photo. This will be featured on our mentorship program page."
-              required
-              error={errors.photoUrl}
-            />
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="fullName">First and Last Name *</Label>
-                <Input
-                  id="fullName"
-                  placeholder="Jane Smith"
-                  value={formData.fullName}
-                  onChange={(e) => updateField('fullName', e.target.value)}
-                  className={errors.fullName ? 'border-red-500' : ''}
-                />
-                {errors.fullName && <p className="text-sm text-red-500">{errors.fullName}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={(e) => updateField('email', e.target.value)}
-                  className={errors.email ? 'border-red-500' : ''}
-                />
-                {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number *</Label>
-              <Input
-                id="phone"
-                placeholder="+64 21 123 4567"
-                value={formData.phone}
-                onChange={(e) => updateField('phone', e.target.value)}
-                className={errors.phone ? 'border-red-500' : ''}
+          <div className="space-y-6 md:space-y-8">
+            {/* Photo Upload Section */}
+            <div className="bg-muted/30 rounded-lg p-5">
+              <PhotoUpload
+                value={formData.photoUrl}
+                onChange={(url) => updateField('photoUrl', url || '')}
+                type="mentor"
+                email={formData.email}
+                label="Your Photo"
+                description="A professional photo builds trust with potential mentees. This will be displayed publicly on our Mentors page."
+                required
+                error={errors.photoUrl}
               />
-              {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
             </div>
 
+            <div className="h-px bg-border" />
+
+            {/* Personal Details Section */}
+            <div className="space-y-5">
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="fullName">First and Last Name *</Label>
+                    <HintIcon hint="Your name will be displayed on your public mentor profile." />
+                  </div>
+                  <Input
+                    id="fullName"
+                    placeholder="Jane Smith"
+                    value={formData.fullName}
+                    onChange={(e) => updateField('fullName', e.target.value)}
+                    className={errors.fullName ? 'border-red-500' : ''}
+                  />
+                  {errors.fullName && <p className="text-sm text-red-500">{errors.fullName}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="email">Email Address *</Label>
+                    <HintIcon hint="We'll send mentee match notifications and program updates here." />
+                  </div>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    value={formData.email}
+                    onChange={(e) => updateField('email', e.target.value)}
+                    className={errors.email ? 'border-red-500' : ''}
+                  />
+                  {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5">
+                  <Label htmlFor="phone">Phone Number *</Label>
+                  <HintIcon hint="Used for urgent program communications only. Not shared with mentees." />
+                </div>
+                <Input
+                  id="phone"
+                  placeholder="+64 21 123 4567"
+                  value={formData.phone}
+                  onChange={(e) => updateField('phone', e.target.value)}
+                  className={errors.phone ? 'border-red-500' : ''}
+                />
+                {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
+              </div>
+            </div>
+
+            <div className="h-px bg-border" />
+
+            {/* Gender Section */}
             <div className="space-y-2">
-              <Label>Gender *</Label>
+              <div className="flex items-center gap-1.5">
+                <Label>Gender *</Label>
+                <HintIcon hint="We celebrate mentors of all genders who support women in STEM." />
+              </div>
               <RadioGroup
                 value={formData.gender}
                 onValueChange={(v) => updateField('gender', v)}
@@ -431,265 +458,360 @@ export default function BecomeMentorPage() {
 
       case 2:
         return (
-          <div className="space-y-6">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-              <div className="flex items-start gap-2">
-                <MapPin className="h-5 w-5 text-blue-600 mt-0.5" />
-                <div>
+          <div className="space-y-6 md:space-y-8">
+            {/* Location Info Box */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
+              <div className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                <div className="space-y-1">
                   <p className="text-sm font-medium text-blue-900">Location Matching</p>
-                  <p className="text-sm text-blue-700">
+                  <p className="text-sm text-blue-700 leading-relaxed">
                     Auckland is She Sharp&apos;s primary activity city. Your location helps us match you with local mentees for in-person meetings.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Your City *</Label>
-                <Select value={formData.city} onValueChange={(v) => updateField('city', v)}>
-                  <SelectTrigger className={errors.city ? 'border-red-500' : ''}>
-                    <SelectValue placeholder="Select your city" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {nzCities.map((city) => (
-                      <SelectItem key={city.value} value={city.value}>
-                        {city.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {errors.city && <p className="text-sm text-red-500">{errors.city}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <Label>Preferred Meeting Format *</Label>
-                <Select value={formData.preferredMeetingFormat} onValueChange={(v) => updateField('preferredMeetingFormat', v)}>
-                  <SelectTrigger className={errors.preferredMeetingFormat ? 'border-red-500' : ''}>
-                    <SelectValue placeholder="Select format" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {meetingFormatOptions.map((opt) => (
-                      <SelectItem key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {errors.preferredMeetingFormat && <p className="text-sm text-red-500">{errors.preferredMeetingFormat}</p>}
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="jobTitle">Current Job Title *</Label>
-                <Input
-                  id="jobTitle"
-                  placeholder="Senior Software Engineer"
-                  value={formData.jobTitle}
-                  onChange={(e) => updateField('jobTitle', e.target.value)}
-                  className={errors.jobTitle ? 'border-red-500' : ''}
-                />
-                {errors.jobTitle && <p className="text-sm text-red-500">{errors.jobTitle}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="company">Organisation *</Label>
-                <Input
-                  id="company"
-                  placeholder="Tech Company Ltd"
-                  value={formData.company}
-                  onChange={(e) => updateField('company', e.target.value)}
-                  className={errors.company ? 'border-red-500' : ''}
-                />
-                {errors.company && <p className="text-sm text-red-500">{errors.company}</p>}
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Years of Experience *</Label>
-                <Select value={formData.yearsExperience} onValueChange={(v) => updateField('yearsExperience', v)}>
-                  <SelectTrigger className={errors.yearsExperience ? 'border-red-500' : ''}>
-                    <SelectValue placeholder="Select experience" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="3">3-5 years</SelectItem>
-                    <SelectItem value="5">5-10 years</SelectItem>
-                    <SelectItem value="10">10-15 years</SelectItem>
-                    <SelectItem value="15">15+ years</SelectItem>
-                  </SelectContent>
-                </Select>
-                {errors.yearsExperience && <p className="text-sm text-red-500">{errors.yearsExperience}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="linkedinUrl">LinkedIn Profile (Optional)</Label>
-                <Input
-                  id="linkedinUrl"
-                  placeholder="https://linkedin.com/in/yourprofile"
-                  value={formData.linkedinUrl}
-                  onChange={(e) => updateField('linkedinUrl', e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Provide a bio *</Label>
-              <p className="text-sm text-gray-500">This will be featured on our mentorship program page.</p>
-              <RadioGroup
-                value={formData.bioMethod}
-                onValueChange={(v) => updateField('bioMethod', v)}
-                className="space-y-2"
-              >
-                {bioMethodOptions.map((opt) => (
-                  <div key={opt.value} className="flex items-center space-x-2">
-                    <RadioGroupItem value={opt.value} id={`bio-${opt.value}`} />
-                    <Label htmlFor={`bio-${opt.value}`} className="font-normal cursor-pointer text-sm">
-                      {opt.label}
-                    </Label>
+            {/* Location Settings Group */}
+            <div className="bg-muted/30 rounded-lg p-5 space-y-5">
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label>Your City *</Label>
+                    <HintIcon hint="Helps us match you with local mentees who prefer in-person meetings." />
                   </div>
-                ))}
-              </RadioGroup>
-              {errors.bioMethod && <p className="text-sm text-red-500">{errors.bioMethod}</p>}
-            </div>
+                  <Select value={formData.city} onValueChange={(v) => updateField('city', v)}>
+                    <SelectTrigger className={errors.city ? 'border-red-500' : ''}>
+                      <SelectValue placeholder="Select your city" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {nzCities.map((city) => (
+                        <SelectItem key={city.value} value={city.value}>
+                          {city.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {errors.city && <p className="text-sm text-red-500">{errors.city}</p>}
+                </div>
 
-            {formData.bioMethod === 'self_written' && (
-              <div className="space-y-2">
-                <Label htmlFor="bio">Your Bio *</Label>
-                <Textarea
-                  id="bio"
-                  placeholder="Tell mentees about your career journey and what drives you (150-500 words)"
-                  value={formData.bio}
-                  onChange={(e) => updateField('bio', e.target.value)}
-                  rows={5}
-                  className={errors.bio ? 'border-red-500' : ''}
-                />
-                <div className="flex justify-between text-xs text-gray-500">
-                  <span>{errors.bio && <span className="text-red-500">{errors.bio}</span>}</span>
-                  <span>{formData.bio.split(/\s+/).filter(Boolean).length} words</span>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label>Preferred Meeting Format *</Label>
+                    <HintIcon hint="Your preference will be matched with mentees who have similar preferences." />
+                  </div>
+                  <Select value={formData.preferredMeetingFormat} onValueChange={(v) => updateField('preferredMeetingFormat', v)}>
+                    <SelectTrigger className={errors.preferredMeetingFormat ? 'border-red-500' : ''}>
+                      <SelectValue placeholder="Select format" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {meetingFormatOptions.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {errors.preferredMeetingFormat && <p className="text-sm text-red-500">{errors.preferredMeetingFormat}</p>}
                 </div>
               </div>
-            )}
+            </div>
+
+            <div className="h-px bg-border" />
+
+            {/* Professional Identity Group */}
+            <div className="space-y-5">
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="jobTitle">Current Job Title *</Label>
+                    <HintIcon hint="Your current role. This is displayed on your mentor profile." />
+                  </div>
+                  <Input
+                    id="jobTitle"
+                    placeholder="Senior Software Engineer"
+                    value={formData.jobTitle}
+                    onChange={(e) => updateField('jobTitle', e.target.value)}
+                    className={errors.jobTitle ? 'border-red-500' : ''}
+                  />
+                  {errors.jobTitle && <p className="text-sm text-red-500">{errors.jobTitle}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="company">Organisation *</Label>
+                    <HintIcon hint="Your company or organization. Displayed on your mentor profile." />
+                  </div>
+                  <Input
+                    id="company"
+                    placeholder="Tech Company Ltd"
+                    value={formData.company}
+                    onChange={(e) => updateField('company', e.target.value)}
+                    className={errors.company ? 'border-red-500' : ''}
+                  />
+                  {errors.company && <p className="text-sm text-red-500">{errors.company}</p>}
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label>Years of Experience *</Label>
+                    <HintIcon hint="Total years in your field. We recommend at least 3 years." />
+                  </div>
+                  <Select value={formData.yearsExperience} onValueChange={(v) => updateField('yearsExperience', v)}>
+                    <SelectTrigger className={errors.yearsExperience ? 'border-red-500' : ''}>
+                      <SelectValue placeholder="Select experience" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="3">3-5 years</SelectItem>
+                      <SelectItem value="5">5-10 years</SelectItem>
+                      <SelectItem value="10">10-15 years</SelectItem>
+                      <SelectItem value="15">15+ years</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {errors.yearsExperience && <p className="text-sm text-red-500">{errors.yearsExperience}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="linkedinUrl">LinkedIn Profile (Optional)</Label>
+                    <HintIcon hint="Mentees can view your full professional background." />
+                  </div>
+                  <Input
+                    id="linkedinUrl"
+                    placeholder="https://linkedin.com/in/yourprofile"
+                    value={formData.linkedinUrl}
+                    onChange={(e) => updateField('linkedinUrl', e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="h-px bg-border" />
+
+            {/* Bio Section */}
+            <div className="space-y-5">
+              {/* Bio Info Box */}
+              <div className="bg-purple-50 border border-purple-200 rounded-lg p-5">
+                <div className="flex items-start gap-3">
+                  <FileText className="h-5 w-5 text-purple-600 mt-0.5 flex-shrink-0" />
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-purple-900">Your Mentor Bio</p>
+                    <p className="text-sm text-purple-700 leading-relaxed">
+                      This bio will be publicly displayed on our mentors page. Share your journey, expertise,
+                      and what motivates you to mentor.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <Label>Provide a bio *</Label>
+                <RadioGroup
+                  value={formData.bioMethod}
+                  onValueChange={(v) => updateField('bioMethod', v)}
+                  className="space-y-2"
+                >
+                  {bioMethodOptions.map((opt) => (
+                    <div key={opt.value} className="flex items-center space-x-2">
+                      <RadioGroupItem value={opt.value} id={`bio-${opt.value}`} />
+                      <Label htmlFor={`bio-${opt.value}`} className="font-normal cursor-pointer text-sm">
+                        {opt.label}
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+                {errors.bioMethod && <p className="text-sm text-red-500">{errors.bioMethod}</p>}
+              </div>
+
+              {formData.bioMethod === 'self_written' && (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="bio">Your Bio *</Label>
+                    <HintIcon hint="Share your career journey and why you want to mentor. 150-300 words works best." />
+                  </div>
+                  <Textarea
+                    id="bio"
+                    placeholder="Tell mentees about your career journey and what drives you..."
+                    value={formData.bio}
+                    onChange={(e) => updateField('bio', e.target.value)}
+                    rows={5}
+                    className={errors.bio ? 'border-red-500' : ''}
+                  />
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>{errors.bio && <span className="text-red-500">{errors.bio}</span>}</span>
+                    <span>{formData.bio.split(/\s+/).filter(Boolean).length} words</span>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         );
 
       case 3:
         return (
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <Label>Basic Soft Skills (Optional)</Label>
-              <p className="text-sm text-gray-500">Skills you can help mentees develop</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {softSkillsOptions.map((skill) => (
-                  <Button
-                    key={skill}
-                    type="button"
-                    variant={formData.softSkillsBasic.includes(skill) ? 'default' : 'outline'}
-                    size="sm"
-                    className={`justify-start text-xs ${formData.softSkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
-                    onClick={() => toggleArrayItem('softSkillsBasic', skill)}
-                  >
-                    {skill}
-                  </Button>
-                ))}
+          <div className="space-y-6 md:space-y-8">
+            {/* Expert Skills Requirement Info Box */}
+            <div className="bg-green-50 border border-green-200 rounded-lg p-5">
+              <div className="flex items-start gap-3">
+                <Award className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-green-900">Expert Skills Requirement</p>
+                  <p className="text-sm text-green-700 leading-relaxed">
+                    We require at least 2 expert soft skills and 2 expert industry skills to ensure
+                    you can provide valuable guidance to your mentees.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-3">
-              <Label>Expert Soft Skills * (Select at least 2)</Label>
-              <p className="text-sm text-gray-500">Skills you have mastered and can teach</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {softSkillsOptions.map((skill) => (
-                  <Button
-                    key={skill}
-                    type="button"
-                    variant={formData.softSkillsExpert.includes(skill) ? 'default' : 'outline'}
-                    size="sm"
-                    className={`justify-start text-xs ${formData.softSkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
-                    onClick={() => toggleArrayItem('softSkillsExpert', skill)}
-                  >
-                    {skill}
-                  </Button>
-                ))}
+            {/* Basic Skills Section (Optional) */}
+            <div className="bg-muted/30 rounded-lg p-5 space-y-6">
+              <h3 className="font-medium text-foreground">Skills You Can Teach (Optional)</h3>
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <Label>Basic Soft Skills</Label>
+                  <HintIcon hint="Skills you can guide mentees in developing." />
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+                  {softSkillsOptions.map((skill) => (
+                    <Button
+                      key={skill}
+                      type="button"
+                      variant={formData.softSkillsBasic.includes(skill) ? 'default' : 'outline'}
+                      size="sm"
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
+                      onClick={() => toggleArrayItem('softSkillsBasic', skill)}
+                    >
+                      {skill}
+                    </Button>
+                  ))}
+                </div>
               </div>
-              {errors.softSkillsExpert && <p className="text-sm text-red-500">{errors.softSkillsExpert}</p>}
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <Label>Basic Industry Skills</Label>
+                  <HintIcon hint="Technical areas you can provide guidance on, even if not your primary expertise." />
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+                  {industrySkillsOptions.map((skill) => (
+                    <Button
+                      key={skill}
+                      type="button"
+                      variant={formData.industrySkillsBasic.includes(skill) ? 'default' : 'outline'}
+                      size="sm"
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
+                      onClick={() => toggleArrayItem('industrySkillsBasic', skill)}
+                    >
+                      {skill}
+                    </Button>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-3">
-              <Label>Basic Industry Skills (Optional)</Label>
-              <p className="text-sm text-gray-500">Technical skills you can help mentees develop</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {industrySkillsOptions.map((skill) => (
-                  <Button
-                    key={skill}
-                    type="button"
-                    variant={formData.industrySkillsBasic.includes(skill) ? 'default' : 'outline'}
-                    size="sm"
-                    className={`justify-start text-xs ${formData.industrySkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
-                    onClick={() => toggleArrayItem('industrySkillsBasic', skill)}
-                  >
-                    {skill}
-                  </Button>
-                ))}
-              </div>
-            </div>
+            <div className="h-px bg-border" />
 
-            <div className="space-y-3">
-              <Label>Expert Industry Skills * (Select at least 2)</Label>
-              <p className="text-sm text-gray-500">Technical skills you have mastered</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {industrySkillsOptions.map((skill) => (
-                  <Button
-                    key={skill}
-                    type="button"
-                    variant={formData.industrySkillsExpert.includes(skill) ? 'default' : 'outline'}
-                    size="sm"
-                    className={`justify-start text-xs ${formData.industrySkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
-                    onClick={() => toggleArrayItem('industrySkillsExpert', skill)}
-                  >
-                    {skill}
-                  </Button>
-                ))}
+            {/* Expert Skills Section (Required) */}
+            <div className="bg-muted/30 rounded-lg p-5 space-y-6">
+              <h3 className="font-medium text-foreground">Your Expert Skills (Required)</h3>
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <Label>Expert Soft Skills * (Select at least 2)</Label>
+                  <HintIcon hint="Skills you've mastered. Mentees seeking these skills may be matched with you." />
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+                  {softSkillsOptions.map((skill) => (
+                    <Button
+                      key={skill}
+                      type="button"
+                      variant={formData.softSkillsExpert.includes(skill) ? 'default' : 'outline'}
+                      size="sm"
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
+                      onClick={() => toggleArrayItem('softSkillsExpert', skill)}
+                    >
+                      {skill}
+                    </Button>
+                  ))}
+                </div>
+                {errors.softSkillsExpert && <p className="text-sm text-red-500">{errors.softSkillsExpert}</p>}
               </div>
-              {errors.industrySkillsExpert && <p className="text-sm text-red-500">{errors.industrySkillsExpert}</p>}
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <Label>Expert Industry Skills * (Select at least 2)</Label>
+                  <HintIcon hint="Your core technical competencies. These are highlighted on your mentor profile." />
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+                  {industrySkillsOptions.map((skill) => (
+                    <Button
+                      key={skill}
+                      type="button"
+                      variant={formData.industrySkillsExpert.includes(skill) ? 'default' : 'outline'}
+                      size="sm"
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
+                      onClick={() => toggleArrayItem('industrySkillsExpert', skill)}
+                    >
+                      {skill}
+                    </Button>
+                  ))}
+                </div>
+                {errors.industrySkillsExpert && <p className="text-sm text-red-500">{errors.industrySkillsExpert}</p>}
+              </div>
             </div>
           </div>
         );
 
       case 4:
         return (
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="longTermGoals">What long-term goal would you prefer your mentee to have? *</Label>
-              <p className="text-sm text-gray-500">Example: To establish a successful tech startup</p>
-              <Textarea
-                id="longTermGoals"
-                placeholder="Describe the long-term goals you'd like to help mentees achieve..."
-                value={formData.expectedMenteeGoalsLongTerm}
-                onChange={(e) => updateField('expectedMenteeGoalsLongTerm', e.target.value)}
-                rows={3}
-                className={errors.expectedMenteeGoalsLongTerm ? 'border-red-500' : ''}
-              />
-              {errors.expectedMenteeGoalsLongTerm && <p className="text-sm text-red-500">{errors.expectedMenteeGoalsLongTerm}</p>}
+          <div className="space-y-6 md:space-y-8">
+            {/* Mentee Goals Section */}
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5">
+                  <Label htmlFor="longTermGoals">What long-term goal would you prefer your mentee to have? *</Label>
+                  <HintIcon hint="What career aspirations would you best support? Example: 'Transition into leadership roles'" />
+                </div>
+                <Textarea
+                  id="longTermGoals"
+                  placeholder="Describe the long-term goals you'd like to help mentees achieve..."
+                  value={formData.expectedMenteeGoalsLongTerm}
+                  onChange={(e) => updateField('expectedMenteeGoalsLongTerm', e.target.value)}
+                  rows={3}
+                  className={errors.expectedMenteeGoalsLongTerm ? 'border-red-500' : ''}
+                />
+                {errors.expectedMenteeGoalsLongTerm && <p className="text-sm text-red-500">{errors.expectedMenteeGoalsLongTerm}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5">
+                  <Label htmlFor="shortTermGoals">What short-term goal would you prefer your mentee to have? *</Label>
+                  <HintIcon hint="What immediate goals can you help mentees achieve? Example: 'Land their first tech job'" />
+                </div>
+                <Textarea
+                  id="shortTermGoals"
+                  placeholder="Describe the short-term goals you'd like to help mentees achieve..."
+                  value={formData.expectedMenteeGoalsShortTerm}
+                  onChange={(e) => updateField('expectedMenteeGoalsShortTerm', e.target.value)}
+                  rows={3}
+                  className={errors.expectedMenteeGoalsShortTerm ? 'border-red-500' : ''}
+                />
+                {errors.expectedMenteeGoalsShortTerm && <p className="text-sm text-red-500">{errors.expectedMenteeGoalsShortTerm}</p>}
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="shortTermGoals">What short-term goal would you prefer your mentee to have? *</Label>
-              <p className="text-sm text-gray-500">Example: To complete a front-end web certification course</p>
-              <Textarea
-                id="shortTermGoals"
-                placeholder="Describe the short-term goals you'd like to help mentees achieve..."
-                value={formData.expectedMenteeGoalsShortTerm}
-                onChange={(e) => updateField('expectedMenteeGoalsShortTerm', e.target.value)}
-                rows={3}
-                className={errors.expectedMenteeGoalsShortTerm ? 'border-red-500' : ''}
-              />
-              {errors.expectedMenteeGoalsShortTerm && <p className="text-sm text-red-500">{errors.expectedMenteeGoalsShortTerm}</p>}
-            </div>
+            <div className="h-px bg-border" />
 
+            {/* Your Expectations Section */}
             <div className="space-y-2">
-              <Label htmlFor="expectations">What would you hope to get from this program? (Optional)</Label>
+              <div className="flex items-center gap-1.5">
+                <Label htmlFor="expectations">What would you hope to get from this program? (Optional)</Label>
+                <HintIcon hint="What do you hope to gain from being a mentor?" />
+              </div>
               <Textarea
                 id="expectations"
                 placeholder="Personal growth, giving back to the community, expanding network..."
@@ -699,169 +821,201 @@ export default function BecomeMentorPage() {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label>What type(s) of mentee would you prefer? *</Label>
-              <div className="flex flex-wrap gap-4 mt-2">
-                {menteeTypeOptions.map((opt) => (
-                  <div key={opt.value} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`mentee-${opt.value}`}
-                      checked={formData.preferredMenteeTypes.includes(opt.value)}
-                      onCheckedChange={() => toggleArrayItem('preferredMenteeTypes', opt.value)}
-                    />
-                    <label htmlFor={`mentee-${opt.value}`} className="text-sm cursor-pointer">
-                      {opt.label}
-                    </label>
-                  </div>
-                ))}
-              </div>
-              {errors.preferredMenteeTypes && <p className="text-sm text-red-500">{errors.preferredMenteeTypes}</p>}
-            </div>
+            <div className="h-px bg-border" />
 
-            <div className="space-y-2">
-              <Label>What industries would you like to mentor in? *</Label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-48 overflow-y-auto p-2 border rounded-lg">
-                {industryOptions.map((opt) => (
-                  <div key={opt.value} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`ind-${opt.value}`}
-                      checked={formData.preferredIndustries.includes(opt.value)}
-                      onCheckedChange={() => toggleArrayItem('preferredIndustries', opt.value)}
-                    />
-                    <label htmlFor={`ind-${opt.value}`} className="text-sm cursor-pointer">
-                      {opt.label}
-                    </label>
-                  </div>
-                ))}
+            {/* Preferences Section */}
+            <div className="bg-muted/30 rounded-lg p-5 space-y-5">
+              <div className="space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <Label>What type(s) of mentee would you prefer? *</Label>
+                  <HintIcon hint="Select career stages where you can provide the most value." />
+                </div>
+                <div className="flex flex-wrap gap-4">
+                  {menteeTypeOptions.map((opt) => (
+                    <div key={opt.value} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`mentee-${opt.value}`}
+                        checked={formData.preferredMenteeTypes.includes(opt.value)}
+                        onCheckedChange={() => toggleArrayItem('preferredMenteeTypes', opt.value)}
+                      />
+                      <label htmlFor={`mentee-${opt.value}`} className="text-sm cursor-pointer">
+                        {opt.label}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+                {errors.preferredMenteeTypes && <p className="text-sm text-red-500">{errors.preferredMenteeTypes}</p>}
               </div>
-              {errors.preferredIndustries && <p className="text-sm text-red-500">{errors.preferredIndustries}</p>}
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <Label>What industries would you like to mentor in? *</Label>
+                  <HintIcon hint="Select industries where your experience is most relevant for mentoring." />
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 max-h-48 overflow-y-auto p-3 bg-background border rounded-lg">
+                  {industryOptions.map((opt) => (
+                    <div key={opt.value} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`ind-${opt.value}`}
+                        checked={formData.preferredIndustries.includes(opt.value)}
+                        onCheckedChange={() => toggleArrayItem('preferredIndustries', opt.value)}
+                      />
+                      <label htmlFor={`ind-${opt.value}`} className="text-sm cursor-pointer">
+                        {opt.label}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+                {errors.preferredIndustries && <p className="text-sm text-red-500">{errors.preferredIndustries}</p>}
+              </div>
             </div>
           </div>
         );
 
       case 5:
         return (
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <Label>Your Personality Type (MBTI) *</Label>
-              <p className="text-sm text-gray-500 flex items-center gap-1">
-                Take the test at{' '}
-                <a
-                  href="https://www.16personalities.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-foreground hover:underline inline-flex items-center"
-                >
-                  16personalities.com
-                  <ExternalLink className="h-3 w-3 ml-1" />
-                </a>
-              </p>
-              <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
-                {mbtiTypes.map((type) => (
-                  <Button
-                    key={type}
-                    type="button"
-                    variant={formData.mbtiType === type ? 'default' : 'outline'}
-                    size="sm"
-                    className={formData.mbtiType === type ? 'bg-foreground' : ''}
-                    onClick={() => updateField('mbtiType', type)}
-                  >
-                    {type}
-                  </Button>
-                ))}
-              </div>
-              {errors.mbtiType && <p className="text-sm text-red-500">{errors.mbtiType}</p>}
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Maximum Mentees</Label>
-                <Select value={formData.maxMentees} onValueChange={(v) => updateField('maxMentees', v)}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">1 mentee</SelectItem>
-                    <SelectItem value="2">2 mentees</SelectItem>
-                    <SelectItem value="3">3 mentees</SelectItem>
-                    <SelectItem value="4">4 mentees</SelectItem>
-                    <SelectItem value="5">5 mentees</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Availability (hours/month)</Label>
-                <Select value={formData.availabilityHoursPerMonth} onValueChange={(v) => updateField('availabilityHoursPerMonth', v)}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="2">2 hours</SelectItem>
-                    <SelectItem value="4">4 hours</SelectItem>
-                    <SelectItem value="6">6 hours</SelectItem>
-                    <SelectItem value="8">8+ hours</SelectItem>
-                  </SelectContent>
-                </Select>
+          <div className="space-y-6 md:space-y-8">
+            {/* Time Commitment Info Box */}
+            <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-5">
+              <div className="flex items-start gap-3">
+                <Clock className="h-5 w-5 text-indigo-600 mt-0.5 flex-shrink-0" />
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-indigo-900">Time Commitment</p>
+                  <p className="text-sm text-indigo-700 leading-relaxed">
+                    Mentoring typically requires 2-4 hours per month per mentee, including meetings,
+                    messages, and occasional events.
+                  </p>
+                </div>
               </div>
             </div>
+
+            {/* Personality & Availability Section */}
+            <div className="bg-muted/30 rounded-lg p-5 space-y-5">
+              <div className="space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <Label>Your Personality Type (MBTI) *</Label>
+                  <HintIcon hint="Helps us match you with compatible mentees. Test takes ~10 min at 16personalities.com" />
+                </div>
+                <div className="grid grid-cols-4 sm:grid-cols-8 gap-2.5">
+                  {mbtiTypes.map((type) => (
+                    <Button
+                      key={type}
+                      type="button"
+                      variant={formData.mbtiType === type ? 'default' : 'outline'}
+                      size="sm"
+                      className={`h-9 min-h-[44px] ${formData.mbtiType === type ? 'bg-foreground' : ''}`}
+                      onClick={() => updateField('mbtiType', type)}
+                    >
+                      {type}
+                    </Button>
+                  ))}
+                </div>
+                {errors.mbtiType && <p className="text-sm text-red-500">{errors.mbtiType}</p>}
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label>Maximum Mentees</Label>
+                    <HintIcon hint="Consider your availability. Most start with 1-2 mentees." />
+                  </div>
+                  <Select value={formData.maxMentees} onValueChange={(v) => updateField('maxMentees', v)}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">1 mentee</SelectItem>
+                      <SelectItem value="2">2 mentees</SelectItem>
+                      <SelectItem value="3">3 mentees</SelectItem>
+                      <SelectItem value="4">4 mentees</SelectItem>
+                      <SelectItem value="5">5 mentees</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label>Availability (hours/month)</Label>
+                    <HintIcon hint="Hours you can dedicate monthly. Each mentee needs 2-4 hours/month." />
+                  </div>
+                  <Select value={formData.availabilityHoursPerMonth} onValueChange={(v) => updateField('availabilityHoursPerMonth', v)}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="2">2 hours</SelectItem>
+                      <SelectItem value="4">4 hours</SelectItem>
+                      <SelectItem value="6">6 hours</SelectItem>
+                      <SelectItem value="8">8+ hours</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+
+            <div className="h-px bg-border" />
 
             {/* Review Summary */}
-            <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-              <h3 className="font-semibold text-foreground">Application Summary</h3>
+            <div className="bg-muted/50 rounded-lg p-5 space-y-4">
+              <h3 className="font-semibold text-foreground pb-2 border-b border-border">Application Summary</h3>
               <div className="grid grid-cols-2 gap-2 text-sm">
-                <div className="text-gray-500">Name:</div>
+                <div className="text-muted-foreground">Name:</div>
                 <div className="font-medium">{formData.fullName}</div>
-                <div className="text-gray-500">Email:</div>
+                <div className="text-muted-foreground">Email:</div>
                 <div className="font-medium">{formData.email}</div>
-                <div className="text-gray-500">City:</div>
+                <div className="text-muted-foreground">City:</div>
                 <div className="font-medium">{nzCities.find(c => c.value === formData.city)?.label}</div>
-                <div className="text-gray-500">Role:</div>
+                <div className="text-muted-foreground">Role:</div>
                 <div className="font-medium">{formData.jobTitle} at {formData.company}</div>
               </div>
               <div className="pt-2">
-                <div className="text-gray-500 text-sm mb-1">Expert Skills:</div>
-                <div className="flex flex-wrap gap-1">
+                <div className="text-muted-foreground text-sm mb-1.5">Expert Skills:</div>
+                <div className="flex flex-wrap gap-1.5">
                   {[...formData.softSkillsExpert, ...formData.industrySkillsExpert].map(s => (
-                    <span key={s} className="bg-muted text-foreground px-2 py-0.5 rounded text-xs">{s}</span>
+                    <span key={s} className="bg-muted text-foreground px-2.5 py-1 rounded text-xs">{s}</span>
                   ))}
                 </div>
               </div>
             </div>
 
-            {/* Agreements */}
-            <div className="space-y-3 border-t pt-4">
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="agreeToTerms"
-                  checked={formData.agreeToTerms}
-                  onCheckedChange={(checked) => updateField('agreeToTerms', !!checked)}
-                />
-                <Label htmlFor="agreeToTerms" className="text-sm leading-relaxed cursor-pointer">
-                  I agree to the{' '}
-                  <Link href="/terms-of-service" className="text-foreground underline">
-                    Terms of Service
-                  </Link>{' '}
-                  and{' '}
-                  <Link href="/privacy-policy" className="text-foreground underline">
-                    Privacy Policy
-                  </Link>
-                </Label>
-              </div>
-              {errors.agreeToTerms && <p className="text-sm text-red-500 ml-7">{errors.agreeToTerms}</p>}
+            <div className="h-px bg-border" />
 
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="agreeToCommitment"
-                  checked={formData.agreeToCommitment}
-                  onCheckedChange={(checked) => updateField('agreeToCommitment', !!checked)}
-                />
-                <Label htmlFor="agreeToCommitment" className="text-sm leading-relaxed cursor-pointer">
-                  I commit to being an active mentor, responding to mentees within 48 hours,
-                  and participating in at least 2 mentoring sessions per month
-                </Label>
+            {/* Agreements */}
+            <div className="space-y-4">
+              <h3 className="font-semibold text-foreground">Commitments</h3>
+              <div className="space-y-3">
+                <div className="flex items-start space-x-3">
+                  <Checkbox
+                    id="agreeToTerms"
+                    checked={formData.agreeToTerms}
+                    onCheckedChange={(checked) => updateField('agreeToTerms', !!checked)}
+                  />
+                  <Label htmlFor="agreeToTerms" className="text-sm leading-relaxed cursor-pointer">
+                    I agree to the{' '}
+                    <Link href="/terms-of-service" className="text-foreground underline">
+                      Terms of Service
+                    </Link>{' '}
+                    and{' '}
+                    <Link href="/privacy-policy" className="text-foreground underline">
+                      Privacy Policy
+                    </Link>
+                  </Label>
+                </div>
+                {errors.agreeToTerms && <p className="text-sm text-red-500 ml-7">{errors.agreeToTerms}</p>}
+
+                <div className="flex items-start space-x-3">
+                  <Checkbox
+                    id="agreeToCommitment"
+                    checked={formData.agreeToCommitment}
+                    onCheckedChange={(checked) => updateField('agreeToCommitment', !!checked)}
+                  />
+                  <Label htmlFor="agreeToCommitment" className="text-sm leading-relaxed cursor-pointer">
+                    I commit to being an active mentor, responding to mentees within 48 hours,
+                    and participating in at least 2 mentoring sessions per month
+                  </Label>
+                </div>
+                {errors.agreeToCommitment && <p className="text-sm text-red-500 ml-7">{errors.agreeToCommitment}</p>}
               </div>
-              {errors.agreeToCommitment && <p className="text-sm text-red-500 ml-7">{errors.agreeToCommitment}</p>}
             </div>
           </div>
         );
@@ -885,22 +1039,18 @@ export default function BecomeMentorPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-4xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-8 max-w-4xl mx-auto">
             {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-center gap-3 p-3 bg-background rounded-lg shadow-sm">
-                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
-                  <benefit.icon className="h-5 w-5 text-foreground" />
-                </div>
-                <div>
-                  <h3 className="font-medium text-foreground text-sm">{benefit.title}</h3>
-                </div>
+              <div key={index} className="flex items-center gap-2">
+                <benefit.icon className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm text-foreground">{benefit.title}</span>
               </div>
             ))}
           </div>
 
           <div className="max-w-2xl mx-auto">
             <Card className="shadow-lg">
-              <CardHeader className="pb-4">
+              <CardHeader className="pb-6">
                 <div className="mb-4">
                   <div className="flex justify-between mb-2">
                     {steps.map((step) => (
@@ -938,10 +1088,10 @@ export default function BecomeMentorPage() {
                 </CardDescription>
               </CardHeader>
 
-              <CardContent className="pt-0">
+              <CardContent className="pt-2 px-4 sm:px-6">
                 {renderStepContent()}
 
-                <div className="flex justify-between mt-8 pt-4 border-t">
+                <div className="flex justify-between mt-10 pt-6 border-t">
                   {currentStep > 1 ? (
                     <Button variant="outline" onClick={handleBack} disabled={loading}>
                       <ChevronLeft className="h-4 w-4 mr-1" />

@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Progress } from '@/components/ui/progress';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { HintIcon } from '@/components/ui/hint-icon';
 import { PhotoUpload } from '@/components/forms/photo-upload';
 import {
   Check,
@@ -28,6 +29,7 @@ import {
   FileText,
   MapPin,
   ExternalLink,
+  Lightbulb,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -266,11 +268,13 @@ export default function MenteeApplicationPage() {
   const handleNext = () => {
     if (validateStep(currentStep)) {
       setCurrentStep((prev) => Math.min(prev + 1, 5));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleBack = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSubmit = async () => {
@@ -314,74 +318,100 @@ export default function MenteeApplicationPage() {
     switch (currentStep) {
       case 1:
         return (
-          <div className="space-y-6">
-            <PhotoUpload
-              value={formData.photoUrl}
-              onChange={(url) => updateField('photoUrl', url || '')}
-              type="mentee"
-              email={formData.email}
-              label="Your Photo"
-              description="Upload a recent photo of yourself. This will be shared with your assigned mentor."
-              required
-              error={errors.photoUrl}
-            />
+          <div className="space-y-6 md:space-y-8">
+            {/* Photo Upload Section */}
+            <div className="bg-muted/30 rounded-lg p-5">
+              <PhotoUpload
+                value={formData.photoUrl}
+                onChange={(url) => updateField('photoUrl', url || '')}
+                type="mentee"
+                email={formData.email}
+                label="Your Photo"
+                description="A clear, professional headshot helps your mentor recognize you at events. This will be visible only to your assigned mentor."
+                required
+                error={errors.photoUrl}
+              />
+            </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="fullName">First and Last Name *</Label>
-                <Input
-                  id="fullName"
-                  placeholder="Jane Smith"
-                  value={formData.fullName}
-                  onChange={(e) => updateField('fullName', e.target.value)}
-                  className={errors.fullName ? 'border-red-500' : ''}
-                />
-                {errors.fullName && <p className="text-sm text-red-500">{errors.fullName}</p>}
+            <div className="h-px bg-border" />
+
+            {/* Personal Details Section */}
+            <div className="space-y-5">
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="fullName">First and Last Name *</Label>
+                    <HintIcon hint="Please use your legal name as it appears on official documents." />
+                  </div>
+                  <Input
+                    id="fullName"
+                    placeholder="Jane Smith"
+                    value={formData.fullName}
+                    onChange={(e) => updateField('fullName', e.target.value)}
+                    className={errors.fullName ? 'border-red-500' : ''}
+                  />
+                  {errors.fullName && <p className="text-sm text-red-500">{errors.fullName}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="email">Email Address *</Label>
+                    <HintIcon hint="We'll send your mentor matching results and program updates here." />
+                  </div>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    value={formData.email}
+                    onChange={(e) => updateField('email', e.target.value)}
+                    className={errors.email ? 'border-red-500' : ''}
+                  />
+                  {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={(e) => updateField('email', e.target.value)}
-                  className={errors.email ? 'border-red-500' : ''}
-                />
-                {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="phone">Phone Number *</Label>
+                    <HintIcon hint="Your mentor may contact you via text. Include country code if needed." />
+                  </div>
+                  <Input
+                    id="phone"
+                    placeholder="+64 21 123 4567"
+                    value={formData.phone}
+                    onChange={(e) => updateField('phone', e.target.value)}
+                    className={errors.phone ? 'border-red-500' : ''}
+                  />
+                  {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="age">Age (Optional)</Label>
+                    <HintIcon hint="Helps us understand our community demographics." />
+                  </div>
+                  <Input
+                    id="age"
+                    type="number"
+                    min="16"
+                    max="100"
+                    placeholder="Enter your age"
+                    value={formData.age}
+                    onChange={(e) => updateField('age', e.target.value)}
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number *</Label>
-                <Input
-                  id="phone"
-                  placeholder="+64 21 123 4567"
-                  value={formData.phone}
-                  onChange={(e) => updateField('phone', e.target.value)}
-                  className={errors.phone ? 'border-red-500' : ''}
-                />
-                {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
-              </div>
+            <div className="h-px bg-border" />
 
-              <div className="space-y-2">
-                <Label htmlFor="age">Age (Optional)</Label>
-                <Input
-                  id="age"
-                  type="number"
-                  min="16"
-                  max="100"
-                  placeholder="Enter your age"
-                  value={formData.age}
-                  onChange={(e) => updateField('age', e.target.value)}
-                />
-              </div>
-            </div>
-
+            {/* Gender Section */}
             <div className="space-y-2">
-              <Label>Gender *</Label>
+              <div className="flex items-center gap-1.5">
+                <Label>Gender *</Label>
+                <HintIcon hint="We collect this to support our mission of advancing women in STEM." />
+              </div>
               <RadioGroup
                 value={formData.gender}
                 onValueChange={(v) => updateField('gender', v)}
@@ -403,75 +433,94 @@ export default function MenteeApplicationPage() {
 
       case 2:
         return (
-          <div className="space-y-6">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-              <div className="flex items-start gap-2">
-                <MapPin className="h-5 w-5 text-blue-600 mt-0.5" />
-                <div>
+          <div className="space-y-6 md:space-y-8">
+            {/* Location Info Box */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
+              <div className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                <div className="space-y-1">
                   <p className="text-sm font-medium text-blue-900">Location Matching</p>
-                  <p className="text-sm text-blue-700">
+                  <p className="text-sm text-blue-700 leading-relaxed">
                     Auckland is She Sharp&apos;s primary activity city. Selecting Auckland increases opportunities for in-person events and meetings.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Your City *</Label>
-                <Select value={formData.city} onValueChange={(v) => updateField('city', v)}>
-                  <SelectTrigger className={errors.city ? 'border-red-500' : ''}>
-                    <SelectValue placeholder="Select your city" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {nzCities.map((city) => (
-                      <SelectItem key={city.value} value={city.value}>
-                        {city.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {errors.city && <p className="text-sm text-red-500">{errors.city}</p>}
-              </div>
+            {/* Location Settings Group */}
+            <div className="bg-muted/30 rounded-lg p-5 space-y-5">
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label>Your City *</Label>
+                    <HintIcon hint="Selecting your city helps us match you with local mentors." />
+                  </div>
+                  <Select value={formData.city} onValueChange={(v) => updateField('city', v)}>
+                    <SelectTrigger className={errors.city ? 'border-red-500' : ''}>
+                      <SelectValue placeholder="Select your city" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {nzCities.map((city) => (
+                        <SelectItem key={city.value} value={city.value}>
+                          {city.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {errors.city && <p className="text-sm text-red-500">{errors.city}</p>}
+                </div>
 
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Label>Preferred Meeting Format *</Label>
+                    <HintIcon hint="Choose how you'd prefer to meet. Hybrid gives you the most flexibility." />
+                  </div>
+                  <Select value={formData.preferredMeetingFormat} onValueChange={(v) => updateField('preferredMeetingFormat', v)}>
+                    <SelectTrigger className={errors.preferredMeetingFormat ? 'border-red-500' : ''}>
+                      <SelectValue placeholder="Select format" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {meetingFormatOptions.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {errors.preferredMeetingFormat && <p className="text-sm text-red-500">{errors.preferredMeetingFormat}</p>}
+                </div>
+              </div>
+            </div>
+
+            <div className="h-px bg-border" />
+
+            {/* Professional Context Group */}
+            <div className="space-y-5">
               <div className="space-y-2">
-                <Label>Preferred Meeting Format *</Label>
-                <Select value={formData.preferredMeetingFormat} onValueChange={(v) => updateField('preferredMeetingFormat', v)}>
-                  <SelectTrigger className={errors.preferredMeetingFormat ? 'border-red-500' : ''}>
-                    <SelectValue placeholder="Select format" />
+                <div className="flex items-center gap-1.5">
+                  <Label>Current Education/Career Stage *</Label>
+                  <HintIcon hint="This helps us match you with mentors who understand your challenges." />
+                </div>
+                <Select value={formData.currentStage} onValueChange={(v) => updateField('currentStage', v)}>
+                  <SelectTrigger className={errors.currentStage ? 'border-red-500' : ''}>
+                    <SelectValue placeholder="Select your stage" />
                   </SelectTrigger>
                   <SelectContent>
-                    {meetingFormatOptions.map((opt) => (
+                    {currentStageOptions.map((opt) => (
                       <SelectItem key={opt.value} value={opt.value}>
                         {opt.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                {errors.preferredMeetingFormat && <p className="text-sm text-red-500">{errors.preferredMeetingFormat}</p>}
+                {errors.currentStage && <p className="text-sm text-red-500">{errors.currentStage}</p>}
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <Label>Current Education/Career Stage *</Label>
-              <Select value={formData.currentStage} onValueChange={(v) => updateField('currentStage', v)}>
-                <SelectTrigger className={errors.currentStage ? 'border-red-500' : ''}>
-                  <SelectValue placeholder="Select your stage" />
-                </SelectTrigger>
-                <SelectContent>
-                  {currentStageOptions.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {errors.currentStage && <p className="text-sm text-red-500">{errors.currentStage}</p>}
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="jobTitle">Job Title *</Label>
+                <div className="flex items-center gap-1.5">
+                  <Label htmlFor="jobTitle">Job Title *</Label>
+                  <HintIcon hint="Students can enter their year and major (e.g., 'Final Year CS Student')." />
+                </div>
                 <Input
                   id="jobTitle"
                   placeholder="e.g., Software Developer, Student"
@@ -483,7 +532,10 @@ export default function MenteeApplicationPage() {
               </div>
 
               <div className="space-y-2">
-                <Label>Industry Sector *</Label>
+                <div className="flex items-center gap-1.5">
+                  <Label>Industry Sector *</Label>
+                  <HintIcon hint="Select your current industry. Students: choose your field of study." />
+                </div>
                 <Select value={formData.currentIndustry} onValueChange={(v) => updateField('currentIndustry', v)}>
                   <SelectTrigger className={errors.currentIndustry ? 'border-red-500' : ''}>
                     <SelectValue placeholder="Select industry" />
@@ -500,10 +552,15 @@ export default function MenteeApplicationPage() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label>Industries for Mentorship (Optional)</Label>
-              <p className="text-sm text-gray-500 mb-2">Select industries you&apos;re interested in exploring with your mentor</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-48 overflow-y-auto p-2 border rounded-lg">
+            <div className="h-px bg-border" />
+
+            {/* Preferred Industries Group */}
+            <div className="bg-muted/30 rounded-lg p-5 space-y-3">
+              <div className="flex items-center gap-1.5">
+                <Label>Industries for Mentorship (Optional)</Label>
+                <HintIcon hint="Industries you'd like to transition into or learn more about." />
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 max-h-48 overflow-y-auto p-3 bg-background border rounded-lg">
                 {industryOptions.map((opt) => (
                   <div key={opt.value} className="flex items-center space-x-2">
                     <Checkbox
@@ -519,18 +576,23 @@ export default function MenteeApplicationPage() {
               </div>
             </div>
 
+            <div className="h-px bg-border" />
+
+            {/* Bio Section */}
             <div className="space-y-2">
-              <Label htmlFor="bio">Brief Bio About Yourself *</Label>
-              <p className="text-sm text-gray-500">Include awards, milestones, and relevant experiences (100+ words recommended)</p>
+              <div className="flex items-center gap-1.5">
+                <Label htmlFor="bio">Brief Bio About Yourself *</Label>
+                <HintIcon hint="Share your education, achievements, current role, and what drives you in STEM. (100+ words recommended)" />
+              </div>
               <Textarea
                 id="bio"
                 placeholder="Tell us about yourself, your background, achievements, and what makes you unique..."
                 value={formData.bio}
                 onChange={(e) => updateField('bio', e.target.value)}
-                rows={4}
+                rows={5}
                 className={errors.bio ? 'border-red-500' : ''}
               />
-              <div className="flex justify-between text-xs text-gray-500">
+              <div className="flex justify-between text-xs text-muted-foreground">
                 <span>{errors.bio && <span className="text-red-500">{errors.bio}</span>}</span>
                 <span>{formData.bio.split(/\s+/).filter(Boolean).length} words</span>
               </div>
@@ -540,82 +602,116 @@ export default function MenteeApplicationPage() {
 
       case 3:
         return (
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <Label>Basic Soft Skills You&apos;re Developing *</Label>
-              <p className="text-sm text-gray-500">Select skills you want to learn or improve</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {softSkillsOptions.map((skill) => (
-                  <Button
-                    key={skill}
-                    type="button"
-                    variant={formData.softSkillsBasic.includes(skill) ? 'default' : 'outline'}
-                    size="sm"
-                    className={`justify-start text-xs ${formData.softSkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
-                    onClick={() => toggleArrayItem('softSkillsBasic', skill)}
-                  >
-                    {skill}
-                  </Button>
-                ))}
-              </div>
-              {errors.softSkillsBasic && <p className="text-sm text-red-500">{errors.softSkillsBasic}</p>}
-            </div>
-
-            <div className="space-y-3">
-              <Label>Basic Industry Skills You&apos;re Developing *</Label>
-              <p className="text-sm text-gray-500">Select technical/industry skills you want to learn</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {industrySkillsOptions.map((skill) => (
-                  <Button
-                    key={skill}
-                    type="button"
-                    variant={formData.industrySkillsBasic.includes(skill) ? 'default' : 'outline'}
-                    size="sm"
-                    className={`justify-start text-xs ${formData.industrySkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
-                    onClick={() => toggleArrayItem('industrySkillsBasic', skill)}
-                  >
-                    {skill}
-                  </Button>
-                ))}
-              </div>
-              {errors.industrySkillsBasic && <p className="text-sm text-red-500">{errors.industrySkillsBasic}</p>}
-            </div>
-
-            <div className="space-y-3">
-              <Label>Expert Soft Skills (Optional)</Label>
-              <p className="text-sm text-gray-500">Select skills you already have expertise in</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {softSkillsOptions.map((skill) => (
-                  <Button
-                    key={skill}
-                    type="button"
-                    variant={formData.softSkillsExpert.includes(skill) ? 'default' : 'outline'}
-                    size="sm"
-                    className={`justify-start text-xs ${formData.softSkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
-                    onClick={() => toggleArrayItem('softSkillsExpert', skill)}
-                  >
-                    {skill}
-                  </Button>
-                ))}
+          <div className="space-y-6 md:space-y-8">
+            {/* Skills Matching Info Box */}
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-5">
+              <div className="flex items-start gap-3">
+                <Lightbulb className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-amber-900">Skills Matching</p>
+                  <p className="text-sm text-amber-700 leading-relaxed">
+                    Your basic skills will be matched with mentors who have expertise in those areas.
+                    Be honest about your current level for the best match.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-3">
-              <Label>Expert Industry Skills (Optional)</Label>
-              <p className="text-sm text-gray-500">Select technical skills you already have expertise in</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {industrySkillsOptions.map((skill) => (
-                  <Button
-                    key={skill}
-                    type="button"
-                    variant={formData.industrySkillsExpert.includes(skill) ? 'default' : 'outline'}
-                    size="sm"
-                    className={`justify-start text-xs ${formData.industrySkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
-                    onClick={() => toggleArrayItem('industrySkillsExpert', skill)}
-                  >
-                    {skill}
-                  </Button>
-                ))}
+            {/* Basic Skills Section */}
+            <div className="bg-muted/30 rounded-lg p-5 space-y-6">
+              <h3 className="font-medium text-foreground">Skills You Want to Learn</h3>
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <Label>Soft Skills You&apos;re Developing *</Label>
+                  <HintIcon hint="Choose skills you'd like to develop. Select 3-5 for best matching." />
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+                  {softSkillsOptions.map((skill) => (
+                    <Button
+                      key={skill}
+                      type="button"
+                      variant={formData.softSkillsBasic.includes(skill) ? 'default' : 'outline'}
+                      size="sm"
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
+                      onClick={() => toggleArrayItem('softSkillsBasic', skill)}
+                    >
+                      {skill}
+                    </Button>
+                  ))}
+                </div>
+                {errors.softSkillsBasic && <p className="text-sm text-red-500">{errors.softSkillsBasic}</p>}
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <Label>Industry Skills You&apos;re Developing *</Label>
+                  <HintIcon hint="Technical skills you're learning or want to explore." />
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+                  {industrySkillsOptions.map((skill) => (
+                    <Button
+                      key={skill}
+                      type="button"
+                      variant={formData.industrySkillsBasic.includes(skill) ? 'default' : 'outline'}
+                      size="sm"
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
+                      onClick={() => toggleArrayItem('industrySkillsBasic', skill)}
+                    >
+                      {skill}
+                    </Button>
+                  ))}
+                </div>
+                {errors.industrySkillsBasic && <p className="text-sm text-red-500">{errors.industrySkillsBasic}</p>}
+              </div>
+            </div>
+
+            <div className="h-px bg-border" />
+
+            {/* Expert Skills Section */}
+            <div className="bg-muted/30 rounded-lg p-5 space-y-6">
+              <h3 className="font-medium text-foreground">Skills You Already Have (Optional)</h3>
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <Label>Expert Soft Skills</Label>
+                  <HintIcon hint="Skills you're confident in - you might help others in the community with these!" />
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+                  {softSkillsOptions.map((skill) => (
+                    <Button
+                      key={skill}
+                      type="button"
+                      variant={formData.softSkillsExpert.includes(skill) ? 'default' : 'outline'}
+                      size="sm"
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
+                      onClick={() => toggleArrayItem('softSkillsExpert', skill)}
+                    >
+                      {skill}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <Label>Expert Industry Skills</Label>
+                  <HintIcon hint="Share your technical strengths." />
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+                  {industrySkillsOptions.map((skill) => (
+                    <Button
+                      key={skill}
+                      type="button"
+                      variant={formData.industrySkillsExpert.includes(skill) ? 'default' : 'outline'}
+                      size="sm"
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
+                      onClick={() => toggleArrayItem('industrySkillsExpert', skill)}
+                    >
+                      {skill}
+                    </Button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -623,114 +719,131 @@ export default function MenteeApplicationPage() {
 
       case 4:
         return (
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="longTermGoals">What is your long-term career goal? *</Label>
-              <p className="text-sm text-gray-500">Example: To pioneer innovative solutions in artificial intelligence</p>
-              <Textarea
-                id="longTermGoals"
-                placeholder="Describe your long-term career aspirations..."
-                value={formData.longTermGoals}
-                onChange={(e) => updateField('longTermGoals', e.target.value)}
-                rows={3}
-                className={errors.longTermGoals ? 'border-red-500' : ''}
-              />
-              {errors.longTermGoals && <p className="text-sm text-red-500">{errors.longTermGoals}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="shortTermGoals">What is your short-term goal? *</Label>
-              <p className="text-sm text-gray-500">Example: To master front-end web development skills within the next year</p>
-              <Textarea
-                id="shortTermGoals"
-                placeholder="What do you want to achieve in the next 6-12 months?"
-                value={formData.shortTermGoals}
-                onChange={(e) => updateField('shortTermGoals', e.target.value)}
-                rows={3}
-                className={errors.shortTermGoals ? 'border-red-500' : ''}
-              />
-              {errors.shortTermGoals && <p className="text-sm text-red-500">{errors.shortTermGoals}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="whyMentor">Why do you want to have a mentor? *</Label>
-              <Textarea
-                id="whyMentor"
-                placeholder="What specific guidance are you seeking from a mentor?"
-                value={formData.whyMentor}
-                onChange={(e) => updateField('whyMentor', e.target.value)}
-                rows={3}
-                className={errors.whyMentor ? 'border-red-500' : ''}
-              />
-              {errors.whyMentor && <p className="text-sm text-red-500">{errors.whyMentor}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="expectations">What would you hope to get from this program? (Optional)</Label>
-              <Textarea
-                id="expectations"
-                placeholder="Your expectations from the mentorship program..."
-                value={formData.programExpectations}
-                onChange={(e) => updateField('programExpectations', e.target.value)}
-                rows={2}
-              />
-            </div>
-
-            <div className="space-y-3">
-              <Label>Your Personality Type (MBTI) *</Label>
-              <p className="text-sm text-gray-500 flex items-center gap-1">
-                Take the test at{' '}
-                <a
-                  href="https://www.16personalities.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-foreground hover:underline inline-flex items-center"
-                >
-                  16personalities.com
-                  <ExternalLink className="h-3 w-3 ml-1" />
-                </a>
-              </p>
-              <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
-                {mbtiTypes.map((type) => (
-                  <Button
-                    key={type}
-                    type="button"
-                    variant={formData.mbtiType === type ? 'default' : 'outline'}
-                    size="sm"
-                    className={formData.mbtiType === type ? 'bg-foreground' : ''}
-                    onClick={() => updateField('mbtiType', type)}
-                  >
-                    {type}
-                  </Button>
-                ))}
+          <div className="space-y-6 md:space-y-8">
+            {/* Career Goals Section */}
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5">
+                  <Label htmlFor="longTermGoals">What is your long-term career goal? *</Label>
+                  <HintIcon hint="Where do you see yourself in 5-10 years? Example: 'Lead a product team at a tech company'" />
+                </div>
+                <Textarea
+                  id="longTermGoals"
+                  placeholder="Describe your long-term career aspirations..."
+                  value={formData.longTermGoals}
+                  onChange={(e) => updateField('longTermGoals', e.target.value)}
+                  rows={3}
+                  className={errors.longTermGoals ? 'border-red-500' : ''}
+                />
+                {errors.longTermGoals && <p className="text-sm text-red-500">{errors.longTermGoals}</p>}
               </div>
-              {errors.mbtiType && <p className="text-sm text-red-500">{errors.mbtiType}</p>}
+
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5">
+                  <Label htmlFor="shortTermGoals">What is your short-term goal? *</Label>
+                  <HintIcon hint="What do you want to achieve in 6-12 months? Example: 'Get my first developer role'" />
+                </div>
+                <Textarea
+                  id="shortTermGoals"
+                  placeholder="What do you want to achieve in the next 6-12 months?"
+                  value={formData.shortTermGoals}
+                  onChange={(e) => updateField('shortTermGoals', e.target.value)}
+                  rows={3}
+                  className={errors.shortTermGoals ? 'border-red-500' : ''}
+                />
+                {errors.shortTermGoals && <p className="text-sm text-red-500">{errors.shortTermGoals}</p>}
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label>Preferred Meeting Frequency</Label>
-              <Select value={formData.preferredMeetingFrequency} onValueChange={(v) => updateField('preferredMeetingFrequency', v)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select frequency" />
-                </SelectTrigger>
-                <SelectContent>
-                  {meetingFrequencyOptions.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </SelectItem>
+            <div className="h-px bg-border" />
+
+            {/* Mentorship Motivation Section */}
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5">
+                  <Label htmlFor="whyMentor">Why do you want to have a mentor? *</Label>
+                  <HintIcon hint="What specific guidance are you hoping to receive?" />
+                </div>
+                <Textarea
+                  id="whyMentor"
+                  placeholder="What specific guidance are you seeking from a mentor?"
+                  value={formData.whyMentor}
+                  onChange={(e) => updateField('whyMentor', e.target.value)}
+                  rows={3}
+                  className={errors.whyMentor ? 'border-red-500' : ''}
+                />
+                {errors.whyMentor && <p className="text-sm text-red-500">{errors.whyMentor}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5">
+                  <Label htmlFor="expectations">What would you hope to get from this program? (Optional)</Label>
+                  <HintIcon hint="Share any specific outcomes you're hoping for from this program." />
+                </div>
+                <Textarea
+                  id="expectations"
+                  placeholder="Your expectations from the mentorship program..."
+                  value={formData.programExpectations}
+                  onChange={(e) => updateField('programExpectations', e.target.value)}
+                  rows={2}
+                />
+              </div>
+            </div>
+
+            <div className="h-px bg-border" />
+
+            {/* Personality & Preferences Section */}
+            <div className="bg-muted/30 rounded-lg p-5 space-y-5">
+              <div className="space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <Label>Your Personality Type (MBTI) *</Label>
+                  <HintIcon hint="Your personality type helps us find a compatible mentor. Test takes ~10 min at 16personalities.com" />
+                </div>
+                <div className="grid grid-cols-4 sm:grid-cols-8 gap-2.5">
+                  {mbtiTypes.map((type) => (
+                    <Button
+                      key={type}
+                      type="button"
+                      variant={formData.mbtiType === type ? 'default' : 'outline'}
+                      size="sm"
+                      className={`h-9 min-h-[44px] ${formData.mbtiType === type ? 'bg-foreground' : ''}`}
+                      onClick={() => updateField('mbtiType', type)}
+                    >
+                      {type}
+                    </Button>
                   ))}
-                </SelectContent>
-              </Select>
+                </div>
+                {errors.mbtiType && <p className="text-sm text-red-500">{errors.mbtiType}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5">
+                  <Label>Preferred Meeting Frequency</Label>
+                  <HintIcon hint="How often would you like to meet? Most successful pairs meet bi-weekly." />
+                </div>
+                <Select value={formData.preferredMeetingFrequency} onValueChange={(v) => updateField('preferredMeetingFrequency', v)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select frequency" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {meetingFrequencyOptions.map((opt) => (
+                      <SelectItem key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
         );
 
       case 5:
         return (
-          <div className="space-y-6">
+          <div className="space-y-5">
             {/* Photo & Personal Info */}
-            <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-              <h3 className="font-semibold text-foreground flex items-center gap-2">
+            <div className="bg-muted/50 rounded-lg p-5 space-y-4">
+              <h3 className="font-semibold text-foreground flex items-center gap-2 pb-2 border-b border-border">
                 <User className="h-4 w-4" /> Personal Information
               </h3>
               <div className="flex gap-4">
@@ -738,59 +851,59 @@ export default function MenteeApplicationPage() {
                   <img src={formData.photoUrl} alt="Profile" className="w-16 h-16 rounded-lg object-cover" />
                 )}
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm flex-1">
-                  <div className="text-gray-500">Name:</div>
+                  <div className="text-muted-foreground">Name:</div>
                   <div className="font-medium">{formData.fullName}</div>
-                  <div className="text-gray-500">Email:</div>
+                  <div className="text-muted-foreground">Email:</div>
                   <div className="font-medium">{formData.email}</div>
-                  <div className="text-gray-500">Phone:</div>
+                  <div className="text-muted-foreground">Phone:</div>
                   <div className="font-medium">{formData.phone}</div>
-                  <div className="text-gray-500">Gender:</div>
+                  <div className="text-muted-foreground">Gender:</div>
                   <div className="font-medium">{genderOptions.find(o => o.value === formData.gender)?.label}</div>
                 </div>
               </div>
             </div>
 
             {/* Location & Background */}
-            <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-              <h3 className="font-semibold text-foreground flex items-center gap-2">
+            <div className="bg-muted/50 rounded-lg p-5 space-y-4">
+              <h3 className="font-semibold text-foreground flex items-center gap-2 pb-2 border-b border-border">
                 <MapPin className="h-4 w-4" /> Location & Background
               </h3>
               <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                <div className="text-gray-500">City:</div>
+                <div className="text-muted-foreground">City:</div>
                 <div className="font-medium">{nzCities.find(c => c.value === formData.city)?.label}</div>
-                <div className="text-gray-500">Meeting Format:</div>
+                <div className="text-muted-foreground">Meeting Format:</div>
                 <div className="font-medium">{meetingFormatOptions.find(o => o.value === formData.preferredMeetingFormat)?.label}</div>
-                <div className="text-gray-500">Career Stage:</div>
+                <div className="text-muted-foreground">Career Stage:</div>
                 <div className="font-medium">{currentStageOptions.find(o => o.value === formData.currentStage)?.label}</div>
-                <div className="text-gray-500">Job Title:</div>
+                <div className="text-muted-foreground">Job Title:</div>
                 <div className="font-medium">{formData.currentJobTitle}</div>
-                <div className="text-gray-500">Industry:</div>
+                <div className="text-muted-foreground">Industry:</div>
                 <div className="font-medium">{industryOptions.find(o => o.value === formData.currentIndustry)?.label}</div>
               </div>
             </div>
 
             {/* Skills */}
-            <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-              <h3 className="font-semibold text-foreground flex items-center gap-2">
+            <div className="bg-muted/50 rounded-lg p-5 space-y-4">
+              <h3 className="font-semibold text-foreground flex items-center gap-2 pb-2 border-b border-border">
                 <Target className="h-4 w-4" /> Skills
               </h3>
               <div className="space-y-3">
                 {formData.softSkillsBasic.length > 0 && (
                   <div>
-                    <div className="text-gray-500 text-sm mb-1">Learning (Soft):</div>
-                    <div className="flex flex-wrap gap-1">
+                    <div className="text-muted-foreground text-sm mb-1.5">Learning (Soft):</div>
+                    <div className="flex flex-wrap gap-1.5">
                       {formData.softSkillsBasic.map(s => (
-                        <span key={s} className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs">{s}</span>
+                        <span key={s} className="bg-blue-100 text-blue-700 px-2.5 py-1 rounded text-xs">{s}</span>
                       ))}
                     </div>
                   </div>
                 )}
                 {formData.industrySkillsBasic.length > 0 && (
                   <div>
-                    <div className="text-gray-500 text-sm mb-1">Learning (Technical):</div>
-                    <div className="flex flex-wrap gap-1">
+                    <div className="text-muted-foreground text-sm mb-1.5">Learning (Technical):</div>
+                    <div className="flex flex-wrap gap-1.5">
                       {formData.industrySkillsBasic.map(s => (
-                        <span key={s} className="bg-muted text-foreground px-2 py-0.5 rounded text-xs">{s}</span>
+                        <span key={s} className="bg-muted text-foreground px-2.5 py-1 rounded text-xs">{s}</span>
                       ))}
                     </div>
                   </div>
@@ -799,30 +912,30 @@ export default function MenteeApplicationPage() {
             </div>
 
             {/* Goals */}
-            <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-              <h3 className="font-semibold text-foreground">Goals & Personality</h3>
-              <div className="text-sm space-y-2">
+            <div className="bg-muted/50 rounded-lg p-5 space-y-4">
+              <h3 className="font-semibold text-foreground pb-2 border-b border-border">Goals & Personality</h3>
+              <div className="text-sm space-y-3">
                 <div>
-                  <span className="text-gray-500">Long-term Goal:</span>
+                  <span className="text-muted-foreground">Long-term Goal:</span>
                   <p className="mt-1">{formData.longTermGoals}</p>
                 </div>
                 <div>
-                  <span className="text-gray-500">Short-term Goal:</span>
+                  <span className="text-muted-foreground">Short-term Goal:</span>
                   <p className="mt-1">{formData.shortTermGoals}</p>
                 </div>
                 <div className="grid grid-cols-2 gap-2 pt-2">
-                  <div><span className="text-gray-500">MBTI:</span> <span className="font-medium">{formData.mbtiType}</span></div>
+                  <div><span className="text-muted-foreground">MBTI:</span> <span className="font-medium">{formData.mbtiType}</span></div>
                   {formData.preferredMeetingFrequency && (
-                    <div><span className="text-gray-500">Meeting:</span> <span className="font-medium">{meetingFrequencyOptions.find(o => o.value === formData.preferredMeetingFrequency)?.label}</span></div>
+                    <div><span className="text-muted-foreground">Meeting:</span> <span className="font-medium">{meetingFrequencyOptions.find(o => o.value === formData.preferredMeetingFrequency)?.label}</span></div>
                   )}
                 </div>
               </div>
             </div>
 
             {/* Payment Info */}
-            <div className="bg-muted border border-border rounded-lg p-4">
-              <h3 className="font-semibold text-foreground mb-2">Next Step: Payment</h3>
-              <p className="text-sm text-gray-600">
+            <div className="bg-purple-50 border border-purple-200 rounded-lg p-5">
+              <h3 className="font-semibold text-purple-900 mb-2">Next Step: Payment</h3>
+              <p className="text-sm text-purple-700 leading-relaxed">
                 After submitting, you&apos;ll be redirected to complete your membership payment of{' '}
                 <span className="font-semibold">$100 NZD/year</span>. Upon successful payment, you&apos;ll receive an
                 invitation code to complete your registration.
@@ -850,22 +963,18 @@ export default function MenteeApplicationPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-4xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-8 max-w-4xl mx-auto">
             {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-center gap-3 p-3 bg-background rounded-lg shadow-sm">
-                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
-                  <benefit.icon className="h-5 w-5 text-foreground" />
-                </div>
-                <div>
-                  <h3 className="font-medium text-foreground text-sm">{benefit.title}</h3>
-                </div>
+              <div key={index} className="flex items-center gap-2">
+                <benefit.icon className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm text-foreground">{benefit.title}</span>
               </div>
             ))}
           </div>
 
           <div className="max-w-2xl mx-auto">
             <Card className="shadow-lg">
-              <CardHeader className="pb-4">
+              <CardHeader className="pb-6">
                 <div className="mb-4">
                   <div className="flex justify-between mb-2">
                     {steps.map((step) => (
@@ -903,10 +1012,10 @@ export default function MenteeApplicationPage() {
                 </CardDescription>
               </CardHeader>
 
-              <CardContent className="pt-0">
+              <CardContent className="pt-2 px-4 sm:px-6">
                 {renderStepContent()}
 
-                <div className="flex justify-between mt-8 pt-4 border-t">
+                <div className="flex justify-between mt-10 pt-6 border-t">
                   {currentStep > 1 ? (
                     <Button variant="outline" onClick={handleBack} disabled={loading}>
                       <ChevronLeft className="h-4 w-4 mr-1" />

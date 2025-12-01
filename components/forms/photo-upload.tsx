@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { HintIcon } from '@/components/ui/hint-icon';
 import { Upload, X, Loader2, Camera, AlertCircle } from 'lucide-react';
 import Image from 'next/image';
 
@@ -108,11 +109,13 @@ export function PhotoUpload({
 
   return (
     <div className="space-y-2">
-      <Label className="flex items-center gap-1">
-        {label}
-        {required && <span className="text-red-500">*</span>}
-      </Label>
-      <p className="text-sm text-gray-500">{description}</p>
+      <div className="flex items-center gap-1.5">
+        <Label className="flex items-center gap-1">
+          {label}
+          {required && <span className="text-red-500">*</span>}
+        </Label>
+        {description && <HintIcon hint={description} />}
+      </div>
 
       {value ? (
         <div className="relative w-32 h-32 rounded-lg overflow-hidden border-2 border-gray-200 group">
