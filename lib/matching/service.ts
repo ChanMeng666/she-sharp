@@ -67,22 +67,8 @@ async function getAvailableMentors(): Promise<MentorMatchInput[]> {
   // Check cache first
   const cached = await getCachedMentorProfiles<MentorMatchInput>();
   if (cached) {
-    console.log(`[AI Matching] Using cached mentors: ${cached.length}`);
     return cached;
   }
-
-  // Debug: Check all mentor profiles first
-  const [allMentors] = await db
-    .select({ count: sql<number>`count(*)::int` })
-    .from(mentorProfiles);
-  console.log(`[AI Matching] All mentor profiles: ${allMentors?.count || 0}`);
-
-  // Check accepting mentees
-  const [acceptingMentors] = await db
-    .select({ count: sql<number>`count(*)::int` })
-    .from(mentorProfiles)
-    .where(eq(mentorProfiles.isAcceptingMentees, true));
-  console.log(`[AI Matching] Mentors accepting mentees: ${acceptingMentors?.count || 0}`);
 
   const mentors = await db
     .select({
@@ -99,8 +85,6 @@ async function getAvailableMentors(): Promise<MentorMatchInput[]> {
         sql`${mentorProfiles.currentMenteesCount} < ${mentorProfiles.maxMentees}`
       )
     );
-
-  console.log(`[AI Matching] Available mentors (accepting & has capacity): ${mentors.length}`);
 
   const result: MentorMatchInput[] = mentors.map(m => ({
     userId: m.profile.userId,
@@ -391,19 +375,8 @@ export async function runBatchMatching(
   let scores: number[] = [];
 
   try {
-    // Debug: Check total mentee and mentor profiles
-    const [menteeCount] = await db
-      .select({ count: sql<number>`count(*)::int` })
-      .from(menteeProfiles);
-    const [mentorCount] = await db
-      .select({ count: sql<number>`count(*)::int` })
-      .from(mentorProfiles);
-    console.log(`[AI Matching] Total mentee profiles: ${menteeCount?.count || 0}`);
-    console.log(`[AI Matching] Total mentor profiles: ${mentorCount?.count || 0}`);
-
     // Get mentees to process (from queue or unmatched)
     const queueMenteeIds = await getQueueForProcessing(limit);
-    console.log(`[AI Matching] Queue mentees: ${queueMenteeIds.length}`);
 
     let menteesToProcess: number[] = [];
 
@@ -424,14 +397,10 @@ export async function runBatchMatching(
         .limit(limit);
 
       menteesToProcess = unmatched.map(m => m.userId);
-      console.log(`[AI Matching] Unmatched mentees found: ${menteesToProcess.length}`);
     }
-
-    console.log(`[AI Matching] Mentees to process: ${menteesToProcess.length}`);
 
     // Check available mentor capacity
     const { availableSlots } = await getAvailableMentorCapacity();
-    console.log(`[AI Matching] Available mentor slots: ${availableSlots}`);
 
     for (const menteeUserId of menteesToProcess) {
       try {

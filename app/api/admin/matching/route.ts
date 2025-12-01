@@ -66,69 +66,45 @@ export async function GET(request: NextRequest) {
     const view = searchParams.get('view') || 'list';
     const includeQueue = searchParams.get('includeQueue') === 'true';
 
-    console.log('Fetching matching data...');
-
     // Fetch core data in parallel
-    let stats, runHistory, capacity;
-    try {
-      [stats, runHistory, capacity] = await Promise.all([
-        getMatchingStats(),
-        getMatchingRunHistory(10),
-        getAvailableMentorCapacity(),
-      ]);
-      console.log('Core data fetched successfully');
-    } catch (error) {
-      console.error('Error fetching core data:', error);
-      throw error;
-    }
+    const [stats, runHistory, capacity] = await Promise.all([
+      getMatchingStats(),
+      getMatchingRunHistory(10),
+      getAvailableMentorCapacity(),
+    ]);
 
     // Fetch matches based on view preference
     let matchesData;
-    try {
-      if (view === 'grouped') {
-        console.log('Fetching grouped matches...');
-        const mentorsWithCandidates = await getMentorWithCandidates();
-        matchesData = {
-          type: 'grouped',
-          mentors: mentorsWithCandidates,
-          totalMentors: mentorsWithCandidates.length,
-          totalCandidates: mentorsWithCandidates.reduce((sum, m) => sum + m.candidates.length, 0),
-        };
-      } else {
-        console.log('Fetching pending matches...');
-        const pendingMatches = await getPendingMatches();
-        console.log('Pending matches fetched:', pendingMatches.length);
-        matchesData = {
-          type: 'list',
-          matches: pendingMatches,
-          total: pendingMatches.length,
-        };
-      }
-    } catch (error) {
-      console.error('Error fetching matches:', error);
-      throw error;
+    if (view === 'grouped') {
+      const mentorsWithCandidates = await getMentorWithCandidates();
+      matchesData = {
+        type: 'grouped',
+        mentors: mentorsWithCandidates,
+        totalMentors: mentorsWithCandidates.length,
+        totalCandidates: mentorsWithCandidates.reduce((sum, m) => sum + m.candidates.length, 0),
+      };
+    } else {
+      const pendingMatches = await getPendingMatches();
+      matchesData = {
+        type: 'list',
+        matches: pendingMatches,
+        total: pendingMatches.length,
+      };
     }
 
     // Optionally include queue information
     let queueData = null;
     if (includeQueue) {
-      try {
-        console.log('Fetching queue data...');
-        const { entries, total } = await getWaitingQueue(20, 0);
-        console.log('Queue data fetched:', entries.length);
-        queueData = {
-          entries,
-          total,
-          stats: {
-            totalWaiting: stats.queueLength,
-            averageWaitDays: stats.averageWaitDays,
-            highPriorityCount: stats.highPriorityCount,
-          },
-        };
-      } catch (error) {
-        console.error('Error fetching queue:', error);
-        throw error;
-      }
+      const { entries, total } = await getWaitingQueue(20, 0);
+      queueData = {
+        entries,
+        total,
+        stats: {
+          totalWaiting: stats.queueLength,
+          averageWaitDays: stats.averageWaitDays,
+          highPriorityCount: stats.highPriorityCount,
+        },
+      };
     }
 
     // System status
@@ -138,7 +114,6 @@ export async function GET(request: NextRequest) {
       cacheInfo: await getCacheInfo(),
     };
 
-    console.log('Serializing response...');
     // Serialize all Date objects before returning JSON
     const responseData = {
       matches: matchesData,
@@ -151,14 +126,8 @@ export async function GET(request: NextRequest) {
       systemStatus,
     };
 
-    try {
-      const serialized = safeSerialize(responseData);
-      console.log('Serialization successful');
-      return NextResponse.json(serialized);
-    } catch (error) {
-      console.error('Serialization error:', error);
-      throw error;
-    }
+    const serialized = safeSerialize(responseData);
+    return NextResponse.json(serialized);
   } catch (error) {
     console.error('Error fetching matching data:', error);
     return NextResponse.json(

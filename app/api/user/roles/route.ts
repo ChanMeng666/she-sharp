@@ -23,7 +23,6 @@ async function ensureProfileExists(userId: number, roleType: string): Promise<vo
         currentMenteesCount: 0,
         isAcceptingMentees: true,
       });
-      console.log(`[Auto-Profile] Created mentor profile for user ${userId}`);
     }
   } else if (roleType === 'mentee') {
     const [existingProfile] = await db
@@ -36,7 +35,6 @@ async function ensureProfileExists(userId: number, roleType: string): Promise<vo
       await db.insert(menteeProfiles).values({
         userId,
       });
-      console.log(`[Auto-Profile] Created mentee profile for user ${userId}`);
     }
   }
 }
