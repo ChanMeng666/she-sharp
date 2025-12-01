@@ -56,7 +56,7 @@ export default function SystemSettingsPage() {
                 <Label htmlFor="registration">Allow New Registrations</Label>
               </div>
               
-              <Button className="bg-purple-600 hover:bg-purple-700">
+              <Button>
                 <Save className="w-4 h-4 mr-2" />
                 Save Changes
               </Button>
@@ -108,7 +108,7 @@ export default function SystemSettingsPage() {
                 </div>
               </div>
               
-              <Button className="bg-purple-600 hover:bg-purple-700">
+              <Button>
                 <Save className="w-4 h-4 mr-2" />
                 Save Security Settings
               </Button>

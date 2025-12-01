@@ -101,14 +101,14 @@ export function MentorsListSection() {
   };
 
   return (
-    <Section id="mentors-list" className="py-16 bg-gradient-to-b from-white to-periwinkle-light/20">
+    <Section id="mentors-list" className="py-16 bg-background">
       <Container>
         <div className="space-y-8">
           <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               EXPLORE OUR MENTORS
             </h2>
-            <p className="text-lg text-gray max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Connect with experienced professionals across various industries who are passionate about guiding the next generation of women in STEM.
             </p>
           </div>
@@ -171,10 +171,10 @@ export function MentorsListSection() {
                       exit={{ opacity: 0 }}
                       className="text-center py-12"
                     >
-                      <p className="text-lg text-gray mb-4">
+                      <p className="text-lg text-muted-foreground mb-4">
                         No mentors found matching your criteria.
                       </p>
-                      <p className="text-sm text-gray">
+                      <p className="text-sm text-muted-foreground">
                         Try adjusting your filters or search terms.
                       </p>
                     </motion.div>

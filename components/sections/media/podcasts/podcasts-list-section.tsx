@@ -28,13 +28,13 @@ export function PodcastsListSection() {
     : podcasts.filter(p => getCategoryLabel(p.category) === selectedCategory);
 
   const categoryColors: Record<string, string> = {
-    "Career Stories": "bg-purple-dark text-white",
-    "Industry Insights": "bg-periwinkle-dark text-white",
-    "Wellbeing": "bg-mint-dark text-navy-dark",
-    "Diversity & Inclusion": "bg-purple-dark text-white",
-    "Inspiration": "bg-purple-light text-purple-dark",
-    "Career Development": "bg-navy-dark text-white",
-    "Education": "bg-periwinkle-light text-periwinkle-dark"
+    "Career Stories": "bg-foreground text-background",
+    "Industry Insights": "bg-foreground text-background",
+    "Wellbeing": "bg-muted text-foreground",
+    "Diversity & Inclusion": "bg-foreground text-background",
+    "Inspiration": "bg-muted text-foreground",
+    "Career Development": "bg-foreground text-background",
+    "Education": "bg-muted text-foreground"
   };
 
   return (
@@ -42,12 +42,12 @@ export function PodcastsListSection() {
       <Container size="full">
         {/* Featured Podcasts Carousel */}
         <div className={layoutSystem.spacing.component.combined}>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-8">Featured Episodes</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">Featured Episodes</h2>
           <Carousel className="w-full">
             <CarouselContent>
               {featuredPodcasts.map((podcast) => (
                 <CarouselItem key={podcast.slug} className="md:basis-1/2 lg:basis-1/3">
-                  <Card className="h-full border-2 border-periwinkle-light hover:border-periwinkle-dark transition-colors">
+                  <Card className="h-full border-2 border-border hover:border-border transition-colors">
                     <div className="relative aspect-[16/9]">
                       <Image
                         src={podcast.coverImage}
@@ -72,8 +72,8 @@ export function PodcastsListSection() {
                           <span>{podcast.duration}</span>
                         </div>
                       </div>
-                      
-                      <h3 className="font-semibold text-lg text-navy-dark mb-3 line-clamp-2">
+
+                      <h3 className="font-semibold text-lg text-foreground mb-3 line-clamp-2">
                         {podcast.title}
                       </h3>
 
@@ -85,8 +85,8 @@ export function PodcastsListSection() {
                         <div className="flex items-center justify-between">
                           <Button
                             size="sm"
-                            variant="ghost"
-                            className="text-periwinkle-dark hover:text-periwinkle-dark/80"
+                            variant="outline"
+                            className="text-foreground hover:text-foreground/80"
                             onClick={() => setPlayingSlug(playingSlug === podcast.slug ? null : podcast.slug)}
                           >
                             {playingSlug === podcast.slug ? (
@@ -98,7 +98,7 @@ export function PodcastsListSection() {
                           <Button
                             asChild
                             size="sm"
-                            className="bg-periwinkle-dark hover:bg-periwinkle-dark/90 text-white"
+                            className="bg-foreground hover:bg-foreground/90 text-background"
                           >
                             <a
                               href={podcast.spotifyUrl}
@@ -124,7 +124,7 @@ export function PodcastsListSection() {
 
         {/* All Episodes with Tabs */}
         <div>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-8">All Episodes</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">All Episodes</h2>
           
           <Tabs defaultValue="All Episodes" value={selectedCategory} onValueChange={setSelectedCategory}>
             <TabsList className="w-full justify-start flex-wrap h-auto p-1 mb-8 bg-muted text-muted-foreground">
@@ -142,7 +142,7 @@ export function PodcastsListSection() {
             <TabsContent value={selectedCategory} className="mt-0">
               <div className="space-y-4">
                 {filteredPodcasts.map((podcast) => (
-                  <Card key={podcast.slug} className="overflow-hidden hover:shadow-lg transition-all border-l-4 border-l-periwinkle-dark">
+                  <Card key={podcast.slug} className="overflow-hidden hover:shadow-lg transition-all border-l-4 border-l-border">
                     <CardHeader className="pb-4">
                       <div className="flex flex-col md:flex-row md:items-start gap-4">
                         <div className="relative w-full md:w-48 aspect-[16/9] flex-shrink-0">
@@ -164,14 +164,14 @@ export function PodcastsListSection() {
                                 <span className="text-sm text-gray">{podcast.date}</span>
                                 <span className="text-sm text-gray">• {podcast.duration}</span>
                               </div>
-                              <h3 className="font-semibold text-xl text-navy-dark">
+                              <h3 className="font-semibold text-xl text-foreground">
                                 {podcast.title}
                               </h3>
                             </div>
 
                             <HoverCard>
                               <HoverCardTrigger asChild>
-                                <Button size="icon" variant="ghost" className="flex-shrink-0">
+                                <Button size="icon" variant="outline" className="flex-shrink-0">
                                   <Info className="h-4 w-4" />
                                 </Button>
                               </HoverCardTrigger>
@@ -188,7 +188,7 @@ export function PodcastsListSection() {
                           <div className="flex items-center gap-4">
                             <Button
                               variant="outline"
-                              className="text-periwinkle-dark border-periwinkle-dark hover:bg-periwinkle-light"
+                              className="text-foreground border-border hover:bg-muted"
                               onClick={() => setPlayingSlug(playingSlug === podcast.slug ? null : podcast.slug)}
                             >
                               {playingSlug === podcast.slug ? (
@@ -206,7 +206,7 @@ export function PodcastsListSection() {
 
                             <Button
                               asChild
-                              className="bg-periwinkle-dark hover:bg-periwinkle-dark/90 text-white"
+                              className="bg-foreground hover:bg-foreground/90 text-background"
                             >
                               <a
                                 href={podcast.spotifyUrl}

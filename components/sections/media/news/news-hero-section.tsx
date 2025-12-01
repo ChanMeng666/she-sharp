@@ -13,18 +13,18 @@ const stats = [
 
 export function NewsHeroSection() {
   return (
-    <Section className="relative overflow-hidden bg-purple-light/10">
+    <Section className="relative overflow-hidden bg-muted">
       {/* Animated background elements */}
-      <div className="absolute inset-0 bg-purple-mid/5" />
+      <div className="absolute inset-0 bg-muted/5" />
 
       <Container className="relative z-10">
-        <div className="py-20 md:py-28">
+        <div className="py-12 md:py-16">
           <div className="text-center max-w-4xl mx-auto mb-16">
-            <Badge className="mb-4 bg-purple-dark text-white border-0">
+            <Badge className="mb-4 bg-foreground text-background border-0">
               Making Headlines
             </Badge>
-            
-            <h1 className="text-5xl md:text-7xl font-bold text-navy-dark mb-6">
+
+            <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6">
               News & Press
             </h1>
             
@@ -37,10 +37,10 @@ export function NewsHeroSection() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center group">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white shadow-md group-hover:shadow-lg transition-shadow duration-150 mb-4">
-                  <stat.icon className="h-8 w-8 text-purple-dark" />
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-background shadow-md group-hover:shadow-lg transition-shadow duration-150 mb-4">
+                  <stat.icon className="h-8 w-8 text-foreground" />
                 </div>
-                <div className="text-3xl md:text-4xl font-bold text-navy-dark mb-1">
+                <div className="text-3xl md:text-4xl font-bold text-foreground mb-1">
                   {stat.value}
                 </div>
                 <div className="text-sm md:text-base text-gray-600">

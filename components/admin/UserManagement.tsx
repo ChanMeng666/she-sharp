@@ -159,7 +159,7 @@ export default function UserManagement() {
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'admin':
-        return 'bg-muted text-purple-700';
+        return 'bg-muted text-foreground';
       case 'mentor':
         return 'bg-green-100 text-green-700';
       case 'mentee':
@@ -172,11 +172,11 @@ export default function UserManagement() {
   const getMembershipBadgeColor = (tier: string) => {
     switch (tier) {
       case 'premium':
-        return 'bg-gradient-to-r from-yellow-400 to-yellow-600 text-white';
+        return 'bg-foreground text-background';
       case 'basic':
-        return 'bg-gradient-to-r from-gray-400 to-gray-600 text-white';
+        return 'bg-muted text-foreground';
       case 'free':
-        return 'bg-gray-200 text-foreground';
+        return 'bg-accent text-foreground';
       default:
         return 'bg-accent text-foreground';
     }
@@ -254,8 +254,8 @@ export default function UserManagement() {
 
         {/* Bulk Actions */}
         {selectedUsers.length > 0 && (
-          <div className="flex items-center gap-2 mb-4 p-3 bg-purple-50 rounded-lg">
-            <span className="text-sm font-medium text-purple-700">
+          <div className="flex items-center gap-2 mb-4 p-3 bg-muted rounded-lg">
+            <span className="text-sm font-medium text-foreground">
               {selectedUsers.length} user{selectedUsers.length > 1 ? 's' : ''} selected
             </span>
             <div className="flex gap-2 ml-auto">
@@ -300,7 +300,7 @@ export default function UserManagement() {
                   />
                   <Avatar className="w-12 h-12">
                     <AvatarImage src={user.image || undefined} alt={user.name || ''} />
-                    <AvatarFallback className="bg-muted text-purple-700">
+                    <AvatarFallback className="bg-muted text-foreground">
                       {getInitials(user.name)}
                     </AvatarFallback>
                   </Avatar>
@@ -311,7 +311,7 @@ export default function UserManagement() {
                 </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
+                    <Button variant="outline" size="icon">
                       <MoreVertical className="w-4 h-4" />
                     </Button>
                   </DropdownMenuTrigger>
@@ -433,7 +433,7 @@ export default function UserManagement() {
                     <div className="flex items-center space-x-3">
                       <Avatar className="w-10 h-10">
                         <AvatarImage src={user.image || undefined} alt={user.name || ''} />
-                        <AvatarFallback className="bg-muted text-purple-700">
+                        <AvatarFallback className="bg-muted text-foreground">
                           {getInitials(user.name)}
                         </AvatarFallback>
                       </Avatar>
@@ -488,7 +488,7 @@ export default function UserManagement() {
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
+                        <Button variant="outline" size="icon">
                           <MoreVertical className="w-4 h-4" />
                         </Button>
                       </DropdownMenuTrigger>

@@ -32,7 +32,7 @@ export function TeamOverviewSection() {
         <div>
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-navy-dark mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Powered by Passionate Volunteers
             </h2>
             <p className="text-xl text-gray max-w-3xl mx-auto">
@@ -50,13 +50,13 @@ export function TeamOverviewSection() {
             {stats.map((stat) => (
               <Card key={stat.label} className="bg-white border-0 shadow-md hover:shadow-lg transition-shadow">
                 <CardContent className="p-8 text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-light/20 rounded-full mb-6">
-                    <stat.icon className="w-8 h-8 text-purple-dark" />
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-muted rounded-full mb-6">
+                    <stat.icon className="w-8 h-8 text-foreground" />
                   </div>
-                  <div className="text-5xl font-bold text-purple-dark mb-2">
+                  <div className="text-5xl font-bold text-foreground mb-2">
                     {stat.value}
                   </div>
-                  <h3 className="text-xl font-semibold text-navy-dark mb-2">
+                  <h3 className="text-xl font-semibold text-foreground mb-2">
                     {stat.label}
                   </h3>
                   <p className="text-gray">

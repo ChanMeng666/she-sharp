@@ -79,9 +79,9 @@ export function AuthHeader() {
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className="ml-auto md:hidden">
             <Button
-              variant="ghost"
+              variant="outline"
               size="icon"
-              className="hover:bg-purple-light/50 hover:text-purple-dark transition-colors"
+              className="hover:bg-muted hover:text-foreground"
             >
               {isOpen ? (
                 <X className="h-5 w-5" />
@@ -93,8 +93,8 @@ export function AuthHeader() {
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px] p-0">
             {/* Mobile Header */}
-            <div className="bg-gradient-to-br from-purple-dark to-purple-mid p-6">
-              <SheetTitle className="text-white text-xl font-bold">
+            <div className="bg-foreground p-6">
+              <SheetTitle className="text-background text-xl font-bold">
                 Menu
               </SheetTitle>
             </div>

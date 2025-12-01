@@ -9,7 +9,6 @@ import { Section } from "@/components/layout/section";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { ExternalLink, Play, Newspaper, Mic, Camera } from "lucide-react";
-import Iridescence, { brandColors } from "@/components/effects/iridescence";
 
 // 精选的重点媒体内容 - 去除tab分类，只展示最重要的
 const featuredMedia = {
@@ -77,7 +76,7 @@ export function MediaSection() {
       <Container size="wide" className="relative z-10">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-dark mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6">
             Recognition & Coverage
           </h2>
           <p className="text-lg text-gray max-w-2xl mx-auto">
@@ -100,15 +99,15 @@ export function MediaSection() {
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                   <Link href={featuredMedia.videoUrl} target="_blank" rel="noopener noreferrer">
                     <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center cursor-pointer hover:bg-white transition-colors">
-                      <Play className="w-8 h-8 text-purple-dark ml-1" />
+                      <Play className="w-8 h-8 text-foreground ml-1" />
                     </div>
                   </Link>
                 </div>
               </AspectRatio>
             </div>
             <div className="p-6 md:p-8 flex flex-col justify-center">
-              <Badge className="w-fit mb-4 bg-purple-dark text-white">Featured</Badge>
-              <h3 className="text-xl md:text-2xl font-bold text-navy-dark mb-3">
+              <Badge className="w-fit mb-4 bg-foreground text-background">Featured</Badge>
+              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
                 {featuredMedia.title}
               </h3>
               <div className="flex items-center gap-4 text-sm text-gray mb-4">
@@ -119,7 +118,7 @@ export function MediaSection() {
               <p className="text-gray mb-6 leading-relaxed">
                 {featuredMedia.description}
               </p>
-              <Button className="w-fit bg-purple-dark hover:bg-purple-mid transition-colors" asChild>
+              <Button className="w-fit bg-foreground hover:bg-foreground/90 transition-colors" asChild>
                 <Link href={featuredMedia.videoUrl} target="_blank" rel="noopener noreferrer">
                   Watch Full Interview
                   <ExternalLink className="ml-2 w-4 h-4" />
@@ -146,7 +145,7 @@ export function MediaSection() {
                     />
                   </AspectRatio>
                   <div className="absolute top-3 left-3">
-                    <Badge className="bg-white/90 text-navy-dark border-0 flex items-center gap-1">
+                    <Badge className="bg-background/90 text-foreground border-0 flex items-center gap-1">
                       <Icon className="w-3 h-3" />
                       {item.type}
                     </Badge>
@@ -172,7 +171,7 @@ export function MediaSection() {
                   <CardDescription className="mb-4">
                     {item.excerpt}
                   </CardDescription>
-                  <Button variant="ghost" size="lg" className="w-full" asChild>
+                  <Button variant="outline" size="lg" className="w-full" asChild>
                     <Link href={item.link} target="_blank" rel="noopener noreferrer">
                       Read More
                       <ExternalLink className="ml-2 w-4 h-4" />
@@ -185,8 +184,8 @@ export function MediaSection() {
         </div>
 
         {/* Simple CTA */}
-        <div className="text-center bg-gradient-to-r from-purple-light/10 to-periwinkle-light/10 rounded-2xl p-8">
-          <h3 className="text-2xl font-bold text-navy-dark mb-4">
+        <div className="text-center bg-muted rounded-2xl p-8">
+          <h3 className="text-2xl font-bold text-foreground mb-4">
             Follow Our Journey
           </h3>
           <p className="text-gray mb-6 max-w-xl mx-auto">

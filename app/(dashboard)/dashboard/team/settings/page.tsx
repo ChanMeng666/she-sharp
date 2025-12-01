@@ -181,7 +181,7 @@ export default function TeamSettingsPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground"></div>
       </div>
     );
   }
@@ -260,7 +260,7 @@ export default function TeamSettingsPage() {
                 </div>
                 {isOwner && member.userId !== currentUser?.id && (
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     onClick={() => setMemberToRemove(member.id)}
                     className="text-red-600 hover:text-red-700 hover:bg-red-50"
@@ -323,7 +323,6 @@ export default function TeamSettingsPage() {
               <Button
                 type="submit"
                 disabled={isInviting}
-                className="bg-purple-600 hover:bg-purple-700"
               >
                 {isInviting ? (
                   <>

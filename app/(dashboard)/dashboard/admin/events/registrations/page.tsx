@@ -247,7 +247,7 @@ export default function EventRegistrationsPage() {
             <Download className="w-4 h-4 mr-2" />
             Export
           </Button>
-          <Button className="bg-purple-600 hover:bg-purple-700 text-sm sm:text-base">
+          <Button className="text-sm sm:text-base">
             <QrCode className="w-4 h-4 mr-2" />
             Check-In Mode
           </Button>
@@ -370,8 +370,8 @@ export default function EventRegistrationsPage() {
           </div>
 
           {selectedRegistrations.length > 0 && (
-            <div className="flex items-center gap-4 mt-4 p-3 bg-purple-50 rounded-lg">
-              <span className="text-sm text-purple-700">
+            <div className="flex items-center gap-4 mt-4 p-3 bg-muted rounded-lg">
+              <span className="text-sm text-foreground">
                 {selectedRegistrations.length} registration(s) selected
               </span>
               <div className="flex gap-2">
@@ -501,7 +501,7 @@ export default function EventRegistrationsPage() {
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
+                        <Button variant="outline" size="icon">
                           <MoreVertical className="w-4 h-4" />
                         </Button>
                       </DropdownMenuTrigger>

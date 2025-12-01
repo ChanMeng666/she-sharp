@@ -25,7 +25,7 @@ export function ThriveHeroSection() {
   }
 
   return (
-    <Section className="relative overflow-hidden bg-gradient-to-br from-purple-light/10 via-white to-periwinkle-light/20 dark:from-gray-950 dark:via-gray-900 dark:to-purple-dark/10">
+    <Section className="relative overflow-hidden bg-muted">
       <Container>
         <div className="py-12 md:py-16 lg:py-20">
           {/* Event Status Badge */}
@@ -38,11 +38,11 @@ export function ThriveHeroSection() {
 
           {/* Title Section */}
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-navy-dark dark:text-white mb-3">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-3">
               {eventDetails.title}
             </h1>
-            
-            <p className="text-lg md:text-xl text-purple-dark font-semibold mb-4">
+
+            <p className="text-lg md:text-xl text-foreground font-semibold mb-4">
               {eventDetails.subtitle}
             </p>
             
@@ -53,35 +53,35 @@ export function ThriveHeroSection() {
 
             {/* Event Details Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto">
-              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg p-3 border border-purple-light dark:border-purple-dark/30">
-                <Calendar className="h-4 w-4 text-purple-dark mx-auto mb-1" />
+              <div className="bg-background/80 backdrop-blur-sm rounded-lg p-3 border border-border">
+                <Calendar className="h-4 w-4 text-foreground mx-auto mb-1" />
                 <p className="text-xs text-gray-600 dark:text-gray-400">Date</p>
-                <p className="text-sm font-medium text-navy-dark dark:text-white">July 30, 2025</p>
+                <p className="text-sm font-medium text-foreground">July 30, 2025</p>
               </div>
-              
-              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg p-3 border border-purple-light dark:border-purple-dark/30">
-                <Clock className="h-4 w-4 text-purple-dark mx-auto mb-1" />
+
+              <div className="bg-background/80 backdrop-blur-sm rounded-lg p-3 border border-border">
+                <Clock className="h-4 w-4 text-foreground mx-auto mb-1" />
                 <p className="text-xs text-gray-600 dark:text-gray-400">Time</p>
-                <p className="text-sm font-medium text-navy-dark dark:text-white">5:00 - 7:30 PM</p>
+                <p className="text-sm font-medium text-foreground">5:00 - 7:30 PM</p>
               </div>
-              
-              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg p-3 border border-purple-light dark:border-purple-dark/30">
-                <Building className="h-4 w-4 text-purple-dark mx-auto mb-1" />
+
+              <div className="bg-background/80 backdrop-blur-sm rounded-lg p-3 border border-border">
+                <Building className="h-4 w-4 text-foreground mx-auto mb-1" />
                 <p className="text-xs text-gray-600 dark:text-gray-400">Venue</p>
-                <p className="text-sm font-medium text-navy-dark dark:text-white">HPE Tower</p>
+                <p className="text-sm font-medium text-foreground">HPE Tower</p>
               </div>
-              
-              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg p-3 border border-purple-light dark:border-purple-dark/30">
-                <Users className="h-4 w-4 text-purple-dark mx-auto mb-1" />
+
+              <div className="bg-background/80 backdrop-blur-sm rounded-lg p-3 border border-border">
+                <Users className="h-4 w-4 text-foreground mx-auto mb-1" />
                 <p className="text-xs text-gray-600 dark:text-gray-400">Attendees</p>
-                <p className="text-sm font-medium text-navy-dark dark:text-white">90 Professionals</p>
+                <p className="text-sm font-medium text-foreground">90 Professionals</p>
               </div>
             </div>
           </div>
 
           {/* Decorative Elements */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-light/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-mint-light/30 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-muted/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-muted/30 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
         </div>
       </Container>
     </Section>

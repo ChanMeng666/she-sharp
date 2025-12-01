@@ -57,50 +57,26 @@ export function BenefitsSection() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const getColorClasses = (color: string) => {
-    switch (color) {
-      case "purple":
-        return {
-          bg: "bg-purple-light/30 dark:bg-purple-dark/10",
-          border: "border-purple-dark/20",
-          icon: "text-purple-dark",
-          badge: "bg-purple-dark/10 text-purple-dark border-purple-dark/20"
-        };
-      case "periwinkle":
-        return {
-          bg: "bg-periwinkle-light/30 dark:bg-periwinkle-dark/10",
-          border: "border-periwinkle-dark/20",
-          icon: "text-periwinkle-dark",
-          badge: "bg-periwinkle-dark/10 text-periwinkle-dark border-periwinkle-dark/20"
-        };
-      case "mint":
-        return {
-          bg: "bg-mint-light/50 dark:bg-mint-dark/10",
-          border: "border-mint-dark/20",
-          icon: "text-navy dark:text-mint-dark",
-          badge: "bg-mint-dark/10 text-navy dark:text-mint-dark border-mint-dark/20"
-        };
-      default:
-        return {
-          bg: "bg-gray-100",
-          border: "border-gray-200",
-          icon: "text-gray-700",
-          badge: "bg-gray-100 text-gray-700 border-gray-200"
-        };
-    }
+    return {
+      bg: "bg-muted",
+      border: "border-border",
+      icon: "text-foreground",
+      badge: "bg-muted text-foreground border-border"
+    };
   };
 
   return (
     <Section bgColor="light">
       <Container size="wide">
         <div className="text-center mb-12">
-          <Badge className="mb-4 bg-periwinkle-dark/10 text-periwinkle-dark border-periwinkle-dark">
+          <Badge className="mb-4 bg-muted text-foreground border-border">
             <Sparkles className="w-3 h-3 mr-1" />
             Transform Your Career
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Benefits of Joining the Mentorship Program
           </h2>
-          <p className="text-lg text-gray max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Unlock opportunities for growth, learning, and connection in a supportive environment
           </p>
         </div>
@@ -131,10 +107,10 @@ export function BenefitsSection() {
                   </div>
                   
                   {/* Content */}
-                  <h3 className="text-xl font-semibold text-navy-dark mb-3 text-center">
+                  <h3 className="text-xl font-semibold text-foreground mb-3 text-center">
                     {benefit.title}
                   </h3>
-                  <p className="text-gray text-center mb-4">
+                  <p className="text-muted-foreground text-center mb-4">
                     {benefit.description}
                   </p>
                   
@@ -158,7 +134,7 @@ export function BenefitsSection() {
         
         {/* Additional Benefits Stats */}
         <div className="mt-16">
-          <h3 className="text-2xl font-bold text-navy-dark text-center mb-8">
+          <h3 className="text-2xl font-bold text-foreground text-center mb-8">
             The Impact in Numbers
           </h3>
           <div className={layoutClasses(
@@ -169,19 +145,19 @@ export function BenefitsSection() {
           )}>
             {additionalBenefits.map((benefit) => {
               const Icon = benefit.icon;
-              
+
               return (
                 <div key={benefit.title} className="text-center group">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-purple-light/50 dark:bg-purple-dark/20 mb-3 group-hover:scale-110 transition-transform">
-                    <Icon className="w-6 h-6 text-purple-dark" />
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-muted mb-3 group-hover:scale-110 transition-transform">
+                    <Icon className="w-6 h-6 text-foreground" />
                   </div>
-                  <div className="text-3xl font-bold text-purple-dark dark:text-purple-mid mb-1">
+                  <div className="text-3xl font-bold text-foreground mb-1">
                     {benefit.stat}
                   </div>
-                  <h4 className="font-semibold text-navy-dark mb-1">
+                  <h4 className="font-semibold text-foreground mb-1">
                     {benefit.title}
                   </h4>
-                  <p className="text-sm text-gray">
+                  <p className="text-sm text-muted-foreground">
                     {benefit.description}
                   </p>
                 </div>

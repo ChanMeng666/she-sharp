@@ -125,8 +125,9 @@ export function PhotoUpload({
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <Button
               type="button"
-              variant="destructive"
+              variant="outline"
               size="sm"
+              className="text-red-600 hover:text-white hover:bg-red-600 border-red-200 hover:border-red-600"
               onClick={handleRemove}
               disabled={uploading}
             >
@@ -139,8 +140,8 @@ export function PhotoUpload({
         <div
           className={`
             relative border-2 border-dashed rounded-lg p-6 text-center cursor-pointer
-            transition-colors hover:border-purple-dark hover:bg-purple-50/50
-            ${dragOver ? 'border-purple-dark bg-purple-50' : 'border-gray-300'}
+            transition-colors hover:border-foreground hover:bg-muted/50
+            ${dragOver ? 'border-foreground bg-muted' : 'border-border'}
             ${error || uploadError ? 'border-red-300 bg-red-50/50' : ''}
           `}
           onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
@@ -159,13 +160,13 @@ export function PhotoUpload({
 
           {uploading ? (
             <div className="flex flex-col items-center gap-2">
-              <Loader2 className="h-10 w-10 text-purple-dark animate-spin" />
-              <p className="text-sm text-gray-500">Uploading...</p>
+              <Loader2 className="h-10 w-10 text-foreground animate-spin" />
+              <p className="text-sm text-muted-foreground">Uploading...</p>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-2">
-              <div className="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center">
-                <Camera className="h-7 w-7 text-purple-dark" />
+              <div className="w-14 h-14 bg-muted rounded-full flex items-center justify-center">
+                <Camera className="h-7 w-7 text-foreground" />
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-700">

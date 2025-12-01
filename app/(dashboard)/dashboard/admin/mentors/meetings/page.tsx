@@ -81,8 +81,8 @@ const meetingTrendData = [
 ];
 
 const meetingTypeData = [
-  { type: 'Video Call', value: 65, color: '#9b2e83' },
-  { type: 'In-Person', value: 20, color: '#c05299' },
+  { type: 'Video Call', value: 65, color: 'hsl(var(--primary))' },
+  { type: 'In-Person', value: 20, color: 'hsl(var(--muted))' },
   { type: 'Phone Call', value: 10, color: '#60a5fa' },
   { type: 'Chat', value: 5, color: '#94a3b8' },
 ];
@@ -227,7 +227,7 @@ export default function MentorMeetingsPage() {
             <Download className="w-4 h-4 mr-2" />
             Export Data
           </Button>
-          <Button className="bg-purple-600 hover:bg-purple-700 text-sm sm:text-base">
+          <Button className="text-sm sm:text-base">
             <Calendar className="w-4 h-4 mr-2" />
             Schedule Meeting
           </Button>
@@ -299,11 +299,11 @@ export default function MentorMeetingsPage() {
                 <YAxis yAxisId="right" orientation="right" />
                 <Tooltip />
                 <Legend />
-                <Line 
-                  yAxisId="left" 
-                  type="monotone" 
-                  dataKey="meetings" 
-                  stroke="#9b2e83" 
+                <Line
+                  yAxisId="left"
+                  type="monotone"
+                  dataKey="meetings"
+                  stroke="hsl(var(--primary))"
                   strokeWidth={2}
                   name="Total Meetings"
                 />
@@ -490,7 +490,7 @@ export default function MentorMeetingsPage() {
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
+                        <Button variant="outline" size="icon">
                           <MoreVertical className="w-4 h-4" />
                         </Button>
                       </DropdownMenuTrigger>

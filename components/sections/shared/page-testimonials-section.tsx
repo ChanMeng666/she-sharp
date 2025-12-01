@@ -66,7 +66,7 @@ export function PageTestimonialsSection({
     <Section bgColor="light" className={className}>
       <Container>
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             {title}
           </h2>
           {subtitle && (
@@ -90,7 +90,7 @@ export function PageTestimonialsSection({
                 <CarouselItem key={testimonial.id} className="md:basis-1/2 lg:basis-1/3">
                   <Card className="h-full">
                     <CardContent className="p-6">
-                      <Quote className="w-8 h-8 text-purple-light mb-4" />
+                      <Quote className="w-8 h-8 text-muted mb-4" />
                       
                       {/* Quote */}
                       <p className="text-gray-700 mb-6 italic">
@@ -106,7 +106,7 @@ export function PageTestimonialsSection({
                               <AvatarFallback>{testimonial.mentee.name[0]}</AvatarFallback>
                             </Avatar>
                             <div>
-                              <p className="font-semibold text-navy-dark">{testimonial.mentee.name}</p>
+                              <p className="font-semibold text-foreground">{testimonial.mentee.name}</p>
                               <p className="text-sm text-gray-600">{testimonial.mentee.role}</p>
                             </div>
                           </div>
@@ -127,7 +127,7 @@ export function PageTestimonialsSection({
                               <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
                             </Avatar>
                             <div>
-                              <p className="font-semibold text-navy-dark">{testimonial.name}</p>
+                              <p className="font-semibold text-foreground">{testimonial.name}</p>
                               <p className="text-sm text-gray-600">{testimonial.role}</p>
                             </div>
                           </div>
@@ -146,19 +146,13 @@ export function PageTestimonialsSection({
                               <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
                             </Avatar>
                             <div>
-                              <p className="font-semibold text-navy-dark">{testimonial.name}</p>
+                              <p className="font-semibold text-foreground">{testimonial.name}</p>
                               <p className="text-sm text-gray-600">{testimonial.company}</p>
                             </div>
                           </div>
                           <Badge 
                             variant="outline" 
-                            className={
-                              testimonial.type === "Corporate Sponsor" 
-                                ? "border-purple-dark text-purple-dark" 
-                                : testimonial.type === "Beneficiary"
-                                ? "border-mint-dark text-mint-dark"
-                                : "border-periwinkle-dark text-periwinkle-dark"
-                            }
+                            className="border-border text-foreground"
                           >
                             {testimonial.type}
                           </Badge>
@@ -174,7 +168,7 @@ export function PageTestimonialsSection({
                               <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
                             </Avatar>
                             <div>
-                              <p className="font-semibold text-navy-dark">{testimonial.name}</p>
+                              <p className="font-semibold text-foreground">{testimonial.name}</p>
                               <p className="text-sm text-gray-600">
                                 {testimonial.role} at {testimonial.company}
                               </p>

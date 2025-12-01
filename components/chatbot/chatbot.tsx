@@ -169,8 +169,8 @@ export function Chatbot() {
             transition={{ duration: 0.2 }}
             className="h-full w-full"
           >
-            <Card className="flex flex-col overflow-hidden shadow-2xl border-purple-dark/20 h-full bg-white">
-              <div className="flex items-center justify-between bg-gradient-to-r from-purple-dark to-periwinkle-dark p-4 text-white flex-shrink-0">
+            <Card className="flex flex-col overflow-hidden shadow-2xl border-border h-full bg-background">
+              <div className="flex items-center justify-between bg-foreground p-4 text-background flex-shrink-0">
                 <div className="flex items-center gap-3">
                   <MessageSquare size={22} />
                   <h3 className="font-semibold text-lg">She Sharp Assistant</h3>
@@ -178,8 +178,8 @@ export function Chatbot() {
                 <div className="flex items-center ">
                   <Button
                     size="icon"
-                    variant="ghost"
-                    className="h-9 w-9 text-white hover:bg-white/20 transition-colors"
+                    variant="outline"
+                    className="h-9 w-9 text-background hover:bg-background/20"
                     onClick={clearHistory}
                     title="Clear chat history"
                   >
@@ -187,8 +187,8 @@ export function Chatbot() {
                   </Button>
                   <Button
                     size="icon"
-                    variant="ghost"
-                    className="h-9 w-9 text-white hover:bg-white/20 transition-colors"
+                    variant="outline"
+                    className="h-9 w-9 text-background hover:bg-background/20"
                     onClick={() => setIsOpen(false)}
                   >
                     <X size={18} />
@@ -225,7 +225,7 @@ export function Chatbot() {
                     <QuickActions onSelectQuestion={handlePresetQuestion} />
                   </div>
 
-                  <form onSubmit={handleFormSubmit} className="border-t border-purple-dark/10 p-5 flex-shrink-0 bg-white">
+                  <form onSubmit={handleFormSubmit} className="border-t border-border p-5 flex-shrink-0 bg-background">
                     <div className="flex gap-3">
                       <Textarea
                         ref={textareaRef}
@@ -233,14 +233,14 @@ export function Chatbot() {
                         onChange={handleInputChange}
                         onKeyDown={handleKeyDown}
                         placeholder="Type your message..."
-                        className="min-h-[60px] max-h-[120px] resize-none border-purple-dark/20 focus:border-purple-dark focus:ring-purple-dark/20 rounded-xl"
+                        className="min-h-[60px] max-h-[120px] resize-none border-border focus:border-foreground focus:ring-foreground/20 rounded-xl"
                         disabled={isLoading}
                       />
                       <Button
                         type="submit"
                         size="icon"
                         disabled={isLoading || !input.trim()}
-                        className="bg-purple-dark hover:bg-purple-mid flex-shrink-0 h-[60px] w-[60px] rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+                        className="bg-foreground hover:bg-foreground/90 text-background flex-shrink-0 h-[60px] w-[60px] rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
                       >
                         <Send size={22} />
                       </Button>
@@ -263,7 +263,7 @@ export function Chatbot() {
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-purple-dark to-periwinkle-dark text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+          className="relative flex h-16 w-16 items-center justify-center rounded-full bg-foreground text-background shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
         >
           <MessageSquare size={26} />
         </button>

@@ -83,13 +83,13 @@ export function BreadcrumbNav() {
       {breadcrumbs.map((item, index) => (
         <div key={index} className="flex items-center">
           {index > 0 && (
-            <ChevronRight aria-hidden="true" className="h-4 w-4 mx-1 text-periwinkle-dark opacity-70" />
+            <ChevronRight aria-hidden="true" className="h-4 w-4 mx-1 text-muted-foreground opacity-70" />
           )}
           {item.href ? (
             <Link
               href={item.href}
               className={cn(
-                "text-blue hover:text-purple-dark hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-periwinkle-dark focus-visible:ring-offset-2 rounded-sm transition-colors",
+                "text-blue hover:text-foreground hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm transition-colors",
                 index === 0 && "flex items-center gap-1"
               )}
             >
@@ -97,7 +97,7 @@ export function BreadcrumbNav() {
               {item.label}
             </Link>
           ) : (
-            <span aria-current="page" className="text-navy-dark font-semibold">
+            <span aria-current="page" className="text-foreground font-semibold">
               {item.label}
             </span>
           )}

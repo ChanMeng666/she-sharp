@@ -24,7 +24,7 @@ export function GalleryHeroSection() {
   }, []);
 
   return (
-    <Section noPadding className="relative h-[70vh] min-h-[500px] overflow-hidden">
+    <Section noPadding className="relative min-h-screen overflow-hidden">
       {/* Full-screen image carousel */}
       <div className="absolute inset-0">
         {heroImages.map((image, index) => (
@@ -43,17 +43,17 @@ export function GalleryHeroSection() {
             />
           </div>
         ))}
-        
+
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-purple-dark/60" />
+        <div className="absolute inset-0 bg-foreground/60" />
       </div>
 
       <Container size="wide" className="relative z-10 h-full flex items-end pb-12">
         <div className="max-w-3xl">
-          <h1 className="text-6xl md:text-8xl font-bold text-white mb-4 drop-shadow-lg">
+          <h1 className="text-6xl md:text-8xl font-bold text-background mb-4 drop-shadow-lg">
             Gallery
           </h1>
-          <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
+          <p className="text-xl md:text-2xl text-background/90 leading-relaxed">
             Capturing moments of innovation, inspiration, and community
           </p>
           
@@ -63,9 +63,9 @@ export function GalleryHeroSection() {
               <button
                 key={index}
                 className={`h-1 rounded-full transition-colors duration-150 ${
-                  index === currentImageIndex 
-                    ? 'w-12 bg-white' 
-                    : 'w-6 bg-white/40 hover:bg-white/60'
+                  index === currentImageIndex
+                    ? 'w-12 bg-background'
+                    : 'w-6 bg-background/40 hover:bg-background/60'
                 }`}
                 onClick={() => setCurrentImageIndex(index)}
                 aria-label={`Go to image ${index + 1}`}

@@ -34,51 +34,27 @@ export function StatsSection() {
   const getColorClasses = (color: string) => {
     switch (color) {
       case "purple":
-        return {
-          bg: "bg-purple-light dark:bg-purple-dark/10",
-          border: "border-purple-dark/20",
-          text: "text-purple-dark",
-          progress: "bg-purple-dark"
-        };
       case "periwinkle":
-        return {
-          bg: "bg-periwinkle-light dark:bg-periwinkle-dark/10",
-          border: "border-periwinkle-dark/20",
-          text: "text-periwinkle-dark",
-          progress: "bg-periwinkle-dark"
-        };
       case "mint":
-        return {
-          bg: "bg-mint-light dark:bg-mint-dark/10",
-          border: "border-mint-dark/20",
-          text: "text-navy dark:text-mint-dark",
-          progress: "bg-mint-dark"
-        };
       case "navy":
-        return {
-          bg: "bg-navy-light dark:bg-navy-dark/10",
-          border: "border-navy-dark/20",
-          text: "text-navy-dark dark:text-navy-light",
-          progress: "bg-navy-dark dark:bg-navy-light"
-        };
       default:
         return {
-          bg: "bg-gray-100",
-          border: "border-gray-200",
-          text: "text-gray-700",
-          progress: "bg-gray-700"
+          bg: "bg-muted",
+          border: "border-border",
+          text: "text-foreground",
+          progress: "bg-foreground"
         };
     }
   };
 
   return (
-    <Section className="py-16 md:py-24 bg-gradient-to-b from-white to-purple-light/30 dark:from-gray-950 dark:to-purple-dark/5">
+    <Section className="py-16 md:py-24 bg-background">
       <Container>
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             What You Get Out of a Mentorship Program
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Research shows participating in a mentorship program provides valuable 
             benefits for both mentees and mentors. Here's what our data reveals:
           </p>
@@ -100,7 +76,7 @@ export function StatsSection() {
                       <div className={`text-4xl font-bold mb-3 ${colors.text}`}>
                         {stat.percentage}
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                      <p className="text-sm text-muted-foreground mb-4">
                         {stat.description}
                       </p>
                       <Progress 
@@ -116,7 +92,7 @@ export function StatsSection() {
                 <HoverCardContent className="w-80">
                   <div className="space-y-2">
                     <h4 className="text-sm font-semibold">{stat.percentage} - More Details</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-muted-foreground">
                       {stat.detail}
                     </p>
                   </div>

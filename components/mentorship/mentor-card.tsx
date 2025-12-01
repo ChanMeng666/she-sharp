@@ -43,13 +43,13 @@ export function MentorCard({ mentor }: MentorCardProps) {
   const getAvailabilityColor = (status: string) => {
     switch (status) {
       case 'available':
-        return 'bg-mint-dark text-navy-dark';
+        return 'bg-green-500 text-white';
       case 'busy':
-        return 'bg-yellow-500 text-navy-dark';
+        return 'bg-yellow-500 text-foreground';
       case 'unavailable':
-        return 'bg-gray text-white';
+        return 'bg-muted text-foreground';
       default:
-        return 'bg-gray text-white';
+        return 'bg-muted text-foreground';
     }
   };
 
@@ -85,25 +85,25 @@ export function MentorCard({ mentor }: MentorCardProps) {
                     {getAvailabilityText(mentor.availability || 'unavailable')}
                   </Badge>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  <div className="text-white">
+                <div className="absolute inset-0 bg-foreground/80 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                  <div className="text-background">
                     <p className="text-sm font-medium mb-1">Click to view profile</p>
                   </div>
                 </div>
               </div>
               <CardContent className="p-4">
                 <div className="space-y-2">
-                  <h3 className="font-semibold text-navy-dark text-lg line-clamp-1">{mentor.name}</h3>
-                  <p className="text-sm text-purple-dark font-medium line-clamp-1">{mentor.role}</p>
-                  <p className="text-sm text-gray line-clamp-1">{mentor.company}</p>
+                  <h3 className="font-semibold text-foreground text-lg line-clamp-1">{mentor.name}</h3>
+                  <p className="text-sm text-foreground font-medium line-clamp-1">{mentor.role}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-1">{mentor.company}</p>
                   <div className="flex flex-wrap gap-1 mt-3">
                     {mentor.expertise.slice(0, 2).map((skill, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs bg-periwinkle-light text-navy-dark">
+                      <Badge key={index} variant="secondary" className="text-xs bg-muted text-foreground">
                         {skill}
                       </Badge>
                     ))}
                     {mentor.expertise.length > 2 && (
-                      <Badge variant="secondary" className="text-xs bg-periwinkle-light text-navy-dark">
+                      <Badge variant="secondary" className="text-xs bg-muted text-foreground">
                         +{mentor.expertise.length - 2}
                       </Badge>
                     )}
@@ -112,7 +112,7 @@ export function MentorCard({ mentor }: MentorCardProps) {
                     <div className="flex items-center gap-1 mt-2">
                       <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
                       <span className="text-sm font-medium">{mentor.rating}</span>
-                      <span className="text-xs text-gray">({mentor.menteeCount} mentees)</span>
+                      <span className="text-xs text-muted-foreground">({mentor.menteeCount} mentees)</span>
                     </div>
                   )}
                 </div>
@@ -128,19 +128,19 @@ export function MentorCard({ mentor }: MentorCardProps) {
                 <AvatarFallback>{mentor.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
               </Avatar>
               <div className="flex-1">
-                <h4 className="font-semibold text-navy-dark">{mentor.name}</h4>
-                <p className="text-sm text-purple-dark">{mentor.role}</p>
-                <p className="text-xs text-gray">{mentor.company}</p>
+                <h4 className="font-semibold text-foreground">{mentor.name}</h4>
+                <p className="text-sm text-foreground">{mentor.role}</p>
+                <p className="text-xs text-muted-foreground">{mentor.company}</p>
               </div>
             </div>
-            <p className="text-sm text-gray line-clamp-3">{mentor.description}</p>
+            <p className="text-sm text-muted-foreground line-clamp-3">{mentor.description}</p>
             <div className="flex items-center gap-4 text-sm">
               <div className="flex items-center gap-1">
-                <Users className="w-4 h-4 text-purple-dark" />
+                <Users className="w-4 h-4 text-foreground" />
                 <span>{mentor.menteeCount} mentees</span>
               </div>
               <div className="flex items-center gap-1">
-                <Calendar className="w-4 h-4 text-purple-dark" />
+                <Calendar className="w-4 h-4 text-foreground" />
                 <span>{mentor.yearsOfExperience}+ years</span>
               </div>
             </div>
@@ -164,9 +164,9 @@ export function MentorCard({ mentor }: MentorCardProps) {
             </div>
             <div className="flex-1 space-y-3">
               <div>
-                <h2 className="text-2xl font-bold text-navy-dark">{mentor.name}</h2>
-                <p className="text-lg text-purple-dark font-medium">{mentor.role}</p>
-                <p className="text-gray">{mentor.company}</p>
+                <h2 className="text-2xl font-bold text-foreground">{mentor.name}</h2>
+                <p className="text-lg text-foreground font-medium">{mentor.role}</p>
+                <p className="text-muted-foreground">{mentor.company}</p>
               </div>
               <Badge className={`${getAvailabilityColor(mentor.availability || 'unavailable')} font-medium`}>
                 {getAvailabilityText(mentor.availability || 'unavailable')}
@@ -177,7 +177,7 @@ export function MentorCard({ mentor }: MentorCardProps) {
                     <Star className="w-5 h-5 fill-yellow-500 text-yellow-500" />
                     <span className="font-semibold text-lg">{mentor.rating}</span>
                   </div>
-                  <span className="text-gray">from {mentor.menteeCount} mentees</span>
+                  <span className="text-muted-foreground">from {mentor.menteeCount} mentees</span>
                 </div>
               )}
             </div>
@@ -185,18 +185,18 @@ export function MentorCard({ mentor }: MentorCardProps) {
 
           <div className="space-y-4">
             <div>
-              <h3 className="font-semibold text-navy-dark mb-2">About</h3>
-              <p className="text-gray leading-relaxed">{mentor.description}</p>
+              <h3 className="font-semibold text-foreground mb-2">About</h3>
+              <p className="text-muted-foreground leading-relaxed">{mentor.description}</p>
               {mentor.bio && (
-                <p className="text-gray leading-relaxed mt-2">{mentor.bio}</p>
+                <p className="text-muted-foreground leading-relaxed mt-2">{mentor.bio}</p>
               )}
             </div>
 
             <div>
-              <h3 className="font-semibold text-navy-dark mb-2">Expertise</h3>
+              <h3 className="font-semibold text-foreground mb-2">Expertise</h3>
               <div className="flex flex-wrap gap-2">
                 {mentor.expertise.map((skill, index) => (
-                  <Badge key={index} variant="secondary" className="bg-periwinkle-light text-navy-dark">
+                  <Badge key={index} variant="secondary" className="bg-muted text-foreground">
                     {skill}
                   </Badge>
                 ))}
@@ -205,40 +205,40 @@ export function MentorCard({ mentor }: MentorCardProps) {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <h4 className="text-sm font-medium text-gray mb-1">Industry</h4>
-                <p className="font-medium text-navy-dark">{mentor.industry}</p>
+                <h4 className="text-sm font-medium text-muted-foreground mb-1">Industry</h4>
+                <p className="font-medium text-foreground">{mentor.industry}</p>
               </div>
               <div>
-                <h4 className="text-sm font-medium text-gray mb-1">Experience</h4>
-                <p className="font-medium text-navy-dark">{mentor.yearsOfExperience}+ years</p>
+                <h4 className="text-sm font-medium text-muted-foreground mb-1">Experience</h4>
+                <p className="font-medium text-foreground">{mentor.yearsOfExperience}+ years</p>
               </div>
               <div>
-                <h4 className="text-sm font-medium text-gray mb-1">Languages</h4>
-                <p className="font-medium text-navy-dark">{mentor.languages.join(', ')}</p>
+                <h4 className="text-sm font-medium text-muted-foreground mb-1">Languages</h4>
+                <p className="font-medium text-foreground">{mentor.languages.join(', ')}</p>
               </div>
               <div>
-                <h4 className="text-sm font-medium text-gray mb-1">Current Mentees</h4>
-                <p className="font-medium text-navy-dark">{mentor.menteeCount}</p>
+                <h4 className="text-sm font-medium text-muted-foreground mb-1">Current Mentees</h4>
+                <p className="font-medium text-foreground">{mentor.menteeCount}</p>
               </div>
             </div>
 
             {mentor.achievements && mentor.achievements.length > 0 && (
               <div>
-                <h3 className="font-semibold text-navy-dark mb-2">Key Achievements</h3>
+                <h3 className="font-semibold text-foreground mb-2">Key Achievements</h3>
                 <ul className="list-disc list-inside space-y-1">
                   {mentor.achievements.map((achievement, index) => (
-                    <li key={index} className="text-gray">{achievement}</li>
+                    <li key={index} className="text-muted-foreground">{achievement}</li>
                   ))}
                 </ul>
               </div>
             )}
 
             <div className="pt-4 space-y-3">
-              <h3 className="font-semibold text-navy-dark">Mentorship Progress</h3>
+              <h3 className="font-semibold text-foreground">Mentorship Progress</h3>
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray">Availability</span>
-                  <span className="text-navy-dark font-medium">
+                  <span className="text-muted-foreground">Availability</span>
+                  <span className="text-foreground font-medium">
                     {mentor.availability === 'available' ? '3 slots available' : 
                      mentor.availability === 'busy' ? '1 slot available' : 'Fully booked'}
                   </span>
@@ -254,8 +254,8 @@ export function MentorCard({ mentor }: MentorCardProps) {
             <div className="flex gap-3 pt-4">
               {!userLoading && (
                 user ? (
-                  <Button 
-                    className="flex-1 bg-purple-dark hover:bg-purple-mid"
+                  <Button
+                    className="flex-1 bg-foreground hover:bg-foreground/90"
                     disabled={mentor.availability === 'unavailable'}
                     asChild
                   >
@@ -265,16 +265,16 @@ export function MentorCard({ mentor }: MentorCardProps) {
                   </Button>
                 ) : (
                   <div className="flex-1 space-y-2">
-                    <Button 
-                      className="w-full bg-purple-dark hover:bg-purple-mid"
+                    <Button
+                      className="w-full bg-foreground hover:bg-foreground/90"
                       asChild
                     >
                       <Link href="/sign-up">
                         Join to Request Mentorship
                       </Link>
                     </Button>
-                    <p className="text-xs text-gray text-center">
-                      Already have an account? <Link href="/sign-in" className="text-purple-dark hover:underline">Sign in</Link>
+                    <p className="text-xs text-muted-foreground text-center">
+                      Already have an account? <Link href="/sign-in" className="text-foreground hover:underline">Sign in</Link>
                     </p>
                   </div>
                 )

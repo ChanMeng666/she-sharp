@@ -40,19 +40,19 @@ export function VolunteerRolesSection() {
           {/* Events Volunteer */}
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h3 className="text-2xl font-bold text-navy mb-4">
+              <h3 className="text-2xl font-bold text-foreground mb-4">
                 {volunteerRole.title}
               </h3>
               <p className="text-gray-700 mb-6">{volunteerRole.description}</p>
               <ul className="space-y-3 mb-8">
                 {volunteerRole.responsibilities.map((item, index) => (
                   <li key={index} className="flex items-start">
-                    <span className="text-purple-dark mt-1 mr-3">•</span>
+                    <span className="text-foreground mt-1 mr-3">•</span>
                     <span className="text-gray-700">{item}</span>
                   </li>
                 ))}
               </ul>
-              <Button asChild className="bg-purple-dark hover:bg-purple-mid">
+              <Button asChild>
                 <Link href="/contact">Become a volunteer</Link>
               </Button>
             </div>
@@ -77,19 +77,19 @@ export function VolunteerRolesSection() {
               />
             </div>
             <div className="md:order-2">
-              <h3 className="text-2xl font-bold text-navy mb-4">
+              <h3 className="text-2xl font-bold text-foreground mb-4">
                 {ambassadorRole.title}
               </h3>
               <p className="text-gray-700 mb-6">{ambassadorRole.description}</p>
               <ul className="space-y-3 mb-8">
                 {ambassadorRole.responsibilities.map((item, index) => (
                   <li key={index} className="flex items-start">
-                    <span className="text-purple-dark mt-1 mr-3">•</span>
+                    <span className="text-foreground mt-1 mr-3">•</span>
                     <span className="text-gray-700">{item}</span>
                   </li>
                 ))}
               </ul>
-              <Button asChild className="bg-purple-dark hover:bg-purple-mid">
+              <Button asChild>
                 <Link href="/contact">Register your interest</Link>
               </Button>
             </div>

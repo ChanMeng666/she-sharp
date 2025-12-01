@@ -114,10 +114,10 @@ export function CurrentSponsorsSection() {
         <div className="space-y-8">
           {/* Section Header */}
           <div className="text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-navy-dark">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Our Corporate Partners
             </h2>
-            <p className="text-lg text-gray max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Join these forward-thinking organizations in creating pathways for women in STEM
             </p>
           </div>
@@ -211,7 +211,7 @@ export function CurrentSponsorsSection() {
             </div>
           ) : filteredSponsors.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray">No sponsors found matching your criteria.</p>
+              <p className="text-muted-foreground">No sponsors found matching your criteria.</p>
             </div>
           ) : viewMode === "grid" ? (
             <div className={layoutClasses(
@@ -239,12 +239,12 @@ export function CurrentSponsorsSection() {
                         </Badge>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-navy-dark">{sponsor.name}</h3>
-                        <p className="text-sm text-gray mt-1">{sponsor.description}</p>
+                        <h3 className="font-semibold text-foreground">{sponsor.name}</h3>
+                        <p className="text-sm text-muted-foreground mt-1">{sponsor.description}</p>
                       </div>
                       <div className="flex justify-between items-center text-sm">
-                        <span className="text-gray">{sponsor.industry}</span>
-                        <span className="text-gray">Since {sponsor.joinedYear}</span>
+                        <span className="text-muted-foreground">{sponsor.industry}</span>
+                        <span className="text-muted-foreground">Since {sponsor.joinedYear}</span>
                       </div>
                     </div>
                   </CardContent>
@@ -267,14 +267,14 @@ export function CurrentSponsorsSection() {
                           />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-navy-dark">{sponsor.name}</h3>
-                          <p className="text-sm text-gray truncate">{sponsor.description}</p>
+                          <h3 className="font-semibold text-foreground">{sponsor.name}</h3>
+                          <p className="text-sm text-muted-foreground truncate">{sponsor.description}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-4 flex-shrink-0">
                         <div className="text-right">
-                          <p className="text-sm text-gray">{sponsor.industry}</p>
-                          <p className="text-xs text-gray">Since {sponsor.joinedYear}</p>
+                          <p className="text-sm text-muted-foreground">{sponsor.industry}</p>
+                          <p className="text-xs text-muted-foreground">Since {sponsor.joinedYear}</p>
                         </div>
                         <Badge className={`${levelColors[sponsor.level]} text-xs`}>
                           {sponsor.level.toUpperCase()}
@@ -289,10 +289,10 @@ export function CurrentSponsorsSection() {
 
           {/* CTA */}
           <div className="text-center pt-8">
-            <p className="text-gray mb-4">
+            <p className="text-muted-foreground mb-4">
               {filteredSponsors.length} {filteredSponsors.length === 1 ? "partner" : "partners"} shown
             </p>
-            <Button asChild size="lg" className="bg-purple-dark hover:bg-purple-mid">
+            <Button asChild size="lg" className="bg-foreground hover:bg-foreground/90">
               <Link href="#contact">Join Our Partner Network</Link>
             </Button>
           </div>

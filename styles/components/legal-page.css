@@ -191,21 +191,21 @@
     @apply text-xl md:text-2xl mb-6 mt-12;
     @apply pl-6;
   }
-  
+
   .legal-content h2::before {
     @apply w-3 h-8;
   }
-  
+
   .legal-section {
     @apply pb-8 mb-8;
   }
-  
+
   .legal-info-box,
   .legal-warning-box,
   .legal-highlight-box {
     @apply p-6 my-6;
   }
-  
+
   .legal-contact-card {
     @apply p-6 my-6;
   }
@@ -240,11 +240,11 @@
   .legal-content h3::before {
     @apply hidden;
   }
-  
+
   .legal-content h2 {
     @apply border-b border-gray-300;
   }
-  
+
   .legal-highlight-box,
   .legal-info-box,
   .legal-warning-box {

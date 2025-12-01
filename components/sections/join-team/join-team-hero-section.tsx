@@ -5,16 +5,16 @@ import Image from "next/image";
 
 export function JoinTeamHeroSection() {
   return (
-    <Section className="bg-white pt-16 pb-20">
+    <Section className="bg-white min-h-screen flex items-center">
       <Container>
         <div className="mx-auto max-w-6xl">
           {/* Title Section */}
           <div className="text-center mb-16">
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight">
-              <span className="block text-navy-dark">JOIN THE</span>
-              <span className="block text-purple-dark mt-2">SHARPEST TEAM</span>
+              <span className="block text-foreground">JOIN THE</span>
+              <span className="block text-foreground mt-2">SHARPEST TEAM</span>
             </h1>
-            <p className="mt-8 text-xl text-gray max-w-3xl mx-auto leading-relaxed">
+            <p className="mt-8 text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Be part of a passionate community of volunteers and ambassadors working together to bridge the gender gap in STEM
             </p>
           </div>

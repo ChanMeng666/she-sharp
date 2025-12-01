@@ -37,16 +37,16 @@ export function PageHeader({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-start sm:items-center gap-3">
           {icon && (
-            <div className="flex-shrink-0 text-purple-dark">
+            <div className="flex-shrink-0 text-foreground">
               {icon}
             </div>
           )}
           <div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-dark">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
               {title}
             </h1>
             {description && (
-              <p className="mt-1 text-sm sm:text-base text-gray">
+              <p className="mt-1 text-sm sm:text-base text-muted-foreground">
                 {description}
               </p>
             )}
@@ -84,11 +84,11 @@ interface SectionHeaderProps {
 export function SectionHeader({ title, description, className }: SectionHeaderProps) {
   return (
     <div className={cn("mb-3 sm:mb-4", className)}>
-      <h2 className="text-xl sm:text-2xl font-semibold text-purple-dark">
+      <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
         {title}
       </h2>
       {description && (
-        <p className="mt-1 text-sm sm:text-base text-gray">
+        <p className="mt-1 text-sm sm:text-base text-muted-foreground">
           {description}
         </p>
       )}

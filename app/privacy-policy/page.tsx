@@ -1,6 +1,6 @@
 import { Shield, Lock, Eye, Users, Database, Mail, Globe, AlertCircle, Info, CheckCircle } from "lucide-react";
 import { LegalPageLayout } from "@/components/legal-page-layout";
-import "@/components/legal-page-styles.css";
+import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Privacy Policy | She Sharp",
@@ -41,15 +41,15 @@ export default function PrivacyPolicyPage() {
           
           <div className="space-y-6 mb-8">
             {/* Event Attendees */}
-            <div className="bg-gradient-to-r from-purple-light/30 to-purple-light/10 rounded-2xl p-8 border border-purple-light/20 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="bg-muted rounded-2xl p-8 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-white rounded-lg shadow-sm flex-shrink-0">
-                  <Users className="h-6 w-6 text-purple-dark" />
+                  <Users className="h-6 w-6 text-foreground" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-3">
                     <h3 className="!mt-0 text-xl">Event Attendees</h3>
-                    <span className="px-3 py-1 bg-purple-dark/20 text-purple-dark text-sm font-medium rounded-full">
+                    <span className="px-3 py-1 bg-muted text-foreground text-sm font-medium rounded-full">
                       Registration Data
                     </span>
                   </div>
@@ -63,22 +63,22 @@ export default function PrivacyPolicyPage() {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-purple-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Name</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Name</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-purple-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Company</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Company</span>
                       </div>
                     </div>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-purple-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Email address</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Email address</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-purple-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Dietary requirements</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Dietary requirements</span>
                       </div>
                     </div>
                   </div>
@@ -87,15 +87,15 @@ export default function PrivacyPolicyPage() {
             </div>
             
             {/* Speakers */}
-            <div className="bg-gradient-to-r from-periwinkle-light/30 to-periwinkle-light/10 rounded-2xl p-8 border border-periwinkle-dark/20 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="bg-muted rounded-2xl p-8 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-white rounded-lg shadow-sm flex-shrink-0">
-                  <Globe className="h-6 w-6 text-periwinkle-dark" />
+                  <Globe className="h-6 w-6 text-foreground" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-3">
                     <h3 className="!mt-0 text-xl">Speakers</h3>
-                    <span className="px-3 py-1 bg-periwinkle-dark/20 text-periwinkle-dark text-sm font-medium rounded-full">
+                    <span className="px-3 py-1 bg-muted text-foreground text-sm font-medium rounded-full">
                       Professional Info
                     </span>
                   </div>
@@ -109,22 +109,22 @@ export default function PrivacyPolicyPage() {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-periwinkle-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Name</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Name</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-periwinkle-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Company</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Company</span>
                       </div>
                     </div>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-periwinkle-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Job title</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Job title</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-periwinkle-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Photo</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Photo</span>
                       </div>
                     </div>
                   </div>
@@ -133,15 +133,15 @@ export default function PrivacyPolicyPage() {
             </div>
             
             {/* Volunteers/Ambassadors */}
-            <div className="bg-gradient-to-r from-mint-light/30 to-mint-light/10 rounded-2xl p-8 border border-mint-light/20 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="bg-muted rounded-2xl p-8 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-white rounded-lg shadow-sm flex-shrink-0">
-                  <Database className="h-6 w-6 text-mint-dark" />
+                  <Database className="h-6 w-6 text-foreground" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-3">
                     <h3 className="!mt-0 text-xl">Volunteers/Ambassadors</h3>
-                    <span className="px-3 py-1 bg-mint-dark/20 text-mint-dark text-sm font-medium rounded-full">
+                    <span className="px-3 py-1 bg-muted text-foreground text-sm font-medium rounded-full">
                       CV & Background
                     </span>
                   </div>
@@ -155,26 +155,26 @@ export default function PrivacyPolicyPage() {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-mint-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Your CV</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Your CV</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-mint-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Name</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Name</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-mint-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Address</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Address</span>
                       </div>
                     </div>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-mint-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Mobile number</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Mobile number</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-mint-dark rounded-full"></div>
-                        <span className="text-sm text-navy-dark">Work history</span>
+                        <div className="w-2 h-2 bg-foreground rounded-full"></div>
+                        <span className="text-sm text-foreground">Work history</span>
                       </div>
                     </div>
                   </div>
@@ -196,7 +196,7 @@ export default function PrivacyPolicyPage() {
             <div className="flex items-start gap-4">
               <span className="number">1</span>
               <div>
-                <h4 className="font-semibold text-navy-dark mb-2">Event Management</h4>
+                <h4 className="font-semibold text-foreground mb-2">Event Management</h4>
                 <p className="text-gray">Organise and manage events effectively</p>
               </div>
             </div>
@@ -204,7 +204,7 @@ export default function PrivacyPolicyPage() {
             <div className="flex items-start gap-4">
               <span className="number">2</span>
               <div>
-                <h4 className="font-semibold text-navy-dark mb-2">Communication</h4>
+                <h4 className="font-semibold text-foreground mb-2">Communication</h4>
                 <p className="text-gray">Communicate important event details with attendees, speakers, and volunteers</p>
               </div>
             </div>
@@ -212,7 +212,7 @@ export default function PrivacyPolicyPage() {
             <div className="flex items-start gap-4">
               <span className="number">3</span>
               <div>
-                <h4 className="font-semibold text-navy-dark mb-2">Promotion</h4>
+                <h4 className="font-semibold text-foreground mb-2">Promotion</h4>
                 <p className="text-gray">Promote speaker involvement on our website, social media, and other materials</p>
               </div>
             </div>
@@ -220,7 +220,7 @@ export default function PrivacyPolicyPage() {
             <div className="flex items-start gap-4">
               <span className="number">4</span>
               <div>
-                <h4 className="font-semibold text-navy-dark mb-2">Volunteer Matching</h4>
+                <h4 className="font-semibold text-foreground mb-2">Volunteer Matching</h4>
                 <p className="text-gray">Match volunteers to relevant activities based on experience and skills</p>
               </div>
             </div>
@@ -228,7 +228,7 @@ export default function PrivacyPolicyPage() {
             <div className="flex items-start gap-4">
               <span className="number">5</span>
               <div>
-                <h4 className="font-semibold text-navy-dark mb-2">Service Improvement</h4>
+                <h4 className="font-semibold text-foreground mb-2">Service Improvement</h4>
                 <p className="text-gray">Improve our event planning and engagement strategies</p>
               </div>
             </div>
@@ -236,7 +236,7 @@ export default function PrivacyPolicyPage() {
             <div className="flex items-start gap-4">
               <span className="number">6</span>
               <div>
-                <h4 className="font-semibold text-navy-dark mb-2">Future Engagement</h4>
+                <h4 className="font-semibold text-foreground mb-2">Future Engagement</h4>
                 <p className="text-gray">Keep you informed about future events, initiatives, and opportunities related to She Sharp</p>
               </div>
             </div>
@@ -254,15 +254,15 @@ export default function PrivacyPolicyPage() {
           
           <div className="space-y-6 mb-8">
             {/* Event Partners & Sponsors */}
-            <div className="bg-gradient-to-r from-purple-light/30 to-purple-light/10 rounded-2xl p-8 border border-purple-light/20 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="bg-muted rounded-2xl p-8 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-white rounded-lg shadow-sm flex-shrink-0">
-                  <Users className="h-6 w-6 text-purple-dark" />
+                  <Users className="h-6 w-6 text-foreground" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-3">
                     <h3 className="!mt-0 text-xl">Event Partners & Sponsors</h3>
-                    <span className="px-3 py-1 bg-purple-dark/20 text-purple-dark text-sm font-medium rounded-full">
+                    <span className="px-3 py-1 bg-muted text-foreground text-sm font-medium rounded-full">
                       Event Coordination
                     </span>
                   </div>
@@ -277,15 +277,15 @@ export default function PrivacyPolicyPage() {
             </div>
             
             {/* Third-Party Platforms */}
-            <div className="bg-gradient-to-r from-periwinkle-light/30 to-periwinkle-light/10 rounded-2xl p-8 border border-periwinkle-dark/20 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="bg-muted rounded-2xl p-8 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-white rounded-lg shadow-sm flex-shrink-0">
-                  <Globe className="h-6 w-6 text-periwinkle-dark" />
+                  <Globe className="h-6 w-6 text-foreground" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-3">
                     <h3 className="!mt-0 text-xl">Third-Party Platforms</h3>
-                    <span className="px-3 py-1 bg-periwinkle-dark/20 text-periwinkle-dark text-sm font-medium rounded-full">
+                    <span className="px-3 py-1 bg-muted text-foreground text-sm font-medium rounded-full">
                       Service Providers
                     </span>
                   </div>
@@ -301,15 +301,15 @@ export default function PrivacyPolicyPage() {
             </div>
             
             {/* Website & Social Media */}
-            <div className="bg-gradient-to-r from-mint-light/30 to-mint-light/10 rounded-2xl p-8 border border-mint-light/20 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="bg-muted rounded-2xl p-8 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-white rounded-lg shadow-sm flex-shrink-0">
-                  <Globe className="h-6 w-6 text-mint-dark" />
+                  <Globe className="h-6 w-6 text-foreground" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-3">
                     <h3 className="!mt-0 text-xl">Website & Social Media</h3>
-                    <span className="px-3 py-1 bg-mint-dark/20 text-mint-dark text-sm font-medium rounded-full">
+                    <span className="px-3 py-1 bg-muted text-foreground text-sm font-medium rounded-full">
                       Promotion
                     </span>
                   </div>
@@ -324,15 +324,15 @@ export default function PrivacyPolicyPage() {
             </div>
             
             {/* Regulatory Authorities */}
-            <div className="bg-gradient-to-r from-purple-light/30 to-purple-light/10 rounded-2xl p-8 border border-purple-light/20 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="bg-muted rounded-2xl p-8 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-white rounded-lg shadow-sm flex-shrink-0">
-                  <Shield className="h-6 w-6 text-purple-dark" />
+                  <Shield className="h-6 w-6 text-foreground" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-3">
                     <h3 className="!mt-0 text-xl">Regulatory Authorities</h3>
-                    <span className="px-3 py-1 bg-purple-dark/20 text-purple-dark text-sm font-medium rounded-full">
+                    <span className="px-3 py-1 bg-muted text-foreground text-sm font-medium rounded-full">
                       Legal Requirements
                     </span>
                   </div>
@@ -349,7 +349,7 @@ export default function PrivacyPolicyPage() {
           
           <div className="legal-warning-box">
             <div className="flex items-start gap-4">
-              <Lock className="h-6 w-6 text-mint-dark mt-1" />
+              <Lock className="h-6 w-6 text-foreground mt-1" />
               <div>
                 <h3 className="!mt-0 text-lg">Important Note</h3>
                 <p className="mb-0">
@@ -366,7 +366,7 @@ export default function PrivacyPolicyPage() {
           
           <div className="legal-info-box">
             <div className="flex items-start gap-4">
-              <Info className="h-6 w-6 text-purple-dark mt-1" />
+              <Info className="h-6 w-6 text-foreground mt-1" />
               <div>
                 <h3 className="!mt-0 text-lg">Your Choice</h3>
                 <p className="mb-4">
@@ -375,15 +375,15 @@ export default function PrivacyPolicyPage() {
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="text-purple-dark mt-0.5">•</span>
+                    <span className="text-foreground mt-0.5">•</span>
                     <span>Confirm your event registration</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-purple-dark mt-0.5">•</span>
+                    <span className="text-foreground mt-0.5">•</span>
                     <span>Tailor your event experience (e.g. catering to dietary restrictions)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-purple-dark mt-0.5">•</span>
+                    <span className="text-foreground mt-0.5">•</span>
                     <span>Connect you with appropriate volunteer opportunities</span>
                   </li>
                 </ul>
@@ -399,7 +399,7 @@ export default function PrivacyPolicyPage() {
           <div className="space-y-6">
             <div className="legal-highlight-box">
               <div className="flex items-start gap-4">
-                <Lock className="h-6 w-6 text-purple-dark" />
+                <Lock className="h-6 w-6 text-foreground" />
                 <div>
                   <h3 className="!mt-0 text-lg">Access Control</h3>
                   <p className="mb-0">
@@ -413,7 +413,7 @@ export default function PrivacyPolicyPage() {
             
             <div className="legal-highlight-box">
               <div className="flex items-start gap-4">
-                <Database className="h-6 w-6 text-periwinkle-dark" />
+                <Database className="h-6 w-6 text-foreground" />
                 <div>
                   <h3 className="!mt-0 text-lg">Data Retention</h3>
                   <p className="mb-0">
@@ -433,7 +433,7 @@ export default function PrivacyPolicyPage() {
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div className="legal-highlight-box">
               <div className="flex items-start gap-4">
-                <Eye className="h-6 w-6 text-purple-dark" />
+                <Eye className="h-6 w-6 text-foreground" />
                 <div>
                   <h3 className="!mt-0 text-lg">Your Rights</h3>
                   <p className="mb-0">
@@ -445,12 +445,12 @@ export default function PrivacyPolicyPage() {
             
             <div className="legal-highlight-box">
               <div className="flex items-start gap-4">
-                <Mail className="h-6 w-6 text-periwinkle-dark" />
+                <Mail className="h-6 w-6 text-foreground" />
                 <div>
                   <h3 className="!mt-0 text-lg">How to Request</h3>
                   <p className="mb-0">
                     To request a copy or update of your information, please contact us at 
-                    <a href="mailto:info@shesharp.org.nz" className="text-purple-dark hover:text-purple-mid ml-1">
+                    <a href="mailto:info@shesharp.org.nz" className="text-foreground hover:text-foreground/80 ml-1">
                       info@shesharp.org.nz
                     </a>
                   </p>
@@ -461,7 +461,7 @@ export default function PrivacyPolicyPage() {
           
           <div className="legal-warning-box">
             <div className="flex items-start gap-4">
-              <AlertCircle className="h-6 w-6 text-mint-dark mt-1" />
+              <AlertCircle className="h-6 w-6 text-foreground mt-1" />
               <div>
                 <h3 className="!mt-0 text-lg">Identity Verification</h3>
                 <p className="mb-0">
@@ -479,7 +479,7 @@ export default function PrivacyPolicyPage() {
           
           <div className="legal-info-box">
             <div className="flex items-start gap-4">
-              <Info className="h-6 w-6 text-purple-dark mt-1" />
+              <Info className="h-6 w-6 text-foreground mt-1" />
               <div>
                 <h3 className="!mt-0 text-lg">Policy Changes</h3>
                 <p className="mb-0">
@@ -504,22 +504,22 @@ export default function PrivacyPolicyPage() {
             
             <div className="grid sm:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-semibold text-navy-dark mb-2">Email Us</h4>
-                <a href="mailto:info@shesharp.org.nz" className="text-purple-dark hover:text-purple-mid transition-colors">
+                <h4 className="font-semibold text-foreground mb-2">Email Us</h4>
+                <a href="mailto:info@shesharp.org.nz" className="text-foreground hover:text-foreground/80 transition-colors">
                   info@shesharp.org.nz
                 </a>
               </div>
               
               <div>
-                <h4 className="font-semibold text-navy-dark mb-2">Website</h4>
-                <a href="https://www.shesharp.org.nz" className="text-purple-dark hover:text-purple-mid transition-colors">
+                <h4 className="font-semibold text-foreground mb-2">Website</h4>
+                <a href="https://www.shesharp.org.nz" className="text-foreground hover:text-foreground/80 transition-colors">
                   www.shesharp.org.nz
                 </a>
               </div>
             </div>
             
-            <div className="mt-6 p-4 bg-purple-light/30 rounded-lg">
-              <p className="text-sm text-navy-dark mb-0">
+            <div className="mt-6 p-4 bg-muted rounded-lg">
+              <p className="text-sm text-foreground mb-0">
                 <strong>Response Time:</strong> We aim to respond to all privacy inquiries within 5 business days.
               </p>
             </div>

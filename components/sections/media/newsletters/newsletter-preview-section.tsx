@@ -14,7 +14,7 @@ import {
 
 export function NewsletterPreviewSection() {
   return (
-    <Section className="py-16 lg:py-24 bg-gradient-to-b from-white to-purple-light/10">
+    <Section className="py-16 lg:py-24 bg-background">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -23,10 +23,10 @@ export function NewsletterPreviewSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <Badge className="mb-4 bg-mint-light text-mint-dark border-mint-dark/20">
+          <Badge className="mb-4 bg-muted text-foreground border-border">
             Monthly Insights
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             What's Inside Our Newsletter
           </h2>
           <p className="text-lg text-gray max-w-3xl mx-auto">
@@ -47,10 +47,10 @@ export function NewsletterPreviewSection() {
             >
               <Card className="h-full text-center hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-6">
-                  <div className="inline-flex p-3 rounded-full bg-purple-light/20 mb-4">
-                    <topic.icon className="h-6 w-6 text-purple-dark" />
+                  <div className="inline-flex p-3 rounded-full bg-muted mb-4">
+                    <topic.icon className="h-6 w-6 text-foreground" />
                   </div>
-                  <h3 className="font-semibold text-navy-dark mb-2">
+                  <h3 className="font-semibold text-foreground mb-2">
                     {topic.title}
                   </h3>
                   <p className="text-sm text-gray">
@@ -70,7 +70,7 @@ export function NewsletterPreviewSection() {
           viewport={{ once: true }}
           className="mb-12"
         >
-          <h3 className="text-2xl font-bold text-navy-dark mb-6 text-center">
+          <h3 className="text-2xl font-bold text-foreground mb-6 text-center">
             Recent Newsletter Issues
           </h3>
           <div className="grid lg:grid-cols-3 gap-6">
@@ -92,14 +92,14 @@ export function NewsletterPreviewSection() {
                   <div className="space-y-2 mb-4">
                     {issue.highlights.map((highlight) => (
                       <div key={highlight} className="flex items-start gap-2">
-                        <Sparkles className="h-4 w-4 text-purple-dark mt-0.5 flex-shrink-0" />
+                        <Sparkles className="h-4 w-4 text-foreground mt-0.5 flex-shrink-0" />
                         <span className="text-sm text-gray-600">{highlight}</span>
                       </div>
                     ))}
                   </div>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     className="w-full group"
                   >
                     Read This Issue
@@ -125,7 +125,7 @@ export function NewsletterPreviewSection() {
             have found otherwise."
           </p>
           <div>
-            <p className="font-semibold text-navy-dark">Rachel Kim</p>
+            <p className="font-semibold text-foreground">Rachel Kim</p>
             <p className="text-sm text-gray">Software Engineer at Xero</p>
           </div>
         </motion.div>

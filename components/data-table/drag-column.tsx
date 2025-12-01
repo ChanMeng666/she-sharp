@@ -13,7 +13,7 @@ function DragHandle({ id }: { id: number }) {
     <Button
       {...attributes}
       {...listeners}
-      variant="ghost"
+      variant="outline"
       size="icon"
       className="text-muted-foreground size-7 hover:bg-transparent"
     >

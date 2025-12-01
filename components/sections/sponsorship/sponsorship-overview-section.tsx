@@ -89,13 +89,13 @@ export function SponsorshipOverviewSection() {
         <div className="space-y-12">
           {/* Section Header */}
           <div className="text-center space-y-4">
-            <Badge className="bg-purple-dark text-white hover:bg-purple-dark">
+            <Badge className="bg-foreground text-background hover:bg-foreground">
               Simple & Transparent Process
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mt-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-4">
               Your Partnership Journey
             </h2>
-            <p className="text-lg text-gray max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               From initial contact to active partnership, we make the process seamless and rewarding.
             </p>
           </div>
@@ -121,20 +121,20 @@ export function SponsorshipOverviewSection() {
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-4">
                             <div className="relative">
-                              <div className="w-12 h-12 bg-purple-light rounded-full flex items-center justify-center">
-                                <span className="text-lg font-bold text-purple-dark">
+                              <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
+                                <span className="text-lg font-bold text-foreground">
                                   {step.number}
                                 </span>
                               </div>
                               {isCompleted && (
-                                <CheckCircle2 className="absolute -bottom-1 -right-1 h-5 w-5 text-mint-dark bg-white rounded-full" />
+                                <CheckCircle2 className="absolute -bottom-1 -right-1 h-5 w-5 text-foreground bg-background rounded-full" />
                               )}
                             </div>
                             <div className="text-left">
-                              <h3 className="font-semibold text-navy-dark text-lg">
+                              <h3 className="font-semibold text-foreground text-lg">
                                 {step.title}
                               </h3>
-                              <p className="text-sm text-gray mt-1">
+                              <p className="text-sm text-muted-foreground mt-1">
                                 {step.description}
                               </p>
                             </div>
@@ -144,9 +144,9 @@ export function SponsorshipOverviewSection() {
                               {step.duration}
                             </Badge>
                             {isExpanded ? (
-                              <ChevronDown className="h-5 w-5 text-gray" />
+                              <ChevronDown className="h-5 w-5 text-muted-foreground" />
                             ) : (
-                              <ChevronRight className="h-5 w-5 text-gray" />
+                              <ChevronRight className="h-5 w-5 text-muted-foreground" />
                             )}
                           </div>
                         </div>
@@ -162,8 +162,8 @@ export function SponsorshipOverviewSection() {
                               key={detailIndex}
                               className="flex items-start gap-3"
                             >
-                              <Circle className="h-2 w-2 text-purple-dark mt-2 flex-shrink-0" />
-                              <span className="text-sm text-gray">
+                              <Circle className="h-2 w-2 text-foreground mt-2 flex-shrink-0" />
+                              <span className="text-sm text-muted-foreground">
                                 {detail}
                               </span>
                             </div>
@@ -178,13 +178,13 @@ export function SponsorshipOverviewSection() {
           </div>
 
           {/* Timeline Summary */}
-          <div className="bg-white rounded-xl p-8 text-center">
-            <h3 className="text-xl font-semibold text-navy-dark mb-4">
+          <div className="bg-background rounded-xl p-8 text-center">
+            <h3 className="text-xl font-semibold text-foreground mb-4">
               Total Timeline: 2-3 Weeks
             </h3>
-            <p className="text-gray max-w-2xl mx-auto">
-              From your initial inquiry to becoming an active partner, the entire process 
-              typically takes 2-3 weeks. We're committed to making your partnership journey 
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              From your initial inquiry to becoming an active partner, the entire process
+              typically takes 2-3 weeks. We're committed to making your partnership journey
               smooth, transparent, and aligned with your goals.
             </p>
           </div>

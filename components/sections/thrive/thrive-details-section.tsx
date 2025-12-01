@@ -60,7 +60,7 @@ export function ThriveDetailsSection() {
     <Section bgColor="accent">
       <Container>
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark dark:text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Event Program Details
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -85,15 +85,15 @@ export function ThriveDetailsSection() {
               <CardContent>
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-xl font-semibold text-navy-dark dark:text-white mb-2">
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
                       {keynoteSpeaker.name}
                     </h3>
-                    <p className="text-purple-dark font-medium mb-4">{keynoteSpeaker.role}</p>
+                    <p className="text-foreground font-medium mb-4">{keynoteSpeaker.role}</p>
                     <p className="text-gray-600 dark:text-gray-400 mb-4">{keynoteSpeaker.bio}</p>
                   </div>
-                  <div className="bg-purple-light/20 dark:bg-purple-dark/20 rounded-lg p-4">
-                    <p className="font-medium text-navy-dark dark:text-white mb-2">Keynote Topic:</p>
-                    <p className="text-purple-dark dark:text-purple-mid font-semibold">
+                  <div className="bg-muted rounded-lg p-4">
+                    <p className="font-medium text-foreground mb-2">Keynote Topic:</p>
+                    <p className="text-foreground font-semibold">
                       {keynoteSpeaker.topic}
                     </p>
                   </div>
@@ -118,10 +118,10 @@ export function ThriveDetailsSection() {
                       key={index} 
                       className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4"
                     >
-                      <h4 className="font-semibold text-navy-dark dark:text-white">
+                      <h4 className="font-semibold text-foreground">
                         {panelist.name}
                       </h4>
-                      <p className="text-sm text-purple-dark dark:text-purple-mid">
+                      <p className="text-sm text-foreground">
                         {panelist.role}
                       </p>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -150,18 +150,18 @@ export function ThriveDetailsSection() {
                       key={index} 
                       className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700"
                     >
-                      <p className="font-medium text-navy-dark dark:text-white text-sm">
+                      <p className="font-medium text-foreground text-sm">
                         {mentor.name}
                       </p>
-                      <p className="text-xs text-purple-dark dark:text-purple-mid">
+                      <p className="text-xs text-foreground">
                         {mentor.expertise}
                       </p>
                     </div>
                   ))}
                 </div>
-                <div className="bg-mint-light/20 dark:bg-mint-dark/10 rounded-lg p-4">
+                <div className="bg-muted rounded-lg p-4">
                   <p className="text-sm text-gray-700 dark:text-gray-300">
-                    <strong className="text-navy-dark dark:text-white">Mentoring Format:</strong> Three 20-minute rounds 
+                    <strong className="text-foreground">Mentoring Format:</strong> Three 20-minute rounds 
                     where attendees rotated between mentors for focused discussions on career development, 
                     CV reviews, and interview preparation.
                   </p>
@@ -183,10 +183,10 @@ export function ThriveDetailsSection() {
                       key={index} 
                       className="flex items-center gap-4 pb-3 border-b border-gray-200 dark:border-gray-700 last:border-0"
                     >
-                      <div className="text-purple-dark dark:text-purple-mid">
+                      <div className="text-foreground">
                         {item.icon}
                       </div>
-                      <span className="text-purple-dark dark:text-purple-mid font-medium min-w-[100px]">
+                      <span className="text-foreground font-medium min-w-[100px]">
                         {item.time}
                       </span>
                       <span className="text-gray-700 dark:text-gray-300">

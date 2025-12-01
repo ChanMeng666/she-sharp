@@ -17,7 +17,7 @@ export default function MentorApplicationsPage() {
           <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
             Auto-refresh every 30 seconds
           </span>
-          <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm sm:text-base">
+          <button className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm sm:text-base">
             Bulk Approve
           </button>
         </div>

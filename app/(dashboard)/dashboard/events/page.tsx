@@ -125,28 +125,15 @@ export default function EventsPage() {
   };
 
   const getEventTypeColor = (eventType: string) => {
-    switch (eventType) {
-      case "workshop":
-        return "bg-purple-light text-primary border-purple-mid/20";
-      case "networking":
-        return "bg-mint-light text-mint-dark border-mint-dark/20";
-      case "mentorship":
-        return "bg-periwinkle-light text-periwinkle-dark border-periwinkle-dark/20";
-      case "conference":
-        return "bg-navy-light text-navy-dark border-navy-dark/20";
-      case "social":
-        return "bg-purple-light text-primary border-purple-mid/20";
-      default:
-        return "bg-accent text-foreground border-border";
-    }
+    return "bg-muted text-foreground border-border";
   };
 
   const EventCard = ({ event }: { event: Event }) => (
-    <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-purple-mid/30 bg-white h-full overflow-hidden">
+    <Card className="group hover:shadow-xl transition-all duration-300 border-border bg-background h-full overflow-hidden">
       <CardHeader>
         <div className="flex justify-between items-start mb-2">
           <div className="space-y-2 flex-1">
-            <CardTitle className="text-lg font-semibold text-navy-dark group-hover:text-primary transition-colors line-clamp-2">
+            <CardTitle className="text-lg font-semibold text-foreground group-hover:text-foreground transition-colors line-clamp-2">
               {event.title}
             </CardTitle>
             <div className="flex flex-wrap gap-2">
@@ -156,12 +143,12 @@ export default function EventsPage() {
                 {event.eventType}
               </Badge>
               {event.isMembersOnly && (
-                <Badge className="bg-purple-light/50 text-primary border-purple-mid/20 text-xs">
+                <Badge className="bg-muted text-foreground border-border text-xs">
                   Members Only
                 </Badge>
               )}
               {event.isOngoing && (
-                <Badge className="bg-mint-light text-mint-dark border-mint-dark/20 text-xs">
+                <Badge className="bg-muted text-foreground border-border text-xs">
                   Happening Now
                 </Badge>
               )}
@@ -169,14 +156,14 @@ export default function EventsPage() {
           </div>
           {event.capacity && (
             <div className="text-right ml-4">
-              <div className="flex items-center gap-1 text-sm text-gray">
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
                 <Users className="h-4 w-4" />
                 <span className="font-medium">
                   {event.currentRegistrations}/{event.capacity}
                 </span>
               </div>
               {event.spotsRemaining !== null && event.spotsRemaining > 0 && (
-                <p className="text-xs text-mint-dark mt-1 font-medium">
+                <p className="text-xs text-foreground mt-1 font-medium">
                   {event.spotsRemaining} spots left
                 </p>
               )}
@@ -191,40 +178,40 @@ export default function EventsPage() {
       </CardHeader>
       <CardContent className="flex-1 space-y-4">
         {event.description && (
-          <CardDescription className="line-clamp-2 text-gray text-sm">
+          <CardDescription className="line-clamp-2 text-muted-foreground text-sm">
             {event.description}
           </CardDescription>
         )}
 
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-sm text-gray">
-            <Calendar className="h-4 w-4 text-primary" />
-            <span className="font-medium text-navy-dark">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Calendar className="h-4 w-4 text-foreground" />
+            <span className="font-medium text-foreground">
               {format(new Date(event.startTime), "PPP")}
             </span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-gray">
-            <Clock className="h-4 w-4 text-primary" />
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Clock className="h-4 w-4 text-foreground" />
             <span>
               {format(new Date(event.startTime), "p")} -{" "}
               {format(new Date(event.endTime), "p")}
               {event.timezone && ` (${event.timezone})`}
             </span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-gray">
-            <span className="text-primary">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <span className="text-foreground">
               {getLocationIcon(event.locationType)}
             </span>
             <span className="capitalize">{event.locationType}</span>
             {event.locationDetails?.venue && (
-              <span className="text-navy-dark font-medium">
+              <span className="text-foreground font-medium">
                 • {event.locationDetails.venue}
               </span>
             )}
           </div>
         </div>
       </CardContent>
-      <CardFooter className="border-t border-border bg-accent/50 flex flex-wrap gap-2 p-4">
+      <CardFooter className="border-t border-border bg-muted flex flex-wrap gap-2 p-4">
         {event.isUpcoming &&
           !event.isFull &&
           (event.isRegistered ? (
@@ -254,7 +241,7 @@ export default function EventsPage() {
         )}
         <Button
           variant="outline"
-          className="min-w-[100px] border-border hover:border-purple-mid/30 hover:bg-purple-light/30 transition-all"
+          className="min-w-[100px] border-border transition-all"
           size="lg"
         >
           View Details
@@ -268,7 +255,7 @@ export default function EventsPage() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-gray">Loading events...</p>
+          <p className="mt-4 text-muted-foreground">Loading events...</p>
         </div>
       </div>
     );
@@ -279,20 +266,20 @@ export default function EventsPage() {
       {/* Header Section */}
       <div className="mb-6 sm:mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
-          <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-primary flex-shrink-0" />
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-dark to-purple-mid bg-clip-text text-transparent">
+          <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-foreground flex-shrink-0" />
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
             Events & Workshops
           </h1>
         </div>
-        <p className="text-gray text-base sm:text-lg">
+        <p className="text-muted-foreground text-base sm:text-lg">
           Discover and register for upcoming She Sharp events
         </p>
       </div>
 
       {/* Info Alert */}
-      <Alert className="mb-6 sm:mb-8 border-purple-mid/20 bg-purple-light/20">
-        <Info className="h-4 w-4 text-primary" />
-        <AlertDescription className="text-navy-dark">
+      <Alert className="mb-6 sm:mb-8 border-border bg-muted">
+        <Info className="h-4 w-4 text-foreground" />
+        <AlertDescription className="text-foreground">
           <strong className="font-semibold">Join our community events!</strong>
           <span className="block sm:inline">
             {" "}
@@ -331,13 +318,13 @@ export default function EventsPage() {
 
         <TabsContent value="upcoming" className="space-y-4">
           {events.upcoming.length === 0 ? (
-            <Card className="border-purple-light shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="text-center py-12">
-                <Sparkles className="h-12 w-12 text-purple-mid mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-navy-dark mb-2">
+                <Sparkles className="h-12 w-12 text-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-foreground mb-2">
                   No upcoming events
                 </h3>
-                <p className="text-gray">Check back soon for new events!</p>
+                <p className="text-muted-foreground">Check back soon for new events!</p>
               </CardContent>
             </Card>
           ) : (
@@ -351,13 +338,13 @@ export default function EventsPage() {
 
         <TabsContent value="ongoing" className="space-y-4">
           {events.ongoing.length === 0 ? (
-            <Card className="border-purple-light shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="text-center py-12">
-                <Clock className="h-12 w-12 text-purple-mid mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-navy-dark mb-2">
+                <Clock className="h-12 w-12 text-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-foreground mb-2">
                   No ongoing events
                 </h3>
-                <p className="text-gray">No events are happening right now</p>
+                <p className="text-muted-foreground">No events are happening right now</p>
               </CardContent>
             </Card>
           ) : (
@@ -371,13 +358,13 @@ export default function EventsPage() {
 
         <TabsContent value="past" className="space-y-4">
           {events.past.length === 0 ? (
-            <Card className="border-purple-light shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="text-center py-12">
-                <Calendar className="h-12 w-12 text-purple-mid mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-navy-dark mb-2">
+                <Calendar className="h-12 w-12 text-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-foreground mb-2">
                   No past events
                 </h3>
-                <p className="text-gray">Past events will appear here</p>
+                <p className="text-muted-foreground">Past events will appear here</p>
               </CardContent>
             </Card>
           ) : (

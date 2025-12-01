@@ -29,7 +29,7 @@ export function TestimonialsSection() {
   return (
     <Section className="py-16 bg-gray-50">
       <Container>
-        <h2 className="text-3xl font-bold text-navy text-center mb-12">
+        <h2 className="text-3xl font-bold text-foreground text-center mb-12">
           Here&apos;s what people say about She Sharp
         </h2>
         <div className="grid md:grid-cols-2 gap-8">
@@ -40,7 +40,7 @@ export function TestimonialsSection() {
                   &ldquo;{testimonial.quote}&rdquo;
                 </blockquote>
                 <div>
-                  <p className="font-semibold text-navy">{testimonial.name}</p>
+                  <p className="font-semibold text-foreground">{testimonial.name}</p>
                   <p className="text-sm text-gray-600">{testimonial.role}</p>
                 </div>
               </CardContent>

@@ -36,7 +36,7 @@ export function EventHeader({ event, className }: EventHeaderProps) {
       {/* Breadcrumb */}
       <Link
         href="/events"
-        className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-purple-dark transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-foreground transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Events
@@ -52,19 +52,17 @@ export function EventHeader({ event, className }: EventHeaderProps) {
           sizes="(max-width: 1024px) 100vw, 900px"
           className="object-cover"
         />
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
         {/* Top badges */}
         <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
           {/* Price/Free Badge */}
           {event.registration?.isFree && (
-            <Badge className="bg-mint-dark text-white border-0 shadow-lg">
+            <Badge className="bg-foreground text-background border-0 shadow-lg">
               Free Event
             </Badge>
           )}
           {event.registration?.price && event.registration.price.amount > 0 && (
-            <Badge className="bg-purple-dark text-white border-0 shadow-lg">
+            <Badge className="bg-foreground text-background border-0 shadow-lg">
               ${event.registration.price.amount} {event.registration.price.currency}
             </Badge>
           )}
@@ -76,8 +74,8 @@ export function EventHeader({ event, className }: EventHeaderProps) {
             className={cn(
               'shadow-lg',
               isOnline && 'bg-blue-500 text-white',
-              isHybrid && 'bg-purple-500 text-white',
-              !isOnline && !isHybrid && 'bg-white/90 text-navy-dark'
+              isHybrid && 'bg-foreground text-background',
+              !isOnline && !isHybrid && 'bg-white/90 text-foreground'
             )}
           >
             {isOnline ? (
@@ -99,7 +97,7 @@ export function EventHeader({ event, className }: EventHeaderProps) {
         {/* Past event overlay */}
         {isPast && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <Badge variant="secondary" className="bg-white text-navy-dark text-lg px-6 py-2">
+            <Badge variant="secondary" className="bg-white text-foreground text-lg px-6 py-2">
               Past Event
             </Badge>
           </div>
@@ -114,7 +112,7 @@ export function EventHeader({ event, className }: EventHeaderProps) {
             {event.category.replace(/-/g, ' ')}
           </Badge>
           {!isPast && daysUntil >= 0 && (
-            <span className="text-sm text-purple-dark font-medium">
+            <span className="text-sm text-foreground font-medium">
               {daysUntil === 0
                 ? 'Today!'
                 : daysUntil === 1
@@ -130,18 +128,18 @@ export function EventHeader({ event, className }: EventHeaderProps) {
         </div>
 
         {/* Title */}
-        <h1 className="text-3xl sm:text-4xl font-bold text-navy-dark">
+        <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
           {event.title}
         </h1>
 
         {/* Date, Time, Location */}
         <div className="flex flex-wrap gap-6 text-gray-600">
           <div className="flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-purple-dark" />
+            <Calendar className="w-5 h-5 text-foreground" />
             <span>{formatEventDate(event, 'full')}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Clock className="w-5 h-5 text-purple-dark" />
+            <Clock className="w-5 h-5 text-foreground" />
             <span>{formatEventTime(event)}</span>
           </div>
           <div className="flex items-center gap-2">
@@ -152,7 +150,7 @@ export function EventHeader({ event, className }: EventHeaderProps) {
               </>
             ) : (
               <>
-                <MapPin className="w-5 h-5 text-purple-dark" />
+                <MapPin className="w-5 h-5 text-foreground" />
                 <span>{event.location.venueName}, {event.location.city}</span>
               </>
             )}

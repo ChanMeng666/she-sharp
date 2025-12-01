@@ -215,7 +215,7 @@ export default function MentorApplications() {
                     <div className="flex items-start space-x-4">
                       <Avatar className="w-12 h-12">
                         <AvatarImage src={application.user.image || undefined} />
-                        <AvatarFallback className="bg-muted text-purple-700">
+                        <AvatarFallback className="bg-muted text-foreground">
                           {getInitials(application.user.name)}
                         </AvatarFallback>
                       </Avatar>
@@ -236,7 +236,7 @@ export default function MentorApplications() {
                             {experienceLevel.label}
                           </span>
                           {application.mbtiType && (
-                            <Badge variant="outline" className="text-purple-600 border-purple-200">
+                            <Badge variant="outline" className="text-foreground border-border">
                               {application.mbtiType}
                             </Badge>
                           )}
@@ -259,7 +259,7 @@ export default function MentorApplications() {
                         {new Date(application.submittedAt).toLocaleDateString()}
                       </span>
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => toggleExpanded(application.id)}
                       >
@@ -308,7 +308,7 @@ export default function MentorApplications() {
                               href={application.linkedinUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-sm text-primary hover:text-purple-700 flex items-center"
+                              className="text-sm text-primary hover:text-primary/80 flex items-center"
                             >
                               <Globe className="w-4 h-4 mr-1" />
                               View Profile
@@ -337,9 +337,9 @@ export default function MentorApplications() {
 
                       {/* Public Application Notice */}
                       {application.isPublicApplication && (
-                        <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                          <p className="text-sm font-medium text-blue-900 mb-1">Public Application</p>
-                          <p className="text-sm text-blue-700">
+                        <div className="p-3 bg-muted rounded-lg border border-border">
+                          <p className="text-sm font-medium text-foreground mb-1">Public Application</p>
+                          <p className="text-sm text-muted-foreground">
                             This applicant has not yet created an account. Upon approval, an invitation
                             code will be generated and sent to their email address.
                           </p>

@@ -28,7 +28,7 @@ export function ThriveTestimonialsSection() {
     <Section bgColor="white">
       <Container>
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark dark:text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             What People Are Saying
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -40,7 +40,7 @@ export function ThriveTestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <Card key={index} className="relative">
               <CardContent className="pt-8">
-                <Quote className="h-8 w-8 text-purple-light absolute top-4 left-4" />
+                <Quote className="h-8 w-8 text-muted-foreground absolute top-4 left-4" />
                 <blockquote className="text-gray-700 dark:text-gray-300 mb-4 pt-4 italic">
                   "{testimonial.quote}"
                 </blockquote>
@@ -52,7 +52,7 @@ export function ThriveTestimonialsSection() {
                   </div>
                 </div>
                 <div className="mt-4">
-                  <cite className="text-navy-dark dark:text-white font-medium not-italic">
+                  <cite className="text-foreground font-medium not-italic">
                     {testimonial.author}
                   </cite>
                   <p className="text-sm text-gray-600 dark:text-gray-400">

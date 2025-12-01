@@ -1,4 +1,4 @@
-import { LucideIcon, Calendar, Users, Briefcase, Heart, Mic, Mail, Camera, FileText, Award, BookOpen, HandHeart, Building2, FolderOpen, Bell, GraduationCap, UserPlus } from "lucide-react";
+import { LucideIcon, Calendar, Users, Heart, Mic, Mail, FileText, Award, BookOpen, HandHeart, Building2, GraduationCap, Newspaper, Sparkles, Library, MessageCircle, UserPlus } from "lucide-react";
 
 export interface NavigationItem {
   title: string;
@@ -16,32 +16,7 @@ export interface NavigationItem {
 export interface NavigationButton {
   title: string;
   href: string;
-  variant:
-    | "default"
-    | "secondary"
-    | "accent"
-    | "navy"
-    | "glass"
-    | "gradient"
-    | "glassmorphism"
-    | "neumorphism"
-    | "outline"
-    | "outline-thick"
-    | "outline-dashed"
-    | "outline-gradient"
-    | "ghost"
-    | "link"
-    | "minimal"
-    | "text"
-    | "black"
-    | "white"
-    | "dark"
-    | "light"
-    | "success"
-    | "warning"
-    | "danger"
-    | "info"
-    | "destructive";
+  variant: "default" | "outline";
 }
 
 export const navigationConfig: {
@@ -66,12 +41,6 @@ export const navigationConfig: {
           icon: Heart,
         },
         {
-          title: "Meet the Team",
-          href: "/about#team",
-          description: "Get to know our dedicated team",
-          icon: Users,
-        },
-        {
           title: "Impact Report",
           href: "/media/impact-report",
           description: "Our annual achievements and impact",
@@ -85,8 +54,8 @@ export const navigationConfig: {
       icon: GraduationCap,
       image: {
         src: "/img/mesh-954.png",
-        alt: "Mentorship program in action",
-        href: "/mentorship",
+        alt: "Meet Our Mentors",
+        href: "/mentorship/mentors",
       },
       children: [
         {
@@ -99,19 +68,13 @@ export const navigationConfig: {
           title: "Become a Mentee",
           href: "/mentorship/join",
           description: "Join the program and get matched with a mentor",
-          icon: GraduationCap,
+          icon: Sparkles,
         },
         {
           title: "Become a Mentor",
           href: "/mentorship/become-a-mentor",
           description: "Apply to share your expertise and guide others",
           icon: Award,
-        },
-        {
-          title: "Meet Our Mentors",
-          href: "/mentorship/mentors",
-          description: "Browse our experienced mentor community",
-          icon: Users,
         },
       ],
     },
@@ -126,15 +89,15 @@ export const navigationConfig: {
       icon: HandHeart,
       image: {
         src: "/img/mesh-152.png",
-        alt: "Join our volunteer team",
-        href: "/join-our-team",
+        alt: "Donate",
+        href: "/donate",
       },
       children: [
         {
           title: "Volunteer with Us",
           href: "/join-our-team",
           description: "Join our team and make a difference",
-          icon: Heart,
+          icon: UserPlus,
         },
         {
           title: "Corporate Partnership",
@@ -142,22 +105,16 @@ export const navigationConfig: {
           description: "Partner with us to support women in STEM",
           icon: Building2,
         },
-        {
-          title: "Donate",
-          href: "/donate",
-          description: "Support our mission with a donation",
-          icon: HandHeart,
-        },
       ],
     },
     {
       title: "Resources",
       href: "/media",
-      icon: BookOpen,
+      icon: Library,
       image: {
         src: "/img/mesh-437.png",
-        alt: "She Sharp Podcast",
-        href: "/media/podcasts",
+        alt: "Photo Gallery",
+        href: "/media/photo-gallery",
       },
       children: [
         {
@@ -173,23 +130,17 @@ export const navigationConfig: {
           icon: Mail,
         },
         {
-          title: "Photo Gallery",
-          href: "/media/photo-gallery",
-          description: "Event highlights and memorable moments",
-          icon: Camera,
-        },
-        {
           title: "In the Press",
           href: "/media/news-and-press",
           description: "Media coverage and press releases",
-          icon: FileText,
+          icon: Newspaper,
         },
       ],
     },
     {
       title: "Contact",
       href: "/contact",
-      icon: Mail,
+      icon: MessageCircle,
     },
   ],
   buttons: [

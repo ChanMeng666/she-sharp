@@ -20,7 +20,7 @@ export function DonationImpactSection() {
   return (
     <Section className="py-16">
       <Container>
-        <h2 className="text-3xl font-bold text-navy text-center mb-12">
+        <h2 className="text-3xl font-bold text-foreground text-center mb-12">
           Some of the ways your donations support She Sharp
         </h2>
         <div className="grid md:grid-cols-2 gap-8">
@@ -35,7 +35,7 @@ export function DonationImpactSection() {
                 />
               </div>
               <CardHeader>
-                <CardTitle className="text-xl text-navy">{area.title}</CardTitle>
+                <CardTitle className="text-xl text-foreground">{area.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700">{area.description}</p>

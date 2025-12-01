@@ -18,10 +18,10 @@ const agendaTypeIcons: Record<string, React.ElementType> = {
 };
 
 const agendaTypeColors: Record<string, string> = {
-  keynote: 'bg-purple-100 text-purple-dark border-purple-200',
-  panel: 'bg-blue-100 text-blue-700 border-blue-200',
-  workshop: 'bg-mint-light text-mint-dark border-mint-mid',
-  networking: 'bg-periwinkle-light text-periwinkle-dark border-periwinkle',
+  keynote: 'bg-muted text-foreground border-border',
+  panel: 'bg-muted text-foreground border-border',
+  workshop: 'bg-muted text-foreground border-border',
+  networking: 'bg-muted text-foreground border-border',
   break: 'bg-gray-100 text-gray-600 border-gray-200',
 };
 
@@ -59,9 +59,9 @@ function AgendaItemCard({ item }: { item: AgendaItem }) {
             item.type === 'break' ? 'bg-gray-50' : 'bg-white'
           )}
         >
-          <h4 className="font-medium text-navy-dark">{item.title}</h4>
+          <h4 className="font-medium text-foreground">{item.title}</h4>
           {item.speaker && (
-            <p className="text-sm text-purple-dark mt-1">
+            <p className="text-sm text-foreground mt-1">
               Speaker: {item.speaker}
             </p>
           )}
@@ -91,7 +91,7 @@ export function EventAgenda({ event, className }: EventAgendaProps) {
 
   return (
     <section className={cn('space-y-6', className)}>
-      <h2 className="text-xl font-semibold text-navy-dark">Event Schedule</h2>
+      <h2 className="text-xl font-semibold text-foreground">Event Schedule</h2>
       <div className="relative">
         {event.agenda.map((item, index) => (
           <AgendaItemCard key={index} item={item} />

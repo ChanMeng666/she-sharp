@@ -5,7 +5,6 @@ import { SponsorshipStatsSection } from "@/components/sections/sponsorship/spons
 import { SponsorshipPackagesSection } from "@/components/sections/sponsorship/sponsorship-packages-section";
 import { ROICalculatorSection } from "@/components/sections/sponsorship/roi-calculator-section";
 import { PhotoGallerySection } from "@/components/sections/sponsorship/photo-gallery-section";
-import { SponsorshipCTASection } from "@/components/sections/sponsorship/sponsorship-cta-section";
 
 export default function CorporateSponsorshipPage() {
   return (
@@ -17,7 +16,6 @@ export default function CorporateSponsorshipPage() {
       <SponsorshipOverviewSection />
       <ROICalculatorSection />
       <PhotoGallerySection />
-      <SponsorshipCTASection />
     </>
   );
 }

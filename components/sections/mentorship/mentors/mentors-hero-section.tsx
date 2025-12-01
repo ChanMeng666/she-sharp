@@ -19,31 +19,31 @@ export function MentorsHeroSection() {
   ];
 
   return (
-    <Section className="relative overflow-hidden bg-navy-dark">
-      <div className="absolute inset-0 bg-gradient-to-br from-navy-dark via-purple-dark/20 to-periwinkle-dark/30" />
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-periwinkle-dark/10 to-transparent transform skew-x-12" />
+    <Section className="relative overflow-hidden bg-foreground">
+      <div className="absolute inset-0 bg-foreground" />
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-muted/10 transform skew-x-12" />
       
       <Container className="relative z-10">
-        <div className="py-24">
+        <div className="py-12 md:py-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <div>
-                <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
+                <h1 className="text-5xl md:text-7xl font-bold text-background leading-tight">
                   CONNECT WITH
                 </h1>
-                <h2 className="text-4xl md:text-6xl font-bold text-periwinkle-light mt-2">
+                <h2 className="text-4xl md:text-6xl font-bold text-muted-foreground mt-2">
                   EXPERT MENTORS
                 </h2>
               </div>
-              
-              <p className="text-lg text-gray-300 max-w-xl mb-8">
-                Discover accomplished professionals ready to guide your STEM journey. 
+
+              <p className="text-lg text-muted-foreground max-w-xl mb-8">
+                Discover accomplished professionals ready to guide your STEM journey.
                 Our mentors bring diverse expertise from leading tech companies and organizations.
               </p>
 
-              <Button 
+              <Button
                 size="lg"
-                className="bg-purple-dark hover:bg-purple-mid text-white mb-8"
+                className="bg-background hover:bg-background/90 text-foreground mb-8"
                 onClick={() => {
                   const element = document.getElementById('mentors-list');
                   element?.scrollIntoView({ behavior: 'smooth' });
@@ -55,12 +55,12 @@ export function MentorsHeroSection() {
               <div className="flex flex-wrap gap-8">
                 {stats.map((stat) => (
                   <div key={stat.label} className="flex items-center gap-3">
-                    <div className="p-3 bg-periwinkle-dark/20 rounded-lg">
-                      <stat.icon className="h-6 w-6 text-periwinkle-light" />
+                    <div className="p-3 bg-muted/20 rounded-lg">
+                      <stat.icon className="h-6 w-6 text-muted-foreground" />
                     </div>
                     <div>
-                      <p className="text-2xl font-bold text-white">{stat.value}</p>
-                      <p className="text-sm text-gray-300">{stat.label}</p>
+                      <p className="text-2xl font-bold text-background">{stat.value}</p>
+                      <p className="text-sm text-muted-foreground">{stat.label}</p>
                     </div>
                   </div>
                 ))}
@@ -84,7 +84,7 @@ export function MentorsHeroSection() {
                   {featuredMentors.map((mentor) => (
                     <CarouselItem key={mentor.id} className="md:basis-1/2 lg:basis-full">
                       <div className="p-1">
-                        <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br from-purple-dark to-periwinkle-dark p-1">
+                        <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-muted p-1">
                           <div className="relative w-full h-full rounded-xl overflow-hidden">
                             <Image
                               src={mentor.image}
@@ -93,8 +93,8 @@ export function MentorsHeroSection() {
                               className="object-cover"
                               sizes="(max-width: 768px) 100vw, 50vw"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-transparent to-transparent" />
-                            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                            <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-transparent to-transparent" />
+                            <div className="absolute bottom-0 left-0 right-0 p-6 text-background">
                               <h3 className="text-xl font-bold mb-1">{mentor.name}</h3>
                               <p className="text-sm opacity-90 mb-2">{mentor.role}</p>
                               <p className="text-sm opacity-80">{mentor.company}</p>
@@ -109,12 +109,12 @@ export function MentorsHeroSection() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="left-2 bg-white/20 border-white/30 text-white hover:bg-white/30" />
-                <CarouselNext className="right-2 bg-white/20 border-white/30 text-white hover:bg-white/30" />
+                <CarouselPrevious className="left-2 bg-background/20 border-background/30 text-background hover:bg-background/30" />
+                <CarouselNext className="right-2 bg-background/20 border-background/30 text-background hover:bg-background/30" />
               </Carousel>
-              
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-periwinkle-dark/20 rounded-full blur-3xl" />
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-purple-dark/20 rounded-full blur-2xl" />
+
+              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-muted/20 rounded-full blur-3xl" />
+              <div className="absolute -top-4 -left-4 w-24 h-24 bg-muted/20 rounded-full blur-2xl" />
             </div>
           </div>
         </div>

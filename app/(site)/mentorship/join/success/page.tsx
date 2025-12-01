@@ -26,26 +26,26 @@ function PaymentSuccessContent() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-purple-dark" />
+        <Loader2 className="h-8 w-8 animate-spin text-foreground" />
       </div>
     );
   }
 
   if (!sessionId && !alreadyPaid) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-16">
+      <div className="min-h-screen bg-muted py-16">
         <div className="container mx-auto px-4 max-w-lg">
           <Card className="border-orange-200 bg-orange-50">
             <CardContent className="pt-6 text-center">
               <AlertCircle className="h-12 w-12 text-orange-500 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-navy-dark mb-2">Session Not Found</h2>
+              <h2 className="text-xl font-semibold text-foreground mb-2">Session Not Found</h2>
               <p className="text-gray-600 mb-6">
                 We couldn&apos;t verify your payment session. If you completed a payment, please check
                 your email for the confirmation and invitation code.
               </p>
               <div className="space-y-3">
                 <Link href="/mentorship/join">
-                  <Button className="w-full bg-purple-dark hover:bg-purple-dark/90">
+                  <Button className="w-full bg-foreground">
                     Return to Membership Page
                   </Button>
                 </Link>
@@ -63,14 +63,14 @@ function PaymentSuccessContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-16">
+    <div className="min-h-screen bg-muted py-16">
       <div className="container mx-auto px-4 max-w-lg">
         <Card className="border-green-200 shadow-lg">
           <CardHeader className="text-center pb-2">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="h-10 w-10 text-green-600" />
             </div>
-            <CardTitle className="text-2xl font-bold text-navy-dark">
+            <CardTitle className="text-2xl font-bold text-foreground">
               Payment Successful!
             </CardTitle>
             <CardDescription className="text-gray-600">
@@ -94,10 +94,10 @@ function PaymentSuccessContent() {
 
             {/* Next Steps */}
             <div className="space-y-4">
-              <h3 className="font-semibold text-navy-dark">Next Steps</h3>
+              <h3 className="font-semibold text-foreground">Next Steps</h3>
               <ol className="space-y-3">
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-purple-dark font-semibold text-sm flex-shrink-0">
+                  <span className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-foreground font-semibold text-sm flex-shrink-0">
                     1
                   </span>
                   <span className="text-gray-600">
@@ -105,7 +105,7 @@ function PaymentSuccessContent() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-purple-dark font-semibold text-sm flex-shrink-0">
+                  <span className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-foreground font-semibold text-sm flex-shrink-0">
                     2
                   </span>
                   <span className="text-gray-600">
@@ -113,7 +113,7 @@ function PaymentSuccessContent() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-purple-dark font-semibold text-sm flex-shrink-0">
+                  <span className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-foreground font-semibold text-sm flex-shrink-0">
                     3
                   </span>
                   <span className="text-gray-600">
@@ -121,7 +121,7 @@ function PaymentSuccessContent() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-purple-dark font-semibold text-sm flex-shrink-0">
+                  <span className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-foreground font-semibold text-sm flex-shrink-0">
                     4
                   </span>
                   <span className="text-gray-600">
@@ -134,7 +134,7 @@ function PaymentSuccessContent() {
             {/* CTA Buttons */}
             <div className="space-y-3 pt-4">
               <Link href="/sign-up">
-                <Button className="w-full h-12 bg-purple-dark hover:bg-purple-dark/90 text-white">
+                <Button className="w-full h-12 bg-foreground text-white">
                   Create Your Account
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -150,7 +150,7 @@ function PaymentSuccessContent() {
             <div className="text-center pt-4 border-t">
               <p className="text-sm text-gray-500">
                 Didn&apos;t receive your email?{' '}
-                <Link href="/contact" className="text-purple-dark hover:underline">
+                <Link href="/contact" className="text-foreground hover:underline">
                   Contact our support team
                 </Link>
               </p>
@@ -166,7 +166,7 @@ export default function PaymentSuccessPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-purple-dark" />
+        <Loader2 className="h-8 w-8 animate-spin text-foreground" />
       </div>
     }>
       <PaymentSuccessContent />

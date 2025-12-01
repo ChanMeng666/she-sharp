@@ -107,7 +107,7 @@ export function layoutClasses(...classes: (string | undefined | false)[]): strin
 
 // Get container class by size
 export function getContainer(size: keyof typeof layoutSystem.containers = "content"): string {
-  return `mx-auto ${layoutSystem.containers[size]}`;
+  return `mx-auto px-4 sm:px-6 lg:px-8 ${layoutSystem.containers[size]}`;
 }
 
 // Get section spacing

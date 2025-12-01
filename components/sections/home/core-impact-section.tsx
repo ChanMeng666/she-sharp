@@ -83,54 +83,40 @@ const AnimatedNumber: React.FC<{ target: number; animate: boolean }> = ({
   return <>{formatNumber(current)}</>;
 };
 
-function StatCard({
+function StatItem({
   item,
   animate,
-  className,
 }: {
   item: ImpactItem;
   animate: boolean;
-  className?: string;
 }) {
   return (
-    <div
-      role="group"
-      tabIndex={0}
-      className={`rounded-xl overflow-hidden border border-gray-700/50 hover:border-purple-dark/50 transition-transform duration-200 hover:-translate-y-0.5 shadow-[0_0_10px_rgba(155,46,131,0.3),0_0_30px_rgba(155,46,131,0.15)] hover:shadow-[0_0_20px_rgba(155,46,131,0.4),0_0_40px_rgba(155,46,131,0.2)] focus-within:-translate-y-0.5 focus-within:shadow-[0_0_20px_rgba(155,46,131,0.4),0_0_40px_rgba(155,46,131,0.2)] ${className ?? ""}`}
-    >
-      <div className="p-5 w-full h-80 flex flex-col justify-between text-ghost-white">
-        <div className="relative w-10 h-10 flex-shrink-0">
-          <Image
-            src={item.icon}
-            alt={`${item.title} icon`}
-            fill
-            className="object-contain"
-            style={{
-              filter: 'brightness(0) saturate(100%) invert(27%) sepia(89%) saturate(1234%) hue-rotate(280deg) brightness(0.9) contrast(0.85)'
-            }}
-          />
-        </div>
-
-        <div>
-          <div className="text-6xl font-extrabold tabular-nums tracking-tight mb-4 text-ghost-white">
-            {(() => {
-              const { target, suffix } = parseTargetValue(item.value);
-              return (
-                <>
-                  <AnimatedNumber target={target} animate={animate} /> {suffix}
-                </>
-              );
-            })()}
-          </div>
-          <div className="flex items-center gap-3">
-            <h3 className="text-lg font-bold text-ghost-white">{item.title}</h3>
-          </div>
-          <div className="h-px w-full mb-4 bg-gradient-to-r from-transparent via-purple-dark/50 to-transparent" />
-          <p className="text-gray-300 text-sm leading-relaxed">
-            {item.desc}
-          </p>
-        </div>
+    <div className="flex flex-col">
+      <div className="relative w-10 h-10 mb-4">
+        <Image
+          src={item.icon}
+          alt={`${item.title} icon`}
+          fill
+          className="object-contain"
+        />
       </div>
+
+      <div className="text-5xl sm:text-6xl font-extrabold tabular-nums tracking-tight mb-2 text-foreground">
+        {(() => {
+          const { target, suffix } = parseTargetValue(item.value);
+          return (
+            <>
+              <AnimatedNumber target={target} animate={animate} />{suffix}
+            </>
+          );
+        })()}
+      </div>
+
+      <h3 className="text-lg font-bold text-foreground mb-2">{item.title}</h3>
+
+      <p className="text-muted-foreground text-sm leading-relaxed">
+        {item.desc}
+      </p>
     </div>
   );
 }
@@ -140,28 +126,27 @@ export function CoreImpactSection() {
   const reduceMotion = usePrefersReducedMotion();
 
   return (
-    <Section className="bg-gradient-to-b from-gray-950/95 via-black/95 to-gray-950/95">
+    <Section className="bg-muted">
       <div ref={ref} className="relative ">
         <Container size="full">
           {/* Header */}
           <AnimateOnScroll variant="fade-up" className=" mb-8 md:mb-20 ">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ghost-white">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
               A Decade of Measurable Impact
             </h2>
           </AnimateOnScroll>
 
           {/* Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-16 max-w-7xl mx-auto">
             {impactData.map((item, i) => (
               <AnimateOnScroll
                 key={i}
                 variant="fade-up"
                 delay={i * 100}
               >
-                <StatCard
+                <StatItem
                   item={item}
                   animate={inView && !reduceMotion}
-                  className=" bg-gray-800/50 backdrop-blur-sm hover:scale-105 hover:bg-gray-800/70 hover:border-purple-dark/70 transition-all duration-300"
                 />
               </AnimateOnScroll>
             ))}

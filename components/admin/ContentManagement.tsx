@@ -329,7 +329,7 @@ export default function ContentManagement() {
                     </SelectContent>
                   </Select>
 
-                  <Button className="bg-purple-600 hover:bg-purple-700">
+                  <Button>
                     <Upload className="w-4 h-4 mr-2" />
                     Upload Resource
                   </Button>
@@ -350,7 +350,7 @@ export default function ContentManagement() {
                         resource.type === 'document' && "bg-blue-100",
                         resource.type === 'video' && "bg-red-100",
                         resource.type === 'template' && "bg-green-100",
-                        resource.type === 'guide' && "bg-muted",
+                        resource.type === 'guide' && "bg-muted text-foreground",
                         resource.type === 'link' && "bg-accent"
                       )}>
                         {getTypeIcon(resource.type)}
@@ -364,7 +364,7 @@ export default function ContentManagement() {
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button variant="outline" className="h-8 w-8" size="icon">
                           <MoreVertical className="w-4 h-4" />
                         </Button>
                       </DropdownMenuTrigger>

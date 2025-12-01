@@ -119,30 +119,11 @@ export default function MyDownloadsPage() {
   };
 
   const getResourceTypeColor = (type: string) => {
-    switch (type) {
-      case 'document':
-        return 'bg-purple-light text-primary';
-      case 'video':
-        return 'bg-periwinkle-light text-periwinkle-dark';
-      case 'image':
-        return 'bg-mint-light text-mint-dark';
-      default:
-        return 'bg-accent text-foreground';
-    }
+    return 'bg-muted text-foreground';
   };
 
   const getCategoryColor = (category: string) => {
-    const categoryLower = category.toLowerCase();
-    if (categoryLower.includes('programming') || categoryLower.includes('code')) {
-      return 'bg-purple-light text-primary border-purple-mid/20';
-    } else if (categoryLower.includes('data') || categoryLower.includes('science')) {
-      return 'bg-periwinkle-light text-periwinkle-dark border-periwinkle-dark/20';
-    } else if (categoryLower.includes('cloud') || categoryLower.includes('devops')) {
-      return 'bg-mint-light text-mint-dark border-mint-dark/20';
-    } else if (categoryLower.includes('design') || categoryLower.includes('ui')) {
-      return 'bg-navy-light text-navy-dark border-navy-dark/20';
-    }
-    return 'bg-accent text-foreground border-border';
+    return 'bg-muted text-foreground border-border';
   };
 
   const formatFileSize = (bytes: number) => {
@@ -191,7 +172,7 @@ export default function MyDownloadsPage() {
   };
 
   const DownloadCard = ({ download }: { download: DownloadedResource }) => (
-    <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-purple-mid/30 bg-white h-full overflow-hidden">
+    <Card className="group hover:shadow-xl transition-all duration-300 border-border bg-background h-full overflow-hidden">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
@@ -199,17 +180,17 @@ export default function MyDownloadsPage() {
               {getResourceIcon(download.resource.resourceType)}
             </div>
             <div className="flex-1 min-w-0">
-              <CardTitle className="text-lg font-semibold text-navy-dark group-hover:text-primary transition-colors line-clamp-1">
+              <CardTitle className="text-lg font-semibold text-foreground group-hover:text-foreground transition-colors line-clamp-1">
                 {download.resource.title}
               </CardTitle>
               <div className="flex flex-wrap items-center gap-2 mt-2">
                 <Badge className={`${getCategoryColor(download.resource.category)} text-xs font-medium`}>
                   {download.resource.category}
                 </Badge>
-                <span className="text-xs text-gray">
+                <span className="text-xs text-muted-foreground">
                   {formatFileSize(download.resource.fileSize)}
                 </span>
-                <span className="text-xs text-primary font-medium">
+                <span className="text-xs text-foreground font-medium">
                   • {getTimeAgo(download.downloadedAt)}
                 </span>
               </div>
@@ -219,19 +200,19 @@ export default function MyDownloadsPage() {
       </CardHeader>
       <CardContent className="flex-1 space-y-4">
         {download.resource.description && (
-          <CardDescription className="line-clamp-2 text-gray text-sm">
+          <CardDescription className="line-clamp-2 text-muted-foreground text-sm">
             {download.resource.description}
           </CardDescription>
         )}
         
         <div className="pt-2 border-t border-border">
-          <div className="flex items-center gap-2 text-xs text-gray">
-            <Download className="h-3.5 w-3.5 text-primary" />
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Download className="h-3.5 w-3.5 text-foreground" />
             <span>Downloaded on {format(new Date(download.downloadedAt), 'PPP')} at {format(new Date(download.downloadedAt), 'p')}</span>
           </div>
         </div>
       </CardContent>
-      <CardFooter className="border-t border-border bg-accent/50 flex flex-wrap gap-2 p-4">
+      <CardFooter className="border-t border-border bg-muted flex flex-wrap gap-2 p-4">
           <Button 
             onClick={() => handleRedownload(download.resource)}
             variant="default"
@@ -259,7 +240,7 @@ export default function MyDownloadsPage() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-gray">Loading your downloads...</p>
+          <p className="mt-4 text-muted-foreground">Loading your downloads...</p>
         </div>
       </div>
     );
@@ -270,21 +251,21 @@ export default function MyDownloadsPage() {
       {/* Header Section */}
       <div className="mb-6 sm:mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
-          <FolderOpen className="h-5 w-5 sm:h-6 sm:w-6 text-primary flex-shrink-0" />
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-dark to-purple-mid bg-clip-text text-transparent">
+          <FolderOpen className="h-5 w-5 sm:h-6 sm:w-6 text-foreground flex-shrink-0" />
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
             My Downloads
           </h1>
         </div>
-        <p className="text-gray text-base sm:text-lg">
+        <p className="text-muted-foreground text-base sm:text-lg">
           Access your previously downloaded resources anytime
         </p>
       </div>
 
       {/* Info Alert */}
       {downloads.length > 0 && (
-        <Alert className="mb-6 sm:mb-8 border-mint-dark/20 bg-mint-light/20">
-          <Info className="h-4 w-4 text-mint-dark" />
-          <AlertDescription className="text-navy-dark">
+        <Alert className="mb-6 sm:mb-8 border-border bg-muted">
+          <Info className="h-4 w-4 text-foreground" />
+          <AlertDescription className="text-foreground">
             <strong className="font-semibold">You have {downloads.length} downloaded resource{downloads.length !== 1 ? 's' : ''}!</strong>
             <span className="block sm:inline"> All your downloads are stored locally for quick access.</span>
           </AlertDescription>
@@ -293,11 +274,11 @@ export default function MyDownloadsPage() {
 
       {/* Tabs Section */}
       {downloads.length === 0 ? (
-        <Card className="border-purple-light shadow-sm">
+        <Card className="border-border shadow-sm">
           <CardContent className="text-center py-12">
-            <Sparkles className="h-12 w-12 text-purple-mid mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-navy-dark mb-2">No downloads yet</h3>
-            <p className="text-gray mb-6">
+            <Sparkles className="h-12 w-12 text-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-foreground mb-2">No downloads yet</h3>
+            <p className="text-muted-foreground mb-6">
               Resources you download will appear here for easy access
             </p>
             <Button 
@@ -329,11 +310,11 @@ export default function MyDownloadsPage() {
 
           <TabsContent value="recent" className="space-y-4">
             {groupedDownloads.recent.length === 0 ? (
-              <Card className="border-purple-light shadow-sm">
+              <Card className="border-border shadow-sm">
                 <CardContent className="text-center py-12">
-                  <Clock className="h-12 w-12 text-purple-mid mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-navy-dark mb-2">No recent downloads</h3>
-                  <p className="text-gray">Downloads from the past week will appear here</p>
+                  <Clock className="h-12 w-12 text-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-foreground mb-2">No recent downloads</h3>
+                  <p className="text-muted-foreground">Downloads from the past week will appear here</p>
                 </CardContent>
               </Card>
             ) : (

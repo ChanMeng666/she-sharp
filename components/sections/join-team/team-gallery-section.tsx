@@ -105,13 +105,13 @@ export function TeamGallerySection() {
           {/* Section Header */}
           <div className="text-center mb-20 space-y-4">
             <div className="inline-flex items-center justify-center gap-2 mb-4">
-              <Camera className="w-5 h-5 text-purple-dark" />
-              <span className="text-sm font-medium text-purple-dark uppercase tracking-wider">
+              <Camera className="w-5 h-5 text-foreground" />
+              <span className="text-sm font-medium text-foreground uppercase tracking-wider">
                 Volunteer Moments
               </span>
             </div>
             
-            <h2 className="text-5xl md:text-6xl font-bold text-navy-dark">
+            <h2 className="text-5xl md:text-6xl font-bold text-foreground">
               Life as a She Sharp Volunteer
             </h2>
             
@@ -185,7 +185,7 @@ export function TeamGallerySection() {
                       <HoverCardContent className="w-96 p-6" side="top" align="center">
                         <div className="space-y-4">
                           <div>
-                            <h4 className="text-lg font-semibold text-navy-dark mb-1">
+                            <h4 className="text-lg font-semibold text-foreground mb-1">
                               {image.event}
                             </h4>
                             <p className="text-sm text-gray-600 leading-relaxed">
@@ -197,10 +197,9 @@ export function TeamGallerySection() {
                           
                           <div className="flex flex-wrap gap-2">
                             {image.tags.map((tag) => (
-                              <Badge 
-                                key={tag} 
+                              <Badge
+                                key={tag}
                                 variant="secondary"
-                                className="bg-purple-light/20 text-purple-dark hover:bg-purple-light/30"
                               >
                                 {tag}
                               </Badge>
@@ -225,7 +224,7 @@ export function TeamGallerySection() {
                 <button
                   key={image.id}
                   className={`w-16 h-12 rounded-lg overflow-hidden transition-opacity duration-150 hover:opacity-80 ${
-                    index === 0 ? 'ring-2 ring-purple-dark ring-offset-2' : ''
+                    index === 0 ? 'ring-2 ring-border ring-offset-2' : ''
                   }`}
                   aria-label={`View ${image.caption}`}
                 >
@@ -246,7 +245,7 @@ export function TeamGallerySection() {
             <p className="text-lg text-gray-600 mb-4">
               Ready to create your own volunteer memories?
             </p>
-            <Badge className="bg-mint-dark text-navy-dark px-6 py-2 text-sm hover:bg-mint-dark/90 cursor-pointer transition-colors duration-150">
+            <Badge className="bg-foreground text-background px-6 py-2 text-sm hover:bg-foreground/90 cursor-pointer transition-colors duration-150">
               Join Our Next Event
             </Badge>
           </div>

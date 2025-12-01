@@ -63,9 +63,9 @@ export function EventRegistrationCard({
         {/* Price Display */}
         <div className="text-center">
           {event.registration?.isFree ? (
-            <div className="text-2xl font-bold text-mint-dark">Free</div>
+            <div className="text-2xl font-bold text-foreground">Free</div>
           ) : event.registration?.price ? (
-            <div className="text-2xl font-bold text-navy-dark">
+            <div className="text-2xl font-bold text-foreground">
               ${event.registration.price.amount}{' '}
               <span className="text-sm font-normal text-gray-500">
                 {event.registration.price.currency}
@@ -81,11 +81,11 @@ export function EventRegistrationCard({
         {/* Date & Time */}
         <div className="space-y-3 p-4 bg-gray-50 rounded-lg">
           <div className="flex items-center gap-3 text-sm">
-            <Calendar className="w-4 h-4 text-purple-dark" />
+            <Calendar className="w-4 h-4 text-foreground" />
             <span className="text-gray-700">{formatEventDate(event, 'full')}</span>
           </div>
           <div className="flex items-center gap-3 text-sm">
-            <Clock className="w-4 h-4 text-purple-dark" />
+            <Clock className="w-4 h-4 text-foreground" />
             <span className="text-gray-700">{formatEventTime(event)}</span>
           </div>
         </div>
@@ -95,7 +95,7 @@ export function EventRegistrationCard({
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Registration</span>
-              <span className="font-medium text-navy-dark">
+              <span className="font-medium text-foreground">
                 {event.registration.attendeeCount || 0} /{' '}
                 {event.registration.capacity}
               </span>
@@ -122,7 +122,7 @@ export function EventRegistrationCard({
                       className="w-8 h-8 border-2 border-white"
                     >
                       <AvatarImage src={avatar} alt="Attendee" />
-                      <AvatarFallback className="text-xs bg-purple-100 text-purple-dark">
+                      <AvatarFallback className="text-xs bg-muted text-foreground">
                         {index + 1}
                       </AvatarFallback>
                     </Avatar>
@@ -155,9 +155,7 @@ export function EventRegistrationCard({
         <Button
           className={cn(
             'w-full',
-            registrationOpen
-              ? 'bg-purple-dark hover:bg-purple-mid'
-              : 'bg-gray-400 cursor-not-allowed'
+            !registrationOpen && !event.registration?.waitlistEnabled && 'bg-gray-400 cursor-not-allowed'
           )}
           size="lg"
           disabled={!registrationOpen && !event.registration?.waitlistEnabled}

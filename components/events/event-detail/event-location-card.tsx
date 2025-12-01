@@ -46,7 +46,7 @@ export function EventLocationCard({ event, className }: EventLocationCardProps) 
             </>
           ) : (
             <>
-              <MapPin className="w-5 h-5 text-purple-dark" />
+              <MapPin className="w-5 h-5 text-foreground" />
               Location
             </>
           )}
@@ -58,7 +58,7 @@ export function EventLocationCard({ event, className }: EventLocationCardProps) 
           <div className="space-y-3">
             <div>
               <p className="text-sm text-gray-500">Platform</p>
-              <p className="font-medium text-navy-dark">
+              <p className="font-medium text-foreground">
                 {platformLabels[event.location.meetingPlatform || 'other']}
               </p>
             </div>
@@ -85,13 +85,13 @@ export function EventLocationCard({ event, className }: EventLocationCardProps) 
           <div className="space-y-3">
             {isHybrid && (
               <div className="pb-3 mb-3 border-b border-gray-200">
-                <p className="text-xs text-purple-dark font-medium uppercase tracking-wide">
+                <p className="text-xs text-foreground font-medium uppercase tracking-wide">
                   In-Person Location
                 </p>
               </div>
             )}
             <div>
-              <p className="font-medium text-navy-dark">
+              <p className="font-medium text-foreground">
                 {event.location.venueName}
               </p>
               {event.location.address && (
@@ -145,7 +145,7 @@ export function EventLocationCard({ event, className }: EventLocationCardProps) 
               href={event.location.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-gray-500 hover:text-purple-dark transition-colors"
+              className="text-sm text-gray-500 hover:text-foreground transition-colors"
             >
               View on Google Maps →
             </a>

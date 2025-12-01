@@ -164,12 +164,12 @@ export default function DynamicDashboard() {
 
       {/* Points & Level Card */}
       {points && (
-        <Card className="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 border-purple-200 dark:border-purple-800">
+        <Card className="bg-muted border-border">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-full flex items-center justify-center">
-                  <Award className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
+                  <Award className="h-6 w-6 text-foreground" />
                 </div>
                 <div>
                   <CardDescription>Experience Level</CardDescription>
@@ -179,7 +179,7 @@ export default function DynamicDashboard() {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{points.current}</p>
+                <p className="text-2xl font-bold text-foreground">{points.current}</p>
                 <p className="text-sm text-muted-foreground">Points Available</p>
               </div>
             </div>
@@ -549,7 +549,7 @@ export default function DynamicDashboard() {
                 <CardDescription>Don't miss these opportunities</CardDescription>
               </div>
               <Link href="/dashboard/events">
-                <Button variant="ghost" size="sm">
+                <Button variant="outline" size="sm">
                   View all
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -593,7 +593,7 @@ export default function DynamicDashboard() {
                 <CardDescription>Latest learning materials</CardDescription>
               </div>
               <Link href="/dashboard/resources">
-                <Button variant="ghost" size="sm">
+                <Button variant="outline" size="sm">
                   View all
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

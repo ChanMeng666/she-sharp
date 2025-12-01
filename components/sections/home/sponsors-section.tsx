@@ -42,21 +42,18 @@ const sponsors = {
 
 export function SponsorsSection() {
   return (
-    <Section className="overflow-hidden bg-gradient-to-b from-gray-950/95 via-black/95 to-gray-950/95">
+    <Section className="overflow-hidden bg-background">
       <Container size="full">
         <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ghost-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
             Thanks to Our Sponsors
           </h2>
-          {/* <p className="text-base sm:text-lg text-gray max-w-2xl mx-auto px-4">
-            Industry-leading organizations that share our vision and invest in advancing women in technology
-          </p> */}
         </AnimateOnScroll>
 
         {/* Silver Sponsors */}
         <div className="mb-20">
           <AnimateOnScroll variant="fade-up" className="text-center mb-12">
-            <h3 className="text-3xl text-purple-dark font-bold tracking-wider flex items-center justify-center gap-2">
+            <h3 className="text-3xl text-muted-foreground font-bold tracking-wider flex items-center justify-center gap-2">
               SILVER
             </h3>
           </AnimateOnScroll>
@@ -93,7 +90,7 @@ export function SponsorsSection() {
         {/* Bronze Sponsors */}
         <div className="mb-12 sm:mb-16">
           <AnimateOnScroll variant="fade-up" className="text-center mb-12">
-            <h3 className="text-3xl text-purple-dark font-bold tracking-wider flex items-center justify-center gap-2">
+            <h3 className="text-3xl text-muted-foreground font-bold tracking-wider flex items-center justify-center gap-2">
               BRONZE
             </h3>
           </AnimateOnScroll>

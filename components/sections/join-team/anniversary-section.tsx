@@ -9,19 +9,19 @@ import { layoutSystem } from "@/lib/layout-system";
 
 export function AnniversarySection() {
   return (
-    <Section bgColor="dark" className="relative overflow-hidden bg-mint-dark">
+    <Section bgColor="dark" className="relative overflow-hidden bg-foreground">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-navy-dark/10" />
+      <div className="absolute inset-0 bg-muted/10" />
 
       <Container size="content" className="relative z-10">
         <Card className="mx-auto border-0 shadow-2xl bg-white/95 backdrop-blur">
           <CardContent className="p-12 text-center">
-            <Badge className="mb-6 bg-white/20 text-purple-dark border border-purple-dark px-4 py-2">
+            <Badge className="mb-6 bg-white/20 text-foreground border border-border px-4 py-2">
               <Sparkles className="w-4 h-4 mr-2" />
               10 Years of Impact
             </Badge>
-            
-            <h3 className="text-3xl md:text-4xl font-bold text-navy-dark mb-6">
+
+            <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
               Calling All She Sharp Alumni!
             </h3>
             
@@ -31,10 +31,10 @@ export function AnniversarySection() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                asChild 
-                size="lg" 
-                className="bg-navy-dark hover:bg-navy-dark/90 text-white shadow-md transition-colors duration-150"
+              <Button
+                asChild
+                size="lg"
+                className="shadow-md"
               >
                 <Link href="/contact">
                   <Users className="w-5 h-5 mr-2" />

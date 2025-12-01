@@ -58,24 +58,24 @@ export default function ForgotPasswordPage() {
         }}
       >
         {/* Background overlay for better readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/70 to-white/60 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
 
-        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
           <CardHeader className="space-y-6 text-center pb-8">
             <div className="space-y-3">
-              <CardTitle className="text-3xl font-bold text-navy-dark">
+              <CardTitle className="text-3xl font-bold text-foreground">
                 Check Your Email
               </CardTitle>
               <CardDescription className="text-gray text-base leading-relaxed">
                 We've sent password reset instructions to<br />
-                <span className="font-semibold text-navy-dark">{email}</span>
+                <span className="font-semibold text-foreground">{email}</span>
               </CardDescription>
             </div>
           </CardHeader>
           
           <CardContent className="space-y-6">
-            <div className="p-4 bg-mint-light/50 border border-mint-dark/20 rounded-xl">
-              <p className="text-sm text-navy-dark leading-relaxed">
+            <div className="p-4 bg-muted border border-border rounded-xl">
+              <p className="text-sm text-foreground leading-relaxed">
                 Please check your email inbox and follow the instructions to reset your password.
                 The link will expire in <span className="font-semibold">1 hour</span>.
               </p>
@@ -90,7 +90,7 @@ export default function ForgotPasswordPage() {
                   setIsSubmitted(false);
                   setEmail('');
                 }}
-                className="text-sm font-semibold text-purple-dark hover:text-purple-mid underline transition-colors"
+                className="text-sm font-semibold text-foreground hover:text-foreground/80 underline transition-colors"
               >
                 Try again
               </button>
@@ -99,7 +99,7 @@ export default function ForgotPasswordPage() {
             <div className="space-y-3">
               <Button
                 asChild
-                variant="neumorphism"
+                variant="default"
                 size="lg"
                 className="w-full h-12 rounded-xl font-semibold"
               >
@@ -126,12 +126,12 @@ export default function ForgotPasswordPage() {
       }}
     >
       {/* Background overlay for better readability */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/70 to-white/60 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
 
-      <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-purple-dark/10 bg-white/95 backdrop-blur-xl">
+      <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
         <CardHeader className="space-y-4 text-center pb-8">
           <div className="space-y-2">
-            <CardTitle className="text-3xl font-bold text-navy-dark">
+            <CardTitle className="text-3xl font-bold text-foreground">
               Reset Your Password
             </CardTitle>
             <CardDescription className="text-gray text-base">
@@ -148,13 +148,13 @@ export default function ForgotPasswordPage() {
               </div>
             )}
             {message && (
-              <div className="p-4 bg-mint-light/50 border border-mint-dark/20 rounded-xl">
-                <div className="text-navy-dark text-sm font-medium">{message}</div>
+              <div className="p-4 bg-muted border border-border rounded-xl">
+                <div className="text-foreground text-sm font-medium">{message}</div>
               </div>
             )}
             
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-semibold text-navy-dark">
+              <Label htmlFor="email" className="text-sm font-semibold text-foreground">
                 Email Address
               </Label>
               <Input
@@ -165,15 +165,15 @@ export default function ForgotPasswordPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={isLoading}
-                className="h-11 px-4 rounded-xl border-2 border-periwinkle-light bg-white/80 backdrop-blur-sm text-navy-dark placeholder:text-gray focus:border-purple-dark focus:ring-4 focus:ring-purple-dark/10 transition-all duration-200"
+                className="h-11 px-4 rounded-xl border-2 border-border bg-background/80 backdrop-blur-sm text-foreground placeholder:text-muted-foreground focus:border-border focus:ring-4 focus:ring-border/10 transition-all duration-200"
               />
             </div>
 
-            <Button 
-              type="submit" 
-              variant="neumorphism"
+            <Button
+              type="submit"
+              variant="default"
               size="lg"
-              className="w-full h-12 rounded-xl font-semibold text-lg transition-all duration-300"
+              className="w-full h-12 rounded-xl font-semibold text-lg"
               disabled={isLoading}
             >
               {isLoading ? 'Sending Instructions...' : 'Send Reset Instructions'}
@@ -181,9 +181,9 @@ export default function ForgotPasswordPage() {
 
             <Button
               asChild
-              variant="outline-thick"
+              variant="outline"
               size="lg"
-              className="w-full h-12 rounded-xl font-medium transition-all duration-300"
+              className="w-full h-12 rounded-xl font-medium"
             >
               <Link href="/sign-in">
                 <ArrowLeft className="mr-2 h-4 w-4" />

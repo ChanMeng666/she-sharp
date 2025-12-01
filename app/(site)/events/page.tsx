@@ -71,25 +71,20 @@ export default function EventsPage() {
   }, [allUpcoming, filters]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Hero Section with Featured Event */}
       {featuredEvent && (
-        <section className="relative bg-gradient-to-br from-purple-dark via-purple-mid to-periwinkle-dark text-white overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-repeat" />
-          </div>
-
+        <section className="relative min-h-screen flex items-center bg-foreground text-background overflow-hidden">
           <div className="container mx-auto px-4 py-16 md:py-24 relative">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left: Event Info */}
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
-                  <Badge className="bg-white/20 text-white border-white/30 hover:bg-white/30">
+                  <Badge className="bg-background/20 text-background border-background/30 hover:bg-background/30">
                     Featured Event
                   </Badge>
                   {getDaysUntilEvent(featuredEvent) <= 7 && (
-                    <Badge className="bg-mint-dark text-white border-0">
+                    <Badge className="bg-background/30 text-background border-0">
                       Coming Soon!
                     </Badge>
                   )}
@@ -99,11 +94,11 @@ export default function EventsPage() {
                   {featuredEvent.title}
                 </h1>
 
-                <p className="text-lg text-white/90 max-w-lg">
+                <p className="text-lg text-background/90 max-w-lg">
                   {featuredEvent.shortDescription || featuredEvent.description.slice(0, 150) + '...'}
                 </p>
 
-                <div className="flex flex-wrap gap-6 text-white/90">
+                <div className="flex flex-wrap gap-6 text-background/90">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-5 h-5" />
                     <span>{formatEventDate(featuredEvent, 'full')}</span>
@@ -131,7 +126,7 @@ export default function EventsPage() {
                 </div>
 
                 {featuredEvent.registration?.attendeeCount && (
-                  <div className="flex items-center gap-2 text-white/80">
+                  <div className="flex items-center gap-2 text-background/80">
                     <Users className="w-5 h-5" />
                     <span>
                       {featuredEvent.registration.attendeeCount} people attending
@@ -143,7 +138,7 @@ export default function EventsPage() {
                   <Button
                     asChild
                     size="lg"
-                    className="bg-white text-purple-dark hover:bg-white/90"
+                    className="bg-background text-foreground hover:bg-background/90"
                   >
                     <Link href={`/events/${featuredEvent.slug}`}>
                       View Details
@@ -153,7 +148,7 @@ export default function EventsPage() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="border-white/30 text-white hover:bg-white/10"
+                    className="border-background/30 text-background hover:bg-background/10"
                   >
                     Register Now
                   </Button>
@@ -170,7 +165,6 @@ export default function EventsPage() {
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
             </div>
           </div>
@@ -178,32 +172,32 @@ export default function EventsPage() {
       )}
 
       {/* Stats Bar */}
-      <section className="bg-white border-b border-gray-200">
+      <section className="bg-background border-b border-border">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-wrap justify-center gap-8 md:gap-16">
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-purple-dark">
+              <div className="text-2xl md:text-3xl font-bold text-foreground">
                 {stats.upcoming}
               </div>
-              <div className="text-sm text-gray-600">Upcoming Events</div>
+              <div className="text-sm text-muted-foreground">Upcoming Events</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-purple-dark">
+              <div className="text-2xl md:text-3xl font-bold text-foreground">
                 {stats.past}
               </div>
-              <div className="text-sm text-gray-600">Past Events</div>
+              <div className="text-sm text-muted-foreground">Past Events</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-purple-dark">
+              <div className="text-2xl md:text-3xl font-bold text-foreground">
                 {stats.online}
               </div>
-              <div className="text-sm text-gray-600">Online Events</div>
+              <div className="text-sm text-muted-foreground">Online Events</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-purple-dark">
+              <div className="text-2xl md:text-3xl font-bold text-foreground">
                 {stats.inPerson}
               </div>
-              <div className="text-sm text-gray-600">In-Person Events</div>
+              <div className="text-sm text-muted-foreground">In-Person Events</div>
             </div>
           </div>
         </div>
@@ -214,10 +208,10 @@ export default function EventsPage() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-navy-dark">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
                 Upcoming Events
               </h2>
-              <p className="text-gray-600 mt-1">
+              <p className="text-muted-foreground mt-1">
                 Join us at our upcoming workshops, networking events, and more
               </p>
             </div>
@@ -243,14 +237,14 @@ export default function EventsPage() {
 
       {/* Past Events Section */}
       {allPast.length > 0 && (
-        <section className="py-12 md:py-16 bg-white">
+        <section className="py-12 md:py-16 bg-muted">
           <div className="container mx-auto px-4">
             <div className="flex items-end justify-between mb-8">
               <div>
-                <h2 className="text-2xl md:text-3xl font-bold text-navy-dark">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground">
                   Past Events
                 </h2>
-                <p className="text-gray-600 mt-1">
+                <p className="text-muted-foreground mt-1">
                   Explore highlights from our previous events
                 </p>
               </div>
@@ -265,33 +259,6 @@ export default function EventsPage() {
         </section>
       )}
 
-      {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-purple-dark to-periwinkle-dark text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Never Miss an Event
-          </h2>
-          <p className="text-white/90 max-w-2xl mx-auto mb-8">
-            Subscribe to our newsletter and get notified about upcoming events,
-            workshops, and networking opportunities.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="bg-white text-purple-dark hover:bg-white/90"
-            >
-              Subscribe to Newsletter
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-white/30 text-white hover:bg-white/10"
-            >
-              Add to Calendar
-            </Button>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

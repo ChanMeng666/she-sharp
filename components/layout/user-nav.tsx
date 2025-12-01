@@ -150,7 +150,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
         <div className="flex items-center gap-3 px-2 py-3">
           <Avatar className="h-10 w-10">
             <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} />
-            <AvatarFallback className="bg-purple-100 text-purple-700">
+            <AvatarFallback className="bg-muted text-foreground">
               {getUserInitials()}
             </AvatarFallback>
           </Avatar>
@@ -166,21 +166,21 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
         </div>
         
         <Link href="/dashboard" className="w-full">
-          <Button variant="ghost" size="lg" className="w-full justify-start">
+          <Button variant="outline" size="lg" className="w-full justify-start">
             <LayoutDashboard className="mr-2 h-4 w-4" />
             Dashboard
           </Button>
         </Link>
-        
+
         <Link href="/dashboard/settings/account" className="w-full">
-          <Button variant="ghost" size="lg" className="w-full justify-start">
+          <Button variant="outline" size="lg" className="w-full justify-start">
             <Settings className="mr-2 h-4 w-4" />
             Account Settings
           </Button>
         </Link>
-        
-        <Button 
-          variant="ghost" 
+
+        <Button
+          variant="outline"
           size="lg"
           className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
           onClick={handleSignOut}
@@ -197,14 +197,14 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="outline"
           size="lg"
-          className="relative flex items-center gap-2 px-2 hover:bg-purple-50"
+          className="relative flex items-center gap-2 px-2 hover:bg-muted"
         >
           <Avatar className="h-8 w-8">
             <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} />
-            <AvatarFallback className="bg-purple-100 text-purple-700 text-xs">
+            <AvatarFallback className="bg-muted text-foreground text-xs">
               {getUserInitials()}
             </AvatarFallback>
           </Avatar>
@@ -227,7 +227,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
           <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10">
               <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} />
-              <AvatarFallback className="bg-purple-100 text-purple-700">
+              <AvatarFallback className="bg-muted text-foreground">
                 {getUserInitials()}
               </AvatarFallback>
             </Avatar>

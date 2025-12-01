@@ -69,10 +69,10 @@ export function SponsorshipStatsSection() {
       <Container size="content">
         <div>
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Our Collective Impact
             </h2>
-            <p className="text-lg text-gray max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Partner with us to drive meaningful change in the STEM community
             </p>
           </div>
@@ -86,49 +86,38 @@ export function SponsorshipStatsSection() {
             {impactMetrics.map((metric, index) => {
               const Icon = metric.icon;
               const progress = animatedValues[index];
-              const colorClasses = {
-                purple: "text-purple-dark bg-purple-light",
-                periwinkle: "text-periwinkle-dark bg-periwinkle-light",
-                mint: "text-mint-dark bg-mint-light/30",
-              };
 
               return (
                 <Card key={metric.label} className="overflow-hidden border-2 hover:shadow-lg transition-shadow">
                   <CardContent className="p-6">
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <div className={`p-3 rounded-full ${colorClasses[metric.color as keyof typeof colorClasses]}`}>
-                          <Icon className="h-6 w-6" />
+                        <div className="p-3 rounded-full bg-muted">
+                          <Icon className="h-6 w-6 text-foreground" />
                         </div>
-                        <span className="text-2xl font-bold text-navy-dark">
+                        <span className="text-2xl font-bold text-foreground">
                           {metric.current.toLocaleString()}
                           {metric.unit.includes("%") ? "%" : "+"}
                         </span>
                       </div>
-                      
+
                       <div>
-                        <h3 className="font-semibold text-navy-dark mb-1">
+                        <h3 className="font-semibold text-foreground mb-1">
                           {metric.label}
                         </h3>
-                        <p className="text-sm text-gray">
+                        <p className="text-sm text-muted-foreground">
                           {metric.description}
                         </p>
                       </div>
 
                       <div className="space-y-2">
-                        <div className="flex justify-between text-xs text-gray">
+                        <div className="flex justify-between text-xs text-muted-foreground">
                           <span>Current</span>
                           <span>Goal: {metric.target.toLocaleString()}{metric.unit.includes("%") ? "%" : ""}</span>
                         </div>
-                        <Progress 
-                          value={progress} 
+                        <Progress
+                          value={progress}
                           className="h-2"
-                          style={{
-                            "--progress-background": 
-                              metric.color === "purple" ? "#c846ab" :
-                              metric.color === "periwinkle" ? "#8982ff" :
-                              "#b1f6e9"
-                          } as React.CSSProperties}
                         />
                       </div>
                     </div>
@@ -139,9 +128,9 @@ export function SponsorshipStatsSection() {
           </div>
 
           <div className="mt-12 text-center">
-            <p className="text-sm text-gray">
-              Since 2014, we've hosted <span className="font-semibold text-purple-dark">84+ events</span> and 
-              partnered with <span className="font-semibold text-purple-dark">50+ organizations</span> to 
+            <p className="text-sm text-muted-foreground">
+              Since 2014, we've hosted <span className="font-semibold text-foreground">84+ events</span> and
+              partnered with <span className="font-semibold text-foreground">50+ organizations</span> to
               create lasting change.
             </p>
           </div>

@@ -49,7 +49,7 @@ const activityTypes = {
   create: { icon: UserPlus, color: 'text-blue-600', bg: 'bg-blue-100' },
   update: { icon: Edit, color: 'text-yellow-600', bg: 'bg-yellow-100' },
   delete: { icon: Trash2, color: 'text-red-600', bg: 'bg-red-100' },
-  security: { icon: Shield, color: 'text-primary', bg: 'bg-muted' },
+  security: { icon: Shield, color: 'text-foreground', bg: 'bg-muted' },
 };
 
 const mockActivities = [
@@ -101,7 +101,7 @@ export default function ActivityLogsPage() {
             Monitor user activities and system events
           </p>
         </div>
-        <Button className="bg-purple-600 hover:bg-purple-700 text-sm sm:text-base">
+        <Button className="text-sm sm:text-base">
           <Download className="w-4 h-4 mr-2" />
           Export Logs
         </Button>

@@ -43,14 +43,14 @@ export function ProgramOverviewSection() {
           {/* Left Content */}
           <div className={layoutClasses("space-y-6", layoutSystem.patterns.splitLayout.left)}>
             <div>
-              <Badge className="mb-4 bg-purple-dark/10 text-purple-dark border-purple-dark">
+              <Badge className="mb-4 bg-muted text-foreground border-border">
                 <Heart className="w-3 h-3 mr-1" />
                 Empowering Women in Tech
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Mentorship that moves careers forward
               </h2>
-              <p className="text-lg text-gray leading-relaxed">
+              <p className="text-lg text-muted-foreground leading-relaxed">
                 We connect women in STEM with mentors for structured 1:1 guidance. Gain clarity, overcome challenges, and grow with a supportive community.
               </p>
             </div>
@@ -62,11 +62,11 @@ export function ProgramOverviewSection() {
                 return (
                   <Card key={feature.title} className="hover:shadow-md transition-shadow">
                     <CardContent className="p-4">
-                      <Icon className="w-8 h-8 text-purple-dark mb-3" />
-                      <h3 className="font-semibold text-navy-dark text-sm mb-1">
+                      <Icon className="w-8 h-8 text-foreground mb-3" />
+                      <h3 className="font-semibold text-foreground text-sm mb-1">
                         {feature.title}
                       </h3>
-                      <p className="text-xs text-gray">
+                      <p className="text-xs text-muted-foreground">
                         {feature.description}
                       </p>
                     </CardContent>
@@ -79,8 +79,8 @@ export function ProgramOverviewSection() {
           {/* Right Content - Key Metrics (single source) */}
           <div className={layoutSystem.patterns.splitLayout.right}>
             <Card className="overflow-hidden">
-              <CardHeader className="bg-periwinkle-light">
-                <CardTitle className="text-navy-dark">Program Snapshot</CardTitle>
+              <CardHeader className="bg-muted">
+                <CardTitle className="text-foreground">Program Snapshot</CardTitle>
               </CardHeader>
               <CardContent className="pt-6">
                 <div className="grid grid-cols-2 gap-4">
@@ -88,13 +88,13 @@ export function ProgramOverviewSection() {
                     const Icon = iconMap[item.icon] || Users;
                     const displayValue = `${item.value}${item.suffix || ""}`;
                     return (
-                      <div key={item.label} className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
-                        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-purple-light/50">
-                          <Icon className="w-5 h-5 text-purple-dark" />
+                      <div key={item.label} className="flex items-center gap-3 p-4 bg-muted rounded-lg">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-muted">
+                          <Icon className="w-5 h-5 text-foreground" />
                         </div>
                         <div>
-                          <div className="text-xl font-bold text-navy-dark dark:text-white">{displayValue}</div>
-                          <div className="text-sm text-gray-600 dark:text-gray-400">{item.label}</div>
+                          <div className="text-xl font-bold text-foreground">{displayValue}</div>
+                          <div className="text-sm text-muted-foreground">{item.label}</div>
                         </div>
                       </div>
                     );

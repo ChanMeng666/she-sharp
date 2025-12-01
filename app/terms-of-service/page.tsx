@@ -1,6 +1,6 @@
 import { FileText, Users, Calendar, Camera, Scale, AlertTriangle, Briefcase, HelpCircle } from "lucide-react";
 import { LegalPageLayout } from "@/components/legal-page-layout";
-import "@/components/legal-page-styles.css";
+import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Terms of Service | She Sharp",
@@ -23,8 +23,8 @@ export default function TermsOfServicePage() {
               Terms of Service. If you do not agree to these terms, please do not use our services.
             </p>
             <div className="flex items-center gap-3 p-4 bg-white/50 rounded-lg">
-              <Scale className="h-5 w-5 text-purple-dark flex-shrink-0" />
-              <p className="text-sm text-navy-dark mb-0">
+              <Scale className="h-5 w-5 text-foreground flex-shrink-0" />
+              <p className="text-sm text-foreground mb-0">
                 These terms constitute a legally binding agreement between you and She Sharp (Registered NZ Charity CC57025).
               </p>
             </div>
@@ -36,9 +36,9 @@ export default function TermsOfServicePage() {
           <h2>About She Sharp</h2>
           
           <div className="grid md:grid-cols-3 gap-6 mb-8">
-            <div className="text-center p-8 bg-gradient-to-br from-purple-light/20 to-periwinkle-light/20 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <div className="mx-auto w-16 h-16 bg-purple-dark/10 rounded-full flex items-center justify-center mb-4">
-                <Users className="h-8 w-8 text-purple-dark" />
+            <div className="text-center p-8 bg-muted rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+              <div className="mx-auto w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
+                <Users className="h-8 w-8 text-foreground" />
               </div>
               <h3 className="!mt-0 text-lg">Our Mission</h3>
               <p className="text-sm text-gray mb-0">
@@ -46,9 +46,9 @@ export default function TermsOfServicePage() {
               </p>
             </div>
             
-            <div className="text-center p-8 bg-gradient-to-br from-periwinkle-light/20 to-mint-light/20 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <div className="mx-auto w-16 h-16 bg-periwinkle-dark/10 rounded-full flex items-center justify-center mb-4">
-                <Briefcase className="h-8 w-8 text-periwinkle-dark" />
+            <div className="text-center p-8 bg-muted rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+              <div className="mx-auto w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
+                <Briefcase className="h-8 w-8 text-foreground" />
               </div>
               <h3 className="!mt-0 text-lg">What We Do</h3>
               <p className="text-sm text-gray mb-0">
@@ -56,9 +56,9 @@ export default function TermsOfServicePage() {
               </p>
             </div>
             
-            <div className="text-center p-8 bg-gradient-to-br from-mint-light/20 to-purple-light/20 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <div className="mx-auto w-16 h-16 bg-mint-dark/10 rounded-full flex items-center justify-center mb-4">
-                <Calendar className="h-8 w-8 text-mint-dark" />
+            <div className="text-center p-8 bg-muted rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+              <div className="mx-auto w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
+                <Calendar className="h-8 w-8 text-foreground" />
               </div>
               <h3 className="!mt-0 text-lg">Since 2014</h3>
               <p className="text-sm text-gray mb-0">
@@ -75,7 +75,7 @@ export default function TermsOfServicePage() {
           <div className="space-y-6">
             <div className="legal-highlight-box">
               <h3 className="!mt-0 flex items-center gap-3">
-                <Users className="h-6 w-6 text-purple-dark" />
+                <Users className="h-6 w-6 text-foreground" />
                 Eligibility Requirements
               </h3>
               <p className="mb-4">
@@ -83,7 +83,7 @@ export default function TermsOfServicePage() {
                 By using our services, you represent that you meet this age requirement.
               </p>
               <div className="p-4 bg-white/50 rounded-lg">
-                <p className="text-sm text-navy-dark mb-0">
+                <p className="text-sm text-foreground mb-0">
                   <strong>Note:</strong> Some programs may have additional eligibility criteria 
                   specific to the program objectives.
                 </p>
@@ -92,36 +92,36 @@ export default function TermsOfServicePage() {
 
             <div className="legal-highlight-box">
               <h3 className="!mt-0 flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-purple-dark" />
+                <AlertTriangle className="h-6 w-6 text-foreground" />
                 Acceptable Use Policy
               </h3>
               <p className="mb-4">When using our services, you agree to:</p>
               
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="bg-mint-light/30 rounded-lg p-4">
-                  <h4 className="font-semibold text-navy-dark mb-3 text-sm">DO</h4>
+                <div className="bg-muted rounded-lg p-4">
+                  <h4 className="font-semibold text-foreground mb-3 text-sm">DO</h4>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
-                      <span className="text-mint-dark mt-0.5">✓</span>
+                      <span className="text-foreground mt-0.5">✓</span>
                       <span>Provide accurate information</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-mint-dark mt-0.5">✓</span>
+                      <span className="text-foreground mt-0.5">✓</span>
                       <span>Respect other members</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-mint-dark mt-0.5">✓</span>
+                      <span className="text-foreground mt-0.5">✓</span>
                       <span>Follow event guidelines</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-mint-dark mt-0.5">✓</span>
+                      <span className="text-foreground mt-0.5">✓</span>
                       <span>Comply with laws</span>
                     </li>
                   </ul>
                 </div>
                 
                 <div className="bg-error/10 rounded-lg p-4">
-                  <h4 className="font-semibold text-navy-dark mb-3 text-sm">DON'T</h4>
+                  <h4 className="font-semibold text-foreground mb-3 text-sm">DON'T</h4>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="text-error mt-0.5">✗</span>
@@ -180,7 +180,7 @@ export default function TermsOfServicePage() {
                 <h3 className="!mt-0 text-lg">Photography & Recording</h3>
                 <div className="legal-warning-box !my-4">
                   <div className="flex items-start gap-3">
-                    <Camera className="h-5 w-5 text-mint-dark mt-1 flex-shrink-0" />
+                    <Camera className="h-5 w-5 text-foreground mt-1 flex-shrink-0" />
                     <div>
                       <p className="mb-2">
                         By attending our events, you consent to being photographed or recorded. 
@@ -208,7 +208,7 @@ export default function TermsOfServicePage() {
                 All content on our website, including text, graphics, logos, and images, is the 
                 property of She Sharp or its content suppliers and is protected by copyright laws.
               </p>
-              <div className="text-sm text-navy-dark/80">
+              <div className="text-sm text-foreground/80">
                 <strong>You may not:</strong>
                 <ul className="mt-2 space-y-1">
                   <li>• Reproduce without permission</li>
@@ -224,7 +224,7 @@ export default function TermsOfServicePage() {
                 By submitting content to our website or services, you grant She Sharp a 
                 non-exclusive, royalty-free license to use, reproduce, and display such content.
               </p>
-              <div className="text-sm text-navy-dark/80">
+              <div className="text-sm text-foreground/80">
                 <strong>You retain:</strong>
                 <ul className="mt-2 space-y-1">
                   <li>• Ownership of your content</li>
@@ -242,13 +242,13 @@ export default function TermsOfServicePage() {
           
           <div className="legal-warning-box">
             <h3 className="!mt-0 flex items-center gap-3">
-              <AlertTriangle className="h-6 w-6 text-mint-dark" />
+              <AlertTriangle className="h-6 w-6 text-foreground" />
               Important Legal Notice
             </h3>
             
             <div className="space-y-4">
               <div>
-                <h4 className="font-semibold text-navy-dark mb-2">Service Disclaimer</h4>
+                <h4 className="font-semibold text-foreground mb-2">Service Disclaimer</h4>
                 <p className="text-sm">
                   Our services are provided "as is" without warranties of any kind. We do not guarantee 
                   specific outcomes from participation in our programs or the accuracy of all information 
@@ -257,7 +257,7 @@ export default function TermsOfServicePage() {
               </div>
               
               <div>
-                <h4 className="font-semibold text-navy-dark mb-2">Limitation of Liability</h4>
+                <h4 className="font-semibold text-foreground mb-2">Limitation of Liability</h4>
                 <p className="text-sm">
                   To the fullest extent permitted by law, She Sharp shall not be liable for any indirect, 
                   incidental, special, or consequential damages arising from your use of our services.
@@ -265,7 +265,7 @@ export default function TermsOfServicePage() {
               </div>
               
               <div>
-                <h4 className="font-semibold text-navy-dark mb-2">Indemnification</h4>
+                <h4 className="font-semibold text-foreground mb-2">Indemnification</h4>
                 <p className="text-sm mb-0">
                   You agree to indemnify and hold harmless She Sharp, its officers, directors, employees, 
                   and volunteers from any claims arising from your use of our services or violation of 
@@ -305,7 +305,7 @@ export default function TermsOfServicePage() {
           
           <div className="legal-contact-card">
             <div className="flex items-start gap-4">
-              <HelpCircle className="h-8 w-8 text-purple-dark mt-1" />
+              <HelpCircle className="h-8 w-8 text-foreground mt-1" />
               <div className="flex-1">
                 <h3 className="!mt-0 text-xl mb-4">We're Here to Help</h3>
                 <p className="mb-6">
@@ -316,19 +316,19 @@ export default function TermsOfServicePage() {
                 <div className="grid sm:grid-cols-3 gap-6">
                   <div>
                     <p className="text-sm text-gray mb-1">Email</p>
-                    <a href="mailto:legal@shesharp.org.nz" className="text-purple-dark hover:text-purple-mid">
+                    <a href="mailto:legal@shesharp.org.nz" className="text-foreground hover:text-foreground/80">
                       legal@shesharp.org.nz
                     </a>
                   </div>
                   
                   <div>
                     <p className="text-sm text-gray mb-1">Charity Number</p>
-                    <p className="text-navy-dark">CC57025</p>
+                    <p className="text-foreground">CC57025</p>
                   </div>
                   
                   <div>
                     <p className="text-sm text-gray mb-1">Updated</p>
-                    <p className="text-navy-dark">
+                    <p className="text-foreground">
                       {new Date().toLocaleDateString('en-NZ', { month: 'long', year: 'numeric' })}
                     </p>
                   </div>

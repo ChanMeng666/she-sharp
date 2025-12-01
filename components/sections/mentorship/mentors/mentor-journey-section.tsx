@@ -77,20 +77,20 @@ export function MentorJourneySection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <Badge className="mb-4 bg-mint-light text-mint-dark border-mint-dark/20">
+          <Badge className="mb-4 bg-muted text-foreground border-border">
             Your Journey
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             The Mentor Journey at She Sharp
           </h2>
-          <p className="text-lg text-gray max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             From application to impact – here's what your mentorship journey looks like
           </p>
         </motion.div>
 
         <div className="relative">
           {/* Timeline line - hidden on mobile */}
-          <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-purple-light to-periwinkle-light" />
+          <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-muted" />
 
           <div className="space-y-8 lg:space-y-12">
             {journeySteps.map((step, index) => (
@@ -108,11 +108,11 @@ export function MentorJourneySection() {
                 <div className="w-full lg:w-5/12">
                   <Card className="p-6 hover:shadow-lg transition-shadow duration-300">
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-purple-light text-purple-dark font-bold text-lg">
+                      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-muted text-foreground font-bold text-lg">
                         {step.number}
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-xl font-semibold text-navy-dark mb-1">
+                        <h3 className="text-xl font-semibold text-foreground mb-1">
                           {step.title}
                         </h3>
                         <Badge variant="secondary" className="text-xs">
@@ -120,12 +120,12 @@ export function MentorJourneySection() {
                         </Badge>
                       </div>
                     </div>
-                    <p className="text-gray mb-4">{step.description}</p>
+                    <p className="text-muted-foreground mb-4">{step.description}</p>
                     <div className="space-y-2">
                       {step.checklist.map((item) => (
                         <div key={item} className="flex items-center gap-2 text-sm">
-                          <CheckCircle2 className="h-4 w-4 text-mint-dark flex-shrink-0" />
-                          <span className="text-gray-600">{item}</span>
+                          <CheckCircle2 className="h-4 w-4 text-foreground flex-shrink-0" />
+                          <span className="text-muted-foreground">{item}</span>
                         </div>
                       ))}
                     </div>
@@ -134,7 +134,7 @@ export function MentorJourneySection() {
 
                 {/* Timeline dot */}
                 <div className="hidden lg:flex items-center justify-center w-2/12">
-                  <div className="w-4 h-4 rounded-full bg-purple-dark ring-4 ring-purple-light/30" />
+                  <div className="w-4 h-4 rounded-full bg-foreground ring-4 ring-muted" />
                 </div>
 
                 {/* Empty space for alternating layout */}
@@ -150,26 +150,26 @@ export function MentorJourneySection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mt-16 bg-gradient-to-r from-purple-light/20 to-periwinkle-light/20 rounded-2xl p-8"
+          className="mt-16 bg-muted rounded-2xl p-8"
         >
           <div className="grid md:grid-cols-3 gap-6 text-center">
             <div>
-              <div className="text-3xl font-bold text-purple-dark">
+              <div className="text-3xl font-bold text-foreground">
                 {globalStats.mentorship.mentors}+
               </div>
-              <div className="text-gray-600">Active Mentors</div>
+              <div className="text-muted-foreground">Active Mentors</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-purple-dark">
+              <div className="text-3xl font-bold text-foreground">
                 {globalStats.mentorship.successRate}%
               </div>
-              <div className="text-gray-600">Success Rate</div>
+              <div className="text-muted-foreground">Success Rate</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-purple-dark">
+              <div className="text-3xl font-bold text-foreground">
                 {globalStats.mentorship.promotionRate.mentors}x
               </div>
-              <div className="text-gray-600">More Likely to be Promoted</div>
+              <div className="text-muted-foreground">More Likely to be Promoted</div>
             </div>
           </div>
         </motion.div>

@@ -38,11 +38,11 @@ const featuredStories = testimonialsByPage.home
 
 export function CommunityStoriesSection() {
   return (
-    <Section className="bg-gradient-to-b from-black/95 via-gray-950/95 to-black/95">
+    <Section className="bg-foreground">
       <Container size="full">
         {/* Section Header */}
         <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ghost-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-background">
             Community in Action
           </h2>
         </AnimateOnScroll>
@@ -54,8 +54,8 @@ export function CommunityStoriesSection() {
             <AnimateOnScroll variant="fade-right" className="w-full lg:w-1/3 flex flex-col justify-between h-full">
               <div>
                 <div className="flex items-center gap-3 mb-8">
-                  <Sparkles className="w-6 h-6 text-purple-dark" />
-                  <h3 className="text-2xl font-semibold text-ghost-white">
+                  <Sparkles className="w-6 h-6 text-background" />
+                  <h3 className="text-2xl font-semibold text-background">
                     Success Stories
                   </h3>
                 </div>
@@ -95,15 +95,15 @@ export function CommunityStoriesSection() {
                 <CarouselContent>
                   {featuredStories.map((story) => (
                     <CarouselItem key={story.id}>
-                      <Card className="border-2 border-purple-dark/50 bg-gray-800/40 backdrop-blur-sm">
+                      <Card className="border-border bg-background">
                         <CardContent className="p-10">
                           {/* Story Text */}
                           <div className="relative">
-                            <Quote className="absolute -top-2 -left-2 w-6 h-6 text-purple-dark rotate-180" />
-                            <blockquote className="text-ghost-white italic text-lg mb-12 leading-relaxed pl-8">
+                            <Quote className="absolute -top-2 -left-2 w-6 h-6 text-muted-foreground rotate-180" />
+                            <blockquote className="text-foreground italic text-lg mb-12 leading-relaxed pl-8">
                               {story.quote}
                             </blockquote>
-                            <Quote className="absolute -bottom-2 -right-2 w-6 h-6 text-purple-dark" />
+                            <Quote className="absolute -bottom-2 -right-2 w-6 h-6 text-muted-foreground" />
                           </div>
 
                           {/* Author Info */}
@@ -112,8 +112,8 @@ export function CommunityStoriesSection() {
                               <AvatarImage src={story.image} alt={story.name} />
                               <AvatarFallback
                                 style={{
-                                  backgroundColor: "var(--color-purple-dark)",
-                                  color: "white",
+                                  backgroundColor: "var(--color-foreground)",
+                                  color: "var(--color-background)",
                                 }}
                               >
                                 {story.name
@@ -123,10 +123,10 @@ export function CommunityStoriesSection() {
                               </AvatarFallback>
                             </Avatar>
                             <div>
-                              <div className="font-semibold text-ghost-white text-lg">
+                              <div className="font-semibold text-foreground text-lg">
                                 {story.name}
                               </div>
-                              <div className="text-gray-300">
+                              <div className="text-muted-foreground">
                                 {story.role} at {story.company}
                               </div>
                             </div>
@@ -138,7 +138,7 @@ export function CommunityStoriesSection() {
                               <Badge
                                 key={tag}
                                 variant="secondary"
-                                className="text-xs bg-purple-dark/30 text-ghost-white border border-purple-dark/50 px-3 py-1"
+                                className="text-xs bg-muted text-foreground border border-border px-3 py-1"
                               >
                                 {tag}
                               </Badge>
@@ -149,8 +149,8 @@ export function CommunityStoriesSection() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="-left-16 h-10 w-10 bg-gray-800/90 hover:bg-gray-800 border-2 border-purple-dark/50 text-purple-dark" />
-                <CarouselNext className="-right-16 h-10 w-10 bg-gray-800/90 hover:bg-gray-800 border-2 border-purple-dark/50 text-purple-dark" />
+                <CarouselPrevious className="hidden md:flex -left-16 h-10 w-10 bg-muted hover:bg-muted/80 border-border text-foreground" />
+                <CarouselNext className="hidden md:flex -right-16 h-10 w-10 bg-muted hover:bg-muted/80 border-border text-foreground" />
               </Carousel>
             </AnimateOnScroll>
           </div>

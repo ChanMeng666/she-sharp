@@ -16,7 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 import { footerConfig } from "@/lib/config/footer";
 import { socialIcons } from "@/components/ui/social-icons";
-import "./footer-styles.css";
+import "@/styles/components/footer.css";
 
 export function SiteFooter() {
   const router = useRouter();
@@ -69,9 +69,7 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="relative bg-navy-dark text-white -mt-12 pt-16 overflow-hidden rounded-t-[50px]">
-      {/* 向上过渡渐变 */}
-      <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-t from-navy-dark to-transparent" />
+    <footer className="relative bg-brand text-background -mt-12 pt-16 overflow-hidden rounded-t-[50px]">
 
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:justify-between gap-8 lg:gap-12 xl:gap-16">
@@ -81,10 +79,10 @@ export function SiteFooter() {
               {/* Newsletter */}
               <div className="mb-8 lg:mb-12">
                 <div className="text-left">
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-white">
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-background">
                     Subscribe to stay updated
                   </h3>
-                  <p className="text-sm md:text-base text-white/80 mb-6 lg:mb-8">
+                  <p className="text-sm md:text-base text-background/80 mb-6 lg:mb-8">
                     Get the latest updates on events, mentorship opportunities,
                     and inspiring stories.
                   </p>
@@ -93,21 +91,22 @@ export function SiteFooter() {
                     className="flex flex-col sm:flex-row gap-3 max-w-lg"
                   >
                     <div className="relative flex-1">
-                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/50" />
+                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-background/50" />
                       <Input
                         type="email"
                         placeholder="Enter your email address"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="pl-12 h-12 text-base bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-purple-mid newsletter-input"
+                        className="pl-12 h-12 text-base bg-background/10 border-background/20 text-background placeholder:text-background/50 focus:border-background/60 newsletter-input"
                       />
                     </div>
                     <Button
                       type="submit"
+                      variant="default"
                       size="lg"
                       disabled={newsletterStatus === "loading"}
-                      className="bg-purple-dark text-white hover:bg-purple-mid transition-colors duration-150 h-12 px-8"
+                      className="h-12 px-8"
                     >
                       {newsletterStatus === "loading"
                         ? "Subscribing..."
@@ -115,7 +114,7 @@ export function SiteFooter() {
                     </Button>
                   </form>
                   {newsletterStatus === "success" && (
-                    <p className="mt-3 text-mint-dark">
+                    <p className="mt-3 text-background/90">
                       Thank you for subscribing!
                     </p>
                   )}
@@ -133,7 +132,7 @@ export function SiteFooter() {
                           href={social.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="social-icon p-2.5 lg:p-3 border-white/60 border rounded-full bg-white/10 hover:bg-purple-dark transition-all"
+                          className="social-icon p-2.5 lg:p-3 border-background/60 border rounded-full bg-background/10 hover:bg-background/20 transition-all"
                           aria-label={`Follow us on ${social.name}`}
                         >
                           <Icon className="h-5 w-5" />
@@ -156,7 +155,7 @@ export function SiteFooter() {
                     key={section.title}
                     className="min-w-[140px] lg:min-w-[160px] xl:min-w-[180px]"
                   >
-                    <h4 className="font-semibold mb-4 text-mint-dark text-sm lg:text-lg">
+                    <h4 className="font-semibold mb-4 text-background text-sm lg:text-lg">
                       {section.title}
                     </h4>
                     <ul className="space-y-2 lg:space-y-4">
@@ -165,7 +164,7 @@ export function SiteFooter() {
                           <Link
                             href={link.href}
                             onClick={(e) => handleSmoothScroll(e, link.href)}
-                            className="text-xs lg:text-base text-white/80 hover:text-purple-mid transition-colors footer-link inline-block"
+                            className="text-xs lg:text-base text-background/80 hover:text-background transition-colors footer-link inline-block"
                           >
                             {link.name}
                           </Link>
@@ -183,15 +182,15 @@ export function SiteFooter() {
                     key={section.title}
                     open={openSections.includes(section.title)}
                     onOpenChange={() => toggleSection(section.title)}
-                    className="border-b border-white/10 last:border-0"
+                    className="border-b border-background/10 last:border-0"
                   >
                     <CollapsibleTrigger className="flex w-full items-center justify-between py-3 md:py-4 text-left">
-                      <h4 className="font-semibold text-mint-dark text-sm md:text-base">
+                      <h4 className="font-semibold text-background text-sm md:text-base">
                         {section.title}
                       </h4>
                       <ChevronDown
                         className={cn(
-                          "h-4 w-4 transition-transform duration-150 text-white/60",
+                          "h-4 w-4 transition-transform duration-150 text-background/60",
                           openSections.includes(section.title) && "rotate-180"
                         )}
                       />
@@ -206,7 +205,7 @@ export function SiteFooter() {
                                 onClick={(e) =>
                                   handleSmoothScroll(e, link.href)
                                 }
-                                className="text-xs md:text-sm text-white/80 hover:text-purple-mid transition-colors block py-1"
+                                className="text-xs md:text-sm text-background/80 hover:text-background transition-colors block py-1"
                               >
                                 {link.name}
                               </Link>
@@ -223,7 +222,7 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <Separator className="bg-white/20" />
+      <Separator className="bg-background/20" />
 
       {/* Bottom Section */}
       <div className="px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
@@ -241,12 +240,12 @@ export function SiteFooter() {
                 />
               </div>
             </Link>
-            <span className="hidden sm:inline text-white/40">|</span>
+            <span className="hidden sm:inline text-background/40">|</span>
             <Link
               href={footerConfig.charityInfo.registrationLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-purple-mid transition-colors duration-150 flex items-center gap-1 text-center text-xs md:text-sm text-white/80"
+              className="hover:text-background transition-colors duration-150 flex items-center gap-1 text-center text-xs md:text-sm text-background/80"
             >
               Registered NZ Charity #
               {footerConfig.charityInfo.registrationNumber}
@@ -260,19 +259,19 @@ export function SiteFooter() {
               <div key={link.name} className="flex items-center">
                 <Link
                   href={link.href}
-                  className="text-white/80 hover:text-purple-mid transition-colors duration-150 legal-link"
+                  className="text-background/80 hover:text-background transition-colors duration-150 legal-link"
                 >
                   {link.name}
                 </Link>
                 {index < footerConfig.legalLinks.length - 1 && (
-                  <span className="mx-1 md:mx-8 text-white/60">•</span>
+                  <span className="mx-1 md:mx-8 text-background/60">•</span>
                 )}
               </div>
             ))}
           </div>
 
           {/* Right side - Copyright */}
-          <div className="text-center lg:text-right text-xs md:text-sm text-white/80">
+          <div className="text-center lg:text-right text-xs md:text-sm text-background/80">
             © {new Date().getFullYear()} She Sharp. All rights reserved.
           </div>
         </div>

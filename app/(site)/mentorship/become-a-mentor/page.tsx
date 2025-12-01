@@ -318,23 +318,23 @@ export default function BecomeMentorPage() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-16">
+      <div className="min-h-screen bg-muted py-16">
         <div className="container mx-auto px-4 max-w-lg">
-          <Card className="border-green-200 shadow-lg">
+          <Card className="border-border shadow-lg">
             <CardContent className="pt-8 text-center">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle2 className="h-12 w-12 text-green-600" />
+              <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="h-12 w-12 text-foreground" />
               </div>
-              <h1 className="text-2xl font-bold text-navy-dark mb-3">
+              <h1 className="text-2xl font-bold text-foreground mb-3">
                 Application Submitted!
               </h1>
-              <p className="text-gray-600 mb-6">
+              <p className="text-muted-foreground mb-6">
                 Thank you for applying to become a mentor with She Sharp. Our team will
                 review your application and get back to you within 5-7 business days.
               </p>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-left">
-                <h3 className="font-semibold text-blue-900 mb-2">What happens next?</h3>
-                <ol className="text-sm text-blue-700 space-y-2">
+              <div className="bg-muted border border-border rounded-lg p-4 mb-6 text-left">
+                <h3 className="font-semibold text-foreground mb-2">What happens next?</h3>
+                <ol className="text-sm text-muted-foreground space-y-2">
                   <li>1. Our team reviews your application</li>
                   <li>2. If approved, you&apos;ll receive an email with your invitation code</li>
                   <li>3. Use the code to create your mentor account</li>
@@ -342,7 +342,7 @@ export default function BecomeMentorPage() {
                 </ol>
               </div>
               <Link href="/">
-                <Button className="w-full bg-purple-dark hover:bg-purple-dark/90">
+                <Button className="w-full">
                   Return to Home
                 </Button>
               </Link>
@@ -587,7 +587,7 @@ export default function BecomeMentorPage() {
                     type="button"
                     variant={formData.softSkillsBasic.includes(skill) ? 'default' : 'outline'}
                     size="sm"
-                    className={`justify-start text-xs ${formData.softSkillsBasic.includes(skill) ? 'bg-blue-600' : ''}`}
+                    className={`justify-start text-xs ${formData.softSkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
                     onClick={() => toggleArrayItem('softSkillsBasic', skill)}
                   >
                     {skill}
@@ -606,7 +606,7 @@ export default function BecomeMentorPage() {
                     type="button"
                     variant={formData.softSkillsExpert.includes(skill) ? 'default' : 'outline'}
                     size="sm"
-                    className={`justify-start text-xs ${formData.softSkillsExpert.includes(skill) ? 'bg-purple-dark' : ''}`}
+                    className={`justify-start text-xs ${formData.softSkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
                     onClick={() => toggleArrayItem('softSkillsExpert', skill)}
                   >
                     {skill}
@@ -626,7 +626,7 @@ export default function BecomeMentorPage() {
                     type="button"
                     variant={formData.industrySkillsBasic.includes(skill) ? 'default' : 'outline'}
                     size="sm"
-                    className={`justify-start text-xs ${formData.industrySkillsBasic.includes(skill) ? 'bg-blue-600' : ''}`}
+                    className={`justify-start text-xs ${formData.industrySkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
                     onClick={() => toggleArrayItem('industrySkillsBasic', skill)}
                   >
                     {skill}
@@ -645,7 +645,7 @@ export default function BecomeMentorPage() {
                     type="button"
                     variant={formData.industrySkillsExpert.includes(skill) ? 'default' : 'outline'}
                     size="sm"
-                    className={`justify-start text-xs ${formData.industrySkillsExpert.includes(skill) ? 'bg-purple-dark' : ''}`}
+                    className={`justify-start text-xs ${formData.industrySkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
                     onClick={() => toggleArrayItem('industrySkillsExpert', skill)}
                   >
                     {skill}
@@ -750,7 +750,7 @@ export default function BecomeMentorPage() {
                   href="https://www.16personalities.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-purple-dark hover:underline inline-flex items-center"
+                  className="text-foreground hover:underline inline-flex items-center"
                 >
                   16personalities.com
                   <ExternalLink className="h-3 w-3 ml-1" />
@@ -763,7 +763,7 @@ export default function BecomeMentorPage() {
                     type="button"
                     variant={formData.mbtiType === type ? 'default' : 'outline'}
                     size="sm"
-                    className={formData.mbtiType === type ? 'bg-purple-dark' : ''}
+                    className={formData.mbtiType === type ? 'bg-foreground' : ''}
                     onClick={() => updateField('mbtiType', type)}
                   >
                     {type}
@@ -808,7 +808,7 @@ export default function BecomeMentorPage() {
 
             {/* Review Summary */}
             <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-              <h3 className="font-semibold text-navy-dark">Application Summary</h3>
+              <h3 className="font-semibold text-foreground">Application Summary</h3>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div className="text-gray-500">Name:</div>
                 <div className="font-medium">{formData.fullName}</div>
@@ -823,7 +823,7 @@ export default function BecomeMentorPage() {
                 <div className="text-gray-500 text-sm mb-1">Expert Skills:</div>
                 <div className="flex flex-wrap gap-1">
                   {[...formData.softSkillsExpert, ...formData.industrySkillsExpert].map(s => (
-                    <span key={s} className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs">{s}</span>
+                    <span key={s} className="bg-muted text-foreground px-2 py-0.5 rounded text-xs">{s}</span>
                   ))}
                 </div>
               </div>
@@ -839,11 +839,11 @@ export default function BecomeMentorPage() {
                 />
                 <Label htmlFor="agreeToTerms" className="text-sm leading-relaxed cursor-pointer">
                   I agree to the{' '}
-                  <Link href="/terms-of-service" className="text-purple-dark underline">
+                  <Link href="/terms-of-service" className="text-foreground underline">
                     Terms of Service
                   </Link>{' '}
                   and{' '}
-                  <Link href="/privacy-policy" className="text-purple-dark underline">
+                  <Link href="/privacy-policy" className="text-foreground underline">
                     Privacy Policy
                   </Link>
                 </Label>
@@ -869,30 +869,30 @@ export default function BecomeMentorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
-      <section className="py-12 md:py-16">
+    <div className="min-h-screen bg-muted">
+      <section className="pt-24 md:pt-32 pb-12 md:pb-16">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-8">
-            <div className="inline-flex items-center gap-2 bg-purple-100 text-purple-dark px-4 py-2 rounded-full mb-4">
+            <div className="inline-flex items-center gap-2 bg-muted-foreground/10 text-foreground px-4 py-2 rounded-full mb-4">
               <Sparkles className="h-4 w-4" />
               <span className="text-sm font-medium">Become a Mentor 2026</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-navy-dark mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Share Your Expertise, Shape the Future
             </h1>
-            <p className="text-gray-600">
+            <p className="text-muted-foreground">
               Join our community of industry leaders and help guide the next generation of women in STEM.
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-4xl mx-auto">
             {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm">
-                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <benefit.icon className="h-5 w-5 text-purple-dark" />
+              <div key={index} className="flex items-center gap-3 p-3 bg-background rounded-lg shadow-sm">
+                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
+                  <benefit.icon className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-navy-dark text-sm">{benefit.title}</h3>
+                  <h3 className="font-medium text-foreground text-sm">{benefit.title}</h3>
                 </div>
               </div>
             ))}
@@ -907,15 +907,15 @@ export default function BecomeMentorPage() {
                       <div
                         key={step.id}
                         className={`flex items-center gap-1.5 text-xs ${
-                          currentStep >= step.id ? 'text-purple-dark' : 'text-gray-400'
+                          currentStep >= step.id ? 'text-foreground' : 'text-gray-400'
                         }`}
                       >
                         <div
                           className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
                             currentStep > step.id
-                              ? 'bg-purple-dark text-white'
+                              ? 'bg-foreground text-white'
                               : currentStep === step.id
-                              ? 'bg-purple-100 text-purple-dark border-2 border-purple-dark'
+                              ? 'bg-muted text-foreground border-2 border-purple-dark'
                               : 'bg-gray-100 text-gray-400'
                           }`}
                         >
@@ -952,7 +952,7 @@ export default function BecomeMentorPage() {
                   )}
 
                   {currentStep < 5 ? (
-                    <Button onClick={handleNext} className="bg-purple-dark hover:bg-purple-dark/90">
+                    <Button onClick={handleNext} className="bg-foreground hover:bg-foreground/90">
                       Next
                       <ChevronRight className="h-4 w-4 ml-1" />
                     </Button>
@@ -960,7 +960,7 @@ export default function BecomeMentorPage() {
                     <Button
                       onClick={handleSubmit}
                       disabled={loading}
-                      className="bg-purple-dark hover:bg-purple-dark/90"
+                      className="bg-foreground hover:bg-foreground/90"
                     >
                       {loading ? (
                         <>
@@ -982,13 +982,13 @@ export default function BecomeMentorPage() {
             <div className="text-center mt-6 space-y-2">
               <p className="text-gray-600">
                 Already have an invitation code?{' '}
-                <Link href="/sign-up" className="text-purple-dark hover:underline font-medium">
+                <Link href="/sign-up" className="text-foreground hover:underline font-medium">
                   Sign up here
                 </Link>
               </p>
               <p className="text-gray-600">
                 Looking to become a mentee?{' '}
-                <Link href="/mentorship/join" className="text-purple-dark hover:underline font-medium">
+                <Link href="/mentorship/join" className="text-foreground hover:underline font-medium">
                   Join as mentee
                 </Link>
               </p>

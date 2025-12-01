@@ -333,7 +333,7 @@ function AccountPageContent() {
   return (
     <div className="container mx-auto py-8 px-4 max-w-5xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-primary">Account Settings</h1>
+        <h1 className="text-3xl font-bold text-foreground">Account Settings</h1>
         <p className="text-muted-foreground mt-2">Manage your account settings and preferences</p>
       </div>
 
@@ -401,7 +401,7 @@ function AccountPageContent() {
                 <Button 
                   type="submit" 
                   disabled={isUpdating}
-                  className="bg-purple-dark hover:bg-purple-mid"
+                  className=""
                 >
                   {isUpdating ? (
                     <>
@@ -499,7 +499,7 @@ function AccountPageContent() {
                 <Button 
                   type="submit" 
                   disabled={isUpdating || !passwordRequirements.every(req => req.met) || newPassword !== confirmPassword}
-                  className="bg-purple-dark hover:bg-purple-mid"
+                  className=""
                 >
                   {isUpdating ? (
                     <>
@@ -530,8 +530,9 @@ function AccountPageContent() {
               </p>
             </CardContent>
             <CardFooter>
-              <Button 
-                variant="destructive"
+              <Button
+                variant="outline"
+                className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 hover:border-red-300"
                 onClick={() => setShowDeleteDialog(true)}
               >
                 <AlertTriangle className="mr-2 h-4 w-4" />

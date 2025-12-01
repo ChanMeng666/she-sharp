@@ -5,7 +5,7 @@
   left: 0;
   width: 100%;
   height: 50px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 50'%3E%3Cpath fill='%231f1e44' fill-opacity='1' d='M0,25 C360,50 720,0 1440,25 L1440,50 L0,50 Z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 50'%3E%3Cpath fill='%23000000' fill-opacity='1' d='M0,25 C360,50 720,0 1440,25 L1440,50 L0,50 Z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
   background-size: cover;
 }
 
@@ -14,7 +14,7 @@
   position: absolute;
   inset: 0;
   opacity: 0.03;
-  background-image: 
+  background-image:
     repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px);
 }
 
@@ -24,7 +24,7 @@
 }
 
 .newsletter-input:focus {
-  border-color: #9b2e83;
+  border-color: #000000;
 }
 
 /* Social Icon Hover - Simple color change */
@@ -72,13 +72,13 @@
   overflow: hidden;
 }
 
-/* Legal Links Hover */
+/* Legal Links Hover - 白色悬停效果，在紫色背景上可见 */
 .legal-link {
   transition: color 0.15s ease;
 }
 
 .legal-link:hover {
-  color: #c846ab;
+  color: #ffffff;
 }
 
 /* Removed all animations, gradients, and complex effects */

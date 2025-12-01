@@ -189,7 +189,7 @@ export default function VerifiedMentorsPage() {
             <Download className="w-4 h-4 mr-2" />
             Export
           </Button>
-          <Button className="bg-purple-600 hover:bg-purple-700 text-sm sm:text-base">
+          <Button className="text-sm sm:text-base">
             <Mail className="w-4 h-4 mr-2" />
             Send Announcement
           </Button>
@@ -408,7 +408,7 @@ export default function VerifiedMentorsPage() {
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
+                        <Button variant="outline" size="icon">
                           <MoreVertical className="w-4 h-4" />
                         </Button>
                       </DropdownMenuTrigger>

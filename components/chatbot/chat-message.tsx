@@ -25,9 +25,9 @@ export function ChatMessage({ content, role, isStreaming }: ChatMessageProps) {
     >
       <div className={cn(
         'flex h-10 w-10 shrink-0 items-center justify-center rounded-full shadow-sm',
-        isUser 
-          ? 'bg-periwinkle-dark text-white' 
-          : 'bg-purple-dark text-white'
+        isUser
+          ? 'bg-muted text-foreground'
+          : 'bg-foreground text-background'
       )}>
         {isUser ? <User size={18} /> : <Bot size={18} />}
       </div>
@@ -38,23 +38,23 @@ export function ChatMessage({ content, role, isStreaming }: ChatMessageProps) {
       )}>
         <div className={cn(
           'rounded-2xl px-4 py-3 shadow-sm',
-          isUser 
-            ? 'bg-periwinkle-light border border-periwinkle-dark/20 rounded-br-md' 
-            : 'bg-purple-light border border-purple-dark/20 rounded-bl-md'
+          isUser
+            ? 'bg-muted border border-border rounded-br-md'
+            : 'bg-muted border border-border rounded-bl-md'
         )}>
           <div className={cn(
             'prose prose-sm max-w-none',
-            isUser ? 'text-navy-dark' : 'text-navy-dark'
+            isUser ? 'text-foreground' : 'text-foreground'
           )}>
             {content}
             {isStreaming && (
-              <span className="inline-block h-4 w-1 animate-pulse bg-mint-dark ml-1 rounded-full" />
+              <span className="inline-block h-4 w-1 animate-pulse bg-foreground ml-1 rounded-full" />
             )}
           </div>
         </div>
-        
+
         <span className={cn(
-          'text-xs text-gray mt-1 px-2',
+          'text-xs text-muted-foreground mt-1 px-2',
           isUser ? 'text-right' : 'text-left'
         )}>
           {isUser ? 'You' : 'She Sharp Assistant'}
