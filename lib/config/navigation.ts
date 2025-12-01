@@ -16,7 +16,7 @@ export interface NavigationItem {
 export interface NavigationButton {
   title: string;
   href: string;
-  variant: "default" | "outline";
+  variant: "default" | "outline" | "brand";
 }
 
 export const navigationConfig: {
@@ -147,7 +147,7 @@ export const navigationConfig: {
     {
       title: "Join Program",
       href: "/mentorship/join",
-      variant: "default",
+      variant: "brand",
     },
   ],
 };

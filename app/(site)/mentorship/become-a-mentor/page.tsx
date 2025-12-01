@@ -363,7 +363,7 @@ export default function BecomeMentorPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Photo Upload Section */}
-            <div className="bg-muted/30 rounded-lg p-5">
+            <div className="bg-[#eaf2ff] rounded-lg p-5">
               <PhotoUpload
                 value={formData.photoUrl}
                 onChange={(url) => updateField('photoUrl', url || '')}
@@ -460,12 +460,12 @@ export default function BecomeMentorPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Location Info Box */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
+            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                <MapPin className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-blue-900">Location Matching</p>
-                  <p className="text-sm text-blue-700 leading-relaxed">
+                  <p className="text-sm font-medium text-[#9b2e83]">Location Matching</p>
+                  <p className="text-sm text-[#1f1e44] leading-relaxed">
                     Auckland is She Sharp&apos;s primary activity city. Your location helps us match you with local mentees for in-person meetings.
                   </p>
                 </div>
@@ -473,7 +473,7 @@ export default function BecomeMentorPage() {
             </div>
 
             {/* Location Settings Group */}
-            <div className="bg-muted/30 rounded-lg p-5 space-y-5">
+            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-5">
               <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
                 <div className="space-y-2">
                   <div className="flex items-center gap-1.5">
@@ -593,12 +593,12 @@ export default function BecomeMentorPage() {
             {/* Bio Section */}
             <div className="space-y-5">
               {/* Bio Info Box */}
-              <div className="bg-purple-50 border border-purple-200 rounded-lg p-5">
+              <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
                 <div className="flex items-start gap-3">
-                  <FileText className="h-5 w-5 text-purple-600 mt-0.5 flex-shrink-0" />
+                  <FileText className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
                   <div className="space-y-1">
-                    <p className="text-sm font-medium text-purple-900">Your Mentor Bio</p>
-                    <p className="text-sm text-purple-700 leading-relaxed">
+                    <p className="text-sm font-medium text-[#9b2e83]">Your Mentor Bio</p>
+                    <p className="text-sm text-[#1f1e44] leading-relaxed">
                       This bio will be publicly displayed on our mentors page. Share your journey, expertise,
                       and what motivates you to mentor.
                     </p>
@@ -653,12 +653,12 @@ export default function BecomeMentorPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Expert Skills Requirement Info Box */}
-            <div className="bg-green-50 border border-green-200 rounded-lg p-5">
+            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <Award className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <Award className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-green-900">Expert Skills Requirement</p>
-                  <p className="text-sm text-green-700 leading-relaxed">
+                  <p className="text-sm font-medium text-[#9b2e83]">Expert Skills Requirement</p>
+                  <p className="text-sm text-[#1f1e44] leading-relaxed">
                     We require at least 2 expert soft skills and 2 expert industry skills to ensure
                     you can provide valuable guidance to your mentees.
                   </p>
@@ -667,7 +667,7 @@ export default function BecomeMentorPage() {
             </div>
 
             {/* Basic Skills Section (Optional) */}
-            <div className="bg-muted/30 rounded-lg p-5 space-y-6">
+            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-6">
               <h3 className="font-medium text-foreground">Skills You Can Teach (Optional)</h3>
 
               <div className="space-y-3">
@@ -682,7 +682,7 @@ export default function BecomeMentorPage() {
                       type="button"
                       variant={formData.softSkillsBasic.includes(skill) ? 'default' : 'outline'}
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsBasic.includes(skill) ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
                       onClick={() => toggleArrayItem('softSkillsBasic', skill)}
                     >
                       {skill}
@@ -703,7 +703,7 @@ export default function BecomeMentorPage() {
                       type="button"
                       variant={formData.industrySkillsBasic.includes(skill) ? 'default' : 'outline'}
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsBasic.includes(skill) ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
                       onClick={() => toggleArrayItem('industrySkillsBasic', skill)}
                     >
                       {skill}
@@ -716,7 +716,7 @@ export default function BecomeMentorPage() {
             <div className="h-px bg-border" />
 
             {/* Expert Skills Section (Required) */}
-            <div className="bg-muted/30 rounded-lg p-5 space-y-6">
+            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-6">
               <h3 className="font-medium text-foreground">Your Expert Skills (Required)</h3>
 
               <div className="space-y-3">
@@ -731,7 +731,7 @@ export default function BecomeMentorPage() {
                       type="button"
                       variant={formData.softSkillsExpert.includes(skill) ? 'default' : 'outline'}
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsExpert.includes(skill) ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
                       onClick={() => toggleArrayItem('softSkillsExpert', skill)}
                     >
                       {skill}
@@ -753,7 +753,7 @@ export default function BecomeMentorPage() {
                       type="button"
                       variant={formData.industrySkillsExpert.includes(skill) ? 'default' : 'outline'}
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsExpert.includes(skill) ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
                       onClick={() => toggleArrayItem('industrySkillsExpert', skill)}
                     >
                       {skill}
@@ -824,7 +824,7 @@ export default function BecomeMentorPage() {
             <div className="h-px bg-border" />
 
             {/* Preferences Section */}
-            <div className="bg-muted/30 rounded-lg p-5 space-y-5">
+            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-5">
               <div className="space-y-3">
                 <div className="flex items-center gap-1.5">
                   <Label>What type(s) of mentee would you prefer? *</Label>
@@ -876,12 +876,12 @@ export default function BecomeMentorPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Time Commitment Info Box */}
-            <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-5">
+            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <Clock className="h-5 w-5 text-indigo-600 mt-0.5 flex-shrink-0" />
+                <Clock className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-indigo-900">Time Commitment</p>
-                  <p className="text-sm text-indigo-700 leading-relaxed">
+                  <p className="text-sm font-medium text-[#9b2e83]">Time Commitment</p>
+                  <p className="text-sm text-[#1f1e44] leading-relaxed">
                     Mentoring typically requires 2-4 hours per month per mentee, including meetings,
                     messages, and occasional events.
                   </p>
@@ -890,7 +890,7 @@ export default function BecomeMentorPage() {
             </div>
 
             {/* Personality & Availability Section */}
-            <div className="bg-muted/30 rounded-lg p-5 space-y-5">
+            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-5">
               <div className="space-y-3">
                 <div className="flex items-center gap-1.5">
                   <Label>Your Personality Type (MBTI) *</Label>
@@ -903,7 +903,7 @@ export default function BecomeMentorPage() {
                       type="button"
                       variant={formData.mbtiType === type ? 'default' : 'outline'}
                       size="sm"
-                      className={`h-9 min-h-[44px] ${formData.mbtiType === type ? 'bg-foreground' : ''}`}
+                      className={`h-9 min-h-[44px] ${formData.mbtiType === type ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
                       onClick={() => updateField('mbtiType', type)}
                     >
                       {type}
@@ -956,7 +956,7 @@ export default function BecomeMentorPage() {
             <div className="h-px bg-border" />
 
             {/* Review Summary */}
-            <div className="bg-muted/50 rounded-lg p-5 space-y-4">
+            <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
               <h3 className="font-semibold text-foreground pb-2 border-b border-border">Application Summary</h3>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div className="text-muted-foreground">Name:</div>
@@ -972,7 +972,7 @@ export default function BecomeMentorPage() {
                 <div className="text-muted-foreground text-sm mb-1.5">Expert Skills:</div>
                 <div className="flex flex-wrap gap-1.5">
                   {[...formData.softSkillsExpert, ...formData.industrySkillsExpert].map(s => (
-                    <span key={s} className="bg-muted text-foreground px-2.5 py-1 rounded text-xs">{s}</span>
+                    <span key={s} className="bg-[#f7e5f3] text-[#9b2e83] px-2.5 py-1 rounded text-xs">{s}</span>
                   ))}
                 </div>
               </div>
@@ -1063,9 +1063,9 @@ export default function BecomeMentorPage() {
                         <div
                           className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
                             currentStep > step.id
-                              ? 'bg-foreground text-white'
+                              ? 'bg-[#9b2e83] text-white'
                               : currentStep === step.id
-                              ? 'bg-muted text-foreground border-2 border-purple-dark'
+                              ? 'bg-[#f7e5f3] text-[#9b2e83] border-2 border-[#9b2e83]'
                               : 'bg-gray-100 text-gray-400'
                           }`}
                         >
@@ -1075,7 +1075,7 @@ export default function BecomeMentorPage() {
                       </div>
                     ))}
                   </div>
-                  <Progress value={(currentStep / 5) * 100} className="h-1.5" />
+                  <Progress value={(currentStep / 5) * 100} className="h-1.5 [&>div]:bg-[#9b2e83]" />
                 </div>
 
                 <CardTitle className="text-xl">{steps[currentStep - 1].title}</CardTitle>
@@ -1093,7 +1093,7 @@ export default function BecomeMentorPage() {
 
                 <div className="flex justify-between mt-10 pt-6 border-t">
                   {currentStep > 1 ? (
-                    <Button variant="outline" onClick={handleBack} disabled={loading}>
+                    <Button variant="outline" onClick={handleBack} disabled={loading} className="hover:bg-[#f7e5f3] hover:border-[#9b2e83]">
                       <ChevronLeft className="h-4 w-4 mr-1" />
                       Back
                     </Button>
@@ -1102,12 +1102,13 @@ export default function BecomeMentorPage() {
                   )}
 
                   {currentStep < 5 ? (
-                    <Button onClick={handleNext}>
+                    <Button variant="brand" onClick={handleNext}>
                       Next
                       <ChevronRight className="h-4 w-4 ml-1" />
                     </Button>
                   ) : (
                     <Button
+                      variant="brand"
                       onClick={handleSubmit}
                       disabled={loading}
                     >

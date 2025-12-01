@@ -320,7 +320,7 @@ export default function MenteeApplicationPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Photo Upload Section */}
-            <div className="bg-muted/30 rounded-lg p-5">
+            <div className="bg-[#eaf2ff] rounded-lg p-5">
               <PhotoUpload
                 value={formData.photoUrl}
                 onChange={(url) => updateField('photoUrl', url || '')}
@@ -435,12 +435,12 @@ export default function MenteeApplicationPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Location Info Box */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
+            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                <MapPin className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-blue-900">Location Matching</p>
-                  <p className="text-sm text-blue-700 leading-relaxed">
+                  <p className="text-sm font-medium text-[#9b2e83]">Location Matching</p>
+                  <p className="text-sm text-[#1f1e44] leading-relaxed">
                     Auckland is She Sharp&apos;s primary activity city. Selecting Auckland increases opportunities for in-person events and meetings.
                   </p>
                 </div>
@@ -448,7 +448,7 @@ export default function MenteeApplicationPage() {
             </div>
 
             {/* Location Settings Group */}
-            <div className="bg-muted/30 rounded-lg p-5 space-y-5">
+            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-5">
               <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
                 <div className="space-y-2">
                   <div className="flex items-center gap-1.5">
@@ -555,7 +555,7 @@ export default function MenteeApplicationPage() {
             <div className="h-px bg-border" />
 
             {/* Preferred Industries Group */}
-            <div className="bg-muted/30 rounded-lg p-5 space-y-3">
+            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-3">
               <div className="flex items-center gap-1.5">
                 <Label>Industries for Mentorship (Optional)</Label>
                 <HintIcon hint="Industries you'd like to transition into or learn more about." />
@@ -604,12 +604,12 @@ export default function MenteeApplicationPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Skills Matching Info Box */}
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-5">
+            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <Lightbulb className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                <Lightbulb className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-amber-900">Skills Matching</p>
-                  <p className="text-sm text-amber-700 leading-relaxed">
+                  <p className="text-sm font-medium text-[#9b2e83]">Skills Matching</p>
+                  <p className="text-sm text-[#1f1e44] leading-relaxed">
                     Your basic skills will be matched with mentors who have expertise in those areas.
                     Be honest about your current level for the best match.
                   </p>
@@ -618,7 +618,7 @@ export default function MenteeApplicationPage() {
             </div>
 
             {/* Basic Skills Section */}
-            <div className="bg-muted/30 rounded-lg p-5 space-y-6">
+            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-6">
               <h3 className="font-medium text-foreground">Skills You Want to Learn</h3>
 
               <div className="space-y-3">
@@ -633,7 +633,7 @@ export default function MenteeApplicationPage() {
                       type="button"
                       variant={formData.softSkillsBasic.includes(skill) ? 'default' : 'outline'}
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsBasic.includes(skill) ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
                       onClick={() => toggleArrayItem('softSkillsBasic', skill)}
                     >
                       {skill}
@@ -655,7 +655,7 @@ export default function MenteeApplicationPage() {
                       type="button"
                       variant={formData.industrySkillsBasic.includes(skill) ? 'default' : 'outline'}
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsBasic.includes(skill) ? 'bg-foreground' : ''}`}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsBasic.includes(skill) ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
                       onClick={() => toggleArrayItem('industrySkillsBasic', skill)}
                     >
                       {skill}
@@ -669,7 +669,7 @@ export default function MenteeApplicationPage() {
             <div className="h-px bg-border" />
 
             {/* Expert Skills Section */}
-            <div className="bg-muted/30 rounded-lg p-5 space-y-6">
+            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-6">
               <h3 className="font-medium text-foreground">Skills You Already Have (Optional)</h3>
 
               <div className="space-y-3">
@@ -684,7 +684,7 @@ export default function MenteeApplicationPage() {
                       type="button"
                       variant={formData.softSkillsExpert.includes(skill) ? 'default' : 'outline'}
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsExpert.includes(skill) ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
                       onClick={() => toggleArrayItem('softSkillsExpert', skill)}
                     >
                       {skill}
@@ -705,7 +705,7 @@ export default function MenteeApplicationPage() {
                       type="button"
                       variant={formData.industrySkillsExpert.includes(skill) ? 'default' : 'outline'}
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsExpert.includes(skill) ? 'bg-foreground' : ''}`}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsExpert.includes(skill) ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
                       onClick={() => toggleArrayItem('industrySkillsExpert', skill)}
                     >
                       {skill}
@@ -793,7 +793,7 @@ export default function MenteeApplicationPage() {
             <div className="h-px bg-border" />
 
             {/* Personality & Preferences Section */}
-            <div className="bg-muted/30 rounded-lg p-5 space-y-5">
+            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-5">
               <div className="space-y-3">
                 <div className="flex items-center gap-1.5">
                   <Label>Your Personality Type (MBTI) *</Label>
@@ -806,7 +806,7 @@ export default function MenteeApplicationPage() {
                       type="button"
                       variant={formData.mbtiType === type ? 'default' : 'outline'}
                       size="sm"
-                      className={`h-9 min-h-[44px] ${formData.mbtiType === type ? 'bg-foreground' : ''}`}
+                      className={`h-9 min-h-[44px] ${formData.mbtiType === type ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
                       onClick={() => updateField('mbtiType', type)}
                     >
                       {type}
@@ -842,7 +842,7 @@ export default function MenteeApplicationPage() {
         return (
           <div className="space-y-5">
             {/* Photo & Personal Info */}
-            <div className="bg-muted/50 rounded-lg p-5 space-y-4">
+            <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
               <h3 className="font-semibold text-foreground flex items-center gap-2 pb-2 border-b border-border">
                 <User className="h-4 w-4" /> Personal Information
               </h3>
@@ -864,7 +864,7 @@ export default function MenteeApplicationPage() {
             </div>
 
             {/* Location & Background */}
-            <div className="bg-muted/50 rounded-lg p-5 space-y-4">
+            <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
               <h3 className="font-semibold text-foreground flex items-center gap-2 pb-2 border-b border-border">
                 <MapPin className="h-4 w-4" /> Location & Background
               </h3>
@@ -883,7 +883,7 @@ export default function MenteeApplicationPage() {
             </div>
 
             {/* Skills */}
-            <div className="bg-muted/50 rounded-lg p-5 space-y-4">
+            <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
               <h3 className="font-semibold text-foreground flex items-center gap-2 pb-2 border-b border-border">
                 <Target className="h-4 w-4" /> Skills
               </h3>
@@ -893,7 +893,7 @@ export default function MenteeApplicationPage() {
                     <div className="text-muted-foreground text-sm mb-1.5">Learning (Soft):</div>
                     <div className="flex flex-wrap gap-1.5">
                       {formData.softSkillsBasic.map(s => (
-                        <span key={s} className="bg-blue-100 text-blue-700 px-2.5 py-1 rounded text-xs">{s}</span>
+                        <span key={s} className="bg-[#f7e5f3] text-[#9b2e83] px-2.5 py-1 rounded text-xs">{s}</span>
                       ))}
                     </div>
                   </div>
@@ -903,7 +903,7 @@ export default function MenteeApplicationPage() {
                     <div className="text-muted-foreground text-sm mb-1.5">Learning (Technical):</div>
                     <div className="flex flex-wrap gap-1.5">
                       {formData.industrySkillsBasic.map(s => (
-                        <span key={s} className="bg-muted text-foreground px-2.5 py-1 rounded text-xs">{s}</span>
+                        <span key={s} className="bg-[#f4f4fa] text-[#8982ff] px-2.5 py-1 rounded text-xs">{s}</span>
                       ))}
                     </div>
                   </div>
@@ -912,7 +912,7 @@ export default function MenteeApplicationPage() {
             </div>
 
             {/* Goals */}
-            <div className="bg-muted/50 rounded-lg p-5 space-y-4">
+            <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
               <h3 className="font-semibold text-foreground pb-2 border-b border-border">Goals & Personality</h3>
               <div className="text-sm space-y-3">
                 <div>
@@ -933,9 +933,9 @@ export default function MenteeApplicationPage() {
             </div>
 
             {/* Payment Info */}
-            <div className="bg-purple-50 border border-purple-200 rounded-lg p-5">
-              <h3 className="font-semibold text-purple-900 mb-2">Next Step: Payment</h3>
-              <p className="text-sm text-purple-700 leading-relaxed">
+            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
+              <h3 className="font-semibold text-[#9b2e83] mb-2">Next Step: Payment</h3>
+              <p className="text-sm text-[#1f1e44] leading-relaxed">
                 After submitting, you&apos;ll be redirected to complete your membership payment of{' '}
                 <span className="font-semibold">$100 NZD/year</span>. Upon successful payment, you&apos;ll receive an
                 invitation code to complete your registration.
@@ -987,9 +987,9 @@ export default function MenteeApplicationPage() {
                         <div
                           className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
                             currentStep > step.id
-                              ? 'bg-foreground text-white'
+                              ? 'bg-[#9b2e83] text-white'
                               : currentStep === step.id
-                              ? 'bg-muted text-foreground border-2 border-purple-dark'
+                              ? 'bg-[#f7e5f3] text-[#9b2e83] border-2 border-[#9b2e83]'
                               : 'bg-gray-100 text-gray-400'
                           }`}
                         >
@@ -999,7 +999,7 @@ export default function MenteeApplicationPage() {
                       </div>
                     ))}
                   </div>
-                  <Progress value={(currentStep / 5) * 100} className="h-1.5" />
+                  <Progress value={(currentStep / 5) * 100} className="h-1.5 [&>div]:bg-[#9b2e83]" />
                 </div>
 
                 <CardTitle className="text-xl">{steps[currentStep - 1].title}</CardTitle>
@@ -1017,7 +1017,7 @@ export default function MenteeApplicationPage() {
 
                 <div className="flex justify-between mt-10 pt-6 border-t">
                   {currentStep > 1 ? (
-                    <Button variant="outline" onClick={handleBack} disabled={loading}>
+                    <Button variant="outline" onClick={handleBack} disabled={loading} className="hover:bg-[#f7e5f3] hover:border-[#9b2e83]">
                       <ChevronLeft className="h-4 w-4 mr-1" />
                       Back
                     </Button>
@@ -1026,12 +1026,13 @@ export default function MenteeApplicationPage() {
                   )}
 
                   {currentStep < 5 ? (
-                    <Button onClick={handleNext}>
+                    <Button variant="brand" onClick={handleNext}>
                       Next
                       <ChevronRight className="h-4 w-4 ml-1" />
                     </Button>
                   ) : (
                     <Button
+                      variant="brand"
                       onClick={handleSubmit}
                       disabled={loading}
                     >
