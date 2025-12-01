@@ -151,7 +151,6 @@ export function ROICalculatorSection() {
                 <Button
                   onClick={handleCalculate}
                   size="lg"
-                  className="bg-foreground hover:bg-foreground/90"
                   disabled={!companyGoals}
                 >
                   <TrendingUp className="mr-2 h-4 w-4" />
@@ -229,10 +228,10 @@ export function ROICalculatorSection() {
                     Ready to make a difference in women's representation in STEM?
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                    <Button asChild className="bg-foreground hover:bg-foreground/90">
+                    <Button asChild>
                       <a href="#contact">Schedule a Partnership Discussion</a>
                     </Button>
-                    <Button asChild variant="outline" className="border-border text-foreground hover:bg-muted">
+                    <Button asChild variant="ghost">
                       <a href="/docs/sponsorship-guide-2025.pdf" download>Download Full Guide</a>
                     </Button>
                   </div>

@@ -204,7 +204,7 @@ export function MentorCardMobile({ mentor }: MentorCardMobileProps) {
                 {!userLoading && (
                   user ? (
                     <Button
-                      className="w-full bg-foreground hover:bg-foreground/90"
+                      className="w-full"
                       disabled={mentor.availability === 'unavailable'}
                       asChild
                     >
@@ -215,7 +215,7 @@ export function MentorCardMobile({ mentor }: MentorCardMobileProps) {
                   ) : (
                     <div className="space-y-2">
                       <Button
-                        className="w-full bg-foreground hover:bg-foreground/90"
+                        className="w-full"
                         asChild
                       >
                         <Link href="/sign-up">

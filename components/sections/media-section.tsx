@@ -118,7 +118,7 @@ export function MediaSection() {
               <p className="text-gray mb-6 leading-relaxed">
                 {featuredMedia.description}
               </p>
-              <Button className="w-fit bg-foreground hover:bg-foreground/90 transition-colors" asChild>
+              <Button className="w-fit" asChild>
                 <Link href={featuredMedia.videoUrl} target="_blank" rel="noopener noreferrer">
                   Watch Full Interview
                   <ExternalLink className="ml-2 w-4 h-4" />

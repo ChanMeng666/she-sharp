@@ -105,8 +105,7 @@ export default function ImpactReportPage() {
             {[2023, 2022, 2021].map((year) => (
               <Button
                 key={year}
-                variant="outline"
-                className="border-border text-foreground hover:bg-muted"
+                variant="ghost"
               >
                 <Calendar className="mr-2 h-4 w-4" />
                 {year} Impact Report (PDF)

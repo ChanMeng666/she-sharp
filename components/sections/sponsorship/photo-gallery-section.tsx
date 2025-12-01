@@ -170,7 +170,6 @@ export function PhotoGallerySection() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
                 asChild
-                className="bg-foreground hover:bg-foreground/90 text-background"
               >
                 <Link href="/media/photo-gallery">
                   Explore Full Gallery

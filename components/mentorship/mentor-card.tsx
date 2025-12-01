@@ -255,7 +255,7 @@ export function MentorCard({ mentor }: MentorCardProps) {
               {!userLoading && (
                 user ? (
                   <Button
-                    className="flex-1 bg-foreground hover:bg-foreground/90"
+                    className="flex-1"
                     disabled={mentor.availability === 'unavailable'}
                     asChild
                   >
@@ -266,7 +266,7 @@ export function MentorCard({ mentor }: MentorCardProps) {
                 ) : (
                   <div className="flex-1 space-y-2">
                     <Button
-                      className="w-full bg-foreground hover:bg-foreground/90"
+                      className="w-full"
                       asChild
                     >
                       <Link href="/sign-up">

@@ -98,7 +98,6 @@ export function PodcastsListSection() {
                           <Button
                             asChild
                             size="sm"
-                            className="bg-foreground hover:bg-foreground/90 text-background"
                           >
                             <a
                               href={podcast.spotifyUrl}
@@ -206,7 +205,6 @@ export function PodcastsListSection() {
 
                             <Button
                               asChild
-                              className="bg-foreground hover:bg-foreground/90 text-background"
                             >
                               <a
                                 href={podcast.spotifyUrl}

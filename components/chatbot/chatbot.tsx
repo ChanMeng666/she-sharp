@@ -240,7 +240,7 @@ export function Chatbot() {
                         type="submit"
                         size="icon"
                         disabled={isLoading || !input.trim()}
-                        className="bg-foreground hover:bg-foreground/90 text-background flex-shrink-0 h-[60px] w-[60px] rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+                        className="flex-shrink-0 h-[60px] w-[60px] rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
                       >
                         <Send size={22} />
                       </Button>

@@ -103,10 +103,10 @@ export function ContactFormSection() {
           />
         </div>
         
-        <Button 
-          type="submit" 
-          size="lg" 
-          className="w-full bg-foreground hover:bg-foreground/90 transition-colors h-12 text-base font-normal"
+        <Button
+          type="submit"
+          size="lg"
+          className="w-full h-12 text-base font-normal"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Sending..." : "Send Message"}

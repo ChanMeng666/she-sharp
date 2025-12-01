@@ -917,7 +917,7 @@ export default function MenteeApplicationPage() {
                   )}
 
                   {currentStep < 5 ? (
-                    <Button onClick={handleNext} className="bg-foreground hover:bg-foreground/90">
+                    <Button onClick={handleNext}>
                       Next
                       <ChevronRight className="h-4 w-4 ml-1" />
                     </Button>
@@ -925,7 +925,6 @@ export default function MenteeApplicationPage() {
                     <Button
                       onClick={handleSubmit}
                       disabled={loading}
-                      className="bg-foreground hover:bg-foreground/90"
                     >
                       {loading ? (
                         <>

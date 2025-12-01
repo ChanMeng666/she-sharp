@@ -25,7 +25,6 @@ export function MentorsCallToActionSection() {
             <Button
               asChild
               size="lg"
-              className="bg-foreground hover:bg-foreground/90"
             >
               <Link href="/mentorship/become-a-mentor" className="inline-flex items-center gap-2">
                 Apply as Mentor

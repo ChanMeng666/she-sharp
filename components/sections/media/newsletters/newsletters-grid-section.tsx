@@ -155,7 +155,7 @@ export function NewslettersGridSection() {
                                 ))}
                               </ul>
                             </div>
-                            <Button asChild className="w-full bg-foreground hover:bg-foreground/90">
+                            <Button asChild className="w-full">
                               <a href={selectedNewsletter?.webUrl} target="_blank" rel="noopener noreferrer">
                                 <Download className="h-4 w-4 mr-2" />
                                 Download Full Newsletter
@@ -165,7 +165,7 @@ export function NewslettersGridSection() {
                         </SheetContent>
                       </Sheet>
 
-                      <Button asChild className="flex-1 bg-foreground hover:bg-foreground/90 text-background">
+                      <Button asChild className="flex-1">
                         <a href={newsletter.webUrl} target="_blank" rel="noopener noreferrer">
                           Read Now
                           <ArrowRight className="h-4 w-4 ml-2" />
@@ -224,8 +224,8 @@ export function NewslettersGridSection() {
                   <Sheet>
                     <SheetTrigger asChild>
                       <Button
-                        variant="outline"
-                        className="w-full border-border text-foreground hover:bg-muted"
+                        variant="ghost"
+                        className="w-full"
                         onClick={() => setSelectedNewsletter(newsletter)}
                       >
                         <Eye className="h-4 w-4 mr-2" />
@@ -234,7 +234,7 @@ export function NewslettersGridSection() {
                     </SheetTrigger>
                   </Sheet>
 
-                  <Button asChild className="w-full bg-foreground hover:bg-foreground/90 text-background">
+                  <Button asChild className="w-full">
                     <a href={newsletter.webUrl} className="inline-flex items-center justify-center">
                       Read Full Issue
                       <ArrowRight className="h-4 w-4 ml-2" />

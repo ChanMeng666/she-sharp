@@ -108,17 +108,15 @@ export function CookieBanner() {
                 Manage
               </Button>
               <Button
-                variant="outline"
+                variant="ghost"
                 size="sm"
                 onClick={rejectAll}
-                className="border-border text-foreground hover:bg-muted"
               >
                 Reject All
               </Button>
               <Button
                 size="sm"
                 onClick={acceptAll}
-                className="bg-foreground hover:bg-foreground/90 text-background"
               >
                 Accept All
               </Button>
@@ -205,15 +203,13 @@ export function CookieBanner() {
 
           <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4 border-t">
             <Button
-              variant="outline"
+              variant="ghost"
               onClick={() => setShowSettings(false)}
-              className="border-border text-foreground hover:bg-muted"
             >
               Cancel
             </Button>
             <Button
               onClick={acceptSelected}
-              className="bg-foreground hover:bg-foreground/90 text-background"
             >
               Save Preferences
             </Button>

@@ -292,7 +292,7 @@ export function CurrentSponsorsSection() {
             <p className="text-muted-foreground mb-4">
               {filteredSponsors.length} {filteredSponsors.length === 1 ? "partner" : "partners"} shown
             </p>
-            <Button asChild size="lg" className="bg-foreground hover:bg-foreground/90">
+            <Button asChild size="lg">
               <Link href="#contact">Join Our Partner Network</Link>
             </Button>
           </div>

@@ -31,12 +31,12 @@ export function SponsorshipHeroSection() {
               Join leading organizations in empowering women in STEM through strategic corporate partnerships that drive real change.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button size="lg" className="bg-foreground hover:bg-foreground/90 text-background" asChild>
+              <Button size="lg" asChild>
                 <Link href="#packages">
                   Explore Partnership Options
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-muted" asChild>
+              <Button size="lg" variant="ghost" asChild>
                 <a href="/docs/sponsorship-guide-2025.pdf" download>
                   <Calendar className="mr-2 h-4 w-4" />
                   Download 2025 Guide

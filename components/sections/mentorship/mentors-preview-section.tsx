@@ -138,7 +138,7 @@ export function MentorsPreviewSection() {
         
         <div className="text-center space-y-4">
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button asChild size="lg" className="bg-foreground hover:bg-foreground/90 text-background">
+            <Button asChild size="lg">
               <Link href="/mentorship/mentors">
                 View All Mentors
                 <ArrowRight className="ml-2 h-4 w-4" />

@@ -115,13 +115,13 @@ export function HowItWorksSection() {
 
         {/* CTA */}
         <div className="text-center mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-          <Button asChild size="lg" className="bg-foreground hover:bg-foreground/90 text-background">
+          <Button asChild size="lg">
             <Link href="/mentorship/join">
               Join as Mentee
               <ChevronRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="border-border text-foreground hover:bg-muted">
+          <Button asChild variant="ghost" size="lg">
             <Link href="/mentorship/become-a-mentor">
               Apply as Mentor
               <ChevronRight className="ml-2 h-4 w-4" />
