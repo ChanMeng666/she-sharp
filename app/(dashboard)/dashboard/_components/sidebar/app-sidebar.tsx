@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Heart } from "lucide-react";
 import Image from "next/image";
 
 import {
@@ -45,9 +44,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
-              <Link href={isAdmin ? "/dashboard/admin" : "/dashboard"}>
+              <Link href="/">
                 <div className="relative w-8 h-8 flex items-center justify-center">
-                  <Heart className="w-6 h-6 fill-foreground text-foreground" />
+                  <Image
+                    src="/logos/she-sharp-logo-purple-dark-130x130.svg"
+                    alt="She Sharp"
+                    width={32}
+                    height={32}
+                    className="w-8 h-8"
+                  />
                 </div>
                 <span className="text-base font-semibold">She Sharp</span>
               </Link>
