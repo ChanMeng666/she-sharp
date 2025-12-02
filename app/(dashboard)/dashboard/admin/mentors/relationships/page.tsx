@@ -55,7 +55,6 @@ import {
   RefreshCw,
   Star,
   MapPin,
-  Mail,
   Pause,
   Play,
   X,
@@ -223,12 +222,6 @@ export default function MentorRelationshipsPage() {
   const handleViewDetails = (relationship: Relationship) => {
     setSelectedRelationship(relationship);
     setDetailsDialogOpen(true);
-  };
-
-  const handleSendMessage = (relationship: Relationship) => {
-    const subject = encodeURIComponent(`Mentorship Program - ${relationship.mentor.name} & ${relationship.mentee.name}`);
-    const body = encodeURIComponent(`Hi ${relationship.mentor.name} and ${relationship.mentee.name},\n\n`);
-    window.open(`mailto:${relationship.mentor.email},${relationship.mentee.email}?subject=${subject}&body=${body}`, '_blank');
   };
 
   const handleChangeStatus = (relationship: Relationship, status: string) => {
@@ -601,10 +594,6 @@ export default function MentorRelationshipsPage() {
                             <Eye className="w-4 h-4 mr-2" />
                             View Details
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleSendMessage(relationship)}>
-                            <Mail className="w-4 h-4 mr-2" />
-                            Send Email
-                          </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           {(relationship.status === 'active' || relationship.status === 'at_risk' || relationship.status === 'pending') && (
                             <DropdownMenuItem onClick={() => handleChangeStatus(relationship, 'paused')}>
@@ -814,12 +803,6 @@ export default function MentorRelationshipsPage() {
             <Button variant="outline" onClick={() => setDetailsDialogOpen(false)}>
               Close
             </Button>
-            {selectedRelationship && (
-              <Button onClick={() => handleSendMessage(selectedRelationship)}>
-                <Mail className="w-4 h-4 mr-2" />
-                Send Email
-              </Button>
-            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>

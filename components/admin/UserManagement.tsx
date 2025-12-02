@@ -6,7 +6,6 @@ import {
   Search,
   MoreVertical,
   UserX,
-  Mail,
   Download,
   ChevronLeft,
   ChevronRight,
@@ -1171,11 +1170,6 @@ export default function UserManagement() {
                                   )}
                                   {user.recordType === 'registered_user' && (
                                     <>
-                                      <DropdownMenuSeparator />
-                                      <DropdownMenuItem onClick={() => window.open(`mailto:${user.email}`, '_blank')}>
-                                        <Mail className="w-4 h-4 mr-2" />
-                                        Send Email
-                                      </DropdownMenuItem>
                                       <DropdownMenuSeparator />
                                       <DropdownMenuItem
                                         onClick={() => openUserActionDialog(user, 'suspend')}
