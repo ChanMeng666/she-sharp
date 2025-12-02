@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { 
+import {
   User,
   Settings,
   Shield,
@@ -28,7 +28,8 @@ import {
   LayoutDashboard,
   AlertCircle,
   CheckCircle2,
-  ChevronDown
+  ChevronDown,
+  BrainCircuit
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -38,6 +39,7 @@ interface UserData {
   email: string;
   emailVerifiedAt?: string;
   role?: string;
+  roles?: string[];
 }
 
 interface UserNavProps {
@@ -47,19 +49,29 @@ interface UserNavProps {
 export function UserNav({ variant = 'desktop' }: UserNavProps) {
   const router = useRouter();
   const [user, setUser] = useState<UserData | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSigningOut, setIsSigningOut] = useState(false);
 
   useEffect(() => {
-    fetchUser();
+    fetchUserAndRoles();
   }, []);
 
-  const fetchUser = async () => {
+  const fetchUserAndRoles = async () => {
     try {
-      const response = await fetch('/api/user');
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data);
+      const [userResponse, roleResponse] = await Promise.all([
+        fetch('/api/user'),
+        fetch('/api/user/role')
+      ]);
+
+      if (userResponse.ok) {
+        const userData = await userResponse.json();
+        setUser(userData);
+      }
+
+      if (roleResponse.ok) {
+        const roleData = await roleResponse.json();
+        setIsAdmin(roleData.isAdmin || false);
       }
     } catch (error) {
       console.error('Failed to fetch user:', error);
@@ -164,15 +176,38 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
             )}
           </div>
         </div>
-        
-        <Link href="/dashboard" className="w-full">
-          <Button variant="outline" size="lg" className="w-full justify-start">
-            <LayoutDashboard className="mr-2 h-4 w-4" />
-            Dashboard
-          </Button>
-        </Link>
 
-        <Link href="/dashboard/settings/account" className="w-full">
+        {isAdmin ? (
+          <>
+            <Link href="/dashboard/admin" className="w-full">
+              <Button variant="outline" size="lg" className="w-full justify-start">
+                <LayoutDashboard className="mr-2 h-4 w-4" />
+                Admin Overview
+              </Button>
+            </Link>
+            <Link href="/dashboard/admin/users" className="w-full">
+              <Button variant="outline" size="lg" className="w-full justify-start">
+                <Users className="mr-2 h-4 w-4" />
+                User Management
+              </Button>
+            </Link>
+            <Link href="/dashboard/admin/matching" className="w-full">
+              <Button variant="outline" size="lg" className="w-full justify-start">
+                <BrainCircuit className="mr-2 h-4 w-4" />
+                AI Matching
+              </Button>
+            </Link>
+          </>
+        ) : (
+          <Link href="/dashboard" className="w-full">
+            <Button variant="outline" size="lg" className="w-full justify-start">
+              <LayoutDashboard className="mr-2 h-4 w-4" />
+              Dashboard
+            </Button>
+          </Link>
+        )}
+
+        <Link href="/dashboard/account" className="w-full">
           <Button variant="outline" size="lg" className="w-full justify-start">
             <Settings className="mr-2 h-4 w-4" />
             Account Settings
@@ -254,56 +289,105 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
         </DropdownMenuLabel>
         
         <DropdownMenuSeparator />
-        
-        <DropdownMenuGroup>
-          <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/dashboard">
-              <LayoutDashboard className="mr-2 h-4 w-4" />
-              <span>Dashboard</span>
-            </Link>
-          </DropdownMenuItem>
-          
-          <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/dashboard/settings/account">
-              <User className="mr-2 h-4 w-4" />
-              <span>Account Settings</span>
-            </Link>
-          </DropdownMenuItem>
-          
-          <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/dashboard/settings/sessions">
-              <Activity className="mr-2 h-4 w-4" />
-              <span>Active Sessions</span>
-            </Link>
-          </DropdownMenuItem>
-          
-          <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/dashboard/settings/team">
-              <Users className="mr-2 h-4 w-4" />
-              <span>Team Settings</span>
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        
-        <DropdownMenuSeparator />
-        
-        <DropdownMenuGroup>
-          <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/dashboard/settings/billing">
-              <CreditCard className="mr-2 h-4 w-4" />
-              <span>Billing</span>
-            </Link>
-          </DropdownMenuItem>
-          
-          {!isEmailVerified && (
-            <DropdownMenuItem asChild className="cursor-pointer">
-              <Link href="/verify-email" className="text-amber-600">
-                <Mail className="mr-2 h-4 w-4" />
-                <span>Verify Email</span>
-              </Link>
-            </DropdownMenuItem>
-          )}
-        </DropdownMenuGroup>
+
+        {isAdmin ? (
+          <>
+            <DropdownMenuGroup>
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href="/dashboard/admin">
+                  <LayoutDashboard className="mr-2 h-4 w-4" />
+                  <span>Admin Overview</span>
+                </Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href="/dashboard/admin/users">
+                  <Users className="mr-2 h-4 w-4" />
+                  <span>User Management</span>
+                </Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href="/dashboard/admin/matching">
+                  <BrainCircuit className="mr-2 h-4 w-4" />
+                  <span>AI Matching</span>
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuGroup>
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href="/dashboard/account">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Account Settings</span>
+                </Link>
+              </DropdownMenuItem>
+
+              {!isEmailVerified && (
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <Link href="/verify-email" className="text-amber-600">
+                    <Mail className="mr-2 h-4 w-4" />
+                    <span>Verify Email</span>
+                  </Link>
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuGroup>
+          </>
+        ) : (
+          <>
+            <DropdownMenuGroup>
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href="/dashboard">
+                  <LayoutDashboard className="mr-2 h-4 w-4" />
+                  <span>Dashboard</span>
+                </Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href="/dashboard/account">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Account Settings</span>
+                </Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href="/dashboard/activity">
+                  <Activity className="mr-2 h-4 w-4" />
+                  <span>Activity</span>
+                </Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href="/dashboard/team/settings">
+                  <Users className="mr-2 h-4 w-4" />
+                  <span>Team Settings</span>
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuGroup>
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href="/dashboard/billing">
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  <span>Billing</span>
+                </Link>
+              </DropdownMenuItem>
+
+              {!isEmailVerified && (
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <Link href="/verify-email" className="text-amber-600">
+                    <Mail className="mr-2 h-4 w-4" />
+                    <span>Verify Email</span>
+                  </Link>
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuGroup>
+          </>
+        )}
         
         <DropdownMenuSeparator />
         
