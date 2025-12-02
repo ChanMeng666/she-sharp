@@ -725,16 +725,15 @@ export default function MatchingManagementPage() {
             {/* Action Buttons */}
             <div className="flex justify-end gap-3 pt-4 border-t">
               <Button
-                variant="outline"
+                variant="destructive"
                 onClick={() => handleReview(match, 'reject')}
-                className="text-red-600 hover:text-red-700 hover:bg-red-50"
               >
                 <XCircle className="h-4 w-4 mr-2" />
                 Reject
               </Button>
               <Button
+                variant="default"
                 onClick={() => handleReview(match, 'approve')}
-                className="bg-green-600 hover:bg-green-700"
               >
                 <CheckCircle className="h-4 w-4 mr-2" />
                 Approve Match
@@ -749,7 +748,7 @@ export default function MatchingManagementPage() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-6 flex justify-center items-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 animate-spin text-purple-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-foreground" />
       </div>
     );
   }

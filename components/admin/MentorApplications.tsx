@@ -358,16 +358,15 @@ export default function MentorApplications() {
                       {application.status === 'pending' || application.status === 'under_review' ? (
                         <div className="flex justify-end space-x-3 pt-4">
                           <Button
-                            variant="outline"
+                            variant="destructive"
                             onClick={() => handleReview(application, 'reject')}
-                            className="text-red-600 hover:text-red-700"
                           >
                             <XCircle className="w-4 h-4 mr-2" />
                             Reject
                           </Button>
                           <Button
+                            variant="default"
                             onClick={() => handleReview(application, 'approve')}
-                            className="bg-green-600 hover:bg-green-700"
                           >
                             <CheckCircle className="w-4 h-4 mr-2" />
                             Approve

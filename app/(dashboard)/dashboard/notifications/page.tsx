@@ -319,10 +319,9 @@ export default function NotificationsPage() {
                               </Button>
                             )}
                             <Button
-                              variant="outline"
+                              variant="ghost"
                               size="sm"
                               onClick={() => deleteNotification(notification.id)}
-                              className="text-muted-foreground hover:text-red-600"
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>

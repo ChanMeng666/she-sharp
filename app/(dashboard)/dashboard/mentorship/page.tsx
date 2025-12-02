@@ -427,8 +427,7 @@ export default function MentorshipDashboard() {
                               Cancel
                             </Button>
                             <Button
-                              variant="outline"
-                              className="text-red-600 hover:text-white hover:bg-red-600 border-red-200 hover:border-red-600"
+                              variant="destructive"
                               onClick={() => handleApplicationAction(application.id, 'reject')}
                               disabled={isProcessing}
                             >

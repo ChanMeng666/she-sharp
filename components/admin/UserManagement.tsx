@@ -845,9 +845,8 @@ export default function UserManagement() {
                     Export
                   </Button>
                   <Button
-                    variant="outline"
+                    variant="destructive"
                     size="sm"
-                    className="text-red-600 hover:text-red-700"
                     onClick={() => handleBulkAction('suspend')}
                     disabled={bulkActionLoading}
                   >
@@ -855,9 +854,8 @@ export default function UserManagement() {
                     {bulkActionLoading ? 'Processing...' : 'Suspend'}
                   </Button>
                   <Button
-                    variant="outline"
+                    variant="destructive"
                     size="sm"
-                    className="text-red-600 hover:text-red-700"
                     onClick={() => handleBulkAction('delete')}
                     disabled={bulkActionLoading}
                   >
@@ -968,7 +966,8 @@ export default function UserManagement() {
                               <div className="flex gap-2">
                                 <Button
                                   size="sm"
-                                  className="flex-1 bg-green-600 hover:bg-green-700"
+                                  variant="default"
+                                  className="flex-1"
                                   onClick={() => openReviewDialog(user, 'approve')}
                                 >
                                   <Check className="w-4 h-4 mr-1" />
@@ -1157,14 +1156,12 @@ export default function UserManagement() {
                                     <>
                                       <DropdownMenuSeparator />
                                       <DropdownMenuItem
-                                        className="text-green-600"
                                         onClick={() => openReviewDialog(user, 'approve')}
                                       >
                                         <Check className="w-4 h-4 mr-2" />
                                         Approve Application
                                       </DropdownMenuItem>
                                       <DropdownMenuItem
-                                        className="text-red-600"
                                         onClick={() => openReviewDialog(user, 'reject')}
                                       >
                                         <X className="w-4 h-4 mr-2" />
@@ -1181,14 +1178,12 @@ export default function UserManagement() {
                                       </DropdownMenuItem>
                                       <DropdownMenuSeparator />
                                       <DropdownMenuItem
-                                        className="text-red-600"
                                         onClick={() => openUserActionDialog(user, 'suspend')}
                                       >
                                         <Ban className="w-4 h-4 mr-2" />
                                         Suspend Account
                                       </DropdownMenuItem>
                                       <DropdownMenuItem
-                                        className="text-red-600"
                                         onClick={() => openUserActionDialog(user, 'delete')}
                                       >
                                         <Trash2 className="w-4 h-4 mr-2" />
@@ -1295,7 +1290,6 @@ export default function UserManagement() {
               <Button
                 onClick={handleReviewSubmit}
                 disabled={submittingReview || (reviewAction === 'reject' && !reviewNotes.trim())}
-                className={reviewAction === 'approve' ? 'bg-green-600 hover:bg-green-700' : ''}
                 variant={reviewAction === 'reject' ? 'destructive' : 'default'}
               >
                 {submittingReview ? 'Processing...' : reviewAction === 'approve' ? 'Approve' : 'Reject'}

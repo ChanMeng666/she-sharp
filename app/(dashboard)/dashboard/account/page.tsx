@@ -531,8 +531,7 @@ function AccountPageContent() {
             </CardContent>
             <CardFooter>
               <Button
-                variant="outline"
-                className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 hover:border-red-300"
+                variant="destructive"
                 onClick={() => setShowDeleteDialog(true)}
               >
                 <AlertTriangle className="mr-2 h-4 w-4" />
@@ -553,7 +552,7 @@ function AccountPageContent() {
             <CardContent className="space-y-4">
               {isLoadingSessions ? (
                 <div className="flex items-center justify-center py-8">
-                  <RefreshCw className="h-8 w-8 animate-spin text-primary" />
+                  <RefreshCw className="h-8 w-8 animate-spin text-foreground" />
                 </div>
               ) : sessions.length === 0 ? (
                 <p className="text-center text-muted-foreground py-8">No active sessions found</p>
@@ -720,7 +719,7 @@ function AccountPageContent() {
             <AlertDialogAction
               onClick={handleDeleteAccount}
               disabled={!deletePassword}
-              className="bg-red-600 hover:bg-red-700"
+              className="bg-destructive text-destructive-foreground border-destructive hover:bg-destructive/80 hover:border-destructive/80"
             >
               Delete Account
             </AlertDialogAction>
