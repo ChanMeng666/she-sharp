@@ -223,11 +223,11 @@ export default function MentorMeetingsPage() {
           </p>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-          <Button variant="outline" className="text-sm sm:text-base">
+          <Button variant="outline">
             <Download className="w-4 h-4 mr-2" />
             Export Data
           </Button>
-          <Button className="text-sm sm:text-base">
+          <Button>
             <Calendar className="w-4 h-4 mr-2" />
             Schedule Meeting
           </Button>

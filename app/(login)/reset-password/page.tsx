@@ -133,12 +133,12 @@ function ResetPasswordForm() {
           </CardHeader>
           <CardFooter className="flex flex-col space-y-2">
             <Link href="/forgot-password" className="w-full">
-              <Button variant="default" size="lg" className="w-full h-12 rounded-xl font-semibold">
+              <Button variant="default" size="lg" className="w-full">
                 Request New Reset Link
               </Button>
             </Link>
             <Link href="/sign-in" className="w-full">
-              <Button variant="outline" size="lg" className="w-full h-12 rounded-xl font-medium">
+              <Button variant="outline" size="lg" className="w-full">
                 Back to Sign In
               </Button>
             </Link>
@@ -275,13 +275,13 @@ function ResetPasswordForm() {
               type="submit"
               variant="default"
               size="lg"
-              className="w-full h-12 rounded-xl font-semibold text-lg"
+              className="w-full"
               disabled={isLoading || !passwordRequirements.every(req => req.met) || password !== confirmPassword}
             >
               {isLoading ? 'Resetting...' : 'Reset Password'}
             </Button>
             <Link href="/sign-in" className="w-full">
-              <Button type="button" variant="outline" size="lg" className="w-full h-12 rounded-xl font-medium">
+              <Button type="button" variant="outline" size="lg" className="w-full">
                 Cancel
               </Button>
             </Link>

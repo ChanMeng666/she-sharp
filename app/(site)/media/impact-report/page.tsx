@@ -35,7 +35,7 @@ export default function ImpactReportPage() {
             <p className="text-foreground mb-6 max-w-2xl mx-auto">
               Our comprehensive annual report showcases the growth, achievements, and impact of our programs.
             </p>
-            <Button size="lg" className="bg-foreground">
+            <Button size="lg" variant="default">
               <Download className="mr-2 h-5 w-5" />
               Download Impact Report (PDF)
             </Button>

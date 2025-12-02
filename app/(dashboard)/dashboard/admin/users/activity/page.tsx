@@ -101,7 +101,7 @@ export default function ActivityLogsPage() {
             Monitor user activities and system events
           </p>
         </div>
-        <Button className="text-sm sm:text-base">
+        <Button>
           <Download className="w-4 h-4 mr-2" />
           Export Logs
         </Button>

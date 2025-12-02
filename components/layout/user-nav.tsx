@@ -200,7 +200,6 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
         <Button
           variant="outline"
           size="lg"
-          className="relative flex items-center gap-2 px-2 hover:bg-muted"
         >
           <Avatar className="h-8 w-8">
             <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} />

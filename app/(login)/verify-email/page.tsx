@@ -137,12 +137,12 @@ function VerifyEmailContent() {
             ) : (
               <>
                 <Link href="/sign-up" className="w-full">
-                  <Button variant="default" size="lg" className="w-full h-12 rounded-xl font-semibold">
+                  <Button variant="default" size="lg" className="w-full">
                     Sign Up Again
                   </Button>
                 </Link>
                 <Link href="/sign-in" className="w-full">
-                  <Button variant="outline" size="lg" className="w-full h-12 rounded-xl font-medium">
+                  <Button variant="outline" size="lg" className="w-full">
                     Go to Sign In
                   </Button>
                 </Link>
@@ -203,7 +203,7 @@ function VerifyEmailContent() {
               disabled={isResending || !email}
               variant="default"
               size="lg"
-              className="w-full h-12 rounded-xl font-semibold"
+              className="w-full"
             >
               {isResending ? (
                 <>
@@ -220,7 +220,7 @@ function VerifyEmailContent() {
         </CardContent>
         <CardFooter>
           <Link href="/sign-in" className="w-full">
-            <Button variant="outline" size="lg" className="w-full h-12 rounded-xl font-medium">
+            <Button variant="outline" size="lg" className="w-full">
               Back to Sign In
             </Button>
           </Link>

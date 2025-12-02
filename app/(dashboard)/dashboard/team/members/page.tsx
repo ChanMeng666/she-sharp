@@ -158,7 +158,7 @@ export default function TeamMembersPage() {
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Team Members</h1>
           {userRole === 'owner' && (
             <Link href="/dashboard/team/settings">
-              <Button className="text-sm sm:text-base">
+              <Button>
                 <UserPlus className="mr-2 h-4 w-4" />
                 Invite Members
               </Button>

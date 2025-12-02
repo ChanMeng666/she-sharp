@@ -88,7 +88,7 @@ export function MentorFilters({ onFiltersChange, totalResults }: MentorFiltersPr
 
         <Popover open={expertiseOpen} onOpenChange={setExpertiseOpen}>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="w-full sm:w-48 justify-between border-border">
+            <Button variant="outline" className="w-full sm:w-48 justify-between">
               <span className="truncate">
                 {filters.expertise.length === 0 ? "Expertise" : `${filters.expertise.length} selected`}
               </span>

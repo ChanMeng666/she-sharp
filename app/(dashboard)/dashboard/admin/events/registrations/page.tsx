@@ -239,15 +239,15 @@ export default function EventRegistrationsPage() {
           </p>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-          <Button variant="outline" className="text-sm sm:text-base">
+          <Button variant="outline">
             <Upload className="w-4 h-4 mr-2" />
             Import
           </Button>
-          <Button variant="outline" className="text-sm sm:text-base">
+          <Button variant="outline">
             <Download className="w-4 h-4 mr-2" />
             Export
           </Button>
-          <Button className="text-sm sm:text-base">
+          <Button>
             <QrCode className="w-4 h-4 mr-2" />
             Check-In Mode
           </Button>
@@ -383,7 +383,7 @@ export default function EventRegistrationsPage() {
                   <UserCheck className="w-4 h-4 mr-2" />
                   Confirm
                 </Button>
-                <Button size="sm" variant="outline" className="text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300">
+                <Button size="sm" variant="destructive">
                   <UserX className="w-4 h-4 mr-2" />
                   Cancel
                 </Button>

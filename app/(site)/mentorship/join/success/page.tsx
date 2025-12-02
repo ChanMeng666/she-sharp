@@ -45,7 +45,7 @@ function PaymentSuccessContent() {
               </p>
               <div className="space-y-3">
                 <Link href="/mentorship/join">
-                  <Button className="w-full bg-foreground">
+                  <Button variant="default" className="w-full">
                     Return to Membership Page
                   </Button>
                 </Link>
@@ -134,7 +134,7 @@ function PaymentSuccessContent() {
             {/* CTA Buttons */}
             <div className="space-y-3 pt-4">
               <Link href="/sign-up">
-                <Button className="w-full h-12 bg-foreground text-white">
+                <Button variant="default" size="lg" className="w-full">
                   Create Your Account
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

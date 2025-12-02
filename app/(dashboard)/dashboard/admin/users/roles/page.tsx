@@ -71,7 +71,7 @@ export default function RoleManagementPage() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="text-sm sm:text-base">
+            <Button>
               <Plus className="w-4 h-4 mr-2" />
               Create Role
             </Button>
@@ -204,7 +204,7 @@ export default function RoleManagementPage() {
                       <Button size="sm" variant="outline" onClick={() => setEditingUser(user)}>
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button size="sm" variant="outline" className="text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300">
+                      <Button size="sm" variant="destructive">
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>

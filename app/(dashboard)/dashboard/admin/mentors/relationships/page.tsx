@@ -230,11 +230,11 @@ export default function MentorRelationshipsPage() {
           </p>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-          <Button variant="outline" className="text-sm sm:text-base">
+          <Button variant="outline">
             <Download className="w-4 h-4 mr-2" />
             Export Report
           </Button>
-          <Button variant="default" className="text-sm sm:text-base">
+          <Button variant="default">
             <Link2 className="w-4 h-4 mr-2" />
             New Pairing
           </Button>

@@ -185,11 +185,11 @@ export default function VerifiedMentorsPage() {
           </p>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-          <Button variant="outline" className="text-sm sm:text-base">
+          <Button variant="outline">
             <Download className="w-4 h-4 mr-2" />
             Export
           </Button>
-          <Button className="text-sm sm:text-base">
+          <Button>
             <Mail className="w-4 h-4 mr-2" />
             Send Announcement
           </Button>

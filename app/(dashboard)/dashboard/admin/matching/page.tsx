@@ -783,7 +783,7 @@ export default function MatchingManagementPage() {
             <Button
               onClick={runBatchMatching}
               disabled={isRunning}
-              className="bg-purple-600 hover:bg-purple-700"
+              variant="brand"
             >
               {isRunning ? (
                 <>
@@ -1005,7 +1005,7 @@ export default function MatchingManagementPage() {
                   <p className="text-muted-foreground mb-4">
                     Run the AI matching algorithm to generate new mentor-mentee suggestions.
                   </p>
-                  <Button onClick={runBatchMatching} disabled={isRunning} className="bg-purple-600 hover:bg-purple-700">
+                  <Button onClick={runBatchMatching} disabled={isRunning} variant="brand">
                     <Sparkles className="h-4 w-4 mr-2" />
                     Run AI Matching
                   </Button>

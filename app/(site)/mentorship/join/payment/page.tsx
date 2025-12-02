@@ -133,7 +133,7 @@ function PaymentContent() {
               <h2 className="text-xl font-semibold text-foreground mb-2">Application Not Found</h2>
               <p className="text-gray-600 mb-6">{error}</p>
               <Link href="/mentorship/join">
-                <Button className="w-full bg-foreground">
+                <Button variant="default" className="w-full">
                   <ChevronLeft className="h-4 w-4 mr-2" />
                   Start New Application
                 </Button>
@@ -223,7 +223,9 @@ function PaymentContent() {
               <Button
                 onClick={handleCheckout}
                 disabled={checkoutLoading || !formData}
-                className="w-full h-12 bg-foreground text-white font-semibold"
+                variant="default"
+                size="lg"
+                className="w-full"
               >
                 {checkoutLoading ? (
                   <>

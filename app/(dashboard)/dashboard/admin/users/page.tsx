@@ -15,10 +15,10 @@ export default function UsersPage() {
           </p>
         </div>
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-          <Button variant="outline" className="text-sm sm:text-base">
+          <Button variant="outline">
             Import Users
           </Button>
-          <Button variant="default" className="text-sm sm:text-base">
+          <Button variant="default">
             Export Users
           </Button>
         </div>

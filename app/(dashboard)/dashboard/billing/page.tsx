@@ -201,7 +201,7 @@ export default function BillingPage() {
               <p className="text-2xl sm:text-3xl font-bold">$29<span className="text-base sm:text-lg font-normal text-muted-foreground">/month</span></p>
               <p className="text-xs sm:text-sm text-muted-foreground">Next billing date: April 1, 2024</p>
             </div>
-            <Button variant="outline" onClick={handleManagePayment} className="text-sm sm:text-base">
+            <Button variant="outline" onClick={handleManagePayment}>
               <CreditCard className="mr-2 h-4 w-4" />
               Manage Payment Method
             </Button>
