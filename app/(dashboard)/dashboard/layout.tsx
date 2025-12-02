@@ -6,7 +6,6 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 import { cn } from "@/lib/utils";
 import { SearchDialog } from "./_components/sidebar/search-dialog";
 import { ThemeSwitcher } from "./_components/sidebar/theme-switcher";
-import { BreadcrumbNav } from "./_components/breadcrumb-nav";
 
 export default async function DashboardLayout({ children }: Readonly<{ children: ReactNode }>) {
   const cookieStore = await cookies();
@@ -38,7 +37,6 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
           </div>
         </header>
         <div className="h-full p-3 sm:p-4 md:p-6 lg:p-8">
-          <BreadcrumbNav />
           {children}
         </div>
       </SidebarInset>

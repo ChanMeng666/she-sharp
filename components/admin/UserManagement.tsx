@@ -22,6 +22,7 @@ import {
   CheckCircle,
   Clock,
   Brain,
+  Users,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -50,7 +51,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Switch } from '@/components/ui/switch';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Tooltip,
@@ -99,6 +102,13 @@ interface User {
   menteeInfo: MenteeInfo | null;
 }
 
+// Role configuration
+const roleConfig = {
+  admin: { name: 'Admin', icon: Shield, color: 'bg-muted text-foreground' },
+  mentor: { name: 'Mentor', icon: GraduationCap, color: 'bg-green-100 text-green-700' },
+  mentee: { name: 'Mentee', icon: Users, color: 'bg-blue-100 text-blue-700' },
+};
+
 export default function UserManagement() {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
@@ -111,6 +121,8 @@ export default function UserManagement() {
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState<'name' | 'email' | 'createdAt'>('createdAt');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [updatingRole, setUpdatingRole] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState('users');
 
   const itemsPerPage = 10;
 
@@ -146,6 +158,35 @@ export default function UserManagement() {
       setTotalPages(1);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Handle role toggle
+  const handleRoleToggle = async (userId: number, roleType: string, currentlyHasRole: boolean) => {
+    setUpdatingRole(`${userId}-${roleType}`);
+    try {
+      const response = await fetch('/api/admin/users/roles', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, roleType, isActive: !currentlyHasRole }),
+      });
+
+      if (response.ok) {
+        // Update local state
+        setUsers(prev => prev.map(user => {
+          if (user.id === userId) {
+            const newRoles = currentlyHasRole
+              ? user.roles.filter(r => r !== roleType)
+              : [...user.roles, roleType];
+            return { ...user, roles: newRoles };
+          }
+          return user;
+        }));
+      }
+    } catch (error) {
+      console.error('Failed to update role:', error);
+    } finally {
+      setUpdatingRole(null);
     }
   };
 
@@ -235,8 +276,23 @@ export default function UserManagement() {
     }
   };
 
+  // Calculate role stats
+  const roleStats = {
+    admin: users.filter(u => u.roles.includes('admin')).length,
+    mentor: users.filter(u => u.roles.includes('mentor')).length,
+    mentee: users.filter(u => u.roles.includes('mentee')).length,
+  };
+
   return (
     <TooltipProvider>
+    <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+      <TabsList>
+        <TabsTrigger value="users">All Users</TabsTrigger>
+        <TabsTrigger value="roles">Role Management</TabsTrigger>
+      </TabsList>
+
+      {/* All Users Tab */}
+      <TabsContent value="users">
     <Card>
       <CardHeader>
         <div className="flex justify-between items-center">
@@ -744,6 +800,120 @@ export default function UserManagement() {
         </div>
       </CardContent>
     </Card>
+      </TabsContent>
+
+      {/* Role Management Tab */}
+      <TabsContent value="roles">
+        {/* Role Statistics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          {Object.entries(roleConfig).map(([roleId, config]) => {
+            const Icon = config.icon;
+            const count = roleStats[roleId as keyof typeof roleStats] || 0;
+
+            return (
+              <Card key={roleId}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Icon className="w-5 h-5 text-primary" />
+                      <CardTitle className="text-sm font-medium">{config.name}</CardTitle>
+                    </div>
+                    <Badge variant="secondary" className={config.color}>
+                      {count} users
+                    </Badge>
+                  </div>
+                </CardHeader>
+              </Card>
+            );
+          })}
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>User Role Assignments</CardTitle>
+            <CardDescription>
+              Toggle roles for users. Changes are saved automatically.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {/* Search for Role Management */}
+            <div className="relative w-full mb-4">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+              <Input
+                type="search"
+                placeholder="Search by name or email..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && fetchUsers()}
+                className="pl-10"
+              />
+            </div>
+
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>User</TableHead>
+                    <TableHead className="text-center">Admin</TableHead>
+                    <TableHead className="text-center">Mentor</TableHead>
+                    <TableHead className="text-center">Mentee</TableHead>
+                    <TableHead className="text-center">Active Roles</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {users.map((user) => {
+                    const activeRolesCount = user.roles.length;
+
+                    return (
+                      <TableRow key={user.id}>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Avatar className="w-8 h-8">
+                              <AvatarImage src={user.image || undefined} alt={user.name || ''} />
+                              <AvatarFallback className="bg-muted text-foreground text-xs">
+                                {getInitials(user.name)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <p className="font-medium text-sm">{user.name || 'Unknown User'}</p>
+                              <p className="text-xs text-muted-foreground">{user.email}</p>
+                            </div>
+                          </div>
+                        </TableCell>
+                        {(['admin', 'mentor', 'mentee'] as const).map((roleType) => {
+                          const hasRole = user.roles.includes(roleType);
+                          const isUpdating = updatingRole === `${user.id}-${roleType}`;
+
+                          return (
+                            <TableCell key={roleType} className="text-center">
+                              <Switch
+                                checked={hasRole}
+                                disabled={isUpdating}
+                                onCheckedChange={() => handleRoleToggle(user.id, roleType, hasRole)}
+                              />
+                            </TableCell>
+                          );
+                        })}
+                        <TableCell className="text-center">
+                          <Badge
+                            variant="outline"
+                            className={cn(
+                              activeRolesCount > 0 ? "text-green-600 border-green-600" : "text-muted-foreground"
+                            )}
+                          >
+                            {activeRolesCount}
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      </TabsContent>
+    </Tabs>
     </TooltipProvider>
   );
 }

@@ -8,17 +8,14 @@ import {
   Users,
   BookOpen,
   Bell,
-  Settings,
   UserCircle,
   Heart,
   FileText,
   BarChart3,
-  Shield,
   Search,
   Award,
   CheckCircle,
   Download,
-  FolderOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {

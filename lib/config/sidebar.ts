@@ -15,7 +15,6 @@ import {
   Heart,
   CheckCircle,
   LayoutDashboard,
-  Shield,
   BarChart3,
   BrainCircuit,
   type LucideIcon,
@@ -148,12 +147,8 @@ export const adminSidebarItems: NavGroup[] = [
     items: [
       {
         title: "User Management",
+        url: "/dashboard/admin/users",
         icon: Users,
-        subItems: [
-          { title: "All Users", url: "/dashboard/admin/users", icon: Users },
-          { title: "Roles & Permissions", url: "/dashboard/admin/users/roles", icon: Shield },
-          { title: "Activity Logs", url: "/dashboard/admin/users/activity", icon: Activity },
-        ],
       },
       {
         title: "Mentorship",
