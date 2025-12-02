@@ -60,14 +60,20 @@ pnpm start            # Start production server
    - Activity logging tracks all team-related actions
 
 3. **Database Schema** (`/lib/db/schema.ts`):
-   - **Total**: 28 tables supporting comprehensive platform features
-   - **User System**: `users`, `user_roles`, `user_memberships`
-   - **Mentorship**: `mentor_profiles`, `mentee_profiles`, `mentorship_relationships`, `meetings`
-   - **Events**: `events`, `event_registrations`, `event_role_assignments`
-   - **Resources**: `resources`, `resource_access_logs`
-   - **Admin**: `admin_permissions`, `activity_logs`
-   - **Auth**: NextAuth tables (`account`, `session`, `verification_token`)
-   - **Legacy**: `teams`, `teamMembers` (kept for backward compatibility)
+   - **Total**: 44 tables and 24 enums supporting comprehensive platform features
+   - **User System** (5 tables): `users`, `user_roles`, `admin_permissions`, `user_memberships`, `user_mentorship_stats`
+   - **Authentication** (6 tables): `account`, `session`, `verification_token`, `email_verifications`, `password_resets`, `password_history`
+   - **Mentorship** (5 tables): `mentor_profiles`, `mentee_profiles`, `mentorship_relationships`, `meetings`, `mentee_waiting_queue`
+   - **Form Submissions** (2 tables): `mentor_form_submissions`, `mentee_form_submissions`
+   - **AI Matching** (2 tables): `ai_match_results`, `ai_matching_runs`
+   - **Events** (3 tables): `events`, `event_registrations`, `event_role_assignments`
+   - **Resources** (2 tables): `resources`, `resource_access_logs`
+   - **Points & Gamification** (7 tables): `user_points`, `points_transactions`, `points_rules`, `milestones`, `user_milestones`, `rewards`, `reward_redemptions`, `experience_levels`
+   - **Membership & Payments** (3 tables): `membership_features`, `membership_benefits`, `membership_purchases`
+   - **Invitation System** (2 tables): `invitation_codes`, `invitation_code_usages`
+   - **Configuration** (2 tables): `skill_options`, `industry_options`
+   - **Activity Logging** (1 table): `activity_logs`
+   - **Legacy** (4 tables): `teams`, `team_members`, `invitations` (kept for backward compatibility)
    - See detailed documentation: `docs/database/DATABASE_SCHEMA.md`
 
 4. **Multi-Role System**:
