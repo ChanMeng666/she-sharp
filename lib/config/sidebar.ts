@@ -134,11 +134,6 @@ export const adminSidebarItems: NavGroup[] = [
         url: "/dashboard/admin",
         icon: LayoutDashboard,
       },
-      {
-        title: "Analytics",
-        url: "/dashboard/admin/analytics",
-        icon: BarChart3,
-      },
     ],
   },
   {
