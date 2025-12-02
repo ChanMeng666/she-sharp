@@ -15,6 +15,13 @@ import {
   Trash2,
   Shield,
   Eye,
+  MapPin,
+  Briefcase,
+  Building2,
+  GraduationCap,
+  CheckCircle,
+  Clock,
+  Brain,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -45,18 +52,51 @@ import {
 } from '@/components/ui/table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
+
+interface MentorInfo {
+  isVerified: boolean;
+  verifiedAt: string | null;
+  isAccepting: boolean;
+  maxMentees: number;
+  currentMentees: number;
+  yearsExperience: number | null;
+  expertise: string[];
+  bio: string | null;
+}
+
+interface MenteeInfo {
+  careerStage: string | null;
+  currentIndustry: string | null;
+  learningGoals: string[];
+  bio: string | null;
+}
 
 interface User {
   id: number;
   name: string | null;
   email: string;
   image: string | null;
+  phone: string | null;
   roles: string[];
   membershipTier: 'free' | 'basic' | 'premium';
   status: 'active' | 'inactive' | 'suspended';
   createdAt: string;
   lastLoginAt: string | null;
+  // Extended info
+  company: string | null;
+  jobTitle: string | null;
+  city: string | null;
+  mbtiType: string | null;
+  applicationStatus: 'none' | 'pending' | 'approved' | 'rejected';
+  mentorInfo: MentorInfo | null;
+  menteeInfo: MenteeInfo | null;
 }
 
 export default function UserManagement() {
@@ -182,7 +222,21 @@ export default function UserManagement() {
     }
   };
 
+  const getApplicationBadge = (status: string) => {
+    switch (status) {
+      case 'approved':
+        return <Badge className="bg-green-100 text-green-700 text-xs"><CheckCircle className="w-3 h-3 mr-1" />Approved</Badge>;
+      case 'pending':
+        return <Badge className="bg-yellow-100 text-yellow-700 text-xs"><Clock className="w-3 h-3 mr-1" />Pending</Badge>;
+      case 'rejected':
+        return <Badge className="bg-red-100 text-red-700 text-xs">Rejected</Badge>;
+      default:
+        return null;
+    }
+  };
+
   return (
+    <TooltipProvider>
     <Card>
       <CardHeader>
         <div className="flex justify-between items-center">
@@ -307,6 +361,11 @@ export default function UserManagement() {
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-foreground truncate">{user.name || 'Unknown User'}</p>
                     <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+                    {(user.jobTitle || user.company) && (
+                      <p className="text-xs text-muted-foreground truncate mt-0.5">
+                        {user.jobTitle}{user.jobTitle && user.company ? ' @ ' : ''}{user.company}
+                      </p>
+                    )}
                   </div>
                 </div>
                 <DropdownMenu>
@@ -344,6 +403,23 @@ export default function UserManagement() {
               </div>
 
               <div className="space-y-2 text-sm">
+                {/* Location and MBTI */}
+                {(user.city || user.mbtiType) && (
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    {user.city && (
+                      <span className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3" />
+                        {user.city}
+                      </span>
+                    )}
+                    {user.mbtiType && (
+                      <Badge variant="outline" className="text-xs px-1.5 py-0">
+                        {user.mbtiType}
+                      </Badge>
+                    )}
+                  </div>
+                )}
+
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Roles:</span>
                   <div className="flex flex-wrap gap-1 justify-end">
@@ -358,6 +434,37 @@ export default function UserManagement() {
                     ))}
                   </div>
                 </div>
+
+                {/* Application Status */}
+                {user.applicationStatus !== 'none' && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Application:</span>
+                    {getApplicationBadge(user.applicationStatus)}
+                  </div>
+                )}
+
+                {/* Mentor Info */}
+                {user.mentorInfo && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Mentor:</span>
+                    <div className="flex items-center gap-1">
+                      {user.mentorInfo.isVerified && (
+                        <CheckCircle className="w-3 h-3 text-green-600" />
+                      )}
+                      <span className="text-xs">
+                        {user.mentorInfo.currentMentees}/{user.mentorInfo.maxMentees} mentees
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Mentee Info */}
+                {user.menteeInfo && user.menteeInfo.careerStage && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Career Stage:</span>
+                    <span className="text-xs capitalize">{user.menteeInfo.careerStage.replace(/_/g, ' ')}</span>
+                  </div>
+                )}
 
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Membership:</span>
@@ -412,11 +519,10 @@ export default function UserManagement() {
                   />
                 </TableHead>
                 <TableHead>User</TableHead>
-                <TableHead>Roles</TableHead>
+                <TableHead>Profile</TableHead>
+                <TableHead>Roles & Status</TableHead>
                 <TableHead>Membership</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Joined</TableHead>
-                <TableHead>Last Active</TableHead>
+                <TableHead>Activity</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -440,20 +546,97 @@ export default function UserManagement() {
                       <div>
                         <p className="font-medium text-foreground">{user.name || 'Unknown User'}</p>
                         <p className="text-sm text-muted-foreground">{user.email}</p>
+                        {(user.jobTitle || user.company) && (
+                          <p className="text-xs text-muted-foreground mt-0.5">
+                            {user.jobTitle}{user.jobTitle && user.company ? ' @ ' : ''}{user.company}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </TableCell>
                   <TableCell>
-                    <div className="flex flex-wrap gap-1">
-                      {user.roles.map((role) => (
-                        <Badge
-                          key={role}
-                          variant="secondary"
-                          className={cn('text-xs', getRoleBadgeColor(role))}
-                        >
-                          {role}
+                    <div className="space-y-1.5">
+                      {/* Location */}
+                      {user.city && (
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <MapPin className="w-3 h-3" />
+                          <span>{user.city}</span>
+                        </div>
+                      )}
+                      {/* MBTI */}
+                      {user.mbtiType && (
+                        <Badge variant="outline" className="text-xs px-1.5 py-0">
+                          <Brain className="w-2.5 h-2.5 mr-1" />
+                          {user.mbtiType}
                         </Badge>
-                      ))}
+                      )}
+                      {/* Mentor Info */}
+                      {user.mentorInfo && (
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <div className="flex items-center gap-1 text-xs">
+                              <GraduationCap className="w-3 h-3 text-purple-600" />
+                              <span>
+                                {user.mentorInfo.isVerified && <CheckCircle className="w-3 h-3 text-green-600 inline mr-1" />}
+                                {user.mentorInfo.currentMentees}/{user.mentorInfo.maxMentees}
+                              </span>
+                              {user.mentorInfo.yearsExperience && (
+                                <span className="text-muted-foreground">• {user.mentorInfo.yearsExperience}y</span>
+                              )}
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{user.mentorInfo.isVerified ? 'Verified Mentor' : 'Mentor'}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {user.mentorInfo.currentMentees} of {user.mentorInfo.maxMentees} mentees
+                              {user.mentorInfo.yearsExperience && ` • ${user.mentorInfo.yearsExperience} years exp`}
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
+                      {/* Mentee Info */}
+                      {user.menteeInfo && (
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <Briefcase className="w-3 h-3 text-blue-600" />
+                          <span className="capitalize">
+                            {user.menteeInfo.careerStage?.replace(/_/g, ' ') || 'Mentee'}
+                          </span>
+                          {user.menteeInfo.currentIndustry && (
+                            <span>• {user.menteeInfo.currentIndustry}</span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="space-y-1.5">
+                      {/* Roles */}
+                      <div className="flex flex-wrap gap-1">
+                        {user.roles.map((role) => (
+                          <Badge
+                            key={role}
+                            variant="secondary"
+                            className={cn('text-xs', getRoleBadgeColor(role))}
+                          >
+                            {role}
+                          </Badge>
+                        ))}
+                      </div>
+                      {/* Application & Account Status */}
+                      <div className="flex items-center gap-1">
+                        {user.applicationStatus !== 'none' && getApplicationBadge(user.applicationStatus)}
+                        <Badge
+                          variant={user.status === 'active' ? 'default' : 'secondary'}
+                          className={cn(
+                            'text-xs',
+                            user.status === 'active' && 'bg-green-100 text-green-700',
+                            user.status === 'inactive' && 'bg-accent text-foreground',
+                            user.status === 'suspended' && 'bg-red-100 text-red-700'
+                          )}
+                        >
+                          {user.status}
+                        </Badge>
+                      </div>
                     </div>
                   </TableCell>
                   <TableCell>
@@ -465,25 +648,14 @@ export default function UserManagement() {
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    <Badge
-                      variant={user.status === 'active' ? 'default' : 'secondary'}
-                      className={cn(
-                        'text-xs',
-                        user.status === 'active' && 'bg-green-100 text-green-700',
-                        user.status === 'inactive' && 'bg-accent text-foreground',
-                        user.status === 'suspended' && 'bg-red-100 text-red-700'
-                      )}
-                    >
-                      {user.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
-                    {new Date(user.createdAt).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
-                    {user.lastLoginAt
-                      ? new Date(user.lastLoginAt).toLocaleDateString()
-                      : 'Never'}
+                    <div className="text-sm space-y-0.5">
+                      <p className="text-muted-foreground text-xs">
+                        Joined: {new Date(user.createdAt).toLocaleDateString()}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        Active: {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}
+                      </p>
+                    </div>
                   </TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
@@ -572,5 +744,6 @@ export default function UserManagement() {
         </div>
       </CardContent>
     </Card>
+    </TooltipProvider>
   );
 }

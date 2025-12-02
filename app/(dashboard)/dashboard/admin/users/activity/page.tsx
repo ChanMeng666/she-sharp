@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -20,13 +19,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { 
-  Activity, 
-  User, 
-  Calendar, 
-  Clock, 
-  Monitor, 
-  Smartphone, 
+import { Skeleton } from '@/components/ui/skeleton';
+import {
+  Activity,
+  Calendar,
+  Clock,
   Globe,
   Shield,
   AlertCircle,
@@ -39,58 +36,109 @@ import {
   UserPlus,
   Download,
   Filter,
-  Search
+  Search,
+  Eye,
+  FileText,
+  RefreshCw
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const activityTypes = {
-  login: { icon: LogIn, color: 'text-green-600', bg: 'bg-green-100' },
-  logout: { icon: LogOut, color: 'text-muted-foreground', bg: 'bg-accent' },
-  create: { icon: UserPlus, color: 'text-blue-600', bg: 'bg-blue-100' },
-  update: { icon: Edit, color: 'text-yellow-600', bg: 'bg-yellow-100' },
-  delete: { icon: Trash2, color: 'text-red-600', bg: 'bg-red-100' },
-  security: { icon: Shield, color: 'text-foreground', bg: 'bg-muted' },
-};
+interface ActivityLog {
+  id: string | number;
+  userId: string | number | null;
+  userName: string | null;
+  userEmail: string | null;
+  action: string;
+  entityType: string | null;
+  entityId: string | number | null;
+  metadata: Record<string, unknown> | null;
+  ipAddress: string | null;
+  timestamp: string;
+}
 
-const mockActivities = [
-  { id: 1, user: 'Sarah Johnson', email: 'sarah@example.com', action: 'login', description: 'User logged in', ipAddress: '192.168.1.1', device: 'desktop', browser: 'Chrome', timestamp: '2024-12-20T10:30:00Z', status: 'success' },
-  { id: 2, user: 'Emily Chen', email: 'emily@example.com', action: 'update', description: 'Updated profile information', ipAddress: '192.168.1.2', device: 'mobile', browser: 'Safari', timestamp: '2024-12-20T10:25:00Z', status: 'success' },
-  { id: 3, user: 'System', email: 'system@shesharp.org', action: 'security', description: 'Failed login attempt detected', ipAddress: '203.0.113.0', device: 'desktop', browser: 'Unknown', timestamp: '2024-12-20T10:20:00Z', status: 'warning' },
-  { id: 4, user: 'Jessica Martinez', email: 'jessica@example.com', action: 'create', description: 'Created new event', ipAddress: '192.168.1.3', device: 'desktop', browser: 'Firefox', timestamp: '2024-12-20T10:15:00Z', status: 'success' },
-  { id: 5, user: 'Admin', email: 'admin@shesharp.org', action: 'delete', description: 'Deleted expired content', ipAddress: '192.168.1.4', device: 'desktop', browser: 'Chrome', timestamp: '2024-12-20T10:10:00Z', status: 'success' },
-];
+interface ActivityResponse {
+  activities: ActivityLog[];
+  pagination: {
+    total: number;
+    limit: number;
+    offset: number;
+    hasMore: boolean;
+  };
+}
+
+// Map action types to icons and styles
+const getActionStyle = (action: string) => {
+  const actionMap: Record<string, { icon: typeof Activity; color: string; bg: string }> = {
+    login: { icon: LogIn, color: 'text-green-600', bg: 'bg-green-100' },
+    logout: { icon: LogOut, color: 'text-muted-foreground', bg: 'bg-accent' },
+    create: { icon: UserPlus, color: 'text-blue-600', bg: 'bg-blue-100' },
+    update: { icon: Edit, color: 'text-yellow-600', bg: 'bg-yellow-100' },
+    delete: { icon: Trash2, color: 'text-red-600', bg: 'bg-red-100' },
+    view: { icon: Eye, color: 'text-purple-600', bg: 'bg-purple-100' },
+    export: { icon: FileText, color: 'text-indigo-600', bg: 'bg-indigo-100' },
+    security: { icon: Shield, color: 'text-foreground', bg: 'bg-muted' },
+  };
+  return actionMap[action.toLowerCase()] || { icon: Activity, color: 'text-muted-foreground', bg: 'bg-accent' };
+};
 
 export default function ActivityLogsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [actionFilter, setActionFilter] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [dateRange, setDateRange] = useState('7d');
+  const [activities, setActivities] = useState<ActivityLog[]>([]);
+  const [pagination, setPagination] = useState({ total: 0, limit: 50, offset: 0, hasMore: false });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [stats, setStats] = useState({ total: 0, uniqueUsers: 0, securityEvents: 0, successRate: 0 });
 
-  const filteredActivities = mockActivities.filter(activity => {
-    const matchesSearch = activity.user.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          activity.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          activity.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesAction = actionFilter === 'all' || activity.action === actionFilter;
-    const matchesStatus = statusFilter === 'all' || activity.status === statusFilter;
-    return matchesSearch && matchesAction && matchesStatus;
-  });
+  // Fetch activity logs from API
+  const fetchActivities = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`/api/admin/activity?limit=100&offset=0`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch activity logs');
+      }
+      const data: ActivityResponse = await response.json();
+      setActivities(data.activities);
+      setPagination(data.pagination);
 
-  const getDeviceIcon = (device: string) => {
-    return device === 'mobile' ? <Smartphone className="w-4 h-4" /> : <Monitor className="w-4 h-4" />;
-  };
+      // Calculate stats from fetched data
+      const uniqueUsers = new Set(data.activities.map(a => a.userId).filter(Boolean)).size;
+      const securityEvents = data.activities.filter(a =>
+        a.action.toLowerCase().includes('security') ||
+        a.action.toLowerCase().includes('failed')
+      ).length;
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'success':
-        return <CheckCircle className="w-4 h-4 text-green-600" />;
-      case 'warning':
-        return <AlertCircle className="w-4 h-4 text-yellow-600" />;
-      case 'error':
-        return <XCircle className="w-4 h-4 text-red-600" />;
-      default:
-        return null;
+      setStats({
+        total: data.pagination.total,
+        uniqueUsers,
+        securityEvents,
+        successRate: data.pagination.total > 0
+          ? Math.round(((data.pagination.total - securityEvents) / data.pagination.total) * 100 * 10) / 10
+          : 100
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchActivities();
+  }, [fetchActivities]);
+
+  // Filter activities based on search and action filter
+  const filteredActivities = activities.filter(activity => {
+    const matchesSearch = searchQuery === '' ||
+      (activity.userName?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false) ||
+      (activity.userEmail?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false) ||
+      activity.action.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (activity.entityType?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
+    const matchesAction = actionFilter === 'all' || activity.action.toLowerCase() === actionFilter;
+    return matchesSearch && matchesAction;
+  });
 
   return (
     <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8 space-y-6">
@@ -101,11 +149,29 @@ export default function ActivityLogsPage() {
             Monitor user activities and system events
           </p>
         </div>
-        <Button>
-          <Download className="w-4 h-4 mr-2" />
-          Export Logs
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={fetchActivities} disabled={loading}>
+            <RefreshCw className={cn("w-4 h-4 mr-2", loading && "animate-spin")} />
+            Refresh
+          </Button>
+          <Button>
+            <Download className="w-4 h-4 mr-2" />
+            Export Logs
+          </Button>
+        </div>
       </div>
+
+      {/* Error Message */}
+      {error && (
+        <Card className="border-red-200 bg-red-50">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 text-red-600">
+              <AlertCircle className="w-5 h-5" />
+              <span>{error}</span>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
@@ -114,38 +180,64 @@ export default function ActivityLogsPage() {
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Activities</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">1,247</p>
-            <p className="text-xs text-muted-foreground">Last 7 days</p>
+            {loading ? (
+              <Skeleton className="h-8 w-20" />
+            ) : (
+              <>
+                <p className="text-2xl font-bold">{stats.total.toLocaleString()}</p>
+                <p className="text-xs text-muted-foreground">All time</p>
+              </>
+            )}
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-muted-foreground">Active Users</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">342</p>
-            <p className="text-xs text-muted-foreground">Unique users</p>
+            {loading ? (
+              <Skeleton className="h-8 w-20" />
+            ) : (
+              <>
+                <p className="text-2xl font-bold">{stats.uniqueUsers}</p>
+                <p className="text-xs text-muted-foreground">Unique users</p>
+              </>
+            )}
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-muted-foreground">Security Events</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold text-yellow-600">12</p>
-            <p className="text-xs text-muted-foreground">Requires attention</p>
+            {loading ? (
+              <Skeleton className="h-8 w-20" />
+            ) : (
+              <>
+                <p className={cn("text-2xl font-bold", stats.securityEvents > 0 && "text-yellow-600")}>
+                  {stats.securityEvents}
+                </p>
+                <p className="text-xs text-muted-foreground">Requires attention</p>
+              </>
+            )}
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-muted-foreground">Success Rate</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold text-green-600">98.5%</p>
-            <p className="text-xs text-muted-foreground">Successful actions</p>
+            {loading ? (
+              <Skeleton className="h-8 w-20" />
+            ) : (
+              <>
+                <p className="text-2xl font-bold text-green-600">{stats.successRate}%</p>
+                <p className="text-xs text-muted-foreground">Successful actions</p>
+              </>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -164,7 +256,7 @@ export default function ActivityLogsPage() {
                 className="pl-10"
               />
             </div>
-            
+
             <Select value={actionFilter} onValueChange={setActionFilter}>
               <SelectTrigger className="w-40">
                 <SelectValue placeholder="All Actions" />
@@ -176,37 +268,10 @@ export default function ActivityLogsPage() {
                 <SelectItem value="create">Create</SelectItem>
                 <SelectItem value="update">Update</SelectItem>
                 <SelectItem value="delete">Delete</SelectItem>
-                <SelectItem value="security">Security</SelectItem>
+                <SelectItem value="view">View</SelectItem>
+                <SelectItem value="export">Export</SelectItem>
               </SelectContent>
             </Select>
-
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder="All Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="success">Success</SelectItem>
-                <SelectItem value="warning">Warning</SelectItem>
-                <SelectItem value="error">Error</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={dateRange} onValueChange={setDateRange}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder="Date Range" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1d">Last 24 hours</SelectItem>
-                <SelectItem value="7d">Last 7 days</SelectItem>
-                <SelectItem value="30d">Last 30 days</SelectItem>
-                <SelectItem value="90d">Last 90 days</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Button variant="outline" size="icon">
-              <Filter className="w-4 h-4" />
-            </Button>
           </div>
         </CardContent>
       </Card>
@@ -216,88 +281,97 @@ export default function ActivityLogsPage() {
         <CardHeader>
           <CardTitle>Recent Activities</CardTitle>
           <CardDescription>
-            Showing {filteredActivities.length} activities
+            Showing {filteredActivities.length} of {pagination.total} activities
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>User</TableHead>
-                  <TableHead>Action</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Device/Location</TableHead>
-                  <TableHead>Timestamp</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-              {filteredActivities.map((activity) => {
-                const actionType = activityTypes[activity.action as keyof typeof activityTypes];
-                const Icon = actionType?.icon || Activity;
-                
-                return (
-                  <TableRow key={activity.id}>
-                    <TableCell>
-                      <div>
-                        <p className="font-medium">{activity.user}</p>
-                        <p className="text-sm text-muted-foreground">{activity.email}</p>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <div className={cn("p-1.5 rounded", actionType?.bg)}>
-                          <Icon className={cn("w-4 h-4", actionType?.color)} />
-                        </div>
-                        <span className="capitalize">{activity.action}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>{activity.description}</TableCell>
-                    <TableCell>
-                      <div className="flex flex-col space-y-1 text-sm">
-                        <div className="flex items-center space-x-1">
-                          {getDeviceIcon(activity.device)}
-                          <span>{activity.browser}</span>
-                        </div>
-                        <div className="flex items-center space-x-1 text-muted-foreground">
-                          <Globe className="w-3 h-3" />
-                          <span className="text-xs">{activity.ipAddress}</span>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex flex-col space-y-1 text-sm">
-                        <div className="flex items-center space-x-1">
-                          <Calendar className="w-3 h-3 text-muted-foreground" />
-                          <span>{new Date(activity.timestamp).toLocaleDateString()}</span>
-                        </div>
-                        <div className="flex items-center space-x-1 text-muted-foreground">
-                          <Clock className="w-3 h-3" />
-                          <span className="text-xs">
-                            {new Date(activity.timestamp).toLocaleTimeString()}
-                          </span>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-1">
-                        {getStatusIcon(activity.status)}
-                        <span className={cn(
-                          "text-sm capitalize",
-                          activity.status === 'success' && "text-green-600",
-                          activity.status === 'warning' && "text-yellow-600",
-                          activity.status === 'error' && "text-red-600"
-                        )}>
-                          {activity.status}
-                        </span>
-                      </div>
-                    </TableCell>
+            {loading ? (
+              <div className="space-y-4">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="flex items-center space-x-4">
+                    <Skeleton className="h-12 w-12 rounded" />
+                    <div className="space-y-2 flex-1">
+                      <Skeleton className="h-4 w-[200px]" />
+                      <Skeleton className="h-4 w-[150px]" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : filteredActivities.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                <Activity className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                <p>No activity logs found</p>
+              </div>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>User</TableHead>
+                    <TableHead>Action</TableHead>
+                    <TableHead>Entity</TableHead>
+                    <TableHead>IP Address</TableHead>
+                    <TableHead>Timestamp</TableHead>
                   </TableRow>
-                );
-              })}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {filteredActivities.map((activity) => {
+                    const actionStyle = getActionStyle(activity.action);
+                    const Icon = actionStyle.icon;
+
+                    return (
+                      <TableRow key={activity.id}>
+                        <TableCell>
+                          <div>
+                            <p className="font-medium">{activity.userName || 'Unknown User'}</p>
+                            <p className="text-sm text-muted-foreground">{activity.userEmail || '-'}</p>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center space-x-2">
+                            <div className={cn("p-1.5 rounded", actionStyle.bg)}>
+                              <Icon className={cn("w-4 h-4", actionStyle.color)} />
+                            </div>
+                            <span className="capitalize">{activity.action}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm">
+                            {activity.entityType && (
+                              <span className="capitalize">{activity.entityType}</span>
+                            )}
+                            {activity.entityId && (
+                              <span className="text-muted-foreground ml-1">#{String(activity.entityId).slice(0, 8)}</span>
+                            )}
+                            {!activity.entityType && !activity.entityId && '-'}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                            <Globe className="w-3 h-3" />
+                            <span>{activity.ipAddress || '-'}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-col space-y-1 text-sm">
+                            <div className="flex items-center space-x-1">
+                              <Calendar className="w-3 h-3 text-muted-foreground" />
+                              <span>{new Date(activity.timestamp).toLocaleDateString()}</span>
+                            </div>
+                            <div className="flex items-center space-x-1 text-muted-foreground">
+                              <Clock className="w-3 h-3" />
+                              <span className="text-xs">
+                                {new Date(activity.timestamp).toLocaleTimeString()}
+                              </span>
+                            </div>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            )}
           </div>
         </CardContent>
       </Card>

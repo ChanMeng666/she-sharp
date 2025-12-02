@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Select,
   SelectContent,
@@ -20,22 +21,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
-import { 
-  Search, 
-  Filter, 
+import {
+  Search,
   Download,
   Calendar,
-  Clock,
   Video,
   Users,
-  TrendingUp,
-  TrendingDown,
   MessageSquare,
   Star,
   FileText,
-  BarChart3,
   Timer,
   CheckCircle,
   XCircle,
@@ -43,10 +38,8 @@ import {
   MoreVertical,
   Eye,
   Edit,
-  Trash2,
-  Send,
-  PhoneCall,
-  Monitor
+  Monitor,
+  RefreshCw
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -58,8 +51,6 @@ import {
 import {
   LineChart,
   Line,
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -70,109 +61,97 @@ import {
   Pie,
   Cell
 } from 'recharts';
+import { cn } from '@/lib/utils';
 
-const meetingTrendData = [
-  { month: 'Jul', meetings: 145, avgDuration: 48 },
-  { month: 'Aug', meetings: 162, avgDuration: 52 },
-  { month: 'Sep', meetings: 178, avgDuration: 50 },
-  { month: 'Oct', meetings: 195, avgDuration: 55 },
-  { month: 'Nov', meetings: 210, avgDuration: 53 },
-  { month: 'Dec', meetings: 188, avgDuration: 51 },
-];
+interface Meeting {
+  id: number;
+  relationshipId: number;
+  mentor: string;
+  mentee: string;
+  date: string;
+  duration: number;
+  type: string;
+  status: string;
+  rating: number | null;
+  topics: string[];
+  notes: string | null;
+  recordingAvailable: boolean;
+}
 
-const meetingTypeData = [
-  { type: 'Video Call', value: 65, color: 'hsl(var(--primary))' },
-  { type: 'In-Person', value: 20, color: 'hsl(var(--muted))' },
-  { type: 'Phone Call', value: 10, color: '#60a5fa' },
-  { type: 'Chat', value: 5, color: '#94a3b8' },
-];
+interface Stats {
+  total: number;
+  completed: number;
+  scheduled: number;
+  cancelled: number;
+  avgDuration: number;
+  avgRating: number;
+  totalRatings: number;
+  completionRate: number;
+}
 
-const mockMeetings = [
-  {
-    id: 1,
-    mentor: 'Dr. Sarah Johnson',
-    mentee: 'Alice Thompson',
-    date: '2024-12-20T14:00:00Z',
-    duration: 55,
-    type: 'video',
-    status: 'completed',
-    rating: 5,
-    topics: ['AWS Architecture', 'Career Planning'],
-    notes: 'Discussed cloud migration strategies and Q1 goals',
-    recordingAvailable: true
-  },
-  {
-    id: 2,
-    mentor: 'Emily Chen',
-    mentee: 'Bob Wilson',
-    date: '2024-12-21T15:00:00Z',
-    duration: 0,
-    type: 'video',
-    status: 'scheduled',
-    rating: null,
-    topics: ['Machine Learning', 'Python'],
-    notes: null,
-    recordingAvailable: false
-  },
-  {
-    id: 3,
-    mentor: 'Jessica Martinez',
-    mentee: 'Carol Davis',
-    date: '2024-12-19T10:00:00Z',
-    duration: 30,
-    type: 'phone',
-    status: 'completed',
-    rating: 4,
-    topics: ['Design Review'],
-    notes: 'Reviewed portfolio projects',
-    recordingAvailable: false
-  },
-  {
-    id: 4,
-    mentor: 'Dr. Rachel Williams',
-    mentee: 'Diana Lee',
-    date: '2024-12-18T16:00:00Z',
-    duration: 45,
-    type: 'in_person',
-    status: 'completed',
-    rating: 5,
-    topics: ['Research Methods', 'Paper Writing'],
-    notes: 'Finalized research proposal draft',
-    recordingAvailable: false
-  },
-  {
-    id: 5,
-    mentor: 'Maria Rodriguez',
-    mentee: 'Eve Brown',
-    date: '2024-12-20T11:00:00Z',
-    duration: 0,
-    type: 'video',
-    status: 'cancelled',
-    rating: null,
-    topics: ['Blockchain'],
-    notes: 'Rescheduled due to conflict',
-    recordingAvailable: false
-  },
-  {
-    id: 6,
-    mentor: 'Dr. Sarah Johnson',
-    mentee: 'Frank Miller',
-    date: '2024-12-22T09:00:00Z',
-    duration: 0,
-    type: 'video',
-    status: 'scheduled',
-    rating: null,
-    topics: ['Team Management'],
-    notes: null,
-    recordingAvailable: false
-  }
+interface TrendData {
+  month: string;
+  meetings: number;
+  avgDuration: number;
+}
+
+interface TypeDistribution {
+  type: string;
+  value: number;
+}
+
+interface ApiResponse {
+  meetings: Meeting[];
+  stats: Stats;
+  trends: TrendData[];
+  typeDistribution: TypeDistribution[];
+  pagination: {
+    total: number;
+    limit: number;
+    offset: number;
+    hasMore: boolean;
+  };
+}
+
+const TYPE_COLORS = [
+  'hsl(var(--primary))',
+  'hsl(var(--muted))',
 ];
 
 export default function MentorMeetingsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
-  const [dateRange, setDateRange] = useState('7d');
+  const [meetings, setMeetings] = useState<Meeting[]>([]);
+  const [stats, setStats] = useState<Stats>({ total: 0, completed: 0, scheduled: 0, cancelled: 0, avgDuration: 0, avgRating: 0, totalRatings: 0, completionRate: 0 });
+  const [trends, setTrends] = useState<TrendData[]>([]);
+  const [typeDistribution, setTypeDistribution] = useState<TypeDistribution[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchMeetings = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/admin/mentors/meetings?limit=100');
+      if (!response.ok) {
+        throw new Error('Failed to fetch meetings');
+      }
+      const data: ApiResponse = await response.json();
+      setMeetings(data.meetings);
+      setStats(data.stats);
+      setTrends(data.trends);
+      setTypeDistribution(data.typeDistribution);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchMeetings();
+  }, [fetchMeetings]);
 
   const getStatusBadge = (status: string) => {
     const variants = {
@@ -194,17 +173,15 @@ export default function MentorMeetingsPage() {
   const getMeetingTypeIcon = (type: string) => {
     const icons = {
       video: { icon: Video, color: 'text-primary' },
-      phone: { icon: PhoneCall, color: 'text-blue-600' },
       in_person: { icon: Users, color: 'text-green-600' },
-      chat: { icon: MessageSquare, color: 'text-muted-foreground' },
     };
     const config = icons[type as keyof typeof icons];
     const Icon = config?.icon || Video;
     return <Icon className={`w-4 h-4 ${config?.color || 'text-muted-foreground'}`} />;
   };
 
-  const filteredMeetings = mockMeetings.filter(meeting => {
-    const matchesSearch = 
+  const filteredMeetings = meetings.filter(meeting => {
+    const matchesSearch = searchQuery === '' ||
       meeting.mentor.toLowerCase().includes(searchQuery.toLowerCase()) ||
       meeting.mentee.toLowerCase().includes(searchQuery.toLowerCase()) ||
       meeting.topics.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -223,6 +200,10 @@ export default function MentorMeetingsPage() {
           </p>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+          <Button variant="outline" onClick={fetchMeetings} disabled={loading}>
+            <RefreshCw className={cn("w-4 h-4 mr-2", loading && "animate-spin")} />
+            Refresh
+          </Button>
           <Button variant="outline">
             <Download className="w-4 h-4 mr-2" />
             Export Data
@@ -234,6 +215,18 @@ export default function MentorMeetingsPage() {
         </div>
       </div>
 
+      {/* Error Message */}
+      {error && (
+        <Card className="border-red-200 bg-red-50">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 text-red-600">
+              <AlertCircle className="w-5 h-5" />
+              <span>{error}</span>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
         <Card>
@@ -241,11 +234,16 @@ export default function MentorMeetingsPage() {
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Meetings</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">342</p>
-            <div className="flex items-center mt-2">
-              <TrendingUp className="w-4 h-4 text-green-600 mr-1" />
-              <span className="text-xs text-green-600">+15% this month</span>
-            </div>
+            {loading ? (
+              <Skeleton className="h-8 w-20" />
+            ) : (
+              <>
+                <p className="text-2xl font-bold">{stats.total}</p>
+                <p className="text-xs text-muted-foreground mt-2">
+                  {stats.completed} completed, {stats.scheduled} scheduled
+                </p>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -254,8 +252,14 @@ export default function MentorMeetingsPage() {
             <CardTitle className="text-sm font-medium text-muted-foreground">Avg Duration</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">52 min</p>
-            <p className="text-xs text-muted-foreground mt-2">Target: 45-60 min</p>
+            {loading ? (
+              <Skeleton className="h-8 w-20" />
+            ) : (
+              <>
+                <p className="text-2xl font-bold">{stats.avgDuration} min</p>
+                <p className="text-xs text-muted-foreground mt-2">Target: 45-60 min</p>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -264,8 +268,14 @@ export default function MentorMeetingsPage() {
             <CardTitle className="text-sm font-medium text-muted-foreground">Completion Rate</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold text-green-600">94%</p>
-            <Progress value={94} className="mt-2 h-2" />
+            {loading ? (
+              <Skeleton className="h-8 w-20" />
+            ) : (
+              <>
+                <p className="text-2xl font-bold text-green-600">{stats.completionRate}%</p>
+                <Progress value={stats.completionRate} className="mt-2 h-2" />
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -274,11 +284,17 @@ export default function MentorMeetingsPage() {
             <CardTitle className="text-sm font-medium text-muted-foreground">Avg Rating</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center space-x-2">
-              <p className="text-2xl font-bold">4.7</p>
-              <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">From 298 reviews</p>
+            {loading ? (
+              <Skeleton className="h-8 w-20" />
+            ) : (
+              <>
+                <div className="flex items-center space-x-2">
+                  <p className="text-2xl font-bold">{stats.avgRating || 'N/A'}</p>
+                  {stats.avgRating > 0 && <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />}
+                </div>
+                <p className="text-xs text-muted-foreground mt-2">From {stats.totalRatings} reviews</p>
+              </>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -291,32 +307,40 @@ export default function MentorMeetingsPage() {
             <CardDescription>Monthly meeting count and average duration</CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={250}>
-              <LineChart data={meetingTrendData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis yAxisId="left" />
-                <YAxis yAxisId="right" orientation="right" />
-                <Tooltip />
-                <Legend />
-                <Line
-                  yAxisId="left"
-                  type="monotone"
-                  dataKey="meetings"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth={2}
-                  name="Total Meetings"
-                />
-                <Line 
-                  yAxisId="right" 
-                  type="monotone" 
-                  dataKey="avgDuration" 
-                  stroke="#60a5fa" 
-                  strokeWidth={2}
-                  name="Avg Duration (min)"
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            {loading ? (
+              <Skeleton className="h-[250px] w-full" />
+            ) : trends.length === 0 ? (
+              <div className="h-[250px] flex items-center justify-center text-muted-foreground">
+                <p>No trend data available</p>
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height={250}>
+                <LineChart data={trends}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis yAxisId="left" />
+                  <YAxis yAxisId="right" orientation="right" />
+                  <Tooltip />
+                  <Legend />
+                  <Line
+                    yAxisId="left"
+                    type="monotone"
+                    dataKey="meetings"
+                    stroke="hsl(var(--primary))"
+                    strokeWidth={2}
+                    name="Total Meetings"
+                  />
+                  <Line
+                    yAxisId="right"
+                    type="monotone"
+                    dataKey="avgDuration"
+                    stroke="#60a5fa"
+                    strokeWidth={2}
+                    name="Avg Duration (min)"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            )}
           </CardContent>
         </Card>
 
@@ -326,25 +350,33 @@ export default function MentorMeetingsPage() {
             <CardDescription>Distribution by communication method</CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={250}>
-              <PieChart>
-                <Pie
-                  data={meetingTypeData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ type, value }) => `${type}: ${value}%`}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {meetingTypeData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+            {loading ? (
+              <Skeleton className="h-[250px] w-full" />
+            ) : typeDistribution.length === 0 ? (
+              <div className="h-[250px] flex items-center justify-center text-muted-foreground">
+                <p>No type data available</p>
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie
+                    data={typeDistribution}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ type, value }) => `${type}: ${value}%`}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {typeDistribution.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={TYPE_COLORS[index % TYPE_COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -363,7 +395,7 @@ export default function MentorMeetingsPage() {
                 className="pl-10"
               />
             </div>
-            
+
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-40">
                 <SelectValue placeholder="All Status" />
@@ -373,7 +405,6 @@ export default function MentorMeetingsPage() {
                 <SelectItem value="completed">Completed</SelectItem>
                 <SelectItem value="scheduled">Scheduled</SelectItem>
                 <SelectItem value="cancelled">Cancelled</SelectItem>
-                <SelectItem value="no_show">No Show</SelectItem>
               </SelectContent>
             </Select>
 
@@ -384,27 +415,9 @@ export default function MentorMeetingsPage() {
               <SelectContent>
                 <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="video">Video Call</SelectItem>
-                <SelectItem value="phone">Phone Call</SelectItem>
                 <SelectItem value="in_person">In Person</SelectItem>
-                <SelectItem value="chat">Chat</SelectItem>
               </SelectContent>
             </Select>
-
-            <Select value={dateRange} onValueChange={setDateRange}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder="Date Range" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="today">Today</SelectItem>
-                <SelectItem value="7d">Last 7 days</SelectItem>
-                <SelectItem value="30d">Last 30 days</SelectItem>
-                <SelectItem value="90d">Last 90 days</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Button variant="outline" size="icon">
-              <Filter className="w-4 h-4" />
-            </Button>
           </div>
         </CardContent>
       </Card>
@@ -414,121 +427,142 @@ export default function MentorMeetingsPage() {
         <CardHeader>
           <CardTitle>Meeting History</CardTitle>
           <CardDescription>
-            {filteredMeetings.length} meetings found
+            {loading ? 'Loading...' : `${filteredMeetings.length} meetings found`}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Participants</TableHead>
-                  <TableHead>Date & Time</TableHead>
-                  <TableHead>Topics</TableHead>
-                  <TableHead>Duration & Type</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Rating</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-              {filteredMeetings.map((meeting) => (
-                <TableRow key={meeting.id}>
-                  <TableCell>
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium">{meeting.mentor}</p>
-                      <p className="text-xs text-muted-foreground">with {meeting.mentee}</p>
+            {loading ? (
+              <div className="space-y-4">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="flex items-center space-x-4">
+                    <div className="space-y-2 flex-1">
+                      <Skeleton className="h-4 w-[200px]" />
+                      <Skeleton className="h-4 w-[150px]" />
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center space-x-2">
-                      <Calendar className="w-4 h-4 text-muted-foreground" />
-                      <div>
-                        <p className="text-sm">{new Date(meeting.date).toLocaleDateString()}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {new Date(meeting.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </p>
+                  </div>
+                ))}
+              </div>
+            ) : filteredMeetings.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                <MessageSquare className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                <p>No meetings found</p>
+              </div>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Participants</TableHead>
+                    <TableHead>Date & Time</TableHead>
+                    <TableHead>Topics</TableHead>
+                    <TableHead>Duration & Type</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Rating</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                {filteredMeetings.map((meeting) => (
+                  <TableRow key={meeting.id}>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <p className="text-sm font-medium">{meeting.mentor}</p>
+                        <p className="text-xs text-muted-foreground">with {meeting.mentee}</p>
                       </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex flex-wrap gap-1">
-                      {meeting.topics.map(topic => (
-                        <Badge key={topic} variant="secondary" className="text-xs">
-                          {topic}
-                        </Badge>
-                      ))}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="space-y-1">
+                    </TableCell>
+                    <TableCell>
                       <div className="flex items-center space-x-2">
-                        {getMeetingTypeIcon(meeting.type)}
-                        <span className="text-sm capitalize">{meeting.type.replace('_', ' ')}</span>
-                      </div>
-                      {meeting.duration > 0 && (
-                        <div className="flex items-center space-x-1 text-xs text-muted-foreground">
-                          <Timer className="w-3 h-3" />
-                          <span>{meeting.duration} min</span>
+                        <Calendar className="w-4 h-4 text-muted-foreground" />
+                        <div>
+                          <p className="text-sm">{new Date(meeting.date).toLocaleDateString()}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {new Date(meeting.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </p>
                         </div>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    {getStatusBadge(meeting.status)}
-                  </TableCell>
-                  <TableCell>
-                    {meeting.rating ? (
-                      <div className="flex items-center space-x-1">
-                        <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                        <span className="text-sm font-medium">{meeting.rating}</span>
                       </div>
-                    ) : (
-                      <span className="text-sm text-muted-foreground">N/A</span>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="icon">
-                          <MoreVertical className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
-                          <Eye className="w-4 h-4 mr-2" />
-                          View Details
-                        </DropdownMenuItem>
-                        {meeting.recordingAvailable && (
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex flex-wrap gap-1">
+                        {(meeting.topics || []).map(topic => (
+                          <Badge key={topic} variant="secondary" className="text-xs">
+                            {topic}
+                          </Badge>
+                        ))}
+                        {(meeting.topics || []).length === 0 && (
+                          <span className="text-xs text-muted-foreground">-</span>
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <div className="flex items-center space-x-2">
+                          {getMeetingTypeIcon(meeting.type)}
+                          <span className="text-sm capitalize">{meeting.type.replace('_', ' ')}</span>
+                        </div>
+                        {meeting.duration > 0 && (
+                          <div className="flex items-center space-x-1 text-xs text-muted-foreground">
+                            <Timer className="w-3 h-3" />
+                            <span>{meeting.duration} min</span>
+                          </div>
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      {getStatusBadge(meeting.status)}
+                    </TableCell>
+                    <TableCell>
+                      {meeting.rating ? (
+                        <div className="flex items-center space-x-1">
+                          <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                          <span className="text-sm font-medium">{meeting.rating}</span>
+                        </div>
+                      ) : (
+                        <span className="text-sm text-muted-foreground">N/A</span>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline" size="icon">
+                            <MoreVertical className="w-4 h-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
                           <DropdownMenuItem>
-                            <Monitor className="w-4 h-4 mr-2" />
-                            View Recording
+                            <Eye className="w-4 h-4 mr-2" />
+                            View Details
                           </DropdownMenuItem>
-                        )}
-                        <DropdownMenuItem>
-                          <FileText className="w-4 h-4 mr-2" />
-                          View Notes
-                        </DropdownMenuItem>
-                        {meeting.status === 'scheduled' && (
-                          <>
+                          {meeting.recordingAvailable && (
                             <DropdownMenuItem>
-                              <Edit className="w-4 h-4 mr-2" />
-                              Reschedule
+                              <Monitor className="w-4 h-4 mr-2" />
+                              View Recording
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-red-600">
-                              <XCircle className="w-4 h-4 mr-2" />
-                              Cancel Meeting
-                            </DropdownMenuItem>
-                          </>
-                        )}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-              </TableBody>
-            </Table>
+                          )}
+                          <DropdownMenuItem>
+                            <FileText className="w-4 h-4 mr-2" />
+                            View Notes
+                          </DropdownMenuItem>
+                          {meeting.status === 'scheduled' && (
+                            <>
+                              <DropdownMenuItem>
+                                <Edit className="w-4 h-4 mr-2" />
+                                Reschedule
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-red-600">
+                                <XCircle className="w-4 h-4 mr-2" />
+                                Cancel Meeting
+                              </DropdownMenuItem>
+                            </>
+                          )}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                </TableBody>
+              </Table>
+            )}
           </div>
         </CardContent>
       </Card>

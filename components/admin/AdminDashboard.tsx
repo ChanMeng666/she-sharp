@@ -5,21 +5,17 @@ import {
   Users,
   User,
   UserCheck,
-  Calendar,
   TrendingUp,
   TrendingDown,
-  ArrowUp,
-  ArrowDown,
   Activity,
   GraduationCap,
-  BookOpen,
   Award,
-  Clock,
   CheckCircle,
   XCircle,
   AlertCircle,
   Palette,
   ArrowRight,
+  BrainCircuit,
 } from 'lucide-react';
 import {
   Card,
@@ -52,18 +48,8 @@ interface DashboardMetrics {
     mentees: number;
     activePairs: number;
     pendingApplications: number;
-  };
-  events: {
-    upcoming: number;
-    totalRegistrations: number;
-    thisMonth: number;
-    attendanceRate: number;
-  };
-  content: {
-    resources: number;
-    newsletters: number;
-    blogPosts: number;
-    mediaFiles: number;
+    completedRelationships: number;
+    avgMatchScore: number;
   };
 }
 
@@ -120,10 +106,10 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
       return { icon: CheckCircle, type: 'success' as const };
     } else if (lowerAction.includes('mentor') && lowerAction.includes('reject')) {
       return { icon: XCircle, type: 'error' as const };
-    } else if (lowerAction.includes('event')) {
-      return { icon: Calendar, type: 'info' as const };
     } else if (lowerAction.includes('mentorship') && lowerAction.includes('complet')) {
       return { icon: Award, type: 'success' as const };
+    } else if (lowerAction.includes('match')) {
+      return { icon: BrainCircuit, type: 'info' as const };
     } else if (lowerAction.includes('login') && lowerAction.includes('fail')) {
       return { icon: AlertCircle, type: 'error' as const };
     } else {
@@ -217,7 +203,7 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
         {/* Mentorship Card */}
         <Card className="@container/card">
           <CardHeader>
-            <CardDescription>Mentorship Program</CardDescription>
+            <CardDescription>Active Mentorships</CardDescription>
             <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
               {data.mentorship.activePairs}
             </CardTitle>
@@ -239,52 +225,50 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
           </CardFooter>
         </Card>
 
-        {/* Events Card */}
+        {/* Completed Relationships Card */}
         <Card className="@container/card">
           <CardHeader>
-            <CardDescription>Events</CardDescription>
+            <CardDescription>Completed Programs</CardDescription>
             <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
-              {data.events.upcoming}
+              {data.mentorship.completedRelationships || 0}
             </CardTitle>
             <CardAction>
               <Badge variant="outline">
-                <Calendar className="h-3 w-3" />
-                Upcoming
+                <CheckCircle className="h-3 w-3" />
+                Success
               </Badge>
             </CardAction>
           </CardHeader>
           <CardFooter className="flex-col items-start gap-1.5 text-sm">
-            <div className="flex gap-2 font-medium items-center">
-              <Progress value={data.events.attendanceRate} className="h-2 flex-1" />
-              <span>{data.events.attendanceRate}%</span>
+            <div className="flex gap-2 font-medium">
+              Mentorship programs completed
             </div>
             <div className="text-muted-foreground">
-              {data.events.totalRegistrations} total registrations
+              All time
             </div>
           </CardFooter>
         </Card>
 
-        {/* Content Card */}
+        {/* AI Matching Card */}
         <Card className="@container/card">
           <CardHeader>
-            <CardDescription>Content Library</CardDescription>
+            <CardDescription>AI Match Score</CardDescription>
             <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
-              {data.content.resources + data.content.blogPosts}
+              {data.mentorship.avgMatchScore ? `${Math.round(data.mentorship.avgMatchScore)}%` : 'N/A'}
             </CardTitle>
             <CardAction>
               <Badge variant="outline">
-                <BookOpen className="h-3 w-3" />
-                Items
+                <BrainCircuit className="h-3 w-3" />
+                Average
               </Badge>
             </CardAction>
           </CardHeader>
           <CardFooter className="flex-col items-start gap-1.5 text-sm">
-            <div className="flex w-full justify-between font-medium">
-              <span>{data.content.resources} resources</span>
-              <span>{data.content.blogPosts} posts</span>
+            <div className="flex gap-2 font-medium">
+              AI-powered matching quality
             </div>
             <div className="text-muted-foreground">
-              Published content
+              Based on compatibility analysis
             </div>
           </CardFooter>
         </Card>
@@ -297,7 +281,7 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
           <CardDescription>Common administrative tasks</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             <Link
               href="/dashboard/admin/mentors/applications"
               className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-accent transition-colors group"
@@ -314,23 +298,13 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
             </Link>
 
             <Link
-              href="/dashboard/admin/events/new"
+              href="/dashboard/admin/matching"
               className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-accent transition-colors group"
             >
               <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors mb-2">
-                <Calendar className="w-6 h-6 text-primary" />
+                <BrainCircuit className="w-6 h-6 text-primary" />
               </div>
-              <span className="text-sm font-medium text-center">Create Event</span>
-            </Link>
-
-            <Link
-              href="/dashboard/admin/content/newsletters"
-              className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-accent transition-colors group"
-            >
-              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors mb-2">
-                <BookOpen className="w-6 h-6 text-primary" />
-              </div>
-              <span className="text-sm font-medium text-center">Newsletters</span>
+              <span className="text-sm font-medium text-center">AI Matching</span>
             </Link>
 
             <Link

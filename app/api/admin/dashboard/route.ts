@@ -5,11 +5,9 @@ import {
   users,
   userRoles,
   mentorshipRelationships,
-  events,
-  eventRegistrations,
-  resources
+  aiMatchResults,
 } from '@/lib/db/schema';
-import { sql, gte, lte, and, eq, or } from 'drizzle-orm';
+import { sql, gte, lte, and, eq } from 'drizzle-orm';
 
 // Admin dashboard metrics endpoint
 export const GET = withRoles(
@@ -104,78 +102,19 @@ export const GET = withRoles(
         .from(mentorshipRelationships)
         .where(eq(mentorshipRelationships.status, 'pending'));
 
-      // Get upcoming events
-      const [{ upcomingEvents }] = await db
-        .select({ upcomingEvents: sql<number>`count(*)` })
-        .from(events)
-        .where(gte(events.startTime, now));
+      // Get completed mentorship relationships
+      const [{ completedRelationships }] = await db
+        .select({ completedRelationships: sql<number>`count(*)` })
+        .from(mentorshipRelationships)
+        .where(eq(mentorshipRelationships.status, 'completed'));
 
-      // Get events this month
-      const [{ eventsThisMonth }] = await db
-        .select({ eventsThisMonth: sql<number>`count(*)` })
-        .from(events)
-        .where(
-          and(
-            gte(events.startTime, startOfMonth),
-            lte(events.startTime, now)
-          )
-        );
-
-      // Get total registrations for upcoming events
-      const [{ totalRegistrations }] = await db
-        .select({ totalRegistrations: sql<number>`COALESCE(sum(${events.currentRegistrations}), 0)` })
-        .from(events)
-        .where(gte(events.startTime, now));
-
-      // Calculate attendance rate (for past events with attendance data)
-      const attendanceData = await db
+      // Get average AI match score
+      const [{ avgMatchScore }] = await db
         .select({
-          avgRate: sql<number>`
-            CASE
-              WHEN sum(${events.capacity}) > 0
-              THEN (sum(${events.actualAttendance})::float / sum(${events.capacity})::float) * 100
-              ELSE 0
-            END
-          `
+          avgMatchScore: sql<number>`COALESCE(AVG(${aiMatchResults.overallScore}), 0)`
         })
-        .from(events)
-        .where(
-          and(
-            lte(events.endTime, now),
-            sql`${events.actualAttendance} IS NOT NULL`,
-            sql`${events.capacity} > 0`
-          )
-        );
-
-      const attendanceRate = attendanceData[0]?.avgRate || 0;
-
-      // Get resource counts
-      const [{ totalResources }] = await db
-        .select({ totalResources: sql<number>`count(*)` })
-        .from(resources);
-
-      // Note: newsletters and blogPosts would need separate tables
-      // For now, we'll filter resources by type
-      const [{ newsletters }] = await db
-        .select({ newsletters: sql<number>`count(*)` })
-        .from(resources)
-        .where(sql`${resources.tags} @> '["newsletter"]'::jsonb`);
-
-      const [{ blogPosts }] = await db
-        .select({ blogPosts: sql<number>`count(*)` })
-        .from(resources)
-        .where(sql`${resources.tags} @> '["blog"]'::jsonb`);
-
-      const [{ mediaFiles }] = await db
-        .select({ mediaFiles: sql<number>`count(*)` })
-        .from(resources)
-        .where(
-          or(
-            eq(resources.resourceType, 'video'),
-            sql`${resources.mimeType} LIKE 'image/%'`,
-            sql`${resources.mimeType} LIKE 'video/%'`
-          )
-        );
+        .from(aiMatchResults)
+        .where(eq(aiMatchResults.status, 'approved'));
 
       // Compile metrics
       const metrics = {
@@ -189,19 +128,9 @@ export const GET = withRoles(
           mentors: mentorCount,
           mentees: menteeCount,
           activePairs: activePairs,
-          pendingApplications: pendingApplications
-        },
-        events: {
-          upcoming: upcomingEvents,
-          totalRegistrations: totalRegistrations,
-          thisMonth: eventsThisMonth,
-          attendanceRate: Math.round(attendanceRate * 10) / 10 // Round to 1 decimal
-        },
-        content: {
-          resources: totalResources,
-          newsletters: newsletters,
-          blogPosts: blogPosts,
-          mediaFiles: mediaFiles
+          pendingApplications: pendingApplications,
+          completedRelationships: completedRelationships,
+          avgMatchScore: Math.round(avgMatchScore * 10) / 10 // Round to 1 decimal
         }
       };
 
