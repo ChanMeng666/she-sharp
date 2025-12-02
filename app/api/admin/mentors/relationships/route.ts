@@ -171,9 +171,11 @@ export const GET = withRoles(
       const [totalStats] = await db
         .select({
           total: sql<number>`count(*)::int`,
+          pending: sql<number>`count(*) filter (where ${mentorshipRelationships.status} = 'pending')::int`,
           active: sql<number>`count(*) filter (where ${mentorshipRelationships.status} = 'active')::int`,
           completed: sql<number>`count(*) filter (where ${mentorshipRelationships.status} = 'completed')::int`,
           paused: sql<number>`count(*) filter (where ${mentorshipRelationships.status} = 'paused')::int`,
+          rejected: sql<number>`count(*) filter (where ${mentorshipRelationships.status} = 'rejected')::int`,
         })
         .from(mentorshipRelationships);
 
@@ -193,10 +195,12 @@ export const GET = withRoles(
         relationships: relationshipsData,
         stats: {
           total: totalStats?.total || 0,
+          pending: totalStats?.pending || 0,
           active: totalStats?.active || 0,
           atRisk: atRiskCount,
           completed: totalStats?.completed || 0,
           paused: totalStats?.paused || 0,
+          rejected: totalStats?.rejected || 0,
           avgSatisfaction: satisfactionStats?.avgSatisfaction
             ? Math.round(satisfactionStats.avgSatisfaction * 10) / 10
             : 0,

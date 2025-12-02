@@ -717,39 +717,29 @@ export default function UserManagement() {
   return (
     <TooltipProvider>
       <div className="space-y-4">
-        {/* Stats Cards */}
+        {/* Stats Summary */}
         {stats && (
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <Card>
-              <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">Total Users</p>
-                <p className="text-2xl font-bold">{stats.totalUsers}</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">Pending Applications</p>
-                <p className="text-2xl font-bold text-yellow-600">{stats.pendingApplications}</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">Mentors</p>
-                <p className="text-2xl font-bold text-green-600">{stats.byRole.mentor}</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">Mentees</p>
-                <p className="text-2xl font-bold text-blue-600">{stats.byRole.mentee}</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">Admins</p>
-                <p className="text-2xl font-bold">{stats.byRole.admin}</p>
-              </CardContent>
-            </Card>
+          <div className="flex flex-wrap items-center gap-6 text-sm">
+            <div className="flex items-center gap-2">
+              <span className="text-muted-foreground">Total Users</span>
+              <span className="font-bold text-lg">{stats.totalUsers}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-muted-foreground">Pending Applications</span>
+              <span className="font-bold text-lg text-yellow-600">{stats.pendingApplications}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-muted-foreground">Mentors</span>
+              <span className="font-bold text-lg text-green-600">{stats.byRole.mentor}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-muted-foreground">Mentees</span>
+              <span className="font-bold text-lg text-blue-600">{stats.byRole.mentee}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-muted-foreground">Admins</span>
+              <span className="font-bold text-lg">{stats.byRole.admin}</span>
+            </div>
           </div>
         )}
 

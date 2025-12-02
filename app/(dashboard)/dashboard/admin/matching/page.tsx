@@ -846,112 +846,48 @@ export default function MatchingManagementPage() {
           </Alert>
         )}
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-yellow-100 rounded-lg">
-                  <Clock className="h-5 w-5 text-yellow-600" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{pendingCount}</p>
-                  <p className="text-xs text-muted-foreground">Pending</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-green-100 rounded-lg">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats?.approvedMatches || 0}</p>
-                  <p className="text-xs text-muted-foreground">Approved</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-red-100 rounded-lg">
-                  <XCircle className="h-5 w-5 text-red-600" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats?.rejectedMatches || 0}</p>
-                  <p className="text-xs text-muted-foreground">Rejected</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-purple-100 rounded-lg">
-                  <Users className="h-5 w-5 text-purple-600" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats?.activeRelationships || 0}</p>
-                  <p className="text-xs text-muted-foreground">Active</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Brain className="h-5 w-5 text-blue-600" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats?.averageMatchScore?.toFixed(0) || 0}%</p>
-                  <p className="text-xs text-muted-foreground">Avg Score</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-orange-100 rounded-lg">
-                  <Timer className="h-5 w-5 text-orange-600" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats?.queueLength || 0}</p>
-                  <p className="text-xs text-muted-foreground">In Queue</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-teal-100 rounded-lg">
-                  <UserPlus className="h-5 w-5 text-teal-600" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats?.mentorCapacity?.availableSlots || 0}</p>
-                  <p className="text-xs text-muted-foreground">Slots Open</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-pink-100 rounded-lg">
-                  <AlertTriangle className="h-5 w-5 text-pink-600" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats?.highPriorityCount || 0}</p>
-                  <p className="text-xs text-muted-foreground">High Priority</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Stats Summary */}
+        <div className="flex flex-wrap items-center gap-6 text-sm">
+          <div className="flex items-center gap-2">
+            <Clock className="h-4 w-4 text-yellow-600" />
+            <span className="font-bold text-lg">{pendingCount}</span>
+            <span className="text-muted-foreground">Pending</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircle className="h-4 w-4 text-green-600" />
+            <span className="font-bold text-lg">{stats?.approvedMatches || 0}</span>
+            <span className="text-muted-foreground">Approved</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <XCircle className="h-4 w-4 text-red-600" />
+            <span className="font-bold text-lg">{stats?.rejectedMatches || 0}</span>
+            <span className="text-muted-foreground">Rejected</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Users className="h-4 w-4 text-purple-600" />
+            <span className="font-bold text-lg">{stats?.activeRelationships || 0}</span>
+            <span className="text-muted-foreground">Active</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Brain className="h-4 w-4 text-blue-600" />
+            <span className="font-bold text-lg">{stats?.averageMatchScore?.toFixed(0) || 0}%</span>
+            <span className="text-muted-foreground">Avg Score</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Timer className="h-4 w-4 text-orange-600" />
+            <span className="font-bold text-lg">{stats?.queueLength || 0}</span>
+            <span className="text-muted-foreground">In Queue</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <UserPlus className="h-4 w-4 text-teal-600" />
+            <span className="font-bold text-lg">{stats?.mentorCapacity?.availableSlots || 0}</span>
+            <span className="text-muted-foreground">Slots Open</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-pink-600" />
+            <span className="font-bold text-lg">{stats?.highPriorityCount || 0}</span>
+            <span className="text-muted-foreground">High Priority</span>
+          </div>
         </div>
 
         {/* Tabs */}

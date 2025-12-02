@@ -167,6 +167,44 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
 
   return (
     <div className="@container/main flex flex-col gap-6">
+      {/* Pending Tasks - Top Priority */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Pending Tasks</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {pendingTasks.length > 0 ? (
+            <div className="space-y-2">
+              {pendingTasks.map((task, idx) => (
+                <Link
+                  key={idx}
+                  href={task.href}
+                  className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "w-2 h-2 rounded-full shrink-0",
+                      task.priority === 'high' && "bg-red-500",
+                      task.priority === 'medium' && "bg-yellow-500",
+                      task.priority === 'low' && "bg-green-500"
+                    )} />
+                    <span className="text-sm font-medium">{task.task}</span>
+                  </div>
+                  <Badge variant="secondary" className="text-xs">
+                    {task.count}
+                  </Badge>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <CheckCircle className="h-12 w-12 text-muted-foreground/50 mb-3" />
+              <p className="text-sm text-muted-foreground">No pending tasks</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Key Metrics Cards */}
       <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
         {/* Total Users Card */}
@@ -344,46 +382,6 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
         </Card>
       )}
 
-      {/* Pending Tasks */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Pending Tasks</CardTitle>
-            <Badge variant="outline">{totalTasksCount} total</Badge>
-          </div>
-        </CardHeader>
-        <CardContent>
-          {pendingTasks.length > 0 ? (
-            <div className="space-y-2">
-              {pendingTasks.map((task, idx) => (
-                <Link
-                  key={idx}
-                  href={task.href}
-                  className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={cn(
-                      "w-2 h-2 rounded-full shrink-0",
-                      task.priority === 'high' && "bg-red-500",
-                      task.priority === 'medium' && "bg-yellow-500",
-                      task.priority === 'low' && "bg-green-500"
-                    )} />
-                    <span className="text-sm font-medium">{task.task}</span>
-                  </div>
-                  <Badge variant="secondary" className="text-xs">
-                    {task.count}
-                  </Badge>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-8 text-center">
-              <CheckCircle className="h-12 w-12 text-muted-foreground/50 mb-3" />
-              <p className="text-sm text-muted-foreground">No pending tasks</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
     </div>
   );
 }

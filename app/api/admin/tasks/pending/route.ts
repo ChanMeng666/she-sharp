@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import {
-  mentorProfiles,
+  mentorFormSubmissions,
   menteeWaitingQueue,
   aiMatchResults,
 } from '@/lib/db/schema';
-import { sql, isNull, eq } from 'drizzle-orm';
+import { sql, eq } from 'drizzle-orm';
 
 // Admin-only pending tasks endpoint
 export const GET = withRoles(
@@ -15,11 +15,11 @@ export const GET = withRoles(
   },
   async (req: NextRequest, context: any) => {
     try {
-      // Get pending mentor applications count
+      // Get pending mentor applications count (from form submissions with 'submitted' status)
       const [{ pendingMentors }] = await db
         .select({ pendingMentors: sql<number>`count(*)` })
-        .from(mentorProfiles)
-        .where(isNull(mentorProfiles.verifiedAt));
+        .from(mentorFormSubmissions)
+        .where(eq(mentorFormSubmissions.status, 'submitted'));
 
       // Get mentees waiting for matching
       const [{ waitingMentees }] = await db

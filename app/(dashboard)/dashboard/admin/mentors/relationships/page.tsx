@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Separator } from '@/components/ui/separator';
 import {
   Select,
   SelectContent,
@@ -21,8 +22,18 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import {
   Search,
   Download,
@@ -44,10 +55,10 @@ import {
   RefreshCw,
   Star,
   MapPin,
-  Brain,
-  Briefcase,
-  Building2,
-  GraduationCap
+  Mail,
+  Pause,
+  Play,
+  X,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -105,10 +116,12 @@ interface Relationship {
 
 interface Stats {
   total: number;
+  pending: number;
   active: number;
   atRisk: number;
   completed: number;
   paused: number;
+  rejected: number;
   avgSatisfaction: number;
   totalMeetings: number;
 }
@@ -128,9 +141,19 @@ export default function MentorRelationshipsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [relationships, setRelationships] = useState<Relationship[]>([]);
-  const [stats, setStats] = useState<Stats>({ total: 0, active: 0, atRisk: 0, completed: 0, paused: 0, avgSatisfaction: 0, totalMeetings: 0 });
+  const [stats, setStats] = useState<Stats>({ total: 0, pending: 0, active: 0, atRisk: 0, completed: 0, paused: 0, rejected: 0, avgSatisfaction: 0, totalMeetings: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  // Dialog states
+  const [detailsDialogOpen, setDetailsDialogOpen] = useState(false);
+  const [endDialogOpen, setEndDialogOpen] = useState(false);
+  const [statusDialogOpen, setStatusDialogOpen] = useState(false);
+  const [selectedRelationship, setSelectedRelationship] = useState<Relationship | null>(null);
+  const [endReason, setEndReason] = useState('');
+  const [newStatus, setNewStatus] = useState<string>('');
+  const [processing, setProcessing] = useState(false);
 
   const fetchRelationships = useCallback(async () => {
     setLoading(true);
@@ -154,14 +177,24 @@ export default function MentorRelationshipsPage() {
     fetchRelationships();
   }, [fetchRelationships]);
 
+  // Clear success message after 3 seconds
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => setSuccessMessage(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
+
   const getStatusBadge = (status: string) => {
     const variants = {
+      pending: { text: 'Pending', className: 'bg-orange-100 text-orange-800', icon: Clock },
       active: { text: 'Active', className: 'bg-green-100 text-green-800', icon: CheckCircle },
       at_risk: { text: 'At Risk', className: 'bg-yellow-100 text-yellow-800', icon: AlertCircle },
-      paused: { text: 'Paused', className: 'bg-accent text-foreground', icon: Clock },
+      paused: { text: 'Paused', className: 'bg-gray-100 text-gray-800', icon: Pause },
       completed: { text: 'Completed', className: 'bg-blue-100 text-blue-800', icon: Target },
+      rejected: { text: 'Rejected', className: 'bg-red-100 text-red-800', icon: X },
     };
-    const variant = variants[status as keyof typeof variants] || variants.paused;
+    const variant = variants[status as keyof typeof variants] || { text: status, className: 'bg-gray-100 text-gray-800', icon: Clock };
     const Icon = variant.icon;
     return (
       <Badge className={variant.className}>
@@ -186,6 +219,85 @@ export default function MentorRelationshipsPage() {
     return matchesSearch && matchesStatus;
   });
 
+  // Action handlers
+  const handleViewDetails = (relationship: Relationship) => {
+    setSelectedRelationship(relationship);
+    setDetailsDialogOpen(true);
+  };
+
+  const handleSendMessage = (relationship: Relationship) => {
+    const subject = encodeURIComponent(`Mentorship Program - ${relationship.mentor.name} & ${relationship.mentee.name}`);
+    const body = encodeURIComponent(`Hi ${relationship.mentor.name} and ${relationship.mentee.name},\n\n`);
+    window.open(`mailto:${relationship.mentor.email},${relationship.mentee.email}?subject=${subject}&body=${body}`, '_blank');
+  };
+
+  const handleChangeStatus = (relationship: Relationship, status: string) => {
+    setSelectedRelationship(relationship);
+    setNewStatus(status);
+    setStatusDialogOpen(true);
+  };
+
+  const handleEndRelationship = (relationship: Relationship) => {
+    setSelectedRelationship(relationship);
+    setEndReason('');
+    setEndDialogOpen(true);
+  };
+
+  const confirmStatusChange = async () => {
+    if (!selectedRelationship || !newStatus) return;
+
+    setProcessing(true);
+    try {
+      const response = await fetch(`/api/admin/mentors/relationships/${selectedRelationship.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (response.ok) {
+        setSuccessMessage(`Relationship status updated to ${newStatus}`);
+        setStatusDialogOpen(false);
+        fetchRelationships();
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Failed to update status');
+      }
+    } catch (err) {
+      setError('Failed to update relationship status');
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  const confirmEndRelationship = async () => {
+    if (!selectedRelationship) return;
+
+    setProcessing(true);
+    try {
+      const response = await fetch(`/api/admin/mentors/relationships/${selectedRelationship.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          status: 'completed',
+          endReason: endReason || 'Ended by admin'
+        }),
+      });
+
+      if (response.ok) {
+        setSuccessMessage('Relationship ended successfully');
+        setEndDialogOpen(false);
+        fetchRelationships();
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Failed to end relationship');
+      }
+    } catch (err) {
+      setError('Failed to end relationship');
+    } finally {
+      setProcessing(false);
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8 space-y-6">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
@@ -200,113 +312,75 @@ export default function MentorRelationshipsPage() {
             <RefreshCw className={cn("w-4 h-4 mr-2", loading && "animate-spin")} />
             Refresh
           </Button>
-          <Button variant="outline">
-            <Download className="w-4 h-4 mr-2" />
-            Export Report
-          </Button>
-          <Button variant="default">
-            <Link2 className="w-4 h-4 mr-2" />
-            New Pairing
-          </Button>
         </div>
       </div>
+
+      {/* Success Message */}
+      {successMessage && (
+        <Card className="border-green-200 bg-green-50">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 text-green-600">
+              <CheckCircle className="w-5 h-5" />
+              <span>{successMessage}</span>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Error Message */}
       {error && (
         <Card className="border-red-200 bg-red-50">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-red-600">
-              <AlertCircle className="w-5 h-5" />
-              <span>{error}</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-red-600">
+                <AlertCircle className="w-5 h-5" />
+                <span>{error}</span>
+              </div>
+              <Button variant="ghost" size="sm" onClick={() => setError(null)}>
+                <X className="w-4 h-4" />
+              </Button>
             </div>
           </CardContent>
         </Card>
       )}
 
       {/* Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-6">
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Active</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <Skeleton className="h-8 w-20" />
-            ) : (
-              <>
-                <p className="text-2xl font-bold">{stats.active}</p>
-                <p className="text-xs text-muted-foreground mt-2">{stats.total} total relationships</p>
-              </>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">At Risk</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <Skeleton className="h-8 w-20" />
-            ) : (
-              <>
-                <p className="text-2xl font-bold text-yellow-600">{stats.atRisk}</p>
-                <p className="text-xs text-muted-foreground mt-2">Need attention</p>
-              </>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Completed</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <Skeleton className="h-8 w-20" />
-            ) : (
-              <>
-                <p className="text-2xl font-bold text-blue-600">{stats.completed}</p>
-                <p className="text-xs text-muted-foreground mt-2">Successfully finished</p>
-              </>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Satisfaction</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <Skeleton className="h-8 w-20" />
-            ) : (
-              <>
-                <div className="flex items-center gap-2">
-                  <p className="text-2xl font-bold">{stats.avgSatisfaction || 'N/A'}</p>
-                  {stats.avgSatisfaction > 0 && <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />}
-                </div>
-                <p className="text-xs text-muted-foreground mt-2">Out of 5.0</p>
-              </>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Meetings</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <Skeleton className="h-8 w-20" />
-            ) : (
-              <>
-                <p className="text-2xl font-bold">{stats.totalMeetings}</p>
-                <p className="text-xs text-muted-foreground mt-2">Completed sessions</p>
-              </>
-            )}
-          </CardContent>
-        </Card>
+      <div className="flex flex-wrap items-center gap-6 text-sm">
+        <div className="flex items-center gap-2">
+          <Clock className="h-4 w-4 text-orange-600" />
+          <span className="font-bold text-lg">{stats.pending}</span>
+          <span className="text-muted-foreground">Pending</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <CheckCircle className="h-4 w-4 text-green-600" />
+          <span className="font-bold text-lg">{stats.active}</span>
+          <span className="text-muted-foreground">Active</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <AlertCircle className="h-4 w-4 text-yellow-600" />
+          <span className="font-bold text-lg">{stats.atRisk}</span>
+          <span className="text-muted-foreground">At Risk</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Pause className="h-4 w-4 text-gray-600" />
+          <span className="font-bold text-lg">{stats.paused}</span>
+          <span className="text-muted-foreground">Paused</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Target className="h-4 w-4 text-blue-600" />
+          <span className="font-bold text-lg">{stats.completed}</span>
+          <span className="text-muted-foreground">Completed</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Star className="h-4 w-4 text-yellow-500" />
+          <span className="font-bold text-lg">{stats.avgSatisfaction || 'N/A'}</span>
+          <span className="text-muted-foreground">Avg Score</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Video className="h-4 w-4 text-purple-600" />
+          <span className="font-bold text-lg">{stats.totalMeetings}</span>
+          <span className="text-muted-foreground">Meetings</span>
+        </div>
       </div>
 
       {/* Filters */}
@@ -330,10 +404,12 @@ export default function MentorRelationshipsPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
                 <SelectItem value="active">Active</SelectItem>
                 <SelectItem value="at_risk">At Risk</SelectItem>
                 <SelectItem value="paused">Paused</SelectItem>
                 <SelectItem value="completed">Completed</SelectItem>
+                <SelectItem value="rejected">Rejected</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -343,7 +419,7 @@ export default function MentorRelationshipsPage() {
       {/* Relationships Table */}
       <Card>
         <CardHeader>
-          <CardTitle>Active Relationships</CardTitle>
+          <CardTitle>All Relationships</CardTitle>
           <CardDescription>
             {loading ? 'Loading...' : `${filteredRelationships.length} relationships found`}
           </CardDescription>
@@ -411,11 +487,6 @@ export default function MentorRelationshipsPage() {
                                 {relationship.mentor.mbtiType}
                               </Badge>
                             )}
-                            {relationship.mentor.yearsExperience && (
-                              <span className="text-xs text-muted-foreground">
-                                {relationship.mentor.yearsExperience}y exp
-                              </span>
-                            )}
                           </div>
                         </div>
                       </div>
@@ -448,11 +519,6 @@ export default function MentorRelationshipsPage() {
                               <Badge variant="outline" className="text-xs px-1 py-0 h-4">
                                 {relationship.mentee.mbtiType}
                               </Badge>
-                            )}
-                            {relationship.mentee.careerStage && (
-                              <span className="text-xs text-muted-foreground capitalize">
-                                {relationship.mentee.careerStage.replace(/_/g, ' ')}
-                              </span>
                             )}
                           </div>
                         </div>
@@ -531,27 +597,39 @@ export default function MentorRelationshipsPage() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleViewDetails(relationship)}>
                             <Eye className="w-4 h-4 mr-2" />
                             View Details
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <MessageSquare className="w-4 h-4 mr-2" />
-                            Send Message
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <FileText className="w-4 h-4 mr-2" />
-                            View Reports
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <Edit className="w-4 h-4 mr-2" />
-                            Edit Pairing
+                          <DropdownMenuItem onClick={() => handleSendMessage(relationship)}>
+                            <Mail className="w-4 h-4 mr-2" />
+                            Send Email
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-red-600">
-                            <Trash2 className="w-4 h-4 mr-2" />
-                            End Relationship
-                          </DropdownMenuItem>
+                          {(relationship.status === 'active' || relationship.status === 'at_risk' || relationship.status === 'pending') && (
+                            <DropdownMenuItem onClick={() => handleChangeStatus(relationship, 'paused')}>
+                              <Pause className="w-4 h-4 mr-2" />
+                              Pause Relationship
+                            </DropdownMenuItem>
+                          )}
+                          {relationship.status === 'paused' && (
+                            <DropdownMenuItem onClick={() => handleChangeStatus(relationship, 'active')}>
+                              <Play className="w-4 h-4 mr-2" />
+                              Resume Relationship
+                            </DropdownMenuItem>
+                          )}
+                          {relationship.status !== 'completed' && relationship.status !== 'rejected' && (
+                            <>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem
+                                className="text-red-600"
+                                onClick={() => handleEndRelationship(relationship)}
+                              >
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                End Relationship
+                              </DropdownMenuItem>
+                            </>
+                          )}
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
@@ -563,6 +641,273 @@ export default function MentorRelationshipsPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* View Details Dialog */}
+      <Dialog open={detailsDialogOpen} onOpenChange={setDetailsDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Relationship Details</DialogTitle>
+            <DialogDescription>
+              View complete information about this mentorship relationship
+            </DialogDescription>
+          </DialogHeader>
+          {selectedRelationship && (
+            <div className="space-y-6">
+              {/* Mentor Info */}
+              <div>
+                <h4 className="font-semibold text-sm mb-3 text-purple-700">Mentor</h4>
+                <div className="flex items-start gap-4 p-4 bg-purple-50 rounded-lg">
+                  <Avatar className="w-12 h-12">
+                    <AvatarImage src={selectedRelationship.mentor.avatar || ''} />
+                    <AvatarFallback>
+                      {selectedRelationship.mentor.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 space-y-1">
+                    <p className="font-medium">{selectedRelationship.mentor.name}</p>
+                    <p className="text-sm text-muted-foreground">{selectedRelationship.mentor.email}</p>
+                    {(selectedRelationship.mentor.jobTitle || selectedRelationship.mentor.company) && (
+                      <p className="text-sm">
+                        {selectedRelationship.mentor.jobTitle}
+                        {selectedRelationship.mentor.jobTitle && selectedRelationship.mentor.company && ' @ '}
+                        {selectedRelationship.mentor.company}
+                      </p>
+                    )}
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {selectedRelationship.mentor.city && (
+                        <Badge variant="outline" className="text-xs">
+                          <MapPin className="w-3 h-3 mr-1" />
+                          {selectedRelationship.mentor.city}
+                        </Badge>
+                      )}
+                      {selectedRelationship.mentor.mbtiType && (
+                        <Badge variant="outline" className="text-xs">
+                          {selectedRelationship.mentor.mbtiType}
+                        </Badge>
+                      )}
+                      {selectedRelationship.mentor.yearsExperience && (
+                        <Badge variant="outline" className="text-xs">
+                          {selectedRelationship.mentor.yearsExperience} years exp
+                        </Badge>
+                      )}
+                    </div>
+                    {selectedRelationship.mentor.expertise.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {selectedRelationship.mentor.expertise.map((skill, i) => (
+                          <Badge key={i} variant="secondary" className="text-xs">{skill}</Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Mentee Info */}
+              <div>
+                <h4 className="font-semibold text-sm mb-3 text-blue-700">Mentee</h4>
+                <div className="flex items-start gap-4 p-4 bg-blue-50 rounded-lg">
+                  <Avatar className="w-12 h-12">
+                    <AvatarImage src={selectedRelationship.mentee.avatar || ''} />
+                    <AvatarFallback>
+                      {selectedRelationship.mentee.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 space-y-1">
+                    <p className="font-medium">{selectedRelationship.mentee.name}</p>
+                    <p className="text-sm text-muted-foreground">{selectedRelationship.mentee.email}</p>
+                    {(selectedRelationship.mentee.jobTitle || selectedRelationship.mentee.industry) && (
+                      <p className="text-sm">
+                        {selectedRelationship.mentee.jobTitle}
+                        {selectedRelationship.mentee.jobTitle && selectedRelationship.mentee.industry && ' in '}
+                        {selectedRelationship.mentee.industry}
+                      </p>
+                    )}
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {selectedRelationship.mentee.city && (
+                        <Badge variant="outline" className="text-xs">
+                          <MapPin className="w-3 h-3 mr-1" />
+                          {selectedRelationship.mentee.city}
+                        </Badge>
+                      )}
+                      {selectedRelationship.mentee.mbtiType && (
+                        <Badge variant="outline" className="text-xs">
+                          {selectedRelationship.mentee.mbtiType}
+                        </Badge>
+                      )}
+                      {selectedRelationship.mentee.careerStage && (
+                        <Badge variant="outline" className="text-xs capitalize">
+                          {selectedRelationship.mentee.careerStage.replace(/_/g, ' ')}
+                        </Badge>
+                      )}
+                    </div>
+                    {selectedRelationship.mentee.learningGoals.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {selectedRelationship.mentee.learningGoals.map((goal, i) => (
+                          <Badge key={i} variant="secondary" className="text-xs">{goal}</Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* Relationship Stats */}
+              <div>
+                <h4 className="font-semibold text-sm mb-3">Relationship Status</h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-3 bg-gray-50 rounded-lg">
+                    <p className="text-xs text-muted-foreground">Status</p>
+                    <div className="mt-1">{getStatusBadge(selectedRelationship.status)}</div>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded-lg">
+                    <p className="text-xs text-muted-foreground">Progress</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <Progress value={selectedRelationship.progress} className="h-2 flex-1" />
+                      <span className="text-sm font-medium">{selectedRelationship.progress}%</span>
+                    </div>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded-lg">
+                    <p className="text-xs text-muted-foreground">Sessions</p>
+                    <p className="text-sm font-medium mt-1">
+                      {selectedRelationship.sessionsCompleted} / {selectedRelationship.totalSessions}
+                    </p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded-lg">
+                    <p className="text-xs text-muted-foreground">Satisfaction</p>
+                    <p className="text-sm font-medium mt-1">
+                      {selectedRelationship.satisfactionScore ?? 'N/A'}
+                    </p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded-lg">
+                    <p className="text-xs text-muted-foreground">Started</p>
+                    <p className="text-sm font-medium mt-1">
+                      {selectedRelationship.startedAt
+                        ? new Date(selectedRelationship.startedAt).toLocaleDateString()
+                        : 'Not started'}
+                    </p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded-lg">
+                    <p className="text-xs text-muted-foreground">Meeting Frequency</p>
+                    <p className="text-sm font-medium mt-1">
+                      {selectedRelationship.meetingFrequency || 'Not set'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Goals */}
+              {selectedRelationship.goals.length > 0 && (
+                <div>
+                  <h4 className="font-semibold text-sm mb-3">Relationship Goals</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedRelationship.goals.map((goal, i) => (
+                      <Badge key={i} variant="outline">{goal}</Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDetailsDialogOpen(false)}>
+              Close
+            </Button>
+            {selectedRelationship && (
+              <Button onClick={() => handleSendMessage(selectedRelationship)}>
+                <Mail className="w-4 h-4 mr-2" />
+                Send Email
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Change Status Dialog */}
+      <Dialog open={statusDialogOpen} onOpenChange={setStatusDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {newStatus === 'paused' ? 'Pause Relationship' : 'Resume Relationship'}
+            </DialogTitle>
+            <DialogDescription>
+              {newStatus === 'paused'
+                ? 'This will temporarily pause the mentorship relationship. Both parties will be notified.'
+                : 'This will resume the mentorship relationship. Both parties will be notified.'}
+            </DialogDescription>
+          </DialogHeader>
+          {selectedRelationship && (
+            <div className="py-4">
+              <div className="flex items-center gap-4 p-3 bg-muted rounded-lg">
+                <div className="flex-1">
+                  <p className="font-medium">{selectedRelationship.mentor.name}</p>
+                  <p className="text-sm text-muted-foreground">Mentor</p>
+                </div>
+                <span className="text-muted-foreground">↔</span>
+                <div className="flex-1 text-right">
+                  <p className="font-medium">{selectedRelationship.mentee.name}</p>
+                  <p className="text-sm text-muted-foreground">Mentee</p>
+                </div>
+              </div>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setStatusDialogOpen(false)} disabled={processing}>
+              Cancel
+            </Button>
+            <Button onClick={confirmStatusChange} disabled={processing}>
+              {processing ? 'Processing...' : newStatus === 'paused' ? 'Pause' : 'Resume'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* End Relationship Dialog */}
+      <Dialog open={endDialogOpen} onOpenChange={setEndDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>End Relationship</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to end this mentorship relationship? This action will mark it as completed.
+            </DialogDescription>
+          </DialogHeader>
+          {selectedRelationship && (
+            <div className="space-y-4 py-4">
+              <div className="flex items-center gap-4 p-3 bg-muted rounded-lg">
+                <div className="flex-1">
+                  <p className="font-medium">{selectedRelationship.mentor.name}</p>
+                  <p className="text-sm text-muted-foreground">Mentor</p>
+                </div>
+                <span className="text-muted-foreground">↔</span>
+                <div className="flex-1 text-right">
+                  <p className="font-medium">{selectedRelationship.mentee.name}</p>
+                  <p className="text-sm text-muted-foreground">Mentee</p>
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="end-reason">Reason (optional)</Label>
+                <Textarea
+                  id="end-reason"
+                  placeholder="Enter a reason for ending this relationship..."
+                  value={endReason}
+                  onChange={(e) => setEndReason(e.target.value)}
+                  className="mt-2"
+                  rows={3}
+                />
+              </div>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEndDialogOpen(false)} disabled={processing}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmEndRelationship} disabled={processing}>
+              {processing ? 'Processing...' : 'End Relationship'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
