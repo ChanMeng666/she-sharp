@@ -7,10 +7,8 @@ import {
   Calendar,
   Users,
   BookOpen,
-  Bell,
   UserCircle,
   Heart,
-  FileText,
   BarChart3,
   Search,
   Award,
@@ -49,8 +47,6 @@ const searchItems = [
 
   // Account
   { group: "Account", icon: UserCircle, label: "Account Settings", url: "/dashboard/account" },
-  { group: "Account", icon: Bell, label: "Notifications", url: "/dashboard/notifications" },
-  { group: "Account", icon: FileText, label: "Activity Log", url: "/dashboard/activity" },
 
   // Admin
   { group: "Admin", icon: BarChart3, label: "Admin Dashboard", url: "/dashboard/admin", adminOnly: true },

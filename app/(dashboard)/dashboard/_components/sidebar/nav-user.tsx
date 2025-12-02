@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { EllipsisVertical, CircleUser, Bell, LogOut, Activity } from "lucide-react";
+import { EllipsisVertical, CircleUser, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -100,18 +100,6 @@ export function NavUser() {
                 <Link href="/dashboard/account">
                   <CircleUser />
                   Account Settings
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard/notifications">
-                  <Bell />
-                  Notifications
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard/activity">
-                  <Activity />
-                  Activity Log
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
