@@ -38,7 +38,7 @@ export const GET = withRoles(
           task: 'Review mentor applications',
           count: pendingMentors,
           priority: 'high' as const,
-          href: '/dashboard/admin/mentors/applications'
+          href: '/dashboard/admin/users?application=pending'
         },
         {
           task: 'Review AI match suggestions',

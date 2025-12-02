@@ -150,7 +150,7 @@ export const adminSidebarItems: NavGroup[] = [
         icon: GraduationCap,
         subItems: [
           { title: "AI Matching", url: "/dashboard/admin/matching", icon: BrainCircuit },
-          { title: "Mentor Applications", url: "/dashboard/admin/mentors/applications", icon: UserPlus },
+          { title: "Mentor Applications", url: "/dashboard/admin/users?application=pending", icon: UserPlus },
           { title: "Active Relationships", url: "/dashboard/admin/mentors/relationships", icon: Users },
           { title: "Meeting Analytics", url: "/dashboard/admin/mentors/meetings", icon: BarChart3 },
         ],

@@ -1,23 +1,23 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   Search,
-  Filter,
   MoreVertical,
-  UserCheck,
   UserX,
   Mail,
   Download,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   Edit,
   Trash2,
   Shield,
   Eye,
   MapPin,
   Briefcase,
-  Building2,
   GraduationCap,
   CheckCircle,
   Clock,
@@ -25,10 +25,12 @@ import {
   Users,
   Star,
   MessageSquare,
-  Award,
   Ban,
   RefreshCw,
-  AlertCircle,
+  UserPlus,
+  Link as LinkIcon,
+  Check,
+  X,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -48,6 +50,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
   Table,
@@ -58,7 +63,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -67,47 +71,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 
-// Verified Mentor interfaces
-interface VerifiedMentor {
-  id: number;
-  userId: number;
-  name: string;
-  email: string;
-  phone: string | null;
-  avatar: string | null;
-  company: string | null;
-  jobTitle: string | null;
-  expertiseAreas: string[];
-  yearsExperience: number | null;
-  bio: string | null;
-  linkedinUrl: string | null;
-  isAcceptingMentees: boolean;
-  maxMentees: number;
-  currentMenteesCount: number;
-  verifiedAt: string;
-  createdAt: string;
-  activeMentees: number;
-  totalMentees: number;
-  totalSessions: number;
-  avgRating: number | null;
-  status: 'active' | 'busy' | 'paused';
-  city: string | null;
-  mbtiType: string | null;
-  preferredIndustries: string[];
-  communicationPreference: string | null;
-  monthlyAvailability: number | null;
-}
-
-interface MentorStats {
-  totalVerified: number;
-  totalActive: number;
-  totalSessions: number;
-  avgRating: number;
-}
-
+// Unified User interface matching the new API response
 interface MentorInfo {
   isVerified: boolean;
   verifiedAt: string | null;
@@ -117,6 +94,12 @@ interface MentorInfo {
   yearsExperience: number | null;
   expertise: string[];
   bio: string | null;
+  linkedinUrl: string | null;
+  activeMentees: number;
+  totalMentees: number;
+  totalSessions: number;
+  avgRating: number | null;
+  status: 'active' | 'busy' | 'paused';
 }
 
 interface MenteeInfo {
@@ -126,89 +109,103 @@ interface MenteeInfo {
   bio: string | null;
 }
 
-interface User {
+interface ApplicationInfo {
   id: number;
+  type: 'mentor' | 'mentee';
+  status: 'pending' | 'under_review';
+  submittedAt: string | null;
+  yearsExperience?: number;
+  expertise?: string[];
+  availabilityHoursPerMonth?: number;
+  bio?: string;
+  linkedinUrl?: string;
+  reviewNotes?: string;
+  maxMentees?: number;
+}
+
+interface UnifiedUser {
+  id: number;
+  recordType: 'registered_user' | 'public_application';
+  recordId: string;
+  userId: number | null;
+  applicationId: number | null;
   name: string | null;
   email: string;
   image: string | null;
   phone: string | null;
   roles: string[];
   membershipTier: 'free' | 'basic' | 'premium';
-  status: 'active' | 'inactive' | 'suspended';
+  accountStatus: 'active' | 'inactive' | 'suspended' | 'pending_registration';
   createdAt: string;
   lastLoginAt: string | null;
-  // Extended info
   company: string | null;
   jobTitle: string | null;
   city: string | null;
   mbtiType: string | null;
   applicationStatus: 'none' | 'pending' | 'approved' | 'rejected';
+  applicationInfo: ApplicationInfo | null;
   mentorInfo: MentorInfo | null;
   menteeInfo: MenteeInfo | null;
 }
 
-// Role configuration
-const roleConfig = {
-  admin: { name: 'Admin', icon: Shield, color: 'bg-muted text-foreground' },
-  mentor: { name: 'Mentor', icon: GraduationCap, color: 'bg-green-100 text-green-700' },
-  mentee: { name: 'Mentee', icon: Users, color: 'bg-blue-100 text-blue-700' },
-};
+interface Stats {
+  totalUsers: number;
+  totalPublicApplications: number;
+  pendingApplications: number;
+  byRole: { admin: number; mentor: number; mentee: number };
+  byStatus: { active: number; inactive: number; suspended: number; pending_registration: number };
+}
 
 export default function UserManagement() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+  // Read URL search params for initial filter values
+  const searchParams = useSearchParams();
+  const initialRole = searchParams.get('role') || 'all';
+  const initialStatus = searchParams.get('status') || 'all';
+  const initialMembership = searchParams.get('membership') || 'all';
+  const initialApplication = searchParams.get('application') || 'all';
+
+  const [users, setUsers] = useState<UnifiedUser[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [roleFilter, setRoleFilter] = useState<string>('all');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [membershipFilter, setMembershipFilter] = useState<string>('all');
+  const [roleFilter, setRoleFilter] = useState<string>(initialRole);
+  const [statusFilter, setStatusFilter] = useState<string>(initialStatus);
+  const [membershipFilter, setMembershipFilter] = useState<string>(initialMembership);
+  const [applicationFilter, setApplicationFilter] = useState<string>(initialApplication);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState<'name' | 'email' | 'createdAt'>('createdAt');
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [sortBy, setSortBy] = useState<string>('createdAt');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [updatingRole, setUpdatingRole] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState('users');
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
 
-  // Verified Mentors state
-  const [verifiedMentors, setVerifiedMentors] = useState<VerifiedMentor[]>([]);
-  const [mentorStats, setMentorStats] = useState<MentorStats>({ totalVerified: 0, totalActive: 0, totalSessions: 0, avgRating: 0 });
-  const [mentorsLoading, setMentorsLoading] = useState(false);
-  const [mentorsError, setMentorsError] = useState<string | null>(null);
-  const [mentorSearchQuery, setMentorSearchQuery] = useState('');
-  const [mentorStatusFilter, setMentorStatusFilter] = useState('all');
+  // Review dialog state
+  const [reviewDialogOpen, setReviewDialogOpen] = useState(false);
+  const [reviewAction, setReviewAction] = useState<'approve' | 'reject'>('approve');
+  const [reviewNotes, setReviewNotes] = useState('');
+  const [reviewingUser, setReviewingUser] = useState<UnifiedUser | null>(null);
+  const [submittingReview, setSubmittingReview] = useState(false);
+
+  // User action dialog state
+  const [actionDialogOpen, setActionDialogOpen] = useState(false);
+  const [actionType, setActionType] = useState<'suspend' | 'delete' | null>(null);
+  const [actionUser, setActionUser] = useState<UnifiedUser | null>(null);
+  const [processingAction, setProcessingAction] = useState(false);
+
+  // Bulk action state
+  const [bulkActionLoading, setBulkActionLoading] = useState(false);
+
+  // Edit user dialog state
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState<UnifiedUser | null>(null);
+  const [editFormData, setEditFormData] = useState({ name: '', phone: '' });
+  const [savingEdit, setSavingEdit] = useState(false);
 
   const itemsPerPage = 10;
 
-  useEffect(() => {
-    fetchUsers();
-  }, [currentPage, roleFilter, statusFilter, membershipFilter, sortBy, sortOrder]);
-
-  // Fetch verified mentors when tab changes
-  const fetchVerifiedMentors = useCallback(async () => {
-    setMentorsLoading(true);
-    setMentorsError(null);
-    try {
-      const response = await fetch('/api/admin/mentors/verified?limit=100');
-      if (!response.ok) {
-        throw new Error('Failed to fetch verified mentors');
-      }
-      const data = await response.json();
-      setVerifiedMentors(data.mentors || []);
-      setMentorStats(data.stats || { totalVerified: 0, totalActive: 0, totalSessions: 0, avgRating: 0 });
-    } catch (err) {
-      setMentorsError(err instanceof Error ? err.message : 'An error occurred');
-    } finally {
-      setMentorsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (activeTab === 'mentors' && verifiedMentors.length === 0) {
-      fetchVerifiedMentors();
-    }
-  }, [activeTab, verifiedMentors.length, fetchVerifiedMentors]);
-
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams({
@@ -221,6 +218,7 @@ export default function UserManagement() {
       if (roleFilter !== 'all') params.append('role', roleFilter);
       if (statusFilter !== 'all') params.append('status', statusFilter);
       if (membershipFilter !== 'all') params.append('membership', membershipFilter);
+      if (applicationFilter !== 'all') params.append('application', applicationFilter);
       if (searchQuery) params.append('search', searchQuery);
 
       const response = await fetch(`/api/admin/users?${params}`);
@@ -229,6 +227,8 @@ export default function UserManagement() {
         const data = await response.json();
         setUsers(data.users || []);
         setTotalPages(data.totalPages || 1);
+        setTotalCount(data.total || 0);
+        setStats(data.stats || null);
       }
     } catch (error) {
       console.error('Failed to fetch users:', error);
@@ -237,7 +237,24 @@ export default function UserManagement() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, roleFilter, statusFilter, membershipFilter, applicationFilter, sortBy, sortOrder, searchQuery]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
+  // Sync URL params to state when they change
+  useEffect(() => {
+    const urlRole = searchParams.get('role') || 'all';
+    const urlStatus = searchParams.get('status') || 'all';
+    const urlMembership = searchParams.get('membership') || 'all';
+    const urlApplication = searchParams.get('application') || 'all';
+
+    if (urlRole !== roleFilter) setRoleFilter(urlRole);
+    if (urlStatus !== statusFilter) setStatusFilter(urlStatus);
+    if (urlMembership !== membershipFilter) setMembershipFilter(urlMembership);
+    if (urlApplication !== applicationFilter) setApplicationFilter(urlApplication);
+  }, [searchParams]);
 
   // Handle role toggle
   const handleRoleToggle = async (userId: number, roleType: string, currentlyHasRole: boolean) => {
@@ -252,7 +269,7 @@ export default function UserManagement() {
       if (response.ok) {
         // Update local state
         setUsers(prev => prev.map(user => {
-          if (user.id === userId) {
+          if (user.id === userId && user.recordType === 'registered_user') {
             const newRoles = currentlyHasRole
               ? user.roles.filter(r => r !== roleType)
               : [...user.roles, roleType];
@@ -268,40 +285,245 @@ export default function UserManagement() {
     }
   };
 
+  // Handle application review
+  const openReviewDialog = (user: UnifiedUser, action: 'approve' | 'reject') => {
+    setReviewingUser(user);
+    setReviewAction(action);
+    setReviewNotes('');
+    setReviewDialogOpen(true);
+  };
+
+  const handleReviewSubmit = async () => {
+    if (!reviewingUser?.applicationInfo) return;
+
+    setSubmittingReview(true);
+    try {
+      const response = await fetch(`/api/admin/mentors/applications/${reviewingUser.applicationInfo.id}/review`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: reviewAction,
+          notes: reviewNotes,
+        }),
+      });
+
+      if (response.ok) {
+        setReviewDialogOpen(false);
+        fetchUsers(); // Refresh the list
+      } else {
+        const error = await response.json();
+        alert(error.message || 'Failed to process application');
+      }
+    } catch (error) {
+      console.error('Failed to process application:', error);
+      alert('Failed to process application');
+    } finally {
+      setSubmittingReview(false);
+    }
+  };
+
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedUsers(users.map(u => u.id));
+      setSelectedUsers(users.map(u => u.recordId));
     } else {
       setSelectedUsers([]);
     }
   };
 
-  const handleSelectUser = (userId: number, checked: boolean) => {
+  const handleSelectUser = (recordId: string, checked: boolean) => {
     if (checked) {
-      setSelectedUsers([...selectedUsers, userId]);
+      setSelectedUsers([...selectedUsers, recordId]);
     } else {
-      setSelectedUsers(selectedUsers.filter(id => id !== userId));
+      setSelectedUsers(selectedUsers.filter(id => id !== recordId));
     }
+  };
+
+  const toggleRowExpansion = (recordId: string) => {
+    const newExpanded = new Set(expandedRows);
+    if (newExpanded.has(recordId)) {
+      newExpanded.delete(recordId);
+    } else {
+      newExpanded.add(recordId);
+    }
+    setExpandedRows(newExpanded);
   };
 
   const handleBulkAction = async (action: string) => {
     if (selectedUsers.length === 0) return;
 
-    switch (action) {
-      case 'export':
-        console.log('Exporting users:', selectedUsers);
-        break;
-      case 'email':
-        console.log('Sending email to:', selectedUsers);
-        break;
-      case 'suspend':
-        console.log('Suspending users:', selectedUsers);
-        break;
-      case 'delete':
-        if (confirm(`Are you sure you want to delete ${selectedUsers.length} users?`)) {
-          console.log('Deleting users:', selectedUsers);
+    setBulkActionLoading(true);
+    try {
+      switch (action) {
+        case 'export': {
+          const response = await fetch('/api/admin/users/bulk', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'export', recordIds: selectedUsers }),
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            // Create CSV and download
+            const csvContent = convertToCSV(result.data);
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `users_export_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+          }
+          break;
         }
-        break;
+        case 'suspend': {
+          if (!confirm(`Are you sure you want to suspend ${selectedUsers.length} user(s)?`)) {
+            break;
+          }
+          const response = await fetch('/api/admin/users/bulk', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'suspend', recordIds: selectedUsers }),
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            alert(result.message);
+            fetchUsers();
+            setSelectedUsers([]);
+          } else {
+            const error = await response.json();
+            alert(error.error || 'Failed to suspend users');
+          }
+          break;
+        }
+        case 'delete': {
+          if (!confirm(`Are you sure you want to delete ${selectedUsers.length} user(s)? This action cannot be undone.`)) {
+            break;
+          }
+          const response = await fetch('/api/admin/users/bulk', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'delete', recordIds: selectedUsers }),
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            alert(result.message);
+            fetchUsers();
+            setSelectedUsers([]);
+          } else {
+            const error = await response.json();
+            alert(error.error || 'Failed to delete users');
+          }
+          break;
+        }
+      }
+    } catch (error) {
+      console.error('Bulk action error:', error);
+      alert('An error occurred while performing the action');
+    } finally {
+      setBulkActionLoading(false);
+    }
+  };
+
+  // Convert data to CSV format
+  const convertToCSV = (data: any[]) => {
+    if (data.length === 0) return '';
+    const headers = Object.keys(data[0]);
+    const csvRows = [headers.join(',')];
+    for (const row of data) {
+      const values = headers.map(h => {
+        const val = row[h];
+        return typeof val === 'string' ? `"${val.replace(/"/g, '""')}"` : val;
+      });
+      csvRows.push(values.join(','));
+    }
+    return csvRows.join('\n');
+  };
+
+  // Open user action dialog
+  const openUserActionDialog = (user: UnifiedUser, action: 'suspend' | 'delete') => {
+    setActionUser(user);
+    setActionType(action);
+    setActionDialogOpen(true);
+  };
+
+  // Open edit user dialog
+  const openEditDialog = (user: UnifiedUser) => {
+    setEditingUser(user);
+    setEditFormData({
+      name: user.name || '',
+      phone: user.phone || '',
+    });
+    setEditDialogOpen(true);
+  };
+
+  // Handle edit user save
+  const handleEditSave = async () => {
+    if (!editingUser) return;
+
+    setSavingEdit(true);
+    try {
+      const response = await fetch(`/api/admin/users/${editingUser.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: editFormData.name,
+          phone: editFormData.phone,
+        }),
+      });
+
+      if (response.ok) {
+        setEditDialogOpen(false);
+        fetchUsers();
+      } else {
+        const error = await response.json();
+        alert(error.error || 'Failed to update user');
+      }
+    } catch (error) {
+      console.error('Edit user error:', error);
+      alert('An error occurred while updating user');
+    } finally {
+      setSavingEdit(false);
+    }
+  };
+
+  // Handle individual user suspend/delete
+  const handleUserAction = async () => {
+    if (!actionUser || !actionType) return;
+
+    setProcessingAction(true);
+    try {
+      if (actionType === 'suspend') {
+        const response = await fetch(`/api/admin/users/${actionUser.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'suspend' }),
+        });
+
+        if (response.ok) {
+          setActionDialogOpen(false);
+          fetchUsers();
+        } else {
+          const error = await response.json();
+          alert(error.error || 'Failed to suspend user');
+        }
+      } else if (actionType === 'delete') {
+        const response = await fetch(`/api/admin/users/${actionUser.id}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          setActionDialogOpen(false);
+          fetchUsers();
+        } else {
+          const error = await response.json();
+          alert(error.error || 'Failed to delete user');
+        }
+      }
+    } catch (error) {
+      console.error('User action error:', error);
+      alert('An error occurred');
+    } finally {
+      setProcessingAction(false);
     }
   };
 
@@ -341,6 +563,21 @@ export default function UserManagement() {
     }
   };
 
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'active':
+        return <Badge className="bg-green-100 text-green-700 text-xs">Active</Badge>;
+      case 'inactive':
+        return <Badge className="bg-accent text-foreground text-xs">Inactive</Badge>;
+      case 'suspended':
+        return <Badge className="bg-red-100 text-red-700 text-xs">Suspended</Badge>;
+      case 'pending_registration':
+        return <Badge className="bg-yellow-100 text-yellow-700 text-xs"><UserPlus className="w-3 h-3 mr-1" />Pending Registration</Badge>;
+      default:
+        return null;
+    }
+  };
+
   const getApplicationBadge = (status: string) => {
     switch (status) {
       case 'approved':
@@ -354,14 +591,6 @@ export default function UserManagement() {
     }
   };
 
-  // Calculate role stats
-  const roleStats = {
-    admin: users.filter(u => u.roles.includes('admin')).length,
-    mentor: users.filter(u => u.roles.includes('mentor')).length,
-    mentee: users.filter(u => u.roles.includes('mentee')).length,
-  };
-
-  // Verified mentors helper functions
   const getMentorStatusBadge = (status: string) => {
     const variants = {
       active: { text: 'Active', className: 'bg-green-100 text-green-800' },
@@ -369,955 +598,822 @@ export default function UserManagement() {
       paused: { text: 'Paused', className: 'bg-accent text-foreground' },
     };
     const variant = variants[status as keyof typeof variants] || variants.paused;
-    return <Badge className={variant.className}>{variant.text}</Badge>;
+    return <Badge className={cn("text-xs", variant.className)}>{variant.text}</Badge>;
   };
 
-  // Filter verified mentors
-  const filteredMentors = verifiedMentors.filter(mentor => {
-    const searchLower = mentorSearchQuery.toLowerCase();
-    const matchesSearch = mentorSearchQuery === '' ||
-      mentor.name.toLowerCase().includes(searchLower) ||
-      mentor.email.toLowerCase().includes(searchLower) ||
-      (mentor.company?.toLowerCase().includes(searchLower) ?? false) ||
-      (mentor.city?.toLowerCase().includes(searchLower) ?? false) ||
-      (mentor.preferredIndustries || []).some(ind => ind.toLowerCase().includes(searchLower)) ||
-      (mentor.expertiseAreas || []).some(skill => skill.toLowerCase().includes(searchLower));
-    const matchesStatus = mentorStatusFilter === 'all' || mentor.status === mentorStatusFilter;
-    return matchesSearch && matchesStatus;
-  });
+  // Render expanded row content
+  const renderExpandedContent = (user: UnifiedUser) => (
+    <TableRow className="bg-muted/30">
+      <TableCell colSpan={8} className="p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Profile Details */}
+          <div className="space-y-3">
+            <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">Profile Details</h4>
+
+            {(user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio) && (
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Bio</p>
+                <p className="text-sm line-clamp-3">
+                  {user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio}
+                </p>
+              </div>
+            )}
+
+            {(user.mentorInfo?.expertise || user.applicationInfo?.expertise) && (
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Expertise</p>
+                <div className="flex flex-wrap gap-1">
+                  {(user.mentorInfo?.expertise || user.applicationInfo?.expertise || []).map((skill, idx) => (
+                    <Badge key={idx} variant="secondary" className="text-xs">{skill}</Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {(user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl) && (
+              <div className="flex items-center gap-2 text-sm">
+                <LinkIcon className="w-3 h-3 text-blue-600" />
+                <a
+                  href={user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline truncate"
+                >
+                  LinkedIn Profile
+                </a>
+              </div>
+            )}
+
+            {user.applicationInfo && (
+              <div className="pt-2 border-t">
+                <p className="text-xs text-muted-foreground mb-1">Application ({user.applicationInfo.type})</p>
+                <div className="space-y-1 text-sm">
+                  <p>Status: <Badge variant="outline" className="ml-1 text-xs">{user.applicationInfo.status}</Badge></p>
+                  {user.applicationInfo.submittedAt && (
+                    <p className="text-muted-foreground text-xs">
+                      Submitted: {new Date(user.applicationInfo.submittedAt).toLocaleDateString()}
+                    </p>
+                  )}
+                  {user.applicationInfo.availabilityHoursPerMonth && (
+                    <p className="text-muted-foreground text-xs">
+                      Availability: {user.applicationInfo.availabilityHoursPerMonth}h/month
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Metrics & Activity */}
+          <div className="space-y-3">
+            <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">Metrics & Activity</h4>
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">Joined</span>
+                <span>{new Date(user.createdAt).toLocaleDateString()}</span>
+              </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">Last Active</span>
+                <span>{user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}</span>
+              </div>
+            </div>
+
+            {user.mentorInfo && user.mentorInfo.isVerified && (
+              <div className="pt-2 border-t space-y-2">
+                <p className="text-xs text-muted-foreground mb-1">Mentor Metrics</p>
+                <div className="flex items-center gap-2 text-sm">
+                  <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                  <span className="font-medium">{user.mentorInfo.avgRating?.toFixed(1) || 'N/A'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Users className="w-4 h-4" />
+                  <span>{user.mentorInfo.activeMentees} active / {user.mentorInfo.totalMentees} total mentees</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <MessageSquare className="w-4 h-4" />
+                  <span>{user.mentorInfo.totalSessions} sessions</span>
+                </div>
+              </div>
+            )}
+
+            {user.menteeInfo && (
+              <div className="pt-2 border-t space-y-2">
+                <p className="text-xs text-muted-foreground mb-1">Mentee Info</p>
+                {user.menteeInfo.careerStage && (
+                  <p className="text-sm">Career Stage: <span className="capitalize">{user.menteeInfo.careerStage.replace(/_/g, ' ')}</span></p>
+                )}
+                {user.menteeInfo.currentIndustry && (
+                  <p className="text-sm text-muted-foreground">Industry: {user.menteeInfo.currentIndustry}</p>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </TableCell>
+    </TableRow>
+  );
 
   return (
     <TooltipProvider>
-    <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-      <TabsList>
-        <TabsTrigger value="users">All Users</TabsTrigger>
-        <TabsTrigger value="roles">Role Management</TabsTrigger>
-        <TabsTrigger value="mentors">Verified Mentors</TabsTrigger>
-      </TabsList>
-
-      {/* All Users Tab */}
-      <TabsContent value="users">
-    <Card>
-      <CardHeader>
-        <div className="flex justify-between items-center">
-          <CardTitle>All Users</CardTitle>
-          <div className="flex items-center space-x-2">
-            <span className="text-sm text-muted-foreground">
-              {selectedUsers.length > 0 && `${selectedUsers.length} selected`}
-            </span>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        {/* Filters and Search */}
-        <div className="flex flex-col gap-4 mb-6">
-          <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
-            <Input
-              type="search"
-              placeholder="Search by name or email..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && fetchUsers()}
-              className="pl-10"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:gap-2 gap-2">
-            <Select value={roleFilter} onValueChange={setRoleFilter}>
-              <SelectTrigger className="w-full lg:w-32">
-                <SelectValue placeholder="All Roles" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Roles</SelectItem>
-                <SelectItem value="admin">Admin</SelectItem>
-                <SelectItem value="mentor">Mentor</SelectItem>
-                <SelectItem value="mentee">Mentee</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full lg:w-32">
-                <SelectValue placeholder="All Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-                <SelectItem value="suspended">Suspended</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={membershipFilter} onValueChange={setMembershipFilter}>
-              <SelectTrigger className="w-full lg:w-32">
-                <SelectValue placeholder="All Tiers" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Tiers</SelectItem>
-                <SelectItem value="premium">Premium</SelectItem>
-                <SelectItem value="basic">Basic</SelectItem>
-                <SelectItem value="free">Free</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Button variant="outline" size="icon" className="col-span-2 md:col-span-1">
-              <Filter className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-
-        {/* Bulk Actions */}
-        {selectedUsers.length > 0 && (
-          <div className="flex items-center gap-2 mb-4 p-3 bg-muted rounded-lg">
-            <span className="text-sm font-medium text-foreground">
-              {selectedUsers.length} user{selectedUsers.length > 1 ? 's' : ''} selected
-            </span>
-            <div className="flex gap-2 ml-auto">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleBulkAction('export')}
-              >
-                <Download className="w-4 h-4 mr-1" />
-                Export
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleBulkAction('email')}
-              >
-                <Mail className="w-4 h-4 mr-1" />
-                Email
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="text-red-600 hover:text-red-700"
-                onClick={() => handleBulkAction('suspend')}
-              >
-                <UserX className="w-4 h-4 mr-1" />
-                Suspend
-              </Button>
-            </div>
+      <div className="space-y-4">
+        {/* Stats Cards */}
+        {stats && (
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <Card>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground">Total Users</p>
+                <p className="text-2xl font-bold">{stats.totalUsers}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground">Pending Applications</p>
+                <p className="text-2xl font-bold text-yellow-600">{stats.pendingApplications}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground">Mentors</p>
+                <p className="text-2xl font-bold text-green-600">{stats.byRole.mentor}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground">Mentees</p>
+                <p className="text-2xl font-bold text-blue-600">{stats.byRole.mentee}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground">Admins</p>
+                <p className="text-2xl font-bold">{stats.byRole.admin}</p>
+              </CardContent>
+            </Card>
           </div>
         )}
 
-        {/* Mobile Card View */}
-        <div className="block lg:hidden space-y-3">
-          {users.map((user) => (
-            <Card key={user.id} className="p-4">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-start space-x-3 flex-1">
-                  <Checkbox
-                    checked={selectedUsers.includes(user.id)}
-                    onCheckedChange={(checked) => handleSelectUser(user.id, checked as boolean)}
-                  />
-                  <Avatar className="w-12 h-12">
-                    <AvatarImage src={user.image || undefined} alt={user.name || ''} />
-                    <AvatarFallback className="bg-muted text-foreground">
-                      {getInitials(user.name)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-foreground truncate">{user.name || 'Unknown User'}</p>
-                    <p className="text-sm text-muted-foreground truncate">{user.email}</p>
-                    {(user.jobTitle || user.company) && (
-                      <p className="text-xs text-muted-foreground truncate mt-0.5">
-                        {user.jobTitle}{user.jobTitle && user.company ? ' @ ' : ''}{user.company}
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="icon">
-                      <MoreVertical className="w-4 h-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Eye className="w-4 h-4 mr-2" />
-                      View Details
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Edit className="w-4 h-4 mr-2" />
-                      Edit User
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Shield className="w-4 h-4 mr-2" />
-                      Manage Permissions
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Mail className="w-4 h-4 mr-2" />
-                      Send Email
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-red-600">
-                      <Trash2 className="w-4 h-4 mr-2" />
-                      Delete User
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-
-              <div className="space-y-2 text-sm">
-                {/* Location and MBTI */}
-                {(user.city || user.mbtiType) && (
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                    {user.city && (
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3" />
-                        {user.city}
-                      </span>
-                    )}
-                    {user.mbtiType && (
-                      <Badge variant="outline" className="text-xs px-1.5 py-0">
-                        {user.mbtiType}
-                      </Badge>
-                    )}
-                  </div>
-                )}
-
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Roles:</span>
-                  <div className="flex flex-wrap gap-1 justify-end">
-                    {user.roles.map((role) => (
-                      <Badge
-                        key={role}
-                        variant="secondary"
-                        className={cn('text-xs', getRoleBadgeColor(role))}
-                      >
-                        {role}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Application Status */}
-                {user.applicationStatus !== 'none' && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Application:</span>
-                    {getApplicationBadge(user.applicationStatus)}
-                  </div>
-                )}
-
-                {/* Mentor Info */}
-                {user.mentorInfo && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Mentor:</span>
-                    <div className="flex items-center gap-1">
-                      {user.mentorInfo.isVerified && (
-                        <CheckCircle className="w-3 h-3 text-green-600" />
-                      )}
-                      <span className="text-xs">
-                        {user.mentorInfo.currentMentees}/{user.mentorInfo.maxMentees} mentees
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {/* Mentee Info */}
-                {user.menteeInfo && user.menteeInfo.careerStage && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Career Stage:</span>
-                    <span className="text-xs capitalize">{user.menteeInfo.careerStage.replace(/_/g, ' ')}</span>
-                  </div>
-                )}
-
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Membership:</span>
-                  <Badge
-                    variant="secondary"
-                    className={cn('text-xs', getMembershipBadgeColor(user.membershipTier))}
-                  >
-                    {user.membershipTier}
-                  </Badge>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Status:</span>
-                  <Badge
-                    variant={user.status === 'active' ? 'default' : 'secondary'}
-                    className={cn(
-                      'text-xs',
-                      user.status === 'active' && 'bg-green-100 text-green-700',
-                      user.status === 'inactive' && 'bg-accent text-foreground',
-                      user.status === 'suspended' && 'bg-red-100 text-red-700'
-                    )}
-                  >
-                    {user.status}
-                  </Badge>
-                </div>
-
-                <div className="flex items-center justify-between pt-2 border-t">
-                  <span className="text-muted-foreground">Joined:</span>
-                  <span className="text-foreground">{new Date(user.createdAt).toLocaleDateString()}</span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Last Active:</span>
-                  <span className="text-foreground">
-                    {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}
-                  </span>
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        {/* Desktop Table View */}
-        <div className="hidden lg:block overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-12">
-                  <Checkbox
-                    checked={selectedUsers.length === users.length && users.length > 0}
-                    onCheckedChange={handleSelectAll}
-                  />
-                </TableHead>
-                <TableHead>User</TableHead>
-                <TableHead>Profile</TableHead>
-                <TableHead>Roles & Status</TableHead>
-                <TableHead>Membership</TableHead>
-                <TableHead>Activity</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {users.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell>
-                    <Checkbox
-                      checked={selectedUsers.includes(user.id)}
-                      onCheckedChange={(checked) => handleSelectUser(user.id, checked as boolean)}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center space-x-3">
-                      <Avatar className="w-10 h-10">
-                        <AvatarImage src={user.image || undefined} alt={user.name || ''} />
-                        <AvatarFallback className="bg-muted text-foreground">
-                          {getInitials(user.name)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="font-medium text-foreground">{user.name || 'Unknown User'}</p>
-                        <p className="text-sm text-muted-foreground">{user.email}</p>
-                        {(user.jobTitle || user.company) && (
-                          <p className="text-xs text-muted-foreground mt-0.5">
-                            {user.jobTitle}{user.jobTitle && user.company ? ' @ ' : ''}{user.company}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="space-y-1.5">
-                      {/* Location */}
-                      {user.city && (
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <MapPin className="w-3 h-3" />
-                          <span>{user.city}</span>
-                        </div>
-                      )}
-                      {/* MBTI */}
-                      {user.mbtiType && (
-                        <Badge variant="outline" className="text-xs px-1.5 py-0">
-                          <Brain className="w-2.5 h-2.5 mr-1" />
-                          {user.mbtiType}
-                        </Badge>
-                      )}
-                      {/* Mentor Info */}
-                      {user.mentorInfo && (
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <div className="flex items-center gap-1 text-xs">
-                              <GraduationCap className="w-3 h-3 text-purple-600" />
-                              <span>
-                                {user.mentorInfo.isVerified && <CheckCircle className="w-3 h-3 text-green-600 inline mr-1" />}
-                                {user.mentorInfo.currentMentees}/{user.mentorInfo.maxMentees}
-                              </span>
-                              {user.mentorInfo.yearsExperience && (
-                                <span className="text-muted-foreground">• {user.mentorInfo.yearsExperience}y</span>
-                              )}
-                            </div>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>{user.mentorInfo.isVerified ? 'Verified Mentor' : 'Mentor'}</p>
-                            <p className="text-xs text-muted-foreground">
-                              {user.mentorInfo.currentMentees} of {user.mentorInfo.maxMentees} mentees
-                              {user.mentorInfo.yearsExperience && ` • ${user.mentorInfo.yearsExperience} years exp`}
-                            </p>
-                          </TooltipContent>
-                        </Tooltip>
-                      )}
-                      {/* Mentee Info */}
-                      {user.menteeInfo && (
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Briefcase className="w-3 h-3 text-blue-600" />
-                          <span className="capitalize">
-                            {user.menteeInfo.careerStage?.replace(/_/g, ' ') || 'Mentee'}
-                          </span>
-                          {user.menteeInfo.currentIndustry && (
-                            <span>• {user.menteeInfo.currentIndustry}</span>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="space-y-1.5">
-                      {/* Roles */}
-                      <div className="flex flex-wrap gap-1">
-                        {user.roles.map((role) => (
-                          <Badge
-                            key={role}
-                            variant="secondary"
-                            className={cn('text-xs', getRoleBadgeColor(role))}
-                          >
-                            {role}
-                          </Badge>
-                        ))}
-                      </div>
-                      {/* Application & Account Status */}
-                      <div className="flex items-center gap-1">
-                        {user.applicationStatus !== 'none' && getApplicationBadge(user.applicationStatus)}
-                        <Badge
-                          variant={user.status === 'active' ? 'default' : 'secondary'}
-                          className={cn(
-                            'text-xs',
-                            user.status === 'active' && 'bg-green-100 text-green-700',
-                            user.status === 'inactive' && 'bg-accent text-foreground',
-                            user.status === 'suspended' && 'bg-red-100 text-red-700'
-                          )}
-                        >
-                          {user.status}
-                        </Badge>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      variant="secondary"
-                      className={cn('text-xs', getMembershipBadgeColor(user.membershipTier))}
-                    >
-                      {user.membershipTier}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="text-sm space-y-0.5">
-                      <p className="text-muted-foreground text-xs">
-                        Joined: {new Date(user.createdAt).toLocaleDateString()}
-                      </p>
-                      <p className="text-muted-foreground text-xs">
-                        Active: {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}
-                      </p>
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="icon">
-                          <MoreVertical className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                          <Eye className="w-4 h-4 mr-2" />
-                          View Details
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Edit className="w-4 h-4 mr-2" />
-                          Edit User
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Shield className="w-4 h-4 mr-2" />
-                          Manage Permissions
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Mail className="w-4 h-4 mr-2" />
-                          Send Email
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-red-600">
-                          <Trash2 className="w-4 h-4 mr-2" />
-                          Delete User
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-
-        {/* Pagination */}
-        <div className="flex items-center justify-between mt-6">
-          <div className="text-sm text-muted-foreground">
-            Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
-            {Math.min(currentPage * itemsPerPage, users.length * totalPages)} of{' '}
-            {users.length * totalPages} users
-          </div>
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              <ChevronLeft className="w-4 h-4" />
-              Previous
-            </Button>
-            <div className="flex items-center space-x-1">
-              {[...Array(Math.min(5, totalPages))].map((_, i) => {
-                const page = i + 1;
-                return (
-                  <Button
-                    key={page}
-                    variant={currentPage === page ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setCurrentPage(page)}
-                    className="w-8 h-8 p-0"
-                  >
-                    {page}
-                  </Button>
-                );
-              })}
-              {totalPages > 5 && <span className="px-2">...</span>}
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              Next
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-      </TabsContent>
-
-      {/* Role Management Tab */}
-      <TabsContent value="roles">
-        {/* Role Statistics */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          {Object.entries(roleConfig).map(([roleId, config]) => {
-            const Icon = config.icon;
-            const count = roleStats[roleId as keyof typeof roleStats] || 0;
-
-            return (
-              <Card key={roleId}>
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Icon className="w-5 h-5 text-primary" />
-                      <CardTitle className="text-sm font-medium">{config.name}</CardTitle>
-                    </div>
-                    <Badge variant="secondary" className={config.color}>
-                      {count} users
-                    </Badge>
-                  </div>
-                </CardHeader>
-              </Card>
-            );
-          })}
-        </div>
-
+        {/* Main Card */}
         <Card>
           <CardHeader>
-            <CardTitle>User Role Assignments</CardTitle>
-            <CardDescription>
-              Toggle roles for users. Changes are saved automatically.
-            </CardDescription>
+            <div className="flex justify-between items-center">
+              <div>
+                <CardTitle>User Management</CardTitle>
+                <CardDescription>
+                  Manage all users, roles, and applications in one place
+                </CardDescription>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Button variant="outline" size="sm" onClick={() => fetchUsers()}>
+                  <RefreshCw className={cn("w-4 h-4 mr-1", loading && "animate-spin")} />
+                  Refresh
+                </Button>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
-            {/* Search for Role Management */}
-            <div className="relative w-full mb-4">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
-              <Input
-                type="search"
-                placeholder="Search by name or email..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && fetchUsers()}
-                className="pl-10"
-              />
-            </div>
-
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>User</TableHead>
-                    <TableHead className="text-center">Admin</TableHead>
-                    <TableHead className="text-center">Mentor</TableHead>
-                    <TableHead className="text-center">Mentee</TableHead>
-                    <TableHead className="text-center">Active Roles</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {users.map((user) => {
-                    const activeRolesCount = user.roles.length;
-
-                    return (
-                      <TableRow key={user.id}>
-                        <TableCell>
-                          <div className="flex items-center gap-3">
-                            <Avatar className="w-8 h-8">
-                              <AvatarImage src={user.image || undefined} alt={user.name || ''} />
-                              <AvatarFallback className="bg-muted text-foreground text-xs">
-                                {getInitials(user.name)}
-                              </AvatarFallback>
-                            </Avatar>
-                            <div>
-                              <p className="font-medium text-sm">{user.name || 'Unknown User'}</p>
-                              <p className="text-xs text-muted-foreground">{user.email}</p>
-                            </div>
-                          </div>
-                        </TableCell>
-                        {(['admin', 'mentor', 'mentee'] as const).map((roleType) => {
-                          const hasRole = user.roles.includes(roleType);
-                          const isUpdating = updatingRole === `${user.id}-${roleType}`;
-
-                          return (
-                            <TableCell key={roleType} className="text-center">
-                              <Switch
-                                checked={hasRole}
-                                disabled={isUpdating}
-                                onCheckedChange={() => handleRoleToggle(user.id, roleType, hasRole)}
-                              />
-                            </TableCell>
-                          );
-                        })}
-                        <TableCell className="text-center">
-                          <Badge
-                            variant="outline"
-                            className={cn(
-                              activeRolesCount > 0 ? "text-green-600 border-green-600" : "text-muted-foreground"
-                            )}
-                          >
-                            {activeRolesCount}
-                          </Badge>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      {/* Verified Mentors Tab */}
-      <TabsContent value="mentors" className="space-y-6">
-        {/* Error Message */}
-        {mentorsError && (
-          <Card className="border-red-200 bg-red-50">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-red-600">
-                <AlertCircle className="w-5 h-5" />
-                <span>{mentorsError}</span>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Statistics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Total Verified</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {mentorsLoading ? (
-                <Skeleton className="h-8 w-20" />
-              ) : (
-                <>
-                  <div className="flex items-center justify-between">
-                    <p className="text-2xl font-bold">{mentorStats.totalVerified}</p>
-                    <Shield className="w-8 h-8 text-primary" />
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-2">Verified mentors</p>
-                </>
-              )}
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Active Mentors</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {mentorsLoading ? (
-                <Skeleton className="h-8 w-20" />
-              ) : (
-                <>
-                  <div className="flex items-center justify-between">
-                    <p className="text-2xl font-bold text-green-600">{mentorStats.totalActive}</p>
-                    <CheckCircle className="w-8 h-8 text-green-600" />
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    {mentorStats.totalVerified > 0 ? Math.round((mentorStats.totalActive / mentorStats.totalVerified) * 100) : 0}% active rate
-                  </p>
-                </>
-              )}
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Avg Rating</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {mentorsLoading ? (
-                <Skeleton className="h-8 w-20" />
-              ) : (
-                <>
-                  <div className="flex items-center justify-between">
-                    <p className="text-2xl font-bold">{mentorStats.avgRating || 'N/A'}</p>
-                    <Star className="w-8 h-8 text-yellow-500 fill-yellow-500" />
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-2">From mentee feedback</p>
-                </>
-              )}
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Total Sessions</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {mentorsLoading ? (
-                <Skeleton className="h-8 w-20" />
-              ) : (
-                <>
-                  <div className="flex items-center justify-between">
-                    <p className="text-2xl font-bold">{mentorStats.totalSessions.toLocaleString()}</p>
-                    <MessageSquare className="w-8 h-8 text-blue-600" />
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-2">Completed meetings</p>
-                </>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Filters */}
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1 relative">
+            {/* Filters */}
+            <div className="flex flex-col gap-4 mb-6">
+              <div className="relative w-full">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                 <Input
                   type="search"
-                  placeholder="Search by name, email, company, or expertise..."
-                  value={mentorSearchQuery}
-                  onChange={(e) => setMentorSearchQuery(e.target.value)}
+                  placeholder="Search by name or email..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && fetchUsers()}
                   className="pl-10"
                 />
               </div>
-              <div className="flex gap-2">
-                <Select value={mentorStatusFilter} onValueChange={setMentorStatusFilter}>
-                  <SelectTrigger className="w-32">
+
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:flex lg:gap-2 gap-2">
+                <Select value={roleFilter} onValueChange={(v) => { setRoleFilter(v); setCurrentPage(1); }}>
+                  <SelectTrigger className="w-full lg:w-32">
+                    <SelectValue placeholder="All Roles" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Roles</SelectItem>
+                    <SelectItem value="admin">Admin</SelectItem>
+                    <SelectItem value="mentor">Mentor</SelectItem>
+                    <SelectItem value="mentee">Mentee</SelectItem>
+                    <SelectItem value="no_role">No Role</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setCurrentPage(1); }}>
+                  <SelectTrigger className="w-full lg:w-40">
                     <SelectValue placeholder="All Status" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">All Status</SelectItem>
                     <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="busy">Busy</SelectItem>
-                    <SelectItem value="paused">Paused</SelectItem>
+                    <SelectItem value="inactive">Inactive</SelectItem>
+                    <SelectItem value="suspended">Suspended</SelectItem>
+                    <SelectItem value="pending_registration">Pending Registration</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button variant="outline" onClick={fetchVerifiedMentors} disabled={mentorsLoading}>
-                  <RefreshCw className={cn("w-4 h-4", mentorsLoading && "animate-spin")} />
-                </Button>
+
+                <Select value={membershipFilter} onValueChange={(v) => { setMembershipFilter(v); setCurrentPage(1); }}>
+                  <SelectTrigger className="w-full lg:w-32">
+                    <SelectValue placeholder="All Tiers" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Tiers</SelectItem>
+                    <SelectItem value="premium">Premium</SelectItem>
+                    <SelectItem value="basic">Basic</SelectItem>
+                    <SelectItem value="free">Free</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select value={applicationFilter} onValueChange={(v) => { setApplicationFilter(v); setCurrentPage(1); }}>
+                  <SelectTrigger className="w-full lg:w-40">
+                    <SelectValue placeholder="Application" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All</SelectItem>
+                    <SelectItem value="has_pending">Has Pending</SelectItem>
+                    <SelectItem value="no_application">No Application</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
+
+            {/* Bulk Actions */}
+            {selectedUsers.length > 0 && (
+              <div className="flex items-center gap-2 mb-4 p-3 bg-muted rounded-lg">
+                <span className="text-sm font-medium text-foreground">
+                  {selectedUsers.length} user{selectedUsers.length > 1 ? 's' : ''} selected
+                </span>
+                <div className="flex gap-2 ml-auto">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleBulkAction('export')}
+                    disabled={bulkActionLoading}
+                  >
+                    <Download className="w-4 h-4 mr-1" />
+                    Export
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-red-600 hover:text-red-700"
+                    onClick={() => handleBulkAction('suspend')}
+                    disabled={bulkActionLoading}
+                  >
+                    <UserX className="w-4 h-4 mr-1" />
+                    {bulkActionLoading ? 'Processing...' : 'Suspend'}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-red-600 hover:text-red-700"
+                    onClick={() => handleBulkAction('delete')}
+                    disabled={bulkActionLoading}
+                  >
+                    <Trash2 className="w-4 h-4 mr-1" />
+                    Delete
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSelectedUsers([])}
+                    disabled={bulkActionLoading}
+                  >
+                    Clear
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Loading State */}
+            {loading ? (
+              <div className="space-y-4">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="flex items-center space-x-4">
+                    <Skeleton className="h-10 w-10 rounded-full" />
+                    <div className="space-y-2 flex-1">
+                      <Skeleton className="h-4 w-[200px]" />
+                      <Skeleton className="h-4 w-[150px]" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : users.length === 0 ? (
+              <div className="text-center py-12 text-muted-foreground">
+                <Users className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                <p>No users found matching your criteria</p>
+              </div>
+            ) : (
+              <>
+                {/* Mobile Card View */}
+                <div className="block lg:hidden space-y-3">
+                  {users.map((user) => (
+                    <Card key={user.recordId} className="p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-start space-x-3 flex-1">
+                          <Checkbox
+                            checked={selectedUsers.includes(user.recordId)}
+                            onCheckedChange={(checked) => handleSelectUser(user.recordId, checked as boolean)}
+                          />
+                          <Avatar className="w-12 h-12">
+                            <AvatarImage src={user.image || undefined} alt={user.name || ''} />
+                            <AvatarFallback className="bg-muted text-foreground">
+                              {getInitials(user.name)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <p className="font-medium text-foreground truncate">{user.name || 'Unknown User'}</p>
+                              {user.recordType === 'public_application' && (
+                                <Badge className="bg-yellow-100 text-yellow-700 text-xs">
+                                  <UserPlus className="w-3 h-3 mr-1" />
+                                  Pending Reg
+                                </Badge>
+                              )}
+                            </div>
+                            <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+                            {(user.jobTitle || user.company) && (
+                              <p className="text-xs text-muted-foreground truncate mt-0.5">
+                                {user.jobTitle}{user.jobTitle && user.company ? ' @ ' : ''}{user.company}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <Button variant="ghost" size="icon" onClick={() => toggleRowExpansion(user.recordId)}>
+                          {expandedRows.has(user.recordId) ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                        </Button>
+                      </div>
+
+                      <div className="space-y-2 text-sm">
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground">Roles:</span>
+                          <div className="flex flex-wrap gap-1 justify-end">
+                            {user.roles.length > 0 ? user.roles.map((role) => (
+                              <Badge key={role} variant="secondary" className={cn('text-xs', getRoleBadgeColor(role))}>
+                                {role}
+                              </Badge>
+                            )) : <span className="text-xs text-muted-foreground">None</span>}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground">Status:</span>
+                          {getStatusBadge(user.accountStatus)}
+                        </div>
+
+                        {user.applicationStatus === 'pending' && (
+                          <div className="flex items-center justify-between">
+                            <span className="text-muted-foreground">Application:</span>
+                            {getApplicationBadge(user.applicationStatus)}
+                          </div>
+                        )}
+                      </div>
+
+                      {expandedRows.has(user.recordId) && (
+                        <div className="mt-4 pt-4 border-t">
+                          {/* Simplified mobile expanded content */}
+                          <div className="space-y-3">
+                            {user.applicationStatus === 'pending' && user.applicationInfo && (
+                              <div className="flex gap-2">
+                                <Button
+                                  size="sm"
+                                  className="flex-1 bg-green-600 hover:bg-green-700"
+                                  onClick={() => openReviewDialog(user, 'approve')}
+                                >
+                                  <Check className="w-4 h-4 mr-1" />
+                                  Approve
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="destructive"
+                                  className="flex-1"
+                                  onClick={() => openReviewDialog(user, 'reject')}
+                                >
+                                  <X className="w-4 h-4 mr-1" />
+                                  Reject
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </Card>
+                  ))}
+                </div>
+
+                {/* Desktop Table View */}
+                <div className="hidden lg:block overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-10"></TableHead>
+                        <TableHead className="w-12">
+                          <Checkbox
+                            checked={selectedUsers.length === users.length && users.length > 0}
+                            onCheckedChange={handleSelectAll}
+                          />
+                        </TableHead>
+                        <TableHead>User</TableHead>
+                        <TableHead>Roles</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Membership</TableHead>
+                        <TableHead>Activity</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {users.map((user) => (
+                        <React.Fragment key={user.recordId}>
+                          <TableRow className={cn(expandedRows.has(user.recordId) && "border-b-0")}>
+                            <TableCell>
+                              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => toggleRowExpansion(user.recordId)}>
+                                {expandedRows.has(user.recordId) ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                              </Button>
+                            </TableCell>
+                            <TableCell>
+                              <Checkbox
+                                checked={selectedUsers.includes(user.recordId)}
+                                onCheckedChange={(checked) => handleSelectUser(user.recordId, checked as boolean)}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center space-x-3">
+                                <Avatar className="w-10 h-10">
+                                  <AvatarImage src={user.image || undefined} alt={user.name || ''} />
+                                  <AvatarFallback className="bg-muted text-foreground">
+                                    {getInitials(user.name)}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <p className="font-medium text-foreground">{user.name || 'Unknown User'}</p>
+                                    {user.recordType === 'public_application' && (
+                                      <Badge className="bg-yellow-100 text-yellow-700 text-xs">
+                                        <UserPlus className="w-3 h-3 mr-1" />
+                                        Pending Reg
+                                      </Badge>
+                                    )}
+                                  </div>
+                                  <p className="text-sm text-muted-foreground">{user.email}</p>
+                                  {(user.jobTitle || user.company) && (
+                                    <p className="text-xs text-muted-foreground mt-0.5">
+                                      {user.jobTitle}{user.jobTitle && user.company ? ' @ ' : ''}{user.company}
+                                    </p>
+                                  )}
+                                  {(user.city || user.mbtiType) && (
+                                    <div className="flex items-center gap-2 mt-1">
+                                      {user.city && (
+                                        <span className="flex items-center gap-0.5 text-xs text-muted-foreground">
+                                          <MapPin className="w-3 h-3" />
+                                          {user.city}
+                                        </span>
+                                      )}
+                                      {user.mbtiType && (
+                                        <Badge variant="outline" className="text-xs px-1 py-0">
+                                          <Brain className="w-2.5 h-2.5 mr-0.5" />
+                                          {user.mbtiType}
+                                        </Badge>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex flex-wrap gap-1">
+                                {user.roles.length > 0 ? user.roles.map((role) => (
+                                  <Badge key={role} variant="secondary" className={cn('text-xs', getRoleBadgeColor(role))}>
+                                    {role}
+                                  </Badge>
+                                )) : <span className="text-xs text-muted-foreground">None</span>}
+                              </div>
+                              {user.mentorInfo?.isVerified && (
+                                <div className="mt-1">
+                                  {getMentorStatusBadge(user.mentorInfo.status)}
+                                </div>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              <div className="space-y-1">
+                                {getStatusBadge(user.accountStatus)}
+                                {user.applicationStatus === 'pending' && getApplicationBadge(user.applicationStatus)}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="secondary" className={cn('text-xs', getMembershipBadgeColor(user.membershipTier))}>
+                                {user.membershipTier}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              <div className="text-sm space-y-0.5">
+                                <p className="text-muted-foreground text-xs">
+                                  Joined: {new Date(user.createdAt).toLocaleDateString()}
+                                </p>
+                                <p className="text-muted-foreground text-xs">
+                                  Active: {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}
+                                </p>
+                              </div>
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <Button variant="outline" size="icon">
+                                    <MoreVertical className="w-4 h-4" />
+                                  </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" className="w-56">
+                                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                  <DropdownMenuSeparator />
+                                  <DropdownMenuItem onClick={() => toggleRowExpansion(user.recordId)}>
+                                    <Eye className="w-4 h-4 mr-2" />
+                                    View Details
+                                  </DropdownMenuItem>
+                                  {user.recordType === 'registered_user' && (
+                                    <>
+                                      <DropdownMenuItem onClick={() => openEditDialog(user)}>
+                                        <Edit className="w-4 h-4 mr-2" />
+                                        Edit User
+                                      </DropdownMenuItem>
+                                      <DropdownMenuSeparator />
+                                      <DropdownMenuSub>
+                                        <DropdownMenuSubTrigger>
+                                          <Shield className="w-4 h-4 mr-2" />
+                                          Manage Roles
+                                        </DropdownMenuSubTrigger>
+                                        <DropdownMenuSubContent>
+                                          {(['admin', 'mentor', 'mentee'] as const).map((roleType) => {
+                                            const hasRole = user.roles.includes(roleType);
+                                            const isUpdating = updatingRole === `${user.id}-${roleType}`;
+                                            return (
+                                              <div
+                                                key={roleType}
+                                                className="flex items-center justify-between px-2 py-1.5"
+                                              >
+                                                <span className="capitalize text-sm">{roleType}</span>
+                                                <Switch
+                                                  checked={hasRole}
+                                                  disabled={isUpdating}
+                                                  onCheckedChange={() => handleRoleToggle(user.id, roleType, hasRole)}
+                                                />
+                                              </div>
+                                            );
+                                          })}
+                                        </DropdownMenuSubContent>
+                                      </DropdownMenuSub>
+                                    </>
+                                  )}
+                                  {user.applicationStatus === 'pending' && user.applicationInfo && (
+                                    <>
+                                      <DropdownMenuSeparator />
+                                      <DropdownMenuItem
+                                        className="text-green-600"
+                                        onClick={() => openReviewDialog(user, 'approve')}
+                                      >
+                                        <Check className="w-4 h-4 mr-2" />
+                                        Approve Application
+                                      </DropdownMenuItem>
+                                      <DropdownMenuItem
+                                        className="text-red-600"
+                                        onClick={() => openReviewDialog(user, 'reject')}
+                                      >
+                                        <X className="w-4 h-4 mr-2" />
+                                        Reject Application
+                                      </DropdownMenuItem>
+                                    </>
+                                  )}
+                                  {user.recordType === 'registered_user' && (
+                                    <>
+                                      <DropdownMenuSeparator />
+                                      <DropdownMenuItem onClick={() => window.open(`mailto:${user.email}`, '_blank')}>
+                                        <Mail className="w-4 h-4 mr-2" />
+                                        Send Email
+                                      </DropdownMenuItem>
+                                      <DropdownMenuSeparator />
+                                      <DropdownMenuItem
+                                        className="text-red-600"
+                                        onClick={() => openUserActionDialog(user, 'suspend')}
+                                      >
+                                        <Ban className="w-4 h-4 mr-2" />
+                                        Suspend Account
+                                      </DropdownMenuItem>
+                                      <DropdownMenuItem
+                                        className="text-red-600"
+                                        onClick={() => openUserActionDialog(user, 'delete')}
+                                      >
+                                        <Trash2 className="w-4 h-4 mr-2" />
+                                        Delete User
+                                      </DropdownMenuItem>
+                                    </>
+                                  )}
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </TableCell>
+                          </TableRow>
+                          {expandedRows.has(user.recordId) && renderExpandedContent(user)}
+                        </React.Fragment>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+
+                {/* Pagination */}
+                <div className="flex items-center justify-between mt-6">
+                  <div className="text-sm text-muted-foreground">
+                    Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
+                    {Math.min(currentPage * itemsPerPage, totalCount)} of {totalCount} records
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                      Previous
+                    </Button>
+                    <div className="flex items-center space-x-1">
+                      {[...Array(Math.min(5, totalPages))].map((_, i) => {
+                        const page = i + 1;
+                        return (
+                          <Button
+                            key={page}
+                            variant={currentPage === page ? 'default' : 'outline'}
+                            size="sm"
+                            onClick={() => setCurrentPage(page)}
+                            className="w-8 h-8 p-0"
+                          >
+                            {page}
+                          </Button>
+                        );
+                      })}
+                      {totalPages > 5 && <span className="px-2">...</span>}
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                    >
+                      Next
+                      <ChevronRight className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
           </CardContent>
         </Card>
 
-        {/* Mentors Table */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Mentor Directory</CardTitle>
-            <CardDescription>
-              {mentorsLoading ? 'Loading...' : `${filteredMentors.length} verified mentors`}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              {mentorsLoading ? (
-                <div className="space-y-4">
-                  {[...Array(5)].map((_, i) => (
-                    <div key={i} className="flex items-center space-x-4">
-                      <Skeleton className="h-12 w-12 rounded-full" />
-                      <div className="space-y-2 flex-1">
-                        <Skeleton className="h-4 w-[200px]" />
-                        <Skeleton className="h-4 w-[150px]" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : filteredMentors.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  <GraduationCap className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                  <p>No verified mentors found</p>
-                </div>
-              ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Mentor</TableHead>
-                      <TableHead>Profile</TableHead>
-                      <TableHead>Expertise</TableHead>
-                      <TableHead>Metrics</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredMentors.map((mentor) => (
-                      <TableRow key={mentor.id}>
-                        <TableCell>
-                          <div className="flex items-center space-x-3">
-                            <Avatar>
-                              <AvatarImage src={mentor.avatar || ''} />
-                              <AvatarFallback>
-                                {mentor.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
-                              </AvatarFallback>
-                            </Avatar>
-                            <div>
-                              <p className="font-medium">{mentor.name}</p>
-                              <p className="text-sm text-muted-foreground">{mentor.jobTitle || 'Mentor'}</p>
-                              <p className="text-xs text-muted-foreground">{mentor.company || '-'}</p>
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="space-y-1.5">
-                            {mentor.city && (
-                              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                <MapPin className="w-3 h-3" />
-                                <span>{mentor.city}</span>
-                              </div>
-                            )}
-                            {mentor.preferredIndustries && mentor.preferredIndustries.length > 0 && (
-                              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                <Building2 className="w-3 h-3" />
-                                <span>{mentor.preferredIndustries.slice(0, 2).join(', ')}</span>
-                              </div>
-                            )}
-                            {mentor.mbtiType && (
-                              <Badge variant="outline" className="text-xs px-1.5 py-0">
-                                <Brain className="w-2.5 h-2.5 mr-1" />
-                                {mentor.mbtiType}
-                              </Badge>
-                            )}
-                            {mentor.monthlyAvailability && (
-                              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                <Clock className="w-3 h-3" />
-                                <span>{mentor.monthlyAvailability}h/month</span>
-                              </div>
-                            )}
-                            <div className="flex items-center gap-1 text-xs text-muted-foreground pt-1">
-                              <Mail className="w-3 h-3" />
-                              <span className="truncate max-w-[150px]">{mentor.email}</span>
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex flex-wrap gap-1">
-                            {(mentor.expertiseAreas || []).slice(0, 2).map(skill => (
-                              <Badge key={skill} variant="secondary" className="text-xs">
-                                {skill}
-                              </Badge>
-                            ))}
-                            {(mentor.expertiseAreas || []).length > 2 && (
-                              <Badge variant="outline" className="text-xs">
-                                +{mentor.expertiseAreas.length - 2}
-                              </Badge>
-                            )}
-                            {(mentor.expertiseAreas || []).length === 0 && (
-                              <span className="text-xs text-muted-foreground">-</span>
-                            )}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="space-y-1 text-sm">
-                            {mentor.avgRating !== null && (
-                              <div className="flex items-center space-x-2">
-                                <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                                <span className="font-medium">{mentor.avgRating}</span>
-                              </div>
-                            )}
-                            <div className="flex items-center space-x-2 text-muted-foreground">
-                              <Users className="w-3 h-3" />
-                              <span className="text-xs">{mentor.activeMentees} active / {mentor.totalMentees} total</span>
-                            </div>
-                            <div className="flex items-center space-x-2 text-muted-foreground">
-                              <MessageSquare className="w-3 h-3" />
-                              <span className="text-xs">{mentor.totalSessions} sessions</span>
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="space-y-2">
-                            {getMentorStatusBadge(mentor.status)}
-                            <div className="flex items-center space-x-1 text-xs text-muted-foreground">
-                              <Award className="w-3 h-3" />
-                              <span>Since {new Date(mentor.verifiedAt).toLocaleDateString()}</span>
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="outline" size="icon">
-                                <MoreVertical className="w-4 h-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem>
-                                <Eye className="w-4 h-4 mr-2" />
-                                View Profile
-                              </DropdownMenuItem>
-                              <DropdownMenuItem>
-                                <Edit className="w-4 h-4 mr-2" />
-                                Edit Details
-                              </DropdownMenuItem>
-                              <DropdownMenuItem>
-                                <Mail className="w-4 h-4 mr-2" />
-                                Send Message
-                              </DropdownMenuItem>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem className="text-red-600">
-                                <Ban className="w-4 h-4 mr-2" />
-                                Suspend Mentor
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              )}
+        {/* Review Dialog */}
+        <Dialog open={reviewDialogOpen} onOpenChange={setReviewDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                {reviewAction === 'approve' ? 'Approve Application' : 'Reject Application'}
+              </DialogTitle>
+              <DialogDescription>
+                {reviewAction === 'approve'
+                  ? `Are you sure you want to approve ${reviewingUser?.name || 'this user'}'s mentor application?`
+                  : `Are you sure you want to reject ${reviewingUser?.name || 'this user'}'s mentor application?`
+                }
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="review-notes">
+                  {reviewAction === 'approve' ? 'Notes (optional)' : 'Reason for rejection (required)'}
+                </Label>
+                <Textarea
+                  id="review-notes"
+                  placeholder={reviewAction === 'approve'
+                    ? 'Add any notes about this approval...'
+                    : 'Please provide a reason for rejecting this application...'
+                  }
+                  value={reviewNotes}
+                  onChange={(e) => setReviewNotes(e.target.value)}
+                  className="mt-2"
+                  rows={4}
+                />
+              </div>
             </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
-    </Tabs>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setReviewDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button
+                onClick={handleReviewSubmit}
+                disabled={submittingReview || (reviewAction === 'reject' && !reviewNotes.trim())}
+                className={reviewAction === 'approve' ? 'bg-green-600 hover:bg-green-700' : ''}
+                variant={reviewAction === 'reject' ? 'destructive' : 'default'}
+              >
+                {submittingReview ? 'Processing...' : reviewAction === 'approve' ? 'Approve' : 'Reject'}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* User Action Confirmation Dialog */}
+        <Dialog open={actionDialogOpen} onOpenChange={setActionDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                {actionType === 'suspend' ? 'Suspend User' : 'Delete User'}
+              </DialogTitle>
+              <DialogDescription>
+                {actionType === 'suspend'
+                  ? `Are you sure you want to suspend ${actionUser?.name || 'this user'}? They will no longer be able to access their account.`
+                  : `Are you sure you want to delete ${actionUser?.name || 'this user'}? This action cannot be undone.`
+                }
+              </DialogDescription>
+            </DialogHeader>
+            {actionUser && (
+              <div className="py-4">
+                <div className="flex items-center space-x-3 p-3 bg-muted rounded-lg">
+                  <Avatar className="w-10 h-10">
+                    <AvatarImage src={actionUser.image || undefined} alt={actionUser.name || ''} />
+                    <AvatarFallback>{getInitials(actionUser.name)}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="font-medium">{actionUser.name || 'Unknown User'}</p>
+                    <p className="text-sm text-muted-foreground">{actionUser.email}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setActionDialogOpen(false)} disabled={processingAction}>
+                Cancel
+              </Button>
+              <Button
+                onClick={handleUserAction}
+                disabled={processingAction}
+                variant="destructive"
+              >
+                {processingAction
+                  ? 'Processing...'
+                  : actionType === 'suspend'
+                    ? 'Suspend User'
+                    : 'Delete User'
+                }
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Edit User Dialog */}
+        <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Edit User</DialogTitle>
+              <DialogDescription>
+                Update user information for {editingUser?.name || 'this user'}
+              </DialogDescription>
+            </DialogHeader>
+            {editingUser && (
+              <div className="space-y-4 py-4">
+                <div className="flex items-center space-x-3 p-3 bg-muted rounded-lg mb-4">
+                  <Avatar className="w-10 h-10">
+                    <AvatarImage src={editingUser.image || undefined} alt={editingUser.name || ''} />
+                    <AvatarFallback>{getInitials(editingUser.name)}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="font-medium">{editingUser.name || 'Unknown User'}</p>
+                    <p className="text-sm text-muted-foreground">{editingUser.email}</p>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-name">Name</Label>
+                  <Input
+                    id="edit-name"
+                    value={editFormData.name}
+                    onChange={(e) => setEditFormData(prev => ({ ...prev, name: e.target.value }))}
+                    placeholder="User name"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-phone">Phone</Label>
+                  <Input
+                    id="edit-phone"
+                    value={editFormData.phone}
+                    onChange={(e) => setEditFormData(prev => ({ ...prev, phone: e.target.value }))}
+                    placeholder="Phone number"
+                  />
+                </div>
+              </div>
+            )}
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setEditDialogOpen(false)} disabled={savingEdit}>
+                Cancel
+              </Button>
+              <Button onClick={handleEditSave} disabled={savingEdit}>
+                {savingEdit ? 'Saving...' : 'Save Changes'}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
     </TooltipProvider>
   );
 }

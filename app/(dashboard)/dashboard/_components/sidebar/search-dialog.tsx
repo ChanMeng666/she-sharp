@@ -51,7 +51,7 @@ const searchItems = [
   // Admin
   { group: "Admin", icon: BarChart3, label: "Admin Dashboard", url: "/dashboard/admin", adminOnly: true },
   { group: "Admin", icon: Users, label: "User Management", url: "/dashboard/admin/users", adminOnly: true },
-  { group: "Admin", icon: Heart, label: "Mentor Applications", url: "/dashboard/admin/mentors/applications", adminOnly: true },
+  { group: "Admin", icon: Heart, label: "Mentor Applications", url: "/dashboard/admin/users?application=pending", adminOnly: true },
   { group: "Admin", icon: Award, label: "AI Matching", url: "/dashboard/admin/matching", adminOnly: true },
 ];
 
