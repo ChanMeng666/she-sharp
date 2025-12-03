@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { db } from '@/lib/db/drizzle';
 import {
   users,
@@ -9,12 +9,15 @@ import {
   userMemberships,
   menteeFormSubmissions,
   mentorFormSubmissions,
+  mentorProfiles,
+  menteeProfiles,
   activityLogs,
   ActivityType,
   type NewUserRole,
   type NewUserMembership,
 } from '@/lib/db/schema';
 import { validateInvitationCode, useInvitationCode } from '@/lib/invitations/service';
+import { addToWaitingQueue } from '@/lib/matching/queue-service';
 import { auth } from '@/lib/auth/auth.config';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
@@ -151,32 +154,162 @@ export const verifyOAuthInvitationCode = validatedAction(verifySchema, async (da
         userId,
         roleType: targetRole,
         isActive: true,
+        // Set verifiedAt for mentors since their form was already approved
+        verifiedAt: targetRole === 'mentor' ? new Date() : undefined,
       };
       await db.insert(userRoles).values(newRole);
+    } else if (targetRole === 'mentor') {
+      // Update existing mentor role to set verifiedAt
+      await db
+        .update(userRoles)
+        .set({ verifiedAt: new Date() })
+        .where(and(eq(userRoles.userId, userId), eq(userRoles.roleType, 'mentor')));
     }
 
-    // Link form submission if applicable
+    // Link form submission and create profile if applicable
     const linkedFormId = codeValidation.code?.linkedFormId;
     const linkedFormType = codeValidation.code?.linkedFormType;
 
     if (linkedFormId && linkedFormType === 'mentee') {
-      await db
-        .update(menteeFormSubmissions)
-        .set({
-          userId,
-          status: 'approved',
-          updatedAt: new Date(),
-        })
-        .where(eq(menteeFormSubmissions.id, linkedFormId));
+      // Get the form data first
+      const [menteeForm] = await db
+        .select()
+        .from(menteeFormSubmissions)
+        .where(eq(menteeFormSubmissions.id, linkedFormId))
+        .limit(1);
+
+      if (menteeForm) {
+        // Update form submission with userId
+        await db
+          .update(menteeFormSubmissions)
+          .set({
+            userId,
+            status: 'approved',
+            updatedAt: new Date(),
+          })
+          .where(eq(menteeFormSubmissions.id, linkedFormId));
+
+        // Update user info from form data
+        await db
+          .update(users)
+          .set({
+            name: menteeForm.fullName || user.name,
+            phone: menteeForm.phone || user.phone,
+            gender: menteeForm.gender || user.gender,
+            age: menteeForm.age || user.age,
+            updatedAt: new Date(),
+          })
+          .where(eq(users.id, userId));
+
+        // Create mentee profile from form data
+        const [existingProfile] = await db
+          .select()
+          .from(menteeProfiles)
+          .where(eq(menteeProfiles.userId, userId))
+          .limit(1);
+
+        if (!existingProfile) {
+          await db.insert(menteeProfiles).values({
+            userId,
+            bio: menteeForm.bio,
+            careerStage: menteeForm.currentStage,
+            learningGoals: [menteeForm.longTermGoals, menteeForm.shortTermGoals].filter(Boolean) as string[],
+            preferredExpertiseAreas: menteeForm.preferredIndustries || [],
+            preferredMeetingFrequency: menteeForm.preferredMeetingFrequency,
+            currentChallenge: menteeForm.whyMentor,
+            mbtiType: menteeForm.mbtiType,
+            photoUrl: menteeForm.photoUrl,
+            formSubmissionId: menteeForm.id,
+            profileCompletedAt: new Date(),
+          });
+        } else {
+          await db
+            .update(menteeProfiles)
+            .set({
+              bio: menteeForm.bio,
+              careerStage: menteeForm.currentStage,
+              learningGoals: [menteeForm.longTermGoals, menteeForm.shortTermGoals].filter(Boolean) as string[],
+              preferredExpertiseAreas: menteeForm.preferredIndustries || [],
+              preferredMeetingFrequency: menteeForm.preferredMeetingFrequency,
+              currentChallenge: menteeForm.whyMentor,
+              mbtiType: menteeForm.mbtiType,
+              photoUrl: menteeForm.photoUrl,
+              formSubmissionId: menteeForm.id,
+              profileCompletedAt: new Date(),
+            })
+            .where(eq(menteeProfiles.userId, userId));
+        }
+
+        // Add mentee to waiting queue for matching
+        await addToWaitingQueue(userId, undefined, 'Added after registration');
+      }
     } else if (linkedFormId && linkedFormType === 'mentor') {
-      await db
-        .update(mentorFormSubmissions)
-        .set({
-          userId,
-          status: 'approved',
-          updatedAt: new Date(),
-        })
-        .where(eq(mentorFormSubmissions.id, linkedFormId));
+      // Get the form data first
+      const [mentorForm] = await db
+        .select()
+        .from(mentorFormSubmissions)
+        .where(eq(mentorFormSubmissions.id, linkedFormId))
+        .limit(1);
+
+      if (mentorForm) {
+        // Update form submission with userId
+        await db
+          .update(mentorFormSubmissions)
+          .set({
+            userId,
+            status: 'approved',
+            updatedAt: new Date(),
+          })
+          .where(eq(mentorFormSubmissions.id, linkedFormId));
+
+        // Update user info from form data
+        await db
+          .update(users)
+          .set({
+            name: mentorForm.fullName || user.name,
+            phone: mentorForm.phone || user.phone,
+            gender: mentorForm.gender || user.gender,
+            updatedAt: new Date(),
+          })
+          .where(eq(users.id, userId));
+
+        // Create mentor profile from form data
+        const [existingProfile] = await db
+          .select()
+          .from(mentorProfiles)
+          .where(eq(mentorProfiles.userId, userId))
+          .limit(1);
+
+        const profileData = {
+          bio: mentorForm.bio,
+          company: mentorForm.company,
+          jobTitle: mentorForm.jobTitle,
+          yearsExperience: mentorForm.yearsExperience,
+          linkedinUrl: mentorForm.linkedinUrl,
+          maxMentees: mentorForm.maxMentees || 3,
+          availabilityHoursPerMonth: mentorForm.availabilityHoursPerMonth,
+          mbtiType: mentorForm.mbtiType,
+          photoUrl: mentorForm.photoUrl,
+          formSubmissionId: mentorForm.id,
+          verifiedAt: new Date(),
+          expertiseAreas: [
+            ...(mentorForm.softSkillsExpert || []),
+            ...(mentorForm.industrySkillsExpert || []),
+          ],
+        };
+
+        if (!existingProfile) {
+          await db.insert(mentorProfiles).values({
+            userId,
+            ...profileData,
+          });
+        } else {
+          await db
+            .update(mentorProfiles)
+            .set(profileData)
+            .where(eq(mentorProfiles.userId, userId));
+        }
+      }
     }
   }
 
