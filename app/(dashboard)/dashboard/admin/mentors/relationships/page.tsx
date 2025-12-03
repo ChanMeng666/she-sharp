@@ -186,12 +186,12 @@ export default function MentorRelationshipsPage() {
 
   const getStatusBadge = (status: string) => {
     const variants = {
-      pending: { text: 'Pending', className: 'bg-muted text-foreground', icon: Clock },
-      active: { text: 'Active', className: 'bg-muted text-foreground', icon: CheckCircle },
-      at_risk: { text: 'At Risk', className: 'bg-muted text-foreground', icon: AlertCircle },
-      paused: { text: 'Paused', className: 'bg-muted text-foreground', icon: Pause },
-      completed: { text: 'Completed', className: 'bg-muted text-foreground', icon: Target },
-      rejected: { text: 'Rejected', className: 'bg-muted text-foreground', icon: X },
+      pending: { text: 'Pending', className: 'bg-[#eaf2ff] text-foreground', icon: Clock },
+      active: { text: 'Active', className: 'bg-foreground text-background', icon: CheckCircle },
+      at_risk: { text: 'At Risk', className: 'bg-[#f7e5f3] text-foreground', icon: AlertCircle },
+      paused: { text: 'Paused', className: 'bg-muted text-muted-foreground', icon: Pause },
+      completed: { text: 'Completed', className: 'bg-foreground text-background', icon: Target },
+      rejected: { text: 'Rejected', className: 'bg-muted-foreground text-background', icon: X },
     };
     const variant = variants[status as keyof typeof variants] || { text: status, className: 'bg-muted text-foreground', icon: Clock };
     const Icon = variant.icon;
@@ -310,10 +310,10 @@ export default function MentorRelationshipsPage() {
 
       {/* Success Message */}
       {successMessage && (
-        <Card className="border-muted bg-muted/50">
+        <Card className="border-[#b1f6e9] bg-[#effefb]">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 text-foreground">
-              <CheckCircle className="w-5 h-5" />
+              <CheckCircle className="w-5 h-5 text-[#9b2e83]" />
               <span>{successMessage}</span>
             </div>
           </CardContent>
@@ -322,11 +322,11 @@ export default function MentorRelationshipsPage() {
 
       {/* Error Message */}
       {error && (
-        <Card className="border-muted bg-muted/50">
+        <Card className="border-[#d72f40]/30 bg-[#d72f40]/5">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-foreground">
-                <AlertCircle className="w-5 h-5" />
+                <AlertCircle className="w-5 h-5 text-[#d72f40]" />
                 <span>{error}</span>
               </div>
               <Button variant="ghost" size="sm" onClick={() => setError(null)}>
@@ -340,39 +340,39 @@ export default function MentorRelationshipsPage() {
       {/* Statistics */}
       <div className="flex flex-wrap items-center gap-6 text-sm">
         <div className="flex items-center gap-2">
-          <Clock className="h-4 w-4 text-foreground" />
+          <Clock className="h-4 w-4 text-[#1378d1]" />
+          <span className="text-[#1378d1] font-medium">Pending</span>
           <span className="font-bold text-lg">{stats.pending}</span>
-          <span className="text-muted-foreground">Pending</span>
         </div>
         <div className="flex items-center gap-2">
-          <CheckCircle className="h-4 w-4 text-foreground" />
+          <CheckCircle className="h-4 w-4 text-[#9b2e83]" />
+          <span className="text-[#9b2e83] font-medium">Active</span>
           <span className="font-bold text-lg">{stats.active}</span>
-          <span className="text-muted-foreground">Active</span>
         </div>
         <div className="flex items-center gap-2">
-          <AlertCircle className="h-4 w-4 text-foreground" />
+          <AlertCircle className="h-4 w-4 text-[#d72f40]" />
+          <span className="text-[#d72f40] font-medium">At Risk</span>
           <span className="font-bold text-lg">{stats.atRisk}</span>
-          <span className="text-muted-foreground">At Risk</span>
         </div>
         <div className="flex items-center gap-2">
-          <Pause className="h-4 w-4 text-foreground" />
+          <Pause className="h-4 w-4 text-muted-foreground" />
+          <span className="text-muted-foreground font-medium">Paused</span>
           <span className="font-bold text-lg">{stats.paused}</span>
-          <span className="text-muted-foreground">Paused</span>
         </div>
         <div className="flex items-center gap-2">
-          <Target className="h-4 w-4 text-foreground" />
+          <Target className="h-4 w-4 text-[#1f1e44]" />
+          <span className="text-[#1f1e44] font-medium">Completed</span>
           <span className="font-bold text-lg">{stats.completed}</span>
-          <span className="text-muted-foreground">Completed</span>
         </div>
         <div className="flex items-center gap-2">
-          <Star className="h-4 w-4 text-foreground" />
+          <Star className="h-4 w-4 text-[#9b2e83] fill-[#9b2e83]" />
+          <span className="text-[#9b2e83] font-medium">Avg Score</span>
           <span className="font-bold text-lg">{stats.avgSatisfaction || 'N/A'}</span>
-          <span className="text-muted-foreground">Avg Score</span>
         </div>
         <div className="flex items-center gap-2">
-          <Video className="h-4 w-4 text-foreground" />
+          <Video className="h-4 w-4 text-[#8982ff]" />
+          <span className="text-[#8982ff] font-medium">Meetings</span>
           <span className="font-bold text-lg">{stats.totalMeetings}</span>
-          <span className="text-muted-foreground">Meetings</span>
         </div>
       </div>
 

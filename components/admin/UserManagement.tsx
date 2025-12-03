@@ -30,6 +30,7 @@ import {
   Link as LinkIcon,
   Check,
   X,
+  Phone,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -539,39 +540,39 @@ export default function UserManagement() {
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'admin':
-        return 'bg-muted text-foreground';
+        return 'bg-[#1f1e44] text-white';
       case 'mentor':
-        return 'bg-muted text-foreground';
+        return 'bg-[#f7e5f3] text-[#9b2e83]';
       case 'mentee':
-        return 'bg-muted text-foreground';
+        return 'bg-[#f4f4fa] text-[#8982ff]';
       default:
-        return 'bg-accent text-foreground';
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   const getMembershipBadgeColor = (tier: string) => {
     switch (tier) {
       case 'premium':
-        return 'bg-foreground text-background';
+        return 'bg-[#9b2e83] text-white';
       case 'basic':
-        return 'bg-muted text-foreground';
+        return 'bg-[#eaf2ff] text-[#1378d1]';
       case 'free':
-        return 'bg-accent text-foreground';
+        return 'bg-muted text-muted-foreground';
       default:
-        return 'bg-accent text-foreground';
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
-        return <Badge className="bg-muted text-foreground text-xs">Active</Badge>;
+        return <Badge className="bg-[#effefb] text-[#1f1e44] text-xs"><CheckCircle className="w-3 h-3 mr-1 text-[#9b2e83]" />Active</Badge>;
       case 'inactive':
-        return <Badge className="bg-accent text-foreground text-xs">Inactive</Badge>;
+        return <Badge className="bg-muted text-muted-foreground text-xs">Inactive</Badge>;
       case 'suspended':
-        return <Badge className="bg-muted text-foreground text-xs">Suspended</Badge>;
+        return <Badge className="bg-[#d72f40]/10 text-[#d72f40] text-xs"><Ban className="w-3 h-3 mr-1" />Suspended</Badge>;
       case 'pending_registration':
-        return <Badge className="bg-muted text-foreground text-xs"><UserPlus className="w-3 h-3 mr-1" />Pending Registration</Badge>;
+        return <Badge className="bg-[#eaf2ff] text-[#1378d1] text-xs"><UserPlus className="w-3 h-3 mr-1" />Pending Registration</Badge>;
       default:
         return null;
     }
@@ -580,11 +581,11 @@ export default function UserManagement() {
   const getApplicationBadge = (status: string) => {
     switch (status) {
       case 'approved':
-        return <Badge className="bg-muted text-foreground text-xs"><CheckCircle className="w-3 h-3 mr-1" />Approved</Badge>;
+        return <Badge className="bg-[#effefb] text-[#1f1e44] text-xs"><CheckCircle className="w-3 h-3 mr-1 text-[#9b2e83]" />Approved</Badge>;
       case 'pending':
-        return <Badge className="bg-muted text-foreground text-xs"><Clock className="w-3 h-3 mr-1" />Pending</Badge>;
+        return <Badge className="bg-[#eaf2ff] text-[#1378d1] text-xs"><Clock className="w-3 h-3 mr-1" />Pending</Badge>;
       case 'rejected':
-        return <Badge className="bg-muted text-foreground text-xs">Rejected</Badge>;
+        return <Badge className="bg-[#d72f40]/10 text-[#d72f40] text-xs"><X className="w-3 h-3 mr-1" />Rejected</Badge>;
       default:
         return null;
     }
@@ -592,12 +593,12 @@ export default function UserManagement() {
 
   const getMentorStatusBadge = (status: string) => {
     const variants = {
-      active: { text: 'Active', className: 'bg-muted text-foreground' },
-      busy: { text: 'Busy', className: 'bg-muted text-foreground' },
-      paused: { text: 'Paused', className: 'bg-accent text-foreground' },
+      active: { text: 'Active', className: 'bg-[#effefb] text-[#1f1e44]', icon: <CheckCircle className="w-3 h-3 mr-1 text-[#9b2e83]" /> },
+      busy: { text: 'Busy', className: 'bg-[#f7e5f3] text-[#9b2e83]', icon: <Clock className="w-3 h-3 mr-1" /> },
+      paused: { text: 'Paused', className: 'bg-muted text-muted-foreground', icon: null },
     };
     const variant = variants[status as keyof typeof variants] || variants.paused;
-    return <Badge className={cn("text-xs", variant.className)}>{variant.text}</Badge>;
+    return <Badge className={cn("text-xs", variant.className)}>{variant.icon}{variant.text}</Badge>;
   };
 
   // Render expanded row content
@@ -607,11 +608,14 @@ export default function UserManagement() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Profile Details */}
           <div className="space-y-3">
-            <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">Profile Details</h4>
+            <h4 className="font-semibold text-sm text-[#9b2e83] uppercase tracking-wide flex items-center gap-2">
+              <Eye className="w-4 h-4" />
+              Profile Details
+            </h4>
 
             {(user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio) && (
               <div>
-                <p className="text-xs text-muted-foreground mb-1">Bio</p>
+                <p className="text-xs text-[#1f1e44] font-medium mb-1">Bio</p>
                 <p className="text-sm line-clamp-3">
                   {user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio}
                 </p>
@@ -620,10 +624,10 @@ export default function UserManagement() {
 
             {(user.mentorInfo?.expertise || user.applicationInfo?.expertise) && (
               <div>
-                <p className="text-xs text-muted-foreground mb-1">Expertise</p>
+                <p className="text-xs text-[#8982ff] font-medium mb-1">Expertise</p>
                 <div className="flex flex-wrap gap-1">
                   {(user.mentorInfo?.expertise || user.applicationInfo?.expertise || []).map((skill, idx) => (
-                    <Badge key={idx} variant="secondary" className="text-xs">{skill}</Badge>
+                    <Badge key={idx} variant="secondary" className="text-xs bg-[#f4f4fa] text-[#8982ff]">{skill}</Badge>
                   ))}
                 </div>
               </div>
@@ -631,12 +635,12 @@ export default function UserManagement() {
 
             {(user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl) && (
               <div className="flex items-center gap-2 text-sm">
-                <LinkIcon className="w-3 h-3 text-foreground" />
+                <LinkIcon className="w-3 h-3 text-[#1378d1]" />
                 <a
                   href={user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-foreground hover:underline truncate"
+                  className="text-[#1378d1] hover:underline truncate"
                 >
                   LinkedIn Profile
                 </a>
@@ -645,7 +649,7 @@ export default function UserManagement() {
 
             {user.applicationInfo && (
               <div className="pt-2 border-t">
-                <p className="text-xs text-muted-foreground mb-1">Application ({user.applicationInfo.type})</p>
+                <p className="text-xs text-[#1378d1] font-medium mb-1">Application ({user.applicationInfo.type})</p>
                 <div className="space-y-1 text-sm">
                   <p>Status: <Badge variant="outline" className="ml-1 text-xs">{user.applicationInfo.status}</Badge></p>
                   {user.applicationInfo.submittedAt && (
@@ -665,7 +669,10 @@ export default function UserManagement() {
 
           {/* Metrics & Activity */}
           <div className="space-y-3">
-            <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">Metrics & Activity</h4>
+            <h4 className="font-semibold text-sm text-[#1f1e44] uppercase tracking-wide flex items-center gap-2">
+              <Briefcase className="w-4 h-4" />
+              Metrics & Activity
+            </h4>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm">
@@ -680,17 +687,17 @@ export default function UserManagement() {
 
             {user.mentorInfo && user.mentorInfo.isVerified && (
               <div className="pt-2 border-t space-y-2">
-                <p className="text-xs text-muted-foreground mb-1">Mentor Metrics</p>
+                <p className="text-xs text-[#9b2e83] font-medium mb-1">Mentor Metrics</p>
                 <div className="flex items-center gap-2 text-sm">
-                  <Star className="w-4 h-4 text-foreground" />
+                  <Star className="w-4 h-4 text-[#9b2e83] fill-[#9b2e83]" />
                   <span className="font-medium">{user.mentorInfo.avgRating?.toFixed(1) || 'N/A'}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Users className="w-4 h-4" />
+                  <Users className="w-4 h-4 text-[#8982ff]" />
                   <span>{user.mentorInfo.activeMentees} active / {user.mentorInfo.totalMentees} total mentees</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MessageSquare className="w-4 h-4" />
+                  <MessageSquare className="w-4 h-4 text-[#1378d1]" />
                   <span>{user.mentorInfo.totalSessions} sessions</span>
                 </div>
               </div>
@@ -698,7 +705,7 @@ export default function UserManagement() {
 
             {user.menteeInfo && (
               <div className="pt-2 border-t space-y-2">
-                <p className="text-xs text-muted-foreground mb-1">Mentee Info</p>
+                <p className="text-xs text-[#8982ff] font-medium mb-1">Mentee Info</p>
                 {user.menteeInfo.careerStage && (
                   <p className="text-sm">Career Stage: <span className="capitalize">{user.menteeInfo.careerStage.replace(/_/g, ' ')}</span></p>
                 )}
@@ -720,23 +727,28 @@ export default function UserManagement() {
         {stats && (
           <div className="flex flex-wrap items-center gap-6 text-sm">
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">Total Users</span>
+              <Users className="w-4 h-4 text-[#1f1e44]" />
+              <span className="text-[#1f1e44] font-medium">Total Users</span>
               <span className="font-bold text-lg">{stats.totalUsers}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">Pending Applications</span>
+              <Clock className="w-4 h-4 text-[#1378d1]" />
+              <span className="text-[#1378d1] font-medium">Pending Applications</span>
               <span className="font-bold text-lg">{stats.pendingApplications}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">Mentors</span>
+              <Star className="w-4 h-4 text-[#9b2e83]" />
+              <span className="text-[#9b2e83] font-medium">Mentors</span>
               <span className="font-bold text-lg">{stats.byRole.mentor}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">Mentees</span>
+              <GraduationCap className="w-4 h-4 text-[#8982ff]" />
+              <span className="text-[#8982ff] font-medium">Mentees</span>
               <span className="font-bold text-lg">{stats.byRole.mentee}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">Admins</span>
+              <Shield className="w-4 h-4 text-[#1f1e44]" />
+              <span className="text-[#1f1e44] font-medium">Admins</span>
               <span className="font-bold text-lg">{stats.byRole.admin}</span>
             </div>
           </div>
@@ -934,7 +946,10 @@ export default function UserManagement() {
 
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Roles:</span>
+                          <span className="text-[#9b2e83] font-medium flex items-center gap-1">
+                            <Shield className="w-3 h-3" />
+                            Roles:
+                          </span>
                           <div className="flex flex-wrap gap-1 justify-end">
                             {user.roles.length > 0 ? user.roles.map((role) => (
                               <Badge key={role} variant="secondary" className={cn('text-xs', getRoleBadgeColor(role))}>
@@ -945,13 +960,19 @@ export default function UserManagement() {
                         </div>
 
                         <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Status:</span>
+                          <span className="text-[#1f1e44] font-medium flex items-center gap-1">
+                            <CheckCircle className="w-3 h-3" />
+                            Status:
+                          </span>
                           {getStatusBadge(user.accountStatus)}
                         </div>
 
                         {user.applicationStatus === 'pending' && (
                           <div className="flex items-center justify-between">
-                            <span className="text-muted-foreground">Application:</span>
+                            <span className="text-[#1378d1] font-medium flex items-center gap-1">
+                              <Clock className="w-3 h-3" />
+                              Application:
+                            </span>
                             {getApplicationBadge(user.applicationStatus)}
                           </div>
                         )}
@@ -1052,13 +1073,13 @@ export default function UserManagement() {
                                   {(user.city || user.mbtiType) && (
                                     <div className="flex items-center gap-2 mt-1">
                                       {user.city && (
-                                        <span className="flex items-center gap-0.5 text-xs text-muted-foreground">
+                                        <span className="flex items-center gap-0.5 text-xs text-[#1378d1]">
                                           <MapPin className="w-3 h-3" />
                                           {user.city}
                                         </span>
                                       )}
                                       {user.mbtiType && (
-                                        <Badge variant="outline" className="text-xs px-1 py-0">
+                                        <Badge className="text-xs px-1.5 py-0 bg-[#f4f4fa] text-[#8982ff] border border-[#8982ff]/30">
                                           <Brain className="w-2.5 h-2.5 mr-0.5" />
                                           {user.mbtiType}
                                         </Badge>
@@ -1261,7 +1282,15 @@ export default function UserManagement() {
             </DialogHeader>
             <div className="space-y-4">
               <div>
-                <Label htmlFor="review-notes">
+                <Label htmlFor="review-notes" className={cn(
+                  "flex items-center gap-2",
+                  reviewAction === 'approve' ? "text-[#9b2e83]" : "text-[#d72f40]"
+                )}>
+                  {reviewAction === 'approve' ? (
+                    <CheckCircle className="w-4 h-4" />
+                  ) : (
+                    <X className="w-4 h-4" />
+                  )}
                   {reviewAction === 'approve' ? 'Notes (optional)' : 'Reason for rejection (required)'}
                 </Label>
                 <Textarea
@@ -1362,7 +1391,10 @@ export default function UserManagement() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="edit-name">Name</Label>
+                  <Label htmlFor="edit-name" className="text-[#1f1e44] flex items-center gap-2">
+                    <Users className="w-4 h-4" />
+                    Name
+                  </Label>
                   <Input
                     id="edit-name"
                     value={editFormData.name}
@@ -1371,7 +1403,10 @@ export default function UserManagement() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="edit-phone">Phone</Label>
+                  <Label htmlFor="edit-phone" className="text-[#8982ff] flex items-center gap-2">
+                    <Phone className="w-4 h-4" />
+                    Phone
+                  </Label>
                   <Input
                     id="edit-phone"
                     value={editFormData.phone}

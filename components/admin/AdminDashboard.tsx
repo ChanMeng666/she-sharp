@@ -133,9 +133,9 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
                   <div className="flex items-center gap-3">
                     <div className={cn(
                       "w-2 h-2 rounded-full shrink-0",
-                      task.priority === 'high' && "bg-foreground",
-                      task.priority === 'medium' && "bg-muted-foreground",
-                      task.priority === 'low' && "bg-muted-foreground/50"
+                      task.priority === 'high' && "bg-[#d72f40]",
+                      task.priority === 'medium' && "bg-[#9b2e83]",
+                      task.priority === 'low' && "bg-muted-foreground"
                     )} />
                     <span className="text-sm font-medium">{task.task}</span>
                   </div>
@@ -147,7 +147,7 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-8 text-center">
-              <CheckCircle className="h-12 w-12 text-muted-foreground/50 mb-3" />
+              <CheckCircle className="h-12 w-12 text-[#9b2e83]/50 mb-3" />
               <p className="text-sm text-muted-foreground">No pending tasks</p>
             </div>
           )}

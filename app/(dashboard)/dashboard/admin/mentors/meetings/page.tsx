@@ -112,8 +112,8 @@ interface ApiResponse {
 }
 
 const TYPE_COLORS = [
-  'hsl(var(--primary))',
-  'hsl(var(--muted))',
+  '#9b2e83',  // Purple Dark - Video calls
+  '#1f1e44',  // Navy Dark - In person
 ];
 
 export default function MentorMeetingsPage() {
@@ -153,10 +153,10 @@ export default function MentorMeetingsPage() {
 
   const getStatusBadge = (status: string) => {
     const variants = {
-      completed: { text: 'Completed', className: 'bg-muted text-foreground', icon: CheckCircle },
-      scheduled: { text: 'Scheduled', className: 'bg-muted text-foreground', icon: Calendar },
-      cancelled: { text: 'Cancelled', className: 'bg-muted text-foreground', icon: XCircle },
-      no_show: { text: 'No Show', className: 'bg-muted text-foreground', icon: AlertCircle },
+      completed: { text: 'Completed', className: 'bg-foreground text-background', icon: CheckCircle },
+      scheduled: { text: 'Scheduled', className: 'bg-[#eaf2ff] text-foreground', icon: Calendar },
+      cancelled: { text: 'Cancelled', className: 'bg-muted-foreground text-background', icon: XCircle },
+      no_show: { text: 'No Show', className: 'bg-destructive/10 text-destructive', icon: AlertCircle },
     };
     const variant = variants[status as keyof typeof variants];
     const Icon = variant?.icon || AlertCircle;
@@ -170,8 +170,8 @@ export default function MentorMeetingsPage() {
 
   const getMeetingTypeIcon = (type: string) => {
     const icons = {
-      video: { icon: Video, color: 'text-foreground' },
-      in_person: { icon: Users, color: 'text-foreground' },
+      video: { icon: Video, color: 'text-[#9b2e83]' },
+      in_person: { icon: Users, color: 'text-[#1f1e44]' },
     };
     const config = icons[type as keyof typeof icons];
     const Icon = config?.icon || Video;
@@ -223,21 +223,37 @@ export default function MentorMeetingsPage() {
 
       {/* Key Metrics Summary */}
       {!loading && (
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-          <span>
-            <strong className="text-foreground">{stats.total}</strong> total meetings
-            ({stats.completed} completed, {stats.scheduled} scheduled)
-          </span>
-          <span>
-            Avg duration: <strong className="text-foreground">{stats.avgDuration} min</strong>
-          </span>
-          <span>
-            Completion rate: <strong className="text-foreground">{stats.completionRate}%</strong>
-          </span>
-          <span>
-            Avg rating: <strong className="text-foreground">{stats.avgRating || 'N/A'}</strong>
-            {stats.totalRatings > 0 && ` (${stats.totalRatings} reviews)`}
-          </span>
+        <div className="flex flex-wrap items-center gap-6 text-sm">
+          <div className="flex items-center gap-2">
+            <Video className="h-4 w-4 text-[#1f1e44]" />
+            <span className="text-[#1f1e44] font-medium">Total Meetings</span>
+            <span className="font-bold text-lg">{stats.total}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircle className="h-4 w-4 text-[#9b2e83]" />
+            <span className="text-[#9b2e83] font-medium">Completed</span>
+            <span className="font-bold text-lg">{stats.completed}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Calendar className="h-4 w-4 text-[#1378d1]" />
+            <span className="text-[#1378d1] font-medium">Scheduled</span>
+            <span className="font-bold text-lg">{stats.scheduled}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Timer className="h-4 w-4 text-[#8982ff]" />
+            <span className="text-[#8982ff] font-medium">Avg Duration</span>
+            <span className="font-bold text-lg">{stats.avgDuration} min</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircle className="h-4 w-4 text-[#1f1e44]" />
+            <span className="text-[#1f1e44] font-medium">Completion Rate</span>
+            <span className="font-bold text-lg">{stats.completionRate}%</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Star className="h-4 w-4 text-[#9b2e83] fill-[#9b2e83]" />
+            <span className="text-[#9b2e83] font-medium">Avg Rating</span>
+            <span className="font-bold text-lg">{stats.avgRating || 'N/A'}</span>
+          </div>
         </div>
       )}
 
@@ -268,7 +284,7 @@ export default function MentorMeetingsPage() {
                     yAxisId="left"
                     type="monotone"
                     dataKey="meetings"
-                    stroke="hsl(var(--primary))"
+                    stroke="#9b2e83"
                     strokeWidth={2}
                     name="Total Meetings"
                   />
@@ -276,7 +292,7 @@ export default function MentorMeetingsPage() {
                     yAxisId="right"
                     type="monotone"
                     dataKey="avgDuration"
-                    stroke="#60a5fa"
+                    stroke="#1378d1"
                     strokeWidth={2}
                     name="Avg Duration (min)"
                   />
@@ -455,7 +471,7 @@ export default function MentorMeetingsPage() {
                     <TableCell>
                       {meeting.rating ? (
                         <div className="flex items-center space-x-1">
-                          <Star className="w-4 h-4 text-foreground" />
+                          <Star className="w-4 h-4 text-[#9b2e83] fill-[#9b2e83]" />
                           <span className="text-sm font-medium">{meeting.rating}</span>
                         </div>
                       ) : (

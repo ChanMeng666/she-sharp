@@ -314,19 +314,19 @@ export default function MatchingManagementPage() {
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-foreground bg-muted';
-    if (score >= 60) return 'text-foreground bg-muted';
-    return 'text-foreground bg-muted';
+    if (score >= 80) return 'bg-foreground text-background';
+    if (score >= 60) return 'bg-muted text-foreground';
+    return 'bg-muted text-muted-foreground';
   };
 
   const getConfidenceBadge = (level?: string) => {
     switch (level) {
       case 'high':
-        return <Badge className="bg-muted text-foreground">High Confidence</Badge>;
+        return <Badge className="bg-foreground text-background">High Confidence</Badge>;
       case 'medium':
         return <Badge className="bg-muted text-foreground">Medium Confidence</Badge>;
       case 'low':
-        return <Badge className="bg-muted text-foreground">Low Confidence</Badge>;
+        return <Badge className="bg-muted text-muted-foreground">Low Confidence</Badge>;
       default:
         return null;
     }
@@ -397,7 +397,7 @@ export default function MatchingManagementPage() {
                   <Badge className={`${getScoreColor(match.overallScore)} font-bold`}>
                     {match.overallScore.toFixed(0)}%
                   </Badge>
-                  <TrendingUp className="h-4 w-4 text-foreground mt-1" />
+                  <TrendingUp className="h-4 w-4 text-[#9b2e83] mt-1" />
                 </div>
 
                 {/* Mentee Info */}
@@ -598,9 +598,9 @@ export default function MatchingManagementPage() {
 
             {/* AI Explanation */}
             {match.aiExplanation && (
-              <div className="p-4 bg-muted/50 rounded-lg border border-muted">
+              <div className="p-4 bg-[#f4f4fa] rounded-lg border border-[#8982ff]/20">
                 <div className="flex items-start gap-2">
-                  <Brain className="h-5 w-5 text-foreground mt-0.5" />
+                  <Brain className="h-5 w-5 text-[#8982ff] mt-0.5" />
                   <div>
                     <p className="font-medium text-foreground mb-1">AI Analysis</p>
                     <p className="text-sm text-muted-foreground">{match.aiExplanation}</p>
@@ -611,9 +611,9 @@ export default function MatchingManagementPage() {
 
             {/* AI Recommendation */}
             {match.aiRecommendation && (
-              <div className="p-4 bg-muted/50 rounded-lg border border-muted">
+              <div className="p-4 bg-[#f7e5f3] rounded-lg border border-[#9b2e83]/20">
                 <div className="flex items-start gap-2">
-                  <Lightbulb className="h-5 w-5 text-foreground mt-0.5" />
+                  <Lightbulb className="h-5 w-5 text-[#9b2e83] mt-0.5" />
                   <div>
                     <p className="font-medium text-foreground mb-1">Recommendation</p>
                     <p className="text-sm text-muted-foreground">{match.aiRecommendation}</p>
@@ -627,9 +627,9 @@ export default function MatchingManagementPage() {
               <h4 className="text-sm font-semibold mb-3">Score Breakdown</h4>
               <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                 {match.mbtiCompatibilityScore !== undefined && (
-                  <div className="p-3 bg-muted/50 rounded-lg">
+                  <div className="p-3 bg-[#f4f4fa] rounded-lg">
                     <div className="flex items-center gap-2 mb-1">
-                      <Brain className="h-4 w-4 text-foreground" />
+                      <Brain className="h-4 w-4 text-[#8982ff]" />
                       <span className="text-xs font-medium">MBTI</span>
                     </div>
                     <Progress value={match.mbtiCompatibilityScore} className="h-2 mb-1" />
@@ -637,9 +637,9 @@ export default function MatchingManagementPage() {
                   </div>
                 )}
                 {match.skillMatchScore !== undefined && (
-                  <div className="p-3 bg-muted/50 rounded-lg">
+                  <div className="p-3 bg-[#eaf2ff] rounded-lg">
                     <div className="flex items-center gap-2 mb-1">
-                      <Target className="h-4 w-4 text-foreground" />
+                      <Target className="h-4 w-4 text-[#1378d1]" />
                       <span className="text-xs font-medium">Skills</span>
                     </div>
                     <Progress value={match.skillMatchScore} className="h-2 mb-1" />
@@ -647,9 +647,9 @@ export default function MatchingManagementPage() {
                   </div>
                 )}
                 {match.goalAlignmentScore !== undefined && (
-                  <div className="p-3 bg-muted/50 rounded-lg">
+                  <div className="p-3 bg-[#f7e5f3] rounded-lg">
                     <div className="flex items-center gap-2 mb-1">
-                      <Heart className="h-4 w-4 text-foreground" />
+                      <Heart className="h-4 w-4 text-[#9b2e83]" />
                       <span className="text-xs font-medium">Goals</span>
                     </div>
                     <Progress value={match.goalAlignmentScore} className="h-2 mb-1" />
@@ -659,7 +659,7 @@ export default function MatchingManagementPage() {
                 {match.industryMatchScore !== undefined && (
                   <div className="p-3 bg-muted/50 rounded-lg">
                     <div className="flex items-center gap-2 mb-1">
-                      <Briefcase className="h-4 w-4 text-foreground" />
+                      <Briefcase className="h-4 w-4 text-[#1f1e44]" />
                       <span className="text-xs font-medium">Industry</span>
                     </div>
                     <Progress value={match.industryMatchScore} className="h-2 mb-1" />
@@ -667,9 +667,9 @@ export default function MatchingManagementPage() {
                   </div>
                 )}
                 {match.logisticsScore !== undefined && (
-                  <div className="p-3 bg-muted/50 rounded-lg">
+                  <div className="p-3 bg-[#effefb] rounded-lg">
                     <div className="flex items-center gap-2 mb-1">
-                      <MapPin className="h-4 w-4 text-foreground" />
+                      <MapPin className="h-4 w-4 text-[#1f1e44]" />
                       <span className="text-xs font-medium">Logistics</span>
                     </div>
                     <Progress value={match.logisticsScore} className="h-2 mb-1" />
@@ -682,9 +682,9 @@ export default function MatchingManagementPage() {
             {/* Matching Factors */}
             <div className="grid md:grid-cols-3 gap-4">
               {match.matchingFactors?.strengths && match.matchingFactors.strengths.length > 0 && (
-                <div className="p-3 bg-muted/50 rounded-lg">
+                <div className="p-3 bg-[#effefb] rounded-lg border border-[#b1f6e9]/50">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle className="h-4 w-4 text-foreground" />
+                    <CheckCircle className="h-4 w-4 text-[#9b2e83]" />
                     <span className="text-sm font-medium text-foreground">Strengths</span>
                   </div>
                   <ul className="text-xs text-muted-foreground space-y-1">
@@ -695,9 +695,9 @@ export default function MatchingManagementPage() {
                 </div>
               )}
               {match.matchingFactors?.challenges && match.matchingFactors.challenges.length > 0 && (
-                <div className="p-3 bg-muted/50 rounded-lg">
+                <div className="p-3 bg-[#d72f40]/5 rounded-lg border border-[#d72f40]/20">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="h-4 w-4 text-foreground" />
+                    <AlertTriangle className="h-4 w-4 text-[#d72f40]" />
                     <span className="text-sm font-medium text-foreground">Challenges</span>
                   </div>
                   <ul className="text-xs text-muted-foreground space-y-1">
@@ -708,9 +708,9 @@ export default function MatchingManagementPage() {
                 </div>
               )}
               {match.matchingFactors?.growthOpportunities && match.matchingFactors.growthOpportunities.length > 0 && (
-                <div className="p-3 bg-muted/50 rounded-lg">
+                <div className="p-3 bg-[#eaf2ff] rounded-lg border border-[#1378d1]/20">
                   <div className="flex items-center gap-2 mb-2">
-                    <TrendingUp className="h-4 w-4 text-foreground" />
+                    <TrendingUp className="h-4 w-4 text-[#1378d1]" />
                     <span className="text-sm font-medium text-foreground">Growth Areas</span>
                   </div>
                   <ul className="text-xs text-muted-foreground space-y-1">
@@ -839,8 +839,8 @@ export default function MatchingManagementPage() {
           </Alert>
         )}
         {successMessage && (
-          <Alert className="border-muted bg-muted/50">
-            <CheckCircle className="h-4 w-4 text-foreground" />
+          <Alert className="border-[#b1f6e9] bg-[#effefb]">
+            <CheckCircle className="h-4 w-4 text-[#9b2e83]" />
             <AlertDescription className="text-foreground">{successMessage}</AlertDescription>
           </Alert>
         )}
@@ -848,44 +848,44 @@ export default function MatchingManagementPage() {
         {/* Stats Summary */}
         <div className="flex flex-wrap items-center gap-6 text-sm">
           <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-foreground" />
+            <Clock className="h-4 w-4 text-[#1378d1]" />
+            <span className="text-[#1378d1] font-medium">Pending</span>
             <span className="font-bold text-lg">{pendingCount}</span>
-            <span className="text-muted-foreground">Pending</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle className="h-4 w-4 text-foreground" />
+            <CheckCircle className="h-4 w-4 text-[#9b2e83]" />
+            <span className="text-[#9b2e83] font-medium">Approved</span>
             <span className="font-bold text-lg">{stats?.approvedMatches || 0}</span>
-            <span className="text-muted-foreground">Approved</span>
           </div>
           <div className="flex items-center gap-2">
-            <XCircle className="h-4 w-4 text-foreground" />
+            <XCircle className="h-4 w-4 text-muted-foreground" />
+            <span className="text-muted-foreground font-medium">Rejected</span>
             <span className="font-bold text-lg">{stats?.rejectedMatches || 0}</span>
-            <span className="text-muted-foreground">Rejected</span>
           </div>
           <div className="flex items-center gap-2">
-            <Users className="h-4 w-4 text-foreground" />
+            <Users className="h-4 w-4 text-[#1f1e44]" />
+            <span className="text-[#1f1e44] font-medium">Active</span>
             <span className="font-bold text-lg">{stats?.activeRelationships || 0}</span>
-            <span className="text-muted-foreground">Active</span>
           </div>
           <div className="flex items-center gap-2">
-            <Brain className="h-4 w-4 text-foreground" />
+            <Brain className="h-4 w-4 text-[#8982ff]" />
+            <span className="text-[#8982ff] font-medium">Avg Score</span>
             <span className="font-bold text-lg">{stats?.averageMatchScore?.toFixed(0) || 0}%</span>
-            <span className="text-muted-foreground">Avg Score</span>
           </div>
           <div className="flex items-center gap-2">
-            <Timer className="h-4 w-4 text-foreground" />
+            <Timer className="h-4 w-4 text-[#1378d1]" />
+            <span className="text-[#1378d1] font-medium">In Queue</span>
             <span className="font-bold text-lg">{stats?.queueLength || 0}</span>
-            <span className="text-muted-foreground">In Queue</span>
           </div>
           <div className="flex items-center gap-2">
-            <UserPlus className="h-4 w-4 text-foreground" />
+            <UserPlus className="h-4 w-4 text-[#9b2e83]" />
+            <span className="text-[#9b2e83] font-medium">Slots Open</span>
             <span className="font-bold text-lg">{stats?.mentorCapacity?.availableSlots || 0}</span>
-            <span className="text-muted-foreground">Slots Open</span>
           </div>
           <div className="flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4 text-foreground" />
+            <AlertTriangle className="h-4 w-4 text-[#d72f40]" />
+            <span className="text-[#d72f40] font-medium">High Priority</span>
             <span className="font-bold text-lg">{stats?.highPriorityCount || 0}</span>
-            <span className="text-muted-foreground">High Priority</span>
           </div>
         </div>
 
