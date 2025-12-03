@@ -541,9 +541,9 @@ export default function UserManagement() {
       case 'admin':
         return 'bg-muted text-foreground';
       case 'mentor':
-        return 'bg-green-100 text-green-700';
+        return 'bg-muted text-foreground';
       case 'mentee':
-        return 'bg-blue-100 text-blue-700';
+        return 'bg-muted text-foreground';
       default:
         return 'bg-accent text-foreground';
     }
@@ -565,13 +565,13 @@ export default function UserManagement() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
-        return <Badge className="bg-green-100 text-green-700 text-xs">Active</Badge>;
+        return <Badge className="bg-muted text-foreground text-xs">Active</Badge>;
       case 'inactive':
         return <Badge className="bg-accent text-foreground text-xs">Inactive</Badge>;
       case 'suspended':
-        return <Badge className="bg-red-100 text-red-700 text-xs">Suspended</Badge>;
+        return <Badge className="bg-muted text-foreground text-xs">Suspended</Badge>;
       case 'pending_registration':
-        return <Badge className="bg-yellow-100 text-yellow-700 text-xs"><UserPlus className="w-3 h-3 mr-1" />Pending Registration</Badge>;
+        return <Badge className="bg-muted text-foreground text-xs"><UserPlus className="w-3 h-3 mr-1" />Pending Registration</Badge>;
       default:
         return null;
     }
@@ -580,11 +580,11 @@ export default function UserManagement() {
   const getApplicationBadge = (status: string) => {
     switch (status) {
       case 'approved':
-        return <Badge className="bg-green-100 text-green-700 text-xs"><CheckCircle className="w-3 h-3 mr-1" />Approved</Badge>;
+        return <Badge className="bg-muted text-foreground text-xs"><CheckCircle className="w-3 h-3 mr-1" />Approved</Badge>;
       case 'pending':
-        return <Badge className="bg-yellow-100 text-yellow-700 text-xs"><Clock className="w-3 h-3 mr-1" />Pending</Badge>;
+        return <Badge className="bg-muted text-foreground text-xs"><Clock className="w-3 h-3 mr-1" />Pending</Badge>;
       case 'rejected':
-        return <Badge className="bg-red-100 text-red-700 text-xs">Rejected</Badge>;
+        return <Badge className="bg-muted text-foreground text-xs">Rejected</Badge>;
       default:
         return null;
     }
@@ -592,8 +592,8 @@ export default function UserManagement() {
 
   const getMentorStatusBadge = (status: string) => {
     const variants = {
-      active: { text: 'Active', className: 'bg-green-100 text-green-800' },
-      busy: { text: 'Busy', className: 'bg-yellow-100 text-yellow-800' },
+      active: { text: 'Active', className: 'bg-muted text-foreground' },
+      busy: { text: 'Busy', className: 'bg-muted text-foreground' },
       paused: { text: 'Paused', className: 'bg-accent text-foreground' },
     };
     const variant = variants[status as keyof typeof variants] || variants.paused;
@@ -631,12 +631,12 @@ export default function UserManagement() {
 
             {(user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl) && (
               <div className="flex items-center gap-2 text-sm">
-                <LinkIcon className="w-3 h-3 text-blue-600" />
+                <LinkIcon className="w-3 h-3 text-foreground" />
                 <a
                   href={user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline truncate"
+                  className="text-foreground hover:underline truncate"
                 >
                   LinkedIn Profile
                 </a>
@@ -682,7 +682,7 @@ export default function UserManagement() {
               <div className="pt-2 border-t space-y-2">
                 <p className="text-xs text-muted-foreground mb-1">Mentor Metrics</p>
                 <div className="flex items-center gap-2 text-sm">
-                  <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                  <Star className="w-4 h-4 text-foreground" />
                   <span className="font-medium">{user.mentorInfo.avgRating?.toFixed(1) || 'N/A'}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -725,15 +725,15 @@ export default function UserManagement() {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-muted-foreground">Pending Applications</span>
-              <span className="font-bold text-lg text-yellow-600">{stats.pendingApplications}</span>
+              <span className="font-bold text-lg">{stats.pendingApplications}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-muted-foreground">Mentors</span>
-              <span className="font-bold text-lg text-green-600">{stats.byRole.mentor}</span>
+              <span className="font-bold text-lg">{stats.byRole.mentor}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-muted-foreground">Mentees</span>
-              <span className="font-bold text-lg text-blue-600">{stats.byRole.mentee}</span>
+              <span className="font-bold text-lg">{stats.byRole.mentee}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-muted-foreground">Admins</span>
@@ -913,7 +913,7 @@ export default function UserManagement() {
                             <div className="flex items-center gap-2">
                               <p className="font-medium text-foreground truncate">{user.name || 'Unknown User'}</p>
                               {user.recordType === 'public_application' && (
-                                <Badge className="bg-yellow-100 text-yellow-700 text-xs">
+                                <Badge className="bg-muted text-foreground text-xs">
                                   <UserPlus className="w-3 h-3 mr-1" />
                                   Pending Reg
                                 </Badge>
@@ -1037,7 +1037,7 @@ export default function UserManagement() {
                                   <div className="flex items-center gap-2">
                                     <p className="font-medium text-foreground">{user.name || 'Unknown User'}</p>
                                     {user.recordType === 'public_application' && (
-                                      <Badge className="bg-yellow-100 text-yellow-700 text-xs">
+                                      <Badge className="bg-muted text-foreground text-xs">
                                         <UserPlus className="w-3 h-3 mr-1" />
                                         Pending Reg
                                       </Badge>

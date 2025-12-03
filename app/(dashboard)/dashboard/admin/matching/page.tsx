@@ -314,19 +314,19 @@ export default function MatchingManagementPage() {
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600 bg-green-100';
-    if (score >= 60) return 'text-yellow-600 bg-yellow-100';
-    return 'text-red-600 bg-red-100';
+    if (score >= 80) return 'text-foreground bg-muted';
+    if (score >= 60) return 'text-foreground bg-muted';
+    return 'text-foreground bg-muted';
   };
 
   const getConfidenceBadge = (level?: string) => {
     switch (level) {
       case 'high':
-        return <Badge className="bg-green-100 text-green-700">High Confidence</Badge>;
+        return <Badge className="bg-muted text-foreground">High Confidence</Badge>;
       case 'medium':
-        return <Badge className="bg-yellow-100 text-yellow-700">Medium Confidence</Badge>;
+        return <Badge className="bg-muted text-foreground">Medium Confidence</Badge>;
       case 'low':
-        return <Badge className="bg-red-100 text-red-700">Low Confidence</Badge>;
+        return <Badge className="bg-muted text-foreground">Low Confidence</Badge>;
       default:
         return null;
     }
@@ -365,9 +365,9 @@ export default function MatchingManagementPage() {
               <div className="flex items-center gap-4 mb-3">
                 {/* Mentor Info */}
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-12 w-12 border-2 border-purple-200">
+                  <Avatar className="h-12 w-12 border-2 border-muted">
                     <AvatarImage src={match.mentorImage || undefined} alt={match.mentorName} />
-                    <AvatarFallback className="bg-purple-100 text-purple-700 font-semibold">
+                    <AvatarFallback className="bg-muted text-foreground font-semibold">
                       {getInitials(match.mentorName)}
                     </AvatarFallback>
                   </Avatar>
@@ -397,14 +397,14 @@ export default function MatchingManagementPage() {
                   <Badge className={`${getScoreColor(match.overallScore)} font-bold`}>
                     {match.overallScore.toFixed(0)}%
                   </Badge>
-                  <TrendingUp className="h-4 w-4 text-purple-400 mt-1" />
+                  <TrendingUp className="h-4 w-4 text-foreground mt-1" />
                 </div>
 
                 {/* Mentee Info */}
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-12 w-12 border-2 border-blue-200">
+                  <Avatar className="h-12 w-12 border-2 border-muted">
                     <AvatarImage src={match.menteeImage || undefined} alt={match.menteeName} />
-                    <AvatarFallback className="bg-blue-100 text-blue-700 font-semibold">
+                    <AvatarFallback className="bg-muted text-foreground font-semibold">
                       {getInitials(match.menteeName)}
                     </AvatarFallback>
                   </Avatar>
@@ -435,7 +435,7 @@ export default function MatchingManagementPage() {
               <div className="flex items-center gap-2 flex-wrap">
                 {getConfidenceBadge(match.confidenceLevel)}
                 {(mentor?.city && mentee?.city && mentor.city === mentee.city) && (
-                  <Badge variant="outline" className="text-green-600 border-green-200 bg-green-50 text-xs">
+                  <Badge variant="outline" className="text-foreground border-muted bg-muted/50 text-xs">
                     <MapPin className="h-3 w-3 mr-1" />
                     Same City
                   </Badge>
@@ -443,7 +443,7 @@ export default function MatchingManagementPage() {
                 {(mentor?.preferredMeetingFormat && mentee?.preferredMeetingFormat &&
                   (mentor.preferredMeetingFormat === mentee.preferredMeetingFormat ||
                    mentor.preferredMeetingFormat === 'both' || mentee.preferredMeetingFormat === 'both')) && (
-                  <Badge variant="outline" className="text-blue-600 border-blue-200 bg-blue-50 text-xs">
+                  <Badge variant="outline" className="text-foreground border-muted bg-muted/50 text-xs">
                     <Video className="h-3 w-3 mr-1" />
                     Meeting Compatible
                   </Badge>
@@ -471,11 +471,11 @@ export default function MatchingManagementPage() {
             <div className="grid md:grid-cols-2 gap-6">
               {/* Mentor Details */}
               <div className="space-y-4">
-                <h4 className="text-sm font-semibold flex items-center gap-2 text-purple-700">
+                <h4 className="text-sm font-semibold flex items-center gap-2 text-foreground">
                   <Users className="h-4 w-4" />
                   Mentor Profile
                 </h4>
-                <div className="p-4 bg-purple-50/50 rounded-lg border border-purple-100 space-y-3">
+                <div className="p-4 bg-muted/50 rounded-lg border border-muted space-y-3">
                   {mentor?.bio && (
                     <div>
                       <p className="text-xs font-medium text-muted-foreground mb-1">Bio</p>
@@ -508,7 +508,7 @@ export default function MatchingManagementPage() {
                           <Badge key={i} variant="secondary" className="text-xs">{skill}</Badge>
                         ))}
                         {mentor.industrySkillsExpert?.slice(0, 3).map((skill, i) => (
-                          <Badge key={`ind-${i}`} variant="secondary" className="text-xs bg-purple-100">{skill}</Badge>
+                          <Badge key={`ind-${i}`} variant="secondary" className="text-xs">{skill}</Badge>
                         ))}
                       </div>
                     </div>
@@ -524,11 +524,11 @@ export default function MatchingManagementPage() {
 
               {/* Mentee Details */}
               <div className="space-y-4">
-                <h4 className="text-sm font-semibold flex items-center gap-2 text-blue-700">
+                <h4 className="text-sm font-semibold flex items-center gap-2 text-foreground">
                   <GraduationCap className="h-4 w-4" />
                   Mentee Profile
                 </h4>
-                <div className="p-4 bg-blue-50/50 rounded-lg border border-blue-100 space-y-3">
+                <div className="p-4 bg-muted/50 rounded-lg border border-muted space-y-3">
                   {mentee?.bio && (
                     <div>
                       <p className="text-xs font-medium text-muted-foreground mb-1">Bio</p>
@@ -567,7 +567,7 @@ export default function MatchingManagementPage() {
                           <Badge key={i} variant="secondary" className="text-xs">{skill}</Badge>
                         ))}
                         {mentee.industrySkillsBasic?.slice(0, 3).map((skill, i) => (
-                          <Badge key={`ind-${i}`} variant="secondary" className="text-xs bg-blue-100">{skill}</Badge>
+                          <Badge key={`ind-${i}`} variant="secondary" className="text-xs">{skill}</Badge>
                         ))}
                       </div>
                     </div>
@@ -598,12 +598,12 @@ export default function MatchingManagementPage() {
 
             {/* AI Explanation */}
             {match.aiExplanation && (
-              <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+              <div className="p-4 bg-muted/50 rounded-lg border border-muted">
                 <div className="flex items-start gap-2">
-                  <Brain className="h-5 w-5 text-purple-600 mt-0.5" />
+                  <Brain className="h-5 w-5 text-foreground mt-0.5" />
                   <div>
-                    <p className="font-medium text-purple-900 mb-1">AI Analysis</p>
-                    <p className="text-sm text-purple-800">{match.aiExplanation}</p>
+                    <p className="font-medium text-foreground mb-1">AI Analysis</p>
+                    <p className="text-sm text-muted-foreground">{match.aiExplanation}</p>
                   </div>
                 </div>
               </div>
@@ -611,12 +611,12 @@ export default function MatchingManagementPage() {
 
             {/* AI Recommendation */}
             {match.aiRecommendation && (
-              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <div className="p-4 bg-muted/50 rounded-lg border border-muted">
                 <div className="flex items-start gap-2">
-                  <Lightbulb className="h-5 w-5 text-blue-600 mt-0.5" />
+                  <Lightbulb className="h-5 w-5 text-foreground mt-0.5" />
                   <div>
-                    <p className="font-medium text-blue-900 mb-1">Recommendation</p>
-                    <p className="text-sm text-blue-800">{match.aiRecommendation}</p>
+                    <p className="font-medium text-foreground mb-1">Recommendation</p>
+                    <p className="text-sm text-muted-foreground">{match.aiRecommendation}</p>
                   </div>
                 </div>
               </div>
@@ -627,9 +627,9 @@ export default function MatchingManagementPage() {
               <h4 className="text-sm font-semibold mb-3">Score Breakdown</h4>
               <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                 {match.mbtiCompatibilityScore !== undefined && (
-                  <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="p-3 bg-muted/50 rounded-lg">
                     <div className="flex items-center gap-2 mb-1">
-                      <Brain className="h-4 w-4 text-purple-600" />
+                      <Brain className="h-4 w-4 text-foreground" />
                       <span className="text-xs font-medium">MBTI</span>
                     </div>
                     <Progress value={match.mbtiCompatibilityScore} className="h-2 mb-1" />
@@ -637,9 +637,9 @@ export default function MatchingManagementPage() {
                   </div>
                 )}
                 {match.skillMatchScore !== undefined && (
-                  <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="p-3 bg-muted/50 rounded-lg">
                     <div className="flex items-center gap-2 mb-1">
-                      <Target className="h-4 w-4 text-blue-600" />
+                      <Target className="h-4 w-4 text-foreground" />
                       <span className="text-xs font-medium">Skills</span>
                     </div>
                     <Progress value={match.skillMatchScore} className="h-2 mb-1" />
@@ -647,9 +647,9 @@ export default function MatchingManagementPage() {
                   </div>
                 )}
                 {match.goalAlignmentScore !== undefined && (
-                  <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="p-3 bg-muted/50 rounded-lg">
                     <div className="flex items-center gap-2 mb-1">
-                      <Heart className="h-4 w-4 text-red-600" />
+                      <Heart className="h-4 w-4 text-foreground" />
                       <span className="text-xs font-medium">Goals</span>
                     </div>
                     <Progress value={match.goalAlignmentScore} className="h-2 mb-1" />
@@ -657,9 +657,9 @@ export default function MatchingManagementPage() {
                   </div>
                 )}
                 {match.industryMatchScore !== undefined && (
-                  <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="p-3 bg-muted/50 rounded-lg">
                     <div className="flex items-center gap-2 mb-1">
-                      <Briefcase className="h-4 w-4 text-green-600" />
+                      <Briefcase className="h-4 w-4 text-foreground" />
                       <span className="text-xs font-medium">Industry</span>
                     </div>
                     <Progress value={match.industryMatchScore} className="h-2 mb-1" />
@@ -667,9 +667,9 @@ export default function MatchingManagementPage() {
                   </div>
                 )}
                 {match.logisticsScore !== undefined && (
-                  <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="p-3 bg-muted/50 rounded-lg">
                     <div className="flex items-center gap-2 mb-1">
-                      <MapPin className="h-4 w-4 text-orange-600" />
+                      <MapPin className="h-4 w-4 text-foreground" />
                       <span className="text-xs font-medium">Logistics</span>
                     </div>
                     <Progress value={match.logisticsScore} className="h-2 mb-1" />
@@ -682,12 +682,12 @@ export default function MatchingManagementPage() {
             {/* Matching Factors */}
             <div className="grid md:grid-cols-3 gap-4">
               {match.matchingFactors?.strengths && match.matchingFactors.strengths.length > 0 && (
-                <div className="p-3 bg-green-50 rounded-lg">
+                <div className="p-3 bg-muted/50 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle className="h-4 w-4 text-green-600" />
-                    <span className="text-sm font-medium text-green-800">Strengths</span>
+                    <CheckCircle className="h-4 w-4 text-foreground" />
+                    <span className="text-sm font-medium text-foreground">Strengths</span>
                   </div>
-                  <ul className="text-xs text-green-700 space-y-1">
+                  <ul className="text-xs text-muted-foreground space-y-1">
                     {match.matchingFactors.strengths.map((s, i) => (
                       <li key={i}>• {s}</li>
                     ))}
@@ -695,12 +695,12 @@ export default function MatchingManagementPage() {
                 </div>
               )}
               {match.matchingFactors?.challenges && match.matchingFactors.challenges.length > 0 && (
-                <div className="p-3 bg-yellow-50 rounded-lg">
+                <div className="p-3 bg-muted/50 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="h-4 w-4 text-yellow-600" />
-                    <span className="text-sm font-medium text-yellow-800">Challenges</span>
+                    <AlertTriangle className="h-4 w-4 text-foreground" />
+                    <span className="text-sm font-medium text-foreground">Challenges</span>
                   </div>
-                  <ul className="text-xs text-yellow-700 space-y-1">
+                  <ul className="text-xs text-muted-foreground space-y-1">
                     {match.matchingFactors.challenges.map((c, i) => (
                       <li key={i}>• {c}</li>
                     ))}
@@ -708,12 +708,12 @@ export default function MatchingManagementPage() {
                 </div>
               )}
               {match.matchingFactors?.growthOpportunities && match.matchingFactors.growthOpportunities.length > 0 && (
-                <div className="p-3 bg-blue-50 rounded-lg">
+                <div className="p-3 bg-muted/50 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
-                    <TrendingUp className="h-4 w-4 text-blue-600" />
-                    <span className="text-sm font-medium text-blue-800">Growth Areas</span>
+                    <TrendingUp className="h-4 w-4 text-foreground" />
+                    <span className="text-sm font-medium text-foreground">Growth Areas</span>
                   </div>
-                  <ul className="text-xs text-blue-700 space-y-1">
+                  <ul className="text-xs text-muted-foreground space-y-1">
                     {match.matchingFactors.growthOpportunities.map((g, i) => (
                       <li key={i}>• {g}</li>
                     ))}
@@ -839,51 +839,51 @@ export default function MatchingManagementPage() {
           </Alert>
         )}
         {successMessage && (
-          <Alert className="border-green-200 bg-green-50">
-            <CheckCircle className="h-4 w-4 text-green-600" />
-            <AlertDescription className="text-green-800">{successMessage}</AlertDescription>
+          <Alert className="border-muted bg-muted/50">
+            <CheckCircle className="h-4 w-4 text-foreground" />
+            <AlertDescription className="text-foreground">{successMessage}</AlertDescription>
           </Alert>
         )}
 
         {/* Stats Summary */}
         <div className="flex flex-wrap items-center gap-6 text-sm">
           <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-yellow-600" />
+            <Clock className="h-4 w-4 text-foreground" />
             <span className="font-bold text-lg">{pendingCount}</span>
             <span className="text-muted-foreground">Pending</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle className="h-4 w-4 text-green-600" />
+            <CheckCircle className="h-4 w-4 text-foreground" />
             <span className="font-bold text-lg">{stats?.approvedMatches || 0}</span>
             <span className="text-muted-foreground">Approved</span>
           </div>
           <div className="flex items-center gap-2">
-            <XCircle className="h-4 w-4 text-red-600" />
+            <XCircle className="h-4 w-4 text-foreground" />
             <span className="font-bold text-lg">{stats?.rejectedMatches || 0}</span>
             <span className="text-muted-foreground">Rejected</span>
           </div>
           <div className="flex items-center gap-2">
-            <Users className="h-4 w-4 text-purple-600" />
+            <Users className="h-4 w-4 text-foreground" />
             <span className="font-bold text-lg">{stats?.activeRelationships || 0}</span>
             <span className="text-muted-foreground">Active</span>
           </div>
           <div className="flex items-center gap-2">
-            <Brain className="h-4 w-4 text-blue-600" />
+            <Brain className="h-4 w-4 text-foreground" />
             <span className="font-bold text-lg">{stats?.averageMatchScore?.toFixed(0) || 0}%</span>
             <span className="text-muted-foreground">Avg Score</span>
           </div>
           <div className="flex items-center gap-2">
-            <Timer className="h-4 w-4 text-orange-600" />
+            <Timer className="h-4 w-4 text-foreground" />
             <span className="font-bold text-lg">{stats?.queueLength || 0}</span>
             <span className="text-muted-foreground">In Queue</span>
           </div>
           <div className="flex items-center gap-2">
-            <UserPlus className="h-4 w-4 text-teal-600" />
+            <UserPlus className="h-4 w-4 text-foreground" />
             <span className="font-bold text-lg">{stats?.mentorCapacity?.availableSlots || 0}</span>
             <span className="text-muted-foreground">Slots Open</span>
           </div>
           <div className="flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4 text-pink-600" />
+            <AlertTriangle className="h-4 w-4 text-foreground" />
             <span className="font-bold text-lg">{stats?.highPriorityCount || 0}</span>
             <span className="text-muted-foreground">High Priority</span>
           </div>
@@ -935,7 +935,7 @@ export default function MatchingManagementPage() {
             {pendingCount === 0 ? (
               <Card>
                 <CardContent className="py-12 text-center">
-                  <Sparkles className="h-12 w-12 text-purple-300 mx-auto mb-4" />
+                  <Sparkles className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">No Pending Matches</h3>
                   <p className="text-muted-foreground mb-4">
                     Run the AI matching algorithm to generate new mentor-mentee suggestions.
@@ -955,7 +955,7 @@ export default function MatchingManagementPage() {
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle className="flex items-center gap-2">
-                          <Users className="h-5 w-5 text-purple-600" />
+                          <Users className="h-5 w-5 text-foreground" />
                           {mentor.mentorName}
                         </CardTitle>
                         <CardDescription>
@@ -1005,8 +1005,8 @@ export default function MatchingManagementPage() {
                         className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
                       >
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                            <UserPlus className="h-5 w-5 text-blue-600" />
+                          <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+                            <UserPlus className="h-5 w-5 text-foreground" />
                           </div>
                           <div>
                             <p className="font-medium">{entry.menteeName}</p>
@@ -1069,14 +1069,8 @@ export default function MatchingManagementPage() {
                         className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-gray-50 rounded-lg gap-4"
                       >
                         <div className="flex items-center gap-4">
-                          <div className={`p-2 rounded-lg ${
-                            run.status === 'completed' ? 'bg-green-100' :
-                            run.status === 'failed' ? 'bg-red-100' : 'bg-yellow-100'
-                          }`}>
-                            <Sparkles className={`h-5 w-5 ${
-                              run.status === 'completed' ? 'text-green-600' :
-                              run.status === 'failed' ? 'text-red-600' : 'text-yellow-600'
-                            }`} />
+                          <div className="p-2 rounded-lg bg-muted">
+                            <Sparkles className="h-5 w-5 text-foreground" />
                           </div>
                           <div>
                             <p className="font-medium">
@@ -1098,7 +1092,7 @@ export default function MatchingManagementPage() {
                             <p className="text-muted-foreground text-xs">Processed</p>
                           </div>
                           <div className="text-center">
-                            <p className="font-semibold text-green-600">{run.matchesGenerated}</p>
+                            <p className="font-semibold">{run.matchesGenerated}</p>
                             <p className="text-muted-foreground text-xs">Matches</p>
                           </div>
                           {run.totalApiCalls !== undefined && (
@@ -1135,9 +1129,9 @@ export default function MatchingManagementPage() {
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 {reviewAction === 'approve' ? (
-                  <CheckCircle className="h-5 w-5 text-green-600" />
+                  <CheckCircle className="h-5 w-5 text-foreground" />
                 ) : (
-                  <XCircle className="h-5 w-5 text-red-600" />
+                  <XCircle className="h-5 w-5 text-foreground" />
                 )}
                 {reviewAction === 'approve' ? 'Approve' : 'Reject'} Match
               </DialogTitle>
@@ -1150,7 +1144,7 @@ export default function MatchingManagementPage() {
             <div className="space-y-4">
               <div>
                 <label className="text-sm font-medium">
-                  Notes {reviewAction === 'reject' && <span className="text-red-500">*</span>}
+                  Notes {reviewAction === 'reject' && <span className="text-foreground">*</span>}
                 </label>
                 <Textarea
                   value={reviewNotes}
@@ -1172,11 +1166,7 @@ export default function MatchingManagementPage() {
               <Button
                 onClick={submitReview}
                 disabled={reviewAction === 'reject' && !reviewNotes.trim()}
-                className={
-                  reviewAction === 'approve'
-                    ? 'bg-green-600 hover:bg-green-700'
-                    : 'bg-red-600 hover:bg-red-700'
-                }
+                variant={reviewAction === 'approve' ? 'default' : 'destructive'}
               >
                 {reviewAction === 'approve' ? 'Approve & Notify' : 'Reject Match'}
               </Button>

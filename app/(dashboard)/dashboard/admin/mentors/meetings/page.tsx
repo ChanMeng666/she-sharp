@@ -153,10 +153,10 @@ export default function MentorMeetingsPage() {
 
   const getStatusBadge = (status: string) => {
     const variants = {
-      completed: { text: 'Completed', className: 'bg-green-100 text-green-800', icon: CheckCircle },
-      scheduled: { text: 'Scheduled', className: 'bg-blue-100 text-blue-800', icon: Calendar },
-      cancelled: { text: 'Cancelled', className: 'bg-red-100 text-red-800', icon: XCircle },
-      no_show: { text: 'No Show', className: 'bg-yellow-100 text-yellow-800', icon: AlertCircle },
+      completed: { text: 'Completed', className: 'bg-muted text-foreground', icon: CheckCircle },
+      scheduled: { text: 'Scheduled', className: 'bg-muted text-foreground', icon: Calendar },
+      cancelled: { text: 'Cancelled', className: 'bg-muted text-foreground', icon: XCircle },
+      no_show: { text: 'No Show', className: 'bg-muted text-foreground', icon: AlertCircle },
     };
     const variant = variants[status as keyof typeof variants];
     const Icon = variant?.icon || AlertCircle;
@@ -170,8 +170,8 @@ export default function MentorMeetingsPage() {
 
   const getMeetingTypeIcon = (type: string) => {
     const icons = {
-      video: { icon: Video, color: 'text-primary' },
-      in_person: { icon: Users, color: 'text-green-600' },
+      video: { icon: Video, color: 'text-foreground' },
+      in_person: { icon: Users, color: 'text-foreground' },
     };
     const config = icons[type as keyof typeof icons];
     const Icon = config?.icon || Video;
@@ -211,9 +211,9 @@ export default function MentorMeetingsPage() {
 
       {/* Error Message */}
       {error && (
-        <Card className="border-red-200 bg-red-50">
+        <Card className="border-muted bg-muted/50">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-red-600">
+            <div className="flex items-center gap-2 text-foreground">
               <AlertCircle className="w-5 h-5" />
               <span>{error}</span>
             </div>
@@ -455,7 +455,7 @@ export default function MentorMeetingsPage() {
                     <TableCell>
                       {meeting.rating ? (
                         <div className="flex items-center space-x-1">
-                          <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                          <Star className="w-4 h-4 text-foreground" />
                           <span className="text-sm font-medium">{meeting.rating}</span>
                         </div>
                       ) : (
@@ -491,7 +491,7 @@ export default function MentorMeetingsPage() {
                                 Reschedule
                               </DropdownMenuItem>
                               <DropdownMenuSeparator />
-                              <DropdownMenuItem className="text-red-600">
+                              <DropdownMenuItem className="text-foreground">
                                 <XCircle className="w-4 h-4 mr-2" />
                                 Cancel Meeting
                               </DropdownMenuItem>

@@ -133,9 +133,9 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
                   <div className="flex items-center gap-3">
                     <div className={cn(
                       "w-2 h-2 rounded-full shrink-0",
-                      task.priority === 'high' && "bg-red-500",
-                      task.priority === 'medium' && "bg-yellow-500",
-                      task.priority === 'low' && "bg-green-500"
+                      task.priority === 'high' && "bg-foreground",
+                      task.priority === 'medium' && "bg-muted-foreground",
+                      task.priority === 'low' && "bg-muted-foreground/50"
                     )} />
                     <span className="text-sm font-medium">{task.task}</span>
                   </div>

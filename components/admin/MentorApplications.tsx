@@ -147,22 +147,22 @@ export default function MentorApplications() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'pending':
-        return 'bg-yellow-100 text-yellow-700';
+        return 'bg-muted text-foreground';
       case 'under_review':
-        return 'bg-blue-100 text-blue-700';
+        return 'bg-muted text-foreground';
       case 'approved':
-        return 'bg-green-100 text-green-700';
+        return 'bg-muted text-foreground';
       case 'rejected':
-        return 'bg-red-100 text-red-700';
+        return 'bg-muted text-foreground';
       default:
         return 'bg-accent text-foreground';
     }
   };
 
   const getExperienceLevel = (years: number) => {
-    if (years >= 10) return { label: 'Senior', color: 'text-primary' };
-    if (years >= 5) return { label: 'Mid-level', color: 'text-blue-600' };
-    return { label: 'Junior', color: 'text-green-600' };
+    if (years >= 10) return { label: 'Senior', color: 'text-foreground' };
+    if (years >= 5) return { label: 'Mid-level', color: 'text-foreground' };
+    return { label: 'Junior', color: 'text-foreground' };
   };
 
   return (
@@ -225,7 +225,7 @@ export default function MentorApplications() {
                             {application.user.name}
                           </h3>
                           {application.isPublicApplication && (
-                            <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                            <Badge variant="outline" className="bg-muted text-foreground border-muted">
                               Public Application
                             </Badge>
                           )}
@@ -378,8 +378,8 @@ export default function MentorApplications() {
                             variant="secondary"
                             className={cn(
                               'text-sm px-3 py-1',
-                              application.status === 'approved' && 'bg-green-100 text-green-700',
-                              application.status === 'rejected' && 'bg-red-100 text-red-700'
+                              application.status === 'approved' && 'bg-muted text-foreground',
+                              application.status === 'rejected' && 'bg-muted text-foreground'
                             )}
                           >
                             {application.status === 'approved' ? 'Approved' : 'Rejected'}
@@ -432,11 +432,7 @@ export default function MentorApplications() {
             <Button
               onClick={submitReview}
               disabled={reviewAction === 'reject' && !reviewNotes.trim()}
-              className={cn(
-                reviewAction === 'approve'
-                  ? 'bg-green-600 hover:bg-green-700'
-                  : 'bg-red-600 hover:bg-red-700'
-              )}
+              variant={reviewAction === 'approve' ? 'default' : 'destructive'}
             >
               Confirm {reviewAction === 'approve' ? 'Approval' : 'Rejection'}
             </Button>
