@@ -14,10 +14,10 @@ interface QuickActionsProps {
 }
 
 const categoryColors = {
-  about: 'bg-muted text-foreground border-border',
-  events: 'bg-muted text-foreground border-border',
-  mentorship: 'bg-muted text-foreground border-border',
-  support: 'bg-muted text-foreground border-border',
+  about: 'bg-[#f7e5f3] text-[#9b2e83] border-[#9b2e83]/30',
+  events: 'bg-[#effefb] text-[#1f1e44] border-[#b1f6e9]',
+  mentorship: 'bg-[#f4f4fa] text-[#8982ff] border-[#8982ff]/30',
+  support: 'bg-[#eaf2ff] text-[#1f1e44] border-[#1378d1]/30',
   general: 'bg-muted text-foreground border-border'
 };
 
@@ -31,13 +31,13 @@ export function QuickActions({ onSelectQuestion }: QuickActionsProps) {
         className="w-full flex items-center justify-between p-4 hover:bg-muted transition-colors group"
       >
         <div className="flex items-center gap-3">
-          <HelpCircle size={18} className="text-foreground group-hover:text-foreground/80 transition-colors" />
+          <HelpCircle size={18} className="text-[#9b2e83] group-hover:text-[#c846ab] transition-colors" />
           <span className="text-sm font-medium text-foreground">Quick Questions</span>
         </div>
         {isExpanded ? (
-          <ChevronUp size={18} className="text-foreground" />
+          <ChevronUp size={18} className="text-[#9b2e83]" />
         ) : (
-          <ChevronDown size={18} className="text-foreground" />
+          <ChevronDown size={18} className="text-[#9b2e83]" />
         )}
       </button>
       

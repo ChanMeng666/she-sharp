@@ -169,17 +169,16 @@ export function Chatbot() {
             transition={{ duration: 0.2 }}
             className="h-full w-full"
           >
-            <Card className="flex flex-col overflow-hidden shadow-2xl border-border h-full bg-background">
+            <Card className="flex flex-col overflow-hidden shadow-2xl border-border h-full bg-background p-0 gap-0">
               <div className="flex items-center justify-between bg-foreground p-4 text-background flex-shrink-0">
                 <div className="flex items-center gap-3">
                   <MessageSquare size={22} />
                   <h3 className="font-semibold text-lg">She Sharp Assistant</h3>
                 </div>
-                <div className="flex items-center ">
+                <div className="flex items-center gap-1">
                   <Button
                     size="icon"
-                    variant="outline"
-                    className="h-9 w-9 text-background hover:bg-background/20"
+                    variant="ghost"
                     onClick={clearHistory}
                     title="Clear chat history"
                   >
@@ -187,8 +186,7 @@ export function Chatbot() {
                   </Button>
                   <Button
                     size="icon"
-                    variant="outline"
-                    className="h-9 w-9 text-background hover:bg-background/20"
+                    variant="ghost"
                     onClick={() => setIsOpen(false)}
                   >
                     <X size={18} />
@@ -238,9 +236,9 @@ export function Chatbot() {
                       />
                       <Button
                         type="submit"
-                        size="icon"
+                        variant="brand"
                         disabled={isLoading || !input.trim()}
-                        className="flex-shrink-0 h-[60px] w-[60px] rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+                        className="flex-shrink-0 h-[60px] w-[60px]"
                       >
                         <Send size={22} />
                       </Button>
@@ -261,12 +259,13 @@ export function Chatbot() {
           isOpen && 'hidden'
         )}
       >
-        <button
+        <Button
+          variant="brand"
           onClick={() => setIsOpen(!isOpen)}
-          className="relative flex h-16 w-16 items-center justify-center rounded-full bg-foreground text-background shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+          className="h-16 w-16 shadow-xl hover:shadow-2xl"
         >
           <MessageSquare size={26} />
-        </button>
+        </Button>
       </motion.div>
     </>
   );

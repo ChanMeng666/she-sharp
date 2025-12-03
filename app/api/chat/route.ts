@@ -1,12 +1,12 @@
-import { google } from '@ai-sdk/google';
+import { openai } from '@ai-sdk/openai';
 import { convertToCoreMessages, streamText } from 'ai';
 
 export async function POST(req: Request) {
   console.log('[Chat API] Request received');
-  
+
   try {
     const { messages } = await req.json();
-    
+
     if (!messages || !Array.isArray(messages)) {
       console.error('[Chat API] Invalid messages format:', messages);
       return new Response('Invalid request: messages array is required', {
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     }
 
     console.log('[Chat API] Processing messages:', messages.length);
-    
+
     // Clean up messages - remove parts field and system message
     const cleanedMessages = messages
       .filter((msg: any) => msg.id !== 'system')
@@ -23,11 +23,11 @@ export async function POST(req: Request) {
         role: msg.role,
         content: msg.content
       }));
-    
+
     console.log('[Chat API] Cleaned messages:', cleanedMessages.length);
 
-    // Create the model
-    const model = google('gemini-1.5-flash');
+    // Create the model - using GPT-4o-mini for cost-effective chat
+    const model = openai('gpt-4o-mini');
     
     console.log('[Chat API] Creating stream with model');
     
