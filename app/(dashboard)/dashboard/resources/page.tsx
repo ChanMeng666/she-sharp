@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -182,18 +182,17 @@ export default function ResourcesPage() {
             {new Date(resource.createdAt).toLocaleDateString()}
           </span>
         </div>
-      </CardContent>
-      <CardFooter className="border-t border-border bg-muted p-4">
-        <Button 
+
+        <Button
           onClick={() => handleDownload(resource)}
           variant="default"
-          className="w-full"
+          className="w-full mt-4"
           size="sm"
         >
           <Download className="h-4 w-4 mr-2" />
           Download Resource
         </Button>
-      </CardFooter>
+      </CardContent>
     </Card>
   );
 

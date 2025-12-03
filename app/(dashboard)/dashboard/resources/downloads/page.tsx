@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -211,9 +211,9 @@ export default function MyDownloadsPage() {
             <span>Downloaded on {format(new Date(download.downloadedAt), 'PPP')} at {format(new Date(download.downloadedAt), 'p')}</span>
           </div>
         </div>
-      </CardContent>
-      <CardFooter className="border-t border-border bg-muted flex flex-wrap gap-2 p-4">
-          <Button 
+
+        <div className="flex flex-wrap gap-2 pt-4">
+          <Button
             onClick={() => handleRedownload(download.resource)}
             variant="default"
             className="min-w-[120px]"
@@ -222,7 +222,7 @@ export default function MyDownloadsPage() {
             <Download className="h-4 w-4 mr-2" />
             Download Again
           </Button>
-          <Button 
+          <Button
             variant="outline"
             onClick={() => window.location.href = `/dashboard/resources/${download.resourceId}`}
             className="min-w-[120px]"
@@ -231,7 +231,8 @@ export default function MyDownloadsPage() {
             View Details
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
-      </CardFooter>
+        </div>
+      </CardContent>
     </Card>
   );
 

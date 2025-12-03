@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { RefreshCw } from 'lucide-react';
 
@@ -129,7 +129,7 @@ function VerifyEmailContent() {
             </CardTitle>
             <CardDescription className="mt-2">{message}</CardDescription>
           </CardHeader>
-          <CardFooter className="flex flex-col space-y-2">
+          <CardContent className="flex flex-col space-y-2">
             {verificationStatus === 'success' ? (
               <p className="text-center text-sm text-gray-600">
                 Redirecting to sign in page...
@@ -148,7 +148,7 @@ function VerifyEmailContent() {
                 </Link>
               </>
             )}
-          </CardFooter>
+          </CardContent>
         </Card>
       </div>
     );
@@ -217,14 +217,13 @@ function VerifyEmailContent() {
               )}
             </Button>
           </div>
-        </CardContent>
-        <CardFooter>
+
           <Link href="/sign-in" className="w-full">
             <Button variant="outline" size="lg" className="w-full">
               Back to Sign In
             </Button>
           </Link>
-        </CardFooter>
+        </CardContent>
       </Card>
     </div>
   );

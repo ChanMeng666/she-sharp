@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -187,15 +187,15 @@ export default function MyRegistrationsPage() {
             <span>Registered on {format(new Date(registration.registeredAt), 'PPP')}</span>
           </div>
         </div>
-      </CardContent>
-      <CardFooter className="border-t border-border bg-muted flex flex-wrap gap-2 p-4">
+
+        <div className="flex flex-wrap gap-2 pt-4">
           {/* Actions for upcoming events */}
           {new Date(registration.event.startTime) > new Date() && (
             <>
               {registration.event.locationDetails?.meetingLink && (
-                <Button 
+                <Button
                   onClick={() => window.open(registration.event.locationDetails.meetingLink, '_blank')}
-                  variant="default" 
+                  variant="default"
                   className="min-w-[100px]"
                   size="sm"
                 >
@@ -203,8 +203,8 @@ export default function MyRegistrationsPage() {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               )}
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => handleCancelRegistration(registration.event.id)}
                 className="min-w-[100px]"
                 size="sm"
@@ -219,9 +219,9 @@ export default function MyRegistrationsPage() {
           {new Date(registration.event.endTime) < new Date() && (
             <>
               {registration.certificateUrl && (
-                <Button 
+                <Button
                   onClick={() => window.open(registration.certificateUrl!, '_blank')}
-                  variant="default" 
+                  variant="default"
                   className="min-w-[100px]"
                   size="sm"
                 >
@@ -230,8 +230,8 @@ export default function MyRegistrationsPage() {
                 </Button>
               )}
               {!registration.feedbackSubmitted && (
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="min-w-[100px]"
                   size="sm"
                 >
@@ -242,14 +242,15 @@ export default function MyRegistrationsPage() {
             </>
           )}
 
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="min-w-[100px] border-border transition-all"
             size="sm"
           >
             View Details
           </Button>
-      </CardFooter>
+        </div>
+      </CardContent>
     </Card>
   );
 

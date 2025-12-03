@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -253,14 +253,13 @@ function MentorsContent() {
                     <Badge variant="secondary">Full</Badge>
                   )}
                 </div>
-              </CardContent>
-              <CardFooter className="border-t p-4">
-                <Link href={`/dashboard/mentors/${mentor.id}`} className="block w-full">
+
+                <Link href={`/dashboard/mentors/${mentor.id}`} className="block w-full pt-4">
                   <Button className="w-full" variant={mentor.isAcceptingMentees ? 'default' : 'outline'}>
                     View Profile
                   </Button>
                 </Link>
-              </CardFooter>
+              </CardContent>
             </Card>
           ))}
         </div>

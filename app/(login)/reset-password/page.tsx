@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Eye, EyeOff } from 'lucide-react';
 
@@ -131,7 +131,7 @@ function ResetPasswordForm() {
               {error || 'This password reset link is invalid or has expired.'}
             </CardDescription>
           </CardHeader>
-          <CardFooter className="flex flex-col space-y-2">
+          <CardContent className="flex flex-col space-y-2">
             <Link href="/forgot-password" className="w-full">
               <Button variant="default" size="lg" className="w-full">
                 Request New Reset Link
@@ -142,7 +142,7 @@ function ResetPasswordForm() {
                 Back to Sign In
               </Button>
             </Link>
-          </CardFooter>
+          </CardContent>
         </Card>
       </div>
     );
@@ -269,8 +269,7 @@ function ResetPasswordForm() {
                 <AlertDescription>Passwords do not match</AlertDescription>
               </Alert>
             )}
-          </CardContent>
-          <CardFooter className="flex flex-col space-y-2">
+
             <Button
               type="submit"
               variant="default"
@@ -285,7 +284,7 @@ function ResetPasswordForm() {
                 Cancel
               </Button>
             </Link>
-          </CardFooter>
+          </CardContent>
         </form>
       </Card>
     </div>

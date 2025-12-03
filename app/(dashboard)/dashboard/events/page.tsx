@@ -7,7 +7,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -210,43 +209,44 @@ export default function EventsPage() {
             )}
           </div>
         </div>
-      </CardContent>
-      <CardFooter className="border-t border-border bg-muted flex flex-wrap gap-2 p-4">
-        {event.isUpcoming &&
-          !event.isFull &&
-          (event.isRegistered ? (
-            <Button
-              variant="outline"
-              onClick={() => handleCancelRegistration(event.id)}
-              className="min-w-[130px]"
-              size="lg"
-            >
-              Cancel Registration
+
+        <div className="flex flex-wrap gap-2 pt-4">
+          {event.isUpcoming &&
+            !event.isFull &&
+            (event.isRegistered ? (
+              <Button
+                variant="outline"
+                onClick={() => handleCancelRegistration(event.id)}
+                className="min-w-[130px]"
+                size="lg"
+              >
+                Cancel Registration
+              </Button>
+            ) : (
+              <Button
+                onClick={() => handleRegister(event.id)}
+                variant="default"
+                className="min-w-[130px]"
+                size="lg"
+              >
+                Register Now
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            ))}
+          {event.isUpcoming && event.isFull && !event.isRegistered && (
+            <Button disabled className="min-w-[130px]" size="lg">
+              Event Full
             </Button>
-          ) : (
-            <Button
-              onClick={() => handleRegister(event.id)}
-              variant="default"
-              className="min-w-[130px]"
-              size="lg"
-            >
-              Register Now
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          ))}
-        {event.isUpcoming && event.isFull && !event.isRegistered && (
-          <Button disabled className="min-w-[130px]" size="lg">
-            Event Full
+          )}
+          <Button
+            variant="outline"
+            className="min-w-[100px] border-border transition-all"
+            size="lg"
+          >
+            View Details
           </Button>
-        )}
-        <Button
-          variant="outline"
-          className="min-w-[100px] border-border transition-all"
-          size="lg"
-        >
-          View Details
-        </Button>
-      </CardFooter>
+        </div>
+      </CardContent>
     </Card>
   );
 

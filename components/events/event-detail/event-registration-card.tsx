@@ -2,7 +2,7 @@
 
 import { Calendar, Clock, Users, AlertCircle, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
 import {
@@ -149,30 +149,30 @@ export function EventRegistrationCard({
             <span>This event has been cancelled</span>
           </div>
         )}
-      </CardContent>
 
-      <CardFooter className="flex-col gap-3">
-        <Button
-          className={cn(
-            'w-full',
-            !registrationOpen && !event.registration?.waitlistEnabled && 'bg-gray-400 cursor-not-allowed'
+        <div className="flex flex-col gap-3 pt-4">
+          <Button
+            className={cn(
+              'w-full',
+              !registrationOpen && !event.registration?.waitlistEnabled && 'bg-gray-400 cursor-not-allowed'
+            )}
+            size="lg"
+            disabled={!registrationOpen && !event.registration?.waitlistEnabled}
+            onClick={handleRegister}
+          >
+            {getButtonText()}
+          </Button>
+          {event.registration?.deadline && registrationOpen && (
+            <p className="text-xs text-gray-500 text-center">
+              Registration closes{' '}
+              {new Date(event.registration.deadline).toLocaleDateString('en-NZ', {
+                month: 'short',
+                day: 'numeric',
+              })}
+            </p>
           )}
-          size="lg"
-          disabled={!registrationOpen && !event.registration?.waitlistEnabled}
-          onClick={handleRegister}
-        >
-          {getButtonText()}
-        </Button>
-        {event.registration?.deadline && registrationOpen && (
-          <p className="text-xs text-gray-500 text-center">
-            Registration closes{' '}
-            {new Date(event.registration.deadline).toLocaleDateString('en-NZ', {
-              month: 'short',
-              day: 'numeric',
-            })}
-          </p>
-        )}
-      </CardFooter>
+        </div>
+      </CardContent>
     </Card>
   );
 }

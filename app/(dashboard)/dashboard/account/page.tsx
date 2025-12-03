@@ -5,10 +5,12 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,52 +21,61 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { 
-  User, 
-  Lock, 
-  Mail, 
-  Shield, 
-  CheckCircle2, 
+import { PhotoUpload } from '@/components/forms/photo-upload';
+import {
+  User,
+  Lock,
+  Mail,
+  CheckCircle2,
   XCircle,
   AlertTriangle,
   Eye,
   EyeOff,
   RefreshCw,
-  Monitor, 
-  Smartphone, 
-  Tablet,
-  Globe,
-  MapPin,
-  Clock,
-  LogOut,
-  Activity
+  Phone,
+  Calendar,
+  Users,
+  Link as LinkIcon,
 } from 'lucide-react';
 
-interface Session {
-  id: number;
-  deviceInfo?: string;
-  deviceType?: string;
-  browser?: string;
-  os?: string;
-  ipAddress?: string;
-  lastActivity: string;
-  createdAt: string;
-  isCurrent?: boolean;
+interface ConnectedAccount {
+  provider: string;
+  providerAccountId: string;
+  type: string;
+  email?: string;
 }
+
+const genderOptions = [
+  { value: 'female', label: 'Female' },
+  { value: 'male', label: 'Male' },
+  { value: 'non_binary', label: 'Non-binary' },
+  { value: 'prefer_not_to_say', label: 'Prefer not to say' },
+  { value: 'other', label: 'Other' },
+];
 
 function AccountPageContent() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'profile' | 'password' | 'sessions' | 'privacy'>('profile');
-  
-  const [user, setUser] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState<'profile' | 'password' | 'privacy'>('profile');
+
+  const [user, setUser] = useState<Record<string, unknown> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
+  // User roles and auth info
+  const [activeRoles, setActiveRoles] = useState<string[]>([]);
+  const [hasPassword, setHasPassword] = useState(true);
+  const [connectedAccounts, setConnectedAccounts] = useState<ConnectedAccount[]>([]);
+  const [currentPhotoUrl, setCurrentPhotoUrl] = useState<string>('');
+
   // Profile form
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [age, setAge] = useState<number | ''>('');
+  const [gender, setGender] = useState<string>('');
+  const [photoUrl, setPhotoUrl] = useState<string | undefined>(undefined);
 
   // Password form
   const [currentPassword, setCurrentPassword] = useState('');
@@ -76,26 +87,21 @@ function AccountPageContent() {
   const [isVerified, setIsVerified] = useState(false);
   const [isSendingVerification, setIsSendingVerification] = useState(false);
 
-  // Sessions
-  const [sessions, setSessions] = useState<Session[]>([]);
-  const [isLoadingSessions, setIsLoadingSessions] = useState(false);
-  const [isRevoking, setIsRevoking] = useState(false);
-  const [sessionToRevoke, setSessionToRevoke] = useState<number | null>(null);
-  const [showRevokeDialog, setShowRevokeDialog] = useState(false);
-
   // Account deletion
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deletePassword, setDeletePassword] = useState('');
 
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+  // Computed properties
+  const isAdmin = activeRoles.includes('admin');
+  const isMentor = activeRoles.includes('mentor');
+  const isMentee = activeRoles.includes('mentee');
+  const showExtendedProfile = isMentor || isMentee;
 
   useEffect(() => {
-    if (activeTab === 'sessions') {
-      fetchSessions();
-    }
-  }, [activeTab]);
+    fetchUserData();
+    fetchRolesAndPhoto();
+    fetchConnectedAccounts();
+  }, []);
 
   const fetchUserData = async () => {
     try {
@@ -105,6 +111,9 @@ function AccountPageContent() {
         setUser(userData);
         setName(userData.name || '');
         setEmail(userData.email || '');
+        setPhone(userData.phone || '');
+        setAge(userData.age || '');
+        setGender(userData.gender || '');
         setIsVerified(!!userData.emailVerifiedAt);
       } else {
         setError('Failed to load user data');
@@ -116,36 +125,38 @@ function AccountPageContent() {
     }
   };
 
-  const fetchSessions = async () => {
-    setIsLoadingSessions(true);
+  const fetchRolesAndPhoto = async () => {
     try {
-      // Mock data for now - replace with actual API call
-      const mockSessions: Session[] = [
-        {
-          id: 1,
-          deviceType: 'desktop',
-          browser: 'Chrome',
-          os: 'Windows 11',
-          ipAddress: '192.168.1.1',
-          lastActivity: new Date().toISOString(),
-          createdAt: new Date(Date.now() - 86400000).toISOString(),
-          isCurrent: true,
-        },
-        {
-          id: 2,
-          deviceType: 'mobile',
-          browser: 'Safari',
-          os: 'iOS 17',
-          ipAddress: '192.168.1.2',
-          lastActivity: new Date(Date.now() - 3600000).toISOString(),
-          createdAt: new Date(Date.now() - 172800000).toISOString(),
-        },
-      ];
-      setSessions(mockSessions);
+      const [rolesRes, photoRes] = await Promise.all([
+        fetch('/api/user/roles'),
+        fetch('/api/user/profile-photo'),
+      ]);
+
+      if (rolesRes.ok) {
+        const rolesData = await rolesRes.json();
+        setActiveRoles(rolesData.activeRoles || []);
+      }
+
+      if (photoRes.ok) {
+        const photoData = await photoRes.json();
+        setCurrentPhotoUrl(photoData.photoUrl || '');
+        setPhotoUrl(photoData.photoUrl || undefined);
+      }
     } catch (err) {
-      setError('Failed to load sessions');
-    } finally {
-      setIsLoadingSessions(false);
+      console.error('Error fetching roles/photo:', err);
+    }
+  };
+
+  const fetchConnectedAccounts = async () => {
+    try {
+      const response = await fetch('/api/user/connected-accounts');
+      if (response.ok) {
+        const data = await response.json();
+        setConnectedAccounts(data.accounts || []);
+        setHasPassword(data.hasPassword);
+      }
+    } catch (err) {
+      console.error('Error fetching connected accounts:', err);
     }
   };
 
@@ -156,20 +167,33 @@ function AccountPageContent() {
     setMessage('');
 
     try {
+      const profileData: Record<string, unknown> = { name, email };
+
+      // Only include extended fields for mentor/mentee
+      if (showExtendedProfile) {
+        profileData.phone = phone || null;
+        profileData.age = age || null;
+        profileData.gender = gender || null;
+        if (photoUrl) {
+          profileData.image = photoUrl;
+        }
+      }
+
       const response = await fetch('/api/user/update-profile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email }),
+        body: JSON.stringify(profileData),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setMessage('Profile updated successfully');
-        if (email !== user.email) {
+        setMessage(data.message || 'Profile updated successfully');
+        if (data.emailChanged) {
           setIsVerified(false);
-          setMessage('Profile updated. Please verify your new email address.');
         }
+        // Refresh photo
+        fetchRolesAndPhoto();
       } else {
         setError(data.error || 'Failed to update profile');
       }
@@ -182,7 +206,7 @@ function AccountPageContent() {
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (newPassword !== confirmPassword) {
       setError('New passwords do not match');
       return;
@@ -201,10 +225,10 @@ function AccountPageContent() {
       const response = await fetch('/api/user/update-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          currentPassword, 
+        body: JSON.stringify({
+          currentPassword,
           newPassword,
-          confirmPassword 
+          confirmPassword
         }),
       });
 
@@ -234,7 +258,7 @@ function AccountPageContent() {
       const response = await fetch('/api/auth/resend-verification', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: user.email }),
+        body: JSON.stringify({ email: user?.email }),
       });
 
       if (response.ok) {
@@ -249,45 +273,34 @@ function AccountPageContent() {
     }
   };
 
-  const handleRevokeSession = async (sessionId: number) => {
-    setIsRevoking(true);
-    setError('');
-    setMessage('');
-
-    try {
-      // Mock API call - replace with actual implementation
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setMessage('Session revoked successfully');
-      setSessions(sessions.filter(s => s.id !== sessionId));
-    } catch (err) {
-      setError('Failed to revoke session');
-    } finally {
-      setIsRevoking(false);
-      setShowRevokeDialog(false);
-      setSessionToRevoke(null);
-    }
-  };
-
-  const handleRevokeAllOther = async () => {
-    setIsRevoking(true);
-    setError('');
-    setMessage('');
-
-    try {
-      // Mock API call - replace with actual implementation
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setMessage('All other sessions revoked successfully');
-      setSessions(sessions.filter(s => s.isCurrent));
-    } catch (err) {
-      setError('Failed to revoke sessions');
-    } finally {
-      setIsRevoking(false);
-    }
-  };
-
   const handleDeleteAccount = async () => {
-    // Implement account deletion logic
-    console.log('Delete account with password:', deletePassword);
+    setIsUpdating(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/user/delete-account', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: deletePassword }),
+      });
+
+      if (response.ok) {
+        router.push('/sign-in');
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Failed to delete account');
+      }
+    } catch (err) {
+      setError('An error occurred while deleting account');
+    } finally {
+      setIsUpdating(false);
+      setShowDeleteDialog(false);
+      setDeletePassword('');
+    }
+  };
+
+  const handlePhotoChange = (url: string | undefined) => {
+    setPhotoUrl(url);
   };
 
   const passwordRequirements = [
@@ -298,28 +311,26 @@ function AccountPageContent() {
     { label: 'Contains special character', met: /[!@#$%^&*]/.test(newPassword) },
   ];
 
-  const getDeviceIcon = (deviceType?: string) => {
-    switch (deviceType) {
-      case 'mobile':
-        return <Smartphone className="h-5 w-5" />;
-      case 'tablet':
-        return <Tablet className="h-5 w-5" />;
+  const getProviderIcon = (provider: string) => {
+    switch (provider.toLowerCase()) {
+      case 'google':
+        return (
+          <svg className="h-5 w-5" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+        );
+      case 'github':
+        return (
+          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+        );
       default:
-        return <Monitor className="h-5 w-5" />;
+        return <LinkIcon className="h-5 w-5" />;
     }
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    
-    if (hours < 1) return 'Just now';
-    if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-    const days = Math.floor(hours / 24);
-    if (days < 7) return `${days} day${days > 1 ? 's' : ''} ago`;
-    return date.toLocaleDateString();
   };
 
   if (isLoading) {
@@ -335,6 +346,15 @@ function AccountPageContent() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-foreground">Account Settings</h1>
         <p className="text-muted-foreground mt-2">Manage your account settings and preferences</p>
+        {activeRoles.length > 0 && (
+          <div className="flex gap-2 mt-3">
+            {activeRoles.map(role => (
+              <Badge key={role} variant="secondary" className="capitalize">
+                {role}
+              </Badge>
+            ))}
+          </div>
+        )}
       </div>
 
       {message && (
@@ -351,11 +371,10 @@ function AccountPageContent() {
         </Alert>
       )}
 
-      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)} className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as typeof activeTab)} className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="profile">Profile</TabsTrigger>
           <TabsTrigger value="password">Security</TabsTrigger>
-          <TabsTrigger value="sessions">Sessions</TabsTrigger>
           <TabsTrigger value="privacy">Verification</TabsTrigger>
         </TabsList>
 
@@ -364,45 +383,130 @@ function AccountPageContent() {
             <CardHeader>
               <CardTitle>Profile Information</CardTitle>
               <CardDescription>
-                Update your account profile information
+                {isAdmin && !showExtendedProfile
+                  ? 'Update your basic account information'
+                  : 'Update your profile information and photo'}
               </CardDescription>
             </CardHeader>
             <form onSubmit={handleUpdateProfile}>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
-                    disabled={isUpdating}
-                  />
+              <CardContent className="space-y-6">
+                {/* Profile Photo - Only for mentor/mentee */}
+                {showExtendedProfile && (
+                  <div className="space-y-4">
+                    <Label>Profile Photo</Label>
+                    <div className="flex items-start gap-6">
+                      <Avatar className="h-24 w-24">
+                        <AvatarImage src={photoUrl || currentPhotoUrl} alt={name} />
+                        <AvatarFallback className="text-2xl">
+                          {name?.charAt(0)?.toUpperCase() || 'U'}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <PhotoUpload
+                          value={photoUrl}
+                          onChange={handlePhotoChange}
+                          type={isMentor ? 'mentor' : 'mentee'}
+                          email={email}
+                          label=""
+                          description="Upload a new profile photo"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Basic Info */}
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">
+                      <User className="inline h-4 w-4 mr-1" />
+                      Name
+                    </Label>
+                    <Input
+                      id="name"
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Your name"
+                      disabled={isUpdating}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">
+                      <Mail className="inline h-4 w-4 mr-1" />
+                      Email Address
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      disabled={isUpdating}
+                    />
+                    {email !== user?.email && (
+                      <p className="text-sm text-amber-600">
+                        Changing your email will require verification
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    disabled={isUpdating}
-                  />
-                  {email !== user?.email && (
-                    <p className="text-sm text-amber-600">
-                      Changing your email will require verification
-                    </p>
-                  )}
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button 
-                  type="submit" 
-                  disabled={isUpdating}
-                  className=""
-                >
+
+                {/* Extended fields - Only for mentor/mentee */}
+                {showExtendedProfile && (
+                  <div className="grid gap-4 md:grid-cols-3">
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">
+                        <Phone className="inline h-4 w-4 mr-1" />
+                        Phone (optional)
+                      </Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="Your phone number"
+                        disabled={isUpdating}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="age">
+                        <Calendar className="inline h-4 w-4 mr-1" />
+                        Age (optional)
+                      </Label>
+                      <Input
+                        id="age"
+                        type="number"
+                        value={age}
+                        onChange={(e) => setAge(e.target.value ? parseInt(e.target.value) : '')}
+                        placeholder="Your age"
+                        min={13}
+                        max={120}
+                        disabled={isUpdating}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="gender">
+                        <Users className="inline h-4 w-4 mr-1" />
+                        Gender (optional)
+                      </Label>
+                      <Select value={gender} onValueChange={setGender} disabled={isUpdating}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select gender" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {genderOptions.map(option => (
+                            <SelectItem key={option.value} value={option.value}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                )}
+
+                <Button type="submit" disabled={isUpdating}>
                   {isUpdating ? (
                     <>
                       <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
@@ -415,107 +519,151 @@ function AccountPageContent() {
                     </>
                   )}
                 </Button>
-              </CardFooter>
+              </CardContent>
             </form>
           </Card>
         </TabsContent>
 
         <TabsContent value="password">
-          <Card>
-            <CardHeader>
-              <CardTitle>Password & Security</CardTitle>
-              <CardDescription>
-                Manage your password and account security settings
-              </CardDescription>
-            </CardHeader>
-            <form onSubmit={handleUpdatePassword}>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="currentPassword">Current Password</Label>
-                  <div className="relative">
+          {/* Connected Accounts - For OAuth users */}
+          {connectedAccounts.length > 0 && (
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle>Connected Accounts</CardTitle>
+                <CardDescription>
+                  External accounts linked to your profile
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {connectedAccounts.map((account, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                      <div className="flex items-center gap-3">
+                        {getProviderIcon(account.provider)}
+                        <div>
+                          <p className="font-medium capitalize">{account.provider}</p>
+                          <p className="text-sm text-muted-foreground">{account.email}</p>
+                        </div>
+                      </div>
+                      <Badge variant="secondary">Connected</Badge>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Password Form - Only if user has password */}
+          {hasPassword ? (
+            <Card>
+              <CardHeader>
+                <CardTitle>Password & Security</CardTitle>
+                <CardDescription>
+                  Manage your password and account security settings
+                </CardDescription>
+              </CardHeader>
+              <form onSubmit={handleUpdatePassword}>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="currentPassword">Current Password</Label>
+                    <div className="relative">
+                      <Input
+                        id="currentPassword"
+                        type={showPasswords ? 'text' : 'password'}
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                        required
+                        disabled={isUpdating}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPasswords(!showPasswords)}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      >
+                        {showPasswords ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="newPassword">New Password</Label>
                     <Input
-                      id="currentPassword"
+                      id="newPassword"
                       type={showPasswords ? 'text' : 'password'}
-                      value={currentPassword}
-                      onChange={(e) => setCurrentPassword(e.target.value)}
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
                       required
                       disabled={isUpdating}
                     />
-                    <button
-                      type="button"
-                      onClick={() => setShowPasswords(!showPasswords)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    >
-                      {showPasswords ? <EyeOff size={20} /> : <Eye size={20} />}
-                    </button>
                   </div>
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="newPassword">New Password</Label>
-                  <Input
-                    id="newPassword"
-                    type={showPasswords ? 'text' : 'password'}
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    required
-                    disabled={isUpdating}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm New Password</Label>
-                  <Input
-                    id="confirmPassword"
-                    type={showPasswords ? 'text' : 'password'}
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                    disabled={isUpdating}
-                  />
-                </div>
-
-                {newPassword && (
-                  <div className="space-y-2 rounded-lg bg-muted p-3">
-                    <p className="text-sm font-medium text-foreground">Password Requirements:</p>
-                    <ul className="space-y-1">
-                      {passwordRequirements.map((req, index) => (
-                        <li key={index} className="flex items-center text-sm">
-                          {req.met ? (
-                            <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
-                          ) : (
-                            <XCircle className="mr-2 h-4 w-4 text-muted-foreground" />
-                          )}
-                          <span className={req.met ? 'text-green-700' : 'text-muted-foreground'}>
-                            {req.label}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                    <Input
+                      id="confirmPassword"
+                      type={showPasswords ? 'text' : 'password'}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                      disabled={isUpdating}
+                    />
                   </div>
-                )}
-              </CardContent>
-              <CardFooter className="flex justify-between">
-                <Button 
-                  type="submit" 
-                  disabled={isUpdating || !passwordRequirements.every(req => req.met) || newPassword !== confirmPassword}
-                  className=""
-                >
-                  {isUpdating ? (
-                    <>
-                      <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                      Updating...
-                    </>
-                  ) : (
-                    <>
-                      <Lock className="mr-2 h-4 w-4" />
-                      Update Password
-                    </>
+
+                  {newPassword && (
+                    <div className="space-y-2 rounded-lg bg-muted p-3">
+                      <p className="text-sm font-medium text-foreground">Password Requirements:</p>
+                      <ul className="space-y-1">
+                        {passwordRequirements.map((req, index) => (
+                          <li key={index} className="flex items-center text-sm">
+                            {req.met ? (
+                              <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                            ) : (
+                              <XCircle className="mr-2 h-4 w-4 text-muted-foreground" />
+                            )}
+                            <span className={req.met ? 'text-green-700' : 'text-muted-foreground'}>
+                              {req.label}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
-                </Button>
-              </CardFooter>
-            </form>
-          </Card>
+
+                  <Button
+                    type="submit"
+                    disabled={isUpdating || !passwordRequirements.every(req => req.met) || newPassword !== confirmPassword}
+                  >
+                    {isUpdating ? (
+                      <>
+                        <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                        Updating...
+                      </>
+                    ) : (
+                      <>
+                        <Lock className="mr-2 h-4 w-4" />
+                        Update Password
+                      </>
+                    )}
+                  </Button>
+                </CardContent>
+              </form>
+            </Card>
+          ) : (
+            <Card>
+              <CardHeader>
+                <CardTitle>Password</CardTitle>
+                <CardDescription>
+                  You signed up using an external provider
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Your account is connected to an external provider ({connectedAccounts.map(a => a.provider).join(', ')}).
+                  You can sign in using your connected account.
+                </p>
+              </CardContent>
+            </Card>
+          )}
 
           <Card className="mt-6 border-red-200">
             <CardHeader>
@@ -524,12 +672,10 @@ function AccountPageContent() {
                 Permanent account deletion
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">
                 Once you delete your account, there is no going back. All your data will be permanently removed.
               </p>
-            </CardContent>
-            <CardFooter>
               <Button
                 variant="destructive"
                 onClick={() => setShowDeleteDialog(true)}
@@ -537,86 +683,7 @@ function AccountPageContent() {
                 <AlertTriangle className="mr-2 h-4 w-4" />
                 Delete Account
               </Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="sessions">
-          <Card>
-            <CardHeader>
-              <CardTitle>Active Sessions</CardTitle>
-              <CardDescription>
-                Manage devices and browsers where you're currently signed in
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {isLoadingSessions ? (
-                <div className="flex items-center justify-center py-8">
-                  <RefreshCw className="h-8 w-8 animate-spin text-foreground" />
-                </div>
-              ) : sessions.length === 0 ? (
-                <p className="text-center text-muted-foreground py-8">No active sessions found</p>
-              ) : (
-                <div className="space-y-4">
-                  {sessions.map((session) => (
-                    <div key={session.id} className="flex items-start justify-between p-4 border rounded-lg">
-                      <div className="flex items-start space-x-4">
-                        <div className="mt-1">
-                          {getDeviceIcon(session.deviceType)}
-                        </div>
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <p className="font-medium">
-                              {session.browser} on {session.os}
-                            </p>
-                            {session.isCurrent && (
-                              <Badge variant="secondary">Current</Badge>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                            <div className="flex items-center gap-1">
-                              <Globe className="h-3 w-3" />
-                              {session.ipAddress}
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              Last active: {formatDate(session.lastActivity)}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      {!session.isCurrent && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            setSessionToRevoke(session.id);
-                            setShowRevokeDialog(true);
-                          }}
-                          disabled={isRevoking}
-                        >
-                          <LogOut className="h-4 w-4" />
-                          Revoke
-                        </Button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
             </CardContent>
-            {sessions.filter(s => !s.isCurrent).length > 0 && (
-              <CardFooter>
-                <Button
-                  variant="outline"
-                  onClick={handleRevokeAllOther}
-                  disabled={isRevoking}
-                  className="w-full"
-                >
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Revoke All Other Sessions
-                </Button>
-              </CardFooter>
-            )}
           </Card>
         </TabsContent>
 
@@ -658,37 +725,36 @@ function AccountPageContent() {
               </div>
 
               {!isVerified && (
-                <Alert className="border-amber-200 bg-amber-50">
-                  <Mail className="h-4 w-4 text-amber-600" />
-                  <AlertDescription>
-                    We've sent a verification link to <strong>{user?.email}</strong>.
-                    Please check your inbox and click the link to verify your account.
-                  </AlertDescription>
-                </Alert>
+                <>
+                  <Alert className="border-amber-200 bg-amber-50">
+                    <Mail className="h-4 w-4 text-amber-600" />
+                    <AlertDescription>
+                      We've sent a verification link to <strong>{user?.email as string}</strong>.
+                      Please check your inbox and click the link to verify your account.
+                    </AlertDescription>
+                  </Alert>
+
+                  <Button
+                    onClick={handleSendVerification}
+                    disabled={isSendingVerification}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    {isSendingVerification ? (
+                      <>
+                        <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Mail className="mr-2 h-4 w-4" />
+                        Resend Verification Email
+                      </>
+                    )}
+                  </Button>
+                </>
               )}
             </CardContent>
-            {!isVerified && (
-              <CardFooter>
-                <Button
-                  onClick={handleSendVerification}
-                  disabled={isSendingVerification}
-                  variant="outline"
-                  className="w-full"
-                >
-                  {isSendingVerification ? (
-                    <>
-                      <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Mail className="mr-2 h-4 w-4" />
-                      Resend Verification Email
-                    </>
-                  )}
-                </Button>
-              </CardFooter>
-            )}
           </Card>
         </TabsContent>
       </Tabs>
@@ -718,30 +784,10 @@ function AccountPageContent() {
             <AlertDialogCancel onClick={() => setDeletePassword('')}>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteAccount}
-              disabled={!deletePassword}
+              disabled={!deletePassword || isUpdating}
               className="bg-destructive text-destructive-foreground border-destructive hover:bg-destructive/80 hover:border-destructive/80"
             >
-              Delete Account
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
-      {/* Revoke Session Dialog */}
-      <AlertDialog open={showRevokeDialog} onOpenChange={setShowRevokeDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Revoke Session?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will sign out the selected device. You'll need to sign in again on that device.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => sessionToRevoke && handleRevokeSession(sessionToRevoke)}
-            >
-              Revoke Session
+              {isUpdating ? 'Deleting...' : 'Delete Account'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -236,35 +236,36 @@ export default function MeetingsPage() {
             </div>
           </div>
         )}
-      </CardContent>
-      <CardFooter className="flex gap-2">
-        {meeting.status === 'scheduled' && new Date(meeting.scheduledAt) > new Date() && (
-          <>
-            {meeting.meetingLink && (
-              <Button asChild>
-                <a href={meeting.meetingLink} target="_blank" rel="noopener noreferrer">
-                  <Video className="h-4 w-4 mr-2" />
-                  Join Meeting
-                </a>
+
+        <div className="flex gap-2 pt-4">
+          {meeting.status === 'scheduled' && new Date(meeting.scheduledAt) > new Date() && (
+            <>
+              {meeting.meetingLink && (
+                <Button asChild>
+                  <a href={meeting.meetingLink} target="_blank" rel="noopener noreferrer">
+                    <Video className="h-4 w-4 mr-2" />
+                    Join Meeting
+                  </a>
+                </Button>
+              )}
+              <Button
+                variant="outline"
+                onClick={() => handleCancelMeeting(meeting.id)}
+              >
+                Cancel
               </Button>
-            )}
-            <Button 
-              variant="outline" 
-              onClick={() => handleCancelMeeting(meeting.id)}
+            </>
+          )}
+          {meeting.status === 'scheduled' && new Date(meeting.scheduledAt) < new Date() && (
+            <Button
+              onClick={() => handleCompleteMeeting(meeting.id, {})}
             >
-              Cancel
+              <CheckCircle className="h-4 w-4 mr-2" />
+              Mark as Complete
             </Button>
-          </>
-        )}
-        {meeting.status === 'scheduled' && new Date(meeting.scheduledAt) < new Date() && (
-          <Button 
-            onClick={() => handleCompleteMeeting(meeting.id, {})}
-          >
-            <CheckCircle className="h-4 w-4 mr-2" />
-            Mark as Complete
-          </Button>
-        )}
-      </CardFooter>
+          )}
+        </div>
+      </CardContent>
     </Card>
   );
 
