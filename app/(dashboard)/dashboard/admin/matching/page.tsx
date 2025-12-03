@@ -150,6 +150,40 @@ interface QueueEntry {
   careerStage: string | null;
 }
 
+interface UnmatchedMentor {
+  userId: number;
+  name: string;
+  email: string;
+  image: string | null;
+  company: string | null;
+  jobTitle: string | null;
+  yearsExperience: number | null;
+  mbtiType: string | null;
+  maxMentees: number;
+  currentMenteesCount: number;
+  availableSlots: number;
+  expertiseAreas: string[];
+  preferredIndustries: string[];
+  city: string | null;
+  createdAt: string;
+}
+
+interface UnmatchedMentee {
+  userId: number;
+  name: string;
+  email: string;
+  image: string | null;
+  careerStage: string | null;
+  currentJobTitle: string | null;
+  currentIndustry: string | null;
+  mbtiType: string | null;
+  preferredIndustries: string[];
+  city: string | null;
+  createdAt: string;
+  inQueue: boolean;
+  queuePosition: number | null;
+}
+
 interface MatchingStats {
   pendingMatches: number;
   approvedMatches: number;
@@ -206,6 +240,8 @@ export default function MatchingManagementPage() {
   const [stats, setStats] = useState<MatchingStats | null>(null);
   const [queueEntries, setQueueEntries] = useState<QueueEntry[]>([]);
   const [queueTotal, setQueueTotal] = useState(0);
+  const [unmatchedMentors, setUnmatchedMentors] = useState<UnmatchedMentor[]>([]);
+  const [unmatchedMentees, setUnmatchedMentees] = useState<UnmatchedMentee[]>([]);
   const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [expandedMatches, setExpandedMatches] = useState<number[]>([]);
@@ -220,7 +256,7 @@ export default function MatchingManagementPage() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/admin/matching?view=${viewMode}&includeQueue=true`);
+      const response = await fetch(`/api/admin/matching?view=${viewMode}&includeQueue=true&includeUnmatched=true`);
       if (response.ok) {
         const data = await response.json();
         setMatchesData(data.matches);
@@ -230,6 +266,10 @@ export default function MatchingManagementPage() {
         if (data.queue) {
           setQueueEntries(data.queue.entries || []);
           setQueueTotal(data.queue.total || 0);
+        }
+        if (data.unmatched) {
+          setUnmatchedMentors(data.unmatched.mentors || []);
+          setUnmatchedMentees(data.unmatched.mentees || []);
         }
       }
     } catch (error) {
@@ -890,9 +930,17 @@ export default function MatchingManagementPage() {
         </div>
 
         {/* Tabs */}
-        <Tabs defaultValue="pending" className="space-y-4">
+        <Tabs defaultValue="unmatched" className="space-y-4">
           <div className="flex justify-between items-center">
             <TabsList>
+              <TabsTrigger value="unmatched">
+                Unmatched Users
+                {(unmatchedMentors.length + unmatchedMentees.length) > 0 && (
+                  <Badge variant="secondary" className="ml-2">
+                    {unmatchedMentors.length + unmatchedMentees.length}
+                  </Badge>
+                )}
+              </TabsTrigger>
               <TabsTrigger value="pending">
                 Pending Matches
                 {pendingCount > 0 && (
@@ -930,6 +978,191 @@ export default function MatchingManagementPage() {
               </Button>
             </div>
           </div>
+
+          <TabsContent value="unmatched" className="space-y-4">
+            {unmatchedMentors.length === 0 && unmatchedMentees.length === 0 ? (
+              <Card>
+                <CardContent className="py-12 text-center">
+                  <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">All Users Matched</h3>
+                  <p className="text-muted-foreground">
+                    All mentors and mentees have been matched or are in the matching queue.
+                  </p>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Unmatched Mentors */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Users className="h-5 w-5 text-[#9b2e83]" />
+                      Available Mentors
+                    </CardTitle>
+                    <CardDescription>
+                      {unmatchedMentors.length} mentor{unmatchedMentors.length !== 1 ? 's' : ''} with available capacity
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {unmatchedMentors.length === 0 ? (
+                      <p className="text-muted-foreground text-center py-4">No available mentors</p>
+                    ) : (
+                      <div className="space-y-3">
+                        {unmatchedMentors.map(mentor => (
+                          <div
+                            key={mentor.userId}
+                            className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border"
+                          >
+                            <div className="flex items-center gap-3">
+                              <Avatar className="h-10 w-10 border">
+                                <AvatarImage src={mentor.image || undefined} alt={mentor.name} />
+                                <AvatarFallback className="bg-muted text-foreground font-semibold">
+                                  {getInitials(mentor.name)}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <p className="font-medium">{mentor.name}</p>
+                                <p className="text-sm text-muted-foreground">
+                                  {mentor.jobTitle || 'Mentor'}
+                                  {mentor.company && ` @ ${mentor.company}`}
+                                </p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  {mentor.mbtiType && (
+                                    <Badge variant="outline" className="text-[10px] px-1.5 py-0">
+                                      {mentor.mbtiType}
+                                    </Badge>
+                                  )}
+                                  {mentor.city && (
+                                    <span className="text-[10px] text-muted-foreground flex items-center gap-0.5">
+                                      <MapPin className="h-2.5 w-2.5" />
+                                      {mentor.city}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <Badge className="bg-[#9b2e83] text-white">
+                                {mentor.availableSlots} slot{mentor.availableSlots !== 1 ? 's' : ''}
+                              </Badge>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                {mentor.currentMenteesCount}/{mentor.maxMentees} mentees
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                Joined {new Date(mentor.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Unmatched Mentees */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <GraduationCap className="h-5 w-5 text-[#1378d1]" />
+                      Unmatched Mentees
+                    </CardTitle>
+                    <CardDescription>
+                      {unmatchedMentees.length} mentee{unmatchedMentees.length !== 1 ? 's' : ''} awaiting matches
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {unmatchedMentees.length === 0 ? (
+                      <p className="text-muted-foreground text-center py-4">No unmatched mentees</p>
+                    ) : (
+                      <div className="space-y-3">
+                        {unmatchedMentees.map(mentee => (
+                          <div
+                            key={mentee.userId}
+                            className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border"
+                          >
+                            <div className="flex items-center gap-3">
+                              <Avatar className="h-10 w-10 border">
+                                <AvatarImage src={mentee.image || undefined} alt={mentee.name} />
+                                <AvatarFallback className="bg-muted text-foreground font-semibold">
+                                  {getInitials(mentee.name)}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <p className="font-medium">{mentee.name}</p>
+                                <p className="text-sm text-muted-foreground">
+                                  {mentee.currentJobTitle || mentee.careerStage?.replace(/_/g, ' ') || 'Mentee'}
+                                  {mentee.currentIndustry && ` in ${mentee.currentIndustry}`}
+                                </p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  {mentee.mbtiType && (
+                                    <Badge variant="outline" className="text-[10px] px-1.5 py-0">
+                                      {mentee.mbtiType}
+                                    </Badge>
+                                  )}
+                                  {mentee.city && (
+                                    <span className="text-[10px] text-muted-foreground flex items-center gap-0.5">
+                                      <MapPin className="h-2.5 w-2.5" />
+                                      {mentee.city}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              {mentee.inQueue ? (
+                                <Badge className="bg-[#1378d1] text-white">
+                                  Queue #{mentee.queuePosition}
+                                </Badge>
+                              ) : (
+                                <Badge variant="outline" className="text-muted-foreground">
+                                  Not in queue
+                                </Badge>
+                              )}
+                              <p className="text-xs text-muted-foreground mt-1">
+                                Joined {new Date(mentee.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
+            {/* Call to Action */}
+            {(unmatchedMentors.length > 0 || unmatchedMentees.length > 0) && (
+              <Card className="border-[#9b2e83]/20 bg-[#f7e5f3]/30">
+                <CardContent className="py-6">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <Sparkles className="h-8 w-8 text-[#9b2e83]" />
+                      <div>
+                        <h3 className="font-semibold">Ready to Match?</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Run the AI matching algorithm to generate match suggestions for these users.
+                        </p>
+                      </div>
+                    </div>
+                    <Button onClick={runBatchMatching} disabled={isRunning} variant="brand">
+                      {isRunning ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Running...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="h-4 w-4 mr-2" />
+                          Run AI Matching
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </TabsContent>
 
           <TabsContent value="pending" className="space-y-4">
             {pendingCount === 0 ? (

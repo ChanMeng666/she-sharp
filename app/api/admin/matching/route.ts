@@ -10,6 +10,8 @@ import {
   reviewMatchSuggestion,
   getWaitingQueue,
   getAvailableMentorCapacity,
+  getUnmatchedMentors,
+  getUnmatchedMentees,
 } from '@/lib/matching/service';
 import { isOpenAIConfigured } from '@/lib/matching/openai-service';
 import { isRedisAvailable, getCacheInfo } from '@/lib/matching/cache';
@@ -49,6 +51,7 @@ function safeSerialize<T>(obj: T): T {
  * Query parameters:
  * - view: 'list' (default) | 'grouped' - How to display matches
  * - includeQueue: 'true' | 'false' - Include queue statistics
+ * - includeUnmatched: 'true' | 'false' - Include unmatched mentors and mentees
  */
 export async function GET(request: NextRequest) {
   try {
@@ -65,6 +68,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const view = searchParams.get('view') || 'list';
     const includeQueue = searchParams.get('includeQueue') === 'true';
+    const includeUnmatched = searchParams.get('includeUnmatched') === 'true';
 
     // Fetch core data in parallel
     const [stats, runHistory, capacity] = await Promise.all([
@@ -107,6 +111,21 @@ export async function GET(request: NextRequest) {
       };
     }
 
+    // Optionally include unmatched users
+    let unmatchedData = null;
+    if (includeUnmatched) {
+      const [mentors, mentees] = await Promise.all([
+        getUnmatchedMentors(),
+        getUnmatchedMentees(),
+      ]);
+      unmatchedData = {
+        mentors,
+        mentees,
+        totalMentors: mentors.length,
+        totalMentees: mentees.length,
+      };
+    }
+
     // System status
     const systemStatus = {
       openaiConfigured: isOpenAIConfigured(),
@@ -123,6 +142,7 @@ export async function GET(request: NextRequest) {
       },
       runHistory,
       queue: queueData,
+      unmatched: unmatchedData,
       systemStatus,
     };
 

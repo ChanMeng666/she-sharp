@@ -953,6 +953,151 @@ export async function getMatchingStats(): Promise<MatchingStats> {
   };
 }
 
+/**
+ * Get unmatched mentors (mentors with available capacity who haven't been in pending matches)
+ */
+export async function getUnmatchedMentors(): Promise<{
+  userId: number;
+  name: string;
+  email: string;
+  image: string | null;
+  company: string | null;
+  jobTitle: string | null;
+  yearsExperience: number | null;
+  mbtiType: string | null;
+  maxMentees: number;
+  currentMenteesCount: number;
+  availableSlots: number;
+  expertiseAreas: string[];
+  preferredIndustries: string[];
+  city: string | null;
+  createdAt: Date;
+}[]> {
+  const mentors = await db
+    .select({
+      userId: mentorProfiles.userId,
+      name: users.name,
+      email: users.email,
+      image: users.image,
+      company: mentorProfiles.company,
+      jobTitle: mentorProfiles.jobTitle,
+      yearsExperience: mentorProfiles.yearsExperience,
+      mbtiType: mentorProfiles.mbtiType,
+      maxMentees: mentorProfiles.maxMentees,
+      currentMenteesCount: mentorProfiles.currentMenteesCount,
+      expertiseAreas: mentorProfiles.expertiseAreas,
+      createdAt: users.createdAt,
+      formCompany: mentorFormSubmissions.company,
+      formJobTitle: mentorFormSubmissions.jobTitle,
+      formYearsExperience: mentorFormSubmissions.yearsExperience,
+      formMbtiType: mentorFormSubmissions.mbtiType,
+      formPreferredIndustries: mentorFormSubmissions.preferredIndustries,
+      formCity: mentorFormSubmissions.city,
+    })
+    .from(mentorProfiles)
+    .innerJoin(users, eq(mentorProfiles.userId, users.id))
+    .leftJoin(mentorFormSubmissions, eq(mentorProfiles.userId, mentorFormSubmissions.userId))
+    .where(
+      and(
+        eq(mentorProfiles.isAcceptingMentees, true),
+        sql`${mentorProfiles.currentMenteesCount} < ${mentorProfiles.maxMentees}`
+      )
+    )
+    .orderBy(desc(users.createdAt));
+
+  return mentors.map(m => ({
+    userId: m.userId,
+    name: m.name || 'Unknown',
+    email: m.email,
+    image: m.image,
+    company: m.formCompany || m.company,
+    jobTitle: m.formJobTitle || m.jobTitle,
+    yearsExperience: m.formYearsExperience ?? m.yearsExperience,
+    mbtiType: m.formMbtiType || m.mbtiType,
+    maxMentees: m.maxMentees || 3,
+    currentMenteesCount: m.currentMenteesCount || 0,
+    availableSlots: (m.maxMentees || 3) - (m.currentMenteesCount || 0),
+    expertiseAreas: (m.expertiseAreas as string[]) || [],
+    preferredIndustries: (m.formPreferredIndustries as string[]) || [],
+    city: m.formCity || null,
+    createdAt: m.createdAt,
+  }));
+}
+
+/**
+ * Get unmatched mentees (mentees without active/pending relationships)
+ */
+export async function getUnmatchedMentees(): Promise<{
+  userId: number;
+  name: string;
+  email: string;
+  image: string | null;
+  careerStage: string | null;
+  currentJobTitle: string | null;
+  currentIndustry: string | null;
+  mbtiType: string | null;
+  preferredIndustries: string[];
+  city: string | null;
+  createdAt: Date;
+  inQueue: boolean;
+  queuePosition: number | null;
+}[]> {
+  // Get mentees without active/pending relationships
+  const mentees = await db
+    .select({
+      userId: menteeProfiles.userId,
+      name: users.name,
+      email: users.email,
+      image: users.image,
+      careerStage: menteeProfiles.careerStage,
+      mbtiType: menteeProfiles.mbtiType,
+      createdAt: users.createdAt,
+      formCurrentStage: menteeFormSubmissions.currentStage,
+      formCurrentJobTitle: menteeFormSubmissions.currentJobTitle,
+      formCurrentIndustry: menteeFormSubmissions.currentIndustry,
+      formMbtiType: menteeFormSubmissions.mbtiType,
+      formPreferredIndustries: menteeFormSubmissions.preferredIndustries,
+      formCity: menteeFormSubmissions.city,
+    })
+    .from(menteeProfiles)
+    .innerJoin(users, eq(menteeProfiles.userId, users.id))
+    .leftJoin(menteeFormSubmissions, eq(menteeProfiles.userId, menteeFormSubmissions.userId))
+    .where(
+      sql`NOT EXISTS (
+        SELECT 1 FROM ${mentorshipRelationships}
+        WHERE ${mentorshipRelationships.menteeUserId} = ${menteeProfiles.userId}
+        AND ${mentorshipRelationships.status} IN ('pending', 'active')
+      )`
+    )
+    .orderBy(desc(users.createdAt));
+
+  // Check queue status for each mentee
+  const results = await Promise.all(
+    mentees.map(async m => {
+      const inQueue = await isInQueue(m.userId);
+      const queuePosition = inQueue ? await getQueuePosition(m.userId) : null;
+
+      return {
+        userId: m.userId,
+        name: m.name || 'Unknown',
+        email: m.email,
+        image: m.image,
+        careerStage: m.formCurrentStage || m.careerStage,
+        currentJobTitle: m.formCurrentJobTitle || null,
+        currentIndustry: m.formCurrentIndustry || null,
+        mbtiType: m.formMbtiType || m.mbtiType,
+        preferredIndustries: (m.formPreferredIndustries as string[]) || [],
+        city: m.formCity || null,
+        createdAt: m.createdAt,
+        inQueue,
+        queuePosition,
+      };
+    })
+  );
+
+  return results;
+}
+
 // Re-export queue service functions for convenience
 export {
   getWaitingQueue,
