@@ -43,18 +43,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
+            <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5 group-data-[collapsible=icon]:!p-1">
               <Link href="/">
-                <div className="relative w-8 h-8 flex items-center justify-center">
+                <div className="relative flex items-center justify-center shrink-0 w-8 h-8 group-data-[collapsible=icon]:w-6 group-data-[collapsible=icon]:h-6 transition-all">
                   <Image
                     src="/logos/she-sharp-logo-purple-dark-130x130.svg"
                     alt="She Sharp"
                     width={32}
                     height={32}
-                    className="w-8 h-8"
+                    className="w-full h-full object-contain"
                   />
                 </div>
-                <span className="text-base font-semibold">She Sharp</span>
+                <span className="text-base font-semibold group-data-[collapsible=icon]:hidden">She Sharp</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
