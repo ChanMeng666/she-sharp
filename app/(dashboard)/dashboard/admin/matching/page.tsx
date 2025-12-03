@@ -915,14 +915,14 @@ export default function MatchingManagementPage() {
             {/* View Toggle for Pending Matches */}
             <div className="flex gap-2">
               <Button
-                variant={viewMode === 'list' ? 'default' : 'outline'}
+                variant={viewMode === 'list' ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => setViewMode('list')}
               >
                 List View
               </Button>
               <Button
-                variant={viewMode === 'grouped' ? 'default' : 'outline'}
+                variant={viewMode === 'grouped' ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => setViewMode('grouped')}
               >

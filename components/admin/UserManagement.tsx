@@ -1127,7 +1127,7 @@ export default function UserManagement() {
                             <TableCell className="text-right">
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                  <Button variant="outline" size="icon">
+                                  <Button variant="ghost" size="icon">
                                     <MoreVertical className="w-4 h-4" />
                                   </Button>
                                 </DropdownMenuTrigger>
@@ -1225,7 +1225,7 @@ export default function UserManagement() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
                       onClick={() => setCurrentPage(currentPage - 1)}
                       disabled={currentPage === 1}
@@ -1239,10 +1239,13 @@ export default function UserManagement() {
                         return (
                           <Button
                             key={page}
-                            variant={currentPage === page ? 'default' : 'outline'}
+                            variant="ghost"
                             size="sm"
                             onClick={() => setCurrentPage(page)}
-                            className="w-8 h-8 p-0"
+                            className={cn(
+                              "w-8 h-8 p-0",
+                              currentPage === page && "bg-muted font-semibold"
+                            )}
                           >
                             {page}
                           </Button>
@@ -1251,7 +1254,7 @@ export default function UserManagement() {
                       {totalPages > 5 && <span className="px-2">...</span>}
                     </div>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
                       onClick={() => setCurrentPage(currentPage + 1)}
                       disabled={currentPage === totalPages}
