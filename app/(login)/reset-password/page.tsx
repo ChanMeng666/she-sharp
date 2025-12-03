@@ -102,7 +102,7 @@ function ResetPasswordForm() {
 
   if (isValidating) {
     return (
-      <div className="flex min-h-[calc(100vh-64px)] items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground mx-auto"></div>
           <p className="mt-4 text-gray-600">Validating reset link...</p>
@@ -114,7 +114,7 @@ function ResetPasswordForm() {
   if (!isTokenValid) {
     return (
       <div 
-        className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4 relative"
+        className="flex min-h-screen items-center justify-center p-4 relative"
         style={{
           backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
           backgroundSize: 'cover',
@@ -151,7 +151,7 @@ function ResetPasswordForm() {
   if (success) {
     return (
       <div 
-        className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4 relative"
+        className="flex min-h-screen items-center justify-center p-4 relative"
         style={{
           backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
           backgroundSize: 'cover',
@@ -175,7 +175,7 @@ function ResetPasswordForm() {
 
   return (
     <div 
-      className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4 relative"
+      className="flex min-h-screen items-center justify-center p-4 relative"
       style={{
         backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
         backgroundSize: 'cover',
@@ -294,7 +294,7 @@ function ResetPasswordForm() {
 export default function ResetPasswordPage() {
   return (
     <Suspense fallback={
-      <div className="flex min-h-[calc(100vh-64px)] items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground"></div>
       </div>
     }>

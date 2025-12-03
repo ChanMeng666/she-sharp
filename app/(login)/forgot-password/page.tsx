@@ -49,7 +49,7 @@ export default function ForgotPasswordPage() {
   if (isSubmitted) {
     return (
       <div 
-        className="min-h-[calc(100vh-64px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative"
+        className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative"
         style={{
           backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
           backgroundSize: 'cover',
@@ -99,9 +99,8 @@ export default function ForgotPasswordPage() {
             <div className="space-y-3">
               <Button
                 asChild
-                variant="default"
                 size="lg"
-                className="w-full h-12 rounded-xl font-semibold"
+                className="w-full"
               >
                 <Link href="/sign-in">
                   <ArrowLeft className="mr-2 h-4 w-4" />
@@ -117,7 +116,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <div 
-      className="min-h-[calc(100vh-64px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative"
+      className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative"
       style={{
         backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
         backgroundSize: 'cover',
@@ -171,9 +170,8 @@ export default function ForgotPasswordPage() {
 
             <Button
               type="submit"
-              variant="default"
               size="lg"
-              className="w-full h-12 rounded-xl font-semibold text-lg"
+              className="w-full"
               disabled={isLoading}
             >
               {isLoading ? 'Sending Instructions...' : 'Send Reset Instructions'}
@@ -183,7 +181,7 @@ export default function ForgotPasswordPage() {
               asChild
               variant="outline"
               size="lg"
-              className="w-full h-12 rounded-xl font-medium"
+              className="w-full"
             >
               <Link href="/sign-in">
                 <ArrowLeft className="mr-2 h-4 w-4" />

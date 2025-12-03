@@ -85,7 +85,7 @@ function VerifyEmailContent() {
     if (isVerifying) {
       return (
         <div 
-          className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4 relative"
+          className="flex min-h-screen items-center justify-center p-4 relative"
           style={{
             backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
             backgroundSize: 'cover',
@@ -112,7 +112,7 @@ function VerifyEmailContent() {
 
     return (
       <div 
-        className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4 relative"
+        className="flex min-h-screen items-center justify-center p-4 relative"
         style={{
           backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
           backgroundSize: 'cover',
@@ -157,7 +157,7 @@ function VerifyEmailContent() {
   // If no token, show the email verification pending page
   return (
     <div 
-      className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4 relative"
+      className="flex min-h-screen items-center justify-center p-4 relative"
       style={{
         backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
         backgroundSize: 'cover',
@@ -232,7 +232,7 @@ function VerifyEmailContent() {
 export default function VerifyEmailPage() {
   return (
     <Suspense fallback={
-      <div className="flex min-h-[calc(100vh-64px)] items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground"></div>
       </div>
     }>
