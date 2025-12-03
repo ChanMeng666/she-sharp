@@ -21,7 +21,7 @@ export default function NotFound() {
 
   return (
     <StandalonePageLayout>
-      <div className="relative min-h-[calc(100vh-12rem)] pt-4 pb-16 px-4 bg-muted">
+      <div className="relative min-h-[calc(100vh-12rem)] pt-24 pb-16 px-4 bg-muted">
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 -right-32 w-64 h-64 bg-muted rounded-full blur-3xl"></div>
