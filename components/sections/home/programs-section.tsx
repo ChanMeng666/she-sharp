@@ -18,6 +18,13 @@ import {
 import { useState } from "react";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
+// Color mapping for program cards using brand colors
+const programColors: Record<string, { bg: string; border: string }> = {
+  purple: { bg: "#9b2e83", border: "rgba(155, 46, 131, 0.5)" }, // Purple Dark
+  periwinkle: { bg: "#8982ff", border: "rgba(137, 130, 255, 0.5)" }, // Periwinkle Dark
+  mint: { bg: "#1f1e44", border: "rgba(31, 30, 68, 0.5)" }, // Navy Dark
+};
+
 // 三大核心项目
 const programs = [
   {
@@ -113,9 +120,13 @@ export function ProgramsSection() {
                   <div
                     className={`rounded-2xl overflow-hidden transition-all duration-300 relative border ${
                       isActive
-                        ? "bg-foreground border-foreground/50"
+                        ? "border-transparent"
                         : "bg-muted border-border hover:border-foreground/50"
                     }`}
+                    style={isActive ? {
+                      backgroundColor: programColors[program.color]?.bg,
+                      borderColor: programColors[program.color]?.border,
+                    } : undefined}
                   >
                     {/* Accordion Header */}
                     <button
@@ -228,7 +239,6 @@ export function ProgramsSection() {
                   className="object-cover transition-opacity duration-200 ease-in-out"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-black/30" />
 
                 {/* Image overlay content */}
                 <div className="absolute bottom-6 left-6 z-10 transition-all duration-500 ease-in-out">

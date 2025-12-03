@@ -19,8 +19,8 @@ export function HeroSection() {
           <source src="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/6494eca97a143f705f5a5436_Home%20Vid%201-1%20Placeholder-transcode.mp4" type="video/mp4" />
         </video>
 
-        {/* Simple overlay for text readability */}
-        <div className="absolute inset-0 bg-black/50" />
+        {/* Gradient overlay: darker on left for text readability, transparent on right for video visibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
       </div>
 
       <Container className="relative z-10 w-full max-w-7xl">

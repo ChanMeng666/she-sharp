@@ -38,7 +38,7 @@ const featuredStories = testimonialsByPage.home
 
 export function CommunityStoriesSection() {
   return (
-    <Section className="bg-foreground">
+    <Section className="bg-[#1f1e44]">
       <Container size="full">
         {/* Section Header */}
         <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
@@ -95,15 +95,15 @@ export function CommunityStoriesSection() {
                 <CarouselContent>
                   {featuredStories.map((story) => (
                     <CarouselItem key={story.id}>
-                      <Card className="border-border bg-background">
+                      <Card className="border-[#9b2e83]/30 bg-[#f7e5f3]">
                         <CardContent className="p-10">
                           {/* Story Text */}
                           <div className="relative">
-                            <Quote className="absolute -top-2 -left-2 w-6 h-6 text-muted-foreground rotate-180" />
+                            <Quote className="absolute -top-2 -left-2 w-6 h-6 text-[#9b2e83]/60 rotate-180" />
                             <blockquote className="text-foreground italic text-lg mb-12 leading-relaxed pl-8">
                               {story.quote}
                             </blockquote>
-                            <Quote className="absolute -bottom-2 -right-2 w-6 h-6 text-muted-foreground" />
+                            <Quote className="absolute -bottom-2 -right-2 w-6 h-6 text-[#9b2e83]/60" />
                           </div>
 
                           {/* Author Info */}
@@ -138,7 +138,7 @@ export function CommunityStoriesSection() {
                               <Badge
                                 key={tag}
                                 variant="secondary"
-                                className="text-xs bg-muted text-foreground border border-border px-3 py-1"
+                                className="text-xs bg-[#9b2e83]/10 text-[#9b2e83] border border-[#9b2e83]/30 px-3 py-1"
                               >
                                 {tag}
                               </Badge>
@@ -149,8 +149,8 @@ export function CommunityStoriesSection() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden md:flex -left-16 h-10 w-10 bg-muted hover:bg-muted/80 border-border text-foreground" />
-                <CarouselNext className="hidden md:flex -right-16 h-10 w-10 bg-muted hover:bg-muted/80 border-border text-foreground" />
+                <CarouselPrevious className="hidden md:flex -left-16 h-10 w-10 bg-[#f7e5f3] hover:bg-[#f7e5f3]/80 border-[#9b2e83]/30 text-[#9b2e83]" />
+                <CarouselNext className="hidden md:flex -right-16 h-10 w-10 bg-[#f7e5f3] hover:bg-[#f7e5f3]/80 border-[#9b2e83]/30 text-[#9b2e83]" />
               </Carousel>
             </AnimateOnScroll>
           </div>
