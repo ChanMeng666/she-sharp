@@ -2,18 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { getUser, getUserWithTeam } from '@/lib/db/queries';
 import { db } from '@/lib/db/drizzle';
-import { users, teamMembers, activityLogs, ActivityType } from '@/lib/db/schema';
+import { teamMembers } from '@/lib/db/schema';
 import { comparePasswords } from '@/lib/auth/session';
-import { eq, and, sql } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { z } from 'zod';
+import { processUserDeletion } from '@/lib/user/deletion-service';
 
 const deleteAccountSchema = z.object({
-  password: z.string().min(8, 'Password must be at least 8 characters').max(100),
+  password: z.string().min(8).max(100).optional(),
+  emailConfirm: z.string().email().optional(),
+}).refine(data => data.password || data.emailConfirm, {
+  message: 'Either password or email confirmation is required',
 });
 
 /**
  * DELETE /api/user/delete-account
- * Soft deletes user account after password verification.
+ * Soft deletes user account with comprehensive data cleanup.
+ * Supports both password verification (for password users) and
+ * email confirmation (for OAuth users).
  */
 export async function DELETE(request: NextRequest) {
   try {
@@ -30,45 +36,53 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: errors }, { status: 400 });
     }
 
-    const { password } = validation.data;
+    const { password, emailConfirm } = validation.data;
 
-    // Check if user has a password (OAuth users may not)
-    if (!user.passwordHash) {
-      return NextResponse.json(
-        { error: 'No password set for this account. Please contact support for account deletion.' },
-        { status: 400 }
-      );
-    }
+    // Verification logic
+    if (password) {
+      // Password verification for users with passwords
+      if (!user.passwordHash) {
+        return NextResponse.json(
+          { error: 'No password set for this account. Please use email confirmation instead.' },
+          { status: 400 }
+        );
+      }
 
-    // Verify password
-    const isPasswordValid = await comparePasswords(password, user.passwordHash);
-    if (!isPasswordValid) {
+      const isPasswordValid = await comparePasswords(password, user.passwordHash);
+      if (!isPasswordValid) {
+        return NextResponse.json(
+          { error: 'Incorrect password. Account deletion failed.' },
+          { status: 400 }
+        );
+      }
+    } else if (emailConfirm) {
+      // Email confirmation for OAuth users (or as fallback)
+      if (emailConfirm !== user.email) {
+        return NextResponse.json(
+          { error: 'Email address does not match. Please enter your exact email address.' },
+          { status: 400 }
+        );
+      }
+    } else {
       return NextResponse.json(
-        { error: 'Incorrect password. Account deletion failed.' },
+        { error: 'Verification required. Please provide password or email confirmation.' },
         { status: 400 }
       );
     }
 
     const userWithTeam = await getUserWithTeam(user.id);
+    const ipAddress = request.headers.get('x-forwarded-for') || 'unknown';
 
-    // Log activity BEFORE deletion
-    await db.insert(activityLogs).values({
-      userId: user.id,
-      action: ActivityType.DELETE_ACCOUNT,
-      entityType: 'user',
-      entityId: user.id,
-      ipAddress: request.headers.get('x-forwarded-for') || 'unknown',
-      metadata: { softDelete: true },
-    });
+    // Process comprehensive user deletion with data cleanup
+    const deletionResult = await processUserDeletion(user.id, ipAddress);
 
-    // Soft delete - set deletedAt and modify email for uniqueness
-    await db
-      .update(users)
-      .set({
-        deletedAt: sql`CURRENT_TIMESTAMP`,
-        email: sql`CONCAT(email, '-', id, '-deleted')`,
-      })
-      .where(eq(users.id, user.id));
+    if (!deletionResult.success) {
+      console.error('Deletion errors:', deletionResult.errors);
+      return NextResponse.json(
+        { error: 'Failed to delete account. Please try again or contact support.' },
+        { status: 500 }
+      );
+    }
 
     // Remove from team if applicable
     if (userWithTeam?.teamId) {
@@ -87,7 +101,7 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Account deleted successfully.',
+      message: 'Account deleted successfully. Your data will be retained for 30 days before permanent removal.',
     });
   } catch (error) {
     console.error('Error deleting account:', error);

@@ -36,6 +36,9 @@ import {
   Calendar,
   Users,
   Link as LinkIcon,
+  Clock,
+  Info,
+  Trash2,
 } from 'lucide-react';
 
 interface ConnectedAccount {
@@ -90,6 +93,7 @@ function AccountPageContent() {
   // Account deletion
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deletePassword, setDeletePassword] = useState('');
+  const [deleteEmailConfirm, setDeleteEmailConfirm] = useState('');
 
   // Computed properties
   const isAdmin = activeRoles.includes('admin');
@@ -278,10 +282,15 @@ function AccountPageContent() {
     setError('');
 
     try {
+      // Use password for users with passwords, email confirmation for OAuth users
+      const body = hasPassword
+        ? { password: deletePassword }
+        : { emailConfirm: deleteEmailConfirm };
+
       const response = await fetch('/api/user/delete-account', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: deletePassword }),
+        body: JSON.stringify(body),
       });
 
       if (response.ok) {
@@ -296,6 +305,7 @@ function AccountPageContent() {
       setIsUpdating(false);
       setShowDeleteDialog(false);
       setDeletePassword('');
+      setDeleteEmailConfirm('');
     }
   };
 
@@ -667,22 +677,62 @@ function AccountPageContent() {
 
           <Card className="mt-6 border-red-200">
             <CardHeader>
-              <CardTitle className="text-red-600">Danger Zone</CardTitle>
+              <CardTitle className="text-red-600 flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5" />
+                Danger Zone
+              </CardTitle>
               <CardDescription>
-                Permanent account deletion
+                Account deletion and data removal
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                Once you delete your account, there is no going back. All your data will be permanently removed.
+                Deleting your account will immediately disable access. Your data will be retained
+                for 30 days before permanent removal, allowing account recovery if needed.
               </p>
-              <Button
-                variant="destructive"
-                onClick={() => setShowDeleteDialog(true)}
-              >
-                <AlertTriangle className="mr-2 h-4 w-4" />
-                Delete Account
-              </Button>
+
+              {/* Impact Summary - Collapsible */}
+              <details className="text-sm">
+                <summary className="cursor-pointer text-muted-foreground hover:text-foreground font-medium">
+                  What happens when I delete my account?
+                </summary>
+                <ul className="mt-3 space-y-2 text-muted-foreground ml-4">
+                  <li className="flex items-start gap-2">
+                    <XCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
+                    <span>Immediate loss of access to dashboard and member features</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <XCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
+                    <span>Active mentorship relationships will be terminated</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <XCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
+                    <span>Event registrations and history will be removed</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <XCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
+                    <span>Points and rewards will be forfeited</span>
+                  </li>
+                </ul>
+              </details>
+
+              <div className="flex items-center gap-4">
+                <Button
+                  variant="destructive"
+                  onClick={() => setShowDeleteDialog(true)}
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete Account
+                </Button>
+                <a
+                  href="/privacy-policy"
+                  className="text-sm text-muted-foreground hover:text-foreground underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Learn more about data retention
+                </a>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -761,33 +811,107 @@ function AccountPageContent() {
 
       {/* Delete Account Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-md">
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your account
-              and remove all your data from our servers.
+            <AlertDialogTitle className="flex items-center gap-2 text-red-600">
+              <AlertTriangle className="h-5 w-5" />
+              Delete Your Account?
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-4">
+                <p>
+                  Your account will be deactivated immediately and you will lose access to all
+                  She Sharp member features.
+                </p>
+
+                {/* Data Retention Notice */}
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-amber-800">
+                  <p className="flex items-start gap-2 text-sm">
+                    <Clock className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                    <span>
+                      <strong>30-day recovery period:</strong> Your data will be retained for
+                      30 days. During this time, you can contact us to recover your account.
+                      After 30 days, all data will be permanently deleted.
+                    </span>
+                  </p>
+                </div>
+
+                {/* OAuth-specific notice */}
+                {!hasPassword && connectedAccounts.length > 0 && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-blue-800">
+                    <p className="flex items-start gap-2 text-sm">
+                      <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                      <span>
+                        Your account is linked to <strong>{connectedAccounts.map(a => a.provider).join(' and ')}</strong>.
+                        Type your email address below to confirm deletion.
+                      </span>
+                    </p>
+                  </div>
+                )}
+              </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <div className="my-4">
-            <Label htmlFor="delete-password">Enter your password to confirm</Label>
-            <Input
-              id="delete-password"
-              type="password"
-              value={deletePassword}
-              onChange={(e) => setDeletePassword(e.target.value)}
-              placeholder="Enter your password"
-              className="mt-2"
-            />
+
+          <div className="my-4 space-y-3">
+            {hasPassword ? (
+              <>
+                <Label htmlFor="delete-password" className="text-sm font-medium">
+                  Enter your password to confirm deletion
+                </Label>
+                <Input
+                  id="delete-password"
+                  type="password"
+                  value={deletePassword}
+                  onChange={(e) => setDeletePassword(e.target.value)}
+                  placeholder="Enter your password"
+                  className="mt-1"
+                />
+              </>
+            ) : (
+              <>
+                <Label htmlFor="delete-email" className="text-sm font-medium">
+                  Type your email address to confirm deletion
+                </Label>
+                <Input
+                  id="delete-email"
+                  type="email"
+                  value={deleteEmailConfirm}
+                  onChange={(e) => setDeleteEmailConfirm(e.target.value)}
+                  placeholder="your.email@example.com"
+                  className="mt-1"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Type <strong>{user?.email as string}</strong> to confirm
+                </p>
+              </>
+            )}
           </div>
+
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setDeletePassword('')}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => {
+              setDeletePassword('');
+              setDeleteEmailConfirm('');
+            }}>
+              Keep My Account
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteAccount}
-              disabled={!deletePassword || isUpdating}
-              className="bg-destructive text-destructive-foreground border-destructive hover:bg-destructive/80 hover:border-destructive/80"
+              disabled={
+                (hasPassword ? !deletePassword : deleteEmailConfirm !== user?.email) || isUpdating
+              }
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isUpdating ? 'Deleting...' : 'Delete Account'}
+              {isUpdating ? (
+                <>
+                  <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                <>
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete Account
+                </>
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
