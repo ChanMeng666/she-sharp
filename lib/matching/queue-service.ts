@@ -92,6 +92,11 @@ export async function getQueuePosition(menteeUserId: number): Promise<number> {
 
   if (!entry) return -1;
 
+  // Convert Date to ISO string for SQL comparison
+  const joinedAtString = entry.joinedAt instanceof Date
+    ? entry.joinedAt.toISOString()
+    : entry.joinedAt;
+
   // Count entries with higher priority or same priority but earlier join time
   const [result] = await db
     .select({ count: sql<number>`count(*)::int` })
@@ -101,7 +106,7 @@ export async function getQueuePosition(menteeUserId: number): Promise<number> {
         eq(menteeWaitingQueue.status, 'waiting'),
         sql`(
           ${menteeWaitingQueue.priority} > ${entry.priority} OR
-          (${menteeWaitingQueue.priority} = ${entry.priority} AND ${menteeWaitingQueue.joinedAt} < ${entry.joinedAt})
+          (${menteeWaitingQueue.priority} = ${entry.priority} AND ${menteeWaitingQueue.joinedAt} < ${joinedAtString})
         )`
       )
     );

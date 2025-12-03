@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useActionState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useActionState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,6 +19,7 @@ import { signIn, signUp } from "./actions";
 import { ActionState } from "@/lib/auth/middleware";
 
 export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
   const priceId = searchParams.get("priceId");
@@ -27,6 +28,13 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
     mode === "signin" ? signIn : signUp,
     { error: "" }
   );
+
+  // Handle successful action with redirect
+  useEffect(() => {
+    if (state?.success && state?.redirectTo) {
+      router.push(state.redirectTo);
+    }
+  }, [state, router]);
 
   return (
     <div

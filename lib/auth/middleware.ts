@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { TeamDataWithMembers, User } from '@/lib/db/schema';
 import { getTeamForUser, getUser } from '@/lib/db/queries';
 import { redirect } from 'next/navigation';
+import { serializeData } from '@/lib/utils';
 
 export type ActionState = {
   error?: string;
@@ -24,7 +25,16 @@ export function validatedAction<S extends z.ZodType<any, any>, T>(
       return { error: result.error.errors[0].message };
     }
 
-    return action(result.data, formData);
+    try {
+      // Execute action and serialize result to handle Date objects
+      const actionResult = await action(result.data, formData);
+      return serializeData(actionResult);
+    } catch (error) {
+      // Catch any errors that might contain Date objects and return a serializable error
+      console.error('Action error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+      return { error: errorMessage };
+    }
   };
 }
 
@@ -39,17 +49,26 @@ export function validatedActionWithUser<S extends z.ZodType<any, any>, T>(
   action: ValidatedActionWithUserFunction<S, T>
 ) {
   return async (prevState: ActionState, formData: FormData) => {
-    const user = await getUser();
-    if (!user) {
-      throw new Error('User is not authenticated');
-    }
+    try {
+      const user = await getUser();
+      if (!user) {
+        return { error: 'User is not authenticated' };
+      }
 
-    const result = schema.safeParse(Object.fromEntries(formData));
-    if (!result.success) {
-      return { error: result.error.errors[0].message };
-    }
+      const result = schema.safeParse(Object.fromEntries(formData));
+      if (!result.success) {
+        return { error: result.error.errors[0].message };
+      }
 
-    return action(result.data, formData, user);
+      // Execute action and serialize result to handle Date objects
+      const actionResult = await action(result.data, formData, user);
+      return serializeData(actionResult);
+    } catch (error) {
+      // Catch any errors that might contain Date objects and return a serializable error
+      console.error('Action error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+      return { error: errorMessage };
+    }
   };
 }
 

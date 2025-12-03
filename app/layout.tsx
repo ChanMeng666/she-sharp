@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { DM_Sans } from 'next/font/google';
 import { getUser, getTeamForUser } from '@/lib/db/queries';
+import { serializeData } from '@/lib/utils';
 import { SWRConfig } from 'swr';
 import { CookieBanner } from '@/components/cookie-banner';
 import { Toaster } from '@/components/ui/sonner';
@@ -33,6 +34,20 @@ export const viewport: Viewport = {
 
 const dmSans = DM_Sans({ subsets: ['latin'] });
 
+/**
+ * Helper to serialize async data for SWR fallback.
+ * Wraps the promise to serialize Date objects to ISO strings.
+ */
+async function getSerializedUser() {
+  const user = await getUser();
+  return serializeData(user);
+}
+
+async function getSerializedTeam() {
+  const team = await getTeamForUser();
+  return serializeData(team);
+}
+
 export default function RootLayout({
   children
 }: {
@@ -48,10 +63,10 @@ export default function RootLayout({
           <SWRConfig
             value={{
               fallback: {
-                // We do NOT await here
-                // Only components that read this data will suspend
-                '/api/user': getUser(),
-                '/api/team': getTeamForUser()
+                // Serialize data to convert Date objects to ISO strings
+                // This prevents "Received an instance of Date" serialization errors
+                '/api/user': getSerializedUser(),
+                '/api/team': getSerializedTeam()
               }
             }}
           >

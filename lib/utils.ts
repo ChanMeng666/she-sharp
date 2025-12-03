@@ -40,3 +40,31 @@ export function formatCurrency(
 
   return new Intl.NumberFormat(locale, formatOptions).format(amount)
 }
+
+/**
+ * Serializes an object by converting Date instances to ISO strings.
+ * This is necessary for passing data from Server Components to Client Components.
+ */
+export function serializeData<T>(data: T): T {
+  if (data === null || data === undefined) {
+    return data;
+  }
+
+  if (data instanceof Date) {
+    return data.toISOString() as unknown as T;
+  }
+
+  if (Array.isArray(data)) {
+    return data.map(item => serializeData(item)) as unknown as T;
+  }
+
+  if (typeof data === 'object') {
+    const serialized: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(data)) {
+      serialized[key] = serializeData(value);
+    }
+    return serialized as T;
+  }
+
+  return data;
+}

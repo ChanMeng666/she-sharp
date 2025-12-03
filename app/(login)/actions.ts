@@ -139,17 +139,21 @@ export const signIn = validatedAction(signInSchema, async (data, formData) => {
   // Clear login attempts on successful login
   await clearLoginAttempts(foundUser.id);
 
-  // Set session with remember me option
+  // Set session with remember me option - only pass id to avoid Date serialization issues
   await Promise.all([
-    setSession(foundUser),
+    setSession({ id: foundUser.id } as any),
     setRememberMeCookie(foundUser.id, foundUser.email, rememberMe || false),
     logActivity(foundTeam?.id, foundUser.id, ActivityType.SIGN_IN)
   ]);
 
   const redirectTo = formData.get('redirect') as string | null;
 
-  // Redirect to dashboard (roles are now auto-assigned during registration)
-  redirect(redirectTo || '/dashboard');
+  // Return success with redirect URL instead of using redirect()
+  // This avoids Date serialization issues with Server Actions
+  return {
+    success: true,
+    redirectTo: redirectTo || '/dashboard'
+  };
 });
 
 const signUpSchema = z.object({
@@ -396,11 +400,15 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
     console.error('Failed to send verification email:', error);
   }
 
-  // Set session for the new user
-  await setSession(createdUser);
+  // Set session for the new user - only pass the id to avoid Date serialization issues
+  await setSession({ id: createdUser.id } as any);
 
-  // Redirect to dashboard (roles are auto-assigned based on invitation code)
-  redirect('/dashboard');
+  // Return success with redirect URL instead of using redirect()
+  // This avoids Date serialization issues with Server Actions
+  return {
+    success: true,
+    redirectTo: '/dashboard'
+  };
 });
 
 export async function signOut() {
