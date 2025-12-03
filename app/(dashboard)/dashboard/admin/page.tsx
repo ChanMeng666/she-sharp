@@ -21,11 +21,11 @@ export default async function AdminPage() {
   }
 
   return (
-    <div className="@container/main flex flex-col gap-6">
+    <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8 space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-bold">Platform Overview</h1>
-        <p className="text-muted-foreground mt-1">
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Platform Overview</h1>
+        <p className="text-sm sm:text-base text-muted-foreground mt-2">
           Monitor and manage the She Sharp platform
         </p>
       </div>

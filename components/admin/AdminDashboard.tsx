@@ -115,7 +115,7 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
   }
 
   return (
-    <div className="@container/main flex flex-col gap-6">
+    <div className="flex flex-col gap-6">
       {/* Pending Tasks - Top Priority */}
       <Card>
         <CardHeader>
