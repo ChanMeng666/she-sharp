@@ -1,15 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import {
-  Users,
-  TrendingUp,
-  TrendingDown,
-  GraduationCap,
-  CheckCircle,
-  AlertCircle,
-  BrainCircuit,
-} from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import {
   Area,
   AreaChart,
@@ -21,14 +13,12 @@ import {
   Card,
   CardAction,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
   CardDescription
 } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import Link from 'next/link';
@@ -38,23 +28,6 @@ interface AdminDashboardProps {
   userId: number;
 }
 
-interface DashboardMetrics {
-  users: {
-    total: number;
-    active: number;
-    new: number;
-    change: number;
-  };
-  mentorship: {
-    mentors: number;
-    mentees: number;
-    activePairs: number;
-    pendingApplications: number;
-    completedRelationships: number;
-    avgMatchScore: number;
-  };
-}
-
 interface GrowthData {
   month: string;
   newUsers: number;
@@ -62,9 +35,7 @@ interface GrowthData {
 }
 
 export default function AdminDashboard({ userId }: AdminDashboardProps) {
-  const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [pendingTasks, setPendingTasks] = useState<any[]>([]);
-  const [totalTasksCount, setTotalTasksCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState('6m');
   const [growthData, setGrowthData] = useState<GrowthData[]>([]);
@@ -92,21 +63,14 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
           startDate.setMonth(startDate.getMonth() - 6);
       }
 
-      const [metricsRes, tasksRes, analyticsRes] = await Promise.all([
-        fetch('/api/admin/dashboard'),
+      const [tasksRes, analyticsRes] = await Promise.all([
         fetch('/api/admin/tasks/pending'),
         fetch(`/api/admin/analytics?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`),
       ]);
 
-      if (metricsRes.ok) {
-        const metricsData = await metricsRes.json();
-        setMetrics(metricsData);
-      }
-
       if (tasksRes.ok) {
         const tasksData = await tasksRes.json();
         setPendingTasks(tasksData.tasks || []);
-        setTotalTasksCount(tasksData.totalCount || 0);
       }
 
       if (analyticsRes.ok) {
@@ -150,21 +114,6 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
     );
   }
 
-  if (!metrics) {
-    return (
-      <div className="flex items-center justify-center h-96">
-        <div className="text-center">
-          <AlertCircle className="h-12 w-12 text-destructive mx-auto mb-4" />
-          <p className="text-lg font-medium mb-2">Failed to load dashboard</p>
-          <p className="text-sm text-muted-foreground mb-4">Please try refreshing the page</p>
-          <Button onClick={fetchDashboardData}>Retry</Button>
-        </div>
-      </div>
-    );
-  }
-
-  const data = metrics;
-
   return (
     <div className="@container/main flex flex-col gap-6">
       {/* Pending Tasks - Top Priority */}
@@ -204,114 +153,6 @@ export default function AdminDashboard({ userId }: AdminDashboardProps) {
           )}
         </CardContent>
       </Card>
-
-      {/* Key Metrics Cards */}
-      <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-        {/* Total Users Card */}
-        <Card className="@container/card">
-          <CardHeader>
-            <CardDescription>Total Users</CardDescription>
-            <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
-              {data.users.total.toLocaleString()}
-            </CardTitle>
-            <CardAction>
-              <Badge variant="outline">
-                {data.users.change > 0 ? (
-                  <>
-                    <TrendingUp className="h-3 w-3" />
-                    +{data.users.change}%
-                  </>
-                ) : (
-                  <>
-                    <TrendingDown className="h-3 w-3" />
-                    {data.users.change}%
-                  </>
-                )}
-              </Badge>
-            </CardAction>
-          </CardHeader>
-          <CardFooter className="flex-col items-start gap-1.5 text-sm">
-            <div className="flex gap-2 font-medium">
-              {data.users.active.toLocaleString()} active
-            </div>
-            <div className="text-muted-foreground">
-              +{data.users.new} new this month
-            </div>
-          </CardFooter>
-        </Card>
-
-        {/* Active Mentorships Card */}
-        <Card className="@container/card">
-          <CardHeader>
-            <CardDescription>Active Mentorships</CardDescription>
-            <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
-              {data.mentorship.activePairs}
-            </CardTitle>
-            <CardAction>
-              <Badge variant="outline">
-                <Users className="h-3 w-3" />
-                {data.mentorship.mentors}:{data.mentorship.mentees}
-              </Badge>
-            </CardAction>
-          </CardHeader>
-          <CardFooter className="flex-col items-start gap-1.5 text-sm">
-            <div className="flex gap-2 font-medium">
-              {data.mentorship.completedRelationships || 0} completed
-            </div>
-            <div className="text-muted-foreground">
-              Mentor to mentee ratio
-            </div>
-          </CardFooter>
-        </Card>
-
-        {/* Pending Applications Card */}
-        <Card className="@container/card">
-          <CardHeader>
-            <CardDescription>Pending Applications</CardDescription>
-            <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
-              {data.mentorship.pendingApplications}
-            </CardTitle>
-            <CardAction>
-              <Badge variant={data.mentorship.pendingApplications > 0 ? 'destructive' : 'outline'}>
-                <GraduationCap className="h-3 w-3" />
-                {data.mentorship.pendingApplications > 0 ? 'Action needed' : 'All clear'}
-              </Badge>
-            </CardAction>
-          </CardHeader>
-          <CardFooter className="flex-col items-start gap-1.5 text-sm">
-            <div className="flex gap-2 font-medium">
-              Mentor applications
-            </div>
-            <div className="text-muted-foreground">
-              Awaiting review
-            </div>
-          </CardFooter>
-        </Card>
-
-        {/* AI Match Score Card */}
-        <Card className="@container/card">
-          <CardHeader>
-            <CardDescription>AI Match Score</CardDescription>
-            <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
-              {data.mentorship.avgMatchScore ? `${Math.round(data.mentorship.avgMatchScore)}%` : 'N/A'}
-            </CardTitle>
-            <CardAction>
-              <Badge variant="outline">
-                <BrainCircuit className="h-3 w-3" />
-                Average
-              </Badge>
-            </CardAction>
-          </CardHeader>
-          <CardFooter className="flex-col items-start gap-1.5 text-sm">
-            <div className="flex gap-2 font-medium">
-              Matching quality
-            </div>
-            <div className="text-muted-foreground">
-              AI compatibility analysis
-            </div>
-          </CardFooter>
-        </Card>
-      </div>
 
       {/* User Growth Chart */}
       {chartData.length > 0 && (

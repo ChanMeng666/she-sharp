@@ -21,10 +21,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Progress } from '@/components/ui/progress';
 import {
   Search,
-  Download,
   Calendar,
   Video,
   Users,
@@ -204,10 +202,6 @@ export default function MentorMeetingsPage() {
             <RefreshCw className={cn("w-4 h-4 mr-2", loading && "animate-spin")} />
             Refresh
           </Button>
-          <Button variant="outline">
-            <Download className="w-4 h-4 mr-2" />
-            Export Data
-          </Button>
           <Button>
             <Calendar className="w-4 h-4 mr-2" />
             Schedule Meeting
@@ -227,77 +221,25 @@ export default function MentorMeetingsPage() {
         </Card>
       )}
 
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Meetings</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <Skeleton className="h-8 w-20" />
-            ) : (
-              <>
-                <p className="text-2xl font-bold">{stats.total}</p>
-                <p className="text-xs text-muted-foreground mt-2">
-                  {stats.completed} completed, {stats.scheduled} scheduled
-                </p>
-              </>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Avg Duration</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <Skeleton className="h-8 w-20" />
-            ) : (
-              <>
-                <p className="text-2xl font-bold">{stats.avgDuration} min</p>
-                <p className="text-xs text-muted-foreground mt-2">Target: 45-60 min</p>
-              </>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Completion Rate</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <Skeleton className="h-8 w-20" />
-            ) : (
-              <>
-                <p className="text-2xl font-bold text-green-600">{stats.completionRate}%</p>
-                <Progress value={stats.completionRate} className="mt-2 h-2" />
-              </>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Avg Rating</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <Skeleton className="h-8 w-20" />
-            ) : (
-              <>
-                <div className="flex items-center space-x-2">
-                  <p className="text-2xl font-bold">{stats.avgRating || 'N/A'}</p>
-                  {stats.avgRating > 0 && <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />}
-                </div>
-                <p className="text-xs text-muted-foreground mt-2">From {stats.totalRatings} reviews</p>
-              </>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+      {/* Key Metrics Summary */}
+      {!loading && (
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+          <span>
+            <strong className="text-foreground">{stats.total}</strong> total meetings
+            ({stats.completed} completed, {stats.scheduled} scheduled)
+          </span>
+          <span>
+            Avg duration: <strong className="text-foreground">{stats.avgDuration} min</strong>
+          </span>
+          <span>
+            Completion rate: <strong className="text-foreground">{stats.completionRate}%</strong>
+          </span>
+          <span>
+            Avg rating: <strong className="text-foreground">{stats.avgRating || 'N/A'}</strong>
+            {stats.totalRatings > 0 && ` (${stats.totalRatings} reviews)`}
+          </span>
+        </div>
+      )}
 
       {/* Charts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
