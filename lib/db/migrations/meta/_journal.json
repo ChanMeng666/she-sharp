@@ -106,6 +106,13 @@
       "when": 1764593373436,
       "tag": "0016_purple_wendigo",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1764754780561,
+      "tag": "0017_flowery_zuras",
+      "breakpoints": true
     }
   ]
 }

@@ -158,10 +158,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     async redirect({ url, baseUrl }) {
-      // For OAuth callbacks, check if user needs onboarding
+      // For OAuth callbacks, redirect to verification page
+      // The verification page will check if user needs to enter invitation code
+      // or redirect to dashboard if already verified
       if (url.includes('/api/auth/callback')) {
-        // We'll check roles in middleware and redirect appropriately
-        return `${baseUrl}/dashboard`;
+        return `${baseUrl}/verify-invitation`;
       }
       // Allows relative callback URLs
       if (url.startsWith("/")) return `${baseUrl}${url}`;

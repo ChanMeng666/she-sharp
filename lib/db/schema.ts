@@ -63,6 +63,7 @@ export const users = pgTable('users', {
   phone: varchar('phone', { length: 50 }),
   age: integer('age'),
   registeredViaInviteCode: integer('registered_via_invite_code'), // FK added after invitationCodes table
+  inviteCodeVerifiedAt: timestamp('invite_code_verified_at'), // For OAuth users who verified invitation code post-signup
 });
 
 // User roles activation table
