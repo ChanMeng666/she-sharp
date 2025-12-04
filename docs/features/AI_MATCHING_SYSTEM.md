@@ -218,12 +218,16 @@ For each suggested match:
 
 Here's how a match might be scored:
 
-```mermaid
-xychart-beta
-    title "Sample Match: Sarah (Mentee) & Dr. Chen (Mentor)"
-    x-axis ["Skills", "Goals", "MBTI", "Industry", "Logistics"]
-    y-axis "Score" 0 --> 100
-    bar [85, 78, 72, 90, 95]
+### Sample Match: Sarah (Mentee) & Dr. Chen (Mentor)
+
+```
+Skills     ████████████████░░░░  85/100
+Goals      ███████████████░░░░░  78/100
+MBTI       ██████████████░░░░░░  72/100
+Industry   ██████████████████░░  90/100
+Logistics  ███████████████████░  95/100
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Overall    ████████████████░░░░  84/100
 ```
 
 | Factor | Score | AI Explanation |
