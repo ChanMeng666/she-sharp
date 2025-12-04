@@ -1,7 +1,6 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import Link from "next/link";
@@ -87,33 +86,29 @@ export function CurrentSponsorsSection() {
             layoutSystem.grids.content.gap
           )}>
             {sponsors.map((sponsor) => (
-              <Card key={sponsor.name} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-start">
-                      <div className="relative h-12 w-32">
-                        <Image
-                          src={sponsor.logo}
-                          alt={sponsor.name}
-                          fill
-                          className={`object-contain object-left ${sponsor.scale || 'scale-100'}`}
-                        />
-                      </div>
-                      <Badge className={`${levelColors[sponsor.level]} text-xs`}>
-                        {sponsor.level.toUpperCase()}
-                      </Badge>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground">{sponsor.name}</h3>
-                      <p className="text-sm text-muted-foreground mt-1">{sponsor.description}</p>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-muted-foreground">{sponsor.industry}</span>
-                      <span className="text-muted-foreground">Since {sponsor.joinedYear}</span>
-                    </div>
+              <div key={sponsor.name} className="space-y-4 p-6">
+                <div className="flex justify-between items-start">
+                  <div className="relative h-12 w-32">
+                    <Image
+                      src={sponsor.logo}
+                      alt={sponsor.name}
+                      fill
+                      className={`object-contain object-left ${sponsor.scale || 'scale-100'}`}
+                    />
                   </div>
-                </CardContent>
-              </Card>
+                  <Badge className={`${levelColors[sponsor.level]} text-xs`}>
+                    {sponsor.level.toUpperCase()}
+                  </Badge>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground">{sponsor.name}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">{sponsor.description}</p>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-muted-foreground">{sponsor.industry}</span>
+                  <span className="text-muted-foreground">Since {sponsor.joinedYear}</span>
+                </div>
+              </div>
             ))}
           </div>
 

@@ -1,6 +1,5 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,24 +35,22 @@ export function DonationOptionsSection() {
           layoutSystem.grids.content.gap
         )}>
           {donationOptions.map((option) => (
-            <Card key={option.amount} className="text-center hover:shadow-lg transition-shadow duration-150">
-              <CardContent className="p-6">
-                <div className="relative w-24 h-24 mx-auto mb-4">
-                  <Image
-                    src={option.image}
-                    alt={`Donate ${option.amount}`}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <h3 className="text-3xl font-bold text-foreground mb-4">
-                  {option.amount}
-                </h3>
-                <Button asChild className="w-full">
-                  <Link href="/donate">Donate Now</Link>
-                </Button>
-              </CardContent>
-            </Card>
+            <div key={option.amount} className="text-center p-6">
+              <div className="relative w-24 h-24 mx-auto mb-4">
+                <Image
+                  src={option.image}
+                  alt={`Donate ${option.amount}`}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <h3 className="text-3xl font-bold text-foreground mb-4">
+                {option.amount}
+              </h3>
+              <Button asChild className="w-full">
+                <Link href="/donate">Donate Now</Link>
+              </Button>
+            </div>
           ))}
         </div>
       </Container>
