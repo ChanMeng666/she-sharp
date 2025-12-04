@@ -33,7 +33,7 @@ function PaymentSuccessContent() {
 
   if (!sessionId && !alreadyPaid) {
     return (
-      <div className="min-h-screen bg-muted py-16">
+      <div className="min-h-screen bg-muted pt-24 md:pt-32 pb-16">
         <div className="container mx-auto px-4 max-w-lg">
           <Card className="border-orange-200 bg-orange-50">
             <CardContent className="pt-6 text-center">
@@ -63,7 +63,7 @@ function PaymentSuccessContent() {
   }
 
   return (
-    <div className="min-h-screen bg-muted py-16">
+    <div className="min-h-screen bg-muted pt-24 md:pt-32 pb-16">
       <div className="container mx-auto px-4 max-w-lg">
         <Card className="border-green-200 shadow-lg">
           <CardHeader className="text-center pb-2">

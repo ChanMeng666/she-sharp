@@ -322,31 +322,48 @@ export default function BecomeMentorPage() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-muted py-16">
-        <div className="container mx-auto px-4 max-w-lg">
-          <Card className="border-border shadow-lg">
+      <div className="min-h-screen bg-[#f4f4fa] pt-24 md:pt-32 pb-16">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 right-0 w-64 h-64 bg-[#effefb] rounded-full blur-3xl opacity-60"></div>
+          <div className="absolute bottom-1/4 left-0 w-64 h-64 bg-[#f7e5f3] rounded-full blur-3xl opacity-60"></div>
+        </div>
+        <div className="container mx-auto px-4 max-w-lg relative z-10">
+          <Card className="border-[#b1f6e9] shadow-lg bg-white">
             <CardContent className="pt-8 text-center">
-              <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle2 className="h-12 w-12 text-foreground" />
+              <div className="w-20 h-20 bg-[#effefb] border-2 border-[#b1f6e9] rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="h-12 w-12 text-[#9b2e83]" />
               </div>
-              <h1 className="text-2xl font-bold text-foreground mb-3">
+              <h1 className="text-2xl font-bold text-[#1f1e44] mb-3">
                 Application Submitted!
               </h1>
-              <p className="text-muted-foreground mb-6">
+              <p className="text-[#1f1e44]/70 mb-6">
                 Thank you for applying to become a mentor with She Sharp. Our team will
                 review your application and get back to you within 5-7 business days.
               </p>
-              <div className="bg-muted border border-border rounded-lg p-4 mb-6 text-left">
-                <h3 className="font-semibold text-foreground mb-2">What happens next?</h3>
-                <ol className="text-sm text-muted-foreground space-y-2">
-                  <li>1. Our team reviews your application</li>
-                  <li>2. If approved, you&apos;ll receive an email with your invitation code</li>
-                  <li>3. Use the code to create your mentor account</li>
-                  <li>4. Complete your profile and start mentoring!</li>
+              <div className="bg-[#eaf2ff] border border-[#8982ff]/20 rounded-lg p-4 mb-6 text-left">
+                <h3 className="font-semibold text-[#1f1e44] mb-2">What happens next?</h3>
+                <ol className="text-sm text-[#1f1e44]/70 space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5">1</span>
+                    <span>Our team reviews your application</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5">2</span>
+                    <span>If approved, you&apos;ll receive an email with your invitation code</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5">3</span>
+                    <span>Use the code to create your mentor account</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5">4</span>
+                    <span>Complete your profile and start mentoring!</span>
+                  </li>
                 </ol>
               </div>
               <Link href="/">
-                <Button className="w-full">
+                <Button variant="brand" className="w-full">
                   Return to Home
                 </Button>
               </Link>

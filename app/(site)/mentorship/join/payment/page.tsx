@@ -125,7 +125,7 @@ function PaymentContent() {
 
   if (error && !formData) {
     return (
-      <div className="min-h-screen bg-muted py-16">
+      <div className="min-h-screen bg-muted pt-24 md:pt-32 pb-16">
         <div className="container mx-auto px-4 max-w-lg">
           <Card className="border-orange-200 bg-orange-50">
             <CardContent className="pt-6 text-center">
@@ -146,7 +146,7 @@ function PaymentContent() {
   }
 
   return (
-    <div className="min-h-screen bg-muted py-12">
+    <div className="min-h-screen bg-muted pt-24 md:pt-32 pb-12">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-xl mx-auto mb-8">
           <div className="inline-flex items-center gap-2 bg-muted text-foreground px-4 py-2 rounded-full mb-4">
