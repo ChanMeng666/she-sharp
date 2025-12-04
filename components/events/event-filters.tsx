@@ -62,7 +62,7 @@ export function EventFiltersBar({
       {/* Main Filter Bar */}
       <div className="flex flex-wrap items-center gap-3">
         {/* Format Toggle Buttons */}
-        <div className="flex items-center bg-gray-100 rounded-lg p-1">
+        <div className="flex items-center bg-[#f4f4fa] rounded-lg p-1">
           <Button
             variant="outline"
             size="sm"
@@ -104,7 +104,7 @@ export function EventFiltersBar({
         {/* Search */}
         {showSearch && (
           <div className="relative flex-1 min-w-[200px] max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8982ff]/60" />
             <Input
               type="text"
               placeholder="Search events..."
@@ -115,7 +115,7 @@ export function EventFiltersBar({
             {filters.search && (
               <button
                 onClick={() => handleSearchChange('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -180,7 +180,7 @@ export function EventFiltersBar({
 
       {/* Expanded Filters */}
       {isExpanded && (
-        <div className="p-4 bg-muted rounded-lg space-y-4">
+        <div className="p-4 bg-[#f4f4fa] rounded-lg space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Category Filter (if not shown above) */}
             {!showCategory && (
@@ -274,7 +274,7 @@ export function EventFormatTabs({
   className?: string;
 }) {
   return (
-    <div className={cn('flex items-center gap-1 bg-gray-100 rounded-lg p-1', className)}>
+    <div className={cn('flex items-center gap-1 bg-[#f4f4fa] rounded-lg p-1', className)}>
       {(['all', 'in_person', 'online'] as const).map((format) => (
         <Button
           key={format}

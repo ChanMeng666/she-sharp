@@ -32,17 +32,17 @@ export function EventOrganizerCard({ event, className }: EventOrganizerCardProps
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center gap-4">
-          <Avatar className="w-14 h-14 border-2 border-border">
+          <Avatar className="w-14 h-14 border-2 border-[#8982ff]/20">
             {organizer.image ? (
               <AvatarImage src={organizer.image} alt={organizer.name} />
             ) : null}
-            <AvatarFallback className="bg-muted text-foreground text-lg font-medium">
+            <AvatarFallback className="bg-[#f4f4fa] text-foreground text-lg font-medium">
               {initials}
             </AvatarFallback>
           </Avatar>
           <div>
             <p className="font-semibold text-foreground">{organizer.name}</p>
-            <p className="text-sm text-gray-600">{organizer.title}</p>
+            <p className="text-sm text-muted-foreground">{organizer.title}</p>
             {organizer.company && (
               <p className="text-sm text-foreground">{organizer.company}</p>
             )}
@@ -50,7 +50,7 @@ export function EventOrganizerCard({ event, className }: EventOrganizerCardProps
         </div>
 
         {organizer.bio && (
-          <p className="text-sm text-gray-600">{organizer.bio}</p>
+          <p className="text-sm text-muted-foreground">{organizer.bio}</p>
         )}
 
         <div className="flex gap-2">

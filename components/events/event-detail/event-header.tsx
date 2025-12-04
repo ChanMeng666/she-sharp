@@ -2,9 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, Calendar, Clock, MapPin, Video, Share2, Bookmark } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, MapPin, Video } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Event, formatEventDate, formatEventTime, getDaysUntilEvent } from '@/lib/data/events';
 import { cn } from '@/lib/utils';
 
@@ -19,24 +18,12 @@ export function EventHeader({ event, className }: EventHeaderProps) {
   const isPast = event.status === 'completed';
   const daysUntil = getDaysUntilEvent(event);
 
-  const handleShare = async () => {
-    if (navigator.share) {
-      await navigator.share({
-        title: event.title,
-        text: event.shortDescription || event.description,
-        url: window.location.href,
-      });
-    } else {
-      await navigator.clipboard.writeText(window.location.href);
-    }
-  };
-
   return (
     <div className={cn('space-y-6', className)}>
       {/* Breadcrumb */}
       <Link
         href="/events"
-        className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-foreground transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Events
@@ -73,7 +60,7 @@ export function EventHeader({ event, className }: EventHeaderProps) {
             variant="secondary"
             className={cn(
               'shadow-lg',
-              isOnline && 'bg-blue-500 text-white',
+              isOnline && 'bg-[#8982ff] text-white',
               isHybrid && 'bg-foreground text-background',
               !isOnline && !isHybrid && 'bg-white/90 text-foreground'
             )}
@@ -133,40 +120,28 @@ export function EventHeader({ event, className }: EventHeaderProps) {
         </h1>
 
         {/* Date, Time, Location */}
-        <div className="flex flex-wrap gap-6 text-gray-600">
+        <div className="flex flex-wrap gap-6 text-muted-foreground">
           <div className="flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-foreground" />
+            <Calendar className="w-5 h-5 text-[#8982ff]" />
             <span>{formatEventDate(event, 'full')}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Clock className="w-5 h-5 text-foreground" />
+            <Clock className="w-5 h-5 text-[#8982ff]" />
             <span>{formatEventTime(event)}</span>
           </div>
           <div className="flex items-center gap-2">
             {isOnline ? (
               <>
-                <Video className="w-5 h-5 text-blue-500" />
+                <Video className="w-5 h-5 text-[#8982ff]" />
                 <span>Online via {event.location.meetingPlatform || 'Video Call'}</span>
               </>
             ) : (
               <>
-                <MapPin className="w-5 h-5 text-foreground" />
+                <MapPin className="w-5 h-5 text-[#8982ff]" />
                 <span>{event.location.venueName}, {event.location.city}</span>
               </>
             )}
           </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex gap-3 pt-2">
-          <Button variant="outline" size="sm" onClick={handleShare}>
-            <Share2 className="w-4 h-4 mr-2" />
-            Share
-          </Button>
-          <Button variant="outline" size="sm">
-            <Bookmark className="w-4 h-4 mr-2" />
-            Save
-          </Button>
         </div>
       </div>
     </div>

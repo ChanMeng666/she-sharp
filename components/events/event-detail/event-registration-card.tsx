@@ -12,7 +12,6 @@ import {
   isRegistrationOpen,
   getSpotsRemaining,
 } from '@/lib/data/events';
-import { cn } from '@/lib/utils';
 
 interface EventRegistrationCardProps {
   event: Event;
@@ -58,7 +57,7 @@ export function EventRegistrationCard({
   };
 
   return (
-    <Card className={cn('sticky top-24', className)}>
+    <Card className={className}>
       <CardHeader className="pb-4">
         {/* Price Display */}
         <div className="text-center">
@@ -67,26 +66,26 @@ export function EventRegistrationCard({
           ) : event.registration?.price ? (
             <div className="text-2xl font-bold text-foreground">
               ${event.registration.price.amount}{' '}
-              <span className="text-sm font-normal text-gray-500">
+              <span className="text-sm font-normal text-muted-foreground">
                 {event.registration.price.currency}
               </span>
             </div>
           ) : (
-            <div className="text-lg text-gray-500">Registration required</div>
+            <div className="text-lg text-muted-foreground">Registration required</div>
           )}
         </div>
       </CardHeader>
 
       <CardContent className="space-y-4">
         {/* Date & Time */}
-        <div className="space-y-3 p-4 bg-gray-50 rounded-lg">
+        <div className="space-y-3 p-4 bg-[#f4f4fa] rounded-lg">
           <div className="flex items-center gap-3 text-sm">
-            <Calendar className="w-4 h-4 text-foreground" />
-            <span className="text-gray-700">{formatEventDate(event, 'full')}</span>
+            <Calendar className="w-4 h-4 text-[#8982ff]" />
+            <span className="text-muted-foreground">{formatEventDate(event, 'full')}</span>
           </div>
           <div className="flex items-center gap-3 text-sm">
-            <Clock className="w-4 h-4 text-foreground" />
-            <span className="text-gray-700">{formatEventTime(event)}</span>
+            <Clock className="w-4 h-4 text-[#8982ff]" />
+            <span className="text-muted-foreground">{formatEventTime(event)}</span>
           </div>
         </div>
 
@@ -94,13 +93,13 @@ export function EventRegistrationCard({
         {event.registration?.capacity && (
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Registration</span>
+              <span className="text-muted-foreground">Registration</span>
               <span className="font-medium text-foreground">
                 {event.registration.attendeeCount || 0} /{' '}
                 {event.registration.capacity}
               </span>
             </div>
-            <Progress value={capacityPercent} className="h-2" />
+            <Progress value={capacityPercent} className="h-2 bg-[#f4f4fa] [&>div]:bg-[#8982ff]" />
             {spotsRemaining !== null && spotsRemaining <= 10 && spotsRemaining > 0 && (
               <p className="text-xs text-amber-600 flex items-center gap-1">
                 <AlertCircle className="w-3 h-3" />
@@ -129,8 +128,8 @@ export function EventRegistrationCard({
                   ))}
                 </div>
               )}
-              <div className="flex items-center gap-1 text-sm text-gray-600">
-                <Users className="w-4 h-4" />
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <Users className="w-4 h-4 text-[#8982ff]" />
                 <span>{event.registration.attendeeCount} attending</span>
               </div>
             </div>
@@ -138,7 +137,7 @@ export function EventRegistrationCard({
 
         {/* Status Messages */}
         {isPast && (
-          <div className="flex items-center gap-2 text-sm text-gray-500 bg-gray-50 p-3 rounded-lg">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground bg-[#f4f4fa] p-3 rounded-lg">
             <CheckCircle className="w-4 h-4" />
             <span>This event has ended</span>
           </div>
@@ -152,18 +151,15 @@ export function EventRegistrationCard({
 
         <div className="flex flex-col gap-3 pt-4">
           <Button
-            className={cn(
-              'w-full',
-              !registrationOpen && !event.registration?.waitlistEnabled && 'bg-gray-400 cursor-not-allowed'
-            )}
             size="lg"
+            className="w-full"
             disabled={!registrationOpen && !event.registration?.waitlistEnabled}
             onClick={handleRegister}
           >
             {getButtonText()}
           </Button>
           {event.registration?.deadline && registrationOpen && (
-            <p className="text-xs text-gray-500 text-center">
+            <p className="text-xs text-muted-foreground text-center">
               Registration closes{' '}
               {new Date(event.registration.deadline).toLocaleDateString('en-NZ', {
                 month: 'short',

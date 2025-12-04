@@ -28,9 +28,9 @@ export function EventCard({
     <Link href={`/events/${event.slug}`} className={cn('block', className)}>
       <Card
         className={cn(
-          'group h-full overflow-hidden transition-all duration-300',
+          'group h-full overflow-hidden transition-all duration-300 py-0',
           'hover:shadow-lg hover:-translate-y-1',
-          'border border-gray-200 dark:border-gray-800',
+          'border border-[#f4f4fa]',
           isPast && 'opacity-75'
         )}
       >
@@ -69,7 +69,7 @@ export function EventCard({
               variant="secondary"
               className={cn(
                 'shadow-md ml-auto',
-                isOnline && 'bg-blue-500 text-white',
+                isOnline && 'bg-[#8982ff] text-white',
                 isHybrid && 'bg-foreground text-background',
                 !isOnline && !isHybrid && 'bg-white/90 text-foreground'
               )}
@@ -100,7 +100,7 @@ export function EventCard({
         <CardContent className="p-4 space-y-3">
           {/* Date & Time */}
           <div className="flex items-center gap-2 text-sm text-foreground font-medium">
-            <Calendar className="w-4 h-4" />
+            <Calendar className="w-4 h-4 text-[#8982ff]" />
             <span>
               {formatEventDate(event, 'short')} · {event.startTime}
             </span>
@@ -121,7 +121,7 @@ export function EventCard({
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             {isOnline ? (
               <>
-                <Video className="w-4 h-4 text-blue-500" />
+                <Video className="w-4 h-4 text-[#8982ff]" />
                 <span>Online Event</span>
               </>
             ) : (
@@ -144,7 +144,7 @@ export function EventCard({
           {/* Attendees Section */}
           {event.registration?.attendeeCount &&
             event.registration.attendeeCount > 0 && (
-              <div className="flex items-center gap-3 pt-2 border-t border-gray-100">
+              <div className="flex items-center gap-3 pt-2 border-t border-[#f4f4fa]">
                 {/* Avatar Stack */}
                 {event.attendeeAvatars && event.attendeeAvatars.length > 0 && (
                   <div className="flex -space-x-2">
@@ -182,9 +182,9 @@ export function EventCard({
                     {event.registration.capacity}
                   </span>
                 </div>
-                <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                <div className="h-1.5 bg-[#f4f4fa] rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-foreground rounded-full transition-all"
+                    className="h-full bg-[#8982ff] rounded-full transition-all"
                     style={{
                       width: `${Math.min(100, (event.registration.attendeeCount / event.registration.capacity) * 100)}%`,
                     }}

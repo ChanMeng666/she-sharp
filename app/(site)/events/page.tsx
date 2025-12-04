@@ -1,121 +1,75 @@
 'use client';
 
-import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Calendar, Clock, MapPin, Video, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
+import { Container } from '@/components/layout/container';
+import { Section } from '@/components/layout/section';
 import { EventCard } from '@/components/events/event-card';
 import { EventList } from '@/components/events/event-list';
 import {
-  EventFiltersBar,
-  EventFilters,
-} from '@/components/events/event-filters';
-import {
-  getAllEvents,
   getUpcomingEvents,
   getPastEvents,
   getFeaturedEvent,
   formatEventDate,
   formatEventTime,
   getDaysUntilEvent,
-  getEventStats,
 } from '@/lib/data/events';
-import { EventFormat, EventCategory } from '@/types/event';
 import { cn } from '@/lib/utils';
 
 export default function EventsPage() {
-  const [filters, setFilters] = useState<EventFilters>({
-    format: 'all',
-    category: 'all',
-    search: '',
-  });
-
   const featuredEvent = getFeaturedEvent();
   const allUpcoming = getUpcomingEvents();
   const allPast = getPastEvents(6);
-  const stats = getEventStats();
-
-  const filteredUpcoming = useMemo(() => {
-    return allUpcoming.filter((event) => {
-      // Format filter
-      if (filters.format !== 'all') {
-        if (filters.format === 'online' && event.location.format !== 'online')
-          return false;
-        if (
-          filters.format === 'in_person' &&
-          event.location.format !== 'in_person'
-        )
-          return false;
-      }
-
-      // Category filter
-      if (filters.category !== 'all' && event.category !== filters.category)
-        return false;
-
-      // Search filter
-      if (filters.search) {
-        const q = filters.search.toLowerCase();
-        const matchesSearch =
-          event.title.toLowerCase().includes(q) ||
-          event.description.toLowerCase().includes(q) ||
-          event.shortDescription?.toLowerCase().includes(q) ||
-          event.tags?.some((t) => t.toLowerCase().includes(q));
-        if (!matchesSearch) return false;
-      }
-
-      return true;
-    });
-  }, [allUpcoming, filters]);
 
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section with Featured Event */}
       {featuredEvent && (
-        <section className="relative min-h-screen flex items-center bg-foreground text-background overflow-hidden">
-          <div className="container mx-auto px-4 py-16 md:py-24 relative">
+        <Section className="bg-surface-periwinkle" spacing="section">
+          <Container size="full">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left: Event Info */}
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
-                  <Badge className="bg-background/20 text-background border-background/30 hover:bg-background/30">
+                  <Badge className="bg-[#8982ff] text-white border-0">
                     Featured Event
                   </Badge>
                   {getDaysUntilEvent(featuredEvent) <= 7 && (
-                    <Badge className="bg-background/30 text-background border-0">
+                    <Badge variant="outline" className="border-[#8982ff] text-[#8982ff]">
                       Coming Soon!
                     </Badge>
                   )}
                 </div>
 
-                <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+                <h1 className="text-4xl md:text-5xl font-bold leading-tight text-foreground">
                   {featuredEvent.title}
                 </h1>
 
-                <p className="text-lg text-background/90 max-w-lg">
+                <p className="text-lg text-muted-foreground max-w-lg">
                   {featuredEvent.shortDescription || featuredEvent.description.slice(0, 150) + '...'}
                 </p>
 
-                <div className="flex flex-wrap gap-6 text-background/90">
+                <div className="flex flex-wrap gap-6 text-muted-foreground">
                   <div className="flex items-center gap-2">
-                    <Calendar className="w-5 h-5" />
+                    <Calendar className="w-5 h-5 text-[#8982ff]" />
                     <span>{formatEventDate(featuredEvent, 'full')}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Clock className="w-5 h-5" />
+                    <Clock className="w-5 h-5 text-[#8982ff]" />
                     <span>{formatEventTime(featuredEvent)}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     {featuredEvent.location.format === 'online' ? (
                       <>
-                        <Video className="w-5 h-5" />
+                        <Video className="w-5 h-5 text-[#8982ff]" />
                         <span>Online Event</span>
                       </>
                     ) : (
                       <>
-                        <MapPin className="w-5 h-5" />
+                        <MapPin className="w-5 h-5 text-[#8982ff]" />
                         <span>
                           {featuredEvent.location.venueName},{' '}
                           {featuredEvent.location.city}
@@ -126,8 +80,8 @@ export default function EventsPage() {
                 </div>
 
                 {featuredEvent.registration?.attendeeCount && (
-                  <div className="flex items-center gap-2 text-background/80">
-                    <Users className="w-5 h-5" />
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Users className="w-5 h-5 text-[#8982ff]" />
                     <span>
                       {featuredEvent.registration.attendeeCount} people attending
                     </span>
@@ -135,21 +89,13 @@ export default function EventsPage() {
                 )}
 
                 <div className="flex gap-4 pt-4">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="bg-background text-foreground hover:bg-background/90"
-                  >
+                  <Button asChild size="lg">
                     <Link href={`/events/${featuredEvent.slug}`}>
                       View Details
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
                   </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="border-background/30 text-background hover:bg-background/10"
-                  >
+                  <Button variant="outline" size="lg">
                     Register Now
                   </Button>
                 </div>
@@ -167,45 +113,13 @@ export default function EventsPage() {
                 />
               </div>
             </div>
-          </div>
-        </section>
+          </Container>
+        </Section>
       )}
 
-      {/* Stats Bar */}
-      <section className="bg-background border-b border-border">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16">
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-foreground">
-                {stats.upcoming}
-              </div>
-              <div className="text-sm text-muted-foreground">Upcoming Events</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-foreground">
-                {stats.past}
-              </div>
-              <div className="text-sm text-muted-foreground">Past Events</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-foreground">
-                {stats.online}
-              </div>
-              <div className="text-sm text-muted-foreground">Online Events</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-foreground">
-                {stats.inPerson}
-              </div>
-              <div className="text-sm text-muted-foreground">In-Person Events</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Upcoming Events Section */}
-      <section className="py-12 md:py-16">
-        <div className="container mx-auto px-4">
+      <Section className="bg-surface-periwinkle" spacing="section">
+        <Container>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">
@@ -217,28 +131,19 @@ export default function EventsPage() {
             </div>
           </div>
 
-          {/* Filters */}
-          <EventFiltersBar
-            filters={filters}
-            onFiltersChange={setFilters}
-            showSearch={true}
-            showCategory={false}
-            className="mb-8"
-          />
-
           {/* Events Grid */}
           <EventList
-            events={filteredUpcoming}
+            events={allUpcoming}
             columns={3}
-            emptyMessage="No upcoming events match your filters. Try adjusting your search or filters."
+            emptyMessage="No upcoming events at the moment. Check back soon!"
           />
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Past Events Section */}
       {allPast.length > 0 && (
-        <section className="py-12 md:py-16 bg-muted">
-          <div className="container mx-auto px-4">
+        <Section className="bg-surface-periwinkle" spacing="section">
+          <Container>
             <div className="flex items-end justify-between mb-8">
               <div>
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground">
@@ -255,8 +160,8 @@ export default function EventsPage() {
                 <EventCard key={event.slug} event={event} />
               ))}
             </div>
-          </div>
-        </section>
+          </Container>
+        </Section>
       )}
 
     </div>

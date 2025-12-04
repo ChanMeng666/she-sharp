@@ -18,24 +18,24 @@ const agendaTypeIcons: Record<string, React.ElementType> = {
 };
 
 const agendaTypeColors: Record<string, string> = {
-  keynote: 'bg-muted text-foreground border-border',
-  panel: 'bg-muted text-foreground border-border',
-  workshop: 'bg-muted text-foreground border-border',
-  networking: 'bg-muted text-foreground border-border',
-  break: 'bg-gray-100 text-gray-600 border-gray-200',
+  keynote: 'bg-[#f4f4fa] text-foreground border-[#8982ff]/30',
+  panel: 'bg-[#f4f4fa] text-foreground border-[#8982ff]/30',
+  workshop: 'bg-[#f4f4fa] text-foreground border-[#8982ff]/30',
+  networking: 'bg-[#f4f4fa] text-foreground border-[#8982ff]/30',
+  break: 'bg-[#f4f4fa] text-muted-foreground border-[#8982ff]/20',
 };
 
 function AgendaItemCard({ item }: { item: AgendaItem }) {
   const Icon = item.type ? agendaTypeIcons[item.type] : Clock;
   const colorClasses = item.type
     ? agendaTypeColors[item.type]
-    : 'bg-gray-100 text-gray-600 border-gray-200';
+    : 'bg-[#f4f4fa] text-muted-foreground border-[#8982ff]/20';
 
   return (
     <div className="flex gap-4">
       {/* Time Column */}
       <div className="w-16 flex-shrink-0 text-right">
-        <span className="text-sm font-medium text-gray-500">{item.time}</span>
+        <span className="text-sm font-medium text-muted-foreground">{item.time}</span>
       </div>
 
       {/* Timeline Dot */}
@@ -48,15 +48,15 @@ function AgendaItemCard({ item }: { item: AgendaItem }) {
         >
           <Icon className="w-5 h-5" />
         </div>
-        <div className="w-0.5 flex-1 bg-gray-200 mt-2" />
+        <div className="w-0.5 flex-1 bg-[#8982ff]/20 mt-2" />
       </div>
 
       {/* Content */}
       <div className="flex-1 pb-8">
         <div
           className={cn(
-            'p-4 rounded-lg border',
-            item.type === 'break' ? 'bg-gray-50' : 'bg-white'
+            'p-4 rounded-lg border border-[#8982ff]/10',
+            item.type === 'break' ? 'bg-[#f4f4fa]' : 'bg-white'
           )}
         >
           <h4 className="font-medium text-foreground">{item.title}</h4>
@@ -66,7 +66,7 @@ function AgendaItemCard({ item }: { item: AgendaItem }) {
             </p>
           )}
           {item.description && (
-            <p className="text-sm text-gray-600 mt-2">{item.description}</p>
+            <p className="text-sm text-muted-foreground mt-2">{item.description}</p>
           )}
           {item.type && (
             <span

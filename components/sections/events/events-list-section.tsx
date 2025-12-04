@@ -16,7 +16,7 @@ export function EventsListSection() {
   const displayedEvents = showMore ? allEvents : allEvents.slice(0, 3);
 
   return (
-    <Section className="py-16 bg-gray-50">
+    <Section className="py-16 bg-surface-periwinkle">
       <Container>
         <h2 className="text-3xl font-bold text-foreground mb-8">Find an Event</h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -32,13 +32,13 @@ export function EventsListSection() {
                   />
                 </div>
                 <CardContent className="p-6">
-                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
-                    <CalendarDays className="h-4 w-4" />
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                    <CalendarDays className="h-4 w-4 text-[#8982ff]" />
                     <span>{formatEventDate(event)}</span>
                   </div>
                   {event.registration?.attendeeCount && (
-                    <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
-                      <Users className="h-4 w-4" />
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                      <Users className="h-4 w-4 text-[#8982ff]" />
                       <span>{event.registration.attendeeCount} attendees</span>
                     </div>
                   )}

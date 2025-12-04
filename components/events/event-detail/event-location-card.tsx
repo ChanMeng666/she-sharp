@@ -41,12 +41,12 @@ export function EventLocationCard({ event, className }: EventLocationCardProps) 
         <CardTitle className="text-lg flex items-center gap-2">
           {isOnline ? (
             <>
-              <Video className="w-5 h-5 text-blue-500" />
+              <Video className="w-5 h-5 text-[#8982ff]" />
               Online Event
             </>
           ) : (
             <>
-              <MapPin className="w-5 h-5 text-foreground" />
+              <MapPin className="w-5 h-5 text-[#8982ff]" />
               Location
             </>
           )}
@@ -57,7 +57,7 @@ export function EventLocationCard({ event, className }: EventLocationCardProps) 
         {(isOnline || isHybrid) && (
           <div className="space-y-3">
             <div>
-              <p className="text-sm text-gray-500">Platform</p>
+              <p className="text-sm text-muted-foreground">Platform</p>
               <p className="font-medium text-foreground">
                 {platformLabels[event.location.meetingPlatform || 'other']}
               </p>
@@ -73,7 +73,7 @@ export function EventLocationCard({ event, className }: EventLocationCardProps) 
               </Button>
             )}
             {isPast && (
-              <p className="text-sm text-gray-500 italic">
+              <p className="text-sm text-muted-foreground italic">
                 Meeting link is no longer available
               </p>
             )}
@@ -84,7 +84,7 @@ export function EventLocationCard({ event, className }: EventLocationCardProps) 
         {(!isOnline || isHybrid) && event.location.venueName && (
           <div className="space-y-3">
             {isHybrid && (
-              <div className="pb-3 mb-3 border-b border-gray-200">
+              <div className="pb-3 mb-3 border-b border-[#f4f4fa]">
                 <p className="text-xs text-foreground font-medium uppercase tracking-wide">
                   In-Person Location
                 </p>
@@ -95,10 +95,10 @@ export function EventLocationCard({ event, className }: EventLocationCardProps) 
                 {event.location.venueName}
               </p>
               {event.location.address && (
-                <p className="text-sm text-gray-600">{event.location.address}</p>
+                <p className="text-sm text-muted-foreground">{event.location.address}</p>
               )}
               {event.location.city && (
-                <p className="text-sm text-gray-600">{event.location.city}</p>
+                <p className="text-sm text-muted-foreground">{event.location.city}</p>
               )}
             </div>
 
@@ -140,12 +140,12 @@ export function EventLocationCard({ event, className }: EventLocationCardProps) 
 
         {/* Embedded Map Preview (placeholder) */}
         {(!isOnline || isHybrid) && event.location.mapUrl && (
-          <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center">
+          <div className="aspect-video bg-[#f4f4fa] rounded-lg flex items-center justify-center">
             <a
               href={event.location.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-gray-500 hover:text-foreground transition-colors"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               View on Google Maps →
             </a>

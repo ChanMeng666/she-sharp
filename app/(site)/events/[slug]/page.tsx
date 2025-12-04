@@ -15,6 +15,8 @@ import {
   EventOrganizerCard,
 } from '@/components/events/event-detail';
 import { EventCard } from '@/components/events/event-card';
+import { Container } from '@/components/layout/container';
+import { Section } from '@/components/layout/section';
 
 interface EventPageProps {
   params: Promise<{
@@ -64,52 +66,57 @@ export default async function EventPage({ params }: EventPageProps) {
   const relatedEvents = getUpcomingEvents(3).filter((e) => e.slug !== slug);
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
-        {/* Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Main Content - Left Column */}
-          <div className="lg:col-span-8 space-y-8">
-            <EventHeader event={event} />
-            <EventDescription event={event} />
-            <EventAgenda event={event} />
-            <EventSpeakers event={event} />
+    <div className="min-h-screen bg-background">
+      {/* Main Content Section */}
+      <Section spacing="section" className="bg-surface-periwinkle">
+        <Container size="full">
+          {/* Two-column layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Main Content - Left Column */}
+            <div className="lg:col-span-8 space-y-8">
+              <EventHeader event={event} />
+              <EventDescription event={event} />
+              <EventAgenda event={event} />
+              <EventSpeakers event={event} />
 
-            {/* Event Photos Gallery (for past events) */}
-            {event.photos && event.photos.length > 0 && (
-              <section className="space-y-4">
-                <h2 className="text-xl font-semibold text-foreground">
-                  Event Photos
-                </h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {event.photos.map((photo, index) => (
-                    <div
-                      key={index}
-                      className="aspect-square rounded-lg overflow-hidden bg-muted"
-                    >
-                      <img
-                        src={photo}
-                        alt={`${event.title} photo ${index + 1}`}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
+              {/* Event Photos Gallery (for past events) */}
+              {event.photos && event.photos.length > 0 && (
+                <section className="space-y-4">
+                  <h2 className="text-xl font-semibold text-foreground">
+                    Event Photos
+                  </h2>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {event.photos.map((photo, index) => (
+                      <div
+                        key={index}
+                        className="aspect-square rounded-lg overflow-hidden bg-[#f4f4fa]"
+                      >
+                        <img
+                          src={photo}
+                          alt={`${event.title} photo ${index + 1}`}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+            </div>
+
+            {/* Sidebar - Right Column */}
+            <div className="lg:col-span-4 space-y-6">
+              <EventRegistrationCard event={event} />
+              <EventLocationCard event={event} />
+              <EventOrganizerCard event={event} />
+            </div>
           </div>
+        </Container>
+      </Section>
 
-          {/* Sidebar - Right Column */}
-          <div className="lg:col-span-4 space-y-6">
-            <EventRegistrationCard event={event} />
-            <EventLocationCard event={event} />
-            <EventOrganizerCard event={event} />
-          </div>
-        </div>
-
-        {/* Related Events */}
-        {relatedEvents.length > 0 && (
-          <section className="mt-16 pt-8 border-t border-border">
+      {/* Related Events */}
+      {relatedEvents.length > 0 && (
+        <Section spacing="section">
+          <Container size="full">
             <h2 className="text-2xl font-bold text-foreground mb-6">
               Other Upcoming Events
             </h2>
@@ -118,9 +125,9 @@ export default async function EventPage({ params }: EventPageProps) {
                 <EventCard key={relatedEvent.slug} event={relatedEvent} />
               ))}
             </div>
-          </section>
-        )}
-      </div>
+          </Container>
+        </Section>
+      )}
     </div>
   );
 }

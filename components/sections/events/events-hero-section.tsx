@@ -6,7 +6,7 @@ import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 export function EventsHeroSection() {
   return (
-    <Section className="bg-muted py-20">
+    <Section className="bg-surface-periwinkle py-20">
       <Container>
         <AnimateOnScroll variant="fade-up" className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
