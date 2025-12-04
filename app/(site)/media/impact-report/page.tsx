@@ -24,10 +24,10 @@ export default function ImpactReportPage() {
         </div>
 
         {/* Featured Report Card */}
-        <Card className="border-2 border-border shadow-xl mb-12">
+        <Card className="border-2 border-[#9b2e83]/20 shadow-xl mb-12">
           <CardContent className="p-8 md:p-12 text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-muted rounded-full mb-6">
-              <Download className="h-8 w-8 text-foreground" />
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-[#f7e5f3] rounded-full mb-6">
+              <Download className="h-8 w-8 text-[#9b2e83]" />
             </div>
             <h2 className="text-2xl font-bold text-foreground mb-4">
               2024 Annual Impact Report
@@ -48,22 +48,22 @@ export default function ImpactReportPage() {
         <Card className="hover:shadow-lg transition-shadow mb-12">
           <CardContent className="p-8">
             <div className="flex items-start gap-4">
-              <div className="p-3 bg-muted rounded-full">
-                <Award className="h-6 w-6 text-foreground" />
+              <div className="p-3 bg-[#f7e5f3] rounded-full">
+                <Award className="h-6 w-6 text-[#9b2e83]" />
               </div>
               <div className="flex-1">
                 <h3 className="text-xl font-bold text-foreground mb-4">Highlights</h3>
                 <ul className="space-y-3 text-gray">
                   <li className="flex items-start gap-2">
-                    <span className="text-foreground">•</span>
+                    <span className="text-[#9b2e83]">•</span>
                     <span>Launched THRIVE career program with strong participant outcomes</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-foreground">•</span>
+                    <span className="text-[#9b2e83]">•</span>
                     <span>Expanded mentorship matching and strategic partnerships</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-foreground">•</span>
+                    <span className="text-[#9b2e83]">•</span>
                     <span>Hosted Google Educator Conference with record attendance</span>
                   </li>
                 </ul>
@@ -73,11 +73,11 @@ export default function ImpactReportPage() {
         </Card>
 
         {/* Looking Ahead Section */}
-        <Card className="bg-muted border-border">
+        <Card className="bg-[#f4f4fa] border-[#8982ff]/20">
           <CardContent className="p-8 md:p-12">
             <div className="flex items-start gap-4">
               <div className="p-3 bg-white rounded-full">
-                <Users className="h-6 w-6 text-foreground" />
+                <Users className="h-6 w-6 text-[#8982ff]" />
               </div>
               <div className="flex-1">
                 <h3 className="text-2xl font-bold text-foreground mb-4">

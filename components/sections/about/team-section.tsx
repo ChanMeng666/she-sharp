@@ -47,7 +47,7 @@ export function TeamSection() {
               key={member.name}
               className={cn(
                 "group relative cursor-pointer rounded-3xl border border-white/40 bg-white/80 backdrop-blur-md",
-                "shadow-[0_5px_5px_rgba(196,193,255,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_15px_20px_rgba(196,193,255,0.35)]",
+                "shadow-[0_5px_5px_rgba(155,46,131,0.15)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_15px_20px_rgba(155,46,131,0.25)]",
                 "p-0 gap-0"
               )}
               onClick={() => setSelectedMember(member)}

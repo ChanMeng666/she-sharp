@@ -21,7 +21,7 @@ export function AboutHeroSection() {
           </p>
 
           {/* Founder's Note (always visible) */}
-          <AnimateOnScroll variant="fade-up" delay={200} className="mt-6 sm:mt-8 text-left bg-background rounded-md p-4 sm:p-5 border border-border">
+          <AnimateOnScroll variant="fade-up" delay={200} className="mt-6 sm:mt-8 text-left bg-[#f7e5f3] rounded-md p-4 sm:p-5 border border-[#9b2e83]/20">
             <div className="space-y-3 text-muted-foreground">
               <p>
                 In 2014, we set out to make career paths into tech visible and
