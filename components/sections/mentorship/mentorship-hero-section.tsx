@@ -12,7 +12,7 @@ import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 export function MentorshipHeroSection() {
   return (
-    <Section className="relative overflow-hidden bg-surface-purple">
+    <Section className="relative overflow-hidden bg-white">
       <Container>
         <div className="py-16 md:py-24">
           {/* Title and CTA */}

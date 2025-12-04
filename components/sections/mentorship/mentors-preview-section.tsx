@@ -88,7 +88,7 @@ export function MentorsPreviewSection() {
               {isLoading ? (
                 <Card className="overflow-hidden aspect-square" />
               ) : (
-                <Card className={`overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${mentor.featured ? 'ring-2 ring-border' : ''}`}>
+                <Card className={`overflow-hidden py-0 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${mentor.featured ? 'ring-2 ring-border' : ''}`}>
                       {mentor.featured && (
                         <Badge className="absolute top-4 right-4 z-10 bg-foreground text-background">
                           <Sparkles className="w-3 h-3 mr-1" />
