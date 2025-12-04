@@ -47,7 +47,8 @@ export function TeamSection() {
               key={member.name}
               className={cn(
                 "group relative cursor-pointer rounded-3xl border border-white/40 bg-white/80 backdrop-blur-md",
-                "shadow-[0_5px_5px_rgba(196,193,255,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_15px_20px_rgba(196,193,255,0.35)]"
+                "shadow-[0_5px_5px_rgba(196,193,255,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_15px_20px_rgba(196,193,255,0.35)]",
+                "p-0 gap-0"
               )}
               onClick={() => setSelectedMember(member)}
             >
@@ -62,7 +63,7 @@ export function TeamSection() {
                   alt={member.name}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover"
+                  className="object-cover object-top"
                 />
               </div>
 
@@ -89,15 +90,15 @@ export function TeamSection() {
           <DialogContent className="max-w-2xl p-0 overflow-hidden">
             {selectedMember && (
               <>
-                <div className="relative h-48 sm:h-64">
+                <div className="relative w-full">
                   <Image
                     src={selectedMember.image}
                     alt={selectedMember.name}
-                    fill
+                    width={640}
+                    height={640}
                     sizes="(max-width: 768px) 100vw, 640px"
-                    className="object-cover"
+                    className="w-full h-auto object-contain"
                   />
-                  <div className="absolute inset-0 bg-foreground/50" />
                 </div>
                 <DialogHeader className="px-4 sm:px-6 pt-4">
                   <DialogTitle className="text-xl sm:text-2xl text-foreground">
