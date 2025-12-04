@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { Mail, ChevronDown, ExternalLink } from "lucide-react";
+import { Mail, ChevronDown, ExternalLink, MapPin } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -139,6 +139,25 @@ export function SiteFooter() {
                         </Link>
                       );
                     })}
+                  </div>
+                </div>
+
+                {/* Contact Info */}
+                <div className="mt-8 lg:mt-10 text-left space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Mail className="h-4 w-4 text-background/60" />
+                    <a
+                      href={`mailto:${footerConfig.contactInfo.email}`}
+                      className="text-sm text-background/80 hover:text-background transition-colors"
+                    >
+                      {footerConfig.contactInfo.email}
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <MapPin className="h-4 w-4 text-background/60" />
+                    <span className="text-sm text-background/80">
+                      {footerConfig.contactInfo.location}
+                    </span>
                   </div>
                 </div>
               </div>

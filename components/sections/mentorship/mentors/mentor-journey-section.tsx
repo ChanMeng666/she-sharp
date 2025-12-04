@@ -4,9 +4,8 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, ArrowRight } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
-import { globalStats } from "@/lib/data/stats";
 
 const journeySteps = [
   {
@@ -143,36 +142,6 @@ export function MentorJourneySection() {
             ))}
           </div>
         </div>
-
-        {/* Stats Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mt-16 bg-muted rounded-2xl p-8"
-        >
-          <div className="grid md:grid-cols-3 gap-6 text-center">
-            <div>
-              <div className="text-3xl font-bold text-foreground">
-                {globalStats.mentorship.mentors}+
-              </div>
-              <div className="text-muted-foreground">Active Mentors</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-foreground">
-                {globalStats.mentorship.successRate}%
-              </div>
-              <div className="text-muted-foreground">Success Rate</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-foreground">
-                {globalStats.mentorship.promotionRate.mentors}x
-              </div>
-              <div className="text-muted-foreground">More Likely to be Promoted</div>
-            </div>
-          </div>
-        </motion.div>
       </Container>
     </Section>
   );

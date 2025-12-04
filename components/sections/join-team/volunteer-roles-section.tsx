@@ -3,7 +3,6 @@ import { Section } from "@/components/layout/section";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import Link from "next/link";
 
 const volunteerRole = {
   title: "What it means to be an events Volunteer",
@@ -53,7 +52,7 @@ export function VolunteerRolesSection() {
                 ))}
               </ul>
               <Button asChild>
-                <Link href="/contact">Become a volunteer</Link>
+                <a href="mailto:hello@shesharp.org.nz?subject=Become%20a%20Volunteer">Become a volunteer</a>
               </Button>
             </div>
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
@@ -90,7 +89,7 @@ export function VolunteerRolesSection() {
                 ))}
               </ul>
               <Button asChild>
-                <Link href="/contact">Register your interest</Link>
+                <a href="mailto:hello@shesharp.org.nz?subject=Ambassador%20Interest">Register your interest</a>
               </Button>
             </div>
           </div>

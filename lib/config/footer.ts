@@ -19,7 +19,17 @@ export interface FooterStats {
   value: string;
 }
 
+export interface ContactInfo {
+  email: string;
+  location: string;
+}
+
 export const footerConfig = {
+  contactInfo: {
+    email: "hello@shesharp.org.nz",
+    location: "Auckland, New Zealand",
+  } as ContactInfo,
+
   stats: [
     { label: "Members", value: "2200+" },
     { label: "Sponsors", value: "50+" },
@@ -60,7 +70,6 @@ export const footerConfig = {
         { name: "Newsletters", href: "/media/newsletters" },
         { name: "Photo Gallery", href: "/media/photo-gallery" },
         { name: "In the Press", href: "/media/news-and-press" },
-        { name: "Contact Us", href: "/contact" },
       ],
     },
   ] as FooterSection[],

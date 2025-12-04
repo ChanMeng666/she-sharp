@@ -3,8 +3,7 @@ import { Section } from "@/components/layout/section";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, Users } from "lucide-react";
-import Link from "next/link";
+import { Sparkles, Mail } from "lucide-react";
 import { layoutSystem } from "@/lib/layout-system";
 
 export function AnniversarySection() {
@@ -36,10 +35,10 @@ export function AnniversarySection() {
                 size="lg"
                 className="shadow-md"
               >
-                <Link href="/contact">
-                  <Users className="w-5 h-5 mr-2" />
+                <a href="mailto:hello@shesharp.org.nz?subject=She%20Sharp%20Alumni%20-%20Register%20Interest">
+                  <Mail className="w-5 h-5 mr-2" />
                   Register Your Interest
-                </Link>
+                </a>
               </Button>
             </div>
 

@@ -1,4 +1,4 @@
-import { LucideIcon, Calendar, Users, Heart, Mic, Mail, FileText, Award, BookOpen, HandHeart, Building2, GraduationCap, Newspaper, Sparkles, Library, MessageCircle, UserPlus } from "lucide-react";
+import { LucideIcon, Calendar, Users, Heart, Mic, Mail, FileText, Award, BookOpen, HandHeart, Building2, GraduationCap, Newspaper, Sparkles, Library, UserPlus } from "lucide-react";
 
 export interface NavigationItem {
   title: string;
@@ -136,11 +136,6 @@ export const navigationConfig: {
           icon: Newspaper,
         },
       ],
-    },
-    {
-      title: "Contact",
-      href: "/contact",
-      icon: MessageCircle,
     },
   ],
   buttons: [
