@@ -1,254 +1,119 @@
-/* Legal Page Typography */
-.legal-content h2 {
-  @apply text-2xl md:text-3xl font-bold text-purple-dark mb-8 mt-16 first:mt-0;
-  @apply relative pl-8;
-  @apply border-b-2 border-purple-light/30 pb-4;
+/* Legal Page - Professional Color Theme */
+/* Colors: Purple Dark #9b2e83, Navy Dark #1f1e44, Purple Light #f7e5f3 */
+
+.legal-content {
+  @apply max-w-4xl mx-auto;
 }
 
-.legal-content h2::before {
-  content: '';
-  @apply absolute left-0 top-1/2 -translate-y-1/2;
-  @apply w-4 h-10 bg-gradient-to-b from-purple-dark to-purple-mid rounded-full;
-  @apply shadow-lg;
+.legal-content h2 {
+  @apply text-2xl font-bold mb-6 mt-12 first:mt-0;
+  @apply pb-3;
+  color: #1f1e44;
+  border-bottom: 2px solid #f7e5f3;
 }
 
 .legal-content h3 {
-  @apply text-xl md:text-2xl font-semibold text-navy-dark mb-6 mt-10;
-  @apply relative pl-6;
-}
-
-.legal-content h3::before {
-  content: '';
-  @apply absolute left-0 top-1/2 -translate-y-1/2;
-  @apply w-2 h-6 bg-periwinkle-dark/60 rounded-full;
+  @apply text-xl font-semibold mb-4 mt-8;
+  color: #9b2e83;
 }
 
 .legal-content h4 {
-  @apply text-lg font-semibold text-navy-dark mb-3 mt-6;
+  @apply text-lg font-semibold mb-3 mt-6;
+  color: #1f1e44;
 }
 
 .legal-content p {
-  @apply text-navy-dark mb-6 leading-relaxed text-base md:text-lg;
-  @apply text-gray-700;
+  @apply mb-4 leading-relaxed;
+  color: #1f1e44;
 }
 
-.legal-content ul, .legal-content ol {
-  @apply space-y-4 mb-8 ml-6;
+.legal-content ul,
+.legal-content ol {
+  @apply mb-4 ml-6 space-y-2;
 }
 
-.legal-content li {
-  @apply text-navy-dark relative pl-6 leading-relaxed;
-  @apply text-gray-700;
-}
-
-.legal-content ul li::before {
-  content: '•';
-  @apply absolute left-0 text-purple-dark text-xl font-bold;
-  @apply top-0;
+.legal-content ul {
+  @apply list-disc;
 }
 
 .legal-content ol {
-  counter-reset: item;
+  @apply list-decimal;
 }
 
-.legal-content ol li {
-  counter-increment: item;
+.legal-content li {
+  @apply leading-relaxed;
+  color: #1f1e44;
 }
 
-.legal-content ol li::before {
-  content: counter(item) '.';
-  @apply absolute left-0 text-purple-dark font-semibold;
-  @apply top-0;
+.legal-content li::marker {
+  color: #9b2e83;
 }
 
 .legal-content a {
-  @apply text-purple-dark hover:text-purple-mid underline underline-offset-2 transition-colors duration-150;
-  @apply font-medium;
+  color: #9b2e83;
+  @apply underline underline-offset-2 hover:no-underline;
+}
+
+.legal-content a:hover {
+  color: #c846ab;
 }
 
 .legal-content strong {
-  @apply font-semibold text-navy-dark;
+  @apply font-semibold;
+  color: #1f1e44;
 }
 
-/* Legal Section Styling */
+.legal-content table {
+  @apply w-full my-6 border-collapse;
+}
+
+.legal-content th {
+  @apply px-4 py-3 text-left text-sm font-semibold;
+  color: #1f1e44;
+  background-color: #f7e5f3;
+  border: 1px solid #f7e5f3;
+}
+
+.legal-content td {
+  @apply px-4 py-3 text-sm;
+  color: #1f1e44;
+  border: 1px solid #f7e5f3;
+}
+
+.legal-content tr:nth-child(even) td {
+  background-color: #f4f4fa;
+}
+
+.legal-content blockquote {
+  @apply pl-4 my-4 italic;
+  border-left: 4px solid #9b2e83;
+  color: #1f1e44;
+  background-color: #f4f4fa;
+  @apply py-3 pr-4 rounded-r;
+}
+
+/* Section spacing */
 .legal-section {
-  @apply relative pb-12 mb-12;
-  @apply border-b border-purple-light/20 last:border-0 last:pb-0 last:mb-0;
+  @apply mb-10;
 }
 
-/* Info Boxes */
+/* Simple info box */
 .legal-info-box {
-  @apply bg-gradient-to-br from-purple-light/10 to-purple-light/5;
-  @apply border border-purple-light/30 rounded-2xl p-8 my-10;
-  @apply relative overflow-hidden;
-  @apply shadow-lg shadow-purple-light/20;
-  @apply backdrop-blur-sm;
-}
-
-.legal-info-box::before {
-  content: '';
-  @apply absolute top-0 right-0 w-40 h-40;
-  @apply bg-purple-mid/10 rounded-full;
-  @apply blur-xl;
-}
-
-.legal-warning-box {
-  @apply bg-gradient-to-br from-mint-light/20 to-mint-light/10;
-  @apply border border-mint-dark/30 rounded-2xl p-8 my-10;
-  @apply shadow-lg shadow-mint-light/20;
-  @apply backdrop-blur-sm;
-}
-
-.legal-highlight-box {
-  @apply bg-gradient-to-br from-periwinkle-light/20 to-periwinkle-light/10;
-  @apply border border-periwinkle-dark/20 rounded-2xl p-8 my-8;
-  @apply shadow-lg shadow-periwinkle-light/20;
-  @apply backdrop-blur-sm;
-  @apply hover:shadow-xl hover:shadow-periwinkle-light/30 transition-all duration-300;
-  @apply hover:scale-[1.02] hover:border-periwinkle-dark/40;
-}
-
-/* Table Styling */
-.legal-table {
-  @apply w-full overflow-hidden rounded-xl border border-purple-light/20 my-8;
-  @apply shadow-lg;
-}
-
-.legal-table thead {
-  @apply bg-gradient-to-r from-purple-light/20 to-purple-light/10;
-}
-
-.legal-table th {
-  @apply px-6 py-4 text-left text-sm font-semibold text-navy-dark;
-  @apply border-b border-purple-light/30;
-}
-
-.legal-table td {
-  @apply px-6 py-4 text-sm text-navy-dark border-t border-purple-light/20;
-}
-
-.legal-table tbody tr {
-  @apply hover:bg-purple-light/10 transition-colors duration-150;
-  @apply hover:shadow-inner;
-}
-
-/* Contact Cards */
-.legal-contact-card {
-  @apply bg-gradient-to-br from-purple-light/5 to-periwinkle-light/5;
-  @apply border border-purple-light/30 rounded-2xl p-10 my-10;
-  @apply shadow-xl hover:shadow-2xl transition-all duration-300;
-  @apply backdrop-blur-sm;
-  @apply hover:scale-[1.01];
-}
-
-/* Numbered List Styling */
-.legal-numbered-list {
-  @apply space-y-6 my-8;
-}
-
-.legal-numbered-list .number {
-  @apply flex-shrink-0 w-10 h-10 bg-gradient-to-br from-purple-dark to-purple-mid;
-  @apply text-white rounded-full flex items-center justify-center;
-  @apply text-sm font-bold;
-  @apply shadow-lg;
-}
-
-/* Icon Lists */
-.legal-icon-list {
-  @apply space-y-4 my-6;
-}
-
-.legal-icon-list li {
-  @apply flex items-start gap-3;
-  @apply p-2 rounded-lg hover:bg-white/50 transition-colors duration-150;
-}
-
-.legal-icon-list .icon {
-  @apply flex-shrink-0 w-6 h-6 text-purple-dark mt-0.5;
-}
-
-/* Enhanced spacing and visual hierarchy */
-.legal-content {
-  @apply max-w-6xl mx-auto;
-  @apply px-4 md:px-8;
-}
-
-/* Card hover effects */
-.legal-highlight-box:hover {
-  @apply transform transition-all duration-300;
-}
-
-/* Enhanced shadows and depth */
-.legal-section:not(:last-child)::after {
-  content: '';
-  @apply absolute bottom-0 left-0 right-0 h-px;
-  @apply bg-gradient-to-r from-transparent via-purple-light/30 to-transparent;
-}
-
-/* Responsive improvements */
-@media (max-width: 768px) {
-  .legal-content h2 {
-    @apply text-xl md:text-2xl mb-6 mt-12;
-    @apply pl-6;
-  }
-
-  .legal-content h2::before {
-    @apply w-3 h-8;
-  }
-
-  .legal-section {
-    @apply pb-8 mb-8;
-  }
-
-  .legal-info-box,
-  .legal-warning-box,
-  .legal-highlight-box {
-    @apply p-6 my-6;
-  }
-
-  .legal-contact-card {
-    @apply p-6 my-6;
-  }
-}
-
-/* Animation enhancements */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.legal-section {
-  animation: fadeInUp 0.6s ease-out;
-}
-
-/* Enhanced focus states for accessibility */
-.legal-content a:focus,
-.legal-content button:focus {
-  @apply outline-none ring-2 ring-purple-dark ring-offset-2;
-  @apply rounded-lg;
+  @apply rounded-lg p-6 my-6;
+  background-color: #f7e5f3;
+  border: 1px solid #f7e5f3;
 }
 
 /* Print styles */
 @media print {
-  .legal-content h2::before,
-  .legal-content h3::before {
-    @apply hidden;
+  .legal-content {
+    @apply max-w-none;
   }
 
-  .legal-content h2 {
-    @apply border-b border-gray-300;
-  }
-
-  .legal-highlight-box,
-  .legal-info-box,
-  .legal-warning-box {
-    @apply border border-gray-300 bg-white;
-    @apply shadow-none;
+  .legal-content h2,
+  .legal-content h3,
+  .legal-content p,
+  .legal-content li {
+    color: #000;
   }
 }

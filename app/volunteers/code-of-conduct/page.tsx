@@ -1,4 +1,3 @@
-import { FileText, Users, Shield, Lock, AlertTriangle, CheckCircle, Pen, Calendar, Mail } from "lucide-react";
 import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
 
@@ -9,445 +8,175 @@ export const metadata = {
 
 export default function AmbassadorCodeOfConductPage() {
   return (
-    <LegalPageLayout 
+    <LegalPageLayout
       title="Ambassador Code of Conduct"
       navTitle="Ambassador Code of Conduct"
       lastUpdated={new Date('2021-07-16')}
-      icon={<Users className="h-12 w-12 text-white" />}
     >
       <div className="legal-content">
-        {/* Organization Header */}
         <section className="legal-section">
-          <div className="legal-info-box">
-            <h2 className="!mt-0">She Sharp Charitable Trust</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <p className="text-lg mb-4">
-                  <strong>New Zealand Registered Charity No. CC57025</strong>
-                </p>
-                <p className="text-sm text-foreground">
-                  Website: <a href="https://shesharp.org.nz" className="text-foreground hover:text-foreground/80">shesharp.org.nz</a>
-                </p>
-                <p className="text-sm text-foreground">
-                  Contact: <a href="mailto:governance@shesharp.org.nz" className="text-foreground hover:text-foreground/80">governance@shesharp.org.nz</a>
-                </p>
-              </div>
-              <div className="flex items-center gap-4 p-4 bg-white/50 rounded-lg">
-                <Shield className="h-6 w-6 text-foreground flex-shrink-0" />
-                <div>
-                  <p className="text-sm text-foreground mb-0">
-                    <strong>Purpose:</strong> This Code of Conduct informs volunteers and ambassadors 
-                    on the standards of conduct required when representing She Sharp.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <h2>She Sharp Charitable Trust</h2>
+          <p>
+            <strong>New Zealand Registered Charity No. CC57025</strong>
+          </p>
+          <p>
+            Website: <a href="https://shesharp.org.nz">shesharp.org.nz</a><br />
+            Contact: <a href="mailto:governance@shesharp.org.nz">governance@shesharp.org.nz</a>
+          </p>
+          <p>
+            <strong>Purpose:</strong> This Code of Conduct informs volunteers and ambassadors
+            on the standards of conduct required when representing She Sharp.
+          </p>
         </section>
 
-        {/* Agreement */}
         <section className="legal-section">
           <h2>Agreement</h2>
-          <div className="legal-highlight-box">
-            <p className="mb-4">
-              The purpose of this Code of Conduct is to inform volunteers on the standards of conduct 
-              required. Volunteers are expected to act honestly, conscientiously, reasonably and in good 
-              faith at all times when carrying out their duties and in their relationships or interactions 
-              with other people.
-            </p>
-            <div className="flex items-center gap-3 p-4 bg-white/50 rounded-lg">
-              <Calendar className="h-5 w-5 text-foreground flex-shrink-0" />
-              <p className="text-sm text-foreground mb-0">
-                <strong>Effective Date:</strong> This agreement is effective from the date of joining our organisation.
-              </p>
-            </div>
-          </div>
+          <p>
+            The purpose of this Code of Conduct is to inform volunteers on the standards of conduct
+            required. Volunteers are expected to act honestly, conscientiously, reasonably and in good
+            faith at all times when carrying out their duties and in their relationships or interactions
+            with other people.
+          </p>
+          <p>
+            <strong>Effective Date:</strong> This agreement is effective from the date of joining our organisation.
+          </p>
         </section>
 
-        {/* Expected Behaviours */}
         <section className="legal-section">
           <h2>Expected Behaviours</h2>
-          
-          <div className="space-y-6">
-            <p className="mb-6">
-              At all times, we expect volunteers to:
-            </p>
-            
-            <div className="legal-highlight-box">
-              <h3 className="!mt-0 flex items-center gap-3">
-                <CheckCircle className="h-6 w-6 text-foreground" />
-                Professional Standards
-              </h3>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">✓</span>
-                  <span className="text-sm">Be present at the agreed times and tell us if you are not able to volunteer</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">✓</span>
-                  <span className="text-sm">Carry out duties and responsibilities in a safe, efficient and competent way</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">✓</span>
-                  <span className="text-sm">Maintain a good standard of dress and attire</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">✓</span>
-                  <span className="text-sm">Comply with lawful and/or reasonable direction, instructions and policies</span>
-                </li>
-              </ul>
-            </div>
+          <p>At all times, we expect volunteers to:</p>
 
-            <div className="legal-highlight-box">
-              <h3 className="!mt-0 flex items-center gap-3">
-                <Lock className="h-6 w-6 text-foreground" />
-                Confidentiality & Resources
-              </h3>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">✓</span>
-                  <span className="text-sm">Respect the privacy of individuals and the organisation and only use confidential information for the purposes for which it was intended</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">✓</span>
-                  <span className="text-sm">Neither use, nor allow the use of, our organisation's property, resources, information, intellectual property or funds other than for authorised purposes</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">✓</span>
-                  <span className="text-sm">Maintain the confidentiality of any information obtained while volunteering</span>
-                </li>
-              </ul>
-            </div>
+          <h3>Professional Standards</h3>
+          <ul>
+            <li>Be present at the agreed times and tell us if you are not able to volunteer</li>
+            <li>Carry out duties and responsibilities in a safe, efficient and competent way</li>
+            <li>Maintain a good standard of dress and attire</li>
+            <li>Comply with lawful and/or reasonable direction, instructions and policies</li>
+          </ul>
 
-            <div className="legal-warning-box">
-              <h3 className="!mt-0 flex items-center gap-3">
-                <Shield className="h-6 w-6 text-foreground" />
-                Safety Procedures
-              </h3>
-              <p className="mb-4 text-sm">Observe safety procedures including:</p>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">•</span>
-                  <span className="text-sm">Keeping yourself and others safe at all times</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">•</span>
-                  <span className="text-sm">Notifying the organisation about hazards or potential hazards in the working environment and event venues</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">•</span>
-                  <span className="text-sm">Notifying the organisation about any accident, incident or property damage</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">•</span>
-                  <span className="text-sm">Complying with New Zealand laws and regulations</span>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <h3>Confidentiality & Resources</h3>
+          <ul>
+            <li>Respect the privacy of individuals and the organisation and only use confidential information for the purposes for which it was intended</li>
+            <li>Neither use, nor allow the use of, our organisation's property, resources, information, intellectual property or funds other than for authorised purposes</li>
+            <li>Maintain the confidentiality of any information obtained while volunteering</li>
+          </ul>
+
+          <h3>Safety Procedures</h3>
+          <ul>
+            <li>Keep yourself and others safe at all times</li>
+            <li>Notify the organisation about hazards or potential hazards in the working environment and event venues</li>
+            <li>Notify the organisation about any accident, incident or property damage</li>
+            <li>Comply with New Zealand laws and regulations</li>
+          </ul>
         </section>
 
-        {/* Prohibited Behaviours */}
         <section className="legal-section">
           <h2>Prohibited Behaviours</h2>
-          
-          <div className="legal-warning-box">
-            <div className="flex items-start gap-4">
-              <AlertTriangle className="h-6 w-6 text-error mt-1" />
-              <div className="flex-1">
-                <h3 className="!mt-0 text-lg">Volunteers will not:</h3>
-                
-                <div className="grid md:grid-cols-2 gap-6 mt-6">
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-3">Organisational Integrity</h4>
-                    <ul className="space-y-2 text-sm">
-                      <li className="flex items-start gap-2">
-                        <span className="text-error">✗</span>
-                        <span>Create any liability for our organisation without authorisation</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-error">✗</span>
-                        <span>Act in a way that may bring our organisation into disrepute (including use of brand, IP, email, social media, data, and other internet sites, engaging with media etc.)</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-error">✗</span>
-                        <span>Seek or accept any offers, gifts, rewards or benefits</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-3">Personal Conduct</h4>
-                    <ul className="space-y-2 text-sm">
-                      <li className="flex items-start gap-2">
-                        <span className="text-error">✗</span>
-                        <span>Engage in any activity that may or causes physical or mental harm of another person (such as verbal abuse, physical abuse, assault, sexual or racial harassment, bullying)</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-error">✗</span>
-                        <span>Be affected by alcohol, medication or non-prescription drugs while volunteering</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-error">✗</span>
-                        <span>Provide a false or misleading statement, declaration or claim</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div className="md:col-span-2">
-                    <h4 className="font-semibold text-foreground mb-3">Property & Legal Compliance</h4>
-                    <ul className="space-y-2 text-sm">
-                      <li className="flex items-start gap-2">
-                        <span className="text-error">✗</span>
-                        <span>Falsify or change any documents or records</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-error">✗</span>
-                        <span>Engage in any activity that may damage both our tangible and intangible property</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-error">✗</span>
-                        <span>Have unauthorised possession of property belonging to anyone else</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-error">✗</span>
-                        <span>Engage in criminal activity in our workplace and event venues</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <p>Volunteers will not:</p>
+
+          <h3>Organisational Integrity</h3>
+          <ul>
+            <li>Create any liability for our organisation without authorisation</li>
+            <li>Act in a way that may bring our organisation into disrepute (including use of brand, IP, email, social media, data, and other internet sites, engaging with media etc.)</li>
+            <li>Seek or accept any offers, gifts, rewards or benefits</li>
+          </ul>
+
+          <h3>Personal Conduct</h3>
+          <ul>
+            <li>Engage in any activity that may or causes physical or mental harm of another person (such as verbal abuse, physical abuse, assault, sexual or racial harassment, bullying)</li>
+            <li>Be affected by alcohol, medication or non-prescription drugs while volunteering</li>
+            <li>Provide a false or misleading statement, declaration or claim</li>
+          </ul>
+
+          <h3>Property & Legal Compliance</h3>
+          <ul>
+            <li>Falsify or change any documents or records</li>
+            <li>Engage in any activity that may damage both our tangible and intangible property</li>
+            <li>Have unauthorised possession of property belonging to anyone else</li>
+            <li>Engage in criminal activity in our workplace and event venues</li>
+          </ul>
         </section>
 
-        {/* Conflicts of Interest */}
         <section className="legal-section">
           <h2>Conflicts of Interest</h2>
-          
-          <div className="space-y-6">
-            <p>
-              Volunteers should avoid situations that may lead to conflicts of interest (potential, actual or perceived) by:
-            </p>
-            
-            <div className="legal-highlight-box">
-              <h3 className="!mt-0">Prevention & Disclosure</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">•</span>
-                  <span className="text-sm">Consulting with your director/trustee/manager/supervisor before undertaking other roles in organisations whose goals, purposes or activities conflict with our organisation</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">•</span>
-                  <span className="text-sm">Making sure your other commitments do not conflict with the performance of your duties at our organisation</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">•</span>
-                  <span className="text-sm">Advising your director/trustee/manager/supervisor immediately if a conflict of interest exists, occurs or could possibly occur</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">•</span>
-                  <span className="text-sm">Notify the organisation where personal interests or obligations conflict with responsibilities of the position, meaning independence, objectivity or impartiality may be questioned</span>
-                </li>
-              </ul>
-              
-              <div className="mt-6 p-4 bg-white/50 rounded-lg">
-                <p className="text-sm text-foreground mb-0">
-                  <strong>Important:</strong> Failure to disclose conflicts of interest may result in investigative and disciplinary action.
-                </p>
-              </div>
-            </div>
-          </div>
+          <p>
+            Volunteers should avoid situations that may lead to conflicts of interest (potential, actual or perceived) by:
+          </p>
+          <ul>
+            <li>Consulting with your director/trustee/manager/supervisor before undertaking other roles in organisations whose goals, purposes or activities conflict with our organisation</li>
+            <li>Making sure your other commitments do not conflict with the performance of your duties at our organisation</li>
+            <li>Advising your director/trustee/manager/supervisor immediately if a conflict of interest exists, occurs or could possibly occur</li>
+            <li>Notifying the organisation where personal interests or obligations conflict with responsibilities of the position, meaning independence, objectivity or impartiality may be questioned</li>
+          </ul>
+          <p>
+            <strong>Important:</strong> Failure to disclose conflicts of interest may result in investigative and disciplinary action.
+          </p>
         </section>
 
-        {/* Data Protection */}
         <section className="legal-section">
           <h2>Data Protection</h2>
-          
-          <div className="space-y-6">
-            <div className="legal-info-box">
-              <h3 className="!mt-0">Our Responsibility</h3>
-              <p className="mb-4">
-                We all have a responsibility to ensure individuals and other organisations can trust us. 
-                Through our roles you may come into contact with information about people and our 
-                organisation that we need to keep confidential.
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="p-4 bg-white/50 rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">Legal Framework</h4>
-                  <p className="text-sm text-gray mb-0">
-                    How organisations collect, manage and work with people's information is covered by the 
-                    Privacy Act 1993, which has been subsequently strengthened by the Privacy Act 2020.
-                  </p>
-                </div>
-                
-                <div className="p-4 bg-white/50 rounded-lg">
-                  <h4 className="font-semibold text-foreground mb-2">Data Types</h4>
-                  <p className="text-sm text-gray mb-0">
-                    In your role as a Volunteer, you will have contact with Personally Identifiable Information 
-                    ('PII') and Sensitive Personal Information ('SPI').
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="legal-highlight-box">
-              <h3 className="!mt-0">Key Principles</h3>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">•</span>
-                  <span className="text-sm">Information should only be gathered from individuals that are specifically needed for any given purpose</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">•</span>
-                  <span className="text-sm">Those who collect data need robust procedures to ensure it is held in a safe and secure format</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">•</span>
-                  <span className="text-sm">We owe a duty of confidentiality to the people we hold information about</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-foreground mt-0.5">•</span>
-                  <span className="text-sm">Access to information is restricted to those who 'need to know'</span>
-                </li>
-              </ul>
-              
-              <div className="mt-6 p-4 bg-white/50 rounded-lg">
-                <p className="text-sm text-foreground mb-0">
-                  <strong>When in doubt:</strong> Please speak to the organisation director/trustee/manager/supervisor 
-                  about data protection procedures and requirements.
-                </p>
-              </div>
-            </div>
-          </div>
+          <p>
+            We all have a responsibility to ensure individuals and other organisations can trust us.
+            Through our roles you may come into contact with information about people and our
+            organisation that we need to keep confidential.
+          </p>
+          <p>
+            How organisations collect, manage and work with people's information is covered by the
+            Privacy Act 1993, which has been subsequently strengthened by the Privacy Act 2020.
+          </p>
+          <p>
+            In your role as a Volunteer, you will have contact with Personally Identifiable Information
+            ('PII') and Sensitive Personal Information ('SPI').
+          </p>
+
+          <h3>Key Principles</h3>
+          <ul>
+            <li>Information should only be gathered from individuals that are specifically needed for any given purpose</li>
+            <li>Those who collect data need robust procedures to ensure it is held in a safe and secure format</li>
+            <li>We owe a duty of confidentiality to the people we hold information about</li>
+            <li>Access to information is restricted to those who 'need to know'</li>
+          </ul>
+          <p>
+            <strong>When in doubt:</strong> Please speak to the organisation director/trustee/manager/supervisor
+            about data protection procedures and requirements.
+          </p>
         </section>
 
-        {/* Breaches & Consequences */}
         <section className="legal-section">
           <h2>Breaches of the Code of Conduct</h2>
-          
-          <div className="legal-warning-box">
-            <h3 className="!mt-0">Enforcement</h3>
-            <p className="mb-4">
-              We expect all of our staff and volunteers to follow this Code of Conduct, and the standards 
-              and behaviours contained within it.
-            </p>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-semibold text-foreground mb-3">Potential Consequences</h4>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <AlertTriangle className="h-4 w-4 text-error mt-0.5" />
-                    <span>Notification of unacceptable behaviour and warning</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <AlertTriangle className="h-4 w-4 text-error mt-0.5" />
-                    <span>Immediate end to volunteer services</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <AlertTriangle className="h-4 w-4 text-error mt-0.5" />
-                    <span>Disciplinary action up to and including dismissal</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <AlertTriangle className="h-4 w-4 text-error mt-0.5" />
-                    <span>Required and reasonable legal action</span>
-                  </li>
-                </ul>
-              </div>
-              
-              <div>
-                <h4 className="font-semibold text-foreground mb-3">Resolution Process</h4>
-                <p className="text-sm text-gray">
-                  Should any staff member or volunteer fail to comply with this Code of Conduct, 
-                  prompt steps will be taken to resolve the matter. Any breach of these requirements 
-                  may be subject to disciplinary action.
-                </p>
-              </div>
-            </div>
-          </div>
+          <p>
+            We expect all of our staff and volunteers to follow this Code of Conduct, and the standards
+            and behaviours contained within it.
+          </p>
+
+          <h3>Potential Consequences</h3>
+          <ul>
+            <li>Notification of unacceptable behaviour and warning</li>
+            <li>Immediate end to volunteer services</li>
+            <li>Disciplinary action up to and including dismissal</li>
+            <li>Required and reasonable legal action</li>
+          </ul>
+          <p>
+            Should any staff member or volunteer fail to comply with this Code of Conduct,
+            prompt steps will be taken to resolve the matter. Any breach of these requirements
+            may be subject to disciplinary action.
+          </p>
         </section>
 
-        {/* Declaration Section */}
         <section className="legal-section">
           <h2>Declaration</h2>
-          
-          <div className="legal-contact-card">
-            <div className="text-center">
-              <h3 className="!mt-0 text-2xl mb-4">
-                Volunteer Agreement
-              </h3>
-              <p className="text-lg mb-6 max-w-2xl mx-auto">
-                I have read and understand the information in this document, and I agree to follow the Code 
-                of Conduct. I commit to helping safeguard the rights and dignities of all people, organisations 
-                and stakeholders I encounter during my volunteer service.
-              </p>
-              
-              <div className="bg-muted rounded-xl p-8 max-w-2xl mx-auto">
-                <div className="grid sm:grid-cols-2 gap-6 mb-6">
-                  <div className="text-left">
-                    <label className="block font-semibold text-foreground mb-2">Volunteer's Full Name</label>
-                    <div className="border-b-2 border-border pb-2 min-h-[2rem]"></div>
-                  </div>
-                  
-                  <div className="text-left">
-                    <label className="block font-semibold text-foreground mb-2">Date of Join</label>
-                    <div className="border-b-2 border-border pb-2 min-h-[2rem]"></div>
-                  </div>
-                  
-                  <div className="text-left">
-                    <label className="block font-semibold text-foreground mb-2">Volunteer's Signature</label>
-                    <div className="border-b-2 border-border pb-2 min-h-[2rem]"></div>
-                  </div>
-                  
-                  <div className="text-left">
-                    <label className="block font-semibold text-foreground mb-2">Date of Signature</label>
-                    <div className="border-b-2 border-border pb-2 min-h-[2rem]"></div>
-                  </div>
-                </div>
-                
-                <div className="border-t border-border pt-6">
-                  <h4 className="font-semibold text-foreground mb-4">If a minor volunteer:</h4>
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <div className="text-left">
-                      <label className="block font-semibold text-foreground mb-2">Parent/Guardian's Full Name</label>
-                      <div className="border-b-2 border-border pb-2 min-h-[2rem]"></div>
-                    </div>
-                    
-                    <div className="text-left">
-                      <label className="block font-semibold text-foreground mb-2">Parent/Guardian's Signature</label>
-                      <div className="border-b-2 border-border pb-2 min-h-[2rem]"></div>
-                    </div>
-                    
-                    <div className="text-left sm:col-span-2">
-                      <label className="block font-semibold text-foreground mb-2">Date of Signature</label>
-                      <div className="border-b-2 border-border pb-2 min-h-[2rem]"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-8 p-4 bg-muted rounded-lg">
-                <div className="flex items-center gap-3 justify-center">
-                  <Mail className="h-5 w-5 text-foreground" />
-                  <p className="text-sm text-foreground mb-0">
-                    <strong>Next Steps:</strong> Please scan & send the completed form to 
-                    <a href="mailto:governance@shesharp.org.nz" className="text-foreground hover:text-foreground/80 mx-1">
-                      governance@shesharp.org.nz
-                    </a>
-                    so that we have both the paper & electronic copies of the signed form in our records 
-                    for compliance with the due diligence and governance of our registered charitable trust.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="inline-flex items-center gap-3 px-6 py-3 bg-foreground text-white rounded-lg mt-8">
-                <Pen className="h-5 w-5" />
-                <span className="font-semibold">Thank you for joining our team</span>
-              </div>
-            </div>
-          </div>
+          <p>
+            I have read and understand the information in this document, and I agree to follow the Code
+            of Conduct. I commit to helping safeguard the rights and dignities of all people, organisations
+            and stakeholders I encounter during my volunteer service.
+          </p>
+          <p>
+            <strong>Next Steps:</strong> Please scan & send the completed form to{" "}
+            <a href="mailto:governance@shesharp.org.nz">governance@shesharp.org.nz</a> so that we have
+            both the paper & electronic copies of the signed form in our records for compliance with the
+            due diligence and governance of our registered charitable trust.
+          </p>
+          <p>Thank you for joining our team.</p>
         </section>
       </div>
     </LegalPageLayout>
