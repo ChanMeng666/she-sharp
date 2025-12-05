@@ -26,6 +26,7 @@ export interface GalleryAlbum {
   title: string;
   description?: string;
   coverImage: string;
+  previewImages?: string[];
   googlePhotosUrl: string;
   category: AlbumCategory;
   date: string;

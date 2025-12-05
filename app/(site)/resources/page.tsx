@@ -2,21 +2,17 @@ import { Metadata } from "next";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
-import { NewsletterGrid } from "@/components/newsletters";
 import { AlbumGrid } from "@/components/gallery";
 import { SpotifyEmbed } from "@/components/spotify/spotify-embed";
 import { ResourcesNewsSection } from "@/components/sections/resources";
 import { SPOTIFY_SHOW, getSpotifyShowUrl } from "@/lib/data/spotify-podcasts";
 import { getGalleryStats } from "@/lib/data/gallery-albums";
-import { getNewsletterStats } from "@/lib/data/newsletters";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Library,
   Camera,
   Mic,
-  Mail,
-  FileText,
   ExternalLink,
   Download,
   Award,
@@ -30,12 +26,11 @@ import {
 export const metadata: Metadata = {
   title: "Resources | She Sharp",
   description:
-    "Explore She Sharp's podcasts, newsletters, photo gallery, press coverage, and impact reports.",
+    "Explore She Sharp's podcasts, photo gallery, press coverage, and impact reports.",
 };
 
 export default function ResourcesPage() {
   const galleryStats = getGalleryStats();
-  const newsletterStats = getNewsletterStats();
 
   return (
     <>
@@ -51,8 +46,8 @@ export default function ResourcesPage() {
               Resources
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              Explore our collection of podcasts, newsletters, photos, press
-              coverage, and impact reports.
+              Explore our collection of podcasts, photos, press coverage, and
+              impact reports.
             </p>
           </AnimateOnScroll>
         </Container>
@@ -130,43 +125,10 @@ export default function ResourcesPage() {
         </Container>
       </Section>
 
-      {/* Section 3: Newsletters */}
-      <Section id="newsletters" bgColor="white" className="py-24 md:py-32" noPadding>
-        <Container size="full">
-          <AnimateOnScroll variant="fade-up" className="mb-12 md:mb-16">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2.5 bg-purple-dark/10 rounded-xl">
-                    <Mail className="h-6 w-6 text-purple-dark" />
-                  </div>
-                  <h2 className="text-3xl sm:text-4xl font-bold">Newsletters</h2>
-                </div>
-                <p className="text-muted-foreground max-w-2xl text-base md:text-lg">
-                  Browse our newsletter archive for updates, events, and inspiring
-                  stories from the She Sharp community.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-4 sm:gap-6">
-                <div className="flex items-center gap-2 bg-muted px-4 py-2 rounded-full">
-                  <span className="text-sm font-medium">{newsletterStats.monthlyCount} Monthly</span>
-                </div>
-                <div className="flex items-center gap-2 bg-muted px-4 py-2 rounded-full">
-                  <span className="text-sm font-medium">{newsletterStats.eventCount} Events</span>
-                </div>
-              </div>
-            </div>
-          </AnimateOnScroll>
-          <AnimateOnScroll variant="fade-up" delay={100}>
-            <NewsletterGrid />
-          </AnimateOnScroll>
-        </Container>
-      </Section>
-
-      {/* Section 4: News & Press */}
+      {/* Section 3: News & Press */}
       <ResourcesNewsSection />
 
-      {/* Section 5: Impact Report */}
+      {/* Section 4: Impact Report */}
       <Section id="impact" className="bg-surface-purple py-24 md:py-32" noPadding>
         <Container size="content">
           <AnimateOnScroll variant="fade-up" className="text-center mb-12 md:mb-16">
