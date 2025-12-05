@@ -22,7 +22,7 @@ export function UpcomingEventSection() {
     : `${featuredEvent.location.venueName || ''}, ${featuredEvent.location.city || ''}`;
 
   return (
-    <Section id="upcoming-event" className="bg-surface-periwinkle">
+    <Section id="upcoming-event" className="bg-surface-periwinkle rounded-[50px]">
         <Container size="full">
           <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
@@ -36,14 +36,14 @@ export function UpcomingEventSection() {
               <div className="relative aspect-[600/380] max-w-[600px] mx-auto lg:mx-0">
                 {/* Background div with slight tilt - responsive */}
                 <div
-                  className="absolute inset-0 bg-muted-foreground/20 rounded-4xl transform rotate-0 md:rotate-[-4deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
+                  className="absolute inset-0 bg-muted-foreground/20 rounded-[50px] transform rotate-0 md:rotate-[-4deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
                 ></div>
                 {/* Image positioned on top */}
                 <Image
                   src={featuredEvent.coverImage}
                   alt={featuredEvent.title}
                   fill
-                  className="rounded-4xl relative z-10 object-cover"
+                  className="rounded-[50px] relative z-10 object-cover"
                 />
               </div>
             </AnimateOnScroll>
