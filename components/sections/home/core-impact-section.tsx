@@ -161,7 +161,7 @@ export function CoreImpactSection() {
   }, [inView, reduceMotion]);
 
   return (
-    <Section className="bg-muted">
+    <Section className="bg-white">
       <div ref={ref} className="relative ">
         <Container size="full">
           {/* Header */}
