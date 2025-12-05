@@ -320,6 +320,16 @@ export function SiteHeader() {
                               {child.title}
                             </Link>
                           ))}
+                          {/* Featured image link */}
+                          {item.image && (
+                            <Link
+                              href={item.image.href}
+                              className="flex items-center gap-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-all duration-150 hover:bg-muted rounded-lg px-2 -mx-2"
+                              onClick={() => setIsOpen(false)}
+                            >
+                              {item.image.alt}
+                            </Link>
+                          )}
                         </div>
                       </CollapsibleContent>
                     </Collapsible>

@@ -68,40 +68,17 @@ export function SiteFooter() {
                     events, career opportunities, and inspiring stories
                     delivered to your inbox.
                   </p>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <Button
-                      asChild
-                      size="lg"
-                      className="h-12 px-8 bg-background text-foreground hover:bg-background/90"
+                  <Button asChild variant="ghost" size="lg">
+                    <a
+                      href={MAILCHIMP_CONFIG.subscribeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      <a
-                        href={MAILCHIMP_CONFIG.subscribeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2"
-                      >
-                        <Mail className="h-5 w-5" />
-                        Subscribe Now
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="lg"
-                      className="h-12 px-6 border-background/30 text-background hover:bg-background/10"
-                    >
-                      <a
-                        href={MAILCHIMP_CONFIG.archiveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2"
-                      >
-                        Browse Archive
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </Button>
-                  </div>
+                      <Mail className="h-5 w-5" />
+                      Subscribe Now
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </Button>
                 </div>
 
                 {/* Social Media */}

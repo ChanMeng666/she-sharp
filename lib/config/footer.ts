@@ -40,9 +40,7 @@ export const footerConfig = {
     {
       title: "About",
       links: [
-        { name: "Our Mission", href: "/about" },
-        { name: "Meet the Team", href: "/about#team" },
-        { name: "Impact Report", href: "/resources#impact" },
+        { name: "About Us", href: "/about" },
       ],
     },
     {
@@ -55,9 +53,14 @@ export const footerConfig = {
       ],
     },
     {
-      title: "Get Involved",
+      title: "Events",
       links: [
         { name: "All Events", href: "/events" },
+      ],
+    },
+    {
+      title: "Get Involved",
+      links: [
         { name: "Volunteer with Us", href: "/join-our-team" },
         { name: "Corporate Partnership", href: "/sponsors/corporate-sponsorship" },
         { name: "Donate", href: "/donate" },
@@ -66,10 +69,7 @@ export const footerConfig = {
     {
       title: "Resources",
       links: [
-        { name: "Photo Gallery", href: "/resources#gallery" },
-        { name: "Podcasts", href: "/resources#podcasts" },
-        { name: "Newsletters", href: "/resources#newsletters" },
-        { name: "In the Press", href: "/resources#news" },
+        { name: "Resources Hub", href: "/resources" },
       ],
     },
   ] as FooterSection[],
@@ -104,6 +104,11 @@ export const footerConfig = {
       name: "YouTube",
       href: "https://www.youtube.com/channel/UCfNDV1btAhwWwEXSyxNd5_Q",
       icon: "youtube",
+    },
+    {
+      name: "Mailchimp",
+      href: "https://us3.campaign-archive.com/home/?u=1bcf1c40837f51b409973326f&id=31bd05e8eb",
+      icon: "mailchimp",
     },
   ] as SocialLink[],
 
