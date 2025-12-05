@@ -171,7 +171,7 @@ export function PhotoGallerySection() {
               <Button
                 asChild
               >
-                <Link href="/media/photo-gallery">
+                <Link href="/resources#gallery">
                   Explore Full Gallery
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>

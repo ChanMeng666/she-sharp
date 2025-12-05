@@ -16,7 +16,7 @@ export const presetQuestions: PresetQuestion[] = [
   {
     id: '3',
     question: 'When is the next event?',
-    answer: 'She Sharp hosts regular events including networking meetups, technical workshops, and special programs like THRIVE. We typically host events monthly, both virtual and in-person, covering topics from technical skills to career development.\n\n**Explore events:** [Upcoming Events](/events) | [Media & Photos](/media/photo-gallery)',
+    answer: 'She Sharp hosts regular events including networking meetups, technical workshops, and special programs like THRIVE. We typically host events monthly, both virtual and in-person, covering topics from technical skills to career development.\n\n**Explore events:** [Upcoming Events](/events) | [Photo Gallery](/resources#gallery)',
     category: 'events'
   },
   {

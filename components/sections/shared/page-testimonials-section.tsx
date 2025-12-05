@@ -49,7 +49,7 @@ export function PageTestimonialsSection({
       testimonials = testimonialsByPage.donate;
     } else if (pathname.includes("/about")) {
       testimonials = testimonialsByPage.about;
-    } else if (pathname.includes("/media")) {
+    } else if (pathname.includes("/media") || pathname.includes("/resources")) {
       testimonials = testimonialsByPage.media;
     } else {
       // Default to home testimonials

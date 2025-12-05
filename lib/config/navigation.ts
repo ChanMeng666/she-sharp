@@ -1,4 +1,4 @@
-import { LucideIcon, Calendar, Users, Heart, Mic, Mail, FileText, Award, BookOpen, HandHeart, Building2, GraduationCap, Newspaper, Sparkles, Library, UserPlus } from "lucide-react";
+import { LucideIcon, Calendar, Users, Award, BookOpen, HandHeart, Building2, GraduationCap, Sparkles, Library, UserPlus } from "lucide-react";
 
 export interface NavigationItem {
   title: string;
@@ -28,25 +28,6 @@ export const navigationConfig: {
       title: "About",
       href: "/about",
       icon: Users,
-      image: {
-        src: "/img/mesh-570.png",
-        alt: "Our team at She Sharp",
-        href: "/about#team",
-      },
-      children: [
-        {
-          title: "Our Mission",
-          href: "/about",
-          description: "Learn about our mission and values",
-          icon: Heart,
-        },
-        {
-          title: "Impact Report",
-          href: "/media/impact-report",
-          description: "Our annual achievements and impact",
-          icon: FileText,
-        },
-      ],
     },
     {
       title: "Mentorship",
@@ -109,33 +90,8 @@ export const navigationConfig: {
     },
     {
       title: "Resources",
-      href: "/media",
+      href: "/resources",
       icon: Library,
-      image: {
-        src: "/img/mesh-437.png",
-        alt: "Photo Gallery",
-        href: "/media/photo-gallery",
-      },
-      children: [
-        {
-          title: "Podcasts",
-          href: "/media/podcasts",
-          description: "Listen to inspiring women in tech stories",
-          icon: Mic,
-        },
-        {
-          title: "Newsletters",
-          href: "/media/newsletters",
-          description: "Subscribe to our monthly newsletter",
-          icon: Mail,
-        },
-        {
-          title: "In the Press",
-          href: "/media/news-and-press",
-          description: "Media coverage and press releases",
-          icon: Newspaper,
-        },
-      ],
     },
   ],
   buttons: [

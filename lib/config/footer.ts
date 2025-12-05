@@ -42,7 +42,7 @@ export const footerConfig = {
       links: [
         { name: "Our Mission", href: "/about" },
         { name: "Meet the Team", href: "/about#team" },
-        { name: "Impact Report", href: "/media/impact-report" },
+        { name: "Impact Report", href: "/resources#impact" },
       ],
     },
     {
@@ -66,10 +66,10 @@ export const footerConfig = {
     {
       title: "Resources",
       links: [
-        { name: "Podcasts", href: "/media/podcasts" },
-        { name: "Newsletters", href: "/media/newsletters" },
-        { name: "Photo Gallery", href: "/media/photo-gallery" },
-        { name: "In the Press", href: "/media/news-and-press" },
+        { name: "Photo Gallery", href: "/resources#gallery" },
+        { name: "Podcasts", href: "/resources#podcasts" },
+        { name: "Newsletters", href: "/resources#newsletters" },
+        { name: "In the Press", href: "/resources#news" },
       ],
     },
   ] as FooterSection[],

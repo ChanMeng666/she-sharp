@@ -192,8 +192,8 @@ export function MediaSection() {
             Stay updated with our latest news, events, and impact stories across media platforms.
           </p>
           <Button variant="outline" size="lg" asChild>
-            <Link href="/media">
-              View All Media Coverage
+            <Link href="/resources">
+              View All Resources
               <ExternalLink className="ml-2 w-4 h-4" />
             </Link>
           </Button>
