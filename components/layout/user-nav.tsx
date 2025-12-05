@@ -133,9 +133,9 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
   if (!user) {
     if (variant === 'mobile') {
       return (
-        <div className="pt-4 border-t border-gray-200">
+        <div className="pt-4 border-t border-[#f7e5f3]">
           <Link href="/sign-up" className="w-full">
-            <Button variant="default" size="lg" className="w-full justify-start">
+            <Button variant="default" size="lg" className="w-full justify-start bg-[#1f1e44] hover:bg-[#1f1e44]/90 text-white">
               <User className="mr-2 h-4 w-4" />
               Membership
             </Button>
@@ -158,17 +158,17 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
   // Mobile variant - simplified menu
   if (variant === 'mobile') {
     return (
-      <div className="flex flex-col gap-2 pt-4 border-t border-gray-200">
-        <div className="flex items-center gap-3 px-2 py-3">
-          <Avatar className="h-10 w-10">
+      <div className="flex flex-col gap-2 pt-4 border-t border-[#f7e5f3]">
+        <div className="flex items-center gap-3 px-2 py-3 bg-[#f7e5f3]/50 rounded-lg">
+          <Avatar className="h-10 w-10 border-2 border-[#9b2e83]/20">
             <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} />
-            <AvatarFallback className="bg-muted text-foreground">
+            <AvatarFallback className="bg-[#9b2e83] text-white">
               {getUserInitials()}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1">
-            <p className="text-sm font-medium">{user.name || 'User'}</p>
-            <p className="text-xs text-gray-500">{user.email}</p>
+            <p className="text-sm font-medium text-[#1f1e44]">{user.name || 'User'}</p>
+            <p className="text-xs text-[#1f1e44]/60">{user.email}</p>
             {!isEmailVerified && (
               <Badge variant="destructive" className="mt-1 text-xs">
                 Email not verified
@@ -180,36 +180,36 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
         {isAdmin ? (
           <>
             <Link href="/dashboard/admin" className="w-full">
-              <Button variant="outline" size="lg" className="w-full justify-start">
-                <LayoutDashboard className="mr-2 h-4 w-4" />
+              <Button variant="outline" size="lg" className="w-full justify-start border-[#f7e5f3] text-[#1f1e44] hover:bg-[#f7e5f3] hover:text-[#9b2e83]">
+                <LayoutDashboard className="mr-2 h-4 w-4 text-[#9b2e83]" />
                 Admin Overview
               </Button>
             </Link>
             <Link href="/dashboard/admin/users" className="w-full">
-              <Button variant="outline" size="lg" className="w-full justify-start">
-                <Users className="mr-2 h-4 w-4" />
+              <Button variant="outline" size="lg" className="w-full justify-start border-[#f7e5f3] text-[#1f1e44] hover:bg-[#f7e5f3] hover:text-[#9b2e83]">
+                <Users className="mr-2 h-4 w-4 text-[#9b2e83]" />
                 User Management
               </Button>
             </Link>
             <Link href="/dashboard/admin/matching" className="w-full">
-              <Button variant="outline" size="lg" className="w-full justify-start">
-                <BrainCircuit className="mr-2 h-4 w-4" />
+              <Button variant="outline" size="lg" className="w-full justify-start border-[#f7e5f3] text-[#1f1e44] hover:bg-[#f7e5f3] hover:text-[#9b2e83]">
+                <BrainCircuit className="mr-2 h-4 w-4 text-[#9b2e83]" />
                 AI Matching
               </Button>
             </Link>
           </>
         ) : (
           <Link href="/dashboard" className="w-full">
-            <Button variant="outline" size="lg" className="w-full justify-start">
-              <LayoutDashboard className="mr-2 h-4 w-4" />
+            <Button variant="outline" size="lg" className="w-full justify-start border-[#f7e5f3] text-[#1f1e44] hover:bg-[#f7e5f3] hover:text-[#9b2e83]">
+              <LayoutDashboard className="mr-2 h-4 w-4 text-[#9b2e83]" />
               Dashboard
             </Button>
           </Link>
         )}
 
         <Link href="/dashboard/account" className="w-full">
-          <Button variant="outline" size="lg" className="w-full justify-start">
-            <Settings className="mr-2 h-4 w-4" />
+          <Button variant="outline" size="lg" className="w-full justify-start border-[#f7e5f3] text-[#1f1e44] hover:bg-[#f7e5f3] hover:text-[#9b2e83]">
+            <Settings className="mr-2 h-4 w-4 text-[#9b2e83]" />
             Account Settings
           </Button>
         </Link>
@@ -217,7 +217,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
         <Button
           variant="outline"
           size="lg"
-          className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
+          className="w-full justify-start border-[#f7e5f3] text-[#d72f40] hover:text-[#d72f40] hover:bg-red-50"
           onClick={handleSignOut}
           disabled={isSigningOut}
         >

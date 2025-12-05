@@ -257,21 +257,21 @@ export function SiteHeader() {
           </SheetTrigger>
           <SheetContent
             side="right"
-            className="w-[300px] sm:w-[400px] p-0 overflow-y-auto bg-background border-l border-border shadow-lg"
+            className="w-[300px] sm:w-[400px] p-0 overflow-y-auto bg-white border-l border-[#f7e5f3] shadow-xl"
           >
-            {/* Mobile Header */}
-            <div className="bg-muted p-6 relative overflow-hidden border-b border-border">
-              <SheetTitle className="text-foreground text-xl font-bold relative z-10">
+            {/* Mobile Header - Purple Dark background */}
+            <div className="bg-[#9b2e83] p-6 relative overflow-hidden">
+              <SheetTitle className="text-white text-xl font-bold relative z-10">
                 Menu
               </SheetTitle>
-              {/* Background Logo */}
-              <div className="absolute bottom-0 right-0 transform translate-x-1/4 translate-y-1/4 opacity-10">
+              {/* Background Logo - Purple version */}
+              <div className="absolute bottom-0 right-0 transform translate-x-1/4 translate-y-1/4 opacity-20">
                 <div className="relative w-32 h-32">
                   <Image
-                    src="/logos/she-sharp-logo.svg"
+                    src="/logos/she-sharp-logo-purple-dark-130x130.svg"
                     alt=""
-                    fill
-                    sizes="128px"
+                    width={130}
+                    height={130}
                     className="object-contain"
                     aria-hidden="true"
                   />
@@ -284,7 +284,7 @@ export function SiteHeader() {
               {navigationConfig.items.map((item, index) => (
                 <div
                   key={item.title}
-                  className="border-b border-border last:border-0 mobile-menu-item"
+                  className="border-b border-[#f7e5f3] last:border-0 mobile-menu-item"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   {item.children ? (
@@ -292,25 +292,25 @@ export function SiteHeader() {
                       open={openMobileMenus.includes(item.title)}
                       onOpenChange={() => toggleMobileMenu(item.title)}
                     >
-                      <CollapsibleTrigger className="flex w-full items-center justify-between py-4 text-left text-base font-medium text-foreground hover:bg-muted transition-all duration-150 rounded-lg px-2 -mx-2">
+                      <CollapsibleTrigger className="flex w-full items-center justify-between py-4 text-left text-base font-medium text-[#1f1e44] hover:bg-[#f7e5f3] transition-all duration-150 rounded-lg px-2 -mx-2">
                         <span className="flex items-center gap-2">
-                          {item.icon && <item.icon className="h-4 w-4" />}
+                          {item.icon && <item.icon className="h-4 w-4 text-[#9b2e83]" />}
                           {item.title}
                         </span>
                         <ChevronDown
                           className={cn(
-                            "h-4 w-4 transition-transform duration-150",
+                            "h-4 w-4 text-[#9b2e83] transition-transform duration-150",
                             openMobileMenus.includes(item.title) && "rotate-180"
                           )}
                         />
                       </CollapsibleTrigger>
                       <CollapsibleContent className="pb-4">
-                        <div className="ml-6 space-y-2">
+                        <div className="ml-6 space-y-1">
                           {item.children.map((child) => (
                             <Link
                               key={child.title}
                               href={child.href}
-                              className="flex items-center gap-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-all duration-150 hover:bg-muted rounded-lg px-2 -mx-2"
+                              className="flex items-center gap-2 py-2 text-sm text-[#1f1e44]/70 hover:text-[#9b2e83] transition-all duration-150 hover:bg-[#f7e5f3] rounded-lg px-2 -mx-2"
                               onClick={(e) => {
                                 handleSmoothScroll(e, child.href);
                                 setIsOpen(false);
@@ -324,7 +324,7 @@ export function SiteHeader() {
                           {item.image && (
                             <Link
                               href={item.image.href}
-                              className="flex items-center gap-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-all duration-150 hover:bg-muted rounded-lg px-2 -mx-2"
+                              className="flex items-center gap-2 py-2 text-sm text-[#1f1e44]/70 hover:text-[#9b2e83] transition-all duration-150 hover:bg-[#f7e5f3] rounded-lg px-2 -mx-2"
                               onClick={() => setIsOpen(false)}
                             >
                               {item.image.alt}
@@ -336,13 +336,13 @@ export function SiteHeader() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="flex items-center gap-2 py-4 text-base font-medium text-foreground hover:bg-muted transition-all duration-150 rounded-lg px-2 -mx-2"
+                      className="flex items-center gap-2 py-4 text-base font-medium text-[#1f1e44] hover:bg-[#f7e5f3] transition-all duration-150 rounded-lg px-2 -mx-2"
                       onClick={(e) => {
                         handleSmoothScroll(e, item.href);
                         setIsOpen(false);
                       }}
                     >
-                      {item.icon && <item.icon className="h-4 w-4" />}
+                      {item.icon && <item.icon className="h-4 w-4 text-[#9b2e83]" />}
                       {item.title}
                     </Link>
                   )}
