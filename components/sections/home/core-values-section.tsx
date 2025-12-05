@@ -38,7 +38,7 @@ export function CoreValuesSection() {
       <AnimateOnScroll variant="fade-right" className="relative w-full md:w-2/3 h-[300px] md:h-auto overflow-hidden">
         <div className="relative w-full h-full">
           <Image
-            src="/img/yourcareer.png"
+            src="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/home-page-ai-hackathon-2025.jpg"
             alt="Core Values"
             fill
             className="object-cover"

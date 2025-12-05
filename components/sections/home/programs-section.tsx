@@ -36,7 +36,7 @@ const programs = [
     icon: Calendar,
     color: "purple",
     image:
-      "/img/security-event.jpg",
+      "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/home-page-hcltech-dunedin-2025.jpg",
     features: [
       { icon: Users, text: "Monthly meetups" },
       { icon: MessageCircle, text: "Expert panels" },
@@ -55,7 +55,7 @@ const programs = [
     icon: Users,
     color: "periwinkle",
     image:
-      "/img/mentorship.jpg",
+      "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/home-page-ai-hackathon-2025-mentorship.jpg",
     features: [
       { icon: Users, text: "1-on-1 mentor matching" },
       { icon: Calendar, text: "Structured 6-month programs" },
@@ -74,7 +74,7 @@ const programs = [
     icon: GraduationCap,
     color: "mint",
     image:
-      "/img/AI.jpg",
+      "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/home-page-xero-with-secure-code-warriors-2025.jpg",
     features: [
       { icon: BookOpen, text: "Technical workshops" },
       { icon: GraduationCap, text: "Professional development" },

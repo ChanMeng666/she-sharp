@@ -1,23 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "../styles/colors.css";
-
-/* Polysans Trial Median Font */
-@font-face {
-  font-family: 'Polysans Trial Median';
-  src: url('/fonts/polysanstrial-median.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
   /* Fonts */
   --font-sans: "DM Sans", sans-serif;
-  --font-heading: "Polysans Trial Median", "DM Sans", sans-serif;
+  --font-heading: "Poppins", "DM Sans", sans-serif;
 
   /* Radius */
   --radius-sm: calc(var(--radius) - 4px);
