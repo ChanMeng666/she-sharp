@@ -4,7 +4,7 @@ import { Section } from "@/components/layout/section";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 import { AlbumGrid } from "@/components/gallery";
 import { SpotifyEmbed } from "@/components/spotify/spotify-embed";
-import { ResourcesNewsSection, ImpactReportCards } from "@/components/sections/resources";
+import { ResourcesNewsSection, ImpactReportCards, ResourcesPageClient } from "@/components/sections/resources";
 import { SPOTIFY_SHOW, getSpotifyShowUrl } from "@/lib/data/spotify-podcasts";
 import { getGalleryStats } from "@/lib/data/gallery-albums";
 import { Button } from "@/components/ui/button";
@@ -28,9 +28,9 @@ export default function ResourcesPage() {
   const galleryStats = getGalleryStats();
 
   return (
-    <>
+    <ResourcesPageClient>
       {/* Hero Section */}
-      <Section className="bg-white py-24 md:py-32 lg:py-40" noPadding>
+      <Section className="bg-transparent py-24 md:py-32 lg:py-40" noPadding>
         <Container size="content">
           <AnimateOnScroll variant="fade-up" className="text-center">
             <div className="inline-flex items-center gap-2 bg-purple-dark/10 text-purple-dark px-4 py-2 rounded-full text-sm font-medium mb-6">
@@ -49,7 +49,7 @@ export default function ResourcesPage() {
       </Section>
 
       {/* Section 1: Photo Gallery */}
-      <Section id="gallery" bgColor="white" className="py-24 md:py-32" noPadding>
+      <Section id="gallery" className="bg-transparent py-24 md:py-32" noPadding>
         <Container size="full">
           <AnimateOnScroll variant="fade-up" className="mb-12 md:mb-16">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
@@ -84,7 +84,7 @@ export default function ResourcesPage() {
       </Section>
 
       {/* Section 2: Podcasts */}
-      <Section id="podcasts" className="bg-white py-24 md:py-32" noPadding>
+      <Section id="podcasts" className="bg-transparent py-24 md:py-32" noPadding>
         <Container size="content">
           <AnimateOnScroll variant="fade-up" className="text-center mb-12 md:mb-16">
             <div className="inline-flex items-center gap-2 bg-purple-mid/10 text-purple-mid px-4 py-2 rounded-full text-sm font-medium mb-6">
@@ -124,7 +124,7 @@ export default function ResourcesPage() {
       <ResourcesNewsSection />
 
       {/* Section 4: Impact Report */}
-      <Section id="impact" className="bg-white py-24 md:py-32" noPadding>
+      <Section id="impact" className="bg-transparent py-24 md:py-32" noPadding>
         <Container size="content">
           <AnimateOnScroll variant="fade-up" className="text-center mb-12 md:mb-16">
             <div className="inline-flex items-center gap-2 bg-purple-dark/10 text-purple-dark px-4 py-2 rounded-full text-sm font-medium mb-6">
@@ -142,6 +142,6 @@ export default function ResourcesPage() {
           </AnimateOnScroll>
         </Container>
       </Section>
-    </>
+    </ResourcesPageClient>
   );
 }
