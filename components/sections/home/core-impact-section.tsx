@@ -54,41 +54,61 @@ const parseTargetValue = (
 const formatNumber = (num: number) =>
   new Intl.NumberFormat(undefined).format(num);
 
-const AnimatedNumber: React.FC<{ target: number; animate: boolean }> = ({
-  target,
-  animate,
-}) => {
-  const [current, setCurrent] = React.useState(animate ? 0 : target);
+const AnimatedNumber: React.FC<{
+  target: number;
+  shouldStart: boolean;
+  skipAnimation?: boolean;
+}> = ({ target, shouldStart, skipAnimation }) => {
+  const [current, setCurrent] = React.useState(skipAnimation ? target : 0);
+  const hasStarted = React.useRef(false);
+  const rafRef = React.useRef<number>(0);
 
   React.useEffect(() => {
-    if (!animate) {
+    // If animation should be skipped, show final value immediately
+    if (skipAnimation) {
       setCurrent(target);
       return;
     }
-    let raf = 0;
-    const durationMs = 2400; // a touch snappier
-    const start = performance.now();
 
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / durationMs);
-      const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
-      setCurrent(Math.round(target * eased));
-      if (t < 1) raf = requestAnimationFrame(tick);
+    // Start animation only once when shouldStart becomes true
+    if (shouldStart && !hasStarted.current) {
+      hasStarted.current = true;
+      const durationMs = 2400;
+      const start = performance.now();
+
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - start) / durationMs);
+        const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+        setCurrent(Math.round(target * eased));
+        if (t < 1) {
+          rafRef.current = requestAnimationFrame(tick);
+        }
+      };
+
+      rafRef.current = requestAnimationFrame(tick);
+    }
+  }, [shouldStart, skipAnimation, target]);
+
+  // Cleanup on unmount only
+  React.useEffect(() => {
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
-
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [animate, target]);
+  }, []);
 
   return <>{formatNumber(current)}</>;
 };
 
 function StatItem({
   item,
-  animate,
+  shouldStart,
+  skipAnimation,
 }: {
   item: ImpactItem;
-  animate: boolean;
+  shouldStart: boolean;
+  skipAnimation?: boolean;
 }) {
   return (
     <div className="flex flex-col">
@@ -106,7 +126,12 @@ function StatItem({
           const { target, suffix } = parseTargetValue(item.value);
           return (
             <>
-              <AnimatedNumber target={target} animate={animate} />{suffix}
+              <AnimatedNumber
+                target={target}
+                shouldStart={shouldStart}
+                skipAnimation={skipAnimation}
+              />
+              {suffix}
             </>
           );
         })()}
@@ -124,6 +149,16 @@ function StatItem({
 export function CoreImpactSection() {
   const { ref, inView } = useInView();
   const reduceMotion = usePrefersReducedMotion();
+  const hasTriggered = React.useRef(false);
+  const [shouldStart, setShouldStart] = React.useState(false);
+
+  // Trigger animation only once when section comes into view
+  React.useEffect(() => {
+    if (inView && !hasTriggered.current && !reduceMotion) {
+      hasTriggered.current = true;
+      setShouldStart(true);
+    }
+  }, [inView, reduceMotion]);
 
   return (
     <Section className="bg-muted">
@@ -146,7 +181,8 @@ export function CoreImpactSection() {
               >
                 <StatItem
                   item={item}
-                  animate={inView && !reduceMotion}
+                  shouldStart={shouldStart}
+                  skipAnimation={reduceMotion}
                 />
               </AnimateOnScroll>
             ))}
