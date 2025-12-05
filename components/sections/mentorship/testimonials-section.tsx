@@ -82,7 +82,7 @@ export function TestimonialsSection() {
         </div>
         
         <div className="mx-auto max-w-5xl">
-          <Card className="relative overflow-hidden hover:shadow-xl transition-all duration-300">
+          <Card className="relative overflow-hidden hover:shadow-xl transition-all duration-300 rounded-[50px]">
             <CardHeader className="pb-0">
               <div className="flex flex-col md:flex-row gap-6 items-start">
                 {/* Mentee Info */}

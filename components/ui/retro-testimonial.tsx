@@ -126,7 +126,7 @@ const Carousel = ({ items, initialScroll = 0 }: iCarouselProps) => {
                   },
                 }}
                 key={`card-${index}`}
-                className="last:pr-[5%] md:last:pr-[33%] rounded-3xl"
+                className="last:pr-[5%] md:last:pr-[33%] rounded-[50px]"
               >
                 {React.cloneElement(item, {
                   onCardClose: () => {
@@ -230,7 +230,7 @@ const TestimonialCard = ({
               exit={{ opacity: 0 }}
               ref={containerRef}
               layoutId={layout ? `card-${testimonial.name}` : undefined}
-              className="max-w-5xl mx-auto bg-gradient-to-b from-background to-muted h-full z-[60] p-4 md:p-10 rounded-3xl relative md:mt-10"
+              className="max-w-5xl mx-auto bg-gradient-to-b from-background to-muted h-full z-[60] p-4 md:p-10 rounded-[50px] relative md:mt-10"
             >
               <button
                 className="sticky top-4 h-8 w-8 right-0 ml-auto rounded-full flex items-center justify-center bg-foreground"
@@ -273,7 +273,7 @@ const TestimonialCard = ({
         <div
           className={`${
             index % 2 === 0 ? "rotate-0" : "-rotate-0"
-          } rounded-3xl bg-gradient-to-b from-background to-muted h-[500px] md:h-[550px] w-80 md:w-96 overflow-hidden flex flex-col items-center justify-center relative z-10 shadow-md border border-border`}
+          } rounded-[50px] bg-gradient-to-b from-background to-muted h-[500px] md:h-[550px] w-80 md:w-96 overflow-hidden flex flex-col items-center justify-center relative z-10 shadow-md border border-border`}
         >
           <div
             className="absolute opacity-20"

@@ -62,7 +62,7 @@ const CompactTestimonialCard = ({
         y: -8,
         transition: { duration: 0.3, ease: "easeOut" },
       }}
-      className="rounded-2xl bg-gradient-to-b from-background to-muted h-[280px] md:h-[320px] w-full overflow-hidden flex flex-col items-center justify-center relative z-10 shadow-md border border-border cursor-pointer"
+      className="rounded-[50px] bg-gradient-to-b from-background to-muted h-[280px] md:h-[320px] w-full overflow-hidden flex flex-col items-center justify-center relative z-10 shadow-md border border-border cursor-pointer"
     >
       <div
         className="absolute opacity-20"

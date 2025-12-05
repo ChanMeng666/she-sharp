@@ -54,7 +54,7 @@ const PROCESS_STEPS: TimeLine_01Entry[] = [
 
 export function HowItWorksSection() {
   return (
-    <Section className="py-16 md:py-24 bg-surface-periwinkle">
+    <Section className="py-16 md:py-24 bg-surface-periwinkle rounded-[50px]">
       {/* Header */}
       <Container>
         <div className="text-center mb-8">

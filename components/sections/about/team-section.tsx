@@ -23,7 +23,7 @@ export function TeamSection() {
   ));
 
   return (
-    <Section className="pt-0">
+    <Section className="pt-0 rounded-b-[50px]">
       <Container size="wide">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">

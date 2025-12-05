@@ -124,7 +124,7 @@ export default function TimeLine_01({
                 {/* Content column */}
                 <article
                   className={
-                    "flex-1 flex flex-col rounded-2xl border p-4 transition-all duration-300 " +
+                    "flex-1 flex flex-col rounded-[50px] border p-6 transition-all duration-300 " +
                     (isActive
                       ? "border-brand/20 bg-surface-purple shadow-lg"
                       : "border-border bg-background")
@@ -174,7 +174,7 @@ export default function TimeLine_01({
                       <div className="overflow-hidden">
                         <div className="space-y-4 pt-2">
                           {entry.items && entry.items.length > 0 && (
-                            <div className="rounded-xl border border-border bg-background p-4">
+                            <div className="rounded-[30px] border border-border bg-background p-4">
                               <ul className="space-y-2">
                                 {entry.items.map((item, itemIndex) => (
                                   <li
