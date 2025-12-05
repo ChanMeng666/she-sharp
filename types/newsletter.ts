@@ -1,34 +1,25 @@
 /**
- * Newsletter type definitions for She Sharp media content
+ * Newsletter type definitions for Mailchimp integration
  */
 
-import { LucideIcon } from 'lucide-react';
+export type NewsletterCategory = "monthly" | "event";
 
-export interface Newsletter {
-  slug: string;
-  month: string;
-  year: string;
-  title?: string;
-  coverImage: string;
-  pdfUrl?: string;
-  webUrl?: string;
-  highlights: string[];
+export const NEWSLETTER_CATEGORY_LABELS: Record<NewsletterCategory, string> = {
+  monthly: "Monthly Newsletter",
+  event: "Event Announcement",
+};
+
+export interface MailchimpNewsletter {
+  id: string;
+  title: string;
+  date: string; // Display date: "October 31, 2025"
+  dateRaw: string; // ISO for sorting: "2025-10-31"
+  mailchimpUrl: string; // Link to Mailchimp campaign
+  category: NewsletterCategory;
   isFeatured?: boolean;
-  issueNumber?: number;
 }
 
-export interface NewsletterTopic {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-}
-
-export interface RecentIssue {
-  slug: string;
-  edition: string;
-  title: string;
-  highlights: string[];
-  readTime: string;
-  category: string;
-  icon: LucideIcon;
+export interface MailchimpConfig {
+  archiveUrl: string;
+  subscribeUrl: string;
 }

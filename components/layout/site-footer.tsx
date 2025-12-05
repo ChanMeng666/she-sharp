@@ -4,9 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { Mail, ChevronDown, ExternalLink, MapPin } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
   Collapsible,
@@ -16,14 +14,10 @@ import {
 import { cn } from "@/lib/utils";
 import { footerConfig } from "@/lib/config/footer";
 import { socialIcons } from "@/components/ui/social-icons";
+import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 import "@/styles/components/footer.css";
 
 export function SiteFooter() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [newsletterStatus, setNewsletterStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
   const [openSections, setOpenSections] = useState<string[]>([]);
 
   const handleSmoothScroll = (
@@ -56,68 +50,58 @@ export function SiteFooter() {
     );
   };
 
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setNewsletterStatus("loading");
-
-    // Simulate API call
-    setTimeout(() => {
-      setNewsletterStatus("success");
-      setEmail("");
-      setTimeout(() => setNewsletterStatus("idle"), 3000);
-    }, 1000);
-  };
-
   return (
     <footer className="relative bg-brand text-background -mt-12 pt-16 overflow-hidden rounded-t-[50px]">
-
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:justify-between gap-8 lg:gap-12 xl:gap-16">
           {/* Left side - Newsletter & Social */}
           <div className="flex-1 max-w-md lg:max-w-lg">
             <div className="relative px-4 md:px-6 lg:px-0 py-12 md:py-16 lg:py-20">
-              {/* Newsletter */}
+              {/* Newsletter CTA */}
               <div className="mb-8 lg:mb-12">
                 <div className="text-left">
                   <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-background">
-                    Subscribe to stay updated
+                    Never Miss an Update
                   </h3>
                   <p className="text-sm md:text-base text-background/80 mb-6 lg:mb-8">
-                    Get the latest updates on events, mentorship opportunities,
-                    and inspiring stories.
+                    Subscribe to our newsletter and get the latest news about
+                    events, career opportunities, and inspiring stories
+                    delivered to your inbox.
                   </p>
-                  <form
-                    onSubmit={handleNewsletterSubmit}
-                    className="flex flex-col sm:flex-row gap-3 max-w-lg"
-                  >
-                    <div className="relative flex-1">
-                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-background/50" />
-                      <Input
-                        type="email"
-                        placeholder="Enter your email address"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        className="pl-12 h-12 text-base bg-background/10 border-background/20 text-background placeholder:text-background/50 focus:border-background/60 newsletter-input"
-                      />
-                    </div>
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <Button
-                      type="submit"
-                      variant="default"
+                      asChild
                       size="lg"
-                      disabled={newsletterStatus === "loading"}
-                      className="h-12 px-8"
+                      className="h-12 px-8 bg-background text-foreground hover:bg-background/90"
                     >
-                      {newsletterStatus === "loading"
-                        ? "Subscribing..."
-                        : "Subscribe"}
+                      <a
+                        href={MAILCHIMP_CONFIG.subscribeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2"
+                      >
+                        <Mail className="h-5 w-5" />
+                        Subscribe Now
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
                     </Button>
-                  </form>
-                  {newsletterStatus === "success" && (
-                    <p className="mt-3 text-background/90">
-                      Thank you for subscribing!
-                    </p>
-                  )}
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="lg"
+                      className="h-12 px-6 border-background/30 text-background hover:bg-background/10"
+                    >
+                      <a
+                        href={MAILCHIMP_CONFIG.archiveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2"
+                      >
+                        Browse Archive
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Social Media */}

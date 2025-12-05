@@ -1,261 +1,254 @@
 /**
- * Newsletter data and helper functions for She Sharp media content
+ * Newsletter data and helper functions for Mailchimp integration
+ *
+ * HOW TO ADD NEW NEWSLETTERS:
+ * ===========================
+ * 1. Go to Mailchimp Campaign Archive:
+ *    https://us3.campaign-archive.com/home/?u=1bcf1c40837f51b409973326f&id=31bd05e8eb
+ * 2. Click on the newsletter to get its direct URL (eepurl.com/xxx format)
+ * 3. Add a new object to the newsletters array below
+ * 4. Set category: "monthly" for monthly newsletters, "event" for event announcements
+ * 5. Set isFeatured: true for the latest 2-3 newsletters
  */
 
-import {
-  Calendar,
-  Clock,
-  TrendingUp,
-  Lightbulb,
-  Users,
-  BookOpen,
-} from 'lucide-react';
-import type { Newsletter, NewsletterTopic, RecentIssue } from '@/types/newsletter';
+import type {
+  MailchimpNewsletter,
+  MailchimpConfig,
+  NewsletterCategory,
+} from "@/types/newsletter";
 
-export const newsletters: Newsletter[] = [
+export const MAILCHIMP_CONFIG: MailchimpConfig = {
+  archiveUrl:
+    "https://us3.campaign-archive.com/home/?u=1bcf1c40837f51b409973326f&id=31bd05e8eb",
+  subscribeUrl:
+    "https://shesharp.us3.list-manage.com/subscribe?u=1bcf1c40837f51b409973326f&id=31bd05e8eb",
+};
+
+export const newsletters: MailchimpNewsletter[] = [
+  // November 2025
   {
-    slug: 'may-2025',
-    month: 'May',
-    year: '2025',
-    coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685b86a4122d34ad5ed64dae_2025_Newsletters%20may.png',
-    webUrl: '#',
-    highlights: [
-      'AI in Education',
-      'Women Tech Leaders Summit',
-      'Career Growth Tips',
-    ],
+    id: "ai-empowerment-nov-2025",
+    title:
+      "From Dunedin's harbour to your future: join us for AI Empowerment on Nov 21",
+    date: "November 9, 2025",
+    dateRaw: "2025-11-09",
+    mailchimpUrl: "http://eepurl.com/jqARlY",
+    category: "event",
     isFeatured: true,
-    issueNumber: 9,
   },
   {
-    slug: 'april-2025',
-    month: 'April',
-    year: '2025',
-    coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685b85f36c4d1ad7379ee334_2025_Newsletters%20april.png',
-    webUrl: '#',
-    highlights: [
-      'Cybersecurity Special',
-      'Mentorship Programs',
-      'Tech Trends 2025',
-    ],
+    id: "vector-thinkathon-nov-2025",
+    title:
+      "Meet the Women Powering Possibility @ Vector + Think-a-thon Challenge",
+    date: "November 1, 2025",
+    dateRaw: "2025-11-01",
+    mailchimpUrl: "http://eepurl.com/jqVk-I",
+    category: "event",
     isFeatured: true,
-    issueNumber: 8,
+  },
+
+  // October 2025
+  {
+    id: "october-2025",
+    title: "She Sharp Newsletter — October 2025",
+    date: "October 31, 2025",
+    dateRaw: "2025-10-31",
+    mailchimpUrl: "http://eepurl.com/jqrNjA",
+    category: "monthly",
+    isFeatured: true,
   },
   {
-    slug: 'march-2025',
-    month: 'March',
-    year: '2025',
-    coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685b844d30bd2eb9475f129c_2025_Newsletters%20march.png',
-    webUrl: '#',
-    highlights: [
-      "International Women's Day",
-      'STEM Scholarships',
-      'Industry Insights',
-    ],
-    isFeatured: false,
-    issueNumber: 7,
+    id: "vector-data-ai-oct-2025-2",
+    title: "SheSharp x Vector: Data, AI, & Career Innovations on Nov 12",
+    date: "October 18, 2025",
+    dateRaw: "2025-10-18",
+    mailchimpUrl: "http://eepurl.com/jpQW7U",
+    category: "event",
   },
   {
-    slug: 'january-2025',
-    month: 'January',
-    year: '2025',
-    coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67c3676dc0772575629f95cd_2025_Newsletters%20feb.png',
-    webUrl: '#',
-    highlights: [
-      'New Year Tech Resolutions',
-      '2025 Predictions',
-      'Community Highlights',
-    ],
-    isFeatured: false,
-    issueNumber: 6,
+    id: "vector-data-ai-oct-2025",
+    title: "SheSharp x Vector: Data, AI, & Career Innovations on Nov 12",
+    date: "October 17, 2025",
+    dateRaw: "2025-10-17",
+    mailchimpUrl: "http://eepurl.com/jpMVao",
+    category: "event",
+  },
+
+  // September 2025
+  {
+    id: "september-2025",
+    title: "She Sharp Newsletter — September 2025",
+    date: "September 30, 2025",
+    dateRaw: "2025-09-30",
+    mailchimpUrl: "http://eepurl.com/jnRb5U",
+    category: "monthly",
   },
   {
-    slug: 'december-2024',
-    month: 'December',
-    year: '2024',
-    coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67c13b51a3357846351d1e3c_2024_Newsletters%20dec.png',
-    webUrl: '#',
-    highlights: ['Year in Review', 'Holiday Tech Guide', 'Success Stories'],
-    isFeatured: false,
-    issueNumber: 5,
+    id: "cybersecurity-reminder-sep-2025",
+    title: "Still Deciding? Don't Miss Our Women in Cybersecurity Workshop!",
+    date: "September 17, 2025",
+    dateRaw: "2025-09-17",
+    mailchimpUrl: "http://eepurl.com/jniIss",
+    category: "event",
   },
   {
-    slug: 'november-2024',
-    month: 'November',
-    year: '2024',
-    coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67c13bf0b7ff2cc5c326e3f1_2024_Newsletters%20nov.png',
-    webUrl: '#',
-    highlights: [
-      'Tech Conference Recap',
-      'Career Advancement',
-      'Innovation Spotlight',
-    ],
-    isFeatured: false,
-    issueNumber: 4,
+    id: "cybersecurity-workshop-sep-2025",
+    title: "Women in Cybersecurity Workshop — Learn, Compete & Win",
+    date: "September 6, 2025",
+    dateRaw: "2025-09-06",
+    mailchimpUrl: "http://eepurl.com/jmINWM",
+    category: "event",
+  },
+
+  // August 2025
+  {
+    id: "august-2025",
+    title: "She Sharp Newsletter — August 2025",
+    date: "August 31, 2025",
+    dateRaw: "2025-08-31",
+    mailchimpUrl: "http://eepurl.com/jlY3NA",
+    category: "monthly",
   },
   {
-    slug: 'october-2024',
-    month: 'October',
-    year: '2024',
-    coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67230bb566a23c809666d347_2024_Newsletters%20oct.png',
-    webUrl: '#',
-    highlights: [
-      '10th Anniversary Special',
-      'Alumni Stories',
-      'Future of Tech',
-    ],
-    isFeatured: false,
-    issueNumber: 3,
+    id: "last-chance-aug-2025",
+    title: "Last chance to register — don't miss out!",
+    date: "August 28, 2025",
+    dateRaw: "2025-08-28",
+    mailchimpUrl: "http://eepurl.com/jl7lzs",
+    category: "event",
   },
   {
-    slug: 'september-2024',
-    month: 'September',
-    year: '2024',
-    coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66fa574d673d6538804201b6_2024_Newsletters%20sept.png',
-    webUrl: '#',
-    highlights: [
-      'Back to School Tech',
-      'Emerging Technologies',
-      'Mentor Spotlight',
-    ],
-    isFeatured: false,
-    issueNumber: 2,
+    id: "fonterra-aug-2025",
+    title: "She Sharp x Fonterra: From farm to future — join us 3 Sept",
+    date: "August 18, 2025",
+    dateRaw: "2025-08-18",
+    mailchimpUrl: "http://eepurl.com/jlp9tM",
+    category: "event",
+  },
+
+  // July 2025
+  {
+    id: "july-2025",
+    title: "She Sharp Newsletter — July 2025",
+    date: "August 1, 2025",
+    dateRaw: "2025-08-01",
+    mailchimpUrl: "http://eepurl.com/jkeLDY",
+    category: "monthly",
   },
   {
-    slug: 'august-2024',
-    month: 'August',
-    year: '2024',
-    coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66d7dbadf304d0a9becc2d75_2024_Newsletters%20aug.png',
-    webUrl: '#',
-    highlights: [
-      'Summer Internships',
-      'Tech Skills Workshop',
-      'Community Events',
-    ],
-    isFeatured: false,
-    issueNumber: 1,
+    id: "ai-hackathon-qa-jul-2025",
+    title: "Join Us Live – AI Hackathon Q&A Tomorrow @ 12PM!",
+    date: "July 14, 2025",
+    dateRaw: "2025-07-14",
+    mailchimpUrl: "http://eepurl.com/ji-8LM",
+    category: "event",
+  },
+  {
+    id: "july-event-2025",
+    title: "July Event",
+    date: "July 4, 2025",
+    dateRaw: "2025-07-04",
+    mailchimpUrl: "http://eepurl.com/jiq--2",
+    category: "event",
+  },
+
+  // June 2025
+  {
+    id: "june-2025",
+    title: "She Sharp Newsletter — June 2025",
+    date: "June 30, 2025",
+    dateRaw: "2025-06-30",
+    mailchimpUrl: "http://eepurl.com/jh8SGA",
+    category: "monthly",
+  },
+
+  // May 2025
+  {
+    id: "may-2025",
+    title: "She Sharp Newsletter — May 2025",
+    date: "May 28, 2025",
+    dateRaw: "2025-05-28",
+    mailchimpUrl: "http://eepurl.com/jfDcOE",
+    category: "monthly",
+  },
+  {
+    id: "perfect-fit-may-2025",
+    title: "Are you ready to find your perfect fit in tech?",
+    date: "May 9, 2025",
+    dateRaw: "2025-05-09",
+    mailchimpUrl: "http://eepurl.com/jeaslo",
+    category: "event",
+  },
+
+  // April 2025
+  {
+    id: "april-2025",
+    title: "She Sharp Newsletter — April 2025",
+    date: "May 6, 2025",
+    dateRaw: "2025-05-06",
+    mailchimpUrl: "http://eepurl.com/jd1TVU",
+    category: "monthly",
+  },
+
+  // March 2025
+  {
+    id: "iamremarkable-mar-2025",
+    title: "Celebrate your success with #IAmRemarkable",
+    date: "March 26, 2025",
+    dateRaw: "2025-03-26",
+    mailchimpUrl: "http://eepurl.com/jaUZPQ",
+    category: "event",
+  },
+  {
+    id: "march-2025",
+    title: "She Sharp Newsletter — March 2025",
+    date: "March 25, 2025",
+    dateRaw: "2025-03-25",
+    mailchimpUrl: "http://eepurl.com/jaLXUE",
+    category: "monthly",
   },
 ];
 
-export const newsletterTopics: NewsletterTopic[] = [
-  {
-    icon: TrendingUp,
-    title: 'Industry Insights',
-    description: 'Latest trends and innovations in tech',
-  },
-  {
-    icon: Users,
-    title: 'Community Stories',
-    description: 'Inspiring journeys from our members',
-  },
-  {
-    icon: BookOpen,
-    title: 'Learning Resources',
-    description: 'Curated tools and tutorials',
-  },
-  {
-    icon: Calendar,
-    title: 'Event Highlights',
-    description: 'Recap of recent events and upcoming opportunities',
-  },
-];
-
-export const recentIssues: RecentIssue[] = [
-  {
-    slug: 'november-2024-issue',
-    edition: 'November 2024',
-    title: 'Breaking Barriers: Women Leading AI Innovation',
-    highlights: [
-      'Interview with Dr. Sarah Chen on ethical AI',
-      '5 AI tools every developer should know',
-      'Community spotlight: Auckland AI meetup recap',
-    ],
-    readTime: '5 min read',
-    category: 'Technology',
-    icon: TrendingUp,
-  },
-  {
-    slug: 'october-2024-issue',
-    edition: 'October 2024',
-    title: 'Career Transitions: From Teacher to Tech Leader',
-    highlights: [
-      "Success story: Maria's journey to Product Management",
-      'Top skills for career changers',
-      'Free resources for learning to code',
-    ],
-    readTime: '7 min read',
-    category: 'Career',
-    icon: Lightbulb,
-  },
-  {
-    slug: 'september-2024-issue',
-    edition: 'September 2024',
-    title: 'Building Your Personal Brand in Tech',
-    highlights: [
-      'LinkedIn optimization tips',
-      'How to start technical blogging',
-      'Networking strategies that actually work',
-    ],
-    readTime: '6 min read',
-    category: 'Professional Development',
-    icon: Users,
-  },
-];
-
-// Helper functions
-
-export function getNewsletterBySlug(slug: string): Newsletter | undefined {
-  return newsletters.find((newsletter) => newsletter.slug === slug);
-}
-
-export function getNewslettersByYear(year: string): Newsletter[] {
-  return newsletters.filter((newsletter) => newsletter.year === year);
-}
-
-export function getFeaturedNewsletters(limit?: number): Newsletter[] {
-  const featured = newsletters.filter((newsletter) => newsletter.isFeatured);
-  return limit ? featured.slice(0, limit) : featured;
-}
-
-export function getLatestNewsletters(limit?: number): Newsletter[] {
-  const sorted = [...newsletters].sort((a, b) => {
-    const dateA = new Date(`${a.month} 1, ${a.year}`);
-    const dateB = new Date(`${b.month} 1, ${b.year}`);
-    return dateB.getTime() - dateA.getTime();
-  });
+/**
+ * Get newsletters sorted by date (newest first)
+ */
+export function getLatestNewsletters(limit?: number): MailchimpNewsletter[] {
+  const sorted = [...newsletters].sort(
+    (a, b) => new Date(b.dateRaw).getTime() - new Date(a.dateRaw).getTime()
+  );
   return limit ? sorted.slice(0, limit) : sorted;
 }
 
-export function getRecentIssues(limit?: number): RecentIssue[] {
-  return limit ? recentIssues.slice(0, limit) : recentIssues;
+/**
+ * Get featured newsletters
+ */
+export function getFeaturedNewsletters(
+  limit?: number
+): MailchimpNewsletter[] {
+  const featured = newsletters.filter((n) => n.isFeatured);
+  return limit ? featured.slice(0, limit) : featured;
 }
 
-export function getAllNewsletterYears(): string[] {
-  const years = new Set(newsletters.map((newsletter) => newsletter.year));
-  return Array.from(years).sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
+/**
+ * Get newsletters by category
+ */
+export function getNewslettersByCategory(
+  category: NewsletterCategory
+): MailchimpNewsletter[] {
+  return newsletters.filter((n) => n.category === category);
 }
 
+/**
+ * Get newsletter statistics
+ */
 export function getNewsletterStats(): {
   total: number;
-  featured: number;
-  years: number;
+  monthlyCount: number;
+  eventCount: number;
 } {
   return {
     total: newsletters.length,
-    featured: newsletters.filter((n) => n.isFeatured).length,
-    years: getAllNewsletterYears().length,
+    monthlyCount: newsletters.filter((n) => n.category === "monthly").length,
+    eventCount: newsletters.filter((n) => n.category === "event").length,
   };
-}
-
-export function getNewsletterTopics(): NewsletterTopic[] {
-  return newsletterTopics;
 }
