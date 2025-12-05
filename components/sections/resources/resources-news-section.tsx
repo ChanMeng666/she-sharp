@@ -122,7 +122,7 @@ const NEWS_ENTRIES: TimeLine_01Entry[] = [
 
 export function ResourcesNewsSection() {
   return (
-    <Section id="news" bgColor="light" className="py-16 md:py-24">
+    <Section id="news" bgColor="white" className="py-16 md:py-24">
       <Container size="content">
         <div className="mb-8 text-center">
           <div className="inline-flex items-center gap-3 mb-4">

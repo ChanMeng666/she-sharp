@@ -53,7 +53,7 @@ export function ImpactReportCards() {
           title={`${report.year}`}
           description=""
           tags={[]}
-          parentBackgroundColor="#f3e8ff"
+          parentBackgroundColor="#ffffff"
           onClick={handleCardClick}
           cardRounding={16}
           fontSizes={{

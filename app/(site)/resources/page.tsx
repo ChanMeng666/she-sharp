@@ -30,7 +30,7 @@ export default function ResourcesPage() {
   return (
     <>
       {/* Hero Section */}
-      <Section className="bg-surface-purple py-24 md:py-32 lg:py-40" noPadding>
+      <Section className="bg-white py-24 md:py-32 lg:py-40" noPadding>
         <Container size="content">
           <AnimateOnScroll variant="fade-up" className="text-center">
             <div className="inline-flex items-center gap-2 bg-purple-dark/10 text-purple-dark px-4 py-2 rounded-full text-sm font-medium mb-6">
@@ -84,7 +84,7 @@ export default function ResourcesPage() {
       </Section>
 
       {/* Section 2: Podcasts */}
-      <Section id="podcasts" className="bg-surface-periwinkle py-24 md:py-32" noPadding>
+      <Section id="podcasts" className="bg-white py-24 md:py-32" noPadding>
         <Container size="content">
           <AnimateOnScroll variant="fade-up" className="text-center mb-12 md:mb-16">
             <div className="inline-flex items-center gap-2 bg-purple-mid/10 text-purple-mid px-4 py-2 rounded-full text-sm font-medium mb-6">
@@ -124,7 +124,7 @@ export default function ResourcesPage() {
       <ResourcesNewsSection />
 
       {/* Section 4: Impact Report */}
-      <Section id="impact" className="bg-surface-purple py-24 md:py-32" noPadding>
+      <Section id="impact" className="bg-white py-24 md:py-32" noPadding>
         <Container size="content">
           <AnimateOnScroll variant="fade-up" className="text-center mb-12 md:mb-16">
             <div className="inline-flex items-center gap-2 bg-purple-dark/10 text-purple-dark px-4 py-2 rounded-full text-sm font-medium mb-6">
