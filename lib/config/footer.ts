@@ -116,10 +116,15 @@ export const footerConfig = {
     { name: "Privacy Policy", href: "/privacy-policy" },
     { name: "Cookie Policy", href: "/cookie-policy" },
     { name: "Terms of Service", href: "/terms-of-service" },
-    // { name: "Accessibility", href: "/accessibility" },
-    // { name: "Security Policy", href: "/security-policy" },
-    // { name: "Code of Conduct", href: "/code-of-conduct" },
-    // { name: "Ambassador Code of Conduct", href: "/volunteers/code-of-conduct" },
+  ] as FooterLink[],
+
+  simplifiedNavLinks: [
+    { name: "About", href: "/about" },
+    { name: "Mentorship", href: "/mentorship" },
+    { name: "Events", href: "/events" },
+    { name: "Donate", href: "/donate" },
+    { name: "Join Our Team", href: "/join-our-team" },
+    { name: "Resources", href: "/resources" },
   ] as FooterLink[],
 
   charityInfo: {
