@@ -131,7 +131,7 @@ export function SiteHeader() {
               <NavigationMenuItem key={item.title}>
                 {item.children ? (
                   <>
-                    <NavigationMenuTrigger className="bg-transparent text-foreground hover:bg-[#f7e5f3]/80 data-[state=open]:bg-[#f7e5f3]/90 transition-all duration-150 rounded-lg px-3 py-2">
+                    <NavigationMenuTrigger className="bg-transparent text-foreground hover:bg-[#f7e5f3]/80 data-[state=open]:bg-[#f7e5f3]/90 transition-all duration-150 rounded-full px-3 py-2">
                       <span className="flex items-center gap-1">
                         {item.title}
                       </span>
@@ -147,7 +147,7 @@ export function SiteHeader() {
                                   <Link
                                     href={child.href}
                                     onClick={(e) => handleSmoothScroll(e, child.href)}
-                                    className="flex items-start gap-3 rounded-lg p-3 transition-all duration-150 hover:bg-[#f7e5f3]/80 focus:bg-[#f7e5f3]/80 group"
+                                    className="flex items-start gap-3 rounded-full p-3 transition-all duration-150 hover:bg-[#f7e5f3]/80 focus:bg-[#f7e5f3]/80 group"
                                   >
                                     {child.icon && (
                                       <div className="mt-0.5">
@@ -175,7 +175,7 @@ export function SiteHeader() {
                         {item.image && (
                           <Link
                             href={item.image.href}
-                            className="relative w-80 overflow-hidden group"
+                            className="relative w-80 overflow-hidden group rounded-r-[50px]"
                           >
                             {/* Content */}
                             <div className={cn(
@@ -207,7 +207,7 @@ export function SiteHeader() {
                       onClick={(e) => handleSmoothScroll(e, item.href)}
                       className={cn(
                         navigationMenuTriggerStyle(),
-                        "bg-transparent text-foreground hover:bg-[#f7e5f3]/80 transition-all duration-150 rounded-lg px-3 py-2"
+                        "bg-transparent text-foreground hover:bg-[#f7e5f3]/80 transition-all duration-150 rounded-full px-3 py-2"
                       )}
                     >
                       {item.title}
