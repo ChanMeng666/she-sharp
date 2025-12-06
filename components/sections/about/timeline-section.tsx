@@ -10,10 +10,10 @@ const timelineData = [
     title: "2014",
     content: (
       <div>
-        <p className="text-foreground text-xs md:text-sm font-normal mb-4">
+        <p className="text-white text-xs md:text-sm font-normal mb-4">
           She Sharp Founded
         </p>
-        <p className="text-muted-foreground text-xs md:text-sm font-normal mb-8">
+        <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
           She Sharp was founded with a mission to bridge the gender gap in STEM
           fields. Started as a small group of passionate advocates, the
           organization set out to create a supportive community for women in
@@ -42,10 +42,10 @@ const timelineData = [
     title: "2018",
     content: (
       <div>
-        <p className="text-foreground text-xs md:text-sm font-normal mb-4">
+        <p className="text-white text-xs md:text-sm font-normal mb-4">
           Mentorship Program Launch
         </p>
-        <p className="text-muted-foreground text-xs md:text-sm font-normal mb-8">
+        <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
           Launched our flagship mentorship program, connecting aspiring women in
           tech with experienced industry professionals to guide their career
           development.
@@ -73,25 +73,25 @@ const timelineData = [
     title: "2020",
     content: (
       <div>
-        <p className="text-foreground text-xs md:text-sm font-normal mb-4">
+        <p className="text-white text-xs md:text-sm font-normal mb-4">
           Going Virtual
         </p>
-        <p className="text-muted-foreground text-xs md:text-sm font-normal mb-8">
+        <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
           Pivoted to virtual events, dramatically expanding our reach and
           accessibility. Our online workshops and networking sessions connected
           women in tech across geographic boundaries.
         </p>
         <div className="mb-8">
-          <div className="flex gap-2 items-center text-muted-foreground text-xs md:text-sm">
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
             Virtual workshops and webinars launched
           </div>
-          <div className="flex gap-2 items-center text-muted-foreground text-xs md:text-sm">
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
             Remote mentorship program expansion
           </div>
-          <div className="flex gap-2 items-center text-muted-foreground text-xs md:text-sm">
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
             Global community engagement
           </div>
-          <div className="flex gap-2 items-center text-muted-foreground text-xs md:text-sm">
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
             Digital networking events
           </div>
         </div>
@@ -118,10 +118,10 @@ const timelineData = [
     title: "2022",
     content: (
       <div>
-        <p className="text-foreground text-xs md:text-sm font-normal mb-4">
+        <p className="text-white text-xs md:text-sm font-normal mb-4">
           2000+ Members Milestone
         </p>
-        <p className="text-muted-foreground text-xs md:text-sm font-normal mb-8">
+        <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
           Our community reached an incredible milestone of over 2000 active
           members, establishing She Sharp as one of the leading organizations
           for women in STEM.
@@ -149,10 +149,10 @@ const timelineData = [
     title: "2024",
     content: (
       <div>
-        <p className="text-foreground text-xs md:text-sm font-normal mb-4">
+        <p className="text-white text-xs md:text-sm font-normal mb-4">
           Celebrating 10 years of impact
         </p>
-        <p className="text-muted-foreground text-xs md:text-sm font-normal mb-8">
+        <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
           A decade of bridging the gender gap in STEM. With 80+ events hosted
           and 2200+ active members, She Sharp continues to empower women in
           technology across the industry.
@@ -194,13 +194,13 @@ const timelineData = [
 
 export function TimelineSection() {
   return (
-    <Section bgColor="white" noPadding>
+    <Section noPadding className="bg-[#1f1e44]">
       <Container size="full">
         <div className="text-center pt-16 md:pt-24 px-4 md:px-8 lg:px-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">
             Our Journey
           </h2>
-          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
             From a small group of advocates to a thriving community of 2200+
             members
           </p>

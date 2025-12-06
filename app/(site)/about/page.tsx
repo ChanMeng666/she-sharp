@@ -1,6 +1,6 @@
 "use client";
 
-import { AboutHeroSection } from "@/components/sections/about/about-hero-section";
+import { SmoothScrollHero } from "@/components/sections/about/smooth-scroll-hero";
 import { TeamSection } from "@/components/sections/about/team-section";
 import { TimelineSection } from "@/components/sections/about/timeline-section";
 import { useScrollToHash } from "@/hooks/use-scroll-to-hash";
@@ -26,13 +26,13 @@ export default function AboutPage() {
       <div className="pointer-events-none absolute top-0 left-0 right-0 h-16" />
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16" />
 
-      <AboutHeroSection />
+      <SmoothScrollHero />
+
+      <TimelineSection />
 
       <div id="team">
         <TeamSection />
       </div>
-
-      <TimelineSection />
     </div>
   );
 }
