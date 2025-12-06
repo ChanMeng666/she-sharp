@@ -162,7 +162,7 @@ export function ScrollingFeatureShowcase({
             >
               {/* Mobile: Glass card backdrop */}
               <div
-                className="absolute left-4 right-4 lg:hidden bg-black/30 backdrop-blur-md rounded-2xl"
+                className="absolute left-4 right-4 lg:hidden bg-black/30 backdrop-blur-md rounded-[50px]"
                 style={{
                   top: `${navOffset + 16}px`,
                   bottom: `${bottomOffset + 16}px`,
@@ -248,12 +248,7 @@ export function ScrollingFeatureShowcase({
                 <Button
                   asChild
                   size="lg"
-                  className={cn(
-                    "px-8 md:px-10 py-4 md:py-6 font-semibold rounded-full uppercase tracking-wider",
-                    currentSlide.textColor === "#ffffff"
-                      ? "bg-white text-black hover:bg-white/90"
-                      : "bg-black text-white hover:bg-black/90"
-                  )}
+                  variant={currentSlide.textColor === "#ffffff" ? "ghost" : "default"}
                 >
                   <Link href={ctaHref}>{ctaText}</Link>
                 </Button>
@@ -269,7 +264,7 @@ export function ScrollingFeatureShowcase({
                 ...gridPatternStyle,
               }}
             >
-              <div className="relative w-[60%] h-[70%] rounded-2xl overflow-hidden shadow-2xl border-4 border-black/5">
+              <div className="relative w-[60%] h-[70%] rounded-[50px] overflow-hidden shadow-2xl border-4 border-black/5">
                 <div
                   className="absolute top-0 left-0 w-full h-full transition-transform ease-in-out"
                   style={{

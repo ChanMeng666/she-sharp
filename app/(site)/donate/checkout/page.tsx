@@ -146,7 +146,6 @@ function CheckoutContent() {
                         variant="outline"
                         size="sm"
                         onClick={() => router.push(`/donate/checkout?amount=${a}`)}
-                        className="text-xs"
                       >
                         ${a}
                       </Button>
@@ -165,7 +164,8 @@ function CheckoutContent() {
                 onClick={handleCheckout}
                 disabled={checkoutLoading}
                 size="lg"
-                className="w-full bg-[#9b2e83] hover:bg-[#7a2468] text-white"
+                variant="brand"
+                className="w-full"
               >
                 {checkoutLoading ? (
                   <>

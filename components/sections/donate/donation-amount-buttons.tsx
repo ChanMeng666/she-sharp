@@ -29,12 +29,7 @@ export function DonationAmountButtons({
           key={amount}
           asChild
           size="lg"
-          className={cn(
-            "h-14 md:h-16 text-lg md:text-xl font-bold rounded-xl transition-all",
-            isDark
-              ? "bg-white text-[#9b2e83] hover:bg-white/90 hover:scale-105"
-              : "bg-[#9b2e83] text-white hover:bg-[#7a2468] hover:scale-105"
-          )}
+          variant={isDark ? "ghost" : "brand"}
         >
           <Link href={`/donate/checkout?amount=${amount}`}>{label}</Link>
         </Button>

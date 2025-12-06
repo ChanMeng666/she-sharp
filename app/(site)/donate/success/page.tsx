@@ -76,7 +76,7 @@ function SuccessContent() {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button asChild className="bg-[#9b2e83] hover:bg-[#7a2468]">
+            <Button asChild variant="brand">
               <Link href="/">
                 <Home className="h-4 w-4 mr-2" />
                 Back to Home
@@ -84,7 +84,6 @@ function SuccessContent() {
             </Button>
             <Button
               variant="outline"
-              className="border-[#9b2e83] text-[#9b2e83] hover:bg-[#9b2e83]/10"
               onClick={() => {
                 const shareText = `I just donated to @SheSharpp to support women in STEM! Join me in making a difference.`;
                 const shareUrl = "https://shesharp.co.nz/donate";
