@@ -142,16 +142,16 @@ export function HowItWorksSection() {
           {/* Tabs */}
           <Tabs defaultValue="mentee" className="w-full">
             <div className="flex justify-center mb-8">
-              <TabsList className="h-12 p-1 bg-white/50 backdrop-blur-sm">
+              <TabsList className="h-14 p-1.5 bg-white/50 backdrop-blur-sm rounded-full">
                 <TabsTrigger
                   value="mentee"
-                  className="px-6 py-2 text-base data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
+                  className="px-8 py-2.5 text-base rounded-full data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
                 >
                   I&apos;m a Mentee
                 </TabsTrigger>
                 <TabsTrigger
                   value="mentor"
-                  className="px-6 py-2 text-base data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
+                  className="px-8 py-2.5 text-base rounded-full data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
                 >
                   I&apos;m a Mentor
                 </TabsTrigger>
