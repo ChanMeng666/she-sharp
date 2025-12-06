@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   experimental: {
     ppr: 'incremental',
     clientSegmentCache: true,
-    nodeMiddleware: true
   },
   images: {
     remotePatterns: [

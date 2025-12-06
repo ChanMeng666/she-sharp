@@ -1,5 +1,6 @@
 /* Legal Page - Professional Color Theme */
 /* Colors: Purple Dark #9b2e83, Navy Dark #1f1e44, Purple Light #f7e5f3 */
+@reference "../../app/globals.css";
 
 .legal-content {
   @apply max-w-4xl mx-auto;
