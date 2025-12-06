@@ -4,7 +4,7 @@ import { Section } from "@/components/layout/section";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 import { AlbumGrid } from "@/components/gallery";
 import { SpotifyEmbed } from "@/components/spotify/spotify-embed";
-import { ResourcesNewsSection, ImpactReportCards, ResourcesPageClient } from "@/components/sections/resources";
+import { ImpactReportCards, ResourcesPageClient } from "@/components/sections/resources";
 import { SPOTIFY_SHOW, getSpotifyShowUrl } from "@/lib/data/spotify-podcasts";
 import { getGalleryStats } from "@/lib/data/gallery-albums";
 import { Button } from "@/components/ui/button";
@@ -120,10 +120,7 @@ export default function ResourcesPage() {
         </Container>
       </Section>
 
-      {/* Section 3: News & Press */}
-      <ResourcesNewsSection />
-
-      {/* Section 4: Impact Report */}
+      {/* Section 3: Impact Report */}
       <Section id="impact" className="bg-transparent py-24 md:py-32" noPadding>
         <Container size="content">
           <AnimateOnScroll variant="fade-up" className="text-center mb-12 md:mb-16">

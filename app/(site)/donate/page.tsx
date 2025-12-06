@@ -1,15 +1,14 @@
-import { DonateHeroSection } from "@/components/sections/donate/donate-hero-section";
-import { DonationOptionsSection } from "@/components/sections/donate/donation-options-section";
-import { DonateInfoSection } from "@/components/sections/donate/donate-info-section";
-import { DonationImpactSection } from "@/components/sections/donate/donation-impact-section";
+import { ScrollingFeatureShowcase } from "@/components/ui/scrolling-feature-showcase";
+import { DonationAmountButtons } from "@/components/sections/donate/donation-amount-buttons";
+import { donateSlides } from "@/lib/data/donate-showcase";
 
 export default function DonatePage() {
   return (
-    <>
-      <DonateHeroSection />
-      <DonationOptionsSection />
-      <DonateInfoSection />
-      <DonationImpactSection />
-    </>
+    <ScrollingFeatureShowcase
+      slides={donateSlides}
+      ctaText="Donate Now"
+      ctaHref="/donate/checkout?amount=25"
+      customFinalContent={<DonationAmountButtons variant="dark" />}
+    />
   );
 }
