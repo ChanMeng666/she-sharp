@@ -182,5 +182,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     },
   },
-  debug: process.env.NODE_ENV === "development",
+  // Set to true to enable auth debug logs in development
+  // debug: process.env.NODE_ENV === "development",
 });
