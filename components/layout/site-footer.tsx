@@ -38,12 +38,7 @@ export function SiteFooter() {
             <h3 className="text-xl md:text-2xl font-semibold mb-3 text-background/90">
               Stay Connected
             </h3>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-background/30 text-background/90 hover:border-background/50 hover:text-background hover:bg-background/10 text-base px-6"
-            >
+            <Button asChild variant="ghost" size="lg">
               <a
                 href={MAILCHIMP_CONFIG.subscribeUrl}
                 target="_blank"
