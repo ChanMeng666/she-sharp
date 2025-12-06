@@ -10,7 +10,7 @@ export const presetQuestions: PresetQuestion[] = [
   {
     id: '2',
     question: 'How can I join the mentorship program?',
-    answer: 'To join as a mentee:\n1. Complete the application form\n2. Pay the $100 NZD annual membership fee\n3. Receive your invitation code via email\n4. Use the code to register and create your account\n\nOnce registered, you\'ll be matched with a mentor based on your goals and preferences.\n\n**Get started:** [Join as Mentee](/mentorship/join) | [View Our Mentors](/mentorship/mentors)',
+    answer: 'To join as a mentee:\n1. Complete the application form\n2. Pay the $100 NZD annual membership fee\n3. Receive your invitation code via email\n4. Use the code to register and create your account\n\nOnce registered, you\'ll be matched with a mentor based on your goals and preferences.\n\n**Get started:** [Join as Mentee](/mentorship/join) | [View Our Mentors](/mentorship#mentors-list)',
     category: 'mentorship'
   },
   {

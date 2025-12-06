@@ -36,7 +36,7 @@ export const navigationConfig: {
       image: {
         src: "/img/mesh-954.png",
         alt: "Meet Our Mentors",
-        href: "/mentorship/mentors",
+        href: "/mentorship#mentors-list",
       },
       children: [
         {
