@@ -16,7 +16,7 @@ export function HeroSection() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/6494eca97a143f705f5a5436_Home%20Vid%201-1%20Placeholder-transcode.mp4" type="video/mp4" />
+          <source src="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/video/home-page-hero.mp4" type="video/mp4" />
         </video>
 
       </div>
