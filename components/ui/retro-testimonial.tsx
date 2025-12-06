@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ImageProps } from "next/image";
@@ -22,6 +23,8 @@ interface iCarouselProps {
     onCardClose: () => void;
   }>[];
   initialScroll?: number;
+  autoPlay?: boolean;
+  autoPlayDuration?: number;
 }
 
 const useOutsideClick = (
@@ -46,110 +49,132 @@ const useOutsideClick = (
   }, [ref, onOutsideClick]);
 };
 
-const Carousel = ({ items, initialScroll = 0 }: iCarouselProps) => {
+const Carousel = ({
+  items,
+  initialScroll = 0,
+  autoPlay = true,
+  autoPlayDuration = 60000,
+}: iCarouselProps) => {
   const carouselRef = React.useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
-  const [canScrollRight, setCanScrollRight] = React.useState(true);
+  const [isHovered, setIsHovered] = React.useState(false);
+  const [translateX, setTranslateX] = React.useState(0);
+  const animationRef = React.useRef<number | null>(null);
+  const lastTimeRef = React.useRef<number>(0);
 
-  const checkScrollability = () => {
-    if (carouselRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
-    }
-  };
-
-  const handleScrollLeft = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -300, behavior: "smooth" });
-    }
-  };
-
-  const handleScrollRight = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 300, behavior: "smooth" });
-    }
-  };
-
-  const handleCardClose = (index: number) => {
-    if (carouselRef.current) {
-      const cardWidth = isMobile() ? 230 : 384;
-      const gap = isMobile() ? 4 : 8;
-      const scrollPosition = (cardWidth + gap) * (index + 1);
-      carouselRef.current.scrollTo({
-        left: scrollPosition,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const isMobile = () => {
+  const isMobile = React.useCallback(() => {
     return typeof window !== "undefined" && window.innerWidth < 768;
-  };
+  }, []);
+
+  const cardWidth = isMobile() ? 320 : 384;
+  const gap = 16;
+  const totalWidth = items.length * (cardWidth + gap);
+  const speed = totalWidth / autoPlayDuration;
 
   useEffect(() => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollLeft = initialScroll;
-      checkScrollability();
-    }
-  }, [initialScroll]);
+    if (!autoPlay) return;
+
+    const animate = (timestamp: number) => {
+      if (!lastTimeRef.current) {
+        lastTimeRef.current = timestamp;
+      }
+
+      if (!isHovered) {
+        const deltaTime = timestamp - lastTimeRef.current;
+
+        setTranslateX((prev) => {
+          const newValue = prev - speed * deltaTime;
+          if (Math.abs(newValue) >= totalWidth) {
+            return newValue + totalWidth;
+          }
+          return newValue;
+        });
+      }
+
+      lastTimeRef.current = timestamp;
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [autoPlay, isHovered, speed, totalWidth]);
+
+  const handleScrollLeft = React.useCallback(() => {
+    const scrollAmount = cardWidth + gap;
+    setTranslateX((prev) => prev + scrollAmount);
+  }, [cardWidth, gap]);
+
+  const handleScrollRight = React.useCallback(() => {
+    const scrollAmount = cardWidth + gap;
+    setTranslateX((prev) => {
+      const newValue = prev - scrollAmount;
+      if (Math.abs(newValue) >= totalWidth) {
+        return newValue + totalWidth;
+      }
+      return newValue;
+    });
+  }, [cardWidth, gap, totalWidth]);
+
+  const handleCardClose = React.useCallback((index: number) => {
+    // Card close handler - no scroll needed for transform-based carousel
+  }, []);
 
   return (
     <div className="relative w-full mt-10">
       <div
-        className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth [scrollbar-width:none] py-5"
+        className="flex w-full overflow-hidden py-5"
         ref={carouselRef}
-        onScroll={checkScrollability}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        <div
-          className={cn(
-            "absolute right-0 z-[1000] h-auto w-[5%] overflow-hidden bg-gradient-to-l"
-          )}
-        />
-        <div
-          className={cn(
-            "flex flex-row justify-start gap-4 pl-3",
-            "max-w-7xl mx-auto"
-          )}
+        <motion.div
+          className={cn("flex flex-row justify-start gap-4 pl-3", "flex-nowrap")}
+          style={{ x: translateX }}
         >
-          {items.map((item, index) => {
-            return (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    duration: 0.5,
-                    delay: 0.2 * index,
-                    ease: "easeOut",
-                  },
-                }}
-                key={`card-${index}`}
-                className="last:pr-[5%] md:last:pr-[33%] rounded-[50px]"
-              >
+          {items.map((item, index) => (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: {
+                  duration: 0.5,
+                  delay: 0.2 * Math.min(index, 5),
+                  ease: "easeOut",
+                },
+              }}
+              key={`card-${index}`}
+              className="flex-shrink-0 rounded-[50px]"
+            >
+              {React.cloneElement(item, {
+                onCardClose: () => handleCardClose(index),
+              })}
+            </motion.div>
+          ))}
+          {autoPlay &&
+            items.map((item, index) => (
+              <div key={`card-clone-${index}`} className="flex-shrink-0 rounded-[50px]">
                 {React.cloneElement(item, {
-                  onCardClose: () => {
-                    return handleCardClose(index);
-                  },
+                  onCardClose: () => handleCardClose(index),
                 })}
-              </motion.div>
-            );
-          })}
-        </div>
+              </div>
+            ))}
+        </motion.div>
       </div>
       <div className="flex justify-end gap-2 mt-4">
         <button
-          className="relative z-40 h-10 w-10 rounded-full bg-foreground flex items-center justify-center disabled:opacity-50 hover:bg-foreground/80 transition-colors duration-200"
+          className="relative z-40 h-10 w-10 rounded-full bg-foreground flex items-center justify-center hover:bg-foreground/80 transition-colors duration-200"
           onClick={handleScrollLeft}
-          disabled={!canScrollLeft}
         >
           <ArrowLeft className="h-6 w-6 text-background" />
         </button>
         <button
-          className="relative z-40 h-10 w-10 rounded-full bg-foreground flex items-center justify-center disabled:opacity-50 hover:bg-foreground/80 transition-colors duration-200"
+          className="relative z-40 h-10 w-10 rounded-full bg-foreground flex items-center justify-center hover:bg-foreground/80 transition-colors duration-200"
           onClick={handleScrollRight}
-          disabled={!canScrollRight}
         >
           <ArrowRight className="h-6 w-6 text-background" />
         </button>
@@ -172,7 +197,12 @@ const TestimonialCard = ({
   backgroundImage?: string;
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleExpand = () => {
     return setIsExpanded(true);
@@ -213,55 +243,59 @@ const TestimonialCard = ({
 
   useOutsideClick(containerRef, handleCollapse);
 
+  const expandedModal = (
+    <AnimatePresence>
+      {isExpanded && (
+        <div className="fixed inset-0 h-screen overflow-hidden z-50">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="bg-foreground/50 backdrop-blur-lg h-full w-full fixed inset-0"
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            ref={containerRef}
+            layoutId={layout ? `card-${testimonial.name}` : undefined}
+            className="max-w-5xl mx-auto bg-gradient-to-b from-background to-muted h-full z-[60] p-4 md:p-10 rounded-[50px] relative md:mt-10"
+          >
+            <button
+              className="sticky top-4 h-8 w-8 right-0 ml-auto rounded-full flex items-center justify-center bg-foreground"
+              onClick={handleCollapse}
+            >
+              <X className="h-6 w-6 text-background absolute" />
+            </button>
+            <motion.p
+              layoutId={layout ? `category-${testimonial.name}` : undefined}
+              className="px-0 md:px-20 text-muted-foreground text-lg font-thin underline underline-offset-8"
+            >
+              {testimonial.designation}
+            </motion.p>
+            <motion.p
+              layoutId={layout ? `title-${testimonial.name}` : undefined}
+              className="px-0 md:px-20 text-2xl md:text-4xl font-normal italic text-foreground mt-4"
+            >
+              {testimonial.name}
+            </motion.p>
+            <div className="py-8 text-foreground px-0 md:px-20 text-xl md:text-2xl font-light leading-relaxed tracking-wide">
+              <Quote className="h-6 w-6 text-muted-foreground mb-4" />
+              {testimonial.description}
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+
   return (
     <>
-      <AnimatePresence>
-        {isExpanded && (
-          <div className="fixed inset-0 h-screen overflow-hidden z-50">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="bg-foreground/50 backdrop-blur-lg h-full w-full fixed inset-0"
-            />
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              ref={containerRef}
-              layoutId={layout ? `card-${testimonial.name}` : undefined}
-              className="max-w-5xl mx-auto bg-gradient-to-b from-background to-muted h-full z-[60] p-4 md:p-10 rounded-[50px] relative md:mt-10"
-            >
-              <button
-                className="sticky top-4 h-8 w-8 right-0 ml-auto rounded-full flex items-center justify-center bg-foreground"
-                onClick={handleCollapse}
-              >
-                <X className="h-6 w-6 text-background absolute" />
-              </button>
-              <motion.p
-                layoutId={layout ? `category-${testimonial.name}` : undefined}
-                className="px-0 md:px-20 text-muted-foreground text-lg font-thin underline underline-offset-8"
-              >
-                {testimonial.designation}
-              </motion.p>
-              <motion.p
-                layoutId={layout ? `title-${testimonial.name}` : undefined}
-                className="px-0 md:px-20 text-2xl md:text-4xl font-normal italic text-foreground mt-4"
-              >
-                {testimonial.name}
-              </motion.p>
-              <div className="py-8 text-foreground px-0 md:px-20 text-xl md:text-2xl font-light leading-relaxed tracking-wide">
-                <Quote className="h-6 w-6 text-muted-foreground mb-4" />
-                {testimonial.description}
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      {isMounted && createPortal(expandedModal, document.body)}
       <motion.button
         layoutId={layout ? `card-${testimonial.name}` : undefined}
         onClick={handleExpand}
-        className=""
+        className="cursor-zoom-in"
         whileHover={{
           rotateX: 2,
           rotateY: 2,
