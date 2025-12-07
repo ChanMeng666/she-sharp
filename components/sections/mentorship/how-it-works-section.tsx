@@ -2,11 +2,9 @@
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import TimeLine_01, { TimeLine_01Entry } from "@/components/ui/release-time-line";
 import {
-  Clock,
   Calendar,
   Handshake,
   Target,
@@ -123,20 +121,15 @@ const MENTOR_STEPS: TimeLine_01Entry[] = [
 
 export function HowItWorksSection() {
   return (
-    <Section className="py-16 md:py-24 bg-surface-periwinkle rounded-[50px]">
+    <Section className="py-16 md:py-24 bg-surface-periwinkle rounded-b-[50px]">
       <Container>
         {/* Header */}
         <div className="text-center mb-8">
-          <Badge className="mb-4 bg-muted text-foreground border-border">
-            <Clock className="w-3 h-3 mr-1" />
-            Your Journey
-          </Badge>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             How the Program Works
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            A structured journey designed to create meaningful connections and
-            drive real career impact
+            Your path to meaningful mentorship connections
           </p>
 
           {/* Tabs */}
@@ -160,8 +153,6 @@ export function HowItWorksSection() {
 
             <TabsContent value="mentee">
               <TimeLine_01
-                title="Your Mentee Journey"
-                description="From application to career growth – here's what your mentorship experience looks like"
                 entries={MENTEE_STEPS}
                 className="py-4"
               />
@@ -169,8 +160,6 @@ export function HowItWorksSection() {
 
             <TabsContent value="mentor">
               <TimeLine_01
-                title="Your Mentor Journey"
-                description="From application to impact – here's how you'll guide the next generation"
                 entries={MENTOR_STEPS}
                 className="py-4"
               />
