@@ -46,6 +46,12 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Prevent hydration mismatch by only rendering interactive elements after mount
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     const url = new URL(href, window.location.origin);
@@ -125,99 +131,120 @@ export function SiteHeader() {
         </Link>
 
         {/* Desktop Navigation */}
-        <NavigationMenu className="hidden lg:flex mx-auto">
-          <NavigationMenuList>
-            {navigationConfig.items.map((item) => (
-              <NavigationMenuItem key={item.title}>
-                {item.children ? (
-                  <>
-                    <NavigationMenuTrigger className="bg-transparent text-foreground hover:bg-[#f7e5f3]/80 data-[state=open]:bg-[#f7e5f3]/90 transition-all duration-150 rounded-full px-3 py-2">
-                      <span className="flex items-center gap-1">
-                        {item.title}
-                      </span>
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent className="nav-dropdown-enter nav-dropdown-enter-active">
-                      <div className="flex w-[800px]">
-                        {/* Left side - Navigation links */}
-                        <div className="flex-1 p-6">
-                          <ul className="space-y-1">
-                            {item.children.map((child) => (
-                              <li key={child.title}>
-                                <NavigationMenuLink asChild>
-                                  <Link
-                                    href={child.href}
-                                    onClick={(e) => handleSmoothScroll(e, child.href)}
-                                    className="flex items-start gap-3 rounded-full p-3 transition-all duration-150 hover:bg-[#f7e5f3]/80 focus:bg-[#f7e5f3]/80 group"
-                                  >
-                                    {child.icon && (
-                                      <div className="mt-0.5">
-                                        <child.icon className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors duration-150" />
-                                      </div>
-                                    )}
-                                    <div className="flex-1">
-                                      <div className="text-sm font-medium text-foreground group-hover:text-foreground transition-colors duration-150">
-                                        {child.title}
-                                      </div>
-                                      {child.description && (
-                                        <p className="mt-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-150">
-                                          {child.description}
-                                        </p>
+        {isMounted ? (
+          <NavigationMenu className="hidden lg:flex mx-auto">
+            <NavigationMenuList>
+              {navigationConfig.items.map((item) => (
+                <NavigationMenuItem key={item.title}>
+                  {item.children ? (
+                    <>
+                      <NavigationMenuTrigger className="bg-transparent text-foreground hover:bg-[#f7e5f3]/80 data-[state=open]:bg-[#f7e5f3]/90 transition-all duration-150 rounded-full px-3 py-2">
+                        <span className="flex items-center gap-1">
+                          {item.title}
+                        </span>
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent className="nav-dropdown-enter nav-dropdown-enter-active">
+                        <div className="flex w-[800px]">
+                          {/* Left side - Navigation links */}
+                          <div className="flex-1 p-6">
+                            <ul className="space-y-1">
+                              {item.children.map((child) => (
+                                <li key={child.title}>
+                                  <NavigationMenuLink asChild>
+                                    <Link
+                                      href={child.href}
+                                      onClick={(e) => handleSmoothScroll(e, child.href)}
+                                      className="flex items-start gap-3 rounded-full p-3 transition-all duration-150 hover:bg-[#f7e5f3]/80 focus:bg-[#f7e5f3]/80 group"
+                                    >
+                                      {child.icon && (
+                                        <div className="mt-0.5">
+                                          <child.icon className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors duration-150" />
+                                        </div>
                                       )}
-                                    </div>
-                                  </Link>
-                                </NavigationMenuLink>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                                      <div className="flex-1">
+                                        <div className="text-sm font-medium text-foreground group-hover:text-foreground transition-colors duration-150">
+                                          {child.title}
+                                        </div>
+                                        {child.description && (
+                                          <p className="mt-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-150">
+                                            {child.description}
+                                          </p>
+                                        )}
+                                      </div>
+                                    </Link>
+                                  </NavigationMenuLink>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
 
-                        {/* Right side - Featured section */}
-                        {item.image && (
-                          <Link
-                            href={item.image.href}
-                            className="relative w-80 overflow-hidden group rounded-r-[50px]"
-                          >
-                            {/* Content */}
-                            <div className={cn(
-                              "relative h-full flex items-center justify-center transition-all duration-300",
-                              featuredBgColors[item.title] || "bg-muted",
-                              "group-hover:opacity-90"
-                            )}>
-                              <div className="text-center p-6">
-                                <div className="text-sm font-medium text-muted-foreground mb-1">
-                                  Featured
-                                </div>
-                                <div className="text-lg font-bold text-foreground">
-                                  {item.image.alt}
-                                </div>
-                                <div className="mt-2 text-sm text-muted-foreground group-hover:text-foreground transition-opacity duration-300">
-                                  Explore →
+                          {/* Right side - Featured section */}
+                          {item.image && (
+                            <Link
+                              href={item.image.href}
+                              className="relative w-80 overflow-hidden group rounded-r-[50px]"
+                            >
+                              {/* Content */}
+                              <div className={cn(
+                                "relative h-full flex items-center justify-center transition-all duration-300",
+                                featuredBgColors[item.title] || "bg-muted",
+                                "group-hover:opacity-90"
+                              )}>
+                                <div className="text-center p-6">
+                                  <div className="text-sm font-medium text-muted-foreground mb-1">
+                                    Featured
+                                  </div>
+                                  <div className="text-lg font-bold text-foreground">
+                                    {item.image.alt}
+                                  </div>
+                                  <div className="mt-2 text-sm text-muted-foreground group-hover:text-foreground transition-opacity duration-300">
+                                    Explore →
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </Link>
+                            </Link>
+                          )}
+                        </div>
+                      </NavigationMenuContent>
+                    </>
+                  ) : (
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href={item.href}
+                        onClick={(e) => handleSmoothScroll(e, item.href)}
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          "bg-transparent text-foreground hover:bg-[#f7e5f3]/80 transition-all duration-150 rounded-full px-3 py-2"
                         )}
-                      </div>
-                    </NavigationMenuContent>
-                  </>
-                ) : (
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href={item.href}
-                      onClick={(e) => handleSmoothScroll(e, item.href)}
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "bg-transparent text-foreground hover:bg-[#f7e5f3]/80 transition-all duration-150 rounded-full px-3 py-2"
-                      )}
-                    >
-                      {item.title}
-                    </Link>
-                  </NavigationMenuLink>
-                )}
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+                      >
+                        {item.title}
+                      </Link>
+                    </NavigationMenuLink>
+                  )}
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+        ) : (
+          /* Static placeholder during SSR to prevent hydration mismatch */
+          <nav className="hidden lg:flex mx-auto">
+            <ul className="flex items-center gap-1">
+              {navigationConfig.items.map((item) => (
+                <li key={item.title} className="relative">
+                  <Link
+                    href={item.href || "#"}
+                    className="group inline-flex h-9 w-max items-center justify-center rounded-full bg-transparent px-4 py-2 text-sm font-medium hover:bg-[#f7e5f3]/80 transition-all duration-150"
+                  >
+                    {item.title}
+                    {item.children && (
+                      <ChevronDown className="relative top-[1px] ml-1 size-3" aria-hidden="true" />
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
 
         {/* Desktop CTA Buttons and User Navigation */}
         <div className="hidden lg:flex items-center gap-3 xl:-mr-8">
@@ -240,21 +267,22 @@ export function SiteHeader() {
         </div>
 
         {/* Mobile Menu Toggle */}
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="ml-auto lg:hidden">
-            <Button
-              variant="outline"
-              size="lg"
-              className="rounded-lg"
-            >
-              {isOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          </SheetTrigger>
+        {isMounted ? (
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild className="ml-auto lg:hidden">
+              <Button
+                variant="outline"
+                size="lg"
+                className="rounded-lg"
+              >
+                {isOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </SheetTrigger>
           <SheetContent
             side="right"
             className="w-[300px] sm:w-[400px] p-0 overflow-y-auto bg-white border-l border-[#f7e5f3] shadow-xl"
@@ -372,6 +400,17 @@ export function SiteHeader() {
             </nav>
           </SheetContent>
         </Sheet>
+        ) : (
+          /* Static placeholder for mobile menu during SSR */
+          <Button
+            variant="outline"
+            size="lg"
+            className="ml-auto lg:hidden rounded-lg"
+          >
+            <Menu className="h-5 w-5" />
+            <span className="sr-only">Toggle menu</span>
+          </Button>
+        )}
       </div>
 
       {/* Desktop Navigation Underline Animation */}
