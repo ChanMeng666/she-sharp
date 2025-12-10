@@ -38,7 +38,7 @@ export function ThriveHeroSection() {
 
           {/* Title Section */}
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-3">
+            <h1 className="text-display-md text-foreground mb-3">
               {eventDetails.title}
             </h1>
 

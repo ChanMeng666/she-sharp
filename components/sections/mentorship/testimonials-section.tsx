@@ -73,7 +73,7 @@ export function TestimonialsSection() {
           <Badge className="mb-4 bg-muted text-foreground border-border">
             Success Stories
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-display-sm text-foreground mb-4">
             Hear From Our Community
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -93,7 +93,7 @@ export function TestimonialsSection() {
                   </Avatar>
                   <div>
                     <p className="text-sm text-muted-foreground">Mentee</p>
-                    <h3 className="font-semibold text-foreground">{current.mentee.name}</h3>
+                    <h3 className="font-brand-script text-xl text-foreground">{current.mentee.name}</h3>
                     <p className="text-sm text-muted-foreground">{current.mentee.role}</p>
                     <p className="text-xs text-muted-foreground">{current.mentee.company}</p>
                   </div>
@@ -109,7 +109,7 @@ export function TestimonialsSection() {
                 <div className="flex items-center gap-4 flex-1 md:justify-end">
                   <div className="text-right">
                     <p className="text-sm text-muted-foreground">Mentor</p>
-                    <h3 className="font-semibold text-foreground">{current.mentor.name}</h3>
+                    <h3 className="font-brand-script text-xl text-foreground">{current.mentor.name}</h3>
                     <p className="text-sm text-muted-foreground">{current.mentor.role}</p>
                     <p className="text-xs text-muted-foreground">{current.mentor.company}</p>
                   </div>
@@ -123,7 +123,7 @@ export function TestimonialsSection() {
             
             <CardContent className="pt-6">
               <Quote className="w-12 h-12 text-brand/30 mb-4" />
-              <blockquote className="text-lg text-foreground mb-6 italic leading-relaxed">
+              <blockquote className="text-quote text-foreground mb-6">
                 {current.quote}
               </blockquote>
               

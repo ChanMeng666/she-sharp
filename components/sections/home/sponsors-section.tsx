@@ -45,7 +45,7 @@ export function SponsorsSection() {
     <Section className="overflow-hidden bg-background">
       <Container size="full">
         <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
+          <h2 className="text-display-sm text-foreground">
             Thanks to Our Sponsors
           </h2>
         </AnimateOnScroll>
@@ -53,7 +53,7 @@ export function SponsorsSection() {
         {/* Silver Sponsors */}
         <div className="mb-20">
           <AnimateOnScroll variant="fade-up" className="text-center mb-12">
-            <h3 className="text-3xl text-muted-foreground font-bold tracking-wider flex items-center justify-center gap-2">
+            <h3 className="text-label text-xl text-muted-foreground flex items-center justify-center gap-2">
               SILVER
             </h3>
           </AnimateOnScroll>
@@ -90,7 +90,7 @@ export function SponsorsSection() {
         {/* Bronze Sponsors */}
         <div className="mb-12 sm:mb-16">
           <AnimateOnScroll variant="fade-up" className="text-center mb-12">
-            <h3 className="text-3xl text-muted-foreground font-bold tracking-wider flex items-center justify-center gap-2">
+            <h3 className="text-label text-xl text-muted-foreground flex items-center justify-center gap-2">
               BRONZE
             </h3>
           </AnimateOnScroll>

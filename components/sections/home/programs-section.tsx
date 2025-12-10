@@ -98,7 +98,7 @@ export function ProgramsSection() {
         <Container size="full">
           {/* Section Header */}
           <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6">
+            <h2 className="text-display-sm text-foreground mb-6">
               Your Path to Success
             </h2>
           </AnimateOnScroll>
@@ -244,7 +244,7 @@ export function ProgramsSection() {
                 <div className="absolute bottom-6 left-6 z-10 transition-all duration-500 ease-in-out">
                   <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg">
                     <div className="text-white">
-                      <div className="text-3xl font-bold mb-1 transition-all duration-300">
+                      <div className="text-stat text-3xl mb-1 transition-all duration-300">
                         {programs[lastSelectedProgram].stats.primary}
                       </div>
                       <div className="text-lg opacity-90 transition-all duration-300">

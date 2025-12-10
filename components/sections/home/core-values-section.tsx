@@ -53,7 +53,7 @@ export function CoreValuesSection() {
       <div className="w-full md:w-1/3 bg-surface-purple flex items-center py-14 sm:py-16 md:py-20 relative md:rounded-r-[50px]">
         <div className="px-6 sm:px-8 md:px-10 lg:px-12 w-full relative z-10">
           <AnimateOnScroll variant="fade-up" className="mb-10 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading text-foreground relative z-20">
+            <h2 className="text-display-sm text-foreground relative z-20">
               Our Core Values
             </h2>
           </AnimateOnScroll>

@@ -121,7 +121,7 @@ function StatItem({
         />
       </div>
 
-      <div className="text-5xl sm:text-6xl font-extrabold tabular-nums tracking-tight mb-2 text-foreground">
+      <div className="text-stat text-5xl sm:text-6xl mb-2 text-foreground">
         {(() => {
           const { target, suffix } = parseTargetValue(item.value);
           return (
@@ -166,7 +166,7 @@ export function CoreImpactSection() {
         <Container size="full">
           {/* Header */}
           <AnimateOnScroll variant="fade-up" className=" mb-8 md:mb-20 ">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
+            <h2 className="text-display-sm text-foreground">
               A Decade of Measurable Impact
             </h2>
           </AnimateOnScroll>

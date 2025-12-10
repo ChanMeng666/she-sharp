@@ -8,7 +8,10 @@ export function JoinTeamHeroSection() {
         <div className="mx-auto max-w-6xl">
           {/* Title Section */}
           <div className="text-center">
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight">
+            <p className="font-brand-script text-2xl md:text-3xl text-muted-foreground mb-4">
+              Make a difference
+            </p>
+            <h1 className="text-display-lg">
               <span className="block text-foreground">JOIN THE</span>
               <span className="block text-foreground mt-2">SHARPEST TEAM</span>
             </h1>

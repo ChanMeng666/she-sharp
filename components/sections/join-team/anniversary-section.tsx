@@ -20,7 +20,7 @@ export function AnniversarySection() {
               10 Years of Impact
             </Badge>
 
-            <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+            <h3 className="text-display-sm text-foreground mb-6">
               Calling All She Sharp Alumni!
             </h3>
             

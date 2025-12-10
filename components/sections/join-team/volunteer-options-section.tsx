@@ -68,7 +68,7 @@ export function VolunteerOptionsSection() {
         <div className="mx-auto max-w-6xl">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+            <h2 className="text-display-sm text-foreground mb-6">
               Choose Your Way to Make an Impact
             </h2>
             <p className="text-xl text-gray max-w-3xl mx-auto">

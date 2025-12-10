@@ -29,7 +29,7 @@ export function ThriveOverviewSection() {
               About the Event
             </Badge>
             
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+            <h2 className="text-display-sm text-foreground mb-6">
               Empowering Professionals at Every Stage
             </h2>
             

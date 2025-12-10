@@ -12,7 +12,7 @@ export function AboutHeroSection() {
     >
       <Container>
         <AnimateOnScroll variant="fade-up" className="relative z-10 mx-auto max-w-3xl text-center px-6 sm:px-0 py-8">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-tight uppercase text-foreground">
+          <h1 className="text-display-lg uppercase text-foreground">
             Changing the ratio in STEM
           </h1>
           <p className="mt-4 sm:mt-6 text-base sm:text-lg text-muted-foreground">
@@ -31,7 +31,7 @@ export function AboutHeroSection() {
                 We've grown by doing the simple things well: practical support,
                 peer learning, and consistent action.
               </p>
-              <p className="italic">
+              <p className="font-brand-script text-2xl text-foreground">
                 — Dr. Mahsa McCauley, Founder and Director
               </p>
             </div>

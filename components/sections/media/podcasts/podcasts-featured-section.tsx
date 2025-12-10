@@ -11,7 +11,7 @@ export function PodcastsFeaturedSection() {
       <Container size="content">
         {/* Main show embed */}
         <div className="mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 text-center">
+          <h2 className="text-display-sm text-foreground mb-6 text-center">
             Listen on Spotify
           </h2>
           <SpotifyEmbed type="show" id={SPOTIFY_SHOW.showId} height={352} />

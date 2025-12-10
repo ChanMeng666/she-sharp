@@ -26,7 +26,7 @@ export function PodcastsHeroSection() {
               Podcasts
             </Badge>
 
-            <h1 className="text-5xl md:text-7xl font-bold text-background mb-6">
+            <h1 className="text-display-lg text-background mb-6">
               {SPOTIFY_SHOW.name}
             </h1>
 

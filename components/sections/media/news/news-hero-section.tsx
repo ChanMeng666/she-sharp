@@ -15,7 +15,7 @@ export function NewsHeroSection() {
               Making Headlines
             </Badge>
 
-            <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6">
+            <h1 className="text-display-lg text-foreground mb-6">
               News & Press
             </h1>
 

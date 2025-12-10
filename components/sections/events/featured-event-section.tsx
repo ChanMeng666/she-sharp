@@ -21,7 +21,7 @@ export function FeaturedEventSection() {
               />
             </div>
             <CardContent className="p-8 md:p-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">
+              <h2 className="text-display-sm text-foreground mb-4">
                 THRIVE: Your Career, Your Story
               </h2>
               <div className="flex items-center gap-2 text-gray-600 mb-6">

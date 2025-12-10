@@ -18,7 +18,7 @@ export function EventsListSection() {
   return (
     <Section className="py-16 bg-surface-periwinkle">
       <Container>
-        <h2 className="text-3xl font-bold text-foreground mb-8">Find an Event</h2>
+        <h2 className="text-display-sm text-foreground mb-8">Find an Event</h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {displayedEvents.map((event) => (
             <Card key={event.slug} className="overflow-hidden hover:shadow-lg transition-shadow">

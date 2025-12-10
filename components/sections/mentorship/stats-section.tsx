@@ -51,7 +51,7 @@ export function StatsSection() {
     <Section className="py-16 md:py-24 bg-background">
       <Container>
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-display-sm text-foreground mb-4">
             What You Get Out of a Mentorship Program
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -73,7 +73,7 @@ export function StatsSection() {
                         <Icon className={`w-8 h-8 ${colors.text}`} />
                         <Info className="w-4 h-4 text-gray-400" />
                       </div>
-                      <div className={`text-4xl font-bold mb-3 ${colors.text}`}>
+                      <div className={`text-4xl text-stat mb-3 ${colors.text}`}>
                         {stat.percentage}
                       </div>
                       <p className="text-sm text-muted-foreground mb-4">

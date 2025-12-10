@@ -9,7 +9,10 @@ export function SponsorshipHeroSection() {
     <Section className="min-h-[60vh] flex items-center">
       <Container>
         <div className="max-w-4xl space-y-6">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
+          <p className="font-brand-script text-2xl md:text-3xl text-muted-foreground">
+            Together we achieve more
+          </p>
+          <h1 className="text-display-md text-foreground">
             Partner with Purpose
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">

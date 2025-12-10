@@ -26,7 +26,7 @@ export function TeamSection() {
     <Section className="pt-0 bg-[#1f1e44]">
       <Container size="wide">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
+          <h2 className="text-display-sm text-white">
             Meet Our People
           </h2>
           <p className="mt-3 sm:mt-4 text-base sm:text-lg max-w-2xl mx-auto px-4 sm:px-0 text-white/80">

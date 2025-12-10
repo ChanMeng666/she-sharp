@@ -47,7 +47,7 @@ export function ProgramOverviewSection() {
                 <Heart className="w-3 h-3 mr-1" />
                 Empowering Women in Tech
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              <h2 className="text-display-sm text-foreground mb-4">
                 Mentorship that moves careers forward
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">

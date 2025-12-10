@@ -17,7 +17,10 @@ export function MentorshipHeroSection() {
         <div className="py-16 md:py-24">
           {/* Title and CTA */}
           <AnimateOnScroll variant="fade-up" className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4">
+            <p className="font-brand-script text-2xl md:text-3xl text-muted-foreground mb-4">
+              Your journey starts here
+            </p>
+            <h1 className="text-display-lg text-foreground mb-4">
               MENTORSHIP
               <span className="block text-muted-foreground">PROGRAM</span>
             </h1>

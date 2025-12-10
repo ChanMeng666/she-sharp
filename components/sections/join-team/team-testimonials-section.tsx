@@ -82,7 +82,7 @@ export function TeamTestimonialsSection() {
               <Sparkles className="w-6 h-6 text-foreground ml-2" />
             </div>
             
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
+            <h2 className="text-display-md text-foreground leading-tight">
               Voices from Our
               <span className="block text-foreground mt-2">Community</span>
             </h2>
@@ -128,10 +128,8 @@ export function TeamTestimonialsSection() {
                         </div>
 
                         {/* Quote Text with improved typography */}
-                        <blockquote className="flex-grow">
-                          <p className="text-lg leading-relaxed text-gray-700">
-                            {testimonial.quote}
-                          </p>
+                        <blockquote className="flex-grow text-quote text-gray-700">
+                          {testimonial.quote}
                         </blockquote>
 
                         <Separator className="bg-gray-100" />
@@ -139,7 +137,7 @@ export function TeamTestimonialsSection() {
                         {/* Author Info with better spacing */}
                         <div className="space-y-3">
                           <div>
-                            <p className="font-semibold text-xl text-foreground">
+                            <p className="font-brand-script text-2xl text-foreground">
                               {testimonial.name}
                             </p>
                             <p className="text-sm text-gray-600 mt-1">
@@ -179,19 +177,19 @@ export function TeamTestimonialsSection() {
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
                 <div className="text-center space-y-3">
-                  <div className="text-4xl md:text-5xl font-bold text-foreground">200+</div>
+                  <div className="text-4xl md:text-5xl text-stat text-foreground">200+</div>
                   <div className="text-base text-gray-600">Active Volunteers</div>
                 </div>
                 <div className="text-center space-y-3">
-                  <div className="text-4xl md:text-5xl font-bold text-foreground">95%</div>
+                  <div className="text-4xl md:text-5xl text-stat text-foreground">95%</div>
                   <div className="text-base text-gray-600">Would Recommend</div>
                 </div>
                 <div className="text-center space-y-3">
-                  <div className="text-4xl md:text-5xl font-bold text-foreground">2200+</div>
+                  <div className="text-4xl md:text-5xl text-stat text-foreground">2200+</div>
                   <div className="text-base text-gray-600">Volunteer Hours</div>
                 </div>
                 <div className="text-center space-y-3">
-                  <div className="text-4xl md:text-5xl font-bold text-foreground">10</div>
+                  <div className="text-4xl md:text-5xl text-stat text-foreground">10</div>
                   <div className="text-base text-gray-600">Years of Impact</div>
                 </div>
               </div>

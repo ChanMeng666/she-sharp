@@ -78,7 +78,7 @@ export function ROICalculatorSection() {
               <div className="mx-auto w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-4">
                 <Calculator className="h-6 w-6 text-foreground" />
               </div>
-              <CardTitle className="text-2xl md:text-3xl font-bold text-foreground">
+              <CardTitle className="text-display-sm text-foreground">
                 Partnership ROI Calculator
               </CardTitle>
               <CardDescription className="text-lg text-muted-foreground mt-2">
