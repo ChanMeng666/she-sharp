@@ -1,13 +1,24 @@
-import { JoinTeamHeroSection } from "@/components/sections/join-team/join-team-hero-section";
-import { VolunteerOptionsSection } from "@/components/sections/join-team/volunteer-options-section";
-import { TeamGallerySection } from "@/components/sections/join-team/team-gallery-section";
+import { FeatureShowcase } from "@/components/ui/feature-showcase";
+import {
+  volunteerImages,
+  joinTeamStats,
+  joinTeamContent,
+  getVolunteerSteps,
+} from "@/lib/data/join-team";
 
 export default function JoinOurTeamPage() {
+  const steps = getVolunteerSteps();
+
   return (
-    <>
-      <JoinTeamHeroSection />
-      <VolunteerOptionsSection />
-      <TeamGallerySection />
-    </>
+    <FeatureShowcase
+      title={joinTeamContent.title}
+      description={joinTeamContent.description}
+      stats={joinTeamStats}
+      steps={steps}
+      tabs={volunteerImages}
+      defaultTab="volunteer"
+      panelMinHeight={600}
+      primaryCta={{ label: "Apply Now", href: "mailto:people@shesharp.org.nz" }}
+    />
   );
 }
