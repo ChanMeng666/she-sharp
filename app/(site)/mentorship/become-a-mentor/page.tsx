@@ -12,12 +12,11 @@ import { Progress } from '@/components/ui/progress';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { HintIcon } from '@/components/ui/hint-icon';
 import { PhotoUpload } from '@/components/forms/photo-upload';
+import { WarpBackground } from '@/components/ui/warp-background';
 import {
   Check,
   Loader2,
   Sparkles,
-  Users,
-  Heart,
   Award,
   Clock,
   ChevronRight,
@@ -27,9 +26,7 @@ import {
   Target,
   FileText,
   MapPin,
-  ExternalLink,
   CheckCircle2,
-  Lightbulb,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -188,12 +185,6 @@ const steps = [
   { id: 5, title: 'Review', icon: FileText },
 ];
 
-const benefits = [
-  { icon: Users, title: 'Connect with Mentees', description: 'Guide the next generation' },
-  { icon: Heart, title: 'Give Back', description: 'Share your expertise' },
-  { icon: Award, title: 'Recognition', description: 'Build your profile' },
-  { icon: Clock, title: 'Flexible Hours', description: 'You set the schedule' },
-];
 
 export default function BecomeMentorPage() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -322,13 +313,15 @@ export default function BecomeMentorPage() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-[#f4f4fa] pt-24 md:pt-32 pb-16">
-        {/* Background decoration */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 right-0 w-64 h-64 bg-[#effefb] rounded-full blur-3xl opacity-60"></div>
-          <div className="absolute bottom-1/4 left-0 w-64 h-64 bg-[#f7e5f3] rounded-full blur-3xl opacity-60"></div>
-        </div>
-        <div className="container mx-auto px-4 max-w-lg relative z-10">
+      <WarpBackground
+        className="min-h-screen bg-[#f4f4fa]"
+        beamsPerSide={4}
+        beamSize={6}
+        beamDuration={5}
+        perspective={120}
+      >
+        <div className="pt-24 md:pt-32 pb-16">
+          <div className="container mx-auto px-4 max-w-lg relative z-10">
           <Card className="border-[#b1f6e9] shadow-lg bg-white">
             <CardContent className="pt-8 text-center">
               <div className="w-20 h-20 bg-[#effefb] border-2 border-[#b1f6e9] rounded-full flex items-center justify-center mx-auto mb-6">
@@ -369,8 +362,9 @@ export default function BecomeMentorPage() {
               </Link>
             </CardContent>
           </Card>
+          </div>
         </div>
-      </div>
+      </WarpBackground>
     );
   }
 
@@ -1040,29 +1034,22 @@ export default function BecomeMentorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-muted">
+    <WarpBackground
+      className="min-h-screen bg-muted"
+      beamsPerSide={4}
+      beamSize={6}
+      beamDuration={5}
+      perspective={120}
+    >
       <section className="pt-24 md:pt-32 pb-12 md:pb-16">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-8">
-            <div className="inline-flex items-center gap-2 bg-muted-foreground/10 text-foreground px-4 py-2 rounded-full mb-4">
-              <Sparkles className="h-4 w-4" />
-              <span className="text-sm font-medium">Become a Mentor 2026</span>
-            </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Share Your Expertise, Shape the Future
+          <div className="text-center max-w-2xl mx-auto mb-8">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+              Become a Mentor
             </h1>
             <p className="text-muted-foreground">
-              Join our community of industry leaders and help guide the next generation of women in STEM.
+              Share your expertise and guide the next generation of women in STEM.
             </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-8 max-w-4xl mx-auto">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <benefit.icon className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm text-foreground">{benefit.title}</span>
-              </div>
-            ))}
           </div>
 
           <div className="max-w-2xl mx-auto">
@@ -1163,6 +1150,6 @@ export default function BecomeMentorPage() {
           </div>
         </div>
       </section>
-    </div>
+    </WarpBackground>
   );
 }
