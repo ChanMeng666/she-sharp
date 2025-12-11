@@ -65,15 +65,18 @@ export const testimonialsByPage = {
         role: "Product Manager",
         company: "Tech Innovations Ltd",
         journey: "6 months in the program",
+        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Fay",
       },
       mentor: {
         name: "Meeta Patel",
         role: "Senior Director",
         company: "Global Tech Corp",
+        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Meeta",
       },
-      quote: "My mentor Meeta provided invaluable insights into the job market and career direction. Her encouragement helped me persevere through challenges.",
-      fullStory: "From the first meeting with Meeta, she was inspiring, both personally and professionally. Her humble yet professional attitude made me comfortable with a feeling of being heard. The encouragement and assurance that I was on the right track gave me confidence to embrace new challenges.",
-      highlights: ["Career Direction", "Industry Insights", "Professional Growth"],
+      quote:
+        "From the first meeting with Meeta, she was inspiring, both personally and professionally. Her humble yet professional attitude made me comfortable with a feeling of being heard.",
+      fullStory:
+        "From the first meeting with Meeta, she was inspiring, both personally and professionally. Her humble yet professional attitude made me comfortable with a feeling of being heard. Her insights and experience of the job market, industries and people, provided me with with clarity and direction. The encouragement and assurance that I was on the right track, to continue to persevere and and embrace challenges is one that I will continue to keep with me as I journey forward. I would like to take this moment to say a 'Thank you' ( but one that does not end there), for your grace and positivity. Looking forward to staying in touch, to sharing our experiences and knowledge.",
     },
     {
       id: "mentor-2",
@@ -82,33 +85,19 @@ export const testimonialsByPage = {
         role: "Product Owner",
         company: "Innovation Hub NZ",
         journey: "Completed 2024 Cohort",
+        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Shweta",
       },
       mentor: {
         name: "Anshu Maharaj",
         role: "Product Manager",
         company: "MYOB",
+        image:
+          "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65f7d581ab77ff98f436f102_Anshu%20Photo.jpg",
       },
-      quote: "This mentorship has been a treasure, empowering me with an efficient toolbox of skills and insights.",
-      fullStory: "The She Sharp mentorship program has truly been a taonga (treasure) for both mentors and mentees. My mentor Anshu's support has been instrumental in my growth as a Product Owner, equipping me with the skills and confidence to navigate challenges.",
-      highlights: ["Skill Development", "Confidence Building", "Career Tools"],
-    },
-    {
-      id: "mentor-3",
-      mentee: {
-        name: "Rachel Kim",
-        role: "UX Designer",
-        company: "Digital Agency",
-        journey: "3 months in the program",
-        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Rachel",
-      },
-      mentor: {
-        name: "Lisa Chen",
-        role: "Design Director",
-        company: "Adobe",
-        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Lisa",
-      },
-      quote: "Having a mentor who understands the unique challenges women face in tech has been transformative for my career.",
-      highlights: ["Design Leadership", "Portfolio Development", "Industry Connections"],
+      quote:
+        "This initiative has truly been a taonga (treasure) for both mentors and mentees, offering invaluable opportunities for growth, guidance, and connection.",
+      fullStory:
+        "What a successful completion of She Sharp first mentorship cohort of 2024! This initiative has truly been a taonga (treasure) for both mentors and mentees, offering invaluable opportunities for growth, guidance, and connection. A shoutout to my incredible She Sharp mentor, Anshu Maharaj, whose support has been instrumental in my journey, enabling me to grow in my Product Owner role. This journey so far has allowed me to grow but has also empowered me to build an efficient toolbox. It has equipped me with the skills and insights needed to navigate challenges with confidence, and I aim to continue applying these tools to make an impact in all aspects moving forward.",
     },
   ],
   events: [
