@@ -16,7 +16,7 @@ export function PodcastPreviewCard({ show }: PodcastPreviewCardProps) {
   const embedUrl = `https://open.spotify.com/embed/show/${show.showId}?utm_source=generator`;
 
   return (
-    <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 hover:shadow-xl rounded-[50px] bg-[#121212]">
+    <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 hover:shadow-xl rounded-[50px] bg-purple-dark">
       {/* Spotify Embed */}
       <iframe
         src={embedUrl}
