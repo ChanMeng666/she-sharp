@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { ArrowRight, MapPin, Calendar } from 'lucide-react';
+import { ArrowRight, MapPin, Clock } from 'lucide-react';
 import { InflectedCard } from '@/components/ui/inflected-card';
 import { Event } from '@/lib/data/events';
 import { cn } from '@/lib/utils';
@@ -32,13 +32,11 @@ export function EventInflectedCard({ event, className, index = 0 }: EventInflect
   // Use sample image based on index
   const sampleImage = SAMPLE_IMAGES[index % SAMPLE_IMAGES.length];
 
-  // Format date with year
+  // Format date parts for prominent display
   const eventDate = new Date(event.startDate);
-  const dateStr = eventDate.toLocaleDateString('en-NZ', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
+  const dayOfWeek = eventDate.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+  const month = eventDate.toLocaleDateString('en-US', { month: 'short' });
+  const day = eventDate.getDate();
 
   // Location string (always in-person)
   const locationStr = event.location.venueName || event.location.city || '';
@@ -79,20 +77,32 @@ export function EventInflectedCard({ event, className, index = 0 }: EventInflect
         maxWidth="100%"
       />
 
-      {/* Date and location info below the card */}
-      <div className="mt-3 px-2.5 space-y-1.5">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Calendar className="w-4 h-4 text-[#8982ff] shrink-0" />
-          <span>{dateStr}</span>
-          <span>·</span>
-          <span>{event.startTime}</span>
+      {/* Date, time and location info below the card */}
+      <div className="mt-3 px-2.5 flex items-start gap-4">
+        {/* Prominent date display */}
+        <div className="text-center shrink-0">
+          <p className="text-[10px] font-semibold tracking-[0.15em] text-muted-foreground">
+            {dayOfWeek}
+          </p>
+          <p className="text-2xl font-bold text-foreground leading-tight">
+            <span className="text-base font-medium mr-0.5">{month}</span>
+            {day}
+          </p>
         </div>
-        {locationStr && (
+
+        {/* Time and location */}
+        <div className="space-y-1 min-w-0 pt-1">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <MapPin className="w-4 h-4 text-muted-foreground shrink-0" />
-            <span className="truncate">{locationStr}</span>
+            <Clock className="w-4 h-4 text-[#8982ff] shrink-0" />
+            <span>{event.startTime}</span>
           </div>
-        )}
+          {locationStr && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <MapPin className="w-4 h-4 text-muted-foreground shrink-0" />
+              <span className="truncate">{locationStr}</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
