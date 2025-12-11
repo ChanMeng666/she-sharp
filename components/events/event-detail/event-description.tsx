@@ -1,6 +1,5 @@
 'use client';
 
-import { CheckCircle2 } from 'lucide-react';
 import { Event } from '@/lib/data/events';
 import { cn } from '@/lib/utils';
 
@@ -9,37 +8,43 @@ interface EventDescriptionProps {
   className?: string;
 }
 
+function CornerIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className={cn('h-6 w-6 text-foreground/20', className)}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
+    </svg>
+  );
+}
+
 export function EventDescription({ event, className }: EventDescriptionProps) {
   return (
-    <div className={cn('space-y-6', className)}>
-      {/* About Section */}
-      <section>
-        <h2 className="text-xl font-semibold text-foreground mb-4">About this event</h2>
-        <div className="prose prose-gray max-w-none">
-          {event.description.split('\n\n').map((paragraph, index) => (
-            <p key={index} className="text-muted-foreground leading-relaxed mb-4">
-              {paragraph}
-            </p>
-          ))}
-        </div>
-      </section>
+    <section className={className}>
+      <div className="relative border border-foreground/10 p-6">
+        <CornerIcon className="absolute -top-3 -left-3" />
+        <CornerIcon className="absolute -top-3 -right-3" />
+        <CornerIcon className="absolute -bottom-3 -left-3" />
+        <CornerIcon className="absolute -bottom-3 -right-3" />
 
-      {/* Highlights */}
-      {event.highlights && event.highlights.length > 0 && (
-        <section className="bg-[#f4f4fa] rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-foreground mb-4">
-            What you&apos;ll get
-          </h3>
-          <ul className="space-y-3">
-            {event.highlights.map((highlight, index) => (
-              <li key={index} className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#8982ff] flex-shrink-0 mt-0.5" />
-                <span className="text-muted-foreground">{highlight}</span>
-              </li>
+        <div className="space-y-4">
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            About this event
+          </p>
+          <div className="space-y-4">
+            {event.description.split('\n\n').map((paragraph, index) => (
+              <p key={index} className="text-muted-foreground leading-relaxed">
+                {paragraph}
+              </p>
             ))}
-          </ul>
-        </section>
-      )}
-    </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

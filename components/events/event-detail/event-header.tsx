@@ -1,10 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowLeft, Calendar, Clock, MapPin, Video } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Event, formatEventDate, formatEventTime, getDaysUntilEvent } from '@/lib/data/events';
+import { Event } from '@/lib/data/events';
 import { cn } from '@/lib/utils';
 
 interface EventHeaderProps {
@@ -13,137 +9,31 @@ interface EventHeaderProps {
 }
 
 export function EventHeader({ event, className }: EventHeaderProps) {
-  const isOnline = event.location.format === 'online';
-  const isHybrid = event.location.format === 'hybrid';
   const isPast = event.status === 'completed';
-  const daysUntil = getDaysUntilEvent(event);
 
   return (
     <div className={cn('space-y-6', className)}>
-      {/* Breadcrumb */}
-      <Link
-        href="/events"
-        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Events
-      </Link>
-
       {/* Cover Image */}
-      <div className="relative aspect-[21/9] sm:aspect-[3/1] rounded-xl overflow-hidden">
-        <Image
+      <div className="relative aspect-[2/1] overflow-hidden bg-muted">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={event.coverImage}
           alt={event.title}
-          fill
-          priority
-          sizes="(max-width: 1024px) 100vw, 900px"
-          className="object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-
-        {/* Top badges */}
-        <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-          {/* Price/Free Badge */}
-          {event.registration?.isFree && (
-            <Badge className="bg-foreground text-background border-0 shadow-lg">
-              Free Event
-            </Badge>
-          )}
-          {event.registration?.price && event.registration.price.amount > 0 && (
-            <Badge className="bg-foreground text-background border-0 shadow-lg">
-              ${event.registration.price.amount} {event.registration.price.currency}
-            </Badge>
-          )}
-          {!event.registration?.isFree && !event.registration?.price && <div />}
-
-          {/* Format Badge */}
-          <Badge
-            variant="secondary"
-            className={cn(
-              'shadow-lg',
-              isOnline && 'bg-[#8982ff] text-white',
-              isHybrid && 'bg-foreground text-background',
-              !isOnline && !isHybrid && 'bg-white/90 text-foreground'
-            )}
-          >
-            {isOnline ? (
-              <>
-                <Video className="w-3 h-3 mr-1" />
-                Online Event
-              </>
-            ) : isHybrid ? (
-              'Hybrid Event'
-            ) : (
-              <>
-                <MapPin className="w-3 h-3 mr-1" />
-                In Person
-              </>
-            )}
-          </Badge>
-        </div>
-
-        {/* Past event overlay */}
         {isPast && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <Badge variant="secondary" className="bg-white text-foreground text-lg px-6 py-2">
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+            <span className="text-white text-sm font-medium px-4 py-2 border border-white/50">
               Past Event
-            </Badge>
+            </span>
           </div>
         )}
       </div>
 
-      {/* Event Info */}
-      <div className="space-y-4">
-        {/* Category & Days Until */}
-        <div className="flex flex-wrap items-center gap-3">
-          <Badge variant="outline" className="capitalize">
-            {event.category.replace(/-/g, ' ')}
-          </Badge>
-          {!isPast && daysUntil >= 0 && (
-            <span className="text-sm text-foreground font-medium">
-              {daysUntil === 0
-                ? 'Today!'
-                : daysUntil === 1
-                  ? 'Tomorrow'
-                  : `${daysUntil} days away`}
-            </span>
-          )}
-          {event.tags && event.tags.slice(0, 3).map((tag) => (
-            <Badge key={tag} variant="secondary" className="text-xs">
-              {tag}
-            </Badge>
-          ))}
-        </div>
-
-        {/* Title */}
-        <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
-          {event.title}
-        </h1>
-
-        {/* Date, Time, Location */}
-        <div className="flex flex-wrap gap-6 text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-[#8982ff]" />
-            <span>{formatEventDate(event, 'full')}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Clock className="w-5 h-5 text-[#8982ff]" />
-            <span>{formatEventTime(event)}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            {isOnline ? (
-              <>
-                <Video className="w-5 h-5 text-[#8982ff]" />
-                <span>Online via {event.location.meetingPlatform || 'Video Call'}</span>
-              </>
-            ) : (
-              <>
-                <MapPin className="w-5 h-5 text-[#8982ff]" />
-                <span>{event.location.venueName}, {event.location.city}</span>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
+      {/* Title */}
+      <h1 className="text-3xl md:text-4xl font-light text-foreground leading-tight">
+        {event.title}
+      </h1>
     </div>
   );
 }

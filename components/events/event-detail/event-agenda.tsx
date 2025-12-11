@@ -1,6 +1,5 @@
 'use client';
 
-import { Clock, Coffee, Mic, Users, Wrench, MessageSquare } from 'lucide-react';
 import { Event, AgendaItem } from '@/types/event';
 import { cn } from '@/lib/utils';
 
@@ -9,77 +8,48 @@ interface EventAgendaProps {
   className?: string;
 }
 
-const agendaTypeIcons: Record<string, React.ElementType> = {
-  keynote: Mic,
-  panel: MessageSquare,
-  workshop: Wrench,
-  networking: Users,
-  break: Coffee,
-};
-
-const agendaTypeColors: Record<string, string> = {
-  keynote: 'bg-[#f4f4fa] text-foreground border-[#8982ff]/30',
-  panel: 'bg-[#f4f4fa] text-foreground border-[#8982ff]/30',
-  workshop: 'bg-[#f4f4fa] text-foreground border-[#8982ff]/30',
-  networking: 'bg-[#f4f4fa] text-foreground border-[#8982ff]/30',
-  break: 'bg-[#f4f4fa] text-muted-foreground border-[#8982ff]/20',
-};
-
-function AgendaItemCard({ item }: { item: AgendaItem }) {
-  const Icon = item.type ? agendaTypeIcons[item.type] : Clock;
-  const colorClasses = item.type
-    ? agendaTypeColors[item.type]
-    : 'bg-[#f4f4fa] text-muted-foreground border-[#8982ff]/20';
-
+function CornerIcon({ className }: { className?: string }) {
   return (
-    <div className="flex gap-4">
-      {/* Time Column */}
-      <div className="w-16 flex-shrink-0 text-right">
-        <span className="text-sm font-medium text-muted-foreground">{item.time}</span>
-      </div>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className={cn('h-6 w-6 text-foreground/20', className)}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
+    </svg>
+  );
+}
 
-      {/* Timeline Dot */}
-      <div className="relative flex flex-col items-center">
-        <div
-          className={cn(
-            'w-10 h-10 rounded-full flex items-center justify-center border-2',
-            colorClasses
-          )}
-        >
-          <Icon className="w-5 h-5" />
-        </div>
-        <div className="w-0.5 flex-1 bg-[#8982ff]/20 mt-2" />
+function AgendaItemRow({ item, isLast }: { item: AgendaItem; isLast: boolean }) {
+  return (
+    <div className={cn('flex gap-6 py-4', !isLast && 'border-b border-foreground/5')}>
+      {/* Time */}
+      <div className="w-20 shrink-0">
+        <span className="text-sm text-muted-foreground">{item.time}</span>
       </div>
 
       {/* Content */}
-      <div className="flex-1 pb-8">
-        <div
-          className={cn(
-            'p-4 rounded-lg border border-[#8982ff]/10',
-            item.type === 'break' ? 'bg-[#f4f4fa]' : 'bg-white'
-          )}
-        >
-          <h4 className="font-medium text-foreground">{item.title}</h4>
-          {item.speaker && (
-            <p className="text-sm text-foreground mt-1">
-              Speaker: {item.speaker}
-            </p>
-          )}
-          {item.description && (
-            <p className="text-sm text-muted-foreground mt-2">{item.description}</p>
-          )}
-          {item.type && (
-            <span
-              className={cn(
-                'inline-block mt-2 text-xs px-2 py-1 rounded-full capitalize',
-                colorClasses
-              )}
-            >
-              {item.type}
-            </span>
-          )}
-        </div>
+      <div className="flex-1 min-w-0">
+        <h4 className="text-foreground font-medium">{item.title}</h4>
+        {item.speaker && (
+          <p className="text-sm text-muted-foreground mt-1">{item.speaker}</p>
+        )}
+        {item.description && (
+          <p className="text-sm text-muted-foreground/70 mt-1">{item.description}</p>
+        )}
       </div>
+
+      {/* Type Badge */}
+      {item.type && (
+        <div className="shrink-0">
+          <span className="text-xs text-muted-foreground capitalize">
+            {item.type}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
@@ -90,12 +60,27 @@ export function EventAgenda({ event, className }: EventAgendaProps) {
   }
 
   return (
-    <section className={cn('space-y-6', className)}>
-      <h2 className="text-xl font-semibold text-foreground">Event Schedule</h2>
-      <div className="relative">
-        {event.agenda.map((item, index) => (
-          <AgendaItemCard key={index} item={item} />
-        ))}
+    <section className={className}>
+      <div className="relative border border-foreground/10 p-6">
+        <CornerIcon className="absolute -top-3 -left-3" />
+        <CornerIcon className="absolute -top-3 -right-3" />
+        <CornerIcon className="absolute -bottom-3 -left-3" />
+        <CornerIcon className="absolute -bottom-3 -right-3" />
+
+        <div className="space-y-4">
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            Schedule
+          </p>
+          <div>
+            {event.agenda.map((item, index) => (
+              <AgendaItemRow
+                key={index}
+                item={item}
+                isLast={index === event.agenda!.length - 1}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

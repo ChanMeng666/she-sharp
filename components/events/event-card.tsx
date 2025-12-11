@@ -35,11 +35,12 @@ export function EventCard({
         )}
       >
         {/* Cover Image */}
-        <div className="relative aspect-[16/9] overflow-hidden">
+        <div className="relative aspect-[16/9] overflow-hidden bg-muted">
           <Image
             src={event.coverImage}
             alt={event.title}
             fill
+            unoptimized
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className={cn(
               'object-cover transition-transform duration-300',

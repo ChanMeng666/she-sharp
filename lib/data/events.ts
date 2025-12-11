@@ -92,7 +92,7 @@ export function getEventsByFormat(format: EventFormat): Event[] {
 }
 
 /**
- * Search events by title, description, or tags
+ * Search events by title or description
  */
 export function searchEvents(query: string): Event[] {
   const q = query.toLowerCase();
@@ -100,8 +100,7 @@ export function searchEvents(query: string): Event[] {
     (e) =>
       e.title.toLowerCase().includes(q) ||
       e.description.toLowerCase().includes(q) ||
-      e.shortDescription?.toLowerCase().includes(q) ||
-      e.tags?.some((t) => t.toLowerCase().includes(q))
+      e.shortDescription?.toLowerCase().includes(q)
   );
 }
 
@@ -211,13 +210,3 @@ export function getAllEventCategories(): EventCategory[] {
   );
 }
 
-/**
- * Get all unique tags from events
- */
-export function getAllEventTags(): string[] {
-  const tagSet = new Set<string>();
-  events.forEach((e) => {
-    e.tags?.forEach((t) => tagSet.add(t));
-  });
-  return Array.from(tagSet).sort();
-}

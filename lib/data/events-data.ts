@@ -9,20 +9,6 @@
  * 2. Update all fields with the new event information
  * 3. Set a unique slug (URL-friendly identifier)
  * 4. Set isFeatured: true if this should be the featured event
- *
- * Event fields:
- * - slug: URL-friendly unique identifier (e.g., 'my-event-2025')
- * - title: Event name
- * - shortDescription: Brief summary (shown on cards)
- * - description: Full event description
- * - category: 'workshop' | 'networking' | 'training' | 'social' | 'thrive' | 'conference' | 'webinar' | 'meetup' | 'panel'
- * - status: 'upcoming' | 'ongoing' | 'completed' | 'cancelled'
- * - isFeatured: true to feature on events page hero
- * - startDate: 'YYYY-MM-DD' format
- * - startTime/endTime: 'HH:mm' format
- * - location: Venue details
- * - registration: Registration settings
- * - coverImage: Event image URL
  */
 
 import { Event } from '@/types/event';
@@ -41,7 +27,6 @@ Whether you're just starting your career or looking to take the next step, THRIV
     category: 'thrive',
     status: 'upcoming',
     isFeatured: true,
-    tags: ['career', 'networking', 'women-in-tech', 'mentorship'],
     startDate: '2025-03-15',
     startTime: '18:00',
     endTime: '20:30',
@@ -58,7 +43,7 @@ Whether you're just starting your career or looking to take the next step, THRIV
       title: 'Founder & Chair',
       company: 'She Sharp',
       image:
-        'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64811ab760ae807f1dc87e65_Team_1_Masha.png',
+        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop',
     },
     speakers: [
       {
@@ -108,12 +93,6 @@ Whether you're just starting your career or looking to take the next step, THRIV
       },
       { time: '20:15', title: 'Closing Remarks & Networking', type: 'networking' },
     ],
-    highlights: [
-      'Hear inspiring career journeys from women leaders',
-      'Speed mentoring with industry professionals',
-      'Network with the She Sharp community',
-      'Free food and refreshments',
-    ],
     registration: {
       isRequired: true,
       capacity: 100,
@@ -121,7 +100,7 @@ Whether you're just starting your career or looking to take the next step, THRIV
       isFree: true,
     },
     coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66e79f2fa69eb4a60dbb3741_Thrive.png',
+      'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=630&fit=crop',
     attendeeAvatars: [
       'https://api.dicebear.com/7.x/avataaars/svg?seed=attendee1',
       'https://api.dicebear.com/7.x/avataaars/svg?seed=attendee2',
@@ -140,7 +119,6 @@ This event features experts from leading healthcare technology companies discuss
 Topics covered include machine learning for medical imaging, predictive analytics for patient outcomes, and ethical considerations in healthcare AI.`,
     category: 'conference',
     status: 'upcoming',
-    tags: ['ai', 'healthcare', 'technology'],
     startDate: '2025-03-22',
     startTime: '12:00',
     endTime: '13:00',
@@ -173,7 +151,7 @@ Topics covered include machine learning for medical imaging, predictive analytic
       isFree: true,
     },
     coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64be1e19df6dbe0feb5fe79c_Webpage-1.png',
+      'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=630&fit=crop',
     attendeeAvatars: [
       'https://api.dicebear.com/7.x/avataaars/svg?seed=online1',
       'https://api.dicebear.com/7.x/avataaars/svg?seed=online2',
@@ -191,7 +169,6 @@ This casual networking event is perfect for making new connections, sharing expe
 No formal agenda - just great conversations and new connections!`,
     category: 'networking',
     status: 'upcoming',
-    tags: ['networking', 'women-in-tech', 'casual'],
     startDate: '2025-04-10',
     startTime: '17:30',
     endTime: '19:30',
@@ -210,7 +187,7 @@ No formal agenda - just great conversations and new connections!`,
       isFree: true,
     },
     coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64be1e19df6dbe0feb5fe79c_Webpage-1.png',
+      'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1200&h=630&fit=crop',
   },
   {
     slug: 'workshop-resume-building-2025',
@@ -228,7 +205,6 @@ In this interactive workshop, you'll learn:
 Bring your current resume for personalized feedback!`,
     category: 'workshop',
     status: 'upcoming',
-    tags: ['career', 'workshop', 'resume', 'job-search'],
     startDate: '2025-04-05',
     startTime: '10:00',
     endTime: '12:00',
@@ -256,7 +232,7 @@ Bring your current resume for personalized feedback!`,
       isFree: true,
     },
     coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64be1e19df6dbe0feb5fe79c_Webpage-1.png',
+      'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&h=630&fit=crop',
   },
   {
     slug: 'google-educator-conference-2024',
@@ -270,7 +246,6 @@ Highlights from the event included hands-on AI workshops, Google Cloud certifica
 Thank you to all attendees and sponsors who made this event a success!`,
     category: 'conference',
     status: 'completed',
-    tags: ['education', 'google', 'edtech', 'conference'],
     startDate: '2024-11-15',
     startTime: '09:00',
     endTime: '17:00',
@@ -281,19 +256,13 @@ Thank you to all attendees and sponsors who made this event a success!`,
       address: '55 Wellesley Street East',
       city: 'Auckland',
     },
-    highlights: [
-      'Hands-on AI workshops',
-      'Google Cloud certification',
-      'EdTech innovation showcase',
-      '150+ educators attended',
-    ],
     registration: {
       isRequired: true,
       attendeeCount: 150,
       isFree: true,
     },
     coverImage:
-      'https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/66fd93a6fdf5e3e3f22d29e1_Google%20Educator.webp',
+      'https://images.unsplash.com/photo-1591115765373-5207764f72e4?w=1200&h=630&fit=crop',
     photos: [
       'https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/Google%20Educator/IMG_7989-min-K6iMGYwxVSVVRCUlThV8RTvnHjqPCE.JPG',
       'https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/Google%20Educator/IMG_8044-min-HLQi94CuRaePCBuxOJ5I9GW3HY5xXs.JPG',
@@ -311,7 +280,6 @@ Panelists shared their journeys, including the challenges they faced, resources 
 Topics covered included bootcamps vs. degrees, building a portfolio, networking strategies, and overcoming imposter syndrome.`,
     category: 'panel',
     status: 'completed',
-    tags: ['career', 'panel', 'beginners', 'career-change'],
     startDate: '2024-10-20',
     startTime: '18:00',
     endTime: '20:00',
@@ -345,6 +313,6 @@ Topics covered included bootcamps vs. degrees, building a portfolio, networking 
       isFree: true,
     },
     coverImage:
-      'https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64be1e19df6dbe0feb5fe79c_Webpage-1.png',
+      'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1200&h=630&fit=crop',
   },
 ];

@@ -77,7 +77,6 @@ export interface Event {
   category: EventCategory;
   status: EventStatus;
   isFeatured?: boolean;
-  tags?: string[];
 
   // Date and Time
   startDate: string; // YYYY-MM-DD format
@@ -95,16 +94,12 @@ export interface Event {
 
   // Content
   agenda?: AgendaItem[];
-  highlights?: string[];
 
   // Registration
   registration?: EventRegistration;
 
   // Media
   coverImage: string;
-  gallery?: string[];
-
-  // Post-event data
-  photos?: string[];
+  photos?: string[]; // Post-event photos
   attendeeAvatars?: string[]; // For avatar stack display
 }
