@@ -167,13 +167,13 @@ const Carousel = ({
       </div>
       <div className="flex justify-end gap-2 mt-4">
         <button
-          className="relative z-40 h-10 w-10 rounded-full bg-foreground flex items-center justify-center hover:bg-foreground/80 transition-colors duration-200"
+          className="relative z-40 h-10 w-10 rounded-full bg-foreground border-2 border-foreground flex items-center justify-center hover:bg-foreground/80 transition-colors duration-200"
           onClick={handleScrollLeft}
         >
           <ArrowLeft className="h-6 w-6 text-background" />
         </button>
         <button
-          className="relative z-40 h-10 w-10 rounded-full bg-foreground flex items-center justify-center hover:bg-foreground/80 transition-colors duration-200"
+          className="relative z-40 h-10 w-10 rounded-full bg-foreground border-2 border-foreground flex items-center justify-center hover:bg-foreground/80 transition-colors duration-200"
           onClick={handleScrollRight}
         >
           <ArrowRight className="h-6 w-6 text-background" />
@@ -262,7 +262,7 @@ const TestimonialCard = ({
             className="max-w-5xl mx-auto bg-gradient-to-b from-background to-muted h-full z-[60] p-4 md:p-10 rounded-[50px] relative md:mt-10"
           >
             <button
-              className="sticky top-4 h-8 w-8 right-0 ml-auto rounded-full flex items-center justify-center bg-foreground"
+              className="sticky top-4 h-8 w-8 right-0 ml-auto rounded-full flex items-center justify-center bg-foreground border-2 border-foreground hover:bg-foreground/80 transition-colors duration-200"
               onClick={handleCollapse}
             >
               <X className="h-6 w-6 text-background absolute" />
