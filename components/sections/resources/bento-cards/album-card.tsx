@@ -1,0 +1,62 @@
+"use client";
+
+import { Card } from "@/components/ui/card";
+import { ExternalLink, Images } from "lucide-react";
+import type { GalleryAlbum } from "@/types/gallery";
+
+interface AlbumCardProps {
+  album: GalleryAlbum;
+  /** Show compact version without description */
+  compact?: boolean;
+}
+
+/**
+ * Album card component for displaying a Google Photos album.
+ * Links to the album in Google Photos.
+ */
+export function AlbumCard({ album, compact = false }: AlbumCardProps) {
+  return (
+    <a
+      href={album.googlePhotosUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block h-full group"
+      aria-label={`View ${album.title} album in Google Photos`}
+    >
+      <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 rounded-[50px]">
+        {/* Cover Image */}
+        <img
+          src={album.coverImage}
+          alt={album.title}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+        {/* External Link Icon */}
+        <div className="absolute top-6 right-6 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="rounded-full bg-white/90 backdrop-blur-sm p-2">
+            <ExternalLink className="h-4 w-4 text-purple-dark" />
+          </div>
+        </div>
+
+        {/* Content Overlay */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
+          {!compact && (
+            <p className="text-xs font-medium text-white/80 uppercase tracking-wider mb-1">
+              {album.date}
+            </p>
+          )}
+          <h3 className={`font-bold text-white mb-1 line-clamp-2 ${compact ? "text-base" : "text-lg"}`}>
+            {album.title}
+          </h3>
+          <div className="flex items-center gap-2 text-white/80">
+            <Images className="h-3.5 w-3.5" />
+            <span className="text-xs">{album.photoCount} photos</span>
+          </div>
+        </div>
+      </Card>
+    </a>
+  );
+}
