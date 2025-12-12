@@ -64,9 +64,9 @@ export default async function EventPage({ params }: EventPageProps) {
   const relatedEvents = getUpcomingEvents(3).filter((e) => e.slug !== slug);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-surface-periwinkle">
       {/* Main Content Section */}
-      <Section spacing="section">
+      <Section spacing="section" className="bg-surface-periwinkle">
         <Container size="full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             {/* Main Content - Left Column */}
@@ -115,7 +115,7 @@ export default async function EventPage({ params }: EventPageProps) {
 
       {/* Related Events */}
       {relatedEvents.length > 0 && (
-        <Section spacing="section" className="border-t border-foreground/5">
+        <Section spacing="section" className="bg-surface-periwinkle border-t border-foreground/5">
           <Container size="full">
             <h2 className="text-lg font-medium text-foreground mb-8">
               More Events
