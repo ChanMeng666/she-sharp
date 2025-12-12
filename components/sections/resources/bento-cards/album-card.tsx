@@ -6,7 +6,6 @@ import type { GalleryAlbum } from "@/types/gallery";
 
 interface AlbumCardProps {
   album: GalleryAlbum;
-  /** Show compact version without description */
   compact?: boolean;
 }
 
@@ -28,7 +27,7 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
         <img
           src={album.coverImage}
           alt={album.title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="absolute top-0 left-1/2 -translate-x-1/2 h-full w-auto min-w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
         {/* Gradient Overlay */}
@@ -41,19 +40,19 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
           </div>
         </div>
 
-        {/* Content Overlay */}
+        {/* Content */}
         <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
           {!compact && (
             <p className="text-xs font-medium text-white/80 uppercase tracking-wider mb-1">
               {album.date}
             </p>
           )}
-          <h3 className={`font-bold text-white mb-1 line-clamp-2 ${compact ? "text-base" : "text-lg"}`}>
+          <h3 className={`font-bold text-white mb-2 line-clamp-2 ${compact ? "text-base" : "text-lg"}`}>
             {album.title}
           </h3>
           <div className="flex items-center gap-2 text-white/80">
             <Images className="h-3.5 w-3.5" />
-            <span className="text-xs">{album.photoCount} photos</span>
+            <span className="text-xs">View Photos</span>
           </div>
         </div>
       </Card>

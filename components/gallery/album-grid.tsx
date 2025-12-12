@@ -43,7 +43,7 @@ export function AlbumGrid() {
         <AnimatePresence mode="popLayout">
           {visibleAlbums.map((album, index) => (
             <motion.div
-              key={album.id}
+              key={album.googlePhotosUrl}
               layout
               initial={{ opacity: 0, y: 20 }}
               animate={{

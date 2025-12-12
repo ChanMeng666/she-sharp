@@ -1,7 +1,7 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Images } from "lucide-react";
 import type { GalleryAlbum } from "@/types/gallery";
 
 interface FeaturedAlbumCardProps {
@@ -10,7 +10,7 @@ interface FeaturedAlbumCardProps {
 
 /**
  * Featured album card for the mainFeature slot.
- * Displays the hero image of a featured album with overlay text.
+ * Displays a prominent card for the featured album.
  */
 export function FeaturedAlbumCard({ album }: FeaturedAlbumCardProps) {
   return (
@@ -22,11 +22,11 @@ export function FeaturedAlbumCard({ album }: FeaturedAlbumCardProps) {
       aria-label={`View ${album.title} album in Google Photos`}
     >
       <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 rounded-[50px]">
-        {/* Hero Image */}
+        {/* Cover Image */}
         <img
           src={album.coverImage}
           alt={album.title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="absolute top-0 left-1/2 -translate-x-1/2 h-full w-auto min-w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
         {/* Gradient Overlay */}
@@ -49,19 +49,14 @@ export function FeaturedAlbumCard({ album }: FeaturedAlbumCardProps) {
         {/* Content Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-8 z-10">
           <p className="text-xs font-medium text-white/80 uppercase tracking-wider mb-2">
-            {album.date} • {album.location}
+            {album.date}
           </p>
-          <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 line-clamp-2">
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 line-clamp-2">
             {album.title}
           </h3>
-          <p className="text-sm text-white/90 mb-4 line-clamp-2">
-            {album.description}
-          </p>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-white/80">
-              {album.photoCount} photos
-            </span>
-            <span className="inline-flex items-center gap-1 text-sm font-medium text-white group-hover:text-purple-light transition-colors">
+            <span className="inline-flex items-center gap-2 text-sm font-medium text-white group-hover:text-purple-light transition-colors">
+              <Images className="h-4 w-4" />
               View Album
               <ExternalLink className="h-3.5 w-3.5" />
             </span>
