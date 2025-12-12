@@ -95,7 +95,7 @@ function VerifyEmailContent() {
         >
           {/* Background overlay for better readability */}
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
-          <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
+          <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
             <CardHeader className="text-center space-y-4 pb-8">
               <div className="flex justify-center">
                 <RefreshCw className="h-12 w-12 text-foreground animate-spin" />
@@ -122,7 +122,7 @@ function VerifyEmailContent() {
       >
         {/* Background overlay for better readability */}
         <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
-        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
+        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
           <CardHeader className="text-center space-y-4 pb-8">
             <CardTitle className="text-3xl font-bold text-foreground">
               {verificationStatus === 'success' ? 'Email Verified!' : 'Verification Failed'}
@@ -167,7 +167,7 @@ function VerifyEmailContent() {
     >
       {/* Background overlay for better readability */}
       <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
-      <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
+      <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
         <CardHeader className="text-center space-y-4 pb-8">
           <CardTitle className="text-3xl font-bold text-foreground">Verify Your Email</CardTitle>
           <CardDescription className="mt-2">

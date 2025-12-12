@@ -91,18 +91,18 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
           defaultValue={mode === "signin" ? "signin" : "signup"}
           className="mb-6"
         >
-          <TabsList className="grid w-full grid-cols-2 h-14">
-            <TabsTrigger value="signin" asChild className="h-12">
+          <TabsList className="grid w-full grid-cols-2 h-14 rounded-[50px] p-1.5">
+            <TabsTrigger value="signin" asChild className="h-full rounded-[40px]">
               <Link href="/sign-in">Log in</Link>
             </TabsTrigger>
-            <TabsTrigger value="signup" asChild className="h-12">
+            <TabsTrigger value="signup" asChild className="h-full rounded-[40px]">
               <Link href="/sign-up">Create account</Link>
             </TabsTrigger>
           </TabsList>
         </Tabs>
 
         {/* Form Card */}
-        <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
+        <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
           <CardContent className="p-8">
             <div className="mb-6">
               <h2 className="text-lg font-medium text-foreground mb-2">

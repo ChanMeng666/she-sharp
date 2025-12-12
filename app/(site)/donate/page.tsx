@@ -8,7 +8,7 @@ export default function DonatePage() {
       slides={donateSlides}
       ctaText="Donate Now"
       ctaHref="/donate/checkout?amount=25"
-      customFinalContent={<DonationAmountButtons variant="dark" />}
+      customFinalContent={<DonationAmountButtons />}
     />
   );
 }

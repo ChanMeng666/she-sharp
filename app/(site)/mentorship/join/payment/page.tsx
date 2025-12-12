@@ -114,8 +114,17 @@ function PaymentContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-muted">
-        <div className="text-center">
+      <div
+        className="min-h-screen flex items-center justify-center relative"
+        style={{
+          backgroundImage: 'url(/img/bauhaus-1764928803893.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+        <div className="text-center relative z-10">
           <Loader2 className="h-8 w-8 animate-spin text-foreground mx-auto mb-4" />
           <p className="text-gray-600">Loading your application...</p>
         </div>
@@ -125,9 +134,18 @@ function PaymentContent() {
 
   if (error && !formData) {
     return (
-      <div className="min-h-screen bg-muted pt-24 md:pt-32 pb-16">
-        <div className="container mx-auto px-4 max-w-lg">
-          <Card className="border-orange-200 bg-orange-50">
+      <div
+        className="min-h-screen pt-24 md:pt-32 pb-16 relative"
+        style={{
+          backgroundImage: 'url(/img/bauhaus-1764928803893.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+        <div className="container mx-auto px-4 max-w-lg relative z-10">
+          <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
             <CardContent className="pt-6 text-center">
               <AlertCircle className="h-12 w-12 text-orange-500 mx-auto mb-4" />
               <h2 className="text-xl font-semibold text-foreground mb-2">Application Not Found</h2>
@@ -146,8 +164,17 @@ function PaymentContent() {
   }
 
   return (
-    <div className="min-h-screen bg-muted pt-24 md:pt-32 pb-12">
-      <div className="container mx-auto px-4">
+    <div
+      className="min-h-screen pt-24 md:pt-32 pb-12 relative"
+      style={{
+        backgroundImage: 'url(/img/bauhaus-1764928803893.svg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-xl mx-auto mb-8">
           <div className="inline-flex items-center gap-2 bg-muted text-foreground px-4 py-2 rounded-full mb-4">
             <Sparkles className="h-4 w-4" />
@@ -164,7 +191,7 @@ function PaymentContent() {
         <div className="max-w-lg mx-auto">
           {/* Application Summary */}
           {formData && (
-            <Card className="mb-6">
+            <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px] mb-6">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg">Application Summary</CardTitle>
               </CardHeader>
@@ -188,7 +215,7 @@ function PaymentContent() {
           )}
 
           {/* Payment Card */}
-          <Card className="border-2 border-border shadow-lg">
+          <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
             <CardHeader className="text-center pb-2">
               <div className="bg-foreground text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3 mx-auto">
                 ANNUAL MEMBERSHIP
@@ -268,8 +295,17 @@ export default function PaymentPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-muted">
-          <Loader2 className="h-8 w-8 animate-spin text-foreground" />
+        <div
+          className="min-h-screen flex items-center justify-center relative"
+          style={{
+            backgroundImage: 'url(/img/bauhaus-1764928803893.svg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+          <Loader2 className="h-8 w-8 animate-spin text-foreground relative z-10" />
         </div>
       }
     >

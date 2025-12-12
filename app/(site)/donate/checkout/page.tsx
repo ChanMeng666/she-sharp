@@ -86,8 +86,19 @@ function CheckoutContent() {
   };
 
   return (
-    <div className="min-h-screen bg-muted pt-24 md:pt-32 pb-12">
-      <div className="container mx-auto px-4">
+    <div
+      className="min-h-screen pt-24 md:pt-32 pb-12 relative"
+      style={{
+        backgroundImage: 'url(/img/bauhaus-1764928820705.svg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Background overlay for better readability */}
+      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-xl mx-auto mb-8">
           <div className="inline-flex items-center gap-2 bg-[#9b2e83]/10 text-[#9b2e83] px-4 py-2 rounded-full mb-4">
             <Heart className="h-4 w-4" />
@@ -103,7 +114,7 @@ function CheckoutContent() {
 
         <div className="max-w-lg mx-auto">
           {/* Donation Card */}
-          <Card className="border-2 border-[#9b2e83]/20 shadow-lg">
+          <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
             <CardHeader className="text-center pb-2">
               <div className="bg-[#9b2e83] text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3 mx-auto">
                 ONE-TIME DONATION
@@ -208,8 +219,17 @@ export default function DonateCheckoutPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-muted">
-          <Loader2 className="h-8 w-8 animate-spin text-[#9b2e83]" />
+        <div
+          className="min-h-screen flex items-center justify-center relative"
+          style={{
+            backgroundImage: 'url(/img/bauhaus-1764928820705.svg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+          <Loader2 className="h-8 w-8 animate-spin text-[#9b2e83] relative z-10" />
         </div>
       }
     >

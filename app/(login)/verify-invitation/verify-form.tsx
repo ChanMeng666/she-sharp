@@ -56,7 +56,7 @@ export function VerifyInvitationForm({ userEmail, userName }: VerifyInvitationFo
         </div>
 
         {/* Form Card */}
-        <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
+        <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
           <CardContent className="p-8">
             {/* Header */}
             <div className="mb-6 text-center">

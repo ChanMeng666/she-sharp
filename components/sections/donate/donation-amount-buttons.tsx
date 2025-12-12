@@ -13,15 +13,11 @@ const donationAmounts = [
 
 interface DonationAmountButtonsProps {
   className?: string;
-  variant?: "light" | "dark";
 }
 
 export function DonationAmountButtons({
   className,
-  variant = "light",
 }: DonationAmountButtonsProps) {
-  const isDark = variant === "dark";
-
   return (
     <div className={cn("grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4", className)}>
       {donationAmounts.map(({ amount, label }) => (
@@ -29,7 +25,6 @@ export function DonationAmountButtons({
           key={amount}
           asChild
           size="lg"
-          variant={isDark ? "ghost" : "brand"}
         >
           <Link href={`/donate/checkout?amount=${amount}`}>{label}</Link>
         </Button>

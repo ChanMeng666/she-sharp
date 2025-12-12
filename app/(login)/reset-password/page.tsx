@@ -124,7 +124,7 @@ function ResetPasswordForm() {
       >
         {/* Background overlay for better readability */}
         <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
-        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
+        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
           <CardHeader className="text-center space-y-4 pb-8">
             <CardTitle className="text-3xl font-bold text-foreground">Invalid Reset Link</CardTitle>
             <CardDescription className="mt-2">
@@ -161,7 +161,7 @@ function ResetPasswordForm() {
       >
         {/* Background overlay for better readability */}
         <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
-        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
+        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
           <CardHeader className="text-center space-y-4 pb-8">
             <CardTitle className="text-3xl font-bold text-foreground">Password Reset Successful!</CardTitle>
             <CardDescription className="mt-2">
@@ -185,7 +185,7 @@ function ResetPasswordForm() {
     >
       {/* Background overlay for better readability */}
       <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
-      <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl">
+      <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
         <CardHeader className="space-y-4 text-center pb-8">
           <CardTitle className="text-3xl font-bold text-foreground">Reset Your Password</CardTitle>
           <CardDescription className="text-center">

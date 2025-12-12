@@ -160,12 +160,12 @@ export function FeatureShowcase({
 
               {/* Tab controls (pill) */}
               <div className="pointer-events-auto absolute inset-x-0 bottom-6 z-10 flex w-full justify-center">
-                <TabsList className="flex gap-2 rounded-full border-2 border-border bg-background/80 p-1.5 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+                <TabsList className="h-14 p-1.5 bg-white/50 backdrop-blur-sm rounded-full">
                   {tabs.map((t) => (
                     <TabsTrigger
                       key={t.value}
                       value={t.value}
-                      className="rounded-full px-5 py-2 data-[state=active]:bg-foreground data-[state=active]:text-background"
+                      className="px-8 py-2.5 text-base rounded-full data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
                     >
                       {t.label}
                     </TabsTrigger>

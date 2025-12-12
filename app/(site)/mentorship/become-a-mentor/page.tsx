@@ -313,16 +313,18 @@ export default function BecomeMentorPage() {
 
   if (isSubmitted) {
     return (
-      <WarpBackground
-        className="min-h-screen bg-[#f4f4fa]"
-        beamsPerSide={4}
-        beamSize={6}
-        beamDuration={5}
-        perspective={120}
+      <div
+        className="min-h-screen pt-24 md:pt-32 pb-16 relative"
+        style={{
+          backgroundImage: 'url(/img/bauhaus-1764928803893.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
       >
-        <div className="pt-24 md:pt-32 pb-16">
-          <div className="container mx-auto px-4 max-w-lg relative z-10">
-          <Card className="border-[#b1f6e9] shadow-lg bg-white">
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+        <div className="container mx-auto px-4 max-w-lg relative z-10">
+          <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
             <CardContent className="pt-8 text-center">
               <div className="w-20 h-20 bg-[#effefb] border-2 border-[#b1f6e9] rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle2 className="h-12 w-12 text-[#9b2e83]" />
@@ -362,9 +364,8 @@ export default function BecomeMentorPage() {
               </Link>
             </CardContent>
           </Card>
-          </div>
         </div>
-      </WarpBackground>
+      </div>
     );
   }
 

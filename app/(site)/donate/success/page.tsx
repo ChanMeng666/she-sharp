@@ -22,8 +22,19 @@ function SuccessContent() {
   const impactMessage = impactMessages[amount] || impactMessages[25];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f7e5f3] to-white pt-24 md:pt-32 pb-12">
-      <div className="container mx-auto px-4">
+    <div
+      className="min-h-screen pt-24 md:pt-32 pb-12 relative"
+      style={{
+        backgroundImage: 'url(/img/bauhaus-1764928820705.svg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Background overlay for better readability */}
+      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-lg mx-auto text-center">
           {/* Success Icon */}
           <div className="mb-6">
@@ -41,7 +52,7 @@ function SuccessContent() {
           </p>
 
           {/* Impact Card */}
-          <Card className="border-[#9b2e83]/20 mb-8">
+          <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px] mb-8">
             <CardContent className="pt-6">
               <div className="flex items-start gap-3">
                 <Heart className="h-5 w-5 text-[#9b2e83] flex-shrink-0 mt-1" />
@@ -120,8 +131,17 @@ export default function DonateSuccessPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-[#f7e5f3]">
-          <Loader2 className="h-8 w-8 animate-spin text-[#9b2e83]" />
+        <div
+          className="min-h-screen flex items-center justify-center relative"
+          style={{
+            backgroundImage: 'url(/img/bauhaus-1764928820705.svg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+          <Loader2 className="h-8 w-8 animate-spin text-[#9b2e83] relative z-10" />
         </div>
       }
     >
