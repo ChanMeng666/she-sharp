@@ -39,6 +39,7 @@ export type FeatureShowcaseProps = {
   panelMinHeight?: number;
   primaryCta?: {
     label: string;
+    mobileLabel?: string;
     href: string;
   };
   secondaryCta?: {
@@ -114,14 +115,29 @@ export function FeatureShowcase({
               </Accordion>
 
               {/* CTAs */}
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Button asChild size="lg" variant="brand">
-                  <Link href={primaryCta.href}>{primaryCta.label}</Link>
-                </Button>
-                {secondaryCta && (
-                  <Button asChild size="lg" variant="outline">
-                    <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
+              <div className="mt-8 flex flex-col gap-3">
+                <div className="flex flex-wrap gap-3">
+                  <Button asChild size="lg" variant="brand" className="w-full sm:w-auto">
+                    <Link href={primaryCta.href}>
+                      <span className="hidden sm:inline">{primaryCta.label}</span>
+                      <span className="sm:hidden">{primaryCta.mobileLabel || primaryCta.label}</span>
+                    </Link>
                   </Button>
+                  {secondaryCta && (
+                    <Button asChild size="lg" variant="outline">
+                      <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
+                    </Button>
+                  )}
+                </div>
+                {primaryCta.href.startsWith("mailto:") && (
+                  <p className="text-sm text-muted-foreground">
+                    <Link
+                      href={primaryCta.href}
+                      className="underline underline-offset-2 hover:text-foreground transition-colors"
+                    >
+                      {primaryCta.href.replace("mailto:", "")}
+                    </Link>
+                  </p>
                 )}
               </div>
             </div>

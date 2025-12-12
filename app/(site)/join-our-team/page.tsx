@@ -18,7 +18,7 @@ export default function JoinOurTeamPage() {
       tabs={volunteerImages}
       defaultTab="volunteer"
       panelMinHeight={600}
-      primaryCta={{ label: "Apply Now", href: "mailto:people@shesharp.org.nz" }}
+      primaryCta={{ label: "Apply Now", mobileLabel: "Email us to apply", href: "mailto:people@shesharp.org.nz" }}
     />
   );
 }

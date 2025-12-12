@@ -175,11 +175,23 @@ export function SponsorshipPricing() {
                   </div>
                 </div>
 
-                <Button asChild size="lg">
-                  <Link href="/contact">Get started</Link>
+                <Button asChild size="lg" className="w-full sm:w-auto">
+                  <Link href="mailto:industry@shesharp.org.nz">
+                    <span className="hidden sm:inline">Get started</span>
+                    <span className="sm:hidden">Email us to get started</span>
+                  </Link>
                 </Button>
 
-                <p className="mt-6 text-sm text-[#1f1e44]/40">
+                <p className="mt-4 text-sm text-[#1f1e44]/60">
+                  <Link
+                    href="mailto:industry@shesharp.org.nz"
+                    className="underline underline-offset-2 hover:text-[#8982ff] transition-colors"
+                  >
+                    industry@shesharp.org.nz
+                  </Link>
+                </p>
+
+                <p className="mt-2 text-sm text-[#1f1e44]/40">
                   All packages are customizable
                 </p>
               </div>
