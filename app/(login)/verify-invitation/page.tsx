@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
-import { cookies } from 'next/headers';
 import { auth } from '@/lib/auth/auth.config';
 import { db } from '@/lib/db/drizzle';
 import { users } from '@/lib/db/schema';
@@ -32,18 +31,9 @@ async function VerifyInvitationContent() {
   }
 
   // If user already verified invitation code or has password (credential signup),
-  // set the oauth-verified cookie and redirect to dashboard
+  // redirect to verify-existing-user API which sets the cookie properly
   if (user.inviteCodeVerifiedAt || user.passwordHash) {
-    const cookieStore = await cookies();
-    cookieStore.set({
-      name: 'oauth-verified',
-      value: 'true',
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 30 * 24 * 60 * 60, // 30 days
-    });
-    redirect('/dashboard');
+    redirect('/api/auth/verify-existing-user');
   }
 
   return (
