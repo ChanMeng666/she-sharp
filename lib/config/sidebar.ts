@@ -1,19 +1,12 @@
 import {
   Home,
-  Calendar,
-  FolderOpen,
-  FileText,
   GraduationCap,
-  Sparkles,
   UserPlus,
   User,
   Users,
-  Settings,
   Bell,
   Activity,
-  CreditCard,
   Heart,
-  CheckCircle,
   LayoutDashboard,
   BarChart3,
   BrainCircuit,
@@ -57,33 +50,24 @@ export const userSidebarItems: NavGroup[] = [
   },
   {
     id: 2,
-    label: "Platform",
+    label: "Mentorship",
     items: [
       {
-        title: "Events",
-        icon: Calendar,
-        subItems: [
-          { title: "Browse Events", url: "/dashboard/events", icon: Calendar },
-          { title: "My Registrations", url: "/dashboard/events/my-registrations", icon: CheckCircle },
-        ],
+        title: "My Mentorship",
+        url: "/dashboard/mentorship",
+        icon: Heart,
       },
       {
-        title: "Resources",
-        icon: FolderOpen,
-        subItems: [
-          { title: "Resource Library", url: "/dashboard/resources", icon: FolderOpen },
-          { title: "My Downloads", url: "/dashboard/resources/downloads", icon: FileText },
-        ],
+        title: "Mentor Profile",
+        url: "/dashboard/mentor-profile",
+        icon: UserPlus,
+        roleRequired: "mentor",
       },
       {
-        title: "Mentorship",
-        icon: GraduationCap,
-        subItems: [
-          { title: "Dashboard", url: "/dashboard/mentorship", icon: Heart },
-          { title: "Browse Mentors", url: "/dashboard/mentors", icon: Sparkles },
-          { title: "Mentor Profile", url: "/dashboard/mentor-profile", icon: UserPlus, roleRequired: "mentor" },
-          { title: "Mentee Profile", url: "/dashboard/mentee-profile", icon: User, roleRequired: "mentee" },
-        ],
+        title: "Mentee Profile",
+        url: "/dashboard/mentee-profile",
+        icon: User,
+        roleRequired: "mentee",
       },
     ],
   },
@@ -91,14 +75,6 @@ export const userSidebarItems: NavGroup[] = [
     id: 3,
     label: "Settings",
     items: [
-      {
-        title: "Team",
-        icon: Users,
-        subItems: [
-          { title: "Members", url: "/dashboard/team/members", icon: Users },
-          { title: "Settings", url: "/dashboard/team/settings", icon: Settings },
-        ],
-      },
       {
         title: "Notifications",
         url: "/dashboard/notifications",
@@ -113,11 +89,6 @@ export const userSidebarItems: NavGroup[] = [
         title: "Activity",
         url: "/dashboard/activity",
         icon: Activity,
-      },
-      {
-        title: "Billing",
-        url: "/dashboard/billing",
-        icon: CreditCard,
       },
     ],
   },

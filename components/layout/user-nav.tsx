@@ -22,7 +22,6 @@ import {
   Shield,
   Users,
   Activity,
-  CreditCard,
   Mail,
   LogOut,
   LayoutDashboard,
@@ -356,24 +355,6 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
                 <Link href="/dashboard/activity">
                   <Activity className="mr-2 h-4 w-4" />
                   <span>Activity</span>
-                </Link>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem asChild className="cursor-pointer">
-                <Link href="/dashboard/team/settings">
-                  <Users className="mr-2 h-4 w-4" />
-                  <span>Team Settings</span>
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-
-            <DropdownMenuSeparator />
-
-            <DropdownMenuGroup>
-              <DropdownMenuItem asChild className="cursor-pointer">
-                <Link href="/dashboard/billing">
-                  <CreditCard className="mr-2 h-4 w-4" />
-                  <span>Billing</span>
                 </Link>
               </DropdownMenuItem>
 
