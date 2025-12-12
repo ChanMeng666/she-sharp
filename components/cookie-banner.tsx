@@ -102,7 +102,6 @@ export function CookieBanner() {
                 variant="outline"
                 size="sm"
                 onClick={() => setShowSettings(true)}
-                className="text-foreground hover:bg-muted"
               >
                 <Settings className="h-4 w-4 mr-1" />
                 Manage

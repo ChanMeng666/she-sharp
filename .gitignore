@@ -68,6 +68,7 @@ lib/db/checkpoints/
 
 # Claude AI
 .claude/
+WARP.md
 
 # Email preview files
 tmp/emails/
