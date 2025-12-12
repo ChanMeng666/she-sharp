@@ -7,40 +7,37 @@ import { Timeline } from "@/components/ui/timeline";
 
 const timelineData = [
   {
-    title: "March",
+    title: "2014",
     content: (
       <div>
         <p className="text-white text-xs md:text-sm font-normal mb-4">
-          AcademyEX — International Women&apos;s Day
+          She# Launch Event
         </p>
         <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
-          Kicked off 2025 with a powerful International Women&apos;s Day
-          celebration at AcademyEX. Featuring an inspiring keynote speaker and
-          engaging panel discussions, 57 attendees from 43 unique companies came
-          together to network, share stories, and celebrate women in tech.
+          She Sharp was founded with a mission to bridge the gender gap in STEM
+          fields. Our inaugural launch event with Orion Health marked the
+          beginning of a movement to create a supportive community for women in
+          technology across New Zealand.
         </p>
         <div className="mb-8">
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 75 registered attendees
+            ✦ Partnership with Orion Health
           </div>
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 43 companies represented
-          </div>
-          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 8 returning community members
+            ✦ Auckland launch
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Image
             src="https://images.unsplash.com/photo-1528901166007-3784c7dd3653?w=500&h=500&fit=crop"
-            alt="International Women's Day event"
+            alt="She Sharp founding event"
             width={500}
             height={500}
             className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
           />
           <Image
             src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&h=500&fit=crop"
-            alt="Networking session"
+            alt="Initial community"
             width={500}
             height={500}
             className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
@@ -50,41 +47,37 @@ const timelineData = [
     ),
   },
   {
-    title: "April",
+    title: "2015",
     content: (
       <div>
         <p className="text-white text-xs md:text-sm font-normal mb-4">
-          #IAmRemarkable Workshop
+          Wellington Launch with Xero
         </p>
         <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
-          The global #IAmRemarkable movement took centre stage with a powerful
-          60-minute workshop led by our founder Dr. Mahsa McCauley. Participants
-          embraced and celebrated their achievements, challenging social
-          perceptions around self-promotion through stories, research, and
-          practical exercises.
+          Expanded our reach beyond Auckland with the Wellington launch,
+          partnering with Xero to bring She Sharp&apos;s mission to the capital
+          city. This expansion marked our commitment to supporting women in tech
+          nationwide.
         </p>
         <div className="mb-8">
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 63 registered attendees
+            ✦ Partnership with Xero
           </div>
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 44 companies represented
-          </div>
-          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ Empowering self-promotion skills
+            ✦ First regional expansion
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Image
             src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&h=500&fit=crop"
-            alt="Workshop session"
+            alt="Wellington launch event"
             width={500}
             height={500}
             className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
           />
           <Image
             src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=500&h=500&fit=crop"
-            alt="Group discussion"
+            alt="Xero partnership"
             width={500}
             height={500}
             className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
@@ -94,40 +87,37 @@ const timelineData = [
     ),
   },
   {
-    title: "May",
+    title: "2016",
     content: (
       <div>
         <p className="text-white text-xs md:text-sm font-normal mb-4">
-          MYOB — Tech That Matches Your Vibe
+          First 100-Attendee Event with Google
         </p>
         <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
-          Partnered with MYOB to help attendees discover their perfect fit in
-          the tech industry. The event featured inspiring keynotes and panel
-          discussions focused on finding alignment between personal values and
-          career paths in technology.
+          A major milestone as we hosted our first event reaching 100 attendees,
+          in partnership with Google. This growth demonstrated the strong demand
+          for community and support among women in New Zealand&apos;s tech
+          sector.
         </p>
         <div className="mb-8">
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 63 registered attendees
+            ✦ Partnership with Google
           </div>
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 39 companies represented
-          </div>
-          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ Career alignment focus
+            ✦ 100 attendees milestone
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Image
             src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=500&h=500&fit=crop"
-            alt="MYOB event"
+            alt="Google partnership event"
             width={500}
             height={500}
             className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
           />
           <Image
             src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=500&h=500&fit=crop"
-            alt="Tech career discussion"
+            alt="100 attendees milestone"
             width={500}
             height={500}
             className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
@@ -137,41 +127,40 @@ const timelineData = [
     ),
   },
   {
-    title: "July",
+    title: "2017",
     content: (
       <div>
         <p className="text-white text-xs md:text-sm font-normal mb-4">
-          HPE — THRIVE: Your Career, Your Story
+          Auckland Tech Grand Tour
         </p>
         <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
-          Our largest event of the year at Hewlett Packard Enterprise brought
-          together 68 attendees from 65 unique companies. The THRIVE programme
-          featured powerful keynotes and panels about owning your career
-          narrative, with passionate discussions about helping others in the
-          community.
+          An ambitious 6.5-hour tour showcasing some of New Zealand&apos;s
+          biggest tech companies. Participants got exclusive behind-the-scenes
+          access to leading organisations, gaining insights into diverse career
+          paths and company cultures in the tech industry.
         </p>
         <div className="mb-8">
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 98 registered attendees
+            ✦ 6.5 hours of exclusive access
           </div>
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 65 companies represented
+            ✦ Multiple top tech companies
           </div>
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ Career storytelling focus
+            ✦ Behind-the-scenes experience
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Image
             src="https://images.unsplash.com/photo-1609619385002-f40f1df9b7eb?w=500&h=500&fit=crop"
-            alt="HPE THRIVE event"
+            alt="Tech company tour"
             width={500}
             height={500}
             className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
           />
           <Image
             src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=500&h=500&fit=crop"
-            alt="Panel discussion"
+            alt="Auckland tech scene"
             width={500}
             height={500}
             className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
@@ -181,40 +170,40 @@ const timelineData = [
     ),
   },
   {
-    title: "August",
+    title: "2020",
     content: (
       <div>
         <p className="text-white text-xs md:text-sm font-normal mb-4">
-          AI Forum — AI Hackathon Festival 2025
+          Going Virtual During COVID-19
         </p>
         <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
-          Partnered with AI Forum New Zealand and AUT to host an exciting AI
-          Hackathon Festival. With 36 returning community members—our highest
-          return rate of the year—this event showcased the growing strength of
-          our network and the increasing interest in AI across industries.
+          Adapted to the global pandemic by pivoting to virtual events,
+          dramatically expanding our reach and accessibility. Despite the
+          challenges, we hosted 12 events throughout the year—10 of which were
+          online—keeping our community connected and engaged.
         </p>
         <div className="mb-8">
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 98 registered attendees
+            ✦ 12 events during COVID year
           </div>
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 64 companies represented
+            ✦ 10 online events
           </div>
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 36 returning members (highest of 2025)
+            ✦ Community stayed connected
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Image
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&h=500&fit=crop"
-            alt="AI Hackathon"
+            alt="Virtual event"
             width={500}
             height={500}
             className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
           />
           <Image
             src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=500&h=500&fit=crop"
-            alt="Tech collaboration"
+            alt="Online collaboration"
             width={500}
             height={500}
             className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
@@ -224,40 +213,194 @@ const timelineData = [
     ),
   },
   {
-    title: "September",
+    title: "2022",
     content: (
       <div>
         <p className="text-white text-xs md:text-sm font-normal mb-4">
-          Fonterra — Business & Technology Transformation
+          First Female-Led Hackathon
         </p>
         <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
-          Closed out our 2025 event series at Fonterra, exploring business and
-          technology transformation platforms. With strong representation from
-          Fonterra and Deloitte, attendees gained insights into enterprise-scale
-          digital transformation and product development strategies.
+          Made history by hosting New Zealand&apos;s first female-led hackathon,
+          creating a space where women could lead, innovate, and showcase their
+          technical skills. This groundbreaking event set a new standard for
+          inclusive tech events in the country.
         </p>
         <div className="mb-8">
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 96 registered attendees
+            ✦ First female-led hackathon in NZ
           </div>
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ 46 companies represented
+            ✦ Women-led innovation
           </div>
           <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
-            ✦ Enterprise transformation focus
+            ✦ Technical skills showcase
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Image
             src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=500&h=500&fit=crop"
-            alt="Fonterra event"
+            alt="Female-led hackathon"
             width={500}
             height={500}
             className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
           />
           <Image
             src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=500&fit=crop"
-            alt="Technology discussion"
+            alt="Hackathon teams"
+            width={500}
+            height={500}
+            className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+          />
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "2023",
+    content: (
+      <div>
+        <p className="text-white text-xs md:text-sm font-normal mb-4">
+          Expanding Horizons
+        </p>
+        <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
+          A transformative year with multiple landmark initiatives. Partnered
+          with Google for an Educator Conference, launched &quot;Inspire
+          Her&quot; to empower Māori and Pasifika school students, and expanded
+          to Hamilton with HCLTech—bringing She Sharp&apos;s mission to more
+          communities than ever.
+        </p>
+        <div className="mb-8">
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
+            ✦ Google Educator Conference
+          </div>
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
+            ✦ Inspire Her: Māori & Pasifika students
+          </div>
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
+            ✦ Hamilton launch with HCLTech
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <Image
+            src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=500&h=500&fit=crop"
+            alt="Google Educator Conference"
+            width={500}
+            height={500}
+            className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+          />
+          <Image
+            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=500&h=500&fit=crop"
+            alt="Inspire Her programme"
+            width={500}
+            height={500}
+            className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+          />
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "2024",
+    content: (
+      <div>
+        <p className="text-white text-xs md:text-sm font-normal mb-4">
+          A Decade of Impact
+        </p>
+        <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
+          Celebrating 10 years of bridging the gender gap in STEM. Hosted
+          another successful hackathon with Fisher & Paykel Healthcare and
+          launched our flagship mentoring programme—connecting aspiring women in
+          tech with experienced industry professionals.
+        </p>
+        <div className="mb-8">
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
+            ✦ Hackathon with F&P Healthcare
+          </div>
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
+            ✦ Mentoring programme launched
+          </div>
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
+            ✦ 10 years of impact
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <Image
+            src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&h=500&fit=crop"
+            alt="F&P Healthcare Hackathon"
+            width={500}
+            height={500}
+            className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+          />
+          <Image
+            src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=500&h=500&fit=crop"
+            alt="Mentoring programme"
+            width={500}
+            height={500}
+            className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+          />
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "2025",
+    content: (
+      <div>
+        <p className="text-white text-xs md:text-sm font-normal mb-4">
+          Building Momentum
+        </p>
+        <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
+          An incredible year of growth with 6 major events reaching over 500
+          registered attendees from 135 unique companies. From celebrating
+          International Women&apos;s Day at AcademyEX to hosting AI Hackathon
+          Festival with AI Forum NZ—each event strengthened our community and
+          advanced our mission.
+        </p>
+        <div className="mb-8">
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
+            ✦ March: AcademyEX — International Women&apos;s Day
+          </div>
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
+            ✦ April: #IAmRemarkable Workshop
+          </div>
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
+            ✦ May: MYOB — Tech That Matches Your Vibe
+          </div>
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
+            ✦ July: HPE — THRIVE: Your Career, Your Story
+          </div>
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
+            ✦ August: AI Forum — AI Hackathon Festival
+          </div>
+          <div className="flex gap-2 items-center text-white/70 text-xs md:text-sm">
+            ✦ September: Fonterra — Business & Tech Transformation
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <Image
+            src="https://images.unsplash.com/photo-1609619385002-f40f1df9b7eb?w=500&h=500&fit=crop"
+            alt="2025 events"
+            width={500}
+            height={500}
+            className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+          />
+          <Image
+            src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=500&h=500&fit=crop"
+            alt="Community growth"
+            width={500}
+            height={500}
+            className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+          />
+          <Image
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&h=500&fit=crop"
+            alt="AI Hackathon Festival"
+            width={500}
+            height={500}
+            className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+          />
+          <Image
+            src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=500&h=500&fit=crop"
+            alt="Women in tech community"
             width={500}
             height={500}
             className="rounded-[50px] object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
@@ -273,12 +416,10 @@ export function TimelineSection() {
     <Section noPadding className="bg-[#1f1e44]">
       <Container size="full">
         <div className="text-center pt-16 md:pt-24 px-4 md:px-8 lg:px-10">
-          <h2 className="text-display-sm text-white">
-            Our 2025 Journey
-          </h2>
+          <h2 className="text-display-sm text-white">Our Journey</h2>
           <p className="mt-3 sm:mt-4 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
-            6 events, 500+ attendees, 135 unique companies — a year of
-            empowerment, learning, and community
+            From a small launch event in 2014 to a thriving community of 2200+
+            members across New Zealand
           </p>
         </div>
         <Timeline data={timelineData} />
