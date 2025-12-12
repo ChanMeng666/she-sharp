@@ -158,11 +158,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     async redirect({ url, baseUrl }) {
-      // For OAuth callbacks, redirect to verification page
-      // The verification page will check if user needs to enter invitation code
-      // or redirect to dashboard if already verified
+      // For OAuth callbacks, redirect to verify-existing-user API
+      // This API checks if user has password or already verified invitation code
+      // and sets the oauth-verified cookie before redirecting appropriately
       if (url.includes('/api/auth/callback')) {
-        return `${baseUrl}/verify-invitation`;
+        return `${baseUrl}/api/auth/verify-existing-user`;
       }
       // Allows relative callback URLs
       if (url.startsWith("/")) return `${baseUrl}${url}`;
