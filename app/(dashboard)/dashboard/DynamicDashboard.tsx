@@ -23,9 +23,6 @@ import {
   Search,
   Clock,
   Target,
-  Award,
-  TrendingUp,
-  TrendingDown,
   MessageSquare,
   FileText,
   Video,
@@ -244,7 +241,7 @@ export default function DynamicDashboard() {
     );
   }
 
-  const { user, stats, points, formStatus, mentor, mentee, upcomingEvents, recentResources, quickActions } = data;
+  const { user, stats, formStatus, mentor, mentee, upcomingEvents, recentResources } = data;
 
   return (
     <div className="@container/main flex flex-col gap-6">
@@ -331,42 +328,6 @@ export default function DynamicDashboard() {
           )}
         </CardContent>
       </Card>
-
-      {/* Points & Level Card */}
-      {points && (
-        <Card className="bg-muted border-border">
-          <CardHeader className="pb-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
-                  <Award className="h-6 w-6 text-foreground" />
-                </div>
-                <div>
-                  <CardDescription>Experience Level</CardDescription>
-                  <CardTitle className="text-xl">
-                    Level {points.level}: {points.levelName}
-                  </CardTitle>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-2xl font-bold text-foreground">{points.current}</p>
-                <p className="text-sm text-muted-foreground">Points Available</p>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>{points.lifetime} lifetime points</span>
-                {points.nextLevel && (
-                  <span>{points.nextLevel.minPoints - points.lifetime} to {points.nextLevel.name}</span>
-                )}
-              </div>
-              <Progress value={points.progressToNextLevel} className="h-2" />
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Form Status Alerts */}
       {formStatus?.mentee?.status && formStatus.mentee.status !== 'approved' && (
@@ -658,52 +619,6 @@ export default function DynamicDashboard() {
               </CardFooter>
             </Card>
           </div>
-
-          {/* Active Mentors */}
-          {mentee.mentors.length > 0 ? (
-            <Card>
-              <CardHeader>
-                <CardTitle>Your Mentors</CardTitle>
-                <CardDescription>Currently learning from {mentee.mentors.length} mentor(s)</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {mentee.mentors.map((mentor: any) => (
-                    <div key={mentor.relationshipId} className="flex items-center justify-between p-3 rounded-lg border transition-colors hover:bg-accent">
-                      <div>
-                        <p className="font-medium">{mentor.name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {mentor.title} {mentor.company && `at ${mentor.company}`}
-                        </p>
-                      </div>
-                      {mentor.nextMeeting && (
-                        <Badge variant="outline">
-                          <Calendar className="h-3 w-3 mr-1" />
-                          {new Date(mentor.nextMeeting).toLocaleDateString()}
-                        </Badge>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          ) : (
-            <Card>
-              <CardContent className="flex flex-col items-center justify-center py-12">
-                <Users className="h-12 w-12 text-muted-foreground mb-4" />
-                <p className="text-lg font-medium mb-1">No mentors yet</p>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Connect with experienced professionals to guide your journey
-                </p>
-                <Link href="/dashboard/mentors">
-                  <Button>
-                    Find a Mentor
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          )}
         </div>
       )}
 
