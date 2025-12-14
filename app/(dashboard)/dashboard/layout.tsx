@@ -20,6 +20,7 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
           className={cn(
             "flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12",
             "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+            "md:rounded-t-xl",
           )}
         >
           <div className="flex w-full items-center px-4 lg:px-6">
