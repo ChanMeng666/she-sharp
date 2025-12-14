@@ -490,33 +490,6 @@ export default function DynamicDashboard() {
             </Card>
           </div>
 
-          {/* Active Mentees */}
-          {mentor.mentees.length > 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Your Mentees</CardTitle>
-                <CardDescription>Currently mentoring {mentor.mentees.length} mentee(s)</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {mentor.mentees.map((mentee: any) => (
-                    <div key={mentee.relationshipId} className="flex items-center justify-between p-3 rounded-lg border transition-colors hover:bg-accent">
-                      <div>
-                        <p className="font-medium">{mentee.name}</p>
-                        <p className="text-sm text-muted-foreground">{mentee.email}</p>
-                      </div>
-                      {mentee.nextMeeting && (
-                        <Badge variant="outline">
-                          <Calendar className="h-3 w-3 mr-1" />
-                          {new Date(mentee.nextMeeting).toLocaleDateString()}
-                        </Badge>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
         </div>
       )}
 
