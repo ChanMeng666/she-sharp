@@ -55,6 +55,15 @@
   --dashboard-bg-mid: 280 30% 96%;    /* #f8f5fa - Light lavender */
   --dashboard-bg-end: 240 25% 98%;    /* #f9f9fc - Cool white */
 
+  /* Extended Brand Colors (for dashboard UI) */
+  --brand-mid: 312 54% 53%;           /* #c846ab Purple Mid */
+  --periwinkle: 244 100% 75%;         /* #8982ff Periwinkle Dark */
+  --periwinkle-light: 240 100% 96%;   /* #eaf2ff Periwinkle Light (Navy Light) */
+  --mint: 165 76% 83%;                /* #b1f6e9 Mint Dark */
+  --mint-light: 165 82% 97%;          /* #effefb Mint Light */
+  --info: 208 83% 45%;                /* #1378d1 Accessible Blue */
+  --info-foreground: 0 0% 100%;       /* #ffffff white text */
+
   /* 深色背景色（Navy） */
   --navy: 242 38% 19%;               /* #1f1e44 深海军蓝 */
   --navy-foreground: 0 0% 100%;      /* #ffffff 白色文字 */

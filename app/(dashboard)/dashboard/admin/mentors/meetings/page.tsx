@@ -154,7 +154,7 @@ export default function MentorMeetingsPage() {
   const getStatusBadge = (status: string) => {
     const variants = {
       completed: { text: 'Completed', className: 'bg-foreground text-background', icon: CheckCircle },
-      scheduled: { text: 'Scheduled', className: 'bg-[#eaf2ff] text-foreground', icon: Calendar },
+      scheduled: { text: 'Scheduled', className: 'bg-periwinkle-light text-foreground', icon: Calendar },
       cancelled: { text: 'Cancelled', className: 'bg-muted-foreground text-background', icon: XCircle },
       no_show: { text: 'No Show', className: 'bg-destructive/10 text-destructive', icon: AlertCircle },
     };
@@ -170,8 +170,8 @@ export default function MentorMeetingsPage() {
 
   const getMeetingTypeIcon = (type: string) => {
     const icons = {
-      video: { icon: Video, color: 'text-[#9b2e83]' },
-      in_person: { icon: Users, color: 'text-[#1f1e44]' },
+      video: { icon: Video, color: 'text-brand' },
+      in_person: { icon: Users, color: 'text-navy' },
     };
     const config = icons[type as keyof typeof icons];
     const Icon = config?.icon || Video;
@@ -225,33 +225,33 @@ export default function MentorMeetingsPage() {
       {!loading && (
         <div className="flex flex-wrap items-center gap-6 text-sm">
           <div className="flex items-center gap-2">
-            <Video className="h-4 w-4 text-[#1f1e44]" />
-            <span className="text-[#1f1e44] font-medium">Total Meetings</span>
+            <Video className="h-4 w-4 text-navy" />
+            <span className="text-navy font-medium">Total Meetings</span>
             <span className="font-bold text-lg">{stats.total}</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle className="h-4 w-4 text-[#9b2e83]" />
-            <span className="text-[#9b2e83] font-medium">Completed</span>
+            <CheckCircle className="h-4 w-4 text-brand" />
+            <span className="text-brand font-medium">Completed</span>
             <span className="font-bold text-lg">{stats.completed}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-[#1378d1]" />
-            <span className="text-[#1378d1] font-medium">Scheduled</span>
+            <Calendar className="h-4 w-4 text-info" />
+            <span className="text-info font-medium">Scheduled</span>
             <span className="font-bold text-lg">{stats.scheduled}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Timer className="h-4 w-4 text-[#8982ff]" />
-            <span className="text-[#8982ff] font-medium">Avg Duration</span>
+            <Timer className="h-4 w-4 text-periwinkle" />
+            <span className="text-periwinkle font-medium">Avg Duration</span>
             <span className="font-bold text-lg">{stats.avgDuration} min</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle className="h-4 w-4 text-[#1f1e44]" />
-            <span className="text-[#1f1e44] font-medium">Completion Rate</span>
+            <CheckCircle className="h-4 w-4 text-navy" />
+            <span className="text-navy font-medium">Completion Rate</span>
             <span className="font-bold text-lg">{stats.completionRate}%</span>
           </div>
           <div className="flex items-center gap-2">
-            <Star className="h-4 w-4 text-[#9b2e83] fill-[#9b2e83]" />
-            <span className="text-[#9b2e83] font-medium">Avg Rating</span>
+            <Star className="h-4 w-4 text-brand fill-brand" />
+            <span className="text-brand font-medium">Avg Rating</span>
             <span className="font-bold text-lg">{stats.avgRating || 'N/A'}</span>
           </div>
         </div>
@@ -471,7 +471,7 @@ export default function MentorMeetingsPage() {
                     <TableCell>
                       {meeting.rating ? (
                         <div className="flex items-center space-x-1">
-                          <Star className="w-4 h-4 text-[#9b2e83] fill-[#9b2e83]" />
+                          <Star className="w-4 h-4 text-brand fill-brand" />
                           <span className="text-sm font-medium">{meeting.rating}</span>
                         </div>
                       ) : (

@@ -186,9 +186,9 @@ export default function MentorRelationshipsPage() {
 
   const getStatusBadge = (status: string) => {
     const variants = {
-      pending: { text: 'Pending', className: 'bg-[#eaf2ff] text-foreground', icon: Clock },
+      pending: { text: 'Pending', className: 'bg-periwinkle-light text-foreground', icon: Clock },
       active: { text: 'Active', className: 'bg-foreground text-background', icon: CheckCircle },
-      at_risk: { text: 'At Risk', className: 'bg-[#f7e5f3] text-foreground', icon: AlertCircle },
+      at_risk: { text: 'At Risk', className: 'bg-surface-purple text-foreground', icon: AlertCircle },
       paused: { text: 'Paused', className: 'bg-muted text-muted-foreground', icon: Pause },
       completed: { text: 'Completed', className: 'bg-foreground text-background', icon: Target },
       rejected: { text: 'Rejected', className: 'bg-muted-foreground text-background', icon: X },
@@ -310,10 +310,10 @@ export default function MentorRelationshipsPage() {
 
       {/* Success Message */}
       {successMessage && (
-        <Card className="border-[#b1f6e9] bg-[#effefb]">
+        <Card className="border-mint bg-mint-light">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 text-foreground">
-              <CheckCircle className="w-5 h-5 text-[#9b2e83]" />
+              <CheckCircle className="w-5 h-5 text-brand" />
               <span>{successMessage}</span>
             </div>
           </CardContent>
@@ -322,11 +322,11 @@ export default function MentorRelationshipsPage() {
 
       {/* Error Message */}
       {error && (
-        <Card className="border-[#d72f40]/30 bg-[#d72f40]/5">
+        <Card className="border-destructive/30 bg-destructive/5">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-foreground">
-                <AlertCircle className="w-5 h-5 text-[#d72f40]" />
+                <AlertCircle className="w-5 h-5 text-destructive" />
                 <span>{error}</span>
               </div>
               <Button variant="ghost" size="sm" onClick={() => setError(null)}>
@@ -340,18 +340,18 @@ export default function MentorRelationshipsPage() {
       {/* Statistics */}
       <div className="flex flex-wrap items-center gap-6 text-sm">
         <div className="flex items-center gap-2">
-          <Clock className="h-4 w-4 text-[#1378d1]" />
-          <span className="text-[#1378d1] font-medium">Pending</span>
+          <Clock className="h-4 w-4 text-info" />
+          <span className="text-info font-medium">Pending</span>
           <span className="font-bold text-lg">{stats.pending}</span>
         </div>
         <div className="flex items-center gap-2">
-          <CheckCircle className="h-4 w-4 text-[#9b2e83]" />
-          <span className="text-[#9b2e83] font-medium">Active</span>
+          <CheckCircle className="h-4 w-4 text-brand" />
+          <span className="text-brand font-medium">Active</span>
           <span className="font-bold text-lg">{stats.active}</span>
         </div>
         <div className="flex items-center gap-2">
-          <AlertCircle className="h-4 w-4 text-[#d72f40]" />
-          <span className="text-[#d72f40] font-medium">At Risk</span>
+          <AlertCircle className="h-4 w-4 text-destructive" />
+          <span className="text-destructive font-medium">At Risk</span>
           <span className="font-bold text-lg">{stats.atRisk}</span>
         </div>
         <div className="flex items-center gap-2">
@@ -360,18 +360,18 @@ export default function MentorRelationshipsPage() {
           <span className="font-bold text-lg">{stats.paused}</span>
         </div>
         <div className="flex items-center gap-2">
-          <Target className="h-4 w-4 text-[#1f1e44]" />
-          <span className="text-[#1f1e44] font-medium">Completed</span>
+          <Target className="h-4 w-4 text-navy" />
+          <span className="text-navy font-medium">Completed</span>
           <span className="font-bold text-lg">{stats.completed}</span>
         </div>
         <div className="flex items-center gap-2">
-          <Star className="h-4 w-4 text-[#9b2e83] fill-[#9b2e83]" />
-          <span className="text-[#9b2e83] font-medium">Avg Score</span>
+          <Star className="h-4 w-4 text-brand fill-brand" />
+          <span className="text-brand font-medium">Avg Score</span>
           <span className="font-bold text-lg">{stats.avgSatisfaction || 'N/A'}</span>
         </div>
         <div className="flex items-center gap-2">
-          <Video className="h-4 w-4 text-[#8982ff]" />
-          <span className="text-[#8982ff] font-medium">Meetings</span>
+          <Video className="h-4 w-4 text-periwinkle" />
+          <span className="text-periwinkle font-medium">Meetings</span>
           <span className="font-bold text-lg">{stats.totalMeetings}</span>
         </div>
       </div>
@@ -746,30 +746,30 @@ export default function MentorRelationshipsPage() {
               <div>
                 <h4 className="font-semibold text-sm mb-3">Relationship Status</h4>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="p-3 bg-muted/50 rounded-lg">
                     <p className="text-xs text-muted-foreground">Status</p>
                     <div className="mt-1">{getStatusBadge(selectedRelationship.status)}</div>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="p-3 bg-muted/50 rounded-lg">
                     <p className="text-xs text-muted-foreground">Progress</p>
                     <div className="flex items-center gap-2 mt-1">
                       <Progress value={selectedRelationship.progress} className="h-2 flex-1" />
                       <span className="text-sm font-medium">{selectedRelationship.progress}%</span>
                     </div>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="p-3 bg-muted/50 rounded-lg">
                     <p className="text-xs text-muted-foreground">Sessions</p>
                     <p className="text-sm font-medium mt-1">
                       {selectedRelationship.sessionsCompleted} / {selectedRelationship.totalSessions}
                     </p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="p-3 bg-muted/50 rounded-lg">
                     <p className="text-xs text-muted-foreground">Satisfaction</p>
                     <p className="text-sm font-medium mt-1">
                       {selectedRelationship.satisfactionScore ?? 'N/A'}
                     </p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="p-3 bg-muted/50 rounded-lg">
                     <p className="text-xs text-muted-foreground">Started</p>
                     <p className="text-sm font-medium mt-1">
                       {selectedRelationship.startedAt
@@ -777,7 +777,7 @@ export default function MentorRelationshipsPage() {
                         : 'Not started'}
                     </p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="p-3 bg-muted/50 rounded-lg">
                     <p className="text-xs text-muted-foreground">Meeting Frequency</p>
                     <p className="text-sm font-medium mt-1">
                       {selectedRelationship.meetingFrequency || 'Not set'}
