@@ -76,16 +76,16 @@
   --chart-5: 0 0% 85%;               /* 极浅灰 */
 
   /* ========================================
-     侧边栏颜色
+     侧边栏颜色（与紫色渐变背景搭配）
      ======================================== */
-  --sidebar-background: 0 0% 98%;    /* #fafafa */
-  --sidebar-foreground: 0 0% 0%;     /* #000000 */
-  --sidebar-primary: 0 0% 0%;        /* #000000 */
+  --sidebar-background: 0 0% 98%;    /* #fafafa - 被透明覆盖 */
+  --sidebar-foreground: 242 38% 25%; /* 深紫灰文字 */
+  --sidebar-primary: 312 54% 40%;    /* #9b2e83 品牌紫 */
   --sidebar-primary-foreground: 0 0% 100%; /* #ffffff */
-  --sidebar-accent: 0 0% 96%;        /* #f5f5f5 */
-  --sidebar-accent-foreground: 0 0% 0%; /* #000000 */
-  --sidebar-border: 0 0% 90%;        /* #e5e5e5 */
-  --sidebar-ring: 0 0% 0%;           /* #000000 */
+  --sidebar-accent: 312 40% 92%;     /* 浅紫色悬停背景 */
+  --sidebar-accent-foreground: 312 54% 30%; /* 深紫色文字 */
+  --sidebar-border: 312 30% 88%;     /* 淡紫色边框 */
+  --sidebar-ring: 312 54% 40%;       /* 品牌紫焦点环 */
 
   /* ========================================
      圆角
