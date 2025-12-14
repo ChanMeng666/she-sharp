@@ -50,6 +50,11 @@
   --surface-purple: 312 50% 93%;     /* #f7e5f3 浅紫背景 */
   --surface-periwinkle: 240 30% 97%; /* #f4f4fa 浅蓝紫背景 */
 
+  /* Dashboard Background Colors */
+  --dashboard-bg-start: 312 40% 97%;  /* #faf5f9 - Very light purple */
+  --dashboard-bg-mid: 280 30% 96%;    /* #f8f5fa - Light lavender */
+  --dashboard-bg-end: 240 25% 98%;    /* #f9f9fc - Cool white */
+
   /* 深色背景色（Navy） */
   --navy: 242 38% 19%;               /* #1f1e44 深海军蓝 */
   --navy-foreground: 0 0% 100%;      /* #ffffff 白色文字 */

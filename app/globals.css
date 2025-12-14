@@ -502,4 +502,20 @@
   .featured-bg-mint {
     background: linear-gradient(135deg, #effefb 0%, #f7fffd 100%);
   }
+
+  /* Dashboard Background Gradient */
+  .dashboard-bg {
+    background: linear-gradient(
+      165deg,
+      hsl(var(--dashboard-bg-start)) 0%,
+      hsl(var(--dashboard-bg-mid)) 40%,
+      hsl(var(--dashboard-bg-end)) 100%
+    ) !important;
+    min-height: 100%;
+  }
+
+  /* Make dashboard sidebar transparent to show continuous gradient */
+  .dashboard-bg [data-slot="sidebar-inner"] {
+    background: transparent !important;
+  }
 }

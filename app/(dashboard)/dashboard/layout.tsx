@@ -9,7 +9,7 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
 
   return (
-    <SidebarProvider defaultOpen={defaultOpen}>
+    <SidebarProvider defaultOpen={defaultOpen} className="dashboard-bg">
       <AppSidebar variant="inset" collapsible="icon" />
       <SidebarInset
         className={cn(
