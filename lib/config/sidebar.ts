@@ -4,8 +4,6 @@ import {
   UserPlus,
   User,
   Users,
-  Bell,
-  Activity,
   Heart,
   LayoutDashboard,
   BarChart3,
@@ -68,27 +66,6 @@ export const userSidebarItems: NavGroup[] = [
         url: "/dashboard/mentee-profile",
         icon: User,
         roleRequired: "mentee",
-      },
-    ],
-  },
-  {
-    id: 3,
-    label: "Settings",
-    items: [
-      {
-        title: "Notifications",
-        url: "/dashboard/notifications",
-        icon: Bell,
-      },
-      {
-        title: "Account",
-        url: "/dashboard/account",
-        icon: User,
-      },
-      {
-        title: "Activity",
-        url: "/dashboard/activity",
-        icon: Activity,
       },
     ],
   },
