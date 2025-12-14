@@ -6,7 +6,6 @@ import { serializeData } from '@/lib/utils';
 import { SWRConfig } from 'swr';
 import { CookieBanner } from '@/components/cookie-banner';
 import { Toaster } from '@/components/ui/sonner';
-import { ChatbotProvider } from '@/components/chatbot/chatbot-provider';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
@@ -88,7 +87,6 @@ export default function RootLayout({
             {children}
             <CookieBanner />
             <Toaster />
-            <ChatbotProvider />
           </SWRConfig>
         </Providers>
       </body>

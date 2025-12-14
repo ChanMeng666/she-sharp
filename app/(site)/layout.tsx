@@ -1,5 +1,6 @@
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { ChatbotProvider } from "@/components/chatbot/chatbot-provider";
 // import { BreadcrumbNav } from "@/components/layout/breadcrumb-nav";
 
 export default function SiteLayout({
@@ -15,6 +16,7 @@ export default function SiteLayout({
         <main className="flex-1">{children}</main>
       </div>
       <SiteFooter />
+      <ChatbotProvider />
     </div>
   );
 }

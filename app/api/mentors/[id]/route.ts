@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
-import { mentorProfiles, users, userRoles, mentorshipRelationships } from '@/lib/db/schema';
+import { mentorProfiles, users, userRoles, mentorshipRelationships, mentorFormSubmissions } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { getUser } from '@/lib/db/queries';
 
@@ -10,8 +10,12 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
+    const { searchParams } = new URL(request.url);
+    const includeFormData = searchParams.get('includeFormData') === 'true';
+    const byUserId = searchParams.get('byUserId') === 'true';
+
     const mentorId = parseInt(id);
-    
+
     if (isNaN(mentorId)) {
       return NextResponse.json(
         { error: 'Invalid mentor ID' },
@@ -19,11 +23,11 @@ export async function GET(
       );
     }
 
-    // First, get just the mentor profile
+    // Get mentor profile by profile ID or user ID
     const [mentorProfile] = await db
       .select()
       .from(mentorProfiles)
-      .where(eq(mentorProfiles.id, mentorId))
+      .where(byUserId ? eq(mentorProfiles.userId, mentorId) : eq(mentorProfiles.id, mentorId))
       .limit(1);
 
     if (!mentorProfile) {
@@ -91,7 +95,7 @@ export async function GET(
     // Check if current user has a relationship with this mentor
     let relationshipStatus = null;
     const currentUser = await getUser();
-    
+
     if (currentUser) {
       const relationships = await db
         .select()
@@ -103,7 +107,7 @@ export async function GET(
           )
         )
         .limit(1);
-      
+
       if (relationships.length > 0) {
         relationshipStatus = relationships[0].status;
       }
@@ -123,6 +127,44 @@ export async function GET(
     const activeMenteesCount = activeRelationships.length;
     const spotsAvailable = Math.max(0, mentor.maxMentees - activeMenteesCount);
 
+    // Get form submission data if requested
+    let formData = null;
+    if (includeFormData) {
+      const [formSubmission] = await db
+        .select({
+          fullName: mentorFormSubmissions.fullName,
+          gender: mentorFormSubmissions.gender,
+          phone: mentorFormSubmissions.phone,
+          jobTitle: mentorFormSubmissions.jobTitle,
+          company: mentorFormSubmissions.company,
+          photoUrl: mentorFormSubmissions.photoUrl,
+          city: mentorFormSubmissions.city,
+          preferredMeetingFormat: mentorFormSubmissions.preferredMeetingFormat,
+          bio: mentorFormSubmissions.bio,
+          softSkillsBasic: mentorFormSubmissions.softSkillsBasic,
+          industrySkillsBasic: mentorFormSubmissions.industrySkillsBasic,
+          softSkillsExpert: mentorFormSubmissions.softSkillsExpert,
+          industrySkillsExpert: mentorFormSubmissions.industrySkillsExpert,
+          expectedMenteeGoalsLongTerm: mentorFormSubmissions.expectedMenteeGoalsLongTerm,
+          expectedMenteeGoalsShortTerm: mentorFormSubmissions.expectedMenteeGoalsShortTerm,
+          programExpectations: mentorFormSubmissions.programExpectations,
+          preferredMenteeTypes: mentorFormSubmissions.preferredMenteeTypes,
+          preferredIndustries: mentorFormSubmissions.preferredIndustries,
+          mbtiType: mentorFormSubmissions.mbtiType,
+          yearsExperience: mentorFormSubmissions.yearsExperience,
+          linkedinUrl: mentorFormSubmissions.linkedinUrl,
+          availabilityHoursPerMonth: mentorFormSubmissions.availabilityHoursPerMonth,
+          maxMentees: mentorFormSubmissions.maxMentees,
+        })
+        .from(mentorFormSubmissions)
+        .where(eq(mentorFormSubmissions.userId, mentorProfile.userId))
+        .limit(1);
+
+      if (formSubmission) {
+        formData = formSubmission;
+      }
+    }
+
     // Return clean JSON object
     return NextResponse.json({
       mentor: {
@@ -130,6 +172,7 @@ export async function GET(
         activeMenteesCount,
         relationshipStatus,
         spotsAvailable,
+        formData,
       },
     });
   } catch (error) {
