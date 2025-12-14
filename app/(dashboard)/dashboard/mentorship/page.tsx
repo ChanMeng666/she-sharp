@@ -96,6 +96,48 @@ interface MentorDetails {
   formData: MentorFormData | null;
 }
 
+interface MenteeFormData {
+  fullName: string | null;
+  gender: string | null;
+  age: number | null;
+  phone: string | null;
+  currentStage: string | null;
+  photoUrl: string | null;
+  bio: string | null;
+  city: string | null;
+  preferredMeetingFormat: string | null;
+  currentJobTitle: string | null;
+  currentIndustry: string | null;
+  preferredIndustries: string[] | null;
+  softSkillsBasic: string[] | null;
+  industrySkillsBasic: string[] | null;
+  softSkillsExpert: string[] | null;
+  industrySkillsExpert: string[] | null;
+  longTermGoals: string | null;
+  shortTermGoals: string | null;
+  whyMentor: string | null;
+  programExpectations: string | null;
+  mbtiType: string | null;
+  preferredMeetingFrequency: string | null;
+}
+
+interface MenteeDetails {
+  id: number;
+  userId: number;
+  name: string;
+  email: string;
+  image: string | null;
+  learningGoals: string[];
+  careerStage: string | null;
+  preferredExpertiseAreas: string[];
+  preferredMeetingFrequency: string | null;
+  bio: string | null;
+  currentChallenge: string | null;
+  profileCompletedAt: string | null;
+  relationshipStatus: string | null;
+  formData: MenteeFormData | null;
+}
+
 // City options mapping (value -> label)
 const cityOptionsMap: Record<string, string> = {
   'auckland': 'Auckland',
@@ -144,6 +186,24 @@ const maxMenteesMap: Record<number, string> = {
   5: '5 mentees',
 };
 
+// Career stage mapping (value -> label)
+const careerStageMap: Record<string, string> = {
+  'undergraduate': 'Undergraduate Student',
+  'postgraduate': 'Postgraduate Student',
+  'early_career': 'Early Career (0-3 years)',
+  'mid_career': 'Mid Career (4-10 years)',
+  'senior': 'Senior (10+ years)',
+  'career_transition': 'Career Transition',
+};
+
+// Meeting frequency mapping (value -> label)
+const meetingFrequencyMap: Record<string, string> = {
+  'weekly': 'Weekly',
+  'biweekly': 'Bi-weekly (Every 2 weeks)',
+  'monthly': 'Monthly',
+  'as_needed': 'As Needed',
+};
+
 // Industry options mapping (value -> label)
 const industryOptionsMap: Record<string, string> = {
   'engineering': 'Engineering',
@@ -183,6 +243,11 @@ export default function MentorshipDashboard() {
   const [selectedMentorDetails, setSelectedMentorDetails] = useState<MentorDetails | null>(null);
   const [isLoadingMentorDetails, setIsLoadingMentorDetails] = useState(false);
   const [isMentorSheetOpen, setIsMentorSheetOpen] = useState(false);
+
+  // Mentee details sheet state
+  const [selectedMenteeDetails, setSelectedMenteeDetails] = useState<MenteeDetails | null>(null);
+  const [isLoadingMenteeDetails, setIsLoadingMenteeDetails] = useState(false);
+  const [isMenteeSheetOpen, setIsMenteeSheetOpen] = useState(false);
 
   useEffect(() => {
     fetchMentorshipData();
@@ -235,6 +300,27 @@ export default function MentorshipDashboard() {
       setIsMentorSheetOpen(false);
     } finally {
       setIsLoadingMentorDetails(false);
+    }
+  };
+
+  const fetchMenteeDetails = async (menteeUserId: number) => {
+    setIsLoadingMenteeDetails(true);
+    setIsMenteeSheetOpen(true);
+    try {
+      const response = await fetch(`/api/mentees/${menteeUserId}?byUserId=true&includeFormData=true`);
+      if (response.ok) {
+        const data = await response.json();
+        setSelectedMenteeDetails(data.mentee);
+      } else {
+        toast.error('Failed to load mentee details');
+        setIsMenteeSheetOpen(false);
+      }
+    } catch (error) {
+      console.error('Failed to fetch mentee details:', error);
+      toast.error('Failed to load mentee details');
+      setIsMenteeSheetOpen(false);
+    } finally {
+      setIsLoadingMenteeDetails(false);
     }
   };
 
@@ -329,10 +415,12 @@ export default function MentorshipDashboard() {
               {relationships.map((relationship) => (
                 <Card
                   key={relationship.id}
-                  className={userRole === 'mentee' ? 'cursor-pointer hover:border-primary/50 transition-colors' : ''}
+                  className="cursor-pointer hover:border-primary/50 transition-colors"
                   onClick={() => {
                     if (userRole === 'mentee' && relationship.mentorId) {
                       fetchMentorDetails(relationship.mentorId);
+                    } else if (userRole === 'mentor' && relationship.menteeId) {
+                      fetchMenteeDetails(relationship.menteeId);
                     }
                   }}
                 >
@@ -377,6 +465,9 @@ export default function MentorshipDashboard() {
                       </span>
                       {userRole === 'mentee' && (
                         <span className="text-primary text-xs ml-auto">Click to view mentor profile</span>
+                      )}
+                      {userRole === 'mentor' && (
+                        <span className="text-primary text-xs ml-auto">Click to view mentee profile</span>
                       )}
                     </div>
                   </CardContent>
@@ -431,6 +522,18 @@ export default function MentorshipDashboard() {
 
                     {userRole === 'mentor' ? (
                       <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            if (application.menteeId) {
+                              fetchMenteeDetails(application.menteeId);
+                            }
+                          }}
+                        >
+                          <Users className="h-3 w-3 mr-1" />
+                          View Profile
+                        </Button>
                         <Dialog>
                           <DialogTrigger asChild>
                             <Button
@@ -781,6 +884,250 @@ export default function MentorshipDashboard() {
           ) : (
             <div className="flex items-center justify-center flex-1 py-12">
               <p className="text-muted-foreground">No mentor details available</p>
+            </div>
+          )}
+        </SheetContent>
+      </Sheet>
+
+      {/* Mentee Details Sheet */}
+      <Sheet open={isMenteeSheetOpen} onOpenChange={setIsMenteeSheetOpen}>
+        <SheetContent className="w-full sm:max-w-2xl flex flex-col p-0">
+          {/* Fixed Header */}
+          <div className="px-8 pt-8 pb-4 border-b bg-background flex-shrink-0">
+            <SheetHeader>
+              <SheetTitle className="text-2xl">Mentee Profile</SheetTitle>
+              <SheetDescription>
+                View your mentee's complete profile and background
+              </SheetDescription>
+            </SheetHeader>
+          </div>
+
+          {/* Scrollable Content */}
+          {isLoadingMenteeDetails ? (
+            <div className="flex items-center justify-center flex-1 py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            </div>
+          ) : selectedMenteeDetails ? (
+            <div className="flex-1 overflow-y-auto">
+              <div className="px-8 py-8 space-y-8">
+                {/* Profile Header Card */}
+                <div className="bg-muted/30 rounded-xl p-6">
+                  <div className="flex items-start gap-5">
+                    <Avatar className="h-20 w-20 border-2 border-background shadow-md">
+                      <AvatarImage src={selectedMenteeDetails.formData?.photoUrl || selectedMenteeDetails.image || undefined} />
+                      <AvatarFallback className="text-lg">{getInitials(selectedMenteeDetails.name)}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-2xl font-semibold mb-1">
+                        {selectedMenteeDetails.formData?.fullName || selectedMenteeDetails.name}
+                      </h3>
+                      {selectedMenteeDetails.formData?.currentJobTitle && (
+                        <p className="text-muted-foreground text-base">
+                          {selectedMenteeDetails.formData.currentJobTitle}
+                          {selectedMenteeDetails.formData.currentIndustry && (
+                            <> in <span className="font-medium">
+                              {industryOptionsMap[selectedMenteeDetails.formData.currentIndustry] || selectedMenteeDetails.formData.currentIndustry}
+                            </span></>
+                          )}
+                        </p>
+                      )}
+                      {selectedMenteeDetails.formData?.currentStage && (
+                        <Badge variant="secondary" className="mt-2">
+                          {careerStageMap[selectedMenteeDetails.formData.currentStage] || selectedMenteeDetails.formData.currentStage}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quick Info Grid */}
+                <div className="grid grid-cols-2 gap-4">
+                  {selectedMenteeDetails.formData?.city && (
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
+                      <MapPin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">Location</p>
+                        <p className="text-sm font-medium">
+                          {cityOptionsMap[selectedMenteeDetails.formData.city] || selectedMenteeDetails.formData.city}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  {selectedMenteeDetails.formData?.preferredMeetingFormat && (
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
+                      <Globe className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">Meeting Format</p>
+                        <p className="text-sm font-medium">
+                          {meetingFormatOptionsMap[selectedMenteeDetails.formData.preferredMeetingFormat] ||
+                            selectedMenteeDetails.formData.preferredMeetingFormat}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  {selectedMenteeDetails.formData?.mbtiType && (
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
+                      <Brain className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">MBTI Type</p>
+                        <p className="text-sm font-medium">{selectedMenteeDetails.formData.mbtiType}</p>
+                      </div>
+                    </div>
+                  )}
+                  {(selectedMenteeDetails.formData?.preferredMeetingFrequency || selectedMenteeDetails.preferredMeetingFrequency) && (
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
+                      <Calendar className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">Meeting Frequency</p>
+                        <p className="text-sm font-medium">
+                          {meetingFrequencyMap[selectedMenteeDetails.formData?.preferredMeetingFrequency || selectedMenteeDetails.preferredMeetingFrequency || ''] ||
+                            selectedMenteeDetails.formData?.preferredMeetingFrequency || selectedMenteeDetails.preferredMeetingFrequency}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Bio Section */}
+                {(selectedMenteeDetails.formData?.bio || selectedMenteeDetails.bio) && (
+                  <div className="space-y-3">
+                    <h4 className="font-semibold text-base flex items-center gap-2">
+                      <GraduationCap className="h-5 w-5 text-primary" />
+                      About
+                    </h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap pl-7">
+                      {selectedMenteeDetails.formData?.bio || selectedMenteeDetails.bio}
+                    </p>
+                  </div>
+                )}
+
+                <Separator />
+
+                {/* Skills Section */}
+                {(selectedMenteeDetails.formData?.softSkillsExpert?.length ||
+                  selectedMenteeDetails.formData?.industrySkillsExpert?.length ||
+                  selectedMenteeDetails.formData?.softSkillsBasic?.length ||
+                  selectedMenteeDetails.formData?.industrySkillsBasic?.length) && (
+                  <div className="space-y-6">
+                    {/* Expert Skills */}
+                    {(selectedMenteeDetails.formData?.softSkillsExpert?.length || selectedMenteeDetails.formData?.industrySkillsExpert?.length) && (
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-base flex items-center gap-2">
+                          <Sparkles className="h-5 w-5 text-primary" />
+                          Expert Skills
+                        </h4>
+                        <div className="flex flex-wrap gap-2 pl-7">
+                          {selectedMenteeDetails.formData?.softSkillsExpert?.map((skill, i) => (
+                            <Badge key={`soft-expert-${i}`} variant="default" className="px-3 py-1">{skill}</Badge>
+                          ))}
+                          {selectedMenteeDetails.formData?.industrySkillsExpert?.map((skill, i) => (
+                            <Badge key={`industry-expert-${i}`} variant="default" className="px-3 py-1">{skill}</Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Skills to Develop */}
+                    {(selectedMenteeDetails.formData?.softSkillsBasic?.length || selectedMenteeDetails.formData?.industrySkillsBasic?.length) && (
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-base flex items-center gap-2">
+                          <Target className="h-5 w-5 text-primary" />
+                          Skills to Develop
+                        </h4>
+                        <div className="flex flex-wrap gap-2 pl-7">
+                          {selectedMenteeDetails.formData?.softSkillsBasic?.map((skill, i) => (
+                            <Badge key={`soft-basic-${i}`} variant="secondary" className="px-3 py-1">{skill}</Badge>
+                          ))}
+                          {selectedMenteeDetails.formData?.industrySkillsBasic?.map((skill, i) => (
+                            <Badge key={`industry-basic-${i}`} variant="secondary" className="px-3 py-1">{skill}</Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Industry Interests */}
+                {selectedMenteeDetails.formData?.preferredIndustries?.length && (
+                  <div className="space-y-3">
+                    <h4 className="font-semibold text-base flex items-center gap-2">
+                      <Building2 className="h-5 w-5 text-primary" />
+                      Industry Interests
+                    </h4>
+                    <div className="flex flex-wrap gap-2 pl-7">
+                      {selectedMenteeDetails.formData.preferredIndustries.map((industry, i) => (
+                        <Badge key={i} variant="outline" className="px-3 py-1">
+                          {industryOptionsMap[industry] || industry}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Goals Section */}
+                {(selectedMenteeDetails.formData?.shortTermGoals ||
+                  selectedMenteeDetails.formData?.longTermGoals ||
+                  selectedMenteeDetails.formData?.whyMentor ||
+                  selectedMenteeDetails.formData?.programExpectations) && (
+                  <>
+                    <Separator />
+
+                    <div className="space-y-6">
+                      <h4 className="font-semibold text-lg">Goals & Expectations</h4>
+
+                      {/* Goals */}
+                      {(selectedMenteeDetails.formData?.shortTermGoals || selectedMenteeDetails.formData?.longTermGoals) && (
+                        <div className="space-y-4 bg-muted/30 rounded-xl p-5">
+                          <p className="font-medium text-sm">Career Goals</p>
+                          {selectedMenteeDetails.formData?.shortTermGoals && (
+                            <div className="space-y-1.5">
+                              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Short-term Goals</p>
+                              <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                                {selectedMenteeDetails.formData.shortTermGoals}
+                              </p>
+                            </div>
+                          )}
+                          {selectedMenteeDetails.formData?.longTermGoals && (
+                            <div className="space-y-1.5">
+                              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Long-term Goals</p>
+                              <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                                {selectedMenteeDetails.formData.longTermGoals}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Why They Need a Mentor */}
+                      {selectedMenteeDetails.formData?.whyMentor && (
+                        <div className="space-y-2">
+                          <p className="font-medium text-sm">Why They Need Mentorship</p>
+                          <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                            {selectedMenteeDetails.formData.whyMentor}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Program Expectations */}
+                      {selectedMenteeDetails.formData?.programExpectations && (
+                        <div className="space-y-2">
+                          <p className="font-medium text-sm">Program Expectations</p>
+                          <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                            {selectedMenteeDetails.formData.programExpectations}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
+
+                {/* Bottom spacing */}
+                <div className="h-4" />
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center flex-1 py-12">
+              <p className="text-muted-foreground">No mentee details available</p>
             </div>
           )}
         </SheetContent>
