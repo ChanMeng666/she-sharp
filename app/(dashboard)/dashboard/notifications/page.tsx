@@ -61,7 +61,8 @@ export default function NotificationsPage() {
         }));
         setNotifications(formattedNotifications);
       } else {
-        console.error('Failed to fetch notifications');
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Failed to fetch notifications:', errorData.details || response.statusText);
       }
     } catch (error) {
       console.error('Error fetching notifications:', error);

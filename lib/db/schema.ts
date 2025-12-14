@@ -348,6 +348,25 @@ export const activityLogs = pgTable('activity_logs', {
   entityIdx: index('activity_logs_entity_idx').on(table.entityType, table.entityId),
 }));
 
+// Notifications
+export const notifications = pgTable('notifications', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  type: varchar('type', { length: 50 }).notNull(), // 'event', 'mentorship', 'resource', 'system', 'meeting'
+  title: varchar('title', { length: 255 }).notNull(),
+  message: text('message').notNull(),
+  read: boolean('read').default(false),
+  actionUrl: varchar('action_url', { length: 500 }),
+  actionLabel: varchar('action_label', { length: 100 }),
+  metadata: jsonb('metadata').$type<Record<string, unknown>>(),
+  createdAt: timestamp('created_at').defaultNow(),
+  readAt: timestamp('read_at'),
+}, (table) => ({
+  userIdIdx: index('idx_notifications_user_id').on(table.userId),
+  readIdx: index('idx_notifications_read').on(table.read),
+  createdAtIdx: index('idx_notifications_created_at').on(table.createdAt),
+}));
+
 // Admin permissions
 export const adminPermissions = pgTable('admin_permissions', {
   id: serial('id').primaryKey(),
@@ -514,6 +533,7 @@ export const usersRelations = relations(users, ({ many, one }) => ({
   adminPermissions: one(adminPermissions),
   mentorshipStats: one(userMentorshipStats),
   activityLogs: many(activityLogs),
+  notifications: many(notifications),
   emailVerifications: many(emailVerifications),
   passwordResets: many(passwordResets),
   passwordHistory: many(passwordHistory),
@@ -632,6 +652,13 @@ export const activityLogsRelations = relations(activityLogs, ({ one }) => ({
   }),
 }));
 
+export const notificationsRelations = relations(notifications, ({ one }) => ({
+  user: one(users, {
+    fields: [notifications.userId],
+    references: [users.id],
+  }),
+}));
+
 export const emailVerificationsRelations = relations(emailVerifications, ({ one }) => ({
   user: one(users, {
     fields: [emailVerifications.userId],
@@ -713,6 +740,8 @@ export type UserMentorshipStat = typeof userMentorshipStats.$inferSelect;
 export type NewUserMentorshipStat = typeof userMentorshipStats.$inferInsert;
 export type ActivityLog = typeof activityLogs.$inferSelect;
 export type NewActivityLog = typeof activityLogs.$inferInsert;
+export type Notification = typeof notifications.$inferSelect;
+export type NewNotification = typeof notifications.$inferInsert;
 export type EmailVerification = typeof emailVerifications.$inferSelect;
 export type NewEmailVerification = typeof emailVerifications.$inferInsert;
 export type PasswordReset = typeof passwordResets.$inferSelect;
