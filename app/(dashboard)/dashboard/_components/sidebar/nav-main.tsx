@@ -23,10 +23,22 @@ import {
   SidebarMenuSubItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { type NavGroup, type NavMainItem } from "@/lib/config/sidebar";
+import { type NavGroup, type NavMainItem, type NavSubItem } from "@/lib/config/sidebar";
 
 interface NavMainProps {
   readonly items: readonly NavGroup[];
+  readonly userRoles?: string[];
+}
+
+// Filter items based on user roles
+function filterItemsByRole<T extends { roleRequired?: string }>(
+  items: readonly T[],
+  userRoles: string[]
+): T[] {
+  return items.filter((item) => {
+    if (!item.roleRequired) return true;
+    return userRoles.includes(item.roleRequired);
+  });
 }
 
 const NavItemExpanded = ({
@@ -127,7 +139,7 @@ const NavItemCollapsed = ({
   );
 };
 
-export function NavMain({ items }: NavMainProps) {
+export function NavMain({ items, userRoles = [] }: NavMainProps) {
   const path = usePathname();
   const { state, isMobile } = useSidebar();
 
@@ -144,42 +156,56 @@ export function NavMain({ items }: NavMainProps) {
 
   return (
     <>
-      {items.map((group) => (
-        <SidebarGroup key={group.id}>
-          {group.label && <SidebarGroupLabel>{group.label}</SidebarGroupLabel>}
-          <SidebarGroupContent className="flex flex-col gap-2">
-            <SidebarMenu>
-              {group.items.map((item) => {
-                if (state === "collapsed" && !isMobile) {
-                  // If no subItems, just render the button as a link
-                  if (!item.subItems) {
-                    return (
-                      <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton
-                          asChild
-                          tooltip={item.title}
-                          isActive={isItemActive(item.url)}
-                        >
-                          <Link href={item.url!}>
-                            {item.icon && <item.icon />}
-                            <span>{item.title}</span>
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    );
+      {items.map((group) => {
+        // Filter group items by role
+        const filteredItems = filterItemsByRole(group.items, userRoles);
+
+        // Skip empty groups
+        if (filteredItems.length === 0) return null;
+
+        return (
+          <SidebarGroup key={group.id}>
+            {group.label && <SidebarGroupLabel>{group.label}</SidebarGroupLabel>}
+            <SidebarGroupContent className="flex flex-col gap-2">
+              <SidebarMenu>
+                {filteredItems.map((item) => {
+                  // Also filter subItems by role
+                  const filteredSubItems = item.subItems
+                    ? filterItemsByRole(item.subItems, userRoles)
+                    : undefined;
+                  const itemWithFilteredSubs = { ...item, subItems: filteredSubItems };
+
+                  if (state === "collapsed" && !isMobile) {
+                    // If no subItems (or all filtered out), just render the button as a link
+                    if (!itemWithFilteredSubs.subItems?.length) {
+                      return (
+                        <SidebarMenuItem key={item.title}>
+                          <SidebarMenuButton
+                            asChild
+                            tooltip={item.title}
+                            isActive={isItemActive(item.url)}
+                          >
+                            <Link href={item.url!}>
+                              {item.icon && <item.icon />}
+                              <span>{item.title}</span>
+                            </Link>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      );
+                    }
+                    // Otherwise, render the dropdown with filtered subItems
+                    return <NavItemCollapsed key={item.title} item={itemWithFilteredSubs} isActive={isItemActive} />;
                   }
-                  // Otherwise, render the dropdown
-                  return <NavItemCollapsed key={item.title} item={item} isActive={isItemActive} />;
-                }
-                // Expanded view
-                return (
-                  <NavItemExpanded key={item.title} item={item} isActive={isItemActive} isSubmenuOpen={isSubmenuOpen} />
-                );
-              })}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      ))}
+                  // Expanded view with filtered subItems
+                  return (
+                    <NavItemExpanded key={item.title} item={itemWithFilteredSubs} isActive={isItemActive} isSubmenuOpen={isSubmenuOpen} />
+                  );
+                })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        );
+      })}
     </>
   );
 }

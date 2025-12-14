@@ -20,14 +20,17 @@ import { NavUser } from "./nav-user";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [userRoles, setUserRoles] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is admin
+    // Check user roles
     fetch("/api/user/role")
       .then((res) => res.json())
       .then((data) => {
-        setIsAdmin(data.roles?.includes("admin") || false);
+        const roles = data.roles || [];
+        setUserRoles(roles);
+        setIsAdmin(roles.includes("admin"));
         setIsLoading(false);
       })
       .catch((err) => {
@@ -68,7 +71,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             ))}
           </div>
         ) : (
-          <NavMain items={sidebarItems} />
+          <NavMain items={sidebarItems} userRoles={userRoles} />
         )}
       </SidebarContent>
       <SidebarFooter>

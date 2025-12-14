@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getUser } from '@/lib/db/queries';
 import { db } from '@/lib/db/drizzle';
-import { menteeProfiles, userRoles, activityLogs, ActivityType, userMentorshipStats } from '@/lib/db/schema';
+import {
+  menteeProfiles,
+  menteeFormSubmissions,
+  userRoles,
+  activityLogs,
+  ActivityType,
+  userMentorshipStats
+} from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 
 export async function GET() {
@@ -11,13 +18,55 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    // Get mentee profile
     const [profile] = await db
       .select()
       .from(menteeProfiles)
       .where(eq(menteeProfiles.userId, user.id))
       .limit(1);
 
-    return NextResponse.json({ profile });
+    // Get form submission data for additional fields
+    const [formData] = await db
+      .select()
+      .from(menteeFormSubmissions)
+      .where(eq(menteeFormSubmissions.userId, user.id))
+      .limit(1);
+
+    // Merge data from both sources
+    const mergedProfile = {
+      // From mentee_profiles
+      id: profile?.id,
+      learningGoals: profile?.learningGoals || [],
+      careerStage: profile?.careerStage || formData?.currentStage || '',
+      preferredExpertiseAreas: profile?.preferredExpertiseAreas || [],
+      preferredMeetingFrequency: profile?.preferredMeetingFrequency || formData?.preferredMeetingFrequency || '',
+      bio: profile?.bio || formData?.bio || '',
+      currentChallenge: profile?.currentChallenge || '',
+      profileCompletedAt: profile?.profileCompletedAt,
+
+      // From mentee_form_submissions (additional fields)
+      photoUrl: formData?.photoUrl || '',
+      fullName: formData?.fullName || user.name || '',
+      gender: formData?.gender || '',
+      age: formData?.age || null,
+      phone: formData?.phone || '',
+      city: formData?.city || '',
+      preferredMeetingFormat: formData?.preferredMeetingFormat || '',
+      currentJobTitle: formData?.currentJobTitle || '',
+      currentIndustry: formData?.currentIndustry || '',
+      preferredIndustries: formData?.preferredIndustries || [],
+      softSkillsBasic: formData?.softSkillsBasic || [],
+      softSkillsExpert: formData?.softSkillsExpert || [],
+      industrySkillsBasic: formData?.industrySkillsBasic || [],
+      industrySkillsExpert: formData?.industrySkillsExpert || [],
+      longTermGoals: formData?.longTermGoals || '',
+      shortTermGoals: formData?.shortTermGoals || '',
+      whyMentor: formData?.whyMentor || '',
+      programExpectations: formData?.programExpectations || '',
+      mbtiType: formData?.mbtiType || '',
+    };
+
+    return NextResponse.json({ profile: mergedProfile, formSubmissionId: formData?.id });
   } catch (error) {
     console.error('Error fetching mentee profile:', error);
     return NextResponse.json(
@@ -36,14 +85,41 @@ export async function POST(request: Request) {
 
     const data = await request.json();
 
-    // Prepare the profile data with proper array handling
+    // Prepare data for mentee_profiles table
     const profileData = {
       learningGoals: data.learningGoals || [],
-      careerStage: data.currentLevel || data.careerStage || null,
-      preferredExpertiseAreas: data.preferredMentorExpertise || data.preferredExpertiseAreas || [],
+      careerStage: data.careerStage || null,
+      preferredExpertiseAreas: data.preferredExpertiseAreas || [],
       preferredMeetingFrequency: data.preferredMeetingFrequency || null,
       bio: data.bio || null,
       currentChallenge: data.currentChallenge || null,
+    };
+
+    // Prepare data for mentee_form_submissions table
+    const formData = {
+      fullName: data.fullName || null,
+      gender: data.gender || null,
+      age: data.age || null,
+      phone: data.phone || null,
+      photoUrl: data.photoUrl || null,
+      city: data.city || null,
+      preferredMeetingFormat: data.preferredMeetingFormat || null,
+      currentStage: data.careerStage || null,
+      currentJobTitle: data.currentJobTitle || null,
+      currentIndustry: data.currentIndustry || null,
+      preferredIndustries: data.preferredIndustries || [],
+      softSkillsBasic: data.softSkillsBasic || [],
+      softSkillsExpert: data.softSkillsExpert || [],
+      industrySkillsBasic: data.industrySkillsBasic || [],
+      industrySkillsExpert: data.industrySkillsExpert || [],
+      longTermGoals: data.longTermGoals || null,
+      shortTermGoals: data.shortTermGoals || null,
+      whyMentor: data.whyMentor || null,
+      programExpectations: data.programExpectations || null,
+      mbtiType: data.mbtiType || null,
+      preferredMeetingFrequency: data.preferredMeetingFrequency || null,
+      bio: data.bio || null,
+      updatedAt: new Date(),
     };
 
     // Check if profile already exists
@@ -53,9 +129,17 @@ export async function POST(request: Request) {
       .where(eq(menteeProfiles.userId, user.id))
       .limit(1);
 
+    // Check if form submission exists
+    const [existingFormSubmission] = await db
+      .select()
+      .from(menteeFormSubmissions)
+      .where(eq(menteeFormSubmissions.userId, user.id))
+      .limit(1);
+
     let profile;
+
+    // Update or create mentee_profiles
     if (existingProfile) {
-      // Update existing profile
       [profile] = await db
         .update(menteeProfiles)
         .set({
@@ -65,7 +149,6 @@ export async function POST(request: Request) {
         .where(eq(menteeProfiles.userId, user.id))
         .returning();
     } else {
-      // Create new profile
       [profile] = await db
         .insert(menteeProfiles)
         .values({
@@ -92,10 +175,9 @@ export async function POST(request: Request) {
           userId: user.id,
           roleType: 'mentee',
           isActive: true,
-          activationStep: 3, // Profile completed
+          activationStep: 3,
         });
 
-        // Log activity
         await db.insert(activityLogs).values({
           userId: user.id,
           action: ActivityType.ACTIVATE_MENTEE_ROLE,
@@ -103,6 +185,39 @@ export async function POST(request: Request) {
           entityId: user.id,
           metadata: { profileCompleted: true }
         });
+      }
+    }
+
+    // Update or create mentee_form_submissions
+    if (existingFormSubmission) {
+      await db
+        .update(menteeFormSubmissions)
+        .set(formData)
+        .where(eq(menteeFormSubmissions.userId, user.id));
+    } else {
+      await db
+        .insert(menteeFormSubmissions)
+        .values({
+          userId: user.id,
+          email: user.email,
+          status: 'approved',
+          ...formData,
+        });
+    }
+
+    // Link form submission to profile if not already linked
+    if (profile && !profile.formSubmissionId) {
+      const [formSubmission] = await db
+        .select({ id: menteeFormSubmissions.id })
+        .from(menteeFormSubmissions)
+        .where(eq(menteeFormSubmissions.userId, user.id))
+        .limit(1);
+
+      if (formSubmission) {
+        await db
+          .update(menteeProfiles)
+          .set({ formSubmissionId: formSubmission.id })
+          .where(eq(menteeProfiles.userId, user.id));
       }
     }
 
