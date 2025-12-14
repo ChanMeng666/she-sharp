@@ -15,6 +15,7 @@ import {
   menteeFormSubmissions,
   ActivityType,
   activityLogs,
+  notifications,
 } from '@/lib/db/schema';
 import { eq, and, ne, notInArray, desc, sql, asc } from 'drizzle-orm';
 import type {
@@ -698,7 +699,8 @@ export async function reviewMatchSuggestion(
         .values({
           mentorUserId: match.match.mentorUserId,
           menteeUserId: match.match.menteeUserId,
-          status: 'pending',
+          status: 'active',
+          startedAt: new Date(),
         })
         .returning();
 
@@ -722,7 +724,7 @@ export async function reviewMatchSuggestion(
       // Remove mentee from queue if present
       await removeFromQueue(match.match.menteeUserId);
 
-      // Send notifications
+      // Send email notifications
       if (mentorEmail && menteeEmail) {
         await sendMatchApprovalNotifications({
           mentorName,
@@ -734,6 +736,34 @@ export async function reviewMatchSuggestion(
           focusAreas: (match.match.suggestedFocusAreas as string[]) || [],
         });
       }
+
+      // Create in-app notifications for both users
+      await db.insert(notifications).values([
+        {
+          userId: match.match.mentorUserId,
+          type: 'mentorship',
+          title: 'New Mentee Matched!',
+          message: `You have been matched with ${menteeName} in the She Sharp Mentorship Program. View your dashboard to connect.`,
+          actionUrl: '/dashboard/mentorship',
+          actionLabel: 'View Mentee',
+          metadata: {
+            relationshipId: relationship.id,
+            matchId: matchId,
+          },
+        },
+        {
+          userId: match.match.menteeUserId,
+          type: 'mentorship',
+          title: 'Mentor Match Confirmed!',
+          message: `Congratulations! You have been matched with ${mentorName}. Your mentorship journey begins now!`,
+          actionUrl: '/dashboard/mentorship',
+          actionLabel: 'View Mentor',
+          metadata: {
+            relationshipId: relationship.id,
+            matchId: matchId,
+          },
+        },
+      ]);
 
       // Log activity
       await db.insert(activityLogs).values({
