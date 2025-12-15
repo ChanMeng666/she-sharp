@@ -84,6 +84,30 @@ import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 
+// Industry mapping (matches mentee application form)
+const INDUSTRY_OPTIONS: Record<string, string> = {
+  engineering: 'Engineering',
+  it_cs: 'Information Technology (IT) and Computer Science',
+  healthcare: 'Healthcare and Medicine',
+  biotech: 'Biotechnology and Life Sciences',
+  renewable_energy: 'Renewable Energy',
+  agriculture: 'Agriculture and Food Science',
+  environmental: 'Environmental Science and Sustainability',
+  telecom: 'Telecommunications',
+  robotics: 'Robotics and Automation',
+  manufacturing: 'Manufacturing and Materials Science',
+  aerospace: 'Aerospace and Defense',
+  finance: 'Finance and Banking',
+  consulting: 'Consulting',
+  education: 'Education',
+  other: 'Other',
+};
+
+const formatIndustry = (industry: string | null): string => {
+  if (!industry) return 'N/A';
+  return INDUSTRY_OPTIONS[industry] || industry;
+};
+
 // Unified User interface matching the new API response
 interface MentorInfo {
   isVerified: boolean;
@@ -592,10 +616,11 @@ export default function UserManagement() {
   };
 
   const getMentorStatusBadge = (status: string) => {
+    // These indicate whether the mentor is accepting new mentees, not account status
     const variants = {
-      active: { text: 'Active', className: 'bg-badge-success-bg text-badge-success-fg', icon: <CheckCircle className="w-3 h-3 mr-1 text-badge-success-icon" /> },
-      busy: { text: 'Busy', className: 'bg-badge-warning-bg text-badge-warning-fg', icon: <Clock className="w-3 h-3 mr-1" /> },
-      paused: { text: 'Paused', className: 'bg-muted text-muted-foreground', icon: null },
+      active: { text: 'Accepting', className: 'bg-mint/20 text-mint-dark border border-mint/30', icon: <UserPlus className="w-3 h-3 mr-1" /> },
+      busy: { text: 'At Capacity', className: 'bg-badge-warning-bg text-badge-warning-fg', icon: <Clock className="w-3 h-3 mr-1" /> },
+      paused: { text: 'Not Accepting', className: 'bg-muted text-muted-foreground', icon: <Ban className="w-3 h-3 mr-1" /> },
     };
     const variant = variants[status as keyof typeof variants] || variants.paused;
     return <Badge className={cn("text-xs", variant.className)}>{variant.icon}{variant.text}</Badge>;
@@ -616,7 +641,7 @@ export default function UserManagement() {
             {(user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio) && (
               <div>
                 <p className="text-xs text-navy font-medium mb-1">Bio</p>
-                <p className="text-sm line-clamp-3">
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap break-words">
                   {user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio}
                 </p>
               </div>
@@ -710,7 +735,7 @@ export default function UserManagement() {
                   <p className="text-sm">Career Stage: <span className="capitalize">{user.menteeInfo.careerStage.replace(/_/g, ' ')}</span></p>
                 )}
                 {user.menteeInfo.currentIndustry && (
-                  <p className="text-sm text-muted-foreground">Industry: {user.menteeInfo.currentIndustry}</p>
+                  <p className="text-sm text-muted-foreground">Industry: {formatIndustry(user.menteeInfo.currentIndustry)}</p>
                 )}
               </div>
             )}

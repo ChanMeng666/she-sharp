@@ -68,6 +68,43 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 
+// Experience years mapping (matches mentor application form)
+const EXPERIENCE_OPTIONS: Record<number, string> = {
+  3: '3-5 years',
+  5: '5-10 years',
+  10: '10-15 years',
+  15: '15+ years',
+};
+
+// Industry mapping (matches mentee application form)
+const INDUSTRY_OPTIONS: Record<string, string> = {
+  engineering: 'Engineering',
+  it_cs: 'Information Technology (IT) and Computer Science',
+  healthcare: 'Healthcare and Medicine',
+  biotech: 'Biotechnology and Life Sciences',
+  renewable_energy: 'Renewable Energy',
+  agriculture: 'Agriculture and Food Science',
+  environmental: 'Environmental Science and Sustainability',
+  telecom: 'Telecommunications',
+  robotics: 'Robotics and Automation',
+  manufacturing: 'Manufacturing and Materials Science',
+  aerospace: 'Aerospace and Defense',
+  finance: 'Finance and Banking',
+  consulting: 'Consulting',
+  education: 'Education',
+  other: 'Other',
+};
+
+const formatYearsExperience = (years: number | null): string => {
+  if (years === null) return 'N/A';
+  return EXPERIENCE_OPTIONS[years] || `${years} years`;
+};
+
+const formatIndustry = (industry: string | null): string => {
+  if (!industry) return 'N/A';
+  return INDUSTRY_OPTIONS[industry] || industry;
+};
+
 interface MentorInfo {
   id: number;
   name: string;
@@ -498,7 +535,7 @@ export default function MentorRelationshipsPage() {
                             <p className="text-xs text-muted-foreground">
                               {relationship.mentee.jobTitle}
                               {relationship.mentee.jobTitle && relationship.mentee.industry && ' in '}
-                              {relationship.mentee.industry}
+                              {formatIndustry(relationship.mentee.industry)}
                             </p>
                           )}
                           <div className="flex items-center gap-2 flex-wrap">
@@ -633,7 +670,7 @@ export default function MentorRelationshipsPage() {
 
       {/* View Details Dialog */}
       <Dialog open={detailsDialogOpen} onOpenChange={setDetailsDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>Relationship Details</DialogTitle>
             <DialogDescription>
@@ -641,49 +678,49 @@ export default function MentorRelationshipsPage() {
             </DialogDescription>
           </DialogHeader>
           {selectedRelationship && (
-            <div className="space-y-6">
+            <div className="space-y-6 min-w-0">
               {/* Mentor Info */}
-              <div>
+              <div className="min-w-0">
                 <h4 className="font-semibold text-sm mb-3 text-foreground">Mentor</h4>
-                <div className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg">
-                  <Avatar className="w-12 h-12">
+                <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg min-w-0">
+                  <Avatar className="w-12 h-12 shrink-0">
                     <AvatarImage src={selectedRelationship.mentor.avatar || ''} />
                     <AvatarFallback>
                       {selectedRelationship.mentor.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="flex-1 space-y-1">
-                    <p className="font-medium">{selectedRelationship.mentor.name}</p>
-                    <p className="text-sm text-muted-foreground">{selectedRelationship.mentor.email}</p>
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <p className="font-medium truncate">{selectedRelationship.mentor.name}</p>
+                    <p className="text-sm text-muted-foreground break-all">{selectedRelationship.mentor.email}</p>
                     {(selectedRelationship.mentor.jobTitle || selectedRelationship.mentor.company) && (
-                      <p className="text-sm">
+                      <p className="text-sm break-words">
                         {selectedRelationship.mentor.jobTitle}
                         {selectedRelationship.mentor.jobTitle && selectedRelationship.mentor.company && ' @ '}
                         {selectedRelationship.mentor.company}
                       </p>
                     )}
-                    <div className="flex flex-wrap gap-2 mt-2">
+                    <div className="flex flex-wrap gap-1.5 mt-2">
                       {selectedRelationship.mentor.city && (
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs shrink-0">
                           <MapPin className="w-3 h-3 mr-1" />
                           {selectedRelationship.mentor.city}
                         </Badge>
                       )}
                       {selectedRelationship.mentor.mbtiType && (
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs shrink-0">
                           {selectedRelationship.mentor.mbtiType}
                         </Badge>
                       )}
                       {selectedRelationship.mentor.yearsExperience && (
-                        <Badge variant="outline" className="text-xs">
-                          {selectedRelationship.mentor.yearsExperience} years exp
+                        <Badge variant="outline" className="text-xs shrink-0">
+                          {formatYearsExperience(selectedRelationship.mentor.yearsExperience)}
                         </Badge>
                       )}
                     </div>
                     {selectedRelationship.mentor.expertise.length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-2">
                         {selectedRelationship.mentor.expertise.map((skill, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">{skill}</Badge>
+                          <Badge key={i} variant="secondary" className="text-xs max-w-full whitespace-normal text-left">{skill}</Badge>
                         ))}
                       </div>
                     )}
@@ -692,48 +729,53 @@ export default function MentorRelationshipsPage() {
               </div>
 
               {/* Mentee Info */}
-              <div>
+              <div className="min-w-0">
                 <h4 className="font-semibold text-sm mb-3 text-foreground">Mentee</h4>
-                <div className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg">
-                  <Avatar className="w-12 h-12">
+                <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg min-w-0">
+                  <Avatar className="w-12 h-12 shrink-0">
                     <AvatarImage src={selectedRelationship.mentee.avatar || ''} />
                     <AvatarFallback>
                       {selectedRelationship.mentee.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="flex-1 space-y-1">
-                    <p className="font-medium">{selectedRelationship.mentee.name}</p>
-                    <p className="text-sm text-muted-foreground">{selectedRelationship.mentee.email}</p>
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <p className="font-medium truncate">{selectedRelationship.mentee.name}</p>
+                    <p className="text-sm text-muted-foreground break-all">{selectedRelationship.mentee.email}</p>
                     {(selectedRelationship.mentee.jobTitle || selectedRelationship.mentee.industry) && (
-                      <p className="text-sm">
+                      <p className="text-sm break-words">
                         {selectedRelationship.mentee.jobTitle}
                         {selectedRelationship.mentee.jobTitle && selectedRelationship.mentee.industry && ' in '}
-                        {selectedRelationship.mentee.industry}
+                        {formatIndustry(selectedRelationship.mentee.industry)}
                       </p>
                     )}
-                    <div className="flex flex-wrap gap-2 mt-2">
+                    <div className="flex flex-wrap gap-1.5 mt-2">
                       {selectedRelationship.mentee.city && (
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs shrink-0">
                           <MapPin className="w-3 h-3 mr-1" />
                           {selectedRelationship.mentee.city}
                         </Badge>
                       )}
                       {selectedRelationship.mentee.mbtiType && (
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs shrink-0">
                           {selectedRelationship.mentee.mbtiType}
                         </Badge>
                       )}
                       {selectedRelationship.mentee.careerStage && (
-                        <Badge variant="outline" className="text-xs capitalize">
+                        <Badge variant="outline" className="text-xs capitalize shrink-0">
                           {selectedRelationship.mentee.careerStage.replace(/_/g, ' ')}
                         </Badge>
                       )}
                     </div>
                     {selectedRelationship.mentee.learningGoals.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-2">
-                        {selectedRelationship.mentee.learningGoals.map((goal, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">{goal}</Badge>
-                        ))}
+                      <div className="mt-3 space-y-2">
+                        <p className="text-xs text-muted-foreground font-medium">Learning Goals:</p>
+                        <ul className="space-y-1.5">
+                          {selectedRelationship.mentee.learningGoals.map((goal, i) => (
+                            <li key={i} className="text-xs text-muted-foreground bg-secondary/50 rounded px-2 py-1.5 break-words">
+                              {goal}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     )}
                   </div>
@@ -743,9 +785,9 @@ export default function MentorRelationshipsPage() {
               <Separator />
 
               {/* Relationship Stats */}
-              <div>
+              <div className="min-w-0">
                 <h4 className="font-semibold text-sm mb-3">Relationship Status</h4>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="p-3 bg-muted/50 rounded-lg">
                     <p className="text-xs text-muted-foreground">Status</p>
                     <div className="mt-1">{getStatusBadge(selectedRelationship.status)}</div>
@@ -754,7 +796,7 @@ export default function MentorRelationshipsPage() {
                     <p className="text-xs text-muted-foreground">Progress</p>
                     <div className="flex items-center gap-2 mt-1">
                       <Progress value={selectedRelationship.progress} className="h-2 flex-1" />
-                      <span className="text-sm font-medium">{selectedRelationship.progress}%</span>
+                      <span className="text-sm font-medium shrink-0">{selectedRelationship.progress}%</span>
                     </div>
                   </div>
                   <div className="p-3 bg-muted/50 rounded-lg">
@@ -779,7 +821,7 @@ export default function MentorRelationshipsPage() {
                   </div>
                   <div className="p-3 bg-muted/50 rounded-lg">
                     <p className="text-xs text-muted-foreground">Meeting Frequency</p>
-                    <p className="text-sm font-medium mt-1">
+                    <p className="text-sm font-medium mt-1 truncate">
                       {selectedRelationship.meetingFrequency || 'Not set'}
                     </p>
                   </div>
@@ -788,13 +830,15 @@ export default function MentorRelationshipsPage() {
 
               {/* Goals */}
               {selectedRelationship.goals.length > 0 && (
-                <div>
+                <div className="min-w-0">
                   <h4 className="font-semibold text-sm mb-3">Relationship Goals</h4>
-                  <div className="flex flex-wrap gap-2">
+                  <ul className="space-y-1.5">
                     {selectedRelationship.goals.map((goal, i) => (
-                      <Badge key={i} variant="outline">{goal}</Badge>
+                      <li key={i} className="text-sm text-muted-foreground bg-muted/50 rounded px-3 py-2 break-words border border-border">
+                        {goal}
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
               )}
             </div>
