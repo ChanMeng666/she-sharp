@@ -447,7 +447,7 @@ export default function MentorshipDashboard() {
                           </CardDescription>
                         </div>
                       </div>
-                      <Badge className="bg-green-100 text-green-800">
+                      <Badge className="bg-badge-success-bg text-badge-success-fg">
                         <CheckCircle className="h-3 w-3 mr-1" />
                         Active
                       </Badge>
@@ -646,11 +646,11 @@ export default function MentorshipDashboard() {
             <div className="flex-1 overflow-y-auto">
                 <div className="px-8 py-8 space-y-8">
                   {/* Profile Header Card */}
-                  <div className="bg-muted/30 rounded-xl p-6">
+                  <div className="bg-surface-purple rounded-xl p-6">
                     <div className="flex items-start gap-5">
-                      <Avatar className="h-20 w-20 border-2 border-background shadow-md">
+                      <Avatar className="h-20 w-20 border-2 border-brand/20 shadow-md">
                         <AvatarImage src={selectedMentorDetails.formData?.photoUrl || selectedMentorDetails.image || undefined} />
-                        <AvatarFallback className="text-lg">{getInitials(selectedMentorDetails.name)}</AvatarFallback>
+                        <AvatarFallback className="text-lg bg-brand/10 text-brand">{getInitials(selectedMentorDetails.name)}</AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-2xl font-semibold mb-1">
@@ -683,8 +683,8 @@ export default function MentorshipDashboard() {
                   {/* Quick Info Grid */}
                   <div className="grid grid-cols-2 gap-4">
                     {selectedMentorDetails.formData?.city && (
-                      <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
-                        <MapPin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-navy-light">
+                        <MapPin className="h-5 w-5 text-info flex-shrink-0" />
                         <div>
                           <p className="text-xs text-muted-foreground">Location</p>
                           <p className="text-sm font-medium">
@@ -694,8 +694,8 @@ export default function MentorshipDashboard() {
                       </div>
                     )}
                     {(selectedMentorDetails.formData?.yearsExperience || selectedMentorDetails.yearsExperience) && (
-                      <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
-                        <Briefcase className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-mint-light">
+                        <Briefcase className="h-5 w-5 text-navy flex-shrink-0" />
                         <div>
                           <p className="text-xs text-muted-foreground">Experience</p>
                           <p className="text-sm font-medium">
@@ -706,8 +706,8 @@ export default function MentorshipDashboard() {
                       </div>
                     )}
                     {selectedMentorDetails.formData?.preferredMeetingFormat && (
-                      <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
-                        <Globe className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-periwinkle-light">
+                        <Globe className="h-5 w-5 text-periwinkle flex-shrink-0" />
                         <div>
                           <p className="text-xs text-muted-foreground">Meeting Format</p>
                           <p className="text-sm font-medium">
@@ -718,8 +718,8 @@ export default function MentorshipDashboard() {
                       </div>
                     )}
                     {selectedMentorDetails.formData?.mbtiType && (
-                      <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
-                        <Brain className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-surface-purple">
+                        <Brain className="h-5 w-5 text-brand flex-shrink-0" />
                         <div>
                           <p className="text-xs text-muted-foreground">MBTI Type</p>
                           <p className="text-sm font-medium">{selectedMentorDetails.formData.mbtiType}</p>
@@ -727,8 +727,8 @@ export default function MentorshipDashboard() {
                       </div>
                     )}
                     {(selectedMentorDetails.formData?.availabilityHoursPerMonth || selectedMentorDetails.availabilityHoursPerMonth) && (
-                      <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
-                        <Clock className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-navy-light">
+                        <Clock className="h-5 w-5 text-info flex-shrink-0" />
                         <div>
                           <p className="text-xs text-muted-foreground">Availability</p>
                           <p className="text-sm font-medium">
@@ -911,11 +911,11 @@ export default function MentorshipDashboard() {
             <div className="flex-1 overflow-y-auto">
               <div className="px-8 py-8 space-y-8">
                 {/* Profile Header Card */}
-                <div className="bg-muted/30 rounded-xl p-6">
+                <div className="bg-periwinkle-light rounded-xl p-6">
                   <div className="flex items-start gap-5">
-                    <Avatar className="h-20 w-20 border-2 border-background shadow-md">
+                    <Avatar className="h-20 w-20 border-2 border-periwinkle/20 shadow-md">
                       <AvatarImage src={selectedMenteeDetails.formData?.photoUrl || selectedMenteeDetails.image || undefined} />
-                      <AvatarFallback className="text-lg">{getInitials(selectedMenteeDetails.name)}</AvatarFallback>
+                      <AvatarFallback className="text-lg bg-periwinkle/10 text-periwinkle">{getInitials(selectedMenteeDetails.name)}</AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
                       <h3 className="text-2xl font-semibold mb-1">
@@ -943,8 +943,8 @@ export default function MentorshipDashboard() {
                 {/* Quick Info Grid */}
                 <div className="grid grid-cols-2 gap-4">
                   {selectedMenteeDetails.formData?.city && (
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
-                      <MapPin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-navy-light">
+                      <MapPin className="h-5 w-5 text-info flex-shrink-0" />
                       <div>
                         <p className="text-xs text-muted-foreground">Location</p>
                         <p className="text-sm font-medium">
@@ -954,8 +954,8 @@ export default function MentorshipDashboard() {
                     </div>
                   )}
                   {selectedMenteeDetails.formData?.preferredMeetingFormat && (
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
-                      <Globe className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-mint-light">
+                      <Globe className="h-5 w-5 text-navy flex-shrink-0" />
                       <div>
                         <p className="text-xs text-muted-foreground">Meeting Format</p>
                         <p className="text-sm font-medium">
@@ -966,8 +966,8 @@ export default function MentorshipDashboard() {
                     </div>
                   )}
                   {selectedMenteeDetails.formData?.mbtiType && (
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
-                      <Brain className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-surface-purple">
+                      <Brain className="h-5 w-5 text-brand flex-shrink-0" />
                       <div>
                         <p className="text-xs text-muted-foreground">MBTI Type</p>
                         <p className="text-sm font-medium">{selectedMenteeDetails.formData.mbtiType}</p>
@@ -975,8 +975,8 @@ export default function MentorshipDashboard() {
                     </div>
                   )}
                   {(selectedMenteeDetails.formData?.preferredMeetingFrequency || selectedMenteeDetails.preferredMeetingFrequency) && (
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
-                      <Calendar className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-periwinkle-light">
+                      <Calendar className="h-5 w-5 text-periwinkle flex-shrink-0" />
                       <div>
                         <p className="text-xs text-muted-foreground">Meeting Frequency</p>
                         <p className="text-sm font-medium">

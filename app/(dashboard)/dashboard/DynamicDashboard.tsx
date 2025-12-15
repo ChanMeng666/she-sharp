@@ -331,7 +331,7 @@ export default function DynamicDashboard() {
 
       {/* Form Status Alerts */}
       {formStatus?.mentee?.status && formStatus.mentee.status !== 'approved' && (
-        <Alert className={formStatus.mentee.status === 'rejected' ? 'border-red-200 bg-red-50' : 'border-blue-200 bg-blue-50'}>
+        <Alert className={formStatus.mentee.status === 'rejected' ? 'border-destructive/30 bg-destructive/5' : 'border-info/30 bg-navy-light'}>
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
             {formStatus.mentee.status === 'not_started' && (
@@ -351,7 +351,7 @@ export default function DynamicDashboard() {
       )}
 
       {formStatus?.mentor?.status && formStatus.mentor.status !== 'approved' && (
-        <Alert className={formStatus.mentor.status === 'rejected' ? 'border-red-200 bg-red-50' : 'border-amber-200 bg-amber-50'}>
+        <Alert className={formStatus.mentor.status === 'rejected' ? 'border-destructive/30 bg-destructive/5' : 'border-brand/30 bg-surface-purple'}>
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
             {formStatus.mentor.status === 'not_started' && (
@@ -375,15 +375,18 @@ export default function DynamicDashboard() {
       {mentor && (
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">Mentor Dashboard</h2>
-            <Badge variant={mentor.isAcceptingMentees ? 'default' : 'secondary'}>
+            <h2 className="text-2xl font-semibold flex items-center gap-2">
+              <Users className="h-6 w-6 text-brand" />
+              Mentor Dashboard
+            </h2>
+            <Badge className={mentor.isAcceptingMentees ? 'bg-badge-success-bg text-badge-success-fg' : ''} variant={mentor.isAcceptingMentees ? undefined : 'secondary'}>
               {mentor.isAcceptingMentees ? 'Accepting Mentees' : 'Not Accepting'}
             </Badge>
           </div>
 
           {/* Mentor Stats */}
-          <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-            <Card className="@container/card">
+          <div className="grid grid-cols-1 gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+            <Card className="@container/card bg-gradient-to-t from-brand/10 to-card shadow-xs">
               <CardHeader>
                 <CardDescription>Current Mentees</CardDescription>
                 <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
@@ -416,7 +419,7 @@ export default function DynamicDashboard() {
               </CardFooter>
             </Card>
 
-            <Card className="@container/card">
+            <Card className="@container/card bg-gradient-to-t from-periwinkle/10 to-card shadow-xs">
               <CardHeader>
                 <CardDescription>Total Meetings</CardDescription>
                 <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
@@ -441,7 +444,7 @@ export default function DynamicDashboard() {
               </CardFooter>
             </Card>
 
-            <Card className="@container/card">
+            <Card className="@container/card bg-gradient-to-t from-info/10 to-card shadow-xs">
               <CardHeader>
                 <CardDescription>Meeting Hours</CardDescription>
                 <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
@@ -466,7 +469,7 @@ export default function DynamicDashboard() {
               </CardFooter>
             </Card>
 
-            <Card className="@container/card">
+            <Card className="@container/card bg-gradient-to-t from-mint/20 to-card shadow-xs">
               <CardHeader>
                 <CardDescription>Resources Shared</CardDescription>
                 <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
@@ -496,11 +499,14 @@ export default function DynamicDashboard() {
       {/* Mentee Section */}
       {mentee && (
         <div className="flex flex-col gap-6">
-          <h2 className="text-2xl font-semibold">Mentee Dashboard</h2>
+          <h2 className="text-2xl font-semibold flex items-center gap-2">
+            <BookOpen className="h-6 w-6 text-periwinkle" />
+            Mentee Dashboard
+          </h2>
 
           {/* Mentee Stats */}
-          <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-            <Card className="@container/card">
+          <div className="grid grid-cols-1 gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+            <Card className="@container/card bg-gradient-to-t from-periwinkle/10 to-card shadow-xs">
               <CardHeader>
                 <CardDescription>Active Mentors</CardDescription>
                 <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
@@ -523,7 +529,7 @@ export default function DynamicDashboard() {
               </CardFooter>
             </Card>
 
-            <Card className="@container/card">
+            <Card className="@container/card bg-gradient-to-t from-brand/10 to-card shadow-xs">
               <CardHeader>
                 <CardDescription>Sessions Attended</CardDescription>
                 <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
@@ -546,7 +552,7 @@ export default function DynamicDashboard() {
               </CardFooter>
             </Card>
 
-            <Card className="@container/card">
+            <Card className="@container/card bg-gradient-to-t from-info/10 to-card shadow-xs">
               <CardHeader>
                 <CardDescription>Events Registered</CardDescription>
                 <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
@@ -569,7 +575,7 @@ export default function DynamicDashboard() {
               </CardFooter>
             </Card>
 
-            <Card className="@container/card">
+            <Card className="@container/card bg-gradient-to-t from-mint/20 to-card shadow-xs">
               <CardHeader>
                 <CardDescription>Resources Accessed</CardDescription>
                 <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">

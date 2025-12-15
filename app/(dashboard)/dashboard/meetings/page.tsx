@@ -229,7 +229,7 @@ export default function MeetingsPage() {
             <span className="text-sm font-medium">Rating:</span>
             <div className="flex gap-1">
               {[...Array(5)].map((_, i) => (
-                <span key={i} className={i < meeting.rating! ? 'text-yellow-500' : 'text-gray-300'}>
+                <span key={i} className={i < meeting.rating! ? 'text-brand' : 'text-muted-foreground/30'}>
                   ★
                 </span>
               ))}

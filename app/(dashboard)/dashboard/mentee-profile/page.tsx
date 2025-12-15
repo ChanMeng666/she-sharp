@@ -264,7 +264,7 @@ export default function MenteeProfilePage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Camera className="h-5 w-5" />
+              <Camera className="h-5 w-5 text-periwinkle" />
               Profile Photo
             </CardTitle>
             <CardDescription>
@@ -284,7 +284,7 @@ export default function MenteeProfilePage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <User className="h-5 w-5" />
+              <User className="h-5 w-5 text-brand" />
               Personal Information
             </CardTitle>
             <CardDescription>
@@ -351,7 +351,7 @@ export default function MenteeProfilePage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <MapPin className="h-5 w-5" />
+              <MapPin className="h-5 w-5 text-info" />
               Location & Meeting Preferences
             </CardTitle>
             <CardDescription>
@@ -422,7 +422,7 @@ export default function MenteeProfilePage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Briefcase className="h-5 w-5" />
+              <Briefcase className="h-5 w-5 text-navy" />
               Professional Information
             </CardTitle>
             <CardDescription>
@@ -496,7 +496,7 @@ export default function MenteeProfilePage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Briefcase className="h-5 w-5" />
+              <Briefcase className="h-5 w-5 text-periwinkle" />
               Preferred Industries
             </CardTitle>
             <CardDescription>
@@ -526,7 +526,7 @@ export default function MenteeProfilePage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Target className="h-5 w-5" />
+              <Target className="h-5 w-5 text-brand" />
               Skills You Want to Master
             </CardTitle>
             <CardDescription>
@@ -577,7 +577,7 @@ export default function MenteeProfilePage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Target className="h-5 w-5" />
+              <Target className="h-5 w-5 text-info" />
               Skills You Want to Learn
             </CardTitle>
             <CardDescription>
@@ -628,7 +628,7 @@ export default function MenteeProfilePage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Heart className="h-5 w-5" />
+              <Heart className="h-5 w-5 text-brand" />
               Goals & Expectations
             </CardTitle>
             <CardDescription>
@@ -683,7 +683,7 @@ export default function MenteeProfilePage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Brain className="h-5 w-5" />
+              <Brain className="h-5 w-5 text-periwinkle" />
               Personality
             </CardTitle>
             <CardDescription>

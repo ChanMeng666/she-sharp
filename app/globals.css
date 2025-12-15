@@ -127,6 +127,21 @@
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
+  /* Badge colors */
+  --color-badge-admin-bg: hsl(var(--badge-admin-bg));
+  --color-badge-admin-fg: hsl(var(--badge-admin-fg));
+  --color-badge-mentor-bg: hsl(var(--badge-mentor-bg));
+  --color-badge-mentor-fg: hsl(var(--badge-mentor-fg));
+  --color-badge-mentee-bg: hsl(var(--badge-mentee-bg));
+  --color-badge-mentee-fg: hsl(var(--badge-mentee-fg));
+  --color-badge-success-bg: hsl(var(--badge-success-bg));
+  --color-badge-success-fg: hsl(var(--badge-success-fg));
+  --color-badge-success-icon: hsl(var(--badge-success-icon));
+  --color-badge-warning-bg: hsl(var(--badge-warning-bg));
+  --color-badge-warning-fg: hsl(var(--badge-warning-fg));
+  --color-badge-info-bg: hsl(var(--badge-info-bg));
+  --color-badge-info-fg: hsl(var(--badge-info-fg));
+
   /* Legacy brand colors (grayscale compatibility) */
   --color-purple-dark: var(--color-purple-dark);
   --color-purple-mid: var(--color-purple-mid);

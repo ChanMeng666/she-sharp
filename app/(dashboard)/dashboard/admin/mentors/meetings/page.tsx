@@ -112,8 +112,8 @@ interface ApiResponse {
 }
 
 const TYPE_COLORS = [
-  '#9b2e83',  // Purple Dark - Video calls
-  '#1f1e44',  // Navy Dark - In person
+  'hsl(312, 54%, 40%)',  // Purple Dark - Video calls (brand)
+  'hsl(242, 38%, 19%)',  // Navy Dark - In person (navy)
 ];
 
 export default function MentorMeetingsPage() {
@@ -284,7 +284,7 @@ export default function MentorMeetingsPage() {
                     yAxisId="left"
                     type="monotone"
                     dataKey="meetings"
-                    stroke="#9b2e83"
+                    stroke="hsl(312, 54%, 40%)"
                     strokeWidth={2}
                     name="Total Meetings"
                   />
@@ -292,7 +292,7 @@ export default function MentorMeetingsPage() {
                     yAxisId="right"
                     type="monotone"
                     dataKey="avgDuration"
-                    stroke="#1378d1"
+                    stroke="hsl(208, 83%, 45%)"
                     strokeWidth={2}
                     name="Avg Duration (min)"
                   />
@@ -324,7 +324,7 @@ export default function MentorMeetingsPage() {
                     labelLine={false}
                     label={({ type, value }) => `${type}: ${value}%`}
                     outerRadius={80}
-                    fill="#8884d8"
+                    fill="hsl(244, 100%, 75%)"
                     dataKey="value"
                   >
                     {typeDistribution.map((entry, index) => (

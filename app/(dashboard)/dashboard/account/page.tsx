@@ -368,9 +368,9 @@ function AccountPageContent() {
       </div>
 
       {message && (
-        <Alert className="mb-6 border-green-200 bg-green-50">
-          <CheckCircle2 className="h-4 w-4 text-green-600" />
-          <AlertDescription className="text-green-800">{message}</AlertDescription>
+        <Alert className="mb-6 border-mint bg-mint-light">
+          <CheckCircle2 className="h-4 w-4 text-brand" />
+          <AlertDescription className="text-foreground">{message}</AlertDescription>
         </Alert>
       )}
 
@@ -626,11 +626,11 @@ function AccountPageContent() {
                         {passwordRequirements.map((req, index) => (
                           <li key={index} className="flex items-center text-sm">
                             {req.met ? (
-                              <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                              <CheckCircle2 className="mr-2 h-4 w-4 text-brand" />
                             ) : (
                               <XCircle className="mr-2 h-4 w-4 text-muted-foreground" />
                             )}
-                            <span className={req.met ? 'text-green-700' : 'text-muted-foreground'}>
+                            <span className={req.met ? 'text-brand' : 'text-muted-foreground'}>
                               {req.label}
                             </span>
                           </li>
@@ -675,9 +675,9 @@ function AccountPageContent() {
             </Card>
           )}
 
-          <Card className="mt-6 border-red-200">
+          <Card className="mt-6 border-destructive/30">
             <CardHeader>
-              <CardTitle className="text-red-600 flex items-center gap-2">
+              <CardTitle className="text-destructive flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5" />
                 Danger Zone
               </CardTitle>
@@ -749,8 +749,8 @@ function AccountPageContent() {
               <div className="flex items-center space-x-3">
                 {isVerified ? (
                   <>
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
-                      <CheckCircle2 className="h-6 w-6 text-green-600" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-mint-light">
+                      <CheckCircle2 className="h-6 w-6 text-brand" />
                     </div>
                     <div>
                       <p className="font-medium">Email Verified</p>
@@ -761,8 +761,8 @@ function AccountPageContent() {
                   </>
                 ) : (
                   <>
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100">
-                      <AlertTriangle className="h-6 w-6 text-amber-600" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-purple">
+                      <AlertTriangle className="h-6 w-6 text-brand" />
                     </div>
                     <div className="flex-1">
                       <p className="font-medium">Email Not Verified</p>
@@ -776,8 +776,8 @@ function AccountPageContent() {
 
               {!isVerified && (
                 <>
-                  <Alert className="border-amber-200 bg-amber-50">
-                    <Mail className="h-4 w-4 text-amber-600" />
+                  <Alert className="border-brand/30 bg-surface-purple">
+                    <Mail className="h-4 w-4 text-brand" />
                     <AlertDescription>
                       We've sent a verification link to <strong>{user?.email as string}</strong>.
                       Please check your inbox and click the link to verify your account.
@@ -825,7 +825,7 @@ function AccountPageContent() {
                 </p>
 
                 {/* Data Retention Notice */}
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-amber-800">
+                <div className="bg-surface-purple border border-brand/30 rounded-lg p-3 text-foreground">
                   <p className="flex items-start gap-2 text-sm">
                     <Clock className="h-4 w-4 mt-0.5 flex-shrink-0" />
                     <span>
@@ -838,7 +838,7 @@ function AccountPageContent() {
 
                 {/* OAuth-specific notice */}
                 {!hasPassword && connectedAccounts.length > 0 && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-blue-800">
+                  <div className="bg-navy-light border border-info/30 rounded-lg p-3 text-foreground">
                     <p className="flex items-start gap-2 text-sm">
                       <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
                       <span>

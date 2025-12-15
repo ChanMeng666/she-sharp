@@ -540,11 +540,11 @@ export default function UserManagement() {
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'admin':
-        return 'bg-[#1f1e44] text-white';
+        return 'bg-badge-admin-bg text-badge-admin-fg';
       case 'mentor':
-        return 'bg-[#f7e5f3] text-[#9b2e83]';
+        return 'bg-badge-mentor-bg text-badge-mentor-fg';
       case 'mentee':
-        return 'bg-[#f4f4fa] text-[#8982ff]';
+        return 'bg-badge-mentee-bg text-badge-mentee-fg';
       default:
         return 'bg-muted text-muted-foreground';
     }
@@ -553,9 +553,9 @@ export default function UserManagement() {
   const getMembershipBadgeColor = (tier: string) => {
     switch (tier) {
       case 'premium':
-        return 'bg-[#9b2e83] text-white';
+        return 'bg-brand text-brand-foreground';
       case 'basic':
-        return 'bg-[#eaf2ff] text-[#1378d1]';
+        return 'bg-badge-info-bg text-badge-info-fg';
       case 'free':
         return 'bg-muted text-muted-foreground';
       default:
@@ -566,13 +566,13 @@ export default function UserManagement() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
-        return <Badge className="bg-[#effefb] text-[#1f1e44] text-xs"><CheckCircle className="w-3 h-3 mr-1 text-[#9b2e83]" />Active</Badge>;
+        return <Badge className="bg-badge-success-bg text-badge-success-fg text-xs"><CheckCircle className="w-3 h-3 mr-1 text-badge-success-icon" />Active</Badge>;
       case 'inactive':
         return <Badge className="bg-muted text-muted-foreground text-xs">Inactive</Badge>;
       case 'suspended':
-        return <Badge className="bg-[#d72f40]/10 text-[#d72f40] text-xs"><Ban className="w-3 h-3 mr-1" />Suspended</Badge>;
+        return <Badge className="bg-destructive/10 text-destructive text-xs"><Ban className="w-3 h-3 mr-1" />Suspended</Badge>;
       case 'pending_registration':
-        return <Badge className="bg-[#eaf2ff] text-[#1378d1] text-xs"><UserPlus className="w-3 h-3 mr-1" />Pending Registration</Badge>;
+        return <Badge className="bg-badge-info-bg text-badge-info-fg text-xs"><UserPlus className="w-3 h-3 mr-1" />Pending Registration</Badge>;
       default:
         return null;
     }
@@ -581,11 +581,11 @@ export default function UserManagement() {
   const getApplicationBadge = (status: string) => {
     switch (status) {
       case 'approved':
-        return <Badge className="bg-[#effefb] text-[#1f1e44] text-xs"><CheckCircle className="w-3 h-3 mr-1 text-[#9b2e83]" />Approved</Badge>;
+        return <Badge className="bg-badge-success-bg text-badge-success-fg text-xs"><CheckCircle className="w-3 h-3 mr-1 text-badge-success-icon" />Approved</Badge>;
       case 'pending':
-        return <Badge className="bg-[#eaf2ff] text-[#1378d1] text-xs"><Clock className="w-3 h-3 mr-1" />Pending</Badge>;
+        return <Badge className="bg-badge-info-bg text-badge-info-fg text-xs"><Clock className="w-3 h-3 mr-1" />Pending</Badge>;
       case 'rejected':
-        return <Badge className="bg-[#d72f40]/10 text-[#d72f40] text-xs"><X className="w-3 h-3 mr-1" />Rejected</Badge>;
+        return <Badge className="bg-destructive/10 text-destructive text-xs"><X className="w-3 h-3 mr-1" />Rejected</Badge>;
       default:
         return null;
     }
@@ -593,8 +593,8 @@ export default function UserManagement() {
 
   const getMentorStatusBadge = (status: string) => {
     const variants = {
-      active: { text: 'Active', className: 'bg-[#effefb] text-[#1f1e44]', icon: <CheckCircle className="w-3 h-3 mr-1 text-[#9b2e83]" /> },
-      busy: { text: 'Busy', className: 'bg-[#f7e5f3] text-[#9b2e83]', icon: <Clock className="w-3 h-3 mr-1" /> },
+      active: { text: 'Active', className: 'bg-badge-success-bg text-badge-success-fg', icon: <CheckCircle className="w-3 h-3 mr-1 text-badge-success-icon" /> },
+      busy: { text: 'Busy', className: 'bg-badge-warning-bg text-badge-warning-fg', icon: <Clock className="w-3 h-3 mr-1" /> },
       paused: { text: 'Paused', className: 'bg-muted text-muted-foreground', icon: null },
     };
     const variant = variants[status as keyof typeof variants] || variants.paused;
@@ -608,14 +608,14 @@ export default function UserManagement() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Profile Details */}
           <div className="space-y-3">
-            <h4 className="font-semibold text-sm text-[#9b2e83] uppercase tracking-wide flex items-center gap-2">
+            <h4 className="font-semibold text-sm text-brand uppercase tracking-wide flex items-center gap-2">
               <Eye className="w-4 h-4" />
               Profile Details
             </h4>
 
             {(user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio) && (
               <div>
-                <p className="text-xs text-[#1f1e44] font-medium mb-1">Bio</p>
+                <p className="text-xs text-navy font-medium mb-1">Bio</p>
                 <p className="text-sm line-clamp-3">
                   {user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio}
                 </p>
@@ -624,10 +624,10 @@ export default function UserManagement() {
 
             {(user.mentorInfo?.expertise || user.applicationInfo?.expertise) && (
               <div>
-                <p className="text-xs text-[#8982ff] font-medium mb-1">Expertise</p>
+                <p className="text-xs text-periwinkle font-medium mb-1">Expertise</p>
                 <div className="flex flex-wrap gap-1">
                   {(user.mentorInfo?.expertise || user.applicationInfo?.expertise || []).map((skill, idx) => (
-                    <Badge key={idx} variant="secondary" className="text-xs bg-[#f4f4fa] text-[#8982ff]">{skill}</Badge>
+                    <Badge key={idx} variant="secondary" className="text-xs bg-badge-mentee-bg text-badge-mentee-fg">{skill}</Badge>
                   ))}
                 </div>
               </div>
@@ -635,12 +635,12 @@ export default function UserManagement() {
 
             {(user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl) && (
               <div className="flex items-center gap-2 text-sm">
-                <LinkIcon className="w-3 h-3 text-[#1378d1]" />
+                <LinkIcon className="w-3 h-3 text-info" />
                 <a
                   href={user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#1378d1] hover:underline truncate"
+                  className="text-info hover:underline truncate"
                 >
                   LinkedIn Profile
                 </a>
@@ -649,7 +649,7 @@ export default function UserManagement() {
 
             {user.applicationInfo && (
               <div className="pt-2 border-t">
-                <p className="text-xs text-[#1378d1] font-medium mb-1">Application ({user.applicationInfo.type})</p>
+                <p className="text-xs text-info font-medium mb-1">Application ({user.applicationInfo.type})</p>
                 <div className="space-y-1 text-sm">
                   <p>Status: <Badge variant="outline" className="ml-1 text-xs">{user.applicationInfo.status}</Badge></p>
                   {user.applicationInfo.submittedAt && (
@@ -669,7 +669,7 @@ export default function UserManagement() {
 
           {/* Metrics & Activity */}
           <div className="space-y-3">
-            <h4 className="font-semibold text-sm text-[#1f1e44] uppercase tracking-wide flex items-center gap-2">
+            <h4 className="font-semibold text-sm text-navy uppercase tracking-wide flex items-center gap-2">
               <Briefcase className="w-4 h-4" />
               Metrics & Activity
             </h4>
@@ -687,17 +687,17 @@ export default function UserManagement() {
 
             {user.mentorInfo && user.mentorInfo.isVerified && (
               <div className="pt-2 border-t space-y-2">
-                <p className="text-xs text-[#9b2e83] font-medium mb-1">Mentor Metrics</p>
+                <p className="text-xs text-brand font-medium mb-1">Mentor Metrics</p>
                 <div className="flex items-center gap-2 text-sm">
-                  <Star className="w-4 h-4 text-[#9b2e83] fill-[#9b2e83]" />
+                  <Star className="w-4 h-4 text-brand fill-brand" />
                   <span className="font-medium">{user.mentorInfo.avgRating?.toFixed(1) || 'N/A'}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Users className="w-4 h-4 text-[#8982ff]" />
+                  <Users className="w-4 h-4 text-periwinkle" />
                   <span>{user.mentorInfo.activeMentees} active / {user.mentorInfo.totalMentees} total mentees</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MessageSquare className="w-4 h-4 text-[#1378d1]" />
+                  <MessageSquare className="w-4 h-4 text-info" />
                   <span>{user.mentorInfo.totalSessions} sessions</span>
                 </div>
               </div>
@@ -705,7 +705,7 @@ export default function UserManagement() {
 
             {user.menteeInfo && (
               <div className="pt-2 border-t space-y-2">
-                <p className="text-xs text-[#8982ff] font-medium mb-1">Mentee Info</p>
+                <p className="text-xs text-periwinkle font-medium mb-1">Mentee Info</p>
                 {user.menteeInfo.careerStage && (
                   <p className="text-sm">Career Stage: <span className="capitalize">{user.menteeInfo.careerStage.replace(/_/g, ' ')}</span></p>
                 )}
@@ -727,28 +727,28 @@ export default function UserManagement() {
         {stats && (
           <div className="flex flex-wrap items-center gap-6 text-sm">
             <div className="flex items-center gap-2">
-              <Users className="w-4 h-4 text-[#1f1e44]" />
-              <span className="text-[#1f1e44] font-medium">Total Users</span>
+              <Users className="w-4 h-4 text-navy" />
+              <span className="text-navy font-medium">Total Users</span>
               <span className="font-bold text-lg">{stats.totalUsers}</span>
             </div>
             <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-[#1378d1]" />
-              <span className="text-[#1378d1] font-medium">Pending Applications</span>
+              <Clock className="w-4 h-4 text-info" />
+              <span className="text-info font-medium">Pending Applications</span>
               <span className="font-bold text-lg">{stats.pendingApplications}</span>
             </div>
             <div className="flex items-center gap-2">
-              <Star className="w-4 h-4 text-[#9b2e83]" />
-              <span className="text-[#9b2e83] font-medium">Mentors</span>
+              <Star className="w-4 h-4 text-brand" />
+              <span className="text-brand font-medium">Mentors</span>
               <span className="font-bold text-lg">{stats.byRole.mentor}</span>
             </div>
             <div className="flex items-center gap-2">
-              <GraduationCap className="w-4 h-4 text-[#8982ff]" />
-              <span className="text-[#8982ff] font-medium">Mentees</span>
+              <GraduationCap className="w-4 h-4 text-periwinkle" />
+              <span className="text-periwinkle font-medium">Mentees</span>
               <span className="font-bold text-lg">{stats.byRole.mentee}</span>
             </div>
             <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-[#1f1e44]" />
-              <span className="text-[#1f1e44] font-medium">Admins</span>
+              <Shield className="w-4 h-4 text-navy" />
+              <span className="text-navy font-medium">Admins</span>
               <span className="font-bold text-lg">{stats.byRole.admin}</span>
             </div>
           </div>
@@ -946,7 +946,7 @@ export default function UserManagement() {
 
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center justify-between">
-                          <span className="text-[#9b2e83] font-medium flex items-center gap-1">
+                          <span className="text-brand font-medium flex items-center gap-1">
                             <Shield className="w-3 h-3" />
                             Roles:
                           </span>
@@ -960,7 +960,7 @@ export default function UserManagement() {
                         </div>
 
                         <div className="flex items-center justify-between">
-                          <span className="text-[#1f1e44] font-medium flex items-center gap-1">
+                          <span className="text-navy font-medium flex items-center gap-1">
                             <CheckCircle className="w-3 h-3" />
                             Status:
                           </span>
@@ -969,7 +969,7 @@ export default function UserManagement() {
 
                         {user.applicationStatus === 'pending' && (
                           <div className="flex items-center justify-between">
-                            <span className="text-[#1378d1] font-medium flex items-center gap-1">
+                            <span className="text-info font-medium flex items-center gap-1">
                               <Clock className="w-3 h-3" />
                               Application:
                             </span>
@@ -1073,13 +1073,13 @@ export default function UserManagement() {
                                   {(user.city || user.mbtiType) && (
                                     <div className="flex items-center gap-2 mt-1">
                                       {user.city && (
-                                        <span className="flex items-center gap-0.5 text-xs text-[#1378d1]">
+                                        <span className="flex items-center gap-0.5 text-xs text-info">
                                           <MapPin className="w-3 h-3" />
                                           {user.city}
                                         </span>
                                       )}
                                       {user.mbtiType && (
-                                        <Badge className="text-xs px-1.5 py-0 bg-[#f4f4fa] text-[#8982ff] border border-[#8982ff]/30">
+                                        <Badge className="text-xs px-1.5 py-0 bg-badge-mentee-bg text-badge-mentee-fg border border-periwinkle/30">
                                           <Brain className="w-2.5 h-2.5 mr-0.5" />
                                           {user.mbtiType}
                                         </Badge>
@@ -1287,7 +1287,7 @@ export default function UserManagement() {
               <div>
                 <Label htmlFor="review-notes" className={cn(
                   "flex items-center gap-2",
-                  reviewAction === 'approve' ? "text-[#9b2e83]" : "text-[#d72f40]"
+                  reviewAction === 'approve' ? "text-brand" : "text-destructive"
                 )}>
                   {reviewAction === 'approve' ? (
                     <CheckCircle className="w-4 h-4" />
@@ -1394,7 +1394,7 @@ export default function UserManagement() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="edit-name" className="text-[#1f1e44] flex items-center gap-2">
+                  <Label htmlFor="edit-name" className="text-navy flex items-center gap-2">
                     <Users className="w-4 h-4" />
                     Name
                   </Label>
@@ -1406,7 +1406,7 @@ export default function UserManagement() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="edit-phone" className="text-[#8982ff] flex items-center gap-2">
+                  <Label htmlFor="edit-phone" className="text-periwinkle flex items-center gap-2">
                     <Phone className="w-4 h-4" />
                     Phone
                   </Label>
