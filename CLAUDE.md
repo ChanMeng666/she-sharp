@@ -32,61 +32,61 @@ pnpm start            # Start production server
 ```
 she-sharp/
 ├── app/                    # Next.js App Router (pages and API routes)
-│   ├── (site)/             # Public pages (home, about, events, etc.)
-│   ├── (login)/            # Authentication pages (sign-in, sign-up, etc.)
-│   ├── (dashboard)/        # Protected dashboard pages
-│   └── api/                # API routes (73 endpoints)
-├── components/             # React components (170+ files)
-│   ├── ui/                 # shadcn/ui base components (59 files)
-│   ├── layout/             # Layout components (header, footer, etc.)
-│   ├── sections/           # Page section components (70 files)
-│   ├── events/             # Event-related components
-│   ├── mentorship/         # Mentorship components
-│   ├── chatbot/            # AI chatbot components
-│   ├── data-table/         # Advanced data table system
-│   ├── admin/              # Admin panel components
-│   └── forms/              # Form components
-├── lib/                    # Core business logic (51 files)
+│   ├── (site)/             # Public pages (home, about, events, etc.) - 15 pages
+│   ├── (login)/            # Authentication pages (sign-in, sign-up, etc.) - 6 pages
+│   ├── (dashboard)/        # Protected dashboard pages - 11 pages
+│   └── api/                # API routes (71 endpoints)
+├── components/             # React components (137 files)
+│   ├── ui/                 # shadcn/ui + custom components (63 files)
+│   ├── layout/             # Layout components (5 files)
+│   ├── sections/           # Page section components (32 files)
+│   ├── events/             # Event-related components (9 files)
+│   ├── chatbot/            # AI chatbot components (7 files)
+│   ├── data-table/         # Advanced data table system (7 files)
+│   ├── gallery/            # Photo gallery components (3 files)
+│   ├── admin/              # Admin panel components (2 files)
+│   ├── forms/              # Form components (1 file)
+│   ├── dashboard/          # Dashboard utilities (1 file)
+│   └── spotify/            # Spotify embed component (1 file)
+├── lib/                    # Core business logic (52 files)
 │   ├── auth/               # Authentication (14 files)
-│   ├── db/                 # Database layer (schema, queries)
+│   ├── data/               # Static data files (12 files)
+│   ├── db/                 # Database layer (7 files + migrations)
 │   ├── matching/           # AI matching system (7 files)
-│   ├── forms/              # Form management
-│   ├── email/              # Email service (Resend)
-│   ├── points/             # Gamification system
-│   ├── invitations/        # Invitation code system
-│   ├── notifications/      # Notification service
-│   ├── stripe/             # Payment integration
-│   ├── user/               # User management
-│   ├── config/             # Navigation and configuration
-│   └── data/               # Static data files
-├── hooks/                  # Custom React hooks
-├── styles/                 # Global and component styles
-├── public/                 # Static assets (images, fonts, icons)
+│   ├── config/             # Navigation and configuration (4 files)
+│   ├── stripe/             # Payment integration (2 files)
+│   ├── email/              # Email service (1 file)
+│   ├── forms/              # Form management (1 file)
+│   ├── points/             # Gamification system (1 file)
+│   ├── invitations/        # Invitation code system (1 file)
+│   ├── notifications/      # Notification service (1 file)
+│   └── user/               # User management (1 file)
+├── hooks/                  # Custom React hooks (6 files)
+├── types/                  # TypeScript type definitions (7 files)
+├── styles/                 # Global and component styles (4 files)
+├── public/                 # Static assets (images, logos, icons)
 ├── docs/                   # Project documentation
-├── scripts/                # Build and utility scripts
-└── types/                  # TypeScript type definitions
+└── scripts/                # Build and utility scripts
 ```
 
 ## Page Routes Structure
 
-### Public Pages (`/(site)/`)
+### Public Pages (`/(site)/`) - 15 pages
 | Route | Description |
 |-------|-------------|
 | `/` | Home page with hero, impact, values, programs |
 | `/about` | Organization mission, team, timeline |
 | `/mentorship` | Mentorship program overview |
-| `/mentorship/mentors` | Browse available mentors |
-| `/mentorship/become-a-mentor` | Mentor application |
-| `/mentorship/join` | Join as mentee (with payment flow) |
+| `/mentorship/become-a-mentor` | Mentor application form |
+| `/mentorship/join` | Join as mentee |
+| `/mentorship/join/payment` | Mentee payment processing |
+| `/mentorship/join/success` | Payment success page |
 | `/events` | Event listings |
 | `/events/[slug]` | Individual event details |
-| `/media` | Media hub home |
-| `/media/podcasts` | Podcast listings |
-| `/media/newsletters` | Newsletter archive |
-| `/media/news-and-press` | Press coverage |
-| `/media/photo-gallery` | Photo gallery |
-| `/contact` | Contact form |
+| `/resources` | Media resources hub (podcasts, newsletters, gallery) |
 | `/donate` | Donation page |
+| `/donate/checkout` | Donation checkout |
+| `/donate/success` | Donation success page |
 | `/sponsors/corporate-sponsorship` | Sponsorship information |
 | `/join-our-team` | Volunteer recruitment |
 
@@ -100,34 +100,26 @@ she-sharp/
 | `/verify-email` | Email verification |
 | `/verify-invitation` | Invitation code verification |
 
-### Dashboard Pages (`/(dashboard)/dashboard/`)
+### Dashboard Pages (`/(dashboard)/dashboard/`) - 11 pages
 | Route | Description |
 |-------|-------------|
-| `/dashboard` | Main dashboard (role-based redirect) |
+| `/dashboard` | Main dashboard (role-based content) |
 | `/dashboard/account` | Account settings |
 | `/dashboard/mentor-profile` | Mentor profile editing |
 | `/dashboard/mentee-profile` | Mentee profile editing |
 | `/dashboard/mentorship` | Mentorship relationships |
-| `/dashboard/mentors` | Browse mentors |
 | `/dashboard/meetings` | Meeting management |
-| `/dashboard/events` | Event management |
-| `/dashboard/resources` | Resource library |
-| `/dashboard/billing` | Subscription management |
-| `/dashboard/notifications` | Notification center |
-| `/dashboard/activity` | Activity logs |
-
-### Admin Pages (`/(dashboard)/dashboard/admin/`)
-| Route | Description |
-|-------|-------------|
 | `/dashboard/admin` | Admin overview |
 | `/dashboard/admin/users` | User management |
-| `/dashboard/admin/mentors/applications` | Mentor application review |
-| `/dashboard/admin/mentors/relationships` | Relationship management |
 | `/dashboard/admin/matching` | AI matching dashboard |
+| `/dashboard/admin/mentors/relationships` | Relationship management |
+| `/dashboard/admin/mentors/meetings` | Meeting oversight |
 
-### Legal Pages
+### Legal & Static Pages (standalone)
+Located in `/app/` root directory (8 pages):
 - `/accessibility`, `/code-of-conduct`, `/cookie-policy`
 - `/privacy-policy`, `/security-policy`, `/terms-of-service`
+- `/not-found` (404 page), `/volunteers/code-of-conduct`
 
 ## Key Features
 
@@ -145,7 +137,7 @@ she-sharp/
 - **Language**: TypeScript with strict mode
 - **Database**: PostgreSQL (Neon) with Drizzle ORM
 - **Authentication**: NextAuth 5.0 (OAuth) + Custom JWT using bcrypt
-- **UI**: shadcn/ui components (59 components) with Tailwind CSS v4
+- **UI**: shadcn/ui components (63 components) with Tailwind CSS v4
 - **Styling**: Tailwind CSS with PostCSS and custom brand colors
 - **AI**: Google Gemini (chatbot) + OpenAI GPT-4 (mentor matching)
 - **Email**: Resend for transactional emails
@@ -176,7 +168,7 @@ she-sharp/
    - Batch matching with caching
 
 4. **Database Schema** (`/lib/db/schema.ts`):
-   - **Total**: 44 tables and 24 enums supporting comprehensive platform features
+   - **Total**: 45 tables and 24 enums supporting comprehensive platform features
    - **User System** (5 tables): `users`, `user_roles`, `admin_permissions`, `user_memberships`, `user_mentorship_stats`
    - **Authentication** (6 tables): `account`, `session`, `verification_token`, `email_verifications`, `password_resets`, `password_history`
    - **Mentorship** (5 tables): `mentor_profiles`, `mentee_profiles`, `mentorship_relationships`, `meetings`, `mentee_waiting_queue`
@@ -188,8 +180,9 @@ she-sharp/
    - **Membership & Payments** (3 tables): `membership_features`, `membership_benefits`, `membership_purchases`
    - **Invitation System** (2 tables): `invitation_codes`, `invitation_code_usages`
    - **Configuration** (2 tables): `skill_options`, `industry_options`
+   - **Notifications** (1 table): `notifications`
    - **Activity Logging** (1 table): `activity_logs`
-   - **Legacy** (4 tables): `teams`, `team_members`, `invitations` (kept for backward compatibility)
+   - **Legacy** (3 tables): `teams`, `team_members`, `invitations` (kept for backward compatibility)
    - See detailed documentation: `docs/database/DATABASE_SCHEMA.md`
 
 5. **Route Protection**:
@@ -200,71 +193,127 @@ she-sharp/
 
 ## Component Architecture
 
-### UI Components (`/components/ui/`) - 59 files
+### UI Components (`/components/ui/`) - 63 files
 Based on shadcn/ui with Tailwind CSS:
-- **Form inputs**: input, textarea, checkbox, radio-group, select, switch
-- **Data display**: table, pagination, badge, avatar, progress, card
-- **Overlays**: dialog, sheet, popover, alert-dialog, drawer
-- **Navigation**: navigation-menu, breadcrumb, sidebar, tabs
-- **Utilities**: button, skeleton, spinner, tooltip, separator
+- **Form inputs**: input, textarea, checkbox, radio-group, select, switch, slider
+- **Data display**: table, pagination, badge, avatar, progress, card, calendar
+- **Overlays**: dialog, sheet, popover, alert-dialog, drawer, hover-card
+- **Navigation**: navigation-menu, breadcrumb, sidebar, tabs, menubar
+- **Utilities**: button, skeleton, spinner, tooltip, separator, scroll-area
 
-### Layout Components (`/components/layout/`) - 6 files
+### Layout Components (`/components/layout/`) - 5 files
 - `site-header.tsx` - Main navigation with responsive menu
 - `site-footer.tsx` - Footer with links, social media, newsletter
 - `container.tsx` - Responsive content container
 - `section.tsx` - Page section wrapper
-- `auth-header.tsx` - Simplified header for auth pages
 - `user-nav.tsx` - User account dropdown menu
 
-### Section Components (`/components/sections/`) - 70 files
-Organized by page:
-- `home/` (7) - hero, programs, values, impact, sponsors
-- `mentorship/` (14) - program overview, benefits, testimonials
-- `events/` (4) - event lists, featured events
-- `media/` (9) - gallery, news, newsletters, podcasts
-- `sponsorship/` (7) - packages, ROI calculator
-- `donate/` (5) - donation options, impact
-- `about/` (3) - team, timeline
-- `contact/` (3) - contact form, info
-- `join-team/` (7) - volunteer roles
+### Section Components (`/components/sections/`) - 30 files
+Organized by feature:
+- `home/` (6) - hero, core-impact, core-values, programs, upcoming-event, sponsors
+- `about/` (4) - about-hero, team, timeline, smooth-scroll-hero
+- `mentorship/` (3) - how-it-works, testimonials, mentors/mentors-list
+- `events/` (3) - events-hero, featured-event, events-list
+- `sponsorship/` (3) - sponsorship-hero, packages, current-sponsors
+- `resources/` (9) - impact-report, resources-page-client, bento-showcase, bento-cards/*
+- `donate/` (1) - donation-amount-buttons
+- Root level (1) - media-section
 
 ### Feature Components
-- **Chatbot** (`/components/chatbot/`) - AI assistant with preset questions
-- **Data Table** (`/components/data-table/`) - TanStack Table with drag-and-drop
-- **Admin** (`/components/admin/`) - Dashboard charts, user management
+- **Chatbot** (`/components/chatbot/`) (7 files) - AI assistant with preset questions, context management
+- **Data Table** (`/components/data-table/`) (7 files) - TanStack Table with drag-and-drop columns
+- **Events** (`/components/events/`) (9 files) - Event cards, registration, calendar integration
+- **Gallery** (`/components/gallery/`) (3 files) - Photo gallery with lightbox
+- **Admin** (`/components/admin/`) (2 files) - Dashboard charts, analytics
 
-## API Routes Summary
+### Custom Hooks (`/hooks/`) - 6 files
+- `use-animate-on-scroll.ts` - Scroll-triggered animations
+- `use-in-view.ts` - Intersection Observer wrapper
+- `use-media-query.ts` - Responsive breakpoint detection
+- `use-mobile.ts` - Mobile device detection
+- `use-prefers-reduced-motion.ts` - Accessibility motion preferences
+- `use-scroll-to-hash.ts` - Smooth scroll to anchor links
 
-### Authentication (`/api/auth/`)
-- NextAuth endpoints, CSRF, OAuth handlers
-- Email verification, password reset
+### Type Definitions (`/types/`) - 7 files
+- `mentor.ts` - Mentor profile types
+- `team.ts` - Team member types
+- `event.ts` - Event data types
+- `gallery.ts` - Photo gallery types
+- `newsletter.ts` - Newsletter types
+- `spotify.ts` - Spotify embed types
+- `impact-report.ts` - Impact report types
 
-### User (`/api/user/`)
-- Profile management, role switching
-- Connected OAuth accounts, account deletion
+## API Routes Summary (71 endpoints)
 
-### Mentorship (`/api/mentorship/`, `/api/mentors/`, `/api/meetings/`)
-- Apply for mentorship, manage relationships
-- Meeting scheduling and tracking
+### Authentication (`/api/auth/`) - 11 endpoints
+- NextAuth handler (`[...nextauth]`), CSRF protection
+- OAuth sign-in, providers list
+- Password reset flow (forgot/reset), email verification
+- Sign-out handling, existing user verification
 
-### Forms (`/api/forms/`)
+### User (`/api/user/`) - 10 endpoints
+- Profile management (view, update, photo)
+- Role switching, roles list
+- Password update, connected OAuth accounts
+- Mentor/mentee profile endpoints
+- Account deletion
+
+### Mentorship (`/api/mentorship/`, `/api/mentors/`, `/api/mentees/`) - 6 endpoints
+- Apply for mentorship, approval workflow
+- Relationship management
+- Mentor/mentee profile retrieval by ID
+
+### Meetings (`/api/meetings/`) - 2 endpoints
+- Meeting CRUD operations
+
+### Forms (`/api/forms/`) - 4 endpoints
 - Mentor and mentee application forms
-- Public and protected submission endpoints
+- Public submission endpoints for unauthenticated users
 
-### Admin (`/api/admin/`)
-- User management, mentor applications
-- AI matching controls, analytics
+### Admin (`/api/admin/`) - 17 endpoints
+- User management (list, bulk operations, roles)
+- Mentor applications review
+- Relationships and meetings oversight
+- AI matching dashboard and queue
+- Invitation codes, permissions, analytics
+- Pending tasks counter
 
-### Payments (`/api/stripe/`)
+### Payments (`/api/stripe/`) - 3 endpoints
 - Checkout session creation
-- Webhook handling for subscription events
+- Donation processing
+- Webhook handling for payment events
 
-### Other
-- `/api/events/` - Event CRUD and registration
-- `/api/resources/` - Resource management
-- `/api/notifications/` - Notification handling
+### Events (`/api/events/`) - 4 endpoints
+- Event CRUD and registration
+- User registration history
+
+### Other Endpoints
+- `/api/resources/` (3) - Resource management and downloads
+- `/api/notifications/` (2) - Notification handling and preferences
 - `/api/chat/` - AI chatbot (Gemini)
-- `/api/invitation-codes/` - Code validation
+- `/api/invitation-codes/validate` - Code validation
+- `/api/matching/suggestions` - AI match suggestions
+- `/api/dashboard/overview` - Dashboard data
+- `/api/analytics/dashboard` - Analytics data
+- `/api/activity-logs` - Activity logging
+- `/api/upload/photo` - Photo uploads
+- `/api/cron/process-queue` - Background job processing
+- `/api/team` - Team data
+
+## Static Data Files (`/lib/data/`) - 12 files
+
+These files contain static content that can be updated without database changes:
+- `team.ts` - Team member profiles and roles
+- `mentors.ts` - Featured mentor data
+- `events.ts` / `events-data.ts` - Event listings and metadata
+- `testimonials.ts` - User testimonials
+- `newsletters.ts` - Newsletter archive data
+- `spotify-podcasts.ts` - Podcast episode links
+- `gallery-albums.ts` - Photo gallery albums
+- `impact-reports.ts` - Annual impact reports
+- `donate-showcase.ts` - Donation tier information
+- `join-team.ts` - Volunteer positions
+- `stats.ts` - Platform statistics (members, events, sponsors)
 
 ## Key Development Patterns
 

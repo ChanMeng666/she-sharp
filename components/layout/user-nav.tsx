@@ -134,7 +134,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
       return (
         <div className="pt-4 border-t border-[#f7e5f3]">
           <Link href="/sign-up" className="w-full">
-            <Button variant="default" size="lg" className="w-full justify-start bg-[#1f1e44] hover:bg-[#1f1e44]/90 text-white">
+            <Button variant="secondary" size="lg" className="w-full">
               <User className="mr-2 h-4 w-4" />
               Membership
             </Button>
@@ -179,44 +179,44 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
         {isAdmin ? (
           <>
             <Link href="/dashboard/admin" className="w-full">
-              <Button variant="outline" size="lg" className="w-full justify-start border-[#f7e5f3] text-[#1f1e44] hover:bg-[#f7e5f3] hover:text-[#9b2e83]">
-                <LayoutDashboard className="mr-2 h-4 w-4 text-[#9b2e83]" />
+              <Button variant="ghost" size="lg" className="w-full justify-start">
+                <LayoutDashboard className="mr-2 h-4 w-4" />
                 Admin Overview
               </Button>
             </Link>
             <Link href="/dashboard/admin/users" className="w-full">
-              <Button variant="outline" size="lg" className="w-full justify-start border-[#f7e5f3] text-[#1f1e44] hover:bg-[#f7e5f3] hover:text-[#9b2e83]">
-                <Users className="mr-2 h-4 w-4 text-[#9b2e83]" />
+              <Button variant="ghost" size="lg" className="w-full justify-start">
+                <Users className="mr-2 h-4 w-4" />
                 User Management
               </Button>
             </Link>
             <Link href="/dashboard/admin/matching" className="w-full">
-              <Button variant="outline" size="lg" className="w-full justify-start border-[#f7e5f3] text-[#1f1e44] hover:bg-[#f7e5f3] hover:text-[#9b2e83]">
-                <BrainCircuit className="mr-2 h-4 w-4 text-[#9b2e83]" />
+              <Button variant="ghost" size="lg" className="w-full justify-start">
+                <BrainCircuit className="mr-2 h-4 w-4" />
                 AI Matching
               </Button>
             </Link>
           </>
         ) : (
           <Link href="/dashboard" className="w-full">
-            <Button variant="outline" size="lg" className="w-full justify-start border-[#f7e5f3] text-[#1f1e44] hover:bg-[#f7e5f3] hover:text-[#9b2e83]">
-              <LayoutDashboard className="mr-2 h-4 w-4 text-[#9b2e83]" />
+            <Button variant="ghost" size="lg" className="w-full justify-start">
+              <LayoutDashboard className="mr-2 h-4 w-4" />
               Dashboard
             </Button>
           </Link>
         )}
 
         <Link href="/dashboard/account" className="w-full">
-          <Button variant="outline" size="lg" className="w-full justify-start border-[#f7e5f3] text-[#1f1e44] hover:bg-[#f7e5f3] hover:text-[#9b2e83]">
-            <Settings className="mr-2 h-4 w-4 text-[#9b2e83]" />
+          <Button variant="ghost" size="lg" className="w-full justify-start">
+            <Settings className="mr-2 h-4 w-4" />
             Account Settings
           </Button>
         </Link>
 
         <Button
-          variant="outline"
+          variant="destructive"
           size="lg"
-          className="w-full justify-start border-[#f7e5f3] text-[#d72f40] hover:text-[#d72f40] hover:bg-red-50"
+          className="w-full justify-start"
           onClick={handleSignOut}
           disabled={isSigningOut}
         >

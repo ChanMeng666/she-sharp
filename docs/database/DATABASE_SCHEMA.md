@@ -1,9 +1,9 @@
 # Database Schema Documentation
 
-> **Last Updated**: 2025-12-02
+> **Last Updated**: 2025-12-15
 > **Database**: PostgreSQL 16 (Neon)
 > **ORM**: Drizzle ORM
-> **Total Tables**: 44
+> **Total Tables**: 45
 > **Total Enums**: 24
 
 ## Overview
@@ -140,12 +140,17 @@ DATABASE_URL="postgresql://user:password@ep-xxx.neon.tech/neondb?sslmode=require
 | `skill_options` | Predefined skill selections |
 | `industry_options` | Industry selection options |
 
-### 12. Activity & Logging (1 table)
+### 12. Notifications (1 table)
+| Table | Description |
+|-------|-------------|
+| `notifications` | User notification inbox |
+
+### 13. Activity & Logging (1 table)
 | Table | Description |
 |-------|-------------|
 | `activity_logs` | System activity audit trail |
 
-### 13. Legacy Tables (4 tables - deprecated)
+### 14. Legacy Tables (3 tables - deprecated)
 | Table | Description |
 |-------|-------------|
 | `teams` | Organization teams (legacy) |
@@ -618,6 +623,34 @@ CREATE TABLE invitation_codes (
 );
 ```
 
+### Notifications
+
+```sql
+CREATE TABLE notifications (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  type VARCHAR(50) NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  message TEXT NOT NULL,
+  read BOOLEAN DEFAULT FALSE,
+  action_url VARCHAR(500),
+  action_label VARCHAR(100),
+  metadata JSONB,
+  created_at TIMESTAMP DEFAULT NOW(),
+  read_at TIMESTAMP
+);
+
+CREATE INDEX idx_notifications_user_id ON notifications(user_id);
+CREATE INDEX idx_notifications_read ON notifications(read);
+CREATE INDEX idx_notifications_created_at ON notifications(created_at);
+```
+
+**Key Features**:
+- Supports multiple notification types (event, mentorship, resource, system, meeting)
+- Action URL/label for clickable notifications
+- Read tracking with timestamp
+- JSONB metadata for flexible payload
+
 ### Admin Permissions
 
 ```sql
@@ -757,6 +790,7 @@ lib/db/migrations/
 ├── 0014_swift_hydra.sql              # Additional fields
 ├── 0015_overjoyed_nico_minoru.sql    # Form fields
 ├── 0016_purple_wendigo.sql           # AI matching enhancements
+├── 0017_flowery_zuras.sql            # OAuth invite code verification
 └── meta/
 ```
 

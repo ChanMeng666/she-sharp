@@ -9,18 +9,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "db:setup": "npx tsx lib/db/setup.ts",
     "db:seed": "npx tsx lib/db/seed.ts",
     "db:seed-profiles": "npx tsx scripts/seed-profiles.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:migrate:safe": "npx tsx scripts/migrate-with-backup.ts",
     "db:studio": "drizzle-kit studio",
-    "db:version": "npx tsx scripts/db-version.ts",
-    "db:snapshot": "npx tsx scripts/db-snapshot.ts",
-    "db:status": "npx tsx scripts/db-version.ts status",
-    "db:history": "npx tsx scripts/db-version.ts history",
-    "env:compare": "node scripts/compare-env.js",
     "env:pull": "npx vercel env pull .env.vercel.production"
   },
   "dependencies": {

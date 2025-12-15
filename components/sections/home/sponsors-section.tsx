@@ -57,7 +57,7 @@ export function SponsorsSection() {
               SILVER
             </h3>
           </AnimateOnScroll>
-          <div className="grid md:grid-cols-3 gap-16 max-w-3xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-16 max-w-3xl mx-auto justify-items-center">
             {sponsors.silver.map((sponsor, index) => (
               <AnimateOnScroll
                 key={sponsor.name}
