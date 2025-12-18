@@ -27,6 +27,8 @@ import {
   Lightbulb,
   Sparkles,
   ExternalLink,
+  Plus,
+  X,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -188,6 +190,12 @@ export default function MenteeApplicationPage() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
+  // Custom skill input states
+  const [customSoftSkillBasic, setCustomSoftSkillBasic] = useState('');
+  const [customIndustrySkillBasic, setCustomIndustrySkillBasic] = useState('');
+  const [customSoftSkillExpert, setCustomSoftSkillExpert] = useState('');
+  const [customIndustrySkillExpert, setCustomIndustrySkillExpert] = useState('');
+
   const updateField = <K extends keyof FormData>(field: K, value: FormData[K]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
@@ -201,6 +209,32 @@ export default function MenteeApplicationPage() {
       ? currentArray.filter((i) => i !== item)
       : [...currentArray, item];
     updateField(field, newArray as FormData[typeof field]);
+  };
+
+  const addCustomSkill = (field: keyof FormData, skill: string, setCustomSkill: (value: string) => void) => {
+    const trimmedSkill = skill.trim();
+    if (!trimmedSkill) return;
+
+    const currentArray = formData[field] as string[];
+    // Check if skill already exists (case-insensitive)
+    const exists = currentArray.some(s => s.toLowerCase() === trimmedSkill.toLowerCase());
+    if (exists) {
+      setCustomSkill('');
+      return;
+    }
+
+    updateField(field, [...currentArray, trimmedSkill] as FormData[typeof field]);
+    setCustomSkill('');
+  };
+
+  const removeCustomSkill = (field: keyof FormData, skill: string) => {
+    const currentArray = formData[field] as string[];
+    updateField(field, currentArray.filter(s => s !== skill) as FormData[typeof field]);
+  };
+
+  // Check if a skill is custom (not in predefined options)
+  const isCustomSkill = (skill: string, predefinedOptions: string[]) => {
+    return !predefinedOptions.includes(skill);
   };
 
   const validateStep = (step: number): boolean => {
@@ -615,7 +649,7 @@ export default function MenteeApplicationPage() {
               <div className="space-y-3">
                 <div className="flex items-center gap-1.5">
                   <Label>Soft Skills You&apos;re Developing *</Label>
-                  <HintIcon hint="Choose skills you'd like to develop. Select 3-5 for best matching." />
+                  <HintIcon hint="Choose skills you'd like to develop. Select 3-5 for best matching, or add your own." />
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
                   {softSkillsOptions.map((skill) => (
@@ -631,13 +665,57 @@ export default function MenteeApplicationPage() {
                     </Button>
                   ))}
                 </div>
+                {/* Custom soft skills display */}
+                {formData.softSkillsBasic.filter(s => isCustomSkill(s, softSkillsOptions)).length > 0 && (
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {formData.softSkillsBasic.filter(s => isCustomSkill(s, softSkillsOptions)).map((skill) => (
+                      <span
+                        key={skill}
+                        className="inline-flex items-center gap-1 bg-[#8982ff] text-white px-2.5 py-1 rounded text-xs"
+                      >
+                        {skill}
+                        <button
+                          type="button"
+                          onClick={() => removeCustomSkill('softSkillsBasic', skill)}
+                          className="hover:bg-white/20 rounded p-0.5"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {/* Custom skill input */}
+                <div className="flex gap-2 pt-1">
+                  <Input
+                    placeholder="Add your own skill..."
+                    value={customSoftSkillBasic}
+                    onChange={(e) => setCustomSoftSkillBasic(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addCustomSkill('softSkillsBasic', customSoftSkillBasic, setCustomSoftSkillBasic);
+                      }
+                    }}
+                    className="flex-1 h-9 text-sm"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-9 px-3"
+                    onClick={() => addCustomSkill('softSkillsBasic', customSoftSkillBasic, setCustomSoftSkillBasic)}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
                 {errors.softSkillsBasic && <p className="text-sm text-red-500">{errors.softSkillsBasic}</p>}
               </div>
 
               <div className="space-y-3">
                 <div className="flex items-center gap-1.5">
                   <Label>Industry Skills You&apos;re Developing *</Label>
-                  <HintIcon hint="Technical skills you're learning or want to explore." />
+                  <HintIcon hint="Technical skills you're learning or want to explore, or add your own." />
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
                   {industrySkillsOptions.map((skill) => (
@@ -652,6 +730,50 @@ export default function MenteeApplicationPage() {
                       {skill}
                     </Button>
                   ))}
+                </div>
+                {/* Custom industry skills display */}
+                {formData.industrySkillsBasic.filter(s => isCustomSkill(s, industrySkillsOptions)).length > 0 && (
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {formData.industrySkillsBasic.filter(s => isCustomSkill(s, industrySkillsOptions)).map((skill) => (
+                      <span
+                        key={skill}
+                        className="inline-flex items-center gap-1 bg-[#8982ff] text-white px-2.5 py-1 rounded text-xs"
+                      >
+                        {skill}
+                        <button
+                          type="button"
+                          onClick={() => removeCustomSkill('industrySkillsBasic', skill)}
+                          className="hover:bg-white/20 rounded p-0.5"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {/* Custom skill input */}
+                <div className="flex gap-2 pt-1">
+                  <Input
+                    placeholder="Add your own skill..."
+                    value={customIndustrySkillBasic}
+                    onChange={(e) => setCustomIndustrySkillBasic(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addCustomSkill('industrySkillsBasic', customIndustrySkillBasic, setCustomIndustrySkillBasic);
+                      }
+                    }}
+                    className="flex-1 h-9 text-sm"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-9 px-3"
+                    onClick={() => addCustomSkill('industrySkillsBasic', customIndustrySkillBasic, setCustomIndustrySkillBasic)}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
                 </div>
                 {errors.industrySkillsBasic && <p className="text-sm text-red-500">{errors.industrySkillsBasic}</p>}
               </div>
@@ -682,12 +804,56 @@ export default function MenteeApplicationPage() {
                     </Button>
                   ))}
                 </div>
+                {/* Custom expert soft skills display */}
+                {formData.softSkillsExpert.filter(s => isCustomSkill(s, softSkillsOptions)).length > 0 && (
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {formData.softSkillsExpert.filter(s => isCustomSkill(s, softSkillsOptions)).map((skill) => (
+                      <span
+                        key={skill}
+                        className="inline-flex items-center gap-1 bg-[#8982ff] text-white px-2.5 py-1 rounded text-xs"
+                      >
+                        {skill}
+                        <button
+                          type="button"
+                          onClick={() => removeCustomSkill('softSkillsExpert', skill)}
+                          className="hover:bg-white/20 rounded p-0.5"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {/* Custom skill input */}
+                <div className="flex gap-2 pt-1">
+                  <Input
+                    placeholder="Add your own skill..."
+                    value={customSoftSkillExpert}
+                    onChange={(e) => setCustomSoftSkillExpert(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addCustomSkill('softSkillsExpert', customSoftSkillExpert, setCustomSoftSkillExpert);
+                      }
+                    }}
+                    className="flex-1 h-9 text-sm"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-9 px-3"
+                    onClick={() => addCustomSkill('softSkillsExpert', customSoftSkillExpert, setCustomSoftSkillExpert)}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
 
               <div className="space-y-3">
                 <div className="flex items-center gap-1.5">
                   <Label>Expert Industry Skills</Label>
-                  <HintIcon hint="Share your technical strengths." />
+                  <HintIcon hint="Share your technical strengths, or add your own." />
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
                   {industrySkillsOptions.map((skill) => (
@@ -702,6 +868,50 @@ export default function MenteeApplicationPage() {
                       {skill}
                     </Button>
                   ))}
+                </div>
+                {/* Custom expert industry skills display */}
+                {formData.industrySkillsExpert.filter(s => isCustomSkill(s, industrySkillsOptions)).length > 0 && (
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {formData.industrySkillsExpert.filter(s => isCustomSkill(s, industrySkillsOptions)).map((skill) => (
+                      <span
+                        key={skill}
+                        className="inline-flex items-center gap-1 bg-[#8982ff] text-white px-2.5 py-1 rounded text-xs"
+                      >
+                        {skill}
+                        <button
+                          type="button"
+                          onClick={() => removeCustomSkill('industrySkillsExpert', skill)}
+                          className="hover:bg-white/20 rounded p-0.5"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {/* Custom skill input */}
+                <div className="flex gap-2 pt-1">
+                  <Input
+                    placeholder="Add your own skill..."
+                    value={customIndustrySkillExpert}
+                    onChange={(e) => setCustomIndustrySkillExpert(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addCustomSkill('industrySkillsExpert', customIndustrySkillExpert, setCustomIndustrySkillExpert);
+                      }
+                    }}
+                    className="flex-1 h-9 text-sm"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-9 px-3"
+                    onClick={() => addCustomSkill('industrySkillsExpert', customIndustrySkillExpert, setCustomIndustrySkillExpert)}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
                 </div>
               </div>
             </div>
