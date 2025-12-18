@@ -667,19 +667,19 @@ export default function MenteeApplicationPage() {
                 </div>
                 {/* Custom soft skills display */}
                 {formData.softSkillsBasic.filter(s => isCustomSkill(s, softSkillsOptions)).length > 0 && (
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
                     {formData.softSkillsBasic.filter(s => isCustomSkill(s, softSkillsOptions)).map((skill) => (
                       <span
                         key={skill}
-                        className="inline-flex items-center gap-1 bg-[#8982ff] text-white px-2.5 py-1 rounded text-xs"
+                        className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
                       >
                         {skill}
                         <button
                           type="button"
                           onClick={() => removeCustomSkill('softSkillsBasic', skill)}
-                          className="hover:bg-white/20 rounded p-0.5"
+                          className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
                         >
-                          <X className="h-3 w-3" />
+                          <X className="h-3.5 w-3.5" />
                         </button>
                       </span>
                     ))}
@@ -733,19 +733,19 @@ export default function MenteeApplicationPage() {
                 </div>
                 {/* Custom industry skills display */}
                 {formData.industrySkillsBasic.filter(s => isCustomSkill(s, industrySkillsOptions)).length > 0 && (
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
                     {formData.industrySkillsBasic.filter(s => isCustomSkill(s, industrySkillsOptions)).map((skill) => (
                       <span
                         key={skill}
-                        className="inline-flex items-center gap-1 bg-[#8982ff] text-white px-2.5 py-1 rounded text-xs"
+                        className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
                       >
                         {skill}
                         <button
                           type="button"
                           onClick={() => removeCustomSkill('industrySkillsBasic', skill)}
-                          className="hover:bg-white/20 rounded p-0.5"
+                          className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
                         >
-                          <X className="h-3 w-3" />
+                          <X className="h-3.5 w-3.5" />
                         </button>
                       </span>
                     ))}
@@ -806,19 +806,19 @@ export default function MenteeApplicationPage() {
                 </div>
                 {/* Custom expert soft skills display */}
                 {formData.softSkillsExpert.filter(s => isCustomSkill(s, softSkillsOptions)).length > 0 && (
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
                     {formData.softSkillsExpert.filter(s => isCustomSkill(s, softSkillsOptions)).map((skill) => (
                       <span
                         key={skill}
-                        className="inline-flex items-center gap-1 bg-[#8982ff] text-white px-2.5 py-1 rounded text-xs"
+                        className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
                       >
                         {skill}
                         <button
                           type="button"
                           onClick={() => removeCustomSkill('softSkillsExpert', skill)}
-                          className="hover:bg-white/20 rounded p-0.5"
+                          className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
                         >
-                          <X className="h-3 w-3" />
+                          <X className="h-3.5 w-3.5" />
                         </button>
                       </span>
                     ))}
@@ -871,19 +871,19 @@ export default function MenteeApplicationPage() {
                 </div>
                 {/* Custom expert industry skills display */}
                 {formData.industrySkillsExpert.filter(s => isCustomSkill(s, industrySkillsOptions)).length > 0 && (
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
                     {formData.industrySkillsExpert.filter(s => isCustomSkill(s, industrySkillsOptions)).map((skill) => (
                       <span
                         key={skill}
-                        className="inline-flex items-center gap-1 bg-[#8982ff] text-white px-2.5 py-1 rounded text-xs"
+                        className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
                       >
                         {skill}
                         <button
                           type="button"
                           onClick={() => removeCustomSkill('industrySkillsExpert', skill)}
-                          className="hover:bg-white/20 rounded p-0.5"
+                          className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
                         >
-                          <X className="h-3 w-3" />
+                          <X className="h-3.5 w-3.5" />
                         </button>
                       </span>
                     ))}
