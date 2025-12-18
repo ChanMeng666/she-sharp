@@ -219,7 +219,7 @@ export default function MenteeApplicationPage() {
       if (!formData.city) newErrors.city = 'Please select your city';
       if (!formData.preferredMeetingFormat) newErrors.preferredMeetingFormat = 'Please select meeting format';
       if (!formData.currentStage) newErrors.currentStage = 'Please select your career stage';
-      if (!formData.currentJobTitle.trim()) newErrors.currentJobTitle = 'Job title is required';
+      if (!formData.currentJobTitle.trim()) newErrors.currentJobTitle = 'Current role is required';
       if (!formData.currentIndustry) newErrors.currentIndustry = 'Please select your industry';
       if (!formData.bio.trim() || formData.bio.length < 50) {
         newErrors.bio = 'Please provide a bio (at least 50 characters)';
@@ -507,12 +507,12 @@ export default function MenteeApplicationPage() {
 
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
-                  <Label htmlFor="jobTitle">Job Title *</Label>
-                  <HintIcon hint="Students can enter their year and major (e.g., 'Final Year CS Student')." />
+                  <Label htmlFor="jobTitle">Current Role *</Label>
+                  <HintIcon hint="Your job title or student status (e.g., 'Data Analyst' or '3rd Year CS Student')" />
                 </div>
                 <Input
                   id="jobTitle"
-                  placeholder="e.g., Software Developer, Student"
+                  placeholder="e.g., Software Developer, Marketing Intern, Final Year Student"
                   value={formData.currentJobTitle}
                   onChange={(e) => updateField('currentJobTitle', e.target.value)}
                   className={errors.currentJobTitle ? 'border-red-500' : ''}
@@ -864,7 +864,7 @@ export default function MenteeApplicationPage() {
                 <div className="font-medium">{meetingFormatOptions.find(o => o.value === formData.preferredMeetingFormat)?.label}</div>
                 <div className="text-muted-foreground">Career Stage:</div>
                 <div className="font-medium">{currentStageOptions.find(o => o.value === formData.currentStage)?.label}</div>
-                <div className="text-muted-foreground">Job Title:</div>
+                <div className="text-muted-foreground">Current Role:</div>
                 <div className="font-medium">{formData.currentJobTitle}</div>
                 <div className="text-muted-foreground">Industry:</div>
                 <div className="font-medium">{industryOptions.find(o => o.value === formData.currentIndustry)?.label}</div>
