@@ -25,6 +25,8 @@ import {
   FileText,
   MapPin,
   Lightbulb,
+  Sparkles,
+  ExternalLink,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -781,12 +783,35 @@ export default function MenteeApplicationPage() {
 
             <div className="h-px bg-border" />
 
+            {/* MBTI Test Info Box */}
+            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
+              <div className="flex items-start gap-3">
+                <Sparkles className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
+                <div className="space-y-2">
+                  <p className="text-sm font-medium text-[#9b2e83]">Don&apos;t Know Your MBTI Type?</p>
+                  <p className="text-sm text-[#1f1e44] leading-relaxed">
+                    Your personality type helps us match you with a compatible mentor. If you don&apos;t know your MBTI type,
+                    take the free test (about 10 minutes) to discover it.
+                  </p>
+                  <a
+                    href="https://www.16personalities.com/free-personality-test"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-[#9b2e83] hover:text-[#7a2468] transition-colors"
+                  >
+                    Take the Free MBTI Test
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
             {/* Personality & Preferences Section */}
             <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-5">
               <div className="space-y-3">
                 <div className="flex items-center gap-1.5">
                   <Label>Your Personality Type (MBTI) *</Label>
-                  <HintIcon hint="Your personality type helps us find a compatible mentor. Test takes ~10 min at 16personalities.com" />
+                  <HintIcon hint="Select your 4-letter personality type from the options below" />
                 </div>
                 <div className="grid grid-cols-4 sm:grid-cols-8 gap-2.5">
                   {mbtiTypes.map((type) => (
