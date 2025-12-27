@@ -53,7 +53,7 @@ export function SponsorsSection() {
         {/* Silver Sponsors */}
         <div className="mb-20">
           <AnimateOnScroll variant="fade-up" className="text-center mb-12">
-            <h3 className="text-label text-xl text-muted-foreground flex items-center justify-center gap-2">
+            <h3 className="text-xl text-brand font-bold flex items-center justify-center gap-2">
               SILVER
             </h3>
           </AnimateOnScroll>
@@ -90,7 +90,7 @@ export function SponsorsSection() {
         {/* Bronze Sponsors */}
         <div className="mb-12 sm:mb-16">
           <AnimateOnScroll variant="fade-up" className="text-center mb-12">
-            <h3 className="text-label text-xl text-muted-foreground flex items-center justify-center gap-2">
+            <h3 className=" text-xl text-brand font-bold flex items-center justify-center gap-2">
               BRONZE
             </h3>
           </AnimateOnScroll>
@@ -127,7 +127,7 @@ export function SponsorsSection() {
 
         {/* CTA */}
         <AnimateOnScroll variant="fade-up" className="text-center">
-          <Button asChild size="lg">
+          <Button asChild size="lg" variant="default" className="mb-12" >
             <Link href="/sponsors/corporate-sponsorship">Become a sponsor</Link>
           </Button>
         </AnimateOnScroll>

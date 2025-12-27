@@ -14,40 +14,12 @@ export interface SocialLink {
   icon: string; // Will be used for icon component selection
 }
 
-export interface FooterStats {
-  label: string;
-  value: string;
-}
-
-export interface ContactInfo {
-  email: string;
-  location: string;
-}
-
 export const footerConfig = {
-  contactInfo: {
-    email: "hello@shesharp.org.nz",
-    location: "Auckland, New Zealand",
-  } as ContactInfo,
-
-  stats: [
-    { label: "Members", value: "2200+" },
-    { label: "Sponsors", value: "50+" },
-    { label: "Events Since 2014", value: "84+" },
-  ] as FooterStats[],
-
   sections: [
-    {
-      title: "About",
-      links: [
-        { name: "About Us", href: "/about" },
-      ],
-    },
     {
       title: "Mentorship",
       links: [
         { name: "About the Program", href: "/mentorship" },
-        { name: "Meet Our Mentors", href: "/mentorship#mentors-list" },
         { name: "Become a Mentee", href: "/mentorship/join" },
         { name: "Become a Mentor", href: "/mentorship/become-a-mentor" },
       ],
@@ -64,12 +36,6 @@ export const footerConfig = {
         { name: "Volunteer with Us", href: "/join-our-team" },
         { name: "Corporate Partnership", href: "/sponsors/corporate-sponsorship" },
         { name: "Donate", href: "/donate" },
-      ],
-    },
-    {
-      title: "Resources",
-      links: [
-        { name: "Resources Hub", href: "/resources" },
       ],
     },
   ] as FooterSection[],
@@ -118,14 +84,12 @@ export const footerConfig = {
     { name: "Terms of Service", href: "/terms-of-service" },
   ] as FooterLink[],
 
-  simplifiedNavLinks: [
-    { name: "About", href: "/about" },
-    { name: "Mentorship", href: "/mentorship" },
-    { name: "Events", href: "/events" },
-    { name: "Donate", href: "/donate" },
-    { name: "Join Our Team", href: "/join-our-team" },
-    { name: "Resources", href: "/resources" },
-  ] as FooterLink[],
+  // simplifiedNavLinks: [
+  //   { name: "Mentorship", href: "/mentorship" },
+  //   { name: "Events", href: "/events" },
+  //   { name: "Donate", href: "/donate" },
+  //   { name: "Join Our Team", href: "/join-our-team" },
+  // ] as FooterLink[],
 
   charityInfo: {
     name: "She Sharp",

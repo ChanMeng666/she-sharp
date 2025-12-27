@@ -64,6 +64,22 @@
   --info: 208 83% 45%;                /* #1378d1 Accessible Blue */
   --info-foreground: 0 0% 100%;       /* #ffffff white text */
 
+  /* Brand Colors (HSL format for direct usage) */
+  --purple-dark: 316 53% 38%;         /* #9b2e83 Purple Dark */
+  --purple-mid: 315 49% 61%;          /* #c846ab Purple Mid */
+  --purple-light: 315 60% 95%;        /* #f7e5f3 Purple Light */
+  --periwinkle-dark: 244 100% 76%;    /* #8982ff Periwinkle Dark */
+  --periwinkle-soft: 243 100% 88%;    /* #c4c1ff Periwinkle Soft */
+  --periwinkle-light: 248 33% 97%;    /* #f4f4fa Periwinkle Light */
+  --indigo-deep: 244 33% 38%;         /* #454180 Indigo Deep */
+  --navy-dark: 241 25% 21%;           /* #1f1e44 Navy Dark */
+  --navy-light: 216 12% 97%;          /* #eaf2ff Navy Light */
+  --mint-dark: 168 86% 83%;           /* #b1f6e9 Mint Dark */
+  --mint-light: 165 80% 97%;          /* #effefb Mint Light */
+  --gray: 0 0% 61%;                   /* #9b9b9b Gray */
+  --blue: 207 81% 46%;                /* #1378d1 Blue */
+  --error: 354 70% 54%;               /* #d72f40 Error */
+
   /* 深色背景色（Navy） */
   --navy: 242 38% 19%;               /* #1f1e44 深海军蓝 */
   --navy-foreground: 0 0% 100%;      /* #ffffff 白色文字 */
@@ -123,68 +139,69 @@
   --radius: 0.5rem;
 
   /* ========================================
-     旧品牌颜色兼容性映射（全部改为灰度）
-     便于逐步迁移到语义化颜色
+     品牌颜色（Tailwind CSS 兼容）
+     用于 Tailwind 的 @theme 和直接颜色引用
      ======================================== */
 
-  /* Purple 系列 → 黑/深灰 */
-  --color-purple-dark: #000000;
-  --color-purple-mid: #404040;
-  --color-purple-light: #f5f5f5;
+  /* Purple 系列 */
+  --color-purple-dark: #9b2e83;      /* 品牌深紫 */
+  --color-purple-mid: #c846ab;       /* 品牌中紫 */
+  --color-purple-light: #f7e5f3;     /* 品牌浅紫 */
 
-  /* Periwinkle 系列 → 灰色 */
-  --color-periwinkle-dark: #525252;
-  --color-periwinkle-soft: #d4d4d4;
-  --color-periwinkle-light: #fafafa;
+  /* Periwinkle 系列 */
+  --color-periwinkle-dark: #8982ff;  /* 深蓝紫 */
+  --color-periwinkle-soft: #c4c1ff;  /* 柔和蓝紫 */
+  --color-periwinkle-light: #f4f4fa; /* 浅蓝紫 */
 
-  /* Navy 系列 → 黑/浅灰 */
-  --color-navy-dark: #000000;
-  --color-navy-light: #f5f5f5;
+  /* Navy 系列 */
+  --color-navy-dark: #1f1e44;        /* 深海军蓝 */
+  --color-navy-light: #eaf2ff;       /* 浅海军蓝 */
 
-  /* Mint 系列 → 灰色 */
-  --color-mint-dark: #a3a3a3;
-  --color-mint-light: #fafafa;
+  /* Mint 系列 */
+  --color-mint-dark: #b1f6e9;        /* 深薄荷绿 */
+  --color-mint-light: #effefb;       /* 浅薄荷绿 */
 
-  /* 其他颜色 */
-  --color-indigo-deep: #171717;
-  --color-gray: #737373;
-  --color-blue: #404040;
-  --color-error: #dc2626;           /* 更新为红色 */
-  --color-ghost-white: #fafafa;
-  --color-light-pink: #e5e5e5;
+  /* 其他品牌颜色 */
+  --color-indigo-deep: #454180;      /* 深靛蓝 */
+  --color-gray: #9b9b9b;             /* 中性灰 */
+  --color-blue: #1378d1;             /* 可访问蓝色 */
+  --color-error: #d72f40;            /* 错误红色 */
+  --color-ghost-white: #f3f3f1;      /* 幽灵白（背景色） */
+  --color-light-pink: #F5D7E3;       /* 浅粉色 */
+  --color-background: #f3f3f1;       /* 背景色（ghost-white） */
 }
 
 /* ==========================================
    深色模式
    ========================================== */
 .dark {
-  /* 背景与前景（反转） */
-  --background: 0 0% 0%;             /* #000000 */
+  /* 背景与前景（深色模式使用 navy-dark） */
+  --background: 241 25% 21%;         /* #1f1e44 Navy Dark */
   --foreground: 0 0% 100%;           /* #ffffff */
 
   /* 卡片 */
-  --card: 0 0% 5%;                   /* #0d0d0d */
+  --card: 241 25% 25%;               /* Navy Dark 变亮 */
   --card-foreground: 0 0% 100%;      /* #ffffff */
 
   /* 弹出层 */
-  --popover: 0 0% 5%;                /* #0d0d0d */
+  --popover: 241 25% 25%;            /* Navy Dark 变亮 */
   --popover-foreground: 0 0% 100%;   /* #ffffff */
 
-  /* 主色（反转为白色） */
-  --primary: 0 0% 100%;              /* #ffffff */
-  --primary-foreground: 0 0% 0%;     /* #000000 */
+  /* 主色（深色模式使用 purple-mid） */
+  --primary: 315 49% 61%;             /* #c846ab Purple Mid */
+  --primary-foreground: 0 0% 100%;   /* #ffffff */
 
-  /* 次色 */
-  --secondary: 0 0% 15%;             /* #262626 */
-  --secondary-foreground: 0 0% 100%; /* #ffffff */
+  /* 次色（深色模式使用 periwinkle-dark） */
+  --secondary: 244 100% 76%;          /* #8982ff Periwinkle Dark */
+  --secondary-foreground: 241 25% 21%; /* Navy Dark */
 
   /* 中性色 */
-  --muted: 0 0% 15%;                 /* #262626 */
-  --muted-foreground: 0 0% 65%;      /* #a3a3a3 */
+  --muted: 241 25% 35%;              /* Navy Dark 变亮 */
+  --muted-foreground: 0 0% 75%;       /* 浅灰文字 */
 
-  /* 强调色 */
-  --accent: 0 0% 15%;                /* #262626 */
-  --accent-foreground: 0 0% 100%;    /* #ffffff */
+  /* 强调色（深色模式使用 mint-dark） */
+  --accent: 168 86% 83%;              /* #b1f6e9 Mint Dark */
+  --accent-foreground: 241 25% 21%;   /* Navy Dark */
 
   /* 品牌色（深色模式保持不变） */
   --brand: 312 54% 40%;              /* #9b2e83 */
@@ -195,33 +212,33 @@
   --surface-purple: 312 30% 15%;     /* 深紫背景 */
   --surface-periwinkle: 240 20% 12%; /* 深蓝紫背景 */
 
-  /* 深色背景色（Navy - 深色模式反转） */
-  --navy: 242 38% 85%;               /* 浅色 */
-  --navy-foreground: 0 0% 0%;        /* 黑色文字 */
+  /* 深色背景色（Navy - 深色模式） */
+  --navy: 241 25% 21%;               /* #1f1e44 Navy Dark */
+  --navy-foreground: 0 0% 100%;      /* 白色文字 */
 
   /* 破坏性操作（红色，深色模式保持） */
   --destructive: 354 70% 51%;        /* #d72f40 */
   --destructive-foreground: 0 0% 100%; /* #ffffff */
 
   /* UI 元素 */
-  --border: 0 0% 20%;                /* #333333 */
-  --input: 0 0% 20%;                 /* #333333 */
-  --ring: 0 0% 100%;                 /* #ffffff */
+  --border: 241 25% 35%;              /* Navy Dark 变亮 */
+  --input: 241 25% 35%;               /* Navy Dark 变亮 */
+  --ring: 244 100% 76%;               /* Periwinkle Dark */
 
-  /* 图表颜色（深色模式） */
-  --chart-1: 0 0% 100%;              /* 白 */
-  --chart-2: 0 0% 75%;               /* 浅灰 */
-  --chart-3: 0 0% 55%;               /* 中灰 */
-  --chart-4: 0 0% 35%;               /* 深灰 */
-  --chart-5: 0 0% 15%;               /* 极深灰 */
+  /* 图表颜色（深色模式 - 品牌色系） */
+  --chart-1: 315 49% 61%;            /* Purple Mid */
+  --chart-2: 244 100% 76%;           /* Periwinkle Dark */
+  --chart-3: 168 86% 83%;            /* Mint Dark */
+  --chart-4: 316 53% 38%;            /* Purple Dark */
+  --chart-5: 207 81% 46%;           /* Blue */
 
   /* 侧边栏 */
-  --sidebar-background: 0 0% 5%;     /* #0d0d0d */
+  --sidebar-background: 241 25% 15%;  /* Navy Dark 更深 */
   --sidebar-foreground: 0 0% 100%;   /* #ffffff */
-  --sidebar-primary: 0 0% 100%;      /* #ffffff */
-  --sidebar-primary-foreground: 0 0% 0%; /* #000000 */
-  --sidebar-accent: 0 0% 15%;        /* #262626 */
-  --sidebar-accent-foreground: 0 0% 100%; /* #ffffff */
-  --sidebar-border: 0 0% 20%;        /* #333333 */
-  --sidebar-ring: 0 0% 100%;         /* #ffffff */
+  --sidebar-primary: 315 49% 61%;     /* Purple Mid */
+  --sidebar-primary-foreground: 0 0% 100%; /* #ffffff */
+  --sidebar-accent: 168 86% 83%;      /* Mint Dark */
+  --sidebar-accent-foreground: 241 25% 21%; /* Navy Dark */
+  --sidebar-border: 241 25% 35%;      /* Navy Dark 变亮 */
+  --sidebar-ring: 244 100% 76%;       /* Periwinkle Dark */
 }
