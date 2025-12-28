@@ -288,7 +288,7 @@ export function SiteHeader() {
             className="w-[300px] sm:w-[400px] p-0 overflow-y-auto bg-white border-l border-[#f7e5f3] shadow-xl"
           >
             {/* Mobile Header - Purple Dark background */}
-            <div className="bg-[#9b2e83] p-6 relative overflow-hidden">
+            <div className="bg-brand p-6 relative overflow-hidden">
               <SheetTitle className="text-white text-xl font-bold relative z-10">
                 Menu
               </SheetTitle>
@@ -322,12 +322,12 @@ export function SiteHeader() {
                     >
                       <CollapsibleTrigger className="flex w-full items-center justify-between py-4 text-left text-base font-medium text-[#1f1e44] hover:bg-[#f7e5f3] transition-all duration-150 rounded-lg px-2 -mx-2">
                         <span className="flex items-center gap-2">
-                          {item.icon && <item.icon className="h-4 w-4 text-[#9b2e83]" />}
+                          {item.icon && <item.icon className="h-4 w-4 text-brand" />}
                           {item.title}
                         </span>
                         <ChevronDown
                           className={cn(
-                            "h-4 w-4 text-[#9b2e83] transition-transform duration-150",
+                            "h-4 w-4 text-brand transition-transform duration-150",
                             openMobileMenus.includes(item.title) && "rotate-180"
                           )}
                         />
@@ -338,7 +338,7 @@ export function SiteHeader() {
                             <Link
                               key={child.title}
                               href={child.href}
-                              className="flex items-center gap-2 py-2 text-sm text-[#1f1e44]/70 hover:text-[#9b2e83] transition-all duration-150 hover:bg-[#f7e5f3] rounded-lg px-2 -mx-2"
+                              className="flex items-center gap-2 py-2 text-sm text-[#1f1e44]/70 hover:text-brand transition-all duration-150 hover:bg-[#f7e5f3] rounded-lg px-2 -mx-2"
                               onClick={(e) => {
                                 handleSmoothScroll(e, child.href);
                                 setIsOpen(false);
@@ -352,7 +352,7 @@ export function SiteHeader() {
                           {item.image && (
                             <Link
                               href={item.image.href}
-                              className="flex items-center gap-2 py-2 text-sm text-[#1f1e44]/70 hover:text-[#9b2e83] transition-all duration-150 hover:bg-[#f7e5f3] rounded-lg px-2 -mx-2"
+                              className="flex items-center gap-2 py-2 text-sm text-[#1f1e44]/70 hover:text-brand transition-all duration-150 hover:bg-[#f7e5f3] rounded-lg px-2 -mx-2"
                               onClick={() => setIsOpen(false)}
                             >
                               {item.image.alt}
@@ -370,7 +370,7 @@ export function SiteHeader() {
                         setIsOpen(false);
                       }}
                     >
-                      {item.icon && <item.icon className="h-4 w-4 text-[#9b2e83]" />}
+                      {item.icon && <item.icon className="h-4 w-4 text-brand" />}
                       {item.title}
                     </Link>
                   )}

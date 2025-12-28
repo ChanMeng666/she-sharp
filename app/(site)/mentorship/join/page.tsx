@@ -460,11 +460,11 @@ export default function MenteeApplicationPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Location Info Box */}
-            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
+            <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
+                <MapPin className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-[#9b2e83]">Location Matching</p>
+                  <p className="text-sm font-medium text-brand">Location Matching</p>
                   <p className="text-sm text-[#1f1e44] leading-relaxed">
                     Auckland is She Sharp&apos;s primary activity city. Selecting Auckland increases opportunities for in-person events and meetings.
                   </p>
@@ -629,11 +629,11 @@ export default function MenteeApplicationPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Skills Matching Info Box */}
-            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
+            <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <Lightbulb className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
+                <Lightbulb className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-[#9b2e83]">Skills Matching</p>
+                  <p className="text-sm font-medium text-brand">Skills Matching</p>
                   <p className="text-sm text-[#1f1e44] leading-relaxed">
                     Your basic skills will be matched with mentors who have expertise in those areas.
                     Be honest about your current level for the best match.
@@ -994,11 +994,11 @@ export default function MenteeApplicationPage() {
             <div className="h-px bg-border" />
 
             {/* MBTI Test Info Box */}
-            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
+            <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <Sparkles className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
+                <Sparkles className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-[#9b2e83]">Don&apos;t Know Your MBTI Type?</p>
+                  <p className="text-sm font-medium text-brand">Don&apos;t Know Your MBTI Type?</p>
                   <p className="text-sm text-[#1f1e44] leading-relaxed">
                     Your personality type helps us match you with a compatible mentor. If you don&apos;t know your MBTI type,
                     take the free test (about 10 minutes) to discover it.
@@ -1007,7 +1007,7 @@ export default function MenteeApplicationPage() {
                     href="https://www.16personalities.com/free-personality-test"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-[#9b2e83] hover:text-[#7a2468] transition-colors"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:text-[#7a2468] transition-colors"
                   >
                     Take the Free MBTI Test
                     <ExternalLink className="h-3.5 w-3.5" />
@@ -1117,7 +1117,7 @@ export default function MenteeApplicationPage() {
                     <div className="text-muted-foreground text-sm mb-1.5">Learning (Soft):</div>
                     <div className="flex flex-wrap gap-1.5">
                       {formData.softSkillsBasic.map(s => (
-                        <span key={s} className="bg-[#f7e5f3] text-[#9b2e83] px-2.5 py-1 rounded text-xs">{s}</span>
+                        <span key={s} className="bg-[#f7e5f3] text-brand px-2.5 py-1 rounded text-xs">{s}</span>
                       ))}
                     </div>
                   </div>
@@ -1157,8 +1157,8 @@ export default function MenteeApplicationPage() {
             </div>
 
             {/* Payment Info */}
-            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
-              <h3 className="font-semibold text-[#9b2e83] mb-2">Next Step: Payment</h3>
+            <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
+              <h3 className="font-semibold text-brand mb-2">Next Step: Payment</h3>
               <p className="text-sm text-[#1f1e44] leading-relaxed">
                 After submitting, you&apos;ll be redirected to complete your membership payment of{' '}
                 <span className="font-semibold">$100 NZD/year</span>. Upon successful payment, you&apos;ll receive an
@@ -1204,9 +1204,9 @@ export default function MenteeApplicationPage() {
                         <div
                           className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
                             currentStep > step.id
-                              ? 'bg-[#9b2e83] text-white'
+                              ? 'bg-brand text-white'
                               : currentStep === step.id
-                              ? 'bg-[#f7e5f3] text-[#9b2e83] border-2 border-[#9b2e83]'
+                              ? 'bg-[#f7e5f3] text-brand border-2 border-brand'
                               : 'bg-gray-100 text-gray-400'
                           }`}
                         >
@@ -1216,7 +1216,7 @@ export default function MenteeApplicationPage() {
                       </div>
                     ))}
                   </div>
-                  <Progress value={(currentStep / 5) * 100} className="h-1.5 [&>div]:bg-[#9b2e83]" />
+                  <Progress value={(currentStep / 5) * 100} className="h-1.5 [&>div]:bg-brand" />
                 </div>
 
                 <CardTitle className="text-xl">{steps[currentStep - 1].title}</CardTitle>

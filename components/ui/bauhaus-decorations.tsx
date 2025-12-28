@@ -19,7 +19,7 @@ interface BauhausProps {
  */
 export function BauhausQuarterCircle({
   size = 60,
-  color = "#9b2e83",
+  color = "hsl(var(--brand))",
   rotation = 0,
   className,
 }: BauhausProps) {
@@ -104,7 +104,7 @@ interface BauhausEyeProps extends BauhausProps {
  */
 export function BauhausEye({
   size = 60,
-  color = "#9b2e83",
+  color = "hsl(var(--brand))",
   pupilColor = "#8982ff",
   rotation = 0,
   className,
@@ -138,7 +138,7 @@ interface BauhausSemicircleProps extends BauhausProps {
  */
 export function BauhausSemicircle({
   size = 60,
-  color = "#9b2e83",
+  color = "hsl(var(--brand))",
   secondColor = "#8982ff",
   rotation = 0,
   className,
@@ -169,7 +169,7 @@ interface BauhausStripedCircleProps extends BauhausProps {
  */
 export function BauhausStripedCircle({
   size = 60,
-  color = "#9b2e83",
+  color = "hsl(var(--brand))",
   stripeColor = "#c846ab",
   rotation = 0,
   className,
@@ -201,7 +201,7 @@ interface BauhausTriangleProps extends BauhausProps {
 export function BauhausTriangleSplit({
   size = 60,
   color = "#b1f6e9",
-  secondColor = "#9b2e83",
+  secondColor = "hsl(var(--brand))",
   rotation = 0,
   className,
 }: BauhausTriangleProps) {
@@ -233,7 +233,7 @@ interface BauhausQuadTrianglesProps extends BauhausProps {
  */
 export function BauhausQuadTriangles({
   size = 60,
-  color = "#9b2e83",
+  color = "hsl(var(--brand))",
   color1 = "#8982ff",
   color2 = "#c846ab",
   color3 = "#1f1e44",
@@ -376,7 +376,7 @@ export function BauhausEyelash({
  */
 export function BauhausCircle({
   size = 60,
-  color = "#9b2e83",
+  color = "hsl(var(--brand))",
   className,
 }: Omit<BauhausProps, "rotation">) {
   return (

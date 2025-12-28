@@ -11,18 +11,18 @@ export function TypingIndicator() {
       transition={{ duration: 0.3 }}
       className="flex gap-3 px-6 py-4"
     >
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full shadow-sm bg-[#9b2e83] text-white">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full shadow-sm bg-brand text-white">
         <Bot size={18} />
       </div>
 
       <div className="flex flex-col items-start">
-        <div className="bg-[#f7e5f3] border border-[#9b2e83]/20 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
+        <div className="bg-[#f7e5f3] border border-brand/20 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
           <div className="flex items-center gap-2">
             <div className="flex gap-1">
               {[0, 1, 2].map((i) => (
                 <motion.div
                   key={i}
-                  className="h-2 w-2 rounded-full bg-[#9b2e83]"
+                  className="h-2 w-2 rounded-full bg-brand"
                   initial={{ scale: 0.8, opacity: 0.6 }}
                   animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.6, 1, 0.6] }}
                   transition={{

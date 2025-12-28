@@ -20,7 +20,7 @@ import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 // Color mapping for program cards using brand colors
 const programColors: Record<string, { bg: string; border: string }> = {
-  purple: { bg: "#9b2e83", border: "rgba(155, 46, 131, 0.5)" }, // Purple Dark
+  purple: { bg: "hsl(var(--brand))", border: "hsl(var(--brand) / 0.5)" }, // Brand Purple
   periwinkle: { bg: "#8982ff", border: "rgba(137, 130, 255, 0.5)" }, // Periwinkle Dark
   mint: { bg: "#1f1e44", border: "rgba(31, 30, 68, 0.5)" }, // Navy Dark
 };

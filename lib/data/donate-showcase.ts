@@ -42,7 +42,7 @@ export const donateSlides: SlideData[] = [
     image:
       "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/donate-4.jpg",
     imageAlt: "She Sharp group photo of members at an event",
-    bgColor: "#9b2e83", // Brand Purple
+    bgColor: "hsl(var(--brand))", // Brand Purple
     textColor: "#ffffff",
   },
 ];

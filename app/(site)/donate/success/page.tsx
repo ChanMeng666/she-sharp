@@ -38,7 +38,7 @@ function SuccessContent() {
         <div className="max-w-lg mx-auto text-center">
           {/* Success Icon */}
           <div className="mb-6">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-[#9b2e83] rounded-full mb-4">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-brand rounded-full mb-4">
               <CheckCircle className="h-10 w-10 text-white" />
             </div>
           </div>
@@ -48,14 +48,14 @@ function SuccessContent() {
             Thank You!
           </h1>
           <p className="text-lg text-gray-600 mb-8">
-            Your generous donation of <span className="font-semibold text-[#9b2e83]">${amount} NZD</span> has been received.
+            Your generous donation of <span className="font-semibold text-brand">${amount} NZD</span> has been received.
           </p>
 
           {/* Impact Card */}
           <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px] mb-8">
             <CardContent className="pt-6">
               <div className="flex items-start gap-3">
-                <Heart className="h-5 w-5 text-[#9b2e83] flex-shrink-0 mt-1" />
+                <Heart className="h-5 w-5 text-brand flex-shrink-0 mt-1" />
                 <div className="text-left">
                   <p className="font-medium text-[#1f1e44] mb-1">Your Impact</p>
                   <p className="text-gray-600 text-sm">{impactMessage}</p>
@@ -67,15 +67,15 @@ function SuccessContent() {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 mb-8">
             <div className="text-center">
-              <p className="text-2xl font-bold text-[#9b2e83]">2200+</p>
+              <p className="text-2xl font-bold text-brand">2200+</p>
               <p className="text-xs text-gray-500">Members</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-[#9b2e83]">50+</p>
+              <p className="text-2xl font-bold text-brand">50+</p>
               <p className="text-xs text-gray-500">Sponsors</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-[#9b2e83]">84+</p>
+              <p className="text-2xl font-bold text-brand">84+</p>
               <p className="text-xs text-gray-500">Events</p>
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function DonateSuccessPage() {
           }}
         >
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
-          <Loader2 className="h-8 w-8 animate-spin text-[#9b2e83] relative z-10" />
+          <Loader2 className="h-8 w-8 animate-spin text-brand relative z-10" />
         </div>
       }
     >

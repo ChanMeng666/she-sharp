@@ -327,7 +327,7 @@ export default function BecomeMentorPage() {
           <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
             <CardContent className="pt-8 text-center">
               <div className="w-20 h-20 bg-[#effefb] border-2 border-[#b1f6e9] rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle2 className="h-12 w-12 text-[#9b2e83]" />
+                <CheckCircle2 className="h-12 w-12 text-brand" />
               </div>
               <h1 className="text-2xl font-bold text-[#1f1e44] mb-3">
                 Application Submitted!
@@ -472,11 +472,11 @@ export default function BecomeMentorPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Location Info Box */}
-            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
+            <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
+                <MapPin className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-[#9b2e83]">Location Matching</p>
+                  <p className="text-sm font-medium text-brand">Location Matching</p>
                   <p className="text-sm text-[#1f1e44] leading-relaxed">
                     Auckland is She Sharp&apos;s primary activity city. Your location helps us match you with local mentees for in-person meetings.
                   </p>
@@ -605,11 +605,11 @@ export default function BecomeMentorPage() {
             {/* Bio Section */}
             <div className="space-y-5">
               {/* Bio Info Box */}
-              <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
+              <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
                 <div className="flex items-start gap-3">
-                  <FileText className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
+                  <FileText className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
                   <div className="space-y-1">
-                    <p className="text-sm font-medium text-[#9b2e83]">Your Mentor Bio</p>
+                    <p className="text-sm font-medium text-brand">Your Mentor Bio</p>
                     <p className="text-sm text-[#1f1e44] leading-relaxed">
                       This bio will be publicly displayed on our mentors page. Share your journey, expertise,
                       and what motivates you to mentor.
@@ -665,11 +665,11 @@ export default function BecomeMentorPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Expert Skills Requirement Info Box */}
-            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
+            <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <Award className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
+                <Award className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-[#9b2e83]">Expert Skills Requirement</p>
+                  <p className="text-sm font-medium text-brand">Expert Skills Requirement</p>
                   <p className="text-sm text-[#1f1e44] leading-relaxed">
                     We require at least 2 expert soft skills and 2 expert industry skills to ensure
                     you can provide valuable guidance to your mentees.
@@ -888,11 +888,11 @@ export default function BecomeMentorPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Time Commitment Info Box */}
-            <div className="bg-[#f7e5f3] border border-[#9b2e83]/30 rounded-lg p-5">
+            <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <Clock className="h-5 w-5 text-[#9b2e83] mt-0.5 flex-shrink-0" />
+                <Clock className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-[#9b2e83]">Time Commitment</p>
+                  <p className="text-sm font-medium text-brand">Time Commitment</p>
                   <p className="text-sm text-[#1f1e44] leading-relaxed">
                     Mentoring typically requires 2-4 hours per month per mentee, including meetings,
                     messages, and occasional events.
@@ -984,7 +984,7 @@ export default function BecomeMentorPage() {
                 <div className="text-muted-foreground text-sm mb-1.5">Expert Skills:</div>
                 <div className="flex flex-wrap gap-1.5">
                   {[...formData.softSkillsExpert, ...formData.industrySkillsExpert].map(s => (
-                    <span key={s} className="bg-[#f7e5f3] text-[#9b2e83] px-2.5 py-1 rounded text-xs">{s}</span>
+                    <span key={s} className="bg-[#f7e5f3] text-brand px-2.5 py-1 rounded text-xs">{s}</span>
                   ))}
                 </div>
               </div>
@@ -1068,9 +1068,9 @@ export default function BecomeMentorPage() {
                         <div
                           className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
                             currentStep > step.id
-                              ? 'bg-[#9b2e83] text-white'
+                              ? 'bg-brand text-white'
                               : currentStep === step.id
-                              ? 'bg-[#f7e5f3] text-[#9b2e83] border-2 border-[#9b2e83]'
+                              ? 'bg-[#f7e5f3] text-brand border-2 border-brand'
                               : 'bg-gray-100 text-gray-400'
                           }`}
                         >
@@ -1080,7 +1080,7 @@ export default function BecomeMentorPage() {
                       </div>
                     ))}
                   </div>
-                  <Progress value={(currentStep / 5) * 100} className="h-1.5 [&>div]:bg-[#9b2e83]" />
+                  <Progress value={(currentStep / 5) * 100} className="h-1.5 [&>div]:bg-brand" />
                 </div>
 
                 <CardTitle className="text-xl">{steps[currentStep - 1].title}</CardTitle>

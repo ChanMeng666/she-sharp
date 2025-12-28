@@ -5,7 +5,7 @@ import React, { HTMLAttributes, useCallback, useMemo } from "react";
 // Brand colors for beams
 const BRAND_COLORS = [
   "#8982ff", // Periwinkle Dark
-  "#9b2e83", // Purple Dark
+  "hsl(var(--brand))", // Brand Purple
   "#c846ab", // Purple Mid
   "#b1f6e9", // Mint Dark
   "#f7e5f3", // Purple Light

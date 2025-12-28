@@ -100,7 +100,7 @@ function CheckoutContent() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-2 bg-[#9b2e83]/10 text-[#9b2e83] px-4 py-2 rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 bg-brand/10 text-brand px-4 py-2 rounded-full mb-4">
             <Heart className="h-4 w-4" />
             <span className="text-sm font-medium">Support She Sharp</span>
           </div>
@@ -116,10 +116,10 @@ function CheckoutContent() {
           {/* Donation Card */}
           <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
             <CardHeader className="text-center pb-2">
-              <div className="bg-[#9b2e83] text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3 mx-auto">
+              <div className="bg-brand text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3 mx-auto">
                 ONE-TIME DONATION
               </div>
-              <CardTitle className="text-4xl font-bold text-[#9b2e83]">
+              <CardTitle className="text-4xl font-bold text-brand">
                 ${displayAmount}{" "}
                 <span className="text-lg font-normal text-gray-500">NZD</span>
               </CardTitle>
@@ -136,8 +136,8 @@ function CheckoutContent() {
                 <ul className="space-y-2">
                   {impacts.map((impact, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <div className="w-5 h-5 bg-[#9b2e83]/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="h-3 w-3 text-[#9b2e83]" />
+                      <div className="w-5 h-5 bg-brand/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Check className="h-3 w-3 text-brand" />
                       </div>
                       <span className="text-gray-700 text-sm">{impact}</span>
                     </li>
@@ -203,7 +203,7 @@ function CheckoutContent() {
           <div className="text-center mt-6">
             <Link
               href="/donate"
-              className="text-gray-600 hover:text-[#9b2e83] inline-flex items-center"
+              className="text-gray-600 hover:text-brand inline-flex items-center"
             >
               <ChevronLeft className="h-4 w-4 mr-1" />
               Back to donation options
@@ -229,7 +229,7 @@ export default function DonateCheckoutPage() {
           }}
         >
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
-          <Loader2 className="h-8 w-8 animate-spin text-[#9b2e83] relative z-10" />
+          <Loader2 className="h-8 w-8 animate-spin text-brand relative z-10" />
         </div>
       }
     >

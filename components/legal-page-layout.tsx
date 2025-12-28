@@ -34,7 +34,7 @@ export function LegalPageLayout({
             <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: "#1f1e44" }}>
               {title}
             </h1>
-            <p style={{ color: "#9b2e83" }}>
+            <p className="text-brand">
               Last Updated: {lastUpdated.toLocaleDateString('en-NZ', {
                 year: 'numeric',
                 month: 'long',

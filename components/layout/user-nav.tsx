@@ -159,9 +159,9 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
     return (
       <div className="flex flex-col gap-2 pt-4 border-t border-[#f7e5f3]">
         <div className="flex items-center gap-3 px-2 py-3 bg-[#f7e5f3]/50 rounded-lg">
-          <Avatar className="h-10 w-10 border-2 border-[#9b2e83]/20">
+          <Avatar className="h-10 w-10 border-2 border-brand/20">
             <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} />
-            <AvatarFallback className="bg-[#9b2e83] text-white">
+            <AvatarFallback className="bg-brand text-white">
               {getUserInitials()}
             </AvatarFallback>
           </Avatar>

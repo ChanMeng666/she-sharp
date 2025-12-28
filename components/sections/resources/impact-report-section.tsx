@@ -68,7 +68,7 @@ export function ImpactReportCards() {
           buttonIconSize={28}
           buttonIconColor="#ffffff"
           buttonIconHoverColor="#ffffff"
-          buttonBackgroundColor="#9b2e83"
+          buttonBackgroundColor="hsl(var(--brand))"
           buttonBackgroundHoverColor="#7a2468"
           imageHoverScale={1.05}
           titleColor="#1a1a1a"
