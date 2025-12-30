@@ -168,7 +168,7 @@
   --color-error: #d72f40;            /* 错误红色 */
   --color-ghost-white: #f3f3f1;      /* 幽灵白（背景色） */
   --color-light-pink: #F5D7E3;       /* 浅粉色 */
-  --color-background: #f3f3f1;       /* 背景色（ghost-white） */
+  --color-background: #eee;       /* 背景色 */
 }
 
 /* ==========================================

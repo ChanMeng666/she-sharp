@@ -201,7 +201,7 @@ export function Chatbot() {
                         size="icon"
                         variant="ghost"
                         onClick={() => setSelectedQuestion(null)}
-                        className="text-white bg-transparent hover:bg-transparent hover:text-white border-none w-12 h-12 p-0 flex items-center justify-center [&_svg]:w-[24px]! [&_svg]:h-[24px]!"
+                        className="text-white bg-transparent hover:bg-transparent hover:text-white border-none w-12 h-12 p-0 flex items-center justify-center "
                       >
                         <ArrowLeft size={24} />
                       </Button>
@@ -428,7 +428,7 @@ export function Chatbot() {
           onClick={() => setIsOpen(!isOpen)}
           className="h-16 w-16 shadow-xl hover:shadow-2xl"
         >
-          <MessageSquare size={26} />
+          <MessageSquare size={24} />
         </Button>
       </motion.div>
     </>
