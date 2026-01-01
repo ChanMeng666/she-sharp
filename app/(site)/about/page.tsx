@@ -1,6 +1,6 @@
 "use client";
 
-import { SmoothScrollHero } from "@/components/sections/about/smooth-scroll-hero";
+import SmoothScrollHero from "@/components/sections/about/smooth-scroll-hero";
 import { TeamSection } from "@/components/sections/about/team-section";
 import { TimelineSection } from "@/components/sections/about/timeline-section";
 import { useScrollToHash } from "@/hooks/use-scroll-to-hash";

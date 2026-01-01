@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Inter, Plus_Jakarta_Sans, Alex_Brush } from 'next/font/google';
+import { Lato, Plus_Jakarta_Sans, Alex_Brush } from 'next/font/google';
 import { getUser, getTeamForUser } from '@/lib/db/queries';
 import { serializeData } from '@/lib/utils';
 import { SWRConfig } from 'swr';
@@ -31,8 +31,9 @@ export const viewport: Viewport = {
   maximumScale: 1
 };
 
-const inter = Inter({
+const lato = Lato({
   subsets: ['latin'],
+  weight: ['300', '400', '700'],
   variable: '--font-sans'
 });
 
@@ -70,7 +71,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-background text-foreground ${inter.variable} ${plusJakartaSans.variable} ${alexBrush.variable}`}
+      className={`bg-background text-foreground ${lato.variable} ${plusJakartaSans.variable} ${alexBrush.variable}`}
     >
       <body className="min-h-[100dvh]">
         <Providers>
