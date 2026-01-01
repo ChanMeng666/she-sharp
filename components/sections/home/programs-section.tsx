@@ -13,7 +13,6 @@ import {
   BookOpen,
   Briefcase,
   Plus,
-  Minus,
 } from "lucide-react";
 import { useState } from "react";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
@@ -167,19 +166,11 @@ export function ProgramsSection() {
                           </p>
                         </div>
                       </div>
-                      <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                          isActive
-                            ? "bg-background/20"
-                            : "bg-foreground/10"
-                        }`}
-                      >
-                        {isActive ? (
-                          <Minus className={`w-4 h-4 ${isActive ? "text-background" : "text-foreground"} opacity-50`} />
-                        ) : (
+                      {!isActive && (
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center bg-foreground/10">
                           <Plus className="w-4 h-4 text-foreground" />
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </button>
 
                     {/* Accordion Content */}

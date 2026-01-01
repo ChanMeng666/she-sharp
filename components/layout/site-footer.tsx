@@ -15,7 +15,6 @@ import { cn } from "@/lib/utils";
 import { footerConfig } from "@/lib/config/footer";
 import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 import { socialIcons } from "@/components/ui/social-icons";
-import "@/styles/components/footer.css";
 
 export function SiteFooter() {
   const [openSections, setOpenSections] = useState<string[]>([]);
@@ -133,7 +132,7 @@ export function SiteFooter() {
                           <Link
                             href={link.href}
                             onClick={(e) => handleSmoothScroll(e, link.href)}
-                            className="text-xs lg:text-base text-white/80 hover:text-purple-mid transition-colors footer-link inline-block"
+                            className="relative inline-block text-xs lg:text-base text-white/80 hover:text-purple-mid transition-colors after:content-[''] after:absolute after:w-0 after:h-px after:bottom-[-2px] after:left-0 after:bg-current after:transition-all after:duration-200 hover:after:w-full"
                           >
                             {link.name}
                           </Link>
@@ -228,12 +227,12 @@ export function SiteFooter() {
               <div key={link.name} className="flex items-center">
                 <Link
                   href={link.href}
-                  className="text-white/80 hover:text-purple-mid transition-colors duration-150 legal-link"
+                  className="text-white/80 hover:text-brand transition-colors duration-150 legal-link"
                 >
                   {link.name}
                 </Link>
                 {index < footerConfig.legalLinks.length - 1 && (
-                  <span className="mx-1 md:mx-8 text-white/60">•</span>
+                  <span className="mx-1 md:mx-8 text-white/80">•</span>
                 )}
               </div>
             ))}
