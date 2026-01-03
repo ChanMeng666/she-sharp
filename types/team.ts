@@ -12,11 +12,15 @@ export const TEAM_ROLES = [
   'Content Creator',
   'Digital Designer',
   'Secretary',
+  'Mentoring Program Lead',
+  'Marketing Lead',
+  'Marketing',
 ] as const;
 
 export type TeamRole = (typeof TEAM_ROLES)[number];
 
 export interface TeamMember {
+  id?: number;
   name: string;
   roles: TeamRole[];
   image: string;
