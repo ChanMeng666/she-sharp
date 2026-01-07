@@ -31,6 +31,7 @@ export default function TimeLine_01({
   className,
 }: TimeLine_01Props) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sentinelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const setSentinelRef = (el: HTMLDivElement | null, i: number) => {
@@ -87,7 +88,10 @@ export default function TimeLine_01({
 
         <div className="mx-auto mt-12 max-w-3xl space-y-12 md:mt-16 md:space-y-16">
           {entries.map((entry, index) => {
-            const isActive = index === activeIndex;
+            const isActive =
+              hoveredIndex !== null
+                ? index === hoveredIndex
+                : index === activeIndex;
 
             return (
               <div
@@ -96,18 +100,26 @@ export default function TimeLine_01({
                 aria-current={isActive ? "true" : "false"}
               >
                 {/* Sticky meta column */}
-                <div className="top-24 flex h-min w-full md:w-48 shrink-0 items-center gap-4 md:sticky">
+                <div
+                  className="top-24 flex h-min w-full md:w-60 shrink-0 items-center gap-4 md:sticky"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
                   <div className="flex items-center gap-3">
-                    <div className={`p-2.5 rounded-xl transition-colors duration-300 ${
-                      isActive ? "bg-brand text-brand-foreground" : "bg-muted text-muted-foreground"
-                    }`}>
-                      <entry.icon className="h-5 w-5" />
+                    <div
+                      className={`p-2.5 rounded-xl transition-colors duration-300 ${
+                        isActive
+                          ? "bg-brand text-brand-foreground"
+                          : "bg-white text-muted-foreground"
+                      }`}
+                    >
+                      <entry.icon className="h-5 w-5 md:h-6 md:w-6" />
                     </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-semibold text-foreground">
+                    <div className="flex flex-col text-left">
+                      <span className="font-semibold text-foreground text-md md:text-lg">
                         {entry.title}
                       </span>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-sm md:text-base text-muted-foreground">
                         {entry.subtitle}
                       </span>
                     </div>
@@ -124,11 +136,13 @@ export default function TimeLine_01({
                 {/* Content column */}
                 <article
                   className={
-                    "flex-1 flex flex-col rounded-[50px] border p-6 transition-all duration-300 " +
+                    "flex-1 flex flex-col rounded-[50px] border p-6 transition-all duration-300" +
                     (isActive
-                      ? "border-brand/20 bg-surface-purple shadow-lg"
-                      : "border-border bg-background")
+                      ? "border-brand/20 bg-brand shadow-lg"
+                      : "border-border bg-white")
                   }
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
                 >
                   {entry.image && (
                     <img
@@ -142,8 +156,8 @@ export default function TimeLine_01({
                     <div className="space-y-2">
                       <h3
                         className={
-                          "text-lg font-semibold leading-tight tracking-tight md:text-xl transition-colors duration-200 " +
-                          (isActive ? "text-foreground" : "text-foreground/70")
+                          "text-lg mb-4 font-semibold leading-tight tracking-tight md:text-xl transition-colors duration-200 " +
+                          (isActive ? "text-white" : "text-foreground/70")
                         }
                       >
                         {entry.title}
@@ -151,9 +165,9 @@ export default function TimeLine_01({
 
                       <p
                         className={
-                          "text-sm leading-relaxed md:text-base transition-all duration-300 " +
+                          "text-sm leading-relaxed md:text-base text-left transition-all duration-300 " +
                           (isActive
-                            ? "text-muted-foreground"
+                            ? "text-white"
                             : "text-muted-foreground/80 line-clamp-2")
                         }
                       >
@@ -172,17 +186,27 @@ export default function TimeLine_01({
                       }
                     >
                       <div className="overflow-hidden">
-                        <div className="space-y-4 pt-2">
+                        <div className="space-y-4">
                           {entry.items && entry.items.length > 0 && (
-                            <div className="rounded-[30px] border border-border bg-background p-4">
+                            <div className="rounded-[30px]  p-4">
                               <ul className="space-y-2">
                                 {entry.items.map((item, itemIndex) => (
                                   <li
                                     key={itemIndex}
-                                    className="flex items-start gap-2 text-sm text-muted-foreground"
+                                    className={`flex items-center gap-2 text-sm transition-colors duration-300 ${
+                                      isActive
+                                        ? "text-white"
+                                        : "text-muted-foreground"
+                                    }`}
                                   >
-                                    <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-brand flex-shrink-0" />
-                                    <span className="leading-relaxed">{item}</span>
+                                    <div
+                                      className={`h-1.5 w-1.5 rounded-full shrink-0 ${
+                                        isActive ? "bg-white" : "bg-brand"
+                                      }`}
+                                    />
+                                    <span className="leading-relaxed text-sm md:text-base ">
+                                      {item}
+                                    </span>
                                   </li>
                                 ))}
                               </ul>
@@ -190,11 +214,11 @@ export default function TimeLine_01({
                           )}
 
                           {entry.button && (
-                            <div className="flex justify-end">
+                            <div className="flex justify-start p-2">
                               <Button
-                                variant="brand"
-                                size="sm"
-                                className="group font-normal transition-all duration-200"
+                                variant="outline"
+                                size="lg"
+                                className="group transition-all duration-200 bg-white text-brand border-white hover:bg-white/90 hover:text-brand hover:border-white/90"
                                 asChild
                               >
                                 <a href={entry.button.url}>
