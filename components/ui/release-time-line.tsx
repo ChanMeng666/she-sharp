@@ -79,14 +79,14 @@ export default function TimeLine_01({
               </h2>
             )}
             {description && (
-              <p className="mb-6 text-base text-muted-foreground md:text-lg">
+              <p className="mb-6 text-base text-foreground md:text-lg">
                 {description}
               </p>
             )}
           </div>
         )}
 
-        <div className="mx-auto mt-12 max-w-3xl space-y-12 md:mt-16 md:space-y-16">
+        <div className="mx-auto mt-12 max-w-4xl space-y-12 md:mt-16 md:space-y-16">
           {entries.map((entry, index) => {
             const isActive =
               hoveredIndex !== null
