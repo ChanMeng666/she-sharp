@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog";
-import { X } from "lucide-react";
+import { X, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { teamMembers } from "@/lib/data/team";
 import { TeamMember } from "@/types/team";
@@ -67,9 +67,9 @@ function TeamMemberCard({ member, index }: TeamMemberCardProps) {
                   e.stopPropagation();
                   setIsDialogOpen(true);
                 }}
-                className="text-sm font-medium text-brand hover:text-brand-hover transition-colors underline"
+                className="text-sm font-medium text-brand hover:text-brand-hover transition-colors underline inline-flex items-center gap-1"
               >
-                Learn more
+                Learn more <ArrowUpRight className="w-4 h-4" />
               </button>
             </div>
 
@@ -78,16 +78,28 @@ function TeamMemberCard({ member, index }: TeamMemberCardProps) {
         </article>
 
         <DialogContent 
-          className="max-w-2xl max-h-[90vh] overflow-y-auto p-8 md:p-10"
+          className="max-w-4xl lg:max-w-5xl max-h-[90vh] overflow-y-auto p-10 md:p-12"
           hideCloseButton
         >
-          <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none p-3 min-w-[44px] min-h-[44px] flex items-center justify-center">
-            <X className="h-5 w-5" />
-            <span className="sr-only">Close</span>
-          </DialogClose>
-          <DialogHeader>
-            <div className="flex items-center gap-6 mb-4">
-              <div className="relative w-24 h-24 rounded-full overflow-hidden ring-4 ring-brand/20 shrink-0">
+          {/* Top row: Name, Title, and Close button */}
+          <div className="flex items-start justify-between mb-6 md:mb-8">
+            <DialogHeader className="flex-1">
+              <DialogTitle className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+                {member.name}
+              </DialogTitle>
+              <p className="text-base md:text-lg font-medium text-brand">
+                {member.roles.join(" • ")}
+              </p>
+            </DialogHeader>
+            <DialogClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none px-2 py-0.5 flex items-center justify-center shrink-0 ml-4">
+              <X className="h-5 w-5" />
+              <span className="sr-only">Close</span>
+            </DialogClose>
+          </div>
+          <div className="flex flex-col md:flex-row gap-8 md:gap-10">
+            {/* Left side: Image */}
+            <div className="shrink-0 flex flex-col items-center md:items-start">
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden ring-4 ring-brand/20 mx-auto md:mx-0">
                 {!imageError ? (
                   <Image
                     src={member.image}
@@ -97,24 +109,20 @@ function TeamMemberCard({ member, index }: TeamMemberCardProps) {
                     onError={() => setImageError(true)}
                   />
                 ) : (
-                  <div className="w-full h-full bg-brand flex items-center justify-center text-brand-foreground text-3xl font-bold">
+                  <div className="w-full h-full bg-brand flex items-center justify-center text-brand-foreground text-4xl md:text-5xl font-bold">
                     {member.name.charAt(0)}
                   </div>
                 )}
               </div>
-              <div>
-                <DialogTitle className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-                  {member.name}
-                </DialogTitle>
-                <p className="text-base md:text-lg font-medium text-brand">
-                  {member.roles.join(" • ")}
-                </p>
-              </div>
             </div>
-          </DialogHeader>
-          <DialogDescription className="text-base text-foreground leading-relaxed whitespace-pre-line">
-            {member.description}
-          </DialogDescription>
+            
+            {/* Right side: Description */}
+            <div className="flex-1 flex items-start">
+              <DialogDescription className="text-sm md:text-base text-foreground leading-relaxed whitespace-pre-line w-full">
+                {member.description}
+              </DialogDescription>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </>
