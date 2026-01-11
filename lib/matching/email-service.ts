@@ -48,9 +48,9 @@ async function sendMatchApprovalToMentor(data: MatchApprovalEmailData): Promise<
       <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #9b2e83 0%, #6b1d5a 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+        .header { background: linear-gradient(135deg, hsl(var(--brand)) 0%, #6b1d5a 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
         .content { background: #f9f9f9; padding: 30px; border: 1px solid #e0e0e0; border-top: none; }
-        .button { display: inline-block; padding: 12px 30px; background: #9b2e83; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+        .button { display: inline-block; padding: 12px 30px; background: hsl(var(--brand)); color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
         .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
         .match-card { background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin: 20px 0; }
         .score-badge { background: #4caf50; color: white; padding: 5px 12px; border-radius: 15px; font-weight: bold; display: inline-block; }
@@ -69,7 +69,7 @@ async function sendMatchApprovalToMentor(data: MatchApprovalEmailData): Promise<
           <p>Great news! You have been matched with a new mentee in the She Sharp Mentorship Program.</p>
 
           <div class="match-card">
-            <h3 style="margin-top: 0; color: #9b2e83;">Your New Mentee</h3>
+            <h3 style="margin-top: 0; color: hsl(var(--brand));">Your New Mentee</h3>
             <p><strong>Name:</strong> ${data.menteeName}</p>
             <p><strong>Email:</strong> <a href="mailto:${data.menteeEmail}">${data.menteeEmail}</a></p>
             <p><strong>Compatibility Score:</strong> <span class="score-badge">${data.matchScore}%</span></p>
@@ -166,9 +166,9 @@ async function sendMatchApprovalToMentee(data: MatchApprovalEmailData): Promise<
       <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #9b2e83 0%, #6b1d5a 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+        .header { background: linear-gradient(135deg, hsl(var(--brand)) 0%, #6b1d5a 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
         .content { background: #f9f9f9; padding: 30px; border: 1px solid #e0e0e0; border-top: none; }
-        .button { display: inline-block; padding: 12px 30px; background: #9b2e83; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+        .button { display: inline-block; padding: 12px 30px; background: hsl(var(--brand)); color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
         .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
         .match-card { background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin: 20px 0; }
         .score-badge { background: #4caf50; color: white; padding: 5px 12px; border-radius: 15px; font-weight: bold; display: inline-block; }
@@ -189,7 +189,7 @@ async function sendMatchApprovalToMentee(data: MatchApprovalEmailData): Promise<
           <p>Exciting news! We've found a mentor who is a great match for your goals and interests in the She Sharp Mentorship Program.</p>
 
           <div class="match-card">
-            <h3 style="margin-top: 0; color: #9b2e83;">Your Mentor</h3>
+            <h3 style="margin-top: 0; color: hsl(var(--brand));">Your Mentor</h3>
             <p><strong>Name:</strong> ${data.mentorName}</p>
             <p><strong>Email:</strong> <a href="mailto:${data.mentorEmail}">${data.mentorEmail}</a></p>
             <p><strong>Compatibility Score:</strong> <span class="score-badge">${data.matchScore}%</span></p>
@@ -280,7 +280,7 @@ export async function sendQueueUpdateNotification(
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
         .header { background: #2196f3; color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
         .content { background: #f9f9f9; padding: 30px; border: 1px solid #e0e0e0; border-top: none; }
-        .button { display: inline-block; padding: 12px 30px; background: #9b2e83; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+        .button { display: inline-block; padding: 12px 30px; background: hsl(var(--brand)); color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
         .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
         .position-card { background: white; border: 2px solid #2196f3; border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; }
         .position-number { font-size: 48px; font-weight: bold; color: #2196f3; }
@@ -376,9 +376,9 @@ export async function sendAddedToQueueNotification(
       <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #9b2e83 0%, #6b1d5a 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+        .header { background: linear-gradient(135deg, hsl(var(--brand)) 0%, #6b1d5a 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
         .content { background: #f9f9f9; padding: 30px; border: 1px solid #e0e0e0; border-top: none; }
-        .button { display: inline-block; padding: 12px 30px; background: #9b2e83; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+        .button { display: inline-block; padding: 12px 30px; background: hsl(var(--brand)); color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
         .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
         .info-box { background: #e3f2fd; border: 1px solid #2196f3; border-radius: 8px; padding: 20px; margin: 20px 0; }
         .position-badge { background: #2196f3; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; display: inline-block; }
@@ -481,7 +481,7 @@ export async function sendQueueExpiredNotification(
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
         .header { background: #ff9800; color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
         .content { background: #f9f9f9; padding: 30px; border: 1px solid #e0e0e0; border-top: none; }
-        .button { display: inline-block; padding: 12px 30px; background: #9b2e83; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+        .button { display: inline-block; padding: 12px 30px; background: hsl(var(--brand)); color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
         .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
       </style>
     </head>
@@ -574,11 +574,11 @@ export async function sendBatchMatchingSummaryToAdmin(
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
         .header { background: #333; color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
         .content { background: #f9f9f9; padding: 30px; border: 1px solid #e0e0e0; border-top: none; }
-        .button { display: inline-block; padding: 12px 30px; background: #9b2e83; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+        .button { display: inline-block; padding: 12px 30px; background: hsl(var(--brand)); color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
         .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
         .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0; }
         .stat-card { background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; text-align: center; }
-        .stat-number { font-size: 32px; font-weight: bold; color: #9b2e83; }
+        .stat-number { font-size: 32px; font-weight: bold; color: hsl(var(--brand)); }
         .stat-label { color: #666; font-size: 12px; text-transform: uppercase; }
       </style>
     </head>

@@ -121,20 +121,20 @@ const MENTOR_STEPS: TimeLine_01Entry[] = [
 
 export function HowItWorksSection() {
   return (
-    <Section className="py-16 md:py-24 bg-surface-periwinkle rounded-b-[50px]">
-      <Container>
+    <Section className="py-16 md:py-32 bg-navy-light rounded-b-[50px]">
+      <Container size="full">
         {/* Header */}
         <div className="text-center mb-8">
           <h2 className="text-display-sm text-foreground mb-4">
             How the Program Works
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
             Your path to meaningful mentorship connections
           </p>
 
           {/* Tabs */}
           <Tabs defaultValue="mentee" className="w-full">
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center">
               <TabsList className="h-14 p-1.5 bg-white/50 backdrop-blur-sm rounded-full">
                 <TabsTrigger
                   value="mentee"

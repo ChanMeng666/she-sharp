@@ -96,8 +96,8 @@ export const navigationConfig: {
   ],
   buttons: [
     {
-      title: "Join Program",
-      href: "/mentorship/join",
+      title: "Join Mentorship",
+      href: "/mentorship",
       variant: "brand",
     },
   ],

@@ -15,7 +15,7 @@
 
 .legal-content h3 {
   @apply text-xl font-semibold mb-4 mt-8;
-  color: #9b2e83;
+  color: hsl(var(--brand));
 }
 
 .legal-content h4 {
@@ -47,11 +47,11 @@
 }
 
 .legal-content li::marker {
-  color: #9b2e83;
+  color: hsl(var(--brand));
 }
 
 .legal-content a {
-  color: #9b2e83;
+  color: hsl(var(--brand));
   @apply underline underline-offset-2 hover:no-underline;
 }
 
@@ -87,7 +87,7 @@
 
 .legal-content blockquote {
   @apply pl-4 my-4 italic;
-  border-left: 4px solid #9b2e83;
+  border-left: 4px solid hsl(var(--brand));
   color: #1f1e44;
   background-color: #f4f4fa;
   @apply py-3 pr-4 rounded-r;

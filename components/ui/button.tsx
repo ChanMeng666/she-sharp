@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
  * 设计原则：
  * - 统一：所有变体使用 border-2 粗边框 + rounded-full 全圆角
  * - 高对比：确保文字在任何背景上清晰可读
- * - 无动画：仅颜色过渡，无 translate、scale、shadow 动画
+ * - 交互动效：悬停时放大 1.02 倍，点击时缩小至 0.98 倍 
  *
  * 变体说明：
  * - default: 黑底白字黑边 → 悬停白底黑字黑边（主要操作）
@@ -21,14 +21,15 @@ import { cn } from "@/lib/utils";
  * - ghost: 白底黑字灰边 → 悬停浅灰底黑字灰边（工具栏/导航）
  */
 const buttonVariants = cva(
-  // 基础样式：统一粗边框 + 全圆角
+  // 基础样式：统一粗边框 + 全圆角 + 缩放动效
   [
     "inline-flex items-center justify-center gap-2 whitespace-nowrap",
     "rounded-full font-medium border-2",
-    "transition-colors duration-200",
+    "transition-all duration-200",
+    "hover:scale-102 active:scale-98",
     "disabled:pointer-events-none disabled:opacity-50",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-    "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 shrink-0",
+    "[&_svg]:pointer-events-none [&_svg]:shrink-0 shrink-0",
   ].join(" "),
   {
     variants: {

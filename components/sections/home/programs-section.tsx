@@ -13,14 +13,13 @@ import {
   BookOpen,
   Briefcase,
   Plus,
-  Minus,
 } from "lucide-react";
 import { useState } from "react";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
 
 // Color mapping for program cards using brand colors
 const programColors: Record<string, { bg: string; border: string }> = {
-  purple: { bg: "#9b2e83", border: "rgba(155, 46, 131, 0.5)" }, // Purple Dark
+  purple: { bg: "hsl(var(--brand))", border: "hsl(var(--brand) / 0.5)" }, // Brand Purple
   periwinkle: { bg: "#8982ff", border: "rgba(137, 130, 255, 0.5)" }, // Periwinkle Dark
   mint: { bg: "#1f1e44", border: "rgba(31, 30, 68, 0.5)" }, // Navy Dark
 };
@@ -167,19 +166,11 @@ export function ProgramsSection() {
                           </p>
                         </div>
                       </div>
-                      <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                          isActive
-                            ? "bg-background/20"
-                            : "bg-foreground/10"
-                        }`}
-                      >
-                        {isActive ? (
-                          <Minus className={`w-4 h-4 ${isActive ? "text-background" : "text-foreground"} opacity-50`} />
-                        ) : (
+                      {!isActive && (
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center bg-foreground/10">
                           <Plus className="w-4 h-4 text-foreground" />
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </button>
 
                     {/* Accordion Content */}

@@ -34,7 +34,7 @@ export default function NotFound() {
             <div className="p-12 text-center space-y-8">
               {/* 404 Number Display */}
               <div className="relative">
-                <div className="text-8xl font-black text-[#9b2e83] leading-none">
+                <div className="text-8xl font-black text-brand leading-none">
                   404
                 </div>
                 <div className="absolute inset-0 text-8xl font-black text-[#f7e5f3] scale-110 leading-none -z-10">
@@ -96,7 +96,7 @@ export default function NotFound() {
               <div className="pt-4 border-t border-[#eaf2ff]">
                 <p className="text-sm text-[#1f1e44]/60">
                   Need help?{' '}
-                  <Link href="/contact" className="text-[#9b2e83] hover:text-[#c846ab] underline transition-colors">
+                  <Link href="/contact" className="text-brand hover:text-[#c846ab] underline transition-colors">
                     Contact our support team
                   </Link>
                 </p>

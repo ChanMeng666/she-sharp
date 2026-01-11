@@ -54,135 +54,122 @@ const parseTargetValue = (
 const formatNumber = (num: number) =>
   new Intl.NumberFormat(undefined).format(num);
 
-const AnimatedNumber: React.FC<{
-  target: number;
-  shouldStart: boolean;
-  skipAnimation?: boolean;
-}> = ({ target, shouldStart, skipAnimation }) => {
-  const [current, setCurrent] = React.useState(skipAnimation ? target : 0);
-  const hasStarted = React.useRef(false);
-  const rafRef = React.useRef<number>(0);
+const AnimatedNumber: React.FC<{ target: number; animate: boolean }> = ({
+  target,
+  animate,
+}) => {
+  const [current, setCurrent] = React.useState(animate ? 0 : target);
 
   React.useEffect(() => {
-    // If animation should be skipped, show final value immediately
-    if (skipAnimation) {
+    if (!animate) {
       setCurrent(target);
       return;
     }
+    let raf = 0;
+    const durationMs = 2400; // a touch snappier
+    const start = performance.now();
 
-    // Start animation only once when shouldStart becomes true
-    if (shouldStart && !hasStarted.current) {
-      hasStarted.current = true;
-      const durationMs = 2400;
-      const start = performance.now();
-
-      const tick = (now: number) => {
-        const t = Math.min(1, (now - start) / durationMs);
-        const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
-        setCurrent(Math.round(target * eased));
-        if (t < 1) {
-          rafRef.current = requestAnimationFrame(tick);
-        }
-      };
-
-      rafRef.current = requestAnimationFrame(tick);
-    }
-  }, [shouldStart, skipAnimation, target]);
-
-  // Cleanup on unmount only
-  React.useEffect(() => {
-    return () => {
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / durationMs);
+      const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+      setCurrent(Math.round(target * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
     };
-  }, []);
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [animate, target]);
 
   return <>{formatNumber(current)}</>;
 };
 
-function StatItem({
+function StatCard({
   item,
-  shouldStart,
-  skipAnimation,
+  animate,
+  className,
 }: {
   item: ImpactItem;
-  shouldStart: boolean;
-  skipAnimation?: boolean;
+  animate: boolean;
+  className?: string;
 }) {
+  const { target, suffix } = parseTargetValue(item.value);
+
   return (
-    <div className="flex flex-col">
-      <div className="relative w-10 h-10 mb-4">
-        <Image
-          src={item.icon}
-          alt={`${item.title} icon`}
-          fill
-          className="object-contain"
-        />
+    <article
+      role="listitem"
+      className={`rounded-xl overflow-hidden border border-border/50 hover:border-brand/50 transition-transform duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-md hover:shadow-brand/10 focus-within:-translate-y-0.5 focus-within:shadow-md focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20 ${className ?? ""}`}
+      tabIndex={0}
+      aria-labelledby={`stat-${item.title.toLowerCase().replace(/\s+/g, "-")}-title`}
+    >
+      <div className="p-5 w-full h-80 flex flex-col justify-between">
+        <div className="relative w-10 h-10 shrink-0" aria-hidden="true">
+          <Image
+            src={item.icon}
+            alt={item.title}
+            fill
+            className="object-contain"
+          />
+        </div>
+
+        <div>
+          <div
+            className="text-6xl font-extrabold tabular-nums tracking-tight mb-4 text-brand"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <AnimatedNumber target={target} animate={animate} />
+            <span aria-hidden="true">{suffix}</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <h3
+              id={`stat-${item.title.toLowerCase().replace(/\s+/g, "-")}-title`}
+              className="text-lg font-bold text-foreground"
+            >
+              {item.title}
+            </h3>
+          </div>
+          <div
+            className="h-px w-full mb-4 bg-linear-to-r from-transparent via-border/50 to-transparent"
+            aria-hidden="true"
+          />
+          <p className="text-muted-foreground text-sm leading-relaxed">
+            {item.desc}
+          </p>
+        </div>
       </div>
-
-      <div className="text-stat text-5xl sm:text-6xl mb-2 text-foreground">
-        {(() => {
-          const { target, suffix } = parseTargetValue(item.value);
-          return (
-            <>
-              <AnimatedNumber
-                target={target}
-                shouldStart={shouldStart}
-                skipAnimation={skipAnimation}
-              />
-              {suffix}
-            </>
-          );
-        })()}
-      </div>
-
-      <h3 className="text-lg font-bold text-foreground mb-2">{item.title}</h3>
-
-      <p className="text-muted-foreground text-sm leading-relaxed">
-        {item.desc}
-      </p>
-    </div>
+    </article>
   );
 }
 
 export function CoreImpactSection() {
   const { ref, inView } = useInView();
   const reduceMotion = usePrefersReducedMotion();
-  const hasTriggered = React.useRef(false);
-  const [shouldStart, setShouldStart] = React.useState(false);
-
-  // Trigger animation only once when section comes into view
-  React.useEffect(() => {
-    if (inView && !hasTriggered.current && !reduceMotion) {
-      hasTriggered.current = true;
-      setShouldStart(true);
-    }
-  }, [inView, reduceMotion]);
 
   return (
-    <Section className="bg-white">
+    <Section className="bg-muted/50" aria-labelledby="impact-heading">
       <div ref={ref} className="relative ">
         <Container size="full">
           {/* Header */}
           <AnimateOnScroll variant="fade-up" className=" mb-8 md:mb-20 ">
-            <h2 className="text-display-sm text-foreground">
+            <h2
+              id="impact-heading"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground"
+            >
               A Decade of Measurable Impact
             </h2>
           </AnimateOnScroll>
 
           {/* Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-16 max-w-7xl mx-auto">
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto"
+            role="list"
+          >
             {impactData.map((item, i) => (
-              <AnimateOnScroll
-                key={i}
-                variant="fade-up"
-                delay={i * 100}
-              >
-                <StatItem
+              <AnimateOnScroll key={i} variant="fade-up" delay={i * 100}>
+                <StatCard
                   item={item}
-                  shouldStart={shouldStart}
-                  skipAnimation={reduceMotion}
+                  animate={inView && !reduceMotion}
+                  className="bg-background/80 backdrop-blur-sm hover:scale-105 hover:bg-background/90 hover:border-brand/50 transition-all duration-300"
                 />
               </AnimateOnScroll>
             ))}

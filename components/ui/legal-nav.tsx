@@ -52,13 +52,13 @@ export function LegalNav({ className, activeTitle, ...props }: LegalNavProps) {
           >
             {index === 0 && (
               <PlusIcon
-                className="-right-[10px] -bottom-[10px] absolute z-10 size-5 text-[#9b2e83] hidden lg:block"
+                className="-right-[10px] -bottom-[10px] absolute z-10 size-5 text-brand hidden lg:block"
                 strokeWidth={1.5}
               />
             )}
             {index === 2 && (
               <PlusIcon
-                className="-right-[10px] -bottom-[10px] absolute z-10 size-5 text-[#9b2e83] hidden lg:block"
+                className="-right-[10px] -bottom-[10px] absolute z-10 size-5 text-brand hidden lg:block"
                 strokeWidth={1.5}
               />
             )}
@@ -88,13 +88,13 @@ function NavCard({ href, icon, title, isActive, className, children }: NavCardPr
       className={cn(
         "flex items-center justify-center gap-2 px-4 py-5 transition-colors",
         isActive
-          ? "bg-[#9b2e83] text-white"
+          ? "bg-brand text-white"
           : "bg-white hover:bg-[#f7e5f3] text-[#1f1e44]",
         className
       )}
       style={{ borderColor: "#f7e5f3" }}
     >
-      <span className={isActive ? "text-white" : "text-[#9b2e83]"}>
+      <span className={isActive ? "text-white" : "text-brand"}>
         {icon}
       </span>
       <span className={cn(
