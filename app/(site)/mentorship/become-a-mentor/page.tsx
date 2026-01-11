@@ -1466,7 +1466,7 @@ export default function BecomeMentorPage() {
               </CardContent>
             </Card>
 
-            <div className="text-center mt-6 space-y-2">
+            <div className="text-center my-6 space-y-2">
               <p className="text-gray-600">
                 Already have an invitation code?{" "}
                 <Link
