@@ -29,7 +29,7 @@ export const presetQuestions: PresetQuestion[] = [
     id: '7',
     question: 'What does membership cost?',
     answer:
-      "Mentee membership is **$100 NZD per year**, which includes:\n- 1-on-1 mentor sessions\n- AI-powered mentor matching\n- Access to all events\n- Premium learning resources\n- Networking opportunities\n\nMentor applications are **free** - experienced professionals can apply to give back to the community.\n\n**Join now:** [Become a Mentee](/mentorship/join) | [Become a Mentor](/mentorship/become-a-mentor)",
+      "Mentee membership is **$100 NZD per year**, which includes:\n- 1-on-1 mentor sessions\n- AI-powered mentor matching\n- Access to all events\n- Premium learning resources\n- Networking opportunities\n\nMentor applications are **FREE** - experienced professionals can apply to give back to the community.\n\n**Join now:** [Become a Mentee](/mentorship/join) | [Become a Mentor](/mentorship/become-a-mentor)",
     category: 'general',
   },
 

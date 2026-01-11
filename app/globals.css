@@ -31,7 +31,7 @@
   /* Fonts */
   --font-sans: var(--font-sans), "Lato", system-ui, sans-serif;
   --font-heading: var(--font-heading), "Plus Jakarta Sans", sans-serif;
-  --font-brand-script: var(--font-brand-script), "Alex Brush", cursive;
+  --font-brand-script: var(--font-brand-script), "Carattere", cursive;
 
   /* Radius */
   --radius-sm: calc(var(--radius) - 4px);

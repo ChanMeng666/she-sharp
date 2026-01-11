@@ -122,7 +122,7 @@ const MENTOR_STEPS: TimeLine_01Entry[] = [
 export function HowItWorksSection() {
   return (
     <Section className="py-16 md:py-32 bg-navy-light rounded-b-[50px]">
-      <Container>
+      <Container size="full">
         {/* Header */}
         <div className="text-center mb-8">
           <h2 className="text-display-sm text-foreground mb-4">

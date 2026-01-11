@@ -2,30 +2,22 @@
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Carousel, TestimonialCard, iTestimonial } from "@/components/ui/retro-testimonial";
+import { MemberCard, MemberCardData } from "@/components/ui/member-card";
 import { mentors } from "@/lib/data/mentors";
 
 export function MentorsListSection() {
-  const testimonialData: iTestimonial[] = mentors.map((mentor) => ({
+  const memberCards = mentors.map((mentor): MemberCardData => ({
+    id: mentor.id,
     name: mentor.name,
-    designation: `${mentor.role} at ${mentor.company}`,
+    image: mentor.image,
     description: mentor.description,
-    profileImage: mentor.image,
+    title: `${mentor.role} at ${mentor.company}`,
   }));
-
-  const cards = testimonialData.map((testimonial, index) => (
-    <TestimonialCard
-      key={`mentor-${index}`}
-      testimonial={testimonial}
-      index={index}
-      backgroundImage="https://images.unsplash.com/photo-1557682250-33bd709cbe85?q=80&w=2029&auto=format&fit=crop"
-    />
-  ));
 
   return (
     <Section id="mentors-list" className="py-16 bg-background">
-      <Container>
-        <div className="space-y-8">
+      <Container size="full">
+        <div className="space-y-12">
           <div className="text-center">
             <h2 className="text-display-sm text-foreground mb-4">
               Explore Our Mentors
@@ -35,7 +27,17 @@ export function MentorsListSection() {
             </p>
           </div>
 
-          <Carousel items={cards} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {memberCards.map((member, index) => (
+              <MemberCard
+                key={member.id ?? `mentor-${index}`}
+                member={member}
+                index={index}
+                background="bg-navy-light"
+                accentColor="bg-info/10"
+              />
+            ))}
+          </div>
         </div>
       </Container>
     </Section>

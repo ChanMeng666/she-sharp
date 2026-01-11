@@ -26,7 +26,7 @@ export function HeroSection() {
           {/* Left: Content area with heading and CTA - using drop-shadow for text visibility */}
           <div className="max-w-xl p-6 sm:p-8 md:p-10 text-center lg:text-left drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]">
             <p className="font-brand-script text-3xl md:text-4xl text-white/90 mb-4">
-              Empowering futures,
+              Empowering futures
             </p>
             <h1 className="text-display-lg uppercase text-white">
               CONNECTING WOMEN IN

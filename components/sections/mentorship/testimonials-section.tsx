@@ -20,64 +20,98 @@ export function TestimonialsSection() {
   };
 
   const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setCurrentIndex(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+    );
   };
 
   const current = testimonials[currentIndex];
 
   return (
     <Section className="py-16 md:py-24 bg-background">
-      <Container>
+      <Container size="full">
         <div className="text-center mb-12">
           <h2 className="text-display-sm text-foreground mb-4">
             Hear From Our Community
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Real stories from mentees and mentors who've transformed their careers through our program
+            Real stories from mentees and mentors who've transformed their
+            careers through our program
           </p>
         </div>
 
         <div className="mx-auto max-w-5xl">
-          <Card className="relative overflow-hidden hover:shadow-xl transition-all duration-300 rounded-[50px]">
+          <Card className="relative overflow-hidden hover:shadow-xl transition-all duration-300 rounded-[50px] p-10 pt-16">
             <CardHeader className="pb-0">
               <div className="flex flex-col md:flex-row gap-6 items-start">
                 {/* Mentee Info */}
                 <div className="flex items-center gap-4 flex-1">
-                  <Avatar className="h-16 w-16 border-2 border-border">
-                    <AvatarImage src={current.mentee.image} alt={current.mentee.name} />
-                    <AvatarFallback>{current.mentee.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                  <Avatar className="h-24 w-24 border-2 border-border">
+                    <AvatarImage
+                      src={current.mentee.image}
+                      alt={current.mentee.name}
+                    />
+                    <AvatarFallback>
+                      {current.mentee.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="text-sm text-muted-foreground">Mentee</p>
-                    <h3 className="font-brand-script text-xl text-foreground">{current.mentee.name}</h3>
-                    <p className="text-sm text-muted-foreground">{current.mentee.role}</p>
-                    <p className="text-xs text-muted-foreground">{current.mentee.company}</p>
+                    <p className="text-lg text-brand font-black mb-2">Mentee</p>
+                    <h3 className="font-brand-script text-2xl text-foreground mb-2">
+                      {current.mentee.name}
+                    </h3>
+                    <p className="text-base text-muted-foreground">
+                      {current.mentee.role}
+                    </p>
+                    <p className="text-base text-muted-foreground">
+                      {current.mentee.company}
+                    </p>
                   </div>
                 </div>
 
                 {/* Journey Badge */}
-                <Badge variant="outline" className="border-border text-foreground">
-                  <Calendar className="w-3 h-3 mr-1" />
+                <Badge
+                  variant="outline"
+                  className="border-border text-base p-2"
+                >
+                  <Calendar className="w-5 h-5 mr-1" />
                   {current.mentee.journey}
                 </Badge>
 
                 {/* Mentor Info */}
                 <div className="flex items-center gap-4 flex-1 md:justify-end">
                   <div className="text-right">
-                    <p className="text-sm text-muted-foreground">Mentor</p>
-                    <h3 className="font-brand-script text-xl text-foreground">{current.mentor.name}</h3>
-                    <p className="text-sm text-muted-foreground">{current.mentor.role}</p>
-                    <p className="text-xs text-muted-foreground">{current.mentor.company}</p>
+                    <p className="text-lg text-brand font-black mb-2">Mentor</p>
+                    <h3 className="font-brand-script text-2xl text-foreground mb-2">
+                      {current.mentor.name}
+                    </h3>
+                    <p className="text-base text-muted-foreground">
+                      {current.mentor.role}
+                    </p>
+                    <p className="text-base text-muted-foreground">
+                      {current.mentor.company}
+                    </p>
                   </div>
-                  <Avatar className="h-16 w-16 border-2 border-border">
-                    <AvatarImage src={current.mentor.image} alt={current.mentor.name} />
-                    <AvatarFallback>{current.mentor.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                  <Avatar className="h-24 w-24 border-2 border-border">
+                    <AvatarImage
+                      src={current.mentor.image}
+                      alt={current.mentor.name}
+                    />
+                    <AvatarFallback>
+                      {current.mentor.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </AvatarFallback>
                   </Avatar>
                 </div>
               </div>
             </CardHeader>
 
-            <CardContent className="pt-6">
+            <CardContent className="px-6 py-4">
               <Quote className="w-12 h-12 text-brand/30 mb-4" />
               <blockquote className="text-quote text-foreground mb-6">
                 {current.quote}
