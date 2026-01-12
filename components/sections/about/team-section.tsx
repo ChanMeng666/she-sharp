@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MemberCard, MemberCardData } from "@/components/ui/member-card";
 import { teamMembers } from "@/lib/data/team";
-import { TeamMember } from "@/types/team";
 
 export function TeamSection() {
   const [showAll, setShowAll] = useState(false);

@@ -164,7 +164,7 @@ export default function ForgotPasswordPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={isLoading}
-                className="h-11 px-4 rounded-xl border-2 border-border bg-background/80 backdrop-blur-sm text-foreground placeholder:text-muted-foreground focus:border-border focus:ring-4 focus:ring-border/10 transition-all duration-200"
+                className="h-11 px-4 rounded-xl border-2 border-border bg-background/80 backdrop-blur-sm text-foreground focus:border-border focus:ring-4 focus:ring-border/10 transition-all duration-200"
               />
             </div>
 

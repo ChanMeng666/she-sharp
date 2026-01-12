@@ -133,7 +133,6 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                   required
                   maxLength={50}
                   placeholder="you@example.com"
-                  className="placeholder:text-muted-foreground/50"
                 />
               </div>
 
@@ -185,7 +184,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                     defaultValue={state.invitationCode || searchParams.get("code") || ""}
                     required
                     maxLength={20}
-                    className="uppercase placeholder:text-muted-foreground/50"
+                    className="uppercase"
                     placeholder="SHP-XXXX-XXXX-XXXX"
                   />
                   <p className="text-xs text-gray-500">

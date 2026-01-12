@@ -95,8 +95,24 @@ export const teamMembers: TeamMember[] = [
     description:
       "Yesha is an AI/Software Engineer at Possibl.ai who brings passion and real-world experience to She Sharp. Based in Auckland, she loves building AI-enhanced solutions and has worked across diverse tech stacks from web development to machine learning. As a She Sharp Ambassador, Yesha is excited to support other women in tech through mentorship and website development, using her own experiences navigating the industry to help create a more inclusive and supportive STEM community.",
     image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68d9fedf55c716e90b1fc777_image%20(2).png",
+  },
+  {
+    id: 13,
+    name: "YESHA KANIYAWALA",
+    roles: ["Ambassador", "Website Maintenance"],
+    description:
+      "Yesha is an AI/Software Engineer at Possibl.ai who brings passion and real-world experience to She Sharp. Based in Auckland, she loves building AI-enhanced solutions and has worked across diverse tech stacks from web development to machine learning. As a She Sharp Ambassador, Yesha is excited to support other women in tech through mentorship and website development, using her own experiences navigating the industry to help create a more inclusive and supportive STEM community.",
+    image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68d9fedf55c716e90b1fc777_image%20(2).png",
   }
-  
+  ,
+  {
+    id: 14,
+    name: "Len Estioko",
+    roles: ["Ambassador", "Marketing"],
+    description:
+      "Len is a seasoned advertising professional with over a decade of experience leading complex, integrated media campaigns across retail media, digital, Out-of-Home, and traditional channels. Holding a Master's in Management (Marketing), Len is committed to a growth mindset, constantly seeking innovative solutions and embracing new challenges. She finds great honor in supporting the next generation of passionate women in tech through her role as a She Sharp Ambassador. Outside of her career, Len manages a full-time role as a mom to a very active preschooler, whose boundless curiosity ensures her days are filled with hundreds of questions a day! Drawing on her strengths as a Relator and Developer, she’s always ready to connect deeply and champion the potential she sees in others, making her the purposeful advocate you need in your corner.",
+    image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68d9fedf55c716e90b1fc777_image%20(2).png",
+  }
 ];
 
 
