@@ -36,7 +36,8 @@ export function TeamSection() {
               name: member.name,
               image: member.image,
               description: member.description,
-              title: member.roles.join(" • "),
+              title: member.roles.join(" | "),
+              linkedin: member.linkedin,
             };
             return (
               <div key={member.id ?? index} role="listitem">

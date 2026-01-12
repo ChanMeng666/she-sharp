@@ -15,6 +15,7 @@ export const TEAM_ROLES = [
   'Mentoring Program Lead',
   'Marketing Lead',
   'Marketing',
+  'UX/UI Designer',
 ] as const;
 
 export type TeamRole = (typeof TEAM_ROLES)[number];
@@ -26,4 +27,5 @@ export interface TeamMember {
   image: string;
   description: string;
   featured?: boolean;
+  linkedin?: string;
 }
