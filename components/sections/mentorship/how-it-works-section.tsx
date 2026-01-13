@@ -135,7 +135,7 @@ export function HowItWorksSection() {
           {/* Tabs */}
           <Tabs defaultValue="mentee" className="w-full">
             <div className="flex justify-center">
-              <TabsList className="h-14 p-1.5 bg-white/50 backdrop-blur-sm rounded-full">
+              <TabsList className="h-14 p-1.5 glass-pill">
                 <TabsTrigger
                   value="mentee"
                   className="px-8 py-2.5 text-base rounded-full data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"

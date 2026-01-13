@@ -544,6 +544,23 @@
     transform: translateY(-2px);
   }
 
+  /* Shared glassmorphism utilities */
+  .glass-panel {
+    @apply rounded-2xl backdrop-blur-md bg-white/10 border border-white/20 shadow-xl;
+  }
+
+  .glass-overlay {
+    @apply bg-background/80 backdrop-blur-sm;
+  }
+
+  .glass-card {
+    @apply border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl;
+  }
+
+  .glass-pill {
+    @apply bg-white/50 backdrop-blur-sm rounded-full;
+  }
+
   /* Scroll-triggered animations */
   .animate-on-scroll {
     opacity: 0;

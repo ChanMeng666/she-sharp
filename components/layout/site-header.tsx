@@ -106,8 +106,8 @@ export function SiteHeader() {
     <header className={cn(
       "fixed top-0 left-0 right-0 z-50",
       "mt-2 mx-auto w-[calc(100%-2rem)] max-w-7xl",
-      "rounded-full",
-      "bg-white/50 backdrop-blur-sm border border-white/40",
+      "rounded-full border border-white/40",
+      "glass-pill",
       "transition-all duration-300 ease-out",
       scrolled ? "shadow-lg bg-white/60" : "shadow-md",
       visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"

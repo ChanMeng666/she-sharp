@@ -169,7 +169,7 @@ export function CoreImpactSection() {
                 <StatCard
                   item={item}
                   animate={inView && !reduceMotion}
-                  className="bg-background/80 backdrop-blur-sm hover:scale-105 hover:bg-background/90 hover:border-brand/50 transition-all duration-300"
+                  className="glass-panel hover:scale-105 hover:bg-background/90 hover:border-brand/50 transition-all duration-300"
                 />
               </AnimateOnScroll>
             ))}

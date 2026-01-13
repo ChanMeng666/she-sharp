@@ -34,14 +34,14 @@ export function FeaturedAlbumCard({ album }: FeaturedAlbumCardProps) {
 
         {/* Top Badge */}
         <div className="absolute top-8 left-8 z-10">
-          <div className="rounded-full bg-white/90 backdrop-blur-sm px-4 py-1.5">
+          <div className="glass-pill bg-white/90 px-4 py-1.5">
             <p className="text-sm font-semibold text-purple-dark">Featured Album</p>
           </div>
         </div>
 
         {/* External Link Icon */}
         <div className="absolute top-8 right-8 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="rounded-full bg-white/90 backdrop-blur-sm p-2">
+          <div className="glass-pill bg-white/90 p-2">
             <ExternalLink className="h-4 w-4 text-purple-dark" />
           </div>
         </div>

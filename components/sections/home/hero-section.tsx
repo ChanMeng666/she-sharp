@@ -23,9 +23,9 @@ export function HeroSection() {
 
       <Container className="relative z-10 w-full max-w-7xl">
         <div className="relative mx-auto flex items-center justify-start">
-          {/* Left: Content area with heading and CTA - using drop-shadow for text visibility */}
-          <div className="max-w-xl p-6 sm:p-8 md:p-10 text-center lg:text-left drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]">
-            <p className="font-brand-script text-3xl md:text-4xl text-white/90 mb-4">
+          {/* Left: Content area with heading and CTA - using glassmorphism for text visibility */}
+          <div className="glass-panel max-w-2xl p-6 sm:p-8 md:p-10 text-center lg:text-left">
+            <p className="font-brand-script text-3xl md:text-4xl text-white mb-4">
               Empowering futures
             </p>
             <h1 className="text-display-lg uppercase text-white">
