@@ -129,7 +129,7 @@ export function MemberCard({
                   </a>
                 )}
               </div>
-              <p className="text-base md:text-lg font-medium text-brand">
+              <p className="text-base md:text-lg font-medium text-brand text-left">
                 {member.title}
               </p>
             </DialogHeader>
