@@ -41,6 +41,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import Link from "next/link";
+import { MentorshipHeroSection } from "@/components/sections/mentorship/mentorship-hero-section";
 
 // New Zealand cities
 const nzCities = [
@@ -1344,24 +1345,30 @@ export default function BecomeMentorPage() {
   };
 
   return (
-    <WarpBackground
-      className="min-h-screen bg-muted"
-      beamsPerSide={4}
-      beamSize={6}
-      beamDuration={5}
-      perspective={120}
-    >
-      <section className="pt-24 md:pt-32 pb-12 md:pb-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-2xl mx-auto mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3">
-              Become a Mentor
-            </h1>
-            <p className="text-muted-foreground">
-              Share your expertise and guide the next generation of women in
-              STEM.
-            </p>
-          </div>
+    <>
+      <MentorshipHeroSection
+        topLeftTitle={
+          <>
+            BECOME A
+            <br />
+            MENTOR
+          </>
+        }
+        topRightImage="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/home-page-ai-hackathon-2025-mentorship.jpg"
+        topRightImageAlt="Women in technology mentorship program"
+        bottomLeftVideo="/video/Mentorship.mp4"
+        bottomRightTitle="Share Your Expertise"
+        bottomRightDescription="Guide the next generation of women in STEM. As a mentor, you'll make a meaningful impact by sharing your knowledge, experience, and insights to help mentees navigate their career journeys and achieve their goals."
+      />
+      <WarpBackground
+        className="min-h-screen bg-muted"
+        beamsPerSide={4}
+        beamSize={6}
+        beamDuration={5}
+        perspective={120}
+      >
+        <section className="pt-12 md:pt-16 pb-12 md:pb-16">
+          <div className="container mx-auto px-4">
 
           <div className="max-w-2xl mx-auto">
             <Card className="shadow-lg">
@@ -1489,6 +1496,7 @@ export default function BecomeMentorPage() {
           </div>
         </div>
       </section>
-    </WarpBackground>
+      </WarpBackground>
+    </>
   );
 }

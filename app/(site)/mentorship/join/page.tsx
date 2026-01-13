@@ -31,6 +31,7 @@ import {
   X,
 } from 'lucide-react';
 import Link from 'next/link';
+import { MentorshipHeroSection } from '@/components/sections/mentorship/mentorship-hero-section';
 
 
 // New Zealand cities for location matching
@@ -1171,23 +1172,30 @@ export default function MenteeApplicationPage() {
   };
 
   return (
-    <WarpBackground
-      className="min-h-screen bg-muted"
-      beamsPerSide={4}
-      beamSize={6}
-      beamDuration={5}
-      perspective={120}
-    >
-      <section className="pt-24 md:pt-32 pb-12 md:pb-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-2xl mx-auto mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-              Find Your Mentor
-            </h1>
-            <p className="text-muted-foreground">
-              Get matched with experienced professionals to guide your STEM career.
-            </p>
-          </div>
+    <>
+      <MentorshipHeroSection
+        topLeftTitle={
+          <>
+            BECOME A
+            <br />
+            MENTEE
+          </>
+        }
+        topRightImage="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/home-page-ai-hackathon-2025-mentorship.jpg"
+        topRightImageAlt="Women in technology mentorship program"
+        bottomLeftVideo="/video/Mentorship.mp4"
+        bottomRightTitle="Find Your Mentor"
+        bottomRightDescription="Get matched with experienced professionals to guide your STEM career. Our mentorship program connects you with industry leaders who can help you navigate challenges, set goals, and achieve your professional aspirations."
+      />
+      <WarpBackground
+        className="min-h-screen bg-muted"
+        beamsPerSide={4}
+        beamSize={6}
+        beamDuration={5}
+        perspective={120}
+      >
+        <section className="pt-12 md:pt-16 pb-12 md:pb-16">
+          <div className="container mx-auto px-4">
 
           <div className="max-w-2xl mx-auto">
             <Card className="shadow-lg">
@@ -1287,6 +1295,7 @@ export default function MenteeApplicationPage() {
           </div>
         </div>
       </section>
-    </WarpBackground>
+      </WarpBackground>
+    </>
   );
 }

@@ -140,13 +140,13 @@ export function HowItWorksSection() {
                   value="mentee"
                   className="px-8 py-2.5 text-base rounded-full data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
                 >
-                  I&apos;m a Mentee
+                  Become a Mentee
                 </TabsTrigger>
                 <TabsTrigger
                   value="mentor"
                   className="px-8 py-2.5 text-base rounded-full data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
                 >
-                  I&apos;m a Mentor
+                  Become a Mentor
                 </TabsTrigger>
               </TabsList>
             </div>
