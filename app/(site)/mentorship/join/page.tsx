@@ -1,19 +1,31 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Progress } from '@/components/ui/progress';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { HintIcon } from '@/components/ui/hint-icon';
-import { PhotoUpload } from '@/components/forms/photo-upload';
-import { WarpBackground } from '@/components/ui/warp-background';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { HintIcon } from "@/components/ui/hint-icon";
+import { PhotoUpload } from "@/components/forms/photo-upload";
+import { WarpBackground } from "@/components/ui/warp-background";
 import {
   Check,
   Loader2,
@@ -29,95 +41,134 @@ import {
   ExternalLink,
   Plus,
   X,
-} from 'lucide-react';
-import Link from 'next/link';
-import { MentorshipHeroSection } from '@/components/sections/mentorship/mentorship-hero-section';
-
+} from "lucide-react";
+import Link from "next/link";
+import { MentorshipHeroSection } from "@/components/sections/mentorship/mentorship-hero-section";
+import { BenefitsSection } from "@/components/sections/mentorship/benefits-section";
+import { Trophy, Rocket, Users } from "lucide-react";
 
 // New Zealand cities for location matching
 const nzCities = [
-  { value: 'auckland', label: 'Auckland' },
-  { value: 'wellington', label: 'Wellington' },
-  { value: 'christchurch', label: 'Christchurch' },
-  { value: 'hamilton', label: 'Hamilton' },
-  { value: 'tauranga', label: 'Tauranga' },
-  { value: 'dunedin', label: 'Dunedin' },
-  { value: 'palmerston_north', label: 'Palmerston North' },
-  { value: 'napier_hastings', label: 'Napier-Hastings' },
-  { value: 'nelson', label: 'Nelson' },
-  { value: 'rotorua', label: 'Rotorua' },
-  { value: 'other_nz', label: 'Other (New Zealand)' },
-  { value: 'international', label: 'International' },
+  { value: "auckland", label: "Auckland" },
+  { value: "wellington", label: "Wellington" },
+  { value: "christchurch", label: "Christchurch" },
+  { value: "hamilton", label: "Hamilton" },
+  { value: "tauranga", label: "Tauranga" },
+  { value: "dunedin", label: "Dunedin" },
+  { value: "palmerston_north", label: "Palmerston North" },
+  { value: "napier_hastings", label: "Napier-Hastings" },
+  { value: "nelson", label: "Nelson" },
+  { value: "rotorua", label: "Rotorua" },
+  { value: "other_nz", label: "Other (New Zealand)" },
+  { value: "international", label: "International" },
 ];
 
 const genderOptions = [
-  { value: 'female', label: 'Female' },
-  { value: 'male', label: 'Male' },
-  { value: 'non_binary', label: 'Non-binary' },
-  { value: 'prefer_not_to_say', label: 'Prefer not to say' },
-  { value: 'other', label: 'Other' },
+  { value: "female", label: "Female" },
+  { value: "male", label: "Male" },
+  { value: "non_binary", label: "Non-binary" },
+  { value: "prefer_not_to_say", label: "Prefer not to say" },
+  { value: "other", label: "Other" },
 ];
 
 const meetingFormatOptions = [
-  { value: 'online', label: 'Online (Virtual meetings only)' },
-  { value: 'in_person', label: 'In-Person (Face-to-face meetings)' },
-  { value: 'hybrid', label: 'Hybrid (Both online and in-person)' },
+  { value: "online", label: "Online (Virtual meetings only)" },
+  { value: "in_person", label: "In-Person (Face-to-face meetings)" },
+  { value: "hybrid", label: "Hybrid (Both online and in-person)" },
 ];
 
 const currentStageOptions = [
-  { value: 'undergraduate', label: 'Undergraduate/Graduate' },
-  { value: 'postgraduate', label: 'Post Graduate' },
-  { value: 'early_career', label: 'Professional - Early Career (0-3 years)' },
-  { value: 'mid_career', label: 'Professional - Mid Career (3-7 years)' },
-  { value: 'senior', label: 'Professional - Senior (7+ years)' },
-  { value: 'career_transition', label: 'Career Transition' },
+  { value: "undergraduate", label: "Undergraduate/Graduate" },
+  { value: "postgraduate", label: "Post Graduate" },
+  { value: "early_career", label: "Professional - Early Career (0-3 years)" },
+  { value: "mid_career", label: "Professional - Mid Career (3-7 years)" },
+  { value: "senior", label: "Professional - Senior (7+ years)" },
+  { value: "career_transition", label: "Career Transition" },
 ];
 
 const industryOptions = [
-  { value: 'engineering', label: 'Engineering' },
-  { value: 'it_cs', label: 'Information Technology (IT) and Computer Science' },
-  { value: 'healthcare', label: 'Healthcare and Medicine' },
-  { value: 'biotech', label: 'Biotechnology and Life Sciences' },
-  { value: 'renewable_energy', label: 'Renewable Energy' },
-  { value: 'agriculture', label: 'Agriculture and Food Science' },
-  { value: 'environmental', label: 'Environmental Science and Sustainability' },
-  { value: 'telecom', label: 'Telecommunications' },
-  { value: 'robotics', label: 'Robotics and Automation' },
-  { value: 'manufacturing', label: 'Manufacturing and Materials Science' },
-  { value: 'aerospace', label: 'Aerospace and Defense' },
-  { value: 'finance', label: 'Finance and Banking' },
-  { value: 'consulting', label: 'Consulting' },
-  { value: 'education', label: 'Education' },
-  { value: 'other', label: 'Other' },
+  { value: "engineering", label: "Engineering" },
+  { value: "it_cs", label: "Information Technology (IT) and Computer Science" },
+  { value: "healthcare", label: "Healthcare and Medicine" },
+  { value: "biotech", label: "Biotechnology and Life Sciences" },
+  { value: "renewable_energy", label: "Renewable Energy" },
+  { value: "agriculture", label: "Agriculture and Food Science" },
+  { value: "environmental", label: "Environmental Science and Sustainability" },
+  { value: "telecom", label: "Telecommunications" },
+  { value: "robotics", label: "Robotics and Automation" },
+  { value: "manufacturing", label: "Manufacturing and Materials Science" },
+  { value: "aerospace", label: "Aerospace and Defense" },
+  { value: "finance", label: "Finance and Banking" },
+  { value: "consulting", label: "Consulting" },
+  { value: "education", label: "Education" },
+  { value: "other", label: "Other" },
 ];
 
 const softSkillsOptions = [
-  'Communication', 'Leadership', 'Problem Solving', 'Time Management',
-  'Critical Thinking', 'Teamwork', 'Adaptability', 'Creativity',
-  'Emotional Intelligence', 'Conflict Resolution', 'Negotiation', 'Presentation',
-  'Networking', 'Active Listening', 'Decision Making',
+  "Communication",
+  "Leadership",
+  "Problem Solving",
+  "Time Management",
+  "Critical Thinking",
+  "Teamwork",
+  "Adaptability",
+  "Creativity",
+  "Emotional Intelligence",
+  "Conflict Resolution",
+  "Negotiation",
+  "Presentation",
+  "Networking",
+  "Active Listening",
+  "Decision Making",
 ];
 
 const industrySkillsOptions = [
-  'Software Development', 'Data Science', 'Product Management', 'UX/UI Design',
-  'Cloud Computing', 'DevOps', 'Cybersecurity', 'Machine Learning',
-  'Mobile Development', 'Web Development', 'Database Management', 'System Architecture',
-  'Project Management', 'Agile/Scrum', 'Business Analysis', 'Quality Assurance',
-  'Customer Service', 'Event Planning', 'Research', 'Technical Writing',
+  "Software Development",
+  "Data Science",
+  "Product Management",
+  "UX/UI Design",
+  "Cloud Computing",
+  "DevOps",
+  "Cybersecurity",
+  "Machine Learning",
+  "Mobile Development",
+  "Web Development",
+  "Database Management",
+  "System Architecture",
+  "Project Management",
+  "Agile/Scrum",
+  "Business Analysis",
+  "Quality Assurance",
+  "Customer Service",
+  "Event Planning",
+  "Research",
+  "Technical Writing",
 ];
 
 const mbtiTypes = [
-  'INTJ', 'INTP', 'ENTJ', 'ENTP',
-  'INFJ', 'INFP', 'ENFJ', 'ENFP',
-  'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ',
-  'ISTP', 'ISFP', 'ESTP', 'ESFP',
+  "INTJ",
+  "INTP",
+  "ENTJ",
+  "ENTP",
+  "INFJ",
+  "INFP",
+  "ENFJ",
+  "ENFP",
+  "ISTJ",
+  "ISFJ",
+  "ESTJ",
+  "ESFJ",
+  "ISTP",
+  "ISFP",
+  "ESTP",
+  "ESFP",
 ];
 
 const meetingFrequencyOptions = [
-  { value: 'weekly', label: 'Weekly' },
-  { value: 'biweekly', label: 'Bi-weekly' },
-  { value: 'monthly', label: 'Monthly' },
-  { value: 'flexible', label: 'Flexible' },
+  { value: "weekly", label: "Weekly" },
+  { value: "biweekly", label: "Bi-weekly" },
+  { value: "monthly", label: "Monthly" },
+  { value: "flexible", label: "Flexible" },
 ];
 
 interface FormData {
@@ -151,37 +202,37 @@ interface FormData {
 }
 
 const initialFormData: FormData = {
-  photoUrl: '',
-  fullName: '',
-  email: '',
-  phone: '',
-  gender: '',
-  age: '',
-  city: '',
-  preferredMeetingFormat: '',
-  currentStage: '',
-  currentJobTitle: '',
-  currentIndustry: '',
+  photoUrl: "",
+  fullName: "",
+  email: "",
+  phone: "",
+  gender: "",
+  age: "",
+  city: "",
+  preferredMeetingFormat: "",
+  currentStage: "",
+  currentJobTitle: "",
+  currentIndustry: "",
   preferredIndustries: [],
-  bio: '',
+  bio: "",
   softSkillsBasic: [],
   industrySkillsBasic: [],
   softSkillsExpert: [],
   industrySkillsExpert: [],
-  longTermGoals: '',
-  shortTermGoals: '',
-  whyMentor: '',
-  programExpectations: '',
-  mbtiType: '',
-  preferredMeetingFrequency: '',
+  longTermGoals: "",
+  shortTermGoals: "",
+  whyMentor: "",
+  programExpectations: "",
+  mbtiType: "",
+  preferredMeetingFrequency: "",
 };
 
 const steps = [
-  { id: 1, title: 'Photo & Info', icon: User },
-  { id: 2, title: 'Background', icon: Briefcase },
-  { id: 3, title: 'Skills', icon: Target },
-  { id: 4, title: 'Goals', icon: Target },
-  { id: 5, title: 'Review', icon: FileText },
+  { id: 1, title: "Photo & Info", icon: User },
+  { id: 2, title: "Background", icon: Briefcase },
+  { id: 3, title: "Skills", icon: Target },
+  { id: 4, title: "Goals", icon: Target },
+  { id: 5, title: "Review", icon: FileText },
 ];
 
 export default function MenteeApplicationPage() {
@@ -189,15 +240,21 @@ export default function MenteeApplicationPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
+    {}
+  );
 
   // Custom skill input states
-  const [customSoftSkillBasic, setCustomSoftSkillBasic] = useState('');
-  const [customIndustrySkillBasic, setCustomIndustrySkillBasic] = useState('');
-  const [customSoftSkillExpert, setCustomSoftSkillExpert] = useState('');
-  const [customIndustrySkillExpert, setCustomIndustrySkillExpert] = useState('');
+  const [customSoftSkillBasic, setCustomSoftSkillBasic] = useState("");
+  const [customIndustrySkillBasic, setCustomIndustrySkillBasic] = useState("");
+  const [customSoftSkillExpert, setCustomSoftSkillExpert] = useState("");
+  const [customIndustrySkillExpert, setCustomIndustrySkillExpert] =
+    useState("");
 
-  const updateField = <K extends keyof FormData>(field: K, value: FormData[K]) => {
+  const updateField = <K extends keyof FormData>(
+    field: K,
+    value: FormData[K]
+  ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
@@ -212,25 +269,37 @@ export default function MenteeApplicationPage() {
     updateField(field, newArray as FormData[typeof field]);
   };
 
-  const addCustomSkill = (field: keyof FormData, skill: string, setCustomSkill: (value: string) => void) => {
+  const addCustomSkill = (
+    field: keyof FormData,
+    skill: string,
+    setCustomSkill: (value: string) => void
+  ) => {
     const trimmedSkill = skill.trim();
     if (!trimmedSkill) return;
 
     const currentArray = formData[field] as string[];
     // Check if skill already exists (case-insensitive)
-    const exists = currentArray.some(s => s.toLowerCase() === trimmedSkill.toLowerCase());
+    const exists = currentArray.some(
+      (s) => s.toLowerCase() === trimmedSkill.toLowerCase()
+    );
     if (exists) {
-      setCustomSkill('');
+      setCustomSkill("");
       return;
     }
 
-    updateField(field, [...currentArray, trimmedSkill] as FormData[typeof field]);
-    setCustomSkill('');
+    updateField(field, [
+      ...currentArray,
+      trimmedSkill,
+    ] as FormData[typeof field]);
+    setCustomSkill("");
   };
 
   const removeCustomSkill = (field: keyof FormData, skill: string) => {
     const currentArray = formData[field] as string[];
-    updateField(field, currentArray.filter(s => s !== skill) as FormData[typeof field]);
+    updateField(
+      field,
+      currentArray.filter((s) => s !== skill) as FormData[typeof field]
+    );
   };
 
   // Check if a skill is custom (not in predefined options)
@@ -242,48 +311,63 @@ export default function MenteeApplicationPage() {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
 
     if (step === 1) {
-      if (!formData.photoUrl) newErrors.photoUrl = 'Photo is required';
-      if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
-      if (!formData.email.trim()) newErrors.email = 'Email is required';
+      if (!formData.photoUrl) newErrors.photoUrl = "Photo is required";
+      if (!formData.fullName.trim())
+        newErrors.fullName = "Full name is required";
+      if (!formData.email.trim()) newErrors.email = "Email is required";
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-        newErrors.email = 'Please enter a valid email';
+        newErrors.email = "Please enter a valid email";
       }
-      if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
-      if (!formData.gender) newErrors.gender = 'Please select your gender';
+      if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+      if (!formData.gender) newErrors.gender = "Please select your gender";
     }
 
     if (step === 2) {
-      if (!formData.city) newErrors.city = 'Please select your city';
-      if (!formData.preferredMeetingFormat) newErrors.preferredMeetingFormat = 'Please select meeting format';
-      if (!formData.currentStage) newErrors.currentStage = 'Please select your career stage';
-      if (!formData.currentJobTitle.trim()) newErrors.currentJobTitle = 'Current role is required';
-      if (!formData.currentIndustry) newErrors.currentIndustry = 'Please select your industry';
+      if (!formData.city) newErrors.city = "Please select your city";
+      if (!formData.preferredMeetingFormat)
+        newErrors.preferredMeetingFormat = "Please select meeting format";
+      if (!formData.currentStage)
+        newErrors.currentStage = "Please select your career stage";
+      if (!formData.currentJobTitle.trim())
+        newErrors.currentJobTitle = "Current role is required";
+      if (!formData.currentIndustry)
+        newErrors.currentIndustry = "Please select your industry";
       if (!formData.bio.trim() || formData.bio.length < 50) {
-        newErrors.bio = 'Please provide a bio (at least 50 characters)';
+        newErrors.bio = "Please provide a bio (at least 50 characters)";
       }
     }
 
     if (step === 3) {
       if (formData.softSkillsBasic.length === 0) {
-        newErrors.softSkillsBasic = 'Please select at least one basic soft skill';
+        newErrors.softSkillsBasic =
+          "Please select at least one basic soft skill";
       }
       if (formData.industrySkillsBasic.length === 0) {
-        newErrors.industrySkillsBasic = 'Please select at least one basic industry skill';
+        newErrors.industrySkillsBasic =
+          "Please select at least one basic industry skill";
       }
     }
 
     if (step === 4) {
-      if (!formData.longTermGoals.trim() || formData.longTermGoals.length < 20) {
-        newErrors.longTermGoals = 'Please describe your long-term goals (at least 20 characters)';
+      if (
+        !formData.longTermGoals.trim() ||
+        formData.longTermGoals.length < 20
+      ) {
+        newErrors.longTermGoals =
+          "Please describe your long-term goals (at least 20 characters)";
       }
-      if (!formData.shortTermGoals.trim() || formData.shortTermGoals.length < 20) {
-        newErrors.shortTermGoals = 'Please describe your short-term goals (at least 20 characters)';
+      if (
+        !formData.shortTermGoals.trim() ||
+        formData.shortTermGoals.length < 20
+      ) {
+        newErrors.shortTermGoals =
+          "Please describe your short-term goals (at least 20 characters)";
       }
       if (!formData.whyMentor.trim()) {
-        newErrors.whyMentor = 'Please explain why you want a mentor';
+        newErrors.whyMentor = "Please explain why you want a mentor";
       }
       if (!formData.mbtiType) {
-        newErrors.mbtiType = 'Please select your personality type';
+        newErrors.mbtiType = "Please select your personality type";
       }
     }
 
@@ -294,13 +378,13 @@ export default function MenteeApplicationPage() {
   const handleNext = () => {
     if (validateStep(currentStep)) {
       setCurrentStep((prev) => Math.min(prev + 1, 5));
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const handleBack = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleSubmit = async () => {
@@ -308,7 +392,9 @@ export default function MenteeApplicationPage() {
 
     setLoading(true);
     try {
-      const checkResponse = await fetch(`/api/forms/mentee/public?email=${encodeURIComponent(formData.email)}`);
+      const checkResponse = await fetch(
+        `/api/forms/mentee/public?email=${encodeURIComponent(formData.email)}`
+      );
       const checkData = await checkResponse.json();
 
       if (checkData.exists && !checkData.paymentCompleted) {
@@ -316,9 +402,9 @@ export default function MenteeApplicationPage() {
         return;
       }
 
-      const response = await fetch('/api/forms/mentee/public', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/forms/mentee/public", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
           age: formData.age ? parseInt(formData.age) : undefined,
@@ -335,7 +421,7 @@ export default function MenteeApplicationPage() {
 
       router.push(`/mentorship/join/payment?id=${data.submissionId}`);
     } catch (error) {
-      setErrors({ email: 'Failed to submit application. Please try again.' });
+      setErrors({ email: "Failed to submit application. Please try again." });
       setLoading(false);
     }
   };
@@ -349,7 +435,7 @@ export default function MenteeApplicationPage() {
             <div className="bg-[#eaf2ff] rounded-lg p-5">
               <PhotoUpload
                 value={formData.photoUrl}
-                onChange={(url) => updateField('photoUrl', url || '')}
+                onChange={(url) => updateField("photoUrl", url || "")}
                 type="mentee"
                 email={formData.email}
                 label="Your Photo"
@@ -373,10 +459,12 @@ export default function MenteeApplicationPage() {
                     id="fullName"
                     placeholder="Jane Smith"
                     value={formData.fullName}
-                    onChange={(e) => updateField('fullName', e.target.value)}
-                    className={errors.fullName ? 'border-red-500' : ''}
+                    onChange={(e) => updateField("fullName", e.target.value)}
+                    className={errors.fullName ? "border-red-500" : ""}
                   />
-                  {errors.fullName && <p className="text-sm text-red-500">{errors.fullName}</p>}
+                  {errors.fullName && (
+                    <p className="text-sm text-red-500">{errors.fullName}</p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -389,10 +477,12 @@ export default function MenteeApplicationPage() {
                     type="email"
                     placeholder="you@example.com"
                     value={formData.email}
-                    onChange={(e) => updateField('email', e.target.value)}
-                    className={errors.email ? 'border-red-500' : ''}
+                    onChange={(e) => updateField("email", e.target.value)}
+                    className={errors.email ? "border-red-500" : ""}
                   />
-                  {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+                  {errors.email && (
+                    <p className="text-sm text-red-500">{errors.email}</p>
+                  )}
                 </div>
               </div>
 
@@ -406,10 +496,12 @@ export default function MenteeApplicationPage() {
                     id="phone"
                     placeholder="+64 21 123 4567"
                     value={formData.phone}
-                    onChange={(e) => updateField('phone', e.target.value)}
-                    className={errors.phone ? 'border-red-500' : ''}
+                    onChange={(e) => updateField("phone", e.target.value)}
+                    className={errors.phone ? "border-red-500" : ""}
                   />
-                  {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
+                  {errors.phone && (
+                    <p className="text-sm text-red-500">{errors.phone}</p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -424,7 +516,7 @@ export default function MenteeApplicationPage() {
                     max="100"
                     placeholder="Enter your age"
                     value={formData.age}
-                    onChange={(e) => updateField('age', e.target.value)}
+                    onChange={(e) => updateField("age", e.target.value)}
                   />
                 </div>
               </div>
@@ -440,19 +532,27 @@ export default function MenteeApplicationPage() {
               </div>
               <RadioGroup
                 value={formData.gender}
-                onValueChange={(v) => updateField('gender', v)}
+                onValueChange={(v) => updateField("gender", v)}
                 className="flex flex-wrap gap-4"
               >
                 {genderOptions.map((opt) => (
                   <div key={opt.value} className="flex items-center space-x-2">
-                    <RadioGroupItem value={opt.value} id={`gender-${opt.value}`} />
-                    <Label htmlFor={`gender-${opt.value}`} className="font-normal cursor-pointer">
+                    <RadioGroupItem
+                      value={opt.value}
+                      id={`gender-${opt.value}`}
+                    />
+                    <Label
+                      htmlFor={`gender-${opt.value}`}
+                      className="font-normal cursor-pointer"
+                    >
                       {opt.label}
                     </Label>
                   </div>
                 ))}
               </RadioGroup>
-              {errors.gender && <p className="text-sm text-red-500">{errors.gender}</p>}
+              {errors.gender && (
+                <p className="text-sm text-red-500">{errors.gender}</p>
+              )}
             </div>
           </div>
         );
@@ -465,9 +565,13 @@ export default function MenteeApplicationPage() {
               <div className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-brand">Location Matching</p>
+                  <p className="text-sm font-medium text-brand">
+                    Location Matching
+                  </p>
                   <p className="text-sm text-[#1f1e44] leading-relaxed">
-                    Auckland is She Sharp&apos;s primary activity city. Selecting Auckland increases opportunities for in-person events and meetings.
+                    Auckland is She Sharp&apos;s primary activity city.
+                    Selecting Auckland increases opportunities for in-person
+                    events and meetings.
                   </p>
                 </div>
               </div>
@@ -481,8 +585,13 @@ export default function MenteeApplicationPage() {
                     <Label>Your City *</Label>
                     <HintIcon hint="Selecting your city helps us match you with local mentors." />
                   </div>
-                  <Select value={formData.city} onValueChange={(v) => updateField('city', v)}>
-                    <SelectTrigger className={errors.city ? 'border-red-500' : ''}>
+                  <Select
+                    value={formData.city}
+                    onValueChange={(v) => updateField("city", v)}
+                  >
+                    <SelectTrigger
+                      className={errors.city ? "border-red-500" : ""}
+                    >
                       <SelectValue placeholder="Select your city" />
                     </SelectTrigger>
                     <SelectContent>
@@ -493,7 +602,9 @@ export default function MenteeApplicationPage() {
                       ))}
                     </SelectContent>
                   </Select>
-                  {errors.city && <p className="text-sm text-red-500">{errors.city}</p>}
+                  {errors.city && (
+                    <p className="text-sm text-red-500">{errors.city}</p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -501,8 +612,17 @@ export default function MenteeApplicationPage() {
                     <Label>Preferred Meeting Format *</Label>
                     <HintIcon hint="Choose how you'd prefer to meet. Hybrid gives you the most flexibility." />
                   </div>
-                  <Select value={formData.preferredMeetingFormat} onValueChange={(v) => updateField('preferredMeetingFormat', v)}>
-                    <SelectTrigger className={errors.preferredMeetingFormat ? 'border-red-500' : ''}>
+                  <Select
+                    value={formData.preferredMeetingFormat}
+                    onValueChange={(v) =>
+                      updateField("preferredMeetingFormat", v)
+                    }
+                  >
+                    <SelectTrigger
+                      className={
+                        errors.preferredMeetingFormat ? "border-red-500" : ""
+                      }
+                    >
                       <SelectValue placeholder="Select format" />
                     </SelectTrigger>
                     <SelectContent>
@@ -513,7 +633,11 @@ export default function MenteeApplicationPage() {
                       ))}
                     </SelectContent>
                   </Select>
-                  {errors.preferredMeetingFormat && <p className="text-sm text-red-500">{errors.preferredMeetingFormat}</p>}
+                  {errors.preferredMeetingFormat && (
+                    <p className="text-sm text-red-500">
+                      {errors.preferredMeetingFormat}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -527,8 +651,13 @@ export default function MenteeApplicationPage() {
                   <Label>Current Education/Career Stage *</Label>
                   <HintIcon hint="This helps us match you with mentors who understand your challenges." />
                 </div>
-                <Select value={formData.currentStage} onValueChange={(v) => updateField('currentStage', v)}>
-                  <SelectTrigger className={errors.currentStage ? 'border-red-500' : ''}>
+                <Select
+                  value={formData.currentStage}
+                  onValueChange={(v) => updateField("currentStage", v)}
+                >
+                  <SelectTrigger
+                    className={errors.currentStage ? "border-red-500" : ""}
+                  >
                     <SelectValue placeholder="Select your stage" />
                   </SelectTrigger>
                   <SelectContent>
@@ -539,7 +668,9 @@ export default function MenteeApplicationPage() {
                     ))}
                   </SelectContent>
                 </Select>
-                {errors.currentStage && <p className="text-sm text-red-500">{errors.currentStage}</p>}
+                {errors.currentStage && (
+                  <p className="text-sm text-red-500">{errors.currentStage}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -551,10 +682,16 @@ export default function MenteeApplicationPage() {
                   id="jobTitle"
                   placeholder="e.g., Software Developer, Marketing Intern, Final Year Student"
                   value={formData.currentJobTitle}
-                  onChange={(e) => updateField('currentJobTitle', e.target.value)}
-                  className={errors.currentJobTitle ? 'border-red-500' : ''}
+                  onChange={(e) =>
+                    updateField("currentJobTitle", e.target.value)
+                  }
+                  className={errors.currentJobTitle ? "border-red-500" : ""}
                 />
-                {errors.currentJobTitle && <p className="text-sm text-red-500">{errors.currentJobTitle}</p>}
+                {errors.currentJobTitle && (
+                  <p className="text-sm text-red-500">
+                    {errors.currentJobTitle}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -562,8 +699,13 @@ export default function MenteeApplicationPage() {
                   <Label>Industry Sector *</Label>
                   <HintIcon hint="Select your current industry. Students: choose your field of study." />
                 </div>
-                <Select value={formData.currentIndustry} onValueChange={(v) => updateField('currentIndustry', v)}>
-                  <SelectTrigger className={errors.currentIndustry ? 'border-red-500' : ''}>
+                <Select
+                  value={formData.currentIndustry}
+                  onValueChange={(v) => updateField("currentIndustry", v)}
+                >
+                  <SelectTrigger
+                    className={errors.currentIndustry ? "border-red-500" : ""}
+                  >
                     <SelectValue placeholder="Select industry" />
                   </SelectTrigger>
                   <SelectContent>
@@ -574,7 +716,11 @@ export default function MenteeApplicationPage() {
                     ))}
                   </SelectContent>
                 </Select>
-                {errors.currentIndustry && <p className="text-sm text-red-500">{errors.currentIndustry}</p>}
+                {errors.currentIndustry && (
+                  <p className="text-sm text-red-500">
+                    {errors.currentIndustry}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -592,9 +738,14 @@ export default function MenteeApplicationPage() {
                     <Checkbox
                       id={`pref-${opt.value}`}
                       checked={formData.preferredIndustries.includes(opt.value)}
-                      onCheckedChange={() => toggleArrayItem('preferredIndustries', opt.value)}
+                      onCheckedChange={() =>
+                        toggleArrayItem("preferredIndustries", opt.value)
+                      }
                     />
-                    <label htmlFor={`pref-${opt.value}`} className="text-sm cursor-pointer">
+                    <label
+                      htmlFor={`pref-${opt.value}`}
+                      className="text-sm cursor-pointer"
+                    >
                       {opt.label}
                     </label>
                   </div>
@@ -614,13 +765,19 @@ export default function MenteeApplicationPage() {
                 id="bio"
                 placeholder="Tell us about yourself, your background, achievements, and what makes you unique..."
                 value={formData.bio}
-                onChange={(e) => updateField('bio', e.target.value)}
+                onChange={(e) => updateField("bio", e.target.value)}
                 rows={5}
-                className={errors.bio ? 'border-red-500' : ''}
+                className={errors.bio ? "border-red-500" : ""}
               />
               <div className="flex justify-between text-xs text-muted-foreground">
-                <span>{errors.bio && <span className="text-red-500">{errors.bio}</span>}</span>
-                <span>{formData.bio.split(/\s+/).filter(Boolean).length} words</span>
+                <span>
+                  {errors.bio && (
+                    <span className="text-red-500">{errors.bio}</span>
+                  )}
+                </span>
+                <span>
+                  {formData.bio.split(/\s+/).filter(Boolean).length} words
+                </span>
               </div>
             </div>
           </div>
@@ -634,10 +791,13 @@ export default function MenteeApplicationPage() {
               <div className="flex items-start gap-3">
                 <Lightbulb className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-brand">Skills Matching</p>
+                  <p className="text-sm font-medium text-brand">
+                    Skills Matching
+                  </p>
                   <p className="text-sm text-[#1f1e44] leading-relaxed">
-                    Your basic skills will be matched with mentors who have expertise in those areas.
-                    Be honest about your current level for the best match.
+                    Your basic skills will be matched with mentors who have
+                    expertise in those areas. Be honest about your current level
+                    for the best match.
                   </p>
                 </div>
               </div>
@@ -645,7 +805,9 @@ export default function MenteeApplicationPage() {
 
             {/* Basic Skills Section */}
             <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-6">
-              <h3 className="font-medium text-foreground">Skills You Want to Learn</h3>
+              <h3 className="font-medium text-foreground">
+                Skills You Want to Learn
+              </h3>
 
               <div className="space-y-3">
                 <div className="flex items-center gap-1.5">
@@ -657,33 +819,43 @@ export default function MenteeApplicationPage() {
                     <Button
                       key={skill}
                       type="button"
-                      variant={formData.softSkillsBasic.includes(skill) ? 'default' : 'outline'}
+                      variant={
+                        formData.softSkillsBasic.includes(skill)
+                          ? "default"
+                          : "outline"
+                      }
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsBasic.includes(skill) ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
-                      onClick={() => toggleArrayItem('softSkillsBasic', skill)}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsBasic.includes(skill) ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      onClick={() => toggleArrayItem("softSkillsBasic", skill)}
                     >
                       {skill}
                     </Button>
                   ))}
                 </div>
                 {/* Custom soft skills display */}
-                {formData.softSkillsBasic.filter(s => isCustomSkill(s, softSkillsOptions)).length > 0 && (
+                {formData.softSkillsBasic.filter((s) =>
+                  isCustomSkill(s, softSkillsOptions)
+                ).length > 0 && (
                   <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
-                    {formData.softSkillsBasic.filter(s => isCustomSkill(s, softSkillsOptions)).map((skill) => (
-                      <span
-                        key={skill}
-                        className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
-                      >
-                        {skill}
-                        <button
-                          type="button"
-                          onClick={() => removeCustomSkill('softSkillsBasic', skill)}
-                          className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                    {formData.softSkillsBasic
+                      .filter((s) => isCustomSkill(s, softSkillsOptions))
+                      .map((skill) => (
+                        <span
+                          key={skill}
+                          className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
                         >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </span>
-                    ))}
+                          {skill}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              removeCustomSkill("softSkillsBasic", skill)
+                            }
+                            className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </button>
+                        </span>
+                      ))}
                   </div>
                 )}
                 {/* Custom skill input */}
@@ -693,9 +865,13 @@ export default function MenteeApplicationPage() {
                     value={customSoftSkillBasic}
                     onChange={(e) => setCustomSoftSkillBasic(e.target.value)}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
+                      if (e.key === "Enter") {
                         e.preventDefault();
-                        addCustomSkill('softSkillsBasic', customSoftSkillBasic, setCustomSoftSkillBasic);
+                        addCustomSkill(
+                          "softSkillsBasic",
+                          customSoftSkillBasic,
+                          setCustomSoftSkillBasic
+                        );
                       }
                     }}
                     className="flex-1 h-9 text-sm"
@@ -705,12 +881,22 @@ export default function MenteeApplicationPage() {
                     variant="outline"
                     size="sm"
                     className="h-9 px-3"
-                    onClick={() => addCustomSkill('softSkillsBasic', customSoftSkillBasic, setCustomSoftSkillBasic)}
+                    onClick={() =>
+                      addCustomSkill(
+                        "softSkillsBasic",
+                        customSoftSkillBasic,
+                        setCustomSoftSkillBasic
+                      )
+                    }
                   >
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
-                {errors.softSkillsBasic && <p className="text-sm text-red-500">{errors.softSkillsBasic}</p>}
+                {errors.softSkillsBasic && (
+                  <p className="text-sm text-red-500">
+                    {errors.softSkillsBasic}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-3">
@@ -723,33 +909,45 @@ export default function MenteeApplicationPage() {
                     <Button
                       key={skill}
                       type="button"
-                      variant={formData.industrySkillsBasic.includes(skill) ? 'default' : 'outline'}
+                      variant={
+                        formData.industrySkillsBasic.includes(skill)
+                          ? "default"
+                          : "outline"
+                      }
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsBasic.includes(skill) ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
-                      onClick={() => toggleArrayItem('industrySkillsBasic', skill)}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsBasic.includes(skill) ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      onClick={() =>
+                        toggleArrayItem("industrySkillsBasic", skill)
+                      }
                     >
                       {skill}
                     </Button>
                   ))}
                 </div>
                 {/* Custom industry skills display */}
-                {formData.industrySkillsBasic.filter(s => isCustomSkill(s, industrySkillsOptions)).length > 0 && (
+                {formData.industrySkillsBasic.filter((s) =>
+                  isCustomSkill(s, industrySkillsOptions)
+                ).length > 0 && (
                   <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
-                    {formData.industrySkillsBasic.filter(s => isCustomSkill(s, industrySkillsOptions)).map((skill) => (
-                      <span
-                        key={skill}
-                        className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
-                      >
-                        {skill}
-                        <button
-                          type="button"
-                          onClick={() => removeCustomSkill('industrySkillsBasic', skill)}
-                          className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                    {formData.industrySkillsBasic
+                      .filter((s) => isCustomSkill(s, industrySkillsOptions))
+                      .map((skill) => (
+                        <span
+                          key={skill}
+                          className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
                         >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </span>
-                    ))}
+                          {skill}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              removeCustomSkill("industrySkillsBasic", skill)
+                            }
+                            className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </button>
+                        </span>
+                      ))}
                   </div>
                 )}
                 {/* Custom skill input */}
@@ -757,11 +955,17 @@ export default function MenteeApplicationPage() {
                   <Input
                     placeholder="Add your own skill..."
                     value={customIndustrySkillBasic}
-                    onChange={(e) => setCustomIndustrySkillBasic(e.target.value)}
+                    onChange={(e) =>
+                      setCustomIndustrySkillBasic(e.target.value)
+                    }
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
+                      if (e.key === "Enter") {
                         e.preventDefault();
-                        addCustomSkill('industrySkillsBasic', customIndustrySkillBasic, setCustomIndustrySkillBasic);
+                        addCustomSkill(
+                          "industrySkillsBasic",
+                          customIndustrySkillBasic,
+                          setCustomIndustrySkillBasic
+                        );
                       }
                     }}
                     className="flex-1 h-9 text-sm"
@@ -771,12 +975,22 @@ export default function MenteeApplicationPage() {
                     variant="outline"
                     size="sm"
                     className="h-9 px-3"
-                    onClick={() => addCustomSkill('industrySkillsBasic', customIndustrySkillBasic, setCustomIndustrySkillBasic)}
+                    onClick={() =>
+                      addCustomSkill(
+                        "industrySkillsBasic",
+                        customIndustrySkillBasic,
+                        setCustomIndustrySkillBasic
+                      )
+                    }
                   >
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
-                {errors.industrySkillsBasic && <p className="text-sm text-red-500">{errors.industrySkillsBasic}</p>}
+                {errors.industrySkillsBasic && (
+                  <p className="text-sm text-red-500">
+                    {errors.industrySkillsBasic}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -784,7 +998,9 @@ export default function MenteeApplicationPage() {
 
             {/* Expert Skills Section */}
             <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-6">
-              <h3 className="font-medium text-foreground">Skills You Already Have (Optional)</h3>
+              <h3 className="font-medium text-foreground">
+                Skills You Already Have (Optional)
+              </h3>
 
               <div className="space-y-3">
                 <div className="flex items-center gap-1.5">
@@ -796,33 +1012,43 @@ export default function MenteeApplicationPage() {
                     <Button
                       key={skill}
                       type="button"
-                      variant={formData.softSkillsExpert.includes(skill) ? 'default' : 'outline'}
+                      variant={
+                        formData.softSkillsExpert.includes(skill)
+                          ? "default"
+                          : "outline"
+                      }
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsExpert.includes(skill) ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
-                      onClick={() => toggleArrayItem('softSkillsExpert', skill)}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsExpert.includes(skill) ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      onClick={() => toggleArrayItem("softSkillsExpert", skill)}
                     >
                       {skill}
                     </Button>
                   ))}
                 </div>
                 {/* Custom expert soft skills display */}
-                {formData.softSkillsExpert.filter(s => isCustomSkill(s, softSkillsOptions)).length > 0 && (
+                {formData.softSkillsExpert.filter((s) =>
+                  isCustomSkill(s, softSkillsOptions)
+                ).length > 0 && (
                   <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
-                    {formData.softSkillsExpert.filter(s => isCustomSkill(s, softSkillsOptions)).map((skill) => (
-                      <span
-                        key={skill}
-                        className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
-                      >
-                        {skill}
-                        <button
-                          type="button"
-                          onClick={() => removeCustomSkill('softSkillsExpert', skill)}
-                          className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                    {formData.softSkillsExpert
+                      .filter((s) => isCustomSkill(s, softSkillsOptions))
+                      .map((skill) => (
+                        <span
+                          key={skill}
+                          className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
                         >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </span>
-                    ))}
+                          {skill}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              removeCustomSkill("softSkillsExpert", skill)
+                            }
+                            className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </button>
+                        </span>
+                      ))}
                   </div>
                 )}
                 {/* Custom skill input */}
@@ -832,9 +1058,13 @@ export default function MenteeApplicationPage() {
                     value={customSoftSkillExpert}
                     onChange={(e) => setCustomSoftSkillExpert(e.target.value)}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
+                      if (e.key === "Enter") {
                         e.preventDefault();
-                        addCustomSkill('softSkillsExpert', customSoftSkillExpert, setCustomSoftSkillExpert);
+                        addCustomSkill(
+                          "softSkillsExpert",
+                          customSoftSkillExpert,
+                          setCustomSoftSkillExpert
+                        );
                       }
                     }}
                     className="flex-1 h-9 text-sm"
@@ -844,7 +1074,13 @@ export default function MenteeApplicationPage() {
                     variant="outline"
                     size="sm"
                     className="h-9 px-3"
-                    onClick={() => addCustomSkill('softSkillsExpert', customSoftSkillExpert, setCustomSoftSkillExpert)}
+                    onClick={() =>
+                      addCustomSkill(
+                        "softSkillsExpert",
+                        customSoftSkillExpert,
+                        setCustomSoftSkillExpert
+                      )
+                    }
                   >
                     <Plus className="h-4 w-4" />
                   </Button>
@@ -861,33 +1097,45 @@ export default function MenteeApplicationPage() {
                     <Button
                       key={skill}
                       type="button"
-                      variant={formData.industrySkillsExpert.includes(skill) ? 'default' : 'outline'}
+                      variant={
+                        formData.industrySkillsExpert.includes(skill)
+                          ? "default"
+                          : "outline"
+                      }
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsExpert.includes(skill) ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
-                      onClick={() => toggleArrayItem('industrySkillsExpert', skill)}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsExpert.includes(skill) ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      onClick={() =>
+                        toggleArrayItem("industrySkillsExpert", skill)
+                      }
                     >
                       {skill}
                     </Button>
                   ))}
                 </div>
                 {/* Custom expert industry skills display */}
-                {formData.industrySkillsExpert.filter(s => isCustomSkill(s, industrySkillsOptions)).length > 0 && (
+                {formData.industrySkillsExpert.filter((s) =>
+                  isCustomSkill(s, industrySkillsOptions)
+                ).length > 0 && (
                   <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
-                    {formData.industrySkillsExpert.filter(s => isCustomSkill(s, industrySkillsOptions)).map((skill) => (
-                      <span
-                        key={skill}
-                        className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
-                      >
-                        {skill}
-                        <button
-                          type="button"
-                          onClick={() => removeCustomSkill('industrySkillsExpert', skill)}
-                          className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                    {formData.industrySkillsExpert
+                      .filter((s) => isCustomSkill(s, industrySkillsOptions))
+                      .map((skill) => (
+                        <span
+                          key={skill}
+                          className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
                         >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </span>
-                    ))}
+                          {skill}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              removeCustomSkill("industrySkillsExpert", skill)
+                            }
+                            className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </button>
+                        </span>
+                      ))}
                   </div>
                 )}
                 {/* Custom skill input */}
@@ -895,11 +1143,17 @@ export default function MenteeApplicationPage() {
                   <Input
                     placeholder="Add your own skill..."
                     value={customIndustrySkillExpert}
-                    onChange={(e) => setCustomIndustrySkillExpert(e.target.value)}
+                    onChange={(e) =>
+                      setCustomIndustrySkillExpert(e.target.value)
+                    }
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
+                      if (e.key === "Enter") {
                         e.preventDefault();
-                        addCustomSkill('industrySkillsExpert', customIndustrySkillExpert, setCustomIndustrySkillExpert);
+                        addCustomSkill(
+                          "industrySkillsExpert",
+                          customIndustrySkillExpert,
+                          setCustomIndustrySkillExpert
+                        );
                       }
                     }}
                     className="flex-1 h-9 text-sm"
@@ -909,7 +1163,13 @@ export default function MenteeApplicationPage() {
                     variant="outline"
                     size="sm"
                     className="h-9 px-3"
-                    onClick={() => addCustomSkill('industrySkillsExpert', customIndustrySkillExpert, setCustomIndustrySkillExpert)}
+                    onClick={() =>
+                      addCustomSkill(
+                        "industrySkillsExpert",
+                        customIndustrySkillExpert,
+                        setCustomIndustrySkillExpert
+                      )
+                    }
                   >
                     <Plus className="h-4 w-4" />
                   </Button>
@@ -926,34 +1186,46 @@ export default function MenteeApplicationPage() {
             <div className="space-y-5">
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
-                  <Label htmlFor="longTermGoals">What is your long-term career goal? *</Label>
+                  <Label htmlFor="longTermGoals">
+                    What is your long-term career goal? *
+                  </Label>
                   <HintIcon hint="Where do you see yourself in 5-10 years? Example: 'Lead a product team at a tech company'" />
                 </div>
                 <Textarea
                   id="longTermGoals"
                   placeholder="Describe your long-term career aspirations..."
                   value={formData.longTermGoals}
-                  onChange={(e) => updateField('longTermGoals', e.target.value)}
+                  onChange={(e) => updateField("longTermGoals", e.target.value)}
                   rows={3}
-                  className={errors.longTermGoals ? 'border-red-500' : ''}
+                  className={errors.longTermGoals ? "border-red-500" : ""}
                 />
-                {errors.longTermGoals && <p className="text-sm text-red-500">{errors.longTermGoals}</p>}
+                {errors.longTermGoals && (
+                  <p className="text-sm text-red-500">{errors.longTermGoals}</p>
+                )}
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
-                  <Label htmlFor="shortTermGoals">What is your short-term goal? *</Label>
+                  <Label htmlFor="shortTermGoals">
+                    What is your short-term goal? *
+                  </Label>
                   <HintIcon hint="What do you want to achieve in 6-12 months? Example: 'Get my first developer role'" />
                 </div>
                 <Textarea
                   id="shortTermGoals"
                   placeholder="What do you want to achieve in the next 6-12 months?"
                   value={formData.shortTermGoals}
-                  onChange={(e) => updateField('shortTermGoals', e.target.value)}
+                  onChange={(e) =>
+                    updateField("shortTermGoals", e.target.value)
+                  }
                   rows={3}
-                  className={errors.shortTermGoals ? 'border-red-500' : ''}
+                  className={errors.shortTermGoals ? "border-red-500" : ""}
                 />
-                {errors.shortTermGoals && <p className="text-sm text-red-500">{errors.shortTermGoals}</p>}
+                {errors.shortTermGoals && (
+                  <p className="text-sm text-red-500">
+                    {errors.shortTermGoals}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -963,30 +1235,38 @@ export default function MenteeApplicationPage() {
             <div className="space-y-5">
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
-                  <Label htmlFor="whyMentor">Why do you want to have a mentor? *</Label>
+                  <Label htmlFor="whyMentor">
+                    Why do you want to have a mentor? *
+                  </Label>
                   <HintIcon hint="What specific guidance are you hoping to receive?" />
                 </div>
                 <Textarea
                   id="whyMentor"
                   placeholder="What specific guidance are you seeking from a mentor?"
                   value={formData.whyMentor}
-                  onChange={(e) => updateField('whyMentor', e.target.value)}
+                  onChange={(e) => updateField("whyMentor", e.target.value)}
                   rows={3}
-                  className={errors.whyMentor ? 'border-red-500' : ''}
+                  className={errors.whyMentor ? "border-red-500" : ""}
                 />
-                {errors.whyMentor && <p className="text-sm text-red-500">{errors.whyMentor}</p>}
+                {errors.whyMentor && (
+                  <p className="text-sm text-red-500">{errors.whyMentor}</p>
+                )}
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
-                  <Label htmlFor="expectations">What would you hope to get from this program? (Optional)</Label>
+                  <Label htmlFor="expectations">
+                    What would you hope to get from this program? (Optional)
+                  </Label>
                   <HintIcon hint="Share any specific outcomes you're hoping for from this program." />
                 </div>
                 <Textarea
                   id="expectations"
                   placeholder="Your expectations from the mentorship program..."
                   value={formData.programExpectations}
-                  onChange={(e) => updateField('programExpectations', e.target.value)}
+                  onChange={(e) =>
+                    updateField("programExpectations", e.target.value)
+                  }
                   rows={2}
                 />
               </div>
@@ -999,10 +1279,13 @@ export default function MenteeApplicationPage() {
               <div className="flex items-start gap-3">
                 <Sparkles className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-brand">Don&apos;t Know Your MBTI Type?</p>
+                  <p className="text-sm font-medium text-brand">
+                    Don&apos;t Know Your MBTI Type?
+                  </p>
                   <p className="text-sm text-[#1f1e44] leading-relaxed">
-                    Your personality type helps us match you with a compatible mentor. If you don&apos;t know your MBTI type,
-                    take the free test (about 10 minutes) to discover it.
+                    Your personality type helps us match you with a compatible
+                    mentor. If you don&apos;t know your MBTI type, take the free
+                    test (about 10 minutes) to discover it.
                   </p>
                   <a
                     href="https://www.16personalities.com/free-personality-test"
@@ -1029,16 +1312,20 @@ export default function MenteeApplicationPage() {
                     <Button
                       key={type}
                       type="button"
-                      variant={formData.mbtiType === type ? 'default' : 'outline'}
+                      variant={
+                        formData.mbtiType === type ? "default" : "outline"
+                      }
                       size="sm"
-                      className={`h-9 min-h-[44px] ${formData.mbtiType === type ? 'bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]' : ''}`}
-                      onClick={() => updateField('mbtiType', type)}
+                      className={`h-9 min-h-[44px] ${formData.mbtiType === type ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      onClick={() => updateField("mbtiType", type)}
                     >
                       {type}
                     </Button>
                   ))}
                 </div>
-                {errors.mbtiType && <p className="text-sm text-red-500">{errors.mbtiType}</p>}
+                {errors.mbtiType && (
+                  <p className="text-sm text-red-500">{errors.mbtiType}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -1046,7 +1333,12 @@ export default function MenteeApplicationPage() {
                   <Label>Preferred Meeting Frequency</Label>
                   <HintIcon hint="How often would you like to meet? Most successful pairs meet bi-weekly." />
                 </div>
-                <Select value={formData.preferredMeetingFrequency} onValueChange={(v) => updateField('preferredMeetingFrequency', v)}>
+                <Select
+                  value={formData.preferredMeetingFrequency}
+                  onValueChange={(v) =>
+                    updateField("preferredMeetingFrequency", v)
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select frequency" />
                   </SelectTrigger>
@@ -1073,7 +1365,11 @@ export default function MenteeApplicationPage() {
               </h3>
               <div className="flex gap-4">
                 {formData.photoUrl && (
-                  <img src={formData.photoUrl} alt="Profile" className="w-16 h-16 rounded-lg object-cover" />
+                  <img
+                    src={formData.photoUrl}
+                    alt="Profile"
+                    className="w-16 h-16 rounded-lg object-cover"
+                  />
                 )}
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm flex-1">
                   <div className="text-muted-foreground">Name:</div>
@@ -1083,7 +1379,12 @@ export default function MenteeApplicationPage() {
                   <div className="text-muted-foreground">Phone:</div>
                   <div className="font-medium">{formData.phone}</div>
                   <div className="text-muted-foreground">Gender:</div>
-                  <div className="font-medium">{genderOptions.find(o => o.value === formData.gender)?.label}</div>
+                  <div className="font-medium">
+                    {
+                      genderOptions.find((o) => o.value === formData.gender)
+                        ?.label
+                    }
+                  </div>
                 </div>
               </div>
             </div>
@@ -1095,15 +1396,35 @@ export default function MenteeApplicationPage() {
               </h3>
               <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
                 <div className="text-muted-foreground">City:</div>
-                <div className="font-medium">{nzCities.find(c => c.value === formData.city)?.label}</div>
+                <div className="font-medium">
+                  {nzCities.find((c) => c.value === formData.city)?.label}
+                </div>
                 <div className="text-muted-foreground">Meeting Format:</div>
-                <div className="font-medium">{meetingFormatOptions.find(o => o.value === formData.preferredMeetingFormat)?.label}</div>
+                <div className="font-medium">
+                  {
+                    meetingFormatOptions.find(
+                      (o) => o.value === formData.preferredMeetingFormat
+                    )?.label
+                  }
+                </div>
                 <div className="text-muted-foreground">Career Stage:</div>
-                <div className="font-medium">{currentStageOptions.find(o => o.value === formData.currentStage)?.label}</div>
+                <div className="font-medium">
+                  {
+                    currentStageOptions.find(
+                      (o) => o.value === formData.currentStage
+                    )?.label
+                  }
+                </div>
                 <div className="text-muted-foreground">Current Role:</div>
                 <div className="font-medium">{formData.currentJobTitle}</div>
                 <div className="text-muted-foreground">Industry:</div>
-                <div className="font-medium">{industryOptions.find(o => o.value === formData.currentIndustry)?.label}</div>
+                <div className="font-medium">
+                  {
+                    industryOptions.find(
+                      (o) => o.value === formData.currentIndustry
+                    )?.label
+                  }
+                </div>
               </div>
             </div>
 
@@ -1115,20 +1436,34 @@ export default function MenteeApplicationPage() {
               <div className="space-y-3">
                 {formData.softSkillsBasic.length > 0 && (
                   <div>
-                    <div className="text-muted-foreground text-sm mb-1.5">Learning (Soft):</div>
+                    <div className="text-muted-foreground text-sm mb-1.5">
+                      Learning (Soft):
+                    </div>
                     <div className="flex flex-wrap gap-1.5">
-                      {formData.softSkillsBasic.map(s => (
-                        <span key={s} className="bg-[#f7e5f3] text-brand px-2.5 py-1 rounded text-xs">{s}</span>
+                      {formData.softSkillsBasic.map((s) => (
+                        <span
+                          key={s}
+                          className="bg-[#f7e5f3] text-brand px-2.5 py-1 rounded text-xs"
+                        >
+                          {s}
+                        </span>
                       ))}
                     </div>
                   </div>
                 )}
                 {formData.industrySkillsBasic.length > 0 && (
                   <div>
-                    <div className="text-muted-foreground text-sm mb-1.5">Learning (Technical):</div>
+                    <div className="text-muted-foreground text-sm mb-1.5">
+                      Learning (Technical):
+                    </div>
                     <div className="flex flex-wrap gap-1.5">
-                      {formData.industrySkillsBasic.map(s => (
-                        <span key={s} className="bg-[#f4f4fa] text-[#8982ff] px-2.5 py-1 rounded text-xs">{s}</span>
+                      {formData.industrySkillsBasic.map((s) => (
+                        <span
+                          key={s}
+                          className="bg-[#f4f4fa] text-[#8982ff] px-2.5 py-1 rounded text-xs"
+                        >
+                          {s}
+                        </span>
                       ))}
                     </div>
                   </div>
@@ -1138,20 +1473,37 @@ export default function MenteeApplicationPage() {
 
             {/* Goals */}
             <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
-              <h3 className="font-semibold text-foreground pb-2 border-b border-border">Goals & Personality</h3>
+              <h3 className="font-semibold text-foreground pb-2 border-b border-border">
+                Goals & Personality
+              </h3>
               <div className="text-sm space-y-3">
                 <div>
                   <span className="text-muted-foreground">Long-term Goal:</span>
                   <p className="mt-1">{formData.longTermGoals}</p>
                 </div>
                 <div>
-                  <span className="text-muted-foreground">Short-term Goal:</span>
+                  <span className="text-muted-foreground">
+                    Short-term Goal:
+                  </span>
                   <p className="mt-1">{formData.shortTermGoals}</p>
                 </div>
                 <div className="grid grid-cols-2 gap-2 pt-2">
-                  <div><span className="text-muted-foreground">MBTI:</span> <span className="font-medium">{formData.mbtiType}</span></div>
+                  <div>
+                    <span className="text-muted-foreground">MBTI:</span>{" "}
+                    <span className="font-medium">{formData.mbtiType}</span>
+                  </div>
                   {formData.preferredMeetingFrequency && (
-                    <div><span className="text-muted-foreground">Meeting:</span> <span className="font-medium">{meetingFrequencyOptions.find(o => o.value === formData.preferredMeetingFrequency)?.label}</span></div>
+                    <div>
+                      <span className="text-muted-foreground">Meeting:</span>{" "}
+                      <span className="font-medium">
+                        {
+                          meetingFrequencyOptions.find(
+                            (o) =>
+                              o.value === formData.preferredMeetingFrequency
+                          )?.label
+                        }
+                      </span>
+                    </div>
                   )}
                 </div>
               </div>
@@ -1159,11 +1511,15 @@ export default function MenteeApplicationPage() {
 
             {/* Payment Info */}
             <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
-              <h3 className="font-semibold text-brand mb-2">Next Step: Payment</h3>
+              <h3 className="font-semibold text-brand mb-2">
+                Next Step: Payment
+              </h3>
               <p className="text-sm text-[#1f1e44] leading-relaxed">
-                After submitting, you&apos;ll be redirected to complete your membership payment of{' '}
-                <span className="font-semibold">$100 NZD/year</span>. Upon successful payment, you&apos;ll receive an
-                invitation code to complete your registration.
+                After submitting, you&apos;ll be redirected to complete your
+                membership payment of{" "}
+                <span className="font-semibold">$100 NZD/year</span>. Upon
+                successful payment, you&apos;ll receive an invitation code to
+                complete your registration.
               </p>
             </div>
           </div>
@@ -1182,13 +1538,36 @@ export default function MenteeApplicationPage() {
           </>
         }
         topRightImage="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/home-page-ai-hackathon-2025-mentorship.jpg"
-        topRightImageAlt="Women in technology mentorship program"
-        bottomLeftVideo="/video/Mentorship.mp4"
-        bottomRightTitle="Find Your Mentor"
-        bottomRightDescription="Get matched with experienced professionals to guide your STEM career. Our mentorship program connects you with industry leaders who can help you navigate challenges, set goals, and achieve your professional aspirations."
+        topRightImageAlt="She Sharp mentorship program"
+        bottomLeftVideo="/video/Mentee-Video.mp4"
+        bottomRightTitle="Learn and be inspired by our empowering mentors in STEM"
+        bottomRightDescription="Gain valuable advice, inspiration, and empowerment from our amazing mentors in STEM to support your personal and professional development journey."
+      />
+      <BenefitsSection
+        title="Benefits of Becoming a Mentee"
+        benefits={[
+          {
+            icon: Trophy,
+            title: "Personalised direction and evaluation",
+            description:
+              "Get personalised guidance and feedback from your mentor, tailored to your specific needs and goals.",
+          },
+          {
+            icon: Rocket,
+            title: "Navigate your growth",
+            description:
+              "Identify your strengths and areas for improvement, guiding you towards becoming the best version of yourself.",
+          },
+          {
+            icon: Users,
+            title: "Opportunities for career growth",
+            description:
+              "Seize the opportunity to advance in your professional journey and confidently achieve your career goals.",
+          },
+        ]}
       />
       <WarpBackground
-        className="min-h-screen bg-muted"
+        className="min-h-screen bg-white"
         beamsPerSide={4}
         beamSize={6}
         beamDuration={5}
@@ -1196,105 +1575,132 @@ export default function MenteeApplicationPage() {
       >
         <section className="pt-12 md:pt-16 pb-12 md:pb-16">
           <div className="container mx-auto px-4">
-
-          <div className="max-w-2xl mx-auto">
-            <Card className="shadow-lg">
-              <CardHeader className="pb-6">
-                <div className="mb-4">
-                  <div className="flex justify-between mb-2">
-                    {steps.map((step) => (
-                      <div
-                        key={step.id}
-                        className={`flex items-center gap-1.5 text-xs ${
-                          currentStep >= step.id ? 'text-foreground' : 'text-gray-400'
-                        }`}
-                      >
+            <div className="max-w-2xl mx-auto">
+              <Card className="shadow-lg">
+                <CardHeader className="pb-6">
+                  <div className="mb-4">
+                    <div className="flex justify-between mb-2">
+                      {steps.map((step) => (
                         <div
-                          className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
-                            currentStep > step.id
-                              ? 'bg-brand text-white'
-                              : currentStep === step.id
-                              ? 'bg-[#f7e5f3] text-brand border-2 border-brand'
-                              : 'bg-gray-100 text-gray-400'
+                          key={step.id}
+                          className={`flex items-center gap-1.5 text-xs ${
+                            currentStep >= step.id
+                              ? "text-foreground"
+                              : "text-gray-400"
                           }`}
                         >
-                          {currentStep > step.id ? <Check className="h-3 w-3" /> : step.id}
+                          <div
+                            className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
+                              currentStep > step.id
+                                ? "bg-brand text-white"
+                                : currentStep === step.id
+                                  ? "bg-[#f7e5f3] text-brand border-2 border-brand"
+                                  : "bg-gray-100 text-gray-400"
+                            }`}
+                          >
+                            {currentStep > step.id ? (
+                              <Check className="h-3 w-3" />
+                            ) : (
+                              step.id
+                            )}
+                          </div>
+                          <span className="hidden md:inline font-medium">
+                            {step.title}
+                          </span>
                         </div>
-                        <span className="hidden md:inline font-medium">{step.title}</span>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+                    <Progress
+                      value={(currentStep / 5) * 100}
+                      className="h-1.5 [&>div]:bg-brand"
+                    />
                   </div>
-                  <Progress value={(currentStep / 5) * 100} className="h-1.5 [&>div]:bg-brand" />
-                </div>
 
-                <CardTitle className="text-xl">{steps[currentStep - 1].title}</CardTitle>
-                <CardDescription>
-                  {currentStep === 1 && 'Upload your photo and provide basic information'}
-                  {currentStep === 2 && 'Tell us about your location and professional background'}
-                  {currentStep === 3 && 'Select skills you want to develop and already have'}
-                  {currentStep === 4 && 'Share your goals and personality type'}
-                  {currentStep === 5 && 'Review your application before proceeding to payment'}
-                </CardDescription>
-              </CardHeader>
+                  <CardTitle className="text-xl">
+                    {steps[currentStep - 1].title}
+                  </CardTitle>
+                  <CardDescription>
+                    {currentStep === 1 &&
+                      "Upload your photo and provide basic information"}
+                    {currentStep === 2 &&
+                      "Tell us about your location and professional background"}
+                    {currentStep === 3 &&
+                      "Select skills you want to develop and already have"}
+                    {currentStep === 4 &&
+                      "Share your goals and personality type"}
+                    {currentStep === 5 &&
+                      "Review your application before proceeding to payment"}
+                  </CardDescription>
+                </CardHeader>
 
-              <CardContent className="pt-2 px-4 sm:px-6">
-                {renderStepContent()}
+                <CardContent className="pt-2 px-4 sm:px-6">
+                  {renderStepContent()}
 
-                <div className="flex justify-between mt-10 pt-6 border-t">
-                  {currentStep > 1 ? (
-                    <Button variant="outline" onClick={handleBack} disabled={loading}>
-                      <ChevronLeft className="h-4 w-4 mr-1" />
-                      Back
-                    </Button>
-                  ) : (
-                    <div />
-                  )}
+                  <div className="flex justify-between mt-10 pt-6 border-t">
+                    {currentStep > 1 ? (
+                      <Button
+                        variant="outline"
+                        onClick={handleBack}
+                        disabled={loading}
+                      >
+                        <ChevronLeft className="h-4 w-4 mr-1" />
+                        Back
+                      </Button>
+                    ) : (
+                      <div />
+                    )}
 
-                  {currentStep < 5 ? (
-                    <Button variant="brand" onClick={handleNext}>
-                      Next
-                      <ChevronRight className="h-4 w-4 ml-1" />
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="brand"
-                      onClick={handleSubmit}
-                      disabled={loading}
-                    >
-                      {loading ? (
-                        <>
-                          <Loader2 className="animate-spin mr-2 h-4 w-4" />
-                          Submitting...
-                        </>
-                      ) : (
-                        <>
-                          Submit & Continue to Payment
-                          <ChevronRight className="h-4 w-4 ml-1" />
-                        </>
-                      )}
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+                    {currentStep < 5 ? (
+                      <Button variant="brand" onClick={handleNext}>
+                        Next
+                        <ChevronRight className="h-4 w-4 ml-1" />
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="brand"
+                        onClick={handleSubmit}
+                        disabled={loading}
+                      >
+                        {loading ? (
+                          <>
+                            <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                            Submitting...
+                          </>
+                        ) : (
+                          <>
+                            Submit & Continue to Payment
+                            <ChevronRight className="h-4 w-4 ml-1" />
+                          </>
+                        )}
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
 
-            <div className="text-center mt-6 space-y-2">
-              <p className="text-gray-600">
-                Already have an invitation code?{' '}
-                <Link href="/sign-up" className="text-foreground hover:underline font-medium">
-                  Sign up here
-                </Link>
-              </p>
-              <p className="text-gray-600">
-                Want to become a mentor?{' '}
-                <Link href="/mentorship/become-a-mentor" className="text-foreground hover:underline font-medium">
-                  Apply to mentor
-                </Link>
-              </p>
+              <div className="text-center my-6 space-y-2">
+                <p className="text-gray-600">
+                  Already have an invitation code?{" "}
+                  <Link
+                    href="/sign-up"
+                    className="text-foreground hover:underline font-medium"
+                  >
+                    Sign up here
+                  </Link>
+                </p>
+                <p className="text-gray-600">
+                  Want to become a mentor?{" "}
+                  <Link
+                    href="/mentorship/become-a-mentor"
+                    className="text-foreground hover:underline font-medium"
+                  >
+                    Apply to mentor
+                  </Link>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
       </WarpBackground>
     </>
   );

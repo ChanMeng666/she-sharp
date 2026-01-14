@@ -42,6 +42,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { MentorshipHeroSection } from "@/components/sections/mentorship/mentorship-hero-section";
+import { BenefitsSection } from "@/components/sections/mentorship/benefits-section";
+import { Trophy, Rocket, Users } from "lucide-react";
 
 // New Zealand cities
 const nzCities = [
@@ -403,7 +405,7 @@ export default function BecomeMentorPage() {
           backgroundRepeat: "no-repeat",
         }}
       >
-      <div className="absolute inset-0 glass-overlay"></div>
+        <div className="absolute inset-0 glass-overlay"></div>
         <div className="container mx-auto px-4 max-w-lg relative z-10">
           <Card className="glass-card rounded-[50px]">
             <CardContent className="pt-8 text-center">
@@ -1355,13 +1357,36 @@ export default function BecomeMentorPage() {
           </>
         }
         topRightImage="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/home-page-ai-hackathon-2025-mentorship.jpg"
-        topRightImageAlt="Women in technology mentorship program"
-        bottomLeftVideo="/video/Mentorship.mp4"
-        bottomRightTitle="Share Your Expertise"
-        bottomRightDescription="Guide the next generation of women in STEM. As a mentor, you'll make a meaningful impact by sharing your knowledge, experience, and insights to help mentees navigate their career journeys and achieve their goals."
+        topRightImageAlt="She Sharp mentorship program"
+        bottomLeftVideo="/video/Mentor-Video.mp4"
+        bottomRightTitle="Share your wisdom and inspire more Women in STEM "
+        bottomRightDescription="Use your experience to guide, inspire, and empower women, fostering their personal and career growth journeys to achieve success and fulfillment in STEM fields."
+      />
+      <BenefitsSection
+        title="Benefits of Becoming a Mentor"
+        benefits={[
+          {
+            icon: Trophy,
+            title: "Personal Fulfillment",
+            description:
+              "Find satisfaction in witnessing the growth and success of your mentee. Knowing you've played a part in their journey is genuinely rewarding.",
+          },
+          {
+            icon: Rocket,
+            title: "Leave a positive mark",
+            description:
+              "Leave behind a positive impact that lasts long after your interactions. It's about making a difference, one mentee at a time!",
+          },
+          {
+            icon: Users,
+            title: "Grow as you guide",
+            description:
+              "Develop strong leadership and communication abilities as you support your mentee. It's a win-win: they flourish, and you thrive right alongside them.",
+          },
+        ]}
       />
       <WarpBackground
-        className="min-h-screen bg-muted"
+        className="min-h-screen bg-white"
         beamsPerSide={4}
         beamSize={6}
         beamDuration={5}
@@ -1369,133 +1394,132 @@ export default function BecomeMentorPage() {
       >
         <section className="pt-12 md:pt-16 pb-12 md:pb-16">
           <div className="container mx-auto px-4">
-
-          <div className="max-w-2xl mx-auto">
-            <Card className="shadow-lg">
-              <CardHeader className="pb-6">
-                <div className="mb-4">
-                  <div className="flex justify-between mb-2">
-                    {steps.map((step) => (
-                      <div
-                        key={step.id}
-                        className={`flex items-center gap-1.5 text-base ${
-                          currentStep >= step.id
-                            ? "text-foreground"
-                            : "text-gray-400"
-                        }`}
-                      >
+            <div className="max-w-2xl mx-auto">
+              <Card className="shadow-lg">
+                <CardHeader className="pb-6">
+                  <div className="mb-4">
+                    <div className="flex justify-between mb-2">
+                      {steps.map((step) => (
                         <div
-                          className={`w-6 h-6 rounded-full flex items-center justify-center text-base font-medium ${
-                            currentStep > step.id
-                              ? "bg-brand text-white"
-                              : currentStep === step.id
-                                ? "bg-[#f7e5f3] text-brand border-2 border-brand"
-                                : "bg-gray-100 text-gray-400"
+                          key={step.id}
+                          className={`flex items-center gap-1.5 text-base ${
+                            currentStep >= step.id
+                              ? "text-foreground"
+                              : "text-gray-400"
                           }`}
                         >
-                          {currentStep > step.id ? (
-                            <Check className="h-3 w-3" />
-                          ) : (
-                            step.id
-                          )}
+                          <div
+                            className={`w-6 h-6 rounded-full flex items-center justify-center text-base font-medium ${
+                              currentStep > step.id
+                                ? "bg-brand text-white"
+                                : currentStep === step.id
+                                  ? "bg-[#f7e5f3] text-brand border-2 border-brand"
+                                  : "bg-gray-100 text-gray-400"
+                            }`}
+                          >
+                            {currentStep > step.id ? (
+                              <Check className="h-3 w-3" />
+                            ) : (
+                              step.id
+                            )}
+                          </div>
+                          <span className="hidden md:inline font-medium">
+                            {step.title}
+                          </span>
                         </div>
-                        <span className="hidden md:inline font-medium">
-                          {step.title}
-                        </span>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+                    <Progress
+                      value={(currentStep / 5) * 100}
+                      className="h-1.5 [&>div]:bg-brand"
+                    />
                   </div>
-                  <Progress
-                    value={(currentStep / 5) * 100}
-                    className="h-1.5 [&>div]:bg-brand"
-                  />
-                </div>
 
-                <CardTitle className="text-3xl">
-                  {steps[currentStep - 1].title}
-                </CardTitle>
-                <CardDescription>
-                  {currentStep === 1 &&
-                    "Upload your photo and provide basic information"}
-                  {currentStep === 2 &&
-                    "Tell us about your location and professional background"}
-                  {currentStep === 3 &&
-                    "Select skills you can teach and have expertise in"}
-                  {currentStep === 4 &&
-                    "Share your mentoring goals and preferences"}
-                  {currentStep === 5 &&
-                    "Review your application and confirm commitment"}
-                </CardDescription>
-              </CardHeader>
+                  <CardTitle className="text-3xl">
+                    {steps[currentStep - 1].title}
+                  </CardTitle>
+                  <CardDescription>
+                    {currentStep === 1 &&
+                      "Upload your photo and provide basic information"}
+                    {currentStep === 2 &&
+                      "Tell us about your location and professional background"}
+                    {currentStep === 3 &&
+                      "Select skills you can teach and have expertise in"}
+                    {currentStep === 4 &&
+                      "Share your mentoring goals and preferences"}
+                    {currentStep === 5 &&
+                      "Review your application and confirm commitment"}
+                  </CardDescription>
+                </CardHeader>
 
-              <CardContent className="pt-2 px-4 sm:px-6">
-                {renderStepContent()}
+                <CardContent className="pt-2 px-4 sm:px-6">
+                  {renderStepContent()}
 
-                <div className="flex justify-between mt-10 pt-6 border-t">
-                  {currentStep > 1 ? (
-                    <Button
-                      variant="outline"
-                      onClick={handleBack}
-                      disabled={loading}
-                    >
-                      <ChevronLeft className="h-4 w-4 mr-1" />
-                      Back
-                    </Button>
-                  ) : (
-                    <div />
-                  )}
+                  <div className="flex justify-between mt-10 pt-6 border-t">
+                    {currentStep > 1 ? (
+                      <Button
+                        variant="outline"
+                        onClick={handleBack}
+                        disabled={loading}
+                      >
+                        <ChevronLeft className="h-4 w-4 mr-1" />
+                        Back
+                      </Button>
+                    ) : (
+                      <div />
+                    )}
 
-                  {currentStep < 5 ? (
-                    <Button variant="brand" onClick={handleNext}>
-                      Next
-                      <ChevronRight className="h-4 w-4 ml-1" />
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="brand"
-                      onClick={handleSubmit}
-                      disabled={loading}
-                    >
-                      {loading ? (
-                        <>
-                          <Loader2 className="animate-spin mr-2 h-4 w-4" />
-                          Submitting...
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="h-4 w-4 mr-2" />
-                          Submit Application
-                        </>
-                      )}
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+                    {currentStep < 5 ? (
+                      <Button variant="brand" onClick={handleNext}>
+                        Next
+                        <ChevronRight className="h-4 w-4 ml-1" />
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="brand"
+                        onClick={handleSubmit}
+                        disabled={loading}
+                      >
+                        {loading ? (
+                          <>
+                            <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                            Submitting...
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="h-4 w-4 mr-2" />
+                            Submit Application
+                          </>
+                        )}
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
 
-            <div className="text-center my-6 space-y-2">
-              <p className="text-gray-600">
-                Already have an invitation code?{" "}
-                <Link
-                  href="/sign-up"
-                  className="text-foreground hover:underline font-medium"
-                >
-                  Sign up here
-                </Link>
-              </p>
-              <p className="text-gray-600">
-                Looking to become a mentee?{" "}
-                <Link
-                  href="/mentorship/join"
-                  className="text-foreground hover:underline font-medium"
-                >
-                  Join as mentee
-                </Link>
-              </p>
+              <div className="text-center my-6 space-y-2">
+                <p className="text-gray-600">
+                  Already have an invitation code?{" "}
+                  <Link
+                    href="/sign-up"
+                    className="text-foreground hover:underline font-medium"
+                  >
+                    Sign up here
+                  </Link>
+                </p>
+                <p className="text-gray-600">
+                  Looking to become a mentee?{" "}
+                  <Link
+                    href="/mentorship/join"
+                    className="text-foreground hover:underline font-medium"
+                  >
+                    Join as mentee
+                  </Link>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
       </WarpBackground>
     </>
   );
