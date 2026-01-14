@@ -89,7 +89,7 @@ export function MentorshipHeroSection({
                 </>
               )}
             </h2>
-            <p className="text-base text-muted-foreground leading-relaxed">
+            <p className="text-md text-muted-foreground leading-relaxed">
               {bottomRightDescription}
             </p>
           </div>

@@ -1537,7 +1537,7 @@ export default function MenteeApplicationPage() {
             MENTEE
           </>
         }
-        topRightImage="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/home-page-ai-hackathon-2025-mentorship.jpg"
+        topRightImage="/img/mentees.jpg"
         topRightImageAlt="She Sharp mentorship program"
         bottomLeftVideo="/video/Mentee-Video.mp4"
         bottomRightTitle="Learn and be inspired by our empowering mentors in STEM"
@@ -1576,6 +1576,9 @@ export default function MenteeApplicationPage() {
         <section className="pt-12 md:pt-16 pb-12 md:pb-16">
           <div className="container mx-auto px-4">
             <div className="max-w-2xl mx-auto">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 mt-8">
+                Apply as Mentee
+              </h2>
               <Card className="shadow-lg">
                 <CardHeader className="pb-6">
                   <div className="mb-4">
