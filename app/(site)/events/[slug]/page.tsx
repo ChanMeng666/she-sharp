@@ -64,10 +64,10 @@ export default async function EventPage({ params }: EventPageProps) {
   const relatedEvents = getUpcomingEvents(3).filter((e) => e.slug !== slug);
 
   return (
-    <div className="min-h-screen bg-surface-periwinkle">
+    <div className="min-h-screen">
       {/* Main Content Section */}
-      <Section spacing="section" className="bg-surface-periwinkle">
-        <Container size="full">
+      <Section spacing="section">
+        <Container size="full" className="py-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             {/* Main Content - Left Column */}
             <div className="lg:col-span-7 xl:col-span-8 space-y-10">
@@ -96,7 +96,7 @@ export default async function EventPage({ params }: EventPageProps) {
                         <img
                           src={photo}
                           alt={`${event.title} photo ${index + 1}`}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover "
                         />
                       </div>
                     ))}

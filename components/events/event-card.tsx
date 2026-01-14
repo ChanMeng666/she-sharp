@@ -29,8 +29,8 @@ export function EventCard({
       <Card
         className={cn(
           'group h-full overflow-hidden transition-all duration-300 py-0',
-          'hover:shadow-lg hover:-translate-y-1',
-          'border border-[#f4f4fa]',
+          'hover:shadow-xl hover:-translate-y-1',
+          'border border-[#f4f4fa] rounded-3xl bg-white',
           isPast && 'opacity-75'
         )}
       >

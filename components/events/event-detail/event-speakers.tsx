@@ -1,6 +1,6 @@
 'use client';
 
-import { Linkedin } from 'lucide-react';
+import { Linkedin, Users } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Event, EventSpeaker } from '@/types/event';
 import { cn } from '@/lib/utils';
@@ -81,14 +81,15 @@ export function EventSpeakers({ event, className }: EventSpeakersProps) {
 
   return (
     <section className={className}>
-      <div className="relative border border-foreground/10 p-6">
+      <div className="relative border border-foreground/10 overflow-hidden rounded-3xl bg-white p-8 md:p-10 pt-12 md:pt-14 shadow-sm hover:shadow-xl transition-all duration-300">
         <CornerIcon className="absolute -top-3 -left-3" />
         <CornerIcon className="absolute -top-3 -right-3" />
         <CornerIcon className="absolute -bottom-3 -left-3" />
         <CornerIcon className="absolute -bottom-3 -right-3" />
 
         <div className="space-y-4">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          <p className="flex items-center gap-2 text-base md:text-lg font-semibold text-foreground uppercase tracking-wider">
+            <Users className="w-5 h-5 md:w-6 md:h-6 text-brand" />
             {event.speakers.length === 1 ? 'Speaker' : 'Speakers'}
           </p>
           <div>

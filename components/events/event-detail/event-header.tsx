@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Event } from '@/lib/data/events';
-import { cn } from '@/lib/utils';
+import { Event } from "@/lib/data/events";
+import { cn } from "@/lib/utils";
 
 interface EventHeaderProps {
   event: Event;
@@ -9,12 +9,12 @@ interface EventHeaderProps {
 }
 
 export function EventHeader({ event, className }: EventHeaderProps) {
-  const isPast = event.status === 'completed';
+  const isPast = event.status === "completed";
 
   return (
-    <div className={cn('space-y-6', className)}>
+    <div className={cn("space-y-6", className)}>
       {/* Cover Image */}
-      <div className="relative aspect-[2/1] overflow-hidden bg-muted">
+      <div className="relative aspect-2/1 overflow-hidden bg-muted rounded-2xl">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={event.coverImage}
