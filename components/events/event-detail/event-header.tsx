@@ -23,7 +23,7 @@ export function EventHeader({ event, className }: EventHeaderProps) {
         />
         {isPast && (
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-            <span className="text-white text-sm font-medium px-4 py-2 border border-white/50">
+            <span className="text-white text-base font-medium px-4 py-2 border border-white/50">
               Past Event
             </span>
           </div>
@@ -31,7 +31,7 @@ export function EventHeader({ event, className }: EventHeaderProps) {
       </div>
 
       {/* Title */}
-      <h1 className="text-3xl md:text-4xl font-light text-foreground leading-tight">
+      <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight font-sans">
         {event.title}
       </h1>
     </div>

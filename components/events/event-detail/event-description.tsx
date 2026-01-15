@@ -34,7 +34,7 @@ export function EventDescription({ event, className }: EventDescriptionProps) {
         <CornerIcon className="absolute -bottom-3 -right-3" />
 
         <div className="space-y-4">
-          <p className="flex items-center gap-2 text-base md:text-lg font-semibold text-foreground uppercase tracking-wider">
+          <p className="flex items-center gap-2 text-base md:text-lg font-semibold text-foreground uppercase  ">
             <Info className="w-5 h-5 md:w-6 md:h-6 text-brand" />
             About this event
           </p>

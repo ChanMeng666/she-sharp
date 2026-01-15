@@ -34,12 +34,12 @@ function SpeakerItem({ speaker, isLast }: { speaker: EventSpeaker; isLast: boole
     .slice(0, 2);
 
   return (
-    <div className={cn('flex items-start gap-4 py-4', !isLast && 'border-b border-foreground/5')}>
-      <Avatar className="w-12 h-12 shrink-0">
+    <div className={cn('flex items-start gap-6 py-4', !isLast && 'border-b border-foreground/5')}>
+      <Avatar className="w-24 h-24 shrink-0">
         {speaker.image ? (
           <AvatarImage src={speaker.image} alt={speaker.name} />
         ) : null}
-        <AvatarFallback className="bg-foreground/5 text-foreground text-sm">
+        <AvatarFallback className="bg-foreground/5 text-foreground text-base">
           {initials}
         </AvatarFallback>
       </Avatar>
@@ -47,10 +47,10 @@ function SpeakerItem({ speaker, isLast }: { speaker: EventSpeaker; isLast: boole
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <h4 className="font-medium text-foreground">{speaker.name}</h4>
-            <p className="text-sm text-muted-foreground">{speaker.title}</p>
+            <h4 className="font-medium text-foreground font-sans">{speaker.name}</h4>
+            <p className="text-base text-muted-foreground">{speaker.title}</p>
             {speaker.company && (
-              <p className="text-sm text-muted-foreground/70">{speaker.company}</p>
+              <p className="text-base text-muted-foreground/70">{speaker.company}</p>
             )}
           </div>
           {speaker.linkedIn && (
@@ -65,7 +65,7 @@ function SpeakerItem({ speaker, isLast }: { speaker: EventSpeaker; isLast: boole
           )}
         </div>
         {speaker.bio && (
-          <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
+          <p className="text-base text-muted-foreground mt-2 line-clamp-2">
             {speaker.bio}
           </p>
         )}
@@ -88,7 +88,7 @@ export function EventSpeakers({ event, className }: EventSpeakersProps) {
         <CornerIcon className="absolute -bottom-3 -right-3" />
 
         <div className="space-y-4">
-          <p className="flex items-center gap-2 text-base md:text-lg font-semibold text-foreground uppercase tracking-wider">
+          <p className="flex items-center gap-2 text-base md:text-lg font-semibold text-foreground uppercase">
             <Users className="w-5 h-5 md:w-6 md:h-6 text-brand" />
             {event.speakers.length === 1 ? 'Speaker' : 'Speakers'}
           </p>
