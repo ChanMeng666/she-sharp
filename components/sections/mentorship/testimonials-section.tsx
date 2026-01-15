@@ -6,7 +6,14 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, ChevronRight, Quote, Calendar } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Quote,
+  Calendar,
+  GraduationCap,
+  Award,
+} from "lucide-react";
 import { useState } from "react";
 import { testimonialsByPage } from "@/lib/data/testimonials";
 
@@ -45,8 +52,8 @@ export function TestimonialsSection() {
             <CardHeader className="pb-0">
               <div className="flex flex-col md:flex-row gap-6 items-start">
                 {/* Mentee Info */}
-                <div className="flex items-center gap-4 flex-1">
-                  <Avatar className="h-24 w-24 border-2 border-border">
+                <div className="flex items-center w-full md:flex-1">
+                  {/* <Avatar className="h-24 w-24 border-2 border-border">
                     <AvatarImage
                       src={current.mentee.image}
                       alt={current.mentee.name}
@@ -57,10 +64,13 @@ export function TestimonialsSection() {
                         .map((n) => n[0])
                         .join("")}
                     </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-lg text-brand font-black mb-2">Mentee</p>
-                    <h3 className="font-brand-script text-2xl text-foreground mb-2">
+                  </Avatar> */}
+                  <div className="w-full">
+                    <p className="text-lg text-brand font-black mb-2 flex items-center gap-2">
+                      <GraduationCap className="w-5 h-5" />
+                      Mentee
+                    </p>
+                    <h3 className="font-heading font-bold text-2xl text-foreground mb-2">
                       {current.mentee.name}
                     </h3>
                     <p className="text-base text-muted-foreground">
@@ -75,17 +85,20 @@ export function TestimonialsSection() {
                 {/* Journey Badge */}
                 <Badge
                   variant="outline"
-                  className="border-border text-base p-2"
+                  className="border-border text-base p-2 w-full md:w-auto"
                 >
                   <Calendar className="w-5 h-5 mr-1" />
                   {current.mentee.journey}
                 </Badge>
 
                 {/* Mentor Info */}
-                <div className="flex items-center gap-4 flex-1 md:justify-end">
-                  <div className="text-right">
-                    <p className="text-lg text-brand font-black mb-2">Mentor</p>
-                    <h3 className="font-brand-script text-2xl text-foreground mb-2">
+                <div className="flex items-center w-full md:flex-1 md:justify-end">
+                  <div className="w-full text-right">
+                    <p className="text-lg text-brand font-black mb-2 flex items-center gap-2 justify-end">
+                      <Award className="w-5 h-5" />
+                      Mentor
+                    </p>
+                    <h3 className="font-heading font-bold text-2xl text-foreground mb-2">
                       {current.mentor.name}
                     </h3>
                     <p className="text-base text-muted-foreground">
@@ -95,7 +108,7 @@ export function TestimonialsSection() {
                       {current.mentor.company}
                     </p>
                   </div>
-                  <Avatar className="h-24 w-24 border-2 border-border">
+                  {/* <Avatar className="h-24 w-24 border-2 border-border">
                     <AvatarImage
                       src={current.mentor.image}
                       alt={current.mentor.name}
@@ -106,15 +119,16 @@ export function TestimonialsSection() {
                         .map((n) => n[0])
                         .join("")}
                     </AvatarFallback>
-                  </Avatar>
+                  </Avatar> */}
                 </div>
               </div>
             </CardHeader>
 
             <CardContent className="px-6 py-4">
-              <Quote className="w-12 h-12 text-brand/30 mb-4" />
-              <blockquote className="text-quote text-foreground mb-6">
-                {current.quote}
+              <blockquote className="text-quote text-foreground mb-6 flex items-start gap-2 md:gap-8">
+                <Quote className="w-12 h-12 text-brand/30 mt-1 shrink-0 rotate-180" />
+                <span className="flex-1">{current.fullStory}</span>
+                <Quote className="w-12 h-12 text-brand/30 mt-1 shrink-0 " />
               </blockquote>
             </CardContent>
           </Card>

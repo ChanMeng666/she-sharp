@@ -1,7 +1,9 @@
-"use client";
+ "use client";
 
+import { useState } from "react";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import TimeLine_01, { TimeLine_01Entry } from "@/components/ui/release-time-line";
 import {
@@ -13,6 +15,11 @@ import {
   HeartHandshake,
   Award,
 } from "lucide-react";
+
+const TAB_VALUES = {
+  mentee: "mentee",
+  mentor: "mentor",
+} as const;
 
 const MENTEE_STEPS: TimeLine_01Entry[] = [
   {
@@ -27,10 +34,6 @@ const MENTEE_STEPS: TimeLine_01Entry[] = [
       "Define your mentorship goals",
       "Select your preferred industry focus",
     ],
-    button: {
-      url: "/mentorship/join",
-      text: "Start Application",
-    },
   },
   {
     icon: Handshake,
@@ -73,10 +76,6 @@ const MENTOR_STEPS: TimeLine_01Entry[] = [
       "Set availability preferences",
       "Share your mentoring style",
     ],
-    button: {
-      url: "/mentorship/become-a-mentor",
-      text: "Apply as Mentor",
-    },
   },
   {
     icon: Users,
@@ -120,6 +119,14 @@ const MENTOR_STEPS: TimeLine_01Entry[] = [
 ];
 
 export function HowItWorksSection() {
+  const [activeRole, setActiveRole] = useState<(typeof TAB_VALUES)[keyof typeof TAB_VALUES]>(
+    TAB_VALUES.mentee,
+  );
+
+  const isMentee = activeRole === TAB_VALUES.mentee;
+  const ctaHref = isMentee ? "/mentorship/join" : "/mentorship/become-a-mentor";
+  const ctaLabel = isMentee ? "Apply as Mentee" : "Apply as Mentor";
+
   return (
     <Section className="py-16 md:py-32 bg-navy-light rounded-b-[50px]">
       <Container size="full">
@@ -133,38 +140,67 @@ export function HowItWorksSection() {
           </p>
 
           {/* Tabs */}
-          <Tabs defaultValue="mentee" className="w-full">
+          <Tabs
+            value={activeRole}
+            onValueChange={(value) => {
+              if (value === TAB_VALUES.mentee || value === TAB_VALUES.mentor) {
+                setActiveRole(value);
+              }
+            }}
+            className="w-full"
+          >
             <div className="flex justify-center">
-              <TabsList className="h-14 p-1.5 bg-white/50 backdrop-blur-sm rounded-full">
+              <TabsList className="h-14 p-1.5 glass-pill">
                 <TabsTrigger
-                  value="mentee"
-                  className="px-8 py-2.5 text-base rounded-full data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
+                  value={TAB_VALUES.mentee}
+                  className={`px-8 py-2.5 text-base rounded-full ${
+                    isMentee
+                      ? "data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
+                      : "data-[state=active]:bg-navy data-[state=active]:text-navy-foreground"
+                  }`}
                 >
-                  I&apos;m a Mentee
+                  Become a Mentee
                 </TabsTrigger>
                 <TabsTrigger
-                  value="mentor"
-                  className="px-8 py-2.5 text-base rounded-full data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
+                  value={TAB_VALUES.mentor}
+                  className={`px-8 py-2.5 text-base rounded-full ${
+                    isMentee
+                      ? "data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
+                      : "data-[state=active]:bg-navy data-[state=active]:text-navy-foreground"
+                  }`}
                 >
-                  I&apos;m a Mentor
+                  Become a Mentor
                 </TabsTrigger>
               </TabsList>
             </div>
 
-            <TabsContent value="mentee">
+            <TabsContent value={TAB_VALUES.mentee}>
               <TimeLine_01
                 entries={MENTEE_STEPS}
                 className="py-4"
+                colorTheme="brand"
               />
             </TabsContent>
 
-            <TabsContent value="mentor">
+            <TabsContent value={TAB_VALUES.mentor}>
               <TimeLine_01
                 entries={MENTOR_STEPS}
                 className="py-4"
+                colorTheme="navy"
               />
             </TabsContent>
           </Tabs>
+
+          <div className="mt-16 flex justify-center">
+            <Button
+              variant={isMentee ? "brand" : "secondary"}
+              size="lg"
+              className="h-14 px-10 text-lg transition-all duration-150"
+              asChild
+            >
+              <a href={ctaHref}>{ctaLabel}</a>
+            </Button>
+          </div>
         </div>
       </Container>
     </Section>

@@ -35,7 +35,7 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
 
         {/* External Link Icon */}
         <div className="absolute top-6 right-6 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="rounded-full bg-white/90 backdrop-blur-sm p-2">
+          <div className="glass-pill bg-white/90 p-2">
             <ExternalLink className="h-4 w-4 text-purple-dark" />
           </div>
         </div>

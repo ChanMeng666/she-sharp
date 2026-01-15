@@ -58,9 +58,9 @@ export default function ForgotPasswordPage() {
         }}
       >
         {/* Background overlay for better readability */}
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 glass-overlay"></div>
 
-        <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
+        <Card className="w-full max-w-md relative z-10 glass-card rounded-[50px]">
           <CardHeader className="space-y-6 text-center pb-8">
             <div className="space-y-3">
               <CardTitle className="text-3xl font-bold text-foreground">
@@ -123,11 +123,11 @@ export default function ForgotPasswordPage() {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
       }}
-    >
+      >
       {/* Background overlay for better readability */}
-      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 glass-overlay"></div>
 
-      <Card className="w-full max-w-md relative z-10 border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
+      <Card className="w-full max-w-md relative z-10 glass-card rounded-[50px]">
         <CardHeader className="space-y-4 text-center pb-8">
           <div className="space-y-2">
             <CardTitle className="text-3xl font-bold text-foreground">
@@ -164,7 +164,7 @@ export default function ForgotPasswordPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={isLoading}
-                className="h-11 px-4 rounded-xl border-2 border-border bg-background/80 backdrop-blur-sm text-foreground placeholder:text-muted-foreground focus:border-border focus:ring-4 focus:ring-border/10 transition-all duration-200"
+                className="h-11 px-4 rounded-xl border-2 border-border glass-overlay text-foreground focus:border-border focus:ring-4 focus:ring-border/10 transition-all duration-200"
               />
             </div>
 

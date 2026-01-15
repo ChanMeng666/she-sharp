@@ -2,6 +2,7 @@
 
 import { Event, AgendaItem } from '@/types/event';
 import { cn } from '@/lib/utils';
+import { CalendarClock } from 'lucide-react';
 
 interface EventAgendaProps {
   event: Event;
@@ -27,25 +28,25 @@ function AgendaItemRow({ item, isLast }: { item: AgendaItem; isLast: boolean }) 
   return (
     <div className={cn('flex gap-6 py-4', !isLast && 'border-b border-foreground/5')}>
       {/* Time */}
-      <div className="w-20 shrink-0">
-        <span className="text-sm text-muted-foreground">{item.time}</span>
+      <div className="w-20 ">
+        <span className="text-base text-muted-foreground">{item.time}</span>
       </div>
 
       {/* Content */}
       <div className="flex-1 min-w-0">
-        <h4 className="text-foreground font-medium">{item.title}</h4>
+        <h4 className="font-medium font-sans">{item.title}</h4>
         {item.speaker && (
-          <p className="text-sm text-muted-foreground mt-1">{item.speaker}</p>
+          <p className="text-base text-muted-foreground/70 mt-1">{item.speaker}</p>
         )}
         {item.description && (
-          <p className="text-sm text-muted-foreground/70 mt-1">{item.description}</p>
+          <p className="text-base text-muted-foreground/70 mt-1">{item.description}</p>
         )}
       </div>
 
       {/* Type Badge */}
       {item.type && (
         <div className="shrink-0">
-          <span className="text-xs text-muted-foreground capitalize">
+          <span className="text-base text-muted-foreground capitalize">
             {item.type}
           </span>
         </div>
@@ -61,14 +62,15 @@ export function EventAgenda({ event, className }: EventAgendaProps) {
 
   return (
     <section className={className}>
-      <div className="relative border border-foreground/10 p-6">
+      <div className="relative border border-foreground/10 overflow-hidden rounded-3xl bg-white p-8 md:p-10 pt-12 md:pt-14 shadow-sm hover:shadow-xl transition-all duration-300">
         <CornerIcon className="absolute -top-3 -left-3" />
         <CornerIcon className="absolute -top-3 -right-3" />
         <CornerIcon className="absolute -bottom-3 -left-3" />
         <CornerIcon className="absolute -bottom-3 -right-3" />
 
         <div className="space-y-4">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          <p className="flex items-center gap-2 text-base md:text-lg font-semibold text-foreground uppercase">
+            <CalendarClock className="w-5 h-5 md:w-6 md:h-6 text-brand" />
             Schedule
           </p>
           <div>

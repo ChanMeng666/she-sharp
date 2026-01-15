@@ -33,7 +33,7 @@ export function VerifyInvitationForm({ userEmail, userName }: VerifyInvitationFo
       }}
     >
       {/* Background overlay */}
-      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 glass-overlay"></div>
 
       <div className="w-full max-w-md relative z-10">
         {/* Logo */}
@@ -56,7 +56,7 @@ export function VerifyInvitationForm({ userEmail, userName }: VerifyInvitationFo
         </div>
 
         {/* Form Card */}
-        <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
+        <Card className="glass-card rounded-[50px]">
           <CardContent className="p-8">
             {/* Header */}
             <div className="mb-6 text-center">

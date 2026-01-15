@@ -2,6 +2,7 @@
 
 import { Event } from '@/lib/data/events';
 import { cn } from '@/lib/utils';
+import { Info } from 'lucide-react';
 
 interface EventDescriptionProps {
   event: Event;
@@ -26,14 +27,15 @@ function CornerIcon({ className }: { className?: string }) {
 export function EventDescription({ event, className }: EventDescriptionProps) {
   return (
     <section className={className}>
-      <div className="relative border border-foreground/10 p-6">
+      <div className="relative border border-foreground/10 overflow-hidden rounded-3xl bg-white p-8 md:p-10 pt-12 md:pt-14 shadow-sm hover:shadow-xl transition-all duration-300">
         <CornerIcon className="absolute -top-3 -left-3" />
         <CornerIcon className="absolute -top-3 -right-3" />
         <CornerIcon className="absolute -bottom-3 -left-3" />
         <CornerIcon className="absolute -bottom-3 -right-3" />
 
         <div className="space-y-4">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          <p className="flex items-center gap-2 text-base md:text-lg font-semibold text-foreground uppercase  ">
+            <Info className="w-5 h-5 md:w-6 md:h-6 text-brand" />
             About this event
           </p>
           <div className="space-y-4">

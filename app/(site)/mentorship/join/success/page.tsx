@@ -34,7 +34,7 @@ function PaymentSuccessContent() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 glass-overlay"></div>
         <Loader2 className="h-8 w-8 animate-spin text-foreground relative z-10" />
       </div>
     );
@@ -51,9 +51,9 @@ function PaymentSuccessContent() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 glass-overlay"></div>
         <div className="container mx-auto px-4 max-w-lg relative z-10">
-          <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
+        <Card className="glass-card rounded-[50px]">
             <CardContent className="pt-6 text-center">
               <AlertCircle className="h-12 w-12 text-orange-500 mx-auto mb-4" />
               <h2 className="text-xl font-semibold text-foreground mb-2">Session Not Found</h2>
@@ -90,9 +90,9 @@ function PaymentSuccessContent() {
         backgroundRepeat: 'no-repeat'
       }}
     >
-      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 glass-overlay"></div>
       <div className="container mx-auto px-4 max-w-lg relative z-10">
-        <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
+        <Card className="glass-card rounded-[50px]">
           <CardHeader className="text-center pb-2">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="h-10 w-10 text-green-600" />
@@ -201,7 +201,7 @@ export default function PaymentSuccessPage() {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 glass-overlay"></div>
         <Loader2 className="h-8 w-8 animate-spin text-foreground relative z-10" />
       </div>
     }>

@@ -102,7 +102,7 @@ function CenterImage() {
           y: useTransform(scrollY, [0, 300], [0, -50]),
         }}
       >
-        <div className="text-left px-6 py-8 md:px-10 md:py-12 mb-8 ml-8 md:mb-4 md:ml-12 rounded-2xl backdrop-blur-md bg-black/40 border border-white/20 shadow-2xl">
+        <div className="glass-panel text-left px-6 py-8 md:px-10 md:py-12 mb-8 ml-8 md:mb-4 md:ml-12 bg-black/40">
           <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 tracking-tight drop-shadow-lg">
             She Sharp
           </h1>

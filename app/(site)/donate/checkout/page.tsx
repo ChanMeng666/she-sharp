@@ -96,7 +96,7 @@ function CheckoutContent() {
       }}
     >
       {/* Background overlay for better readability */}
-      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 glass-overlay"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-xl mx-auto mb-8">
@@ -114,7 +114,7 @@ function CheckoutContent() {
 
         <div className="max-w-lg mx-auto">
           {/* Donation Card */}
-          <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
+          <Card className="glass-card rounded-[50px]">
             <CardHeader className="text-center pb-2">
               <div className="bg-brand text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3 mx-auto">
                 ONE-TIME DONATION
@@ -228,7 +228,7 @@ export default function DonateCheckoutPage() {
             backgroundRepeat: 'no-repeat'
           }}
         >
-          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+          <div className="absolute inset-0 glass-overlay"></div>
           <Loader2 className="h-8 w-8 animate-spin text-brand relative z-10" />
         </div>
       }

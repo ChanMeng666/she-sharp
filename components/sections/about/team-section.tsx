@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MemberCard, MemberCardData } from "@/components/ui/member-card";
 import { teamMembers } from "@/lib/data/team";
-import { TeamMember } from "@/types/team";
 
 export function TeamSection() {
   const [showAll, setShowAll] = useState(false);
@@ -37,7 +36,8 @@ export function TeamSection() {
               name: member.name,
               image: member.image,
               description: member.description,
-              title: member.roles.join(" • "),
+              title: member.roles.join(" | "),
+              linkedin: member.linkedin,
             };
             return (
               <div key={member.id ?? index} role="listitem">

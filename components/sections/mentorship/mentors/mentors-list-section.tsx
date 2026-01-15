@@ -12,6 +12,7 @@ export function MentorsListSection() {
     image: mentor.image,
     description: mentor.description,
     title: `${mentor.role} at ${mentor.company}`,
+    linkedin: mentor.linkedIn,
   }));
 
   return (

@@ -20,7 +20,7 @@ export function Section({
 }: SectionProps) {
   const bgClasses = {
     white: "bg-background text-foreground",
-    light: "bg-muted text-foreground",
+    light: "text-foreground",
     accent: "bg-muted text-foreground",
     dark: "bg-foreground text-background",
   };

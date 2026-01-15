@@ -176,7 +176,7 @@ export function FeatureShowcase({
 
               {/* Tab controls (pill) */}
               <div className="pointer-events-auto absolute inset-x-0 bottom-6 z-10 flex w-full justify-center">
-                <TabsList className="h-14 p-1.5 bg-white/50 backdrop-blur-sm rounded-full">
+                <TabsList className="h-14 p-1.5 glass-pill">
                   {tabs.map((t) => (
                     <TabsTrigger
                       key={t.value}

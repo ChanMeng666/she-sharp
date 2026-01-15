@@ -93,7 +93,7 @@ export function EventSidebarPanel({ event, className }: EventSidebarPanelProps) 
       {/* Minimalist Card with Corner Icons */}
       <div
         className={cn(
-          'relative border border-foreground/10 p-6',
+          'relative border border-foreground/10 overflow-hidden rounded-3xl bg-white p-8 md:p-10 pt-12 md:pt-14 shadow-sm hover:shadow-xl transition-all duration-300',
           className
         )}
       >
@@ -106,11 +106,11 @@ export function EventSidebarPanel({ event, className }: EventSidebarPanelProps) 
         <div className="space-y-6">
           {/* Date & Time */}
           <div className="space-y-3">
-            <div className="flex items-center gap-3 text-sm">
+            <div className="flex items-center gap-3 text-base">
               <Calendar className="w-4 h-4 text-muted-foreground" />
               <span className="text-foreground">{formatEventDate(event, 'full')}</span>
             </div>
-            <div className="flex items-center gap-3 text-sm">
+            <div className="flex items-center gap-3 text-base">
               <Clock className="w-4 h-4 text-muted-foreground" />
               <span className="text-foreground">{formatEventTime(event)}</span>
             </div>
@@ -118,7 +118,7 @@ export function EventSidebarPanel({ event, className }: EventSidebarPanelProps) 
 
           {/* Status */}
           {(isPast || isCancelled) && (
-            <p className="text-sm text-muted-foreground text-center">
+            <p className="text-base text-muted-foreground text-center">
               {isPast ? 'This event has ended' : 'This event has been cancelled'}
             </p>
           )}
@@ -135,7 +135,7 @@ export function EventSidebarPanel({ event, className }: EventSidebarPanelProps) 
           </Button>
 
           {event.registration?.deadline && registrationOpen && (
-            <p className="text-xs text-muted-foreground text-center">
+            <p className="text-base text-muted-foreground text-center">
               Registration closes{' '}
               {new Date(event.registration.deadline).toLocaleDateString('en-NZ', {
                 month: 'short',
@@ -147,14 +147,19 @@ export function EventSidebarPanel({ event, className }: EventSidebarPanelProps) 
       </div>
 
       {/* Location Card */}
-      <div className="relative border border-foreground/10 p-6 mt-6">
+      <div className="relative border border-foreground/10 overflow-hidden rounded-3xl bg-white p-8 md:p-10 pt-12 md:pt-14 shadow-sm hover:shadow-xl transition-all duration-300 mt-6">
         <CornerIcon className="absolute -top-3 -left-3" />
         <CornerIcon className="absolute -top-3 -right-3" />
         <CornerIcon className="absolute -bottom-3 -left-3" />
         <CornerIcon className="absolute -bottom-3 -right-3" />
 
         <div className="space-y-4">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          <p className="flex items-center gap-2 text-base md:text-lg font-semibold text-foreground uppercase tracking-wider">
+            {isOnline ? (
+              <Video className="w-5 h-5 md:w-6 md:h-6 text-brand" />
+            ) : (
+              <MapPin className="w-5 h-5 md:w-6 md:h-6 text-brand" />
+            )}
             {isOnline ? 'Online Event' : 'Location'}
           </p>
 
@@ -182,8 +187,7 @@ export function EventSidebarPanel({ event, className }: EventSidebarPanelProps) 
           {(!isOnline || isHybrid) && event.location.venueName && (
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-muted-foreground mt-0.5" />
-                <div className="text-sm">
+                <div className="text-base pl-8">
                   <p className="text-foreground">{event.location.venueName}</p>
                   {event.location.address && (
                     <p className="text-muted-foreground">{event.location.address}</p>

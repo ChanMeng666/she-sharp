@@ -27,22 +27,6 @@ const timelineData = [
             ✦ Auckland launch
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Image
-            src="https://images.unsplash.com/photo-1528901166007-3784c7dd3653?w=500&h=500&fit=crop"
-            alt="She Sharp founding event"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full  "
-          />
-          <Image
-            src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&h=500&fit=crop"
-            alt="Initial community"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-        </div>
       </div>
     ),
   },
@@ -67,22 +51,6 @@ const timelineData = [
             ✦ First regional expansion
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Image
-            src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&h=500&fit=crop"
-            alt="Wellington launch event"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-          <Image
-            src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=500&h=500&fit=crop"
-            alt="Xero partnership"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-        </div>
       </div>
     ),
   },
@@ -106,22 +74,6 @@ const timelineData = [
           <div className="flex gap-2 items-center text-white/70 text-sm md:text-lg">
             ✦ 100 attendees milestone
           </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Image
-            src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=500&h=500&fit=crop"
-            alt="Google partnership event"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-          <Image
-            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=500&h=500&fit=crop"
-            alt="100 attendees milestone"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
         </div>
       </div>
     ),
@@ -150,22 +102,6 @@ const timelineData = [
             ✦ Behind-the-scenes experience
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Image
-            src="https://images.unsplash.com/photo-1609619385002-f40f1df9b7eb?w=500&h=500&fit=crop"
-            alt="Tech company tour"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-          <Image
-            src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=500&h=500&fit=crop"
-            alt="Auckland tech scene"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-        </div>
       </div>
     ),
   },
@@ -193,22 +129,6 @@ const timelineData = [
             ✦ Community stayed connected
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Image
-            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&h=500&fit=crop"
-            alt="Virtual event"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-          <Image
-            src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=500&h=500&fit=crop"
-            alt="Online collaboration"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-        </div>
       </div>
     ),
   },
@@ -235,22 +155,6 @@ const timelineData = [
           <div className="flex gap-2 items-center text-white/70 text-sm md:text-lg">
             ✦ Technical skills showcase
           </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Image
-            src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=500&h=500&fit=crop"
-            alt="Female-led hackathon"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-          <Image
-            src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=500&fit=crop"
-            alt="Hackathon teams"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
         </div>
       </div>
     ),
@@ -280,22 +184,6 @@ const timelineData = [
             ✦ Hamilton launch with HCLTech
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Image
-            src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=500&h=500&fit=crop"
-            alt="Google Educator Conference"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-          <Image
-            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=500&h=500&fit=crop"
-            alt="Inspire Her programme"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-        </div>
       </div>
     ),
   },
@@ -322,22 +210,6 @@ const timelineData = [
           <div className="flex gap-2 items-center text-white/70 text-sm md:text-lg">
             ✦ 10 years of impact
           </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Image
-            src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&h=500&fit=crop"
-            alt="F&P Healthcare Hackathon"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-          <Image
-            src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=500&h=500&fit=crop"
-            alt="Mentoring programme"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
         </div>
       </div>
     ),
@@ -376,36 +248,6 @@ const timelineData = [
             ✦ September: Fonterra — Business & Tech Transformation
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Image
-            src="https://images.unsplash.com/photo-1609619385002-f40f1df9b7eb?w=500&h=500&fit=crop"
-            alt="2025 events"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-          <Image
-            src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=500&h=500&fit=crop"
-            alt="Community growth"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-          <Image
-            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&h=500&fit=crop"
-            alt="AI Hackathon Festival"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-          <Image
-            src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=500&h=500&fit=crop"
-            alt="Women in tech community"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full"
-          />
-        </div>
       </div>
     ),
   },
@@ -416,7 +258,9 @@ export function TimelineSection() {
     <Section noPadding className="bg-navy">
       <Container size="full">
         <div className="text-center pt-16 md:pt-24 px-4 md:px-8 lg:px-10">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">Our Journey</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
+            Our Journey
+          </h2>
           <p className="mt-6 sm:mt-8 text-base sm:text-xl text-white/80 max-w-2xl mx-auto">
             From a small launch event in 2014 to a thriving community of 2200+
             members across New Zealand

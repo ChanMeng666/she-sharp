@@ -47,7 +47,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
       }}
     >
       {/* Background overlay for better readability */}
-      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 glass-overlay"></div>
 
       <div className="w-full max-w-md relative z-10">
         {/* Logo */}
@@ -102,7 +102,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
         </Tabs>
 
         {/* Form Card */}
-        <Card className="border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl rounded-[50px]">
+        <Card className="glass-card rounded-[50px]">
           <CardContent className="p-8">
             <div className="mb-6">
               <h2 className="text-lg font-medium text-foreground mb-2">
@@ -133,7 +133,6 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                   required
                   maxLength={50}
                   placeholder="you@example.com"
-                  className="placeholder:text-muted-foreground/50"
                 />
               </div>
 
@@ -185,7 +184,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                     defaultValue={state.invitationCode || searchParams.get("code") || ""}
                     required
                     maxLength={20}
-                    className="uppercase placeholder:text-muted-foreground/50"
+                    className="uppercase"
                     placeholder="SHP-XXXX-XXXX-XXXX"
                   />
                   <p className="text-xs text-gray-500">

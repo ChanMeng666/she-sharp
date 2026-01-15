@@ -162,7 +162,7 @@ export function ScrollingFeatureShowcase({
             >
               {/* Mobile: Glass card backdrop */}
               <div
-                className="absolute left-4 right-4 lg:hidden bg-black/30 backdrop-blur-md rounded-[50px]"
+                className="absolute left-4 right-4 lg:hidden glass-panel bg-black/30 rounded-[50px]"
                 style={{
                   top: `${navOffset + 16}px`,
                   bottom: `${bottomOffset + 16}px`,

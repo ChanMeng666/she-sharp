@@ -10,6 +10,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { X, ArrowUpRight } from "lucide-react";
+import { LinkedInIcon } from "@/components/ui/social-icons";
 import Image from "next/image";
 
 export interface MemberCardData {
@@ -18,6 +19,7 @@ export interface MemberCardData {
   image: string;
   description: string;
   title: string; // For display: role/company for mentors, roles.join() for team members
+  linkedin?: string;
 }
 
 interface MemberCardProps {
@@ -27,7 +29,12 @@ interface MemberCardProps {
   accentColor?: string;
 }
 
-export function MemberCard({ member, index, background = "bg-surface-periwinkle", accentColor = "bg-brand/5" }: MemberCardProps) {
+export function MemberCard({
+  member,
+  index,
+  background = "bg-surface-periwinkle",
+  accentColor = "bg-brand/5",
+}: MemberCardProps) {
   const [imageError, setImageError] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -60,9 +67,23 @@ export function MemberCard({ member, index, background = "bg-surface-periwinkle"
             </div>
 
             <div className="text-center">
-              <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
-                {member.name}
-              </h3>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-foreground">
+                  {member.name}
+                </h3>
+                {member.linkedin && (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-brand hover:text-brand-hover transition-colors"
+                    aria-label={`${member.name}'s LinkedIn profile`}
+                  >
+                    <LinkedInIcon className="w-5 h-5" />
+                  </a>
+                )}
+              </div>
               <p className="text-sm sm:text-base font-medium text-brand mb-4">
                 {member.title}
               </p>
@@ -80,20 +101,35 @@ export function MemberCard({ member, index, background = "bg-surface-periwinkle"
               </button>
             </div>
 
-            <div className={`absolute top-0 right-0 w-32 h-32 ${accentColor} rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+            <div
+              className={`absolute top-0 right-0 w-32 h-32 ${accentColor} rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+            />
           </div>
         </article>
 
-        <DialogContent 
+        <DialogContent
           className="max-w-4xl lg:max-w-5xl max-h-[90vh] overflow-y-auto p-10 md:p-12"
           hideCloseButton
         >
           <div className="flex items-start justify-between mb-6 md:mb-8">
             <DialogHeader className="flex-1">
-              <DialogTitle className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-                {member.name}
-              </DialogTitle>
-              <p className="text-base md:text-lg font-medium text-brand">
+              <div className="flex items-center gap-2 mb-2">
+                <DialogTitle className="text-2xl md:text-3xl font-bold text-foreground">
+                  {member.name}
+                </DialogTitle>
+                {member.linkedin && (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-brand hover:text-brand-hover transition-colors"
+                    aria-label={`${member.name}'s LinkedIn profile`}
+                  >
+                    <LinkedInIcon className="w-6 h-6" />
+                  </a>
+                )}
+              </div>
+              <p className="text-base md:text-lg font-medium text-brand text-left">
                 {member.title}
               </p>
             </DialogHeader>
@@ -120,7 +156,7 @@ export function MemberCard({ member, index, background = "bg-surface-periwinkle"
                 )}
               </div>
             </div>
-            
+
             <div className="flex-1 flex items-start">
               <DialogDescription className="text-sm md:text-base text-foreground leading-relaxed whitespace-pre-line w-full">
                 {member.description}
@@ -132,4 +168,3 @@ export function MemberCard({ member, index, background = "bg-surface-periwinkle"
     </>
   );
 }
-

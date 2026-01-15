@@ -22,6 +22,7 @@ export interface TimeLine_01Props {
   description?: string;
   entries?: TimeLine_01Entry[];
   className?: string;
+  colorTheme?: "brand" | "navy";
 }
 
 export default function TimeLine_01({
@@ -29,6 +30,7 @@ export default function TimeLine_01({
   description,
   entries = [],
   className,
+  colorTheme = "brand",
 }: TimeLine_01Props) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -109,7 +111,9 @@ export default function TimeLine_01({
                     <div
                       className={`p-2.5 rounded-xl transition-colors duration-300 ${
                         isActive
-                          ? "bg-brand text-brand-foreground"
+                          ? colorTheme === "navy"
+                            ? "bg-navy text-navy-foreground"
+                            : "bg-brand text-brand-foreground"
                           : "bg-white text-muted-foreground"
                       }`}
                     >
@@ -138,7 +142,9 @@ export default function TimeLine_01({
                   className={
                     "flex-1 flex flex-col rounded-[50px] border p-6 transition-all duration-300" +
                     (isActive
-                      ? "border-brand/20 bg-brand shadow-lg"
+                      ? colorTheme === "navy"
+                        ? " border-navy/20 bg-navy shadow-lg"
+                        : " border-brand/20 bg-brand shadow-lg"
                       : "border-border bg-white")
                   }
                   onMouseEnter={() => setHoveredIndex(index)}
@@ -201,7 +207,11 @@ export default function TimeLine_01({
                                   >
                                     <div
                                       className={`h-1.5 w-1.5 rounded-full shrink-0 ${
-                                        isActive ? "bg-white" : "bg-brand"
+                                        isActive
+                                          ? "bg-white"
+                                          : colorTheme === "navy"
+                                            ? "bg-navy"
+                                            : "bg-brand"
                                       }`}
                                     />
                                     <span className="leading-relaxed text-sm md:text-base ">
@@ -218,7 +228,11 @@ export default function TimeLine_01({
                               <Button
                                 variant="outline"
                                 size="lg"
-                                className="group transition-all duration-200 bg-white text-brand border-white hover:bg-white/90 hover:text-brand hover:border-white/90"
+                                className={`group transition-all duration-200 bg-white border-white hover:bg-white/90 hover:border-white/90 ${
+                                  colorTheme === "navy"
+                                    ? "text-navy hover:text-navy"
+                                    : "text-brand hover:text-brand"
+                                }`}
                                 asChild
                               >
                                 <a href={entry.button.url}>
