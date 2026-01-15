@@ -3,12 +3,14 @@
 import { Event } from '@/lib/data/events';
 import { EventCard } from './event-card';
 import { cn } from '@/lib/utils';
+import { ReactNode } from 'react';
 
 interface EventListProps {
   events: Event[];
   columns?: 1 | 2 | 3 | 4;
   emptyMessage?: string;
   className?: string;
+  renderCard?: (event: Event, index: number) => ReactNode;
 }
 
 export function EventList({
@@ -16,6 +18,7 @@ export function EventList({
   columns = 3,
   emptyMessage = 'No events found',
   className,
+  renderCard,
 }: EventListProps) {
   if (events.length === 0) {
     return (
@@ -28,7 +31,7 @@ export function EventList({
   return (
     <div
       className={cn(
-        'grid gap-6',
+        'grid gap-x-8 gap-y-20',
         columns === 1 && 'grid-cols-1',
         columns === 2 && 'grid-cols-1 sm:grid-cols-2',
         columns === 3 && 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
@@ -36,9 +39,13 @@ export function EventList({
         className
       )}
     >
-      {events.map((event) => (
-        <EventCard key={event.slug} event={event} />
-      ))}
+      {events.map((event, index) =>
+        renderCard ? (
+          renderCard(event, index)
+        ) : (
+          <EventCard key={event.slug} event={event} />
+        )
+      )}
     </div>
   );
 }

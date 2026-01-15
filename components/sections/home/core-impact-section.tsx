@@ -97,7 +97,7 @@ function StatCard({
   return (
     <article
       role="listitem"
-      className={`rounded-xl overflow-hidden border border-border/50 hover:border-brand/50 transition-transform duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-md hover:shadow-brand/10 focus-within:-translate-y-0.5 focus-within:shadow-md focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20 ${className ?? ""}`}
+      className={`rounded-xl overflow-hidden border border-border/50 hover:border-brand/50 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-sm hover:shadow-brand/10 focus-within:-translate-y-0.5 focus-within:shadow-sm focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20 ${className ?? ""}`}
       tabIndex={0}
       aria-labelledby={`stat-${item.title.toLowerCase().replace(/\s+/g, "-")}-title`}
     >

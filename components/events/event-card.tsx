@@ -1,41 +1,41 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Calendar, MapPin, Video, Users } from 'lucide-react';
-import { Event, formatEventDate } from '@/lib/data/events';
-import { cn } from '@/lib/utils';
+import Link from "next/link";
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Calendar, MapPin, Video, Users } from "lucide-react";
+import { Event, formatEventDate } from "@/lib/data/events";
+import { cn } from "@/lib/utils";
 
 interface EventCardProps {
   event: Event;
-  variant?: 'default' | 'compact' | 'featured';
+  variant?: "default" | "compact" | "featured";
   className?: string;
 }
 
 export function EventCard({
   event,
-  variant = 'default',
+  variant = "default",
   className,
 }: EventCardProps) {
-  const isOnline = event.location.format === 'online';
-  const isHybrid = event.location.format === 'hybrid';
-  const isPast = event.status === 'completed';
+  const isOnline = event.location.format === "online";
+  const isHybrid = event.location.format === "hybrid";
+  const isPast = event.status === "completed";
 
   return (
-    <Link href={`/events/${event.slug}`} className={cn('block', className)}>
+    <Link href={`/events/${event.slug}`} className={cn("block", className)}>
       <Card
         className={cn(
-          'group h-full overflow-hidden transition-all duration-300 py-0',
-          'hover:shadow-xl hover:-translate-y-1',
-          'border border-[#f4f4fa] rounded-3xl bg-white',
-          isPast && 'opacity-75'
+          "group h-full overflow-hidden transition-all duration-300 py-0",
+          "hover:shadow-xl hover:-translate-y-1",
+          "border border-[#f4f4fa] rounded-3xl ",
+          isPast && "opacity-75"
         )}
       >
         {/* Cover Image */}
-        <div className="relative aspect-[16/9] overflow-hidden bg-muted">
+        <div className="relative aspect-[16/9] overflow-hidden  ">
           <Image
             src={event.coverImage}
             alt={event.title}
@@ -43,8 +43,8 @@ export function EventCard({
             unoptimized
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className={cn(
-              'object-cover transition-transform duration-300',
-              'group-hover:scale-105'
+              "object-cover transition-transform duration-300",
+              "group-hover:scale-105"
             )}
           />
 
@@ -59,20 +59,21 @@ export function EventCard({
                 Free
               </Badge>
             )}
-            {event.registration?.price && event.registration.price.amount > 0 && (
-              <Badge className="bg-foreground text-background border-0 shadow-md">
-                ${event.registration.price.amount}
-              </Badge>
-            )}
+            {event.registration?.price &&
+              event.registration.price.amount > 0 && (
+                <Badge className="bg-foreground text-background border-0 shadow-md">
+                  ${event.registration.price.amount}
+                </Badge>
+              )}
 
             {/* Format Badge */}
             <Badge
               variant="secondary"
               className={cn(
-                'shadow-md ml-auto',
-                isOnline && 'bg-[#8982ff] text-white',
-                isHybrid && 'bg-foreground text-background',
-                !isOnline && !isHybrid && 'bg-white/90 text-foreground'
+                "shadow-md ml-auto",
+                isOnline && "bg-[#8982ff] text-white",
+                isHybrid && "bg-foreground text-background",
+                !isOnline && !isHybrid && "bg-white/90 text-foreground"
               )}
             >
               {isOnline ? (
@@ -81,9 +82,9 @@ export function EventCard({
                   Online
                 </>
               ) : isHybrid ? (
-                'Hybrid'
+                "Hybrid"
               ) : (
-                'In Person'
+                "In Person"
               )}
             </Badge>
           </div>
@@ -91,7 +92,10 @@ export function EventCard({
           {/* Past Event Overlay */}
           {isPast && (
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-              <Badge variant="secondary" className="bg-white/90 text-foreground">
+              <Badge
+                variant="secondary"
+                className="bg-white/90 text-foreground"
+              >
                 Past Event
               </Badge>
             </div>
@@ -103,16 +107,16 @@ export function EventCard({
           <div className="flex items-center gap-2 text-sm text-foreground font-medium">
             <Calendar className="w-4 h-4 text-[#8982ff]" />
             <span>
-              {formatEventDate(event, 'short')} · {event.startTime}
+              {formatEventDate(event, "short")} · {event.startTime}
             </span>
           </div>
 
           {/* Title */}
           <h3
             className={cn(
-              'font-semibold text-foreground line-clamp-2',
-              'group-hover:text-foreground/80 transition-colors',
-              variant === 'compact' ? 'text-base' : 'text-lg'
+              "font-semibold text-foreground line-clamp-2",
+              "group-hover:text-foreground/80 transition-colors",
+              variant === "compact" ? "text-base" : "text-lg"
             )}
           >
             {event.title}
@@ -136,7 +140,7 @@ export function EventCard({
           </div>
 
           {/* Organizer */}
-          {event.organizer && variant !== 'compact' && (
+          {event.organizer && variant !== "compact" && (
             <p className="text-sm text-muted-foreground truncate">
               Hosted by {event.organizer.company || event.organizer.name}
             </p>
@@ -155,7 +159,7 @@ export function EventCard({
                         className="w-6 h-6 border-2 border-white"
                       >
                         <AvatarImage src={avatar} alt="Attendee" />
-                        <AvatarFallback className="text-xs bg-muted text-foreground">
+                        <AvatarFallback className="text-sm   text-foreground">
                           {index + 1}
                         </AvatarFallback>
                       </Avatar>
@@ -176,10 +180,10 @@ export function EventCard({
             event.registration?.capacity &&
             event.registration?.attendeeCount && (
               <div className="pt-2">
-                <div className="flex justify-between text-xs text-muted-foreground mb-1">
+                <div className="flex justify-between text-sm text-muted-foreground mb-1">
                   <span>Registration</span>
                   <span>
-                    {event.registration.attendeeCount} /{' '}
+                    {event.registration.attendeeCount} /{" "}
                     {event.registration.capacity}
                   </span>
                 </div>

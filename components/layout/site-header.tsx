@@ -162,7 +162,7 @@ export function SiteHeader() {
                                         </div>
                                       )}
                                       <div className="flex-1">
-                                        <div className="text-sm font-medium text-foreground group-hover:text-foreground transition-colors duration-150">
+                                        <div className="text-sm font-bold text-foreground group-hover:text-foreground transition-colors duration-150">
                                           {child.title}
                                         </div>
                                         {child.description && (
@@ -338,7 +338,7 @@ export function SiteHeader() {
                             <Link
                               key={child.title}
                               href={child.href}
-                              className="flex items-center gap-2 py-2 text-sm text-[#1f1e44]/70 hover:text-brand transition-all duration-150 hover:bg-[#f7e5f3] rounded-lg px-2 -mx-2"
+                              className="flex items-center gap-2 py-2 text-sm font-bold text-[#1f1e44]/70 hover:text-brand transition-all duration-150 hover:bg-[#f7e5f3] rounded-lg px-2 -mx-2"
                               onClick={(e) => {
                                 handleSmoothScroll(e, child.href);
                                 setIsOpen(false);

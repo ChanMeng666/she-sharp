@@ -70,7 +70,7 @@ export function TestimonialsSection() {
                       <GraduationCap className="w-5 h-5" />
                       Mentee
                     </p>
-                    <h3 className="font-brand-script text-2xl text-foreground mb-2">
+                    <h3 className="font-heading font-bold text-2xl text-foreground mb-2">
                       {current.mentee.name}
                     </h3>
                     <p className="text-base text-muted-foreground">
@@ -98,7 +98,7 @@ export function TestimonialsSection() {
                       <Award className="w-5 h-5" />
                       Mentor
                     </p>
-                    <h3 className="font-brand-script text-2xl text-foreground mb-2">
+                    <h3 className="font-heading font-bold text-2xl text-foreground mb-2">
                       {current.mentor.name}
                     </h3>
                     <p className="text-base text-muted-foreground">

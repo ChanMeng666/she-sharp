@@ -18,7 +18,7 @@ export default function MentorshipPage() {
         topRightImageAlt="Women in technology mentorship program group photo"
         bottomLeftVideo="/video/Mentorship.mp4"
         bottomRightTitle="Empowering Women in STEM"
-        bottomRightTitleHighlight="through mentoring"
+        bottomRightTitleHighlight="through Mentoring"
         bottomRightDescription="Our mentorship program facilitates supportive relationships between our mentors and mentees. Through sharing knowledge, advice, and encouragement, we help mentees navigate careers, overcome challenges, and achieve interpersonal goals."
       />
       <HowItWorksSection />
