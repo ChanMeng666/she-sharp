@@ -51,8 +51,8 @@ export function EventInflectedCard({
     : event.location.venueName || event.location.city || "";
 
   return (
-    <div className={cn("relative flex flex-col h-[480px]", className)}>
-      <div className="flex-1">
+    <div className={cn("relative flex flex-col h-full min-h-[480px]", className)}>
+      <div className="flex-1 min-h-0">
         <InflectedCard
           id={event.slug}
           image={sampleImage}
@@ -66,7 +66,7 @@ export function EventInflectedCard({
           cardRounding={16}
           fontSizes={{
             title: "1.25rem",
-            description: "0.875rem",
+            description: "1rem",
             tags: "0.75rem",
           }}
           margins={{
@@ -91,7 +91,7 @@ export function EventInflectedCard({
       </div>
 
       {/* Date, time and location info below the card - aligned to bottom */}
-      <div className="px-2 flex items-start gap-12 mt-auto">
+      <div className="px-2 flex items-start gap-12 mt-auto ">
         {/* Prominent date display */}
         <div className="text-left shrink-0">
           <p className="text-2xl font-bold text-foreground">

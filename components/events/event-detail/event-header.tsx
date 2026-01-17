@@ -31,7 +31,7 @@ export function EventHeader({ event, className }: EventHeaderProps) {
       </div>
 
       {/* Title */}
-      <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight font-sans">
+      <h1 className="text-3xl md:text-4xl font-bold text-foreground mt-8">
         {event.title}
       </h1>
     </div>

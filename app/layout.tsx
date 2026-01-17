@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Lato, Plus_Jakarta_Sans, Carattere } from 'next/font/google';
+import { DM_Sans, Plus_Jakarta_Sans, Carattere } from 'next/font/google';
 import { getUser, getTeamForUser } from '@/lib/db/queries';
 import { serializeData } from '@/lib/utils';
 import { SWRConfig } from 'swr';
@@ -31,9 +31,9 @@ export const viewport: Viewport = {
   maximumScale: 1
 };
 
-const lato = Lato({
+const dmSans = DM_Sans({
   subsets: ['latin'],
-  weight: ['300', '400', '700'],
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-sans'
 });
 
@@ -71,7 +71,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-background text-foreground ${lato.variable} ${plusJakartaSans.variable} ${carattere.variable}`}
+      className={`bg-background text-foreground ${dmSans.variable} ${plusJakartaSans.variable} ${carattere.variable}`}
     >
       <body className="min-h-[100dvh]">
         <Providers>

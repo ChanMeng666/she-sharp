@@ -64,7 +64,7 @@ export default async function EventPage({ params }: EventPageProps) {
   const relatedEvents = getUpcomingEvents(3).filter((e) => e.slug !== slug);
 
   return (
-    <div className="min-h-screen bg-background ">
+    <div className="min-h-screen bg-background">
       {/* Main Content Section */}
       <Section spacing="section" >
         <Container size="full" className="py-12">
