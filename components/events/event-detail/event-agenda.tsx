@@ -62,14 +62,14 @@ export function EventAgenda({ event, className }: EventAgendaProps) {
 
   return (
     <section className={className}>
-      <div className="relative border border-foreground/10 overflow-hidden rounded-3xl bg-white p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300">
+      <div className="relative overflow-hidden rounded-3xl py-8 md:py-10 pr-8 md:pr-10 pl-0">
         <CornerIcon className="absolute -top-3 -left-3" />
         <CornerIcon className="absolute -top-3 -right-3" />
         <CornerIcon className="absolute -bottom-3 -left-3" />
         <CornerIcon className="absolute -bottom-3 -right-3" />
 
         <div className="space-y-4">
-          <p className="flex items-center gap-2 text-base md:text-lg font-semibold text-foreground uppercase">
+          <p className="flex items-center gap-2 text-base md:text-lg lg:text-xl font-semibold text-foreground uppercase">
             Schedule
           </p>
           <div>

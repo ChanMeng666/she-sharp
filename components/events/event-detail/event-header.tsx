@@ -12,9 +12,9 @@ export function EventHeader({ event, className }: EventHeaderProps) {
   const isPast = event.status === "completed";
 
   return (
-    <div className={cn("space-y-6", className)}>
+    <div className={cn("", className)}>
       {/* Cover Image */}
-      <div className="relative aspect-2/1 overflow-hidden bg-muted rounded-2xl">
+      <div className="relative h-64 md:h-80 lg:h-96 xl:h-[28rem] overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={event.coverImage}
@@ -29,11 +29,6 @@ export function EventHeader({ event, className }: EventHeaderProps) {
           </div>
         )}
       </div>
-
-      {/* Title */}
-      <h1 className="text-3xl md:text-4xl font-bold text-foreground mt-8">
-        {event.title}
-      </h1>
     </div>
   );
 }

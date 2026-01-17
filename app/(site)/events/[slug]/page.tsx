@@ -1,20 +1,20 @@
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import {
   getAllEvents,
   getEventBySlug,
   getUpcomingEvents,
-} from '@/lib/data/events';
+} from "@/lib/data/events";
 import {
   EventHeader,
   EventDescription,
   EventAgenda,
   EventSpeakers,
   EventSidebarPanel,
-} from '@/components/events/event-detail';
-import { EventCard } from '@/components/events/event-card';
-import { Container } from '@/components/layout/container';
-import { Section } from '@/components/layout/section';
+} from "@/components/events/event-detail";
+import { EventCard } from "@/components/events/event-card";
+import { Container } from "@/components/layout/container";
+import { Section } from "@/components/layout/section";
 
 interface EventPageProps {
   params: Promise<{
@@ -37,7 +37,7 @@ export async function generateMetadata({
 
   if (!event) {
     return {
-      title: 'Event Not Found | She Sharp',
+      title: "Event Not Found | She Sharp",
     };
   }
 
@@ -48,7 +48,7 @@ export async function generateMetadata({
       title: event.title,
       description: event.shortDescription || event.description.slice(0, 160),
       images: [event.coverImage],
-      type: 'website',
+      type: "website",
     },
   };
 }
@@ -65,27 +65,34 @@ export default async function EventPage({ params }: EventPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Cover Image */}
+      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+        <div>
+          <EventHeader event={event} />
+        </div>
+      </div>
+
       {/* Main Content Section */}
-      <Section spacing="section" >
-        <Container size="full" className="py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+      <Section spacing="section">
+        <Container size="full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Main Content - Left Column */}
-            <div className="lg:col-span-7 xl:col-span-8 space-y-10">
-              <EventHeader event={event} />
+            <div className="lg:col-span-7 xl:col-span-8 space-y-8">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
+                {event.title}
+              </h1>
               <EventDescription event={event} />
 
               {event.agenda && event.agenda.length > 0 && (
                 <EventAgenda event={event} />
               )}
 
-              {event.speakers && event.speakers.length > 0 && (
-                <EventSpeakers event={event} />
-              )}
-
               {/* Event Photos Gallery (for past events) */}
               {event.photos && event.photos.length > 0 && (
                 <section className="space-y-4 ">
-                  <h2 className="text-lg font-medium text-foreground">Photos</h2>
+                  <h2 className="text-lg font-medium text-foreground">
+                    Photos
+                  </h2>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {event.photos.map((photo, index) => (
                       <div
@@ -113,11 +120,19 @@ export default async function EventPage({ params }: EventPageProps) {
         </Container>
       </Section>
 
+      {/* Speakers Section  */}
+      {event.speakers && event.speakers.length > 0 && (
+        <EventSpeakers event={event} />
+      )}
+
       {/* Related Events */}
       {relatedEvents.length > 0 && (
-        <Section spacing="section" className="bg-surface-periwinkle border-t border-foreground/5">
+        <Section
+          spacing="section"
+          className="bg-muted pb-24"
+        >
           <Container size="full">
-            <h2 className="text-lg font-medium text-foreground mb-8">
+            <h2 className="text-base md:text-lg lg:text-xl font-semibold text-foreground mb-8">
               More Events
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">

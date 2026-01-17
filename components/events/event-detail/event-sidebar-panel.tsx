@@ -105,7 +105,7 @@ export function EventSidebarPanel({
       {(isPast || isCancelled) && (
         <div
           className={cn(
-            "relative border border-foreground/10 overflow-hidden rounded-3xl bg-white p-8 md:p-10 pt-12 md:pt-14 shadow-sm hover:shadow-xl transition-all duration-300",
+            "relative border border-white/20 overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md p-8 md:p-10 pt-12 md:pt-14 shadow-sm hover:shadow-xl transition-all duration-300",
             className
           )}
         >
@@ -128,7 +128,7 @@ export function EventSidebarPanel({
       {/* Location Card */}
       <div
         className={cn(
-          "relative border border-foreground/10 overflow-hidden rounded-3xl bg-white p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
+          "relative border border-white/20 overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
           (isPast || isCancelled) && "mt-6"
         )}
       >
@@ -138,7 +138,7 @@ export function EventSidebarPanel({
         <CornerIcon className="absolute -bottom-3 -right-3" />
 
         <div className="space-y-8">
-          <p className="text-base md:text-lg font-semibold text-foreground uppercase">
+          <p className="text-base md:text-lg lg:text-xl font-semibold text-foreground uppercase">
             Time & Location
           </p>
 
