@@ -2,6 +2,7 @@
 
 import { Event } from "@/lib/data/events";
 import { cn } from "@/lib/utils";
+import { EventCountdown } from "./event-countdown";
 
 interface EventHeaderProps {
   event: Event;
@@ -10,6 +11,13 @@ interface EventHeaderProps {
 
 export function EventHeader({ event, className }: EventHeaderProps) {
   const isPast = event.status === "completed";
+
+  // Check if event is in the future
+  const eventDate = new Date(event.startDate);
+  const [hours, minutes] = event.startTime.split(":").map(Number);
+  eventDate.setHours(hours, minutes, 0, 0);
+  const now = new Date();
+  const isFutureEvent = eventDate > now;
 
   return (
     <div className={cn("", className)}>
@@ -26,6 +34,17 @@ export function EventHeader({ event, className }: EventHeaderProps) {
             <span className="text-white text-base font-medium px-4 py-2 border border-white/50">
               Past Event
             </span>
+          </div>
+        )}
+
+        {/* Countdown */}
+        {isFutureEvent && (
+          <div className="absolute bottom-4 sm:bottom-6 lg:bottom-8 z-10 w-full">
+            <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+              <div className="w-full max-w-[600px]">
+                <EventCountdown event={event} />
+              </div>
+            </div>
           </div>
         )}
       </div>

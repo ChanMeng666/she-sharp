@@ -81,8 +81,9 @@ export default async function EventPage({ params }: EventPageProps) {
               <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
                 {event.title}
               </h1>
-              <EventDescription event={event} />
 
+              <EventDescription event={event} />
+              
               {event.agenda && event.agenda.length > 0 && (
                 <EventAgenda event={event} />
               )}
@@ -127,10 +128,7 @@ export default async function EventPage({ params }: EventPageProps) {
 
       {/* Related Events */}
       {relatedEvents.length > 0 && (
-        <Section
-          spacing="section"
-          className="bg-muted pb-24"
-        >
+        <Section spacing="section" className="bg-muted pb-24">
           <Container size="full">
             <h2 className="text-base md:text-lg lg:text-xl font-semibold text-foreground mb-8">
               More Events
