@@ -65,15 +65,15 @@ export default function EventsPage() {
   const featuredEvent = getFeaturedEvent();
   const allEvents = getAllEvents();
   const [isImageHovered, setIsImageHovered] = useState(false);
-  
+
   // Search and filter state
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
-  
+
   // Pagination state
   const [displayedCount, setDisplayedCount] = useState(6);
   const EVENTS_PER_PAGE = 6;
-  
+
   // Extract available years from events
   const availableYears = useMemo(() => {
     const years = new Set<number>();
@@ -83,7 +83,7 @@ export default function EventsPage() {
     });
     return Array.from(years).sort((a, b) => b - a); // Sort descending (newest first)
   }, [allEvents]);
-  
+
   // Filter events based on search query and selected years
   const filteredEvents = useMemo(() => {
     return allEvents.filter((event) => {
@@ -91,43 +91,43 @@ export default function EventsPage() {
       const matchesSearch =
         searchQuery === "" ||
         event.title.toLowerCase().includes(searchQuery.toLowerCase());
-      
+
       // Year filter - check if event year is in selectedYears array
       const eventYear = new Date(event.startDate).getFullYear();
       const matchesYear = selectedYears.length === 0 || selectedYears.includes(eventYear);
-      
+
       return matchesSearch && matchesYear;
     });
   }, [allEvents, searchQuery, selectedYears]);
-  
+
   // Reset displayed count when filters change
   useEffect(() => {
     setDisplayedCount(EVENTS_PER_PAGE);
   }, [searchQuery, selectedYears]);
-  
+
   // Get events to display (paginated)
   const displayedEvents = useMemo(() => {
     return filteredEvents.slice(0, displayedCount);
   }, [filteredEvents, displayedCount]);
-  
+
   // Check if there are more events to load
   const hasMoreEvents = displayedCount < filteredEvents.length;
-  
+
   // Load more events handler
   const handleLoadMore = () => {
     setDisplayedCount((prev) => prev + EVENTS_PER_PAGE);
   };
-  
+
   // Count active filters
   const activeFilterCount = selectedYears.length;
-  
+
   // Toggle year selection
   const toggleYear = (year: number) => {
     setSelectedYears((prev) =>
       prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]
     );
   };
-  
+
   // Clear all year filters
   const clearAllYears = () => {
     setSelectedYears([]);
@@ -140,7 +140,7 @@ export default function EventsPage() {
         <Section spacing="section">
           <Container size="full">
             <div
-              className="relative w-full h-[500px] md:h-[600px] rounded-2xl overflow-hidden mt-12" 
+              className="relative w-full h-[500px] md:h-[600px] rounded-2xl overflow-hidden mt-12"
             >
               {/* Image */}
               <div
@@ -161,7 +161,7 @@ export default function EventsPage() {
                 />
               </div>
 
-              {/* Glassmorphism title in bottom left */}
+              {/* title in bottom left */}
               <div className="absolute bottom-0 left-0 w-1/2 md:w-2/5 p-6">
                 <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-2xl px-6 py-4 md:px-8 md:py-6 shadow-lg h-full flex items-center">
                   <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg">
@@ -175,7 +175,6 @@ export default function EventsPage() {
                 className="absolute bottom-0 right-0 pt-8 pl-8 rounded-tl-[3rem]"
                 style={{ backgroundColor: "#eee" }}
               >
-                {/* Curved corner pseudo-elements */}
                 <div
                   className="absolute bottom-0 -left-8 w-8 h-8 bg-transparent"
                   style={{
@@ -202,7 +201,7 @@ export default function EventsPage() {
       )}
 
       {/* All Events Section */}
-      <Section  spacing="section">
+      <Section spacing="section">
         <Container size="full">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
@@ -217,15 +216,14 @@ export default function EventsPage() {
 
           {/* Search and Filter Controls */}
           <div className="flex gap-4 mb-8">
-            {/* Search Input */}
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" />
               <Input
                 type="text"
                 placeholder="Search events by title..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9"
+                className="pl-9 border-0 border-b border-gray-400 rounded-none focus-visible:ring-0 focus-visible:border-gray-900"
               />
             </div>
 
@@ -274,7 +272,7 @@ export default function EventsPage() {
               />
             )}
           />
-          
+
           {/* Load More Button */}
           {hasMoreEvents && (
             <div className="flex justify-center mt-16">

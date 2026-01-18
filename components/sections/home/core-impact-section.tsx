@@ -97,7 +97,7 @@ function StatCard({
   return (
     <article
       role="listitem"
-      className={`rounded-xl overflow-hidden border border-border/50 hover:border-brand/50 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-sm hover:shadow-brand/10 focus-within:-translate-y-0.5 focus-within:shadow-sm focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20 ${className ?? ""}`}
+      className={`rounded-xl overflow-hidden border border-border/30 bg-background/40 backdrop-blur-md backdrop-saturate-150 shadow-lg shadow-black/5 hover:border-brand/50 hover:bg-background/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/10 focus-within:-translate-y-0.5 focus-within:shadow-xl focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20 ${className ?? ""}`}
       tabIndex={0}
       aria-labelledby={`stat-${item.title.toLowerCase().replace(/\s+/g, "-")}-title`}
     >
@@ -169,7 +169,7 @@ export function CoreImpactSection() {
                 <StatCard
                   item={item}
                   animate={inView && !reduceMotion}
-                  className="glass-panel hover:scale-105 hover:bg-background/90 hover:border-brand/50 transition-all duration-300"
+                  className="hover:scale-105"
                 />
               </AnimateOnScroll>
             ))}

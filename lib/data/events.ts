@@ -12,8 +12,8 @@ import {
   EventFormat,
   EVENT_CATEGORIES,
   AgendaItem,
-} from '@/types/event';
-import { events } from './events-data';
+} from "@/types/event";
+import { events } from "./events-data";
 
 // Re-export types and data for convenience
 export type { Event, EventCategory, EventStatus, EventFormat, AgendaItem };
@@ -43,9 +43,10 @@ export function getAllEvents(): Event[] {
 export function getUpcomingEvents(limit?: number): Event[] {
   const now = new Date();
   const upcoming = events
-    .filter((e) => new Date(e.startDate) >= now && e.status !== 'cancelled')
+    .filter((e) => new Date(e.startDate) >= now && e.status !== "cancelled")
     .sort(
-      (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+      (a, b) =>
+        new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
     );
   return limit ? upcoming.slice(0, limit) : upcoming;
 }
@@ -56,9 +57,10 @@ export function getUpcomingEvents(limit?: number): Event[] {
 export function getPastEvents(limit?: number): Event[] {
   const now = new Date();
   const past = events
-    .filter((e) => new Date(e.startDate) < now || e.status === 'completed')
+    .filter((e) => new Date(e.startDate) < now || e.status === "completed")
     .sort(
-      (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+      (a, b) =>
+        new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
     );
   return limit ? past.slice(0, limit) : past;
 }
@@ -67,14 +69,31 @@ export function getPastEvents(limit?: number): Event[] {
  * Get in-person events (upcoming only)
  */
 export function getInPersonEvents(): Event[] {
-  return getUpcomingEvents().filter((e) => e.location.format === 'in_person');
+  return getUpcomingEvents().filter((e) => e.location.format === "in_person");
 }
 
 /**
- * Get featured event
+ * Get featured event - returns the latest (most future) upcoming event
  */
 export function getFeaturedEvent(): Event | undefined {
-  return events.find((e) => e.isFeatured && e.status === 'upcoming');
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+
+  // Find all upcoming events
+  const upcomingEvents = events.filter(
+    (e) => new Date(e.startDate) >= now && e.status === "upcoming"
+  );
+
+  if (upcomingEvents.length === 0) {
+    return undefined;
+  }
+
+  // Return the event with the latest date (most future)
+  return upcomingEvents.reduce((latest, current) => {
+    const latestDate = new Date(latest.startDate);
+    const currentDate = new Date(current.startDate);
+    return currentDate > latestDate ? current : latest;
+  });
 }
 
 /**
@@ -122,17 +141,17 @@ export function getDaysUntilEvent(event: Event): number {
  */
 export function formatEventDate(
   event: Event,
-  style: 'short' | 'long' | 'full' = 'long'
+  style: "short" | "long" | "full" = "long"
 ): string {
   const date = new Date(event.startDate);
   const options: Intl.DateTimeFormatOptions =
-    style === 'short'
-      ? { month: 'short', day: 'numeric' }
-      : style === 'full'
-        ? { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-        : { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+    style === "short"
+      ? { month: "short", day: "numeric" }
+      : style === "full"
+        ? { weekday: "long", year: "numeric", month: "long", day: "numeric" }
+        : { weekday: "short", month: "short", day: "numeric", year: "numeric" };
 
-  return date.toLocaleDateString('en-NZ', options);
+  return date.toLocaleDateString("en-NZ", options);
 }
 
 /**
@@ -146,7 +165,7 @@ export function formatEventTime(event: Event): string {
  * Check if registration is open
  */
 export function isRegistrationOpen(event: Event): boolean {
-  if (event.status !== 'upcoming') return false;
+  if (event.status !== "upcoming") return false;
   if (!event.registration?.isRequired) return false;
   if (
     event.registration.deadline &&
@@ -177,10 +196,10 @@ export function getSpotsRemaining(event: Event): number | null {
 export function getEventStats() {
   const now = new Date();
   const upcoming = events.filter(
-    (e) => new Date(e.startDate) >= now && e.status !== 'cancelled'
+    (e) => new Date(e.startDate) >= now && e.status !== "cancelled"
   );
   const past = events.filter(
-    (e) => new Date(e.startDate) < now || e.status === 'completed'
+    (e) => new Date(e.startDate) < now || e.status === "completed"
   );
 
   const byCategory: Partial<Record<EventCategory, number>> = {};
@@ -195,7 +214,7 @@ export function getEventStats() {
     total: events.length,
     upcoming: upcoming.length,
     past: past.length,
-    inPerson: events.filter((e) => e.location.format === 'in_person').length,
+    inPerson: events.filter((e) => e.location.format === "in_person").length,
     byCategory,
     byFormat,
   };
@@ -209,4 +228,3 @@ export function getAllEventCategories(): EventCategory[] {
     events.some((e) => e.category === cat)
   );
 }
-
