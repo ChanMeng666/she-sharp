@@ -12,6 +12,7 @@ import {
   EventSpeakers,
   EventSidebarPanel,
   EventPhotos,
+  EventSponsorship,
 } from "@/components/events/event-detail";
 import { EventCard } from "@/components/events/event-card";
 import { Container } from "@/components/layout/container";
@@ -114,6 +115,11 @@ export default async function EventPage({ params }: EventPageProps) {
           <EventSpeakers event={event} />
         </div>
       )}
+
+      {/* Sponsorship Section */}
+      <div className="mt-16">
+        <EventSponsorship event={event} />
+      </div>
 
       {/* Photos Section */}
       {event.photos && event.photos.length > 0 && (
