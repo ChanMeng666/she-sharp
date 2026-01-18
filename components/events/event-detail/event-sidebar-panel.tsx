@@ -25,21 +25,6 @@ interface EventSidebarPanelProps {
   className?: string;
 }
 
-function CornerIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className={cn("h-6 w-6 text-foreground/20", className)}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
-    </svg>
-  );
-}
-
 export function EventSidebarPanel({
   event,
   className,
@@ -71,6 +56,7 @@ export function EventSidebarPanel({
   };
 
   const getButtonText = () => {
+    if (isPast && event.albumUrl) return "View Image";
     if (isPast) return "Event Ended";
     if (isCancelled) return "Event Cancelled";
     if (isFull) return "Event Full";
@@ -86,6 +72,12 @@ export function EventSidebarPanel({
   const handleRegister = () => {
     if (event.registration?.externalUrl) {
       window.open(event.registration.externalUrl, "_blank");
+    }
+  };
+
+  const handleViewImages = () => {
+    if (event.albumUrl) {
+      window.open(event.albumUrl, "_blank");
     }
   };
 
@@ -105,18 +97,12 @@ export function EventSidebarPanel({
       {(isPast || isCancelled) && (
         <div
           className={cn(
-            "relative border border-white/20 overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md p-8 md:p-10 pt-12 md:pt-14 shadow-sm hover:shadow-xl transition-all duration-300",
+            "relative border border-white/20 overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
             className
           )}
         >
-          {/* Corner Decorations */}
-          <CornerIcon className="absolute -top-3 -left-3" />
-          <CornerIcon className="absolute -top-3 -right-3" />
-          <CornerIcon className="absolute -bottom-3 -left-3" />
-          <CornerIcon className="absolute -bottom-3 -right-3" />
-
           <div className="space-y-6">
-            <p className="text-base text-muted-foreground text-center">
+            <p className="text-lg text-muted-foreground text-center">
               {isPast
                 ? "This event has ended"
                 : "This event has been cancelled"}
@@ -132,13 +118,8 @@ export function EventSidebarPanel({
           (isPast || isCancelled) && "mt-6"
         )}
       >
-        <CornerIcon className="absolute -top-3 -left-3" />
-        <CornerIcon className="absolute -top-3 -right-3" />
-        <CornerIcon className="absolute -bottom-3 -left-3" />
-        <CornerIcon className="absolute -bottom-3 -right-3" />
-
         <div className="space-y-8">
-          <p className="text-base md:text-lg lg:text-xl font-semibold text-foreground uppercase">
+          <p className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground uppercase">
             Time & Location
           </p>
 
@@ -235,17 +216,23 @@ export function EventSidebarPanel({
             )}
           </div>
 
-          {/* CTA - Only show if event date is in the future */}
-          {isFutureEvent && (
+          {/* CTA - Show if event date is in the future or if past event has albumUrl */}
+          {(isFutureEvent || (isPast && event.albumUrl)) && (
             <div className="space-y-4">
               <Button
                 size="lg"
                 variant="brand"
                 className="w-full"
                 disabled={
-                  !registrationOpen && !event.registration?.waitlistEnabled
+                  !isPast &&
+                  !registrationOpen &&
+                  !event.registration?.waitlistEnabled
                 }
-                onClick={handleRegister}
+                onClick={
+                  isPast && event.albumUrl
+                    ? handleViewImages
+                    : handleRegister
+                }
               >
                 {getButtonText()}
               </Button>
@@ -267,14 +254,22 @@ export function EventSidebarPanel({
         </div>
       </div>
 
-      {/* Mobile Fixed Button - Only show if event date is in the future */}
-      {isFutureEvent && (
+      {/* Mobile Fixed Button - Show if event date is in the future or if past event has albumUrl */}
+      {(isFutureEvent || (isPast && event.albumUrl)) && (
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-foreground/10 lg:hidden z-50">
           <Button
             size="lg"
             className="w-full"
-            disabled={!registrationOpen && !event.registration?.waitlistEnabled}
-            onClick={handleRegister}
+            disabled={
+              !isPast &&
+              !registrationOpen &&
+              !event.registration?.waitlistEnabled
+            }
+            onClick={
+              isPast && event.albumUrl
+                ? handleViewImages
+                : handleRegister
+            }
           >
             {getButtonText()}
           </Button>

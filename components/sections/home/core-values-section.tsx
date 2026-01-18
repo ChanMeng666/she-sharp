@@ -97,7 +97,7 @@ export function CoreValuesSection() {
   return (
     <div
       ref={containerRef}
-      className="h-[60vh] w-full overflow-y-scroll snap-y snap-proximity scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+      className="h-[80vh] w-full overflow-y-scroll snap-y snap-proximity scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
       style={{
         scrollBehavior: "smooth",
         WebkitOverflowScrolling: "touch",
@@ -143,18 +143,18 @@ export function CoreValuesSection() {
                 sectionRefs.current[index] = el as HTMLElement;
               }
             }}
-            className={`snap-start h-[60vh] w-full flex items-center justify-center relative ${bgClass} transition-colors duration-700 ease-in-out shrink-0`}
+            className={`snap-start h-[80vh] w-full flex items-center justify-center relative ${bgClass} transition-colors duration-700 ease-in-out shrink-0`}
             style={bgStyle}
           >
             <div
-              className={`flex flex-col md:flex-row w-full max-w-7xl mx-auto px-4 md:px-8 transition-all duration-1000 ease-out ${
+              className={`flex flex-col md:flex-row w-full max-w-7xl mx-auto  transition-all duration-1000 ease-out ${
                 isActive
                   ? "opacity-100 translate-y-0 scale-100"
                   : "opacity-100 translate-y-4 scale-100"
               }`}
             >
               {/* Left side - Image (2/3 width on desktop) */}
-              <div className="relative w-full md:w-2/3 h-[200px] md:h-[60vh] overflow-hidden">
+              <div className="relative w-full md:w-2/3 h-[250px] md:h-[80vh] overflow-hidden">
                 <Image
                   src={value.image}
                   alt={value.title}

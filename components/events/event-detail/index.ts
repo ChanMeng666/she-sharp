@@ -4,3 +4,4 @@ export { EventAgenda } from './event-agenda';
 export { EventSpeakers } from './event-speakers';
 export { EventSidebarPanel } from './event-sidebar-panel';
 export { EventCountdown } from './event-countdown';
+export { EventPhotos } from './event-photos';

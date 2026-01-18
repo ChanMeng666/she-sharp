@@ -29,13 +29,15 @@ export function EventHeader({ event, className }: EventHeaderProps) {
           alt={event.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {isPast && (
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+        {/* Overlay Mask */}
+        <div className="absolute inset-0 bg-black/30" />
+        {/* {isPast && (
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
             <span className="text-white text-base font-medium px-4 py-2 border border-white/50">
               Past Event
             </span>
           </div>
-        )}
+        )} */}
 
         {/* Countdown */}
         {isFutureEvent && (

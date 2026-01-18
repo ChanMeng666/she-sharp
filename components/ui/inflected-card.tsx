@@ -146,6 +146,10 @@ export const InflectedCard: React.FC<InflectedCardProps> = ({
                 src={image}
                 alt={title}
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading="lazy"
+                quality={85}
+                unoptimized={image.startsWith('/img/')}
                 style={{
                   objectFit: 'cover',
                   transition: 'transform 0.3s ease',

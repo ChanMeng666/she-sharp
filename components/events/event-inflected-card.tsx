@@ -6,16 +6,6 @@ import { InflectedCard } from "@/components/ui/inflected-card";
 import { Event } from "@/lib/data/events";
 import { cn } from "@/lib/utils";
 
-// Sample images from Unsplash for demo purposes
-const SAMPLE_IMAGES = [
-  "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80", // Conference
-  "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80", // Workshop
-  "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&q=80", // Networking
-  "https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=800&q=80", // Tech event
-  "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&q=80", // Team meetup
-  "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80", // Business meeting
-];
-
 interface EventInflectedCardProps {
   event: Event;
   className?: string;
@@ -33,8 +23,8 @@ export function EventInflectedCard({
     router.push(`/events/${event.slug}`);
   };
 
-  // Use sample image based on index
-  const sampleImage = SAMPLE_IMAGES[index % SAMPLE_IMAGES.length];
+  // Use event coverImage, fallback to She Sharp logo if not available
+  const displayImage = event.coverImage || "/logos/she-sharp-logo.svg";
 
   // Format date parts for prominent display
   const eventDate = new Date(event.startDate);
@@ -55,7 +45,7 @@ export function EventInflectedCard({
       <div className="flex-1 min-h-0">
         <InflectedCard
           id={event.slug}
-          image={sampleImage}
+          image={displayImage}
           title={event.title}
           description={
             event.shortDescription || event.description.slice(0, 120) + "..."

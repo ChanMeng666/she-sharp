@@ -101,5 +101,6 @@ export interface Event {
   // Media
   coverImage: string;
   photos?: string[]; // Post-event photos
+  albumUrl?: string; // URL to photo album
   attendeeAvatars?: string[]; // For avatar stack display
 }

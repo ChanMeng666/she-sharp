@@ -11,6 +11,7 @@ import {
   EventAgenda,
   EventSpeakers,
   EventSidebarPanel,
+  EventPhotos,
 } from "@/components/events/event-detail";
 import { EventCard } from "@/components/events/event-card";
 import { Container } from "@/components/layout/container";
@@ -77,40 +78,26 @@ export default async function EventPage({ params }: EventPageProps) {
         <Container size="full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Main Content - Left Column */}
-            <div className="lg:col-span-7 xl:col-span-8 space-y-8">
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
+            <div className="lg:col-span-7 xl:col-span-8 space-y-12">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-12">
                 {event.title}
               </h1>
 
               <EventDescription event={event} />
-              
+
+              <div className="w-full md:pr-8">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={event.coverImage}
+                  alt={event.title}
+                  className="w-full h-auto"
+                />
+              </div>
+
               {event.agenda && event.agenda.length > 0 && (
                 <EventAgenda event={event} />
               )}
 
-              {/* Event Photos Gallery (for past events) */}
-              {event.photos && event.photos.length > 0 && (
-                <section className="space-y-4 ">
-                  <h2 className="text-lg font-medium text-foreground">
-                    Photos
-                  </h2>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {event.photos.map((photo, index) => (
-                      <div
-                        key={index}
-                        className="aspect-square overflow-hidden bg-muted"
-                      >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={photo}
-                          alt={`${event.title} photo ${index + 1}`}
-                          className="w-full h-full object-cover "
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              )}
             </div>
 
             {/* Sidebar - Right Column */}
@@ -123,14 +110,23 @@ export default async function EventPage({ params }: EventPageProps) {
 
       {/* Speakers Section  */}
       {event.speakers && event.speakers.length > 0 && (
-        <EventSpeakers event={event} />
+        <div className="mt-16">
+          <EventSpeakers event={event} />
+        </div>
+      )}
+
+      {/* Photos Section */}
+      {event.photos && event.photos.length > 0 && (
+        <div className="bg-white">
+          <EventPhotos event={event} />
+        </div>
       )}
 
       {/* Related Events */}
       {relatedEvents.length > 0 && (
         <Section spacing="section" className="bg-muted pb-24">
           <Container size="full">
-            <h2 className="text-base md:text-lg lg:text-xl font-semibold text-foreground mb-8">
+            <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground mb-8 uppercase">
               More Events
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">

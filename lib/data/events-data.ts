@@ -140,7 +140,103 @@ Whether you're a team lead, engineering manager, or aspiring to leadership, this
     coverImage:
       "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=630&fit=crop",
     attendeeAvatars: [],
-  },
+  }, {
+    slug: "she-sharp-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+    title: "She Sharp & HCLTech: AI Empowerment: Shaping an Inclusive Digital Future",
+    shortDescription: "An inspiring evening exploring how inclusive AI and diverse perspectives can shape future innovation and work.",
+    description: `Join us for an inspiring evening on how AI is helping people unlock new levels of creativity, productivity, and innovation.
+
+The event features a keynote address and a panel discussion with industry leaders who will share stories and insights on how diverse perspectives in STEM lead to fair, ethical, and inclusive AI solutions.
+
+We will also explore the impact of AI on the future of work and highlight the skills and mindsets that will help you adapt, thrive, and lead in an AI-powered world.`,
+    category: "networking",
+    status: "completed",
+    isFeatured: false,
+    startDate: "2025-11-21",
+    startTime: "16:30",
+    endTime: "19:30",
+    timezone: "Pacific/Auckland",
+    location: {
+      format: "in_person",
+      venueName: "University Union Building, University of Otago",
+      address: "",
+      city: "Dunedin",
+      mapUrl: "",
+      meetingUrl: "",
+    },
+    organizer: {
+      name: "She Sharp",
+      title: "Host",
+      company: "She Sharp",
+    },
+    speakers: [
+      {
+        name: "Rasha Y. Abu-Safieh",
+        title: "Head of Digital Strategy & Partnerships",
+        company: "University of Otago",
+        bio: "Rasha Abu-Safieh is Head of Digital Strategy and Partnering at the University of Otago and an internationally recognised leader in digital strategy and implementation. A Time Magazine Next Generation Leader and Edmund Hillary Fellow, Rasha’s two decades of experience span digital transformation, AI strategy, and social innovation. With qualifications in AI for Business, Digital Transformation, and Systems Change Leadership, she has co-founded award-winning social enterprises and co-led Otago\’s Digital Strategy. Based in Dunedin, Rasha champions technology that empowers people and communities through inclusive, sustainable, human-centred innovation.",
+        image: "/img/RashaAbuSafieh.jpg",
+      },
+      {
+        name: "Graeme Riley",
+        title: "Chief Information Officer",
+        company: "Dunedin City Council",
+        bio: "Graeme Riley is a technology and digital-transformation leader with more than 25 years experience across aviation, IT, and financial services in Australia, China, Europe, and New Zealand. He has led global and national technology programmes, modernising IT organisations and delivering complex solutions across both public and private sectors. As CIO at Dunedin City Council, Graeme is focused on building digital capability that supports communities, strengthens public services, and ensures technology and AI are developed responsibly, ethically, and inclusively. He has a strong track record in building high-performing teams, simplifying complex environments, and using technology as an enabler for people and organisations.",
+        image: "/img/GraemeRiley.png",
+      },
+      {
+        name: "Deb Sutton",
+        title: "Labour Market Advisor",
+        company: "Ministry of Social Development",
+        bio: "In her current role, Deb implements employment strategies and responds to the Southern region's labour market demands. She builds relationships with employers, industry groups, providers, and government agencies to create initiatives that help MSD jobseekers gain sustainable employment. With over 30 years' experience in training, recruitment, business development, project management, and HR across government, tertiary, manufacturing, and mining, Deb's strengths lie in people development and building win-win connections between individuals and businesses.",
+        image: "/img/DebSutton.jpg",
+      },
+      {
+        name: "Sophie Wiltshier",
+        title: "Callaghan Innovation MTF, PGDip, BA",
+        company: "",
+        bio: "With 14+ years' experience across private and public sectors, Sophie empowers startups and women in business, tech, and science. She supports frontier ventures to export globally, win tenders, and unlock $3M+ for innovation and growth. Her strategic lens and human-centred design help scale NZ businesses, protect IP, and maximise the R&D Tax Incentive. Sophie proudly contributes to Aotearoa's innovation ecosystem, ensuring no opportunity or funding is left behind.",
+        image: "/img/SophieWiltshier.jpg",
+      },
+      {
+        name: "Kerry Ryan",
+        title: "Principal Advisor for Secondary Transitions",
+        company: "",
+        bio: "Kerry Ryan is a Principal Advisor for Secondary Transitions in Otago and Southland, with nearly 40 years of experience in education across both local and international contexts. He has taught A Level and the International Baccalaureate, and held senior leadership roles in secondary schools, including 12 years as Head of Science. Kerry is committed to culturally responsive practice and inclusive education. He is a strong advocate for teacher professional learning and development, viewing it as a key driver of student success and system transformation. Kerry is particularly mindful of the role creatives play in tech and how diverse thinking can shape more equitable futures.",
+        image: "/img/KerryRyan.png",
+      },
+      {
+        name: "Steve Gadsby",
+        title: "Public Sector Lead APME, Consulting",
+        company: "HCLTech",
+        bio: "A Generalist by nature, Steve has accumulated a raft of experiences in his 30+ years in the IT Services and Consulting industries. His career spans life as a COBOL Programmer, just about every role that IT had to offer, and compulsory stints at both an NZ Telco, & a ‘Big 4’. He currently oversees the Public Sector activities for the recently formed Consulting business unit for HCLTech across Asia Pacific and Middle East.\n\nBeing both a strategist and a deliverer, Steve adeptly travels both paths simultaneously. His passion though lies in both Education and positive societal change. He enjoys mentoring roles and the opportunity to ‘give back’ to the local communities through either swinging a chainsaw at local working bee’s or sitting in the Presiding Member (Chair) of local School Boards.",
+        image: "/img/SteveGadsby.png",
+      },
+    ],
+    registration: {
+      isRequired: true,
+      externalUrl: "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+      capacity: undefined,
+      attendeeCount: undefined,
+      waitlistEnabled: false,
+      deadline: undefined,
+      price: {
+        amount: 0,
+        currency: "NZD",
+      },
+      isFree: true,
+    },
+    coverImage: "/img/HCLTechPoster.png",
+    albumUrl: "https://photos.google.com/share/AF1QipOzji5dKXJVUNCE4G2C4IUX4BmavWum-P9WZEKSruTpASO8L1ox7_L5emlZPBwzEg?key=Um51STlJTmhENWtDWEJ1QmlHUFNJSGhadExHajlB",
+    attendeeAvatars: [
+    ],
+    photos: [
+      "https://lh3.googleusercontent.com/pw/AP1GczMNA-KAcjgfXDZnDIuqDFaQVZLhVrfqU1vJGi77Rl6ylf8qOglukYMXFyV4wNrJUF3fjb4g2a48xfBPGmiH-PSBoUNjNmM9LD2AnAZjRJUEiJ7dxN1o92ocwmd3i68VBK73L56Jgk0XYT70P7H78JC7dw=w1879-h1253-s-no-gm?authuser=0",
+      "https://lh3.googleusercontent.com/pw/AP1GczMgabUeaBvMXpQO4k7Ohg38yIHDDZatDLWhkscQHPTv2gw_NgJrAgotG_ie7M3x0DBd2rCQer5fHU9NQrVni8eBeGYHiSEzvdTn4sQB8GE4ZEIWCHz83Wc4ytMYRpKXXhg3e9Vxz3IqL4Ur9FdenN2Ipw=w2296-h1530-s-no-gm?authuser=0",
+      "https://lh3.googleusercontent.com/pw/AP1GczMNEy7XahBU3IuqXHbq1zGLSYIl3hGaaamYs13FgIx3OOPGfGoS_Q7rODbLQr_SW1CKZ-MzJxpwVt3w6APQ1FFtQHMwo84PcI1pxgygMgpLj2J1kXUBdVviyDz-5Wgfqxzgw8v_NZeC8drOEGP1NOfSsA=w1879-h1253-s-no-gm?authuser=0"
+    ],
+  }
+  ,
   {
     slug: "dummy-social-summer-bbq-2025",
     title: "Dummy Social: Summer BBQ & Networking",

@@ -9,21 +9,6 @@ interface EventSpeakersProps {
   className?: string;
 }
 
-function CornerIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className={cn("h-6 w-6 text-foreground/20", className)}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
-    </svg>
-  );
-}
-
 export function EventSpeakers({ event, className }: EventSpeakersProps) {
   if (!event.speakers || event.speakers.length === 0) {
     return null;
@@ -33,11 +18,11 @@ export function EventSpeakers({ event, className }: EventSpeakersProps) {
     <section className={className}>
       <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-          <div className="space-y-4">
-            <p className="flex items-center gap-2 text-base md:text-lg lg:text-xl font-semibold text-foreground uppercase">
+          <div className="space-y-8">
+            <p className="flex items-center gap-2 text-lg md:text-xl lg:text-2xl font-semibold text-foreground uppercase">
               {event.speakers.length === 1 ? "Speaker" : "Speakers"}
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 items-stretch">
               {event.speakers.map((speaker, index) => {
                 const memberCardData: MemberCardData = {
                   id: index,
@@ -51,7 +36,11 @@ export function EventSpeakers({ event, className }: EventSpeakersProps) {
                 };
                 return (
                   <div key={index} className="w-full h-full flex">
-                    <MemberCard member={memberCardData} index={index} />
+                    <MemberCard 
+                      member={memberCardData} 
+                      index={index}
+                      hideDescriptionOnCard={true}
+                    />
                   </div>
                 );
               })}

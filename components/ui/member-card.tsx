@@ -27,6 +27,7 @@ interface MemberCardProps {
   index?: number;
   background?: string;
   accentColor?: string;
+  hideDescriptionOnCard?: boolean;
 }
 
 export function MemberCard({
@@ -34,6 +35,7 @@ export function MemberCard({
   index,
   background = "bg-surface-periwinkle",
   accentColor = "bg-brand/5",
+  hideDescriptionOnCard = false,
 }: MemberCardProps) {
   const [imageError, setImageError] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -43,7 +45,7 @@ export function MemberCard({
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <article
           onClick={() => setIsDialogOpen(true)}
-          className={`group relative ${background} rounded-2xl overflow-hidden
+          className={`group relative w-full ${background} rounded-2xl overflow-hidden
                       transition-all duration-300 hover:shadow-2xl hover:-translate-y-1
                       focus-within:ring-4 focus-within:ring-brand/50 cursor-pointer`}
         >
@@ -87,9 +89,11 @@ export function MemberCard({
               <p className="text-sm sm:text-base font-medium text-brand mb-4">
                 {member.title}
               </p>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed line-clamp-3 mb-3">
-                {member.description}
-              </p>
+              {!hideDescriptionOnCard && (
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed line-clamp-3 mb-3">
+                  {member.description}
+                </p>
+              )}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
