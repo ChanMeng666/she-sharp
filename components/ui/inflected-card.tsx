@@ -270,6 +270,7 @@ export const InflectedCard: React.FC<InflectedCardProps> = ({
             {title}
           </h3>
           <p
+            className="line-clamp-3"
             style={{
               fontSize: fontSizes.description,
               color: descriptionColor,

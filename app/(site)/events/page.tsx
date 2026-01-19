@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, Search, X, Calendar, MapPin, Tag, Clock } from "lucide-react";
+import { Search, X, Calendar, MapPin, Tag, Clock } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { EventInflectedCard } from "@/components/events/event-inflected-card";
 import { EventList } from "@/components/events/event-list";
-import { getAllEvents, getFeaturedEvent, Event } from "@/lib/data/events";
+import { FeaturedEventHero } from "@/components/events/featured-event-hero";
+import { getAllEvents, getFeaturedEvent } from "@/lib/data/events";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -35,51 +34,9 @@ const CATEGORY_LABELS: Record<EventCategory, string> = {
   panel: "Panel",
 };
 
-// Sample hero image
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&q=80";
-
-function HeroButtons({ slug }: { slug: string }) {
-  const [isHovered, setIsHovered] = useState<"details" | "register" | null>(
-    null
-  );
-
-  return (
-    <div className="flex gap-3">
-      <Link
-        href={`/events/${slug}`}
-        className="flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300"
-        style={{
-          backgroundColor: isHovered === "details" ? "#333333" : "#000000",
-          color: "#ffffff",
-        }}
-        onMouseEnter={() => setIsHovered("details")}
-        onMouseLeave={() => setIsHovered(null)}
-      >
-        View Details
-        <ArrowRight className="w-5 h-5" />
-      </Link>
-      <Link
-        href={`/events/${slug}`}
-        className="flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300 border-2"
-        style={{
-          backgroundColor: isHovered === "register" ? "#000000" : "transparent",
-          color: isHovered === "register" ? "#ffffff" : "#000000",
-          borderColor: "#000000",
-        }}
-        onMouseEnter={() => setIsHovered("register")}
-        onMouseLeave={() => setIsHovered(null)}
-      >
-        Register Now
-      </Link>
-    </div>
-  );
-}
-
 export default function EventsPage() {
   const featuredEvent = getFeaturedEvent();
   const allEvents = getAllEvents();
-  const [isImageHovered, setIsImageHovered] = useState(false);
 
   // Search and filter state
   const [searchQuery, setSearchQuery] = useState("");
@@ -205,80 +162,18 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen mb-24">
-      {/* Hero Section - Full width image with InflectedCard style */}
-      {featuredEvent && (
-        <Section spacing="section">
-          <Container size="full">
-            <div
-              className="relative w-full h-[500px] md:h-[600px] rounded-2xl overflow-hidden mt-12"
-            >
-              {/* Image */}
-              <div
-                className="absolute inset-0 overflow-hidden rounded-2xl"
-                onMouseEnter={() => setIsImageHovered(true)}
-                onMouseLeave={() => setIsImageHovered(false)}
-              >
-                <Image
-                  src={HERO_IMAGE}
-                  alt={featuredEvent.title}
-                  fill
-                  priority
-                  sizes="100vw"
-                  className="object-cover transition-transform duration-300"
-                  style={{
-                    transform: isImageHovered ? "scale(1.05)" : "scale(1)",
-                  }}
-                />
-              </div>
-
-              {/* title in bottom left */}
-              <div className="absolute bottom-0 left-0 w-1/2 md:w-2/5 p-6">
-                <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-2xl px-6 py-4 md:px-8 md:py-6 shadow-lg h-full flex items-center">
-                  <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg">
-                    {featuredEvent.title}
-                  </h3>
-                </div>
-              </div>
-
-              {/* Buttons container with curved corner effect */}
-              <div
-                className="absolute bottom-0 right-0 pt-8 pl-8 rounded-tl-[3rem]"
-                style={{ backgroundColor: "#eee" }}
-              >
-                <div
-                  className="absolute bottom-0 -left-8 w-8 h-8 bg-transparent"
-                  style={{
-                    borderBottomRightRadius: "2rem",
-                    boxShadow: "0.5rem 0.5rem 0 0.5rem #eee",
-                  }}
-                />
-                <div
-                  className="absolute -top-8 right-0 w-8 h-8 bg-transparent"
-                  style={{
-                    borderBottomRightRadius: "2rem",
-                    boxShadow: "0.5rem 0.5rem 0 0.5rem #eee",
-                  }}
-                />
-
-                {/* Buttons */}
-                <div className="pb-6 pr-6">
-                  <HeroButtons slug={featuredEvent.slug} />
-                </div>
-              </div>
-            </div>
-          </Container>
-        </Section>
-      )}
+      {/* Hero Section - Featured event with fallback image */}
+      <FeaturedEventHero event={featuredEvent} />
 
       {/* All Events Section */}
       <Section spacing="section">
         <Container size="full">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
                 All Events
               </h2>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-muted-foreground text-lg mt-4">
                 Discover our workshops, networking events, conferences and more
               </p>
             </div>
@@ -286,8 +181,9 @@ export default function EventsPage() {
 
           {/* Search and Filter Controls */}
           <div className="space-y-4 mb-8">
-            {/* Search Bar */}
-            <div className="flex gap-4">
+            {/* Search Bar and Filter Buttons - Same row on md+, two rows on smaller screens */}
+            <div className="flex flex-col md:flex-row gap-16 md:items-center">
+              {/* Search Bar */}
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -306,154 +202,155 @@ export default function EventsPage() {
                   </button>
                 )}
               </div>
-            </div>
 
-            {/* Filter Buttons Row */}
-            <div className="flex flex-wrap gap-2">
-              {/* Upcoming Only Toggle */}
-              <Button
-                variant={showUpcomingOnly ? "default" : "outline"}
-                size="sm"
-                onClick={() => setShowUpcomingOnly(!showUpcomingOnly)}
-                className="h-9"
-              >
-                <Clock className="h-4 w-4 mr-2" />
-                Upcoming Only
-              </Button>
-
-              {/* Category Filter */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-9">
-                    <Tag className="h-4 w-4 mr-2" />
-                    Category
-                    {selectedCategories.length > 0 && (
-                      <Badge variant="secondary" className="ml-2 h-5 px-1.5">
-                        {selectedCategories.length}
-                      </Badge>
-                    )}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-48">
-                  <DropdownMenuLabel>Event Category</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  {availableCategories.map((category) => (
-                    <DropdownMenuCheckboxItem
-                      key={category}
-                      checked={selectedCategories.includes(category)}
-                      onCheckedChange={() => toggleCategory(category)}
-                    >
-                      {CATEGORY_LABELS[category]}
-                    </DropdownMenuCheckboxItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* Year Filter */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-9">
-                    <Calendar className="h-4 w-4 mr-2" />
-                    Year
-                    {selectedYears.length > 0 && (
-                      <Badge variant="secondary" className="ml-2 h-5 px-1.5">
-                        {selectedYears.length}
-                      </Badge>
-                    )}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-48">
-                  <DropdownMenuLabel>Event Year</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  {availableYears.map((year) => (
-                    <DropdownMenuCheckboxItem
-                      key={year}
-                      checked={selectedYears.includes(year)}
-                      onCheckedChange={() => toggleYear(year)}
-                    >
-                      {year}
-                    </DropdownMenuCheckboxItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* City Filter */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-9">
-                    <MapPin className="h-4 w-4 mr-2" />
-                    City
-                    {selectedCities.length > 0 && (
-                      <Badge variant="secondary" className="ml-2 h-5 px-1.5">
-                        {selectedCities.length}
-                      </Badge>
-                    )}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-48">
-                  <DropdownMenuLabel>Event City</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  {availableCities.map((city) => (
-                    <DropdownMenuCheckboxItem
-                      key={city}
-                      checked={selectedCities.includes(city)}
-                      onCheckedChange={() => toggleCity(city)}
-                    >
-                      {city}
-                    </DropdownMenuCheckboxItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* Clear All Filters */}
-              {hasActiveFilters && (
+              {/* Filter Buttons Row */}
+              <div className="flex flex-wrap gap-2">
+                {/* Upcoming Only Toggle */}
                 <Button
-                  variant="ghost"
+                  variant={showUpcomingOnly ? "default" : "outline"}
                   size="sm"
-                  onClick={clearAllFilters}
-                  className="h-9 text-muted-foreground hover:text-foreground"
+                  onClick={() => setShowUpcomingOnly(!showUpcomingOnly)}
+                  className="h-9"
                 >
-                  <X className="h-4 w-4 mr-1" />
-                  Clear all
+                  <Clock className="h-4 w-4 mr-1" />
+                  Upcoming Only
                 </Button>
-              )}
+
+                {/* Category Filter */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="h-9">
+                      <Tag className="h-4 w-4 mr-1" />
+                      Category
+                      {selectedCategories.length > 0 && (
+                        <Badge variant="secondary" className="ml-2 h-5 px-1.5">
+                          {selectedCategories.length}
+                        </Badge>
+                      )}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-48">
+                    <DropdownMenuLabel>Event Category</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {availableCategories.map((category) => (
+                      <DropdownMenuCheckboxItem
+                        key={category}
+                        checked={selectedCategories.includes(category)}
+                        onCheckedChange={() => toggleCategory(category)}
+                      >
+                        {CATEGORY_LABELS[category]}
+                      </DropdownMenuCheckboxItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                {/* Year Filter */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="h-9">
+                      <Calendar className="h-4 w-4 mr-1" />
+                      Year
+                      {selectedYears.length > 0 && (
+                        <Badge variant="secondary" className="ml-2 h-5 px-1.5">
+                          {selectedYears.length}
+                        </Badge>
+                      )}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-48">
+                    <DropdownMenuLabel>Event Year</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {availableYears.map((year) => (
+                      <DropdownMenuCheckboxItem
+                        key={year}
+                        checked={selectedYears.includes(year)}
+                        onCheckedChange={() => toggleYear(year)}
+                      >
+                        {year}
+                      </DropdownMenuCheckboxItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                {/* City Filter */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="h-9">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      City
+                      {selectedCities.length > 0 && (
+                        <Badge variant="secondary" className="ml-2 h-5 px-1.5">
+                          {selectedCities.length}
+                        </Badge>
+                      )}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-48">
+                    <DropdownMenuLabel>Event City</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {availableCities.map((city) => (
+                      <DropdownMenuCheckboxItem
+                        key={city}
+                        checked={selectedCities.includes(city)}
+                        onCheckedChange={() => toggleCity(city)}
+                      >
+                        {city}
+                      </DropdownMenuCheckboxItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                {/* Clear All Filters */}
+                {hasActiveFilters && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={clearAllFilters}
+                    className="h-9 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="h-4 w-4 mr-1" />
+                    Clear all
+                  </Button>
+                )}
+              </div>
             </div>
 
-            {/* Active Filters Display & Results Count */}
-            <div className="flex flex-wrap items-center gap-2">
+            {/* Results Count - Separate row */}
+            <div className="flex items-center">
               <span className="text-sm text-muted-foreground">
                 Showing {filteredEvents.length} of {allEvents.length} events
               </span>
-              {(selectedCategories.length > 0 || selectedYears.length > 0 || selectedCities.length > 0) && (
-                <>
-                  <span className="text-muted-foreground">•</span>
-                  {selectedCategories.map((category) => (
-                    <Badge key={category} variant="secondary" className="gap-1">
-                      {CATEGORY_LABELS[category]}
-                      <button onClick={() => toggleCategory(category)} className="hover:text-foreground">
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-                  {selectedYears.map((year) => (
-                    <Badge key={year} variant="secondary" className="gap-1">
-                      {year}
-                      <button onClick={() => toggleYear(year)} className="hover:text-foreground">
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-                  {selectedCities.map((city) => (
-                    <Badge key={city} variant="secondary" className="gap-1">
-                      {city}
-                      <button onClick={() => toggleCity(city)} className="hover:text-foreground">
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-                </>
-              )}
             </div>
+
+            {/* Active Filters Display - Separate row if filters are active */}
+            {(selectedCategories.length > 0 || selectedYears.length > 0 || selectedCities.length > 0) && (
+              <div className="flex flex-wrap items-center gap-2">
+                {selectedCategories.map((category) => (
+                  <Badge key={category} variant="secondary" className="gap-1">
+                    {CATEGORY_LABELS[category]}
+                    <button onClick={() => toggleCategory(category)} className="hover:text-foreground">
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                ))}
+                {selectedYears.map((year) => (
+                  <Badge key={year} variant="secondary" className="gap-1">
+                    {year}
+                    <button onClick={() => toggleYear(year)} className="hover:text-foreground">
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                ))}
+                {selectedCities.map((city) => (
+                  <Badge key={city} variant="secondary" className="gap-1">
+                    {city}
+                    <button onClick={() => toggleCity(city)} className="hover:text-foreground">
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Events Grid with Inflected Cards */}

@@ -41,7 +41,7 @@ We will also explore the impact of AI on the future of work and highlight the sk
         name: "Rasha Y. Abu-Safieh",
         title: "Head of Digital Strategy & Partnerships, UO",
         company: "UO",
-        bio: "Rasha Abu-Safieh is Head of Digital Strategy and Partnering at the University of Otago and an internationally recognised leader in digital strategy and implementation. A Time Magazine Next Generation Leader and Edmund Hillary Fellow, Rasha's two decades of experience span digital transformation, AI strategy, and social innovation. With qualifications in AI for Business, Digital Transformation, and Systems Change Leadership, she has co-founded award-winning social enterprises and co-led Otago's Digital Strategy. Based in Dunedin, Rasha champions technology that empowers people and communities through inclusive, sustainable, human-centred innovation.",
+        bio: "Rasha Abu-Safieh is Head of Digital Strategy and Partnering at the University of Otago and an internationally recognised leader in digital strategy and implementation. A Time Magazine Next Generation Leader and Edmund Hillary Fellow, Rasha' s two decades of experience span digital transformation, AI strategy, and social innovation. With qualifications in AI for Business, Digital Transformation, and Systems Change Leadership, she has co-founded award-winning social enterprises and co-led Otago' s Digital Strategy. Based in Dunedin, Rasha champions technology that empowers people and communities through inclusive, sustainable, human-centred innovation.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/690848f171cefe15bc1491f7_Rasha%20Abu%20Safieh-%201.jpg",
       },
       {
@@ -54,14 +54,14 @@ We will also explore the impact of AI on the future of work and highlight the sk
       {
         name: "Deb Sutton",
         title: "Labour Market Advisor ' Ministry of Social Dev",
-        bio: "In her current role, Deb implements employment strategies and responds to the Southern region's labour market demands. She builds relationships with employers, industry groups, providers, and government agencies to create initiatives that help MSD jobseekers gain sustainable employment. With over 30 years' experience in training, recruitment, business development, project management, and HR across government, tertiary, manufacturing, and mining, Deb's strengths lie in people development and building win-win connections between individuals and businesses.''",
+        bio: "In her current role, Deb implements employment strategies and responds to the Southern region' s labour market demands. She builds relationships with employers, industry groups, providers, and government agencies to create initiatives that help MSD jobseekers gain sustainable employment. With over 30 years'  experience in training, recruitment, business development, project management, and HR across government, tertiary, manufacturing, and mining, Deb' s strengths lie in people development and building win-win connections between individuals and businesses.''",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/690800f7c09ef2133b1a243a_DebSutton.jpg",
       },
       {
         name: "Sophie Wiltshier",
         title: "Callaghan Innovation MTF, PGDip, BA",
         company: "BA",
-        bio: "With 14+ years' experience across private and public sectors, Sophie empowers startups and women in business, tech, and science. She supports frontier ventures to export globally, win tenders, and unlock \$3M+ for innovation and growth. Her strategic lens and human-centred design help scale NZ businesses, protect IP, and maximise the R&D Tax Incentive. Sophie proudly contributes to Aotearoa's innovation ecosystem, ensuring no opportunity or funding is left behind.'",
+        bio: "With 14+ years'  experience across private and public sectors, Sophie empowers startups and women in business, tech, and science. She supports frontier ventures to export globally, win tenders, and unlock \$3M+ for innovation and growth. Her strategic lens and human-centred design help scale NZ businesses, protect IP, and maximise the R&D Tax Incentive. Sophie proudly contributes to Aotearoa' s innovation ecosystem, ensuring no opportunity or funding is left behind.'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6908014d21151127db6ddf9b_Sophie%20Pic.jpg",
       },
       {
@@ -75,41 +75,9 @@ We will also explore the impact of AI on the future of work and highlight the sk
         name: "Steve Gadsby",
         title: "Public Sector Lead APME, Consulting",
         company: "Consulting",
-        bio: "A Generalist by nature, Steve has accumulated a raft of experiences in his 30+ years in the IT Services and Consulting industries. His career spans life as a COBOL Programmer, just about every role that IT had to offer, and compulsory stints at both an NZ Telco, & a 'Big 4'. He currently oversees the Public Sector activities for the recently formed Consulting business unit for HCLTech across Asia Pacific and Middle East.Being both a strategist and a deliverer, Steve adeptly travels both paths simultaneously. His passion though lies in both Education and positive societal change. He enjoys mentoring roles and the opportunity to 'give back' to the local communities through either swinging a chainsaw at local working bee's or sitting in the Presiding Member (Chair) of local School Boards.",
+        bio: "A Generalist by nature, Steve has accumulated a raft of experiences in his 30+ years in the IT Services and Consulting industries. His career spans life as a COBOL Programmer, just about every role that IT had to offer, and compulsory stints at both an NZ Telco, & a 'Big 4' . He currently oversees the Public Sector activities for the recently formed Consulting business unit for HCLTech across Asia Pacific and Middle East.Being both a strategist and a deliverer, Steve adeptly travels both paths simultaneously. His passion though lies in both Education and positive societal change. He enjoys mentoring roles and the opportunity to 'give back'  to the local communities through either swinging a chainsaw at local working bee' s or sitting in the Presiding Member (Chair) of local School Boards.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/691ad5e555de2c42b0441d8e_Steve%20Gadsby_LinkedIn_1%20Background%20Removed.png",
       },
-      {
-        name: "Michelle Sandford",
-        title: "Developer Engagement Lead Asia - Microsoft",
-        company: "Microsoft",
-        bio: "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-        image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-        linkedIn: "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-      },
-      {
-        name: "Renee Noble",
-        title: "Python Cloud Advocate - Microsoft",
-        company: "Microsoft",
-        bio: "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the 'if they can see it they can be it' motto.",
-        image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-        linkedIn: "https://www.linkedin.com/in/noblerenee/",
-      },
-      {
-        name: "Amir Mohammadi",
-        title: "Founder & Director - Promptech",
-        company: "Promptech",
-        bio: "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-        image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-        linkedIn: "https://www.linkedin.com/in/amirmim/",
-      },
-      {
-        name: "Geri Harris",
-        title: "Senior Lecturer - AUT Business School",
-        company: "AUT Business School",
-        bio: "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-        image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-        linkedIn: "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-      }
     ],
     registration: {
       isRequired: true,
@@ -130,9 +98,9 @@ We will also explore the impact of AI on the future of work and highlight the sk
     shortDescription: "Join us for an inspiring evening with Vector as we explore how technology is transforming the energy sector.",
     description: `Join us for an inspiring evening with Vector as we explore how technology is transforming the energy sector.
 
-This SheSharp event will spotlight Vector's journey as a tech-enabled utility, showcasing real stories of innovation in Data, AI, ADMS and digital platforms.
+This SheSharp event will spotlight Vector' s journey as a tech-enabled utility, showcasing real stories of innovation in Data, AI, ADMS and digital platforms.
 
-We'll celebrate the voices of women in STEM, inside Vector and across the wider tech community, through a dynamic panel and a 45-minute Think-a-Thon designed to spark ideas and connection.'
+We' ll celebrate the voices of women in STEM, inside Vector and across the wider tech community, through a dynamic panel and a 45-minute Think-a-Thon designed to spark ideas and connection.'
 
 Whether you're curious about inclusive career pathways, passionate about solving real-world problems, or looking to grow your network, this is your chance to engage with a future-facing company committed to diversity, innovation and impact.
 
@@ -153,7 +121,7 @@ Level 6, 110 Carlton Gore Road, Newmarket, Auckland 1023`,
       {
         name: "Shona Irving",
         title: "Head of Enterprise Data and Information Management",
-        bio: "Shona Irving heads up Enterprise Data and Information Management for Vector, where she's all about making data work smarter for people and teams. She's big on building trusted, understood, inclusive data cultures and helping others grow in their careers. Outside the office, Shona volunteers as a KaiÄrahi for Scouting Aotearoa, supporting young people to build confidence, leadership skills, and a love for the outdoors. When she's not wrangling data or planning the next scout adventure, you'll likely find her hiking one of Aotearoa's stunning trails or planning the next adventure for her whÄnau. She lives by the quote: 'Leave things better than you found them.''",
+        bio: "Shona Irving heads up Enterprise Data and Information Management for Vector, where she' s all about making data work smarter for people and teams. She' s big on building trusted, understood, inclusive data cultures and helping others grow in their careers. Outside the office, Shona volunteers as a KaiÄrahi for Scouting Aotearoa, supporting young people to build confidence, leadership skills, and a love for the outdoors. When she' s not wrangling data or planning the next scout adventure, you' ll likely find her hiking one of Aotearoa' s stunning trails or planning the next adventure for her whÄnau. She lives by the quote: 'Leave things better than you found them.''",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68e07910a8f710b7f087da5b_Shona%20Irving.jpg",
       },
       {
@@ -219,10 +187,10 @@ Level 6, 110 Carlton Gore Road, Newmarket, Auckland 1023`,
   {
     slug: "code-secure",
     title: "Code Secure. Lead the Future: Women in Cybersecurity Workshop",
-    shortDescription: "ðFree t-shirts, coding challenges, and a community of women in tech ' all in one workshop!JoinXero,Secure Code Warrior, andShe Sharpfor a hands-on workshop built just for you. This is your space tolearn, connect, and growalongside an empowering community of women in tech. ð",
-    description: `ðFree t-shirts, coding challenges, and a community of women in tech ' all in one workshop!JoinXero,Secure Code Warrior, andShe Sharpfor a hands-on workshop built just for you. This is your space tolearn, connect, and growalongside an empowering community of women in tech. ð
+    shortDescription: "Free t-shirts, coding challenges, and a community of women in tech, all in one workshop!Join Xero, Secure Code Warrior, and She Sharp for a hands-on workshop built just for you. This is your space to learn, connect, and grow alongside an empowering community of women in tech. ",
+    description: `Free t-shirts, coding challenges, and a community of women in tech, all in one workshop!Join Xero, Secure Code Warrior, and She Sharp for a hands-on workshop built just for you. This is your space to learn, connect, and grow alongside an empowering community of women in tech. 
 
-Whether you're just curious or ready to level up, this workshop is for YOU. '¨`,
+Whether you' re just curious or ready to level up, this workshop is for YOU.`,
     category: "workshop",
     status: "completed",
     startDate: "2025-10-03",
@@ -254,7 +222,7 @@ Whether you're just curious or ready to level up, this workshop is for YOU. 
         name: "Mehika Manocha",
         title: "Lead Software Engineer, Xero",
         company: "Xero",
-        bio: "Mehika is a Lead Engineer at Xero, where she blends technical leadership with a commitment to building a more inclusive and equitable tech landscape. As co-chair of Xero's Tech Diversity ERG, she champions fostering a culture of belonging. She is also an active member of Xero's Security Champions community, promoting stronger security practices.She extends her commitment for empowerment to the broader community by facilitating coding workshops for Code Like a Girl. Mehika holds an Honours degree in Advanced Computing, with a specialisation in AI, from The Australian National University. When not at her keyboard, she recharges by hiking, practicing yoga, or getting immersed in a good book.",
+        bio: "Mehika is a Lead Engineer at Xero, where she blends technical leadership with a commitment to building a more inclusive and equitable tech landscape. As co-chair of Xero' s Tech Diversity ERG, she champions fostering a culture of belonging. She is also an active member of Xero' s Security Champions community, promoting stronger security practices.She extends her commitment for empowerment to the broader community by facilitating coding workshops for Code Like a Girl. Mehika holds an Honours degree in Advanced Computing, with a specialisation in AI, from The Australian National University. When not at her keyboard, she recharges by hiking, practicing yoga, or getting immersed in a good book.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68baac28c7eeb2d9347c4dd1_MehikaManochBio.jpg",
         linkedIn: "https://www.linkedin.com/in/mehikamanocha",
       },
@@ -309,8 +277,8 @@ Whether you're just curious or ready to level up, this workshop is for YOU. 
   {
     slug: "business-and-technology-transformation-through-platforms-and-products",
     title: "Business and Technology Transformation Through Platforms and Products",
-    shortDescription: "Join a dynamic panel discussion featuring three diverse, experienced, and growth-minded women who are driving meaningful change within Fonterra's Products and Platforms landscape. This session will explore the transformational shift toward a product and platform-centric approach, highlighting the pivotal role it plays in shaping the future of IT delivery and unlocking greater business outcomes.",
-    description: `Join a dynamic panel discussion featuring three diverse, experienced, and growth-minded women who are driving meaningful change within Fonterra's Products and Platforms landscape. This session will explore the transformational shift toward a product and platform-centric approach, highlighting the pivotal role it plays in shaping the future of IT delivery and unlocking greater business outcomes.
+    shortDescription: "Join a dynamic panel discussion featuring three diverse, experienced, and growth-minded women who are driving meaningful change within Fonterra' s Products and Platforms landscape. This session will explore the transformational shift toward a product and platform-centric approach, highlighting the pivotal role it plays in shaping the future of IT delivery and unlocking greater business outcomes.",
+    description: `Join a dynamic panel discussion featuring three diverse, experienced, and growth-minded women who are driving meaningful change within Fonterra' s Products and Platforms landscape. This session will explore the transformational shift toward a product and platform-centric approach, highlighting the pivotal role it plays in shaping the future of IT delivery and unlocking greater business outcomes.
 
 Fonterra, 109 Fanshawe Street, Auckland Central, Auckland 1010`,
     category: "networking",
@@ -330,7 +298,7 @@ Fonterra, 109 Fanshawe Street, Auckland Central, Auckland 1010`,
         name: "Vicky Enkhsaikhan",
         title: "women in tech advocate, educator, and GenAI expert",
         company: "and GenAI expert",
-        bio: "The unique possibilities technology presents for indigenous communities is at the heart of Vicky Enkhsaikhan's journey from a nomadic childhood in the Gobi Desert to becoming the co-founder of the Empasoft Institute of Technology in Ulaanbaatar, Mongolia.Vicky has witnessed and supported the use of GenAI and other technologies by local software companies to protect and further her language and culture, while advocating for women in tech and providing access to education in her home country and beyond.",
+        bio: "The unique possibilities technology presents for indigenous communities is at the heart of Vicky Enkhsaikhan' s journey from a nomadic childhood in the Gobi Desert to becoming the co-founder of the Empasoft Institute of Technology in Ulaanbaatar, Mongolia.Vicky has witnessed and supported the use of GenAI and other technologies by local software companies to protect and further her language and culture, while advocating for women in tech and providing access to education in her home country and beyond.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68b3779bdd6358872971f627_image.png",
       },
       {
@@ -344,14 +312,14 @@ Fonterra, 109 Fanshawe Street, Auckland Central, Auckland 1010`,
         name: "Tracey Connor",
         title: "Release Train Practice Lead, IT Engineering",
         company: "IT Engineering",
-        bio: "Tracey leads a high-performing team of delivery engineers at Fonterra, specializing in Platform, Release, Quality, and DevOps Engineering. With 20+ years of global IT experience, she's passionate about platform engineering, Agile/DevOps delivery systems, and continuous improvement. Her focus is on enabling fast, high-quality delivery through reusable systems and business-outcome-driven approaches.",
+        bio: "Tracey leads a high-performing team of delivery engineers at Fonterra, specializing in Platform, Release, Quality, and DevOps Engineering. With 20+ years of global IT experience, she' s passionate about platform engineering, Agile/DevOps delivery systems, and continuous improvement. Her focus is on enabling fast, high-quality delivery through reusable systems and business-outcome-driven approaches.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/689c68228cdc8d1eadfa5cfb_TraceyConnor%201.JPG",
       },
       {
         name: "Kritika Law",
         title: "Platform Owner - Salesforce",
         company: "Salesforce",
-        bio: "Kritika leads the Salesforce CRM platform at Fonterra, where she's driven its evolution for over a decade. With a background in IT engineering and a Master's in Information Sciences, she began her career in software testing before transitioning into implementation consulting. Her passion lies in delivering impactful solutions that transform business operations. Today, she focuses on maximizing Salesforce's strategic value through innovation and organizational enablement.",
+        bio: "Kritika leads the Salesforce CRM platform at Fonterra, where she' s driven its evolution for over a decade. With a background in IT engineering and a Master' s in Information Sciences, she began her career in software testing before transitioning into implementation consulting. Her passion lies in delivering impactful solutions that transform business operations. Today, she focuses on maximizing Salesforce' s strategic value through innovation and organizational enablement.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68a6c5e2b8bb64dd5904a4f0_Kritika.jpg",
       },
       {
@@ -425,7 +393,7 @@ AUT, 55 Wellesley Street East, Auckland Central 1010`,
         name: "Alejandro Davila",
         title: "Founder of CONICAL",
         company: "PlayStation currently in production",
-        bio: "Alejandro Davila, Founder of CONICAL, built the Auckland studio in 2016 to push the boundaries of virtual-reality storytelling. An AUT alumnus and Young NZ Innovator of the Year finalist, he earned early acclaim for The Green Fairy, New Zealand's first VR film, later adapted into a TVNZ animated series with support from Epic Games. Under his leadership the team has delivered immersive experiences for brands including Spark, Westfield, and Coca-Cola. Alejandro is now directing Faeborne, a story-driven action-adventure fantasy video game for PlayStation currently in production.",
+        bio: "Alejandro Davila, Founder of CONICAL, built the Auckland studio in 2016 to push the boundaries of virtual-reality storytelling. An AUT alumnus and Young NZ Innovator of the Year finalist, he earned early acclaim for The Green Fairy, New Zealand' s first VR film, later adapted into a TVNZ animated series with support from Epic Games. Under his leadership the team has delivered immersive experiences for brands including Spark, Westfield, and Coca-Cola. Alejandro is now directing Faeborne, a story-driven action-adventure fantasy video game for PlayStation currently in production.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/689454587ec5f00ec724894a_alejandro-davila-nz-conical.jpg",
       },
       {
@@ -481,7 +449,7 @@ AUT, 55 Wellesley Street East, Auckland Central 1010`,
       {
         name: "Alan Dent",
         title: "",
-        bio: "Alan has been working in higher education and IT for many years. He built his first web page the same year the Power Macintosh launched and started his career migrating databases from hierarchical to relational models'helping him dodge Y2K chaos. Since then, he's helped embed every major tech shift into higher education. His roles have included head of IT, manager across Student & Research Administration, consultant, (briefly) University Librarian, and now Director of Data, Technology Risk & Policy. He's also domain lead for the Higher Education Data Reference Model, adopted by thousands of universities worldwide. He's especially excited about how AI can boost his average Python skills to clean up messy data.",
+        bio: "Alan has been working in higher education and IT for many years. He built his first web page the same year the Power Macintosh launched and started his career migrating databases from hierarchical to relational models'helping him dodge Y2K chaos. Since then, he' s helped embed every major tech shift into higher education. His roles have included head of IT, manager across Student & Research Administration, consultant, (briefly) University Librarian, and now Director of Data, Technology Risk & Policy. He' s also domain lead for the Higher Education Data Reference Model, adopted by thousands of universities worldwide. He' s especially excited about how AI can boost his average Python skills to clean up messy data.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/689c66e3e624d2e6868f26cb_WEB2%2002%20Alan%20Dent.jpg",
       },
       {
@@ -495,13 +463,13 @@ AUT, 55 Wellesley Street East, Auckland Central 1010`,
       {
         name: "Shae Parsons",
         title: "",
-        bio: "Shae Parsons is an AI consultant, product strategist, and Miss Earth New Zealand 2025 with a passion for turning bold ideas into impactful, sustainable solutions. With a Master's in Computer and Information Science (First Class Honours), she has delivered AI strategy, ethical technology design, and culturally grounded product development projects for organisations including Callaghan Innovation and the AI Forum. She has also mentored MÄori businesses through high-growth strategies, designed market-ready tech products, and championed responsible AI adoption. Blending technical expertise, business acumen, and creative problem-solving, Shae empowers teams to design innovative solutions that work for people, planet, and profit.",
+        bio: "Shae Parsons is an AI consultant, product strategist, and Miss Earth New Zealand 2025 with a passion for turning bold ideas into impactful, sustainable solutions. With a Master' s in Computer and Information Science (First Class Honours), she has delivered AI strategy, ethical technology design, and culturally grounded product development projects for organisations including Callaghan Innovation and the AI Forum. She has also mentored MÄori businesses through high-growth strategies, designed market-ready tech products, and championed responsible AI adoption. Blending technical expertise, business acumen, and creative problem-solving, Shae empowers teams to design innovative solutions that work for people, planet, and profit.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/689c616e7d30faa0c152b994_IMG_8757.jpg",
       },
       {
         name: "Isha Sangrolkar",
         title: "",
-        bio: "Isha has strong knowledge in ML, AI, and cloud technologies. She specializes in training models, fine-tuning parameters, and prompt engineering, with a focus on building ethical and responsible AI solutions. She has hands-on experience with Azure OpenAI and Google Cloud's Vertex AI. As a software developer, she works confidently with Java, Python, and Go, and has experience creating scalable, cloud-based applications. Isha enjoys turning ideas into real, working solutions.",
+        bio: "Isha has strong knowledge in ML, AI, and cloud technologies. She specializes in training models, fine-tuning parameters, and prompt engineering, with a focus on building ethical and responsible AI solutions. She has hands-on experience with Azure OpenAI and Google Cloud' s Vertex AI. As a software developer, she works confidently with Java, Python, and Go, and has experience creating scalable, cloud-based applications. Isha enjoys turning ideas into real, working solutions.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/689c65caa1d0876274f8e62e_image.png",
       },
       {
@@ -531,7 +499,7 @@ AUT, 55 Wellesley Street East, Auckland Central 1010`,
       {
         name: "Sara Ghafoor",
         title: "",
-        bio: "I'm an AI-driven problem solver with an Electrical Engineering background and a Master's in Computer Information Sciences, Majored in AI. Currently with Entelar Group, I work on Spark NZ projects while bringing my passion for innovation to the hackathon world. In just two years, I've been part of five hackathons ' mentoring, competing, and volunteering. I excel at turning ideas into standout pitches and guiding teams to shape concepts that shine. With skills in generative AI, medical imaging, machine learning, CNNs, and text mining, I bring both technical depth and creative spark to every challenge.",
+        bio: "I' m an AI-driven problem solver with an Electrical Engineering background and a Master' s in Computer Information Sciences, Majored in AI. Currently with Entelar Group, I work on Spark NZ projects while bringing my passion for innovation to the hackathon world. In just two years, I've been part of five hackathons ' mentoring, competing, and volunteering. I excel at turning ideas into standout pitches and guiding teams to shape concepts that shine. With skills in generative AI, medical imaging, machine learning, CNNs, and text mining, I bring both technical depth and creative spark to every challenge.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/652774fc247ee7d771e65d2c_Sara.png",
       },
       {
@@ -575,7 +543,7 @@ AUT, 55 Wellesley Street East, Auckland Central 1010`,
 
 Join us for an empowering session focused on helping you take the next step in your career journey. Whether you're searching for your first job or exploring a career transition, this event will equip you with the tools, insights, and confidence you need.
 
-This is more than a talk ' it's a hands-on, interactive experience designed to help you build clarity, confidence, and connections. Open to all, but especially geared towardsuniversity students,recent graduates, andprofessionals seeking new opportunities.
+This is more than a talk ' it' s a hands-on, interactive experience designed to help you build clarity, confidence, and connections. Open to all, but especially geared towardsuniversity students,recent graduates, andprofessionals seeking new opportunities.
 
 HPE, Level 19 PWC Tower, Commercial Bay, 15 Customs Street West, Auckland Central`,
     category: "thrive",
@@ -594,7 +562,7 @@ HPE, Level 19 PWC Tower, Commercial Bay, 15 Customs Street West, Auckland Centra
       {
         name: "Kathryn Sandford",
         title: "",
-        bio: "Kathryn Sandford is a leadership coach and personal brand strategist who challenges the outdated rules around visibility, self-promotion, and influence.She works with professionals who've been overlooked, underestimated, or stuck at a crossroads helping them build a personal brand that reflects who they really are, not just what they've done. Her signature programme, Invisible to Influential, helps women 40+ and emerging leaders stop playing small and start showing up with clarity, confidence, and presence.Kathryn's belief is simple but powerful: Your personal brand isn't a performance ' it's your presence. Self-promotion isn't ego ' it's self-respect. And visibility starts on the inside, long before the outside world catches up.'",
+        bio: "Kathryn Sandford is a leadership coach and personal brand strategist who challenges the outdated rules around visibility, self-promotion, and influence.She works with professionals who've been overlooked, underestimated, or stuck at a crossroads helping them build a personal brand that reflects who they really are, not just what they've done. Her signature programme, Invisible to Influential, helps women 40+ and emerging leaders stop playing small and start showing up with clarity, confidence, and presence.Kathryn' s belief is simple but powerful: Your personal brand isn' t a performance ' it' s your presence. Self-promotion isn' t ego ' it' s self-respect. And visibility starts on the inside, long before the outside world catches up.'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/686237b2c1b15cec7645e530_Elevate%20%20_HR-13%20(1).jpg",
       },
       {
@@ -622,7 +590,7 @@ HPE, Level 19 PWC Tower, Commercial Bay, 15 Customs Street West, Auckland Centra
       {
         name: "Jamini Patel",
         title: "Distribution Manager (previous HPE graduate)",
-        bio: "Jamini began her career through the Hewlett Packard Enterprise graduate programme, gaining a comprehensive introduction to the world of tech sales. This foundational experience deepened her understanding of the tech industry and sharpened her skills in sales and partner relations. She later transitioned into her current role as a Distribution Business Manager, where she continues to expand her expertise and make meaningful contributions.In addition to her core responsibilities, Jamini completed a short-term assignment in marketing communications for New Zealand, a role that allowed her to tap into her passion for marketing and social media and express her creative spirit.Beyond her day-to-day role, Jamini plays an active part in fostering workplace culture and community. She chairs the Early Career Network, where she leads the planning of events that support professional growth and networking. She is also a dedicated member of In Her Element, HPE's Women's Leadership Network, where she champions women's development and leads initiatives that drive diversity, inclusion, and empowerment across the organisation.'",
+        bio: "Jamini began her career through the Hewlett Packard Enterprise graduate programme, gaining a comprehensive introduction to the world of tech sales. This foundational experience deepened her understanding of the tech industry and sharpened her skills in sales and partner relations. She later transitioned into her current role as a Distribution Business Manager, where she continues to expand her expertise and make meaningful contributions.In addition to her core responsibilities, Jamini completed a short-term assignment in marketing communications for New Zealand, a role that allowed her to tap into her passion for marketing and social media and express her creative spirit.Beyond her day-to-day role, Jamini plays an active part in fostering workplace culture and community. She chairs the Early Career Network, where she leads the planning of events that support professional growth and networking. She is also a dedicated member of In Her Element, HPE' s Women' s Leadership Network, where she champions women' s development and leads initiatives that drive diversity, inclusion, and empowerment across the organisation.'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/686b6e7dbaea94f8cf28eb91_Jamini%20Patel.jpeg",
         linkedIn: "https://www.linkedin.com/in/jamini-patel-311ba9170/",
       },
@@ -651,7 +619,7 @@ HPE, Level 19 PWC Tower, Commercial Bay, 15 Customs Street West, Auckland Centra
       {
         name: "Irene Naidu",
         title: "SnapperNet Business Development Manager",
-        bio: "SnapperNet Business Development Manager || Founder of TechBabesNZWith over 20 years of experience in the information technology industry, Irene is a seasoned Business Development Manager known for her outstanding sales achievements, deep industry knowledge, and strong network of connections. Her career is marked by a commitment to driving growth, fostering relationships, and making a meaningful impact within the NZ tech sector.In 2023, she was honoured with the Reseller News NZ Women in ICT Award in the Achievement category and currently serves as a judge for both the Women in ICT Awards and the NZ Channel Partner Awards.She is also the founder of TechBabesNZ, a platform and podcast focused on conversations shaping New Zealand's technology landscape. A passionate advocate for diversity in tech, Irene actively mentors women entering the ICT sector and volunteers with South Auckland STEM, encouraging more MÄori and Pasifika youth to pursue careers in technology.Her mission is clear: to make STEM accessible to all young Kiwis and help close the digital divide across Aotearoa.'",
+        bio: "SnapperNet Business Development Manager || Founder of TechBabesNZWith over 20 years of experience in the information technology industry, Irene is a seasoned Business Development Manager known for her outstanding sales achievements, deep industry knowledge, and strong network of connections. Her career is marked by a commitment to driving growth, fostering relationships, and making a meaningful impact within the NZ tech sector.In 2023, she was honoured with the Reseller News NZ Women in ICT Award in the Achievement category and currently serves as a judge for both the Women in ICT Awards and the NZ Channel Partner Awards.She is also the founder of TechBabesNZ, a platform and podcast focused on conversations shaping New Zealand' s technology landscape. A passionate advocate for diversity in tech, Irene actively mentors women entering the ICT sector and volunteers with South Auckland STEM, encouraging more MÄori and Pasifika youth to pursue careers in technology.Her mission is clear: to make STEM accessible to all young Kiwis and help close the digital divide across Aotearoa.'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/686b7028bf8b5d7ad362879c_Irene%20Naidu.jpeg",
       },
       {
@@ -673,7 +641,7 @@ HPE, Level 19 PWC Tower, Commercial Bay, 15 Customs Street West, Auckland Centra
         name: "Matthew Hall-White",
         title: "Financial Adviser - Life and Health Insurance",
         company: "Life and Health Insurance",
-        bio: "Matt finds fulfilment in working closely with clients, guiding them through their financial options and empowering them to make informed decisions for a secure future. He firmly believes that sound advice'especially during challenging times'offers essential protection against both financial and emotional stress.Outside of work, Matt is an avid outdoor enthusiast who enjoys tramping, running, and exploring the mountains. He values self-care and believes in the importance of finding balance amidst life's demands.'",
+        bio: "Matt finds fulfilment in working closely with clients, guiding them through their financial options and empowering them to make informed decisions for a secure future. He firmly believes that sound advice'especially during challenging times'offers essential protection against both financial and emotional stress.Outside of work, Matt is an avid outdoor enthusiast who enjoys tramping, running, and exploring the mountains. He values self-care and believes in the importance of finding balance amidst life' s demands.'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/686b7136426b1f78f21f3888_Matthew%20Hall-White.jpeg",
         linkedIn: "https://www.linkedin.com/in/hallwhite/",
       },
@@ -703,7 +671,7 @@ HPE, Level 19 PWC Tower, Commercial Bay, 15 Customs Street West, Auckland Centra
         name: "Bahareh Jalili-Moghaddam",
         title: "Call Centre Manager, PB Tech",
         company: "PB Tech",
-        bio: "Bahareh is a passionate and energetic Call Centre Manager at PB Tech, known for turning challenges into opportunities and creating outstanding customer experiences. With a people-first mindset and a love for fast-paced environments, she leads with positivity, purpose, and a smile'bringing energy and impact to every team she's part of.",
+        bio: "Bahareh is a passionate and energetic Call Centre Manager at PB Tech, known for turning challenges into opportunities and creating outstanding customer experiences. With a people-first mindset and a love for fast-paced environments, she leads with positivity, purpose, and a smile'bringing energy and impact to every team she' s part of.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68874b7242b76ac2043c88f5_IMG_7827.jpeg",
       },
       {
@@ -810,9 +778,9 @@ As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare
   },
   {
     slug: "tech-that-matches-your-vibe-find-your-perfect-fit",
-    title: "'Tech That Matches Your Vibe: Find Your Perfect Fit'",
-    shortDescription: "Discover how your unique strengths can shape your tech journey in this exciting lightning-style event! Hear from 6 inspiring speakers as they share how they've harnessed their unique talents to thrive in their roles and overcome challenges. Whether you're exploring tech careers or seeking clarity on where you might fit, this event will spark ideas and help you uncover your potential.",
-    description: `Discover how your unique strengths can shape your tech journey in this exciting lightning-style event! Hear from 6 inspiring speakers as they share how they've harnessed their unique talents to thrive in their roles and overcome challenges. Whether you're exploring tech careers or seeking clarity on where you might fit, this event will spark ideas and help you uncover your potential.
+    title: "Tech That Matches Your Vibe: Find Your Perfect Fit",
+    shortDescription: "Discover how your unique strengths can shape your tech journey in this exciting lightning-style event! Hear from 6 inspiring speakers as they share how they've harnessed their unique talents to thrive in their roles and overcome challenges. Whether you' re exploring tech careers or seeking clarity on where you might fit, this event will spark ideas and help you uncover your potential.",
+    description: `Discover how your unique strengths can shape your tech journey in this exciting lightning-style event! Hear from 6 inspiring speakers as they share how they've harnessed their unique talents to thrive in their roles and overcome challenges. Whether you' re exploring tech careers or seeking clarity on where you might fit, this event will spark ideas and help you uncover your potential.
 
 8/50 Albert Street, Auckland Central, Auckland 1010`,
     category: "networking",
@@ -860,7 +828,7 @@ As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare
         name: "Madaleen Bothma",
         title: "Senior product manager",
         company: "MYOB with a knack for bringing people together",
-        bio: "Madaleen Bothma is a senior product manager at MYOB with a knack for bringing people together and making things happen! With a career spanning roles such as software developer, team leader, project manager, transformation expert, and product manager, she has a wide range of experience and has had a blast along the way.She's all about the magic of teamwork and believes that when diverse perspectives and strengths come together, amazing things happen. Her proudest professional moments are when everything aligns, and our work makes a real difference to real people.",
+        bio: "Madaleen Bothma is a senior product manager at MYOB with a knack for bringing people together and making things happen! With a career spanning roles such as software developer, team leader, project manager, transformation expert, and product manager, she has a wide range of experience and has had a blast along the way.She' s all about the magic of teamwork and believes that when diverse perspectives and strengths come together, amazing things happen. Her proudest professional moments are when everything aligns, and our work makes a real difference to real people.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67fdfceb06fb9e7e878e02ef_Madaleen%20Bothma-12.jpg",
         linkedIn: "https://www.linkedin.com/in/madaleen-bothma-0012b61/",
       },
@@ -989,10 +957,10 @@ Dr. Mahsa McCauley is the founder and the director of She Sharp , an Associate P
   {
     slug: "she-sharp-academy-ex-international-womens-day",
     title: "She Sharp & academyEX: International Women's Day",
-    shortDescription: "She Sharp's International Women's Day (IWD) event is scheduled for March 14 at academyEX. Join us for an inspiring evening celebrating women in tech, featuring engaging discussions, networking opportunities, and community connections. The registration starts at 4.30 pm, and the event kicks off at 5 PM'don't miss it!",
-    description: `She Sharp's International Women's Day (IWD) event is scheduled for March 14 at academyEX. Join us for an inspiring evening celebrating women in tech, featuring engaging discussions, networking opportunities, and community connections. The registration starts at 4.30 pm, and the event kicks off at 5 PM'don't miss it!
+    shortDescription: "She Sharp' s International Women' s Day (IWD) event is scheduled for March 14 at academyEX. Join us for an inspiring evening celebrating women in tech, featuring engaging discussions, networking opportunities, and community connections. The registration starts at 4.30 pm, and the event kicks off at 5 PM'don' t miss it!",
+    description: `She Sharp' s International Women' s Day (IWD) event is scheduled for March 14 at academyEX. Join us for an inspiring evening celebrating women in tech, featuring engaging discussions, networking opportunities, and community connections. The registration starts at 4.30 pm, and the event kicks off at 5 PM'don' t miss it!
 
-Moumita Das Roy is a cross-industry marketer with a wealth of technology marketing experience in iconic, global organisations. Recognised as LinkedIn Top Voice and Creator to Follow, she is a prolific content creator passionately engaging in conversations about Diversity and Inclusion, Social Impact, and Volunteering. You'll find her at the crossroads of innovation and impact, creativity and purpose. Moumita's multicultural work environments and travels across seven continents through work a`,
+Moumita Das Roy is a cross-industry marketer with a wealth of technology marketing experience in iconic, global organisations. Recognised as LinkedIn Top Voice and Creator to Follow, she is a prolific content creator passionately engaging in conversations about Diversity and Inclusion, Social Impact, and Volunteering. You' ll find her at the crossroads of innovation and impact, creativity and purpose. Moumita' s multicultural work environments and travels across seven continents through work a`,
     category: "networking",
     status: "completed",
     startDate: "2025-03-14",
@@ -1010,27 +978,27 @@ Moumita Das Roy is a cross-industry marketer with a wealth of technology marketi
         name: "Moumita Das Roy",
         title: "Commercial Communications Manager - DuluxGroup",
         company: "DuluxGroup",
-        bio: "Moumita Das Roy is a cross-industry marketer with a wealth of technology marketing experience in iconic, global organisations. Recognised as LinkedIn Top Voice and Creator to Follow, she is a prolific content creator passionately engaging in conversations about Diversity and Inclusion, Social Impact, and Volunteering. You'll find her at the crossroads of innovation and impact, creativity and purpose. Moumita's multicultural work environments and travels across seven continents through work and volunteering enrich her storytelling, making her contributions relatable and versatile. Besides her day job, she helps senior corporate executives, professionals and entrepreneurs in sharing their stories confidently across social media.",
+        bio: "Moumita Das Roy is a cross-industry marketer with a wealth of technology marketing experience in iconic, global organisations. Recognised as LinkedIn Top Voice and Creator to Follow, she is a prolific content creator passionately engaging in conversations about Diversity and Inclusion, Social Impact, and Volunteering. You' ll find her at the crossroads of innovation and impact, creativity and purpose. Moumita' s multicultural work environments and travels across seven continents through work and volunteering enrich her storytelling, making her contributions relatable and versatile. Besides her day job, she helps senior corporate executives, professionals and entrepreneurs in sharing their stories confidently across social media.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67c62f5b750d6a1b1d32b821_Moumita%20Das%20Roy%20Photo.png",
       },
       {
         name: "Perrin Rowland",
         title: "Chief Product & Experience Officer",
-        bio: "When I started my journey, I never imagined where my passion for understanding people would take me. My life has moved at different rhythms, but as I get older, I become more attuned to the ride than the destination. This realization has shaped my career journey: when we center human and environmental needs in our work, transformation follows. At academyEX and Westpac, I led teams that revolutionized customer connections. Your ability to see connections others miss is your superpower. Find where your perspective meets the world's needs'that's where your greatest contribution lies. Remember, persistence in growth, change, or even satisfying my sweet tooth, builds every success story, including yours.",
+        bio: "When I started my journey, I never imagined where my passion for understanding people would take me. My life has moved at different rhythms, but as I get older, I become more attuned to the ride than the destination. This realization has shaped my career journey: when we center human and environmental needs in our work, transformation follows. At academyEX and Westpac, I led teams that revolutionized customer connections. Your ability to see connections others miss is your superpower. Find where your perspective meets the world' s needs'that' s where your greatest contribution lies. Remember, persistence in growth, change, or even satisfying my sweet tooth, builds every success story, including yours.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67c63282c133a81a3836b8d0_image%20(56).png",
       },
       {
         name: "Ireen Rahiman-Manuel",
         title: "Founder and Director of Impactdev360",
         company: "Drowning Prevention Aotearoa",
-        bio: "Ireen Rahiman-Manuel has 20+ years of experience in design, planning, and impact measurement across New Zealand, Australia, and the Pacific. A strong advocate for maternal and child health, she is the founder/director of Impactdev360 and Rapid Builders & Renovators. She specializes in leadership, strategic planning, policy development, and social sector strengthening. She has led complex programs, including STEM initiatives. Ireen is the co-chair of Auckland Council's Ethnic Peoples Advisory Panel, a board member for Drowning Prevention Aotearoa and Women's Health Action NZ, and a spokesperson for Child Poverty Action Group Aotearoa.",
+        bio: "Ireen Rahiman-Manuel has 20+ years of experience in design, planning, and impact measurement across New Zealand, Australia, and the Pacific. A strong advocate for maternal and child health, she is the founder/director of Impactdev360 and Rapid Builders & Renovators. She specializes in leadership, strategic planning, policy development, and social sector strengthening. She has led complex programs, including STEM initiatives. Ireen is the co-chair of Auckland Council' s Ethnic Peoples Advisory Panel, a board member for Drowning Prevention Aotearoa and Women' s Health Action NZ, and a spokesperson for Child Poverty Action Group Aotearoa.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67c7f38a609ff1167d1fefb5_Screen%20Shot%202025-03-05%20at%207.40.1.png",
       },
       {
         name: "Janet Van Jenkins",
         title: "General Manager - Flexware",
         company: "Flexware",
-        bio: "The youngest of four daughters born to Vietnamese refugee parents, Janet grew up with strong female role models who showed her that women can do anything. Her career has spanned market research, sales, surgical device design, education outreach, charities, consulting, and acting - a true rollercoaster of experiences. Passionate about problem-solving, education, and the arts, she blends technical expertise with creativity to drive meaningful change towards a more equitable future. As GM of FlexWare and Programme Manager for Children's University Massey, Janet is dedicated to helping people reach their full potential, whether they're 5 or 65.",
+        bio: "The youngest of four daughters born to Vietnamese refugee parents, Janet grew up with strong female role models who showed her that women can do anything. Her career has spanned market research, sales, surgical device design, education outreach, charities, consulting, and acting - a true rollercoaster of experiences. Passionate about problem-solving, education, and the arts, she blends technical expertise with creativity to drive meaningful change towards a more equitable future. As GM of FlexWare and Programme Manager for Children' s University Massey, Janet is dedicated to helping people reach their full potential, whether they' re 5 or 65.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67ce84dfa41b3725204bd57f_Screen%20Shot%202025-03-10%20at%207.21.10%20PM.png",
       },
       {
@@ -1087,7 +1055,7 @@ Moumita Das Roy is a cross-industry marketer with a wealth of technology marketi
 
 The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.
 
-Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they'll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.
+Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they' ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.
 
 12 Madden Street - Grid AKL - Generator.Google Maps`,
     category: "conference",
@@ -1115,7 +1083,7 @@ Teachers will be equipped with the ability to tap into the creativity and enthus
         name: "Alliv Samson",
         title: "CGO and Co-Founder of Kami",
         company: "Founder of Kami",
-        bio: "Alliv Samson is the CGO and Co-Founder of Kami, the world's #1 digital classroom application that is transforming the way students and teachers engage and collaborate with learning resources. She is responsible for Kami's ventures into offshore markets, their marketing efforts, team growth, and user growth.Alliv graduated with a Bachelor of Arts Majors in Political Studies and Media Studies from the University of Auckland. She has mentored university students through The University of Auckland Velocity Programme and Centre for Innovation and Entrepreneurship, and her experience in computer science and freelance work has helped shape Kami into one of the fastest growing EdTech companies across the globe.'",
+        bio: "Alliv Samson is the CGO and Co-Founder of Kami, the world' s #1 digital classroom application that is transforming the way students and teachers engage and collaborate with learning resources. She is responsible for Kami' s ventures into offshore markets, their marketing efforts, team growth, and user growth.Alliv graduated with a Bachelor of Arts Majors in Political Studies and Media Studies from the University of Auckland. She has mentored university students through The University of Auckland Velocity Programme and Centre for Innovation and Entrepreneurship, and her experience in computer science and freelance work has helped shape Kami into one of the fastest growing EdTech companies across the globe.'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/670c79e4bcb72874bd74433a_Alliv%20Samson%20(Keynote).jpg",
         linkedIn: "https://www.linkedin.com/in/alliv/",
       },
@@ -1131,7 +1099,7 @@ Teachers will be equipped with the ability to tap into the creativity and enthus
         name: "Dr. Kara Kennedy",
         title: "Principal - AI Literacy Institute",
         company: "AI Literacy Institute",
-        bio: "Kara Kennedy, PhD, is a scholar, author, and educator in the areas of digital and AI literacy and science fiction. She launched the AI Literacy Institute for resources and guidance on Generative AI topics, and her AI guides have been shared and translated by educators around the world. She has presented on digital and AI literacy at conferences in the US, Australia, and NZ and published journal articles on digital and information literacy and on the gender gap in Wikipedia. Her work as a learning advisor at the University of Canterbury and Manukau Institute of Technology has given her valuable insights into people's struggles with technology, and she is keen to help close the digital divide and the gender gap in STEM.",
+        bio: "Kara Kennedy, PhD, is a scholar, author, and educator in the areas of digital and AI literacy and science fiction. She launched the AI Literacy Institute for resources and guidance on Generative AI topics, and her AI guides have been shared and translated by educators around the world. She has presented on digital and AI literacy at conferences in the US, Australia, and NZ and published journal articles on digital and information literacy and on the gender gap in Wikipedia. Her work as a learning advisor at the University of Canterbury and Manukau Institute of Technology has given her valuable insights into people' s struggles with technology, and she is keen to help close the digital divide and the gender gap in STEM.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66d1789a4b5f67bde73883ce_Kara.jpeg",
         linkedIn: "https://www.linkedin.com/in/kara-kennedy6/",
       },
@@ -1147,7 +1115,7 @@ Teachers will be equipped with the ability to tap into the creativity and enthus
         name: "Catherine Frost",
         title: "Lead Writer Technology , Ministry of Education",
         company: "Ministry of Education",
-        bio: "Catherine is currently Lead Writer in the Technology learning area in the Ministry of Education for the curriculum refresh Te MÄtaiaho. Teaching across all sectors, first in the 90's in the UK and since 2004 in Aotearoa New Zealand, Catherine has almost 30 years' experience in Technology education, leadership, strategy and curriculum development; Catherine has held a variety of, advisory, consultancy and national project leadership roles, specialising in change strategy, leadership with the goal to improve the educational opportunities for all Äkonga through a 'futures-ready' lens and quality learning design. She is passionate about curriculum and the potential of emerging technologies to transform educational possibilities.",
+        bio: "Catherine is currently Lead Writer in the Technology learning area in the Ministry of Education for the curriculum refresh Te MÄtaiaho. Teaching across all sectors, first in the 90' s in the UK and since 2004 in Aotearoa New Zealand, Catherine has almost 30 years' experience in Technology education, leadership, strategy and curriculum development; Catherine has held a variety of, advisory, consultancy and national project leadership roles, specialising in change strategy, leadership with the goal to improve the educational opportunities for all Äkonga through a 'futures-ready'  lens and quality learning design. She is passionate about curriculum and the potential of emerging technologies to transform educational possibilities.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66f8f1791c37f36fc8e345a1_Catherine%20Frost(Demo).jpg",
       },
       {
@@ -1162,7 +1130,7 @@ Teachers will be equipped with the ability to tap into the creativity and enthus
         name: "Munireh Rouget",
         title: "Deputy Chair - TENZ Council",
         company: "TENZ Council",
-        bio: "Munireh serves as the Deputy Chair on the TENZ council and is Poutakawaenga mÅ te PÅ«take Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle. She earned her Master's in Computer Sciences from UniversitÃ© Paul Sabatier in France and began her career as a Software Engineer, crafting e-commerce websites for major international companies. In 2021, she made the exciting decision to become a teacher, aiming to enhance diversity and inclusion in Computer Sciences and Digital Technologies. Now, as the Leader of Learning for Digital Technology at Fraser High School, she strives to empower young women and support them in their journeys in STEMM, particularly in Computer Science.",
+        bio: "Munireh serves as the Deputy Chair on the TENZ council and is Poutakawaenga mÅ te PÅ«take Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle. She earned her Master' s in Computer Sciences from UniversitÃ© Paul Sabatier in France and began her career as a Software Engineer, crafting e-commerce websites for major international companies. In 2021, she made the exciting decision to become a teacher, aiming to enhance diversity and inclusion in Computer Sciences and Digital Technologies. Now, as the Leader of Learning for Digital Technology at Fraser High School, she strives to empower young women and support them in their journeys in STEMM, particularly in Computer Science.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/670c7805bc6a2c73a5469191_Munireh.png",
         linkedIn: "https://www.linkedin.com/in/munireh-rouget-43501a60?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
       },
@@ -1213,7 +1181,7 @@ Teachers will be equipped with the ability to tap into the creativity and enthus
         name: "Paul Savage",
         title: "Kami - Senior Product Marketer",
         company: "Senior Product Marketer",
-        bio: "Paul Savage, Senior Product Marketer at Kami, brings a unique blend of educational expertise and product innovation to the workshop. With a background as a former adult education teacher and over 20 years of global product marketing experience. His mission is to bring educators tools that break down barriers in education, ensuring equitable learning opportunities for all students. Paul's passion for blending pedagogy with technology drives his commitment to transforming classrooms into engaging, supportive environments for students of all backgrounds.",
+        bio: "Paul Savage, Senior Product Marketer at Kami, brings a unique blend of educational expertise and product innovation to the workshop. With a background as a former adult education teacher and over 20 years of global product marketing experience. His mission is to bring educators tools that break down barriers in education, ensuring equitable learning opportunities for all students. Paul' s passion for blending pedagogy with technology drives his commitment to transforming classrooms into engaging, supportive environments for students of all backgrounds.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/670c9279065093d7fd6b92ec_Paul%20Savage%20(Workshop%20Speaker).png",
       },
       {
@@ -1294,7 +1262,7 @@ Gallagher Academy of Performing Arts, Te Whare TÄpere Iti`,
         name: "Loren George",
         title: "Data Product Lead - Fonterra",
         company: "Fonterra",
-        bio: "Having started in Fonterra 17 years ago in Accounts Payable and moving my way through my career to spend the last 12 years in the data space, it has been clear to me that the demand for 'data people' is only getting bigger. I currently work as the Data Product Lead for Fonterra, understanding the frameworks needed to take Fonterra on it's Data Product Transformation. The role involves a lot of indirect management, coaching and stakeholder management, all of which I am passionate about. I believe that each person has their own value and enjoy working with people to unlock the skill that makes them shine so they can bring the most to their role.",
+        bio: "Having started in Fonterra 17 years ago in Accounts Payable and moving my way through my career to spend the last 12 years in the data space, it has been clear to me that the demand for 'data people' is only getting bigger. I currently work as the Data Product Lead for Fonterra, understanding the frameworks needed to take Fonterra on it' s Data Product Transformation. The role involves a lot of indirect management, coaching and stakeholder management, all of which I am passionate about. I believe that each person has their own value and enjoy working with people to unlock the skill that makes them shine so they can bring the most to their role.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6715e0c3822287f94176a635_Loren%20George.PNG",
         linkedIn: "https://www.linkedin.com/in/loren-george-28597pdf/",
       },
@@ -1408,7 +1376,7 @@ This milestone event will feature inspiring talks from key industry figures and 
         name: "Alexia Hilbertidou",
         title: "Founder, GirlBoss New Zealand",
         company: "GirlBoss New Zealand",
-        bio: "Alexia is the CEO of GirlBoss NZ - NZ's largest organisation for young women. Founded when Alexia was just16, GirlBoss now has 17,500 members. Alexia's mission is to get women to the table - the boardroom tablethat is, and she believes the decisions made while young are crucial in paving the way. She has flown withNASA, received a Queen's Young Leaders Medal for Services to the Commonwealth, is a National GeographicExplorer, Forbes 30 under 30, and the youngest person to represent New Zealand at the United Nations inNew York. She was named Pacific Young Entrepreneur of the Year in 2020 and 2022.",
+        bio: "Alexia is the CEO of GirlBoss NZ - NZ's largest organisation for young women. Founded when Alexia was just16, GirlBoss now has 17,500 members. Alexia' s mission is to get women to the table - the boardroom tablethat is, and she believes the decisions made while young are crucial in paving the way. She has flown withNASA, received a Queen' s Young Leaders Medal for Services to the Commonwealth, is a National GeographicExplorer, Forbes 30 under 30, and the youngest person to represent New Zealand at the United Nations inNew York. She was named Pacific Young Entrepreneur of the Year in 2020 and 2022.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66ebaa7e8a9d1200adac0006_AlexiaHHeadshotSquare.jpg",
         linkedIn: "https://www.linkedin.com/in/alexiah/",
       },
@@ -1423,14 +1391,14 @@ This milestone event will feature inspiring talks from key industry figures and 
         name: "Frances Valintine CNZM",
         title: "Founder & Board Director, academyEX",
         company: "academyEX",
-        bio: "Frances Valintine CNZM is a passionate educator and technologist dedicated to creating opportunities that connect professionals with the knowledge they need to succeed in today's rapidly advancing world. For over 25 years, she has focused on shifting education and business practices to develop the skills, knowledge, and mindset needed for the future of work, societal change, and planetary protection.In 2024, Frances transitioned from CEO to Founder and Board Director, concentrating on major initiatives and partnerships at academyEX, a post-graduate institute specializing in technological advancement, education, sustainability, and leadership.",
+        bio: "Frances Valintine CNZM is a passionate educator and technologist dedicated to creating opportunities that connect professionals with the knowledge they need to succeed in today' s rapidly advancing world. For over 25 years, she has focused on shifting education and business practices to develop the skills, knowledge, and mindset needed for the future of work, societal change, and planetary protection.In 2024, Frances transitioned from CEO to Founder and Board Director, concentrating on major initiatives and partnerships at academyEX, a post-graduate institute specializing in technological advancement, education, sustainability, and leadership.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66fa6a291efe1e2daf30f74b_Frances%20Valintine.jpeg",
         linkedIn: "https://www.linkedin.com/in/francesvalintine/?originalSubdomain=nz",
       },
       {
         name: "Aravind Subramanian",
         title: "Partner in Deloitte's Technology",
-        bio: "Aravind is a Partner in Deloitte's Technology & Transformation practice with over 20 years of professional experience leading a wide range of data-driven CX, business and digital transformation initiatives. He leads the AI & Data capability at Deloitte and specializes in AI enablement, Trustworthy AI, Data Leadership & Culture change and Strategic Data Governance.Prior to focusing on Data & Analytics, Aravind worked across customer transformation and ecommerce initiatives and thus brings a good understanding how data & insights are managed across the enterprise from client facing functions to internal business operations.",
+        bio: "Aravind is a Partner in Deloitte' s Technology & Transformation practice with over 20 years of professional experience leading a wide range of data-driven CX, business and digital transformation initiatives. He leads the AI & Data capability at Deloitte and specializes in AI enablement, Trustworthy AI, Data Leadership & Culture change and Strategic Data Governance.Prior to focusing on Data & Analytics, Aravind worked across customer transformation and ecommerce initiatives and thus brings a good understanding how data & insights are managed across the enterprise from client facing functions to internal business operations.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66fe07ec60960af4d0aa824b_Picture%201.png",
         linkedIn: "https://www.linkedin.com/in/aruvihere/",
       },
@@ -1438,7 +1406,7 @@ This milestone event will feature inspiring talks from key industry figures and 
         name: "Rochelle Moffitt",
         title: "Founder & CEO, Tickled Pink",
         company: "Tickled Pink",
-        bio: "Championing women in business and helping them courageously up their game and amplify their presence, Rochelle is a powerhouse in New Zealand's social media and marketing industry.With a knack for innovative strategies and a passion for bold, lasting change, Rochelle supports individuals to elevate their visibility and achieve unparalleled success.As an award-winning marketer, she specialises in strategic personal branding, compelling story-driven marketing, and effective networking relationship management. Making her the go-to expert for those who dare to be brave and are ready to shine and succeed.",
+        bio: "Championing women in business and helping them courageously up their game and amplify their presence, Rochelle is a powerhouse in New Zealand' s social media and marketing industry.With a knack for innovative strategies and a passion for bold, lasting change, Rochelle supports individuals to elevate their visibility and achieve unparalleled success.As an award-winning marketer, she specialises in strategic personal branding, compelling story-driven marketing, and effective networking relationship management. Making her the go-to expert for those who dare to be brave and are ready to shine and succeed.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67034e56cb13daf751a0f03f_Rochelle.png",
         linkedIn: "https://www.linkedin.com/in/rochellemoffitt/?originalSubdomain=nz",
       },
@@ -1531,7 +1499,7 @@ Fonterra Centre109 Fanshawe Street, Auckland CBD, Auckland 1010, New Zealand`,
         name: "Natasha Brownlie",
         title: "Modern Work Specialist - Microsoft",
         company: "Microsoft",
-        bio: "Natasha is a Modern Work Specialist at Microsoft, supporting Commercial organisations across New Zealand boost productivity, flexibility, wellbeing, and connection. Holding a Masters of Commerce and with a background in human resources, she transitioned to the IT sector in 2022 by joining Microsoft. Merging her interest in both human resources and technology has allowed Natasha to focus on elevating employee experiences in today's hybrid work environment and the emerging Gen AI era.",
+        bio: "Natasha is a Modern Work Specialist at Microsoft, supporting Commercial organisations across New Zealand boost productivity, flexibility, wellbeing, and connection. Holding a Masters of Commerce and with a background in human resources, she transitioned to the IT sector in 2022 by joining Microsoft. Merging her interest in both human resources and technology has allowed Natasha to focus on elevating employee experiences in today' s hybrid work environment and the emerging Gen AI era.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66b1bfc09569bcb55d2163a4_natasha.jpeg",
         linkedIn: "https://www.linkedin.com/in/natasha-brownlie-7550a0214/",
       },
@@ -1547,7 +1515,7 @@ Fonterra Centre109 Fanshawe Street, Auckland CBD, Auckland 1010, New Zealand`,
         name: "Stephanie Lopez",
         title: "Chief of Staff to the CIO - Fonterra",
         company: "Fonterra",
-        bio: "Steffie is the Chief of Staff for IT at Fonterra, supporting the digital transformation of 16.6 billion liters of milk annually into 30% of the world's dairy exports. With a background as an internationally experienced Senior Technical Business Analyst and seven years in technology transformation consulting, she won the PMO of the Year at the Irish PMI National Project Awards in 2019. Steffie collaborates closely with executives and partners to deliver strategic outcomes across technology and is a champion of diversity, guiding new talent in the corporate world.",
+        bio: "Steffie is the Chief of Staff for IT at Fonterra, supporting the digital transformation of 16.6 billion liters of milk annually into 30% of the world' s dairy exports. With a background as an internationally experienced Senior Technical Business Analyst and seven years in technology transformation consulting, she won the PMO of the Year at the Irish PMI National Project Awards in 2019. Steffie collaborates closely with executives and partners to deliver strategic outcomes across technology and is a champion of diversity, guiding new talent in the corporate world.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66bc65845481bb49a1af93a6_S.%20Lo%CC%81pez.jpg",
         linkedIn: "https://www.linkedin.com/in/stephaniechoy/",
       },
@@ -1667,7 +1635,7 @@ The problems to solve are based on the six key environmental outcomes (AI for th
     slug: "f-p-hackathon",
     title: "F&P Hackathon",
     shortDescription: "Fisher and Paykel Healthcare will be hosting an AI Hackathon on July 26th ' 28th kicking off with a keynote from Nicholas Fourie, VP of ICT.Are you ready to embark on an exhilarating journey of creativity, problem-solving, and innovation? In a world where innovation is the lifeblood of progress, we often find ourselves bogged down by repetitive tasks, mundane processes, and administrative burden",
-    description: `Fisher and Paykel Healthcare will be hosting an AI Hackathon on July 26th ' 28th kicking off with a keynote from Nicholas Fourie, VP of ICT.Are you ready to embark on an exhilarating journey of creativity, problem-solving, and innovation? In a world where innovation is the lifeblood of progress, we often find ourselves bogged down by repetitive tasks, mundane processes, and administrative burdens. Let's Break Free from Drudgery!Join us at the AI Hackathon and be part of the movement to liber
+    description: `Fisher and Paykel Healthcare will be hosting an AI Hackathon on July 26th ' 28th kicking off with a keynote from Nicholas Fourie, VP of ICT.Are you ready to embark on an exhilarating journey of creativity, problem-solving, and innovation? In a world where innovation is the lifeblood of progress, we often find ourselves bogged down by repetitive tasks, mundane processes, and administrative burdens. Let' s Break Free from Drudgery!Join us at the AI Hackathon and be part of the movement to liber
 
 Nicholas Fourie has been the Vice President of Information & Communication Technology at Fisher & Paykel Healthcare since February 2017. Since joining the company in 2007, he has held various systems engineering and management roles. Before his tenure at Fisher & Paykel, Nicholas worked for the South African division of BHP Billiton. He holds a Diploma in Computer Engineering from Damelin School of Information Technology in South Africa.`,
     category: "workshop",
@@ -1764,7 +1732,7 @@ Nicholas Fourie has been the Vice President of Information & Communication Techn
         name: "Chase Bloch",
         title: "Data Analyst - Fisher & Paykel Health Care, ICT",
         company: "Fisher & Paykel Health Care, ICT",
-        bio: "Chase received his PhD in Political Science & Social Data Analytics from Pennsylvania State University in 2023. Since then, he has moved to New Zealand and joined the ICT Data Analytics team at Fisher & Paykel Healthcare, where he works on report development and training to help the business make the most of their data.Chase's research focused on natural language processing and machine/deep learning, and he has used this experience to help Fisher & Paykel Healthcare start developing AI tools to gain deeper insights from their data.",
+        bio: "Chase received his PhD in Political Science & Social Data Analytics from Pennsylvania State University in 2023. Since then, he has moved to New Zealand and joined the ICT Data Analytics team at Fisher & Paykel Healthcare, where he works on report development and training to help the business make the most of their data.Chase' s research focused on natural language processing and machine/deep learning, and he has used this experience to help Fisher & Paykel Healthcare start developing AI tools to gain deeper insights from their data.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6699dd45c1c3a5e5ef2971df_Screen%20Shot%202024-07-19%20at%203.27.49%20PM.png",
         linkedIn: "https://www.linkedin.com/in/chase-bloch-790412137/",
       },
@@ -1780,7 +1748,7 @@ Nicholas Fourie has been the Vice President of Information & Communication Techn
         name: "Chris Campbell",
         title: "User Experience Manager-Fisher & Paykel Healthcare",
         company: "Fisher & Paykel Healthcare",
-        bio: "As a User Experience Designer in the medical device industry, I have a diverse background in experience design and   interaction design. My expertise lies in System Thinking, User Experience, Device User Interface Design, and Human-Computer Interaction . Throughout my career, I've successfully led user-centric projects and guided creative teams to develop a diverse array of products. More recently I have been exploring the opportunities AI can offers in within the healthcare sector.",
+        bio: "As a User Experience Designer in the medical device industry, I have a diverse background in experience design and   interaction design. My expertise lies in System Thinking, User Experience, Device User Interface Design, and Human-Computer Interaction . Throughout my career, I've successfully led user-centric projects and guided creative teams to develop a diverse array of products. More recently I have been exploring the opportunities AI can offers in within the healthcare sector.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66998dd3330e2b89cb3d05dc_ChrisCampbell.jpg",
         linkedIn: "https://www.linkedin.com/in/chrishcampbell/",
       },
@@ -1828,7 +1796,7 @@ Nicholas Fourie has been the Vice President of Information & Communication Techn
         name: "Jesse Luong",
         title: "Business Analyst - Fisher & Paykel Health Care",
         company: "Fisher & Paykel Health Care",
-        bio: "Combine finance, data and technology, I have experience in system implementation and process automation using AI and different data language. As a Business Analyst at F&P Healthcare, I analyse and develop data metrics, evaluate and optimize processes to enable business profitability. I'm working to improve the efficiency of the company process in managing and reporting big and complex data environment.",
+        bio: "Combine finance, data and technology, I have experience in system implementation and process automation using AI and different data language. As a Business Analyst at F&P Healthcare, I analyse and develop data metrics, evaluate and optimize processes to enable business profitability. I' m working to improve the efficiency of the company process in managing and reporting big and complex data environment.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f86a9746a0e04c5647f56_jesse.jpeg",
         linkedIn: "https://www.linkedin.com/in/jesse-luong-667206b2/",
       },
@@ -1952,8 +1920,8 @@ Nicholas Fourie has been the Vice President of Information & Communication Techn
   {
     slug: "bank-on-yourself",
     title: "Bank on Yourself",
-    shortDescription: "Are nerves holding you back? Fear not! Join Fiserv's empowering workshop, 'Banking on Yourself' and be inspired by those who carved their own paths. Fiserv, a Fortune 200 leader in mobile banking, is fuelled by the talent and dedication of our team. We're leading the way because of the brilliant minds we invest in. Discover the power of self-belief, we'll even equip you with a successful t",
-    description: `Are nerves holding you back? Fear not! Join Fiserv's empowering workshop, 'Banking on Yourself' and be inspired by those who carved their own paths. Fiserv, a Fortune 200 leader in mobile banking, is fuelled by the talent and dedication of our team. We're leading the way because of the brilliant minds we invest in. Discover the power of self-belief, we'll even equip you with a successful toolkit that you can take away. Shatter limitations, own your value with unshakeable confidence, whil
+    shortDescription: "Are nerves holding you back? Fear not! Join Fiserv' s empowering workshop, 'Banking on Yourself' and be inspired by those who carved their own paths. Fiserv, a Fortune 200 leader in mobile banking, is fuelled by the talent and dedication of our team. We're leading the way because of the brilliant minds we invest in. Discover the power of self-belief, we' ll even equip you with a successful t",
+    description: `Are nerves holding you back? Fear not! Join Fiserv' s empowering workshop, 'Banking on Yourself' and be inspired by those who carved their own paths. Fiserv, a Fortune 200 leader in mobile banking, is fuelled by the talent and dedication of our team. We're leading the way because of the brilliant minds we invest in. Discover the power of self-belief, we' ll even equip you with a successful toolkit that you can take away. Shatter limitations, own your value with unshakeable confidence, whil
 
 Fiserv Office, Level 6, 8 Tangihua Street, Auckland CBD, Auckland 1010, New ZealandGet directions`,
     category: "networking",
@@ -1985,7 +1953,7 @@ Fiserv Office, Level 6, 8 Tangihua Street, Auckland CBD, Auckland 1010, New Zeal
       {
         name: "Jazmin Vagha",
         title: "Software Developer & Scrum Master",
-        bio: "Jazmin is a scrum master and intermediate software developer who is also an active member of the Fiserv Women tech organising committee, where she helps empower other women in tech! She worked with Fiserv during her AUT R&D project Consequently joined Fiserv's internship program after graduation then, secured herself a role as a Junior Software Developer",
+        bio: "Jazmin is a scrum master and intermediate software developer who is also an active member of the Fiserv Women tech organising committee, where she helps empower other women in tech! She worked with Fiserv during her AUT R&D project Consequently joined Fiserv' s internship program after graduation then, secured herself a role as a Junior Software Developer",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6667f361d36661c723a5f3c8_Jazmin.jpeg",
         linkedIn: "https://www.linkedin.com/in/jazmin-vagha?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
       },
@@ -2075,14 +2043,14 @@ Les Mills International, Level 2/200 Victoria Street West, Auckland CBD, Aucklan
         name: "Effy Collis",
         title: "Senior Product Manager, Les Mills International",
         company: "Les Mills International",
-        bio: "Effy likes to describe working in digital product as 'advanced cat herding'! While she holds degrees in mechanical engineering and psychology, Effy has chosen to flex her career into a variety of different spaces in the tech industry; from web dev to account management, UX design to team leadership. She prides herself on being a jack of all trades, and on finding creative yet simple solutions to the right problems.",
+        bio: "Effy likes to describe working in digital product as 'advanced cat herding' ! While she holds degrees in mechanical engineering and psychology, Effy has chosen to flex her career into a variety of different spaces in the tech industry; from web dev to account management, UX design to team leadership. She prides herself on being a jack of all trades, and on finding creative yet simple solutions to the right problems.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6628b3be706b2e3dd86e7422_EC.png",
       },
       {
         name: "Macy Ma",
         title: "Senior Software Engineer, Les Mills International",
         company: "Les Mills International",
-        bio: "Macy has been working in the industry for 9 years, from university to her current job. Her career path has been quite straightforward, including working in front-end and full-stack engineering, but she also loves to do project management work, and help in product delivery. Her advice is to be a tech person, she always thinks tech is used to serve the business. There are no 'female' developers, we are all developers!",
+        bio: "Macy has been working in the industry for 9 years, from university to her current job. Her career path has been quite straightforward, including working in front-end and full-stack engineering, but she also loves to do project management work, and help in product delivery. Her advice is to be a tech person, she always thinks tech is used to serve the business. There are no 'female'  developers, we are all developers!",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6628b43e7f9ad11f23a70e85_MM.png",
         linkedIn: "https://www.linkedin.com/in/macy-ma-107887134",
       },
@@ -2098,7 +2066,7 @@ Les Mills International, Level 2/200 Victoria Street West, Auckland CBD, Aucklan
         name: "Jess Zhang",
         title: "Senior Data Engineer, Les Mills International",
         company: "Les Mills International",
-        bio: "Jess currently has six years of professional working experience. She started off as a software engineer before venturing into data engineering from a Computer Science and Information Systems background.Jess has worked in various industries namely Orion Health which is a digital healthcare company and Trade Me, New Zealand's largest e-commerce site. The data landscape has never been more interesting and Jess is loving her current role to rebuild Les Mills' data platform.'",
+        bio: "Jess currently has six years of professional working experience. She started off as a software engineer before venturing into data engineering from a Computer Science and Information Systems background.Jess has worked in various industries namely Orion Health which is a digital healthcare company and Trade Me, New Zealand' s largest e-commerce site. The data landscape has never been more interesting and Jess is loving her current role to rebuild Les Mills'  data platform.'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6628b5534fdcec82458a7913_JZ.png",
         linkedIn: "https://www.linkedin.com/in/jesscyz/",
       },
@@ -2158,10 +2126,10 @@ Les Mills International, Level 2/200 Victoria Street West, Auckland CBD, Aucklan
   {
     slug: "embracing-bias",
     title: "Embracing Bias",
-    shortDescription: "How to use cognitive biases to design great products, services, and your life! Join us for an evening at MYOB where we'll focus on the importance of understanding human behaviour. While technical qualifications can be a gateway to working in software design, we need people from all backgrounds to design meaningful products and services. This talk will speak to the vital contributions human-centr",
-    description: `How to use cognitive biases to design great products, services, and your life! Join us for an evening at MYOB where we'll focus on the importance of understanding human behaviour. While technical qualifications can be a gateway to working in software design, we need people from all backgrounds to design meaningful products and services. This talk will speak to the vital contributions human-centred designers make in the tech industry. Hazel Halim and Annabelle Yoon will take you through what co
+    shortDescription: "How to use cognitive biases to design great products, services, and your life! Join us for an evening at MYOB where we' ll focus on the importance of understanding human behaviour. While technical qualifications can be a gateway to working in software design, we need people from all backgrounds to design meaningful products and services. This talk will speak to the vital contributions human-centr",
+    description: `How to use cognitive biases to design great products, services, and your life! Join us for an evening at MYOB where we' ll focus on the importance of understanding human behaviour. While technical qualifications can be a gateway to working in software design, we need people from all backgrounds to design meaningful products and services. This talk will speak to the vital contributions human-centred designers make in the tech industry. Hazel Halim and Annabelle Yoon will take you through what co
 
-Annabelle is a qualitative Design Researcher with experience leading research to launch new products and services and improve existing ones. She distils complex findings into simple actionable insights and is a champion of the user. With a background in art and design, Annabelle enjoys impacting the design process through research, and collaborating with others to design amazing customer experiences. Annabelle's experience includes working at agencies in Toronto and Sydney and for Yahoo! and W`,
+Annabelle is a qualitative Design Researcher with experience leading research to launch new products and services and improve existing ones. She distils complex findings into simple actionable insights and is a champion of the user. With a background in art and design, Annabelle enjoys impacting the design process through research, and collaborating with others to design amazing customer experiences. Annabelle' s experience includes working at agencies in Toronto and Sydney and for Yahoo! and W`,
     category: "networking",
     status: "completed",
     startDate: "2024-04-18",
@@ -2179,7 +2147,7 @@ Annabelle is a qualitative Design Researcher with experience leading research to
         name: "Annabelle Yoon",
         title: "Senior Design Researcher, MYOB",
         company: "MYOB",
-        bio: "Annabelle is a qualitative Design Researcher with experience leading research to launch new products and services and improve existing ones. She distils complex findings into simple actionable insights and is a champion of the user. With a background in art and design, Annabelle enjoys impacting the design process through research, and collaborating with others to design amazing customer experiences. Annabelle's experience includes working at agencies in Toronto and Sydney and for Yahoo! and Westpac Australia. Annabelle now lives and works in her hometown in Auckland.",
+        bio: "Annabelle is a qualitative Design Researcher with experience leading research to launch new products and services and improve existing ones. She distils complex findings into simple actionable insights and is a champion of the user. With a background in art and design, Annabelle enjoys impacting the design process through research, and collaborating with others to design amazing customer experiences. Annabelle' s experience includes working at agencies in Toronto and Sydney and for Yahoo! and Westpac Australia. Annabelle now lives and works in her hometown in Auckland.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65e8b2441d0ebbd30c2bbcb4_Annabelle%20Yoon%20Headshot.jpeg",
         linkedIn: "https://www.linkedin.com/in/annabelleyoon/",
       },
@@ -2187,7 +2155,7 @@ Annabelle is a qualitative Design Researcher with experience leading research to
         name: "Hazel Halil Halim",
         title: "Senior Service Designer, MYOB",
         company: "MYOB",
-        bio: "Born in Bulgaria and raised in Turkey, Hazel pursued design studies in both Turkey and Italy, gaining insights into contrasts, shifting context. Having lived and worked in many countries, Hazel possesses a keen ability to navigate diverse environments. Initially arriving in Aotearoa for a six-month mission, she now finds herself almost five years later, deeply rooted in the kiwi culture. With a background in Service and Systems design, some of Hazel's work includes mentoring start-ups in the social innovation sector in Paris, helping NGOs in Cambodia, and setting up an Innovation Center for SAP in Auckland.",
+        bio: "Born in Bulgaria and raised in Turkey, Hazel pursued design studies in both Turkey and Italy, gaining insights into contrasts, shifting context. Having lived and worked in many countries, Hazel possesses a keen ability to navigate diverse environments. Initially arriving in Aotearoa for a six-month mission, she now finds herself almost five years later, deeply rooted in the kiwi culture. With a background in Service and Systems design, some of Hazel' s work includes mentoring start-ups in the social innovation sector in Paris, helping NGOs in Cambodia, and setting up an Innovation Center for SAP in Auckland.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65e8b284cd0cc1fc20d30c6a_Hazel%20Photo%20(1).jpeg",
         linkedIn: "https://www.linkedin.com/in/hazel-halim-12396818/",
       },
@@ -2235,8 +2203,8 @@ Annabelle is a qualitative Design Researcher with experience leading research to
   {
     slug: "international-womens-day-2",
     title: "International Women's Day",
-    shortDescription: "Join us for our annual breakfast event at Woolworths. We will celebrate women's achievements, raise awareness about discrimination and take action to drive gender parity. Let's have the opportunity to network and come together to leave the event with actionable outcomes to #inspireinclusion.",
-    description: `Join us for our annual breakfast event at Woolworths. We will celebrate women's achievements, raise awareness about discrimination and take action to drive gender parity. Let's have the opportunity to network and come together to leave the event with actionable outcomes to #inspireinclusion.
+    shortDescription: "Join us for our annual breakfast event at Woolworths. We will celebrate women' s achievements, raise awareness about discrimination and take action to drive gender parity. Let' s have the opportunity to network and come together to leave the event with actionable outcomes to #inspireinclusion.",
+    description: `Join us for our annual breakfast event at Woolworths. We will celebrate women' s achievements, raise awareness about discrimination and take action to drive gender parity. Let' s have the opportunity to network and come together to leave the event with actionable outcomes to #inspireinclusion.
 
 Level 8 (WooliesX) 4 Williamson Avenue, Grey Lynn, Auckland 1021, New Zealand`,
     category: "networking",
@@ -2417,7 +2385,7 @@ Hannah partners with New Zealand's most sophisticated advertisers to leverage Go
 
 The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.
 
-Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they'll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.`,
+Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they' ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.`,
     category: "conference",
     status: "completed",
     startDate: "2023-11-17",
@@ -2478,7 +2446,7 @@ Teachers will be equipped with the ability to tap into the creativity and enthus
         name: "Christopher Mende",
         title: "Customer Engineering, Google Cloud NZ",
         company: "Google Cloud NZ",
-        bio: "Christopher is the engineering lead for Google Cloud's digital native customers. He's closely involved with NZ businesses creating a pathway for their journey to Cloud and AI, his work being showcased across industries and the globe.Christopher is also a facilitator in the Google Innovation Labs team that brings concepts to life using a methodology heavily focused on customer empathy. His work here involves joining the best of Google tech with market shaping concepts to move the needle on an organization's innovation journey.",
+        bio: "Christopher is the engineering lead for Google Cloud' s digital native customers. He' s closely involved with NZ businesses creating a pathway for their journey to Cloud and AI, his work being showcased across industries and the globe.Christopher is also a facilitator in the Google Innovation Labs team that brings concepts to life using a methodology heavily focused on customer empathy. His work here involves joining the best of Google tech with market shaping concepts to move the needle on an organization's innovation journey.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6523c7864dd8dc8744a0f0f9_christopher-mende-photo%201.jpeg",
       },
       {
@@ -2602,7 +2570,7 @@ The event is taking place on Friday 3rd November 2023, 4:30pm - 6:30pm NZT`,
         name: "Roz Urbahn",
         title: "Chief People Officer - LIC",
         company: "LIC",
-        bio: "Roz is the Chief People Officer for Livestock Improvement Corporation (LIC), leading the People & Performance Group which builds and sustains a high performing and engaged workforce. That team look after a range of areas like employee experience, employment relations, OD & Talent, H&S and Environment.Roz has been in this role since August 2017 and prior to that worked at Fletcher Building in a variety of senior human resource leadership roles. She has held human resource positions at blue chip organisations such as Vodafone, Foxtel, Frucor Beverages, Hudson Global Resources, andLion.When Roz isn't a CPO she is busy wrangling two young sons, a husband and a very adventurous Labrador who loves stealing unattended socks!",
+        bio: "Roz is the Chief People Officer for Livestock Improvement Corporation (LIC), leading the People & Performance Group which builds and sustains a high performing and engaged workforce. That team look after a range of areas like employee experience, employment relations, OD & Talent, H&S and Environment.Roz has been in this role since August 2017 and prior to that worked at Fletcher Building in a variety of senior human resource leadership roles. She has held human resource positions at blue chip organisations such as Vodafone, Foxtel, Frucor Beverages, Hudson Global Resources, andLion.When Roz isn' t a CPO she is busy wrangling two young sons, a husband and a very adventurous Labrador who loves stealing unattended socks!",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65238f3312393c5e483655d8_roz-profile.jpg",
         linkedIn: "https://www.linkedin.com/in/roz-urbahn-03b1315/",
       },
@@ -2617,14 +2585,14 @@ The event is taking place on Friday 3rd November 2023, 4:30pm - 6:30pm NZT`,
         name: "Katrina Lipinski",
         title: "Data Chapter Lead - Fonterra IT",
         company: "Fonterra IT",
-        bio: "Katrina is the Data Chapter Lead at Fonterra, with over 20 years experience at the Co-op initially working as an Accounting, before an increasing involvement in large scale projects, saw a change in career path to the field of Data. Katrina's role has a heavy emphasis on enabling great outcomes for the business through data, and she leads a team of data professionals transforming the Co-op through the delivery of Data Products. Katrina is dedicated to driving value through sustainable, pragmatic solutions.",
+        bio: "Katrina is the Data Chapter Lead at Fonterra, with over 20 years experience at the Co-op initially working as an Accounting, before an increasing involvement in large scale projects, saw a change in career path to the field of Data. Katrina' s role has a heavy emphasis on enabling great outcomes for the business through data, and she leads a team of data professionals transforming the Co-op through the delivery of Data Products. Katrina is dedicated to driving value through sustainable, pragmatic solutions.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65239035a50676b7869edcdc_katrina-profile.png",
       },
       {
         name: "Rosie Spragg",
         title: "General Manager Economic Development - Te Waka",
         company: "Te Waka",
-        bio: "Rosie is the General Manager Economic Development at Te Waka, the Waikato region's economic development agency. In her role she is responsible for the strategy, planning and implementation of initiatives to develop the Waikato economy with a focus on the region's wealth and employment creating sectors, including the technology industry.Rosie has diverse experience spanning the private and public sector, working in analytical, strategic, commercial and operational leadership roles. Rosie founded her career in the technology industry, primarily working in the telecommunications sector before joining Callaghan Innovation where she was responsible for leading key strategic change initiatives.",
+        bio: "Rosie is the General Manager Economic Development at Te Waka, the Waikato region' s economic development agency. In her role she is responsible for the strategy, planning and implementation of initiatives to develop the Waikato economy with a focus on the region's wealth and employment creating sectors, including the technology industry.Rosie has diverse experience spanning the private and public sector, working in analytical, strategic, commercial and operational leadership roles. Rosie founded her career in the technology industry, primarily working in the telecommunications sector before joining Callaghan Innovation where she was responsible for leading key strategic change initiatives.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6523905a6ad2c5e919be9b3f_rosie-profile.jpeg",
       },
       {
@@ -2638,7 +2606,7 @@ The event is taking place on Friday 3rd November 2023, 4:30pm - 6:30pm NZT`,
         name: "Sania Naved",
         title: "Business Analyst - Te Whatu Ora",
         company: "Te Whatu Ora",
-        bio: "Sania is a Business Analyst at Te Whatu Ora. She works closely with clinicians and other technical experts to implement and optimise tech solutions in all the hospitals in the Waikato region, with the ultimate aim to improve the patient experience within the health system. Prior to this, she was a Business Analyst at Datacom. Sania went to Hamilton Girls' High School. She graduated from the University of Waikato in 2020, with a Bachelor of Science majoring in Computer Science and Psychology and a Bachelor of Science with Honours in Psychology.'",
+        bio: "Sania is a Business Analyst at Te Whatu Ora. She works closely with clinicians and other technical experts to implement and optimise tech solutions in all the hospitals in the Waikato region, with the ultimate aim to improve the patient experience within the health system. Prior to this, she was a Business Analyst at Datacom. Sania went to Hamilton Girls'  High School. She graduated from the University of Waikato in 2020, with a Bachelor of Science majoring in Computer Science and Psychology and a Bachelor of Science with Honours in Psychology.'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65278dfae706df81e1fa211b_She%23%20photo%20-%20Sania.jpg",
       },
       {
@@ -2875,7 +2843,7 @@ Join us in person at the Fonterra Auckland head office.`,
       {
         name: "Suzanne Holland",
         title: "General Manager IT",
-        bio: "After graduating from the University of South Australia with a Bachelor of Business majoring in Information Systems and Marketing Suzanne commenced her professional career on the EDS (now HP) Graduate program. Over her 28 years in the industry, Suzanne has worked across numerous government and private organisations and is now the General Manager IT leading the business engagement team across Hire to Retire & Employee Experience and Retail & Shareholder Experience for New Zealand's largest business and dairy co-operative, Fonterra.   Suzanne has a passion for attracting, retaining and developing Women in IT and is a huge advocate for She#.'",
+        bio: "After graduating from the University of South Australia with a Bachelor of Business majoring in Information Systems and Marketing Suzanne commenced her professional career on the EDS (now HP) Graduate program. Over her 28 years in the industry, Suzanne has worked across numerous government and private organisations and is now the General Manager IT leading the business engagement team across Hire to Retire & Employee Experience and Retail & Shareholder Experience for New Zealand' s largest business and dairy co-operative, Fonterra.   Suzanne has a passion for attracting, retaining and developing Women in IT and is a huge advocate for She#.'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64ba837b5b24857b50e87a6a_SHolland%20picture.JPG",
         linkedIn: "https://www.linkedin.com/in/suzanne-holland-b56aa616",
       },
@@ -2897,7 +2865,7 @@ Join us in person at the Fonterra Auckland head office.`,
       {
         name: "Caroline Campbell",
         title: "Technical Assistant",
-        bio: "Caroline has been with Fonterra since 2017, working at Fonterra's Research & Development Centre in Palmerston North. Growing up in the United States, Caroline's interest in science and the chemistry behind recipes led her to a BSc in Food Science & Technology from the University of Idaho followed by a Masters and a Ph.D. in Food Science at North Carolina State University. At Fonterra's Research & Development Centre, Caroline has applied her knowledge on the R&D Yoghurt team performing laboratory and pilot plant research to develop new processes and products for customers worldwide.",
+        bio: "Caroline has been with Fonterra since 2017, working at Fonterra' s Research & Development Centre in Palmerston North. Growing up in the United States, Caroline' s interest in science and the chemistry behind recipes led her to a BSc in Food Science & Technology from the University of Idaho followed by a Masters and a Ph.D. in Food Science at North Carolina State University. At Fonterra' s Research & Development Centre, Caroline has applied her knowledge on the R&D Yoghurt team performing laboratory and pilot plant research to develop new processes and products for customers worldwide.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64ba852c65878f48a0e19a4b_CCampbell%20headshot.jpg",
         linkedIn: "https://www.linkedin.com/in/carolinelcampbell",
       },
@@ -2905,7 +2873,7 @@ Join us in person at the Fonterra Auckland head office.`,
         name: "Linda Mulvihill",
         title: "General Manager Energy & Climate",
         company: "Fonterra",
-        bio: "Linda grew up on a sheep and beef farm in rural New Zealand, which embedded a passion for the land and agriculture.   Linda gets to pursue both of these passions in both her professional and personal life. Linda is the General Manager of Energy & Climate for Fonterra, NZ's largest dairy co-operative, where she leads the strategy and program to improve energy efficiency and reduce carbon emissions across the manufacturing sites, while also ensuring that the company has an economic and secure supply of energy.    Linda has a Bachelor of Science and a Bachelor of Laws, and joined Fonterra via the graduate program and obtained her Masters of Dairy Science & Technology.",
+        bio: "Linda grew up on a sheep and beef farm in rural New Zealand, which embedded a passion for the land and agriculture.   Linda gets to pursue both of these passions in both her professional and personal life. Linda is the General Manager of Energy & Climate for Fonterra, NZ' s largest dairy co-operative, where she leads the strategy and program to improve energy efficiency and reduce carbon emissions across the manufacturing sites, while also ensuring that the company has an economic and secure supply of energy.    Linda has a Bachelor of Science and a Bachelor of Laws, and joined Fonterra via the graduate program and obtained her Masters of Dairy Science & Technology.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64ba8659207f66103ee80e7c_Linda%20M%20profile.jpg",
         linkedIn: "https://www.linkedin.com/in/linda-mulvihill-854b94a",
       },
@@ -3029,7 +2997,7 @@ The problems this year to solve, are based on the five key environmental outcome
 
 Join us to discover how you can grow your career at Kiwibank while shaping the future of banking in Aotearoa.'
 
-Spaces are limited, so secure a place now if you haven't already. We have special prizes and giveaways for those who attend the event.'
+Spaces are limited, so secure a place now if you haven' t already. We have special prizes and giveaways for those who attend the event.'
 
 The event is taking place on Tuesday 25th July 2023, from 5:00 pm - 7:30 pm NZST
 
@@ -3112,10 +3080,10 @@ Kiwibank Head OfficeLevel 3, Te Kupenga, 155 Fanshaw Street, Auckland CBDGoogle 
   {
     slug: "2023-innovation-unleashed",
     title: "Innovation Unleashed",
-    shortDescription: "Some of the world's leading companies use Deloitte's 10 Types of Innovation Framework to create innovative products.",
-    description: `Some of the world's leading companies use Deloitte's 10 Types of Innovation Framework to create innovative products.
+    shortDescription: "Some of the world' s leading companies use Deloitte' s 10 Types of Innovation Framework to create innovative products.",
+    description: `Some of the world' s leading companies use Deloitte' s 10 Types of Innovation Framework to create innovative products.
 
-When you're building technology, it's important to think about more than just the features your product delivers. To be successful, you also need to build out extensions to your application or system that connects with the wider ecosystem. The result is building more than just an app, but a platform and service that customers love and stay with.`,
+When you' re building technology, it' s important to think about more than just the features your product delivers. To be successful, you also need to build out extensions to your application or system that connects with the wider ecosystem. The result is building more than just an app, but a platform and service that customers love and stay with.`,
     category: "networking",
     status: "completed",
     startDate: "2023-06-20",
@@ -3131,7 +3099,7 @@ When you're building technology, it's important to think about more than
         name: "Thomas Darlow",
         title: "Creative Director, Deloitte Creative",
         company: "Deloitte Creative",
-        bio: "Tom's advertising work has been quoted by Obama, nominated for an Emmy, turned Kobe Bryant's retirement into the most successful sneaker launch in history, and has been twice named the most effective campaign on earth. He's also played Coachella, toured with The Strokes and Kaiser Chiefs, and currently has a feature film in development with NZ Film Commission.",
+        bio: "Tom' s advertising work has been quoted by Obama, nominated for an Emmy, turned Kobe Bryant' s retirement into the most successful sneaker launch in history, and has been twice named the most effective campaign on earth. He' s also played Coachella, toured with The Strokes and Kaiser Chiefs, and currently has a feature film in development with NZ Film Commission.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/648283f89ed007962ff38991_1_Thomas%20Darlow.png",
         linkedIn: "https://nz.linkedin.com/in/thomas-darlow-626519224",
       },
@@ -3139,7 +3107,7 @@ When you're building technology, it's important to think about more than
         name: "Kath Millard",
         title: "Associate Director, Deloitte",
         company: "Deloitte",
-        bio: "Kath has worked in IT, retail banking, construction, education, nuclear and now consulting at Deloitte. In all these places, the common threads to success have been finding solutions to complex issues, working with diverse teams, and fostering new ideas and clear thinking. When Kath's not at work, you'll find her in a gym lifting (relatively) heavy things and competing at Olympic weightlifting as a masters athlete.",
+        bio: "Kath has worked in IT, retail banking, construction, education, nuclear and now consulting at Deloitte. In all these places, the common threads to success have been finding solutions to complex issues, working with diverse teams, and fostering new ideas and clear thinking. When Kath' s not at work, you' ll find her in a gym lifting (relatively) heavy things and competing at Olympic weightlifting as a masters athlete.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6482843d6d987582a9d58cf6_2_Kath%20Millard.png",
         linkedIn: "http://linkedin.com/in/kath-millard-0923601",
       },
@@ -3281,13 +3249,13 @@ Whether you're looking to start a career in tech, or you're already working in t
       {
         name: "Laura Rutherfurd",
         title: "Product Manager",
-        bio: "I have been in the software industry for just over 9 years with 8 of those being at MYOB but my first interaction with the tech space was through a project back in 1990 when the bank I worked for decided to update their systems. This meant we could use computers for customer files regardless of where their home branch was instead of having to call the home branch to verify details, get balances etc. This gave a better customer experience and saved a lot of time for the customer and the customer service team. I was fortunate enough to install and configure the computers for our branch. Such an exciting time when we didn't even have any tech at home aside from a TV.",
+        bio: "I have been in the software industry for just over 9 years with 8 of those being at MYOB but my first interaction with the tech space was through a project back in 1990 when the bank I worked for decided to update their systems. This meant we could use computers for customer files regardless of where their home branch was instead of having to call the home branch to verify details, get balances etc. This gave a better customer experience and saved a lot of time for the customer and the customer service team. I was fortunate enough to install and configure the computers for our branch. Such an exciting time when we didn' t even have any tech at home aside from a TV.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6476b25922508d639e5432c8_1_Laura%20Rutherfurd_Speakers.png",
       },
       {
         name: "Lucy Brychkova",
         title: "Quality Analyst",
-        bio: "I have 7 years of experience in software testing and have worked with a range of products, both cloud and on-prem.QA is my third choice of profession. First was psychology, and I got degree for that, after which decided it wasn't my thing. Then was graphic design, for which I got a diploma, but eventually figured out it was also not for me. So while working as a call centre operator I explored the idea of software testing and I liked it a lot. This time I made my way into the job before getting the certificate, and this time the choice was right.Within MYOB I moved teams multiple times and worked with many awesome people, learning a lot and even teaching a bit. I am always happy to share my experience with others.",
+        bio: "I have 7 years of experience in software testing and have worked with a range of products, both cloud and on-prem.QA is my third choice of profession. First was psychology, and I got degree for that, after which decided it wasn' t my thing. Then was graphic design, for which I got a diploma, but eventually figured out it was also not for me. So while working as a call centre operator I explored the idea of software testing and I liked it a lot. This time I made my way into the job before getting the certificate, and this time the choice was right.Within MYOB I moved teams multiple times and worked with many awesome people, learning a lot and even teaching a bit. I am always happy to share my experience with others.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6476b2c1fcda5206fe37b8f0_3_Lucy%20Brychkova_Speakers.png",
       },
       {
@@ -3345,9 +3313,9 @@ Whether you're looking to start a career in tech, or you're already working in t
   },
   {
     slug: "2023-international-womens-day",
-    title: "International Women's Day",
-    shortDescription: "For International Women's Day, She Sharp is partnering with Countdown and inviting you to #embraceequity and kick-start your day. Let's challenge gender stereotypes, call out discrimination, draw attention to bias, and seek out inclusion in all aspects of our personal and professional lives.",
-    description: `For International Women's Day, She Sharp is partnering with Countdown and inviting you to #embraceequity and kick-start your day. Let's challenge gender stereotypes, call out discrimination, draw attention to bias, and seek out inclusion in all aspects of our personal and professional lives.
+    title: "International Women' s Day",
+    shortDescription: "For International Women' s Day, She Sharp is partnering with Countdown and inviting you to #embraceequity and kick-start your day. Let' s challenge gender stereotypes, call out discrimination, draw attention to bias, and seek out inclusion in all aspects of our personal and professional lives.",
+    description: `For International Women' s Day, She Sharp is partnering with Countdown and inviting you to #embraceequity and kick-start your day. Let' s challenge gender stereotypes, call out discrimination, draw attention to bias, and seek out inclusion in all aspects of our personal and professional lives.
 
 She Sharp are committed to empowering more women into STEM careers to drive gender parity into a world free from bias. Our events are an open opportunity for Everyone, regardless of gender, age, race or background, to work together in order to bridge the gender gap and better represent women within STEM fields.`,
     category: "networking",
@@ -3437,7 +3405,7 @@ Our guest speakers will discuss and reflect on their experiences throughout 2022
         name: "Alexia Hilbertidou",
         title: "Founder, GirlBoss New Zealand",
         company: "GirlBoss New Zealand",
-        bio: "Alexia is the CEO of GirlBoss NZ - NZ's largest organisation for young women. Founded when Alexia was just16, GirlBoss now has 17,500 members. Alexia's mission is to get women to the table - the boardroom tablethat is, and she believes the decisions made while young are crucial in paving the way. She has flown withNASA, received a Queen's Young Leaders Medal for Services to the Commonwealth, is a National GeographicExplorer, Forbes 30 under 30, and the youngest person to represent New Zealand at the United Nations inNew York. She was named Pacific Young Entrepreneur of the Year in 2020 and 2022.",
+        bio: "Alexia is the CEO of GirlBoss NZ - NZ's largest organisation for young women. Founded when Alexia was just16, GirlBoss now has 17,500 members. Alexia' s mission is to get women to the table - the boardroom tablethat is, and she believes the decisions made while young are crucial in paving the way. She has flown withNASA, received a Queen' s Young Leaders Medal for Services to the Commonwealth, is a National GeographicExplorer, Forbes 30 under 30, and the youngest person to represent New Zealand at the United Nations inNew York. She was named Pacific Young Entrepreneur of the Year in 2020 and 2022.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66ebaa7e8a9d1200adac0006_AlexiaHHeadshotSquare.jpg",
         linkedIn: "https://www.linkedin.com/in/alexiah/",
       },
@@ -3588,8 +3556,8 @@ As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare
   {
     slug: "2022-ai-enviro-hack",
     title: "AI Enviro Hack",
-    shortDescription: "She Sharp Hackathon is an all-female-led and non-binary 32 hour hackathon, which aims to help individuals to understand they belong in tech and that there are various roles you can have in the tech industry. Do you have a passion to save the planet, starting in our backyard? We're bringing to life practical examples from the AI Forum's recently published AI for Environment in Aotearoa New Zeal",
-    description: `She Sharp Hackathon is an all-female-led and non-binary 32 hour hackathon, which aims to help individuals to understand they belong in tech and that there are various roles you can have in the tech industry. Do you have a passion to save the planet, starting in our backyard? We're bringing to life practical examples from the AI Forum's recently published AI for Environment in Aotearoa New Zealand report.
+    shortDescription: "She Sharp Hackathon is an all-female-led and non-binary 32 hour hackathon, which aims to help individuals to understand they belong in tech and that there are various roles you can have in the tech industry. Do you have a passion to save the planet, starting in our backyard? We' re bringing to life practical examples from the AI Forum' s recently published AI for Environment in Aotearoa New Zeal",
+    description: `She Sharp Hackathon is an all-female-led and non-binary 32 hour hackathon, which aims to help individuals to understand they belong in tech and that there are various roles you can have in the tech industry. Do you have a passion to save the planet, starting in our backyard? We' re bringing to life practical examples from the AI Forum' s recently published AI for Environment in Aotearoa New Zealand report.
 
 'Join 60+ people for a weekend of learning, building, and connecting to build your tech skills and realise that you have allies who are supporting you every step of the way.`,
     category: "workshop",
@@ -3646,13 +3614,13 @@ As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare
       {
         name: "Amrit Kaur",
         title: "",
-        bio: "Since COVID-19, Amrit has been working with Ministry of Health on NZ's COVID-19 response in the role of a Digital BA for the National Border Solution. Over her short career, Amrit has developed technical and non-technical skills in the tech world and likes to be involved in a holistic way in the work she is doing.",
+        bio: "Since COVID-19, Amrit has been working with Ministry of Health on NZ' s COVID-19 response in the role of a Digital BA for the National Border Solution. Over her short career, Amrit has developed technical and non-technical skills in the tech world and likes to be involved in a holistic way in the work she is doing.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64780d3b4165a94ec7bb0eaa_1_Amrit%20Kaur.png",
       },
       {
         name: "Audrey Zhang",
         title: "",
-        bio: "Audrey is a Senior Data Scientist at Spark New Zealand with 5+ years' experience in data and AI. She is inspired by the power of data and machine learning to drive business decision and tackle existing challenges. She is also keen on supporting / providing guidance to women in Tech&Data&AI.",
+        bio: "Audrey is a Senior Data Scientist at Spark New Zealand with 5+ years'  experience in data and AI. She is inspired by the power of data and machine learning to drive business decision and tackle existing challenges. She is also keen on supporting / providing guidance to women in Tech&Data&AI.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64780da5e448e3020c817da2_2_Audrey%20Zhang.png",
       },
       {
@@ -3677,7 +3645,7 @@ As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare
       {
         name: "Chanel Sullivan",
         title: "",
-        bio: "Kia ora koutou katoa, my name is Chanel and I'm a graduate analyst developer at FNZ. I come from a neuroscience background at university but felt like a career change after finishing my honours dissertation! In my spare time I really enjoy tramping, reading and playing netball. I'm really looking forward to getting to meet everyone.",
+        bio: "Kia ora koutou katoa, my name is Chanel and I' m a graduate analyst developer at FNZ. I come from a neuroscience background at university but felt like a career change after finishing my honours dissertation! In my spare time I really enjoy tramping, reading and playing netball. I' m really looking forward to getting to meet everyone.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6486800575633d2f785db14a_6_Chanel%20Sullivan.png",
       },
       {
@@ -3695,7 +3663,7 @@ As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare
       {
         name: "Tahseena Begum",
         title: "",
-        bio: "Growth-minded, Inquisitive and Positive thinking Professional. I have 2 full years of Software development experience and ample amount of tertiary education. After growing my family I'm eager to continue programming and creating software that will have an impact in a business.",
+        bio: "Growth-minded, Inquisitive and Positive thinking Professional. I have 2 full years of Software development experience and ample amount of tertiary education. After growing my family I' m eager to continue programming and creating software that will have an impact in a business.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64868096377f5d11a4d320ea_9_Tahseena%20Begum.png",
       },
       {
@@ -3756,7 +3724,7 @@ As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare
     shortDescription: "We operate in an unusual world that has seen workplaces and normal operating models change from the norms that we have been used to. Navigating the 'new normal' can be challenging for both new starters in the tech industry settling in, as well as for managers and teams helping their junior staff find their pathways and build networks in often remote or disrupted working environments.",
     description: `We operate in an unusual world that has seen workplaces and normal operating models change from the norms that we have been used to. Navigating the 'new normal' can be challenging for both new starters in the tech industry settling in, as well as for managers and teams helping their junior staff find their pathways and build networks in often remote or disrupted working environments.
 
-In this interactive in-person session, we will be talking with some of ANZ's women in tech whose careers have been formed throughout these disruptive years. We will hear about their journeys and expectations versus the realities and how they have faced and adapted to the challenges. Supporting them we will also hear from more senior team members at ANZ on how they are helping support people to strengthen their resilience and protect their wellbeing through change.`,
+In this interactive in-person session, we will be talking with some of ANZ' s women in tech whose careers have been formed throughout these disruptive years. We will hear about their journeys and expectations versus the realities and how they have faced and adapted to the challenges. Supporting them we will also hear from more senior team members at ANZ on how they are helping support people to strengthen their resilience and protect their wellbeing through change.`,
     category: "networking",
     status: "completed",
     startDate: "2022-07-21",
@@ -3796,7 +3764,7 @@ In this interactive in-person session, we will be talking with some of ANZ's
         name: "Angela Batistich",
         title: "Tech Area Lead, Wholesale Technologies",
         company: "Wholesale Technologies",
-        bio: "Angela has an extensive career in the Financial Services Industry as a Technology Leader with a dynamic and constantly evolving approach. She is currently Tech Area Lead - Wholesale Technologies at ANZ and also a passionate supporter of Women in Technology, actively involved in various mentoring programmes and leadership forums.For Angela, being a Tech Leader is not just about the Technology, it's about the people and the experiences and opportunities it provides to be vehicles of change beyond and above where we are today and into the future.",
+        bio: "Angela has an extensive career in the Financial Services Industry as a Technology Leader with a dynamic and constantly evolving approach. She is currently Tech Area Lead - Wholesale Technologies at ANZ and also a passionate supporter of Women in Technology, actively involved in various mentoring programmes and leadership forums.For Angela, being a Tech Leader is not just about the Technology, it' s about the people and the experiences and opportunities it provides to be vehicles of change beyond and above where we are today and into the future.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6482917143ecc1e804367593_5_Angela%20Batistich.png",
       },
       {
@@ -3883,7 +3851,7 @@ It will be a fabulous event for everyone - no matter if you know nothing about t
         name: "Amina Aggarwal",
         title: "Spark - Security Consultant",
         company: "Security Consultant",
-        bio: "Amina Aggarwal has a broad range of experience that is more than 11 years in Information Technology. She is currently working as a Network and Security Design Consultant at Spark and provides cyber security advice to Spark's internal and external customers. She is the Winner of 2021 Women in Security Awards NZ, awarded by DEFSEC (Defence Security New Zealand) magazine for going above and beyond her duties as a cyber security professional. She is also a finalist in the 'People's Choice Award' category for the Ally of the Year Awards 2022. Amina has been involved with the New Zealand Network for Women in Security (NZNWS) as an ambassador since 2021.",
+        bio: "Amina Aggarwal has a broad range of experience that is more than 11 years in Information Technology. She is currently working as a Network and Security Design Consultant at Spark and provides cyber security advice to Spark' s internal and external customers. She is the Winner of 2021 Women in Security Awards NZ, awarded by DEFSEC (Defence Security New Zealand) magazine for going above and beyond her duties as a cyber security professional. She is also a finalist in the 'People' s Choice Award' category for the Ally of the Year Awards 2022. Amina has been involved with the New Zealand Network for Women in Security (NZNWS) as an ambassador since 2021.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64824fd9b9ac85dab394fc03_2_Amina%20Aggarwal%C2%A0.png",
       },
       {
@@ -3911,7 +3879,7 @@ It will be a fabulous event for everyone - no matter if you know nothing about t
         name: "Tiffany Bloomquist",
         title: "AWS - NZ Country Manager",
         company: "NZ Country Manager",
-        bio: "Tiffany is currently the country manager for AWS in New Zealand, leading our commercial sales across large enterprise, Software as a Service providers, small to medium businesses and start-ups. She is an experienced international leader, focused on driving customer business outcomes, transformation, innovative strategy and leveraging partnerships to drive growth. AWS's focus in Aotearoa is to help unleash further innovation, drive greater productivity, increase our skilled workforce, and truly position New Zealand at the forefront of digital commerce for generations of Kiwis to come.",
+        bio: "Tiffany is currently the country manager for AWS in New Zealand, leading our commercial sales across large enterprise, Software as a Service providers, small to medium businesses and start-ups. She is an experienced international leader, focused on driving customer business outcomes, transformation, innovative strategy and leveraging partnerships to drive growth. AWS' s focus in Aotearoa is to help unleash further innovation, drive greater productivity, increase our skilled workforce, and truly position New Zealand at the forefront of digital commerce for generations of Kiwis to come.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/648250d3e6213b74fbb6de53_1_Tiffany%20Bloomquist.png",
       },
       {
@@ -3925,7 +3893,7 @@ It will be a fabulous event for everyone - no matter if you know nothing about t
         name: "Sai Honig",
         title: "NZNWS - Co-Founder",
         company: "Co-Founder",
-        bio: "Sai Honig is a multipotentialite who has worked in differing roles in various industries. Prior to information security, Sai was an aerospace design engineer and financial/ operational auditing. Sai's IT experience is in the governance, audit, supply chain, risk management, and security. Her industrial experience includes manufacturing, healthcare, education, and financial services.Sai is technical but not a programmer. She flourish the most in a security role that works right across the business, consultatively bringing security 'into the real world' for the average staff member. Sai is passionate in helping others and promoting a wider understanding of cybersecurity.",
+        bio: "Sai Honig is a multipotentialite who has worked in differing roles in various industries. Prior to information security, Sai was an aerospace design engineer and financial/ operational auditing. Sai' s IT experience is in the governance, audit, supply chain, risk management, and security. Her industrial experience includes manufacturing, healthcare, education, and financial services.Sai is technical but not a programmer. She flourish the most in a security role that works right across the business, consultatively bringing security 'into the real world' for the average staff member. Sai is passionate in helping others and promoting a wider understanding of cybersecurity.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/648251d9d24696d449324c43_3_Sai%20Honig%C2%A0.png",
       },
       {
@@ -4022,13 +3990,13 @@ Mispah Carelsen is the Agile Coaching Chapter Lead at Countdown. Her journey sta
       {
         name: "Shannon Evans",
         title: "Senior Product Manager",
-        bio: "Shannon is a commercially astute Senior Product Manager with more than 10 years' experience leading and contributing to business transformation projects that enhance product functionality and deliver customer value. With strong interpersonal skills, she is adept at working collaboratively with cross-functional teams to develop product and digital channels in agile environments. Shannon is practised at defining business requirements, developing strategy, managing budgets and leading teams having done so at Countdown, Spark and Vodafone.",
+        bio: "Shannon is a commercially astute Senior Product Manager with more than 10 years'  experience leading and contributing to business transformation projects that enhance product functionality and deliver customer value. With strong interpersonal skills, she is adept at working collaboratively with cross-functional teams to develop product and digital channels in agile environments. Shannon is practised at defining business requirements, developing strategy, managing budgets and leading teams having done so at Countdown, Spark and Vodafone.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/648678ec7487ca6201f8adb0_3_Shannon%20Evans.png",
       },
       {
         name: "Steph Welch",
         title: "Product Chapter Lead",
-        bio: "Shannon is a commercially astute Senior Product Manager with more than 10 years' experience leading and contributing to business transformation projects that enhance product functionality and deliver customer value. With strong interpersonal skills, she is adept at working collaboratively with cross-functional teams to develop product and digital channels in agile environments. Shannon is practised at defining business requirements, developing strategy, managing budgets and leading teams having done so at Countdown, Spark and Vodafone.",
+        bio: "Shannon is a commercially astute Senior Product Manager with more than 10 years'  experience leading and contributing to business transformation projects that enhance product functionality and deliver customer value. With strong interpersonal skills, she is adept at working collaboratively with cross-functional teams to develop product and digital channels in agile environments. Shannon is practised at defining business requirements, developing strategy, managing budgets and leading teams having done so at Countdown, Spark and Vodafone.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64867a68f6227d3adca33f7d_4_Steph%20Welch.png",
       },
       {
@@ -4131,14 +4099,14 @@ Lindsay has been with MYOB for 6 years across a variety of roles and is currentl
         name: "Taylor Waddington",
         title: "ProtÃ©gÃ© Software Developer at MYOB",
         company: "MYOB",
-        bio: "Hi, I'm Taylor. Just over a year ago, I started at MYOB in the FMA program as a protege Software Developer. Before moving to MYOB I was down in Dunedin studying a double degree in Information Systems and Marketing. Since being at MYOB I have had the opportunity to grow and navigate myself through the corporate world. I have discovered what it's like to be a Software Developer and had the opportunity to venture outside of this expertise and work aside one of MYOB's Business Analyst to further develop my skills in another area.",
+        bio: "Hi, I' m Taylor. Just over a year ago, I started at MYOB in the FMA program as a protege Software Developer. Before moving to MYOB I was down in Dunedin studying a double degree in Information Systems and Marketing. Since being at MYOB I have had the opportunity to grow and navigate myself through the corporate world. I have discovered what it' s like to be a Software Developer and had the opportunity to venture outside of this expertise and work aside one of MYOB' s Business Analyst to further develop my skills in another area.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6486829bfe9ab71e50be070b_2_Taylor%20Waddington.png",
       },
       {
         name: "Kyle Nicholas",
         title: "Senior Developer at MYOB",
         company: "MYOB",
-        bio: "Hi, I'm Kyle, a Senior Developer at MYOB. I'd say I'm a classic T-Shaped Full Stack Developer and have worked with C#, Jade, PowerShell etc. I strongly believe that the journey is half the fun; traditional or non-traditional, we learn from all of it and it's what we make of it that counts",
+        bio: "Hi, I' m Kyle, a Senior Developer at MYOB. I' d say I' m a classic T-Shaped Full Stack Developer and have worked with C#, Jade, PowerShell etc. I strongly believe that the journey is half the fun; traditional or non-traditional, we learn from all of it and it' s what we make of it that counts",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/648682c751d3e1c28b6a1af3_3_Kyle%20Nicholas.png",
       },
       {
@@ -4190,8 +4158,8 @@ Lindsay has been with MYOB for 6 years across a variety of roles and is currentl
   {
     slug: "2022-break-the-bias",
     title: "Break the Bias",
-    shortDescription: "International Women's Day is fast approaching and She Sharp is partnering with AWS to bring you an inspirational evening where we talk all about #breakingthebias!",
-    description: `International Women's Day is fast approaching and She Sharp is partnering with AWS to bring you an inspirational evening where we talk all about #breakingthebias!
+    shortDescription: "International Women' s Day is fast approaching and She Sharp is partnering with AWS to bring you an inspirational evening where we talk all about #breakingthebias!",
+    description: `International Women' s Day is fast approaching and She Sharp is partnering with AWS to bring you an inspirational evening where we talk all about #breakingthebias!
 
 Pip is an experienced tech executive who knows first hand what it takes to take tech products to the world. From heading up Strategy and Product at EROAD, to Product and Data Science at Dexibit, Pip now applies that unique product leadership skillset of spanning vision to tactics in her role leading strategy & operations at Amazon Web Services NZ.`,
     category: "networking",
@@ -4384,7 +4352,7 @@ Curious about career pathways in data, analytics and visualisation? Do you want 
     shortDescription: "Join us to celebrate Ada Lovelace Day and International Day of the Girls. We are delighted to present two wonderful speakers for this event ' Ankita and Elina. Hear their stories and be inspired!",
     description: `Join us to celebrate Ada Lovelace Day and International Day of the Girls. We are delighted to present two wonderful speakers for this event ' Ankita and Elina. Hear their stories and be inspired!
 
-We'll also have quizzes and games and an overall fun session.`,
+We' ll also have quizzes and games and an overall fun session.`,
     category: "networking",
     status: "completed",
     startDate: "2021-10-11",
@@ -4510,10 +4478,10 @@ This program aims to:1. Improve the motivation and self-promotion skills of wome
   {
     slug: "women-in-ai-for-social-good",
     title: "Women in AI for social good",
-    shortDescription: "From healthcare, to finance, education and government, artificial intelligence (AI) is reshaping every part of our lives. It is also helping solve some of the world's greatest challenges. However, women account for less than 25 percent of the AI workforce.",
-    description: `From healthcare, to finance, education and government, artificial intelligence (AI) is reshaping every part of our lives. It is also helping solve some of the world's greatest challenges. However, women account for less than 25 percent of the AI workforce.
+    shortDescription: "From healthcare, to finance, education and government, artificial intelligence (AI) is reshaping every part of our lives. It is also helping solve some of the world' s greatest challenges. However, women account for less than 25 percent of the AI workforce.",
+    description: `From healthcare, to finance, education and government, artificial intelligence (AI) is reshaping every part of our lives. It is also helping solve some of the world' s greatest challenges. However, women account for less than 25 percent of the AI workforce.
 
-Please join our next event to discuss women in AI for social good. Be inspired byDr Mahsa Mohaghegh'svision to increase female participation in AI, for the benefit of all. She will be joined by a panel of guest speakers to explore female-led AI that's good for the world. Join the conversation, network and create valuable connections.`,
+Please join our next event to discuss women in AI for social good. Be inspired byDr Mahsa Mohaghegh' svision to increase female participation in AI, for the benefit of all. She will be joined by a panel of guest speakers to explore female-led AI that' s good for the world. Join the conversation, network and create valuable connections.`,
     category: "social",
     status: "completed",
     startDate: "2021-06-08",
@@ -4541,7 +4509,7 @@ Please join our next event to discuss women in AI for social good. Be inspired b
       {
         name: "Heather Gadonniex",
         title: "",
-        bio: "Heather is a growth-oriented leader passionate about bringing world-changing technologies to market and scaling social impact. She is a data-driven strategist experienced in developing and leading go-to-market, communications, and sustainability initiatives at start-ups and multi-national organizations. Most recently, Heather served as the VP of Marketing and Strategic Partnerships at Sama, a leading San Francisco based machine learning company focused on producing high quality training data for the world's leading AI teams. Heather is an active member of Partnership on AI, including spearheading work to create guidelines for ethical data sourcing and enrichment.'",
+        bio: "Heather is a growth-oriented leader passionate about bringing world-changing technologies to market and scaling social impact. She is a data-driven strategist experienced in developing and leading go-to-market, communications, and sustainability initiatives at start-ups and multi-national organizations. Most recently, Heather served as the VP of Marketing and Strategic Partnerships at Sama, a leading San Francisco based machine learning company focused on producing high quality training data for the world' s leading AI teams. Heather is an active member of Partnership on AI, including spearheading work to create guidelines for ethical data sourcing and enrichment.'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562bd916a2068e01dc80fa4_WhatsApp_Image_2023-10-18_at_5.35.37_PM.jpeg.jpg",
       },
       {
@@ -4560,7 +4528,7 @@ Please join our next event to discuss women in AI for social good. Be inspired b
       {
         name: "Jacqueline Comer",
         title: "",
-        bio: "Jacqueline is co-founder and chief product officer of Areto Labs, a social enterprise that uses machine learning to build more positive and inclusive online communities. A lover of words and linguistics, she spent much of her career as a journalist, copywriter and creative director, before pursuing her master's of technological futures and investigating using natural language processing to surface microaggression in text. That work, along with successfully launching an Areto Labs Twitter probot called ParityBOT_NZ, which uses NLP to combat toxicity directed at women election candidates, convinced her to pivot her career to focus on using AI for social good.",
+        bio: "Jacqueline is co-founder and chief product officer of Areto Labs, a social enterprise that uses machine learning to build more positive and inclusive online communities. A lover of words and linguistics, she spent much of her career as a journalist, copywriter and creative director, before pursuing her master' s of technological futures and investigating using natural language processing to surface microaggression in text. That work, along with successfully launching an Areto Labs Twitter probot called ParityBOT_NZ, which uses NLP to combat toxicity directed at women election candidates, convinced her to pivot her career to focus on using AI for social good.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562bd916a2068e01dc80fa4_WhatsApp_Image_2023-10-18_at_5.35.37_PM.jpeg.jpg",
       },
       {
@@ -4612,10 +4580,10 @@ Please join our next event to discuss women in AI for social good. Be inspired b
   {
     slug: "the-truths-to-gaming-and-start-up",
     title: "The Truths to Gaming and Start-up",
-    shortDescription: "'The Truths to Gaming and Start-up - SheSharp Edition' is organised by SheSharp, in collaboration with Geo AR Games & the New Zealand Game Developers Association (NZGDA). If you're interested in Gaming, Augmented Reality, and Development, then this is an event you don't want to miss!",
-    description: `'The Truths to Gaming and Start-up - SheSharp Edition' is organised by SheSharp, in collaboration with Geo AR Games & the New Zealand Game Developers Association (NZGDA). If you're interested in Gaming, Augmented Reality, and Development, then this is an event you don't want to miss!
+    shortDescription: "'The Truths to Gaming and Start-up - SheSharp Edition' is organised by SheSharp, in collaboration with Geo AR Games & the New Zealand Game Developers Association (NZGDA). If you' re interested in Gaming, Augmented Reality, and Development, then this is an event you don' t want to miss!",
+    description: `'The Truths to Gaming and Start-up - SheSharp Edition' is organised by SheSharp, in collaboration with Geo AR Games & the New Zealand Game Developers Association (NZGDA). If you' re interested in Gaming, Augmented Reality, and Development, then this is an event you don' t want to miss!
 
-Hear the inspiring story of Melanie, CEO of Geo AR Games, and learn how she grew her start-up and worked on national as well as international projects! It's quite difficult for women to make it in the gaming industry and many females go through the stereotypical work environment. Melanie has some great tips for young women out there who are looking for a career in gaming, and how to make it in the industry! The gaming world needs women, like Talia Pua, Carol Taka and Vaanipriya Diwan, who are
+Hear the inspiring story of Melanie, CEO of Geo AR Games, and learn how she grew her start-up and worked on national as well as international projects! It' s quite difficult for women to make it in the gaming industry and many females go through the stereotypical work environment. Melanie has some great tips for young women out there who are looking for a career in gaming, and how to make it in the industry! The gaming world needs women, like Talia Pua, Carol Taka and Vaanipriya Diwan, who are
 
 Although this event features all female speakers, anyone can attend; from high school/university students to professionals far into their careers, people of all genders, aspiring entrepreneurs, are all welcome. We have a range of activities lined up, such as networking, gaming, and play-testing sessions.`,
     category: "networking",
@@ -4712,7 +4680,7 @@ Although this event features all female speakers, anyone can attend; from high s
 
 The Tech21 Summithad a number of young entrepreneurs and digital disruptors sharing their stories with more than a thousand 12 to 14 year olds to inspire them into a career in tech. Plus, a special live performance by Kings at Tech21!
 
-SheSharp and Women in Tech (AUT) were at 'The Imagine Zone,' which is the space for Äkonga (learners) to touch, feel, see and imagine their future in tech. We connected Äkonga and tech sector ' navigating through our digital future.`,
+SheSharp and Women in Tech (AUT) were at 'The Imagine Zone,'  which is the space for Äkonga (learners) to touch, feel, see and imagine their future in tech. We connected Äkonga and tech sector ' navigating through our digital future.`,
     category: "networking",
     status: "completed",
     startDate: "2021-05-24",
@@ -4773,8 +4741,8 @@ SheSharp and Women in Tech (AUT) were at 'The Imagine Zone,' which is th
   {
     slug: "women-in-tech-and-trades",
     title: "Women in Tech and Trades",
-    shortDescription: "This month's event was all about women in tech and trades who are proving that they are more than just a diversity quota filler & industry leaders who are setting a new benchmark for inclusivity every day.",
-    description: `This month's event was all about women in tech and trades who are proving that they are more than just a diversity quota filler & industry leaders who are setting a new benchmark for inclusivity every day.
+    shortDescription: "This month' s event was all about women in tech and trades who are proving that they are more than just a diversity quota filler & industry leaders who are setting a new benchmark for inclusivity every day.",
+    description: `This month' s event was all about women in tech and trades who are proving that they are more than just a diversity quota filler & industry leaders who are setting a new benchmark for inclusivity every day.
 
 It was an evening where we shined the spotlight on women. Industry leaders spoke about why they have not settled for a seat on the sidelines, and how they are setting a new benchmark for inclusivity everyday.
 
@@ -4869,10 +4837,10 @@ It was an evening where we shined the spotlight on women. Industry leaders spoke
   {
     slug: "2021-international-womens-day",
     title: "International Women's Day",
-    shortDescription: "SheSharp is delighted to announce our first community event of the year: We are partnering with MYOB to celebrate International Women's Day! There will be team challenges, fun quizzes, and general fun and interactive awesomeness. So bring your A-game along! This is a great event to bring along your work colleagues to network and reconnect with others you haven't had the opportunity to meet in",
-    description: `SheSharp is delighted to announce our first community event of the year: We are partnering with MYOB to celebrate International Women's Day! There will be team challenges, fun quizzes, and general fun and interactive awesomeness. So bring your A-game along! This is a great event to bring along your work colleagues to network and reconnect with others you haven't had the opportunity to meet in person over the last few months! This event is open to all ages and all genders, all students and wo
+    shortDescription: "SheSharp is delighted to announce our first community event of the year: We are partnering with MYOB to celebrate International Women' s Day! There will be team challenges, fun quizzes, and general fun and interactive awesomeness. So bring your A-game along! This is a great event to bring along your work colleagues to network and reconnect with others you haven' t had the opportunity to meet in",
+    description: `SheSharp is delighted to announce our first community event of the year: We are partnering with MYOB to celebrate International Women' s Day! There will be team challenges, fun quizzes, and general fun and interactive awesomeness. So bring your A-game along! This is a great event to bring along your work colleagues to network and reconnect with others you haven' t had the opportunity to meet in person over the last few months! This event is open to all ages and all genders, all students and wo
 
-Camilla Weinstein has worked within the talent space for over 15 years and has been with MYOB for almost 4 years as the Talent Lead in New Zealand. She is a mum of 2 boys under 5, and is the Owner of Straw the Line NZ has her side hustle. She's passionate about Talent, Employer Branding, Inclusion & Diversity, Sustainability and saving the planet one slurp at a time! As well as, spending time with her young family, exploring the world around us, snowboarding and enjoying the finer things in li`,
+Camilla Weinstein has worked within the talent space for over 15 years and has been with MYOB for almost 4 years as the Talent Lead in New Zealand. She is a mum of 2 boys under 5, and is the Owner of Straw the Line NZ has her side hustle. She' s passionate about Talent, Employer Branding, Inclusion & Diversity, Sustainability and saving the planet one slurp at a time! As well as, spending time with her young family, exploring the world around us, snowboarding and enjoying the finer things in li`,
     category: "networking",
     status: "completed",
     startDate: "2021-03-18",
@@ -4887,7 +4855,7 @@ Camilla Weinstein has worked within the talent space for over 15 years and has b
       {
         name: "Camilla Weinstein",
         title: "",
-        bio: "Camilla Weinstein has worked within the talent space for over 15 years and has been with MYOB for almost 4 years as the Talent Lead in New Zealand. She is a mum of 2 boys under 5, and is the Owner of Straw the Line NZ has her side hustle. She's passionate about Talent, Employer Branding, Inclusion & Diversity, Sustainability and saving the planet one slurp at a time! As well as, spending time with her young family, exploring the world around us, snowboarding and enjoying the finer things in life!'",
+        bio: "Camilla Weinstein has worked within the talent space for over 15 years and has been with MYOB for almost 4 years as the Talent Lead in New Zealand. She is a mum of 2 boys under 5, and is the Owner of Straw the Line NZ has her side hustle. She' s passionate about Talent, Employer Branding, Inclusion & Diversity, Sustainability and saving the planet one slurp at a time! As well as, spending time with her young family, exploring the world around us, snowboarding and enjoying the finer things in life!'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f8373ec5d3aadabfb86784_Camilla%20Weinstein.png",
       },
       {
@@ -4900,7 +4868,7 @@ Camilla Weinstein has worked within the talent space for over 15 years and has b
       {
         name: "Lindsay Brotherton Kilburn",
         title: "",
-        bio: "Lindsay has been with MYOB for almost 6 years moving from Business Analyst to Delivery Manager. Driven to provide a quality solution delivered by engaged and motivated people Lindsay's words to live by are 'we rise by lifting others'.'",
+        bio: "Lindsay has been with MYOB for almost 6 years moving from Business Analyst to Delivery Manager. Driven to provide a quality solution delivered by engaged and motivated people Lindsay' s words to live by are 'we rise by lifting others'.'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f8377e1139bd0eb92aa53e_Lindsay%20Brotherton%20Kilburn.jpg",
       },
       {
@@ -4919,7 +4887,7 @@ Camilla Weinstein has worked within the talent space for over 15 years and has b
         name: "Taylor Waddington",
         title: "ProtÃ©gÃ© Software Developer at MYOB",
         company: "MYOB",
-        bio: "Hi, I'm Taylor. Just over a year ago, I started at MYOB in the FMA program as a protege Software Developer. Before moving to MYOB I was down in Dunedin studying a double degree in Information Systems and Marketing. Since being at MYOB I have had the opportunity to grow and navigate myself through the corporate world. I have discovered what it's like to be a Software Developer and had the opportunity to venture outside of this expertise and work aside one of MYOB's Business Analyst to further develop my skills in another area.",
+        bio: "Hi, I' m Taylor. Just over a year ago, I started at MYOB in the FMA program as a protege Software Developer. Before moving to MYOB I was down in Dunedin studying a double degree in Information Systems and Marketing. Since being at MYOB I have had the opportunity to grow and navigate myself through the corporate world. I have discovered what it' s like to be a Software Developer and had the opportunity to venture outside of this expertise and work aside one of MYOB' s Business Analyst to further develop my skills in another area.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6486829bfe9ab71e50be070b_2_Taylor%20Waddington.png",
       },
       {
@@ -4974,9 +4942,9 @@ Camilla Weinstein has worked within the talent space for over 15 years and has b
     shortDescription: "We partnered with Xero to give people an opportunity to have a much needed night out to end 2020 with a bang!",
     description: `We partnered with Xero to give people an opportunity to have a much needed night out to end 2020 with a bang!
 
-SheSharp and Xero hosted a Girl's Night Out to bring together like-minded women interested in tech for a night of fun, interaction and challenges. As unprecedented this year has been, where most of us have interacted online via zoom calls or google hangouts, it's time (and safe) for us to have an in person event. You don't have to have a vast knowledge of tech or the tech sector to come along.
+SheSharp and Xero hosted a Girl' s Night Out to bring together like-minded women interested in tech for a night of fun, interaction and challenges. As unprecedented this year has been, where most of us have interacted online via zoom calls or google hangouts, it' s time (and safe) for us to have an in person event. You don' t have to have a vast knowledge of tech or the tech sector to come along.
 
-There were team challenges, fun quizzes and general fun and interactive awesomeness. So people brought their A-game along! This was a great event to network and reconnect with others we haven't had the opportunity to meet in person over the last few months!
+There were team challenges, fun quizzes and general fun and interactive awesomeness. So people brought their A-game along! This was a great event to network and reconnect with others we haven' t had the opportunity to meet in person over the last few months!
 
 This event was open to all students (18+) and working professionals! Food and Drinks (No Alcohol) were provided!`,
     category: "social",
@@ -4994,7 +4962,7 @@ This event was open to all students (18+) and working professionals! Food and Dr
         name: "Monica Makau (Mumbi)",
         title: "Security Risk & Compliance Specialist, Xero",
         company: "Xero",
-        bio: "Mumbi is the Security Risk & Compliance Specialist. She has been with the security team at Xero for almost 2 years. Before her career in security, Mumbi worked in the finance sector approving mortgages and home loans. She has a degree in Computer Science which was obtained at Kabarak University in Kenya - her motherland. Mumbi moved to Aotearoa NZ back in 2015 to study a Masters of Service-Oriented Computing at AUT. Since then, she's developed a passion for security - and all things Kiwi!'",
+        bio: "Mumbi is the Security Risk & Compliance Specialist. She has been with the security team at Xero for almost 2 years. Before her career in security, Mumbi worked in the finance sector approving mortgages and home loans. She has a degree in Computer Science which was obtained at Kabarak University in Kenya - her motherland. Mumbi moved to Aotearoa NZ back in 2015 to study a Masters of Service-Oriented Computing at AUT. Since then, she' s developed a passion for security - and all things Kiwi!'",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562bd916a2068e01dc80fa4_WhatsApp_Image_2023-10-18_at_5.35.37_PM.jpeg.jpg",
       },
       {
@@ -5081,7 +5049,7 @@ Our amazingly talented speaker, Ruth James is going to do the same by telling us
         name: "Ruth James",
         title: "",
         company: "Xero as their Tech Outreach and Engage Coordinator",
-        bio: "Ruth fell into the NZ tech industry by complete fluke when she arrived in the country thirteen years ago! Her first job was as a receptionist for a tech company (Fronde), since then she's worked for a number of New Zealand technology companies and currently works at Xero as their Tech Outreach and Engage Coordinator. In the last seven years she has become increasingly active in encouraging the next generation of Kiwi's into the tech sector. She has thrown herself at every opportunity going where she can help enable, inspire and encourage school and university students to pursue a career in tech.",
+        bio: "Ruth fell into the NZ tech industry by complete fluke when she arrived in the country thirteen years ago! Her first job was as a receptionist for a tech company (Fronde), since then she' s worked for a number of New Zealand technology companies and currently works at Xero as their Tech Outreach and Engage Coordinator. In the last seven years she has become increasingly active in encouraging the next generation of Kiwi' s into the tech sector. She has thrown herself at every opportunity going where she can help enable, inspire and encourage school and university students to pursue a career in tech.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562d4f14f5963423a071387_Screen%20Shot%202023-11-26%20at%206.17.30%20PM.png",
       },
       {
@@ -5149,7 +5117,7 @@ Each session will feature a presentation and Q&A from our featured guest speaker
         name: "Sai Honig",
         title: "NZNWS - Co-Founder",
         company: "Co-Founder",
-        bio: "Sai Honig is a multipotentialite who has worked in differing roles in various industries. Prior to information security, Sai was an aerospace design engineer and financial/ operational auditing. Sai's IT experience is in the governance, audit, supply chain, risk management, and security. Her industrial experience includes manufacturing, healthcare, education, and financial services.Sai is technical but not a programmer. She flourish the most in a security role that works right across the business, consultatively bringing security 'into the real world' for the average staff member. Sai is passionate in helping others and promoting a wider understanding of cybersecurity.",
+        bio: "Sai Honig is a multipotentialite who has worked in differing roles in various industries. Prior to information security, Sai was an aerospace design engineer and financial/ operational auditing. Sai' s IT experience is in the governance, audit, supply chain, risk management, and security. Her industrial experience includes manufacturing, healthcare, education, and financial services.Sai is technical but not a programmer. She flourish the most in a security role that works right across the business, consultatively bringing security 'into the real world' for the average staff member. Sai is passionate in helping others and promoting a wider understanding of cybersecurity.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/648251d9d24696d449324c43_3_Sai%20Honig%C2%A0.png",
       },
       {
@@ -5225,7 +5193,7 @@ Zainab Manasawala (Produce Development Engineer, Fisher & Paykel)`,
       {
         name: "Amrit Kaur",
         title: "",
-        bio: "Since COVID-19, Amrit has been working with Ministry of Health on NZ's COVID-19 response in the role of a Digital BA for the National Border Solution. Over her short career, Amrit has developed technical and non-technical skills in the tech world and likes to be involved in a holistic way in the work she is doing.",
+        bio: "Since COVID-19, Amrit has been working with Ministry of Health on NZ' s COVID-19 response in the role of a Digital BA for the National Border Solution. Over her short career, Amrit has developed technical and non-technical skills in the tech world and likes to be involved in a holistic way in the work she is doing.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64780d3b4165a94ec7bb0eaa_1_Amrit%20Kaur.png",
       },
       {
@@ -5340,8 +5308,8 @@ Join us for an unforgettable evening - This event is not to be missed! Join us. 
   {
     slug: "she-storytellers-series",
     title: "SHE# Storytellers Series",
-    shortDescription: "Whilst 2020 started off with a bang, the start of a new decade, it quickly turned into unprecedented times. Yes, we've heard the word 'unprecedented' a lot over the past few months, but the truth is, the world just wasn't prepared for what was quickly evolving to be the biggest pandemic of this generation. For us here, in little ol' New Zealand, Kiwis too, persevered, making sacrifices f",
-    description: `Whilst 2020 started off with a bang, the start of a new decade, it quickly turned into unprecedented times. Yes, we've heard the word 'unprecedented' a lot over the past few months, but the truth is, the world just wasn't prepared for what was quickly evolving to be the biggest pandemic of this generation. For us here, in little ol' New Zealand, Kiwis too, persevered, making sacrifices for the preservation of the lives of others. She Sharp, in recognising these difficult times, decided
+    shortDescription: "Whilst 2020 started off with a bang, the start of a new decade, it quickly turned into unprecedented times. Yes, we've heard the word 'unprecedented'  a lot over the past few months, but the truth is, the world just wasn' t prepared for what was quickly evolving to be the biggest pandemic of this generation. For us here, in little ol'  New Zealand, Kiwis too, persevered, making sacrifices f",
+    description: `Whilst 2020 started off with a bang, the start of a new decade, it quickly turned into unprecedented times. Yes, we've heard the word 'unprecedented'  a lot over the past few months, but the truth is, the world just wasn' t prepared for what was quickly evolving to be the biggest pandemic of this generation. For us here, in little ol'  New Zealand, Kiwis too, persevered, making sacrifices for the preservation of the lives of others. She Sharp, in recognising these difficult times, decided
 
 Thanks to everyone who was able to join us during May ' June for the She Sharp Storytellers Series. Over five weeks, She Sharp hosted a range of tech leaders, from the likes of Google and Microsoft. We had participants tuning in from all around Aotearoa and across APAC. We hope that you were able to gain inspiration, motivation, and some new connections through the platform during these challenging times.`,
     category: "networking",
@@ -5358,7 +5326,7 @@ Thanks to everyone who was able to join us during May ' June for the She Sha
       {
         name: "Saba Samiei",
         title: "",
-        bio: "Saba's mission in life is to do her best in creating a better future for humanity and all that lives around us. She has quite a diverse experience in the tech industry from hands-on coding to leading multi-million dollar transformation projects.Saba developed an in-depth passion for artificial intelligence back in 2017 and has dedicated her life outside of work to this topic ever since. She recently submitted her master thesis which focused on understanding the why behind the warnings about the danger of AI continues to work on this topic in more depth.",
+        bio: "Saba' s mission in life is to do her best in creating a better future for humanity and all that lives around us. She has quite a diverse experience in the tech industry from hands-on coding to leading multi-million dollar transformation projects.Saba developed an in-depth passion for artificial intelligence back in 2017 and has dedicated her life outside of work to this topic ever since. She recently submitted her master thesis which focused on understanding the why behind the warnings about the danger of AI continues to work on this topic in more depth.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f7bd97700193c77acbca98_saba-samiei.jpg",
         linkedIn: "https://www.linkedin.com/in/sabasamiei/",
       },
@@ -5378,7 +5346,7 @@ Thanks to everyone who was able to join us during May ' June for the She Sha
       {
         name: "Alisa Edwards",
         title: "",
-        bio: "Alisa is a Chilean-American (and almost Kiwi) who is passionate about the environment, diversity & inclusion, and tech for good. She is active in Auckland's Salesforce community where she runs the Women in Tech group, works as a Salesforce consultant at GravityLab, teaches the Admin course at Tech Futures Lab, and collects 600+ Trailhead badges as well as ten Salesforce certifications. Alisa loves hearing from inspiring people, learning new languages, exploring vegan restaurants, hiking NZ Great Walks, attending hackathons, minimising waste, and finding ways to do things thoughtfully and a bit unconventionally.",
+        bio: "Alisa is a Chilean-American (and almost Kiwi) who is passionate about the environment, diversity & inclusion, and tech for good. She is active in Auckland' s Salesforce community where she runs the Women in Tech group, works as a Salesforce consultant at GravityLab, teaches the Admin course at Tech Futures Lab, and collects 600+ Trailhead badges as well as ten Salesforce certifications. Alisa loves hearing from inspiring people, learning new languages, exploring vegan restaurants, hiking NZ Great Walks, attending hackathons, minimising waste, and finding ways to do things thoughtfully and a bit unconventionally.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64fe6d05a1cce20956d4e278_Alisa%20Edwards.png",
       },
       {
@@ -5431,9 +5399,9 @@ Thanks to everyone who was able to join us during May ' June for the She Sha
     slug: "robotic-process-automation",
     title: "Robotic Process Automation Workshop",
     shortDescription: "We invite you to take part in our automation challenge, which will have you working in teams to develop an automated solution for a basic use case. There will be experienced developers on hand to help you through your solution, but with limited time this will definitely be a challenge. We have prepared some pre-work to help you prepare for the day, however the software we will be using (UiPath) is",
-    description: `We invite you to take part in our automation challenge, which will have you working in teams to develop an automated solution for a basic use case. There will be experienced developers on hand to help you through your solution, but with limited time this will definitely be a challenge. We have prepared some pre-work to help you prepare for the day, however the software we will be using (UiPath) is designed to be low-code with plenty of drag-and-drop options so we believe you'll be able to deve
+    description: `We invite you to take part in our automation challenge, which will have you working in teams to develop an automated solution for a basic use case. There will be experienced developers on hand to help you through your solution, but with limited time this will definitely be a challenge. We have prepared some pre-work to help you prepare for the day, however the software we will be using (UiPath) is designed to be low-code with plenty of drag-and-drop options so we believe you' ll be able to deve
 
-Priyanka is a leader in EY's technology advisory practice. With a focus on automation she helps clients understand how processes can be improved through a combination of technology and process improvement. She studied Mathematics at university and joined EY on their graduate programme in the UK, later moving to New Zealand to join the Auckland team. Whilst every day is different, her role these days can be simplified into three parts; helping clients solve business problems (delivery), pursuin`,
+Priyanka is a leader in EY' s technology advisory practice. With a focus on automation she helps clients understand how processes can be improved through a combination of technology and process improvement. She studied Mathematics at university and joined EY on their graduate programme in the UK, later moving to New Zealand to join the Auckland team. Whilst every day is different, her role these days can be simplified into three parts; helping clients solve business problems (delivery), pursuin`,
     category: "workshop",
     status: "completed",
     startDate: "2020-03-05",
@@ -5448,13 +5416,13 @@ Priyanka is a leader in EY's technology advisory practice. With a focus on a
       {
         name: "Priyanka Tailor",
         title: "Automation Lead",
-        bio: "Priyanka is a leader in EY's technology advisory practice. With a focus on automation she helps clients understand how processes can be improved through a combination of technology and process improvement. She studied Mathematics at university and joined EY on their graduate programme in the UK, later moving to New Zealand to join the Auckland team. Whilst every day is different, her role these days can be simplified into three parts; helping clients solve business problems (delivery), pursuing new opportunities with clients (sales) and managing the EY team (coaching). Priyanka is passionate about cultural diversity and understanding others' perspectives.",
+        bio: "Priyanka is a leader in EY' s technology advisory practice. With a focus on automation she helps clients understand how processes can be improved through a combination of technology and process improvement. She studied Mathematics at university and joined EY on their graduate programme in the UK, later moving to New Zealand to join the Auckland team. Whilst every day is different, her role these days can be simplified into three parts; helping clients solve business problems (delivery), pursuing new opportunities with clients (sales) and managing the EY team (coaching). Priyanka is passionate about cultural diversity and understanding others'  perspectives.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65013352e6920711965c57d9_87654148_2686054368342840_2068468739518496768_n.jpg",
       },
       {
         name: "Thashnee Pillay",
         title: "Service Design Lead",
-        bio: "Thashnee is a senior service designer and the Agile lead for NZ at EY with 10+ years' experience across various sectors. She has a passion for getting teams to deliver outcomes that matter to their customers and thrives on bridging the gap between design and delivery with the ability to coach teams through each of these areas. Her first job out of campus was an IT lecturer after which she joined a global software delivery consultancy. She has worked in various roles within software delivery including business. Her technical background made the transition into business seamless and pivotal to helping clients design better ways of working, later on as an Agile coach.",
+        bio: "Thashnee is a senior service designer and the Agile lead for NZ at EY with 10+ years'  experience across various sectors. She has a passion for getting teams to deliver outcomes that matter to their customers and thrives on bridging the gap between design and delivery with the ability to coach teams through each of these areas. Her first job out of campus was an IT lecturer after which she joined a global software delivery consultancy. She has worked in various roles within software delivery including business. Her technical background made the transition into business seamless and pivotal to helping clients design better ways of working, later on as an Agile coach.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/650133c09ad19c5f51f01063_87873690_2687338451547765_4406142030535720960_n.jpg",
       },
       {
@@ -5509,7 +5477,7 @@ Priyanka is a leader in EY's technology advisory practice. With a focus on a
     shortDescription: "Unless you have been living under a rock, you will have heard of blockchain.",
     description: `Unless you have been living under a rock, you will have heard of blockchain.
 
-Blockchain is one of the most important inventions since the Internet. It's powering systems for supply chain, fintech, mobility, digital identity and yes, eventrading virtual cats. But, what exactly is Blockchain? How does it work? And most importantly, how do you decide if it's right for your idea or business?
+Blockchain is one of the most important inventions since the Internet. It' s powering systems for supply chain, fintech, mobility, digital identity and yes, eventrading virtual cats. But, what exactly is Blockchain? How does it work? And most importantly, how do you decide if it' s right for your idea or business?
 
 Join us at the event to learn the ins and outs of this emerging technology and blockchain based projects happening around New Zealand. Hear from the industry experts from Centrality, Yabble, and Ähau, about their blockchain journey. We will also conduct an Ideathon, where our experts will show you how easy it is to get started on blockchain programming. So team up and design your very own blockchain application to win a prize for the best concept. Drinks and nibbles will be provided to accompan`,
     category: "networking",
@@ -5592,8 +5560,8 @@ Join us at the event to learn the ins and outs of this emerging technology and b
   {
     slug: "she-wahine-kakano",
     title: "SHE# @ WÄHINE KÄKANO",
-    shortDescription: "WÄhine KÄkano is New Zealand's premier young women's festival where young women between the ages of 16-22 years can attend a wide range of workshops which will equip them with skills and confidence required to take on their careers.",
-    description: `WÄhine KÄkano is New Zealand's premier young women's festival where young women between the ages of 16-22 years can attend a wide range of workshops which will equip them with skills and confidence required to take on their careers.
+    shortDescription: "WÄhine KÄkano is New Zealand' s premier young women' s festival where young women between the ages of 16-22 years can attend a wide range of workshops which will equip them with skills and confidence required to take on their careers.",
+    description: `WÄhine KÄkano is New Zealand' s premier young women' s festival where young women between the ages of 16-22 years can attend a wide range of workshops which will equip them with skills and confidence required to take on their careers.
 
 She# was a part of this festival and facilitated an interactive workshop where attendees were introduced to Augmented Reality. Our attendees were able to experience AR first hand and were able to create one of their own. The workshop also included a career talk from our She# Ambassador and Software Engineer Abby Shen, where she took us through her journey in the technology sector.`,
     category: "networking",
@@ -5656,8 +5624,8 @@ She# was a part of this festival and facilitated an interactive workshop where a
   {
     slug: "she-amazon-web-services-aws",
     title: "SHE# @ AMAZON WEB SERVICES (AWS)",
-    shortDescription: "She# was proud to hold an incredible event at Amazon Web Services on a very inspiring topic: The Amazon Culture of Innovation. Attendees enjoyed listening to AWS's Katrien Pagenaer, the NZ Sales Manager at AWS as she talked about the the key innovation fostering ideas followed by Amazon that helped it grow from an online books retailer to an e-commerce and computing giant. This was followed by a",
-    description: `She# was proud to hold an incredible event at Amazon Web Services on a very inspiring topic: The Amazon Culture of Innovation. Attendees enjoyed listening to AWS's Katrien Pagenaer, the NZ Sales Manager at AWS as she talked about the the key innovation fostering ideas followed by Amazon that helped it grow from an online books retailer to an e-commerce and computing giant. This was followed by a hands-on workshop that saw teams brainstorming to come up with their very own innovation, and pitch
+    shortDescription: "She# was proud to hold an incredible event at Amazon Web Services on a very inspiring topic: The Amazon Culture of Innovation. Attendees enjoyed listening to AWS' s Katrien Pagenaer, the NZ Sales Manager at AWS as she talked about the the key innovation fostering ideas followed by Amazon that helped it grow from an online books retailer to an e-commerce and computing giant. This was followed by a",
+    description: `She# was proud to hold an incredible event at Amazon Web Services on a very inspiring topic: The Amazon Culture of Innovation. Attendees enjoyed listening to AWS' s Katrien Pagenaer, the NZ Sales Manager at AWS as she talked about the the key innovation fostering ideas followed by Amazon that helped it grow from an online books retailer to an e-commerce and computing giant. This was followed by a hands-on workshop that saw teams brainstorming to come up with their very own innovation, and pitch
 
 As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare, Sune excels in mentoring, combining her analytical skills and creative flair to inspire her team. Her unique approach to problem-solving and strong belief in the power of intuition and communication make her an invaluable guide. Sune's dedication to personal and professional growth within her role showcases her as a transformative leader and mentor.`,
     category: "networking",
@@ -6143,7 +6111,7 @@ Brown bag lunches were provided by SheSharp while attendees were guided through 
 
 In the second session, we got to know these Googlers a bit better with a career panel. Each Googler shared their path to Google, as well as some insight into life at Google. Attendees were able to ask anything and get all their questions answered, and did we mention ' get lots of Google swag!!
 
-The event ended with the opportunities at Google for students ' internships, graduate positions, and the Women Techmakers Scholarship. The scholarship was particularly encouraged, and SheSharp Ambassadors who were former recipients spoke highly of the Scholars' Retreat, where recipients can connect with fellow scholars, network with Googlers and participate in a number of workshops, held in a different Google Asia Pacific office each year.`,
+The event ended with the opportunities at Google for students ' internships, graduate positions, and the Women Techmakers Scholarship. The scholarship was particularly encouraged, and SheSharp Ambassadors who were former recipients spoke highly of the Scholars'  Retreat, where recipients can connect with fellow scholars, network with Googlers and participate in a number of workshops, held in a different Google Asia Pacific office each year.`,
     category: "workshop",
     status: "completed",
     startDate: "2018-03-26",
@@ -6279,7 +6247,7 @@ After this the students all boarded the bus again and headed down the hill to Pa
 
 After this the group then jumped back on the bus again and heads down to Wynyard quarter and to the Air New Zealand Head Office. Here a team Product Owners, Developers and Quality Assurers introduced themselves and talked about their work. The group was then split into two smaller groups which consequently encouraging a more intimate conversation between the presenters and attendees. The Air New Zealand team talked to one team about Oscar, the Air New Zealand chatbot that used AI to help with cu
 
-It wasn't long before the students were on the bus again and heading to their final destination of the tour, Trade Me. Here they were greeted by Grace Benedek Rooney, a Developer at Trade Me, who talked about what it is like to be a developer. Developers at Trade Me work in teams, use a variety of tools in order to deliver cool and useful products. She also talked about how as a developer, you get to help people in their lives without meeting them in person. Her example was about a student mov`,
+It wasn' t long before the students were on the bus again and heading to their final destination of the tour, Trade Me. Here they were greeted by Grace Benedek Rooney, a Developer at Trade Me, who talked about what it is like to be a developer. Developers at Trade Me work in teams, use a variety of tools in order to deliver cool and useful products. She also talked about how as a developer, you get to help people in their lives without meeting them in person. Her example was about a student mov`,
     category: "networking",
     status: "completed",
     startDate: "2017-12-11",
@@ -6537,7 +6505,7 @@ Of course, there was plenty of Google swag given away and attendees got a unique
     shortDescription: "SheSharp, OMGTech, Colab AUT and Tech Girl Movement collaborated for Superhero Daughter Day 2017",
     description: `SheSharp, OMGTech, Colab AUT and Tech Girl Movement collaborated for Superhero Daughter Day 2017
 
-The event celebrated International Women's Day and took place in AUT. Years 1 to Year 7 girls were invited to participate in workshops that involved Coding, Robotics and Unmaking. We saw 140 girls from different backgrounds come through for an action-packed day ready to learn and get techy.
+The event celebrated International Women' s Day and took place in AUT. Years 1 to Year 7 girls were invited to participate in workshops that involved Coding, Robotics and Unmaking. We saw 140 girls from different backgrounds come through for an action-packed day ready to learn and get techy.
 
 The attendants also got to hear from Mikayla Stokes, Bright Sparks winner, who shared her story about how she developed her interest in technology.`,
     category: "networking",
@@ -6598,7 +6566,7 @@ The attendants also got to hear from Mikayla Stokes, Bright Sparks winner, who s
     shortDescription: "Over 50 (mainly high school students) joined us for our first She# event of 2017 held at Orion Health. We started the workshop with some ice breakers and team building games so everyone became for comfortable and familiar with one another.",
     description: `Over 50 (mainly high school students) joined us for our first She# event of 2017 held at Orion Health. We started the workshop with some ice breakers and team building games so everyone became for comfortable and familiar with one another.
 
-Using the workbooks and USB's provided, students worked in pairs or individually to create a game using the platform Construct 2. After a morning of writing code and testing the game we broke for lunch refueling on pizza! This was then followed by a presentation by our guest speaker, Niamh Fitzgerald, a game developer and Media Design Student. Niamh shared her experience and insight into the NZ game development scene ' she became an instant hit with the students with a prolonged and very pos`,
+Using the workbooks and USB' s provided, students worked in pairs or individually to create a game using the platform Construct 2. After a morning of writing code and testing the game we broke for lunch refueling on pizza! This was then followed by a presentation by our guest speaker, Niamh Fitzgerald, a game developer and Media Design Student. Niamh shared her experience and insight into the NZ game development scene ' she became an instant hit with the students with a prolonged and very pos`,
     category: "networking",
     status: "completed",
     startDate: "2017-02-25",
@@ -6659,8 +6627,8 @@ Using the workbooks and USB's provided, students worked in pairs or individu
   {
     slug: "she-fisher-paykel",
     title: "SHE# @ FISHER & PAYKEL",
-    shortDescription: "On a sunny Thursday morning during half term a group of female high school and university students headed out to the Fisher and Paykel Healthcare offices in East Tamaki. We'd all come to find out more about this iconic Kiwi company founded in 1934 and their pioneering work create medical apparatus for healthcare.",
-    description: `On a sunny Thursday morning during half term a group of female high school and university students headed out to the Fisher and Paykel Healthcare offices in East Tamaki. We'd all come to find out more about this iconic Kiwi company founded in 1934 and their pioneering work create medical apparatus for healthcare.
+    shortDescription: "On a sunny Thursday morning during half term a group of female high school and university students headed out to the Fisher and Paykel Healthcare offices in East Tamaki. We' d all come to find out more about this iconic Kiwi company founded in 1934 and their pioneering work create medical apparatus for healthcare.",
+    description: `On a sunny Thursday morning during half term a group of female high school and university students headed out to the Fisher and Paykel Healthcare offices in East Tamaki. We' d all come to find out more about this iconic Kiwi company founded in 1934 and their pioneering work create medical apparatus for healthcare.
 
 We kicked the session off with some ice breaker games so everyone felt comfortable and familiar with each other. The team at Fisher and Paykel Healthcare then introduced themselves and gave an overview of the company, its challenges and achievements. This lead seamlessly into the group activity whereby the students worked in teams to come up with a solution to attached a breathing ventilator to a premature baby. They created prototypes using and a box of equipment provided and a toy baby! At the
 
@@ -6729,7 +6697,7 @@ By the end of our visit all our students were excited and inspired to pursue the
     shortDescription: "We had Ruth, the Head of UX Design at Trade Me, give us a lesson on how she has overcome her fears of public speaking and some effective skills on how to present effectively.",
     description: `We had Ruth, the Head of UX Design at Trade Me, give us a lesson on how she has overcome her fears of public speaking and some effective skills on how to present effectively.
 
-Our very own Emily gave us a taste of what it's like to work at NZ's leading auction site, from slides to free lunch to smart toilets! We also had Kate James, one of the Recruitment Managers at Trade Me, who gave some tips and advice for landing a job at Trade Me! Of course, there was plenty of pizza and cool swag. We finished with a table topics style workshop where everyone could put their public speaking skills to use!`,
+Our very own Emily gave us a taste of what it' s like to work at NZ' s leading auction site, from slides to free lunch to smart toilets! We also had Kate James, one of the Recruitment Managers at Trade Me, who gave some tips and advice for landing a job at Trade Me! Of course, there was plenty of pizza and cool swag. We finished with a table topics style workshop where everyone could put their public speaking skills to use!`,
     category: "networking",
     status: "completed",
     startDate: "2016-08-03",
@@ -6874,20 +6842,20 @@ Read more about our fantastic lightning speakers below!`,
       {
         name: "Donna Wright",
         title: "Business Strategy Director",
-        bio: "Donna, Microsoft NZ's Services Director since 2010, oversees Consulting and Support, driving Microsoft's Enterprise Customer empowerment. Returning in 2016 as Business Strategy Director, she concentrates on the Subsidiary's growth and transformation strategy. Previously, Donna dedicated 15 years to the Airline Industry in NZ and Australia, shaping IT strategy, leading e-commerce, digital transformation, and marketing solutions. Post her 2004 departure from Air NZ, Donna served as CIO at Coca-Cola Amatil NZ for 6 years. There, she facilitated mobile sales, automated warehousing, and implemented the global Coca-Cola Bottler SAP ERP solution. Donna holds a Bachelor's in Computer Science and an MBA from Auckland University.",
+        bio: "Donna, Microsoft NZ's Services Director since 2010, oversees Consulting and Support, driving Microsoft's Enterprise Customer empowerment. Returning in 2016 as Business Strategy Director, she concentrates on the Subsidiary' s growth and transformation strategy. Previously, Donna dedicated 15 years to the Airline Industry in NZ and Australia, shaping IT strategy, leading e-commerce, digital transformation, and marketing solutions. Post her 2004 departure from Air NZ, Donna served as CIO at Coca-Cola Amatil NZ for 6 years. There, she facilitated mobile sales, automated warehousing, and implemented the global Coca-Cola Bottler SAP ERP solution. Donna holds a Bachelor's in Computer Science and an MBA from Auckland University.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6563e2b5669316cb06457295_Donna-Wright.png",
       },
       {
         name: "Rocky Heckman",
         title: "HoloLens Business Development Manager",
-        bio: "Rocky, pioneers holographic computing in the evolving era of technology. Microsoft's HoloLens stands as the world's initial fully untethered holographic computer, seamlessly merging the digital and physical domains. This innovation unlocks vast possibilities for Microsoft, its clientele, and collaborators. Driving this initiative aligns with his overarching goal of fostering the Digital Society.A regular presenter at industry events, including Microsoft Ignite, His expertise spans collaborations with governments, law enforcement, aviation, healthcare, finance, game studios, and ISVs. Prior to computer-centric career, he served as an aircraft mechanic, contributed to Cape Canaveral, and engaged with US government contractors.''",
+        bio: "Rocky, pioneers holographic computing in the evolving era of technology. Microsoft's HoloLens stands as the world' s initial fully untethered holographic computer, seamlessly merging the digital and physical domains. This innovation unlocks vast possibilities for Microsoft, its clientele, and collaborators. Driving this initiative aligns with his overarching goal of fostering the Digital Society.A regular presenter at industry events, including Microsoft Ignite, His expertise spans collaborations with governments, law enforcement, aviation, healthcare, finance, game studios, and ISVs. Prior to computer-centric career, he served as an aircraft mechanic, contributed to Cape Canaveral, and engaged with US government contractors.''",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6563e3ada57237327e4dabf4_Rocky-Heckman-ovfwdpiq05c1otgefljz0kwl9q21kj4k6vz49b2t2w.png",
       },
       {
         name: "Lance Witheridge",
         title: "Insights Analyst, TRADEME",
         company: "TRADEME",
-        bio: "Originally from London, Lance unintentionally ventured into a tech career when a temp job turned permanent, evolving into a decade-long contracting position. As a software developer, he contributed to JP Morgan's Equities division in London and Tokyo, also working remotely from Christchurch. Later, he transitioned to a similar role in Westpac's Financial Markets team in Auckland.Lance entered an Analytics role within Westpac's mortgages team, eventually departing the world of banking and corporate attire for his current position as an Insights Analyst at Trade Me. Having been around long enough to attend a workshop on the nascent concept of 'the internet', He is now applying that knowledge and exploring ways to capitalize on it.",
+        bio: "Originally from London, Lance unintentionally ventured into a tech career when a temp job turned permanent, evolving into a decade-long contracting position. As a software developer, he contributed to JP Morgan' s Equities division in London and Tokyo, also working remotely from Christchurch. Later, he transitioned to a similar role in Westpac' s Financial Markets team in Auckland.Lance entered an Analytics role within Westpac' s mortgages team, eventually departing the world of banking and corporate attire for his current position as an Insights Analyst at Trade Me. Having been around long enough to attend a workshop on the nascent concept of 'the internet', He is now applying that knowledge and exploring ways to capitalize on it.",
         image: "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6563e5c5ebad4f0466457c8e_Lance-W-ovfwddatjavbhvy5ey9tm5zljpq9sgs1t7ht0pkxbs.png",
       },
       {
@@ -7083,8 +7051,8 @@ Throughout the workshop our SheSharp committee members and ambassadors help stud
   {
     slug: "she-sharp-westpac",
     title: "She Sharp @ Westpac",
-    shortDescription: "This event took place in the heart of Auckland CBD at Westpac's head office. We heard from the inspiring DawieOlivers, Westpac's Chief Information Officer, and his team on what they do at Westpac and their focus on the importnace of diversity of thought.",
-    description: `This event took place in the heart of Auckland CBD at Westpac's head office. We heard from the inspiring DawieOlivers, Westpac's Chief Information Officer, and his team on what they do at Westpac and their focus on the importnace of diversity of thought.
+    shortDescription: "This event took place in the heart of Auckland CBD at Westpac' s head office. We heard from the inspiring DawieOlivers, Westpac' s Chief Information Officer, and his team on what they do at Westpac and their focus on the importnace of diversity of thought.",
+    description: `This event took place in the heart of Auckland CBD at Westpac' s head office. We heard from the inspiring DawieOlivers, Westpac' s Chief Information Officer, and his team on what they do at Westpac and their focus on the importnace of diversity of thought.
 
 Event attendees learnt about just how much technology has transformed the banking industry as well as participated in leadership and diversity workshops. Read about our panelists from Westpac below.`,
     category: "networking",
@@ -7147,8 +7115,8 @@ Event attendees learnt about just how much technology has transformed the bankin
   {
     slug: "she-sharp-xero-in-wellington",
     title: "She Sharp @ Xero in Wellington",
-    shortDescription: "Wellington's first SheSharp event was sponsored by Xero and 920 Career Agents as well as Orion Health, Unitec and Google and was held at Xero with a team of SheSharp members who travelled down from Auckland. The event was sold out, with over 60 women attending from around Wellington, some even travelling in from other cities around New Zealand.In addition to secondary and tertiary students, ther",
-    description: `Wellington's first SheSharp event was sponsored by Xero and 920 Career Agents as well as Orion Health, Unitec and Google and was held at Xero with a team of SheSharp members who travelled down from Auckland. The event was sold out, with over 60 women attending from around Wellington, some even travelling in from other cities around New Zealand.In addition to secondary and tertiary students, there were also industry members from a range of companies including Xero, 920 Career Agents, Fonde, Cat
+    shortDescription: "Wellington' s first SheSharp event was sponsored by Xero and 920 Career Agents as well as Orion Health, Unitec and Google and was held at Xero with a team of SheSharp members who travelled down from Auckland. The event was sold out, with over 60 women attending from around Wellington, some even travelling in from other cities around New Zealand.In addition to secondary and tertiary students, ther",
+    description: `Wellington' s first SheSharp event was sponsored by Xero and 920 Career Agents as well as Orion Health, Unitec and Google and was held at Xero with a team of SheSharp members who travelled down from Auckland. The event was sold out, with over 60 women attending from around Wellington, some even travelling in from other cities around New Zealand.In addition to secondary and tertiary students, there were also industry members from a range of companies including Xero, 920 Career Agents, Fonde, Cat
 
 The event also included a panel of women from Xero who shared successes, challenges and experiences from their own journeys. Feedback from participants was very encouraging, many commenting on the level of professionalism of the event and on the value and necessity of such a group to continue in Wellington.Read about out awesome panelists from Xero below.`,
     category: "networking",
@@ -7211,10 +7179,10 @@ The event also included a panel of women from Xero who shared successes, challen
   {
     slug: "hacking-insecurities-grid-akl",
     title: "Hacking Insecurities @ Grid AKL",
-    shortDescription: "Imposter Syndrome is a long talked about topic that many people in the tech industry suffer from (not just women, either!). It's that feeling of not being good enough or that you don't deserve to be where you are today. We often think we're alone in this mindset; but most people feel this way at some point in their career!",
-    description: `Imposter Syndrome is a long talked about topic that many people in the tech industry suffer from (not just women, either!). It's that feeling of not being good enough or that you don't deserve to be where you are today. We often think we're alone in this mindset; but most people feel this way at some point in their career!
+    shortDescription: "Imposter Syndrome is a long talked about topic that many people in the tech industry suffer from (not just women, either!). It' s that feeling of not being good enough or that you don' t deserve to be where you are today. We often think we' re alone in this mindset; but most people feel this way at some point in their career!",
+    description: `Imposter Syndrome is a long talked about topic that many people in the tech industry suffer from (not just women, either!). It' s that feeling of not being good enough or that you don' t deserve to be where you are today. We often think we' re alone in this mindset; but most people feel this way at some point in their career!
 
-We had a presentation from Michelle about what imposter syndrome is and how to overcome this barrier that is stopping you from being awesome! Her life motto is to stop complaining and start changing and say yes to anything that doesn't kill you. Her presentation was inspiring and led onto group discussions about a range of topics related to imposter syndrome. We had talks about our overuse of the words 'sorry ' and 'just' as well as what we thought our best traits were and whether perf`,
+We had a presentation from Michelle about what imposter syndrome is and how to overcome this barrier that is stopping you from being awesome! Her life motto is to stop complaining and start changing and say yes to anything that doesn' t kill you. Her presentation was inspiring and led onto group discussions about a range of topics related to imposter syndrome. We had talks about our overuse of the words 'sorry ' and 'just' as well as what we thought our best traits were and whether perf`,
     category: "workshop",
     status: "completed",
     startDate: "2015-08-19",
@@ -7467,8 +7435,8 @@ The event had lots of cake, pizza, goodies and surprises! Teams created a short 
   {
     slug: "she-sharp-launch-event",
     title: "She Sharp Launch Event",
-    shortDescription: "She Sharp had the official launch event with Orion Health at their Grafton offices. This included a Scrum workshop and plenty of opportunity to network with Orion employees as well as other women in technical fields. Guest speakers from Orion Health, Diana Venter and Tegan Harrison shared some of their stories of being a woman in software development and also talked about some of Orion Health's",
-    description: `She Sharp had the official launch event with Orion Health at their Grafton offices. This included a Scrum workshop and plenty of opportunity to network with Orion employees as well as other women in technical fields. Guest speakers from Orion Health, Diana Venter and Tegan Harrison shared some of their stories of being a woman in software development and also talked about some of Orion Health's products and processes.
+    shortDescription: "She Sharp had the official launch event with Orion Health at their Grafton offices. This included a Scrum workshop and plenty of opportunity to network with Orion employees as well as other women in technical fields. Guest speakers from Orion Health, Diana Venter and Tegan Harrison shared some of their stories of being a woman in software development and also talked about some of Orion Health' s",
+    description: `She Sharp had the official launch event with Orion Health at their Grafton offices. This included a Scrum workshop and plenty of opportunity to network with Orion employees as well as other women in technical fields. Guest speakers from Orion Health, Diana Venter and Tegan Harrison shared some of their stories of being a woman in software development and also talked about some of Orion Health' s products and processes.
 
 As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare, Sune excels in mentoring, combining her analytical skills and creative flair to inspire her team. Her unique approach to problem-solving and strong belief in the power of intuition and communication make her an invaluable guide. Sune's dedication to personal and professional growth within her role showcases her as a transformative leader and mentor.`,
     category: "networking",

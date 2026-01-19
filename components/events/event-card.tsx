@@ -35,7 +35,7 @@ export function EventCard({
         )}
       >
         {/* Cover Image */}
-        <div className="relative aspect-[16/9] overflow-hidden  ">
+        <div className="relative aspect-16/9 overflow-hidden  ">
           <Image
             src={event.coverImage}
             alt={event.title}
