@@ -1,0 +1,1169 @@
+{
+  "metadata": {
+    "source": "https://www.shesharp.org.nz/media/photo-gallery",
+    "scrapedAt": "2026-01-19T23:38:35.449724",
+    "totalGalleries": 76,
+    "organization": "She Sharp New Zealand",
+    "description": "Photo galleries from She Sharp events",
+    "yearRange": {
+      "earliest": "2014",
+      "latest": "2025"
+    },
+    "galleriesByYear": {
+      "2025": 10,
+      "2024": 9,
+      "2023": 13,
+      "2022": 8,
+      "2021": 5,
+      "2020": 6,
+      "2019": 5,
+      "2018": 6,
+      "2017": 5,
+      "2016": 5,
+      "2015": 3,
+      "2014": 1
+    }
+  },
+  "galleries": [
+    {
+      "id": 1,
+      "title": "She Sharp & HCLTech: AI Empowerment: Shaping an Inclusive Digital Future",
+      "date": "November 21, 2025",
+      "year": "2025",
+      "galleryUrl": "https://photos.app.goo.gl/krVccsrdhyEeWtSAA",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68e995df8373aaeb77006628_HCLTech%20Poster%20(2).png",
+        "alt": "HCL-Poster",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68e995df8373aaeb77006628_HCLTech%20Poster%20(2)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68e995df8373aaeb77006628_HCLTech%20Poster%20(2)-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68e995df8373aaeb77006628_HCLTech%20Poster%20(2).png 1080w",
+        "localPath": "assets/images/galleries/001_She_Sharp_&_HCLTech_AI_Empowerment_Shaping_an_Incl.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery",
+      "pageNumber": 1
+    },
+    {
+      "id": 2,
+      "title": "Future-Ready: Data, AI, Digital Innovation & Inclusive Careers at Vector",
+      "date": "November 12, 2025",
+      "year": "2025",
+      "galleryUrl": "https://photos.app.goo.gl/4x8J5DKZLP7WESwq8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/691a687f088cca0f562a3ae6_vector_event_poster__1080_x_1080_px___1__720.png",
+        "alt": "",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/691a687f088cca0f562a3ae6_vector_event_poster__1080_x_1080_px___1__720-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/691a687f088cca0f562a3ae6_vector_event_poster__1080_x_1080_px___1__720.png 720w",
+        "localPath": "assets/images/galleries/002_Future-Ready_Data,_AI,_Digital_Innovation_&_Inclus.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery",
+      "pageNumber": 1
+    },
+    {
+      "id": 3,
+      "title": "Code Secure. Lead the Future: Women in Cybersecurity Workshop",
+      "date": "October 3, 2025",
+      "year": "2025",
+      "galleryUrl": "https://photos.app.goo.gl/4CWo8WBuM1rfg63q9",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68c01166fb8c1fe0aae90eb8_Xero%20-%20Social%20Media.png",
+        "alt": "",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68c01166fb8c1fe0aae90eb8_Xero%20-%20Social%20Media-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68c01166fb8c1fe0aae90eb8_Xero%20-%20Social%20Media-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68c01166fb8c1fe0aae90eb8_Xero%20-%20Social%20Media.png 1080w",
+        "localPath": "assets/images/galleries/003_Code_Secure._Lead_the_Future_Women_in_Cybersecurit.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery",
+      "pageNumber": 1
+    },
+    {
+      "id": 4,
+      "title": "Business and Technology Transformation Through Platforms and Products",
+      "date": "September 3, 2025",
+      "year": "2025",
+      "galleryUrl": "https://photos.app.goo.gl/TYrx8hrvrp4rbAS19",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68c1323693bebb750e82f755_fonterra.png",
+        "alt": "",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68c1323693bebb750e82f755_fonterra-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/68c1323693bebb750e82f755_fonterra.png 706w",
+        "localPath": "assets/images/galleries/004_Business_and_Technology_Transformation_Through_Pla.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery",
+      "pageNumber": 1
+    },
+    {
+      "id": 5,
+      "title": "AI Hackathon Festival 2025",
+      "date": "August 15, 2025",
+      "year": "2025",
+      "galleryUrl": "https://photos.app.goo.gl/GUQBZCNDV7X5Jx5d6",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685b930195a2e57635c32a0a_-TechWomenNZ-%20Humanitix%20Event%20Banner%2020%20May%202025.webp",
+        "alt": "",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685b930195a2e57635c32a0a_-TechWomenNZ-%20Humanitix%20Event%20Banner%2020%20May%202025-p-500.webp 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685b930195a2e57635c32a0a_-TechWomenNZ-%20Humanitix%20Event%20Banner%2020%20May%202025-p-800.webp 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685b930195a2e57635c32a0a_-TechWomenNZ-%20Humanitix%20Event%20Banner%2020%20May%202025-p-1080.webp 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685b930195a2e57635c32a0a_-TechWomenNZ-%20Humanitix%20Event%20Banner%2020%20May%202025.webp 2400w",
+        "localPath": "assets/images/galleries/005_AI_Hackathon_Festival_2025.webp"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery",
+      "pageNumber": 1
+    },
+    {
+      "id": 6,
+      "title": "Thrive: Your Career, Your Story",
+      "date": "July 30, 2025",
+      "year": "2025",
+      "galleryUrl": "https://photos.app.goo.gl/58coFzFj2FfWbFMp7",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685d16184e0d23702c5f2066_THRIVE%20Your%20Career%2C%20%20Your%20Story.jpg",
+        "alt": "",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685d16184e0d23702c5f2066_THRIVE%20Your%20Career%2C%20%20Your%20Story-p-500.jpg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685d16184e0d23702c5f2066_THRIVE%20Your%20Career%2C%20%20Your%20Story-p-800.jpg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685d16184e0d23702c5f2066_THRIVE%20Your%20Career%2C%20%20Your%20Story-p-1080.jpg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/685d16184e0d23702c5f2066_THRIVE%20Your%20Career%2C%20%20Your%20Story.jpg 1110w",
+        "localPath": "assets/images/galleries/006_Thrive_Your_Career,_Your_Story.jpg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery",
+      "pageNumber": 1
+    },
+    {
+      "id": 7,
+      "title": "Ethnic Advantage Conference",
+      "date": "June 28, 2025",
+      "year": "2025",
+      "galleryUrl": "https://photos.app.goo.gl/FUVC4aR3vPgvRzK57",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/684918c467a93421eafe8f3b_unnamed.jpg",
+        "alt": "",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/684918c467a93421eafe8f3b_unnamed-p-500.jpg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/684918c467a93421eafe8f3b_unnamed-p-800.jpg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/684918c467a93421eafe8f3b_unnamed.jpg 1080w",
+        "localPath": "assets/images/galleries/007_Ethnic_Advantage_Conference.jpg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery",
+      "pageNumber": 1
+    },
+    {
+      "id": 8,
+      "title": "Tech That Matches Your Vibe: Find Your Perfect Fit",
+      "date": "May 22, 2025",
+      "year": "2025",
+      "galleryUrl": "https://photos.google.com/share/AF1QipNxzXF2evZ8rGwTEe0_VASAbntGIRm77aa9q5jDQbUTm_al_yxu47Zv2KXyFFj_vA?key=RDloa3JNS3V2N3N3RGdXZWtDel9Id2ZUNGxyZXB3",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67fd6ff293328e7d586a0200_myOB%20tech%20week%20event.png",
+        "alt": "",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67fd6ff293328e7d586a0200_myOB%20tech%20week%20event-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67fd6ff293328e7d586a0200_myOB%20tech%20week%20event-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67fd6ff293328e7d586a0200_myOB%20tech%20week%20event.png 1080w",
+        "localPath": "assets/images/galleries/008_Tech_That_Matches_Your_Vibe_Find_Your_Perfect_Fit.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery",
+      "pageNumber": 1
+    },
+    {
+      "id": 9,
+      "title": "#IAmRemarkable",
+      "date": "April 16, 2025",
+      "year": "2025",
+      "galleryUrl": "https://photos.app.goo.gl/Q7DK7YfkSDVweWPZ7",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67ce885e79f6ad76f91dc4a1_Screen%20Shot%202025-03-10%20at%207.36.11%20PM.png",
+        "alt": "",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67ce885e79f6ad76f91dc4a1_Screen%20Shot%202025-03-10%20at%207.36.11%20PM-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67ce885e79f6ad76f91dc4a1_Screen%20Shot%202025-03-10%20at%207.36.11%20PM-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67ce885e79f6ad76f91dc4a1_Screen%20Shot%202025-03-10%20at%207.36.11%20PM-p-1080.png 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67ce885e79f6ad76f91dc4a1_Screen%20Shot%202025-03-10%20at%207.36.11%20PM-p-1600.png 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67ce885e79f6ad76f91dc4a1_Screen%20Shot%202025-03-10%20at%207.36.11%20PM.png 1758w",
+        "localPath": "assets/images/galleries/009_#IAmRemarkable.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery",
+      "pageNumber": 1
+    },
+    {
+      "id": 10,
+      "title": "She Sharp & academyEX: International Women's Day",
+      "date": "March 14, 2025",
+      "year": "2025",
+      "galleryUrl": "https://photos.app.goo.gl/Jm121AcMN8n8bn1g6",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67db4b3d53a88fa011d49f6e_IWD%20-%20Poster%20(1).png",
+        "alt": "",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67db4b3d53a88fa011d49f6e_IWD%20-%20Poster%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67db4b3d53a88fa011d49f6e_IWD%20-%20Poster%20(1)-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67db4b3d53a88fa011d49f6e_IWD%20-%20Poster%20(1).png 1080w",
+        "localPath": "assets/images/galleries/010_She_Sharp_&_academyEX_International_Women's_Day.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=2",
+      "pageNumber": 2
+    },
+    {
+      "id": 11,
+      "title": "Google Educator Conference",
+      "date": "November 21, 2024",
+      "year": "2024",
+      "galleryUrl": "https://photos.google.com/share/AF1QipOc8gUVACSuzYMYhULk6pYJBLDF-NqgfpYyBUisLn4HxuABKmWNBkfP7DmjYlJ5Ew?key=d2NaVkRLWnBwVEhlYWN4Vk41MHhFZmxDQlU1eUZB",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67c1393875d438f45786d5d9_Google%20Educator%20Conference.jpg",
+        "alt": "Event Poster",
+        "srcset": "",
+        "localPath": "assets/images/galleries/011_Google_Educator_Conference.jpg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=2",
+      "pageNumber": 2
+    },
+    {
+      "id": 12,
+      "title": "The Role of Technology in Sustainable Development",
+      "date": "November 15, 2024",
+      "year": "2024",
+      "galleryUrl": "https://photos.google.com/share/AF1QipMMnhPQ_uyrJvm4o6PfLL1HesJTEYjLOLpmAlSXKCR4NWIluke_DS1QH7LcpgLW8w?key=WV9JckJMTkk2OE5EelpmSW1GbC0wS3N3czVWb0JR",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67c1388d5ccd8b5bd8b7be0c_The%20Role%20of%20Technology%20in%20Sustainable%20Development.png",
+        "alt": "Event Poster",
+        "srcset": "",
+        "localPath": "assets/images/galleries/012_The_Role_of_Technology_in_Sustainable_Development.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=2",
+      "pageNumber": 2
+    },
+    {
+      "id": 13,
+      "title": "She Sharp 10-Year Anniversary",
+      "date": "October 18, 2024",
+      "year": "2024",
+      "galleryUrl": "https://photos.google.com/share/AF1QipM5V7Qrn72ZMJjCVLlRm5nw8aYcyJ6mpBwGt6R9NhvXF2M65tdXP9lOdZUMuFv9hw?key=YU5XYlRlX1JWN2dKWVJsRWVqZTg4bUVyQ19DZEFB",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67230db0aea4360addb5e13a_10yr.png",
+        "alt": "10 year anniversary poster",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67230db0aea4360addb5e13a_10yr-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67230db0aea4360addb5e13a_10yr-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/67230db0aea4360addb5e13a_10yr.png 1080w",
+        "localPath": "assets/images/galleries/013_She_Sharp_10-Year_Anniversary.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=2",
+      "pageNumber": 2
+    },
+    {
+      "id": 14,
+      "title": "Harness the Power of Data and AI",
+      "date": "August 29, 2024",
+      "year": "2024",
+      "galleryUrl": "https://photos.app.goo.gl/CkyNgfFGPPSPe7aY7",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66d5745b61e76397cc18bc7f_Harness%20the%20power%20of%20data%20and%20AI.png",
+        "alt": "harness the power of data and ai poster",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66d5745b61e76397cc18bc7f_Harness%20the%20power%20of%20data%20and%20AI-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66d5745b61e76397cc18bc7f_Harness%20the%20power%20of%20data%20and%20AI.png 750w",
+        "localPath": "assets/images/galleries/014_Harness_the_Power_of_Data_and_AI.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=2",
+      "pageNumber": 2
+    },
+    {
+      "id": 15,
+      "title": "F&P Hackathon",
+      "date": "July 26, 2024",
+      "year": "2024",
+      "galleryUrl": "https://photos.google.com/share/AF1QipODlnod3NHZhVi3P8-EUf0b61kfxnbTwvJr6kLH7LzspGJKAJwOpDGiHxb9XEl_rw?key=ZF85ajcwc0t1V2M5OEt6SlhzY2U0b0dsSkhSUUdn",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66acb041bbdbd2a1c9e5e353_F%26P%20Hackathon%20with%20She%23-p-500.png",
+        "alt": "Event Poster",
+        "srcset": "",
+        "localPath": "assets/images/galleries/015_F&P_Hackathon.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=2",
+      "pageNumber": 2
+    },
+    {
+      "id": 16,
+      "title": "Bank on Yourself",
+      "date": "June 26, 2024",
+      "year": "2024",
+      "galleryUrl": "https://photos.google.com/share/AF1QipNQMGXh8ux34BlU3WY4tCnBBCcy-peq3VBiASaghcPf4fOCKEZqfEewUM7h1xvhEw?key=TU9vZGdnRTQ2eklPZmFLVFZXb24zQWdjaUtpam1n",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66346c2db16ed9c945e7c018_Bank%20on%20yourself%20%20Fiserv%20%20June%20Event%202024%20-%201.png",
+        "alt": "",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66346c2db16ed9c945e7c018_Bank%20on%20yourself%20%20Fiserv%20%20June%20Event%202024%20-%201-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66346c2db16ed9c945e7c018_Bank%20on%20yourself%20%20Fiserv%20%20June%20Event%202024%20-%201.png 800w",
+        "localPath": "assets/images/galleries/016_Bank_on_Yourself.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=2",
+      "pageNumber": 2
+    },
+    {
+      "id": 17,
+      "title": "OWN THE UNEXPECTED",
+      "date": "May 9, 2024",
+      "year": "2024",
+      "galleryUrl": "https://photos.app.goo.gl/6PAiXxTGDwA8VuvT9",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6626f89f854f893dfd09e264_Own%20the%20Unexpected%20%20MYOB%20%20May%20Event%202024.png",
+        "alt": "Event Poster",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6626f89f854f893dfd09e264_Own%20the%20Unexpected%20%20MYOB%20%20May%20Event%202024-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6626f89f854f893dfd09e264_Own%20the%20Unexpected%20%20MYOB%20%20May%20Event%202024.png 800w",
+        "localPath": "assets/images/galleries/017_OWN_THE_UNEXPECTED.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=2",
+      "pageNumber": 2
+    },
+    {
+      "id": 18,
+      "title": "Embracing Bias",
+      "date": "April 18, 2024",
+      "year": "2024",
+      "galleryUrl": "https://photos.app.goo.gl/brA5VppyZx9mAU2V9",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65e8b1780d4e1a2e971ead33_IMG_9232.png",
+        "alt": "",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65e8b1780d4e1a2e971ead33_IMG_9232-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65e8b1780d4e1a2e971ead33_IMG_9232.png 800w",
+        "localPath": "assets/images/galleries/018_Embracing_Bias.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=2",
+      "pageNumber": 2
+    },
+    {
+      "id": 19,
+      "title": "International Women's Day",
+      "date": "March 7, 2024",
+      "year": "2024",
+      "galleryUrl": "https://photos.app.goo.gl/4nECHs1jrfg1X33g8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65ee9ac9f020f21a8663163f_65c325993a60e7690a376381_1-p-1080.png",
+        "alt": "",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65ee9ac9f020f21a8663163f_65c325993a60e7690a376381_1-p-1080-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65ee9ac9f020f21a8663163f_65c325993a60e7690a376381_1-p-1080-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65ee9ac9f020f21a8663163f_65c325993a60e7690a376381_1-p-1080.png 1080w",
+        "localPath": "assets/images/galleries/019_International_Women's_Day.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=3",
+      "pageNumber": 3
+    },
+    {
+      "id": 20,
+      "title": "SHE CELEBRATES",
+      "date": "December 14, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.google.com/share/AF1QipOo06Lmikuy3b7dDlOPK1C7ahH1YfFZrc9kH2V-N-zEjxctmj15gEkA8mHeijayWg?key=V2hqZ2syZS02WGp4YzFRMmM0S3JNU3Y4TllSOUhB",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6580d2cceec8960cffd7465b_Event%20Tile_BGs%20(8).png",
+        "alt": "Group photo with graphic overlay",
+        "srcset": "",
+        "localPath": "assets/images/galleries/020_SHE_CELEBRATES.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=3",
+      "pageNumber": 3
+    },
+    {
+      "id": 21,
+      "title": "GOOGLE EDUCATOR CONFERENCE (CS4HS)",
+      "date": "November 17, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.app.goo.gl/F7tcyAYeTZsNrw9r5",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/655e807592cc5bf792f5f49b_647ea5b77167f474e14c1409_Conference_Tile%20Image.png",
+        "alt": "Landing tile",
+        "srcset": "",
+        "localPath": "assets/images/galleries/021_GOOGLE_EDUCATOR_CONFERENCE_(CS4HS).png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=3",
+      "pageNumber": 3
+    },
+    {
+      "id": 22,
+      "title": "Women in Security Awards 2023",
+      "date": "November 9, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.app.goo.gl/7TDiVDKGZyoEnkzF9",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562ddc42f3bb75b0b736f1c_3351449%20(1).jpg",
+        "alt": "SheSharp-Team",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562ddc42f3bb75b0b736f1c_3351449%20(1)-p-500.jpg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562ddc42f3bb75b0b736f1c_3351449%20(1)-p-800.jpg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562ddc42f3bb75b0b736f1c_3351449%20(1)-p-1080.jpg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562ddc42f3bb75b0b736f1c_3351449%20(1)-p-1600.jpg 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562ddc42f3bb75b0b736f1c_3351449%20(1).jpg 2000w",
+        "localPath": "assets/images/galleries/022_Women_in_Security_Awards_2023.jpg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=3",
+      "pageNumber": 3
+    },
+    {
+      "id": 23,
+      "title": "Technological Change - Workplace & Workforce Impacts",
+      "date": "November 3, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.app.goo.gl/YuKvz6hVJPEnGcG16",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6506f6f1e2f6c2cf326375a5_Technological-change%20(1).png",
+        "alt": "Image of a person pushing a wall with a graphic overlay",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6506f6f1e2f6c2cf326375a5_Technological-change%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6506f6f1e2f6c2cf326375a5_Technological-change%20(1).png 800w",
+        "localPath": "assets/images/galleries/023_Technological_Change_-_Workplace_&_Workforce_Impac.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=3",
+      "pageNumber": 3
+    },
+    {
+      "id": 24,
+      "title": "Inspire Her: Te Whakatipuranga Wahine",
+      "date": "October 11, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.app.goo.gl/8MLnZczARZSK297Z6",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f71e8518226d4308e8450f_Screen%20Shot%202023-09-05%20at%208.20%201%20(1).png",
+        "alt": "Two people smiling",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f71e8518226d4308e8450f_Screen%20Shot%202023-09-05%20at%208.20%201%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f71e8518226d4308e8450f_Screen%20Shot%202023-09-05%20at%208.20%201%20(1).png 799w",
+        "localPath": "assets/images/galleries/024_Inspire_Her_Te_Whakatipuranga_Wahine.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=3",
+      "pageNumber": 3
+    },
+    {
+      "id": 25,
+      "title": "From Burnout to Balance",
+      "date": "September 20, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.app.goo.gl/PeTEUpz6rBf837ek8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64e6b18462e1f800f9b3b86b_burnt-toast%201%20(1).png",
+        "alt": "hand pulling toast out of a toaster",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64e6b18462e1f800f9b3b86b_burnt-toast%201%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64e6b18462e1f800f9b3b86b_burnt-toast%201%20(1).png 800w",
+        "localPath": "assets/images/galleries/025_From_Burnout_to_Balance.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=3",
+      "pageNumber": 3
+    },
+    {
+      "id": 26,
+      "title": "A Legendairy Career",
+      "date": "August 24, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.google.com/share/AF1QipPp89jeZu3NIuBu4IyZBEFXPiNW_bu0G3eBGOu1TmViyHc4Q6DVLglaaqr-P8tuVg?key=ejdiZklKV3g4NWR5Q3BuR2R2RVdvcWg4Zzk5aHZn",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64c26e358410f2f3de81780f_Event%20Tile_BGs%20(3).png",
+        "alt": "A graphic of a woman holding a beaker",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64c26e358410f2f3de81780f_Event%20Tile_BGs%20(3)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64c26e358410f2f3de81780f_Event%20Tile_BGs%20(3)-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64c26e358410f2f3de81780f_Event%20Tile_BGs%20(3)-p-1080.png 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64c26e358410f2f3de81780f_Event%20Tile_BGs%20(3).png 1200w",
+        "localPath": "assets/images/galleries/026_A_Legendairy_Career.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=3",
+      "pageNumber": 3
+    },
+    {
+      "id": 27,
+      "title": "AI for the Environment Hackathon Festival",
+      "date": "August 11, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.google.com/share/AF1QipNbWoerLdUpPI4ECxU7BN1ujww_ssDwsCF6zphx5eTTxV6jkoSCIGuYA47tna5aQg?key=QmFPTTlOT1FHcXpNbVdaamM4am1SeHRDNGFvOHFB",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64dcebc78286e31f685758bf_Screen%20Shot%202023-08-16%20at%2011.28%201%20(1).png",
+        "alt": "Group photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64dcebc78286e31f685758bf_Screen%20Shot%202023-08-16%20at%2011.28%201%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64dcebc78286e31f685758bf_Screen%20Shot%202023-08-16%20at%2011.28%201%20(1).png 792w",
+        "localPath": "assets/images/galleries/027_AI_for_the_Environment_Hackathon_Festival.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=3",
+      "pageNumber": 3
+    },
+    {
+      "id": 28,
+      "title": "The Buzz about Banking",
+      "date": "July 25, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.app.goo.gl/VDMepEvbrsgNTxxYA",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64c2661e5bd3fc5f860fd464_20230725185742_IMG_6478.jpg",
+        "alt": "Group photo of people",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64c2661e5bd3fc5f860fd464_20230725185742_IMG_6478-p-500.jpg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64c2661e5bd3fc5f860fd464_20230725185742_IMG_6478-p-800.jpg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64c2661e5bd3fc5f860fd464_20230725185742_IMG_6478-p-1080.jpg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64c2661e5bd3fc5f860fd464_20230725185742_IMG_6478-p-1600.jpg 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64c2661e5bd3fc5f860fd464_20230725185742_IMG_6478-p-2000.jpg 2000w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64c2661e5bd3fc5f860fd464_20230725185742_IMG_6478.jpg 2048w",
+        "localPath": "assets/images/galleries/028_The_Buzz_about_Banking.jpg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=4",
+      "pageNumber": 4
+    },
+    {
+      "id": 29,
+      "title": "Innovation Unleashed",
+      "date": "June 20, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.google.com/u/2/share/AF1QipMXp48cg8gmLWBxGs06m_lnTf2lTWSPOy4RywDad4gBF5RXN21P1NK8gxN0bHvVfQ?key=ZmM3Vm9iXzM1SDMzRndqbjh6NzY0NVYwM1E4ZGdB",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64978c3aa0ebb88792c4eec3_Deloitte%20Group%20Photo.jpg",
+        "alt": "Group photo with attendees of the Innovation Unleashed event",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64978c3aa0ebb88792c4eec3_Deloitte%20Group%20Photo-p-500.jpg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64978c3aa0ebb88792c4eec3_Deloitte%20Group%20Photo-p-800.jpg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64978c3aa0ebb88792c4eec3_Deloitte%20Group%20Photo-p-1080.jpg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64978c3aa0ebb88792c4eec3_Deloitte%20Group%20Photo-p-1600.jpg 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64978c3aa0ebb88792c4eec3_Deloitte%20Group%20Photo-p-2000.jpg 2000w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64978c3aa0ebb88792c4eec3_Deloitte%20Group%20Photo.jpg 2048w",
+        "localPath": "assets/images/galleries/029_Innovation_Unleashed.jpg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=4",
+      "pageNumber": 4
+    },
+    {
+      "id": 30,
+      "title": "Tomorrow Expo",
+      "date": "May 12, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.app.goo.gl/CrG8zEn3gx2taT7z8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649ca6cd042bb29e5f8c38e4_Tomorrow%20Expo%20photo-min.JPEG",
+        "alt": "She Sharp Ambassadors and a group of students smiling at the camera at the Tomorrow Expo event",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649ca6cd042bb29e5f8c38e4_Tomorrow%20Expo%20photo-min-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649ca6cd042bb29e5f8c38e4_Tomorrow%20Expo%20photo-min-p-800.jpeg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649ca6cd042bb29e5f8c38e4_Tomorrow%20Expo%20photo-min-p-1080.jpeg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649ca6cd042bb29e5f8c38e4_Tomorrow%20Expo%20photo-min-p-1600.jpeg 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649ca6cd042bb29e5f8c38e4_Tomorrow%20Expo%20photo-min-p-2000.jpeg 2000w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649ca6cd042bb29e5f8c38e4_Tomorrow%20Expo%20photo-min.JPEG 2048w",
+        "localPath": "assets/images/galleries/030_Tomorrow_Expo.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=4",
+      "pageNumber": 4
+    },
+    {
+      "id": 31,
+      "title": "Kickstart your Career in Tech with MYOB",
+      "date": "April 20, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.app.goo.gl/5ujM3ZDBZNZkvHf3A",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/648bc744bc26ca20847a0142_1_Kickstart%20your%20Career_2.jpeg",
+        "alt": "Group photo of all women who attended the event",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/648bc744bc26ca20847a0142_1_Kickstart%20your%20Career_2-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/648bc744bc26ca20847a0142_1_Kickstart%20your%20Career_2-p-800.jpeg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/648bc744bc26ca20847a0142_1_Kickstart%20your%20Career_2-p-1080.jpeg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/648bc744bc26ca20847a0142_1_Kickstart%20your%20Career_2-p-1600.jpeg 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/648bc744bc26ca20847a0142_1_Kickstart%20your%20Career_2.jpeg 1608w",
+        "localPath": "assets/images/galleries/031_Kickstart_your_Career_in_Tech_with_MYOB.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=4",
+      "pageNumber": 4
+    },
+    {
+      "id": 32,
+      "title": "International Womenâs Day",
+      "date": "March 8, 2023",
+      "year": "2023",
+      "galleryUrl": "https://photos.app.goo.gl/Dm7dYQxWUZrmiGYp6",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494d63ffe1028adf58bba64_2_Int%20Womens%20Day_2.jpeg",
+        "alt": "Group photo of all women who attended the event",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494d63ffe1028adf58bba64_2_Int%20Womens%20Day_2-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494d63ffe1028adf58bba64_2_Int%20Womens%20Day_2-p-800.jpeg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494d63ffe1028adf58bba64_2_Int%20Womens%20Day_2-p-1080.jpeg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494d63ffe1028adf58bba64_2_Int%20Womens%20Day_2-p-1600.jpeg 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494d63ffe1028adf58bba64_2_Int%20Womens%20Day_2.jpeg 1608w",
+        "localPath": "assets/images/galleries/032_International_Womenâs_Day.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=4",
+      "pageNumber": 4
+    },
+    {
+      "id": 33,
+      "title": "She Celebrates",
+      "date": "December 5, 2022",
+      "year": "2022",
+      "galleryUrl": "https://photos.app.goo.gl/xqbaZe42T4pxaouN9",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494d6a189a35ee14188e9dc_3_She%20Celabrates_9.jpeg",
+        "alt": "A room of women socialising in a group",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494d6a189a35ee14188e9dc_3_She%20Celabrates_9-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494d6a189a35ee14188e9dc_3_She%20Celabrates_9-p-800.jpeg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494d6a189a35ee14188e9dc_3_She%20Celabrates_9-p-1080.jpeg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494d6a189a35ee14188e9dc_3_She%20Celabrates_9-p-1600.jpeg 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494d6a189a35ee14188e9dc_3_She%20Celabrates_9.jpeg 1608w",
+        "localPath": "assets/images/galleries/033_She_Celebrates.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=4",
+      "pageNumber": 4
+    },
+    {
+      "id": 34,
+      "title": "Shaping the Future with AI",
+      "date": "October 20, 2022",
+      "year": "2022",
+      "galleryUrl": "https://photos.app.goo.gl/v7j1FphkjqNwHs9C8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950a53f2292faeed2ba70f_4%20V2_Shaping%20Future%20AI_3.jpeg",
+        "alt": "shaping the future with AI gallery image",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950a53f2292faeed2ba70f_4%20V2_Shaping%20Future%20AI_3-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950a53f2292faeed2ba70f_4%20V2_Shaping%20Future%20AI_3-p-800.jpeg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950a53f2292faeed2ba70f_4%20V2_Shaping%20Future%20AI_3-p-1080.jpeg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950a53f2292faeed2ba70f_4%20V2_Shaping%20Future%20AI_3-p-1600.jpeg 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950a53f2292faeed2ba70f_4%20V2_Shaping%20Future%20AI_3.jpeg 1608w",
+        "localPath": "assets/images/galleries/034_Shaping_the_Future_with_AI.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=4",
+      "pageNumber": 4
+    },
+    {
+      "id": 35,
+      "title": "AI Enviro HackÂ",
+      "date": "September 3, 2022",
+      "year": "2022",
+      "galleryUrl": "https://photos.app.goo.gl/xL7pZxBjx4sPNHbG9",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950a9f4f777e440bcef550_5_AI%20Enviro%20hack_2%20Large.jpeg",
+        "alt": "AI Enviro HackÂ group photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950a9f4f777e440bcef550_5_AI%20Enviro%20hack_2%20Large-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950a9f4f777e440bcef550_5_AI%20Enviro%20hack_2%20Large-p-800.jpeg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950a9f4f777e440bcef550_5_AI%20Enviro%20hack_2%20Large-p-1080.jpeg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950a9f4f777e440bcef550_5_AI%20Enviro%20hack_2%20Large.jpeg 1280w",
+        "localPath": "assets/images/galleries/035_AI_Enviro_HackÂ.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=4",
+      "pageNumber": 4
+    },
+    {
+      "id": 36,
+      "title": "Navigating the Workplace as a Woman",
+      "date": "July 21, 2022",
+      "year": "2022",
+      "galleryUrl": "https://photos.app.goo.gl/nvrAm5Y6BKDZe8WAA",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950ae2a1473ce678851e40_6_Navigating%20Workforce_2.jpeg",
+        "alt": "Navigating the Workplace as a Woman",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950ae2a1473ce678851e40_6_Navigating%20Workforce_2-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950ae2a1473ce678851e40_6_Navigating%20Workforce_2-p-800.jpeg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950ae2a1473ce678851e40_6_Navigating%20Workforce_2-p-1080.jpeg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950ae2a1473ce678851e40_6_Navigating%20Workforce_2-p-1600.jpeg 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950ae2a1473ce678851e40_6_Navigating%20Workforce_2.jpeg 1608w",
+        "localPath": "assets/images/galleries/036_Navigating_the_Workplace_as_a_Woman.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=4",
+      "pageNumber": 4
+    },
+    {
+      "id": 37,
+      "title": "Women in SecurityÂ",
+      "date": "June 17, 2022",
+      "year": "2022",
+      "galleryUrl": "https://photos.app.goo.gl/kAtCCTk9Z1cfUMxRA",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b19534c78f845a24aad_7_Women%20in%20Security_3%20Large.jpeg",
+        "alt": "Women in SecurityÂ event photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b19534c78f845a24aad_7_Women%20in%20Security_3%20Large-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b19534c78f845a24aad_7_Women%20in%20Security_3%20Large-p-800.jpeg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b19534c78f845a24aad_7_Women%20in%20Security_3%20Large-p-1080.jpeg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b19534c78f845a24aad_7_Women%20in%20Security_3%20Large.jpeg 1280w",
+        "localPath": "assets/images/galleries/037_Women_in_SecurityÂ.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=5",
+      "pageNumber": 5
+    },
+    {
+      "id": 38,
+      "title": "Women Igniting Tech",
+      "date": "May 20, 2022",
+      "year": "2022",
+      "galleryUrl": "https://photos.app.goo.gl/WgWXBsgCydK7oghg9",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b4851a8e261adc87030_8_Women%20Igniting%20Tech_2%20Large.jpeg",
+        "alt": "Women Igniting Tech event photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b4851a8e261adc87030_8_Women%20Igniting%20Tech_2%20Large-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b4851a8e261adc87030_8_Women%20Igniting%20Tech_2%20Large-p-800.jpeg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b4851a8e261adc87030_8_Women%20Igniting%20Tech_2%20Large-p-1080.jpeg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b4851a8e261adc87030_8_Women%20Igniting%20Tech_2%20Large.jpeg 1280w",
+        "localPath": "assets/images/galleries/038_Women_Igniting_Tech.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=5",
+      "pageNumber": 5
+    },
+    {
+      "id": 39,
+      "title": "Mind your own Career",
+      "date": "April 8, 2022",
+      "year": "2022",
+      "galleryUrl": "https://photos.app.goo.gl/XLUJykcL6DD8kVjU6",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b7aeff339994be82004_9_Mind%20Your%20Own%20Career_2.jpeg",
+        "alt": "Mind your own Career event photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b7aeff339994be82004_9_Mind%20Your%20Own%20Career_2-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b7aeff339994be82004_9_Mind%20Your%20Own%20Career_2-p-800.jpeg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b7aeff339994be82004_9_Mind%20Your%20Own%20Career_2-p-1080.jpeg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b7aeff339994be82004_9_Mind%20Your%20Own%20Career_2-p-1600.jpeg 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b7aeff339994be82004_9_Mind%20Your%20Own%20Career_2-p-2000.jpeg 2000w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950b7aeff339994be82004_9_Mind%20Your%20Own%20Career_2.jpeg 2412w",
+        "localPath": "assets/images/galleries/039_Mind_your_own_Career.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=5",
+      "pageNumber": 5
+    },
+    {
+      "id": 40,
+      "title": "Break the Bias",
+      "date": "March 10, 2022",
+      "year": "2022",
+      "galleryUrl": "https://photos.app.goo.gl/Wo8NNXtzdfhzbHcG7",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950bb3a1473ce67885a055_10_Break%20the%20bias_5.jpeg",
+        "alt": "Break the Bias event photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950bb3a1473ce67885a055_10_Break%20the%20bias_5-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950bb3a1473ce67885a055_10_Break%20the%20bias_5-p-800.jpeg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950bb3a1473ce67885a055_10_Break%20the%20bias_5-p-1080.jpeg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64950bb3a1473ce67885a055_10_Break%20the%20bias_5.jpeg 1280w",
+        "localPath": "assets/images/galleries/040_Break_the_Bias.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=5",
+      "pageNumber": 5
+    },
+    {
+      "id": 41,
+      "title": "Women in AI for social good",
+      "date": "June 8, 2021",
+      "year": "2021",
+      "galleryUrl": "https://photos.app.goo.gl/TJuU1hjyTMJzHVR46",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562bd2d7602aec51ad6de54_Screen%20Shot%202023-11-26%20at%204.35%201.png",
+        "alt": "Lady speaking in an audience",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562bd2d7602aec51ad6de54_Screen%20Shot%202023-11-26%20at%204.35%201-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562bd2d7602aec51ad6de54_Screen%20Shot%202023-11-26%20at%204.35%201.png 800w",
+        "localPath": "assets/images/galleries/041_Women_in_AI_for_social_good.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=5",
+      "pageNumber": 5
+    },
+    {
+      "id": 42,
+      "title": "The Truths to Gaming and Start-up",
+      "date": "May 25, 2021",
+      "year": "2021",
+      "galleryUrl": "https://photos.app.goo.gl/qBktoQHvdBSEqhrc6",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65277a1019ab40b9c17a26e5_The%20Truths%20to%20Gaming...png",
+        "alt": "Banner image of a group of people",
+        "srcset": "",
+        "localPath": "assets/images/galleries/042_The_Truths_to_Gaming_and_Start-up.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=5",
+      "pageNumber": 5
+    },
+    {
+      "id": 43,
+      "title": "Imagine Zone - Techweek",
+      "date": "May 24, 2021",
+      "year": "2021",
+      "galleryUrl": "https://photos.app.goo.gl/EUqHeNaCKx1YnPRZ8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562c1b57602aec51ad96329_Screen%20Shot%202023-11-26%20at%204.53%201.png",
+        "alt": "Group of children drawing at a booth",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562c1b57602aec51ad96329_Screen%20Shot%202023-11-26%20at%204.53%201-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562c1b57602aec51ad96329_Screen%20Shot%202023-11-26%20at%204.53%201.png 800w",
+        "localPath": "assets/images/galleries/043_Imagine_Zone_-_Techweek.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=5",
+      "pageNumber": 5
+    },
+    {
+      "id": 44,
+      "title": "Women in Tech and Trades",
+      "date": "April 29, 2021",
+      "year": "2021",
+      "galleryUrl": "https://photos.app.goo.gl/SGiRGm4PKmDy9ouy5",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562b6c4450333206054b5d5_Event%20Tile_BGs%20(11).png",
+        "alt": "Banner of lady speaking",
+        "srcset": "",
+        "localPath": "assets/images/galleries/044_Women_in_Tech_and_Trades.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=5",
+      "pageNumber": 5
+    },
+    {
+      "id": 45,
+      "title": "International Woman's Day",
+      "date": "March 18, 2021",
+      "year": "2021",
+      "galleryUrl": "https://photos.app.goo.gl/DrumDy7uurprGiX68",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562c52e5867daf52e34066c_Screen%20Shot%202023-11-26%20at%205.09%201.png",
+        "alt": "Poster of International Woman's Day",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562c52e5867daf52e34066c_Screen%20Shot%202023-11-26%20at%205.09%201-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562c52e5867daf52e34066c_Screen%20Shot%202023-11-26%20at%205.09%201.png 800w",
+        "localPath": "assets/images/galleries/045_International_Woman's_Day.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=5",
+      "pageNumber": 5
+    },
+    {
+      "id": 46,
+      "title": "Girls night out",
+      "date": "November 26, 2020",
+      "year": "2020",
+      "galleryUrl": "https://photos.app.goo.gl/dDLxQ92n5NSzrfDk9",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562d27e85e7da906c131bcb_64f82ca021aa3802cee9bf48_Girls%20night%20out-p-1080.png",
+        "alt": "Graphic illustration of people putting their hands up",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562d27e85e7da906c131bcb_64f82ca021aa3802cee9bf48_Girls%20night%20out-p-1080-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562d27e85e7da906c131bcb_64f82ca021aa3802cee9bf48_Girls%20night%20out-p-1080-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562d27e85e7da906c131bcb_64f82ca021aa3802cee9bf48_Girls%20night%20out-p-1080.png 1080w",
+        "localPath": "assets/images/galleries/046_Girls_night_out.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=6",
+      "pageNumber": 6
+    },
+    {
+      "id": 47,
+      "title": "ONLINE QUIZ NIGHT CELEBRATING ADA LOVELACE DAY",
+      "date": "October 15, 2020",
+      "year": "2020",
+      "galleryUrl": "https://photos.app.goo.gl/KmMQByWYpxDE4yoz7",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562d5e0dcbd1d3b7f7e987f_Screen%20Shot%202023-11-26%20at%206.19%201.png",
+        "alt": "Event Photo",
+        "srcset": "",
+        "localPath": "assets/images/galleries/047_ONLINE_QUIZ_NIGHT_CELEBRATING_ADA_LOVELACE_DAY.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=6",
+      "pageNumber": 6
+    },
+    {
+      "id": 48,
+      "title": "Storytellers 2.0",
+      "date": "September 24, 2020",
+      "year": "2020",
+      "galleryUrl": "https://photos.app.goo.gl/5Co2mqzaYwJXytE7A",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65ba0df3f3f95eec638681d3_She%20Sharp%20Speakers%20Series%202.0%20-%20Social%20Media%20Square%20(1).png",
+        "alt": "Event photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65ba0df3f3f95eec638681d3_She%20Sharp%20Speakers%20Series%202.0%20-%20Social%20Media%20Square%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65ba0df3f3f95eec638681d3_She%20Sharp%20Speakers%20Series%202.0%20-%20Social%20Media%20Square%20(1)-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65ba0df3f3f95eec638681d3_She%20Sharp%20Speakers%20Series%202.0%20-%20Social%20Media%20Square%20(1).png 983w",
+        "localPath": "assets/images/galleries/048_Storytellers_2.0.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=6",
+      "pageNumber": 6
+    },
+    {
+      "id": 49,
+      "title": "SheSharp Future Ready",
+      "date": "August 13, 2020",
+      "year": "2020",
+      "galleryUrl": "https://photos.app.goo.gl/tyz4czPPvav8fE93A",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6541eb6a63018af5b0b3c9e5_Future%20Ready.png",
+        "alt": "Event Photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6541eb6a63018af5b0b3c9e5_Future%20Ready-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6541eb6a63018af5b0b3c9e5_Future%20Ready-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6541eb6a63018af5b0b3c9e5_Future%20Ready.png 874w",
+        "localPath": "assets/images/galleries/049_SheSharp_Future_Ready.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=6",
+      "pageNumber": 6
+    },
+    {
+      "id": 50,
+      "title": "SHESHARP TECHWEEK: ENVISION THE FUTURE",
+      "date": "July 29, 2020",
+      "year": "2020",
+      "galleryUrl": "https://photos.app.goo.gl/6H7FqD4NgPBQMtk39",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64faedd0e6f461cad8ec0e3e_Techweek2020.webp",
+        "alt": "Event photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64faedd0e6f461cad8ec0e3e_Techweek2020-p-500.webp 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64faedd0e6f461cad8ec0e3e_Techweek2020-p-800.webp 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64faedd0e6f461cad8ec0e3e_Techweek2020.webp 900w",
+        "localPath": "assets/images/galleries/050_SHESHARP_TECHWEEK_ENVISION_THE_FUTURE.webp"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=6",
+      "pageNumber": 6
+    },
+    {
+      "id": 51,
+      "title": "Robotic Process Automation Workshop",
+      "date": "March 5, 2020",
+      "year": "2020",
+      "galleryUrl": "https://photos.app.goo.gl/K87RwgfETg7gcJWr7",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65013115c8690e010a0e9084_landingImage.jpg",
+        "alt": "group photo ",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65013115c8690e010a0e9084_landingImage-p-500.jpg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65013115c8690e010a0e9084_landingImage-p-800.jpg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65013115c8690e010a0e9084_landingImage-p-1080.jpg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65013115c8690e010a0e9084_landingImage-p-1600.jpg 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65013115c8690e010a0e9084_landingImage-p-2000.jpg 2000w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65013115c8690e010a0e9084_landingImage.jpg 2048w",
+        "localPath": "assets/images/galleries/051_Robotic_Process_Automation_Workshop.jpg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=6",
+      "pageNumber": 6
+    },
+    {
+      "id": 52,
+      "title": "She Sharp @ Centrality",
+      "date": "July 25, 2019",
+      "year": "2019",
+      "galleryUrl": "https://photos.app.goo.gl/YJM9SteTrd6i1zXH8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6550a2aa308e88ddc86ad294_Event%20Tile_BGs%20(10).png",
+        "alt": "Event Photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6550a2aa308e88ddc86ad294_Event%20Tile_BGs%20(10)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6550a2aa308e88ddc86ad294_Event%20Tile_BGs%20(10).png 800w",
+        "localPath": "assets/images/galleries/052_She_Sharp_@_Centrality.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=6",
+      "pageNumber": 6
+    },
+    {
+      "id": 53,
+      "title": "SHE# @ WÄHINE KÄKANO",
+      "date": "June 24, 2019",
+      "year": "2019",
+      "galleryUrl": "https://photos.app.goo.gl/PtMF1YjAqTY1uLvQ8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6550a255f224407ac9d6ca99_wahine-kakano-she%201%20(1).png",
+        "alt": "Event Photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6550a255f224407ac9d6ca99_wahine-kakano-she%201%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6550a255f224407ac9d6ca99_wahine-kakano-she%201%20(1).png 800w",
+        "localPath": "assets/images/galleries/053_SHE#_@_WÄHINE_KÄKANO.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=6",
+      "pageNumber": 6
+    },
+    {
+      "id": 54,
+      "title": "SHE# @ AMAZON WEB SERVICES (AWS)",
+      "date": "June 13, 2019",
+      "year": "2019",
+      "galleryUrl": "https://photos.app.goo.gl/Yh1Kr9SaA4dYMujr5",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6550a285de5933fd685d2136_Event%20Tile_BGs%20(9).png",
+        "alt": "Event Photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6550a285de5933fd685d2136_Event%20Tile_BGs%20(9)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6550a285de5933fd685d2136_Event%20Tile_BGs%20(9).png 800w",
+        "localPath": "assets/images/galleries/054_SHE#_@_AMAZON_WEB_SERVICES_(AWS).png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=6",
+      "pageNumber": 6
+    },
+    {
+      "id": 55,
+      "title": "SHE# @ WORKDAY",
+      "date": "May 2, 2019",
+      "year": "2019",
+      "galleryUrl": "https://photos.app.goo.gl/ZKbFaBhM562arnnd8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6550a23419795897b21d0281_workday-card%201%20(1).png",
+        "alt": "Event photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6550a23419795897b21d0281_workday-card%201%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6550a23419795897b21d0281_workday-card%201%20(1).png 800w",
+        "localPath": "assets/images/galleries/055_SHE#_@_WORKDAY.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=7",
+      "pageNumber": 7
+    },
+    {
+      "id": 56,
+      "title": "SHE# @ DELOITTE",
+      "date": "March 6, 2019",
+      "year": "2019",
+      "galleryUrl": "https://photos.app.goo.gl/ESDcBgJKy8vxXCVWA",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n.jpg",
+        "alt": "Event photo",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n-p-500.jpg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n-p-800.jpg 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n-p-1080.jpg 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n-p-1600.jpg 1600w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n.jpg 2016w",
+        "localPath": "assets/images/galleries/056_SHE#_@_DELOITTE.jpg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=7",
+      "pageNumber": 7
+    },
+    {
+      "id": 57,
+      "title": "She Sharp @ Nyriad",
+      "date": "July 26, 2018",
+      "year": "2018",
+      "galleryUrl": "https://photos.app.goo.gl/qcMhc1rHJ6fBgtv8A",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65546f49288acc86aa5df4b2_The%20Truths%20to%20Gaming...png",
+        "alt": "High school students ",
+        "srcset": "",
+        "localPath": "assets/images/galleries/057_She_Sharp_@_Nyriad.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=7",
+      "pageNumber": 7
+    },
+    {
+      "id": 58,
+      "title": "Vision Board @ Grid AKL",
+      "date": "June 26, 2018",
+      "year": "2018",
+      "galleryUrl": "https://photos.app.goo.gl/qcMhc1rHJ6fBgtv8A",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65546ae80764bf6513d49b23_Event%20Tile_BGs%20(1).png",
+        "alt": "Group of students",
+        "srcset": "",
+        "localPath": "assets/images/galleries/058_Vision_Board_@_Grid_AKL.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=7",
+      "pageNumber": 7
+    },
+    {
+      "id": 59,
+      "title": "She Sharp @ Techweek",
+      "date": "May 26, 2018",
+      "year": "2018",
+      "galleryUrl": "https://photos.app.goo.gl/nzoPZDiyhnmzfYzr6",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/655467585a5309a409f6af25_Event%20Tile_BGs.png",
+        "alt": "Graphic of people building an object",
+        "srcset": "",
+        "localPath": "assets/images/galleries/059_She_Sharp_@_Techweek.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=7",
+      "pageNumber": 7
+    },
+    {
+      "id": 60,
+      "title": "She Sharp @ Vend",
+      "date": "April 26, 2018",
+      "year": "2018",
+      "galleryUrl": "https://photos.app.goo.gl/P1wRFoB1FXZfjFwd8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/655464c93a5afa26bf74f0ee_9_Cover%20(1).png",
+        "alt": "Group of people with graphic overlay",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/655464c93a5afa26bf74f0ee_9_Cover%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/655464c93a5afa26bf74f0ee_9_Cover%20(1).png 506w",
+        "localPath": "assets/images/galleries/060_She_Sharp_@_Vend.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=7",
+      "pageNumber": 7
+    },
+    {
+      "id": 61,
+      "title": "She Sharp with Google Codelab",
+      "date": "March 26, 2018",
+      "year": "2018",
+      "galleryUrl": "https://photos.app.goo.gl/9myFnTVS6KUeDmRx5",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562a64fe79197d7d77038de_google-code-lab.jpeg",
+        "alt": "People standing behind a google table",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562a64fe79197d7d77038de_google-code-lab-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562a64fe79197d7d77038de_google-code-lab.jpeg 800w",
+        "localPath": "assets/images/galleries/061_She_Sharp_with_Google_Codelab.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=7",
+      "pageNumber": 7
+    },
+    {
+      "id": 62,
+      "title": "Design Thinking",
+      "date": "February 20, 2018",
+      "year": "2018",
+      "galleryUrl": "https://photos.app.goo.gl/kT2rPYNb5yFr6yst5",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562a4415867daf52e2001a8_design-thinkinh.jpeg",
+        "alt": "People drawing around the table",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562a4415867daf52e2001a8_design-thinkinh-p-500.jpeg 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562a4415867daf52e2001a8_design-thinkinh.jpeg 800w",
+        "localPath": "assets/images/galleries/062_Design_Thinking.jpeg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=7",
+      "pageNumber": 7
+    },
+    {
+      "id": 63,
+      "title": "AUCKLAND TECH GRAND TOUR",
+      "date": "December 11, 2017",
+      "year": "2017",
+      "galleryUrl": "https://photos.app.goo.gl/LmTbupupj7u1JG5A9",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/655bd62128e417eef19cb904_Christmas%20event2017.png",
+        "alt": "Event Photo in Frame",
+        "srcset": "",
+        "localPath": "assets/images/galleries/063_AUCKLAND_TECH_GRAND_TOUR.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=7",
+      "pageNumber": 7
+    },
+    {
+      "id": 64,
+      "title": "SHE# @ PUSHPAY",
+      "date": "October 19, 2017",
+      "year": "2017",
+      "galleryUrl": "https://photos.app.goo.gl/N9TkNfvKbJvgJt6M7",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/655b03cd589685400ad64989_Pushpay.png",
+        "alt": "Event photo with frame",
+        "srcset": "",
+        "localPath": "assets/images/galleries/064_SHE#_@_PUSHPAY.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=8",
+      "pageNumber": 8
+    },
+    {
+      "id": 65,
+      "title": "SHE# @ TECHWEEK 2017",
+      "date": "May 1, 2017",
+      "year": "2017",
+      "galleryUrl": "https://photos.app.goo.gl/A5cZzcCjCNPsBDjV7",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/655ae9f65a2f35ddedd3785d_Event%20Tile_BGs.png",
+        "alt": "Event Photo",
+        "srcset": "",
+        "localPath": "assets/images/galleries/065_SHE#_@_TECHWEEK_2017.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=8",
+      "pageNumber": 8
+    },
+    {
+      "id": 66,
+      "title": "SHE# with GOOGLE @ AUT",
+      "date": "March 23, 2017",
+      "year": "2017",
+      "galleryUrl": "https://photos.app.goo.gl/N4fin2qfgD4711sJ7",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65553288b72931b4e9ebb579_GoogleAUT%20Landing%20Image.png",
+        "alt": "Event photo in Frame",
+        "srcset": "",
+        "localPath": "assets/images/galleries/066_SHE#_with_GOOGLE_@_AUT.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=8",
+      "pageNumber": 8
+    },
+    {
+      "id": 67,
+      "title": "SUPERHERO DAUGHTER DAY",
+      "date": "March 18, 2017",
+      "year": "2017",
+      "galleryUrl": "https://photos.app.goo.gl/Na5RAHcxDDm5MrGb9",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65a8610a9bce4e231d2b28dd_Event%20Tile_BGs%20(10).png",
+        "alt": "Event photo",
+        "srcset": "",
+        "localPath": "assets/images/galleries/067_SUPERHERO_DAUGHTER_DAY.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=8",
+      "pageNumber": 8
+    },
+    {
+      "id": 68,
+      "title": "SHE# @ FISHER & PAYKEL",
+      "date": "September 29, 2016",
+      "year": "2016",
+      "galleryUrl": "https://photos.app.goo.gl/HLAefNZronkJoUe56",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65a85e6806ca2326d76790e8_Event%20Tile_BGs%20(9).png",
+        "alt": "Event Photo",
+        "srcset": "",
+        "localPath": "assets/images/galleries/068_SHE#_@_FISHER_&_PAYKEL.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=8",
+      "pageNumber": 8
+    },
+    {
+      "id": 69,
+      "title": "Security 101: Plugging the Data Leak",
+      "date": "May 28, 2016",
+      "year": "2016",
+      "galleryUrl": "https://photos.app.goo.gl/i5gkSHpZiMHeyc7W8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65630a640452a90b80fffd40_Event%20Tile_BGs%20(3).png",
+        "alt": "Landing Image",
+        "srcset": "",
+        "localPath": "assets/images/galleries/069_Security_101_Plugging_the_Data_Leak.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=8",
+      "pageNumber": 8
+    },
+    {
+      "id": 70,
+      "title": "She Sharp @ Microsoft",
+      "date": "April 27, 2016",
+      "year": "2016",
+      "galleryUrl": "https://photos.app.goo.gl/UuHHsPgm5EcK7qaD8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6563ea8be0ea84080bf098ba_Event%20Tile_BGs%20(4).png",
+        "alt": "Person wearing VR goggles",
+        "srcset": "",
+        "localPath": "assets/images/galleries/070_She_Sharp_@_Microsoft.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=8",
+      "pageNumber": 8
+    },
+    {
+      "id": 71,
+      "title": "An Evening with Google",
+      "date": "March 21, 2016",
+      "year": "2016",
+      "galleryUrl": "https://photos.app.goo.gl/rW2QcwNvypL2Ugye6",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/656305664d7f3c3ad79fc2f4_Event%20Tile_BGs%20(1).png",
+        "alt": "Tile Image",
+        "srcset": "",
+        "localPath": "assets/images/galleries/071_An_Evening_with_Google.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=8",
+      "pageNumber": 8
+    },
+    {
+      "id": 72,
+      "title": "App Inventor Workshop @ Orion Health",
+      "date": "March 12, 2016",
+      "year": "2016",
+      "galleryUrl": "https://photos.app.goo.gl/JznDe7PKXDFuLxd99",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6562e7a22e529075a4b93da7_Event%20Tile_BGs.png",
+        "alt": "Students sitting around a desk",
+        "srcset": "",
+        "localPath": "assets/images/galleries/072_App_Inventor_Workshop_@_Orion_Health.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=8",
+      "pageNumber": 8
+    },
+    {
+      "id": 73,
+      "title": "She Sharp @ Westpac",
+      "date": "November 26, 2015",
+      "year": "2015",
+      "galleryUrl": "https://photos.app.goo.gl/DmvjaUAX1GhWagPX8",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/656460e9aaab50cbc60dd004_westpaclanding.jpg",
+        "alt": "Two people behind an android figure",
+        "srcset": "",
+        "localPath": "assets/images/galleries/073_She_Sharp_@_Westpac.jpg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=9",
+      "pageNumber": 9
+    },
+    {
+      "id": 74,
+      "title": "She Sharp @ Xero in Wellington",
+      "date": "October 1, 2015",
+      "year": "2015",
+      "galleryUrl": "https://photos.app.goo.gl/EKu6cXcn1TNQYYDTA",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65645f776f03289b84a749c3_xerowellingtonlanding.jpg",
+        "alt": "Event photo",
+        "srcset": "",
+        "localPath": "assets/images/galleries/074_She_Sharp_@_Xero_in_Wellington.jpg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=9",
+      "pageNumber": 9
+    },
+    {
+      "id": 75,
+      "title": "SHE SHARP ANITA BORG CELEBRATION",
+      "date": "January 16, 2015",
+      "year": "2015",
+      "galleryUrl": "https://photos.google.com/share/AF1QipNVz5RsqOJkjo2ZZ4KPTYByfSZFuhMdjkpw5Qt7u7goKQnX3OUfmH0Mvl8KYuEb1w?key=ZFlpbWZEZGpMSjBKTFF1cHdXWmJlbm9URGtWSUJ3",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65645535a6017f9b4487b58a_anitalanding.jpg",
+        "alt": "Event tile with event photo",
+        "srcset": "",
+        "localPath": "assets/images/galleries/075_SHE_SHARP_ANITA_BORG_CELEBRATION.jpg"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=9",
+      "pageNumber": 9
+    },
+    {
+      "id": 76,
+      "title": "She Sharp Launch Event",
+      "date": "July 4, 2014",
+      "year": "2014",
+      "galleryUrl": "https://photos.google.com/share/AF1QipM6kDjk86UgxWbSSL1uRo0LqdJnJsGFFDpVvGe4xIpHHBfaHKXd83NBvYDJPG4FPA?key=NGdHUC02VEZqbUctaE5rczJDcXNHZHc4S3cya3dR",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65644012ba31a04ba51ba2f1_Event%20Tile_BGs%20(12).png",
+        "alt": "Group photo",
+        "srcset": "",
+        "localPath": "assets/images/galleries/076_She_Sharp_Launch_Event.png"
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=9",
+      "pageNumber": 9
+    }
+  ]
+}
