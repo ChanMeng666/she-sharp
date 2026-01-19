@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Search, Filter } from "lucide-react";
+import { ArrowRight, Search, X, Calendar, MapPin, Tag, Clock } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { EventInflectedCard } from "@/components/events/event-inflected-card";
@@ -11,14 +11,29 @@ import { EventList } from "@/components/events/event-list";
 import { getAllEvents, getFeaturedEvent, Event } from "@/lib/data/events";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuCheckboxItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuItem,
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
+import { EVENT_CATEGORIES, EventCategory } from "@/types/event";
+
+// Category display names
+const CATEGORY_LABELS: Record<EventCategory, string> = {
+  workshop: "Workshop",
+  networking: "Networking",
+  training: "Training",
+  social: "Social",
+  thrive: "THRIVE",
+  conference: "Conference",
+  webinar: "Webinar",
+  meetup: "Meetup",
+  panel: "Panel",
+};
 
 // Sample hero image
 const HERO_IMAGE =
@@ -69,6 +84,9 @@ export default function EventsPage() {
   // Search and filter state
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<EventCategory[]>([]);
+  const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  const [showUpcomingOnly, setShowUpcomingOnly] = useState(false);
 
   // Pagination state
   const [displayedCount, setDisplayedCount] = useState(6);
@@ -81,29 +99,60 @@ export default function EventsPage() {
       const year = new Date(event.startDate).getFullYear();
       years.add(year);
     });
-    return Array.from(years).sort((a, b) => b - a); // Sort descending (newest first)
+    return Array.from(years).sort((a, b) => b - a);
   }, [allEvents]);
 
-  // Filter events based on search query and selected years
+  // Extract available categories from events
+  const availableCategories = useMemo(() => {
+    const categories = new Set<EventCategory>();
+    allEvents.forEach((event) => {
+      categories.add(event.category);
+    });
+    return Array.from(categories).sort();
+  }, [allEvents]);
+
+  // Extract available cities from events
+  const availableCities = useMemo(() => {
+    const cities = new Set<string>();
+    allEvents.forEach((event) => {
+      if (event.location?.city) {
+        cities.add(event.location.city);
+      }
+    });
+    return Array.from(cities).sort();
+  }, [allEvents]);
+
+  // Filter events based on all criteria
   const filteredEvents = useMemo(() => {
     return allEvents.filter((event) => {
-      // Search filter - case-insensitive title match
+      // Search filter - title and shortDescription
       const matchesSearch =
         searchQuery === "" ||
-        event.title.toLowerCase().includes(searchQuery.toLowerCase());
+        event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (event.shortDescription?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
 
-      // Year filter - check if event year is in selectedYears array
+      // Year filter
       const eventYear = new Date(event.startDate).getFullYear();
       const matchesYear = selectedYears.length === 0 || selectedYears.includes(eventYear);
 
-      return matchesSearch && matchesYear;
+      // Category filter
+      const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(event.category);
+
+      // City filter
+      const matchesCity = selectedCities.length === 0 ||
+        (event.location?.city && selectedCities.includes(event.location.city));
+
+      // Status filter (upcoming only)
+      const matchesStatus = !showUpcomingOnly || event.status === "upcoming";
+
+      return matchesSearch && matchesYear && matchesCategory && matchesCity && matchesStatus;
     });
-  }, [allEvents, searchQuery, selectedYears]);
+  }, [allEvents, searchQuery, selectedYears, selectedCategories, selectedCities, showUpcomingOnly]);
 
   // Reset displayed count when filters change
   useEffect(() => {
     setDisplayedCount(EVENTS_PER_PAGE);
-  }, [searchQuery, selectedYears]);
+  }, [searchQuery, selectedYears, selectedCategories, selectedCities, showUpcomingOnly]);
 
   // Get events to display (paginated)
   const displayedEvents = useMemo(() => {
@@ -119,7 +168,7 @@ export default function EventsPage() {
   };
 
   // Count active filters
-  const activeFilterCount = selectedYears.length;
+  const activeFilterCount = selectedYears.length + selectedCategories.length + selectedCities.length + (showUpcomingOnly ? 1 : 0);
 
   // Toggle year selection
   const toggleYear = (year: number) => {
@@ -128,10 +177,31 @@ export default function EventsPage() {
     );
   };
 
-  // Clear all year filters
-  const clearAllYears = () => {
-    setSelectedYears([]);
+  // Toggle category selection
+  const toggleCategory = (category: EventCategory) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
+    );
   };
+
+  // Toggle city selection
+  const toggleCity = (city: string) => {
+    setSelectedCities((prev) =>
+      prev.includes(city) ? prev.filter((c) => c !== city) : [...prev, city]
+    );
+  };
+
+  // Clear all filters
+  const clearAllFilters = () => {
+    setSelectedYears([]);
+    setSelectedCategories([]);
+    setSelectedCities([]);
+    setShowUpcomingOnly(false);
+    setSearchQuery("");
+  };
+
+  // Check if any filters are active
+  const hasActiveFilters = activeFilterCount > 0 || searchQuery !== "";
 
   return (
     <div className="min-h-screen mb-24">
@@ -215,48 +285,175 @@ export default function EventsPage() {
           </div>
 
           {/* Search and Filter Controls */}
-          <div className="flex gap-4 mb-8">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" />
-              <Input
-                type="text"
-                placeholder="Search events by title..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 border-0 border-b border-gray-400 rounded-none focus-visible:ring-0 focus-visible:border-gray-900"
-              />
+          <div className="space-y-4 mb-8">
+            {/* Search Bar */}
+            <div className="flex gap-4">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search events by title or description..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9 pr-9 border-0 border-b border-gray-400 rounded-none focus-visible:ring-0 focus-visible:border-gray-900"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
             </div>
 
-            {/* Filter Button */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="relative">
-                  <Filter className="h-4 w-4 mr-2" />
-                  Filter
-                  {activeFilterCount > 0 && (
-                    <span className="ml-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand text-brand-foreground text-xs font-medium">
-                      {activeFilterCount}
-                    </span>
-                  )}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={clearAllYears}>
+            {/* Filter Buttons Row */}
+            <div className="flex flex-wrap gap-2">
+              {/* Upcoming Only Toggle */}
+              <Button
+                variant={showUpcomingOnly ? "default" : "outline"}
+                size="sm"
+                onClick={() => setShowUpcomingOnly(!showUpcomingOnly)}
+                className="h-9"
+              >
+                <Clock className="h-4 w-4 mr-2" />
+                Upcoming Only
+              </Button>
+
+              {/* Category Filter */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="h-9">
+                    <Tag className="h-4 w-4 mr-2" />
+                    Category
+                    {selectedCategories.length > 0 && (
+                      <Badge variant="secondary" className="ml-2 h-5 px-1.5">
+                        {selectedCategories.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-48">
+                  <DropdownMenuLabel>Event Category</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {availableCategories.map((category) => (
+                    <DropdownMenuCheckboxItem
+                      key={category}
+                      checked={selectedCategories.includes(category)}
+                      onCheckedChange={() => toggleCategory(category)}
+                    >
+                      {CATEGORY_LABELS[category]}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Year Filter */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="h-9">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    Year
+                    {selectedYears.length > 0 && (
+                      <Badge variant="secondary" className="ml-2 h-5 px-1.5">
+                        {selectedYears.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-48">
+                  <DropdownMenuLabel>Event Year</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {availableYears.map((year) => (
+                    <DropdownMenuCheckboxItem
+                      key={year}
+                      checked={selectedYears.includes(year)}
+                      onCheckedChange={() => toggleYear(year)}
+                    >
+                      {year}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* City Filter */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="h-9">
+                    <MapPin className="h-4 w-4 mr-2" />
+                    City
+                    {selectedCities.length > 0 && (
+                      <Badge variant="secondary" className="ml-2 h-5 px-1.5">
+                        {selectedCities.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-48">
+                  <DropdownMenuLabel>Event City</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {availableCities.map((city) => (
+                    <DropdownMenuCheckboxItem
+                      key={city}
+                      checked={selectedCities.includes(city)}
+                      onCheckedChange={() => toggleCity(city)}
+                    >
+                      {city}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Clear All Filters */}
+              {hasActiveFilters && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearAllFilters}
+                  className="h-9 text-muted-foreground hover:text-foreground"
+                >
+                  <X className="h-4 w-4 mr-1" />
                   Clear all
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                {availableYears.map((year) => (
-                  <DropdownMenuCheckboxItem
-                    key={year}
-                    checked={selectedYears.includes(year)}
-                    onCheckedChange={() => toggleYear(year)}
-                    className="[&>span:first-child]:border [&>span:first-child]:border-border [&>span:first-child]:rounded [&>span:first-child]:size-4 [&>span:first-child]:flex [&>span:first-child]:items-center [&>span:first-child]:justify-center"
-                  >
-                    {year}
-                  </DropdownMenuCheckboxItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </Button>
+              )}
+            </div>
+
+            {/* Active Filters Display & Results Count */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-sm text-muted-foreground">
+                Showing {filteredEvents.length} of {allEvents.length} events
+              </span>
+              {(selectedCategories.length > 0 || selectedYears.length > 0 || selectedCities.length > 0) && (
+                <>
+                  <span className="text-muted-foreground">•</span>
+                  {selectedCategories.map((category) => (
+                    <Badge key={category} variant="secondary" className="gap-1">
+                      {CATEGORY_LABELS[category]}
+                      <button onClick={() => toggleCategory(category)} className="hover:text-foreground">
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  ))}
+                  {selectedYears.map((year) => (
+                    <Badge key={year} variant="secondary" className="gap-1">
+                      {year}
+                      <button onClick={() => toggleYear(year)} className="hover:text-foreground">
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  ))}
+                  {selectedCities.map((city) => (
+                    <Badge key={city} variant="secondary" className="gap-1">
+                      {city}
+                      <button onClick={() => toggleCity(city)} className="hover:text-foreground">
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  ))}
+                </>
+              )}
+            </div>
           </div>
 
           {/* Events Grid with Inflected Cards */}
