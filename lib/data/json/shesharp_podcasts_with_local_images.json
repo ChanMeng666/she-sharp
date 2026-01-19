@@ -1,0 +1,335 @@
+{
+  "metadata": {
+    "source": "https://www.shesharp.org.nz/media/podcasts",
+    "organization": "She Sharp New Zealand",
+    "scrapedAt": "2026-01-19T23:24:51.126723",
+    "totalPodcasts": 15,
+    "description": "She Sharp Bytes podcast episodes - empowering women in tech",
+    "version": "1.0",
+    "imagesDownloaded": true,
+    "imagesDownloadedAt": "2026-01-19T23:28:55",
+    "imageStats": {
+      "total_urls": 15,
+      "unique_urls": 15,
+      "downloaded": 15,
+      "skipped_existing": 0,
+      "failed": 0,
+      "duplicates": 0
+    }
+  },
+  "podcasts": [
+    {
+      "id": 1,
+      "title": "Tech Wonderland: A Holiday Celebration with Google's Performance Lead, Hannah Weir",
+      "date": {
+        "raw": "December 2023",
+        "month": "December",
+        "year": 2023,
+        "isoDate": "2023-12-01"
+      },
+      "spotifyUrl": "https://podcasters.spotify.com/pod/show/shesharpbytes/episodes/Tech-Wonderland-A-Holiday-Celebration-with-Googles-Performance-Lead--Hannah-Weir-e2dcpjs",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65a9cbb3c67fedb1bc802f30_Podcast%20Template%20(1).png",
+        "alt": "Shesharp Group photo with Ambassador",
+        "localPath": "assets/images/podcasts/65a9cbb3c67fedb1bc802f30_Podcast_Template_1_bc8e5114.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_podcasters",
+      "slug": "tech-wonderland-a-holiday-celebration-with-googles",
+      "spotifyEpisodeSlug": "Tech-Wonderland-A-Holiday-Celebration-with-Googles-Performance-Lead--Hannah-Weir-e2dcpjs"
+    },
+    {
+      "id": 2,
+      "title": "TECHNOLOGICAL CHANGE - WORKPLACE & WORKFORCE IMPACTS",
+      "date": {
+        "raw": "November 2023",
+        "month": "November",
+        "year": 2023,
+        "isoDate": "2023-11-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/6adaUENgRCtCRl5AsTSjFu?si=VXm96TvdQLuocmiCm_rXfw",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/656449f3d01f2e91e441cff0_Podcast%20Template.png",
+        "alt": "",
+        "localPath": "assets/images/podcasts/656449f3d01f2e91e441cff0_Podcast_Template_79e82070.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "technological-change-workplace-workforce-impacts",
+      "spotifyEpisodeId": "6adaUENgRCtCRl5AsTSjFu"
+    },
+    {
+      "id": 3,
+      "title": "Inspire Her: Te Whakatipuranga Wahine",
+      "date": {
+        "raw": "October 2023",
+        "month": "October",
+        "year": 2023,
+        "isoDate": "2023-10-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/5LdpXQRWdzkBOwix7jYG2v?si=b3f0a40653f74347",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65509ac5a0623d92b00799c5_Group%20480965680%20(1).png",
+        "alt": "Banner with two students",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65509ac5a0623d92b00799c5_Group%20480965680%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65509ac5a0623d92b00799c5_Group%20480965680%20(1).png 800w",
+        "localPath": "assets/images/podcasts/65509ac5a0623d92b00799c5_Group_480965680_1_4cf329c9.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "inspire-her-te-whakatipuranga-wahine",
+      "spotifyEpisodeId": "5LdpXQRWdzkBOwix7jYG2v"
+    },
+    {
+      "id": 4,
+      "title": "From Burnout to Balance",
+      "date": {
+        "raw": "September 2023",
+        "month": "September",
+        "year": 2023,
+        "isoDate": "2023-09-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/3fS98C8166pKyaLeFCIZnJ?si=dAnFGyL2Qrq3Qy5HSGcJiw",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6516caff046b6bee332a81b9_Group%20480965692.png",
+        "alt": "Banner of a hand pulling toast out of a toaster",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6516caff046b6bee332a81b9_Group%20480965692-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6516caff046b6bee332a81b9_Group%20480965692-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6516caff046b6bee332a81b9_Group%20480965692-p-1080.png 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6516caff046b6bee332a81b9_Group%20480965692.png 1200w",
+        "localPath": "assets/images/podcasts/6516caff046b6bee332a81b9_Group_480965692_83c08c80.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "from-burnout-to-balance",
+      "spotifyEpisodeId": "3fS98C8166pKyaLeFCIZnJ"
+    },
+    {
+      "id": 5,
+      "title": "A Legendairy Career",
+      "date": {
+        "raw": "September 2023",
+        "month": "September",
+        "year": 2023,
+        "isoDate": "2023-09-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/4M1z06uxrpetXgbK8nwE8T",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f48bfd055ab00edf0c9575_Event%20Tile_BGs%20(1).png",
+        "alt": "Graphic with woman holding a beaker",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f48bfd055ab00edf0c9575_Event%20Tile_BGs%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f48bfd055ab00edf0c9575_Event%20Tile_BGs%20(1)-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f48bfd055ab00edf0c9575_Event%20Tile_BGs%20(1)-p-1080.png 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f48bfd055ab00edf0c9575_Event%20Tile_BGs%20(1).png 1200w",
+        "localPath": "assets/images/podcasts/64f48bfd055ab00edf0c9575_Event_Tile_BGs_1_ccf767f1.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "a-legendairy-career",
+      "spotifyEpisodeId": "4M1z06uxrpetXgbK8nwE8T"
+    },
+    {
+      "id": 6,
+      "title": "Innovation Unleashed with Deloitte",
+      "date": {
+        "raw": "July 2023",
+        "month": "July",
+        "year": 2023,
+        "isoDate": "2023-07-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/7xwZoJrW1N2O53q82Ox7zu?si=YfB_aFGQRve-XH2a2yHZEw",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64bb8ab537717a195533fc8a_Podcast%20Template%20(3).png",
+        "alt": "Woman speaking in front of two people ",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64bb8ab537717a195533fc8a_Podcast%20Template%20(3)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64bb8ab537717a195533fc8a_Podcast%20Template%20(3).png 800w",
+        "localPath": "assets/images/podcasts/64bb8ab537717a195533fc8a_Podcast_Template_3_e84474fe.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "innovation-unleashed-with-deloitte",
+      "spotifyEpisodeId": "7xwZoJrW1N2O53q82Ox7zu"
+    },
+    {
+      "id": 7,
+      "title": "Kickstart Your Career in Tech with MYOB",
+      "date": {
+        "raw": "May 2023",
+        "month": "May",
+        "year": 2023,
+        "isoDate": "2023-05-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/6PoBMkylOLasUa8sS4f1GM?si=3152dd76ba1d444f&nd=1",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926803e40138d6dc0e5c02_Podcast%20Tile_Kickstart%20Your%20Career%20in%20Tech%20with%20MYOB.png",
+        "alt": "A young women relaxing on a couch in the sunshine with a laptop",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926803e40138d6dc0e5c02_Podcast%20Tile_Kickstart%20Your%20Career%20in%20Tech%20with%20MYOB-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926803e40138d6dc0e5c02_Podcast%20Tile_Kickstart%20Your%20Career%20in%20Tech%20with%20MYOB-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926803e40138d6dc0e5c02_Podcast%20Tile_Kickstart%20Your%20Career%20in%20Tech%20with%20MYOB.png 1200w",
+        "localPath": "assets/images/podcasts/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Yo_c1a6cb69.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "kickstart-your-career-in-tech-with-myob",
+      "spotifyEpisodeId": "6PoBMkylOLasUa8sS4f1GM"
+    },
+    {
+      "id": 8,
+      "title": "A Chat with Fiona Webby @ AcademyEX: The New Youniversity",
+      "date": {
+        "raw": "April 2023",
+        "month": "April",
+        "year": 2023,
+        "isoDate": "2023-04-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/1dSfuPifLzq4Uu6sougpxi?si=3d027606230848a7&nd=1",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926899d771e6ed62e9f52b_Podcast%20Tile_A%20Chat%20with%20Fiona%20Webby.png",
+        "alt": "Decorative",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926899d771e6ed62e9f52b_Podcast%20Tile_A%20Chat%20with%20Fiona%20Webby-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926899d771e6ed62e9f52b_Podcast%20Tile_A%20Chat%20with%20Fiona%20Webby-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926899d771e6ed62e9f52b_Podcast%20Tile_A%20Chat%20with%20Fiona%20Webby.png 1200w",
+        "localPath": "assets/images/podcasts/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with__bd179af2.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "a-chat-with-fiona-webby-academyex-the-new-youniver",
+      "spotifyEpisodeId": "1dSfuPifLzq4Uu6sougpxi"
+    },
+    {
+      "id": 9,
+      "title": "IWD #EmbraceEquality",
+      "date": {
+        "raw": "April 2023",
+        "month": "April",
+        "year": 2023,
+        "isoDate": "2023-04-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/3x5nHASoOHsYY3mlbJZEQX?si=5ec634b0921145bd&nd=1",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649268ebdac5954a754425d5_Podcast%20Tile_IWD%20%23EmbraceEquality.png",
+        "alt": "A group of women sitting around a table",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649268ebdac5954a754425d5_Podcast%20Tile_IWD%20%23EmbraceEquality-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649268ebdac5954a754425d5_Podcast%20Tile_IWD%20%23EmbraceEquality-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649268ebdac5954a754425d5_Podcast%20Tile_IWD%20%23EmbraceEquality.png 1200w",
+        "localPath": "assets/images/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "iwd-embraceequality",
+      "spotifyEpisodeId": "3x5nHASoOHsYY3mlbJZEQX"
+    },
+    {
+      "id": 10,
+      "title": "She Sharp Bytes into Software Development with Security in Mind",
+      "date": {
+        "raw": "February 2023",
+        "month": "February",
+        "year": 2023,
+        "isoDate": "2023-02-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/5X8tMqIj5ADZVVDOBKv0ZO?si=03df8d189ed24750&nd=1",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926d5dbfcc54669c5e7d7c_Podcast%20Tile_She%20Sharp%20Bytes%20into%20Software%20Development%20with%20Security%20in%20Mind.png",
+        "alt": "Decorative",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926d5dbfcc54669c5e7d7c_Podcast%20Tile_She%20Sharp%20Bytes%20into%20Software%20Development%20with%20Security%20in%20Mind-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926d5dbfcc54669c5e7d7c_Podcast%20Tile_She%20Sharp%20Bytes%20into%20Software%20Development%20with%20Security%20in%20Mind-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926d5dbfcc54669c5e7d7c_Podcast%20Tile_She%20Sharp%20Bytes%20into%20Software%20Development%20with%20Security%20in%20Mind.png 1200w",
+        "localPath": "assets/images/podcasts/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_By_c188f735.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "she-sharp-bytes-into-software-development-with-sec",
+      "spotifyEpisodeId": "5X8tMqIj5ADZVVDOBKv0ZO"
+    },
+    {
+      "id": 11,
+      "title": "Shaping the Future with AI - Using AI to Shape Your World",
+      "date": {
+        "raw": "October 2022",
+        "month": "October",
+        "year": 2022,
+        "isoDate": "2022-10-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/7ftBVksRgrYGBTbg0l9HO6?si=d3cb5f47f6a044f9",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494ce4d9ebcd7fa78ec60b0_Podcast%20Tile_Shaping%20the%20Future%20with%20AI%20-%20Using%20AI%20to%20Shape%20Your%20World.png",
+        "alt": "woman smiling",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494ce4d9ebcd7fa78ec60b0_Podcast%20Tile_Shaping%20the%20Future%20with%20AI%20-%20Using%20AI%20to%20Shape%20Your%20World-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494ce4d9ebcd7fa78ec60b0_Podcast%20Tile_Shaping%20the%20Future%20with%20AI%20-%20Using%20AI%20to%20Shape%20Your%20World-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494ce4d9ebcd7fa78ec60b0_Podcast%20Tile_Shaping%20the%20Future%20with%20AI%20-%20Using%20AI%20to%20Shape%20Your%20World.png 1200w",
+        "localPath": "assets/images/podcasts/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the__28d8bc10.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "shaping-the-future-with-ai-using-ai-to-shape-your-",
+      "spotifyEpisodeId": "7ftBVksRgrYGBTbg0l9HO6"
+    },
+    {
+      "id": 12,
+      "title": "AI for the Environment - Female Led Hackathon",
+      "date": {
+        "raw": "September 2022",
+        "month": "September",
+        "year": 2022,
+        "isoDate": "2022-09-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/7MCUwNbUAoAexkS9LeEHBN?si=c0e74101101b48f0",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cf5d644246ba02e79ed4_Podcast%20Tile_AI%20for%20the%20Environment%20-%20Female%20Led%20Hackathon.png",
+        "alt": "hackathon",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cf5d644246ba02e79ed4_Podcast%20Tile_AI%20for%20the%20Environment%20-%20Female%20Led%20Hackathon-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cf5d644246ba02e79ed4_Podcast%20Tile_AI%20for%20the%20Environment%20-%20Female%20Led%20Hackathon-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cf5d644246ba02e79ed4_Podcast%20Tile_AI%20for%20the%20Environment%20-%20Female%20Led%20Hackathon.png 1200w",
+        "localPath": "assets/images/podcasts/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_E_80bb51d3.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "ai-for-the-environment-female-led-hackathon",
+      "spotifyEpisodeId": "7MCUwNbUAoAexkS9LeEHBN"
+    },
+    {
+      "id": 13,
+      "title": "Sharing a Career path: She# Bytes with Nicole Lin",
+      "date": {
+        "raw": "July 2022",
+        "month": "July",
+        "year": 2022,
+        "isoDate": "2022-07-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/3ZmaHzKEf9qL0HiUQQE72P?si=bbeb0cf0f312485f",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfb10feb550729ee1c33_Podcast%20Tile_Sharing%20a%20Career%20path_%20She%23%20Bytes%20with%20Nicole%20Lin.png",
+        "alt": "nicole lin headshot",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfb10feb550729ee1c33_Podcast%20Tile_Sharing%20a%20Career%20path_%20She%23%20Bytes%20with%20Nicole%20Lin-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfb10feb550729ee1c33_Podcast%20Tile_Sharing%20a%20Career%20path_%20She%23%20Bytes%20with%20Nicole%20Lin-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfb10feb550729ee1c33_Podcast%20Tile_Sharing%20a%20Career%20path_%20She%23%20Bytes%20with%20Nicole%20Lin.png 1200w",
+        "localPath": "assets/images/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "sharing-a-career-path-she-bytes-with-nicole-lin",
+      "spotifyEpisodeId": "3ZmaHzKEf9qL0HiUQQE72P"
+    },
+    {
+      "id": 14,
+      "title": "Mind Your Own Career",
+      "date": {
+        "raw": "June 2022",
+        "month": "June",
+        "year": 2022,
+        "isoDate": "2022-06-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/40ctM08sUvNdAMuoq34LwM?si=5833e9c58e174610",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfe00feb550729ee4a7b_Podcast%20Tile_Mind%20Your%20own%20career.png",
+        "alt": "woman at desk",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfe00feb550729ee4a7b_Podcast%20Tile_Mind%20Your%20own%20career-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfe00feb550729ee4a7b_Podcast%20Tile_Mind%20Your%20own%20career-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfe00feb550729ee4a7b_Podcast%20Tile_Mind%20Your%20own%20career.png 1200w",
+        "localPath": "assets/images/podcasts/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_ow_fd9e2b66.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "mind-your-own-career",
+      "spotifyEpisodeId": "40ctM08sUvNdAMuoq34LwM"
+    },
+    {
+      "id": 15,
+      "title": "What is this podcast about?",
+      "date": {
+        "raw": "April 2022",
+        "month": "April",
+        "year": 2022,
+        "isoDate": "2022-04-01"
+      },
+      "spotifyUrl": "https://open.spotify.com/episode/1cvcsFbhEHcXRaaTHsGom8?si=b3a980e1b92f4a5f&nd=1",
+      "coverImage": {
+        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494f876e09c314b47369d47_Podcast%20Tile_What%20is%20this%20podcast%20about_.png",
+        "alt": "Young woman listening to a podcast on She Sharp Spotify podcast platform",
+        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494f876e09c314b47369d47_Podcast%20Tile_What%20is%20this%20podcast%20about_-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494f876e09c314b47369d47_Podcast%20Tile_What%20is%20this%20podcast%20about_-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494f876e09c314b47369d47_Podcast%20Tile_What%20is%20this%20podcast%20about_-p-1080.png 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494f876e09c314b47369d47_Podcast%20Tile_What%20is%20this%20podcast%20about_.png 1200w",
+        "localPath": "assets/images/podcasts/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_704d879d.png"
+      },
+      "platform": "Spotify",
+      "linkType": "spotify_episode",
+      "slug": "what-is-this-podcast-about",
+      "spotifyEpisodeId": "1cvcsFbhEHcXRaaTHsGom8"
+    }
+  ]
+}
