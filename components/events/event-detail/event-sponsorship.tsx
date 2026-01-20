@@ -16,8 +16,8 @@ export function EventSponsorship({ event, className }: EventSponsorshipProps) {
   // For now, we'll show it for all events, but you can add conditional logic
   
   return (
-    <section id="event-sponsorship" className={cn("relative overflow-hidden", className)}>
-      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-gradient-to-br from-brand/5 via-background to-brand/10">
+    <section id="event-sponsorship" className={cn("relative overflow-hidden py-16", className)}>
+      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-linear-to-br from-brand/5 via-background to-brand/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Side - Decorative Circle/Graphic */}
@@ -30,7 +30,7 @@ export function EventSponsorship({ event, className }: EventSponsorshipProps) {
                 <div className="absolute inset-12 rounded-full border-4 border-brand/50"></div>
                 
                 {/* Center content */}
-                <div className="absolute inset-16 rounded-full bg-gradient-to-br from-brand/10 to-brand/20 flex items-center justify-center">
+                <div className="absolute inset-16 rounded-full bg-linear-to-br from-brand/10 to-brand/20 flex items-center justify-center">
                   <div className="text-center p-8">
                     <div className="text-4xl md:text-5xl font-bold text-brand mb-2">She</div>
                     <div className="text-4xl md:text-5xl font-bold text-brand">Sharp</div>

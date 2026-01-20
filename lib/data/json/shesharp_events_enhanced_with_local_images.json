@@ -2197,44 +2197,7 @@
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84",
           "As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare, Sune excels in mentoring, combining her analytical skills and creative flair to inspire her team. Her unique approach to problem-solving and strong belief in the power of intuition and communication make her an invaluable guide. Sune's dedication to personal and professional growth within her role showcases her as a transformative leader and mentor."
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -4905,44 +4868,7 @@
           "This year, the AI Hackathon festival will be expanding on the problems to solve beyond the five key environmental outcomes (AI for the Environment Report 2022) to include Kaitiakitanga, embracing our connection to the land and surrounding natural environment fulfilling our roles as custodians.",
           "The problems to solve are based on the six key environmental outcomes (AI for the Environment Report 2022). They have expanded these to make them more relevant to all participants in 2024."
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -8009,44 +7935,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -8287,44 +8176,7 @@
           "Get a quick look at how the Secure Code Warrior platform works and what to expect during the workshop. :https://secure-code-warrior.wistia.com/medias/iuwtu89k00",
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -8519,44 +8371,7 @@
           "By the end of our visit all our students were excited and inspired to pursue their dreams as engineers! Big thank you to Mandy McAlwee and the team at Fisher and Paykel Healthcare for having us.",
           "Get a quick look at how the Secure Code Warrior platform works and what to expect during the workshop. :https://secure-code-warrior.wistia.com/medias/iuwtu89k00"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -8778,44 +8593,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -9047,44 +8825,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -9321,44 +9062,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -9595,44 +9299,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -9869,44 +9536,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -10143,44 +9773,7 @@
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84",
           "As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare, Sune excels in mentoring, combining her analytical skills and creative flair to inspire her team. Her unique approach to problem-solving and strong belief in the power of intuition and communication make her an invaluable guide. Sune's dedication to personal and professional growth within her role showcases her as a transformative leader and mentor."
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -10417,44 +10010,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -10691,44 +10247,7 @@
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84",
           "As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare, Sune excels in mentoring, combining her analytical skills and creative flair to inspire her team. Her unique approach to problem-solving and strong belief in the power of intuition and communication make her an invaluable guide. Sune's dedication to personal and professional growth within her role showcases her as a transformative leader and mentor."
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -11309,44 +10828,7 @@
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84",
           "As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare, Sune excels in mentoring, combining her analytical skills and creative flair to inspire her team. Her unique approach to problem-solving and strong belief in the power of intuition and communication make her an invaluable guide. Sune's dedication to personal and professional growth within her role showcases her as a transformative leader and mentor."
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -11583,44 +11065,7 @@
           "Get a quick look at how the Secure Code Warrior platform works and what to expect during the workshop. :https://secure-code-warrior.wistia.com/medias/iuwtu89k00",
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -11857,44 +11302,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -12383,44 +11791,7 @@
           "Get a quick look at how the Secure Code Warrior platform works and what to expect during the workshop. :https://secure-code-warrior.wistia.com/medias/iuwtu89k00",
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -12989,44 +12360,7 @@
           "After this the group then jumped back on the bus again and heads down to Wynyard quarter and to the Air New Zealand Head Office. Here a team Product Owners, Developers and Quality Assurers introduced themselves and talked about their work. The group was then split into two smaller groups which consequently encouraging a more intimate conversation between the presenters and attendees. The Air New Zealand team talked to one team about Oscar, the Air New Zealand chatbot that used AI to help with cu",
           "It wasnât long before the students were on the bus again and heading to their final destination of the tour, Trade Me. Here they were greeted by Grace Benedek Rooney, a Developer at Trade Me, who talked about what it is like to be a developer. Developers at Trade Me work in teams, use a variety of tools in order to deliver cool and useful products. She also talked about how as a developer, you get to help people in their lives without meeting them in person. Her example was about a student mov"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -13258,44 +12592,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -13532,44 +12829,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -13795,44 +13055,7 @@
           "Get a quick look at how the Secure Code Warrior platform works and what to expect during the workshop. :https://secure-code-warrior.wistia.com/medias/iuwtu89k00",
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -14069,44 +13292,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -14338,44 +13524,7 @@
           "Get a quick look at how the Secure Code Warrior platform works and what to expect during the workshop. :https://secure-code-warrior.wistia.com/medias/iuwtu89k00",
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -14612,44 +13761,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -14875,44 +13987,7 @@
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84",
           "As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare, Sune excels in mentoring, combining her analytical skills and creative flair to inspire her team. Her unique approach to problem-solving and strong belief in the power of intuition and communication make her an invaluable guide. Sune's dedication to personal and professional growth within her role showcases her as a transformative leader and mentor."
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -15144,44 +14219,7 @@
           "In the second session, we got to know these Googlers a bit better with a career panel. Each Googler shared their path to Google, as well as some insight into life at Google. Attendees were able to ask anything and get all their questions answered, and did we mention â get lots of Google swag!!",
           "The event ended with the opportunities at Google for students â internships, graduate positions, and the Women Techmakers Scholarship. The scholarship was particularly encouraged, and SheSharp Ambassadors who were former recipients spoke highly of the Scholarsâ Retreat, where recipients can connect with fellow scholars, network with Googlers and participate in a number of workshops, held in a different Google Asia Pacific office each year."
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -15418,44 +14456,7 @@
           "Get a quick look at how the Secure Code Warrior platform works and what to expect during the workshop. :https://secure-code-warrior.wistia.com/medias/iuwtu89k00",
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -16643,44 +15644,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -16917,44 +15881,7 @@
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84",
           "As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare, Sune excels in mentoring, combining her analytical skills and creative flair to inspire her team. Her unique approach to problem-solving and strong belief in the power of intuition and communication make her an invaluable guide. Sune's dedication to personal and professional growth within her role showcases her as a transformative leader and mentor."
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -18545,44 +17472,7 @@
           "Get a quick look at how the Secure Code Warrior platform works and what to expect during the workshop. :https://secure-code-warrior.wistia.com/medias/iuwtu89k00",
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -20684,44 +19574,7 @@
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -21270,44 +20123,7 @@
           "Get a quick look at how the Secure Code Warrior platform works and what to expect during the workshop. :https://secure-code-warrior.wistia.com/medias/iuwtu89k00",
           "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -21872,44 +20688,7 @@
           "As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare, Sune excels in mentoring, combining her analytical skills and creative flair to inspire her team. Her unique approach to problem-solving and strong belief in the power of intuition and communication make her an invaluable guide. Sune's dedication to personal and professional growth within her role showcases her as a transformative leader and mentor.",
           "Mel currently works at ASB, as a digital experience analyst. She graduated at UoA in 2018 with a Bcom, but joining the tech industry happened to fall into her lap and she decided she loved working there! She has had experience as a business analyst in other corporate roles, as well as having the pleasure of working for non-profit organisations in the marketing space too. She has been nominated for many leadership programs in each company she has worked for, which is clearly proven in her strengt"
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",
@@ -25445,44 +24224,7 @@
           "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84",
           "As the Head of ICT Planning & Portfolio Management at Fisher & Paykel Healthcare, Sune excels in mentoring, combining her analytical skills and creative flair to inspire her team. Her unique approach to problem-solving and strong belief in the power of intuition and communication make her an invaluable guide. Sune's dedication to personal and professional growth within her role showcases her as a transformative leader and mentor."
         ],
-        "speakers": [
-          {
-            "name": "Michelle Sandford",
-            "title": "Developer Engagement Lead Asia - Microsoft",
-            "company": "Microsoft",
-            "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement as a technology evangelist. She advocates for STEM, the Games Industry and Developers. She presents at around 50 Conferences and Events around the world on Technology, Learning to Code, Open Source and AI. She judges hackathons and encourages the next generation into technology careers.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e1238644649f294b1cb_michelle.jpeg",
-            "linkedin": "https://www.linkedin.com/in/michellesandford/?originalSubdomain=au",
-            "imageLocal": "assets/images/speakers/667f8e1238644649f294b1cb_michelle_dcd688c6.jpg"
-          },
-          {
-            "name": "Renee Noble",
-            "title": "Python Cloud Advocate - Microsoft",
-            "company": "Microsoft",
-            "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She works as a Cloud Advocate at the Microsoft Reactor which allows her to connect with and share tech insight with the wider developer and student community, whilst running ConnectEd Code and school teaching takes her back to working with students and teachers, at the start of their tech journeys. Finally, the Girls' Programming Network gives her a focused opportunity to work with girls and women, spreading the program nationally, and to live the \"if they can see it they can be it\" motto.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/667f8e5639d419f849993ac3_renee.jpeg",
-            "linkedin": "https://www.linkedin.com/in/noblerenee/",
-            "imageLocal": "assets/images/speakers/667f8e5639d419f849993ac3_renee_f652d229.jpg"
-          },
-          {
-            "name": "Amir Mohammadi",
-            "title": "Founder & Director - Promptech",
-            "company": "Promptech",
-            "bio": "Dr. Amir Mohammadi founded Promptech.ai with a firm belief in the transformative power of AI, aiming to deliver comprehensive AI solutions tailored to enterprise needs. He developed AI teamspace to boost productivity, created prompt engineering toolkits, large language model libraries, and online courses. He is committed to lowering the access barrier in AI for businesses, researchers, and practitioners across Aotearoa.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6683852ea94122c453a26366_amir.jpeg",
-            "linkedin": "https://www.linkedin.com/in/amirmim/",
-            "imageLocal": "assets/images/speakers/6683852ea94122c453a26366_amir_ae457d59.jpg"
-          },
-          {
-            "name": "Geri Harris",
-            "title": "Senior Lecturer - AUT Business School",
-            "company": "AUT Business School",
-            "bio": "Geri Harris is a senior lecturer at AUT Business School, integrating tech concepts into engaging discussions. A technology futurist, she seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured for years and has 13+ years of consulting experience. Her philosophy inspires collaboration, knowledge sharing, and innovation, challenging the status quo. Geri's expertise in business, social, environmental, and ethical aspects of tech innovation helps hackathon participants explore the potential of emerging digital technologies in transforming business operations.",
-            "image": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/66833ab7ab9af673a80d47af_geri.jpeg",
-            "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13/?originalSubdomain=nz",
-            "imageLocal": "assets/images/speakers/66833ab7ab9af673a80d47af_geri_e8b364da.jpg"
-          }
-        ],
+        "speakers": [],
         "organizers": [
           {
             "name": "Sune Rogers",

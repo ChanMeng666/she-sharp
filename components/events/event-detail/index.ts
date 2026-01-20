@@ -6,3 +6,4 @@ export { EventSidebarPanel } from './event-sidebar-panel';
 export { EventCountdown } from './event-countdown';
 export { EventPhotos } from './event-photos';
 export { EventSponsorship } from './event-sponsorship';
+export { EventSponsors } from './event-sponsors';

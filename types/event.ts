@@ -41,6 +41,13 @@ export interface EventSpeaker {
   linkedIn?: string;
 }
 
+// Event sponsor information
+export interface EventSponsor {
+  name: string;
+  logo: string;
+  type?: string;
+}
+
 // Agenda item
 export interface AgendaItem {
   time: string;
@@ -103,4 +110,7 @@ export interface Event {
   photos?: string[]; // Post-event photos
   albumUrl?: string; // URL to photo album
   attendeeAvatars?: string[]; // For avatar stack display
+
+  // Sponsors
+  sponsors?: EventSponsor[];
 }
