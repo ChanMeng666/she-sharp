@@ -1,35 +1,51 @@
 "use client";
 
+import Link from "next/link";
 import { Card } from "@/components/ui/card";
+import { ArrowUpRight, Mic } from "lucide-react";
 import type { SpotifyShowConfig } from "@/types/spotify";
 
-interface PodcastPreviewCardProps {
-  show: SpotifyShowConfig;
-  spotifyUrl: string;
-}
-
 /**
- * Podcast embedded player card for the secondaryFeature slot.
- * Embeds the Spotify player directly for in-page listening.
+ * Podcast preview card for the secondaryFeature slot.
+ * Links to the podcasts page with a background image.
  */
-export function PodcastPreviewCard({ show }: PodcastPreviewCardProps) {
-  const embedUrl = `https://open.spotify.com/embed/show/${show.showId}?utm_source=generator`;
-
+export function PodcastPreviewCard({ show }: { show: SpotifyShowConfig }) {
   return (
-    <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 hover:shadow-xl rounded-[50px] bg-brand">
-      {/* Spotify Embed */}
-      <iframe
-        src={embedUrl}
-        width="100%"
-        height="100%"
-        frameBorder="0"
-        allowFullScreen
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-        title={`${show.name} - Spotify Podcast`}
-        className="absolute inset-0 w-full h-full"
-        style={{ borderRadius: "50px" }}
-      />
-    </Card>
+    <Link href="/resources/podcasts" className="block h-full group">
+      <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 rounded-[50px] bg-black">
+        {/* Background image */}
+        <img
+          src="/img/podcast.jpg"
+          alt={show.name}
+          className="absolute inset-0 h-full w-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
+        />
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+
+        {/* Badge */}
+        <div className="absolute top-6 left-6 z-10">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-gray-900">
+            <Mic className="h-3.5 w-3.5" />
+            Podcast
+          </span>
+        </div>
+
+        {/* Content */}
+        <div className="absolute inset-x-6 bottom-6 z-10 flex items-end justify-between gap-4">
+          <div>
+            <h3 className="text-lg md:text-xl font-semibold text-white leading-snug line-clamp-2">
+              {show.name}
+            </h3>
+            <p className="mt-2 text-sm text-white/80 line-clamp-2">
+              {show.description}
+            </p>
+          </div>
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/90 text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+            <ArrowUpRight className="h-5 w-5" />
+          </div>
+        </div>
+      </Card>
+    </Link>
   );
 }

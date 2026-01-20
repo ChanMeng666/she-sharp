@@ -115,3 +115,62 @@ export const BentoGridShowcase = ({
     </motion.section>
   );
 };
+
+/**
+ * Props for the BentoGrid2x2 component.
+ * A simpler 2-column, 2-row grid with 4 slots.
+ */
+interface BentoGrid2x2Props {
+  /** Top-left card */
+  topLeft: React.ReactNode;
+  /** Top-right card */
+  topRight: React.ReactNode;
+  /** Bottom-left card */
+  bottomLeft: React.ReactNode;
+  /** Bottom-right card */
+  bottomRight: React.ReactNode;
+  /** Optional class names for the grid container */
+  className?: string;
+}
+
+/**
+ * A responsive, animated 2-column bento grid layout component.
+ * Arranges four content slots in a standard 2x2 grid.
+ */
+export const BentoGrid2x2 = ({
+  topLeft,
+  topRight,
+  bottomLeft,
+  bottomRight,
+  className,
+}: BentoGrid2x2Props) => {
+  return (
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className={cn(
+        "grid w-full grid-cols-1 gap-6 md:grid-cols-2 md:grid-rows-2",
+        "auto-rows-[minmax(240px,auto)]",
+        className
+      )}
+    >
+      {/* Top-left (row 1, col 1) */}
+      <motion.div variants={itemVariants} className="md:col-start-1 md:row-start-1">
+        {topLeft}
+      </motion.div>
+      {/* Top-right (row 1, col 2) */}
+      <motion.div variants={itemVariants} className="md:col-start-2 md:row-start-1">
+        {topRight}
+      </motion.div>
+      {/* Bottom-left (row 2, col 1) */}
+      <motion.div variants={itemVariants} className="md:col-start-1 md:row-start-2">
+        {bottomLeft}
+      </motion.div>
+      {/* Bottom-right (row 2, col 2) */}
+      <motion.div variants={itemVariants} className="md:col-start-2 md:row-start-2">
+        {bottomRight}
+      </motion.div>
+    </motion.section>
+  );
+};

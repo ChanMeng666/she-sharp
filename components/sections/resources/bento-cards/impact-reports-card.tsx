@@ -15,16 +15,26 @@ interface ImpactReportsCardProps {
  */
 export function ImpactReportsCard({ reports }: ImpactReportsCardProps) {
   return (
-    <Card className="h-full w-full overflow-hidden transition-all duration-300 hover:shadow-lg rounded-[50px] bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950/50 dark:to-purple-900/30">
-      <div className="p-8 flex flex-col h-full">
+    <Card className="relative h-full w-full overflow-hidden transition-all duration-300 hover:shadow-lg rounded-[50px] group">
+      {/* Background Image */}
+      <img
+        src="/img/impact.jpg"
+        alt="Impact background"
+        className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+      />
+
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+
+      <div className="relative z-10 p-8 flex flex-col h-full">
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-2.5 bg-purple-dark/10 rounded-xl">
-            <FileText className="h-5 w-5 text-purple-dark" />
+          <div className="p-2.5 bg-white/20 backdrop-blur-sm rounded-xl">
+            <FileText className="h-5 w-5 text-white" />
           </div>
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-foreground">Impact Reports</h3>
-            <p className="text-xs text-muted-foreground">Annual achievements</p>
+            <h3 className="text-lg font-semibold text-white">Impact Reports</h3>
+            <p className="text-xs text-white/80">Annual achievements</p>
           </div>
         </div>
 
@@ -33,8 +43,9 @@ export function ImpactReportsCard({ reports }: ImpactReportsCardProps) {
           {reports.map((report, index) => (
             <Button
               key={report.year}
-              variant={index === 0 ? "brand" : "ghost"}
+              variant={index === 0 ? "brand" : "outline"}
               size="lg"
+              className={index !== 0 ? "bg-white/10 border-white/30 text-white hover:bg-white/20 hover:text-white" : ""}
               asChild
             >
               <a
