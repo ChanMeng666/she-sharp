@@ -31,7 +31,25 @@ export function EventSidebarPanel({
 }: EventSidebarPanelProps) {
   const [copied, setCopied] = useState(false);
 
-  const isPast = event.status === "completed";
+  const getMapUrl = (): string | null => {
+    if (event.location.mapUrl) {
+      return event.location.mapUrl;
+    }
+
+    const venueName = event.location.venueName?.trim();
+    const address = event.location.address?.trim();
+    const city = event.location.city?.trim();
+
+    const parts = [venueName, address, city].filter(Boolean);
+    if (parts.length === 0) {
+      return null;
+    }
+
+    const query = encodeURIComponent(parts.join(", "));
+    return `https://www.google.com/maps/search/?api=1&query=${query}`;
+  };
+
+  const isPastByStatus = event.status === "completed";
   const isCancelled = event.status === "cancelled";
   const isOnline = event.location.format === "online";
   const isHybrid = event.location.format === "hybrid";
@@ -42,11 +60,13 @@ export function EventSidebarPanel({
     spotsRemaining === 0 &&
     !event.registration?.waitlistEnabled;
 
-  // Check if event date is in the future
+  // Check if event date is in the future (date-based, independent of status)
   const eventDate = new Date(event.startDate);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const isFutureEvent = eventDate >= today;
+  const isPastByDate = eventDate < today;
+  const isPastEvent = isPastByStatus || isPastByDate;
 
   const platformLabels: Record<string, string> = {
     zoom: "Zoom",
@@ -56,8 +76,8 @@ export function EventSidebarPanel({
   };
 
   const getButtonText = () => {
-    if (isPast && event.albumUrl) return "View Image";
-    if (isPast) return "Event Ended";
+    if (isPastEvent && event.albumUrl) return "View Image";
+    if (isPastEvent) return "Event Ended";
     if (isCancelled) return "Event Cancelled";
     if (isFull) return "Event Full";
     if (spotsRemaining !== null && spotsRemaining <= 5 && spotsRemaining > 0) {
@@ -91,10 +111,12 @@ export function EventSidebarPanel({
     }
   };
 
+  const mapUrl = getMapUrl();
+
   return (
     <>
       {/* Status Card - Only show if event is past or cancelled */}
-      {(isPast || isCancelled) && (
+      {(isPastEvent || isCancelled) && (
         <div
           className={cn(
             "relative border border-white/20 overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
@@ -103,7 +125,7 @@ export function EventSidebarPanel({
         >
           <div className="space-y-6">
             <p className="text-lg text-muted-foreground text-center">
-              {isPast
+              {isPastEvent
                 ? "This event has ended"
                 : "This event has been cancelled"}
             </p>
@@ -115,7 +137,7 @@ export function EventSidebarPanel({
       <div
         className={cn(
           "relative border border-white/20 overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
-          (isPast || isCancelled) && "mt-6"
+          (isPastEvent || isCancelled) && "mt-6"
         )}
       >
         <div className="space-y-8">
@@ -146,7 +168,7 @@ export function EventSidebarPanel({
                     {platformLabels[event.location.meetingPlatform || "other"]}
                   </span>
                 </div>
-                {event.location.meetingUrl && !isPast && (
+                {event.location.meetingUrl && !isPastEvent && (
                   <Button
                     variant="outline"
                     size="sm"
@@ -198,14 +220,12 @@ export function EventSidebarPanel({
                       {copied ? "Copied" : "Copy"}
                     </Button>
                   )}
-                  {event.location.mapUrl && (
+                  {mapUrl && (
                     <Button
                       variant="outline"
                       size="sm"
                       className="flex-1"
-                      onClick={() =>
-                        window.open(event.location.mapUrl, "_blank")
-                      }
+                      onClick={() => window.open(mapUrl, "_blank")}
                     >
                       <ExternalLink className="w-3 h-3 mr-1" />
                       Map
@@ -217,19 +237,19 @@ export function EventSidebarPanel({
           </div>
 
           {/* CTA - Show if event date is in the future or if past event has albumUrl */}
-          {(isFutureEvent || (isPast && event.albumUrl)) && (
+          {(isFutureEvent || (isPastEvent && event.albumUrl)) && (
             <div className="space-y-4">
               <Button
                 size="lg"
                 variant="brand"
                 className="w-full"
                 disabled={
-                  !isPast &&
+                  !isPastEvent &&
                   !registrationOpen &&
                   !event.registration?.waitlistEnabled
                 }
                 onClick={
-                  isPast && event.albumUrl
+                  isPastEvent && event.albumUrl
                     ? handleViewImages
                     : handleRegister
                 }
@@ -255,18 +275,18 @@ export function EventSidebarPanel({
       </div>
 
       {/* Mobile Fixed Button - Show if event date is in the future or if past event has albumUrl */}
-      {(isFutureEvent || (isPast && event.albumUrl)) && (
+      {(isFutureEvent || (isPastEvent && event.albumUrl)) && (
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-foreground/10 lg:hidden z-50">
           <Button
             size="lg"
             className="w-full"
             disabled={
-              !isPast &&
+              !isPastEvent &&
               !registrationOpen &&
               !event.registration?.waitlistEnabled
             }
             onClick={
-              isPast && event.albumUrl
+              isPastEvent && event.albumUrl
                 ? handleViewImages
                 : handleRegister
             }

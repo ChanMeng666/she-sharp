@@ -82,6 +82,9 @@ export default function EventsPage() {
   // Filter events based on all criteria
   const filteredEvents = useMemo(() => {
     return allEvents.filter((event) => {
+      const eventDate = new Date(event.startDate);
+      const now = new Date();
+
       // Search filter - title and shortDescription
       const matchesSearch =
         searchQuery === "" ||
@@ -99,8 +102,10 @@ export default function EventsPage() {
       const matchesCity = selectedCities.length === 0 ||
         (event.location?.city && selectedCities.includes(event.location.city));
 
-      // Status filter (upcoming only)
-      const matchesStatus = !showUpcomingOnly || event.status === "upcoming";
+      // Status filter (upcoming only) - based on date, not just status flag
+      const isUpcomingByDate =
+        eventDate.getTime() >= now.getTime() && event.status !== "cancelled";
+      const matchesStatus = !showUpcomingOnly || isUpcomingByDate;
 
       return matchesSearch && matchesYear && matchesCategory && matchesCity && matchesStatus;
     });
