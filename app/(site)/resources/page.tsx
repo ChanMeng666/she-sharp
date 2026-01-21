@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { ResourcesBentoShowcase, ResourcesPageClient } from "@/components/sections/resources";
+import { ResourcesBentoShowcase, ResourcesPageClient } from "@/components/resources";
 
 export const metadata: Metadata = {
   title: "Resources | She Sharp",

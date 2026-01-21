@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
-import { ContactForm } from "@/components/sections/contact";
+import { ContactForm } from "@/components/contact";
 import { footerConfig } from "@/lib/config/footer";
 import { socialIcons } from "@/components/ui/social-icons";
 import { Mail } from "lucide-react";

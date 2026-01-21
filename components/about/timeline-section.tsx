@@ -259,9 +259,9 @@ export function TimelineSection() {
       <Container size="full">
         <div className="text-center pt-16 md:pt-24 px-4 md:px-8 lg:px-10">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-            Our Journey
+            A Deep Dive into Our Journey
           </h2>
-          <p className="mt-6 sm:mt-8 text-base sm:text-xl text-white/80 max-w-2xl mx-auto">
+          <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed">
             From a small launch event in 2014 to a thriving community of 2200+
             members across New Zealand
           </p>
