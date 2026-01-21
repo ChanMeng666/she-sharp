@@ -1,4 +1,4 @@
-import type { ShowcaseStep, TabMedia } from "@/components/ui/feature-showcase";
+import type { TabMedia } from "@/components/ui/feature-showcase";
 
 export interface VolunteerPath {
   id: string;
@@ -89,18 +89,3 @@ export const joinTeamContent = {
     "Be part of a passionate community of volunteers and ambassadors working together to bridge the gender gap in STEM",
 };
 
-/**
- * Transform volunteer paths into accordion steps for FeatureShowcase
- */
-export function getVolunteerSteps(): ShowcaseStep[] {
-  return volunteerPaths.map((path) => {
-    const responsibilitiesSummary = path.responsibilities.slice(0, 3).join(", ");
-    const benefitsSummary = path.benefits.slice(0, 3).join(", ");
-
-    return {
-      id: path.id,
-      title: path.title,
-      text: `${path.commitment}. ${responsibilitiesSummary}. Benefits: ${benefitsSummary}.`,
-    };
-  });
-}
