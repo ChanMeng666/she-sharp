@@ -75,7 +75,7 @@ export function FeatureShowcase({
             </Badge>
           )}
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter">
+          <h2 className="text-display-sm">
             {title}
           </h2>
 

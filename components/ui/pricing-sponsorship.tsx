@@ -88,7 +88,7 @@ export function SponsorshipPricing() {
       <div className="mx-auto max-w-5xl px-6">
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-balance text-3xl font-bold md:text-4xl lg:text-5xl text-[#1f1e44]">
+          <h2 className="text-balance text-display-sm text-[#1f1e44]">
             Partner with Purpose
           </h2>
           <p className="mx-auto mt-4 max-w-md text-balance text-lg text-[#1f1e44]/60">

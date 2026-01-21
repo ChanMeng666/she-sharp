@@ -16,7 +16,7 @@ export function TeamSection() {
         <div className="text-center mb-12 lg:mb-16">
           <h2
             id="team-heading"
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6"
+            className="text-display-sm text-foreground mb-4 sm:mb-6"
           >
             Meet Our People
           </h2>

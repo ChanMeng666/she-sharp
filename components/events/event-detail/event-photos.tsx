@@ -16,7 +16,7 @@ export function EventPhotos({ event, className }: EventPhotosProps) {
 
   return (
     <section id="event-photos" className={cn("space-y-8 py-24", className)}>
-      <h2 className="text-lg md:text-xl lg:text-4xl font-semibold uppercase text-center mb-12">
+      <h2 className="text-display-sm uppercase text-center mb-12">
         A taste of the Event
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">

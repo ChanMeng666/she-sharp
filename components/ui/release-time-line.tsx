@@ -76,7 +76,7 @@ export default function TimeLine_01({
         {(title || description) && (
           <div className="mx-auto max-w-3xl text-center">
             {title && (
-              <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl text-foreground">
+              <h2 className="mb-4 text-display-sm text-foreground">
                 {title}
               </h2>
             )}

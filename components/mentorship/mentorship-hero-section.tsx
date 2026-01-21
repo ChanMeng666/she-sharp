@@ -80,7 +80,7 @@ export function MentorshipHeroSection({
         {/* Bottom Right: White Background with Text */}
         <div className={`${bottomRightBgColor} text-foreground flex items-center justify-center p-8 md:p-12 lg:p-16 min-h-[400px] md:min-h-[500px]`}>
           <div className="max-w-lg">
-            <h2 className="text-3xl md:text-3xl lg:text-4xl font-bold text-navy mb-6 leading-tight">
+            <h2 className="text-display-sm text-navy mb-6 leading-tight">
               {bottomRightTitle}
               {bottomRightTitleHighlight && (
                 <>
