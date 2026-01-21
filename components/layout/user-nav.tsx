@@ -128,30 +128,9 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
     );
   }
 
-  // Not logged in - show sign in/up buttons
+  // Not logged in - no button shown
   if (!user) {
-    if (variant === 'mobile') {
-      return (
-        <div className="pt-4 border-t border-[#f7e5f3]">
-          <Link href="/sign-up" className="w-full">
-            <Button variant="secondary" size="lg" className="w-full">
-              <User className="mr-2 h-4 w-4" />
-              Membership
-            </Button>
-          </Link>
-        </div>
-      );
-    }
-
-    return (
-      <div className="flex items-center">
-        <Link href="/sign-up">
-          <Button size="lg" variant="default">
-            Membership
-          </Button>
-        </Link>
-      </div>
-    );
+    return null;
   }
 
   // Mobile variant - simplified menu

@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Newspaper } from "lucide-react";
 import { newsPressItems } from "@/lib/data/news-press";
 
 /**
- * Highlight card for \"In the Press\" on the resources bento grid.
+ * Highlight card for "In the Press" on the resources bento grid.
  * Uses the most recent news item as the background.
  */
 export function PressHighlightCard() {
@@ -14,7 +14,7 @@ export function PressHighlightCard() {
 
   return (
     <Link href="/resources/in-the-press" className="block h-full group">
-      <Card className="relative h-full w-full min-h-[320px] overflow-hidden border-0 shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 rounded-[50px] bg-black">
+      <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 rounded-[50px] bg-black">
         {/* Background image */}
         {featured && (
           <img
@@ -29,7 +29,8 @@ export function PressHighlightCard() {
 
         {/* Badge */}
         <div className="absolute top-6 left-6 z-10">
-          <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-gray-900">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-gray-900">
+            <Newspaper className="h-3.5 w-3.5" />
             In the Press
           </span>
         </div>
@@ -37,14 +38,14 @@ export function PressHighlightCard() {
         {/* Content */}
         <div className="absolute inset-x-6 bottom-6 z-10 flex items-end justify-between gap-4">
           <div>
-            <h3 className="text-lg md:text-xl font-semibold text-white leading-snug line-clamp-2">
-              {featured ? featured.title : "News & press coverage"}
+            <h3 className="text-2xl md:text-3xl font-bold text-white leading-snug line-clamp-2">
+             News & Press Coverage
             </h3>
-            <p className="mt-2 text-sm text-white/80 line-clamp-2">
-              Explore media features and awards celebrating the She Sharp community.
+            <p className="mt-2 text-sm md:text-base text-white/80 line-clamp-2">
+              Explore media features and awards celebrating the She Sharp community
             </p>
           </div>
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/90 text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
             <ArrowUpRight className="h-5 w-5" />
           </div>
         </div>
@@ -52,5 +53,3 @@ export function PressHighlightCard() {
     </Link>
   );
 }
-
-
