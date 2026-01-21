@@ -22,7 +22,7 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
       className="block h-full group"
       aria-label={`View ${album.title} album in Google Photos`}
     >
-      <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 rounded-[50px]">
+      <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 rounded-[30px] aspect-[4/3]">
         {/* Cover Image */}
         <img
           src={album.coverImage}

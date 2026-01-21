@@ -1,40 +1,31 @@
 "use client";
 
-import { BentoGridShowcase } from "@/components/ui/bento-grid";
+import { BentoGrid2x2 } from "@/components/ui/bento-grid";
 import {
-  FeaturedAlbumCard,
-  AlbumCard,
   PodcastPreviewCard,
   ImpactReportsCard,
+  PressHighlightCard,
+  PhotoGalleryPreviewCard,
 } from "./bento-cards";
-import { galleryAlbums } from "@/lib/data/gallery-albums";
 import { impactReports } from "@/lib/data/impact-reports";
-import { SPOTIFY_SHOW, getSpotifyShowUrl } from "@/lib/data/spotify-podcasts";
+import { SPOTIFY_SHOW } from "@/lib/data/spotify-podcasts";
 
 /**
  * Main bento grid showcase for the resources page.
- * Composes all slot cards into the BentoGridShowcase layout.
+ * Uses a 2x2 grid layout for the four main resource sections.
  */
 export function ResourcesBentoShowcase() {
-  const spotifyUrl = getSpotifyShowUrl();
-
-  // Get albums for each slot - AI Hackathon 2025 in the center (mainFeature)
-  const aiHackathon = galleryAlbums[0]; // She# AI Hackathon 2025
-  const hclTechDunedin = galleryAlbums[1]; // She# & HCLTech Dunedin
-  const vector = galleryAlbums[2]; // She# @ Vector
-  const xeroSecureCode = galleryAlbums[3]; // She# @ Xero with Secure Code Warriors
-
   return (
-    <BentoGridShowcase
-      className="max-w-7xl mx-auto"
-      integrations={<AlbumCard album={hclTechDunedin} compact />}
-      mainFeature={<FeaturedAlbumCard album={aiHackathon} />}
-      featureTags={<AlbumCard album={vector} compact />}
-      secondaryFeature={
-        <PodcastPreviewCard show={SPOTIFY_SHOW} spotifyUrl={spotifyUrl} />
-      }
-      statistic={<AlbumCard album={xeroSecureCode} />}
-      journey={<ImpactReportsCard reports={impactReports} />}
+    <BentoGrid2x2
+      className="max-w-5xl mx-auto"
+      // Photo Gallery (links to /resources/photo-gallery)
+      topLeft={<PhotoGalleryPreviewCard />}
+      // Podcast (links to /resources/podcasts)
+      topRight={<PodcastPreviewCard show={SPOTIFY_SHOW} />}
+      // Impact Reports
+      bottomLeft={<ImpactReportsCard reports={impactReports} />}
+      // In the Press (links to /resources/in-the-press)
+      bottomRight={<PressHighlightCard />}
     />
   );
 }

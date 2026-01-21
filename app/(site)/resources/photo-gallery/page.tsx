@@ -1,0 +1,13 @@
+import { Metadata } from "next";
+import { GalleryAlbumsGrid } from "@/components/sections/resources/albums";
+
+export const metadata: Metadata = {
+  title: "Photo Gallery | She Sharp",
+  description:
+    "Browse photo albums from She Sharp events, workshops, and community gatherings.",
+};
+
+export default function PhotoGalleryPage() {
+  return <GalleryAlbumsGrid />;
+}
+

@@ -31,10 +31,10 @@ export const galleryAlbums: GalleryAlbum[] = [
     googlePhotosUrl: 'https://photos.app.goo.gl/4CWo8WBuM1rfg63q9',
     coverImage: `${BLOB_BASE_URL}/2025-10-Xero.jpg`,
   },
-  {
-    title: '2025-09 - She# @ Fonterra',
-    date: 'Sep 3',
-    googlePhotosUrl: 'https://photos.app.goo.gl/TYrx8hrvrp4rbAS19',
-    coverImage: `${BLOB_BASE_URL}/2025-09-Fonterra.jpg`,
-  },
+  // {
+  //   title: '2025-09 - She# @ Fonterra',
+  //   date: 'Sep 3',
+  //   googlePhotosUrl: 'https://photos.app.goo.gl/TYrx8hrvrp4rbAS19',
+  //   coverImage: `${BLOB_BASE_URL}/2025-09-Fonterra.jpg`,
+  // },
 ];

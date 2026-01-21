@@ -24,11 +24,11 @@ const buttonVariants = cva(
   // 基础样式：统一粗边框 + 全圆角 + 缩放动效
   [
     "inline-flex items-center justify-center gap-2 whitespace-nowrap",
-    "rounded-full font-medium border-2",
+    "rounded-full font-medium border-1",
     "transition-all duration-200",
     "hover:scale-102 active:scale-98",
     "disabled:pointer-events-none disabled:opacity-50",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+    "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 shrink-0",
   ].join(" "),
   {

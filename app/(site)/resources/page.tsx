@@ -12,10 +12,8 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <ResourcesPageClient>
-      {/* Bento Grid Showcase with Title */}
-      <Section className="bg-transparent py-16 md:py-24" noPadding>
+      <Section className="bg-transparent py-16 md:py-24 lg:py-32" noPadding>
         <Container size="full">
-          {/* Title Section - Minimal Style */}
           <div className="mb-8 md:mb-12">
             <h1 className="text-center text-4xl font-bold tracking-tight">
               Resource Library
@@ -25,7 +23,6 @@ export default function ResourcesPage() {
             </p>
           </div>
 
-          {/* Bento Grid */}
           <ResourcesBentoShowcase />
         </Container>
       </Section>
