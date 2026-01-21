@@ -13,6 +13,7 @@ import {
   FileText,
   Mic,
   Images,
+  Mail,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -133,11 +134,16 @@ export const navigationConfig: {
         },
       ],
     },
+    {
+      title: "Contact",
+      href: "/contact",
+      icon: Mail,
+    },
   ],
   buttons: [
     {
-      title: "Join Mentorship",
-      href: "/mentorship",
+      title: "Join Membership",
+      href: "/membership",
       variant: "brand",
     },
   ],
