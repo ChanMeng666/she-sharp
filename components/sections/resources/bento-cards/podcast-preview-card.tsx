@@ -16,12 +16,12 @@ export function PodcastPreviewCard({ show }: { show: SpotifyShowConfig }) {
         {/* Background image */}
         <img
           src="/img/podcast.jpg"
-          alt={show.name}
+          alt="She Sharp Talks podcast"
           className="absolute inset-0 h-full w-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
         />
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
 
         {/* Badge */}
         <div className="absolute top-6 left-6 z-10">
@@ -34,11 +34,12 @@ export function PodcastPreviewCard({ show }: { show: SpotifyShowConfig }) {
         {/* Content */}
         <div className="absolute inset-x-6 bottom-6 z-10 flex items-end justify-between gap-4">
           <div>
-            <h3 className="text-lg md:text-xl font-semibold text-white leading-snug line-clamp-2">
-              {show.name}
+            <h3 className="text-2xl md:text-3xl font-bold text-white leading-snug line-clamp-2">
+            She Sharp Talks
             </h3>
-            <p className="mt-2 text-sm text-white/80 line-clamp-2">
-              {show.description}
+            <p className="mt-2 text-sm md:text-base text-white/80 line-clamp-2">
+  Inspiring conversations with women leading innovation in technology
+
             </p>
           </div>
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/90 text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">

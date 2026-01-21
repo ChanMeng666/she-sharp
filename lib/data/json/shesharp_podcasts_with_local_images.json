@@ -27,16 +27,17 @@
         "year": 2023,
         "isoDate": "2023-12-01"
       },
-      "spotifyUrl": "https://podcasters.spotify.com/pod/show/shesharpbytes/episodes/Tech-Wonderland-A-Holiday-Celebration-with-Googles-Performance-Lead--Hannah-Weir-e2dcpjs",
+      "spotifyUrl": "https://open.spotify.com/episode/4wQ6NuXiVQzbEKMQzMwdyy?si=21TTm_RkRW2V7rnQGnhyEA",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65a9cbb3c67fedb1bc802f30_Podcast%20Template%20(1).png",
+        "url": "",
         "alt": "Shesharp Group photo with Ambassador",
         "localPath": "assets/images/podcasts/65a9cbb3c67fedb1bc802f30_Podcast_Template_1_bc8e5114.png"
       },
       "platform": "Spotify",
       "linkType": "spotify_podcasters",
       "slug": "tech-wonderland-a-holiday-celebration-with-googles",
-      "spotifyEpisodeSlug": "Tech-Wonderland-A-Holiday-Celebration-with-Googles-Performance-Lead--Hannah-Weir-e2dcpjs"
+      "spotifyEpisodeSlug": "Tech-Wonderland-A-Holiday-Celebration-with-Googles-Performance-Lead--Hannah-Weir-e2dcpjs",
+    "spotifyEpisodeId": "4wQ6NuXiVQzbEKMQzMwdyy"
     },
     {
       "id": 2,

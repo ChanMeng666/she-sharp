@@ -1,4 +1,19 @@
-import { LucideIcon, Calendar, Users, Award, BookOpen, HandHeart, Building2, GraduationCap, Sparkles, Library, UserPlus } from "lucide-react";
+import {
+  LucideIcon,
+  Calendar,
+  Users,
+  Award,
+  BookOpen,
+  HandHeart,
+  Building2,
+  GraduationCap,
+  Sparkles,
+  Library,
+  UserPlus,
+  FileText,
+  Mic,
+  Images,
+} from "lucide-react";
 
 export interface NavigationItem {
   title: string;
@@ -92,6 +107,31 @@ export const navigationConfig: {
       title: "Resources",
       href: "/resources",
       icon: Library,
+      image: {
+        src: "/img/mesh-152.png",
+        alt: "Resource Library",
+        href: "/resources",
+      },
+      children: [
+        {
+          title: "Photo Gallery",
+          href: "/resources/photo-gallery",
+          description: "Browse albums from events and community moments",
+          icon: Images,
+        },
+        {
+          title: "In the Press",
+          href: "/resources/in-the-press",
+          description: "News and media coverage featuring She Sharp",
+          icon: FileText,
+        },
+        {
+          title: "Podcasts",
+          href: "/resources/podcasts",
+          description: "Listen to She Sharp Talks and featured episodes",
+          icon: Mic,
+        },
+      ],
     },
   ],
   buttons: [

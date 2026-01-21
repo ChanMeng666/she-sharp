@@ -13,29 +13,39 @@
  */
 
 import { SpotifyShowConfig, SpotifyEpisode } from "@/types/spotify";
+import podcastsData from "@/lib/data/json/shesharp_podcasts_with_local_images.json";
 
 /** Main show configuration */
 export const SPOTIFY_SHOW: SpotifyShowConfig = {
   showId: "3CQf214DtzML2jqvVIxCqT",
-  name: "She Sharp Talks",
-  description:
-    "Inspiring conversations with women leading innovation in technology",
+};
+
+type ScrapedPodcast = (typeof podcastsData)["podcasts"][number];
+
+const mapPodcastToSpotifyEpisode = (
+  podcast: ScrapedPodcast,
+): SpotifyEpisode | null => {
+  // Prefer explicit Spotify episode ID; fall back to the Spotify Podcasters slug.
+  const id = podcast.spotifyEpisodeId ?? podcast.spotifyEpisodeSlug;
+
+  if (!id) {
+    return null;
+  }
+
+  return {
+    id,
+    // Use expanded height so descriptions are visible by default.
+    height: 352,
+  };
 };
 
 /**
  * Featured episodes to display on the page.
  * To add more episodes, simply add new entries to this array.
  */
-export const FEATURED_EPISODES: SpotifyEpisode[] = [
-  {
-    id: "0GRfESmqleMwWBN2ANPqEp",
-    height: 152, // Compact view
-  },
-  {
-    id: "4wQ6NuXiVQzbEKMQzMwdyy",
-    height: 352, // Expanded view with description
-  },
-];
+export const FEATURED_EPISODES: SpotifyEpisode[] = podcastsData.podcasts
+  .map(mapPodcastToSpotifyEpisode)
+  .filter((episode): episode is SpotifyEpisode => episode !== null);
 
 /** Get the embed URL for the main show */
 export function getSpotifyShowEmbedUrl(): string {
