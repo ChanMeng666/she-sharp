@@ -12,8 +12,4 @@ export interface SpotifyEpisode {
 export interface SpotifyShowConfig {
   /** Spotify show ID (e.g., "3CQf214DtzML2jqvVIxCqT") */
   showId: string;
-  /** Display name for the show */
-  name: string;
-  /** Short description */
-  description: string;
 }
