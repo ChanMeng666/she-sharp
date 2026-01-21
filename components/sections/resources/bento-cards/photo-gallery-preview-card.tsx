@@ -42,7 +42,7 @@ export function PhotoGalleryPreviewCard() {
               Event Photos & Highlights
             </h3>
             <p className="mt-2 text-sm md:text-base text-white/80 line-clamp-2">
-              Browse photo albums from our workshops, networking events, and community gatherings
+              Browse photo albums from our workshops, networking events, and community gatherings.
             </p>
           </div>
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/90 text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">

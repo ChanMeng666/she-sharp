@@ -39,7 +39,7 @@ export function PodcastPreviewCard({ show }: { show: SpotifyShowConfig }) {
             </h3>
             <p className="mt-2 text-sm md:text-base text-white/80 line-clamp-2">
   Inspiring conversations with women leading innovation in technology
-           
+
             </p>
           </div>
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/90 text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
