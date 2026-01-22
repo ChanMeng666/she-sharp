@@ -35,7 +35,7 @@ export function HeroSection() {
             </h1>
             <div className="mt-12 flex justify-center lg:justify-start">
               <Button variant="brand" size="lg" asChild className="px-6">
-                <Link href="#upcoming-event">Attend next event</Link>
+                <Link href="/events" target="_blank">Explore Our Events</Link>
               </Button>
             </div>
           </div>
