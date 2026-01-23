@@ -41,7 +41,7 @@ export function EventSponsorship({ event, className }: EventSponsorshipProps) {
 
             {/* Right Side - Content */}
             <div className="space-y-6 order-1 lg:order-2">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
+              <h2 className="text-display-sm text-foreground leading-tight">
                 Partner with Purpose
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">

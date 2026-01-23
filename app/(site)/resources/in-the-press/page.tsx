@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { PressGrid } from "@/components/sections/resources";
+import { PressGrid } from "@/components/resources";
 
 export const metadata: Metadata = {
   title: "In the Press | She Sharp",

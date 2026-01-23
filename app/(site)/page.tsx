@@ -1,10 +1,10 @@
 import "@/styles/animations/hero.css";
-import { HeroSection } from "@/components/sections/home/hero-section";
-import { CoreImpactSection } from "@/components/sections/home/core-impact-section";
-import { CoreValuesSection } from "@/components/sections/home/core-values-section";
-import { ProgramsSection } from "@/components/sections/home/programs-section";
-import { UpcomingEventSection } from "@/components/sections/home/upcoming-event-section";
-import { SponsorsSection } from "@/components/sections/home/sponsors-section";
+import { HeroSection } from "@/components/home/hero-section";
+import { CoreImpactSection } from "@/components/home/core-impact-section";
+import { CoreValuesSection } from "@/components/home/core-values-section";
+import { ProgramsSection } from "@/components/home/programs-section";
+import { UpcomingEventSection } from "@/components/home/upcoming-event-section";
+import { SponsorsSection } from "@/components/home/sponsors-section";
 
 export default function HomePage() {
   return (

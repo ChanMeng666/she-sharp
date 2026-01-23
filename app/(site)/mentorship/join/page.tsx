@@ -43,8 +43,8 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { MentorshipHeroSection } from "@/components/sections/mentorship/mentorship-hero-section";
-import { BenefitsSection } from "@/components/sections/mentorship/benefits-section";
+import { MentorshipHeroSection } from "@/components/mentorship/mentorship-hero-section";
+import { BenefitsSection } from "@/components/mentorship/benefits-section";
 import { Trophy, Rocket, Users } from "lucide-react";
 
 // New Zealand cities for location matching

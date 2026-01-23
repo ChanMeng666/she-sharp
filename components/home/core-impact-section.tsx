@@ -153,7 +153,7 @@ export function CoreImpactSection() {
           <AnimateOnScroll variant="fade-up" className=" mb-8 md:mb-20 ">
             <h2
               id="impact-heading"
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground"
+              className="text-display-sm text-foreground"
             >
               A Decade of Measurable Impact
             </h2>

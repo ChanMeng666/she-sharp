@@ -1,24 +1,27 @@
 import { FeatureShowcase } from "@/components/ui/feature-showcase";
 import {
   volunteerImages,
+  volunteerPaths,
   joinTeamStats,
   joinTeamContent,
-  getVolunteerSteps,
 } from "@/lib/data/join-team";
 
 export default function JoinOurTeamPage() {
-  const steps = getVolunteerSteps();
-
   return (
     <FeatureShowcase
+      eyebrow={joinTeamContent.eyebrow}
       title={joinTeamContent.title}
       description={joinTeamContent.description}
       stats={joinTeamStats}
-      steps={steps}
+      volunteerPaths={volunteerPaths}
       tabs={volunteerImages}
       defaultTab="volunteer"
-      panelMinHeight={600}
-      primaryCta={{ label: "Apply Now", mobileLabel: "Email us to apply", href: "mailto:people@shesharp.org.nz" }}
+      panelMinHeight={500}
+      primaryCta={{
+        label: "Apply Now",
+        mobileLabel: "Email us to apply",
+        href: "mailto:people@shesharp.org.nz",
+      }}
     />
   );
 }

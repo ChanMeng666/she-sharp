@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { GalleryAlbumsGrid } from "@/components/sections/resources";
+import { GalleryAlbumsGrid } from "@/components/resources";
 
 export const metadata: Metadata = {
   title: "Photo Gallery | She Sharp",

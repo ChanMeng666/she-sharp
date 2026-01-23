@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
-import { MembershipBenefits, MembershipTiers } from "@/components/sections/membership";
+import { MembershipBenefits, MembershipTiers } from "@/components/membership";
 
 export const metadata: Metadata = {
   title: "Membership | She Sharp",

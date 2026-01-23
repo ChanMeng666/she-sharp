@@ -1,9 +1,10 @@
 "use client";
 
-import SmoothScrollHero from "@/components/sections/about/smooth-scroll-hero";
-import { TeamSection } from "@/components/sections/about/team-section";
-import { TimelineSection } from "@/components/sections/about/timeline-section";
+import SmoothScrollHero from "@/components/about/smooth-scroll-hero";
+import { TeamSection } from "@/components/about/team-section";
+import { TimelineSection } from "@/components/about/timeline-section";
 import { useScrollToHash } from "@/hooks/use-scroll-to-hash";
+import { FounderQuote } from "@/components/about/founder-quote";
 
 export default function AboutPage() {
   // 使用自定义 hook 处理 hash 滚动
@@ -11,23 +12,9 @@ export default function AboutPage() {
 
   return (
     <div className="relative overflow-hidden">
-      {/* Page-level Iridescence background (About-specific color) */}
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-30">
-        {/* <Iridescence
-          color={brandColors.navAbout}
-          mouseReact={false}
-          amplitude={0.10}
-          speed={0.25}
-          className="w-full h-full"
-        /> */}
-      </div>
-
-      {/* Subtle top/bottom gradient fades to improve text contrast */}
-      <div className="pointer-events-none absolute top-0 left-0 right-0 h-16" />
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16" />
 
       <SmoothScrollHero />
-
+      <FounderQuote />
       <TimelineSection />
 
       <div id="team">

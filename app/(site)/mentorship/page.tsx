@@ -1,7 +1,7 @@
-import { TestimonialsSection } from "@/components/sections/mentorship/testimonials-section";
-import { HowItWorksSection } from "@/components/sections/mentorship/how-it-works-section";
-import { MentorsListSection } from "@/components/sections/mentorship/mentors/mentors-list-section";
-import { MentorshipHeroSection } from "@/components/sections/mentorship/mentorship-hero-section";
+import { TestimonialsSection } from "@/components/mentorship/testimonials-section";
+import { HowItWorksSection } from "@/components/mentorship/how-it-works-section";
+import { MentorsListSection } from "@/components/mentorship/mentors/mentors-list-section";
+import { MentorshipHeroSection } from "@/components/mentorship/mentorship-hero-section";
 
 export default function MentorshipPage() {
   return (

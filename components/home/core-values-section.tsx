@@ -180,7 +180,7 @@ export function CoreValuesSection() {
                 <div className="w-full">
                   {/* Section Title */}
                   <h2
-                    className={`text-xl md:text-2xl lg:text-3xl font-heading mb-8 md:mb-12 lg:mb-16 ${textClass} opacity-60`}
+                    className={`text-display-sm mb-8 md:mb-12 lg:mb-16 ${textClass} opacity-60`}
                   >
                     Our Core Values
                   </h2>
