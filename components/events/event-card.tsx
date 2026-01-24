@@ -8,6 +8,11 @@ import { Calendar, MapPin, Video, Users } from "lucide-react";
 import { EventV3 } from "@/types/event";
 import { formatEventDate, isPastEvent } from "@/lib/data/events";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 
 interface EventCardProps {
   event: EventV3;
@@ -112,21 +117,26 @@ export function EventCard({
           </h3>
 
           {/* Location */}
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            {isOnline ? (
-              <>
-                <Video className="w-4 h-4 text-[#8982ff]" />
-                <span>Online Event</span>
-              </>
-            ) : (
-              <>
-                <MapPin className="w-4 h-4 text-muted-foreground" />
-                <span className="truncate">
-                  {location.venueName || location.city || "TBA"}
-                </span>
-              </>
-            )}
-          </div>
+          {isOnline ? (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Video className="w-4 h-4 text-[#8982ff]" />
+              <span>Online Event</span>
+            </div>
+          ) : (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-start gap-2 text-sm text-muted-foreground cursor-default">
+                  <MapPin className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
+                  <span className="line-clamp-2">
+                    {location.venueName || location.city || "TBA"}
+                  </span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="top" className="max-w-xs">
+                {location.venueName || location.city || "TBA"}
+              </TooltipContent>
+            </Tooltip>
+          )}
 
           {/* Attendees */}
           {event.attendees && event.attendees > 0 && (

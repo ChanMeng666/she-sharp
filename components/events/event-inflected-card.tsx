@@ -6,6 +6,11 @@ import { InflectedCard } from "@/components/ui/inflected-card";
 import { EventV3 } from "@/types/event";
 import { parseDateString } from "@/lib/data/events";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 
 interface EventInflectedCardProps {
   event: EventV3;
@@ -102,14 +107,21 @@ export function EventInflectedCard({
             </div>
           )}
           {locationStr && (
-            <div className="flex items-center gap-2 text-base text-muted-foreground">
-              {isOnline ? (
-                <Video className="w-4 h-4 text-brand shrink-0" />
-              ) : (
-                <MapPin className="w-4 h-4 text-brand shrink-0" />
-              )}
-              <span className="truncate text-base">{locationStr}</span>
-            </div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-start gap-2 text-sm text-muted-foreground cursor-default">
+                  {isOnline ? (
+                    <Video className="w-4 h-4 text-brand shrink-0 mt-0.5" />
+                  ) : (
+                    <MapPin className="w-4 h-4 text-brand shrink-0 mt-0.5" />
+                  )}
+                  <span className="line-clamp-2">{locationStr}</span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="top" className="max-w-xs">
+                {locationStr}
+              </TooltipContent>
+            </Tooltip>
           )}
         </div>
       </div>
