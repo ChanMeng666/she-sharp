@@ -1,0 +1,1915 @@
+{
+  "host_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+  "total_urls_attempted": 49,
+  "successful_events": 49,
+  "failed_urls": [],
+  "events": [
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/2024-google-educators-conference",
+        "slug": "2024-google-educators-conference",
+        "title": "2024 Google Educator Conference",
+        "date_time": "Thu, 21 Nov 2024, 8am - 6pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/oKBPpg2CQHqHfbbvwhWP"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/2024-google-educators-conference",
+        "title": "2024 Google Educator Conference",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/oKBPpg2CQHqHfbbvwhWP",
+        "date_time": "Thu, 21 Nov 2024, 8am - 6pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8422463,174.7566512&query_place_id=ChIJ-cXZOfRHDW0RLMOqsYOekWI",
+          "latitude": -36.8422463,
+          "longitude": 174.7566512
+        },
+        "description": [
+          "The purpose is to upskill our valuable high school educators by presenting emerging technologies and ways to engage students with them so students can be better equipped for the needs of twenty-first-century learning.The conference will centre on showcasing cutting-edge, tangible applications and their use in a learning context.Teachers will engage with a range of digital technologies and learn techniques to incorporate technology and computational thinking in their classrooms and learn to link applications to the theory."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2F2024-google-educators-conference&quote=2024%20Google%20Educator%20Conference",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2F2024-google-educators-conference",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/ai-forum-nz-hackathon-2023",
+        "slug": "ai-forum-nz-hackathon-2023",
+        "title": "AI Forum NZ | AI for the Environment Hackathon 2023",
+        "date_time": "",
+        "location": "Various venues throughout Aotearoa, Australia and South PacificAotearoa, NZ | Australia | South Pacific",
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/mqJU3sStTfaRBHxR79BA"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/ai-forum-nz-hackathon-2023",
+        "title": "AI Forum NZ | AI for the Environment Hackathon 2023",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/mqJU3sStTfaRBHxR79BA",
+        "date_time": null,
+        "location": {
+          "venue_name": "Various venues throughout Aotearoa, Australia and South PacificAotearoa, NZ | Australia | South Pacific",
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "The AI for the Environment Hackathon Festival is back for another year. Taking place across four initial locations, with more to be announced in the coming weeks.This year our problems to solve are based on the five key environmental outcomes (AI for the Environment Report 2022). We have expanded these to make them more relevant to all participants in 2023.Participants will learn many new skills, meet like-minded peers, and network with sponsors and mentors. At the end of the hackathon teams will demonstrate their project in front of a judging panel who select the winner. The best four winners have a chance to pitch their idea at theAI Summit 23.ÂRegister yourself and your team, and select your venue.Timings:Day 1starts 9.00amDay 2finishes 6.00pmVenues & Dates:Auckland| 11-12 August 2023 |Â academyEX | Manuka Room | 99 Khyber Pass Road, Grafton | AucklandAuckland| 15-16 August 2023 |Â iHeart Lounge | NZME Auckland | 2 Graham Street | Auckland CBD(*this venue is 9am-5pm)Wellington| 14-15 August 2023 |Â AWS Wellington | Level 21/157 Lambton Quay | Wellington CentraChristchurch| 15-16 August 2023 |- Callaghan Innovation, 5 Sheffield Crescent, Burnside, ChristchurchFiji| 18-19 August 2023 |Â ANZ House Level 5, Suva |Â Tagimoucia Conference RoomWaikato| 19-20 August 2023 | AI Institute, School of Computing & Mathematical Sciences,Â University of Waikato | Gate 8 | Hillcrest Road | HamiltonOnline is only for experienced participants and we will collect registrations and then distribute across venues that can provide hybrid.REGISTRATIONS CLOSE 24 HOURS BEFORE THE EVENT DATESPartners:AWS, University of Waikato AI Institute, Taiao Project, Lynker AnalyticsSponsors:ÂNZME, Callaghan Innovation, Google, SheSharp, academyEX,ÂPowerco, ANZWe respectfully ask that all participantsâ¯planning to attend an in person eventâ¯are healthy and well. Should you be unable to attend due to illness or isolation we request that you stay home. Please let us know you if you are unable to attend by emailingevents@techalliance.nzwith your name and the event date."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "AI ForumNZ",
+          "profile_url": "https://events.humanitix.com/host/62a28e7c88c5fb0b35130326",
+          "followers": "1322 followers",
+          "website": null,
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fai-forum-nz-hackathon-2023&quote=AI%20Forum%20NZ%20%7C%20AI%20for%20the%20Environment%20Hackathon%202023",
+          "instagram": null,
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fai-forum-nz-hackathon-2023",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "Refunds are available up to 7 days prior to the event"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/developher",
+        "slug": "developher",
+        "title": "She Sharp & MYOB: Kickstart Your Career in Tech",
+        "date_time": "Fri, 28 Apr 2023, 5pm - 7:30pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/aDvbWsg0QZSd7FenKNxM"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/developher",
+        "title": "She Sharp & MYOB: Kickstart Your Career in Tech",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/aDvbWsg0QZSd7FenKNxM",
+        "date_time": "Fri, 28 Apr 2023, 5pm - 7:30pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
+          "latitude": -36.8708076,
+          "longitude": 174.7633361
+        },
+        "description": [
+          "Join us for:ÂShe Sharp & MYOB: \n\nKickstarting Your Career in TechHearing from Opportunities at MYOB for a Career in TechWe\n are thrilled to announce an upcoming event in partnership with MYOB. \nThis event is aimed at providing women with insights and opportunities \nto pursue a career in the tech industry, and we can't wait to share it \nwith you!The event will be held on April 28th at the \nMYOB office in Mt Eden. Attendees will have the chance to hear from \nexperienced professionals in the tech industry, who will be sharing \ntheir personal stories, experiences and insights on how to navigate a \ncareer in tech. This is a unique opportunity to gain valuable insights \nand advice from some of the best in the industry, and to learn more \nabout MYOB as a company.Whether you're looking to \nstart a career in tech, or you're already working in the industry and \nlooking to grow your skills and network, this event is for you. With the\n support of MYOB, we hope to inspire and empower women to pursue their \npassions and achieve their career goals.We encourage you to register early as spaces are limited!We will have special prizes and giveaways for those who register and attend the event.More details coming soon!Laura RutherfurdProduct ManagerI have been in the software industry for just over 9 years with 8 of those being at MYOB but my first interaction with the tech space was through a project back in 1990 when the bank I worked for decided to update their systems. This meant we could use computers for customer files regardless of where their home branch was instead of having to call the home branch to verify details, get balances etc. This gave a better customer experience and saved a lot of time for the customer and the customer service team. I was fortunate enough to install and configure the computers for our branch. Such an exciting time when we didnât even have any tech at home aside from a TV.Throughout my 37 years of working, I have been in a variety of roles before joining MYOB including banking, finance, music teaching, sports coaching, sport management, health & safety and environmental management as well as being a Mum. Throughout all of the roles I have done I have always been drawn to simplifying processes and making life easier for customers and colleagues, so there was no question when I was offered a role at MYOB.At MYOB I have worked in Support, Consulting, Operations with a variety of roles within those areas, and now Product and love. I love that I get to learn every day and use that knowledge to help my colleagues and our customers whenever I can. I get to be innovative in a flexible and diverse environment where people matter so much.Lucy BrychkovaQuality Analyst with passion for security and automation.I have 7 years of experience in software testing and have worked with a range of products, both cloud and on-prem.QA is my third choice of profession. First was psychology, and I got degree for that, after which decided it wasnât my thing. Then was graphic design, for which I got a diploma, but eventually figured out it was also not for me. So while working as a call centre operator I explored the idea of software testing and I liked it a lot. This time I made my way into the job before getting the certificate, and this time the choice was right.I continued exploring various technologies and using various opportunities, which is a fun and never-ending process. Within MYOB I moved teams multiple times and worked with many awesome people, learning a lot and even teaching a bit. I am always happy to share my experience with others.Yvonne WeidemannBusiness AnalystCareer Highlights: I have been in the IT industry for 35 years. I started off as a mainframe operator in the late 80âs and then worked my way through the IT industry without any tertiary qualifications. My other roles included; ERP Support Analyst, Network Support Analyst, Network Manager, IT Operations Manager, ERP Functional Consultant and finally Business Analyst.During My years as an ERP consultant I decided that I better get some sort of qualification, so in 2018 I decided to skip a post grad degree and graduated with a PGDIP in Business Administration. But the biggest highlight of my career came in March this year â I achieved my very first official IT qualification, that of Certified Agile Product Owner. That is proof that you are never too old to learn.MYOB had a lot to do with me getting an IT qualification, MYOB walks the talk when it comes to personal development. It is my responsibility to choose what areas to develop, I feel supported during my personal development and I am held accountable for my training.Anshu MaharajProduct ManagerI have been working in the IT industry for over 23 Years. I graduated with a degree in Information management and while at university started working probono for the Ministry of Justice in Fiji. I was helping them build a records management system. That helped me get a job with the IT HUB For the Fiji Government. Putting things into perspective that department managed software that paid all Civil servants in Fiji. Over 30K people, Records management for every Birth Death and Marriage in Fiji and Immigration and border management at all ports of entry for Fiji. Key learning from this was not to shy away from diving into the details and understanding the issues without jumping into the solutions. We did everything. From Requirements gathering to development, product marketing, release, and training. My 1st project was migrating data from file extracts using Cobol programming language into Oracle 9i database. I moved on to work for the Fiji revenue and taxation system developing and supporting the taxation softwareOn moving to Nz I worked for Auckland Transport for 7 years before I joined MYOB IN 2018 as a Snr Business Analyst for the leading SaaS solution MYOB Advanced. I had started working with teams who were technically strong. After 3 years as the Snr BA I got an opportunity to transition to the role of product manager. One of the best things about MYOB is the freedom to share your viewpoint. It is not about who is correct but about what is the best outcome all things considered. The other awesome thing about MYOB is that leaders provide pathways to help you walk towards your goals. If you are committed to achieving your goals MYOB will do all that it can to help youâJean FulopProduct ManagerI have 20 yearsâ experience in the IT industry, In-depth knowledge and experience involving all aspects of implementation including; gathering requirements, developing user cases and delivering key initiatives.Analysis and design, user and technical support, usability, project management, documentation and training business needs analysis.I have a degree in Information Technology and have worked in a variety of domains including consulting, solutions implementation and product development."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fdevelopher&quote=She%20Sharp%20%26%20MYOB%3A%20Kickstart%20Your%20Career%20in%20Tech",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fdevelopher",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/f-and-p-hackathon-with-she",
+        "slug": "f-and-p-hackathon-with-she",
+        "title": "F&P Hackathon with She#",
+        "date_time": "",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/wjkDZeH5SJ6FG4sGnGMR"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/f-and-p-hackathon-with-she",
+        "title": "F&P Hackathon with She#",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/wjkDZeH5SJ6FG4sGnGMR",
+        "date_time": null,
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
+          "latitude": -36.9353732,
+          "longitude": 174.878403
+        },
+        "description": [
+          "Fisher and Paykel Healthcare will be hosting an AI Hackathon on July 26th â 28th kicking off with a keynote from Nicholas Fourie, VP of ICT.Are you ready to embark on an exhilarating journey of creativity, problem-solving, and innovation? In a world where innovation is the lifeblood of progress, we often find ourselves bogged down by repetitive tasks, mundane processes, and administrative burdens. Letâs Break Free from Drudgery!Join us at the AI Hackathon and be part of the movement to liberate innovation from the shackles of monotony. Together, weâll build a smarter, more efficient future.At this exciting event, youâll acquire fresh skills, connect with fellow enthusiasts, and engage with sponsors and mentors. After intense collaboration, your team will showcase your project to a panel of judges who will determine the winner. Hackathons provide an inclusive environment where diverse skill sets converge to tackle real-world challenges.By attending this event, I understand that I may be photographed, filmed and recorded, and that these photos/videos may be shared publicly by She Sharp and used for promotional purposes."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Ff-and-p-hackathon-with-she&quote=F%26P%20Hackathon%20with%20She%23",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Ff-and-p-hackathon-with-she",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/future-ready",
+        "slug": "future-ready",
+        "title": "She Sharp Future Ready!",
+        "date_time": "Thu, 13 Aug 2020, 12pm - 1pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/N5bpCaMAR69mDuLARben"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/future-ready",
+        "title": "She Sharp Future Ready!",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/N5bpCaMAR69mDuLARben",
+        "date_time": "Thu, 13 Aug 2020, 12pm - 1pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "Get Future Ready with She Sharp!Take part in the exciting careers available in our technology driven future!Join\n She Sharp for an inspirational and empowering panel on STEM Careers for\n our future generations. The recent times have taught us that if there \nis anything that the future holds is the impact technology will have on \nour day-to-day. We hope to inspire and guide you to learn more about \nvarious STEM pathways.We will be discussing the following topics:â What career options are available? What are the unique opportunities in tech where you can get involved?â How can you get yourself across the latest technology trends outside of the classroom?â\n What role does personal development play in building the right mindset \nto tackle the uncertainties of tomorrow? What does it mean to have a \npersonal brand?â What should you consider to plan for your tertiary education?Featuring\n our very own She Sharp past and present ambassadors who will be sharing\n their amazing career journeys with you and hope to leave you empowered \nand inspired.Join us. Dare to dream. Create your Future.We will live streaming online on Thursday 13th August, 12 pm.Introducing our PanelistsNicole Yue Lin (Data Scientist, Spark)Shruti Sherekar (Business Analyst & Agile Consultant, IAG)Amrit Kaur (Tech, Strategy & Transformation Consultant, Deloitte)Zainab Manasawala (Produce Development Engineer, Fisher & Paykel)Learn more atshesharp.co.nz/eventsand get your tickets today!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Ffuture-ready&quote=She%20Sharp%20Future%20Ready!",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Ffuture-ready",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refund policy specified."
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/girlsnightout",
+        "slug": "girlsnightout",
+        "title": "Girls Night Out @Xero",
+        "date_time": "Thu, 26 Nov 2020, 5:30pm - 8pm NZDT",
+        "location": "Xero officeLevel 3, 96 St Georges Bay Road, Parnell",
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/UxaYOoVSbGMiNUFFrkHg"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/girlsnightout",
+        "title": "Girls Night Out @Xero",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/UxaYOoVSbGMiNUFFrkHg",
+        "date_time": "Thu, 26 Nov 2020, 5:30pm - 8pm NZDT",
+        "location": {
+          "venue_name": "Xero officeLevel 3, 96 St Georges Bay Road, Parnell",
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "Girlâs Night Out!!SheSharp is delighted to announce the last event of the year! This will be our first in-person event post-COVID!We are partnering with Xero to give people an opportunity to have a much needed night out to end 2020 with a bang!ÂSheSharp and Xero will be hosting a Girlâs Night Out to bring together like-minded women interested in tech for a night of fun, interaction and challenges. As unprecedented this year has been, where most of us have interacted online via zoom calls or google hangouts, itâs time (and safe) for us to have an in person event. You donât have to have a vast knowledge of tech or the tech sector to come along.ÂThere will be team challenges, fun quizzes and general fun and interactive awesomeness. So bring your A-game along! This is a great event to bring along your work colleagues to network and reconnect with others you havenât had the opportunity to meet in person over the last few months!ÂThis event is open to all students (18+) and working professionals! Food and Drinks (No Alcohol) will be provided!ÂDate: 26th November 2020Time: 6pm - 8pmAgenda:5.30pm - 6pm: Doors open6pm: Kick off at 6pm (nibbles and drink available on arrival)6- 7pm: Fun and interactive team-based challenges7- 7:50pm: Team quiz - fun quiz based on all things tech!7:50 - 8pm: Wrap up, photo, thank you, etcLocation: Xero office, level 3, 96 St Georges Bay Road, ParnellGrab your tickets now >- we hope to see you soon!Questions? Feedback? Please drop us a message at shesharp.nz@gmail.com ð"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fgirlsnightout&quote=Girls%20Night%20Out%20%40Xero",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fgirlsnightout",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refund policy specified."
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/google-educators-conference",
+        "slug": "google-educators-conference",
+        "title": "Google Educators Conference",
+        "date_time": "Fri, 17 Nov 2023, 8am - 6pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/oKBPpg2CQHqHfbbvwhWP"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/google-educators-conference",
+        "title": "Google Educators Conference",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/oKBPpg2CQHqHfbbvwhWP",
+        "date_time": "Fri, 17 Nov 2023, 8am - 6pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8422298,174.757009&query_place_id=ChIJVVVVnvlHDW0Rwyod-_ddhAw",
+          "latitude": -36.8422298,
+          "longitude": 174.757009
+        },
+        "description": [
+          "The purpose is to upskill our valuable high school educators by presenting emerging technologies and ways to engage students with them so students can be better equipped for the needs of twenty-first-century learning.The conference will centre on showcasing cutting-edge, tangible applications and their use in a learning context.Teachers will engage with a range of digital technologies and learn techniques to incorporate technology and computational thinking in their classrooms and learn to link applications to the theory.The day starts with a keynote speaker, followed byÂ  demonstrations,Â collection of workshops, and networking expo will focus onÂ preparing New Zealand educators for teaching computer science,Â programming and technology subjects in New Zealand schools."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fgoogle-educators-conference&quote=Google%20Educators%20Conference",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fgoogle-educators-conference",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/google-event",
+        "slug": "google-event",
+        "title": "She Sharp & Google - Shaping the Future with AI",
+        "date_time": "Thu, 20 Oct 2022, 4:30pm - 7:15pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/XXZfoNRAQ0qCF1Ay80nW"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/google-event",
+        "title": "She Sharp & Google - Shaping the Future with AI",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/XXZfoNRAQ0qCF1Ay80nW",
+        "date_time": "Thu, 20 Oct 2022, 4:30pm - 7:15pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8422283,174.7569969&query_place_id=ChIJC4PMOvRHDW0RilNiW5KvMCg",
+          "latitude": -36.8422283,
+          "longitude": 174.7569969
+        },
+        "description": [
+          "Using Artificial Intelligence to Shape Your WorldThe world is constantly evolving. Digital technologies are transforming exponentially from day to day, and Artificial Intelligence has changed the way we interact with the world around us. For example, we can find information through conversations with machines, instantly translate written and verbal language and even have our digital assistant.ÂIn this interactive workshop hosted by Google, we will learn more about using Artificial Intelligence and how to get involved and build AI applications. With awareness of the tools used to innovate, we will discuss the importance of how they are used and the potential impact of ethics and biases. We will also hear from Google Leaders in the AI space on how they got involved and their thoughts on AI in this changing world. Most importantly, we will equip you with the tools and resources required to build experiences and showcase how easy it is to get started with AI right now.ÂPlease bring along your Laptop, and Letâs get ready to start building!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fgoogle-event&quote=She%20Sharp%20%26%20Google%20-%20Shaping%20the%20Future%20with%20AI",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fgoogle-event",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/iamremarkable",
+        "slug": "iamremarkable",
+        "title": "IamRemarkable",
+        "date_time": "Wed, 15 Sep 2021, 6pm - 7:30pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/E8SsUqN7Sg6J9FnAbmAs"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/iamremarkable",
+        "title": "IamRemarkable",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/E8SsUqN7Sg6J9FnAbmAs",
+        "date_time": "Wed, 15 Sep 2021, 6pm - 7:30pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "In this session, you willâ develop the confidence to promote yourselves in the workplace and personal life, thereby breaking modesty norms and glass ceilings.#IamRemarkable is a Google initiative empowering women and other underrepresented groups to celebrate their achievements in the workplace and beyond.This program aims to:1. Improve the motivation and self-promotion skills of women and underrepresented groups2. Change social perceptions and refresh the conversation around self-promotionÂ We look forward to your participation!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fiamremarkable&quote=IamRemarkable",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fiamremarkable",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/iamremarkable-lf7rurd0",
+        "slug": "iamremarkable-lf7rurd0",
+        "title": "Ada Lovelace Day  Celebration",
+        "date_time": "Mon, 11 Oct 2021, 6pm - 7:30pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/uyxpbsnQteD6VMFdadkQ"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/iamremarkable-lf7rurd0",
+        "title": "Ada Lovelace Day  Celebration",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/uyxpbsnQteD6VMFdadkQ",
+        "date_time": "Mon, 11 Oct 2021, 6pm - 7:30pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "We look forward to your participation!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fiamremarkable-lf7rurd0&quote=Ada%20Lovelace%20Day%20%20Celebration",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fiamremarkable-lf7rurd0",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/inspire-her-te-whakatipuranga-wahine",
+        "slug": "inspire-her-te-whakatipuranga-wahine",
+        "title": "Inspire Her: Te Whakatipuranga Wahine",
+        "date_time": "Wed, 11 Oct 2023, 9am - 3pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/tCpNtxkAQcu0mthpdYxU"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/inspire-her-te-whakatipuranga-wahine",
+        "title": "Inspire Her: Te Whakatipuranga Wahine",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/tCpNtxkAQcu0mthpdYxU",
+        "date_time": "Wed, 11 Oct 2023, 9am - 3pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.9846165,174.8819894&query_place_id=ChIJdVgrl7lNDW0RS3267Gr2o10",
+          "latitude": -36.9846165,
+          "longitude": 174.8819894
+        },
+        "description": [],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Finspire-her-te-whakatipuranga-wahine&quote=Inspire%20Her%3A%20Te%20Whakatipuranga%20Wahine",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Finspire-her-te-whakatipuranga-wahine",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/international-women-s-day-event-myob",
+        "slug": "international-women-s-day-event-myob",
+        "title": "She# International Women's Day event with MYOB - Thursday 18th March 2021",
+        "date_time": "Thu, 18 Mar 2021, 5:30pm - 8pm NZDT",
+        "location": "MYOB officeLevel 5, 12 Normanby Road, Mt Eden, Auckland",
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/Y4nwSoFWRaON65R3UUa4"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/international-women-s-day-event-myob",
+        "title": "She# International Women's Day event with MYOB - Thursday 18th March 2021",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/Y4nwSoFWRaON65R3UUa4",
+        "date_time": "Thu, 18 Mar 2021, 5:30pm - 8pm NZDT",
+        "location": {
+          "venue_name": "MYOB officeLevel 5, 12 Normanby Road, Mt Eden, Auckland",
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "She#International Women's Day Celebration with MYOB - March 18, 2021#ChooseToChallenge Â #IWD2021Note: tickets are sold out online but we might have spots available for door sales - email us at shesharp.nz@gmail.com to let us knowof your interestSheSharp is delighted to announce our first community event of the year:We are partnering with MYOB to celebrate International Womenâs Day!There will be team challenges, fun quizzes, and general fun and interactive awesomeness. So bring your A-game along! This is a great event to bring along your work colleagues to network and reconnect with others you havenât had the opportunity to meet in person over the last few months!This event is open to all ages and all genders, all students and working professionals! Food and Drinks (Non-Alcohol) will be provided.Check out our website for full details, including the speakers and panelists bios:Âhttps://shesharp.org.nz/events...Date: Thursday 18th March 2021Time: 6pm - 8pmAgenda:5:30 pm - Doors opens6 pm - 5 mins â Intro (She#)6.05 pm - 10 mins â Keynote Speaker â Camilla Weinstein -experience as a parent, coming back to work in level 4 lockdown after mat leave, running a side hustle, what MYOB offers in terms of women network, support, parents hub, flexibility, and a new policy we are bringing out on Transgender challenging the status quo.6.15 pm - 5 mins â Q&A6.20 pm - 10 mins â Keynote speaker â Grant McIvor -FMA and why we choose to challenge the gender balance with our proteges6.30 pm - 5 mins â Q&A6.35 pm - 30 mins â Break while also completing a bingo sheet on facts of MYOB and info spoken about. Food and drinks provided and a prize for the winner.7.05 pm - 20 mins â Panel of 4 discussing and relating experience/stories to the theme of IWD â 5 mins each to discuss their experiences to the question. Lindsay Brotherton-Kilburn, Leah Filkin, Martin Longely, and 1 more TBC.7.25 pm - 20 mins â Break out into teams to discuss the preferred question and come up with solutions?7.45 pm - 10 mins â Panel to revert back with the audience on findings7.55 pm - 5 mins â Wrap up and winner of Bingo announced8.00 pm â EndGrab your tickets now >- we hope to see you soon.Questions? Feedback? Please drop us a message at shesharp.nz@gmail.com ð"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://shesharp.org.nz/events/international-womens-day-with-myob-2021-info/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Finternational-women-s-day-event-myob&quote=She%23%20International%20Women's%20Day%20event%20with%20MYOB%20-%20Thursday%2018th%20March%202021",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Finternational-women-s-day-event-myob",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "Note: For those who already bought tickets for the previous event date - they will be valid for the new date! If you have a ticket for the original date (11th March) and are unable to make this new date (18th March) please get in touch with us via shesharp.nz@gmail.com"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/navigating-the-workplace",
+        "slug": "navigating-the-workplace",
+        "title": "She Sharp & ANZ: Navigating the Workplace as a Woman",
+        "date_time": "Thu, 21 Jul 2022, 6pm - 7:30pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/YYze56j2T3ONT8mwtGox"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/navigating-the-workplace",
+        "title": "She Sharp & ANZ: Navigating the Workplace as a Woman",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/YYze56j2T3ONT8mwtGox",
+        "date_time": "Thu, 21 Jul 2022, 6pm - 7:30pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8456742,174.7643189&query_place_id=ChIJ8Z0aPPpHDW0RsMCbJGLvAA8",
+          "latitude": -36.8456742,
+          "longitude": 174.7643189
+        },
+        "description": [
+          "Navigating the Workplace as a WomanConversations with our young women starting out in techWe operate in an unusual world that has seen workplaces and normal operating models change from the norms that we have been used to. Navigating the ânew normalâ can be challenging for both new starters in the tech industry settling in, as well as for managers and teams helping their junior staff find their pathways and build networks in often remote or disrupted working environments.ÂÂ In this interactive, in person session we will be talking with some of ANZâs women in tech whose careers have beenÂ  formed throughout these disruptive years, we will hear about their journeys and expectations versus the realities and how they have faced and adapted to the challenges. Supporting them we will also hear from more senior team members at ANZ on how they are helping support people to strengthen their resilience and protect their wellbeing through change.Our events are open and inclusive to all genders, females, males, \nnonbinary, and allies! So bring your friends and colleagues for a great \nnight of learning and networking with the community.MORE INFO & SPEAKERS ANNOUNCED!Speakers/Panelists:Meet our speakers from ANZRenay Yang - Associate Product Owner, Personal and Funds PortfolioRenay started at ANZ as a teller in the branch during university, since then she has completed the ANZ Graduate Programme and has held a number of roles including Risk Management, Business Design and now Product Ownership. Renay is currently looking after a project to allow ANZ staff members to better assist a customer to on-board with ANZ.Reilly Sharpe - Technology GraduateReilly is currently in the Design Centre of Excellence. She started at ANZ in 2020 as a TupuToa Intern and then continued onto the Graduate programme. Reilly is a key driver of initiatives in our MÄori and Pacifica in Technology ropu.Lauren Halka - Technology GraduateLauren is a Technology Graduate and is currently in the Design Team. She came through the Summer of Tech Programme in 2019 and then continued onto the Technology Graduate Programme in 2021.Megan Tapsell - Head of Pacific TechnologyMegan has 3 key functions at ANZ. Her day job is Head of Technology for the Pacific and consists of managing resources across 10 different countries. She also represents ANZ as Chair of the AIFNZ (Artificial Intelligence Forum NZ) as they look to increase education and participation in the Aotearoa AI industry. Underpinning both of these, Megan leads a MÄori and Pacifica rÅpu here in ANZ which focuses on inter-twining a Te Ao MÄori and Pasifika view into the way ANZ looks to deliver their Technology. Megan's vision and motivation is to ensure increased MÄori engagement both in the corporate technology industry and in the services they produce.Angela Batistich - Tech Area Lead, Wholesale TechnologiesAngela has an extensive career in the Financial Services Industry as a Technology Leader with a dynamic and constantly evolving approach. She is currently Tech Area Lead - Wholesale Technologies at ANZ and also a passionate supporter of Women in Technology, actively involved in various mentoring programmes and leadership forums. For Angela, being a Tech Leader is not just about the Technology, itâs about the people and the experiences and opportunities it provides to be vehicles of change beyond and above where we are today and into the future.Marija Potter - Head of Workforce, ANZ Tech and Industry/Organisational PsychologistMarija is an Industrial/Organisational Psychologist and the Head of Workforce for Technology at ANZ. Leveraging behavioural science in the workplace, Marija is responsible for ensuring ANZ has the right people, in the right place, at the right time, with the right skills for today and the future. Marija is responsible for driving transformational change and unlocking human potential across all layers of the organisation. Marija has worked in the Technology sector for over a decade.We welcome you tosign up for our mailing list&follow our social media accountsfor more exciting events, opportunities and updates!Â ð"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fnavigating-the-workplace&quote=She%20Sharp%20%26%20ANZ%3A%20Navigating%20the%20Workplace%20as%20a%20Woman",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fnavigating-the-workplace",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/online-event-celebrating-ada-lovelace-day",
+        "slug": "online-event-celebrating-ada-lovelace-day",
+        "title": "ONLINE EVENT CELEBRATING ADA LOVELACE DAY",
+        "date_time": "Thu, 15 Oct 2020, 6:30pm - 7:30pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/uhxViLPjSQ2432Tylv4g"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/online-event-celebrating-ada-lovelace-day",
+        "title": "ONLINE EVENT CELEBRATING ADA LOVELACE DAY",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/uhxViLPjSQ2432Tylv4g",
+        "date_time": "Thu, 15 Oct 2020, 6:30pm - 7:30pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "We have another amazing event coming up on the 15th October with our lovely She Sharp Alumni, Ruth James speaking at the Event! The event is to celebrate Ada Lovelace Day! In sponsorship with Xero!Ada Lovelace Day was founded in 2009 by Suw Charman-Anderson to celebrate the achievements of women in science, technology, engineering and maths (STEM).Our amazingly talented speaker, Ruth James is going to do the same by telling us about her journey in tech. Ruth fell into the NZ tech industry by complete fluke when she arrived in the country thirteen years ago! Her first job was as a receptionist for a tech company (Fronde), since then sheâs worked for a number of New Zealand technology companies and currently works at Xero as their Tech Outreach and Engage Coordinator. In the last seven years she has become increasingly active in encouraging the next generation of Kiwiâs into the tech sector. She has thrown herself at every opportunity going where she can help enable, inspire and encourage school and university students to pursue a career in tech.She Sharp is honoured to have Ruth join us to celebrate this day! So please join us on 15th October by registering for the online event using this link:Âhttps://lnkd.in/gh_3jYz"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fonline-event-celebrating-ada-lovelace-day&quote=ONLINE%20EVENT%20CELEBRATING%20ADA%20LOVELACE%20DAY",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fonline-event-celebrating-ada-lovelace-day",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refund policy specified."
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-celebrates",
+        "slug": "she-celebrates",
+        "title": "She Sharp & AWS presents: She Celebrates - End of Year Event",
+        "date_time": "Mon, 5 Dec 2022, 6pm - 8pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/TkWbcc6RnWwWWXPs4Ew0"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-celebrates",
+        "title": "She Sharp & AWS presents: She Celebrates - End of Year Event",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/TkWbcc6RnWwWWXPs4Ew0",
+        "date_time": "Mon, 5 Dec 2022, 6pm - 8pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8441992,174.7657401&query_place_id=ChIJyRV3oPlHDW0RYT2Rg5qusWs",
+          "latitude": -36.8441992,
+          "longitude": 174.7657401
+        },
+        "description": [
+          "She Sharp & AWS presents: She Celebrates - End of Year EventCome celebrate the holiday season with us, reflect on the past year, and hear from diverse role models in tech and\n\ninspirations for the future!She Sharp is delighted to present She Celebrates: A reflection on the past year and Inspiration for the future! Come and join us for an evening of Reflection and Inspiration presented by a variety of motivational speakers from STEM-related industries and hosted by AWS and She Sharp. This fantastic opportunity will introduce you to new and exciting ideas for the future, while providing a space to network with STEM professionals.Our guest speakers will discuss and reflect on their experiences throughout 2022 in celebration of another incredible year together. The event will be a great networking opportunity to meet with like-minded individuals, mingle with established professionals, celebrate successes and achievements, and have fun!We are excited to see you there!Â Get your tickets today before it sells out, spots are strictly limited.Please note this is a strictly 18+ event.Introducing ourÂ SpeakersAlexia Hilbertidou-\tGirlBoss, FounderMike Nooney- AWS NZ,Â Tech LeaderPriti Ambani-Â Tata Consultancy Services, Director New Business and InnovationDenise Carter-BennettÂ -Â Datacom,Â Cybersecurity AnalystPersis Patel- Vodafone, SME Consumer PMO Busines ManagerDamien Harvey-Â Deloitte, Partner - ConsultingDr. Haren Sam -ÂHead of Enterprise Greenfield â New Zealand, Amazon Web ServicesÂ & Amazon Digital Innovation Advocate"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-celebrates&quote=She%20Sharp%20%26%20AWS%20presents%3A%20She%20Celebrates%20-%20End%20of%20Year%20Event",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-celebrates",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-celebrates-tot0tupv",
+        "slug": "she-celebrates-tot0tupv",
+        "title": "She celebrates - End of Year Event",
+        "date_time": "Thu, 14 Dec 2023, 6pm - 8pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/91IdHdj4RH2fZbstqRom"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-celebrates-tot0tupv",
+        "title": "She celebrates - End of Year Event",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/91IdHdj4RH2fZbstqRom",
+        "date_time": "Thu, 14 Dec 2023, 6pm - 8pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8422393,174.7572019&query_place_id=ChIJVVVVnvlHDW0Rwyod-_ddhAw",
+          "latitude": -36.8422393,
+          "longitude": 174.7572019
+        },
+        "description": [
+          "Come celebrate the holiday season with us, reflect on the past year, and hear from diverse role models in tech and inspirations for the future!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-celebrates-tot0tupv&quote=She%20celebrates%20-%20End%20of%20Year%20Event",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-celebrates-tot0tupv",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-10-year-anniversary",
+        "slug": "she-sharp-10-year-anniversary",
+        "title": "She Sharp 10-Year Anniversary",
+        "date_time": "Fri, 18 Oct 2024, 5:30pm - 8pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/8aW5Wr0pQTmblQpkeWvz"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-10-year-anniversary",
+        "title": "She Sharp 10-Year Anniversary",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/8aW5Wr0pQTmblQpkeWvz",
+        "date_time": "Fri, 18 Oct 2024, 5:30pm - 8pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8435565,174.7668454&query_place_id=ChIJ3723u_tHDW0RGVX6wVRQwrU",
+          "latitude": -36.8435565,
+          "longitude": 174.7668454
+        },
+        "description": [
+          "Join us for a special celebration as we mark a decade of bridging the gender gap in STEM! SheSharp is on a mission to challenge misconceptions about the tech industry and empower the next generation of women to pursue careers in STEM through events, networking, and career development opportunities.This milestone event will feature inspiring talks from key industry figures and honor our long-time ambassadors, who will share their remarkable stories and experiences as women in tech. The evening will conclude with a networking session, giving you a chance to celebrate and connect with industry leaders and fellow professionals shaping the future of tech.By attending this event, I understand that I may be photographed, filmed and recorded, and that these photos/videos may be shared publicly by She Sharp and used for promotional purposes."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-10-year-anniversary&quote=She%20Sharp%2010-Year%20Anniversary",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-10-year-anniversary",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-ai-forum-hackathon",
+        "slug": "she-sharp-ai-forum-hackathon",
+        "title": "She Sharp - AI for the Environment Female-Led Hackathon #AIEnviroHack",
+        "date_time": "",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/EtAtjgFkSiov4b5IWSTg"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-ai-forum-hackathon",
+        "title": "She Sharp - AI for the Environment Female-Led Hackathon #AIEnviroHack",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/EtAtjgFkSiov4b5IWSTg",
+        "date_time": null,
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8542358,174.767378&query_place_id=ChIJp575EuRHDW0R-ZV4rXnCSnE",
+          "latitude": -36.8542358,
+          "longitude": 174.767378
+        },
+        "description": [
+          "She Sharp & the AI Forum are excited to present the first-ever female-led AI hackathon!Join us over theÂ 3-4th September 2022Â for a weekend of creative problem-solving in a supportive female-led environment.ÂLearn new skills, build new networks, make new friends and solve purposeful problems!In the lead-up to theAotearoa AI Summit,Â She Sharp and AI ForumÂ are hosting the AI EnviroHack series across New Zealand.Â  The top \nteams from each Hackathon willÂ pitch their solutions at the AI Summit on 12 September in \nAuckland, where the overall winners will be announced.She Sharp Hackathon is an all-female-led and non-binary 32-hour hackathon, which aims to help individuals to understand they belong in tech and that there are various roles you can have in the tech industry. Join 60+ people for a weekend of learning, building, and connecting to build your tech skills and realise that you have allies who are supporting you every step of the way.WHY DO WE NEED A FEMALE-LED HACKATHON?Women are underrepresented in the tech world, and itâs important to us to change that! In conjunction with AI Forum, we are creating a welcoming learning environment to demonstrate that there is a place in tech for every female. Youâll be the chance to build cool and innovative projects that focus onÂAI for the environment.ÂThe AI Hack is held over the weekend of September 3/4th at AUT Campus in Auckland.DO I NEED ANY EXPERIENCE IN COMPUTER SCIENCE TO PARTICIPATE?People of skill levels are encouraged to attend, even if theyâve never written a line of code. There are different types of roles you can play in a Hackathon, design, technical, customer-centric or business-focused. There will be plenty of women here to mentor and support you on the journey of experienced hackers.WHAT WILL I NEED?A bunch of enthusiasm, ideas and team spirit. Please bring your own computer and charger or preferred digital devices. It is recommended to use a laptop or tablet.HOW DO I PARTICIPATE?You can come solo or with a team. A team will consist of (a maximum of 5 people), it helps if you have diverse members in the team (these can be designers, UI/UX, product people, software or data engineers, data scientist or business focussed/non-technical). If you don't already have a team that's okay too, everyone is encouraged to come along. Individuals can pitch an idea and then you can vote on what team/project idea you would like to join on the day.HOW DOES IT WORK?A hackathon is a design & coding sprint where âhackersâ (participants) with both technical and non-technical backgrounds come together to build exciting projects. Throughout the hackathon, you will learn many new skills, meet like-minded peers, and network with sponsors and mentors. At the end of the weekend, you will get a chance to demo your project and maybe go home with some prizes! The winning team will present at the AI Summit in late September.I donât know how to code. Can I still come?Of course! The event is designed for first-time hackers to try something new. We actively encourage people from all backgrounds, and disciplines, to attend! We have mentors to guide you along the way. Just bring yourself, a willingness to learn, and a positive attitude!Does it cost anything?For students, the hack will cost you $15, and working professional tickets will be $30. You will have access to a plethora of tools to help you be successful with your project. All monies received from the registration go toward the prize pool for the winning teams!Can I still come if Iâm not a woman+?She Sharp hack is designed to be an inclusive space to support females, those identifying as female and non-binary individuals who are interested in technology. As weâre focused on encouraging minorities into tech, this event is specifically created as a place for women+ to explore the tech industry in a supportive way. Otherwise, we welcome people of all genders to participate as a volunteer or mentors. Keep an eye out on our Facebook page and website for more information.Problem to Solve:The AI Forum recently published a report onAI for the EnvironmentÂ this document has 10 recommendations divided into 3 sections. We would like to concentrate on delivering real-life examples of how we could deliver the first of those sections:Build a Coherent Environmental Data EcosystemDeploy AI alongside other new technologies to enhance environmental data collection.Develop a national environmental open data framework.Consider where and how mÄtauranga MÄori may be incorporated within Government AI systems.Coordinate the development of standards and best practices for environmental data managementWhat might a solution look like?The purpose here is to participate, ideate and learn, but of course, if your objective is also to âwinâ the judges will need to see the purpose in what you are creating and you may need to appeal to some who are not necessarily technologists or data scientists:Demonstrate the collaboration of citizen science with academic and government research to uncover previously hidden insights.  This may include emissions, erosion, native and non-native flora, fauna and sea life, and waste.Demonstrate bringing together data from different sources for an environmental purpose without impacting data sovereignty, e.g. Federated Data; Data Mesh; etc.Consider the deployment of AI alongside other new technologies to enhance environmental data collection, enabling the incorporation of mÄtauranga MÄori and principles of accessibility and openness into a Climate Change solution.Do not be limited by these examples â we are hoping you will have your own ideas that you want to try out.Why should I attend?If youâre passionate about usingTech for Good,you want to be part of NZ's very first female-led hackathon, come alongÂ pitch an idea and create/join a team.Â This is the ideal opportunity to hone \nyour skills with real-life problems and learn to collaborate with others (designers, UI/UX, software engineers, business people and non-technical participants).ÂShare ideas, and knowledge and gain \nvaluable experience:developing a solution that is good for the worldextending your comfort zone in a supportive environmentÂ Âshowcasing your skills and learning even morecreating new connections and team buildingdeveloping communication and presentation skillsThere will be two winning teams that will go forwardÂ to present their solution on centre stage at the Aotearoa AIÂ Summit Conference on 12 September! There will be other prizes up for grabs!All funds raised from the ticket sales will go towards the prize pool for the winning project(s)!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-ai-forum-hackathon&quote=She%20Sharp%20-%20AI%20for%20the%20Environment%20Female-Led%20Hackathon%20%23AIEnviroHack",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-ai-forum-hackathon",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "Refunds are available up to 7 days prior to the event. Due to logistics and catering arrangements, we are unable to refund within 7 days of event date. However, if you are no longer able to attend, and want to pass your ticket on to someone else, please get in touch with us via info@shesharp.org.nz as soon as possible to arrange the ticket transfer to your nominated person."
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-academy-ex-international-women-s-day",
+        "slug": "she-sharp-and-academy-ex-international-women-s-day",
+        "title": "She Sharp & Academy EX: International Women's Day",
+        "date_time": "Fri, 14 Mar 2025, 5pm - 7pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/GUALeR6CRXuxbR2YFkCM"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-academy-ex-international-women-s-day",
+        "title": "She Sharp & Academy EX: International Women's Day",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/GUALeR6CRXuxbR2YFkCM",
+        "date_time": "Fri, 14 Mar 2025, 5pm - 7pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.864872,174.7642524&query_place_id=ChIJe6Q8Ed9HDW0RJDGYEw4DqbU",
+          "latitude": -36.864872,
+          "longitude": 174.7642524
+        },
+        "description": [
+          "Breaking Barriers for Gender Equality NowShe Sharpâs International Womenâs Day (IWD) event is scheduled for March 14 at academyEX. Join us for an inspiring evening celebrating women in tech, featuring engaging discussions, networking opportunities, and community connections.Â The registration starts at 4.30 pm, and theÂ event kicks off at 5 PMâdonât miss it!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-academy-ex-international-women-s-day&quote=She%20Sharp%20%26%20Academy%20EX%3A%20International%20Women's%20Day",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-academy-ex-international-women-s-day",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-countdown-techweek-event",
+        "slug": "she-sharp-and-countdown-techweek-event",
+        "title": "Women Igniting a Passion for Tech - SOLD OUT",
+        "date_time": "Fri, 20 May 2022, 7:30am - 9:30am NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/Ul98g7zPQm6kwjbAzihH"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-countdown-techweek-event",
+        "title": "Women Igniting a Passion for Tech - SOLD OUT",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/Ul98g7zPQm6kwjbAzihH",
+        "date_time": "Fri, 20 May 2022, 7:30am - 9:30am NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8585472,174.7487792&query_place_id=ChIJq0Czl5VHDW0RYLF9zDA1eTg",
+          "latitude": -36.8585472,
+          "longitude": 174.7487792
+        },
+        "description": [
+          "WE'RE FULLY SOLD OUT! We've hit our max venue capacity for the event. If you would like to see if there's any last minutes spots opening up, please sign up for the waitlist.We have a fantastic evening event celebrating Women in Security onÂ Friday 17th June hosted by AWS Auckland Office in Commercial Bay - tickets are on sale now for only $5/Student or $10/Professional. Register here:https://events.humanitix.com/w...Surround yourself with great women: Stories of the women who have ignited our passion for careers in TechnologyEnjoy a networking breakfast and surround yourself with great women. She# and Countdown collaborate to bring you first-hand the real stories of the women who are igniting our passion for careers in Technology. Join our breakfast session and see what you can learn to help you re/ignite the flame of your technology career.You\n will hear from key talent across our Analytics and Insights, Product, \nStrategy & Transformation and Engineering practices. Hear how they \nhave navigated their careers and learn useful tips as to the art of \nnetworking and really owning your career path.Techweek event listing:https://techweek.co.nz/whats-o...Speakers &Â GuestsMispah CarelsenChapter Lead Agile CoachingMispah\n Carelsen is the Agile Coaching Chapter Lead at Countdown. Her journey \nstarted as a marketing manager at a tech startup, where she discovered \n& fell in love with the world of Agile, which is all about people \n& the way in which they work together to deliver value. Since that \nfateful time, she has played many agile roles, eventually landing on \nagile coaching & leading other agilists. She is passionate about \nmaking people awesome & bringing humanness back into the world of \nwork. She is an active member of the Business Agility community & is\n also currently pursuing her PhD in Leading the Gen Z & Millennial \ngenerations.Kari JonesHead of Analytics & InsightsKari\n is an experienced senior leader, committed to improving the performance\n of New Zealand organisations through the increased adoption and \napplication of emerging technology, advanced analytics and artificial \nintelligence. Over the past 11 years, Kari has worked with a range of \niconic organisations to increase their digital and analytics maturity, \nexecuting strategies that improve customer-centricity, and operational \neffectiveness and achieve significant business results.Shannon EvansSenior Product Manager - Acquire & Onboard at CountdownShannon\n is a commercially astute Senior Product Manager with more than 10 \nyearsâ experience leading and contributing to business transformation \nprojects that enhance product functionality and deliver customer value. \nWith strong interpersonal skills, she is adept at working \ncollaboratively with cross-functional teams to develop product and \ndigital channels in agile environments. Shannon is practised at defining\n business requirements, developing strategy, managing budgets and \nleading teams having done so at Countdown, Spark and Vodafone.Steph WelchProduct Chapter Lead - More Than Just a Customer at CountdownSteph\n is a Product Leader with more than 10 years ofÂ experience working in \ne-commerce, product development and digital strategy. She is passionate \nabout growing awesome product people and working together to refine \ntheir craft and create value. Steph has a proven track record of driving\n strategic programmes of work, delivering customer experience \nimprovements withÂ cross-functionalÂ teams and commercial growth for \nbusinesses, having done so at Countdown, Air New Zealand and Trade Me.Manasi PaulChapter Lead QAAn\n engineer by qualification, Manasi has been in the tech industry for \naround 17 years now. Have worked in various areas including software \ndevelopment, technical testing, test and test practice management, \nandÂ project and delivery management across multiple domains in the \nUnited States, India and NZ.Manasi has worked in startups , \nmid-sized companies, as well as corporate environments across product \nbased companies as well as consultancies and it,Â has been an enriching \nexperience for me.Manasi says being a mum, balancing work/ life \ncan get tough at times, so time management she has learnt, is a \nmust-have skill to lead a fulfilling life!Tingting LISenior Software DeveloperTingting\n is a senior software developer in countdown. Formerly a kindergarten \nteacher in China, she was inspired by my family in IT to transition into\n the industry. She has found programming to be a really fun subject and \nstarted to pursue a career to become a programmer by studying at Massey \nUniversity where she majored in Software Engineering with Honours. \nDuring her last year of Uni, she started to participate in \naÂ part-timeÂ commercial project. After graduation Tingting worked with \nseveral companies to build several projects, which were used in NZ and \nglobally.Jing LuSoftware DeveloperJing\n is a member of our Engineering practice. She is a full-stack \ndeveloperÂ at CountdownX. Jing is an accomplished coder and programmer \nand enjoys using her tech skills to solve real problems. Jing graduated \nfrom China in 2014 with Bachelor's degree in Network engineering. She \nmoved to NZ and studied at Auckland University achieving a Masters's \ndegree in software engineering in 2017.Mahsa McCauley (Mohaghegh)Founder She Sharp and AUT Director of Women in TechnologyMahsa\n is the founder and director of charitable trust She Sharp, which aims \nto encourage more girls to study STEM fields. Her passion for promoting \ncareers in technology to young women has been widely recognised and has \nseen her nominated for and win numerous awards."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-countdown-techweek-event&quote=Women%20Igniting%20a%20Passion%20for%20Tech%20-%20SOLD%20OUT",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-countdown-techweek-event",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-fiserv-bank-on-yourself",
+        "slug": "she-sharp-and-fiserv-bank-on-yourself",
+        "title": "She Sharp & Fiserv: Bank on yourself",
+        "date_time": "Wed, 26 Jun 2024, 5:30pm - 7:30pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/7q82gb8gSReiYDP9GMoq"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-fiserv-bank-on-yourself",
+        "title": "She Sharp & Fiserv: Bank on yourself",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/7q82gb8gSReiYDP9GMoq",
+        "date_time": "Wed, 26 Jun 2024, 5:30pm - 7:30pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8458624,174.7735703&query_place_id=ChIJ-w41WQdIDW0RXCxWi-OhzFw",
+          "latitude": -36.8458624,
+          "longitude": 174.7735703
+        },
+        "description": [
+          "Are nerves holding you back? Fear not! Join Fiservâs empowering workshop, âBanking on Yourselfâ and be inspired by those who carved their own paths. Fiserv, a Fortune 200 leader in mobile banking, is fuelled by the talent and dedication of our team. We're leading the way because of the brilliant minds we invest in. Discover the power of self-belief, weâll even equip you with a successful toolkit that you can take away. Shatter limitations, own your value with unshakeable confidence, while mastering the elevator pitch to promote yourself effectively and chase your dreams. Don't wait for permission - back yourself and take control of your journey!By attending this event, I understand that I may be photographed, filmed and recorded, and that these photos/videos may be shared publicly by She Sharp and used for promotional purposes."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-fiserv-bank-on-yourself&quote=She%20Sharp%20%26%20Fiserv%3A%20Bank%20on%20yourself",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-fiserv-bank-on-yourself",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-fonterra-a-legendairy-career",
+        "slug": "she-sharp-and-fonterra-a-legendairy-career",
+        "title": "She Sharp & Fonterra : A Legendairy Career",
+        "date_time": "Thu, 24 Aug 2023, 5:30pm - 8:30pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/LOLDluORmy7APCpLNOKR"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-fonterra-a-legendairy-career",
+        "title": "She Sharp & Fonterra : A Legendairy Career",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/LOLDluORmy7APCpLNOKR",
+        "date_time": "Thu, 24 Aug 2023, 5:30pm - 8:30pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8456256,174.7563744&query_place_id=ChIJ4fMtv_NHDW0R0XVnO5YPdbk",
+          "latitude": -36.8456256,
+          "longitude": 174.7563744
+        },
+        "description": [
+          "Thursday, August 24, 2023Good Together: by complementing technical expertise with power skills, the opportunities are endlessFrom grass to glass, find out how women across all aspects of Science, Technology, Engineering and Maths can apply their technical expertise and their complementary power skills to deliver goodness for generations to come. The opportunities are endless from on farm sustainability, animal science and digital solutions, through to cutting edge laboratory research at our Fonterra Research and Development Centre, exploring robotics and automation across manufacturing systems and leveraging current & future technology to empower our employees & optimise our business for the future.ÂJoin us in person at the Fonterra Auckland head office.Across the evening you will learn more about Fonterra including an overview of the Early in Careers entry opportunities, hear from a panel of women about their personal experiences, spend some time exploring power skills and how these can enhance your career journey (from job application and beyond) with plenty of time for networking.Spaces are limited and we are expecting a sold-out event, so register now to secure your place."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-fonterra-a-legendairy-career&quote=%20She%20Sharp%20%26%20Fonterra%20%3A%20A%20Legendairy%20Career",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-fonterra-a-legendairy-career",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-fonterra-business-and-technology-transformation-through-platforms-and-products",
+        "slug": "she-sharp-and-fonterra-business-and-technology-transformation-through-platforms-and-products",
+        "title": "She Sharp & Fonterra:Business and Technology Transformation Through Platforms and Products",
+        "date_time": "Wed, 3 Sep 2025, 5:30pm - 7:30pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/etmcsJR6StWcTINtCUzr"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-fonterra-business-and-technology-transformation-through-platforms-and-products",
+        "title": "She Sharp & Fonterra:Business and Technology Transformation Through Platforms and Products",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/etmcsJR6StWcTINtCUzr",
+        "date_time": "Wed, 3 Sep 2025, 5:30pm - 7:30pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8457585,174.7560805&query_place_id=ChIJRcLbvfNHDW0RgfG4eWHcU74",
+          "latitude": -36.8457585,
+          "longitude": 174.7560805
+        },
+        "description": [
+          "Join a dynamic panel discussion featuring three diverse, experienced, and growth-minded women who are driving meaningful change within Fonterraâs Products and Platforms landscape. This session will explore the transformational shift toward a product and platform-centric approach, highlighting the pivotal role it plays in shaping the future of IT delivery and unlocking greater business outcomes."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-fonterra-business-and-technology-transformation-through-platforms-and-products&quote=She%20Sharp%20%26%20Fonterra%3ABusiness%20and%20Technology%20Transformation%20Through%20Platforms%20and%20Products%20",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-fonterra-business-and-technology-transformation-through-platforms-and-products",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-fonterra-harness-the-power-of-generative-al",
+        "slug": "she-sharp-and-fonterra-harness-the-power-of-generative-al",
+        "title": "She Sharp & Fonterra: Harness The Power of Generative Al",
+        "date_time": "Thu, 29 Aug 2024, 5:30pm - 7:30pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/jzo1ASj7RQSlCz8ngvQp"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-fonterra-harness-the-power-of-generative-al",
+        "title": "She Sharp & Fonterra: Harness The Power of Generative Al",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/jzo1ASj7RQSlCz8ngvQp",
+        "date_time": "Thu, 29 Aug 2024, 5:30pm - 7:30pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8457585,174.7560805&query_place_id=ChIJRcLbvfNHDW0RgfG4eWHcU74",
+          "latitude": -36.8457585,
+          "longitude": 174.7560805
+        },
+        "description": [
+          "Harness The Power of Generative Al: A Deep Dive into Fonterra's Al JourneyJoin us for an enlightening session on how Fonterra, a global dairy nutrition company, has harnessed the power of Artificial Intelligence (Al) to revolutionise their entire value chain which produces 30% of the world's dairy exports from nutritious New Zealand farms.What's in Store?Al in Action: Get an overview Of how Fonterra has leveraged Al to safeguard its 34 production lines. Discover how the company has saved an equivalent of 150 years of manual effort by interpreting century-old information using Al.Masterclass in Prompt Engineering: Attendees will have the unique opportunity to participate in a mini masterclass in Prompt Engineering. This hands-on session will provide insights into the art and science of designing effective prompts for Al systems.Networking Opportunity: Engage with professionals from various fields, share ideas, and broaden your understanding of applications in different industries. Don't miss this opportunity to delve into the world of Al and explore its transformative potential!By attending this event, I understand that I may be photographed, filmed and recorded, and that these photos/videos may be shared publicly by She Sharp and used for promotional purposes."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-fonterra-harness-the-power-of-generative-al&quote=She%20Sharp%20%26%20Fonterra%3A%20Harness%20The%20Power%20of%20Generative%20Al",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-fonterra-harness-the-power-of-generative-al",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-hcl",
+        "slug": "she-sharp-and-hcl",
+        "title": "She Sharp & HCLTech",
+        "date_time": "Fri, 15 Nov 2024, 4:30pm - 6:30pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/WtY1SG5iTtghQQCcqgD6"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-hcl",
+        "title": "She Sharp & HCLTech",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/WtY1SG5iTtghQQCcqgD6",
+        "date_time": "Fri, 15 Nov 2024, 4:30pm - 6:30pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-37.78643929999999,175.3150648&query_place_id=ChIJSXtRUCYZbW0Roe6aR7C5AEU",
+          "latitude": -37.78643929999999,
+          "longitude": 175.3150648
+        },
+        "description": [
+          "The Role of Technology in Sustainable Development: Discuss how technology can be used to address environmental challenges and promote sustainability focusing on green Tech.By attending this event, I understand that I may be photographed, filmed and recorded, and that these photos/videos may be shared publicly by She Sharp and used for promotional purposes."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-hcl&quote=She%20Sharp%20%26%20HCLTech",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-hcl",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-hcl-technological-change-workplace-and-workforce-impacts",
+        "slug": "she-sharp-and-hcl-technological-change-workplace-and-workforce-impacts",
+        "title": "She Sharp & HCL: Technological change - workplace & workforce impacts",
+        "date_time": "Fri, 3 Nov 2023, 4:30pm - 6:30pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/Rqs350ovTajJbhnR6nI4"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-hcl-technological-change-workplace-and-workforce-impacts",
+        "title": "She Sharp & HCL: Technological change - workplace & workforce impacts",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/Rqs350ovTajJbhnR6nI4",
+        "date_time": "Fri, 3 Nov 2023, 4:30pm - 6:30pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-37.78663590000001,175.3176315&query_place_id=ChIJYfb-UCYZbW0RrZfR5DNNfz0",
+          "latitude": -37.78663590000001,
+          "longitude": 175.3176315
+        },
+        "description": [
+          "Technological change will continue to reshape the workplace and workforce. It's up to us, as individuals, organisations, and societies, to shape this future collaboratively, ensuring that technological change benefits everyone."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-hcl-technological-change-workplace-and-workforce-impacts&quote=She%20Sharp%20%26%20HCL%3A%20Technological%20change%20-%20workplace%20%26%20workforce%20impacts",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-hcl-technological-change-workplace-and-workforce-impacts",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+        "slug": "she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+        "title": "She Sharp & HCLTech: AI Empowerment: Shaping an Inclusive Digital Future",
+        "date_time": "Fri, 21 Nov 2025, 4:30pm - 7:30pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/0UWXaweAQG6qWtXO0KrA"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+        "title": "She Sharp & HCLTech: AI Empowerment: Shaping an Inclusive Digital Future",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/0UWXaweAQG6qWtXO0KrA",
+        "date_time": "Fri, 21 Nov 2025, 4:30pm - 7:30pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-45.8661274,170.5121474&query_place_id=ChIJ1zFU6m6sLqgRlaapZj-jzEg",
+          "latitude": -45.8661274,
+          "longitude": 170.5121474
+        },
+        "description": [
+          "Join us for an inspiring evening on how AI is helping people unlock new levels of creativity, productivity, and innovation.The event features a keynote address and a panel discussion with industry leaders who will share stories and insights on how diverse perspectives in STEM lead to fair, ethical, and inclusive AI solutions.We will also explore the impact of AI on the future of work and highlight the skills and mindsets that will help you adapt, thrive, and lead in an AI-powered world.Here is the agenda for the evening:Time SlotDurationActivity4:30pm - 5:30pm60 minsRegistration and Networking5:30pm - 5:55pm25 minsWelcome and kick off5:55pm - 6:15pm20 minsKeynote6:15pm - 6:50pm35 minsPanel Discussion6:50pm - 7:00pm10 minsQ&A7:00pm - 7:05pm5 minsGroup Photo & Break7:05pm - 7:30pm25 minsGroup Activity7:30pm - 7:40pm10 minsClosing"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future&quote=She%20Sharp%20%26%20HCLTech%3A%20AI%20Empowerment%3A%20Shaping%20an%20Inclusive%20Digital%20Future",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-kiwibank",
+        "slug": "she-sharp-and-kiwibank",
+        "title": "She Sharp & Kiwibank: The Buzz about Banking",
+        "date_time": "Tue, 25 Jul 2023, 5:30pm - 7:30pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/vwz3ue5Rb6uqSr9wHaiF"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-kiwibank",
+        "title": "She Sharp & Kiwibank: The Buzz about Banking",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/vwz3ue5Rb6uqSr9wHaiF",
+        "date_time": "Tue, 25 Jul 2023, 5:30pm - 7:30pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.84515109999999,174.7545237&query_place_id=ChIJRaSNkrhHDW0R4pNQJBHvdyo",
+          "latitude": -36.84515109999999,
+          "longitude": 174.7545237
+        },
+        "description": [
+          "She Sharp & Kiwibank: \n\nThe Buzz about BankingJoin us to discover how you can grow your career at Kiwibank while shaping the future of banking in Aotearoa.Â At this event, youâll hear from two of Kiwibankâs senior executives who lead their new tech innovations. Learn about their career journey and why banking is an exciting (and important!) sector.Youâll also get your hands stuck into an innovation roadmap workshop for Kiwibankâhow should they innovate in the next 12 months? A new user interface? Faster processing? Mobile banking app features? Itâs up to you and your teammates to find the best solution!About our speakers:Hamish RumboldâÂ Chief Digital and Technology Officer atÂ Kiwibank.ÂHe has a successful track record for building high performing teams, strategy, and technology to transform the customer experience and drive commercial growth.Â  âFor me the buzz aboutÂ KiwibankÂ is the people, the purpose and the impact we have on the future of banking in Aotearoaâ ÂBelinda Newman âÂTreasurer atÂ Kiwibank.She has worked in Treasury and Financial Markets roles for over 20 years in Sydney, London and now Auckland. Â \"For me, the buzz aboutÂ KiwibankÂ is that it's dynamic, fast-paced and it really isÂ KiwiÂ makingÂ KiwiÂ better off\""
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-kiwibank&quote=She%20Sharp%20%26%20Kiwibank%3A%20The%20Buzz%20about%20Banking",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-kiwibank",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-les-mills-own-the-unexpected",
+        "slug": "she-sharp-and-les-mills-own-the-unexpected",
+        "title": "She Sharp & Les Mills: Own The Unexpected",
+        "date_time": "Thu, 9 May 2024, 5:30pm - 7:30pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/kvexlrbTxGz5Efml6MIB"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-les-mills-own-the-unexpected",
+        "title": "She Sharp & Les Mills: Own The Unexpected",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/kvexlrbTxGz5Efml6MIB",
+        "date_time": "Thu, 9 May 2024, 5:30pm - 7:30pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8484159,174.7568309&query_place_id=ChIJWwgQgfJHDW0RxsjpqsfO-_A",
+          "latitude": -36.8484159,
+          "longitude": 174.7568309
+        },
+        "description": [
+          "Join us for an empowering evening as Les Mills International shines a spotlight on the unconventional routes many have taken to enter and navigate the technology industry. Expect to hear powerful stories of resilience, innovation, and success. Furthermore, we'll be exploring the theme of being underestimated - a common experience for many women and minorities in STEM. But rather than viewing it as a setback, we'll discuss how it can be harnessed as a powerful tool for exceeding expectations and breaking barriers. Don't miss this opportunity to connect, learn, and be inspired.By attending this event, I understand that I may be photographed, filmed and recorded, and that these photos/videos may be shared publicly by She Sharp and used for promotional purposes."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-les-mills-own-the-unexpected&quote=She%20Sharp%20%26%20Les%20Mills%3A%20Own%20The%20Unexpected%20",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-les-mills-own-the-unexpected",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-myob",
+        "slug": "she-sharp-and-myob",
+        "title": "She Sharp & MYOB - Mind Your Own Career",
+        "date_time": "Thu, 28 Apr 2022, 6:30pm - 8pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/eotfyJYEReGtBsul9JLg"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-myob",
+        "title": "She Sharp & MYOB - Mind Your Own Career",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/eotfyJYEReGtBsul9JLg",
+        "date_time": "Thu, 28 Apr 2022, 6:30pm - 8pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "Mind Your Ownâ¦ CAREER!She Sharp is teaming up with MYOB to discuss the diversity of careers in technology and the multiple pathways we can take to achieve our dream job in STEM.Come along on Thursday, 28th April, 6:30 pm and engage with an expert team of MYOB panellists who will highlight some of the pathways that can be followed which lead to a career in Technology, participate in a guided workshop to help discover our deep-set motivations and Q&A with the MYOB and She# teams to create a composition of insights to enable us to make conscious career choices based on our aspirations and motivationsâ¦. so YOU can definitively begin to Mind Your Own Career.We will have special prizes and giveaways for those who register and attend the event. Get your tickets now!Speakers:Lyndsay Kilburn, Delivery Manager at MYOBLindsay has been with MYOB for 6 years across a variety of roles and is currently Delivery Manager for a cross functional team of developers and engineers focused on site reliability engineering.Â She's passionate about diversity in technology in all its forms and finding opportunities for people to thrive.Taylor Waddington, ProtÃ©gÃ© Software Developer at MYOBHi, Iâm Taylor. Just over a year ago, I started at MYOB in the FMA program as a protege Software Developer. Before moving to MYOB I was down in Dunedin studying a double degree in Information Systems and Marketing. Since being at MYOB I have had the opportunity to grow and navigate myself through the corporate world. I have discovered what itâs like to be a Software Developer and had the opportunity to venture outside of this expertise and work aside one of MYOBâs Business Analyst to further develop my skills in another area.ÂKyle Nicholas, Senior Developer at MYOBHi, Iâm Kyle, a Senior Developer at MYOB. Iâd say Iâm a classic T-Shaped Full Stack Developer and have worked with C#, Jade, PowerShell etc. I strongly believe that the journey is half the fun; traditional or non-traditional, we learn from all of it and itâs what we make of it that counts"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-myob&quote=She%20Sharp%20%26%20MYOB%20-%20Mind%20Your%20Own%20Career",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-myob",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-myob-embracing-bias",
+        "slug": "she-sharp-and-myob-embracing-bias",
+        "title": "She Sharp & MYOB: Embracing Bias",
+        "date_time": "Thu, 18 Apr 2024, 5:30pm - 7:30pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/l77EuiSYigcXCyXXUmXw"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-myob-embracing-bias",
+        "title": "She Sharp & MYOB: Embracing Bias",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/l77EuiSYigcXCyXXUmXw",
+        "date_time": "Thu, 18 Apr 2024, 5:30pm - 7:30pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.87080969999999,174.7635465&query_place_id=ChIJYe-_rtpHDW0RGwJrUjtqJBM",
+          "latitude": -36.87080969999999,
+          "longitude": 174.7635465
+        },
+        "description": [
+          "How to use cognitive biases to design great products, services, and your life!Join us for an evening at MYOB where weâll focus on the importance of understanding human behaviour. While technical qualifications can be a gateway to working in software design, we need people from all backgrounds to design meaningful products and services. This talk will speak to the vital contributions human-centred designers make in the tech industry.Hazel Halim and Annabelle Yoon will take you through what cognitive biases are and how to recognise and use them in your work, study, or personal life!By attending this event, I understand that I may be photographed, filmed and recorded, and that these photos/videos may be shared publicly by She Sharp and used for promotional purposes."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-myob-embracing-bias&quote=She%20Sharp%20%26%20MYOB%3A%20Embracing%20Bias",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-myob-embracing-bias",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-myob-tech-that-matches",
+        "slug": "she-sharp-and-myob-tech-that-matches",
+        "title": "She Sharp & MYOB: Tech That Matches Your Vibe - Find Your Perfect Fit",
+        "date_time": "Thu, 22 May 2025, 5pm - 7:30pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/TJdaF1MeQGCe31QooRVm"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-myob-tech-that-matches",
+        "title": "She Sharp & MYOB: Tech That Matches Your Vibe - Find Your Perfect Fit",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/TJdaF1MeQGCe31QooRVm",
+        "date_time": "Thu, 22 May 2025, 5pm - 7:30pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8464923,174.7648639&query_place_id=Ei44LzUwIEFsYmVydCBTdHJlZXQsIEF1Y2tsYW5kIDEwMTAsIE5ldyBaZWFsYW5kIjcaNQowEi4KFAoSCcnzMUP6Rw1tERk12snlbszFEDIqFAoSCX3I_4r6Rw1tEQAsLvUdwRQYEgE4",
+          "latitude": -36.8464923,
+          "longitude": 174.7648639
+        },
+        "description": [
+          "Tech That Matches Your Vibe: Find Your Perfect FitDiscover how your unique strengths can shape your tech journey in this exciting lightning-style event! Hear from 6 inspiring speakers as they share how theyâve harnessed their unique talents to thrive in their roles and overcome challenges. Whether youâre exploring tech careers or seeking clarity on where you might fit, this event will spark ideas and help you uncover your potential."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-myob-tech-that-matches&quote=She%20Sharp%20%26%20MYOB%3A%20Tech%20That%20Matches%20Your%20Vibe%20-%20Find%20Your%20Perfect%20Fit",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-myob-tech-that-matches",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-techbabes-nz-thrive-your-career-your-story",
+        "slug": "she-sharp-and-techbabes-nz-thrive-your-career-your-story",
+        "title": "She Sharp & TechBabesNZ: THRIVE: YOUR CAREER, YOUR STORY",
+        "date_time": "Wed, 30 Jul 2025, 5pm - 8pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/W7Wdf6OURfCNERH3kUnD"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-techbabes-nz-thrive-your-career-your-story",
+        "title": "She Sharp & TechBabesNZ: THRIVE: YOUR CAREER, YOUR STORY",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/W7Wdf6OURfCNERH3kUnD",
+        "date_time": "Wed, 30 Jul 2025, 5pm - 8pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8441992,174.7657401&query_place_id=ChIJBbBKcCVHDW0RfNlukgQCXiI",
+          "latitude": -36.8441992,
+          "longitude": 174.7657401
+        },
+        "description": [
+          "Are you a soon-to-be graduate, a recent graduate, or a professional ready for a career move? This event is designed just for you.Join us for an empowering session focused on helping you take the next step in your career journey. Whether you're searching for your first job or exploring a career transition, this event will equip you with the tools, insights, and confidence you need.Weâll cover key topics including:Personal Branding: Learn how to present yourself confidently and authentically in the job market.Assessing CVs: Get expert feedback on how to strengthen your CV to stand out from the crowd.Interview Strategies: Discover practical tips to prepare for and succeed in interviews.Mentorship Guidance: Hear from experienced professionals and gain valuable career advice tailored to your goals.This is more than a talk â itâs a hands-on, interactive experience designed to help you build clarity, confidence, and connections. Open to all, but especially geared towardsÂ university students,Â recent graduates, andÂ professionals seeking new opportunities."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-techbabes-nz-thrive-your-career-your-story&quote=%20She%20Sharp%20%26%20TechBabesNZ%3A%20THRIVE%3A%20YOUR%20CAREER%2C%20YOUR%20STORY",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-techbabes-nz-thrive-your-career-your-story",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-techwomen-nz-from-burnout-to-balance",
+        "slug": "she-sharp-and-techwomen-nz-from-burnout-to-balance",
+        "title": "She Sharp & TechWomen NZ: From Burnout to Balance",
+        "date_time": "Wed, 20 Sep 2023, 7:30am - 9am NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/v8oDdhtkRuSUKuHpbAYe"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-techwomen-nz-from-burnout-to-balance",
+        "title": "She Sharp & TechWomen NZ: From Burnout to Balance",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/v8oDdhtkRuSUKuHpbAYe",
+        "date_time": "Wed, 20 Sep 2023, 7:30am - 9am NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8441946,174.7657335&query_place_id=ChIJBbBKcCVHDW0RfNlukgQCXiI",
+          "latitude": -36.8441946,
+          "longitude": 174.7657335
+        },
+        "description": [
+          "Our âFrom Burnout to Balanceâ breakfast event is going to be an enlightening morning where we delve into two vital aspects ofÂwell-being.As women, we wear many hats - we are professionals, mothers, partners, and more. It is this dance of roles that showcases our adaptability, but also puts us at a greater risk of burnout. In addition, the boundaries between work and personal life are becoming increasingly blurred. Our incredible speakers will guide you on a journey towards achieving equilibrium in the fast-paced world of technology, looking atÂactionable strategies to harmoniseÂprofessional ambitions with self-care.Brigette McGregor-MacdonaldÂwill speak to discovering the power of mindfulness and provide key techniques that empower you to stay centred, enhance focus, and build resilience against burnout.ÂMaja LeeÂwill dive into the critical connection between nutrition, health and stress management, providing insights into putting your health first for peak performance, optimising energy levels and warding off burnout.It is time to invest in your well-being, embrace balance, and unlock your full potential in both your professional and personal life.Join us as we change the narrative from âBurnoutâ to âBalanceâ."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-techwomen-nz-from-burnout-to-balance&quote=She%20Sharp%20%26%20TechWomen%20NZ%3A%20From%20Burnout%20to%20Balance",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-techwomen-nz-from-burnout-to-balance",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector",
+        "slug": "she-sharp-and-vector-powering-possibility-women-in-tech-vector",
+        "title": "She Sharp & Vector: Future-Ready: Data, AI, Digital Innovation & Inclusive Careers at Vector",
+        "date_time": "Wed, 12 Nov 2025, 5pm - 8pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/2cIhgc8fQH2h37GvRtVU"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector",
+        "title": "She Sharp & Vector: Future-Ready: Data, AI, Digital Innovation & Inclusive Careers at Vector",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/2cIhgc8fQH2h37GvRtVU",
+        "date_time": "Wed, 12 Nov 2025, 5pm - 8pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8652009,174.77722&query_place_id=ChIJYVjkP3RIDW0RqkR_qut8Sm0",
+          "latitude": -36.8652009,
+          "longitude": 174.77722
+        },
+        "description": [
+          "Join us for an inspiring evening with Vector as we explore how technology is transforming the energy sector.This SheSharp event will spotlight Vectorâs journey as a tech-enabled utility, showcasing real stories of innovation in Data, AI, ADMS and digital platforms.Weâll celebrate the voices of women in STEM, inside Vector and across the wider tech community, through a dynamic panel and a 45-minute Think-a-Thon designed to spark ideas and connection.Whether you're curious about inclusive career pathways, passionate about solving real-world problems, or looking to grow your network, this is your chance to engage with a future-facing company committed to diversity, innovation and impact.Here is the agenda for the evening:Time SlotDurationActivity5:00pm - 5:30pm30 minsRegistration and Networking5:30pm - 5:45pm15 minsWelcome and Kick off5:45pm - 6:15pm35 minsPanel Discussion6:15pm - 6:25pm10 minsQ&A6:25pm - 6:35pm10 minsGroup Photo & Break6:35pm - 7:30pm65 minsThink-a-thon!7:30pm - 7:40pm10 minsJudging7:40pm - 7:50pm10 minsAwarding of Winners7:50pm - 8:00pm10 minsClosing"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-vector-powering-possibility-women-in-tech-vector&quote=She%20Sharp%20%26%20Vector%3A%20Future-Ready%3A%20Data%2C%20AI%2C%20Digital%20Innovation%20%26%20Inclusive%20Careers%20at%20Vector",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-vector-powering-possibility-women-in-tech-vector",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-woolworths-international-women-s-day",
+        "slug": "she-sharp-and-woolworths-international-women-s-day",
+        "title": "She Sharp & Woolworths: International Women's Day",
+        "date_time": "Thu, 7 Mar 2024, 7:30am - 9:30am NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/EBIFkQNDT5C3XIvIVqCI"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-and-woolworths-international-women-s-day",
+        "title": "She Sharp & Woolworths: International Women's Day",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/EBIFkQNDT5C3XIvIVqCI",
+        "date_time": "Thu, 7 Mar 2024, 7:30am - 9:30am NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8585184,174.7483896&query_place_id=ChIJ54fVhJVHDW0R2aFAUNU7338",
+          "latitude": -36.8585184,
+          "longitude": 174.7483896
+        },
+        "description": [
+          "Join us for our annual breakfast event at Woolworths. We will celebrate womenâs achievements, raise awareness about discrimination and take action to drive gender parity. Letâs have the opportunity to network and come together to leave the event with actionable outcomes to #inspireinclusion.ÂBy attending this event, I understand that I may be photographed, filmed and recorded, and that these photos/videos may be shared publicly by She Sharp and used for promotional purposes."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-woolworths-international-women-s-day&quote=She%20Sharp%20%26%20Woolworths%3A%20International%20Women's%20Day",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-and-woolworths-international-women-s-day",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-deloitte-innovation",
+        "slug": "she-sharp-deloitte-innovation",
+        "title": "She Sharp & Deloitte: Innovation Unleashed",
+        "date_time": "Tue, 20 Jun 2023, 5pm - 7:30pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/aDvbWsg0QZSd7FenKNxM"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-deloitte-innovation",
+        "title": "She Sharp & Deloitte: Innovation Unleashed",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/aDvbWsg0QZSd7FenKNxM",
+        "date_time": "Tue, 20 Jun 2023, 5pm - 7:30pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.84616879999999,174.7665584&query_place_id=ChIJ3723u_tHDW0RGVX6wVRQwrU",
+          "latitude": -36.84616879999999,
+          "longitude": 174.7665584
+        },
+        "description": [
+          "Join us for:ÂShe Sharp & Deloitte: \n\nInnovation UnleashedLearn aboutÂ cutting-edge innovation with us!We\n are thrilled to announce an upcoming event in partnership with Deloitte. \nThis event is aimed at providing attendees with insights and opportunities for how to embrace cutting edge innovation!We encourage you to register early as spaces are limited!We will have special prizes and giveaways for those who register and attend the event.ÂPeople of all genders and backgroundsÂ are welcome to attend our events.More details coming soon!She Sharp is a community of women and non-binary people in tech who aim to inspire, empower and connect. Deloitte is a global industry leading firm ofÂ experts who help clients transform their businesses with innovative solutions.In this event, you will hear from inspiring speakers who will share their insights and experiences on innovation in various fields. You will also participate in an interactive workshop where you will learn about the Deloitte innovation framework and how to apply it to your own projects. Whether you are a student, a professional, or an entrepreneur, this event will help you learn about cutting-edge innovation and network with like-minded people.Don't miss this opportunity to learn about embracing innovation with She Sharp and Deloitte! We look forward to seeing you there!Innovation in technology has become increasingly vital in our fast-paced, interconnected world.With the ever-evolving landscape of digital advancements, it's crucial for countries like New Zealand to embrace and foster innovation in the tech industry.Â It encourages individuals and organizations to think outside the box, explore new possibilities, and push the boundaries of what is currently known. A vibrant tech sector that values innovation can attract and retain talented individuals, foster cross-industry collaborations, and inspire the next generation of tech enthusiasts. InnovationÂ drives economic growth, enhances efficiency and productivity, addresses societal challenges, fosters creativity and collaboration, and embraces ethical considerations.So, let's celebrate the spirit of innovation and stay ahead by attending the Innovation Unleashed event on 20 June hosted by one of industry leaders - Deloitte!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-deloitte-innovation&quote=She%20Sharp%20%26%20Deloitte%3A%20Innovation%20Unleashed",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-deloitte-innovation",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-ey",
+        "slug": "she-sharp-ey",
+        "title": "She Sharp@ EY",
+        "date_time": "Thu, 5 Mar 2020, 5:30pm - 8pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/W9QqiorqQdkjJu46IuE8"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-ey",
+        "title": "She Sharp@ EY",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/W9QqiorqQdkjJu46IuE8",
+        "date_time": "Thu, 5 Mar 2020, 5:30pm - 8pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8444931,174.7689278&query_place_id=ChIJYTrwqP5HDW0ReONUt5AbJV4",
+          "latitude": -36.8444931,
+          "longitude": 174.7689278
+        },
+        "description": [],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-ey&quote=She%20Sharp%40%20EY",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-ey",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-fergus",
+        "slug": "she-sharp-fergus",
+        "title": "She Sharp @ Fergus: Women in Tech & Trades",
+        "date_time": "Thu, 29 Apr 2021, 6pm - 8pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/FMFv50NgTG84rXvHcdM5"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-fergus",
+        "title": "She Sharp @ Fergus: Women in Tech & Trades",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/FMFv50NgTG84rXvHcdM5",
+        "date_time": "Thu, 29 Apr 2021, 6pm - 8pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8657158,174.7582235&query_place_id=ChIJEcHsB8RHDW0RMbrYmrLbKSg",
+          "latitude": -36.8657158,
+          "longitude": 174.7582235
+        },
+        "description": [
+          "Moving Beyond Diversity &Â Inclusion - An Evening with She# &Â Fergus SoftwareJoin us for an inspiring evening where we will shine the \nspotlight on women in tech and trades who are proving that they are more\n than just a diversity quota filler.You will hear from leaders in the \nindustry who have not settled for a seat on the sidelines and are \nsetting a new benchmark for inclusivity every day.\"Diversity is an invitation to the party, Inclusion is about an invitation to dance\"We have an amazing line-up of speakers - follow us for the updates!Keynote SpeakersChris Stevens, CTO and Product Officer at Fergus SoftwareChris is the newly appointed Chief Technology and Product Officer at Fergus, leading their engineering, product and design teams. Chris is a SaaS veteran, having worked for several global success stories such as PushPay, Orion Health and most recently, AskNicely. What's even better is his passion for building awesome software that delivers for its customers, the hard-working trades using Fergus being the best example.Ruby Kolesky, Heart of Product at JoyousRuby started off her career in tech as a software engineer and was the only female to graduate in her class. She has experienced first hand what it is like to be a mother in a male-dominated work-place. Come join us to hear Ruby speak about her experience with motherhood and her job in the technical field and her influence in creating the Joyous parental journey benefit.Amy FitzPatrick, Owner of Pink SparkyHaving started her apprenticeship in 2004, Amy is now the Founder and Director of Pink Sparky.Â  She currently employs, trains and supports 2 female apprentices on their path to being fully qualified. Amy and her team are based in The Waikato and fully support Women in Trades.Babra Ajaz, Junior Software Engineer at Fergus SoftwareBabra\n is a recent graduate from the University of Auckland. She studied \nComputer Systems Engineering and is working as a Software Engineer at \nFergus Software. Her journey in the technical field, although just \nstarting, has been guided with strong mentors that encourage her every \nday to be her best self and not let any biases come in the way."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-fergus&quote=She%20Sharp%20%40%20Fergus%3A%20Women%20in%20Tech%20%26%20Trades",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-fergus",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-iamremarkable",
+        "slug": "she-sharp-iamremarkable",
+        "title": "She Sharp: #IAmRemarkable",
+        "date_time": "Wed, 16 Apr 2025, 12pm - 1pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/5HqOH0UxRXeAsTy3rbMx"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-iamremarkable",
+        "title": "She Sharp: #IAmRemarkable",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/5HqOH0UxRXeAsTy3rbMx",
+        "date_time": "Wed, 16 Apr 2025, 12pm - 1pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "#IAmRemarkableis a global movement that empowers everyone, including under represented groups, to celebrate their achievements in the workplace and beyond, while challenging the social perception around self-promotion. At the heart of our movement is a 60 minute workshop open to everyone, hosted by our very own She Sharp founder and director- Dr Mahsa McCauley (Mohaghegh)."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-iamremarkable&quote=She%20Sharp%3A%20%23IAmRemarkable",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-iamremarkable",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-scw-and-xero-code-secure-lead-the-future-women-in-cybersecurity-workshop",
+        "slug": "she-sharp-scw-and-xero-code-secure-lead-the-future-women-in-cybersecurity-workshop",
+        "title": "She Sharp, SecureCodeWarrior, Xero: Code Secure. Lead the Future: Women in Cybersecurity Workshop",
+        "date_time": "Fri, 3 Oct 2025, 9:30am - 2pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/MeVIBcuSS7qINFi4sLbw"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-scw-and-xero-code-secure-lead-the-future-women-in-cybersecurity-workshop",
+        "title": "She Sharp, SecureCodeWarrior, Xero: Code Secure. Lead the Future: Women in Cybersecurity Workshop",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/MeVIBcuSS7qINFi4sLbw",
+        "date_time": "Fri, 3 Oct 2025, 9:30am - 2pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8524457,174.7821066&query_place_id=ChIJ0y5wuQ9IDW0RBBEMji-SOvE",
+          "latitude": -36.8524457,
+          "longitude": 174.7821066
+        },
+        "description": [
+          "ðFree t-shirts, coding challenges, and a community of women in tech â all in one workshop!JoinXero,Secure Code Warrior, andShe Sharpfor a hands-on workshop built just for you. This is your space tolearn, connect, and growalongside an empowering community of women in tech. ðð©âð» Whatâs waiting for you:Every participant gets afree t-shirton the day!Be part of Secure Code Warriorâs gamification approach to secure coding!Challenge yourself in an excitingcoding workshopdesigned to foster interest and engagement in secure coding practices.Tacklereal-world vulnerable code challengesâ identify the problem, find the insecure code, and fix the vulnerability.Choose from arange of programming languages(like Java Spring, Python, JavaScript, and Ruby). For those just starting out, thereâs also abeginner-friendly pseudocode optionto help you build core concepts you can apply anywhere.Hear lightning talksfrom four inspiring women leaders whoâll share their journeys, spark ideas, and highlight real pathways into cybersecurity.Collaborate and connectwith like-minded women and female-identifying participants, building confidence and breaking barriers together.Watch as participantsclimb the leaderboardand see who will be crowned the âSecure Code Warriorâ â with prizes for the top coders! ðð¡What you need to know:Bring yourlaptop and chargerto take part in the coding challenges.Anintro videowill be sent to you before the event so you can get familiar with the platform.Youâll also receive areminder email 2 days and 1 day before the eventto make sure youâre all set to join.This workshop is designed for women and female-identifying participants who want to explore, grow, and connect in the world of secure coding and cybersecurity. Itâs perfect for those who are:Exploring or building careers in security or developmentLooking to deepen their coding skills and gain industry insightsExcited to collaborate and learn alongside peers in the industryKeen to learn directly from industry leaders in cybersecurityWhether youâre just curious or ready to level up, this workshop is for YOU.â¨Here is the agenda for the day:Time SlotDurationActivity09:30am - 10:00am30 minsRegistration and Networking10:00am - 10:25am25 minsWelcome and kick off10:25am - 11:13am48 minsLightning Talks11:13am - 11:23am10 minsQ&A for our lovely speakers11:23am - 11:50am27 minsOnboarding for SCW platform and Demo11:50am - 12:00pm10 minsQ&A for SCW platform12:00pm - 12:30pm30 minsGroup photo & lunch time!12:30pm - 1:30pm60 minsCoding Workshop1:30pm - 2:00pm30 minsAwarding of Winners & Closing Remarks2:00pm - 4:00pm120 minsNetworking"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-scw-and-xero-code-secure-lead-the-future-women-in-cybersecurity-workshop&quote=She%20Sharp%2C%20SecureCodeWarrior%2C%20Xero%3A%20Code%20Secure.%20Lead%20the%20Future%3A%20Women%20in%20Cybersecurity%20Workshop",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-scw-and-xero-code-secure-lead-the-future-women-in-cybersecurity-workshop",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-techweek",
+        "slug": "she-sharp-techweek",
+        "title": "The Truths to Gaming and Start-up - presented by She Sharp & Geo AR Games",
+        "date_time": "Tue, 25 May 2021, 6pm - 8pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/w0O1QCGcRWyXRu3XC3Ed"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-techweek",
+        "title": "The Truths to Gaming and Start-up - presented by She Sharp & Geo AR Games",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/w0O1QCGcRWyXRu3XC3Ed",
+        "date_time": "Tue, 25 May 2021, 6pm - 8pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8434787,174.7571161&query_place_id=ChIJzXywIPRHDW0Rz6fazacJS3U",
+          "latitude": -36.8434787,
+          "longitude": 174.7571161
+        },
+        "description": [
+          "âThe Truths to Gaming and Start-up - SheSharp Editionâ\n is organised by SheSharp, in collaboration with Geo AR Games & the \nNew Zealand Game Developers Association (NZGDA). If youâre interested in\n Gaming, Augmented Reality, and Development, then this is an event you \ndonât want to miss!Hear the inspiring story of Melanie, CEO of \nGeo AR Games, and learn how she grew her start-up and worked on national\n as well as international projects! Itâs quite difficult for women to \nmake it in the gaming industry and many females go through the \nstereotypical work environment. Melanie has some great tips for young \nwomen out there who are looking for a career in gaming, and how to make \nit in the industry! The gaming world needs women,Â like Talia Pua, Carol \nTaka and Vaanipriya Diwan, who are part of the panel on the night!Although\n this event features all female speakers, anyone can attend; from high \nschool/university students to professionals far into their careers, \npeople of all genders, aspiring entrepreneurs, are all welcome. We have a\n range of activities lined up, such as networking, gaming, and \nplay-testing sessions.OUR SPEAKERMelanie \nLanglotzMelanie \nLanglotz is the founder of Geo AR Games and the ideas person behind the \nproduct range. She has got a varied 20 years background from both a \ntechnical and management perspective in the Entertainment and Media \nindustry and holds a Post Grad Diploma in Entrepreneurship, a Diploma in\n Business Coaching. She has spent the last 7 years immersing herself in \ngame psychology and Augmented Reality. Her original AR WORLD idea goes \nback to Feb 2011 with the first prototype being developed back in 2012.Mel has been through 2 business incubators: Start-up Chile and Lightning\n Lab, which provided the springboard for Geo AR Games, our first product\n \"Sharks in the Park\" and later on \"Magical Park\".OUR PANELISTSTalia PuaTalia\n is equal parts a performer and designer of playful interactions. Her \nbody of work spans across multiple disciplines including, but not \nlimited to, game and play, installation work, theatre-making and \nperformance. She has worked with AUT, Geo AR, MOTAT, Red Leap Theatre \nand Proudly Asian Theatre. In 2019 she was awarded a Gold Pin for her \nboard game 'Continuum' at the Best Awards.Carol TakaCarol\n is a freelance Maori Game Designer. She is working as a junior \nDeveloper with GeoAR, doing game design and programming amongst other  \nthings. She has a Bachelor of Creative Technologies and this has \nsupported her journey in the industry. She enjoys working with Augmented\n Reality and Virtual Reality and hopes to work more with those in \nrelation to her Maori heritage.Vaanipriya DiwanVaanipriya\n graduated from Auckland University of Technology with a Bachelor of \nCreative Technologies. Having studied such an interdisciplinary course \nhas allowed her to learn and gain valuable skills in many subjects. \nShe's freelancing with GeoAR Games and utilising her augmented reality, \nconcept and game design, and communication amongst other key skills."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-techweek&quote=The%20Truths%20to%20Gaming%20and%20Start-up%20-%20presented%20by%20She%20Sharp%20%26%20Geo%20AR%20Games",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-techweek",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/she-sharp-techweek-envision-the-future-how-to-create-a-more-diverse-inclusive-and-sustainable-future-through-technology-and-human-centered-innovation",
+        "slug": "she-sharp-techweek-envision-the-future-how-to-create-a-more-diverse-inclusive-and-sustainable-future-through-technology-and-human-centered-innovation",
+        "title": "She Sharp Techweek: Envision The Future: How to Create A More Diverse, Inclusive & Sustainable Future through Technology & Human-Centered Innovation",
+        "date_time": "Wed, 29 Jul 2020, 5:30pm - 7pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/KueQMyZYR4uZbuvXgTBN"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/she-sharp-techweek-envision-the-future-how-to-create-a-more-diverse-inclusive-and-sustainable-future-through-technology-and-human-centered-innovation",
+        "title": "She Sharp Techweek: Envision The Future: How to Create A More Diverse, Inclusive & Sustainable Future through Technology & Human-Centered Innovation",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/KueQMyZYR4uZbuvXgTBN",
+        "date_time": "Wed, 29 Jul 2020, 5:30pm - 7pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "Join She Sharp and diverse tech leaders for an inspiring and on the future of technology and leadership to create a more inclusive tomorrow.What's it all about?Join She Sharp for an inspiring and thought-provoking panel on the future of leadership in technology. 2020 has brought unprecedented challenges to the forefront of humanity. With crisis comes opportunities. Learn how we can harness the power of human ingenuity to create a better tomorrow.Topics to be discussed will include:- How do we accelerate innovation and find transformative solutions to critical issues faced by organisations and navigate the evolving industry landscape and the new normal- How do we harness the power of cutting-edge emerging technologies for impact and agility- What we need to do to bring about more diversity within the tech sector (diverse workforce, environment, culture, ways of working, thinking)- How can New Zealanders leverage our unique advantages to unleash our full potentialFeaturing a diverse range of leaders and voices from the NZ tech sector. Join us for an unforgettable evening - This event is not to be missed!Join us. Be inspired. Take action.We will live streaming online on Wednesday 29th July, 5.30 pm. Register to receive the webinar details to tune in!Brought to you by She Sharp. We empower females ranging from high school all the way to industry professionals in or considering a career in Science, Engineering, Technology, and Mathematics (STEM). We aim to address the issues of diversity and inclusion within STEM by empowering equal opportunities to all genders.Â We were honoured to win the 2019 Diversity Works Award for Empowerment (Small Organisation Excellence) in 2019.Our special guests:Isuru Fernando (Google Cloud NZ, ex-IBM NZ Head of AI, AI Forum NZ)Samar Alrayyes (MicrosoftÂ Azure Digital Transformation Specialist & TechWomen Executive Team Member)Jane Hwang (Solnet Solutions, General Manager)Evelyn Seewald (ex-Fonterra, General Manager for Farm Source Digital)Ulrich Frerk (Adroit, Founder and Director)Dr Reza Jarral (Doctor, EHF Fellow and Tech Futures Lab Graduate)Topics to be covered will include:How do we accelerate innovation and find transformative solutions to critical issues faced by organisations today and navigate the evolving industry landscape and the new normalHow do we harness the power of cutting-edge emerging technologies for impact and agilityWhat we need to do to improve diversity and inclusion within the tech sector (gender, culture, workforce, environment, ways of working, thinking)How should we empower New Zealanders to leverage our unique strengths to unleash our full innovative potentialJoin us for an unforgettable evening, and hear from a diverse range of leaders and voices from the NZ tech sector to envision a better future.Learn more aboutÂour speakers onÂShe Sharp websiteÂ andÂTechweek page!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-techweek-envision-the-future-how-to-create-a-more-diverse-inclusive-and-sustainable-future-through-technology-and-human-centered-innovation&quote=She%20Sharp%20Techweek%3A%20Envision%20The%20Future%3A%20How%20to%20Create%20A%20More%20Diverse%2C%20Inclusive%20%26%20Sustainable%20Future%20through%20Technology%20%26%20Human-Centered%20Innovation",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshe-sharp-techweek-envision-the-future-how-to-create-a-more-diverse-inclusive-and-sustainable-future-through-technology-and-human-centered-innovation",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/shesharp-iwd-2022",
+        "slug": "shesharp-iwd-2022",
+        "title": "She Sharp & AWS International Women's Day Event #BreakTheBias",
+        "date_time": "Thu, 10 Mar 2022, 6:30pm - 8pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/kIUEeEphRTmbXbOmlk5Z"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/shesharp-iwd-2022",
+        "title": "She Sharp & AWS International Women's Day Event #BreakTheBias",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/kIUEeEphRTmbXbOmlk5Z",
+        "date_time": "Thu, 10 Mar 2022, 6:30pm - 8pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "She Sharp is back to celebrate International Womenâs Day 2022! We hope youâve had a beautiful summer so far and that you are excited for all that She Sharp has planned for you this year!International Womenâs Day is fast approaching and She Sharp is partnering with AWS to bring you an inspirational evening where we talk all about#breakingthebias!Come along onThursday, 10th March, 6:30pmto\n enjoy some fireside chats by amazing panelists, an interactive workshop and\n a short quiz. Please join us to celebrate and honour the women you \nknow, the women who inspire you and the women who work hard everyday to \ncreate more diversity in the tech sector!We will have special prizes and giveaways for those who register and attend the event.We canât wait to start off 2022 with you!Meet the speakers!Pip Gilbert, AWSPip is an experienced tech executive who knows first hand what it takes to take tech products to the world. From heading up Strategy and Product at EROAD, to Product and Data Science at Dexibit, Pip now applies that unique product leadership skillset of spanning vision to tactics in her role leading strategy & operations at Amazon Web Services NZ.Gilbert Quinn, AWSI am a husband, father, artist, geek, technology enthusiast, gamer, kids play gym, food lover and travel lover. My career has led me to specialise in software and solution architecture and design, business analysis, team and process management, and helping customer digitally transform their business. I joined AWS in 2019 as the first SA Manager in NZ, leading a team of Solutions Architects helping customer solve business challenges through the use of AWS technologies. Before that I was CTO at Britehouse Automotive which is part of the NTT group of companies, where I lead a team building technology enabled business solutions for the Automotive industry in South Africa.Pratima Singh, AWSPratima has been in the IT industry for almost 14 years. Through her tenure she has been in a multitude of roles - from being an individual contributor to leading cloud centre of excellence teams. In her current role as a solutions architect at AWS,Â  Pratima helps small and medium business use cloud to build successful businesses. Pratima has been a SheBuilds mentor and has spoken on various technical and non-technical topics in global conferencesAdam Barker, AWSAdam is a Senior technology executive with extensive experience driving business outcomes through cloud. Skilled in Cloud Strategy and Technology, Sales, Partner Management, Go-to-market Strategy and Negotiation.Meet the Implicit Bias workshop presenters!Erin Anderson Scott, GD1 (Global from Day One)Erin is passionate about connecting people, businesses, and communities.Currently, she is the Community Manager at GD1 VC firm. Her international experience and diverse background have given her a strong understanding of the digital divide, the benefits of technology, and how they can be utilised to create positive change.She is an advocate for diversity and inclusion, and collaboration over competition. In a previous role with Australian based company Fitted for Work, she helped deliver Australia's first transgender women in work programs, worked alongside large corporates to streamline sustainability and inclusivity initiatives, and has delivered thousands of programs and services to women and gender diverse clients facing disadvantage.Outside of work you'll find Erin coaching tennis, exploring art galleries, out on an adventure, or investigating sustainable fashion avenues.Pauli Sosa, Go Hard on Tech (Auckland Unlimited) & MUV TalksPauli is passionate about connecting people and making things happen. She is the Community Manager at Go Hard On Tech by Auckland Unlimited.She Co-Founded MUV Talks, a non a non-profit series focused on building capability and relationships within communities. She is also a volunteer as Global Facilitator at Startup Weekend and Startup Digest Curator for New Zealand.Meet the AI art &Â NFT workshop presenter!Ankita Dhakar, Security Lit / Cyber CosmosDue to the impact of COVID-19 and people moving to remote working and\n more businesses choosing digital solutions brought a cyber-pandemic to \nNew Zealand. Once Ankita learnt about cyber security incidents and the \nvery real threats companies and individuals face in the digital era, she\n knew she had to help. With this vision, she founded Security Lit, A \ncompany providing penetration testing and security consultancy services \nto SMEs. Ankita made it her mission to make cybersecurity solutions easy\n and affordable so that all businesses â big or small - can operate \nconfidently and securely in cyberspace.Join our wonderful celebration of International Women's Day!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshesharp-iwd-2022&quote=She%20Sharp%20%26%20AWS%20International%20Women's%20Day%20Event%20%23BreakTheBias",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshesharp-iwd-2022",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/shesharp-iwd-2023",
+        "slug": "shesharp-iwd-2023",
+        "title": "She Sharp & Countdown: International Women's Day",
+        "date_time": "Wed, 8 Mar 2023, 7:30am - 9am NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/aDvbWsg0QZSd7FenKNxM"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/shesharp-iwd-2023",
+        "title": "She Sharp & Countdown: International Women's Day",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/aDvbWsg0QZSd7FenKNxM",
+        "date_time": "Wed, 8 Mar 2023, 7:30am - 9am NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8585472,174.7487792&query_place_id=ChIJq0Czl5VHDW0RYLF9zDA1eTg",
+          "latitude": -36.8585472,
+          "longitude": 174.7487792
+        },
+        "description": [
+          "Join us for Breakfast on International Women's Day!We are excited to announce our first event for 2023 will be a breakfast event in collaboration with Countdown to celebrate International Womenâs Day!For International Womenâs Day, She Sharp is partnering with Countdown and inviting you to #embraceequity and kick-start your day. Letâs challenge gender stereotypes, call out discrimination, draw attention to bias, and seek out inclusion in all aspects of our personal and professional lives.She Sharp are committed to empowering more women into STEM careers to drive gender parity into a world free from bias. Our events are an open opportunity for Everyone, regardless of gender, age, race or background, to work together in order to bridge the gender gap and better represent women within STEM fields.Come along on Wednesday, 8th March, 7:30am to enjoy some inspiring women speakers, as well as a delicious, nutritious breakfast. Join us to celebrate and honour the Women you know, the Women who inspire you and the Women who work hard everyday to create more diversity in STEM!We have special prizes and giveaways for those who register and attend the event.Â Get your tickets now!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fshesharp-iwd-2023&quote=She%20Sharp%20%26%20Countdown%3A%20International%20Women's%20Day",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fshesharp-iwd-2023",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/story-tellers-series",
+        "slug": "story-tellers-series",
+        "title": "STORYTELLERS SERIES",
+        "date_time": "",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/DFyh3CmQ0Wbu8vlM9u7w"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/story-tellers-series",
+        "title": "STORYTELLERS SERIES",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/DFyh3CmQ0Wbu8vlM9u7w",
+        "date_time": null,
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "She Sharp Storytellers SeriesWe are excited to announce our upcoming free She Sharp Storytellers Series, featuring interactive sessions with inspiring and remarkable leaders in technology, hosted on Zoom. Get your free tickets now!Got questions about your career path? Curious about emerging technology? Keen to network with amazing peers? Join us at our She Sharp Storytellers virtual Zoom sessions! We hope that these events will inspire, empower and help you stay future-ready!Each session will feature a presentation and Q&A from our featured guest speakers on their career journey & industry topics, plus opportunities for breakout discussions and networking.She Sharp Storytellers Series officially kicks off with our inaugural event onÂThursday 7th May 5.30 pm featuring Saba Samiei (Microsoft)Â Thursday 14th May 5.30 pm featuring Tash Bettridge (Vodafone)Â Thursday 14th May 5.30 pm featuring Lena Waizenegger (AUT)Â Thursday 14th May 5.30 pm featuring Alisa Edwards (Gravity Lab)Thursday 4th June 6.00 pm featuringÂ Paola Golledge (Google)We will be announcing more awesome speakers shortly, so stay tuned and follow us on shesharp.co.nz and our social media channels for announcements!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fstory-tellers-series&quote=STORYTELLERS%20SERIES",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fstory-tellers-series",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refund policy specified."
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/storytellers-series-2-0",
+        "slug": "storytellers-series-2-0",
+        "title": "STORYTELLERS SERIES  2.0",
+        "date_time": "",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/DFyh3CmQ0Wbu8vlM9u7w"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/storytellers-series-2-0",
+        "title": "STORYTELLERS SERIES  2.0",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/DFyh3CmQ0Wbu8vlM9u7w",
+        "date_time": null,
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "She Sharp Storytellers SeriesSheSharp is delighted to announce Storytellers Series 2.0 after an overwhelming response from our first series!This time around we have the honour to bring some more amazing speakers to you all! We are super excited to announce Sai Honig (ANZ Bank, Senior Security Consultant) and Divya Kataria (Transmission Gully, Graduate Civil Engineer) for our free She# Storytellers Series 2.0!Get your free tickets fromÂshesharp.co.nz/eventsÂ today!Zoom details will be sent to registered attendees.Each session will feature a presentation and Q&A from our featured guest speakers on their career journey & industry topics, plus opportunities for breakout discussions and networking with fellow professionals and aspiring technologists.We will be announcing more awesome speakers for June, so stay tuned and follow us onÂshesharp.co.nzÂ and our social media channels for updates!Please forward this email to anyone you know who would enjoy the series. These events are for everyone, all genders, backgrounds, and career stages welcome!Grab your free tickets nowÂ - we hope to seeing you soon!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fstorytellers-series-2-0&quote=STORYTELLERS%20SERIES%20%202.0",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fstorytellers-series-2-0",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refund policy specified."
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/women-in-data-and-analytics",
+        "slug": "women-in-data-and-analytics",
+        "title": "Women in Data and Analytics",
+        "date_time": "Tue, 30 Nov 2021, 6:30pm - 8pm NZDT",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/zGXUFOssToirKDN4qPTS"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/women-in-data-and-analytics",
+        "title": "Women in Data and Analytics",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/zGXUFOssToirKDN4qPTS",
+        "date_time": "Tue, 30 Nov 2021, 6:30pm - 8pm NZDT",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": null,
+          "latitude": null,
+          "longitude": null
+        },
+        "description": [
+          "Join us ONLINE on Tuesday 30th NovemberÂ for a jam-packed evening!Curious about career pathways in data, analytics and visualisation? Do you want to learn from industry leaders, get career advice, and participate in a hands-on Power BI workshop?We will start with a panel featuring renowned experts, Leila Etaati, Indira Bandari, Owen Auger, Sudhir Rawat, about career development as a data analytics, data engineer, and data science, what they need, and what skills we need to know.After that, we have a hands-on lab for working with Power BI, extracting data from a data source, then cleaning it and visualizing it to show the current situation of the data better and learning how to visualise data for better storytelling and decision making.Speakers:Leila EtaatiLeila is \nthe first Microsoft AI MVP in New Zealand and Australia. She has Ph.D. \nin Information System from the University Of Auckland. She is the \nCo-director and data scientist in RADACAD Company with more than 100 \nclients around the world. She is the co-organizer of Microsoft Business \nIntelligence and Power BI Use group (meetup) in Auckland with more than \n1200 members as well as the co-organizer of three main conferences in \nAuckland: SQL Saturday Auckland (2015 till now) with more than 400 \nregistrations, Difinity (2017 till now) with more than 200 registrations\n and Global AI Bootcamp 2018.She is a Data Scientist, BI Consultant, Trainer, and a well-known \nInternational Speaker to many conferences such as Microsoft ignite, SQL \npass, Data Platform Summit, SQL Saturday, Power BI World Tour and so \nforth in Europe, USA, Asia, Australia, and New Zealand. She has over ten\n years' experience working with databases and software systems and was \ninvolved in many large-scale projects for big-sized companies. Leila is \nan active Technical Microsoft AI blogger for RADACAD."
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fwomen-in-data-and-analytics&quote=Women%20in%20Data%20and%20Analytics",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fwomen-in-data-and-analytics",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    },
+    {
+      "basic_info": {
+        "url": "https://events.humanitix.com/women-in-security",
+        "slug": "women-in-security",
+        "title": "Women in Security - Reshaping the Future",
+        "date_time": "Fri, 17 Jun 2022, 6pm - 8pm NZST",
+        "location": null,
+        "image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/OQtaCPkkQUKaYhwbCRf0"
+      },
+      "detail_info": {
+        "url": "https://events.humanitix.com/women-in-security",
+        "title": "Women in Security - Reshaping the Future",
+        "banner_image_url": "https://cdn.filestackcontent.com/cache=expiry:max/resize=width:1600/output=format:jpg,quality:40/compress/OQtaCPkkQUKaYhwbCRf0",
+        "date_time": "Fri, 17 Jun 2022, 6pm - 8pm NZST",
+        "location": {
+          "venue_name": null,
+          "full_address": null,
+          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-36.8441592,174.7659162&query_place_id=ChIJERqNe_lHDW0R8hVkFSFqUhA",
+          "latitude": -36.8441592,
+          "longitude": 174.7659162
+        },
+        "description": [
+          "Women in Security - Reshaping the FutureEVENT HAS SOLD OUT! Due to the overwhelming popularity of this event we've hit our max venue capacity in record time. Please sign up for theticket waitlistto be notified in case any spots open up.We welcome you tosign up for our mailing list&follow our social media accountsfor more exciting events, opportunities and updates!Â ðJoin us at the AWS Office in Auckland for this special event recognising individuals, initiatives, and organisations that are changing the norms, reconditioning the way we think about diversity, inclusion, and equity, and shaping a new normal for the security industry in Aotearoa.Featuring a stellar line-up of speakers from across Aotearoa's security sector, we will hear lightning talks from each of them sharing their journeys and learnings, demystifying the security industry, followed by a Q&A Panel. We'll also have fun interactive activities and opportunities for networking over yummy food and drinks, with awesome prizes up for grabs on the night.It will be a fabulous event for everyone - no matter if you know nothing about the industry, new to security, curious about the industry or a seasoned security professional! AND remember - our events are open and inclusive to all genders, females, males, nonbinary, and allies! So bring your friends or colleagues for a great night of learning and networking with the community.+ NEW SPEAKERS ANNOUNCED!Speakers/Panelists:Kate Pearce (Trade Me - Head of Security)Kate is currently the Security Officer at Trade Me, where she runs the security team to keep the data of millions of kiwis safe.  Kate holds several governance roles in tech-adjacent organizations including Internet NZ councillor, the NZITF Board - (New Zealand Internet Task force -  a body for Security professionals). Kate gives her time to many different causes in and around the tech community and is a firm believer in everyone getting a fair go no matter their background.She spent several years working in information security consulting while based in the United States â first for the Chicago-based consultancy Neohapsis, and then for Cisco after Neohapsis was acquired by Cisco in 2015. Before her current role, Kate ran a security assessment and response practice across the Asia-Pacific region for Cisco. Her work as a consultant covered application security and secure SDLC, network security, and systems security.She has spoken and presented research on security topics at many high-profile events, and is an advocate for women and minorities in tech. She is a regular speaker and keynote presenter at conferences in the Australia-New Zealand region and has presented twice at BlackHat, the leading worldwide technical cyber security conference.Amina Aggarwal (Spark - Security Consultant, ITSP Magazine Podcast Host, NZNWS - Ambassador Lead)Amina Aggarwal has a broad range of experience that is more than 11 years in Information Technology. She is currently working as a Network and Security Design Consultant at Spark and provides cyber security advice to Sparkâs internal and external customers. She is the Winner of 2021 Women in Security Awards NZ, awarded by DEFSEC (Defence Security New Zealand) magazine for going above and beyond her duties as a cyber security professional. She is also a finalist in the âPeopleâs Choice Awardâ category for the Ally of the Year Awards 2022.Amina has been involved with the New Zealand Network for Women in Security (NZNWS) as an ambassador since 2021. She has committed to giving her time to Cybersecurity events globally. She aims to empower women by exemplifying that if she can do it anyone can do it. She is also a podcast host at ITSP Magazine where she shares diverse perspectives of women in technology and aims to empower women using the power of sharing stories of technology professionals. She has been involved in various other programs such as CyberSafe mentorship program for mentoring marginalised communities in Africa and leads the code club for a local Montessori School in Auckland, New Zealand.Briar Feng, PhD (NZ Super Fund)Briar officially started the security journey last year with NZ Super Fund, where she worked for the Risk team prior to this thrilling new chapter. Trained but not so tamed as an economist, she found her love for law and corporate governance during the master programme, which pushed her through a PhD in Commercial Law from the University of Auckland. After the graduation and before returning to New Zealand, Briar worked for UN ESCAP and UN Population Fund on various ICT for Development initiatives. She is not your typical security gal, so to speak, but she is absolutely excited to be part of this thriving industry and work with more and more brilliant fellow women in security.Laura Bell (SafeStack Academy - CEO)With over twenty years of experience in software development and information security, Laura Bell specialises in bringing security into organisations of every shape and size.She is the founder and CEO of SafeStack Academy, an online education platform offering flexible, high-quality, and people-focused secure development training for fast moving companies, with a focus on building security skills, practices, and culture across the entire engineering team.Laura is an experienced conference speaker, trainer, and regular panel member, and has spoken at a range of events such as BlackHat USA, Velocity, and OSCON on the subjects of privacy, covert communications, agile security, and security mindset.She is also the co-author of Agile Application Security and Security for Everyone.Asya Ivanova (Generate KiwiSaver - CTO)Asya comes from a diverse background pulling together knowledge across blockchain, finance and telecom industries. In her last few jobs security has been the primary focus where she has built products and the teams around it.Special Guests:Tiffany Bloomquist (AWS - NZ Country Manager)Tiffany is currently the country manager for AWS in New Zealand, leading our commercial sales across large enterprise, Software as a Service providers, small to medium businesses and start-ups. She is an experienced international leader, focused on driving customer business outcomes, transformation, innovative strategy and leveraging partnerships to drive growth.Â AWSâs focus in Aotearoa is to help unleash further innovation, drive \ngreater productivity, increase our skilled workforce, and truly position\n New Zealand at the forefront of digital commerce for generations of \nKiwis to come.She coordinates 150+ AWS NZ employees to deliver assistance across thousands of customers and partners as they leverage cloud-based operating models to transform their overall architecture with AWS services. Her teams work hand-in-hand with customers and AWS partners to provide deep expertise in the architecture, design, development and implementation of cloud computing initiatives that result in real business outcomes.ÂTiffany has 24+ yearsâ experience in Services and Technology businesses with international roles in the US, Europe and Asia. Passionate customer advocate, with career spanning management of worldwide deployments of internal business applications, design and launch of start-up organizations and programs, sales strategy and business development, orchestration of worldwide and time zone level strategy and leadership of large people organizations.Sarah Lock (AWS - Startup Account Manager, Women @ AWS NZ Lead)Sarah is currently Account Manager at AWS New Zealand. Her entire career has been in the tech field helping find the right people for companies to grow and succeed. Now excited to bring these skills to advise New Zealand startups and help them grow!We will be joined byÂ Tiffany Bloomquist (AWS - NZ Country Manager) who will be welcoming everyone to AWS NZ andÂ Sarah Lock (AWS - Startup Account Manager, Women @ AWS NZ Lead) who will be moderating the panel!Sai Honig (NZNWS - Co-Founder, AWS - Security Consultant)Sai Honig is a multipotentialite who has worked in differing roles in various industries. Prior to information security, Sai was an aerospace design engineer and financial/ operational auditing. Saiâs IT experience is in the governance, audit, supply chain, risk management, and security. Her industrial experience includes manufacturing, healthcare, education, and financial services.Sai is technical but not a programmer. She flourish the most in a security role that works right across the business, consultatively bringing security \"into the real world\" for the average staff member. Sai is passionate in helping others and promoting a wider understanding of cybersecurity. She works with teams to develop and incorporate security knowledge into their work. Sai also enjoys mentoring others and sharing her path to cybersecurity.Originally from the United States, Sai now lives in New Zealand. Sai is also co-founder of NZ Network for Women in Security. This is a forum for women currently working in cybersecurity or are interested in cybersecurity.Tash Bettridge (NZNWS - Co-Founder)Tash Bettridge (Te whÄnau-a-apanui, ngapuhi, pakeha) is an award-winning woman in security, having co-founded the New Zealand Network for Women in Security, she was recognised in theÂ global SIA Women in Security Forum Power 100 in 2022, Women in Security Awards Aotearoa Indigenous Advocate, amongst numerous industry accolades for her work advocating for diversity in cybersecurity, as well as initiatives that empower MÄori and Pacific People.Abby Zhang (NZNWS - Auckland Chapter Lead)Abby Zhang is a Security Analyst, Cloud and Fintech Security Researcher based in Aotearoa. Abby is an experienced cybersecurity and technology risk professional with years of professional experience in auditing, internal control, risk management and IAM. Abby has previously worked in large CPA Firms in China, where she worked in the banking and insurance sector.Abby moved to Aotearoa and studied for a Graduate Diploma in Computing from Unitec Institute of Technology in 2020. This is where she found and developed her passion for cloud security, fintech security, penetration testing, ABI, machine learning, and data science.In her spare time, she is playing HacktheBox labs where she has a Pro Hacker Rank and preparing for the OSCP. She is also a volunteer for Parkrun NZ and a Community Patroller for Community Patrols of New Zealand (CPNZ).Tash and Sai from NZNWS will be sharing some fantastic opportunities for women in security in New Zealand.Tash, Amina and Abby from NZNWS will also be leading the interactive workshop activities!"
+        ],
+        "agenda": [],
+        "host": {
+          "name": "She Sharp",
+          "profile_url": "https://events.humanitix.com/host/5e3388f9a912950007fda1c7",
+          "followers": "271 followers",
+          "website": "https://www.shesharp.org.nz/",
+          "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fevents.humanitix.com%2Fwomen-in-security&quote=Women%20in%20Security%20-%20Reshaping%20the%20Future",
+          "instagram": "https://www.instagram.com/shesharpnz/",
+          "linkedin": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fevents.humanitix.com%2Fwomen-in-security",
+          "twitter": "https://humanitix.com/impact",
+          "description": null
+        },
+        "refund_policy": "No refunds"
+      }
+    }
+  ]
+}
