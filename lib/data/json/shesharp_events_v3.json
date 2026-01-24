@@ -1,7 +1,7 @@
 {
   "metadata": {
     "source": "https://www.shesharp.org.nz/events",
-    "scrapedAt": "2026-01-24T07:27:31.888Z",
+    "scrapedAt": "2026-01-24T21:11:30.199Z",
     "totalEvents": 84,
     "organization": "She Sharp New Zealand",
     "version": "3.0"
@@ -26,9 +26,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "University Union Building, University of Otago",
+          "address": "University of Otago 660 Cumberland Street, Dunedin North, Dunedin 9016, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-45.8661274,170.5121474&query_place_id=ChIJ1zFU6m6sLqgRlaapZj-jzEg",
@@ -328,9 +328,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Xero Office (Level 2)",
+          "address": "96 Saint Georges Bay Road, Parnell, Auckland 1052, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8524457,174.7821066&query_place_id=ChIJ0y5wuQ9IDW0RBBEMji-SOvE",
@@ -473,9 +473,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Fonterra",
+          "address": "109 Fanshawe Street, Auckland Central, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8457585,174.7560805&query_place_id=ChIJRcLbvfNHDW0RgfG4eWHcU74",
@@ -599,9 +599,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "HPE, Level 19 PWC Tower",
+          "address": "15 Customs Street West, Auckland Central, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8441992,174.7657401&query_place_id=ChIJBbBKcCVHDW0RfNlukgQCXiI",
@@ -1264,9 +1264,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "MYOB Office",
+          "address": "8/50 Albert Street, Auckland Central, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8464923,174.7648639&query_place_id=Ei44LzUwIEFsYmVydCBTdHJlZXQsIEF1Y2tsYW5kIDEwMTAsIE5ldyBaZWFsYW5kIjcaNQowEi4KFAoSCcnzMUP6Rw1tERk12snlbszFEDIqFAoSCX3I_4r6Rw1tEQAsLvUdwRQYEgE4",
@@ -1520,9 +1520,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "MYOB office",
+          "address": "Level 5, 12 Normanby Road, Mt Eden, Auckland",
           "city": "",
           "country": "New Zealand"
         },
@@ -1662,9 +1662,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "GridAKL / Futures Lab / Level 4, 12 Madden St / Wynyard Qtr",
+          "address": "12 Madden Street, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8422463,174.7566512&query_place_id=ChIJ-cXZOfRHDW0RLMOqsYOekWI",
@@ -2064,9 +2064,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Deloitte Auckland (Level 20)",
+          "address": "01 Queen Street, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8435565,174.7668454&query_place_id=ChIJ3723u_tHDW0RGVX6wVRQwrU",
@@ -2271,9 +2271,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Fonterra Centre",
+          "address": "109 Fanshawe Street, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8457585,174.7560805&query_place_id=ChIJRcLbvfNHDW0RgfG4eWHcU74",
@@ -2438,9 +2438,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Various venues throughout Aotearoa, Australia and South Pacific",
+          "address": "Aotearoa, NZ | Australia | South Pacific",
           "city": "",
           "country": "New Zealand"
         },
@@ -2488,7 +2488,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "Refunds are available up to 7 days prior to the event",
-        "humanitixUrl": "https://events.humanitix.com/ai-forum-nz-hackathon-2023"
+        "humanitixUrl": "https://events.humanitix.com/ai-forum-nz-hackathon-2023",
+        "dateTime": "2023-08-11T07:00:00+1200 - 2023-08-20T17:00:00+1200",
+        "startTime": "23",
+        "endTime": "08"
       }
     },
     {
@@ -2510,9 +2513,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Various venues throughout Aotearoa, Australia and South Pacific",
+          "address": "Aotearoa, NZ | Australia | South Pacific",
           "city": "",
           "country": "New Zealand"
         },
@@ -2985,7 +2988,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "Refunds are available up to 7 days prior to the event",
-        "humanitixUrl": "https://events.humanitix.com/ai-forum-nz-hackathon-2023"
+        "humanitixUrl": "https://events.humanitix.com/ai-forum-nz-hackathon-2023",
+        "dateTime": "2023-08-11T07:00:00+1200 - 2023-08-20T17:00:00+1200",
+        "startTime": "23",
+        "endTime": "08"
       }
     },
     {
@@ -3007,9 +3013,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Fiserv Office, Level 6",
+          "address": "8 Tangihua Street, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8458624,174.7735703&query_place_id=ChIJ-w41WQdIDW0RXCxWi-OhzFw",
@@ -3148,9 +3154,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Les Mills International",
+          "address": "Level 2/200 Victoria Street West, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8484159,174.7568309&query_place_id=ChIJWwgQgfJHDW0RxsjpqsfO-_A",
@@ -3329,9 +3335,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Level 5 (MYOB office)",
+          "address": "12 Normanby Road, Mount Eden, Auckland 1024, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.87080969999999,174.7635465&query_place_id=ChIJYe-_rtpHDW0RGwJrUjtqJBM",
@@ -3432,9 +3438,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "MYOB office",
+          "address": "Level 5, 12 Normanby Road, Mt Eden, Auckland",
           "city": "",
           "country": "New Zealand"
         },
@@ -3517,9 +3523,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "GridAKL / Futures Lab / Level 4, 12 Madden St / Wynyard Qtr",
+          "address": "12 Madden Street, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8422463,174.7566512&query_place_id=ChIJ-cXZOfRHDW0RLMOqsYOekWI",
@@ -3794,7 +3800,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "No refund policy specified.",
-        "humanitixUrl": "https://events.humanitix.com/storytellers-series-2-0"
+        "humanitixUrl": "https://events.humanitix.com/storytellers-series-2-0",
+        "dateTime": "2020-05-14T17:30:15+1200 - 2020-10-01T19:30:00+1300",
+        "startTime": "20",
+        "endTime": "05"
       }
     },
     {
@@ -3919,7 +3928,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "No refund policy specified.",
-        "humanitixUrl": "https://events.humanitix.com/story-tellers-series"
+        "humanitixUrl": "https://events.humanitix.com/story-tellers-series",
+        "dateTime": "2020-05-07T17:30:15+1200 - 2020-06-30T18:30:00+1200",
+        "startTime": "20",
+        "endTime": "05"
       }
     },
     {
@@ -4161,9 +4173,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Fisher &amp; Paykel Healthcare Campus",
+          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -4228,7 +4240,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she",
+        "dateTime": "2024-07-26T17:30:30+1200 - 2024-07-28T18:00:30+1200",
+        "startTime": "24",
+        "endTime": "07"
       }
     },
     {
@@ -4250,9 +4265,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "MYOB",
+          "address": "Level 5, Eden, 5/12 Normanby Road, Mount Eden, Auckland 1024, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
@@ -4347,9 +4362,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Xero Office (Level 2)",
+          "address": "96 Saint Georges Bay Road, Parnell, Auckland 1052, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8524457,174.7821066&query_place_id=ChIJ0y5wuQ9IDW0RBBEMji-SOvE",
@@ -4620,9 +4635,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Fisher &amp; Paykel Healthcare Campus",
+          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -4690,7 +4705,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she",
+        "dateTime": "2024-07-26T17:30:30+1200 - 2024-07-28T18:00:30+1200",
+        "startTime": "24",
+        "endTime": "07"
       }
     },
     {
@@ -4800,9 +4818,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "AWS Offce, Commercial Bay, Auckland",
+          "address": "AWS Office, PwC Tower, Level 13/15 Customs Street West, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8441992,174.7657401&query_place_id=ChIJyRV3oPlHDW0RYT2Rg5qusWs",
@@ -4896,9 +4914,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "MYOB",
+          "address": "Level 5, Eden, 5/12 Normanby Road, Mount Eden, Auckland 1024, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
@@ -5149,9 +5167,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "10 Madden Street",
+          "address": "10 Madden Street, Central, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8422283,174.7569969&query_place_id=ChIJC4PMOvRHDW0RilNiW5KvMCg",
@@ -5420,9 +5438,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "GridAKL / John Lysaght",
+          "address": "101 Pakenham Street West, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8434787,174.7571161&query_place_id=ChIJzXywIPRHDW0Rz6fazacJS3U",
@@ -5753,9 +5771,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Fisher &amp; Paykel Healthcare Campus",
+          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -5825,7 +5843,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she",
+        "dateTime": "2024-07-26T17:30:30+1200 - 2024-07-28T18:00:30+1200",
+        "startTime": "24",
+        "endTime": "07"
       }
     },
     {
@@ -5847,9 +5868,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "GridAKL / John Lysaght",
+          "address": "101 Pakenham Street West, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8434787,174.7571161&query_place_id=ChIJzXywIPRHDW0Rz6fazacJS3U",
@@ -5935,9 +5956,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Fisher &amp; Paykel Healthcare Campus",
+          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -6008,7 +6029,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she",
+        "dateTime": "2024-07-26T17:30:30+1200 - 2024-07-28T18:00:30+1200",
+        "startTime": "24",
+        "endTime": "07"
       }
     },
     {
@@ -6030,9 +6054,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "MYOB",
+          "address": "Level 5, Eden, 5/12 Normanby Road, Mount Eden, Auckland 1024, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
@@ -6212,9 +6236,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "GridAKL / John Lysaght",
+          "address": "101 Pakenham Street West, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8434787,174.7571161&query_place_id=ChIJzXywIPRHDW0Rz6fazacJS3U",
@@ -6300,9 +6324,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "MYOB",
+          "address": "Level 5, Eden, 5/12 Normanby Road, Mount Eden, Auckland 1024, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
@@ -6392,9 +6416,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Fisher &amp; Paykel Healthcare Campus",
+          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -6466,7 +6490,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she",
+        "dateTime": "2024-07-26T17:30:30+1200 - 2024-07-28T18:00:30+1200",
+        "startTime": "24",
+        "endTime": "07"
       }
     },
     {
@@ -6577,9 +6604,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "MYOB",
+          "address": "Level 5, Eden, 5/12 Normanby Road, Mount Eden, Auckland 1024, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
@@ -6718,9 +6745,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "AWS Offce, Commercial Bay, Auckland",
+          "address": "AWS Office, PwC Tower, Level 13/15 Customs Street West, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8441992,174.7657401&query_place_id=ChIJyRV3oPlHDW0RYT2Rg5qusWs",
@@ -7080,9 +7107,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Fisher &amp; Paykel Healthcare Campus",
+          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -7150,7 +7177,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she",
+        "dateTime": "2024-07-26T17:30:30+1200 - 2024-07-28T18:00:30+1200",
+        "startTime": "24",
+        "endTime": "07"
       }
     },
     {
@@ -7172,9 +7202,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Fisher &amp; Paykel Healthcare Campus",
+          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -7297,7 +7327,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she",
+        "dateTime": "2024-07-26T17:30:30+1200 - 2024-07-28T18:00:30+1200",
+        "startTime": "24",
+        "endTime": "07"
       }
     },
     {
@@ -7319,9 +7352,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Countdown Ponsonby",
+          "address": "4 Williamson Avenue, Grey Lynn, Auckland 1021, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8585472,174.7487792&query_place_id=ChIJq0Czl5VHDW0RYLF9zDA1eTg",
@@ -7473,9 +7506,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "The Pa Multifunction Room",
+          "address": "Hillcrest Road, Hillcrest, Hamilton 3216, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-37.78663590000001,175.3176315&query_place_id=ChIJYfb-UCYZbW0RrZfR5DNNfz0",
@@ -7798,9 +7831,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "GridAKL / John Lysaght",
+          "address": "101 Pakenham Street West, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8434787,174.7571161&query_place_id=ChIJzXywIPRHDW0Rz6fazacJS3U",
@@ -7961,9 +7994,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "GridAKL / John Lysaght",
+          "address": "101 Pakenham Street West, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8434787,174.7571161&query_place_id=ChIJzXywIPRHDW0Rz6fazacJS3U",
@@ -8115,9 +8148,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Xero office",
+          "address": "Level 3, 96 St Georges Bay Road, Parnell",
           "city": "",
           "country": "New Zealand"
         },
@@ -8246,9 +8279,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "AUT South Campus",
+          "address": "640 Great South Road, Manukau City Centre, Auckland 2025, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9846165,174.8819894&query_place_id=ChIJdVgrl7lNDW0RS3267Gr2o10",
@@ -8789,9 +8822,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "MYOB office",
+          "address": "Level 5, 12 Normanby Road, Mt Eden, Auckland",
           "city": "",
           "country": "New Zealand"
         },
@@ -8965,9 +8998,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Various venues throughout Aotearoa, Australia and South Pacific",
+          "address": "Aotearoa, NZ | Australia | South Pacific",
           "city": "",
           "country": "New Zealand"
         },
@@ -9025,7 +9058,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "Refunds are available up to 7 days prior to the event",
-        "humanitixUrl": "https://events.humanitix.com/ai-forum-nz-hackathon-2023"
+        "humanitixUrl": "https://events.humanitix.com/ai-forum-nz-hackathon-2023",
+        "dateTime": "2023-08-11T07:00:00+1200 - 2023-08-20T17:00:00+1200",
+        "startTime": "23",
+        "endTime": "08"
       }
     },
     {
@@ -9047,9 +9083,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Fonterra Centre",
+          "address": "109 Fanshawe Street, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8456256,174.7563744&query_place_id=ChIJ4fMtv_NHDW0R0XVnO5YPdbk",
@@ -9286,9 +9322,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Kiwibank Head Office - Te Kupenga",
+          "address": "Level 3/155-167 Fanshawe Street, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.84515109999999,174.7545237&query_place_id=ChIJRaSNkrhHDW0R4pNQJBHvdyo",
@@ -9412,9 +9448,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Level 5 (MYOB office)",
+          "address": "12 Normanby Road, Mount Eden, Auckland 1024, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.87080969999999,174.7635465&query_place_id=ChIJYe-_rtpHDW0RGwJrUjtqJBM",
@@ -9607,9 +9643,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "AWS Offce, Commercial Bay, Auckland",
+          "address": "AWS Offce, PwC Tower, Level 13/15 Customs Street West, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8441592,174.7659162&query_place_id=ChIJERqNe_lHDW0R8hVkFSFqUhA",
@@ -9838,9 +9874,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "MYOB",
+          "address": "Level 5, Eden, 5/12 Normanby Road, Mount Eden, Auckland 1024, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
@@ -9980,9 +10016,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Countdown Ponsonby",
+          "address": "4 Williamson Avenue, Grey Lynn, Auckland 1021, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8585472,174.7487792&query_place_id=ChIJq0Czl5VHDW0RYLF9zDA1eTg",
@@ -10182,9 +10218,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "ANZ Atrium",
+          "address": "ANZ Centre, 23 Albert Street, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8456742,174.7643189&query_place_id=ChIJ8Z0aPPpHDW0RsMCbJGLvAA8",
@@ -10360,9 +10396,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Vector’s office",
+          "address": "110 Carlton Gore Road, Newmarket, Auckland 1023, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8652009,174.77722&query_place_id=ChIJYVjkP3RIDW0RqkR_qut8Sm0",
@@ -10490,9 +10526,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "Various venues throughout Aotearoa, Australia and South Pacific",
+          "address": "Aotearoa, NZ | Australia | South Pacific",
           "city": "",
           "country": "New Zealand"
         },
@@ -10769,7 +10805,10 @@
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "Refunds are available up to 7 days prior to the event",
-        "humanitixUrl": "https://events.humanitix.com/ai-forum-nz-hackathon-2023"
+        "humanitixUrl": "https://events.humanitix.com/ai-forum-nz-hackathon-2023",
+        "dateTime": "2023-08-11T07:00:00+1200 - 2023-08-20T17:00:00+1200",
+        "startTime": "23",
+        "endTime": "08"
       }
     },
     {
@@ -10791,9 +10830,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "AWS Offce, Commercial Bay, Auckland",
+          "address": "AWS Office, PwC Tower, Level 13/15 Customs Street West, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8441992,174.7657401&query_place_id=ChIJyRV3oPlHDW0RYT2Rg5qusWs",
@@ -10980,9 +11019,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "10 Madden Street",
+          "address": "10 Madden Street, Central, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8422283,174.7569969&query_place_id=ChIJC4PMOvRHDW0RilNiW5KvMCg",
@@ -11077,9 +11116,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "MYOB office",
+          "address": "Level 5, 12 Normanby Road, Mt Eden, Auckland",
           "city": "",
           "country": "New Zealand"
         },
@@ -11195,9 +11234,9 @@
         "date": "",
         "time": "",
         "location": {
-          "format": "online",
-          "venueName": "",
-          "address": "",
+          "format": "in_person",
+          "venueName": "MYOB",
+          "address": "Level 5, Eden, 5/12 Normanby Road, Mount Eden, Auckland 1024, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",

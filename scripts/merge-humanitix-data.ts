@@ -279,6 +279,38 @@ function main() {
       ...v3Event.detailPageData.location,
     };
 
+    // Add venue name if available and current is empty
+    if (hLocation.venue_name && !mergedLocation.venueName) {
+      mergedLocation.venueName = hLocation.venue_name;
+      hasNewData = true;
+    }
+
+    // Add full address if available and current is empty
+    if (hLocation.full_address && !mergedLocation.address) {
+      mergedLocation.address = hLocation.full_address;
+      hasNewData = true;
+    }
+
+    // Update format based on location data
+    // If we have a venue name or address, it's likely an in-person event
+    if (
+      (hLocation.venue_name || hLocation.full_address) &&
+      mergedLocation.format === "online"
+    ) {
+      // Check if it's truly online (virtual venue names)
+      const venueNameLower = (hLocation.venue_name || "").toLowerCase();
+      const isOnlineVenue =
+        venueNameLower.includes("online") ||
+        venueNameLower.includes("virtual") ||
+        venueNameLower.includes("zoom") ||
+        venueNameLower.includes("webinar");
+
+      if (!isOnlineVenue && hLocation.venue_name) {
+        mergedLocation.format = "in_person";
+        hasNewData = true;
+      }
+    }
+
     // Add Google Maps URL if available
     if (hLocation.google_maps_url && !mergedLocation.googleMapsUrl) {
       mergedLocation.googleMapsUrl = hLocation.google_maps_url;
