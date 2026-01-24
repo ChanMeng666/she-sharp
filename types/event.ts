@@ -181,6 +181,10 @@ export interface EventLocationV3 {
   address: string;
   city: string;
   country: string;
+  // Extended fields from Humanitix
+  googleMapsUrl?: string;
+  latitude?: number;
+  longitude?: number;
 }
 
 // Detail page data structure
@@ -203,6 +207,13 @@ export interface EventDetailPageData {
   category: string;
   status: string;
   isFeatured: boolean;
+  // Extended fields from Humanitix
+  dateTime?: string; // Full date/time string e.g. "Thu, 21 Nov 2024, 8am - 6pm NZDT"
+  startTime?: string; // Extracted start time e.g. "8am"
+  endTime?: string; // Extracted end time e.g. "6pm"
+  timezone?: string; // Timezone e.g. "NZDT"
+  refundPolicy?: string; // Refund policy text
+  humanitixUrl?: string; // Humanitix registration URL
 }
 
 // Main V3 Event interface (matches JSON structure)

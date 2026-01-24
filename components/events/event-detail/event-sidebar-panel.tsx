@@ -33,6 +33,11 @@ export function EventSidebarPanel({
   const location = event.detailPageData.location;
 
   const getMapUrl = (): string | null => {
+    // Prefer googleMapsUrl from Humanitix if available
+    if (location.googleMapsUrl) {
+      return location.googleMapsUrl;
+    }
+
     const venueName = location.venueName?.trim();
     const address = location.address?.trim();
     const city = location.city?.trim();
@@ -45,6 +50,22 @@ export function EventSidebarPanel({
     const query = encodeURIComponent(parts.join(", "));
     return `https://www.google.com/maps/search/?api=1&query=${query}`;
   };
+
+  // Format time display with timezone
+  const getTimeDisplay = (): string | null => {
+    const { startTime, endTime, timezone, time } = event.detailPageData;
+
+    // If we have precise time info from Humanitix
+    if (startTime && endTime) {
+      const timePart = `${startTime} - ${endTime}`;
+      return timezone ? `${timePart} ${timezone}` : timePart;
+    }
+
+    // Fall back to original time field
+    return time || null;
+  };
+
+  const timeDisplay = getTimeDisplay();
 
   const isPast = isPastEvent(event);
   const isFuture = isFutureDate(event.date);
@@ -122,12 +143,10 @@ export function EventSidebarPanel({
             </div>
 
             {/* Time - only show if available */}
-            {event.detailPageData.time && (
+            {timeDisplay && (
               <div className="flex items-center gap-3 text-base">
                 <Clock className="w-5 h-5 text-muted-foreground" />
-                <span className="text-foreground">
-                  {event.detailPageData.time}
-                </span>
+                <span className="text-foreground">{timeDisplay}</span>
               </div>
             )}
 
@@ -186,6 +205,16 @@ export function EventSidebarPanel({
               </div>
             )}
           </div>
+
+          {/* Refund Policy - only show for future events */}
+          {isFuture && event.detailPageData.refundPolicy && (
+            <div className="pt-2 border-t border-white/10">
+              <p className="text-xs text-muted-foreground">
+                <span className="font-medium">Refund Policy:</span>{" "}
+                {event.detailPageData.refundPolicy}
+              </p>
+            </div>
+          )}
 
           {/* CTA - Show if event date is in the future or if past event has gallery */}
           {(isFuture || (isPast && event.detailPageData.galleryUrl)) && (

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "source": "https://www.shesharp.org.nz/events",
-    "scrapedAt": "2026-01-24T15:01:59.696340",
+    "scrapedAt": "2026-01-24T07:27:31.888Z",
     "totalEvents": 84,
     "organization": "She Sharp New Zealand",
     "version": "3.0"
@@ -30,7 +30,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-45.8661274,170.5121474&query_place_id=ChIJ1zFU6m6sLqgRlaapZj-jzEg",
+          "latitude": -45.8661274,
+          "longitude": 170.5121474
         },
         "fullDescription": [
           "Join us for an inspiring evening on how AI is helping people unlock new levels of creativity, productivity, and innovation.",
@@ -175,7 +178,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 21 Nov 2025, 4:30pm - 7:30pm NZDT",
+        "startTime": "4:30pm",
+        "endTime": "7:30pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future"
       }
     },
     {
@@ -291,7 +300,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 13 Aug 2020, 12pm - 1pm NZST",
+        "startTime": "12pm",
+        "endTime": "1pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refund policy specified.",
+        "humanitixUrl": "https://events.humanitix.com/future-ready"
       }
     },
     {
@@ -317,7 +332,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8524457,174.7821066&query_place_id=ChIJ0y5wuQ9IDW0RBBEMji-SOvE",
+          "latitude": -36.8524457,
+          "longitude": 174.7821066
         },
         "fullDescription": [
           "🎉Free t-shirts, coding challenges, and a community of women in tech — all in one workshop!JoinXero,Secure Code Warrior, andShe Sharpfor a hands-on workshop built just for you. This is your space tolearn, connect, and growalongside an empowering community of women in tech. 💖",
@@ -427,7 +445,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 3 Oct 2025, 9:30am - 2pm NZDT",
+        "startTime": "9:30am",
+        "endTime": "2pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-scw-and-xero-code-secure-lead-the-future-women-in-cybersecurity-workshop"
       }
     },
     {
@@ -453,7 +477,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8457585,174.7560805&query_place_id=ChIJRcLbvfNHDW0RgfG4eWHcU74",
+          "latitude": -36.8457585,
+          "longitude": 174.7560805
         },
         "fullDescription": [
           "Join a dynamic panel discussion featuring three diverse, experienced, and growth-minded women who are driving meaningful change within Fonterra’s Products and Platforms landscape. This session will explore the transformational shift toward a product and platform-centric approach, highlighting the pivotal role it plays in shaping the future of IT delivery and unlocking greater business outcomes.",
@@ -544,7 +571,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Wed, 3 Sep 2025, 5:30pm - 7:30pm NZST",
+        "startTime": "5:30pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-fonterra-business-and-technology-transformation-through-platforms-and-products"
       }
     },
     {
@@ -570,7 +603,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8441992,174.7657401&query_place_id=ChIJBbBKcCVHDW0RfNlukgQCXiI",
+          "latitude": -36.8441992,
+          "longitude": 174.7657401
         },
         "fullDescription": [
           "Are you a soon-to-be graduate, a recent graduate, or a professional ready for a career move? This event is designed just for you.",
@@ -866,7 +902,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Wed, 30 Jul 2025, 5pm - 8pm NZST",
+        "startTime": "5pm",
+        "endTime": "8pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-techbabes-nz-thrive-your-career-your-story"
       }
     },
     {
@@ -1226,7 +1268,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8464923,174.7648639&query_place_id=Ei44LzUwIEFsYmVydCBTdHJlZXQsIEF1Y2tsYW5kIDEwMTAsIE5ldyBaZWFsYW5kIjcaNQowEi4KFAoSCcnzMUP6Rw1tERk12snlbszFEDIqFAoSCX3I_4r6Rw1tEQAsLvUdwRQYEgE4",
+          "latitude": -36.8464923,
+          "longitude": 174.7648639
         },
         "fullDescription": [
           "Discover how your unique strengths can shape your tech journey in this exciting lightning-style event! Hear from 6 inspiring speakers as they share how they’ve harnessed their unique talents to thrive in their roles and overcome challenges. Whether you’re exploring tech careers or seeking clarity on where you might fit, this event will spark ideas and help you uncover your potential.",
@@ -1369,7 +1414,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 22 May 2025, 5pm - 7:30pm NZST",
+        "startTime": "5pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-myob-tech-that-matches"
       }
     },
     {
@@ -1441,7 +1492,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Wed, 15 Sep 2021, 6pm - 7:30pm NZST",
+        "startTime": "6pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/iamremarkable"
       }
     },
     {
@@ -1577,7 +1634,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 18 Mar 2021, 5:30pm - 8pm NZDT",
+        "startTime": "5:30pm",
+        "endTime": "8pm",
+        "timezone": "NZDT",
+        "refundPolicy": "Note: For those who already bought tickets for the previous event date - they will be valid for the new date! If you have a ticket for the original date (11th March) and are unable to make this new date (18th March) please get in touch with us via shesharp.nz@gmail.com",
+        "humanitixUrl": "https://events.humanitix.com/international-women-s-day-event-myob"
       }
     },
     {
@@ -1603,7 +1666,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8422463,174.7566512&query_place_id=ChIJ-cXZOfRHDW0RLMOqsYOekWI",
+          "latitude": -36.8422463,
+          "longitude": 174.7566512
         },
         "fullDescription": [
           "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
@@ -1794,7 +1860,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 21 Nov 2024, 8am - 6pm NZDT",
+        "startTime": "8am",
+        "endTime": "6pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/2024-google-educators-conference"
       }
     },
     {
@@ -1964,7 +2036,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Wed, 29 Jul 2020, 5:30pm - 7pm NZST",
+        "startTime": "5:30pm",
+        "endTime": "7pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-techweek-envision-the-future-how-to-create-a-more-diverse-inclusive-and-sustainable-future-through-technology-and-human-centered-innovation"
       }
     },
     {
@@ -1990,7 +2068,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8435565,174.7668454&query_place_id=ChIJ3723u_tHDW0RGVX6wVRQwrU",
+          "latitude": -36.8435565,
+          "longitude": 174.7668454
         },
         "fullDescription": [
           "Join us for a special celebration as we mark a decade of bridging the gender gap in STEM!SheSharp is on a mission to challenge misconceptions about the tech industry and empower the next generation of women to pursue careers in STEM through events, networking, and career development opportunities.",
@@ -2162,7 +2243,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 18 Oct 2024, 5:30pm - 8pm NZDT",
+        "startTime": "5:30pm",
+        "endTime": "8pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-10-year-anniversary"
       }
     },
     {
@@ -2188,7 +2275,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8457585,174.7560805&query_place_id=ChIJRcLbvfNHDW0RgfG4eWHcU74",
+          "latitude": -36.8457585,
+          "longitude": 174.7560805
         },
         "fullDescription": [
           "Harness The Power of Generative Al: A Deep Dive into Fonterra's Al Journey. Join us for an enlightening session on how Fonterra, a global dairy nutrition company, has harnessed the power of Artificial Intelligence (Al) to revolutionise their entire value chain which produces 30% of the world's dairy exports from nutritious New Zealand farms. What's in Store? Al in Action: Get an overview Of how Fonterra has leveraged Al to safeguard its 34 production lines. Discover how the company has saved an ",
@@ -2320,7 +2410,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 29 Aug 2024, 5:30pm - 7:30pm NZST",
+        "startTime": "5:30pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-fonterra-harness-the-power-of-generative-al"
       }
     },
     {
@@ -2390,7 +2486,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "Refunds are available up to 7 days prior to the event",
+        "humanitixUrl": "https://events.humanitix.com/ai-forum-nz-hackathon-2023"
       }
     },
     {
@@ -2885,7 +2983,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "Refunds are available up to 7 days prior to the event",
+        "humanitixUrl": "https://events.humanitix.com/ai-forum-nz-hackathon-2023"
       }
     },
     {
@@ -2911,7 +3011,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8458624,174.7735703&query_place_id=ChIJ-w41WQdIDW0RXCxWi-OhzFw",
+          "latitude": -36.8458624,
+          "longitude": 174.7735703
         },
         "fullDescription": [
           "Are nerves holding you back? Fear not! Join Fiserv’s empowering workshop, “Banking on Yourself” and be inspired by those who carved their own paths. Fiserv, a Fortune 200 leader in mobile banking, is fuelled by the talent and dedication of our team. We're leading the way because of the brilliant minds we invest in. Discover the power of self-belief, we’ll even equip you with a successful toolkit that you can take away. Shatter limitations, own your value with unshakeable confidence, while master",
@@ -3017,7 +3120,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Wed, 26 Jun 2024, 5:30pm - 7:30pm NZST",
+        "startTime": "5:30pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-fiserv-bank-on-yourself"
       }
     },
     {
@@ -3043,7 +3152,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8484159,174.7568309&query_place_id=ChIJWwgQgfJHDW0RxsjpqsfO-_A",
+          "latitude": -36.8484159,
+          "longitude": 174.7568309
         },
         "fullDescription": [
           "Join us for an empowering evening as Les Mills International shines a spotlight on the unconventional routes many have taken to enter and navigate the technology industry. Expect to hear powerful stories if resilience, innovation, and success. Furthermore, we'll be exploring the theme of being underestimated - a common experience for many women and minorities in STEM. But rather than viewing it as a setback, we'll discuss how it can be harnessed as a powerful tool for exceeding expectations and ",
@@ -3189,7 +3301,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 9 May 2024, 5:30pm - 7:30pm NZST",
+        "startTime": "5:30pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-les-mills-own-the-unexpected"
       }
     },
     {
@@ -3215,7 +3333,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.87080969999999,174.7635465&query_place_id=ChIJYe-_rtpHDW0RGwJrUjtqJBM",
+          "latitude": -36.87080969999999,
+          "longitude": 174.7635465
         },
         "fullDescription": [
           "How to use cognitive biases to design great products, services, and your life! Join us for an evening at MYOB where we’ll focus on the importance of understanding human behaviour. While technical qualifications can be a gateway to working in software design, we need people from all backgrounds to design meaningful products and services. This talk will speak to the vital contributions human-centred designers make in the tech industry. Hazel Halim and Annabelle Yoon will take you through what cogn",
@@ -3283,7 +3404,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 18 Apr 2024, 5:30pm - 7:30pm NZST",
+        "startTime": "5:30pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-myob-embracing-bias"
       }
     },
     {
@@ -3362,7 +3489,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 18 Mar 2021, 5:30pm - 8pm NZDT",
+        "startTime": "5:30pm",
+        "endTime": "8pm",
+        "timezone": "NZDT",
+        "refundPolicy": "Note: For those who already bought tickets for the previous event date - they will be valid for the new date! If you have a ticket for the original date (11th March) and are unable to make this new date (18th March) please get in touch with us via shesharp.nz@gmail.com",
+        "humanitixUrl": "https://events.humanitix.com/international-women-s-day-event-myob"
       }
     },
     {
@@ -3388,7 +3521,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8422463,174.7566512&query_place_id=ChIJ-cXZOfRHDW0RLMOqsYOekWI",
+          "latitude": -36.8422463,
+          "longitude": 174.7566512
         },
         "fullDescription": [
           "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
@@ -3563,7 +3699,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 21 Nov 2024, 8am - 6pm NZDT",
+        "startTime": "8am",
+        "endTime": "6pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/2024-google-educators-conference"
       }
     },
     {
@@ -3650,7 +3792,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "No refund policy specified.",
+        "humanitixUrl": "https://events.humanitix.com/storytellers-series-2-0"
       }
     },
     {
@@ -3773,7 +3917,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "No refund policy specified.",
+        "humanitixUrl": "https://events.humanitix.com/story-tellers-series"
       }
     },
     {
@@ -4019,7 +4165,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
+          "latitude": -36.9353732,
+          "longitude": 174.878403
         },
         "fullDescription": [
           "We had Ruth, the Head of UX Design at Trade Me, give us a lesson on how she has overcome her fears of public speaking and some effective skills on how to present effectively.",
@@ -4077,7 +4226,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
       }
     },
     {
@@ -4103,7 +4254,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
+          "latitude": -36.8708076,
+          "longitude": 174.7633361
         },
         "fullDescription": [
           "This event took place in the heart of Auckland CBD at Westpac’s head office. We heard from the inspiring DawieOlivers, Westpac’s Chief Information Officer, and his team on what they do at Westpac and their focus on the importnace of diversity of thought.",
@@ -4165,7 +4319,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 28 Apr 2023, 5pm - 7:30pm NZST",
+        "startTime": "5pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/developher"
       }
     },
     {
@@ -4191,7 +4351,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8524457,174.7821066&query_place_id=ChIJ0y5wuQ9IDW0RBBEMji-SOvE",
+          "latitude": -36.8524457,
+          "longitude": 174.7821066
         },
         "fullDescription": [
           "Wellington’s first SheSharp event was sponsored by Xero and 920 Career Agents as well as Orion Health, Unitec and Google and was held at Xero with a team of SheSharp members who travelled down from Auckland. The event was sold out, with over 60 women attending from around Wellington, some even travelling in from other cities around New Zealand.In addition to secondary and tertiary students, there were also industry members from a range of companies including Xero, 920 Career Agents, Fonde, Catal",
@@ -4253,7 +4416,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 3 Oct 2025, 9:30am - 2pm NZDT",
+        "startTime": "9:30am",
+        "endTime": "2pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-scw-and-xero-code-secure-lead-the-future-women-in-cybersecurity-workshop"
       }
     },
     {
@@ -4455,7 +4624,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
+          "latitude": -36.9353732,
+          "longitude": 174.878403
         },
         "fullDescription": [
           "SheSharp joined with IBM for an awesome event that gave women the opportuniy to connect with lots of industry professionals. We had a guest speaker from IBM tell us about her story and journey to project management with IBM. We also had a hands-on session all about User Experience in app development."
@@ -4516,7 +4688,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
       }
     },
     {
@@ -4630,7 +4804,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8441992,174.7657401&query_place_id=ChIJyRV3oPlHDW0RYT2Rg5qusWs",
+          "latitude": -36.8441992,
+          "longitude": 174.7657401
         },
         "fullDescription": [
           "She Sharp had the official launch event with Orion Health at their Grafton offices. This included a Scrum workshop and plenty of opportunity to network with Orion employees as well as other women in technical fields. Guest speakers from Orion Health, Diana Venter and Tegan Harrison shared some of their stories of being a woman in software development and also talked about some of Orion Health’s products and processes."
@@ -4691,7 +4868,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Mon, 5 Dec 2022, 6pm - 8pm NZDT",
+        "startTime": "6pm",
+        "endTime": "8pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-celebrates"
       }
     },
     {
@@ -4717,7 +4900,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
+          "latitude": -36.8708076,
+          "longitude": 174.7633361
         },
         "fullDescription": [
           "This event brought speakers from various parts of the tech industry together for an evening of demos, lightning talks, networking and cupcakes. We were even lucky enough to get to try out the first ever Microsoft HoloLens in New Zealand!",
@@ -4848,7 +5034,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 28 Apr 2023, 5pm - 7:30pm NZST",
+        "startTime": "5pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/developher"
       }
     },
     {
@@ -4961,7 +5153,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8422283,174.7569969&query_place_id=ChIJC4PMOvRHDW0RilNiW5KvMCg",
+          "latitude": -36.8422283,
+          "longitude": 174.7569969
         },
         "fullDescription": [
           "About 100 attendees joined SheSharp and Google team from Sydney for an evening at GridAKL. The first session addressed the issue of unconscious bias with Google sharing their training and knowledge around this area. This proved to be a great insight into how one of the biggest tech companies in the world is addressing the issue of diversity.",
@@ -5024,7 +5219,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 20 Oct 2022, 4:30pm - 7:15pm NZDT",
+        "startTime": "4:30pm",
+        "endTime": "7:15pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/google-event"
       }
     },
     {
@@ -5191,7 +5392,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 15 Oct 2020, 6:30pm - 7:30pm NZDT",
+        "startTime": "6:30pm",
+        "endTime": "7:30pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refund policy specified.",
+        "humanitixUrl": "https://events.humanitix.com/online-event-celebrating-ada-lovelace-day"
       }
     },
     {
@@ -5217,7 +5424,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8434787,174.7571161&query_place_id=ChIJzXywIPRHDW0Rz6fazacJS3U",
+          "latitude": -36.8434787,
+          "longitude": 174.7571161
         },
         "fullDescription": [
           "TheMinistry of EducationandNZTechpartnered up to host the Tech21 Summit, to inspire ākonga (learners) into technology careers. The one day Summit aimed to spark inspiration for year 7–10  ākonga while showcasing tech innovation and creativity, plus offering the opportunity to find out more about Technology Learning career pathways.",
@@ -5271,7 +5481,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Tue, 25 May 2021, 6pm - 8pm NZST",
+        "startTime": "6pm",
+        "endTime": "8pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-techweek"
       }
     },
     {
@@ -5541,7 +5757,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
+          "latitude": -36.9353732,
+          "longitude": 174.878403
         },
         "fullDescription": [
           "We had our event with PushPay on 19th Oct, 2017 and it was about the DevOps concepts and how it is bringing cultural change in industry. We had 3 awesome speakers from 3 different tech companies in Auckland, Lisa Helm from 2degree, Alix Klingenberg from Push pay and Rashmi Modhwadia from Orion Health.",
@@ -5604,7 +5823,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
       }
     },
     {
@@ -5630,7 +5851,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8434787,174.7571161&query_place_id=ChIJzXywIPRHDW0Rz6fazacJS3U",
+          "latitude": -36.8434787,
+          "longitude": 174.7571161
         },
         "fullDescription": [
           "Come along to hear outstanding women give quick insightful talks about their challenges, inspiration and motivations around solving real world problems using technology. This inspiring group include a wide range of experience from award winning high school and university students to working professionals, demonstrating that inspiration can happen at any age!",
@@ -5683,7 +5907,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Tue, 25 May 2021, 6pm - 8pm NZST",
+        "startTime": "6pm",
+        "endTime": "8pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-techweek"
       }
     },
     {
@@ -5709,7 +5939,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
+          "latitude": -36.9353732,
+          "longitude": 174.878403
         },
         "fullDescription": [
           "“Googlers” from Google Sydney joined us for a bias busting workshop that was open to all students and professionals.",
@@ -5773,7 +6006,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
       }
     },
     {
@@ -5799,7 +6034,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
+          "latitude": -36.8708076,
+          "longitude": 174.7633361
         },
         "fullDescription": [
           "Nyriad is our platinum sponsor and held their very first event with us on 26th July, 2018. Nyriad is a New Zealand exascale software company specialising in advance data storage solutions for big data and high performing computing.",
@@ -5857,7 +6095,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 28 Apr 2023, 5pm - 7:30pm NZST",
+        "startTime": "5pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/developher"
       }
     },
     {
@@ -5972,7 +6216,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8434787,174.7571161&query_place_id=ChIJzXywIPRHDW0Rz6fazacJS3U",
+          "latitude": -36.8434787,
+          "longitude": 174.7571161
         },
         "fullDescription": [
           "The event was about learning project management skill and how these concepts can be used by anyone in our daily lives.The workshop provided an introduction to the basics of project management as well as tools and techniques to help develop skills to become a great project manager leading successful projects.",
@@ -6025,7 +6272,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Tue, 25 May 2021, 6pm - 8pm NZST",
+        "startTime": "6pm",
+        "endTime": "8pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-techweek"
       }
     },
     {
@@ -6051,7 +6304,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
+          "latitude": -36.8708076,
+          "longitude": 174.7633361
         },
         "fullDescription": [
           "A joint event with Vend, held on 26th April, taught the women about real-world that Vend solves. They also shared their why, why they do the things they do and how they do. We also heard from Jade, Joanna and Novia, some of the senior women from product, design and engineering. The event also gave the attendees to work on a problem which simulated the Challenges faced in a real world scenario."
@@ -6108,7 +6364,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 28 Apr 2023, 5pm - 7:30pm NZST",
+        "startTime": "5pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/developher"
       }
     },
     {
@@ -6134,7 +6396,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
+          "latitude": -36.9353732,
+          "longitude": 174.878403
         },
         "fullDescription": [
           "We partnered with our gold sponsor again this year for the annual SheSharp with Google event. Over 50 attendees, from students to working professionals, joined us for this midday event held on Monday 26th March at AUT city campus.",
@@ -6199,7 +6464,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
       }
     },
     {
@@ -6314,7 +6581,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
+          "latitude": -36.8708076,
+          "longitude": 174.7633361
         },
         "fullDescription": [
           "Unless you have been living under a rock, you will have heard of blockchain.",
@@ -6420,7 +6690,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 28 Apr 2023, 5pm - 7:30pm NZST",
+        "startTime": "5pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/developher"
       }
     },
     {
@@ -6446,7 +6722,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8441992,174.7657401&query_place_id=ChIJyRV3oPlHDW0RYT2Rg5qusWs",
+          "latitude": -36.8441992,
+          "longitude": 174.7657401
         },
         "fullDescription": [
           "Come celebrate the holiday season with us, reflect on the past year, and hear from diverse role models in tech and inspirations for the future!",
@@ -6580,7 +6859,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Mon, 5 Dec 2022, 6pm - 8pm NZDT",
+        "startTime": "6pm",
+        "endTime": "8pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-celebrates"
       }
     },
     {
@@ -6799,7 +7084,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
+          "latitude": -36.9353732,
+          "longitude": 174.878403
         },
         "fullDescription": [
           "She# in collaboration with Workday developed an interactive evening exploring the world of Cyber Security. The attendees were divided into groups for an exiting session of cyber-security quiz and the winners received Workday goodies. We were also delighted to hear from a panel of four Workday employees about their journeys into this industry. The evening was brought to a close by a demonstration of a live hack!"
@@ -6860,7 +7148,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
       }
     },
     {
@@ -6886,7 +7176,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
+          "latitude": -36.9353732,
+          "longitude": 174.878403
         },
         "fullDescription": [
           "She# was delighted to be invited to Deloitte for a Chatbot Design Workshop. Over 40 attendees were split into teams to develop a Chatbot solution in a case study presented by Deloitte. Experienced Deloitte consultants mentored each team to ensure they had the necessary guidance. Teams elected four members to talk to the “client” and understand the client requirements for the solution. Finally, a solution was presented by each team. Pizza, Drinks, and Networking saw the evening to a close!",
@@ -7002,7 +7295,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/f-and-p-hackathon-with-she"
       }
     },
     {
@@ -7028,7 +7323,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8585472,174.7487792&query_place_id=ChIJq0Czl5VHDW0RYLF9zDA1eTg",
+          "latitude": -36.8585472,
+          "longitude": 174.7487792
         },
         "fullDescription": [
           "This month’s event was all about women in tech and trades who are proving that they are more than just a diversity quota filler & industry leaders who are setting a new benchmark for inclusivity every day.",
@@ -7147,7 +7445,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 20 May 2022, 7:30am - 9:30am NZST",
+        "startTime": "7:30am",
+        "endTime": "9:30am",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-countdown-techweek-event"
       }
     },
     {
@@ -7173,7 +7477,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-37.78663590000001,175.3176315&query_place_id=ChIJYfb-UCYZbW0RrZfR5DNNfz0",
+          "latitude": -37.78663590000001,
+          "longitude": 175.3176315
         },
         "fullDescription": [
           "Technological change will continue to reshape the workplace and workforce. It's up to us, as individuals, organisations, and societies, to shape this future collaboratively, ensuring that technological change benefits everyone.",
@@ -7348,7 +7655,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 3 Nov 2023, 4:30pm - 6:30pm NZDT",
+        "startTime": "4:30pm",
+        "endTime": "6:30pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-hcl-technological-change-workplace-and-workforce-impacts"
       }
     },
     {
@@ -7489,7 +7802,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8434787,174.7571161&query_place_id=ChIJzXywIPRHDW0Rz6fazacJS3U",
+          "latitude": -36.8434787,
+          "longitude": 174.7571161
         },
         "fullDescription": [
           "Join She Sharp for an inspiring and thought-provoking panel on the future of leadership in technology. 2020 has brought unprecedented challenges to the forefront of humanity. With a crisis comes opportunities. Learn how we can harness the power of human ingenuity to create a better tomorrow. Topics to be discussed will include:",
@@ -7531,7 +7847,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Tue, 25 May 2021, 6pm - 8pm NZST",
+        "startTime": "6pm",
+        "endTime": "8pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-techweek"
       }
     },
     {
@@ -7611,7 +7933,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 13 Aug 2020, 12pm - 1pm NZST",
+        "startTime": "12pm",
+        "endTime": "1pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refund policy specified.",
+        "humanitixUrl": "https://events.humanitix.com/future-ready"
       }
     },
     {
@@ -7637,7 +7965,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8434787,174.7571161&query_place_id=ChIJzXywIPRHDW0Rz6fazacJS3U",
+          "latitude": -36.8434787,
+          "longitude": 174.7571161
         },
         "fullDescription": [
           "“The Truths to Gaming and Start-up - SheSharp Edition” is organised by SheSharp, in collaboration with Geo AR Games & the New Zealand Game Developers Association (NZGDA). If you’re interested in Gaming, Augmented Reality, and Development, then this is an event you don’t want to miss!",
@@ -7756,7 +8087,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Tue, 25 May 2021, 6pm - 8pm NZST",
+        "startTime": "6pm",
+        "endTime": "8pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-techweek"
       }
     },
     {
@@ -7881,7 +8218,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 26 Nov 2020, 5:30pm - 8pm NZDT",
+        "startTime": "5:30pm",
+        "endTime": "8pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refund policy specified.",
+        "humanitixUrl": "https://events.humanitix.com/girlsnightout"
       }
     },
     {
@@ -7907,7 +8250,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9846165,174.8819894&query_place_id=ChIJdVgrl7lNDW0RS3267Gr2o10",
+          "latitude": -36.9846165,
+          "longitude": 174.8819894
         },
         "fullDescription": [
           "At She Sharp, our mission is to actively engage a broader range of Maori and Pasifika female students by equipping them with the knowledge, network, and skills to enter STEM industries. We are dedicated to inspiring and empowering the next generation of talent from these communities to explore and embrace the dynamic world of STEM and the digital domain through immersive hands-on workshops on topics such as AI, AR, and robotics.",
@@ -8152,7 +8498,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Wed, 11 Oct 2023, 9am - 3pm NZDT",
+        "startTime": "9am",
+        "endTime": "3pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/inspire-her-te-whakatipuranga-wahine"
       }
     },
     {
@@ -8234,7 +8586,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 15 Oct 2020, 6:30pm - 7:30pm NZDT",
+        "startTime": "6:30pm",
+        "endTime": "7:30pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refund policy specified.",
+        "humanitixUrl": "https://events.humanitix.com/online-event-celebrating-ada-lovelace-day"
       }
     },
     {
@@ -8341,7 +8699,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Tue, 30 Nov 2021, 6:30pm - 8pm NZDT",
+        "startTime": "6:30pm",
+        "endTime": "8pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/women-in-data-and-analytics"
       }
     },
     {
@@ -8397,7 +8761,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Wed, 15 Sep 2021, 6pm - 7:30pm NZST",
+        "startTime": "6pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/iamremarkable"
       }
     },
     {
@@ -8567,7 +8937,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 18 Mar 2021, 5:30pm - 8pm NZDT",
+        "startTime": "5:30pm",
+        "endTime": "8pm",
+        "timezone": "NZDT",
+        "refundPolicy": "Note: For those who already bought tickets for the previous event date - they will be valid for the new date! If you have a ticket for the original date (11th March) and are unable to make this new date (18th March) please get in touch with us via shesharp.nz@gmail.com",
+        "humanitixUrl": "https://events.humanitix.com/international-women-s-day-event-myob"
       }
     },
     {
@@ -8647,7 +9023,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "Refunds are available up to 7 days prior to the event",
+        "humanitixUrl": "https://events.humanitix.com/ai-forum-nz-hackathon-2023"
       }
     },
     {
@@ -8673,7 +9051,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8456256,174.7563744&query_place_id=ChIJ4fMtv_NHDW0R0XVnO5YPdbk",
+          "latitude": -36.8456256,
+          "longitude": 174.7563744
         },
         "fullDescription": [
           "Good Together: by complementing technical expertise with power skills, the opportunities are endless",
@@ -8805,7 +9186,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 24 Aug 2023, 5:30pm - 8:30pm NZST",
+        "startTime": "5:30pm",
+        "endTime": "8:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-fonterra-a-legendairy-career"
       }
     },
     {
@@ -8903,7 +9290,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.84515109999999,174.7545237&query_place_id=ChIJRaSNkrhHDW0R4pNQJBHvdyo",
+          "latitude": -36.84515109999999,
+          "longitude": 174.7545237
         },
         "fullDescription": [
           "Hear the experiences of Kiwibank executives and engage in an innovation roadmap workshop!",
@@ -8994,7 +9384,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Tue, 25 Jul 2023, 5:30pm - 7:30pm NZST",
+        "startTime": "5:30pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-kiwibank"
       }
     },
     {
@@ -9020,7 +9416,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.87080969999999,174.7635465&query_place_id=ChIJYe-_rtpHDW0RGwJrUjtqJBM",
+          "latitude": -36.87080969999999,
+          "longitude": 174.7635465
         },
         "fullDescription": [
           "International Women’s Day is fast approaching and She Sharp is partnering with AWS to bring you an inspirational evening where we talk all about #breakingthebias!",
@@ -9180,7 +9579,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 18 Apr 2024, 5:30pm - 7:30pm NZST",
+        "startTime": "5:30pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-myob-embracing-bias"
       }
     },
     {
@@ -9206,7 +9611,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8441592,174.7659162&query_place_id=ChIJERqNe_lHDW0R8hVkFSFqUhA",
+          "latitude": -36.8441592,
+          "longitude": 174.7659162
         },
         "fullDescription": [
           "Join us at the AWS Office in Auckland for this special event recognising individuals, initiatives, and organisations that are changing the norms, reconditioning the way we think about diversity, inclusion, and equity, and shaping a new normal for the security industry in Aotearoa.",
@@ -9402,7 +9810,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 17 Jun 2022, 6pm - 8pm NZST",
+        "startTime": "6pm",
+        "endTime": "8pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/women-in-security"
       }
     },
     {
@@ -9428,7 +9842,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
+          "latitude": -36.8708076,
+          "longitude": 174.7633361
         },
         "fullDescription": [
           "She Sharp is teaming up with MYOB to discuss the diversity of careers in technology and the multiple pathways we can take to achieve our dream job in STEM. Come along and engage with an expert team of MYOB panellists who will highlight some of the pathways that can be followed which lead to a career in Technology, participate in a guided workshop to help discover our deep-set motivations and Q&A with the MYOB and She# teams to create a composition of insights to enable us to make conscious caree",
@@ -9535,7 +9952,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 28 Apr 2023, 5pm - 7:30pm NZST",
+        "startTime": "5pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/developher"
       }
     },
     {
@@ -9561,7 +9984,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8585472,174.7487792&query_place_id=ChIJq0Czl5VHDW0RYLF9zDA1eTg",
+          "latitude": -36.8585472,
+          "longitude": 174.7487792
         },
         "fullDescription": [
           "Surround yourself with great women: Stories of the women who have ignited our passion for careers in Technology. Enjoy a networking breakfast and surround yourself with great women. She Sharp and Countdown collaborate to bring you first-hand the real stories of the women who are igniting our passion for careers in Technology. Join our breakfast session and see what you can learn to help you re/ignite the flame of your technology career. You will hear from key talent across our Analytics and Insi",
@@ -9728,7 +10154,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 20 May 2022, 7:30am - 9:30am NZST",
+        "startTime": "7:30am",
+        "endTime": "9:30am",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-countdown-techweek-event"
       }
     },
     {
@@ -9754,7 +10186,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8456742,174.7643189&query_place_id=ChIJ8Z0aPPpHDW0RsMCbJGLvAA8",
+          "latitude": -36.8456742,
+          "longitude": 174.7643189
         },
         "fullDescription": [
           "We operate in an unusual world that has seen workplaces and normal operating models change from the norms that we have been used to. Navigating the “new normal” can be challenging for both new starters in the tech industry settling in, as well as for managers and teams helping their junior staff find their pathways and build networks in often remote or disrupted working environments.",
@@ -9897,7 +10332,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 21 Jul 2022, 6pm - 7:30pm NZST",
+        "startTime": "6pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/navigating-the-workplace"
       }
     },
     {
@@ -9923,7 +10364,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8652009,174.77722&query_place_id=ChIJYVjkP3RIDW0RqkR_qut8Sm0",
+          "latitude": -36.8652009,
+          "longitude": 174.77722
         },
         "fullDescription": [
           "Some of the world’s leading companies use Deloitte’s 10 Types of Innovation Framework to create innovative products.",
@@ -10018,7 +10462,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Wed, 12 Nov 2025, 5pm - 8pm NZDT",
+        "startTime": "5pm",
+        "endTime": "8pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector"
       }
     },
     {
@@ -10317,7 +10767,9 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "refundPolicy": "Refunds are available up to 7 days prior to the event",
+        "humanitixUrl": "https://events.humanitix.com/ai-forum-nz-hackathon-2023"
       }
     },
     {
@@ -10343,7 +10795,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8441992,174.7657401&query_place_id=ChIJyRV3oPlHDW0RYT2Rg5qusWs",
+          "latitude": -36.8441992,
+          "longitude": 174.7657401
         },
         "fullDescription": [
           "She Sharp is delighted to present She Celebrates: A reflection on the past year and Inspiration for the future! Come and join us for an evening of Reflection and Inspiration presented by a variety of motivational speakers from STEM-related industries and hosted by AWS and She Sharp. This fantastic opportunity will introduce you to new and exciting ideas for the future, while providing a space to network with STEM professionals.",
@@ -10497,7 +10952,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Mon, 5 Dec 2022, 6pm - 8pm NZDT",
+        "startTime": "6pm",
+        "endTime": "8pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/she-celebrates"
       }
     },
     {
@@ -10523,7 +10984,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8422283,174.7569969&query_place_id=ChIJC4PMOvRHDW0RilNiW5KvMCg",
+          "latitude": -36.8422283,
+          "longitude": 174.7569969
         },
         "fullDescription": [
           "The world is constantly evolving. Digital technologies are transforming exponentially from day to day and Artificial Intelligence has changed the way we interact with the world around us. We can find information through conversations with machines, instantly translate written and verbal language and even have our own personal digital assistant.",
@@ -10585,7 +11049,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 20 Oct 2022, 4:30pm - 7:15pm NZDT",
+        "startTime": "4:30pm",
+        "endTime": "7:15pm",
+        "timezone": "NZDT",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/google-event"
       }
     },
     {
@@ -10697,7 +11167,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Thu, 18 Mar 2021, 5:30pm - 8pm NZDT",
+        "startTime": "5:30pm",
+        "endTime": "8pm",
+        "timezone": "NZDT",
+        "refundPolicy": "Note: For those who already bought tickets for the previous event date - they will be valid for the new date! If you have a ticket for the original date (11th March) and are unable to make this new date (18th March) please get in touch with us via shesharp.nz@gmail.com",
+        "humanitixUrl": "https://events.humanitix.com/international-women-s-day-event-myob"
       }
     },
     {
@@ -10723,7 +11199,10 @@
           "venueName": "",
           "address": "",
           "city": "",
-          "country": "New Zealand"
+          "country": "New Zealand",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8708076,174.7633361&query_place_id=ChIJMxCAB9BHDW0RWD-o8MnR86w",
+          "latitude": -36.8708076,
+          "longitude": 174.7633361
         },
         "fullDescription": [
           "This event is aimed at providing women with insights and opportunities to pursue a career in the tech industry.",
@@ -10842,7 +11321,13 @@
         ],
         "category": "",
         "status": "upcoming",
-        "isFeatured": false
+        "isFeatured": false,
+        "dateTime": "Fri, 28 Apr 2023, 5pm - 7:30pm NZST",
+        "startTime": "5pm",
+        "endTime": "7:30pm",
+        "timezone": "NZST",
+        "refundPolicy": "No refunds",
+        "humanitixUrl": "https://events.humanitix.com/developher"
       }
     }
   ]
