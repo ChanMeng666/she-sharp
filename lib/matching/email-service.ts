@@ -102,7 +102,7 @@ async function sendMatchApprovalToMentor(data: MatchApprovalEmailData): Promise<
         </div>
         <div class="footer">
           <p>© 2025 She Sharp. Empowering women in STEM.</p>
-          <p>Questions? Contact us at support@shesharp.org</p>
+          <p>Questions? Contact us at support@shesharp.org.nz</p>
         </div>
       </div>
     </body>
@@ -215,7 +215,7 @@ async function sendMatchApprovalToMentee(data: MatchApprovalEmailData): Promise<
         </div>
         <div class="footer">
           <p>© 2025 She Sharp. Empowering women in STEM.</p>
-          <p>Questions? Contact us at support@shesharp.org</p>
+          <p>Questions? Contact us at support@shesharp.org.nz</p>
         </div>
       </div>
     </body>
@@ -318,7 +318,7 @@ export async function sendQueueUpdateNotification(
         </div>
         <div class="footer">
           <p>© 2025 She Sharp. Empowering women in STEM.</p>
-          <p>Questions? Contact us at support@shesharp.org</p>
+          <p>Questions? Contact us at support@shesharp.org.nz</p>
         </div>
       </div>
     </body>
@@ -420,7 +420,7 @@ export async function sendAddedToQueueNotification(
         </div>
         <div class="footer">
           <p>© 2025 She Sharp. Empowering women in STEM.</p>
-          <p>Questions? Contact us at support@shesharp.org</p>
+          <p>Questions? Contact us at support@shesharp.org.nz</p>
         </div>
       </div>
     </body>
@@ -507,7 +507,7 @@ export async function sendQueueExpiredNotification(
         </div>
         <div class="footer">
           <p>© 2025 She Sharp. Empowering women in STEM.</p>
-          <p>Questions? Contact us at support@shesharp.org</p>
+          <p>Questions? Contact us at support@shesharp.org.nz</p>
         </div>
       </div>
     </body>

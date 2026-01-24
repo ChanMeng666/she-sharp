@@ -23,7 +23,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     console.log('=====================================');
     console.log('To:', to);
     console.log('Subject:', subject);
-    console.log('From: She Sharp <noreply@shesharp.org>');
+    console.log('From: She Sharp <noreply@shesharp.org.nz>');
     console.log('Time:', new Date().toISOString());
     console.log('-------------------------------------');
     
@@ -71,10 +71,10 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     try {
       console.log('Attempting to send email via Resend...');
       console.log('To:', to);
-      console.log('From:', process.env.EMAIL_FROM || 'She Sharp <noreply@shesharp.org>');
+      console.log('From:', process.env.EMAIL_FROM || 'She Sharp <noreply@shesharp.org.nz>');
       
       const { data, error } = await resend.emails.send({
-        from: process.env.EMAIL_FROM || 'She Sharp <noreply@shesharp.org>',
+        from: process.env.EMAIL_FROM || 'She Sharp <noreply@shesharp.org.nz>',
         to,
         subject,
         html,
@@ -447,7 +447,7 @@ export async function sendPaymentConfirmationEmail(
         </div>
         <div class="footer">
           <p>© 2025 She Sharp. Empowering women in STEM.</p>
-          <p>Questions? Contact us at support@shesharp.org</p>
+          <p>Questions? Contact us at support@shesharp.org.nz</p>
         </div>
       </div>
     </body>
@@ -482,7 +482,7 @@ ${baseUrl}/sign-up
 Note: This invitation code is valid for 30 days and can only be used once.
 
 © 2025 She Sharp. Empowering women in STEM.
-Questions? Contact us at support@shesharp.org
+Questions? Contact us at support@shesharp.org.nz
   `;
 
   return sendEmail({
