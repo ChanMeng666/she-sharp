@@ -139,7 +139,7 @@ Located in `/app/` root directory (8 pages):
 - **Authentication**: NextAuth 5.0 (OAuth) + Custom JWT using bcrypt
 - **UI**: shadcn/ui components (63 components) with Tailwind CSS v4
 - **Styling**: Tailwind CSS with PostCSS and custom brand colors
-- **AI**: Google Gemini (chatbot) + OpenAI GPT-4 (mentor matching)
+- **AI**: OpenAI GPT-4o-mini (chatbot) + OpenAI GPT-4 (mentor matching)
 - **Email**: Resend for transactional emails
 - **Payments**: Stripe for subscriptions and one-time payments
 - **Charts**: Recharts for analytics dashboards
@@ -290,7 +290,7 @@ Organized by feature:
 ### Other Endpoints
 - `/api/resources/` (3) - Resource management and downloads
 - `/api/notifications/` (2) - Notification handling and preferences
-- `/api/chat/` - AI chatbot (Gemini)
+- `/api/chat/` - AI chatbot (OpenAI GPT-4o-mini)
 - `/api/invitation-codes/validate` - Code validation
 - `/api/matching/suggestions` - AI match suggestions
 - `/api/dashboard/overview` - Dashboard data
@@ -337,8 +337,7 @@ AUTH_GOOGLE_ID / AUTH_GOOGLE_SECRET    # Google OAuth
 AUTH_GITHUB_ID / AUTH_GITHUB_SECRET    # GitHub OAuth
 
 # Services
-GOOGLE_GENERATIVE_AI_API_KEY=...       # Gemini AI chatbot
-OPENAI_API_KEY=...                     # GPT-4 matching (optional)
+OPENAI_API_KEY=...                     # OpenAI chatbot (GPT-4o-mini) + GPT-4 matching
 RESEND_API_KEY=...                     # Email service
 
 # Payments
