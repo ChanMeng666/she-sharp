@@ -1,18 +1,21 @@
 "use client";
 
-import { Event } from "@/types/event";
+import { EventV3 } from "@/types/event";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { hasPhotos } from "@/lib/data/events";
 
 interface EventPhotosProps {
-  event: Event;
+  event: EventV3;
   className?: string;
 }
 
 export function EventPhotos({ event, className }: EventPhotosProps) {
-  if (!event.photos || event.photos.length === 0) {
+  if (!hasPhotos(event)) {
     return null;
   }
+
+  const photos = event.detailPageData.photos;
 
   return (
     <section id="event-photos" className={cn("space-y-8 py-24", className)}>
@@ -20,35 +23,30 @@ export function EventPhotos({ event, className }: EventPhotosProps) {
         A taste of the Event
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {event.photos.map((photo, index) => (
-          <div
-            key={index}
-            className="aspect-square overflow-hidden bg-muted"
-          >
+        {photos.map((photo, index) => (
+          <div key={index} className="aspect-square overflow-hidden bg-muted">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={photo}
-              alt={`${event.title} photo ${index + 1}`}
+              src={photo.url}
+              alt={photo.alt || `${event.title} photo ${index + 1}`}
               className="w-full h-full object-cover"
             />
           </div>
         ))}
       </div>
-      <div className="flex justify-center mt-12">
-        <Button
-          variant="brand"
-          size="lg"
-          onClick={() => {
-            if (event.albumUrl) {
-              window.open(event.albumUrl, "_blank");
-            }
-          }}
-          disabled={!event.albumUrl}
-        >
-          View Gallery
-        </Button>
-      </div>
+      {event.detailPageData.galleryUrl && (
+        <div className="flex justify-center mt-12">
+          <Button
+            variant="brand"
+            size="lg"
+            onClick={() => {
+              window.open(event.detailPageData.galleryUrl, "_blank");
+            }}
+          >
+            View Gallery
+          </Button>
+        </div>
+      )}
     </section>
   );
 }
-

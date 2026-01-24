@@ -7,7 +7,12 @@ import { Section } from "@/components/layout/section";
 import { EventInflectedCard } from "@/components/events/event-inflected-card";
 import { EventList } from "@/components/events/event-list";
 import { FeaturedEventHero } from "@/components/events/featured-event-hero";
-import { getAllEvents, getFeaturedEvent } from "@/lib/data/events";
+import {
+  getAllEvents,
+  getFeaturedEvent,
+  parseDateString,
+  isFutureDate,
+} from "@/lib/data/events";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,20 +24,6 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-import { EVENT_CATEGORIES, EventCategory } from "@/types/event";
-
-// Category display names
-const CATEGORY_LABELS: Record<EventCategory, string> = {
-  workshop: "Workshop",
-  networking: "Networking",
-  training: "Training",
-  social: "Social",
-  thrive: "THRIVE",
-  conference: "Conference",
-  webinar: "Webinar",
-  meetup: "Meetup",
-  panel: "Panel",
-};
 
 export default function EventsPage() {
   const featuredEvent = getFeaturedEvent();
@@ -41,7 +32,7 @@ export default function EventsPage() {
   // Search and filter state
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<EventCategory[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const [showUpcomingOnly, setShowUpcomingOnly] = useState(false);
 
@@ -53,7 +44,7 @@ export default function EventsPage() {
   const availableYears = useMemo(() => {
     const years = new Set<number>();
     allEvents.forEach((event) => {
-      const year = new Date(event.startDate).getFullYear();
+      const year = parseDateString(event.date).getFullYear();
       years.add(year);
     });
     return Array.from(years).sort((a, b) => b - a);
@@ -61,9 +52,12 @@ export default function EventsPage() {
 
   // Extract available categories from events
   const availableCategories = useMemo(() => {
-    const categories = new Set<EventCategory>();
+    const categories = new Set<string>();
     allEvents.forEach((event) => {
-      categories.add(event.category);
+      const category = event.detailPageData.category;
+      if (category && category.length > 0) {
+        categories.add(category);
+      }
     });
     return Array.from(categories).sort();
   }, [allEvents]);
@@ -72,8 +66,9 @@ export default function EventsPage() {
   const availableCities = useMemo(() => {
     const cities = new Set<string>();
     allEvents.forEach((event) => {
-      if (event.location?.city) {
-        cities.add(event.location.city);
+      const city = event.detailPageData.location?.city;
+      if (city && city.length > 0) {
+        cities.add(city);
       }
     });
     return Array.from(cities).sort();
@@ -82,39 +77,61 @@ export default function EventsPage() {
   // Filter events based on all criteria
   const filteredEvents = useMemo(() => {
     return allEvents.filter((event) => {
-      const eventDate = new Date(event.startDate);
-      const now = new Date();
-
       // Search filter - title and shortDescription
       const matchesSearch =
         searchQuery === "" ||
         event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (event.shortDescription?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
+        event.shortDescription
+          ?.toLowerCase()
+          .includes(searchQuery.toLowerCase());
 
       // Year filter
-      const eventYear = new Date(event.startDate).getFullYear();
-      const matchesYear = selectedYears.length === 0 || selectedYears.includes(eventYear);
+      const eventYear = parseDateString(event.date).getFullYear();
+      const matchesYear =
+        selectedYears.length === 0 || selectedYears.includes(eventYear);
 
       // Category filter
-      const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(event.category);
+      const eventCategory = event.detailPageData.category || "";
+      const matchesCategory =
+        selectedCategories.length === 0 ||
+        selectedCategories.includes(eventCategory);
 
       // City filter
-      const matchesCity = selectedCities.length === 0 ||
-        (event.location?.city && selectedCities.includes(event.location.city));
+      const eventCity = event.detailPageData.location?.city || "";
+      const matchesCity =
+        selectedCities.length === 0 || selectedCities.includes(eventCity);
 
-      // Status filter (upcoming only) - based on date, not just status flag
-      const isUpcomingByDate =
-        eventDate.getTime() >= now.getTime() && event.status !== "cancelled";
-      const matchesStatus = !showUpcomingOnly || isUpcomingByDate;
+      // Status filter (upcoming only) - based on date
+      const isUpcoming = isFutureDate(event.date);
+      const matchesStatus = !showUpcomingOnly || isUpcoming;
 
-      return matchesSearch && matchesYear && matchesCategory && matchesCity && matchesStatus;
+      return (
+        matchesSearch &&
+        matchesYear &&
+        matchesCategory &&
+        matchesCity &&
+        matchesStatus
+      );
     });
-  }, [allEvents, searchQuery, selectedYears, selectedCategories, selectedCities, showUpcomingOnly]);
+  }, [
+    allEvents,
+    searchQuery,
+    selectedYears,
+    selectedCategories,
+    selectedCities,
+    showUpcomingOnly,
+  ]);
 
   // Reset displayed count when filters change
   useEffect(() => {
     setDisplayedCount(EVENTS_PER_PAGE);
-  }, [searchQuery, selectedYears, selectedCategories, selectedCities, showUpcomingOnly]);
+  }, [
+    searchQuery,
+    selectedYears,
+    selectedCategories,
+    selectedCities,
+    showUpcomingOnly,
+  ]);
 
   // Get events to display (paginated)
   const displayedEvents = useMemo(() => {
@@ -130,7 +147,11 @@ export default function EventsPage() {
   };
 
   // Count active filters
-  const activeFilterCount = selectedYears.length + selectedCategories.length + selectedCities.length + (showUpcomingOnly ? 1 : 0);
+  const activeFilterCount =
+    selectedYears.length +
+    selectedCategories.length +
+    selectedCities.length +
+    (showUpcomingOnly ? 1 : 0);
 
   // Toggle year selection
   const toggleYear = (year: number) => {
@@ -140,9 +161,11 @@ export default function EventsPage() {
   };
 
   // Toggle category selection
-  const toggleCategory = (category: EventCategory) => {
+  const toggleCategory = (category: string) => {
     setSelectedCategories((prev) =>
-      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
     );
   };
 
@@ -164,6 +187,11 @@ export default function EventsPage() {
 
   // Check if any filters are active
   const hasActiveFilters = activeFilterCount > 0 || searchQuery !== "";
+
+  // Format category label
+  const formatCategoryLabel = (category: string) => {
+    return category.charAt(0).toUpperCase() + category.slice(1);
+  };
 
   return (
     <div className="min-h-screen mb-24">
@@ -222,32 +250,37 @@ export default function EventsPage() {
                 </Button>
 
                 {/* Category Filter */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="h-9">
-                      <Tag className="h-4 w-4 mr-1" />
-                      Category
-                      {selectedCategories.length > 0 && (
-                        <Badge variant="secondary" className="ml-2 h-5 px-1.5">
-                          {selectedCategories.length}
-                        </Badge>
-                      )}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-48">
-                    <DropdownMenuLabel>Event Category</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    {availableCategories.map((category) => (
-                      <DropdownMenuCheckboxItem
-                        key={category}
-                        checked={selectedCategories.includes(category)}
-                        onCheckedChange={() => toggleCategory(category)}
-                      >
-                        {CATEGORY_LABELS[category]}
-                      </DropdownMenuCheckboxItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                {availableCategories.length > 0 && (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm" className="h-9">
+                        <Tag className="h-4 w-4 mr-1" />
+                        Category
+                        {selectedCategories.length > 0 && (
+                          <Badge
+                            variant="secondary"
+                            className="ml-2 h-5 px-1.5"
+                          >
+                            {selectedCategories.length}
+                          </Badge>
+                        )}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-48">
+                      <DropdownMenuLabel>Event Category</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      {availableCategories.map((category) => (
+                        <DropdownMenuCheckboxItem
+                          key={category}
+                          checked={selectedCategories.includes(category)}
+                          onCheckedChange={() => toggleCategory(category)}
+                        >
+                          {formatCategoryLabel(category)}
+                        </DropdownMenuCheckboxItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
 
                 {/* Year Filter */}
                 <DropdownMenu>
@@ -278,32 +311,37 @@ export default function EventsPage() {
                 </DropdownMenu>
 
                 {/* City Filter */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="h-9">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      City
-                      {selectedCities.length > 0 && (
-                        <Badge variant="secondary" className="ml-2 h-5 px-1.5">
-                          {selectedCities.length}
-                        </Badge>
-                      )}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-48">
-                    <DropdownMenuLabel>Event City</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    {availableCities.map((city) => (
-                      <DropdownMenuCheckboxItem
-                        key={city}
-                        checked={selectedCities.includes(city)}
-                        onCheckedChange={() => toggleCity(city)}
-                      >
-                        {city}
-                      </DropdownMenuCheckboxItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                {availableCities.length > 0 && (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm" className="h-9">
+                        <MapPin className="h-4 w-4 mr-1" />
+                        City
+                        {selectedCities.length > 0 && (
+                          <Badge
+                            variant="secondary"
+                            className="ml-2 h-5 px-1.5"
+                          >
+                            {selectedCities.length}
+                          </Badge>
+                        )}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-48">
+                      <DropdownMenuLabel>Event City</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      {availableCities.map((city) => (
+                        <DropdownMenuCheckboxItem
+                          key={city}
+                          checked={selectedCities.includes(city)}
+                          onCheckedChange={() => toggleCity(city)}
+                        >
+                          {city}
+                        </DropdownMenuCheckboxItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
 
                 {/* Clear All Filters */}
                 {hasActiveFilters && (
@@ -328,12 +366,17 @@ export default function EventsPage() {
             </div>
 
             {/* Active Filters Display - Separate row if filters are active */}
-            {(selectedCategories.length > 0 || selectedYears.length > 0 || selectedCities.length > 0) && (
+            {(selectedCategories.length > 0 ||
+              selectedYears.length > 0 ||
+              selectedCities.length > 0) && (
               <div className="flex flex-wrap items-center gap-2">
                 {selectedCategories.map((category) => (
                   <Badge key={category} variant="secondary" className="gap-1">
-                    {CATEGORY_LABELS[category]}
-                    <button onClick={() => toggleCategory(category)} className="hover:text-foreground">
+                    {formatCategoryLabel(category)}
+                    <button
+                      onClick={() => toggleCategory(category)}
+                      className="hover:text-foreground"
+                    >
                       <X className="h-3 w-3" />
                     </button>
                   </Badge>
@@ -341,7 +384,10 @@ export default function EventsPage() {
                 {selectedYears.map((year) => (
                   <Badge key={year} variant="secondary" className="gap-1">
                     {year}
-                    <button onClick={() => toggleYear(year)} className="hover:text-foreground">
+                    <button
+                      onClick={() => toggleYear(year)}
+                      className="hover:text-foreground"
+                    >
                       <X className="h-3 w-3" />
                     </button>
                   </Badge>
@@ -349,7 +395,10 @@ export default function EventsPage() {
                 {selectedCities.map((city) => (
                   <Badge key={city} variant="secondary" className="gap-1">
                     {city}
-                    <button onClick={() => toggleCity(city)} className="hover:text-foreground">
+                    <button
+                      onClick={() => toggleCity(city)}
+                      className="hover:text-foreground"
+                    >
                       <X className="h-3 w-3" />
                     </button>
                   </Badge>

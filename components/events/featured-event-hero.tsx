@@ -6,12 +6,12 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import type { Event } from "@/lib/data/events";
+import type { EventV3 } from "@/types/event";
 
 const FALLBACK_HERO_IMAGE = "/img/2026.jpg";
 
 interface FeaturedEventHeroProps {
-  event?: Event;
+  event?: EventV3;
 }
 
 function HeroButtons({ slug }: { slug: string }) {
@@ -65,8 +65,8 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
             onMouseLeave={() => setIsImageHovered(false)}
           >
             <Image
-              src={event ? event.coverImage : FALLBACK_HERO_IMAGE}
-              alt={event ? event.title : "She Sharp events"}
+              src={event ? event.coverImage.url : FALLBACK_HERO_IMAGE}
+              alt={event ? (event.coverImage.alt || event.title) : "She Sharp events"}
               fill
               priority
               sizes="100vw"

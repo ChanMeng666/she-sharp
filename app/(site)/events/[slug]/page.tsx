@@ -4,16 +4,19 @@ import {
   getAllEvents,
   getEventBySlug,
   getUpcomingEvents,
+  hasAnySpeakers,
+  hasPhotos,
+  hasSpecialSections,
 } from "@/lib/data/events";
 import {
   EventHeader,
   EventDescription,
-  EventAgenda,
   EventSpeakers,
   EventSidebarPanel,
   EventPhotos,
   EventSponsorship,
   EventSponsors,
+  EventSpecialSections,
 } from "@/components/events/event-detail";
 import { EventCard } from "@/components/events/event-card";
 import { Container } from "@/components/layout/container";
@@ -44,13 +47,18 @@ export async function generateMetadata({
     };
   }
 
+  const description =
+    event.shortDescription ||
+    event.detailPageData.fullDescription[0]?.slice(0, 160) ||
+    "";
+
   return {
     title: `${event.title} | She Sharp Events`,
-    description: event.shortDescription || event.description.slice(0, 160),
+    description,
     openGraph: {
       title: event.title,
-      description: event.shortDescription || event.description.slice(0, 160),
-      images: [event.coverImage],
+      description,
+      images: [event.coverImage.url],
       type: "website",
     },
   };
@@ -85,21 +93,30 @@ export default async function EventPage({ params }: EventPageProps) {
                 {event.title}
               </h1>
 
+              {/* Subtitle if available */}
+              {event.detailPageData.subtitle && (
+                <p className="text-xl text-muted-foreground -mt-8">
+                  {event.detailPageData.subtitle}
+                </p>
+              )}
+
               <EventDescription event={event} />
+
+              {/* Special Sections (workshop prep, videos, etc.) */}
+              {hasSpecialSections(event) && (
+                <EventSpecialSections
+                  sections={event.detailPageData.specialSections}
+                />
+              )}
 
               <div className="w-full md:pr-8">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={event.coverImage}
-                  alt={event.title}
+                  src={event.coverImage.url}
+                  alt={event.coverImage.alt || event.title}
                   className="w-full h-auto"
                 />
               </div>
-
-              {event.agenda && event.agenda.length > 0 && (
-                <EventAgenda event={event} />
-              )}
-
             </div>
 
             {/* Sidebar - Right Column */}
@@ -110,8 +127,8 @@ export default async function EventPage({ params }: EventPageProps) {
         </Container>
       </Section>
 
-      {/* Speakers Section  */}
-      {event.speakers && event.speakers.length > 0 && (
+      {/* Speakers Section */}
+      {hasAnySpeakers(event) && (
         <div className="mt-16">
           <EventSpeakers event={event} />
         </div>
@@ -128,7 +145,7 @@ export default async function EventPage({ params }: EventPageProps) {
       </div>
 
       {/* Photos Section */}
-      {event.photos && event.photos.length > 0 && (
+      {hasPhotos(event) && (
         <div className="bg-white">
           <EventPhotos event={event} />
         </div>

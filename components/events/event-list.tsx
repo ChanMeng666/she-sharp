@@ -1,16 +1,16 @@
 'use client';
 
-import { Event } from '@/lib/data/events';
+import { EventV3 } from '@/types/event';
 import { EventCard } from './event-card';
 import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
 
 interface EventListProps {
-  events: Event[];
+  events: EventV3[];
   columns?: 1 | 2 | 3 | 4;
   emptyMessage?: string;
   className?: string;
-  renderCard?: (event: Event, index: number) => ReactNode;
+  renderCard?: (event: EventV3, index: number) => ReactNode;
 }
 
 export function EventList({
@@ -53,7 +53,7 @@ export function EventList({
 interface EventSectionProps {
   title: string;
   description?: string;
-  events: Event[];
+  events: EventV3[];
   columns?: 1 | 2 | 3 | 4;
   showSeeAll?: boolean;
   seeAllHref?: string;

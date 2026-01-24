@@ -1,23 +1,18 @@
 "use client";
 
-import { Event } from "@/lib/data/events";
+import { EventV3 } from "@/types/event";
 import { cn } from "@/lib/utils";
 import { EventCountdown } from "./event-countdown";
+import { parseDateString, isFutureDate } from "@/lib/data/events";
 
 interface EventHeaderProps {
-  event: Event;
+  event: EventV3;
   className?: string;
 }
 
 export function EventHeader({ event, className }: EventHeaderProps) {
-  const isPast = event.status === "completed";
-
   // Check if event is in the future
-  const eventDate = new Date(event.startDate);
-  const [hours, minutes] = event.startTime.split(":").map(Number);
-  eventDate.setHours(hours, minutes, 0, 0);
-  const now = new Date();
-  const isFutureEvent = eventDate > now;
+  const isFutureEvent = isFutureDate(event.date);
 
   return (
     <div className={cn("", className)}>
@@ -25,19 +20,12 @@ export function EventHeader({ event, className }: EventHeaderProps) {
       <div className="relative h-64 md:h-80 lg:h-96 xl:h-[28rem] overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={event.coverImage}
-          alt={event.title}
+          src={event.coverImage.url}
+          alt={event.coverImage.alt || event.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
         {/* Overlay Mask */}
         <div className="absolute inset-0 bg-black/30" />
-        {/* {isPast && (
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
-            <span className="text-white text-base font-medium px-4 py-2 border border-white/50">
-              Past Event
-            </span>
-          </div>
-        )} */}
 
         {/* Countdown */}
         {isFutureEvent && (

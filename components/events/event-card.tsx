@@ -4,13 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Calendar, MapPin, Video, Users } from "lucide-react";
-import { Event, formatEventDate } from "@/lib/data/events";
+import { EventV3 } from "@/types/event";
+import { formatEventDate, isPastEvent } from "@/lib/data/events";
 import { cn } from "@/lib/utils";
 
 interface EventCardProps {
-  event: Event;
+  event: EventV3;
   variant?: "default" | "compact" | "featured";
   className?: string;
 }
@@ -20,9 +20,10 @@ export function EventCard({
   variant = "default",
   className,
 }: EventCardProps) {
-  const isOnline = event.location.format === "online";
-  const isHybrid = event.location.format === "hybrid";
-  const isPast = event.status === "completed";
+  const location = event.detailPageData.location;
+  const isOnline = location.format === "online";
+  const isHybrid = location.format === "hybrid";
+  const isPast = isPastEvent(event);
 
   return (
     <Link href={`/events/${event.slug}`} className={cn("block", className)}>
@@ -37,8 +38,8 @@ export function EventCard({
         {/* Cover Image */}
         <div className="relative aspect-16/9 overflow-hidden  ">
           <Image
-            src={event.coverImage}
-            alt={event.title}
+            src={event.coverImage.url}
+            alt={event.coverImage.alt || event.title}
             fill
             unoptimized
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -53,19 +54,6 @@ export function EventCard({
 
           {/* Top Badges */}
           <div className="absolute top-3 left-3 right-3 flex justify-between items-start">
-            {/* Price Badge */}
-            {event.registration?.isFree && (
-              <Badge className="bg-green-500 text-white border-0 shadow-md">
-                Free
-              </Badge>
-            )}
-            {event.registration?.price &&
-              event.registration.price.amount > 0 && (
-                <Badge className="bg-foreground text-background border-0 shadow-md">
-                  ${event.registration.price.amount}
-                </Badge>
-              )}
-
             {/* Format Badge */}
             <Badge
               variant="secondary"
@@ -107,7 +95,8 @@ export function EventCard({
           <div className="flex items-center gap-2 text-sm text-foreground font-medium">
             <Calendar className="w-4 h-4 text-[#8982ff]" />
             <span>
-              {formatEventDate(event, "short")} · {event.startTime}
+              {formatEventDate(event, "short")}
+              {event.detailPageData.time && ` · ${event.detailPageData.time}`}
             </span>
           </div>
 
@@ -133,70 +122,21 @@ export function EventCard({
               <>
                 <MapPin className="w-4 h-4 text-muted-foreground" />
                 <span className="truncate">
-                  {event.location.venueName || event.location.city}
+                  {location.venueName || location.city || "TBA"}
                 </span>
               </>
             )}
           </div>
 
-          {/* Organizer */}
-          {event.organizer && variant !== "compact" && (
-            <p className="text-sm text-muted-foreground truncate">
-              Hosted by {event.organizer.company || event.organizer.name}
-            </p>
+          {/* Attendees */}
+          {event.attendees && event.attendees > 0 && (
+            <div className="flex items-center gap-3 pt-2 border-t border-[#f4f4fa]">
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <Users className="w-4 h-4" />
+                <span>{event.attendees} attended</span>
+              </div>
+            </div>
           )}
-
-          {/* Attendees Section */}
-          {event.registration?.attendeeCount &&
-            event.registration.attendeeCount > 0 && (
-              <div className="flex items-center gap-3 pt-2 border-t border-[#f4f4fa]">
-                {/* Avatar Stack */}
-                {event.attendeeAvatars && event.attendeeAvatars.length > 0 && (
-                  <div className="flex -space-x-2">
-                    {event.attendeeAvatars.slice(0, 3).map((avatar, index) => (
-                      <Avatar
-                        key={index}
-                        className="w-6 h-6 border-2 border-white"
-                      >
-                        <AvatarImage src={avatar} alt="Attendee" />
-                        <AvatarFallback className="text-sm   text-foreground">
-                          {index + 1}
-                        </AvatarFallback>
-                      </Avatar>
-                    ))}
-                  </div>
-                )}
-
-                {/* Attendee Count */}
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <Users className="w-4 h-4" />
-                  <span>{event.registration.attendeeCount} attending</span>
-                </div>
-              </div>
-            )}
-
-          {/* Capacity indicator for upcoming events */}
-          {!isPast &&
-            event.registration?.capacity &&
-            event.registration?.attendeeCount && (
-              <div className="pt-2">
-                <div className="flex justify-between text-sm text-muted-foreground mb-1">
-                  <span>Registration</span>
-                  <span>
-                    {event.registration.attendeeCount} /{" "}
-                    {event.registration.capacity}
-                  </span>
-                </div>
-                <div className="h-1.5 bg-[#f4f4fa] rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-[#8982ff] rounded-full transition-all"
-                    style={{
-                      width: `${Math.min(100, (event.registration.attendeeCount / event.registration.capacity) * 100)}%`,
-                    }}
-                  />
-                </div>
-              </div>
-            )}
         </CardContent>
       </Card>
     </Link>
@@ -208,7 +148,7 @@ export function EventCardCompact({
   event,
   className,
 }: {
-  event: Event;
+  event: EventV3;
   className?: string;
 }) {
   return <EventCard event={event} variant="compact" className={className} />;

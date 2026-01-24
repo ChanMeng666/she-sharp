@@ -11,17 +11,16 @@ import {
   Check,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Event } from "@/types/event";
+import { EventV3 } from "@/types/event";
 import {
   formatEventDate,
-  formatEventTime,
-  isRegistrationOpen,
-  getSpotsRemaining,
+  isFutureDate,
+  isPastEvent,
 } from "@/lib/data/events";
 import { cn } from "@/lib/utils";
 
 interface EventSidebarPanelProps {
-  event: Event;
+  event: EventV3;
   className?: string;
 }
 
@@ -31,14 +30,12 @@ export function EventSidebarPanel({
 }: EventSidebarPanelProps) {
   const [copied, setCopied] = useState(false);
 
-  const getMapUrl = (): string | null => {
-    if (event.location.mapUrl) {
-      return event.location.mapUrl;
-    }
+  const location = event.detailPageData.location;
 
-    const venueName = event.location.venueName?.trim();
-    const address = event.location.address?.trim();
-    const city = event.location.city?.trim();
+  const getMapUrl = (): string | null => {
+    const venueName = location.venueName?.trim();
+    const address = location.address?.trim();
+    const city = location.city?.trim();
 
     const parts = [venueName, address, city].filter(Boolean);
     if (parts.length === 0) {
@@ -49,63 +46,35 @@ export function EventSidebarPanel({
     return `https://www.google.com/maps/search/?api=1&query=${query}`;
   };
 
-  const isPastByStatus = event.status === "completed";
-  const isCancelled = event.status === "cancelled";
-  const isOnline = event.location.format === "online";
-  const isHybrid = event.location.format === "hybrid";
-  const registrationOpen = isRegistrationOpen(event);
-  const spotsRemaining = getSpotsRemaining(event);
-  const isFull =
-    spotsRemaining !== null &&
-    spotsRemaining === 0 &&
-    !event.registration?.waitlistEnabled;
-
-  // Check if event date is in the future (date-based, independent of status)
-  const eventDate = new Date(event.startDate);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const isFutureEvent = eventDate >= today;
-  const isPastByDate = eventDate < today;
-  const isPastEvent = isPastByStatus || isPastByDate;
-
-  const platformLabels: Record<string, string> = {
-    zoom: "Zoom",
-    teams: "Microsoft Teams",
-    "google-meet": "Google Meet",
-    other: "Video Call",
-  };
+  const isPast = isPastEvent(event);
+  const isFuture = isFutureDate(event.date);
+  const isOnline = location.format === "online";
+  const isHybrid = location.format === "hybrid";
 
   const getButtonText = () => {
-    if (isPastEvent && event.albumUrl) return "View Image";
-    if (isPastEvent) return "Event Ended";
-    if (isCancelled) return "Event Cancelled";
-    if (isFull) return "Event Full";
-    if (spotsRemaining !== null && spotsRemaining <= 5 && spotsRemaining > 0) {
-      return `Register - ${spotsRemaining} spots left`;
-    }
-    if (event.registration?.waitlistEnabled && spotsRemaining === 0) {
-      return "Join Waitlist";
-    }
+    if (isPast && event.detailPageData.galleryUrl) return "View Gallery";
+    if (isPast) return "Event Ended";
     return "Register Now";
   };
 
   const handleRegister = () => {
-    if (event.registration?.externalUrl) {
-      window.open(event.registration.externalUrl, "_blank");
+    if (event.detailPageData.registrationUrl) {
+      window.open(event.detailPageData.registrationUrl, "_blank");
     }
   };
 
-  const handleViewImages = () => {
-    if (event.albumUrl) {
-      window.open(event.albumUrl, "_blank");
+  const handleViewGallery = () => {
+    if (event.detailPageData.galleryUrl) {
+      window.open(event.detailPageData.galleryUrl, "_blank");
     }
   };
 
   const handleCopyAddress = async () => {
-    if (event.location.address) {
-      await navigator.clipboard.writeText(
-        `${event.location.venueName}, ${event.location.address}, ${event.location.city}`
-      );
+    const fullAddress = [location.venueName, location.address, location.city]
+      .filter(Boolean)
+      .join(", ");
+    if (fullAddress) {
+      await navigator.clipboard.writeText(fullAddress);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
@@ -115,8 +84,8 @@ export function EventSidebarPanel({
 
   return (
     <>
-      {/* Status Card - Only show if event is past or cancelled */}
-      {(isPastEvent || isCancelled) && (
+      {/* Status Card - Only show if event is past */}
+      {isPast && (
         <div
           className={cn(
             "relative border border-white/20 overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
@@ -125,9 +94,7 @@ export function EventSidebarPanel({
         >
           <div className="space-y-6">
             <p className="text-lg text-muted-foreground text-center">
-              {isPastEvent
-                ? "This event has ended"
-                : "This event has been cancelled"}
+              This event has ended
             </p>
           </div>
         </div>
@@ -137,7 +104,7 @@ export function EventSidebarPanel({
       <div
         className={cn(
           "relative border border-white/20 overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
-          (isPastEvent || isCancelled) && "mt-6"
+          isPast && "mt-6"
         )}
       >
         <div className="space-y-8">
@@ -154,58 +121,42 @@ export function EventSidebarPanel({
               </span>
             </div>
 
-            {/* Time */}
-            <div className="flex items-center gap-3 text-base">
-              <Clock className="w-5 h-5 text-muted-foreground" />
-              <span className="text-foreground">{formatEventTime(event)}</span>
-            </div>
+            {/* Time - only show if available */}
+            {event.detailPageData.time && (
+              <div className="flex items-center gap-3 text-base">
+                <Clock className="w-5 h-5 text-muted-foreground" />
+                <span className="text-foreground">
+                  {event.detailPageData.time}
+                </span>
+              </div>
+            )}
 
             {(isOnline || isHybrid) && (
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <Video className="w-5 h-5 text-muted-foreground" />
-                  <span className="text-foreground">
-                    {platformLabels[event.location.meetingPlatform || "other"]}
-                  </span>
+                  <span className="text-foreground">Online Event</span>
                 </div>
-                {event.location.meetingUrl && !isPastEvent && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full"
-                    onClick={() =>
-                      window.open(event.location.meetingUrl, "_blank")
-                    }
-                  >
-                    Join Online
-                  </Button>
-                )}
               </div>
             )}
 
-            {(!isOnline || isHybrid) && event.location.venueName && (
+            {(!isOnline || isHybrid) && location.venueName && (
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <MapPin className="w-6 h-6 text-muted-foreground shrink-0 mt-0.5" />
                   <div className="text-base">
-                    <p className="text-foreground">
-                      {event.location.venueName}
-                    </p>
-                    {event.location.address && (
-                      <p className="text-muted-foreground">
-                        {event.location.address}
-                      </p>
+                    <p className="text-foreground">{location.venueName}</p>
+                    {location.address && (
+                      <p className="text-muted-foreground">{location.address}</p>
                     )}
-                    {event.location.city && (
-                      <p className="text-muted-foreground">
-                        {event.location.city}
-                      </p>
+                    {location.city && (
+                      <p className="text-muted-foreground">{location.city}</p>
                     )}
                   </div>
                 </div>
 
                 <div className="flex gap-2 pl-7">
-                  {event.location.address && (
+                  {(location.address || location.venueName) && (
                     <Button
                       variant="outline"
                       size="sm"
@@ -236,58 +187,35 @@ export function EventSidebarPanel({
             )}
           </div>
 
-          {/* CTA - Show if event date is in the future or if past event has albumUrl */}
-          {(isFutureEvent || (isPastEvent && event.albumUrl)) && (
+          {/* CTA - Show if event date is in the future or if past event has gallery */}
+          {(isFuture || (isPast && event.detailPageData.galleryUrl)) && (
             <div className="space-y-4">
               <Button
                 size="lg"
                 variant="brand"
                 className="w-full"
-                disabled={
-                  !isPastEvent &&
-                  !registrationOpen &&
-                  !event.registration?.waitlistEnabled
-                }
                 onClick={
-                  isPastEvent && event.albumUrl
-                    ? handleViewImages
+                  isPast && event.detailPageData.galleryUrl
+                    ? handleViewGallery
                     : handleRegister
                 }
               >
                 {getButtonText()}
               </Button>
-
-              {event.registration?.deadline && registrationOpen && (
-                <p className="text-base text-muted-foreground text-center italic">
-                  Registration closes{" "}
-                  {new Date(event.registration.deadline).toLocaleDateString(
-                    "en-NZ",
-                    {
-                      month: "short",
-                      day: "numeric",
-                    }
-                  )}
-                </p>
-              )}
             </div>
           )}
         </div>
       </div>
 
-      {/* Mobile Fixed Button - Show if event date is in the future or if past event has albumUrl */}
-      {(isFutureEvent || (isPastEvent && event.albumUrl)) && (
+      {/* Mobile Fixed Button */}
+      {(isFuture || (isPast && event.detailPageData.galleryUrl)) && (
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-foreground/10 lg:hidden z-50">
           <Button
             size="lg"
             className="w-full"
-            disabled={
-              !isPastEvent &&
-              !registrationOpen &&
-              !event.registration?.waitlistEnabled
-            }
             onClick={
-              isPastEvent && event.albumUrl
-                ? handleViewImages
+              isPast && event.detailPageData.galleryUrl
+                ? handleViewGallery
                 : handleRegister
             }
           >

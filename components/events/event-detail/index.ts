@@ -7,3 +7,4 @@ export { EventCountdown } from './event-countdown';
 export { EventPhotos } from './event-photos';
 export { EventSponsorship } from './event-sponsorship';
 export { EventSponsors } from './event-sponsors';
+export { EventSpecialSections } from './event-special-sections';

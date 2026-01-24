@@ -72,7 +72,7 @@ export interface EventRegistration {
   isFree?: boolean;
 }
 
-// Main Event interface
+// Main Event interface (Legacy - kept for backward compatibility)
 export interface Event {
   // Core identification
   slug: string;
@@ -113,4 +113,107 @@ export interface Event {
 
   // Sponsors
   sponsors?: EventSponsor[];
+}
+
+// ============================================
+// V3 Event Types (New JSON structure)
+// ============================================
+
+// Cover image with alt text
+export interface EventCoverImage {
+  url: string;
+  alt: string;
+}
+
+// Speaker in V3 format
+export interface EventSpeakerV3 {
+  name: string;
+  title: string;
+  company: string;
+  bio: string;
+  image: string;
+  linkedin: string;
+}
+
+// Speaker group with heading
+export interface EventSpeakerGroup {
+  heading: string;
+  speakers: EventSpeakerV3[];
+}
+
+// Categorized speakers structure
+export interface EventSpeakersV3 {
+  keynote_speakers?: EventSpeakerGroup;
+  panel_speakers?: EventSpeakerGroup;
+  guest_speakers?: EventSpeakerGroup;
+  panel_facilitators?: EventSpeakerGroup;
+}
+
+// Sponsor in V3 format
+export interface EventSponsorV3 {
+  name: string;
+  logo: string;
+}
+
+// Sponsors grouped by type
+export interface EventSponsorsV3 {
+  main: EventSponsorV3[];
+  other: EventSponsorV3[];
+}
+
+// Special section (workshop prep, video links, etc.)
+export interface EventSpecialSection {
+  type: string;
+  title: string;
+  content: string[];
+}
+
+// Photo with alt text
+export interface EventPhotoV3 {
+  url: string;
+  alt: string;
+}
+
+// Location in V3 format
+export interface EventLocationV3 {
+  format: string;
+  venueName: string;
+  address: string;
+  city: string;
+  country: string;
+}
+
+// Detail page data structure
+export interface EventDetailPageData {
+  url: string;
+  title: string;
+  subtitle: string;
+  date: string;
+  time: string;
+  location: EventLocationV3;
+  fullDescription: string[];
+  speakers: EventSpeakersV3;
+  organizers: EventSpeakerV3[];
+  sponsors: EventSponsorsV3;
+  specialSections: EventSpecialSection[];
+  photos: EventPhotoV3[];
+  galleryUrl: string;
+  registrationUrl: string;
+  images: EventPhotoV3[];
+  category: string;
+  status: string;
+  isFeatured: boolean;
+}
+
+// Main V3 Event interface (matches JSON structure)
+export interface EventV3 {
+  id: number;
+  slug: string;
+  title: string;
+  date: string; // "November 21, 2025" format
+  coverImage: EventCoverImage;
+  detailPageUrl: string;
+  shortDescription: string;
+  attendees: number | null;
+  detailPageData: EventDetailPageData;
 }

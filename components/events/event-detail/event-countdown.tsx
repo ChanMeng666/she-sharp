@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Event } from "@/types/event";
+import { EventV3 } from "@/types/event";
+import { parseDateString } from "@/lib/data/events";
 
 interface EventCountdownProps {
-  event: Event;
+  event: EventV3;
   className?: string;
 }
 
@@ -17,10 +18,20 @@ export function EventCountdown({ event, className }: EventCountdownProps) {
   });
 
   useEffect(() => {
-    // Calculate target date from startDate and startTime
-    const [hours, minutes] = event.startTime.split(":").map(Number);
-    const targetDate = new Date(event.startDate);
-    targetDate.setHours(hours, minutes, 0, 0);
+    // Parse the event date
+    const targetDate = parseDateString(event.date);
+
+    // If there's a specific time, use it; otherwise default to 9:00 AM
+    if (event.detailPageData.time) {
+      const timeMatch = event.detailPageData.time.match(/(\d+):(\d+)/);
+      if (timeMatch) {
+        const hours = parseInt(timeMatch[1], 10);
+        const minutes = parseInt(timeMatch[2], 10);
+        targetDate.setHours(hours, minutes, 0, 0);
+      }
+    } else {
+      targetDate.setHours(9, 0, 0, 0);
+    }
 
     const updateCountdown = () => {
       const now = new Date();
@@ -29,7 +40,9 @@ export function EventCountdown({ event, className }: EventCountdownProps) {
       if (difference > 0) {
         setTimeLeft({
           days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          hours: Math.floor(
+            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          ),
           minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
           seconds: Math.floor((difference % (1000 * 60)) / 1000),
         });
@@ -42,7 +55,7 @@ export function EventCountdown({ event, className }: EventCountdownProps) {
     const interval = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(interval);
-  }, [event.startDate, event.startTime]);
+  }, [event.date, event.detailPageData.time]);
 
   return (
     <div className={className}>
@@ -105,4 +118,3 @@ export function EventCountdown({ event, className }: EventCountdownProps) {
     </div>
   );
 }
-

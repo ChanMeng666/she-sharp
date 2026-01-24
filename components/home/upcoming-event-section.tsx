@@ -25,10 +25,11 @@ export function UpcomingEventSection() {
     return null;
   }
 
-  const isOnline = featuredEvent.location.format === "online";
+  const location = featuredEvent.detailPageData.location;
+  const isOnline = location.format === "online";
   const locationText = isOnline
     ? "Online Event"
-    : `${featuredEvent.location.venueName || ""}, ${featuredEvent.location.city || ""}`;
+    : `${location.venueName || ""}, ${location.city || ""}`;
 
   return (
     <Section
@@ -51,8 +52,8 @@ export function UpcomingEventSection() {
               <div className="absolute inset-0 bg-muted-foreground/20 rounded-[50px] transform rotate-0 md:rotate-[-4deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"></div>
               {/* Image positioned on top */}
               <Image
-                src={featuredEvent.coverImage}
-                alt={featuredEvent.title}
+                src={featuredEvent.coverImage.url}
+                alt={featuredEvent.coverImage.alt || featuredEvent.title}
                 fill
                 className="rounded-[50px] relative z-10 object-cover"
               />
@@ -123,7 +124,7 @@ export function UpcomingEventSection() {
 
             <p className="text-muted-foreground text-base leading-relaxed mb-8">
               {featuredEvent.shortDescription ||
-                featuredEvent.description.slice(0, 200) + "..."}
+                (featuredEvent.detailPageData.fullDescription[0]?.slice(0, 200) + "...")}
             </p>
 
             <Button asChild size="lg" className="w-fit">
