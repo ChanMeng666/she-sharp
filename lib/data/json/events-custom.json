@@ -1,0 +1,48 @@
+{
+  "template": {
+    "id": 0,
+    "slug": "example-event-slug",
+    "title": "Example Event Title",
+    "date": "January 1, 2030",
+    "coverImage": {
+      "url": "/img/example-event.jpg",
+      "alt": "Example event cover"
+    },
+    "detailPageUrl": "https://www.shesharp.org.nz/events/example-event-slug",
+    "shortDescription": "Short summary shown on the events list.",
+    "attendees": null,
+    "detailPageData": {
+      "url": "https://www.shesharp.org.nz/events/example-event-slug",
+      "title": "Example Event Title",
+      "subtitle": "Optional subtitle",
+      "date": "January 1, 2030",
+      "time": "5:30pm - 7:00pm NZDT",
+      "location": {
+        "format": "in_person",
+        "venueName": "Example Venue",
+        "address": "123 Example Street",
+        "city": "Auckland",
+        "country": "New Zealand"
+      },
+      "fullDescription": [
+        "Paragraph 1 of the full description.",
+        "Paragraph 2 of the full description."
+      ],
+      "speakers": {},
+      "organizers": [],
+      "sponsors": {
+        "main": [],
+        "other": []
+      },
+      "specialSections": [],
+      "photos": [],
+      "galleryUrl": "",
+      "registrationUrl": "",
+      "images": [],
+      "category": "",
+      "status": "upcoming",
+      "isFeatured": false
+    }
+  },
+  "events": []
+}

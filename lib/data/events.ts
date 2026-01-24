@@ -13,7 +13,8 @@ import {
   EventSponsorsV3,
   EventLocationV3,
 } from "@/types/event";
-import { eventsV3, eventsMetadata } from "./events-data";
+import { eventsV3 as scrapedEventsV3, eventsMetadata } from "./events-data";
+import { customEventsV3 } from "./events-custom";
 
 const HUMANITIX_EVENT_URLS = [
   "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
@@ -73,6 +74,54 @@ const normalizeUrl = (url: string) =>
     .trim()
     .toLowerCase();
 
+/**
+ * Returns a merged event list, preferring custom entries on conflicts.
+ */
+const mergeEvents = (scraped: EventV3[], custom: EventV3[]): EventV3[] => {
+  const merged = [...scraped];
+  const indexBySlug = new Map<string, number>();
+  const slugByHumanitixUrl = new Map<string, string>();
+
+  scraped.forEach((event, index) => {
+    indexBySlug.set(event.slug, index);
+    const humanitixUrl = event.detailPageData.humanitixUrl;
+    if (humanitixUrl) {
+      slugByHumanitixUrl.set(normalizeUrl(humanitixUrl), event.slug);
+    }
+  });
+
+  custom.forEach((event) => {
+    const slug = event.slug;
+    const humanitixUrl = event.detailPageData.humanitixUrl;
+    const normalizedHumanitixUrl = humanitixUrl
+      ? normalizeUrl(humanitixUrl)
+      : null;
+
+    const slugFromUrl = normalizedHumanitixUrl
+      ? slugByHumanitixUrl.get(normalizedHumanitixUrl)
+      : undefined;
+    const targetSlug = slugFromUrl ?? slug;
+    const existingIndex = indexBySlug.get(targetSlug);
+
+    if (existingIndex !== undefined) {
+      merged[existingIndex] = event;
+      indexBySlug.set(event.slug, existingIndex);
+      if (normalizedHumanitixUrl) {
+        slugByHumanitixUrl.set(normalizedHumanitixUrl, event.slug);
+      }
+      return;
+    }
+
+    merged.push(event);
+    indexBySlug.set(event.slug, merged.length - 1);
+    if (normalizedHumanitixUrl) {
+      slugByHumanitixUrl.set(normalizedHumanitixUrl, event.slug);
+    }
+  });
+
+  return merged;
+};
+
 const HUMANITIX_URL_SET = new Set(
   HUMANITIX_EVENT_URLS.map((url) => normalizeUrl(url))
 );
@@ -111,7 +160,9 @@ const normalizeTitle = (event: EventV3): string => {
   return detailTitle && detailTitle.length > 0 ? detailTitle : event.title;
 };
 
-const normalizedEventsV3: EventV3[] = eventsV3.map((event) => {
+const baseEventsV3 = mergeEvents(scrapedEventsV3, customEventsV3);
+
+const normalizedEventsV3: EventV3[] = baseEventsV3.map((event) => {
   const humanitixUrl = event.detailPageData.humanitixUrl;
   const isVerifiedHumanitix =
     humanitixUrl && HUMANITIX_URL_SET.has(normalizeUrl(humanitixUrl));
@@ -146,7 +197,8 @@ export type {
   EventSponsorsV3,
   EventLocationV3,
 };
-export { eventsV3, eventsMetadata };
+export const eventsV3 = baseEventsV3;
+export { eventsMetadata };
 
 // ============================================
 // Date Parsing Utility
