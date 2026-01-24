@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, MapPin, Clock, Video } from "lucide-react";
 import { InflectedCard } from "@/components/ui/inflected-card";
 import { EventV3 } from "@/types/event";
-import { parseDateString } from "@/lib/data/events";
+import { getEventDisplayTime, parseDateString } from "@/lib/data/events";
 import { cn } from "@/lib/utils";
 import {
   Tooltip,
@@ -37,6 +37,7 @@ export function EventInflectedCard({
   const dayOfWeek = eventDate.toLocaleDateString("en-US", { weekday: "long" });
   const month = eventDate.toLocaleDateString("en-US", { month: "short" });
   const day = eventDate.getDate();
+  const displayTime = getEventDisplayTime(event);
 
   // Check if event is online
   const location = event.detailPageData.location;
@@ -100,10 +101,10 @@ export function EventInflectedCard({
 
         {/* Time and location */}
         <div className="space-y-1 min-w-0 pt-1">
-          {event.detailPageData.time && (
+          {displayTime && (
             <div className="flex items-center gap-2 text-base text-muted-foreground">
               <Clock className="w-4 h-4 text-brand shrink-0" />
-              <span>{event.detailPageData.time}</span>
+              <span>{displayTime}</span>
             </div>
           )}
           {locationStr && (

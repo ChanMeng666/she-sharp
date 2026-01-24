@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { EventV3 } from "@/types/event";
-import { parseDateString } from "@/lib/data/events";
+import { getEventStartTime, parseDateString } from "@/lib/data/events";
 
 interface EventCountdownProps {
   event: EventV3;
@@ -22,8 +22,9 @@ export function EventCountdown({ event, className }: EventCountdownProps) {
     const targetDate = parseDateString(event.date);
 
     // If there's a specific time, use it; otherwise default to 9:00 AM
-    if (event.detailPageData.time) {
-      const timeMatch = event.detailPageData.time.match(/(\d+):(\d+)/);
+    const startTime = getEventStartTime(event);
+    if (startTime) {
+      const timeMatch = startTime.match(/(\d+):(\d+)/);
       if (timeMatch) {
         const hours = parseInt(timeMatch[1], 10);
         const minutes = parseInt(timeMatch[2], 10);
@@ -55,7 +56,12 @@ export function EventCountdown({ event, className }: EventCountdownProps) {
     const interval = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(interval);
-  }, [event.date, event.detailPageData.time]);
+  }, [
+    event.date,
+    event.detailPageData.startTime,
+    event.detailPageData.time,
+    event.detailPageData.dateTime,
+  ]);
 
   return (
     <div className={className}>

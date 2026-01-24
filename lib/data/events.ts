@@ -15,6 +15,128 @@ import {
 } from "@/types/event";
 import { eventsV3, eventsMetadata } from "./events-data";
 
+const HUMANITIX_EVENT_URLS = [
+  "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+  "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector",
+  "https://events.humanitix.com/she-sharp-scw-and-xero-code-secure-lead-the-future-women-in-cybersecurity-workshop",
+  "https://events.humanitix.com/she-sharp-and-fonterra-business-and-technology-transformation-through-platforms-and-products",
+  "https://events.humanitix.com/she-sharp-and-techbabes-nz-thrive-your-career-your-story",
+  "https://events.humanitix.com/she-sharp-and-myob-tech-that-matches",
+  "https://events.humanitix.com/she-sharp-iamremarkable",
+  "https://events.humanitix.com/she-sharp-and-academy-ex-international-women-s-day",
+  "https://events.humanitix.com/2024-google-educators-conference",
+  "https://events.humanitix.com/she-sharp-and-hcl",
+  "https://events.humanitix.com/she-sharp-10-year-anniversary",
+  "https://events.humanitix.com/she-sharp-and-fonterra-harness-the-power-of-generative-al",
+  "https://events.humanitix.com/f-and-p-hackathon-with-she",
+  "https://events.humanitix.com/she-sharp-and-fiserv-bank-on-yourself",
+  "https://events.humanitix.com/she-sharp-and-les-mills-own-the-unexpected",
+  "https://events.humanitix.com/she-sharp-and-myob-embracing-bias",
+  "https://events.humanitix.com/she-sharp-and-woolworths-international-women-s-day",
+  "https://events.humanitix.com/she-celebrates-tot0tupv",
+  "https://events.humanitix.com/google-educators-conference",
+  "https://events.humanitix.com/she-sharp-and-hcl-technological-change-workplace-and-workforce-impacts",
+  "https://events.humanitix.com/inspire-her-te-whakatipuranga-wahine",
+  "https://events.humanitix.com/she-sharp-and-techwomen-nz-from-burnout-to-balance",
+  "https://events.humanitix.com/she-sharp-and-fonterra-a-legendairy-career",
+  "https://events.humanitix.com/she-sharp-and-kiwibank",
+  "https://events.humanitix.com/she-sharp-deloitte-innovation",
+  "https://events.humanitix.com/developher",
+  "https://events.humanitix.com/shesharp-iwd-2023",
+  "https://events.humanitix.com/she-celebrates",
+  "https://events.humanitix.com/google-event",
+  "https://events.humanitix.com/she-sharp-ai-forum-hackathon",
+  "https://events.humanitix.com/navigating-the-workplace",
+  "https://events.humanitix.com/women-in-security",
+  "https://events.humanitix.com/she-sharp-and-countdown-techweek-event",
+  "https://events.humanitix.com/she-sharp-and-myob",
+  "https://events.humanitix.com/shesharp-iwd-2022",
+  "https://events.humanitix.com/women-in-data-and-analytics",
+  "https://events.humanitix.com/iamremarkable-lf7rurd0",
+  "https://events.humanitix.com/iamremarkable",
+  "https://events.humanitix.com/she-sharp-techweek",
+  "https://events.humanitix.com/she-sharp-fergus",
+  "https://events.humanitix.com/international-women-s-day-event-myob",
+  "https://events.humanitix.com/girlsnightout",
+  "https://events.humanitix.com/online-event-celebrating-ada-lovelace-day",
+  "https://events.humanitix.com/storytellers-series-2-0",
+  "https://events.humanitix.com/future-ready",
+  "https://events.humanitix.com/she-sharp-techweek-envision-the-future-how-to-create-a-more-diverse-inclusive-and-sustainable-future-through-technology-and-human-centered-innovation",
+  "https://events.humanitix.com/story-tellers-series",
+  "https://events.humanitix.com/she-sharp-ey",
+];
+
+const normalizeUrl = (url: string) =>
+  url
+    .split(/[?#]/)[0]
+    .replace(/\/$/, "")
+    .trim()
+    .toLowerCase();
+
+const HUMANITIX_URL_SET = new Set(
+  HUMANITIX_EVENT_URLS.map((url) => normalizeUrl(url))
+);
+
+const deriveEventTime = (event: EventV3): string | null => {
+  const { startTime, endTime, timezone, dateTime, time } =
+    event.detailPageData;
+
+  if (time && time.trim().length > 0) {
+    return time;
+  }
+
+  if (startTime && endTime) {
+    const timePart = `${startTime} - ${endTime}`;
+    return timezone ? `${timePart} ${timezone}` : timePart;
+  }
+
+  if (startTime) {
+    return timezone ? `${startTime} ${timezone}` : startTime;
+  }
+
+  if (dateTime && dateTime.trim().length > 0) {
+    const lastCommaIndex = dateTime.lastIndexOf(",");
+    const timePart =
+      lastCommaIndex >= 0
+        ? dateTime.slice(lastCommaIndex + 1).trim()
+        : dateTime.trim();
+    return timePart || null;
+  }
+
+  return null;
+};
+
+const normalizeTitle = (event: EventV3): string => {
+  const detailTitle = event.detailPageData.title?.trim();
+  return detailTitle && detailTitle.length > 0 ? detailTitle : event.title;
+};
+
+const normalizedEventsV3: EventV3[] = eventsV3.map((event) => {
+  const humanitixUrl = event.detailPageData.humanitixUrl;
+  const isVerifiedHumanitix =
+    humanitixUrl && HUMANITIX_URL_SET.has(normalizeUrl(humanitixUrl));
+
+  if (!isVerifiedHumanitix) {
+    return event;
+  }
+
+  const normalizedTitle = normalizeTitle(event);
+  const normalizedTime = deriveEventTime(event);
+
+  if (normalizedTitle === event.title && !normalizedTime) {
+    return event;
+  }
+
+  return {
+    ...event,
+    title: normalizedTitle,
+    detailPageData: {
+      ...event.detailPageData,
+      time: event.detailPageData.time || normalizedTime || "",
+    },
+  };
+});
+
 // Re-export types and data for convenience
 export type {
   EventV3,
@@ -55,14 +177,14 @@ export function isFutureDate(dateStr: string): boolean {
  * Get event by slug
  */
 export function getEventBySlug(slug: string): EventV3 | undefined {
-  return eventsV3.find((e) => e.slug === slug);
+  return normalizedEventsV3.find((e) => e.slug === slug);
 }
 
 /**
  * Get all events
  */
 export function getAllEvents(): EventV3[] {
-  return eventsV3;
+  return normalizedEventsV3;
 }
 
 /**
@@ -72,7 +194,7 @@ export function getUpcomingEvents(limit?: number): EventV3[] {
   const now = new Date();
   now.setHours(0, 0, 0, 0);
 
-  const upcoming = eventsV3
+  const upcoming = normalizedEventsV3
     .filter((e) => parseDateString(e.date) >= now)
     .sort(
       (a, b) =>
@@ -88,7 +210,7 @@ export function getPastEvents(limit?: number): EventV3[] {
   const now = new Date();
   now.setHours(0, 0, 0, 0);
 
-  const past = eventsV3
+  const past = normalizedEventsV3
     .filter((e) => parseDateString(e.date) < now)
     .sort(
       (a, b) =>
@@ -120,7 +242,7 @@ export function getFeaturedEvent(): EventV3 | undefined {
  * Get events by category
  */
 export function getEventsByCategory(category: string): EventV3[] {
-  return eventsV3.filter(
+  return normalizedEventsV3.filter(
     (e) => e.detailPageData.category.toLowerCase() === category.toLowerCase()
   );
 }
@@ -129,7 +251,7 @@ export function getEventsByCategory(category: string): EventV3[] {
  * Get events by city
  */
 export function getEventsByCity(city: string): EventV3[] {
-  return eventsV3.filter(
+  return normalizedEventsV3.filter(
     (e) => e.detailPageData.location.city.toLowerCase() === city.toLowerCase()
   );
 }
@@ -139,7 +261,7 @@ export function getEventsByCity(city: string): EventV3[] {
  */
 export function searchEvents(query: string): EventV3[] {
   const q = query.toLowerCase();
-  return eventsV3.filter(
+  return normalizedEventsV3.filter(
     (e) =>
       e.title.toLowerCase().includes(q) ||
       e.shortDescription.toLowerCase().includes(q) ||
@@ -208,25 +330,27 @@ export function getEventStats() {
   const now = new Date();
   now.setHours(0, 0, 0, 0);
 
-  const upcoming = eventsV3.filter((e) => parseDateString(e.date) >= now);
-  const past = eventsV3.filter((e) => parseDateString(e.date) < now);
+  const upcoming = normalizedEventsV3.filter(
+    (e) => parseDateString(e.date) >= now
+  );
+  const past = normalizedEventsV3.filter((e) => parseDateString(e.date) < now);
 
   // Get unique cities
   const cities = new Set(
-    eventsV3
+    normalizedEventsV3
       .map((e) => e.detailPageData.location.city)
       .filter((city) => city && city.length > 0)
   );
 
   // Get unique categories
   const categories = new Set(
-    eventsV3
+    normalizedEventsV3
       .map((e) => e.detailPageData.category)
       .filter((cat) => cat && cat.length > 0)
   );
 
   return {
-    total: eventsV3.length,
+    total: normalizedEventsV3.length,
     upcoming: upcoming.length,
     past: past.length,
     cities: Array.from(cities),
@@ -239,7 +363,7 @@ export function getEventStats() {
  */
 export function getAllEventCities(): string[] {
   const cities = new Set(
-    eventsV3
+    normalizedEventsV3
       .map((e) => e.detailPageData.location.city)
       .filter((city) => city && city.length > 0)
   );
@@ -251,7 +375,7 @@ export function getAllEventCities(): string[] {
  */
 export function getAllEventYears(): number[] {
   const years = new Set(
-    eventsV3.map((e) => parseDateString(e.date).getFullYear())
+    normalizedEventsV3.map((e) => parseDateString(e.date).getFullYear())
   );
   return Array.from(years).sort((a, b) => b - a);
 }
@@ -260,9 +384,44 @@ export function getAllEventYears(): number[] {
  * Get events by year
  */
 export function getEventsByYear(year: number): EventV3[] {
-  return eventsV3.filter(
+  return normalizedEventsV3.filter(
     (e) => parseDateString(e.date).getFullYear() === year
   );
+}
+
+/**
+ * Get display-friendly time for an event
+ */
+export function getEventDisplayTime(event: EventV3): string | null {
+  return deriveEventTime(event);
+}
+
+/**
+ * Get start time for countdowns
+ */
+export function getEventStartTime(event: EventV3): string | null {
+  const { startTime, time, dateTime } = event.detailPageData;
+
+  if (startTime) {
+    return startTime;
+  }
+
+  if (time && time.trim().length > 0) {
+    const [timePart] = time.split("-");
+    return timePart.trim();
+  }
+
+  if (dateTime && dateTime.trim().length > 0) {
+    const lastCommaIndex = dateTime.lastIndexOf(",");
+    const timePart =
+      lastCommaIndex >= 0
+        ? dateTime.slice(lastCommaIndex + 1).trim()
+        : dateTime.trim();
+    const [timeRange] = timePart.split("-");
+    return timeRange.trim() || null;
+  }
+
+  return null;
 }
 
 /**

@@ -6,7 +6,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Video, Users } from "lucide-react";
 import { EventV3 } from "@/types/event";
-import { formatEventDate, isPastEvent } from "@/lib/data/events";
+import {
+  formatEventDate,
+  getEventDisplayTime,
+  isPastEvent,
+} from "@/lib/data/events";
 import { cn } from "@/lib/utils";
 import {
   Tooltip,
@@ -29,6 +33,7 @@ export function EventCard({
   const isOnline = location.format === "online";
   const isHybrid = location.format === "hybrid";
   const isPast = isPastEvent(event);
+  const displayTime = getEventDisplayTime(event);
 
   return (
     <Link href={`/events/${event.slug}`} className={cn("block", className)}>
@@ -101,7 +106,7 @@ export function EventCard({
             <Calendar className="w-4 h-4 text-[#8982ff]" />
             <span>
               {formatEventDate(event, "short")}
-              {event.detailPageData.time && ` · ${event.detailPageData.time}`}
+              {displayTime && ` · ${displayTime}`}
             </span>
           </div>
 
