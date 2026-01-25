@@ -14,7 +14,7 @@ export default function MentorshipPage() {
             PROGRAM
           </>
         }
-        topRightImage="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/home-page-ai-hackathon-2025-mentorship.jpg"
+        topRightImage="/img/vercel-blob/home-page-ai-hackathon-2025-mentorship.jpg"
         topRightImageAlt="Women in technology mentorship program group photo"
         bottomLeftVideo="/video/Mentorship.mp4"
         bottomRightTitle="Empowering Women in STEM"

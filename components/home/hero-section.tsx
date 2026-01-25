@@ -15,7 +15,7 @@ export function HeroSection() {
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source
-            src="https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/video/home-page-hero.mp4"
+            src="/video/home-page-hero.mp4"
             type="video/mp4"
           />
         </video>

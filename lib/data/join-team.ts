@@ -69,13 +69,13 @@ export const volunteerImages: TabMedia[] = [
   {
     value: "volunteer",
     label: "Event Volunteer",
-    src: "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/join-our-team-volunteer.jpg",
+    src: "/img/vercel-blob/about-4.jpg",
     alt: "She Sharp volunteers at event setup",
   },
   {
     value: "ambassador",
     label: "Ambassador",
-    src: "https://lxd4dc8r8oetlgua.public.blob.vercel-storage.com/public/img/join-our-team-ambassador.jpg",
+    src: "/img/vercel-blob/about-5.jpg",
     alt: "She Sharp ambassadors team meeting",
   },
 ];
