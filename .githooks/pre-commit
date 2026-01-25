@@ -37,7 +37,6 @@ PATTERNS=(
     
     # Webhook secrets and API keys
     "whsec_"
-    "vercel_blob_rw_"
     "re_[A-Za-z0-9_]+"
 )
 

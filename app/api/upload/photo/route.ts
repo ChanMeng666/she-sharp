@@ -1,13 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { put, del } from '@vercel/blob';
+import cloudinary from '@/lib/cloudinary/config';
 
 // Max file size: 2MB (to conserve storage)
 const MAX_FILE_SIZE = 2 * 1024 * 1024;
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
 /**
+ * Extracts the public_id from a Cloudinary URL.
+ * Example: https://res.cloudinary.com/cloud/image/upload/v123/she-sharp/mentor/email_123.jpg
+ * Returns: she-sharp/mentor/email_123
+ */
+function extractPublicId(url: string): string | null {
+  try {
+    const match = url.match(/\/upload\/(?:v\d+\/)?(.+)\.\w+$/);
+    return match ? match[1] : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * POST /api/upload/photo
- * Uploads a photo to Vercel Blob storage.
+ * Uploads a photo to Cloudinary storage.
  * Returns the public URL of the uploaded image.
  */
 export async function POST(request: NextRequest) {
@@ -37,22 +51,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate unique filename
+    // Generate unique public_id for Cloudinary
     const timestamp = Date.now();
-    const ext = file.name.split('.').pop() || 'jpg';
     const prefix = type || 'profile';
     const sanitizedEmail = email?.replace(/[^a-zA-Z0-9]/g, '_') || 'unknown';
-    const filename = `${prefix}/${sanitizedEmail}_${timestamp}.${ext}`;
+    const publicId = `she-sharp/${prefix}/${sanitizedEmail}_${timestamp}`;
 
-    // Upload to Vercel Blob
-    const blob = await put(filename, file, {
-      access: 'public',
-      addRandomSuffix: false,
+    // Convert file to base64 data URI for Cloudinary upload
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    const base64 = buffer.toString('base64');
+    const dataUri = `data:${file.type};base64,${base64}`;
+
+    // Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(dataUri, {
+      public_id: publicId,
+      resource_type: 'image',
+      overwrite: true,
+      // Apply automatic format and quality optimization
+      transformation: [
+        { quality: 'auto', fetch_format: 'auto' }
+      ]
     });
 
     return NextResponse.json({
       success: true,
-      url: blob.url,
+      url: result.secure_url,
       size: file.size,
       contentType: file.type,
     });
@@ -67,7 +91,7 @@ export async function POST(request: NextRequest) {
 
 /**
  * DELETE /api/upload/photo
- * Deletes a photo from Vercel Blob storage.
+ * Deletes a photo from Cloudinary storage.
  */
 export async function DELETE(request: NextRequest) {
   try {
@@ -78,7 +102,13 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'No URL provided' }, { status: 400 });
     }
 
-    await del(url);
+    // Extract public_id from Cloudinary URL
+    const publicId = extractPublicId(url);
+    if (!publicId) {
+      return NextResponse.json({ error: 'Invalid Cloudinary URL' }, { status: 400 });
+    }
+
+    await cloudinary.uploader.destroy(publicId);
 
     return NextResponse.json({ success: true });
   } catch (error) {

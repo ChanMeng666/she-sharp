@@ -154,7 +154,7 @@ async function clearAllData() {
   console.log('  ✅ DATABASE CLEAR COMPLETE');
   console.log('═══════════════════════════════════════════════════════════════');
   console.log('\n📝 Next steps:');
-  console.log('  1. Manually delete files from Vercel Blob storage if needed');
+  console.log('  1. Manually delete files from Cloudinary storage if needed');
   console.log('  2. Create a new admin account when ready');
   console.log('  3. Run: npx tsx scripts/reset-db-and-create-admin.ts');
   console.log('     (if you want to create a default admin account)\n');

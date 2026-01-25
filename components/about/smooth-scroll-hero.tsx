@@ -82,7 +82,7 @@ function CenterImage() {
           opacity,
           filter,
           backgroundImage:
-            "url(/img/vercel-blob/about-2.jpg)",
+            "url(/img/gallery/about-2.jpg)",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
@@ -119,14 +119,14 @@ function ParallaxImages() {
   return (
     <div className="mx-auto max-w-7xl px-4 pt-[200px] relative ">
       <ParallaxImg
-        src="/img/vercel-blob/about-3.jpg"
+        src="/img/gallery/about-3.jpg"
         alt="She Sharp event"
         start={-300}
         end={300}
         className="w-1/2 rounded-2xl "
       />
       <ParallaxImg
-        src="/img/vercel-blob/about-1.jpg"
+        src="/img/gallery/about-1.jpg"
         alt="She Sharp community"
         start={200}
         end={-300}

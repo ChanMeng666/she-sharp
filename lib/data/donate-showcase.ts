@@ -7,7 +7,7 @@ export const donateSlides: SlideData[] = [
     description:
       "Your donation empowers the next generation of women in STEM. Every contribution helps us bridge the gender gap through events, mentorship, and career opportunities.",
     image:
-      "/img/vercel-blob/donate-1.jpg",
+      "/img/gallery/donate-1.jpg",
     imageAlt: "Four women at She Sharp event, one speaking into a microphone",
     bgColor: "#1f1e44", // Navy Dark
     textColor: "#ffffff",
@@ -18,7 +18,7 @@ export const donateSlides: SlideData[] = [
     description:
       "Your donations help us bring events and workshops to low decile schools, train teachers and educators on the importance of digital curriculums, and make sure She Sharp events are accessible through subsidised tickets.",
     image:
-      "/img/vercel-blob/donate-2.jpg",
+      "/img/gallery/donate-2.jpg",
     imageAlt: "She Sharp educational workshop in a classroom setting",
     bgColor: "#ffffff", // White
     textColor: "#1f1e44", // Navy Dark
@@ -29,7 +29,7 @@ export const donateSlides: SlideData[] = [
     description:
       "This includes accessible venues, nourishing food and drinks, AV equipment hire and tools for workshops—we want to make sure attendees and volunteers have a great time at our events!",
     image:
-      "/img/vercel-blob/donate-3.jpg",
+      "/img/gallery/donate-3.jpg",
     imageAlt: "She Sharp members enjoying food and conversation at an event",
     bgColor: "#f7e5f3", // Surface Purple
     textColor: "#1f1e44", // Navy Dark
@@ -40,7 +40,7 @@ export const donateSlides: SlideData[] = [
     description:
       "Choose an amount to make your impact today. Every dollar counts toward making sure our events are engaging, fun and safe spaces for women and underrepresented groups in STEM.",
     image:
-      "/img/vercel-blob/donate-4.jpg",
+      "/img/gallery/donate-4.jpg",
     imageAlt: "She Sharp group photo of members at an event",
     bgColor: "hsl(var(--brand))", // Brand Purple
     textColor: "#ffffff",
