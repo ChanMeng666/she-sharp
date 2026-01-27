@@ -563,7 +563,7 @@ export default function MenteeApplicationPage() {
             {/* Location Info Box */}
             <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
+                <MapPin className="h-5 w-5 text-brand mt-0.5 shrink-0" />
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-brand">
                     Location Matching
@@ -1537,6 +1537,7 @@ export default function MenteeApplicationPage() {
             MENTEE
           </>
         }
+        topLeftBgColor="bg-brand"
         topRightImage="/img/mentees.jpg"
         topRightImageAlt="She Sharp mentorship programme"
         bottomLeftVideo="/video/Mentee-Video.mp4"

@@ -5,6 +5,8 @@ import { ReactNode } from "react";
 
 interface MentorshipHeroSectionProps {
   topLeftTitle: string | ReactNode;
+  topLeftBgColor?: string;
+  topLeftTextColor?: string;
   topRightImage?: string;
   topRightImageAlt?: string;
   bottomLeftContent?: ReactNode;
@@ -17,6 +19,8 @@ interface MentorshipHeroSectionProps {
 
 export function MentorshipHeroSection({
   topLeftTitle,
+  topLeftBgColor = "bg-navy",
+  topLeftTextColor = "text-white",
   topRightImage,
   topRightImageAlt = "Mentorship programme image",
   bottomLeftContent,
@@ -29,8 +33,8 @@ export function MentorshipHeroSection({
   return (
     <section className="w-full bg-background">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full">
-        {/* Top Left: Dark Blue Background with Text */}
-        <div className="bg-navy text-white flex items-center justify-center p-8 md:p-12 lg:p-16 min-h-[400px] md:min-h-[500px]">
+        {/* Top Left: Customizable Background with Text */}
+        <div className={`${topLeftBgColor} ${topLeftTextColor} flex items-center justify-center p-8 md:p-12 lg:p-16 min-h-[400px] md:min-h-[500px]`}>
           <div className="text-center md:text-left">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight leading-tight">
               {typeof topLeftTitle === 'string' ? (

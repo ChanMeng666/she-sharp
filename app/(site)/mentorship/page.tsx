@@ -21,6 +21,8 @@ export default function MentorshipPage() {
             PROGRAMME
           </>
         }
+        topLeftBgColor="bg-white"
+        topLeftTextColor="text-foreground"
         topRightImage="/img/gallery/home-page-ai-hackathon-2025-mentorship.jpg"
         topRightImageAlt="Women in technology mentorship programme group photo"
         bottomLeftVideo="/video/Mentorship.mp4"
