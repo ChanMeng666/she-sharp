@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { FeatureShowcase } from "@/components/ui/feature-showcase";
 import {
   volunteerImages,
@@ -5,6 +6,12 @@ import {
   joinTeamStats,
   joinTeamContent,
 } from "@/lib/data/join-team";
+
+export const metadata: Metadata = {
+  title: "Join Our Team | She Sharp",
+  description:
+    "Become a volunteer or ambassador at She Sharp. Join our passionate community working to bridge the gender gap in STEM across New Zealand.",
+};
 
 export default function JoinOurTeamPage() {
   return (

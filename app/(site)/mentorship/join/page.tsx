@@ -439,7 +439,7 @@ export default function MenteeApplicationPage() {
                 type="mentee"
                 email={formData.email}
                 label="Your Photo"
-                description="A clear, professional headshot helps your mentor recognize you at events. This will be visible only to your assigned mentor."
+                description="A clear, professional headshot helps your mentor recognise you at events. This will be visible only to your assigned mentor."
                 required
                 error={errors.photoUrl}
               />
@@ -470,7 +470,7 @@ export default function MenteeApplicationPage() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-1.5">
                     <Label htmlFor="email">Email Address *</Label>
-                    <HintIcon hint="We'll send your mentor matching results and program updates here." />
+                    <HintIcon hint="We'll send your mentor matching results and programme updates here." />
                   </div>
                   <Input
                     id="email"
@@ -1256,13 +1256,13 @@ export default function MenteeApplicationPage() {
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
                   <Label htmlFor="expectations">
-                    What would you hope to get from this program? (Optional)
+                    What would you hope to get from this programme? (Optional)
                   </Label>
-                  <HintIcon hint="Share any specific outcomes you're hoping for from this program." />
+                  <HintIcon hint="Share any specific outcomes you're hoping for from this programme." />
                 </div>
                 <Textarea
                   id="expectations"
-                  placeholder="Your expectations from the mentorship program..."
+                  placeholder="Your expectations from the mentorship programme..."
                   value={formData.programExpectations}
                   onChange={(e) =>
                     updateField("programExpectations", e.target.value)
@@ -1538,7 +1538,7 @@ export default function MenteeApplicationPage() {
           </>
         }
         topRightImage="/img/mentees.jpg"
-        topRightImageAlt="She Sharp mentorship program"
+        topRightImageAlt="She Sharp mentorship programme"
         bottomLeftVideo="/video/Mentee-Video.mp4"
         bottomRightTitle="Learn and be inspired by our empowering mentors in STEM"
         bottomRightDescription="Gain valuable advice, inspiration, and empowerment from our amazing mentors in STEM to support your personal and professional development journey."

@@ -3,7 +3,7 @@ import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Terms of Service | She Sharp",
-  description: "Terms of service for using She Sharp's website and participating in our programs.",
+  description: "Terms of service for using She Sharp's website and participating in our programmes.",
 };
 
 export default function TermsOfServicePage() {
@@ -39,8 +39,8 @@ export default function TermsOfServicePage() {
             By using our services, you represent that you meet this age requirement.
           </p>
           <p>
-            <strong>Note:</strong> Some programs may have additional eligibility criteria
-            specific to the program objectives.
+            <strong>Note:</strong> Some programmes may have additional eligibility criteria
+            specific to the programme objectives.
           </p>
 
           <h3>Acceptable Use Policy</h3>
@@ -73,7 +73,7 @@ export default function TermsOfServicePage() {
 
           <h3>Code of Conduct</h3>
           <p>
-            All participants must maintain professional behavior and respect for others.
+            All participants must maintain professional behaviour and respect for others.
             Violations may result in removal from events and suspension from future activities.
           </p>
 
@@ -121,7 +121,7 @@ export default function TermsOfServicePage() {
           <h3>Service Disclaimer</h3>
           <p>
             Our services are provided "as is" without warranties of any kind. We do not guarantee
-            specific outcomes from participation in our programs or the accuracy of all information
+            specific outcomes from participation in our programmes or the accuracy of all information
             on our website.
           </p>
 

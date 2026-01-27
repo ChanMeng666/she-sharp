@@ -44,7 +44,7 @@ const MENTEE_STEPS: TimeLine_01Entry[] = [
     items: [
       "Goal alignment matching",
       "Industry & expertise pairing",
-      "Personalized introductions",
+      "Personalised introductions",
       "Compatibility assessment",
     ],
   },
@@ -108,7 +108,7 @@ const MENTOR_STEPS: TimeLine_01Entry[] = [
     title: "Celebrate Impact",
     subtitle: "Ongoing",
     description:
-      "Recognize achievements and help shape the next generation of women leaders in STEM. Continue making a lasting difference.",
+      "Recognise achievements and help shape the next generation of women leaders in STEM. Continue making a lasting difference.",
     items: [
       "Celebrate mentee wins",
       "Provide final feedback",
@@ -133,7 +133,7 @@ export function HowItWorksSection() {
         {/* Header */}
         <div className="text-center mb-8">
           <h2 className="text-display-sm text-foreground mb-4">
-            How the Program Works
+            How the Programme Works
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
             Your path to meaningful mentorship connections

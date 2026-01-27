@@ -850,10 +850,10 @@ export default function MentorshipDashboard() {
                           </div>
                         )}
 
-                        {/* Program Expectations */}
+                        {/* Programme Expectations */}
                         {selectedMentorDetails.formData?.programExpectations && (
                           <div className="space-y-2">
-                            <p className="font-medium text-sm">Program Expectations</p>
+                            <p className="font-medium text-sm">Programme Expectations</p>
                             <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
                               {selectedMentorDetails.formData.programExpectations}
                             </p>
@@ -1108,7 +1108,7 @@ export default function MentorshipDashboard() {
                         </div>
                       )}
 
-                      {/* Program Expectations */}
+                      {/* Programme Expectations */}
                       {selectedMenteeDetails.formData?.programExpectations && (
                         <div className="space-y-2">
                           <p className="font-medium text-sm">Program Expectations</p>

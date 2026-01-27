@@ -52,7 +52,7 @@ export function Chatbot() {
         id: "welcome",
         role: "assistant",
         content:
-          "Hello! I'm the She Sharp assistant. I'm here to help you learn about our organization, programs, and how you can get involved. How can I help you today?",
+          "Hello! I'm the She Sharp assistant. I'm here to help you learn about our organisation, programmes, and how you can get involved. How can I help you today?",
       },
     ];
   }, []);
@@ -163,7 +163,7 @@ export function Chatbot() {
         id: "welcome",
         role: "assistant" as const,
         content:
-          "Hello! I'm the She Sharp assistant. I'm here to help you learn about our organization, programs, and how you can get involved. How can I help you today?",
+          "Hello! I'm the She Sharp assistant. I'm here to help you learn about our organisation, programmes, and how you can get involved. How can I help you today?",
       },
     ];
     setMessages(initialMessages);

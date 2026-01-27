@@ -411,7 +411,7 @@ export async function sendPaymentConfirmationEmail(
             <span class="success-badge">✓ Payment Confirmed</span>
           </div>
 
-          <h2>Welcome to She Sharp Mentorship Program!</h2>
+          <h2>Welcome to She Sharp Mentorship Programme!</h2>
           <p>Thank you for your payment of <strong>$${details.amount} NZD</strong> for the ${details.membershipTier.charAt(0).toUpperCase() + details.membershipTier.slice(1)} Membership.</p>
 
           <div class="code-box">

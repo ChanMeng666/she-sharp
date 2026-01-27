@@ -61,12 +61,12 @@ async function sendMatchApprovalToMentor(data: MatchApprovalEmailData): Promise<
       <div class="container">
         <div class="header">
           <h1>You Have a New Mentee!</h1>
-          <p style="margin: 0; opacity: 0.9;">She Sharp Mentorship Program</p>
+          <p style="margin: 0; opacity: 0.9;">She Sharp Mentorship Programme</p>
         </div>
         <div class="content">
           <p>Dear ${data.mentorName},</p>
 
-          <p>Great news! You have been matched with a new mentee in the She Sharp Mentorship Program.</p>
+          <p>Great news! You have been matched with a new mentee in the She Sharp Mentorship Programme.</p>
 
           <div class="match-card">
             <h3 style="margin-top: 0; color: hsl(var(--brand));">Your New Mentee</h3>
@@ -114,7 +114,7 @@ New Mentee Match - She Sharp
 
 Dear ${data.mentorName},
 
-Great news! You have been matched with a new mentee in the She Sharp Mentorship Program.
+Great news! You have been matched with a new mentee in the She Sharp Mentorship Programme.
 
 YOUR NEW MENTEE
 Name: ${data.menteeName}
@@ -186,7 +186,7 @@ async function sendMatchApprovalToMentee(data: MatchApprovalEmailData): Promise<
 
           <p>Dear ${data.menteeName},</p>
 
-          <p>Exciting news! We've found a mentor who is a great match for your goals and interests in the She Sharp Mentorship Program.</p>
+          <p>Exciting news! We've found a mentor who is a great match for your goals and interests in the She Sharp Mentorship Programme.</p>
 
           <div class="match-card">
             <h3 style="margin-top: 0; color: hsl(var(--brand));">Your Mentor</h3>
@@ -227,7 +227,7 @@ Congratulations! You've Been Matched with a Mentor - She Sharp
 
 Dear ${data.menteeName},
 
-Exciting news! We've found a mentor who is a great match for your goals and interests in the She Sharp Mentorship Program.
+Exciting news! We've found a mentor who is a great match for your goals and interests in the She Sharp Mentorship Programme.
 
 YOUR MENTOR
 Name: ${data.mentorName}
@@ -290,7 +290,7 @@ export async function sendQueueUpdateNotification(
       <div class="container">
         <div class="header">
           <h1>Queue Status Update</h1>
-          <p style="margin: 0; opacity: 0.9;">She Sharp Mentorship Program</p>
+          <p style="margin: 0; opacity: 0.9;">She Sharp Mentorship Programme</p>
         </div>
         <div class="content">
           <p>Dear ${menteeName},</p>
@@ -307,7 +307,7 @@ export async function sendQueueUpdateNotification(
 
           <h4>What happens next?</h4>
           <ul>
-            <li>Our AI system analyzes mentor availability</li>
+            <li>Our AI system analyses mentor availability</li>
             <li>We match based on skills, goals, and compatibility</li>
             <li>You'll be notified immediately when matched</li>
           </ul>
@@ -338,7 +338,7 @@ Estimated wait: ${estimatedWait}
 We're actively working to match you with a mentor who aligns with your goals and interests. Thank you for your patience!
 
 What happens next?
-- Our AI system analyzes mentor availability
+- Our AI system analyses mentor availability
 - We match based on skills, goals, and compatibility
 - You'll be notified immediately when matched
 
@@ -388,12 +388,12 @@ export async function sendAddedToQueueNotification(
       <div class="container">
         <div class="header">
           <h1>You're in the Queue!</h1>
-          <p style="margin: 0; opacity: 0.9;">She Sharp Mentorship Program</p>
+          <p style="margin: 0; opacity: 0.9;">She Sharp Mentorship Programme</p>
         </div>
         <div class="content">
           <p>Dear ${menteeName},</p>
 
-          <p>Thank you for your interest in the She Sharp Mentorship Program! We've added you to our matching queue.</p>
+          <p>Thank you for your interest in the She Sharp Mentorship Programme! We've added you to our matching queue.</p>
 
           <div class="info-box">
             <p style="margin: 0;"><strong>Your Position:</strong> <span class="position-badge">#${queuePosition}</span></p>
@@ -432,7 +432,7 @@ You're in the Queue! - She Sharp Mentorship Program
 
 Dear ${menteeName},
 
-Thank you for your interest in the She Sharp Mentorship Program! We've added you to our matching queue.
+Thank you for your interest in the She Sharp Mentorship Programme! We've added you to our matching queue.
 
 Your Position: #${queuePosition}
 Estimated Wait: ${estimatedWait}

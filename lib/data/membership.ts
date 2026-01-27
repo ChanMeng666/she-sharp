@@ -43,7 +43,7 @@ export const membershipBenefits: MembershipBenefit[] = [
     icon: Users,
     title: "1-on-1 Mentor Sessions",
     description:
-      "Get personalized guidance from experienced mentors in tech who understand your journey.",
+      "Get personalised guidance from experienced mentors in tech who understand your journey.",
   },
   {
     icon: Sparkles,

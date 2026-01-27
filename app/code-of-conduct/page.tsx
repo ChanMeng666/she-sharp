@@ -14,8 +14,8 @@ export default function CodeOfConductPage() {
           <h2>Building an Inclusive Community</h2>
           <p>
             She Sharp is dedicated to providing a welcoming and supportive environment for all women
-            and allies in STEM. This Code of Conduct outlines our expectations for participant behavior
-            and the consequences for unacceptable behavior.
+            and allies in STEM. This Code of Conduct outlines our expectations for participant behaviour
+            and the consequences for unacceptable behaviour.
           </p>
           <p>
             We are committed to fostering a community where everyone feels valued, respected, and
@@ -33,7 +33,7 @@ export default function CodeOfConductPage() {
         </section>
 
         <section className="legal-section">
-          <h2>Expected Behavior</h2>
+          <h2>Expected Behaviour</h2>
           <p>All community members are expected to:</p>
 
           <h3>In Our Community</h3>
@@ -56,8 +56,8 @@ export default function CodeOfConductPage() {
         </section>
 
         <section className="legal-section">
-          <h2>Unacceptable Behavior</h2>
-          <p>The following behaviors are not tolerated:</p>
+          <h2>Unacceptable Behaviour</h2>
+          <p>The following behaviours are not tolerated:</p>
 
           <h3>Harassment & Discrimination</h3>
           <ul>
@@ -67,7 +67,7 @@ export default function CodeOfConductPage() {
             <li>Inappropriate physical contact</li>
           </ul>
 
-          <h3>Disruptive Behavior</h3>
+          <h3>Disruptive Behaviour</h3>
           <ul>
             <li>Sustained disruption of events</li>
             <li>Advocating for harmful acts</li>
@@ -77,14 +77,14 @@ export default function CodeOfConductPage() {
 
           <p>
             <strong>Zero Tolerance:</strong> We maintain a zero-tolerance policy for harassment
-            of any kind. Participants asked to stop any inappropriate behavior are expected to
+            of any kind. Participants asked to stop any inappropriate behaviour are expected to
             comply immediately.
           </p>
         </section>
 
         <section className="legal-section">
           <h2>Commitment to Diversity</h2>
-          <p>We explicitly honor diversity in:</p>
+          <p>We explicitly honour diversity in:</p>
           <ul>
             <li>Age and generation</li>
             <li>Gender identity</li>
@@ -107,7 +107,7 @@ export default function CodeOfConductPage() {
 
         <section className="legal-section">
           <h2>Reporting Violations</h2>
-          <p>If you experience or witness unacceptable behavior, please report it as soon as possible:</p>
+          <p>If you experience or witness unacceptable behaviour, please report it as soon as possible:</p>
 
           <h3>At Events</h3>
           <ul>
@@ -127,7 +127,7 @@ export default function CodeOfConductPage() {
 
           <h3>Our Response Process</h3>
           <ol>
-            <li><strong>Immediate Safety</strong> — We prioritize the safety and well-being of all participants</li>
+            <li><strong>Immediate Safety</strong> — We prioritise the safety and well-being of all participants</li>
             <li><strong>Investigation</strong> — We gather information and speak with involved parties</li>
             <li><strong>Action</strong> — We take appropriate action based on our findings</li>
             <li><strong>Follow-up</strong> — We check in with affected parties and monitor the situation</li>
@@ -136,7 +136,7 @@ export default function CodeOfConductPage() {
 
         <section className="legal-section">
           <h2>Consequences</h2>
-          <p>Unacceptable behavior will not be tolerated. Consequences may include:</p>
+          <p>Unacceptable behaviour will not be tolerated. Consequences may include:</p>
 
           <h3>Immediate Actions</h3>
           <ul>
@@ -154,7 +154,7 @@ export default function CodeOfConductPage() {
 
           <p>
             Decisions are made on a case-by-case basis by the She Sharp leadership team,
-            considering the severity and pattern of behavior.
+            considering the severity and pattern of behaviour.
           </p>
         </section>
 
@@ -168,7 +168,7 @@ export default function CodeOfConductPage() {
           </ul>
           <p>
             This code also applies when an individual is representing She Sharp in public spaces
-            or when behavior could negatively impact the community's safety and well-being.
+            or when behaviour could negatively impact the community's safety and well-being.
           </p>
         </section>
 

@@ -510,7 +510,7 @@ export default function BecomeMentorPage() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-1.5">
                     <Label htmlFor="email">Email Address *</Label>
-                    <HintIcon hint="We'll send mentee match notifications and program updates here." />
+                    <HintIcon hint="We'll send mentee match notifications and programme updates here." />
                   </div>
                   <Input
                     id="email"
@@ -529,7 +529,7 @@ export default function BecomeMentorPage() {
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
                   <Label htmlFor="phone">Phone Number *</Label>
-                  <HintIcon hint="Used for urgent program communications only. Not shared with mentees." />
+                  <HintIcon hint="Used for urgent programme communications only. Not shared with mentees." />
                 </div>
                 <Input
                   id="phone"
@@ -689,7 +689,7 @@ export default function BecomeMentorPage() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-1.5">
                     <Label htmlFor="company">Organisation *</Label>
-                    <HintIcon hint="Your company or organization. Displayed on your mentor profile." />
+                    <HintIcon hint="Your company or organisation. Displayed on your mentor profile." />
                   </div>
                   <Input
                     id="company"
@@ -1047,7 +1047,7 @@ export default function BecomeMentorPage() {
             <div className="space-y-2">
               <div className="flex items-center gap-1.5">
                 <Label htmlFor="expectations">
-                  What would you hope to get from this program? (Optional)
+                  What would you hope to get from this programme? (Optional)
                 </Label>
                 <HintIcon hint="What do you hope to gain from being a mentor?" />
               </div>
@@ -1357,17 +1357,17 @@ export default function BecomeMentorPage() {
           </>
         }
         topRightImage="/img/mentors.jpg"
-        topRightImageAlt="She Sharp mentorship program"
+        topRightImageAlt="She Sharp mentorship programme"
         bottomLeftVideo="/video/Mentor-Video.mp4"
         bottomRightTitle="Share your wisdom and inspire more Women in STEM "
-        bottomRightDescription="Use your experience to guide, inspire, and empower women, fostering their personal and career growth journeys to achieve success and fulfillment in STEM fields."
+        bottomRightDescription="Use your experience to guide, inspire, and empower women, fostering their personal and career growth journeys to achieve success and fulfilment in STEM fields."
       />
       <BenefitsSection
         title="Benefits of Becoming a Mentor"
         benefits={[
           {
             icon: Trophy,
-            title: "Personal Fulfillment",
+            title: "Personal Fulfilment",
             description:
               "Find satisfaction in witnessing the growth and success of your mentee. Knowing you've played a part in their journey is genuinely rewarding.",
           },

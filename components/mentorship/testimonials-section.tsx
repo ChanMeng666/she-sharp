@@ -43,7 +43,7 @@ export function TestimonialsSection() {
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Real stories from mentees and mentors who've transformed their
-            careers through our program
+            careers through our programme
           </p>
         </div>
 

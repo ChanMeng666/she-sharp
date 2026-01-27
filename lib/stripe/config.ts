@@ -34,7 +34,7 @@ export const MEMBERSHIP_PRICES = {
     currency: 'nzd',
     interval: 'year' as const,
     name: 'Annual Membership',
-    description: 'She Sharp Annual Mentorship Program Membership',
+    description: 'She Sharp Annual Mentorship Programme Membership',
   },
 } as const;
 

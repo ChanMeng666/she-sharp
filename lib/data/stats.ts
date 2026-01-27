@@ -67,7 +67,7 @@ export const pageStats = {
     milestones: [
       { year: 2014, event: "She Sharp Founded" },
       { year: 2016, event: "First THRIVE Conference" },
-      { year: 2018, event: "Mentorship Program Launched" },
+      { year: 2018, event: "Mentorship Programme Launched" },
       { year: 2020, event: "Virtual Events Platform" },
       { year: 2022, event: "1000 Members Milestone" },
       { year: 2024, event: "Global Expansion" },
@@ -82,7 +82,7 @@ export const pageStats = {
       },
       {
         value: globalStats.mentorship.mentees,
-        label: "Program Participants",
+        label: "Programme Participants",
         icon: "GraduationCap",
       },
       {
@@ -96,7 +96,7 @@ export const pageStats = {
       {
         percentage: `${globalStats.mentorship.successRate}%`,
         description: "Feel more empowered after joining",
-        detail: "Based on annual program survey",
+        detail: "Based on annual programme survey",
       },
       {
         percentage: `${globalStats.mentorship.skillImprovement}%`,
@@ -111,7 +111,7 @@ export const pageStats = {
       {
         percentage: `${globalStats.mentorship.promotionRate.mentees}x more`,
         description: "Mentees likely to be promoted",
-        detail: "Within 2 years of program completion",
+        detail: "Within 2 years of programme completion",
       },
     ],
   },

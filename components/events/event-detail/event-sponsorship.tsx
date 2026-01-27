@@ -49,7 +49,7 @@ export function EventSponsorship({ event, className }: EventSponsorshipProps) {
                 Partner with Purpose
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                Join leading organizations in empowering women in STEM through
+                Join leading organisations in empowering women in STEM through
                 strategic corporate partnerships. Connect with our team to learn
                 how your sponsorship can make a meaningful impact.
               </p>

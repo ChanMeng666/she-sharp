@@ -92,7 +92,7 @@ export function SponsorshipPricing() {
             Partner with Purpose
           </h2>
           <p className="mx-auto mt-4 max-w-md text-balance text-lg text-[#1f1e44]/60">
-            Join leading organizations in empowering women in STEM through strategic corporate partnerships
+            Join leading organisations in empowering women in STEM through strategic corporate partnerships
           </p>
         </div>
 
@@ -208,7 +208,7 @@ export function SponsorshipPricing() {
                 </ul>
 
                 <p className="mt-8 text-sm text-[#1f1e44]/40">
-                  Organizations supporting our mission:
+                  Organisations supporting our mission:
                 </p>
 
                 {/* Logo Wall */}

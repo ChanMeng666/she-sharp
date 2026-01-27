@@ -18,7 +18,7 @@ interface MentorshipHeroSectionProps {
 export function MentorshipHeroSection({
   topLeftTitle,
   topRightImage,
-  topRightImageAlt = "Mentorship program image",
+  topRightImageAlt = "Mentorship programme image",
   bottomLeftContent,
   bottomLeftVideo,
   bottomRightTitle,
