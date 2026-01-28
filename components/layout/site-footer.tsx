@@ -74,7 +74,7 @@ export function SiteFooter() {
                     asChild
                     variant="ghost"
                     size="lg"
-                    className="bg-purple-dark text-white border border-white/50 hover:bg-purple-mid transition-colors duration-150 h-12 px-8"
+                    className="bg-white/10 backdrop-blur-sm text-white border border-white/60 hover:bg-purple-dark transition-all duration-150 h-12 px-8 rounded-full"
                   >
                     <a
                       href={MAILCHIMP_CONFIG.subscribeUrl}
