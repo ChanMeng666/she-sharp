@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import {
   getAllEvents,
   getEventBySlug,
@@ -86,6 +88,20 @@ export default async function EventPage({ params }: EventPageProps) {
       {/* Main Content Section */}
       <Section spacing="section">
         <Container size="full">
+          {/* Back to Events Link */}
+          <Link
+            href="/events"
+            className="inline-flex items-center gap-1 text-muted-foreground hover:text-brand transition-all duration-300 font-bold group mb-6 uppercase"
+          >
+            <span className="flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 ">
+              <ArrowLeft className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-0.5 text-brand" />
+            </span>
+            <span className="relative text-brand">
+              Back to Events
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand transition-all duration-300 group-hover:w-full" />
+            </span>
+          </Link>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Main Content - Left Column */}
             <div className="lg:col-span-7 xl:col-span-8 space-y-12">

@@ -49,7 +49,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: 6,
     name: "Alyssa Pausanos",
-    roles: ["Ambassador", "Mentoring Program Lead"],
+    roles: ["Ambassador", "Mentoring Programme Lead"],
     linkedin: "https://www.linkedin.com/in/alyssa-pausanos-a847a8246/",
     description:
       "Alyssa is a Graduate Software Engineer at Vista Group and a first-class honours Software Engineering graduate from Auckland University of Technology. She’s skilled in a variety of programming languages, frameworks, and tech stacks. \n\nOutside of work, she enjoys creative pursuits like web design and interior styling, which balance and inspire her technical side. Her journey with She Sharp began through a mentorship programme led by Dr. Mahsa, sparking her passion for supporting more women in STEM",
@@ -61,7 +61,7 @@ export const teamMembers: TeamMember[] = [
     roles: ["Ambassador", "Industry"],
     linkedin: "https://www.linkedin.com/in/meeta-patel-53105928/",
     description:
-      "Dr. Meeta Patel is an experienced scientist with over 20 years of research expertise. As a Senior Scientist and Sustainability Lead at NanoLayr, she developed and implemented the company's sustainability strategy, including eco-friendly packaging. Her PhD in science and background in biopolymers have been invaluable. \n\nDr. Patel has built strong relationships with councils, universities, research institutes, community groups, and organizations, showcasing her collaboration skills. She is active in volunteering, organizing community sports, and promoting STEM education. As an industry lead ambassador for SHE Sharp, she leverages her experience in professional and volunteer roles to foster collaboration.",
+      "Dr. Meeta Patel is an experienced scientist with over 20 years of research expertise. As a Senior Scientist and Sustainability Lead at NanoLayr, she developed and implemented the company's sustainability strategy, including eco-friendly packaging. Her PhD in science and background in biopolymers have been invaluable. \n\nDr. Patel has built strong relationships with councils, universities, research institutes, community groups, and organisations, showcasing her collaboration skills. She is active in volunteering, organising community sports, and promoting STEM education. As an industry lead ambassador for SHE Sharp, she leverages her experience in professional and volunteer roles to foster collaboration.",
     image: "/img/meeta.png",
   },
   {
@@ -88,7 +88,7 @@ export const teamMembers: TeamMember[] = [
     roles: ["Ambassador", "Marketing Lead"],
     linkedin: "https://www.linkedin.com/in/marriane-bentigan-204203220/",
     description:
-      "Marriane is a Marketing Specialist at PB Tech who loves bringing creativity and strategy together to make ideas come alive. With years of experience leading marketing programs across Asia-Pacific, she’s now happily growing her career in New Zealand. Passionate about giving back, she supports women in tech and uplifts communities where people feel welcome and inspired. \n\nOutside of work, Marriane is the full-time mediator between her two strong-willed boys and wife, a creative video professional—so her days are often filled with sibling banter, production talk, and the occasional strategic Costco run. Her energy is contagious, and she’s always ready to cheer others on and be the hype bud you didn’t know you needed.",
+      "Marriane is a Marketing Specialist at PB Tech who loves bringing creativity and strategy together to make ideas come alive. With years of experience leading marketing programmes across Asia-Pacific, she's now happily growing her career in New Zealand. Passionate about giving back, she supports women in tech and uplifts communities where people feel welcome and inspired. \n\nOutside of work, Marriane is the full-time mediator between her two strong-willed boys and wife, a creative video professional—so her days are often filled with sibling banter, production talk, and the occasional strategic Costco run. Her energy is contagious, and she's always ready to cheer others on and be the hype bud you didn't know you needed.",
     image: "/img/marriane.png",
   },{
     id: 11,

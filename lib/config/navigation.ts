@@ -14,6 +14,8 @@ import {
   Mic,
   Images,
   Mail,
+  ChartGantt,
+  UsersRound,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -44,6 +46,25 @@ export const navigationConfig: {
       title: "About",
       href: "/about",
       icon: Users,
+      image: {
+        src: "/img/mesh-954.png",
+        alt: "About She Sharp",
+        href: "/about",
+      },
+      children: [
+        {
+          title: "Our History",
+          href: "/about#timeline",
+          description: "A deep dive into our journey since 2014",
+          icon: ChartGantt,
+        },
+        {
+          title: "Our People",
+          href: "/about#team",
+          description: "Meet the team behind She Sharp",
+          icon: UsersRound,
+        },
+      ],
     },
     {
       title: "Mentorship",
@@ -56,15 +77,15 @@ export const navigationConfig: {
       },
       children: [
         {
-          title: "About the Program",
+          title: "About the Programme",
           href: "/mentorship",
-          description: "Learn about our mentorship program",
+          description: "Learn about our mentorship programme",
           icon: BookOpen,
         },
         {
           title: "Become a Mentee",
           href: "/mentorship/join",
-          description: "Join the program and get matched with a mentor",
+          description: "Join the programme and get matched with a mentor",
           icon: Sparkles,
         },
         {

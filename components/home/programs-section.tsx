@@ -47,20 +47,20 @@ const programs = [
   },
   {
     id: "mentorship",
-    title: "Mentorship Program",
+    title: "Mentorship Programme",
     subtitle: "Get career guidance",
     description:
-      "Connect with experienced professionals for personalized career support and growth.",
+      "Connect with experienced professionals for personalised career support and growth.",
     icon: Users,
     color: "periwinkle",
     image:
       "/img/gallery/home-page-ai-hackathon-2025-mentorship.jpg",
     features: [
       { icon: Users, text: "1-on-1 mentor matching" },
-      { icon: Calendar, text: "Structured 6-month programs" },
+      { icon: Calendar, text: "Structured 6-month programmes" },
       { icon: Briefcase, text: "Career transition support" },
     ],
-    stats: { primary: "6-Month", secondary: "Programs" },
+    stats: { primary: "6-Month", secondary: "Programmes" },
     cta: { text: "Apply Now", href: "/mentorship" },
     highlight: "Applications open",
   },

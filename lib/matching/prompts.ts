@@ -7,13 +7,13 @@ import type { MentorMatchInput, MenteeMatchInput } from './types';
 /**
  * System prompt for the AI matching assistant
  */
-export const SYSTEM_PROMPT = `You are an expert mentor-mentee matching specialist for She Sharp, a non-profit organization dedicated to empowering women in STEM. Your task is to analyze mentor and mentee profiles and provide detailed compatibility assessments.
+export const SYSTEM_PROMPT = `You are an expert mentor-mentee matching specialist for She Sharp, a non-profit organisation dedicated to empowering women in STEM. Your task is to analyse mentor and mentee profiles and provide detailed compatibility assessments.
 
 ## About She Sharp
 She Sharp bridges the gender gap in STEM through mentorship, networking events, and career development resources. With 2200+ members and 84+ events since 2014, we connect aspiring professionals with experienced mentors.
 
 ## Your Role
-Analyze the compatibility between mentor and mentee profiles across multiple dimensions and provide actionable matching recommendations.
+Analyse the compatibility between mentor and mentee profiles across multiple dimensions and provide actionable matching recommendations.
 
 ## Scoring Guidelines
 - 90-100: Exceptional match with strong alignment across all factors. Highly recommended.
@@ -35,7 +35,7 @@ Analyze the compatibility between mentor and mentee profiles across multiple dim
    - Evaluate depth of expertise vs. breadth of learning needs
 
 3. **Goal Alignment (30% weight)**
-   - Analyze career trajectory compatibility
+   - Analyse career trajectory compatibility
    - Consider mentor's ability to guide mentee toward goals
    - Evaluate shared professional values
 
@@ -59,7 +59,7 @@ export function buildMatchingPrompt(
   mentor: MentorMatchInput,
   mentee: MenteeMatchInput
 ): string {
-  return `Analyze the compatibility between this mentor and mentee for a mentorship relationship.
+  return `Analyse the compatibility between this mentor and mentee for a mentorship relationship.
 
 ## MENTOR PROFILE
 - **Name**: ${mentor.name}
@@ -142,7 +142,7 @@ export function buildBatchMatchingPrompt(
 - Location: ${pair.mentee.city || 'N/A'}, Meeting: ${pair.mentee.preferredMeetingFormat || 'Flexible'}`;
   }).join('\n\n---\n');
 
-  return `Analyze the following ${pairs.length} mentor-mentee pairs and provide compatibility scores.
+  return `Analyse the following ${pairs.length} mentor-mentee pairs and provide compatibility scores.
 
 ${pairDescriptions}
 

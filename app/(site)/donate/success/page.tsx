@@ -119,7 +119,7 @@ function SuccessContent() {
 
           {/* Receipt Notice */}
           <p className="text-xs text-gray-400 mt-8">
-            A receipt has been sent to your email address. She Sharp is a registered non-profit organization.
+            A receipt has been sent to your email address. She Sharp is a registered non-profit organisation.
           </p>
         </div>
       </div>

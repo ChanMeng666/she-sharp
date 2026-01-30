@@ -743,7 +743,7 @@ export async function reviewMatchSuggestion(
           userId: match.match.mentorUserId,
           type: 'mentorship',
           title: 'New Mentee Matched!',
-          message: `You have been matched with ${menteeName} in the She Sharp Mentorship Program. View your dashboard to connect.`,
+          message: `You have been matched with ${menteeName} in the She Sharp Mentorship Programme. View your dashboard to connect.`,
           actionUrl: '/dashboard/mentorship',
           actionLabel: 'View Mentee',
           metadata: {

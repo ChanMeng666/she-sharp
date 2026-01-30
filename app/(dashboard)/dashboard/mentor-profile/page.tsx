@@ -623,10 +623,10 @@ export default function MentorProfilePage() {
               />
             </div>
             <div>
-              <Label htmlFor="programExpectations">Program Expectations</Label>
+              <Label htmlFor="programExpectations">Programme Expectations</Label>
               <Textarea
                 id="programExpectations"
-                placeholder="What do you expect from the mentorship program?"
+                placeholder="What do you expect from the mentorship programme?"
                 value={profile.programExpectations}
                 onChange={(e) => setProfile({ ...profile, programExpectations: e.target.value })}
                 className="min-h-[100px]"

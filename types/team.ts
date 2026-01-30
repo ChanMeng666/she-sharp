@@ -12,7 +12,7 @@ export const TEAM_ROLES = [
   'Content Creator',
   'Digital Designer',
   'Secretary',
-  'Mentoring Program Lead',
+  'Mentoring Programme Lead',
   'Marketing Lead',
   'Marketing',
   'UX/UI Designer',

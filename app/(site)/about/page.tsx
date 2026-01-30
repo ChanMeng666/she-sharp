@@ -15,7 +15,10 @@ export default function AboutPage() {
 
       <SmoothScrollHero />
       <FounderQuote />
-      <TimelineSection />
+      
+      <div id="timeline">
+        <TimelineSection />
+      </div>
 
       <div id="team">
         <TeamSection />

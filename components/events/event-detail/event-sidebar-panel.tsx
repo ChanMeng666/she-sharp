@@ -174,34 +174,37 @@ export function EventSidebarPanel({
                   </div>
                 </div>
 
-                <div className="flex gap-2 pl-7">
-                  {(location.address || location.venueName) && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
-                      onClick={handleCopyAddress}
-                    >
-                      {copied ? (
-                        <Check className="w-3 h-3 mr-1" />
-                      ) : (
-                        <Copy className="w-3 h-3 mr-1" />
-                      )}
-                      {copied ? "Copied" : "Copy"}
-                    </Button>
-                  )}
-                  {mapUrl && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
-                      onClick={() => window.open(mapUrl, "_blank")}
-                    >
-                      <ExternalLink className="w-3 h-3 mr-1" />
-                      Map
-                    </Button>
-                  )}
-                </div>
+                {/* Only show Copy and Map buttons for future events */}
+                {!isPast && (
+                  <div className="flex gap-2 pl-7">
+                    {(location.address || location.venueName) && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
+                        onClick={handleCopyAddress}
+                      >
+                        {copied ? (
+                          <Check className="w-3 h-3 mr-1" />
+                        ) : (
+                          <Copy className="w-3 h-3 mr-1" />
+                        )}
+                        {copied ? "Copied" : "Copy"}
+                      </Button>
+                    )}
+                    {mapUrl && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
+                        onClick={() => window.open(mapUrl, "_blank")}
+                      >
+                        <ExternalLink className="w-3 h-3 mr-1" />
+                        Map
+                      </Button>
+                    )}
+                  </div>
+                )}
               </div>
             )}
           </div>

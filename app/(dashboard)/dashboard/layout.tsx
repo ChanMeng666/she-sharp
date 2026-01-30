@@ -1,8 +1,15 @@
 import { ReactNode } from "react";
+import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { AppSidebar } from "./_components/sidebar/app-sidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+
+export const metadata: Metadata = {
+  title: "Dashboard | She Sharp",
+  description:
+    "Access your She Sharp dashboard to manage your profile, mentorship, meetings, and account settings.",
+};
 
 export default async function DashboardLayout({ children }: Readonly<{ children: ReactNode }>) {
   const cookieStore = await cookies();

@@ -3,7 +3,7 @@
 import { EventV3 } from "@/types/event";
 import { cn } from "@/lib/utils";
 import { EventCountdown } from "./event-countdown";
-import { parseDateString, isFutureDate } from "@/lib/data/events";
+import { isFutureDate } from "@/lib/data/events";
 
 interface EventHeaderProps {
   event: EventV3;
