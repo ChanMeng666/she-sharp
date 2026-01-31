@@ -97,7 +97,7 @@ export function CoreValuesSection() {
   return (
     <div
       ref={containerRef}
-      className="h-[80vh] w-full overflow-y-scroll snap-y snap-proximity scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+      className="h-[70vh] w-full overflow-y-scroll snap-y snap-proximity scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] "
       style={{
         scrollBehavior: "smooth",
         WebkitOverflowScrolling: "touch",
@@ -106,30 +106,9 @@ export function CoreValuesSection() {
       {coreValues.map((value, index) => {
         const isActive = activeIndex === index;
         const isEven = index % 2 === 0;
-        const isSecond = index === 1;
-        const isThird = index === 2;
-        const bgClass = isSecond
-          ? ""
-          : isThird
-            ? "bg-navy"
-            : isEven
-              ? "bg-surface-purple"
-              : "bg-gray-950";
-        const bgStyle = isSecond ? { backgroundColor: "#EFFEFB" } : {};
-        const textClass = isSecond
-          ? "text-foreground"
-          : isThird
-            ? "text-white"
-            : isEven
-              ? "text-foreground"
-              : "text-ghost-white";
-        const mutedTextClass = isSecond
-          ? "text-muted-foreground"
-          : isThird
-            ? "text-gray-300"
-            : isEven
-              ? "text-muted-foreground"
-              : "text-gray-300";
+        const bgStyle = { backgroundColor: "#ffffff" };
+        const textClass = "text-foreground";
+        const mutedTextClass = "text-muted-foreground";
         const iconBgClass = isEven
           ? "bg-purple-dark/10 border-purple-dark/20"
           : "bg-purple-dark/20 border-purple-dark/40";
@@ -143,39 +122,30 @@ export function CoreValuesSection() {
                 sectionRefs.current[index] = el as HTMLElement;
               }
             }}
-            className={`snap-start h-[80vh] w-full flex items-center justify-center relative ${bgClass} transition-colors duration-700 ease-in-out shrink-0`}
+            className="snap-start h-[70vh] w-full flex items-stretch relative transition-colors duration-700 ease-in-out shrink-0"
             style={bgStyle}
           >
             <div
-              className={`flex flex-col md:flex-row w-full max-w-7xl mx-auto  transition-all duration-1000 ease-out ${
+              className={`flex flex-col md:flex-row w-full h-full transition-all duration-1000 ease-out ${
                 isActive
                   ? "opacity-100 translate-y-0 scale-100"
                   : "opacity-100 translate-y-4 scale-100"
               }`}
             >
               {/* Left side - Image (2/3 width on desktop) */}
-              <div className="relative w-full md:w-2/3 h-[250px] md:h-[80vh] overflow-hidden">
+              <div className="relative w-full md:w-2/3 h-full overflow-hidden">
                 <Image
                   src={value.image}
                   alt={value.title}
                   fill
                   className="object-cover object-center"
-                  sizes="(max-width: 768px) 100vw, 66vw"
                 />
               </div>
 
               {/* Right side - Content (1/3 width on desktop) */}
               <div
-                className={`w-full md:w-1/3 flex items-center p-6 md:p-10 lg:p-12 ${
-                  isSecond
-                    ? ""
-                    : isThird
-                      ? "bg-navy"
-                      : isEven
-                        ? "bg-surface-purple"
-                        : "bg-gray-950"
-                } rounded-lg md:rounded-r-lg md:rounded-l-none`}
-                style={isSecond ? { backgroundColor: "#EFFEFB" } : {}}
+                className="w-full md:w-1/3 flex items-center p-6 md:p-10 lg:p-12 rounded-lg md:rounded-r-lg md:rounded-l-none"
+                style={bgStyle}
               >
                 <div className="w-full">
                   {/* Section Title */}

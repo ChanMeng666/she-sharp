@@ -8,7 +8,7 @@ import { Container } from "@/components/layout/container";
 
 export function HeroSection() {
   return (
-    <section className="relative py-16 md:min-h-screen md:flex md:items-center overflow-hidden">
+    <section className="relative py-16 md:min-h-[95vh] md:flex md:items-center overflow-hidden">
       {/* Full background image */}
       <div className="absolute inset-0">
         <Image

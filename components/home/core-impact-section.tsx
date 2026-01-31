@@ -120,16 +120,14 @@ function StatCard({
             <AnimatedNumber target={target} animate={animate} />
             <span aria-hidden="true">{suffix}</span>
           </div>
-          <div className="flex items-center gap-3">
-            <h3
-              id={`stat-${item.title.toLowerCase().replace(/\s+/g, "-")}-title`}
-              className="text-lg font-bold text-foreground"
-            >
-              {item.title}
-            </h3>
-          </div>
+          <h3
+            id={`stat-${item.title.toLowerCase().replace(/\s+/g, "-")}-title`}
+            className="text-lg font-bold text-foreground mb-4"
+          >
+            {item.title}
+          </h3>
           <div
-            className="h-px w-full mb-4 bg-linear-to-r from-transparent via-border/50 to-transparent"
+            className="h-px w-full mb-4 bg-gradient-to-r from-transparent via-border/50 to-transparent"
             aria-hidden="true"
           />
           <p className="text-muted-foreground text-sm leading-relaxed">
@@ -147,10 +145,10 @@ export function CoreImpactSection() {
 
   return (
     <Section className="bg-muted/50" aria-labelledby="impact-heading">
-      <div ref={ref} className="relative ">
+      <div ref={ref} className="relative">
         <Container size="full">
           {/* Header */}
-          <AnimateOnScroll variant="fade-up" className=" mb-8 md:mb-20 ">
+          <AnimateOnScroll variant="fade-up" className="my-12 md:my-16 lg:my-20">
             <h2
               id="impact-heading"
               className="text-display-sm text-foreground"
@@ -161,7 +159,7 @@ export function CoreImpactSection() {
 
           {/* Grid */}
           <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto my-12 md:my-16 lg:my-20"
             role="list"
           >
             {impactData.map((item, i) => (

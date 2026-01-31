@@ -36,10 +36,10 @@ export function UpcomingEventSection() {
       id="upcoming-event"
       className="bg-surface-periwinkle rounded-[50px]"
     >
-      <Container size="full">
+      <Container size="full" className="mt-12 md:mt-16 lg:mt-20 mb-12 md:mb-16 lg:mb-20">
         <AnimateOnScroll
           variant="fade-up"
-          className="text-center mb-8 sm:mb-20"
+          className="text-center mb-12 md:mb-16 lg:mb-20"
         >
           <h2 className="text-display-sm text-foreground">Upcoming Event</h2>
         </AnimateOnScroll>

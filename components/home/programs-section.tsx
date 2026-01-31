@@ -94,9 +94,9 @@ export function ProgramsSection() {
   return (
     <>
       <Section className="bg-background">
-        <Container size="full">
+        <Container size="full" className="mt-12 md:mt-16 lg:mt-20 mb-12 md:mb-16 lg:mb-20">
           {/* Section Header */}
-          <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
+          <AnimateOnScroll variant="fade-up" className="text-center mb-12 md:mb-16 lg:mb-20">
             <h2 className="text-display-sm text-foreground mb-6">
               Your Path to Success
             </h2>
@@ -119,13 +119,9 @@ export function ProgramsSection() {
                   <div
                     className={`rounded-[50px] overflow-hidden transition-all duration-300 relative border ${
                       isActive
-                        ? "border-transparent"
+                        ? "bg-background border-foreground/30"
                         : "bg-muted border-border hover:border-foreground/50"
                     }`}
-                    style={isActive ? {
-                      backgroundColor: programColors[program.color]?.bg,
-                      borderColor: programColors[program.color]?.border,
-                    } : undefined}
                   >
                     {/* Accordion Header */}
                     <button
@@ -137,31 +133,19 @@ export function ProgramsSection() {
                           setLastSelectedProgram(index);
                         }
                       }}
-                      className={`w-full p-6 text-left flex items-center justify-between transition-colors duration-200 ${
-                        isActive ? "text-background" : "text-foreground"
-                      }`}
+                      className="w-full p-6 text-left flex items-center justify-between transition-colors duration-200 text-foreground"
                     >
                       <div className="flex items-center gap-4">
                         <div
-                          className={`p-2.5 lg:p-3 border rounded-full transition-all ${
-                            isActive
-                              ? "border-background bg-background/10"
-                              : "border-foreground/30 bg-foreground/10"
-                          }`}
+                          className="p-2.5 lg:p-3 border rounded-full transition-all border-foreground/30 bg-foreground/10"
                         >
                           <Icon
-                            className={`h-5 w-5 ${
-                              isActive
-                                ? "text-background"
-                                : "text-foreground"
-                            }`}
+                            className="h-5 w-5 text-foreground"
                           />
                         </div>
                         <div >
-                          <h3 className={`text-2xl font-bold ${isActive ? "text-background" : "text-foreground"}`}>{program.title}</h3>
-                          <p className={`${
-                            isActive ? "text-background/90" : "text-muted-foreground"
-                          }`}>
+                          <h3 className="text-2xl font-bold text-foreground">{program.title}</h3>
+                          <p className="text-muted-foreground">
                             {program.subtitle}
                           </p>
                         </div>
@@ -179,8 +163,8 @@ export function ProgramsSection() {
                         isActive ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                       }`}
                     >
-                      <div className="px-6 pb-6 text-background">
-                        <p className="text-background/90 mb-6 leading-relaxed">
+                      <div className="px-6 pb-6 text-foreground">
+                        <p className="text-muted-foreground mb-6 leading-relaxed">
                           {program.description}
                         </p>
 
@@ -193,8 +177,8 @@ export function ProgramsSection() {
                                 key={featureIndex}
                                 className="flex items-center gap-3"
                               >
-                                <FeatureIcon className="w-4 h-4 text-background/80 flex-shrink-0" />
-                                <span className="text-sm text-background/90">
+                                <FeatureIcon className="w-4 h-4 text-foreground/80 shrink-0" />
+                                <span className="text-sm text-muted-foreground">
                                   {feature.text}
                                 </span>
                               </li>
@@ -204,7 +188,7 @@ export function ProgramsSection() {
 
                         {/* CTA Button */}
                         <Link href={program.cta.href}>
-                          <Button variant="ghost" size="lg">
+                          <Button variant="ghost" size="lg" className="border-foreground/30 ">
                             {program.cta.text}
                           </Button>
                         </Link>
