@@ -42,9 +42,9 @@ const sponsors = {
 
 export function SponsorsSection() {
   return (
-    <Section className="overflow-hidden bg-background">
-      <Container size="full">
-        <AnimateOnScroll variant="fade-up" className="text-center mb-8 sm:mb-20">
+    <Section className="overflow-hidden bg-white">
+      <Container size="full" className="mt-12 md:mt-16 lg:mt-20 mb-12 md:mb-16 lg:mb-20">
+        <AnimateOnScroll variant="fade-up" className="text-center mb-12 md:mb-16 lg:mb-20">
           <h2 className="text-display-sm text-foreground">
             Thanks to Our Sponsors
           </h2>
