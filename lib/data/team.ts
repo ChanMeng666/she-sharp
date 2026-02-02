@@ -124,7 +124,7 @@ export const teamMembers: TeamMember[] = [
     roles: ["Ambassador", "UX/UI Designer"],
     linkedin: "https://www.linkedin.com/in/lesley-gao/",
     description:
-      "Lesley Gao is a Product Designer based in Auckland, working at Watchful, a security-tech company building AI-powered monitoring platforms. She has a background in journalism, web development, and UX/UI, and has worked on projects spanning SaaS products, onboarding experiences, and AI-enabled tools. \n\nLesley values gender equality and is passionate about supporting programmes and events that empower and connect women in tech across Aotearoa. Outside of work, she enjoys solving puzzles and building with Lego, hiking Auckland’s trails, capturing moments through her camera lens, and occasionally sketching.",
+      "Lesley Gao is a Product Designer at Watchful, a security-tech company building AI-powered monitoring platforms. With a background in journalism, web development, and UX/UI, she has worked on projects spanning SaaS products, onboarding experiences, and AI-enabled tools, including designing the She Sharp website.\n\nLesley is passionate about gender equality and supporting programmes and events that empower and connect women in tech across Aotearoa. Outside of work, she enjoys hiking Auckland's trails, photography, and building with Lego.",
     image: "/img/lesley.png",
   } ,
   {

@@ -119,7 +119,7 @@ export function ProgramsSection() {
                   <div
                     className={`rounded-[50px] overflow-hidden transition-all duration-300 relative border ${
                       isActive
-                        ? "bg-background border-foreground/30"
+                        ? "bg-background border-foreground/30 shadow-lg shadow-brand/20 "
                         : "bg-muted border-border hover:border-foreground/50"
                     }`}
                   >
@@ -133,11 +133,11 @@ export function ProgramsSection() {
                           setLastSelectedProgram(index);
                         }
                       }}
-                      className="w-full p-6 text-left flex items-center justify-between transition-colors duration-200 text-foreground"
+                      className="w-full p-6 text-left flex items-center justify-between transition-colors duration-200 text-foreground "
                     >
                       <div className="flex items-center gap-4">
                         <div
-                          className="p-2.5 lg:p-3 border rounded-full transition-all border-foreground/30 bg-foreground/10"
+                          className="p-2.5 lg:p-3 border rounded-full  transition-all border-foreground/30 bg-foreground/10"
                         >
                           <Icon
                             className="h-5 w-5 text-foreground"

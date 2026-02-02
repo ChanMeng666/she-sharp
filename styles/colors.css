@@ -15,23 +15,23 @@
 
   /* 背景与前景 */
   --background: 0 0% 100%;           /* #ffffff 白色背景 */
-  --foreground: 213 9% 19%;          /* #2C3035 深灰文字 */
+  --foreground: 215 28% 17%;         /* #1F2937 深灰文字 */
 
   /* 卡片 */
   --card: 0 0% 100%;                 /* #ffffff */
-  --card-foreground: 213 9% 19%;      /* #2C3035 */
+  --card-foreground: 215 28% 17%;    /* #1F2937 */
 
   /* 弹出层 */
   --popover: 0 0% 100%;              /* #ffffff */
-  --popover-foreground: 213 9% 19%;  /* #2C3035 */
+  --popover-foreground: 215 28% 17%; /* #1F2937 */
 
   /* 主色（深灰） */
-  --primary: 213 9% 19%;              /* #2C3035 */
+  --primary: 215 28% 17%;            /* #1F2937 */
   --primary-foreground: 0 0% 100%;   /* #ffffff */
 
   /* 次色（浅灰背景） */
   --secondary: 0 0% 96%;             /* #f5f5f5 */
-  --secondary-foreground: 213 9% 19%; /* #2C3035 */
+  --secondary-foreground: 215 28% 17%; /* #1F2937 */
 
   /* 中性色 */
   --muted: 0 0% 96%;                 /* #f5f5f5 */
@@ -39,7 +39,7 @@
 
   /* 强调色 */
   --accent: 0 0% 96%;                /* #f5f5f5 */
-  --accent-foreground: 213 9% 19%;    /* #2C3035 */
+  --accent-foreground: 215 28% 17%;  /* #1F2937 */
 
   /* 品牌色（She Sharp 紫色） */
   --brand: 312 54% 40%;              /* #9b2e83 品牌紫 */
@@ -91,7 +91,7 @@
   /* UI 元素 */
   --border: 0 0% 90%;                /* #e5e5e5 */
   --input: 0 0% 90%;                 /* #e5e5e5 */
-  --ring: 213 9% 19%;                 /* #2C3035 */
+  --ring: 215 28% 17%;               /* #1F2937 */
 
   /* 图表颜色（品牌色系） */
   --chart-1: 312 54% 40%;            /* Purple Dark #9b2e83 */

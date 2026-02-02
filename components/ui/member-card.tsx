@@ -33,8 +33,8 @@ interface MemberCardProps {
 export function MemberCard({
   member,
   index,
-  background = "bg-surface-periwinkle",
-  accentColor = "bg-brand/5",
+  background,
+  accentColor,
   hideDescriptionOnCard = false,
 }: MemberCardProps) {
   const [imageError, setImageError] = useState(false);
