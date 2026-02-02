@@ -34,7 +34,7 @@ export function MentorsListSection() {
                 key={member.id ?? `mentor-${index}`}
                 member={member}
                 index={index}
-                background="bg-navy-light"
+                background="bg-white"
                 accentColor="bg-info/10"
               />
             ))}

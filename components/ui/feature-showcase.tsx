@@ -172,8 +172,8 @@ export function FeatureShowcase({
                   className={cn(
                     "relative overflow-hidden rounded-3xl p-8 transition-all duration-300 hover:shadow-lg",
                     index === 0
-                      ? "bg-gradient-to-br from-teal-50 to-cyan-50 border-teal-200/50"
-                      : "bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200/50"
+                      ? "bg-linear-to-br from-teal-50 to-cyan-50 border-teal-200/50"
+                      : "bg-linear-to-br from-purple-50 to-pink-50 border-purple-200/50"
                   )}
                 >
                   {/* Header */}
@@ -284,10 +284,10 @@ export function FeatureShowcase({
                     asChild
                     size="lg"
                     className={cn(
-                      "w-full",
+                      "w-1/2 mx-auto",
                       index === 0
                         ? "bg-teal-500 hover:bg-teal-600 text-white"
-                        : "bg-brand hover:bg-brand/90 text-white"
+                        : "bg-brand hover:bg-brand-hover text-white"
                     )}
                   >
                     <Link href={primaryCta.href}>Apply Now</Link>

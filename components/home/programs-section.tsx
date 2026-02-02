@@ -120,7 +120,7 @@ export function ProgramsSection() {
                     className={`rounded-[50px] overflow-hidden transition-all duration-300 relative border ${
                       isActive
                         ? "bg-background border-foreground/30 shadow-lg shadow-brand/20 "
-                        : "bg-muted border-border hover:border-foreground/50"
+                        : "bg-muted border-border hover:border-foreground/30"
                     }`}
                   >
                     {/* Accordion Header */}
@@ -204,7 +204,7 @@ export function ProgramsSection() {
             <AnimateOnScroll variant="fade-left" className="relative w-full md:w-4/5 mx-auto">
               {/* Background div with slight tilt - responsive */}
               <div
-                className="absolute inset-0 bg-muted-foreground/20 rounded-[50px] transform rotate-0 md:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
+                className="absolute inset-0 border border-foreground/30 rounded-[50px] transform rotate-0 md:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
               ></div>
               <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-[50px] overflow-hidden z-10">
                 <Image

@@ -37,8 +37,11 @@ export function TeamSection() {
             };
             return (
               <div key={member.id ?? index} role="listitem">
-                <MemberCard member={memberCardData} index={index} background="bg-surface-periwinkle"
-                  accentColor="bg-brand/5" />
+                <MemberCard 
+                member={memberCardData} 
+                index={index} 
+                background="bg-white"
+                accentColor="bg-brand/5" />
               </div>
             );
           })}
