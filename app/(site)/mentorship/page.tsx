@@ -3,6 +3,7 @@ import { TestimonialsSection } from "@/components/mentorship/testimonials-sectio
 import { HowItWorksSection } from "@/components/mentorship/how-it-works-section";
 import { MentorsListSection } from "@/components/mentorship/mentors/mentors-list-section";
 import { MentorshipHeroSection } from "@/components/mentorship/mentorship-hero-section";
+import { MentorshipBenefits } from "@/components/mentorship/mentorship-benefits-section";
 
 export const metadata: Metadata = {
   title: "Mentorship Programme | She Sharp",
@@ -31,6 +32,7 @@ export default function MentorshipPage() {
         bottomRightDescription="Our mentorship programme facilitates supportive relationships between our mentors and mentees. Through sharing knowledge, advice, and encouragement, we help mentees navigate careers, overcome challenges, and achieve interpersonal goals."
       />
       <HowItWorksSection />
+      <MentorshipBenefits />
       <MentorsListSection />
       <TestimonialsSection />
     </>

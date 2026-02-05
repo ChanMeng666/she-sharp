@@ -5,7 +5,7 @@ import { teamMembers } from "@/lib/data/team";
 export function TeamSection() {
   return (
     <section
-      className="py-16 lg:py-24 bg-background"
+      className="bg-muted py-16 md:py-24 lg:py-32"
       aria-labelledby="team-heading"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,7 +16,7 @@ export function TeamSection() {
           >
             Meet Our People
           </h2>
-          <p className="text-lg sm:text-xl lg:text-2xl max-w-3xl mx-auto text-muted-foreground leading-relaxed">
+          <p className="text-md lg:text-lg max-w-2xl mx-auto text-muted-foreground leading-relaxed">
             The passionate team of leaders, innovators, and advocates driving
             change in the tech industry
           </p>
@@ -37,11 +37,11 @@ export function TeamSection() {
             };
             return (
               <div key={member.id ?? index} role="listitem">
-                <MemberCard 
-                member={memberCardData} 
-                index={index} 
-                background="bg-white"
-                accentColor="bg-brand/5" />
+                <MemberCard
+                  member={memberCardData}
+                  index={index}
+                  background="bg-white"
+                  accentColor="bg-brand/5" />
               </div>
             );
           })}

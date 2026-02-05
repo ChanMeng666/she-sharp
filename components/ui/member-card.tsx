@@ -46,7 +46,7 @@ export function MemberCard({
         <article
           onClick={() => setIsDialogOpen(true)}
           className={`group relative w-full ${background} rounded-2xl overflow-hidden
-                      transition-all duration-300 hover:shadow-2xl hover:-translate-y-1
+                      transition-all duration-300 hover:shadow-lg hover:-translate-y-1
                       focus-within:ring-4 focus-within:ring-brand/50 cursor-pointer`}
         >
           <div className="p-6 sm:p-8">
