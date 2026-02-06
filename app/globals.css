@@ -717,5 +717,6 @@
   .dashboard-bg[data-slot="sidebar-wrapper"] {
     min-height: 100svh !important;
   }
+
 }
 
