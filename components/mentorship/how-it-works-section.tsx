@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import { useState } from "react";
 import { Container } from "@/components/layout/container";
@@ -128,14 +128,14 @@ export function HowItWorksSection() {
   const ctaLabel = isMentee ? "Apply as Mentee" : "Apply as Mentor";
 
   return (
-    <Section className="py-16 md:py-32 bg-navy-light rounded-b-[50px]">
+    <Section className="py-16 xl:py-24 2xl:py-32 bg-navy-light">
       <Container size="full">
         {/* Header */}
         <div className="text-center mb-8">
           <h2 className="text-display-sm text-foreground mb-4">
             How the Programme Works
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
             Your path to meaningful mentorship connections
           </p>
 
@@ -153,21 +153,13 @@ export function HowItWorksSection() {
               <TabsList className="h-14 p-1.5 glass-pill">
                 <TabsTrigger
                   value={TAB_VALUES.mentee}
-                  className={`px-8 py-2.5 text-base rounded-full ${
-                    isMentee
-                      ? "data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
-                      : "data-[state=active]:bg-navy data-[state=active]:text-navy-foreground"
-                  }`}
+                  className="px-8 py-2.5 text-base rounded-full data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
                 >
                   Become a Mentee
                 </TabsTrigger>
                 <TabsTrigger
                   value={TAB_VALUES.mentor}
-                  className={`px-8 py-2.5 text-base rounded-full ${
-                    isMentee
-                      ? "data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
-                      : "data-[state=active]:bg-navy data-[state=active]:text-navy-foreground"
-                  }`}
+                  className="px-8 py-2.5 text-base rounded-full data-[state=active]:bg-navy data-[state=active]:text-navy-foreground"
                 >
                   Become a Mentor
                 </TabsTrigger>

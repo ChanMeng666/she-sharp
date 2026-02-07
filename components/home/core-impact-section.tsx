@@ -97,7 +97,7 @@ function StatCard({
   return (
     <article
       role="listitem"
-      className={`rounded-xl overflow-hidden border border-border/30 bg-background/40 backdrop-blur-md backdrop-saturate-150 shadow-lg shadow-black/5 hover:border-brand/50 hover:bg-background/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/10 focus-within:-translate-y-0.5 focus-within:shadow-xl focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20 ${className ?? ""}`}
+      className={`rounded-xl overflow-hidden border border-border/30 bg-white/50 backdrop-blur-md backdrop-saturate-150 shadow-lg shadow-black/5 hover:border-brand/50 hover:bg-background/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/10 focus-within:-translate-y-0.5 focus-within:shadow-xl focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20 ${className ?? ""}`}
       tabIndex={0}
       aria-labelledby={`stat-${item.title.toLowerCase().replace(/\s+/g, "-")}-title`}
     >
@@ -127,7 +127,7 @@ function StatCard({
             {item.title}
           </h3>
           <div
-            className="h-px w-full mb-4 bg-gradient-to-r from-transparent via-border/50 to-transparent"
+            className="h-px w-full mb-4 bg-linear-to-r from-transparent via-border/50 to-transparent"
             aria-hidden="true"
           />
           <p className="text-muted-foreground text-sm leading-relaxed">
@@ -144,7 +144,7 @@ export function CoreImpactSection() {
   const reduceMotion = usePrefersReducedMotion();
 
   return (
-    <Section className="bg-muted/50" aria-labelledby="impact-heading">
+    <Section className="bg-muted" aria-labelledby="impact-heading">
       <div ref={ref} className="relative">
         <Container size="full">
           {/* Header */}

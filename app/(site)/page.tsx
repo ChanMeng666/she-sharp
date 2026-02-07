@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import "@/styles/animations/hero.css";
 import { HeroSection } from "@/components/home/hero-section";
+import { CTASection } from "@/components/home/CTA-section";
 
 export const metadata: Metadata = {
   title: "She Sharp | Empowering Women in STEM",
@@ -22,6 +23,7 @@ export default function HomePage() {
       <ProgramsSection />
       <UpcomingEventSection />
       <SponsorsSection />
+      <CTASection />
     </>
   );
 }
