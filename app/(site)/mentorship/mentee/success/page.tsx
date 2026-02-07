@@ -62,7 +62,7 @@ function PaymentSuccessContent() {
                 your email for the confirmation and invitation code.
               </p>
               <div className="space-y-3">
-                <Link href="/mentorship/join">
+                <Link href="/mentorship/mentee">
                   <Button variant="default" className="w-full">
                     Return to Membership Page
                   </Button>
@@ -108,7 +108,7 @@ function PaymentSuccessContent() {
             {/* Email Notification */}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <div className="flex items-start gap-3">
-                <Mail className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                <Mail className="h-5 w-5 text-blue-600 mt-0.5 shrink-0" />
                 <div>
                   <h3 className="font-semibold text-blue-900 mb-1">Check Your Email</h3>
                   <p className="text-sm text-blue-700">
@@ -124,7 +124,7 @@ function PaymentSuccessContent() {
               <h3 className="font-semibold text-foreground">Next Steps</h3>
               <ol className="space-y-3">
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-foreground font-semibold text-sm flex-shrink-0">
+                  <span className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-foreground font-semibold text-sm shrink-0">
                     1
                   </span>
                   <span className="text-gray-600">
@@ -132,7 +132,7 @@ function PaymentSuccessContent() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-foreground font-semibold text-sm flex-shrink-0">
+                  <span className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-foreground font-semibold text-sm shrink-0">
                     2
                   </span>
                   <span className="text-gray-600">
@@ -140,7 +140,7 @@ function PaymentSuccessContent() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-foreground font-semibold text-sm flex-shrink-0">
+                  <span className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-foreground font-semibold text-sm shrink-0">
                     3
                   </span>
                   <span className="text-gray-600">
@@ -148,7 +148,7 @@ function PaymentSuccessContent() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-foreground font-semibold text-sm flex-shrink-0">
+                  <span className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-foreground font-semibold text-sm shrink-0">
                     4
                   </span>
                   <span className="text-gray-600">

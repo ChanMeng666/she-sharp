@@ -628,7 +628,7 @@ export default function MentorshipDashboard() {
       <Sheet open={isMentorSheetOpen} onOpenChange={setIsMentorSheetOpen}>
         <SheetContent className="w-full sm:max-w-2xl flex flex-col p-0">
           {/* Fixed Header */}
-          <div className="px-8 pt-8 pb-4 border-b bg-background flex-shrink-0">
+          <div className="px-8 pt-8 pb-4 border-b bg-background shrink-0">
             <SheetHeader>
               <SheetTitle className="text-2xl">Mentor Profile</SheetTitle>
               <SheetDescription>
@@ -684,7 +684,7 @@ export default function MentorshipDashboard() {
                   <div className="grid grid-cols-2 gap-4">
                     {selectedMentorDetails.formData?.city && (
                       <div className="flex items-center gap-3 p-3 rounded-lg bg-navy-light">
-                        <MapPin className="h-5 w-5 text-info flex-shrink-0" />
+                        <MapPin className="h-5 w-5 text-info shrink-0" />
                         <div>
                           <p className="text-xs text-muted-foreground">Location</p>
                           <p className="text-sm font-medium">
@@ -695,7 +695,7 @@ export default function MentorshipDashboard() {
                     )}
                     {(selectedMentorDetails.formData?.yearsExperience || selectedMentorDetails.yearsExperience) && (
                       <div className="flex items-center gap-3 p-3 rounded-lg bg-mint-light">
-                        <Briefcase className="h-5 w-5 text-navy flex-shrink-0" />
+                        <Briefcase className="h-5 w-5 text-navy shrink-0" />
                         <div>
                           <p className="text-xs text-muted-foreground">Experience</p>
                           <p className="text-sm font-medium">
@@ -707,7 +707,7 @@ export default function MentorshipDashboard() {
                     )}
                     {selectedMentorDetails.formData?.preferredMeetingFormat && (
                       <div className="flex items-center gap-3 p-3 rounded-lg bg-periwinkle-light">
-                        <Globe className="h-5 w-5 text-periwinkle flex-shrink-0" />
+                        <Globe className="h-5 w-5 text-periwinkle shrink-0" />
                         <div>
                           <p className="text-xs text-muted-foreground">Meeting Format</p>
                           <p className="text-sm font-medium">
@@ -719,7 +719,7 @@ export default function MentorshipDashboard() {
                     )}
                     {selectedMentorDetails.formData?.mbtiType && (
                       <div className="flex items-center gap-3 p-3 rounded-lg bg-surface-purple">
-                        <Brain className="h-5 w-5 text-brand flex-shrink-0" />
+                        <Brain className="h-5 w-5 text-brand shrink-0" />
                         <div>
                           <p className="text-xs text-muted-foreground">MBTI Type</p>
                           <p className="text-sm font-medium">{selectedMentorDetails.formData.mbtiType}</p>
@@ -728,7 +728,7 @@ export default function MentorshipDashboard() {
                     )}
                     {(selectedMentorDetails.formData?.availabilityHoursPerMonth || selectedMentorDetails.availabilityHoursPerMonth) && (
                       <div className="flex items-center gap-3 p-3 rounded-lg bg-navy-light">
-                        <Clock className="h-5 w-5 text-info flex-shrink-0" />
+                        <Clock className="h-5 w-5 text-info shrink-0" />
                         <div>
                           <p className="text-xs text-muted-foreground">Availability</p>
                           <p className="text-sm font-medium">
@@ -893,7 +893,7 @@ export default function MentorshipDashboard() {
       <Sheet open={isMenteeSheetOpen} onOpenChange={setIsMenteeSheetOpen}>
         <SheetContent className="w-full sm:max-w-2xl flex flex-col p-0">
           {/* Fixed Header */}
-          <div className="px-8 pt-8 pb-4 border-b bg-background flex-shrink-0">
+          <div className="px-8 pt-8 pb-4 border-b bg-background shrink-0">
             <SheetHeader>
               <SheetTitle className="text-2xl">Mentee Profile</SheetTitle>
               <SheetDescription>
@@ -944,7 +944,7 @@ export default function MentorshipDashboard() {
                 <div className="grid grid-cols-2 gap-4">
                   {selectedMenteeDetails.formData?.city && (
                     <div className="flex items-center gap-3 p-3 rounded-lg bg-navy-light">
-                      <MapPin className="h-5 w-5 text-info flex-shrink-0" />
+                      <MapPin className="h-5 w-5 text-info shrink-0" />
                       <div>
                         <p className="text-xs text-muted-foreground">Location</p>
                         <p className="text-sm font-medium">
@@ -955,7 +955,7 @@ export default function MentorshipDashboard() {
                   )}
                   {selectedMenteeDetails.formData?.preferredMeetingFormat && (
                     <div className="flex items-center gap-3 p-3 rounded-lg bg-mint-light">
-                      <Globe className="h-5 w-5 text-navy flex-shrink-0" />
+                      <Globe className="h-5 w-5 text-navy shrink-0" />
                       <div>
                         <p className="text-xs text-muted-foreground">Meeting Format</p>
                         <p className="text-sm font-medium">
@@ -967,7 +967,7 @@ export default function MentorshipDashboard() {
                   )}
                   {selectedMenteeDetails.formData?.mbtiType && (
                     <div className="flex items-center gap-3 p-3 rounded-lg bg-surface-purple">
-                      <Brain className="h-5 w-5 text-brand flex-shrink-0" />
+                      <Brain className="h-5 w-5 text-brand shrink-0" />
                       <div>
                         <p className="text-xs text-muted-foreground">MBTI Type</p>
                         <p className="text-sm font-medium">{selectedMenteeDetails.formData.mbtiType}</p>
@@ -976,7 +976,7 @@ export default function MentorshipDashboard() {
                   )}
                   {(selectedMenteeDetails.formData?.preferredMeetingFrequency || selectedMenteeDetails.preferredMeetingFrequency) && (
                     <div className="flex items-center gap-3 p-3 rounded-lg bg-periwinkle-light">
-                      <Calendar className="h-5 w-5 text-periwinkle flex-shrink-0" />
+                      <Calendar className="h-5 w-5 text-periwinkle shrink-0" />
                       <div>
                         <p className="text-xs text-muted-foreground">Meeting Frequency</p>
                         <p className="text-sm font-medium">

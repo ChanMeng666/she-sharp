@@ -66,7 +66,7 @@ export function FeatureShowcase({
   return (
     <section className={cn("w-full bg-background text-foreground", className)}>
       {/* Hero Header */}
-      <div className="bg-gradient-to-b from-muted/50 to-background py-16 md:py-24">
+      <div className="bg-linear-to-b from-muted/50 to-background py-16 md:py-24">
         <div className="container mx-auto max-w-7xl px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             {/* Left: Text Content */}

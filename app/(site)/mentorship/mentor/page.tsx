@@ -426,13 +426,13 @@ export default function BecomeMentorPage() {
                 </h3>
                 <ol className="text-base text-[#1f1e44]/70 space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-base flex-shrink-0 mt-0.5">
+                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
                       1
                     </span>
                     <span>Our team reviews your application</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-base flex-shrink-0 mt-0.5">
+                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
                       2
                     </span>
                     <span>
@@ -441,13 +441,13 @@ export default function BecomeMentorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-base flex-shrink-0 mt-0.5">
+                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
                       3
                     </span>
                     <span>Use the code to create your mentor account</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-base flex-shrink-0 mt-0.5">
+                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
                       4
                     </span>
                     <span>Complete your profile and start mentoring!</span>
@@ -585,7 +585,7 @@ export default function BecomeMentorPage() {
             {/* Location Info Box */}
             <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
+                <MapPin className="h-5 w-5 text-brand mt-0.5 shrink-0" />
                 <div className="space-y-1">
                   <p className="text-base font-medium text-brand">
                     Location Matching
@@ -757,7 +757,7 @@ export default function BecomeMentorPage() {
               {/* Bio Info Box */}
               <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
                 <div className="flex items-start gap-3">
-                  <FileText className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
+                  <FileText className="h-5 w-5 text-brand mt-0.5 shrink-0" />
                   <div className="space-y-1">
                     <p className="text-base font-medium text-brand">
                       Your Mentor Bio
@@ -837,7 +837,7 @@ export default function BecomeMentorPage() {
             {/* Expert Skills Requirement Info Box */}
             <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <Award className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
+                <Award className="h-5 w-5 text-brand mt-0.5 shrink-0" />
                 <div className="space-y-1">
                   <p className="text-base font-medium text-brand">
                     Expert Skills Requirement
@@ -1147,7 +1147,7 @@ export default function BecomeMentorPage() {
             {/* Time Commitment Info Box */}
             <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <Clock className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
+                <Clock className="h-5 w-5 text-brand mt-0.5 shrink-0" />
                 <div className="space-y-1">
                   <p className="text-base font-medium text-brand">
                     Time Commitment
@@ -1513,7 +1513,7 @@ export default function BecomeMentorPage() {
                 <p className="text-gray-600">
                   Looking to become a mentee?{" "}
                   <Link
-                    href="/mentorship/join"
+                    href="/mentorship/mentee"
                     className="text-foreground hover:underline font-medium"
                   >
                     Join as mentee

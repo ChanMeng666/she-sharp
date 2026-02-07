@@ -78,10 +78,10 @@ she-sharp/
 | `/` | Home page with hero, impact, values, programs |
 | `/about` | Organization mission, team, timeline |
 | `/mentorship` | Mentorship program overview |
-| `/mentorship/become-a-mentor` | Mentor application form |
-| `/mentorship/join` | Join as mentee |
-| `/mentorship/join/payment` | Mentee payment processing |
-| `/mentorship/join/success` | Payment success page |
+| `/mentorship/mentor` | Mentor application form |
+| `/mentorship/mentee` | Join as mentee |
+| `/mentorship/mentee/payment` | Mentee payment processing |
+| `/mentorship/mentee/success` | Payment success page |
 | `/events` | Event listings |
 | `/events/[slug]` | Individual event details |
 | `/resources` | Media resources hub (podcasts, newsletters, gallery) |

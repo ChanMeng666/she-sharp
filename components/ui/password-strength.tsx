@@ -78,7 +78,7 @@ export function PasswordStrengthIndicator({
             
             return (
               <li key={index} className={cn('flex items-start space-x-1', textColor)}>
-                <Icon className="h-3 w-3 mt-0.5 flex-shrink-0" />
+                <Icon className="h-3 w-3 mt-0.5 shrink-0" />
                 <span>{item}</span>
               </li>
             );

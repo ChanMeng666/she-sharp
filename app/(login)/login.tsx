@@ -180,7 +180,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                     />
                     <p className="text-xs text-gray-500">
                       Don&apos;t have an invitation code?{" "}
-                      <Link href="/mentorship/join" className="text-foreground hover:underline">
+                      <Link href="/mentorship/mentee" className="text-foreground hover:underline">
                         Apply for membership
                       </Link>
                     </p>

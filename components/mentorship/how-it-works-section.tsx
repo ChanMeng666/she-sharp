@@ -124,7 +124,7 @@ export function HowItWorksSection() {
   );
 
   const isMentee = activeRole === TAB_VALUES.mentee;
-  const ctaHref = isMentee ? "/mentorship/join" : "/mentorship/become-a-mentor";
+  const ctaHref = isMentee ? "/mentorship/mentee" : "/mentorship/mentor";
   const ctaLabel = isMentee ? "Apply as Mentee" : "Apply as Mentor";
 
   return (

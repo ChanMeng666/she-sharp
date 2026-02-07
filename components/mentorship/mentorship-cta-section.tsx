@@ -19,10 +19,10 @@ export function MentorshipCTASection() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center  py-4 md:py-6">
             <Button variant="brand" size="lg" asChild>
-              <Link href="/mentorship/join">Become a Mentee</Link>
+              <Link href="/mentorship/mentee">Become a Mentee</Link>
             </Button>
             <Button variant="secondary" size="lg" asChild>
-              <Link href="/mentorship/become-a-mentor">Become a Mentor</Link>
+              <Link href="/mentorship/mentor">Become a Mentor</Link>
             </Button>
           </div>
         </div>

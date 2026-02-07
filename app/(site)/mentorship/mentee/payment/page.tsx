@@ -64,7 +64,7 @@ function PaymentContent() {
 
         if (data.form.paymentCompleted) {
           // Already paid, redirect to success
-          router.push('/mentorship/join/success?already_paid=true');
+          router.push('/mentorship/mentee/success?already_paid=true');
           return;
         }
 
@@ -150,7 +150,7 @@ function PaymentContent() {
               <AlertCircle className="h-12 w-12 text-orange-500 mx-auto mb-4" />
               <h2 className="text-xl font-semibold text-foreground mb-2">Application Not Found</h2>
               <p className="text-gray-600 mb-6">{error}</p>
-              <Link href="/mentorship/join">
+              <Link href="/mentorship/mentee">
                 <Button variant="default" className="w-full">
                   <ChevronLeft className="h-4 w-4 mr-2" />
                   Start New Application
@@ -232,7 +232,7 @@ function PaymentContent() {
               <ul className="space-y-2">
                 {includedFeatures.map((feature, index) => (
                   <li key={index} className="flex items-center gap-3">
-                    <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center shrink-0">
                       <Check className="h-3 w-3 text-green-600" />
                     </div>
                     <span className="text-gray-700 text-sm">{feature}</span>
@@ -278,7 +278,7 @@ function PaymentContent() {
           {/* Back Link */}
           <div className="text-center mt-6">
             <Link
-              href="/mentorship/join"
+              href="/mentorship/mentee"
               className="text-gray-600 hover:text-foreground inline-flex items-center"
             >
               <ChevronLeft className="h-4 w-4 mr-1" />

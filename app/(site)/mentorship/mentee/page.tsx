@@ -46,6 +46,10 @@ import Link from "next/link";
 import { MentorshipHeroSection } from "@/components/mentorship/mentorship-hero-section";
 import { BenefitsSection } from "@/components/mentorship/benefits-section";
 import { Trophy, Rocket, Users } from "lucide-react";
+// Import mentee components
+import { MenteeResponsibilitiesSection } from "@/components/mentorship/mentee/mentee-responsibilities-section";
+import { BecomeMenteeCTASection } from "@/components/mentorship/mentee/become-mentee-cta-section";
+
 
 // New Zealand cities for location matching
 const nzCities = [
@@ -398,7 +402,7 @@ export default function MenteeApplicationPage() {
       const checkData = await checkResponse.json();
 
       if (checkData.exists && !checkData.paymentCompleted) {
-        router.push(`/mentorship/join/payment?id=${checkData.submissionId}`);
+        router.push(`/mentorship/mentee/payment?id=${checkData.submissionId}`);
         return;
       }
 
@@ -419,7 +423,7 @@ export default function MenteeApplicationPage() {
         return;
       }
 
-      router.push(`/mentorship/join/payment?id=${data.submissionId}`);
+      router.push(`/mentorship/mentee/payment?id=${data.submissionId}`);
     } catch (error) {
       setErrors({ email: "Failed to submit application. Please try again." });
       setLoading(false);
@@ -789,7 +793,7 @@ export default function MenteeApplicationPage() {
             {/* Skills Matching Info Box */}
             <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <Lightbulb className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
+                <Lightbulb className="h-5 w-5 text-brand mt-0.5 shrink-0" />
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-brand">
                     Skills Matching
@@ -836,28 +840,28 @@ export default function MenteeApplicationPage() {
                 {formData.softSkillsBasic.filter((s) =>
                   isCustomSkill(s, softSkillsOptions)
                 ).length > 0 && (
-                  <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
-                    {formData.softSkillsBasic
-                      .filter((s) => isCustomSkill(s, softSkillsOptions))
-                      .map((skill) => (
-                        <span
-                          key={skill}
-                          className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
-                        >
-                          {skill}
-                          <button
-                            type="button"
-                            onClick={() =>
-                              removeCustomSkill("softSkillsBasic", skill)
-                            }
-                            className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                    <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
+                      {formData.softSkillsBasic
+                        .filter((s) => isCustomSkill(s, softSkillsOptions))
+                        .map((skill) => (
+                          <span
+                            key={skill}
+                            className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
                           >
-                            <X className="h-3.5 w-3.5" />
-                          </button>
-                        </span>
-                      ))}
-                  </div>
-                )}
+                            {skill}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                removeCustomSkill("softSkillsBasic", skill)
+                              }
+                              className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                            >
+                              <X className="h-3.5 w-3.5" />
+                            </button>
+                          </span>
+                        ))}
+                    </div>
+                  )}
                 {/* Custom skill input */}
                 <div className="flex gap-2 pt-1">
                   <Input
@@ -928,28 +932,28 @@ export default function MenteeApplicationPage() {
                 {formData.industrySkillsBasic.filter((s) =>
                   isCustomSkill(s, industrySkillsOptions)
                 ).length > 0 && (
-                  <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
-                    {formData.industrySkillsBasic
-                      .filter((s) => isCustomSkill(s, industrySkillsOptions))
-                      .map((skill) => (
-                        <span
-                          key={skill}
-                          className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
-                        >
-                          {skill}
-                          <button
-                            type="button"
-                            onClick={() =>
-                              removeCustomSkill("industrySkillsBasic", skill)
-                            }
-                            className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                    <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
+                      {formData.industrySkillsBasic
+                        .filter((s) => isCustomSkill(s, industrySkillsOptions))
+                        .map((skill) => (
+                          <span
+                            key={skill}
+                            className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
                           >
-                            <X className="h-3.5 w-3.5" />
-                          </button>
-                        </span>
-                      ))}
-                  </div>
-                )}
+                            {skill}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                removeCustomSkill("industrySkillsBasic", skill)
+                              }
+                              className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                            >
+                              <X className="h-3.5 w-3.5" />
+                            </button>
+                          </span>
+                        ))}
+                    </div>
+                  )}
                 {/* Custom skill input */}
                 <div className="flex gap-2 pt-1">
                   <Input
@@ -1029,28 +1033,28 @@ export default function MenteeApplicationPage() {
                 {formData.softSkillsExpert.filter((s) =>
                   isCustomSkill(s, softSkillsOptions)
                 ).length > 0 && (
-                  <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
-                    {formData.softSkillsExpert
-                      .filter((s) => isCustomSkill(s, softSkillsOptions))
-                      .map((skill) => (
-                        <span
-                          key={skill}
-                          className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
-                        >
-                          {skill}
-                          <button
-                            type="button"
-                            onClick={() =>
-                              removeCustomSkill("softSkillsExpert", skill)
-                            }
-                            className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                    <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
+                      {formData.softSkillsExpert
+                        .filter((s) => isCustomSkill(s, softSkillsOptions))
+                        .map((skill) => (
+                          <span
+                            key={skill}
+                            className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
                           >
-                            <X className="h-3.5 w-3.5" />
-                          </button>
-                        </span>
-                      ))}
-                  </div>
-                )}
+                            {skill}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                removeCustomSkill("softSkillsExpert", skill)
+                              }
+                              className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                            >
+                              <X className="h-3.5 w-3.5" />
+                            </button>
+                          </span>
+                        ))}
+                    </div>
+                  )}
                 {/* Custom skill input */}
                 <div className="flex gap-2 pt-1">
                   <Input
@@ -1116,28 +1120,28 @@ export default function MenteeApplicationPage() {
                 {formData.industrySkillsExpert.filter((s) =>
                   isCustomSkill(s, industrySkillsOptions)
                 ).length > 0 && (
-                  <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
-                    {formData.industrySkillsExpert
-                      .filter((s) => isCustomSkill(s, industrySkillsOptions))
-                      .map((skill) => (
-                        <span
-                          key={skill}
-                          className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
-                        >
-                          {skill}
-                          <button
-                            type="button"
-                            onClick={() =>
-                              removeCustomSkill("industrySkillsExpert", skill)
-                            }
-                            className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                    <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
+                      {formData.industrySkillsExpert
+                        .filter((s) => isCustomSkill(s, industrySkillsOptions))
+                        .map((skill) => (
+                          <span
+                            key={skill}
+                            className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
                           >
-                            <X className="h-3.5 w-3.5" />
-                          </button>
-                        </span>
-                      ))}
-                  </div>
-                )}
+                            {skill}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                removeCustomSkill("industrySkillsExpert", skill)
+                              }
+                              className="hover:bg-white/20 rounded-full p-0.5 -mr-1 transition-colors"
+                            >
+                              <X className="h-3.5 w-3.5" />
+                            </button>
+                          </span>
+                        ))}
+                    </div>
+                  )}
                 {/* Custom skill input */}
                 <div className="flex gap-2 pt-1">
                   <Input
@@ -1277,7 +1281,7 @@ export default function MenteeApplicationPage() {
             {/* MBTI Test Info Box */}
             <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
               <div className="flex items-start gap-3">
-                <Sparkles className="h-5 w-5 text-brand mt-0.5 flex-shrink-0" />
+                <Sparkles className="h-5 w-5 text-brand mt-0.5 shrink-0" />
                 <div className="space-y-2">
                   <p className="text-sm font-medium text-brand">
                     Don&apos;t Know Your MBTI Type?
@@ -1567,6 +1571,13 @@ export default function MenteeApplicationPage() {
           },
         ]}
       />
+
+      <MenteeResponsibilitiesSection />
+
+
+      <BecomeMenteeCTASection />
+
+      {/* Apply as Mentee Section */}
       <WarpBackground
         className="min-h-screen bg-white"
         beamsPerSide={4}
@@ -1587,20 +1598,18 @@ export default function MenteeApplicationPage() {
                       {steps.map((step) => (
                         <div
                           key={step.id}
-                          className={`flex items-center gap-1.5 text-xs ${
-                            currentStep >= step.id
-                              ? "text-foreground"
-                              : "text-gray-400"
-                          }`}
+                          className={`flex items-center gap-1.5 text-xs ${currentStep >= step.id
+                            ? "text-foreground"
+                            : "text-gray-400"
+                            }`}
                         >
                           <div
-                            className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
-                              currentStep > step.id
-                                ? "bg-brand text-white"
-                                : currentStep === step.id
-                                  ? "bg-[#f7e5f3] text-brand border-2 border-brand"
-                                  : "bg-gray-100 text-gray-400"
-                            }`}
+                            className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${currentStep > step.id
+                              ? "bg-brand text-white"
+                              : currentStep === step.id
+                                ? "bg-[#f7e5f3] text-brand border-2 border-brand"
+                                : "bg-gray-100 text-gray-400"
+                              }`}
                           >
                             {currentStep > step.id ? (
                               <Check className="h-3 w-3" />
@@ -1695,10 +1704,10 @@ export default function MenteeApplicationPage() {
                 <p className="text-gray-600">
                   Want to become a mentor?{" "}
                   <Link
-                    href="/mentorship/become-a-mentor"
+                    href="/mentorship/mentor"
                     className="text-foreground hover:underline font-medium"
                   >
-                    Apply to mentor
+                    Apply as mentor
                   </Link>
                 </p>
               </div>
@@ -1706,6 +1715,7 @@ export default function MenteeApplicationPage() {
           </div>
         </section>
       </WarpBackground>
+
     </>
   );
 }

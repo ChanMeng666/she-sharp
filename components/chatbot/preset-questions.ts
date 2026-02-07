@@ -29,7 +29,7 @@ export const presetQuestions: PresetQuestion[] = [
     id: '7',
     question: 'What does membership cost?',
     answer:
-      "Mentee membership is **$100 NZD per year**, which includes:\n- 1-on-1 mentor sessions\n- AI-powered mentor matching\n- Access to all events\n- Premium learning resources\n- Networking opportunities\n\nMentor applications are **FREE** - experienced professionals can apply to give back to the community.\n\n**Join now:** [Become a Mentee](/mentorship/join) | [Become a Mentor](/mentorship/become-a-mentor)",
+      "Mentee membership is **$100 NZD per year**, which includes:\n- 1-on-1 mentor sessions\n- AI-powered mentor matching\n- Access to all events\n- Premium learning resources\n- Networking opportunities\n\nMentor applications are **FREE** - experienced professionals can apply to give back to the community.\n\n**Join now:** [Become a Mentee](/mentorship/mentee) | [Become a Mentor](/mentorship/mentor)",
     category: 'general',
   },
 
@@ -38,14 +38,14 @@ export const presetQuestions: PresetQuestion[] = [
     id: '2',
     question: 'How can I join the mentorship programme?',
     answer:
-      "To join as a mentee:\n1. Complete the application form\n2. Pay the $100 NZD annual membership fee\n3. Receive your invitation code via email\n4. Use the code to register and create your account\n\nOnce registered, you'll be matched with a mentor based on your goals and preferences.\n\n**Get started:** [Join as Mentee](/mentorship/join) | [View Our Mentors](/mentorship#mentors-list)",
+      "To join as a mentee:\n1. Complete the application form\n2. Pay the $100 NZD annual membership fee\n3. Receive your invitation code via email\n4. Use the code to register and create your account\n\nOnce registered, you'll be matched with a mentor based on your goals and preferences.\n\n**Get started:** [Join as Mentee](/mentorship/mentee) | [View Our Mentors](/mentorship#mentors-list)",
     category: 'mentorship',
   },
   {
     id: '8',
     question: 'How can I get involved as a mentor?',
     answer:
-      "To become a mentor:\n1. Complete the application form\n2. Our team reviews your application (5-7 business days)\n3. If approved, receive your invitation code via email\n4. Register and create your mentor account\n\nYou'll be matched with mentees based on your expertise and their goals.\n\n**Apply now:** [Become a Mentor](/mentorship/become-a-mentor) | [Mentorship Overview](/mentorship)",
+      "To become a mentor:\n1. Complete the application form\n2. Our team reviews your application (5-7 business days)\n3. If approved, receive your invitation code via email\n4. Register and create your mentor account\n\nYou'll be matched with mentees based on your expertise and their goals.\n\n**Apply now:** [Become a Mentor](/mentorship/mentor) | [Mentorship Overview](/mentorship)",
     category: 'mentorship',
   },
 

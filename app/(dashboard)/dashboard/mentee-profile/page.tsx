@@ -94,7 +94,7 @@ const mbtiTypes = [
   'ISTP', 'ISFP', 'ESTP', 'ESFP',
 ];
 
-// Must match the values used in the mentee application form (/mentorship/join)
+// Must match the values used in the mentee application form (/mentorship/mentee)
 const careerStageOptions = [
   { value: 'undergraduate', label: 'Undergraduate/Graduate' },
   { value: 'postgraduate', label: 'Post Graduate' },

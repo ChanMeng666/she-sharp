@@ -55,7 +55,7 @@ function SuccessContent() {
           <Card className="glass-card rounded-[50px] mb-8">
             <CardContent className="pt-6">
               <div className="flex items-start gap-3">
-                <Heart className="h-5 w-5 text-brand flex-shrink-0 mt-1" />
+                <Heart className="h-5 w-5 text-brand shrink-0 mt-1" />
                 <div className="text-left">
                   <p className="font-medium text-[#1f1e44] mb-1">Your Impact</p>
                   <p className="text-gray-600 text-sm">{impactMessage}</p>
