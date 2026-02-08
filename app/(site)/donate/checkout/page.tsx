@@ -136,7 +136,7 @@ function CheckoutContent() {
                 <ul className="space-y-2">
                   {impacts.map((impact, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <div className="w-5 h-5 bg-brand/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-5 h-5 bg-brand/10 rounded-full flex items-center justify-center shrink-0 mt-0.5">
                         <Check className="h-3 w-3 text-brand" />
                       </div>
                       <span className="text-gray-700 text-sm">{impact}</span>

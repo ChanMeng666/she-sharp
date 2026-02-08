@@ -1,5 +1,7 @@
 import { Metadata } from "next";
-import { FeatureShowcase } from "@/components/ui/feature-showcase";
+import { JoinTeamHeroSection } from "@/components/join-team/join-team-hero-section";
+import { VolunteerPathsSection } from "@/components/join-team/volunteer-paths-section";
+import { JoinTeamTestimonialsSection } from "@/components/join-team/testimonials-section";
 import {
   volunteerImages,
   volunteerPaths,
@@ -15,20 +17,24 @@ export const metadata: Metadata = {
 
 export default function JoinOurTeamPage() {
   return (
-    <FeatureShowcase
-      eyebrow={joinTeamContent.eyebrow}
-      title={joinTeamContent.title}
-      description={joinTeamContent.description}
-      stats={joinTeamStats}
-      volunteerPaths={volunteerPaths}
-      tabs={volunteerImages}
-      defaultTab="volunteer"
-      panelMinHeight={500}
-      primaryCta={{
-        label: "Apply Now",
-        mobileLabel: "Email us to apply",
-        href: "mailto:people@shesharp.org.nz",
-      }}
-    />
+    <section className="w-full bg-background text-foreground">
+      <JoinTeamHeroSection
+        title={joinTeamContent.title}
+        description={joinTeamContent.description}
+        stats={joinTeamStats}
+      />
+      <VolunteerPathsSection
+        title={joinTeamContent.title}
+        description={joinTeamContent.description}
+        stats={joinTeamStats.map(stat => stat.text)}
+        volunteerPaths={volunteerPaths}
+        tabs={volunteerImages}
+        primaryCta={{
+          label: "Apply Now",
+          href: "mailto:people@shesharp.org.nz",
+        }}
+      />
+      <JoinTeamTestimonialsSection />
+    </section>
   );
 }

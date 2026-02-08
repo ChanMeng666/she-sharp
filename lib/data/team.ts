@@ -67,7 +67,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: 8,
     name: "Sara Ghafoor",
-    roles: ["Ambassador", "Secretary"],
+    roles: ["Ambassador", "Marketing"],
     linkedin: "https://www.linkedin.com/in/sara-ghafoor/",
     description:
       "Kia ora! I’m Sara Ghafoor, an Electrical Engineer turned AI enthusiast passionate about inclusive tech. At Entelar Group, I support telecom site operations and major rollouts across NZ. I also help lead SheSharp’s events, mentorships, and community initiatives, collaborating with Google, Microsoft, Fonterra, and more. With a background in machine learning, medical imaging, and generative AI, I’m driven by tech that creates real-world impact—whether I’m mentoring at hackathons, managing projects, or running national events.",
@@ -93,7 +93,7 @@ export const teamMembers: TeamMember[] = [
   },{
     id: 11,
     name: "Gurleen Kaur",
-    roles: ["Ambassador", "Marketing"],
+    roles: ["Ambassador", "Secretary"],
     linkedin: "https://www.linkedin.com/in/leen-kaur/",
     description:
       "Gurleen is a graduating student at Auckland University of Technology, pursuing a Bachelor of Computer and Information Sciences with a major in Software Development and a minor in Data Science. Passionate about empowering women in tech, she volunteers with She Sharp's marketing team, contributing through video editing, content creation, and leveraging her skills in tools like CapCut and Canva. \n\nWith hands-on experience in projects like AI games, web development, and managing YouTube channels with over 10 million views, Gurleen is dedicated to bridging the gender gap in STEM while honing her expertise in programming and data analysis.",
@@ -124,7 +124,7 @@ export const teamMembers: TeamMember[] = [
     roles: ["Ambassador", "UX/UI Designer"],
     linkedin: "https://www.linkedin.com/in/lesley-gao/",
     description:
-      "Lesley Gao is a Product Designer based in Auckland, working at Watchful, a security-tech company building AI-powered monitoring platforms. She has a background in journalism, web development, and UX/UI, and has worked on projects spanning SaaS products, onboarding experiences, and AI-enabled tools. \n\nLesley values gender equality and is passionate about supporting programmes and events that empower and connect women in tech across Aotearoa. Outside of work, she enjoys solving puzzles and building with Lego, hiking Auckland’s trails, capturing moments through her camera lens, and occasionally sketching.",
+      "Lesley Gao is a Product Designer at Watchful, a security-tech company building AI-powered monitoring platforms. With a background in journalism, web development, and UX/UI, she has worked on projects spanning SaaS products, onboarding experiences, and AI-enabled tools, including designing the She Sharp website.\n\nLesley is passionate about gender equality and supporting programmes and events that empower and connect women in tech across Aotearoa. Outside of work, she enjoys hiking Auckland's trails, photography, and building with Lego.",
     image: "/img/lesley.png",
   } ,
   {

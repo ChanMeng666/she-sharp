@@ -52,7 +52,7 @@ const genderOptions = [
   { value: 'other', label: 'Other' },
 ];
 
-// Must match the values used in the mentor application form (/mentorship/become-a-mentor)
+// Must match the values used in the mentor application form (/mentorship/mentor)
 const yearsExperienceOptions = [
   { value: '3', label: '3-5 years' },
   { value: '5', label: '5-10 years' },

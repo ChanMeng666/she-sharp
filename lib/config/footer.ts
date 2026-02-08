@@ -20,8 +20,8 @@ export const footerConfig = {
       title: "Mentorship",
       links: [
         { name: "About the Programme", href: "/mentorship" },
-        { name: "Become a Mentee", href: "/mentorship/join" },
-        { name: "Become a Mentor", href: "/mentorship/become-a-mentor" },
+        { name: "Become a Mentee", href: "/mentorship/mentee" },
+        { name: "Become a Mentor", href: "/mentorship/mentor" },
       ],
     },
     {

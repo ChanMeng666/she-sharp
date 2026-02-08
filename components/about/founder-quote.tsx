@@ -20,7 +20,7 @@ export function FounderQuote() {
             {/* Quote content - Left side */}
             <div className="flex-1 text-white order-2 lg:order-1">
               {/* Quote text with integrated quote mark */}
-              <blockquote className="text-base md:text-lg lg:text-xl  mb-8 space-y-4">
+              <blockquote className="text-base md:text-lg mb-8 space-y-4">
                 <p>
                   <span className="text-white">"</span>As the Director of She Sharp, I am proud to lead an organisation dedicated to empowering women in tech. Despite women making up over half of the population, they represent only 20% of roles in STEM fields.
                 </p>

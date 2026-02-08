@@ -84,13 +84,13 @@ export const navigationConfig: {
         },
         {
           title: "Become a Mentee",
-          href: "/mentorship/join",
+          href: "/mentorship/mentee",
           description: "Join the programme and get matched with a mentor",
           icon: Sparkles,
         },
         {
           title: "Become a Mentor",
-          href: "/mentorship/become-a-mentor",
+          href: "/mentorship/mentor",
           description: "Apply to share your expertise and guide others",
           icon: Award,
         },

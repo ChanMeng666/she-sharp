@@ -83,7 +83,7 @@ export function CookieBanner() {
         <div className="container max-w-6xl mx-auto">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-start gap-3 flex-1">
-              <Cookie className="h-6 w-6 text-foreground mt-1 flex-shrink-0" />
+              <Cookie className="h-6 w-6 text-foreground mt-1 shrink-0" />
               <div>
                 <h3 className="font-semibold text-foreground mb-1">We value your privacy</h3>
                 <p className="text-sm text-muted-foreground">

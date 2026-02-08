@@ -40,7 +40,7 @@ export const AnimatedAlbumCard = React.forwardRef<
           <h2 className="text-xl sm:text-2xl font-bold tracking-tight line-clamp-1">
             {title}
           </h2>
-          <ArrowRight className="h-5 w-5 flex-shrink-0 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
+          <ArrowRight className="h-5 w-5 shrink-0 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
         </div>
 
         {/* Stacked Images with Hover Animation */}

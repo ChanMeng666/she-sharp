@@ -191,7 +191,7 @@
 
   body {
     margin: 0;
-    background-color: hsl(var(--background));
+    background-color: hsl(var(--muted));
     font-family: var(--font-sans);
     @apply text-foreground;
     min-height: 100vh;
@@ -717,5 +717,6 @@
   .dashboard-bg[data-slot="sidebar-wrapper"] {
     min-height: 100svh !important;
   }
+
 }
 

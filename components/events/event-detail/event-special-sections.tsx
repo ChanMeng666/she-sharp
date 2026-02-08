@@ -49,7 +49,7 @@ function SpecialSectionContent({ content }: { content: string }) {
           className="text-brand hover:underline flex items-center gap-1 break-all"
         >
           {videoData.url}
-          <ExternalLink className="w-3 h-3 flex-shrink-0" />
+          <ExternalLink className="w-3 h-3 shrink-0" />
         </a>
       </div>
     );
@@ -65,7 +65,7 @@ function SpecialSectionContent({ content }: { content: string }) {
         className="text-brand hover:underline flex items-center gap-1 break-all"
       >
         {content}
-        <ExternalLink className="w-3 h-3 flex-shrink-0" />
+        <ExternalLink className="w-3 h-3 shrink-0" />
       </a>
     );
   }

@@ -307,7 +307,7 @@ export default function DynamicDashboard() {
                       }
                     }}
                   >
-                    <div className="flex-shrink-0 p-1.5 rounded-md bg-background">
+                    <div className="shrink-0 p-1.5 rounded-md bg-background">
                       {getNotificationIcon(notification.type)}
                     </div>
                     <div className="flex-1 min-w-0">

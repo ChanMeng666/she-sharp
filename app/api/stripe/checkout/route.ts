@@ -26,10 +26,10 @@ export async function POST(request: NextRequest) {
       email,
       userId: user?.id,
       formSubmissionId,
-      successUrl: `${baseUrl}/mentorship/join/success`,
+      successUrl: `${baseUrl}/mentorship/mentee/success`,
       cancelUrl: formSubmissionId
-        ? `${baseUrl}/mentorship/join/payment?id=${formSubmissionId}`
-        : `${baseUrl}/mentorship/join`,
+        ? `${baseUrl}/mentorship/mentee/payment?id=${formSubmissionId}`
+        : `${baseUrl}/mentorship/mentee`,
     });
 
     return NextResponse.json({

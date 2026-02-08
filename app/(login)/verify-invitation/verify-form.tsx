@@ -129,13 +129,13 @@ export function VerifyInvitationForm({ userEmail, userName }: VerifyInvitationFo
               </p>
               <div className="mt-3 flex flex-col gap-2">
                 <Link
-                  href="/mentorship/join"
+                  href="/mentorship/mentee"
                   className="text-sm text-center text-primary hover:underline"
                 >
                   Apply as a Mentee (requires payment)
                 </Link>
                 <Link
-                  href="/mentorship/become-a-mentor"
+                  href="/mentorship/mentor"
                   className="text-sm text-center text-primary hover:underline"
                 >
                   Apply as a Mentor (requires approval)

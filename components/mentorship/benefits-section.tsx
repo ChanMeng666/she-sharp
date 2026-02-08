@@ -22,9 +22,9 @@ export function BenefitsSection({
   benefits,
 }: BenefitsSectionProps) {
   return (
-    <Section className="py-16 md:py-24 bg-muted">
+    <Section className="py-16 xl:py-24 2xl:py-32 bg-muted">
       <Container size="full">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto ">
           {/* Header */}
           <div className="text-left mb-12 md:mb-16">
             <h2 className="text-display-sm text-foreground mb-4">
@@ -33,7 +33,7 @@ export function BenefitsSection({
           </div>
 
           {/* Benefits Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 py-4 md:py-6">
             {benefits.map((benefit, index) => {
               const Icon = benefit.icon;
 

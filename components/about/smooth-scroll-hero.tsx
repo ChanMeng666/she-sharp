@@ -90,7 +90,7 @@ function CenterImage() {
 
       {/* Overlay gradient for depth */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-b from-gray-50/40 via-transparent to-gray-50/60 pointer-events-none"
+        className="absolute inset-0 bg-linear-to-b from-gray-50/40 via-transparent to-gray-50/60 pointer-events-none"
         style={{ opacity }}
       />
 

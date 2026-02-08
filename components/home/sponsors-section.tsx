@@ -42,8 +42,8 @@ const sponsors = {
 
 export function SponsorsSection() {
   return (
-    <Section className="overflow-hidden bg-white">
-      <Container size="full" className="mt-12 md:mt-16 lg:mt-20 mb-12 md:mb-16 lg:mb-20">
+    <Section className="overflow-hidden bg-white py-16 xl:py-24 2xl:py-32">
+      <Container size="full">
         <AnimateOnScroll variant="fade-up" className="text-center mb-12 md:mb-16 lg:mb-20">
           <h2 className="text-display-sm text-foreground">
             Thanks to Our Sponsors
@@ -64,24 +64,24 @@ export function SponsorsSection() {
                 variant="fade-up"
                 delay={index * 100}
               >
-              <a
-                key={sponsor.name}
-                href={sponsor.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Visit ${sponsor.name} website`}
-                title={sponsor.description}
-                className="block"
-              >
-                <div className="relative h-20 w-56 sm:w-64 flex items-center justify-center shrink-0">
-                  <Image
-                    src={sponsor.logo}
-                    alt={sponsor.name}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </a>
+                <a
+                  key={sponsor.name}
+                  href={sponsor.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${sponsor.name} website`}
+                  title={sponsor.description}
+                  className="block"
+                >
+                  <div className="relative h-20 w-56 sm:w-64 flex items-center justify-center shrink-0">
+                    <Image
+                      src={sponsor.logo}
+                      alt={sponsor.name}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </a>
               </AnimateOnScroll>
             ))}
           </div>
@@ -101,23 +101,23 @@ export function SponsorsSection() {
                 key={sponsor.name}
                 variant="fade-up"
               >
-              <a
-                href={sponsor.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Visit ${sponsor.name} website`}
-                title={sponsor.description}
-                className="block"
-              >
-                <div className="relative h-20 w-56 sm:w-64 flex items-center justify-center shrink-0">
-                  <Image
-                    src={sponsor.logo}
-                    alt={sponsor.name}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </a>
+                <a
+                  href={sponsor.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${sponsor.name} website`}
+                  title={sponsor.description}
+                  className="block"
+                >
+                  <div className="relative h-20 w-56 sm:w-64 flex items-center justify-center shrink-0">
+                    <Image
+                      src={sponsor.logo}
+                      alt={sponsor.name}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </a>
               </AnimateOnScroll>
             ))}
           </div>

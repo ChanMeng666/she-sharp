@@ -698,19 +698,19 @@ function AccountPageContent() {
                 </summary>
                 <ul className="mt-3 space-y-2 text-muted-foreground ml-4">
                   <li className="flex items-start gap-2">
-                    <XCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
+                    <XCircle className="h-4 w-4 text-red-500 mt-0.5 shrink-0" />
                     <span>Immediate loss of access to dashboard and member features</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <XCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
+                    <XCircle className="h-4 w-4 text-red-500 mt-0.5 shrink-0" />
                     <span>Active mentorship relationships will be terminated</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <XCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
+                    <XCircle className="h-4 w-4 text-red-500 mt-0.5 shrink-0" />
                     <span>Event registrations and history will be removed</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <XCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
+                    <XCircle className="h-4 w-4 text-red-500 mt-0.5 shrink-0" />
                     <span>Points and rewards will be forfeited</span>
                   </li>
                 </ul>
@@ -827,7 +827,7 @@ function AccountPageContent() {
                 {/* Data Retention Notice */}
                 <div className="bg-surface-purple border border-brand/30 rounded-lg p-3 text-foreground">
                   <p className="flex items-start gap-2 text-sm">
-                    <Clock className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                    <Clock className="h-4 w-4 mt-0.5 shrink-0" />
                     <span>
                       <strong>30-day recovery period:</strong> Your data will be retained for
                       30 days. During this time, you can contact us to recover your account.
@@ -840,7 +840,7 @@ function AccountPageContent() {
                 {!hasPassword && connectedAccounts.length > 0 && (
                   <div className="bg-navy-light border border-info/30 rounded-lg p-3 text-foreground">
                     <p className="flex items-start gap-2 text-sm">
-                      <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                      <Info className="h-4 w-4 mt-0.5 shrink-0" />
                       <span>
                         Your account is linked to <strong>{connectedAccounts.map(a => a.provider).join(' and ')}</strong>.
                         Type your email address below to confirm deletion.
