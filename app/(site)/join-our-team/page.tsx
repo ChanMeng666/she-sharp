@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { JoinTeamHeroSection } from "@/components/join-team/join-team-hero-section";
 import { VolunteerPathsSection } from "@/components/join-team/volunteer-paths-section";
+import { JoinTeamTestimonialsSection } from "@/components/join-team/testimonials-section";
 import {
   volunteerImages,
   volunteerPaths,
@@ -33,6 +34,7 @@ export default function JoinOurTeamPage() {
           href: "mailto:people@shesharp.org.nz",
         }}
       />
+      <JoinTeamTestimonialsSection />
     </section>
   );
 }
