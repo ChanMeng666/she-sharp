@@ -128,7 +128,7 @@ export function HowItWorksSection() {
   const ctaLabel = isMentee ? "Apply as Mentee" : "Apply as Mentor";
 
   return (
-    <Section className="py-16 xl:py-24 2xl:py-32 bg-navy-light">
+    <Section id="how-it-works" className="py-16 xl:py-24 2xl:py-32 bg-navy-light">
       <Container size="full">
         {/* Header */}
         <div className="text-center mb-8">

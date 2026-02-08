@@ -44,6 +44,8 @@ import Link from "next/link";
 import { MentorshipHeroSection } from "@/components/mentorship/mentorship-hero-section";
 import { BenefitsSection } from "@/components/mentorship/benefits-section";
 import { Trophy, Rocket, Users } from "lucide-react";
+import { BecomeMentorCTASection } from "@/components/mentorship/mentor/become-mentor-cta-section";
+import { MentorResponsibilitiesSection } from "@/components/mentorship/mentor/mentor-responsibilities-section";
 
 // New Zealand cities
 const nzCities = [
@@ -1385,6 +1387,11 @@ export default function BecomeMentorPage() {
           },
         ]}
       />
+
+      <MentorResponsibilitiesSection />
+
+      <BecomeMentorCTASection />
+
       <WarpBackground
         className="min-h-screen bg-white"
         beamsPerSide={4}
@@ -1405,20 +1412,18 @@ export default function BecomeMentorPage() {
                       {steps.map((step) => (
                         <div
                           key={step.id}
-                          className={`flex items-center gap-1.5 text-base ${
-                            currentStep >= step.id
-                              ? "text-foreground"
-                              : "text-gray-400"
-                          }`}
+                          className={`flex items-center gap-1.5 text-base ${currentStep >= step.id
+                            ? "text-foreground"
+                            : "text-gray-400"
+                            }`}
                         >
                           <div
-                            className={`w-6 h-6 rounded-full flex items-center justify-center text-base font-medium ${
-                              currentStep > step.id
-                                ? "bg-brand text-white"
-                                : currentStep === step.id
-                                  ? "bg-[#f7e5f3] text-brand border-2 border-brand"
-                                  : "bg-gray-100 text-gray-400"
-                            }`}
+                            className={`w-6 h-6 rounded-full flex items-center justify-center text-base font-medium ${currentStep > step.id
+                              ? "bg-brand text-white"
+                              : currentStep === step.id
+                                ? "bg-[#f7e5f3] text-brand border-2 border-brand"
+                                : "bg-gray-100 text-gray-400"
+                              }`}
                           >
                             {currentStep > step.id ? (
                               <Check className="h-3 w-3" />

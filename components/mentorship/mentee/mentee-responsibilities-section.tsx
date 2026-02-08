@@ -7,6 +7,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { ExternalLink, ChevronDown, MessageSquare, Target, Lightbulb, TrendingUp, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
 
 const responsibilityCategories = {
   communication: {
@@ -108,20 +109,32 @@ export function MenteeResponsibilitiesSection() {
                 })}
               </div>
 
-              <Button
-                asChild
-                size="lg"
-                variant="brand"
-              >
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSeiNe0btTXNLsJeIsMape05630fK1SLdldO9Ty3x8QbLd6B6w/viewform?usp=sf_link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 "
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button
+                  asChild
+                  size="lg"
+                  variant="brand"
                 >
-                  Start Your Journey
-                </a>
-              </Button>
+                  <a
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSeiNe0btTXNLsJeIsMape05630fK1SLdldO9Ty3x8QbLd6B6w/viewform?usp=sf_link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 "
+                  >
+                    Start Your Journey
+                  </a>
+                </Button>
+                <Button 
+                  asChild 
+                  size="lg" 
+                  variant="outline"
+                  className="border-brand text-brand hover:bg-brand/50 hover:text-white transition-colors"
+                >
+                  <Link href="/mentorship#how-it-works">
+                    Learn How It Works
+                  </Link>
+                </Button>
+              </div>
             </div>
 
             {/* Image with overlay info */}
@@ -144,7 +157,7 @@ export function MenteeResponsibilitiesSection() {
               </div>
 
               {/* Floating commitment card */}
-              <div className="absolute -top-4 -right-4 bg-periwinkle-dark/70 backdrop-blur-sm rounded-lg p-6 shadow-lg hidden lg:block">
+              <div className="absolute -top-4 -right-4 bg-brand/70 backdrop-blur-sm rounded-lg p-6 shadow-lg hidden lg:block">
                 <p className="text-white font-semibold text-base">Time Commitment</p>
                 <p className="text-white text-base mt-1">2-4 hours per month</p>
               </div>

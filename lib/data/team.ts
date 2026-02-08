@@ -67,7 +67,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: 8,
     name: "Sara Ghafoor",
-    roles: ["Ambassador", "Secretary"],
+    roles: ["Ambassador", "Marketing"],
     linkedin: "https://www.linkedin.com/in/sara-ghafoor/",
     description:
       "Kia ora! I’m Sara Ghafoor, an Electrical Engineer turned AI enthusiast passionate about inclusive tech. At Entelar Group, I support telecom site operations and major rollouts across NZ. I also help lead SheSharp’s events, mentorships, and community initiatives, collaborating with Google, Microsoft, Fonterra, and more. With a background in machine learning, medical imaging, and generative AI, I’m driven by tech that creates real-world impact—whether I’m mentoring at hackathons, managing projects, or running national events.",
@@ -93,7 +93,7 @@ export const teamMembers: TeamMember[] = [
   },{
     id: 11,
     name: "Gurleen Kaur",
-    roles: ["Ambassador", "Marketing"],
+    roles: ["Ambassador", "Secretary"],
     linkedin: "https://www.linkedin.com/in/leen-kaur/",
     description:
       "Gurleen is a graduating student at Auckland University of Technology, pursuing a Bachelor of Computer and Information Sciences with a major in Software Development and a minor in Data Science. Passionate about empowering women in tech, she volunteers with She Sharp's marketing team, contributing through video editing, content creation, and leveraging her skills in tools like CapCut and Canva. \n\nWith hands-on experience in projects like AI games, web development, and managing YouTube channels with over 10 million views, Gurleen is dedicated to bridging the gender gap in STEM while honing her expertise in programming and data analysis.",

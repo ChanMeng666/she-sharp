@@ -5,7 +5,7 @@ import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Clock, Calendar, Users, Zap, ArrowRight, Info } from "lucide-react";
+import { Clock, Calendar, Users, Zap } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -44,11 +44,8 @@ export function BecomeMenteeCTASection() {
   ];
 
   return (
-    <Section className="py-16 xl:py-24 2xl:py-32 bg-linear-to-br from-purple-light via-purple-mid to-periwinkle-dark relative overflow-hidden ">
+    <Section className="py-16 bg-linear-to-br from-purple-light via-purple-mid to-purple-dark relative overflow-hidden ">
       {/* Background decoration */}
-
-
-
       <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
 
       <Container size="full" className="relative z-10">
@@ -87,7 +84,7 @@ export function BecomeMenteeCTASection() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="border-white text-white hover:bg-white/10 w-fit mt-8"
+                  className="border-white text-white hover:bg-white/10 w-fit mt-8 bg-brand"
                 >
                   <a
                     href="https://docs.google.com/forms/d/e/1FAIpQLSeiNe0btTXNLsJeIsMape05630fK1SLdldO9Ty3x8QbLd6B6w/viewform?usp=sf_link"
@@ -106,12 +103,12 @@ export function BecomeMenteeCTASection() {
 
               {/* Quick Info - Right Side, Stacked */}
               <div className="w-full md:w-1/2 flex items-top justify-end">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-16 flex flex-col gap-8">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-12 flex flex-col gap-8">
                   {quickInfo.map((item) => {
                     const Icon = item.icon;
                     return (
                       <div key={item.label} className="flex items-center gap-8">
-                        <Icon className="w-6 h-6 text-mint-dark shrink-0" />
+                        <Icon className="w-6 h-6 text-white shrink-0" />
                         <div>
                           <p className="text-base text-white/80">{item.label}</p>
                           <p className=" text-lg font-semibold text-white">{item.value}</p>
@@ -121,9 +118,6 @@ export function BecomeMenteeCTASection() {
                   })}
                 </div>
               </div>
-
-
-              
             </div>
           </div>
         </div>
