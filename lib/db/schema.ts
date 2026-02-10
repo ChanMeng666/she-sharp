@@ -43,6 +43,12 @@ export const meetingFormatEnum = pgEnum('meeting_format', ['online', 'in_person'
 export const queueStatusEnum = pgEnum('queue_status', ['waiting', 'matching_in_progress', 'matched', 'expired', 'cancelled']);
 export const confidenceLevelEnum = pgEnum('confidence_level', ['high', 'medium', 'low']);
 
+export const volunteerCurrentStatusEnum = pgEnum('volunteer_current_status', [
+  'high_school_student', 'university_student', 'industry', 'sponsor_partner', 'other'
+]);
+
+export const volunteerTypeEnum = pgEnum('volunteer_type', ['ambassador', 'volunteer']);
+
 // Core user table (simplified - no role field)
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
@@ -794,6 +800,8 @@ export enum ActivityType {
   PAYMENT_COMPLETED = 'PAYMENT_COMPLETED',
   SUBSCRIPTION_CREATED = 'SUBSCRIPTION_CREATED',
   SUBSCRIPTION_CANCELLED = 'SUBSCRIPTION_CANCELLED',
+  SUBMIT_VOLUNTEER_FORM = 'SUBMIT_VOLUNTEER_FORM',
+  REVIEW_VOLUNTEER_APPLICATION = 'REVIEW_VOLUNTEER_APPLICATION',
 }
 
 // ============================================================================
@@ -1014,6 +1022,41 @@ export const menteeFormSubmissions = pgTable('mentee_form_submissions', {
   statusIdx: index('mentee_form_submissions_status_idx').on(table.status),
   emailIdx: index('mentee_form_submissions_email_idx').on(table.email),
   paymentIdx: index('mentee_form_submissions_payment_idx').on(table.paymentCompleted),
+}));
+
+// Volunteer/Ambassador form submissions
+export const volunteerFormSubmissions = pgTable('volunteer_form_submissions', {
+  id: serial('id').primaryKey(),
+  type: volunteerTypeEnum('type').notNull(),
+  email: varchar('email', { length: 255 }).notNull(),
+  status: formStatusEnum('status').notNull().default('submitted'),
+  submittedAt: timestamp('submitted_at'),
+  reviewedAt: timestamp('reviewed_at'),
+  reviewedBy: integer('reviewed_by').references(() => users.id),
+  reviewNotes: text('review_notes'),
+  // Common fields (both types)
+  firstName: varchar('first_name', { length: 100 }).notNull(),
+  lastName: varchar('last_name', { length: 100 }).notNull(),
+  currentStatus: volunteerCurrentStatusEnum('current_status').notNull(),
+  currentStatusOther: varchar('current_status_other', { length: 200 }),
+  organisation: varchar('organisation', { length: 200 }),
+  howHeardAbout: text('how_heard_about').notNull(),
+  skillSets: text('skill_sets').notNull(),
+  // Ambassador-only fields (nullable)
+  linkedinUrl: varchar('linkedin_url', { length: 500 }),
+  itIndustryInterest: text('it_industry_interest'),
+  volunteerHoursPerWeek: varchar('volunteer_hours_per_week', { length: 20 }),
+  cvUrl: varchar('cv_url', { length: 500 }),
+  cvFileName: varchar('cv_file_name', { length: 255 }),
+  // Volunteer-only fields (nullable)
+  eventsPerYear: varchar('events_per_year', { length: 20 }),
+  // Timestamps
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  statusIdx: index('volunteer_form_status_idx').on(table.status),
+  emailIdx: index('volunteer_form_email_idx').on(table.email),
+  typeIdx: index('volunteer_form_type_idx').on(table.type),
 }));
 
 // User points balance
@@ -1284,6 +1327,14 @@ export const menteeFormSubmissionsRelations = relations(menteeFormSubmissions, (
   }),
 }));
 
+export const volunteerFormSubmissionsRelations = relations(volunteerFormSubmissions, ({ one }) => ({
+  reviewer: one(users, {
+    fields: [volunteerFormSubmissions.reviewedBy],
+    references: [users.id],
+    relationName: 'volunteerFormReviewer',
+  }),
+}));
+
 export const userPointsRelations = relations(userPoints, ({ one }) => ({
   user: one(users, {
     fields: [userPoints.userId],
@@ -1399,6 +1450,8 @@ export type MentorFormSubmission = typeof mentorFormSubmissions.$inferSelect;
 export type NewMentorFormSubmission = typeof mentorFormSubmissions.$inferInsert;
 export type MenteeFormSubmission = typeof menteeFormSubmissions.$inferSelect;
 export type NewMenteeFormSubmission = typeof menteeFormSubmissions.$inferInsert;
+export type VolunteerFormSubmission = typeof volunteerFormSubmissions.$inferSelect;
+export type NewVolunteerFormSubmission = typeof volunteerFormSubmissions.$inferInsert;
 export type UserPoint = typeof userPoints.$inferSelect;
 export type NewUserPoint = typeof userPoints.$inferInsert;
 export type PointsTransaction = typeof pointsTransactions.$inferSelect;

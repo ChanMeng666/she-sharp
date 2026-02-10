@@ -198,12 +198,11 @@ export function VolunteerPathsSection({
                         <Link
                           href={
                             path.id === "volunteer"
-                              ? "https://docs.google.com/forms/d/e/1FAIpQLSdTEFjOs6lLHZDGpSvoMfkckloPBMbvFA45iNhVvh1sAsUZlA/viewform"
+                              ? "/join-our-team/apply?type=volunteer"
                               : path.id === "ambassador"
-                              ? "https://docs.google.com/forms/d/e/1FAIpQLSfQCjMOvfh7OVmBZg3T7eS70xhKkB_iSnlIpjv3xJ1i-EUTyg/viewform"
+                              ? "/join-our-team/apply?type=ambassador"
                               : primaryCta.href
                           }
-                          target="_blank"
                         >
                           Apply Now
                         </Link>

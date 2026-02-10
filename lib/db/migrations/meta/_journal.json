@@ -113,6 +113,13 @@
       "when": 1764754780561,
       "tag": "0017_flowery_zuras",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1770683725196,
+      "tag": "0018_sour_trish_tilby",
+      "breakpoints": true
     }
   ]
 }

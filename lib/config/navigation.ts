@@ -118,6 +118,12 @@ export const navigationConfig: {
           icon: UserPlus,
         },
         {
+          title: "Apply as Ambassador",
+          href: "/join-our-team/apply?type=ambassador",
+          description: "Express your interest in becoming a She Sharp Ambassador",
+          icon: Award,
+        },
+        {
           title: "Corporate Partnership",
           href: "/sponsors/corporate-sponsorship",
           description: "Partner with us to support women in STEM",
