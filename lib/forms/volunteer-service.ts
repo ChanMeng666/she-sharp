@@ -94,22 +94,26 @@ export async function submitVolunteerForm(data: VolunteerFormData): Promise<Subm
       },
     });
 
-    // Send Slack notification (fire-and-forget)
-    sendVolunteerSlackNotification({
-      type: data.type,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      currentStatus: data.currentStatus,
-      organisation: data.organisation,
-      howHeardAbout: data.howHeardAbout,
-      skillSets: data.skillSets,
-      linkedinUrl: data.linkedinUrl,
-      itIndustryInterest: data.itIndustryInterest,
-      volunteerHoursPerWeek: data.volunteerHoursPerWeek,
-      cvUrl: data.cvUrl,
-      eventsPerYear: data.eventsPerYear,
-    }).catch(err => console.error('Slack notification error:', err));
+    // Send Slack notification (await to ensure it completes before serverless function exits)
+    try {
+      await sendVolunteerSlackNotification({
+        type: data.type,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        currentStatus: data.currentStatus,
+        organisation: data.organisation,
+        howHeardAbout: data.howHeardAbout,
+        skillSets: data.skillSets,
+        linkedinUrl: data.linkedinUrl,
+        itIndustryInterest: data.itIndustryInterest,
+        volunteerHoursPerWeek: data.volunteerHoursPerWeek,
+        cvUrl: data.cvUrl,
+        eventsPerYear: data.eventsPerYear,
+      });
+    } catch (err) {
+      console.error('Slack notification error:', err);
+    }
 
     return { success: true, submissionId: submission.id };
   } catch (error) {

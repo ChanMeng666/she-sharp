@@ -34,7 +34,7 @@ const STATUS_LABELS: Record<string, string> = {
  * Non-blocking: failures are logged but don't throw.
  */
 export async function sendVolunteerSlackNotification(data: VolunteerNotificationData): Promise<void> {
-  const webhookUrl = process.env.SLACK_VOLUNTEER_WEBHOOK_URL;
+  const webhookUrl = process.env.SLACK_VOLUNTEER_WEBHOOK_URL?.trim();
   if (!webhookUrl) {
     console.warn('SLACK_VOLUNTEER_WEBHOOK_URL not configured, skipping notification');
     return;
