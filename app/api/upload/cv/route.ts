@@ -11,7 +11,10 @@ const ALLOWED_EXTENSIONS = ['.pdf'];
  */
 function extractPublicId(url: string): string | null {
   try {
-    const match = url.match(/\/upload\/(?:v\d+\/)?(.+)$/);
+    // Handles both regular and signed URLs:
+    // Regular: /upload/v123/she-sharp/cv/file.pdf
+    // Signed:  /upload/s--sig--/v123/she-sharp/cv/file.pdf
+    const match = url.match(/\/upload\/(?:s--[^/]+--\/)?(?:v\d+\/)?(.+)$/);
     return match ? match[1] : null;
   } catch {
     return null;
@@ -68,9 +71,17 @@ export async function POST(request: NextRequest) {
       overwrite: true,
     });
 
+    // Generate a signed URL so raw resources can be accessed without 401
+    const signedUrl = cloudinary.url(result.public_id, {
+      resource_type: 'raw',
+      sign_url: true,
+      secure: true,
+      type: 'upload',
+    });
+
     return NextResponse.json({
       success: true,
-      url: result.secure_url,
+      url: signedUrl,
       fileName: file.name,
       size: file.size,
       contentType: file.type,
