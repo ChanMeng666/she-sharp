@@ -200,8 +200,8 @@ export default function VolunteerApplyPage() {
               Thank you for your interest in volunteering with She Sharp!
               Please fill out the form below and we will be in touch.
               If you have any questions, feel free to contact us at{' '}
-              <a href="mailto:info@shesharp.org.nz" className="text-brand hover:underline">
-                info@shesharp.org.nz
+              <a href="mailto:people@shesharp.org.nz" className="text-brand hover:underline">
+                people@shesharp.org.nz
               </a>
             </p>
           </div>
