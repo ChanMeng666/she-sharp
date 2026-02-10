@@ -147,6 +147,7 @@ export default function VolunteerApplyPage() {
       }
 
       setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
       setServerError('Network error. Please check your connection and try again.');
     } finally {
