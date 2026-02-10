@@ -393,7 +393,7 @@ export default function VolunteerApplyPage() {
                     }}
                     email={email}
                     label="CV / Resume"
-                    description="Upload your CV or resume (PDF, DOC, or DOCX)"
+                    description="Upload your CV or resume in PDF format"
                     required
                     error={errors.cvUrl}
                   />

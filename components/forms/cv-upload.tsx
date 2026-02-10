@@ -40,17 +40,10 @@ export function CVUpload({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = useCallback(async (file: File) => {
-    const allowedTypes = [
-      'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    ];
-    const allowedExtensions = ['.pdf', '.doc', '.docx'];
     const name = file.name.toLowerCase();
-    const hasValidExtension = allowedExtensions.some(ext => name.endsWith(ext));
 
-    if (!allowedTypes.includes(file.type) && !hasValidExtension) {
-      setUploadError('Please upload a PDF, DOC, or DOCX file.');
+    if (file.type !== 'application/pdf' && !name.endsWith('.pdf')) {
+      setUploadError('Please upload a PDF file.');
       return;
     }
 
@@ -69,22 +62,12 @@ export function CVUpload({
         formData.append('email', email);
       }
 
-      console.log('[CV Upload] Sending request:', {
-        fileName: file.name,
-        fileType: file.type,
-        fileSize: file.size,
-        email: email || 'not provided',
-      });
-
       const response = await fetch('/api/upload/cv', {
         method: 'POST',
         body: formData,
       });
 
-      console.log('[CV Upload] Response status:', response.status);
-
       const data = await response.json();
-      console.log('[CV Upload] Response data:', data);
 
       if (data.error) {
         setUploadError(data.error);
@@ -93,8 +76,7 @@ export function CVUpload({
 
       setFileSize(file.size);
       onChange(data.url, file.name);
-    } catch (err) {
-      console.error('[CV Upload] Client error:', err);
+    } catch {
       setUploadError('Failed to upload CV. Please try again.');
     } finally {
       setUploading(false);
@@ -179,7 +161,7 @@ export function CVUpload({
           <input
             ref={inputRef}
             type="file"
-            accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            accept=".pdf,application/pdf"
             className="hidden"
             onChange={handleFileChange}
             disabled={uploading}
@@ -200,7 +182,7 @@ export function CVUpload({
                   Click to upload or drag and drop
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
-                  PDF, DOC or DOCX (max 10MB)
+                  PDF only (max 10MB)
                 </p>
               </div>
             </div>

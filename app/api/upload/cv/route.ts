@@ -3,12 +3,8 @@ import cloudinary from '@/lib/cloudinary/config';
 
 // Max file size: 10MB
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
-const ALLOWED_TYPES = [
-  'application/pdf',
-  'application/msword',
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-];
-const ALLOWED_EXTENSIONS = ['.pdf', '.doc', '.docx'];
+const ALLOWED_TYPES = ['application/pdf'];
+const ALLOWED_EXTENSIONS = ['.pdf'];
 
 /**
  * Extracts the public_id from a Cloudinary URL for raw resources.
@@ -24,7 +20,7 @@ function extractPublicId(url: string): string | null {
 
 /**
  * POST /api/upload/cv
- * Uploads a CV document to Cloudinary storage.
+ * Uploads a CV document (PDF only) to Cloudinary storage.
  */
 export async function POST(request: NextRequest) {
   try {
@@ -32,38 +28,16 @@ export async function POST(request: NextRequest) {
     const file = formData.get('file') as File | null;
     const email = formData.get('email') as string | null;
 
-    // Diagnose Cloudinary config at runtime
-    const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-    const apiKey = process.env.CLOUDINARY_API_KEY;
-    const apiSecret = process.env.CLOUDINARY_API_SECRET;
-    console.log('[CV Upload API] Cloudinary config check:', {
-      cloudName,
-      apiKey,
-      apiKeyLength: apiKey?.length,
-      apiKeyCharCodes: apiKey ? [...apiKey].map(c => c.charCodeAt(0)) : [],
-      hasApiSecret: !!apiSecret,
-      apiSecretLength: apiSecret?.length,
-    });
-
-    console.log('[CV Upload API] Received request:', {
-      hasFile: !!file,
-      fileName: file?.name,
-      fileType: file?.type,
-      fileSize: file?.size,
-      email,
-    });
-
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    // Validate file type
+    // Validate file type (PDF only)
     const fileName = file.name.toLowerCase();
     const hasValidExtension = ALLOWED_EXTENSIONS.some(ext => fileName.endsWith(ext));
     if (!ALLOWED_TYPES.includes(file.type) && !hasValidExtension) {
-      console.log('[CV Upload API] Rejected file type:', file.type, fileName);
       return NextResponse.json(
-        { error: 'Invalid file type. Only PDF, DOC, and DOCX files are allowed.' },
+        { error: 'Invalid file type. Only PDF files are allowed.' },
         { status: 400 }
       );
     }
@@ -79,10 +53,7 @@ export async function POST(request: NextRequest) {
     // Generate unique public_id for Cloudinary (include extension for raw resources)
     const timestamp = Date.now();
     const sanitizedEmail = email?.replace(/[^a-zA-Z0-9]/g, '_') || 'unknown';
-    const extension = fileName.substring(fileName.lastIndexOf('.'));
-    const publicId = `she-sharp/cv/${sanitizedEmail}_${timestamp}${extension}`;
-
-    console.log('[CV Upload API] Preparing Cloudinary upload:', { publicId });
+    const publicId = `she-sharp/cv/${sanitizedEmail}_${timestamp}.pdf`;
 
     // Convert file to base64 data URI for Cloudinary upload
     const bytes = await file.arrayBuffer();
@@ -90,18 +61,11 @@ export async function POST(request: NextRequest) {
     const base64 = buffer.toString('base64');
     const dataUri = `data:${file.type};base64,${base64}`;
 
-    console.log('[CV Upload API] Base64 size:', base64.length, 'bytes');
-
     // Upload to Cloudinary as raw resource
     const result = await cloudinary.uploader.upload(dataUri, {
       public_id: publicId,
       resource_type: 'raw',
       overwrite: true,
-    });
-
-    console.log('[CV Upload API] Cloudinary success:', {
-      url: result.secure_url,
-      publicId: result.public_id,
     });
 
     return NextResponse.json({
@@ -115,7 +79,6 @@ export async function POST(request: NextRequest) {
     console.error('[CV Upload API] Error:', error instanceof Error ? {
       message: error.message,
       name: error.name,
-      stack: error.stack,
     } : error);
     return NextResponse.json(
       { error: 'Failed to upload CV. Please try again.' },
