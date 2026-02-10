@@ -19,7 +19,7 @@ function extractPublicId(url: string): string | null {
  *
  * Proxies CV downloads via the Cloudinary API endpoint (api.cloudinary.com)
  * to bypass CDN delivery restrictions on raw resources that cause 401 errors.
- * Generates a fresh private download URL and redirects to it.
+ * Uses the SDK's private_download_url to generate a correctly signed URL.
  */
 export async function GET(request: NextRequest) {
   const url = request.nextUrl.searchParams.get('url');
@@ -28,36 +28,26 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Missing url parameter' }, { status: 400 });
   }
 
-  const publicId = extractPublicId(url);
+  const fullPublicId = extractPublicId(url);
 
-  if (!publicId || !publicId.startsWith('she-sharp/cv/')) {
+  if (!fullPublicId || !fullPublicId.startsWith('she-sharp/cv/')) {
     return NextResponse.json({ error: 'Invalid CV resource' }, { status: 400 });
   }
 
   try {
-    const cloudName = process.env.CLOUDINARY_CLOUD_NAME?.trim();
-    const apiKey = process.env.CLOUDINARY_API_KEY?.trim();
-    const apiSecret = process.env.CLOUDINARY_API_SECRET?.trim();
+    // For the download API, the file extension must be separated from the public_id
+    // and passed as the format parameter. e.g. "she-sharp/cv/file.pdf" becomes
+    // public_id="she-sharp/cv/file" and format="pdf".
+    const extMatch = fullPublicId.match(/^(.+)\.(\w+)$/);
+    const publicId = extMatch ? extMatch[1] : fullPublicId;
+    const format = extMatch ? extMatch[2] : '';
 
-    if (!cloudName || !apiKey || !apiSecret) {
-      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
-    }
-
-    // Generate a signed download URL via the Cloudinary API endpoint.
-    // This uses api.cloudinary.com (not the CDN res.cloudinary.com),
+    // Use the SDK to generate a correctly signed private download URL.
+    // This hits api.cloudinary.com (not the CDN res.cloudinary.com),
     // so it is not affected by CDN delivery restrictions on raw resources.
-    const timestamp = Math.floor(Date.now() / 1000);
-    const signature = cloudinary.utils.api_sign_request(
-      { public_id: publicId, timestamp },
-      apiSecret,
-    );
-
-    const downloadUrl =
-      `https://api.cloudinary.com/v1_1/${cloudName}/raw/download` +
-      `?public_id=${encodeURIComponent(publicId)}` +
-      `&timestamp=${timestamp}` +
-      `&signature=${signature}` +
-      `&api_key=${apiKey}`;
+    const downloadUrl = cloudinary.utils.private_download_url(publicId, format, {
+      resource_type: 'raw',
+    });
 
     return NextResponse.redirect(downloadUrl);
   } catch (error) {
