@@ -71,17 +71,9 @@ export async function POST(request: NextRequest) {
       overwrite: true,
     });
 
-    // Generate a signed URL so raw resources can be accessed without 401
-    const signedUrl = cloudinary.url(result.public_id, {
-      resource_type: 'raw',
-      sign_url: true,
-      secure: true,
-      type: 'upload',
-    });
-
     return NextResponse.json({
       success: true,
-      url: signedUrl,
+      url: result.secure_url,
       fileName: file.name,
       size: file.size,
       contentType: file.type,
