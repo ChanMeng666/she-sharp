@@ -32,6 +32,14 @@ export async function POST(request: NextRequest) {
     const file = formData.get('file') as File | null;
     const email = formData.get('email') as string | null;
 
+    console.log('[CV Upload API] Received request:', {
+      hasFile: !!file,
+      fileName: file?.name,
+      fileType: file?.type,
+      fileSize: file?.size,
+      email,
+    });
+
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
@@ -40,6 +48,7 @@ export async function POST(request: NextRequest) {
     const fileName = file.name.toLowerCase();
     const hasValidExtension = ALLOWED_EXTENSIONS.some(ext => fileName.endsWith(ext));
     if (!ALLOWED_TYPES.includes(file.type) && !hasValidExtension) {
+      console.log('[CV Upload API] Rejected file type:', file.type, fileName);
       return NextResponse.json(
         { error: 'Invalid file type. Only PDF, DOC, and DOCX files are allowed.' },
         { status: 400 }
@@ -54,11 +63,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate unique public_id for Cloudinary
+    // Generate unique public_id for Cloudinary (no extension in public_id for raw)
     const timestamp = Date.now();
     const sanitizedEmail = email?.replace(/[^a-zA-Z0-9]/g, '_') || 'unknown';
-    const extension = fileName.substring(fileName.lastIndexOf('.'));
-    const publicId = `she-sharp/cv/${sanitizedEmail}_${timestamp}${extension}`;
+    const publicId = `she-sharp/cv/${sanitizedEmail}_${timestamp}`;
+
+    console.log('[CV Upload API] Preparing Cloudinary upload:', { publicId });
 
     // Convert file to base64 data URI for Cloudinary upload
     const bytes = await file.arrayBuffer();
@@ -66,11 +76,18 @@ export async function POST(request: NextRequest) {
     const base64 = buffer.toString('base64');
     const dataUri = `data:${file.type};base64,${base64}`;
 
+    console.log('[CV Upload API] Base64 size:', base64.length, 'bytes');
+
     // Upload to Cloudinary as raw resource
     const result = await cloudinary.uploader.upload(dataUri, {
       public_id: publicId,
       resource_type: 'raw',
       overwrite: true,
+    });
+
+    console.log('[CV Upload API] Cloudinary success:', {
+      url: result.secure_url,
+      publicId: result.public_id,
     });
 
     return NextResponse.json({
@@ -81,7 +98,11 @@ export async function POST(request: NextRequest) {
       contentType: file.type,
     });
   } catch (error) {
-    console.error('Error uploading CV:', error);
+    console.error('[CV Upload API] Error:', error instanceof Error ? {
+      message: error.message,
+      name: error.name,
+      stack: error.stack,
+    } : error);
     return NextResponse.json(
       { error: 'Failed to upload CV. Please try again.' },
       { status: 500 }

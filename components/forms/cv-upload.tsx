@@ -69,12 +69,22 @@ export function CVUpload({
         formData.append('email', email);
       }
 
+      console.log('[CV Upload] Sending request:', {
+        fileName: file.name,
+        fileType: file.type,
+        fileSize: file.size,
+        email: email || 'not provided',
+      });
+
       const response = await fetch('/api/upload/cv', {
         method: 'POST',
         body: formData,
       });
 
+      console.log('[CV Upload] Response status:', response.status);
+
       const data = await response.json();
+      console.log('[CV Upload] Response data:', data);
 
       if (data.error) {
         setUploadError(data.error);
@@ -83,7 +93,8 @@ export function CVUpload({
 
       setFileSize(file.size);
       onChange(data.url, file.name);
-    } catch {
+    } catch (err) {
+      console.error('[CV Upload] Client error:', err);
       setUploadError('Failed to upload CV. Please try again.');
     } finally {
       setUploading(false);
