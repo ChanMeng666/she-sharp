@@ -35,17 +35,10 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // For the download API, the file extension must be separated from the public_id
-    // and passed as the format parameter. e.g. "she-sharp/cv/file.pdf" becomes
-    // public_id="she-sharp/cv/file" and format="pdf".
-    const extMatch = fullPublicId.match(/^(.+)\.(\w+)$/);
-    const publicId = extMatch ? extMatch[1] : fullPublicId;
-    const format = extMatch ? extMatch[2] : '';
-
-    // Use the SDK to generate a correctly signed private download URL.
-    // This hits api.cloudinary.com (not the CDN res.cloudinary.com),
-    // so it is not affected by CDN delivery restrictions on raw resources.
-    const downloadUrl = cloudinary.utils.private_download_url(publicId, format, {
+    // For raw resources, the extension is part of the stored public_id.
+    // Pass the full public_id (including .pdf) and empty format so the
+    // download API looks up the resource by its exact public_id.
+    const downloadUrl = cloudinary.utils.private_download_url(fullPublicId, '', {
       resource_type: 'raw',
     });
 
