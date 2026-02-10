@@ -7,14 +7,12 @@ const ALLOWED_TYPES = ['application/pdf'];
 const ALLOWED_EXTENSIONS = ['.pdf'];
 
 /**
- * Extracts the public_id from a Cloudinary URL for raw resources.
+ * Extracts the public_id from a Cloudinary image URL (strips file extension).
+ * Example: /image/upload/v123/she-sharp/cv/email_123.pdf → she-sharp/cv/email_123
  */
 function extractPublicId(url: string): string | null {
   try {
-    // Handles both regular and signed URLs:
-    // Regular: /upload/v123/she-sharp/cv/file.pdf
-    // Signed:  /upload/s--sig--/v123/she-sharp/cv/file.pdf
-    const match = url.match(/\/upload\/(?:s--[^/]+--\/)?(?:v\d+\/)?(.+)$/);
+    const match = url.match(/\/upload\/(?:v\d+\/)?(.+)\.\w+$/);
     return match ? match[1] : null;
   } catch {
     return null;
@@ -24,6 +22,8 @@ function extractPublicId(url: string): string | null {
 /**
  * POST /api/upload/cv
  * Uploads a CV document (PDF only) to Cloudinary storage.
+ * Uses resource_type 'image' (Cloudinary supports PDF as image assets)
+ * so that the CDN URL is publicly accessible without restrictions.
  */
 export async function POST(request: NextRequest) {
   try {
@@ -53,10 +53,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate unique public_id for Cloudinary (include extension for raw resources)
+    // Generate unique public_id (no extension — Cloudinary adds .pdf as the format)
     const timestamp = Date.now();
     const sanitizedEmail = email?.replace(/[^a-zA-Z0-9]/g, '_') || 'unknown';
-    const publicId = `she-sharp/cv/${sanitizedEmail}_${timestamp}.pdf`;
+    const publicId = `she-sharp/cv/${sanitizedEmail}_${timestamp}`;
 
     // Convert file to base64 data URI for Cloudinary upload
     const bytes = await file.arrayBuffer();
@@ -64,10 +64,11 @@ export async function POST(request: NextRequest) {
     const base64 = buffer.toString('base64');
     const dataUri = `data:${file.type};base64,${base64}`;
 
-    // Upload to Cloudinary as raw resource
+    // Upload as image resource — Cloudinary natively supports PDF as image assets.
+    // This avoids CDN delivery restrictions that apply to raw resources (401 errors).
     const result = await cloudinary.uploader.upload(dataUri, {
       public_id: publicId,
-      resource_type: 'raw',
+      resource_type: 'image',
       overwrite: true,
     });
 
@@ -108,7 +109,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid Cloudinary URL' }, { status: 400 });
     }
 
-    await cloudinary.uploader.destroy(publicId, { resource_type: 'raw' });
+    await cloudinary.uploader.destroy(publicId, { resource_type: 'image' });
 
     return NextResponse.json({ success: true });
   } catch (error) {
