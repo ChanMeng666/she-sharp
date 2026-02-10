@@ -93,12 +93,9 @@ export async function sendVolunteerSlackNotification(data: VolunteerNotification
   }
 
   if (isAmbassador && data.cvUrl) {
-    // Route through download proxy to bypass Cloudinary CDN delivery restrictions
-    const baseUrl = process.env.BASE_URL?.trim() || 'https://www.shesharp.co.nz';
-    const proxyUrl = `${baseUrl}/api/upload/cv/download?url=${encodeURIComponent(data.cvUrl)}`;
     blocks.push({
       type: 'section',
-      text: { type: 'mrkdwn', text: `*CV:* <${proxyUrl}|Download CV>` },
+      text: { type: 'mrkdwn', text: `*CV:* <${data.cvUrl}|Download CV>` },
     });
   }
 
