@@ -32,6 +32,19 @@ export async function POST(request: NextRequest) {
     const file = formData.get('file') as File | null;
     const email = formData.get('email') as string | null;
 
+    // Diagnose Cloudinary config at runtime
+    const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+    const apiKey = process.env.CLOUDINARY_API_KEY;
+    const apiSecret = process.env.CLOUDINARY_API_SECRET;
+    console.log('[CV Upload API] Cloudinary config check:', {
+      cloudName,
+      apiKey,
+      apiKeyLength: apiKey?.length,
+      apiKeyCharCodes: apiKey ? [...apiKey].map(c => c.charCodeAt(0)) : [],
+      hasApiSecret: !!apiSecret,
+      apiSecretLength: apiSecret?.length,
+    });
+
     console.log('[CV Upload API] Received request:', {
       hasFile: !!file,
       fileName: file?.name,
