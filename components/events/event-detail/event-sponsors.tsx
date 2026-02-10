@@ -21,7 +21,7 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
   return (
     <section
       id="event-sponsors"
-      className={cn("py-16 border-t border-border bg-muted/40", className)}
+      className="py-16 border-t border-border bg-white"
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">

@@ -1,7 +1,6 @@
 "use client";
 
 import { EventV3 } from "@/types/event";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -15,7 +14,7 @@ export function EventSponsorship({ event, className }: EventSponsorshipProps) {
   return (
     <section
       id="event-sponsorship"
-      className={cn("relative overflow-hidden py-16", className)}
+      className="relative overflow-hidden"
     >
       <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-linear-to-br from-brand/5 via-background to-brand/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">

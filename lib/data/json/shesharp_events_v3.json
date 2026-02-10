@@ -217,8 +217,7 @@
           "Join us for an inspiring evening with Vector as we explore how technology is transforming the energy sector.",
           "This SheSharp event will spotlight Vector’s journey as a tech-enabled utility, showcasing real stories of innovation in Data, AI, ADMS and digital platforms.",
           "We’ll celebrate the voices of women in STEM, inside Vector and across the wider tech community, through a dynamic panel and a 45-minute Think-a-Thon designed to spark ideas and connection.‍",
-          "Whether you're curious about inclusive career pathways, passionate about solving real-world problems, or looking to grow your network, this is your chance to engage with a future-facing company committed to diversity, innovation and impact.",
-          "Shona Irving heads up Enterprise Data and Information Management for Vector, where she’s all about making data work smarter for people and teams. She’s big on building trusted, understood, inclusive data cultures and helping others grow in their careers. Outside the office, Shona volunteers as a Kaiārahi for Scouting Aotearoa, supporting young people to build confidence, leadership skills, and a love for the outdoors. When she’s not wrangling data or planning the next scout adventure, you’ll lik"
+          "Whether you're curious about inclusive career pathways, passionate about solving real-world problems, or looking to grow your network, this is your chance to engage with a future-facing company committed to diversity, innovation and impact."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -271,7 +270,7 @@
         },
         "specialSections": [],
         "photos": [],
-        "galleryUrl": "",
+        "galleryUrl": "https://photos.google.com/share/AF1QipONHHOewHzAoTCFLQBO3Ho4yMOqWKZN-hUuruuwyfvYHj0p7CC1K9vvURQNuVklHg?key=V0hMc1BoRE9nZko5RU9RRUx0dWs2QzUtSDFfQkVR",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
           {
@@ -320,7 +319,7 @@
         "alt": "Code Secure. Lead the Future: Women in Cybersecurity Workshop"
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/code-secure",
-      "shortDescription": "🎉Free t-shirts, coding challenges, and a community of women in tech — all in one workshop!JoinXero,Secure Code Warrior, andShe Sharpfor a hands-on workshop built just for you. This is your space tolearn, connect, and growalongside an empowering community of women in tech. 💖",
+      "shortDescription": "🎉Free t-shirts, coding challenges, and a community of women in tech — all in one workshop!Join Xero,Secure Code Warrior, andShe Sharpfor a hands-on workshop built just for you. This is your space tolearn, connect, and growalongside an empowering community of women in tech. 💖",
       "attendees": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/code-secure",
@@ -339,11 +338,21 @@
           "longitude": 174.7821066
         },
         "fullDescription": [
-          "🎉Free t-shirts, coding challenges, and a community of women in tech — all in one workshop!JoinXero,Secure Code Warrior, andShe Sharpfor a hands-on workshop built just for you. This is your space tolearn, connect, and growalongside an empowering community of women in tech. 💖",
-          "Whether you’re just curious or ready to level up, this workshop is for YOU.✨",
-          "Get a quick look at how the Secure Code Warrior platform works and what to expect during the workshop. :https://secure-code-warrior.wistia.com/medias/iuwtu89k00",
-          "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
-          "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
+          "🎉 Free t-shirts, coding challenges, and a community of women in tech — all in one workshop!",
+          "Join Xero, Secure Code Warrior, and She Sharp for a hands-on workshop built just for you. This is your space to learn, connect, and grow alongside an empowering community of women in tech. 💖",
+          "What’s waiting for you:",
+          "• Every participant gets a free t-shirt on the day.",
+          "• Take part in Secure Code Warrior’s gamified secure coding workshop designed to foster interest and engagement in secure coding practices.",
+          "• Tackle real-world vulnerable code challenges — identify the problem, find the insecure code, and fix the vulnerability.",
+          "• Choose from a range of programming languages (Java Spring, Python, JavaScript, Ruby), or start with a beginner-friendly pseudocode option to build core concepts you can apply anywhere.",
+          "• Hear lightning talks from four inspiring women leaders who’ll share their journeys and highlight real pathways into cybersecurity.",
+          "• Collaborate and connect with like-minded women and female-identifying participants, building confidence and breaking barriers together.",
+          "• Watch the leaderboard climb and see who will be crowned the ‘Secure Code Warrior’ — with prizes for the top coders! 🏆",
+          "💡 What you need to know:",
+          "• Bring your laptop and charger to take part in the coding challenges.",
+          "• An intro video will be sent to you before the event so you can get familiar with the platform.",
+          "• You’ll also receive a reminder email 2 days and 1 day before the event to make sure you’re all set to join.",
+          "Whether you’re just curious or ready to level up, this workshop is for YOU. ✨"       
         ],
         "speakers": {
           "keynote_speakers": {
@@ -484,11 +493,7 @@
           "longitude": 174.7560805
         },
         "fullDescription": [
-          "Join a dynamic panel discussion featuring three diverse, experienced, and growth-minded women who are driving meaningful change within Fonterra’s Products and Platforms landscape. This session will explore the transformational shift toward a product and platform-centric approach, highlighting the pivotal role it plays in shaping the future of IT delivery and unlocking greater business outcomes.",
-          "The unique possibilities technology presents for indigenous communities is at the heart of Vicky Enkhsaikhan’s journey from a nomadic childhood in the Gobi Desert to becoming the co-founder of the Empasoft Institute of Technology in Ulaanbaatar, Mongolia.Vicky has witnessed and supported the use of GenAI and other technologies by local software companies to protect and further her language and culture, while advocating for women in tech and providing access to education in her home country and b",
-          "Aileen heads the Digital Enablement team for People & Culture at Fonterra, shaping the technology roadmap to enhance employee experiences. She also leads the enterprise people data strategy, driving governance and data-driven decision-making. With 25 years in tech—including IT project management and technical roles—Aileen is a champion of customer-centric solutions and the intersection of people and technology.",
-          "Tracey leads a high-performing team of delivery engineers at Fonterra, specializing in Platform, Release, Quality, and DevOps Engineering. With 20+ years of global IT experience, she’s passionate about platform engineering, Agile/DevOps delivery systems, and continuous improvement. Her focus is on enabling fast, high-quality delivery through reusable systems and business-outcome-driven approaches.",
-          "Kritika leads the Salesforce CRM platform at Fonterra, where she’s driven its evolution for over a decade. With a background in IT engineering and a Master’s in Information Sciences, she began her career in software testing before transitioning into implementation consulting. Her passion lies in delivering impactful solutions that transform business operations. Today, she focuses on maximizing Salesforce’s strategic value through innovation and organizational enablement."
+          "Join a dynamic panel discussion featuring three diverse, experienced, and growth-minded women who are driving meaningful change within Fonterra’s Products and Platforms landscape. This session will explore the transformational shift toward a product and platform-centric approach, highlighting the pivotal role it plays in shaping the future of IT delivery and unlocking greater business outcomes."
         ],
         "speakers": {
           "guest_speakers": {
@@ -612,9 +617,12 @@
         "fullDescription": [
           "Are you a soon-to-be graduate, a recent graduate, or a professional ready for a career move? This event is designed just for you.",
           "Join us for an empowering session focused on helping you take the next step in your career journey. Whether you're searching for your first job or exploring a career transition, this event will equip you with the tools, insights, and confidence you need.",
-          "This is more than a talk — it’s a hands-on, interactive experience designed to help you build clarity, confidence, and connections. Open to all, but especially geared towardsuniversity students,recent graduates, andprofessionals seeking new opportunities.",
-          "Kathryn Sandford is a leadership coach and personal brand strategist who challenges the outdated rules around visibility, self-promotion, and influence.She works with professionals who’ve been overlooked, underestimated, or stuck at a crossroads helping them build a personal brand that reflects who they really are, not just what they’ve done. Her signature programme, Invisible to Influential, helps women 40+ and emerging leaders stop playing small and start showing up with clarity, confidence, a",
-          "Kathryn’s belief is simple but powerful: Your personal brand isn’t a performance — it’s your presence. Self-promotion isn’t ego — it’s self-respect. And visibility starts on the inside, long before the outside world catches up."
+          "We’ll cover key topics including:",
+          "• Personal Branding: Learn how to present yourself confidently and authentically in the job market.",
+          "• Assessing CVs: Get expert feedback on how to strengthen your CV to stand out from the crowd.",
+          "• Interview Strategies: Discover practical tips to prepare for and succeed in interviews.",
+          "• Mentorship Guidance: Hear from experienced professionals and gain valuable career advice tailored to your goals.",
+          "This is more than a talk — it’s a hands-on, interactive experience designed to help you build clarity, confidence, and connections. Open to all, but especially geared towardsuniversity students,recent graduates, andprofessionals seeking new opportunities."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -1229,7 +1237,9 @@
           "country": "New Zealand"
         },
         "fullDescription": [
-          "She Sharp will be at theEthnic Advantage Conference 2025, a powerful one-day event bringing together over 300 ethnic community leaders, service providers, faith leaders, government agencies, and more to explore the role of ethnic communities in social cohesion and resilience."
+          "She Sharp will be at theEthnic Advantage Conference 2025, a powerful one-day event bringing together over 300 ethnic community leaders, service providers, faith leaders, government agencies, and more to explore the role of ethnic communities in social cohesion and resilience.",
+          "Visit our She Sharp stall during registration and break times to learn more about our mission to empower women in STEM, upcoming opportunities, and how you can get involved.",
+          "We look forward to connecting with you!"
         ],
         "speakers": {},
         "organizers": [],
@@ -1281,11 +1291,7 @@
           "longitude": 174.7648639
         },
         "fullDescription": [
-          "Discover how your unique strengths can shape your tech journey in this exciting lightning-style event! Hear from 6 inspiring speakers as they share how they’ve harnessed their unique talents to thrive in their roles and overcome challenges. Whether you’re exploring tech careers or seeking clarity on where you might fit, this event will spark ideas and help you uncover your potential.",
-          "Anshu is a highly experienced product manager with over 20 years of experience in managing products for Enterprise SaaS and on-premises customers. Anshu has worked in a variety of industries, including Transport, Taxation & Compliance, Payroll, Records Management, Identity Services, Border Security and Passenger Management, and GIS.",
-          "With hands-on experience in DevOps and Azure hosting platforms, Anshu excels in leveraging cutting-edge technology for optimal results. As a dynamic leader and research professional, she has spearheaded numerous successful Agile and Waterfall-driven initiatives. Anshu's commitment to excellence and her proactive approach to staying updated on industry trends make her a valuable asset to any team.",
-          "Yvonne is a versatile Business Analyst specialising in Requirements Gathering, Process Improvement, and Stakeholder Communication. With expertise in Functional Testing, Risk Assessment, and User Experience Design, she ensures software projects meet stakeholder expectations. Proficient in Agile methodologies, she facilitates scrum rituals and champions continuous improvement initiatives. Yvonne excels in documentation, change management, and stays updated on industry trends to drive innovation in",
-          "Lara is a Senior Service Designer at MYOB, with over four years of experience in the experience design world. Despite transitioning her career from project management to design at MYOB, a craving to get amongst juicy problems and make things better for users (internal and external) follows here wherever she goes."
+          "Discover how your unique strengths can shape your tech journey in this exciting lightning-style event! Hear from 6 inspiring speakers as they share how they’ve harnessed their unique talents to thrive in their roles and overcome challenges. Whether you’re exploring tech careers or seeking clarity on where you might fit, this event will spark ideas and help you uncover your potential."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -1456,8 +1462,7 @@
           "country": "New Zealand"
         },
         "fullDescription": [
-          "#IAmRemarkable is a global movement that empowers everyone, including under represented groups, to celebrate their achievements in the workplace and beyond, while challenging the social perception around self-promotion. At the heart of our movement is a 60 minute workshop open to everyone, hosted by our very own She Sharp founder and director- Dr Mahsa McCauley (Mohaghegh).",
-          "Dr. Mahsa McCauley is the founder and the director of She Sharp , an Associate Professor in the School of Computer, Engineering and Mathematical Sciences at Auckland University of Technology and Chair of the AI Forum New Zealand. An internationally recognised leader in AI and machine learning, Dr. McCauley also serves on the boards of NZTech, EdTechNZ and the AI Research Association, where she contributes to shaping the future of AI policy and research in New Zealand. Internationally, she has en"
+          "#IAmRemarkable is a global movement that empowers everyone, including under represented groups, to celebrate their achievements in the workplace and beyond, while challenging the social perception around self-promotion. At the heart of our movement is a 60 minute workshop open to everyone, hosted by our very own She Sharp founder and director- Dr Mahsa McCauley (Mohaghegh)."
         ],
         "speakers": {
           "hosts": {
@@ -1537,11 +1542,7 @@
           "longitude": 174.7642524
         },
         "fullDescription": [
-          "She Sharp’s International Women’s Day (IWD) event is scheduled for March 14 at academyEX. Join us for an inspiring evening celebrating women in tech, featuring engaging discussions, networking opportunities, and community connections. The registration starts at 4.30 pm, and the event kicks off at 5 PM—don’t miss it!",
-          "Moumita Das Roy is a cross-industry marketer with a wealth of technology marketing experience in iconic, global organisations. Recognised as LinkedIn Top Voice and Creator to Follow, she is a prolific content creator passionately engaging in conversations about Diversity and Inclusion, Social Impact, and Volunteering. You’ll find her at the crossroads of innovation and impact, creativity and purpose. Moumita’s multicultural work environments and travels across seven continents through work and v",
-          "When I started my journey, I never imagined where my passion for understanding people would take me. My life has moved at different rhythms, but as I get older, I become more attuned to the ride than the destination. This realization has shaped my career journey: when we center human and environmental needs in our work, transformation follows. At academyEX and Westpac, I led teams that revolutionized customer connections. Your ability to see connections others miss is your superpower. Find where",
-          "Ireen Rahiman-Manuel has 20+ years of experience in design, planning, and impact measurement across New Zealand, Australia, and the Pacific. A strong advocate for maternal and child health, she is the founder/director of Impactdev360 and Rapid Builders & Renovators. She specializes in leadership, strategic planning, policy development, and social sector strengthening. She has led complex programs, including STEM initiatives. Ireen is the co-chair of Auckland Council’s Ethnic Peoples Advisory Pan",
-          "The youngest of four daughters born to Vietnamese refugee parents, Janet grew up with strong female role models who showed her that women can do anything. Her career has spanned market research, sales, surgical device design, education outreach, charities, consulting, and acting - a true rollercoaster of experiences. Passionate about problem-solving, education, and the arts, she blends technical expertise with creativity to drive meaningful change towards a more equitable future. As GM of FlexWa"
+          "She Sharp’s International Women’s Day (IWD) event is scheduled for March 14 at academyEX. Join us for an inspiring evening celebrating women in tech, featuring engaging discussions, networking opportunities, and community connections. The registration starts at 4.30 pm, and the event kicks off at 5 PM—don’t miss it!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -1684,9 +1685,7 @@
         "fullDescription": [
           "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
           "The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.",
-          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.",
-          "Steve has been a High School Social Studies and Geography teacher for the last 16 years in New Zealand since returning from teaching in London for 2 years. Steve worked to bring Google for Education to his school and along with a colleague trained the staff in the use of Google for education. Over 8 years, Steve passionately promoted Google Tools through workshops across New Zealand. He's Level 1 and 2 Certified Educator & Trainer, attended the 2019 Sydney Innovator Academy, and is part of the G",
-          "Alliv Samson is the CGO and Co-Founder of Kami, the world’s #1 digital classroom application that is transforming the way students and teachers engage and collaborate with learning resources. She is responsible for Kami’s ventures into offshore markets, their marketing efforts, team growth, and user growth."
+          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -1908,11 +1907,7 @@
           "longitude": 175.3176315
         },
         "fullDescription": [
-          "Discuss how technology can be used to address environmental challenges and promote sustainability focusing on green Tech.",
-          "Lara is a seasoned senior executive with nearly 40 years of experience in the energy, mining, and technology sectors, spanning government-owned, public, and private settings. She has operated in numerous roles at company, division, and functional levels, in both corporate and site environments, in Australia and overseas. Lara holds undergraduate and post graduate qualifications including a Bachelor of Business, Certified Practicing Accountant (CPA), Masters of Business Administration (MBA), and ",
-          "Having started in Fonterra 17 years ago in Accounts Payable and moving my way through my career to spend the last 12 years in the data space, it has been clear to me that the demand for “data people” is only getting bigger. I currently work as the Data Product Lead for Fonterra, understanding the frameworks needed to take Fonterra on it’s Data Product Transformation. The role involves a lot of indirect management, coaching and stakeholder management, all of which I am passionate about. I believe",
-          "Noor is of Pakistani origin, grown up in Dubai and has been in NZ for the last 10 years. Noor works as a Tech Strategist/Chief Technology Officer for health in NZ @Microsoft. She drives technological innovation and transformation within the healthcare sector and supports the development and implemention of strategic technology solutions to enhance patient care, streamline operations, and improve efficiency. Her expertise in both technology and healthcare helps organisations achieve their goals a",
-          "Kim is a senior lecturer in Civil Engineering at the University of Waikato and a Chartered Professional Geotechnical Engineer with strong industry links. She has over 10 years of experience as a geotechnical engineer through various building and infrastructure projects. After returning to academia in 2021, Kim has focussed her research interests on the behaviour of unusual NZ soils, slope instability, landslides and the use of geotechnical waste to create 3D printable sustainable concrete. Kim i"
+          "Discuss how technology can be used to address environmental challenges and promote sustainability focusing on green Tech."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -2088,10 +2083,7 @@
         },
         "fullDescription": [
           "Join us for a special celebration as we mark a decade of bridging the gender gap in STEM!SheSharp is on a mission to challenge misconceptions about the tech industry and empower the next generation of women to pursue careers in STEM through events, networking, and career development opportunities.",
-          "This milestone event will feature inspiring talks from key industry figures and honor our long-time ambassadors, who will share their remarkable stories and experiences as women in tech. The evening will conclude with a networking session, giving you a chance to celebrate and connect with industry leaders and fellow professionals shaping the future of tech.",
-          "Dr. Mahsa McCauley is the founder and the director of She Sharp , an Associate Professor in the School of Computer, Engineering and Mathematical Sciences at Auckland University of Technology and Chair of the AI Forum New Zealand. An internationally recognised leader in AI and machine learning, Dr. McCauley also serves on the boards of NZTech, EdTechNZ and the AI Research Association, where she contributes to shaping the future of AI policy and research in New Zealand. Internationally, she has en",
-          "Alexia is the CEO of GirlBoss NZ - NZ's largest organisation for young women. Founded when Alexia was just16, GirlBoss now has 17,500 members. Alexia’s mission is to get women to the table - the boardroom tablethat is, and she believes the decisions made while young are crucial in paving the way. She has flown withNASA, received a Queen’s Young Leaders Medal for Services to the Commonwealth, is a National GeographicExplorer, Forbes 30 under 30, and the youngest person to represent New Zealand at",
-          "Libby is passionate about co-creating magical and intelligent experiences with all types of New Zealand based organisations through the IBM Ecosystem.Over her 8 year career at IBM, Libby spent four years as a Cognitive Engineer in the Telco industry and for the past two years has been a Data & AI Partner Technical Specialist.Libby dedicates her time to being essential to her business partners, listening and ideating on the problem their customers have and dreaming up together the best solution w"
+          "This milestone event will feature inspiring talks from key industry figures and honor our long-time ambassadors, who will share their remarkable stories and experiences as women in tech. The evening will conclude with a networking session, giving you a chance to celebrate and connect with industry leaders and fellow professionals shaping the future of tech."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -2294,11 +2286,11 @@
           "longitude": 174.7560805
         },
         "fullDescription": [
-          "Harness The Power of Generative Al: A Deep Dive into Fonterra's Al Journey. Join us for an enlightening session on how Fonterra, a global dairy nutrition company, has harnessed the power of Artificial Intelligence (Al) to revolutionise their entire value chain which produces 30% of the world's dairy exports from nutritious New Zealand farms. What's in Store? Al in Action: Get an overview Of how Fonterra has leveraged Al to safeguard its 34 production lines. Discover how the company has saved an ",
-          "Saskia is our Digital Operational Technology Manager. She and her team collaborate with the business to deploy innovative solutions, like AI image cognition. Joining Fonterra in 2009 as an Inventory Manager, she spent 14 years in inventory and purchasing, ending as National Procurement and Materials Manager, leading a large team and focusing on simplification and standardization. After developing Power BI solutions, she moved into her current role in Automation & Operational Technology. Saskia l",
-          "Melody joined Fonterra in 2023 as the GM of the Integrated Operations Centre. She generates insights from data and enables our value chain through digital innovation, leveraging AI to unlock step changes. With a Bachelor of Commerce in Information Systems, Melody began her career in technology consulting, working across Africa, Asia, the UK, and Australia on large-scale ERP implementations. She then spent 10 years in the mining industry focusing on digital transformation. Now back in NZ, she enj",
-          "Natasha is a Modern Work Specialist at Microsoft, supporting Commercial organisations across New Zealand boost productivity, flexibility, wellbeing, and connection. Holding a Masters of Commerce and with a background in human resources, she transitioned to the IT sector in 2022 by joining Microsoft. Merging her interest in both human resources and technology has allowed Natasha to focus on elevating employee experiences in today’s hybrid work environment and the emerging Gen AI era.",
-          "Helius started his career in a start-up driving digital transformation. After graduating as a geologist, he implemented technologies for the Brazilian government. He led data and digital transformation at De Beers from 1994, then globally in 2001. In 2007, he joined Rio Tinto in London to lead global IT and Data. Moving to Singapore in 2015, he developed data strategies, later leading digital transformation at Alcoa in 2019. In 2022, he became Fonterra's Chief Data Officer. Throughout, he's leve"
+          "Harness The Power of Generative Al: A Deep Dive into Fonterra's Al Journey. Join us for an enlightening session on how Fonterra, a global dairy nutrition company, has harnessed the power of Artificial Intelligence (Al) to revolutionise their entire value chain which produces 30% of the world's dairy exports from nutritious New Zealand farms.  ",
+          "What's in Store?",
+          "Al in Action: Get an overview Of how Fonterra has leveraged Al to safeguard its 34 production lines. Discover how the company has saved an equivalent of 150 years of manual effort by interpreting century-old information using Al. ",
+          "Masterclass in Prompt Engineering: Attendees will have the unique opportunity to participate in a mini masterclass in Prompt Engineering. This hands-on session will provide insights into the art and science of designing effective prompts for Al systems. ",
+          "Networking Opportunity: Engage with professionals from various fields, share ideas, and broaden your understanding of applications in different industries. Don't miss this opportunity to delve into the world of Al and explore its transformative potential!"
         ],
         "speakers": {
           "keynote_speakers": {
