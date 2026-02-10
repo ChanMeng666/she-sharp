@@ -76,10 +76,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate unique public_id for Cloudinary (no extension in public_id for raw)
+    // Generate unique public_id for Cloudinary (include extension for raw resources)
     const timestamp = Date.now();
     const sanitizedEmail = email?.replace(/[^a-zA-Z0-9]/g, '_') || 'unknown';
-    const publicId = `she-sharp/cv/${sanitizedEmail}_${timestamp}`;
+    const extension = fileName.substring(fileName.lastIndexOf('.'));
+    const publicId = `she-sharp/cv/${sanitizedEmail}_${timestamp}${extension}`;
 
     console.log('[CV Upload API] Preparing Cloudinary upload:', { publicId });
 
