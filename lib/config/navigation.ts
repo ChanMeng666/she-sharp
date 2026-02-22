@@ -16,6 +16,7 @@ import {
   Mail,
   ChartGantt,
   UsersRound,
+  MessageCircle,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -112,16 +113,25 @@ export const navigationConfig: {
       },
       children: [
         {
-          title: "Volunteer with Us",
-          href: "/join-our-team",
-          description: "Join our team and make a difference",
+          title: "Become a Volunteer",
+          href: "/join-our-team/apply?type=volunteer",
+          description:
+            "Help at events on a flexible schedule — no weekly commitment required",
           icon: UserPlus,
         },
         {
-          title: "Apply as Ambassador",
+          title: "Become an Ambassador",
           href: "/join-our-team/apply?type=ambassador",
-          description: "Express your interest in becoming a She Sharp Ambassador",
+          description:
+            "Lead projects, shape strategy, and grow your leadership skills",
           icon: Award,
+        },
+        {
+          title: "Alumni Feedback",
+          href: "/join-our-team/apply/ex-ambassador",
+          description:
+            "Past ambassador? Share your experience and stay connected",
+          icon: MessageCircle,
         },
         {
           title: "Corporate Partnership",
