@@ -16,7 +16,6 @@ import {
   Mail,
   ChartGantt,
   UsersRound,
-  MessageCircle,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -113,25 +112,11 @@ export const navigationConfig: {
       },
       children: [
         {
-          title: "Become a Volunteer",
-          href: "/join-our-team/apply?type=volunteer",
+          title: "Join Our Team",
+          href: "/join-our-team",
           description:
-            "Help at events on a flexible schedule — no weekly commitment required",
+            "Explore volunteer, ambassador, and alumni paths — find the right fit for you",
           icon: UserPlus,
-        },
-        {
-          title: "Become an Ambassador",
-          href: "/join-our-team/apply?type=ambassador",
-          description:
-            "Lead projects, shape strategy, and grow your leadership skills",
-          icon: Award,
-        },
-        {
-          title: "Alumni Feedback",
-          href: "/join-our-team/apply/ex-ambassador",
-          description:
-            "Past ambassador? Share your experience and stay connected",
-          icon: MessageCircle,
         },
         {
           title: "Corporate Partnership",
