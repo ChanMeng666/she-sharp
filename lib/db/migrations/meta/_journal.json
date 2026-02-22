@@ -120,6 +120,13 @@
       "when": 1770683725196,
       "tag": "0018_sour_trish_tilby",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1771740036098,
+      "tag": "0019_zippy_gertrude_yorkes",
+      "breakpoints": true
     }
   ]
 }

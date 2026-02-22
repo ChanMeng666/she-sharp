@@ -47,7 +47,22 @@ export const volunteerCurrentStatusEnum = pgEnum('volunteer_current_status', [
   'high_school_student', 'university_student', 'industry', 'sponsor_partner', 'other'
 ]);
 
-export const volunteerTypeEnum = pgEnum('volunteer_type', ['ambassador', 'volunteer']);
+export const volunteerTypeEnum = pgEnum('volunteer_type', ['ambassador', 'volunteer', 'ex_ambassador']);
+
+export const howHeardAboutEnum = pgEnum('how_heard_about', [
+  'attended_event', 'linkedin', 'word_of_mouth', 'search_engine', 'social_media', 'other'
+]);
+
+export const experienceRatingEnum = pgEnum('experience_rating', [
+  'excellent', 'good', 'average', 'below_average', 'poor'
+]);
+
+export const recruitmentStageEnum = pgEnum('recruitment_stage', [
+  'new', 'contacted', 'screening', 'interview_requested', 'interview_scheduled',
+  'approved', 'rejected', 'onboarding', 'nda_sent', 'nda_signed', 'active'
+]);
+
+export const communicationMethodEnum = pgEnum('communication_method', ['email', 'phone']);
 
 // Core user table (simplified - no role field)
 export const users = pgTable('users', {
@@ -802,6 +817,9 @@ export enum ActivityType {
   SUBSCRIPTION_CANCELLED = 'SUBSCRIPTION_CANCELLED',
   SUBMIT_VOLUNTEER_FORM = 'SUBMIT_VOLUNTEER_FORM',
   REVIEW_VOLUNTEER_APPLICATION = 'REVIEW_VOLUNTEER_APPLICATION',
+  UPDATE_RECRUITMENT_STAGE = 'UPDATE_RECRUITMENT_STAGE',
+  AI_SCREEN_VOLUNTEER = 'AI_SCREEN_VOLUNTEER',
+  SUBMIT_EX_AMBASSADOR_FORM = 'SUBMIT_EX_AMBASSADOR_FORM',
 }
 
 // ============================================================================
@@ -1037,11 +1055,15 @@ export const volunteerFormSubmissions = pgTable('volunteer_form_submissions', {
   // Common fields (both types)
   firstName: varchar('first_name', { length: 100 }).notNull(),
   lastName: varchar('last_name', { length: 100 }).notNull(),
-  currentStatus: volunteerCurrentStatusEnum('current_status').notNull(),
+  currentStatus: volunteerCurrentStatusEnum('current_status'),
   currentStatusOther: varchar('current_status_other', { length: 200 }),
   organisation: varchar('organisation', { length: 200 }),
-  howHeardAbout: text('how_heard_about').notNull(),
-  skillSets: text('skill_sets').notNull(),
+  howHeardAbout: text('how_heard_about'),
+  skillSets: text('skill_sets'),
+  // New shared fields
+  phone: varchar('phone', { length: 50 }),
+  howHeardAboutOption: howHeardAboutEnum('how_heard_about_option'),
+  howHeardAboutOther: varchar('how_heard_about_other', { length: 200 }),
   // Ambassador-only fields (nullable)
   linkedinUrl: varchar('linkedin_url', { length: 500 }),
   itIndustryInterest: text('it_industry_interest'),
@@ -1050,6 +1072,40 @@ export const volunteerFormSubmissions = pgTable('volunteer_form_submissions', {
   cvFileName: varchar('cv_file_name', { length: 255 }),
   // Volunteer-only fields (nullable)
   eventsPerYear: varchar('events_per_year', { length: 20 }),
+  // Ex-ambassador specific fields
+  currentRoleTitle: varchar('current_role_title', { length: 200 }),
+  joinedSheSharpYear: integer('joined_she_sharp_year'),
+  leftRoleYear: integer('left_role_year'),
+  stillAmbassador: boolean('still_ambassador'),
+  experienceRating: experienceRatingEnum('experience_rating'),
+  mostValuablePart: varchar('most_valuable_part', { length: 100 }),
+  mostValuablePartOther: varchar('most_valuable_part_other', { length: 200 }),
+  wouldRecommend: boolean('would_recommend'),
+  wantFeatured: boolean('want_featured'),
+  preferredCommunication: communicationMethodEnum('preferred_communication'),
+  additionalComments: text('additional_comments'),
+  // Recruitment pipeline fields
+  recruitmentStage: recruitmentStageEnum('recruitment_stage').default('new'),
+  recruitmentStageUpdatedAt: timestamp('recruitment_stage_updated_at'),
+  recruitmentStageUpdatedBy: integer('recruitment_stage_updated_by').references(() => users.id),
+  interviewRequestedBy: varchar('interview_requested_by', { length: 100 }),
+  interviewScheduledAt: timestamp('interview_scheduled_at'),
+  interviewNotes: text('interview_notes'),
+  joinedDate: timestamp('joined_date'),
+  ndaSentAt: timestamp('nda_sent_at'),
+  ndaSignedAt: timestamp('nda_signed_at'),
+  slackInvitedAt: timestamp('slack_invited_at'),
+  adminNotes: text('admin_notes'),
+  // AI screening fields
+  aiScreeningResult: jsonb('ai_screening_result').$type<{
+    summary: string;
+    recommendation: 'accept' | 'interview' | 'reject';
+    confidence: number;
+    strengths: string[];
+    concerns: string[];
+    reasoning: string;
+  }>(),
+  aiScreenedAt: timestamp('ai_screened_at'),
   // Timestamps
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
@@ -1057,6 +1113,7 @@ export const volunteerFormSubmissions = pgTable('volunteer_form_submissions', {
   statusIdx: index('volunteer_form_status_idx').on(table.status),
   emailIdx: index('volunteer_form_email_idx').on(table.email),
   typeIdx: index('volunteer_form_type_idx').on(table.type),
+  recruitmentStageIdx: index('volunteer_form_recruitment_stage_idx').on(table.recruitmentStage),
 }));
 
 // User points balance
