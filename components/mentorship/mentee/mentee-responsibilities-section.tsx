@@ -141,7 +141,7 @@ export function MenteeResponsibilitiesSection() {
             <div className="relative">
               <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/66e7d7462e0faf4e732c4cf1_IMG_9889.jpg"
+                  src="/img/scraped/site/mentorship/66e7d7462e0faf4e732c4cf1_IMG_9889_416482b4.jpg"
                   alt="Mentorship session"
                   fill
                   className="object-cover"

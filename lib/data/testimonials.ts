@@ -92,7 +92,7 @@ export const testimonialsByPage = {
         role: "Product Manager",
         company: "MYOB",
         image:
-          "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65f7d581ab77ff98f436f102_Anshu%20Photo.jpg",
+          "/img/scraped/site/mentorship/65f7d581ab77ff98f436f102_Anshu_Photo_59560633.jpg",
       },
       quote:
         "This initiative has truly been a taonga (treasure) for both mentors and mentees, offering invaluable opportunities for growth, guidance, and connection.",
