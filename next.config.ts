@@ -14,12 +14,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '*.public.blob.vercel-storage.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'lxd4dc8r8oetlgua.public.blob.vercel-storage.com',
+        hostname: 'res.cloudinary.com',
         pathname: '/**',
       },
     ],
