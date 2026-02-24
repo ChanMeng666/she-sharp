@@ -820,6 +820,7 @@ export enum ActivityType {
   UPDATE_RECRUITMENT_STAGE = 'UPDATE_RECRUITMENT_STAGE',
   AI_SCREEN_VOLUNTEER = 'AI_SCREEN_VOLUNTEER',
   SUBMIT_EX_AMBASSADOR_FORM = 'SUBMIT_EX_AMBASSADOR_FORM',
+  SUBMIT_CONTACT_FORM = 'SUBMIT_CONTACT_FORM',
 }
 
 // ============================================================================
@@ -1114,6 +1115,23 @@ export const volunteerFormSubmissions = pgTable('volunteer_form_submissions', {
   emailIdx: index('volunteer_form_email_idx').on(table.email),
   typeIdx: index('volunteer_form_type_idx').on(table.type),
   recruitmentStageIdx: index('volunteer_form_recruitment_stage_idx').on(table.recruitmentStage),
+}));
+
+// Contact form submissions
+export const contactFormSubmissions = pgTable('contact_form_submissions', {
+  id: serial('id').primaryKey(),
+  fullName: varchar('full_name', { length: 100 }).notNull(),
+  email: varchar('email', { length: 255 }).notNull(),
+  organisation: varchar('organisation', { length: 200 }),
+  message: text('message').notNull(),
+  status: formStatusEnum('status').notNull().default('submitted'),
+  submittedAt: timestamp('submitted_at').notNull().defaultNow(),
+  reviewedAt: timestamp('reviewed_at'),
+  reviewedBy: integer('reviewed_by').references(() => users.id),
+  reviewNotes: text('review_notes'),
+}, (table) => ({
+  emailIdx: index('contact_form_email_idx').on(table.email),
+  statusIdx: index('contact_form_status_idx').on(table.status),
 }));
 
 // User points balance
@@ -1509,6 +1527,8 @@ export type MenteeFormSubmission = typeof menteeFormSubmissions.$inferSelect;
 export type NewMenteeFormSubmission = typeof menteeFormSubmissions.$inferInsert;
 export type VolunteerFormSubmission = typeof volunteerFormSubmissions.$inferSelect;
 export type NewVolunteerFormSubmission = typeof volunteerFormSubmissions.$inferInsert;
+export type ContactFormSubmission = typeof contactFormSubmissions.$inferSelect;
+export type NewContactFormSubmission = typeof contactFormSubmissions.$inferInsert;
 export type UserPoint = typeof userPoints.$inferSelect;
 export type NewUserPoint = typeof userPoints.$inferInsert;
 export type PointsTransaction = typeof pointsTransactions.$inferSelect;

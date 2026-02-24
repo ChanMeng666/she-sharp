@@ -70,8 +70,19 @@ const STAGE_LABELS: Record<string, string> = {
   active: 'Active',
 };
 
+interface ContactNotificationData {
+  fullName: string;
+  email: string;
+  organisation?: string | null;
+  message: string;
+}
+
 function getWebhookUrl(): string | null {
   return process.env.SLACK_VOLUNTEER_WEBHOOK_URL?.trim() || null;
+}
+
+function getContactWebhookUrl(): string | null {
+  return process.env.SLACK_CONTACT_WEBHOOK_URL?.trim() || null;
 }
 
 async function sendSlackMessage(blocks: Record<string, unknown>[]): Promise<void> {
@@ -93,6 +104,28 @@ async function sendSlackMessage(blocks: Record<string, unknown>[]): Promise<void
     }
   } catch (error) {
     console.error('Failed to send Slack notification:', error);
+  }
+}
+
+async function sendContactSlackMessage(blocks: Record<string, unknown>[]): Promise<void> {
+  const webhookUrl = getContactWebhookUrl();
+  if (!webhookUrl) {
+    console.warn('SLACK_CONTACT_WEBHOOK_URL not configured, skipping notification');
+    return;
+  }
+
+  try {
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ blocks }),
+    });
+
+    if (!response.ok) {
+      console.error('Slack contact webhook failed:', response.status, await response.text());
+    }
+  } catch (error) {
+    console.error('Failed to send Slack contact notification:', error);
   }
 }
 
@@ -247,4 +280,36 @@ export async function sendAIScreeningNotification(data: AIScreeningNotificationD
   ];
 
   await sendSlackMessage(blocks);
+}
+
+/**
+ * Sends a Slack notification for a new contact form submission.
+ */
+export async function sendContactSlackNotification(data: ContactNotificationData): Promise<void> {
+  const fields = [
+    { type: 'mrkdwn', text: `*Name:*\n${data.fullName}` },
+    { type: 'mrkdwn', text: `*Email:*\n${data.email}` },
+  ];
+
+  if (data.organisation) {
+    fields.push({ type: 'mrkdwn', text: `*Organisation:*\n${data.organisation}` });
+  }
+
+  const blocks: Record<string, unknown>[] = [
+    {
+      type: 'header',
+      text: { type: 'plain_text', text: 'New Contact Form Submission', emoji: true },
+    },
+    {
+      type: 'section',
+      fields,
+    },
+    {
+      type: 'section',
+      text: { type: 'mrkdwn', text: `*Message:*\n${data.message}` },
+    },
+    { type: 'divider' },
+  ];
+
+  await sendContactSlackMessage(blocks);
 }

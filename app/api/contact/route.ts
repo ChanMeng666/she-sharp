@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { sendEmail } from "@/lib/email/service";
+import { submitContactForm } from "@/lib/forms/contact-service";
 
 const CONTACT_EMAIL = "info@shesharp.org.nz";
 
@@ -75,9 +76,19 @@ This email was sent from the She Sharp website contact form.
       );
     }
 
+    // Save to database and send Slack notification (non-blocking)
+    let submissionId: number | undefined;
+    try {
+      const result = await submitContactForm({ fullName, email, organisation, message });
+      submissionId = result.submissionId;
+    } catch (err) {
+      console.error("Failed to save contact form submission:", err);
+    }
+
     return NextResponse.json({
       success: true,
       message: "Your message has been sent successfully.",
+      submissionId,
     });
   } catch (error) {
     console.error("Error processing contact form:", error);
