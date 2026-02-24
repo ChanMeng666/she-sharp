@@ -9,11 +9,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'api.dicebear.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'placehold.co',
         pathname: '/**',
       },
@@ -25,11 +20,6 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'lxd4dc8r8oetlgua.public.blob.vercel-storage.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
         pathname: '/**',
       },
     ],

@@ -7,10 +7,10 @@ import type { ImpactReport } from '@/types/impact-report';
 export const impactReports: ImpactReport[] = [
   {
     year: 2025,
-    pdfUrl: 'https://drive.google.com/file/d/1E4rlK_0o95KhPErcoc-YSFfcxz-frrCU/view?usp=sharing',
+    pdfUrl: '/docs/she-sharp-impact-report-2025.pdf',
   },
   {
     year: 2024,
-    pdfUrl: 'https://drive.google.com/file/d/1obLUIQK0MbZ7fmSMKhJcbsSEAb7laDbm/view?usp=sharing',
+    pdfUrl: '/docs/she-sharp-impact-report-2024.pdf',
   },
 ];
