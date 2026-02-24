@@ -67,7 +67,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: 8,
     name: "Sara Ghafoor",
-    roles: ["Ambassador", "Marketing"],
+    roles: ["Ambassador", "Marketing Lead"],
     linkedin: "https://www.linkedin.com/in/sara-ghafoor/",
     description:
       "Kia ora! I’m Sara Ghafoor, an Electrical Engineer turned AI enthusiast passionate about inclusive tech. At Entelar Group, I support telecom site operations and major rollouts across NZ. I also help lead SheSharp’s events, mentorships, and community initiatives, collaborating with Google, Microsoft, Fonterra, and more. With a background in machine learning, medical imaging, and generative AI, I’m driven by tech that creates real-world impact—whether I’m mentoring at hackathons, managing projects, or running national events.",
@@ -85,7 +85,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: 10,
     name: "Marriane Bentigan",
-    roles: ["Ambassador", "Marketing Lead"],
+    roles: ["Ambassador", "Marketing"],
     linkedin: "https://www.linkedin.com/in/marriane-bentigan-204203220/",
     description:
       "Marriane is a Marketing Specialist at PB Tech who loves bringing creativity and strategy together to make ideas come alive. With years of experience leading marketing programmes across Asia-Pacific, she's now happily growing her career in New Zealand. Passionate about giving back, she supports women in tech and uplifts communities where people feel welcome and inspired. \n\nOutside of work, Marriane is the full-time mediator between her two strong-willed boys and wife, a creative video professional—so her days are often filled with sibling banter, production talk, and the occasional strategic Costco run. Her energy is contagious, and she's always ready to cheer others on and be the hype bud you didn't know you needed.",
@@ -111,7 +111,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: 13,
     name: "Len Estioko",
-    roles: ["Ambassador", "Marketing"],
+    roles: ["Ambassador", "Marketing Lead"],
     linkedin: "https://www.linkedin.com/in/lenestioko/",
     description:
     "Len is a seasoned advertising professional with over a decade of experience leading complex, integrated media campaigns across retail media, digital, Out-of-Home, and traditional channels. Holding a Master's in Management (Marketing), Len is committed to a growth mindset, constantly seeking innovative solutions and embracing new challenges. She finds great honor in supporting the next generation of passionate women in tech through her role as a She Sharp Ambassador. \n\nOutside of her career, Len manages a full-time role as a mom to a very active preschooler, whose boundless curiosity ensures her days are filled with hundreds of questions a day! Drawing on her strengths as a Relator and Developer, she’s always ready to connect deeply and champion the potential she sees in others, making her the purposeful advocate you need in your corner.",
