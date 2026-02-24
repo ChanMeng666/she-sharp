@@ -152,9 +152,9 @@
       "year": "2025",
       "galleryUrl": "https://photos.app.goo.gl/Q7DK7YfkSDVweWPZ7",
       "coverImage": {
-        "url": "/img/scraped/galleries/012_#IAmRemarkable.png",
+        "url": "/img/scraped/galleries/012_SHARPIAmRemarkable.png",
         "alt": "",
-        "srcset": "/img/scraped/misc/67ce885e79f6ad76f91dc4a1_Screen_Shot_2025-03-10_at_7.36.11_PM-p-500.png 500w, /img/scraped/misc/67ce885e79f6ad76f91dc4a1_Screen_Shot_2025-03-10_at_7.36.11_PM-p-800.png 800w, /img/scraped/misc/67ce885e79f6ad76f91dc4a1_Screen_Shot_2025-03-10_at_7.36.11_PM-p-1080.png 1080w, /img/scraped/misc/67ce885e79f6ad76f91dc4a1_Screen_Shot_2025-03-10_at_7.36.11_PM-p-1600.png 1600w, /img/scraped/galleries/012_#IAmRemarkable.png 1758w",
+        "srcset": "/img/scraped/misc/67ce885e79f6ad76f91dc4a1_Screen_Shot_2025-03-10_at_7.36.11_PM-p-500.png 500w, /img/scraped/misc/67ce885e79f6ad76f91dc4a1_Screen_Shot_2025-03-10_at_7.36.11_PM-p-800.png 800w, /img/scraped/misc/67ce885e79f6ad76f91dc4a1_Screen_Shot_2025-03-10_at_7.36.11_PM-p-1080.png 1080w, /img/scraped/misc/67ce885e79f6ad76f91dc4a1_Screen_Shot_2025-03-10_at_7.36.11_PM-p-1600.png 1600w, /img/scraped/galleries/012_SHARPIAmRemarkable.png 1758w",
         "localPath": "assets/images/galleries/009_#IAmRemarkable.png"
       },
       "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery",
@@ -812,9 +812,9 @@
       "year": "2019",
       "galleryUrl": "https://photos.app.goo.gl/PtMF1YjAqTY1uLvQ8",
       "coverImage": {
-        "url": "/img/scraped/galleries/071_SHE#_@_WĀHINE_KĀKANO.png",
+        "url": "/img/scraped/galleries/071_SHESHARP_@_WĀHINE_KĀKANO.png",
         "alt": "Event Photo",
-        "srcset": "/img/scraped/misc/6550a255f224407ac9d6ca99_wahine-kakano-she_1_(1)-p-500.png 500w, /img/scraped/galleries/071_SHE#_@_WĀHINE_KĀKANO.png 800w",
+        "srcset": "/img/scraped/misc/6550a255f224407ac9d6ca99_wahine-kakano-she_1_(1)-p-500.png 500w, /img/scraped/galleries/071_SHESHARP_@_WĀHINE_KĀKANO.png 800w",
         "localPath": "assets/images/galleries/053_SHE#_@_WÄHINE_KÄKANO.png"
       },
       "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=6",
@@ -827,9 +827,9 @@
       "year": "2019",
       "galleryUrl": "https://photos.app.goo.gl/Yh1Kr9SaA4dYMujr5",
       "coverImage": {
-        "url": "/img/scraped/galleries/072_SHE#_@_AMAZON_WEB_SERVICES_(AWS).png",
+        "url": "/img/scraped/galleries/072_SHESHARP_@_AMAZON_WEB_SERVICES_(AWS).png",
         "alt": "Event Photo",
-        "srcset": "/img/scraped/misc/6550a285de5933fd685d2136_Event_Tile_BGs_(9)-p-500.png 500w, /img/scraped/galleries/072_SHE#_@_AMAZON_WEB_SERVICES_(AWS).png 800w",
+        "srcset": "/img/scraped/misc/6550a285de5933fd685d2136_Event_Tile_BGs_(9)-p-500.png 500w, /img/scraped/galleries/072_SHESHARP_@_AMAZON_WEB_SERVICES_(AWS).png 800w",
         "localPath": "assets/images/galleries/054_SHE#_@_AMAZON_WEB_SERVICES_(AWS).png"
       },
       "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=6",
@@ -842,9 +842,9 @@
       "year": "2019",
       "galleryUrl": "https://photos.app.goo.gl/ZKbFaBhM562arnnd8",
       "coverImage": {
-        "url": "/img/scraped/galleries/076_SHE#_@_WORKDAY.png",
+        "url": "/img/scraped/galleries/076_SHESHARP_@_WORKDAY.png",
         "alt": "Event photo",
-        "srcset": "/img/scraped/misc/6550a23419795897b21d0281_workday-card_1_(1)-p-500.png 500w, /img/scraped/galleries/076_SHE#_@_WORKDAY.png 800w",
+        "srcset": "/img/scraped/misc/6550a23419795897b21d0281_workday-card_1_(1)-p-500.png 500w, /img/scraped/galleries/076_SHESHARP_@_WORKDAY.png 800w",
         "localPath": "assets/images/galleries/055_SHE#_@_WORKDAY.png"
       },
       "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=7",
@@ -857,9 +857,9 @@
       "year": "2019",
       "galleryUrl": "https://photos.app.goo.gl/ESDcBgJKy8vxXCVWA",
       "coverImage": {
-        "url": "/img/scraped/galleries/077_SHE#_@_DELOITTE.jpg",
+        "url": "/img/scraped/galleries/077_SHESHARP_@_DELOITTE.jpg",
         "alt": "Event photo",
-        "srcset": "/img/scraped/misc/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n-p-500.jpg 500w, /img/scraped/misc/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n-p-800.jpg 800w, /img/scraped/misc/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n-p-1080.jpg 1080w, /img/scraped/misc/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n-p-1600.jpg 1600w, /img/scraped/galleries/077_SHE#_@_DELOITTE.jpg 2016w",
+        "srcset": "/img/scraped/misc/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n-p-500.jpg 500w, /img/scraped/misc/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n-p-800.jpg 800w, /img/scraped/misc/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n-p-1080.jpg 1080w, /img/scraped/misc/6553f8af6a7c5ca684c4a1ac_53311849_10156314940033519_7726221092590714880_n-p-1600.jpg 1600w, /img/scraped/galleries/077_SHESHARP_@_DELOITTE.jpg 2016w",
         "localPath": "assets/images/galleries/056_SHE#_@_DELOITTE.jpg"
       },
       "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=7",
@@ -977,7 +977,7 @@
       "year": "2017",
       "galleryUrl": "https://photos.app.goo.gl/N9TkNfvKbJvgJt6M7",
       "coverImage": {
-        "url": "/img/scraped/galleries/088_SHE#_@_PUSHPAY.png",
+        "url": "/img/scraped/galleries/088_SHESHARP_@_PUSHPAY.png",
         "alt": "Event photo with frame",
         "srcset": "",
         "localPath": "assets/images/galleries/064_SHE#_@_PUSHPAY.png"
@@ -992,7 +992,7 @@
       "year": "2017",
       "galleryUrl": "https://photos.app.goo.gl/A5cZzcCjCNPsBDjV7",
       "coverImage": {
-        "url": "/img/scraped/galleries/089_SHE#_@_TECHWEEK_2017.png",
+        "url": "/img/scraped/galleries/089_SHESHARP_@_TECHWEEK_2017.png",
         "alt": "Event Photo",
         "srcset": "",
         "localPath": "assets/images/galleries/065_SHE#_@_TECHWEEK_2017.png"
@@ -1007,7 +1007,7 @@
       "year": "2017",
       "galleryUrl": "https://photos.app.goo.gl/N4fin2qfgD4711sJ7",
       "coverImage": {
-        "url": "/img/scraped/galleries/090_SHE#_with_GOOGLE_@_AUT.png",
+        "url": "/img/scraped/galleries/090_SHESHARP_with_GOOGLE_@_AUT.png",
         "alt": "Event photo in Frame",
         "srcset": "",
         "localPath": "assets/images/galleries/066_SHE#_with_GOOGLE_@_AUT.png"
@@ -1037,7 +1037,7 @@
       "year": "2016",
       "galleryUrl": "https://photos.app.goo.gl/HLAefNZronkJoUe56",
       "coverImage": {
-        "url": "/img/scraped/galleries/092_SHE#_@_FISHER_&_PAYKEL.png",
+        "url": "/img/scraped/galleries/092_SHESHARP_@_FISHER_&_PAYKEL.png",
         "alt": "Event Photo",
         "srcset": "",
         "localPath": "assets/images/galleries/068_SHE#_@_FISHER_&_PAYKEL.png"
