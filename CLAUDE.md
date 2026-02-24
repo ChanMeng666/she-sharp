@@ -57,7 +57,8 @@ she-sharp/
 │   ├── stripe/             # Payment integration (2 files)
 │   ├── cloudinary/         # Image storage service (1 file)
 │   ├── email/              # Email service (1 file)
-│   ├── forms/              # Form management (1 file)
+│   ├── forms/              # Form management (2 files)
+│   ├── slack/              # Slack webhook notifications (1 file)
 │   ├── points/             # Gamification system (1 file)
 │   ├── invitations/        # Invitation code system (1 file)
 │   ├── notifications/      # Notification service (1 file)
@@ -130,7 +131,7 @@ Located in `/app/` root directory (8 pages):
 - **Events Platform**: Upcoming events, registration, THRIVE program
 - **Media Hub**: Podcasts, newsletters, photo galleries, press coverage
 - **Support Options**: Donation and corporate sponsorship pages
-- **Contact System**: Contact forms and social media integration
+- **Contact System**: Contact forms with DB storage and Slack notifications
 - **AI Chatbot**: Google Gemini-powered assistant
 
 ### Technology Stack
@@ -141,7 +142,8 @@ Located in `/app/` root directory (8 pages):
 - **UI**: shadcn/ui components (63 components) with Tailwind CSS v4
 - **Styling**: Tailwind CSS with PostCSS and custom brand colors
 - **AI**: OpenAI GPT-4o-mini (chatbot) + OpenAI GPT-4 (mentor matching)
-- **Email**: Resend for transactional emails
+- **Email**: Resend for transactional emails (auth, mentorship, recruitment)
+- **Notifications**: Slack Incoming Webhooks for form submission alerts (volunteer, contact)
 - **Payments**: Stripe for subscriptions and one-time payments
 - **Charts**: Recharts for analytics dashboards
 - **Tables**: TanStack Table with dnd-kit for drag-and-drop
@@ -169,11 +171,11 @@ Located in `/app/` root directory (8 pages):
    - Batch matching with caching
 
 4. **Database Schema** (`/lib/db/schema.ts`):
-   - **Total**: 45 tables and 24 enums supporting comprehensive platform features
+   - **Total**: 46 tables and 24 enums supporting comprehensive platform features
    - **User System** (5 tables): `users`, `user_roles`, `admin_permissions`, `user_memberships`, `user_mentorship_stats`
    - **Authentication** (6 tables): `account`, `session`, `verification_token`, `email_verifications`, `password_resets`, `password_history`
    - **Mentorship** (5 tables): `mentor_profiles`, `mentee_profiles`, `mentorship_relationships`, `meetings`, `mentee_waiting_queue`
-   - **Form Submissions** (2 tables): `mentor_form_submissions`, `mentee_form_submissions`
+   - **Form Submissions** (3 tables): `mentor_form_submissions`, `mentee_form_submissions`, `contact_form_submissions`
    - **AI Matching** (2 tables): `ai_match_results`, `ai_matching_runs`
    - **Events** (3 tables): `events`, `event_registrations`, `event_role_assignments`
    - **Resources** (2 tables): `resources`, `resource_access_logs`
@@ -288,6 +290,9 @@ Organized by feature:
 - Event CRUD and registration
 - User registration history
 
+### Contact (`/api/contact/`) - 1 endpoint
+- Contact form submission (DB storage + Slack notification)
+
 ### Other Endpoints
 - `/api/resources/` (3) - Resource management and downloads
 - `/api/notifications/` (2) - Notification handling and preferences
@@ -339,7 +344,11 @@ AUTH_GITHUB_ID / AUTH_GITHUB_SECRET    # GitHub OAuth
 
 # Services
 OPENAI_API_KEY=...                     # OpenAI chatbot (GPT-4o-mini) + GPT-4 matching
-RESEND_API_KEY=...                     # Email service
+RESEND_API_KEY=...                     # Email service (auth, mentorship, recruitment)
+
+# Slack Notifications
+SLACK_VOLUNTEER_WEBHOOK_URL=...        # Volunteer/ambassador application alerts
+SLACK_CONTACT_WEBHOOK_URL=...          # Contact form submission alerts
 
 # Payments
 STRIPE_SECRET_KEY=...                  # Stripe API key
