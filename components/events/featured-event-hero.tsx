@@ -77,10 +77,25 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
             />
 
             {!event && (
-              <div className="absolute inset-x-0 bottom-0 h-1/5 flex items-center justify-center bg-black/30">
-                <p className="text-xl md:text-4xl font-semibold text-white">
-                  More events are coming soon...
-                </p>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-center justify-center">
+                <div className="text-center px-6 max-w-2xl">
+                  <p className="text-sm uppercase tracking-widest text-white/80 mb-3">
+                    She Sharp
+                  </p>
+                  <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                    Events &amp; Workshops
+                  </h2>
+                  <p className="text-base md:text-lg text-white/80 mb-8 leading-relaxed">
+                    We bring women in tech together through workshops, panels, and networking events. Stay tuned for upcoming opportunities.
+                  </p>
+                  <Link
+                    href="#past-events"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium bg-white text-black hover:bg-white/90 transition-colors"
+                  >
+                    See Past Events
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                </div>
               </div>
             )}
           </div>

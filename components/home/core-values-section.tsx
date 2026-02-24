@@ -2,7 +2,9 @@
 
 import { Heart, Rocket, Target } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
+import { Section } from "@/components/layout/section";
+import { Container } from "@/components/layout/container";
 
 type CoreValue = {
   icon: React.ElementType;
@@ -36,149 +38,67 @@ const coreValues: CoreValue[] = [
 ];
 
 export function CoreValuesSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const observerOptions = {
-      root: containerRef.current,
-      rootMargin: "-20% 0px -20% 0px",
-      threshold: [0, 0.25, 0.5, 0.75, 1],
-    };
-
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      let maxRatio = 0;
-      let maxIndex = 0;
-
-      entries.forEach((entry) => {
-        const index = sectionRefs.current.findIndex(
-          (ref) => ref === entry.target
-        );
-        if (index !== -1 && entry.intersectionRatio > maxRatio) {
-          maxRatio = entry.intersectionRatio;
-          maxIndex = index;
-        }
-      });
-
-      if (maxRatio > 0.2) {
-        setActiveIndex(maxIndex);
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions
-    );
-
-    const timeoutId = setTimeout(() => {
-      const sections = sectionRefs.current.filter(Boolean);
-      if (sections.length > 0) {
-        sections.forEach((section) => {
-          if (section) {
-            observer.observe(section);
-          }
-        });
-      }
-    }, 200);
-
-    return () => {
-      clearTimeout(timeoutId);
-      sectionRefs.current.forEach((section) => {
-        if (section) {
-          observer.unobserve(section);
-        }
-      });
-    };
-  }, []);
-
   return (
-    <div
-      ref={containerRef}
-      className="h-[70vh] w-full overflow-y-scroll snap-y snap-proximity scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] "
-      style={{
-        scrollBehavior: "smooth",
-        WebkitOverflowScrolling: "touch",
-      }}
-    >
-      {coreValues.map((value, index) => {
-        const isActive = activeIndex === index;
-        const isEven = index % 2 === 0;
-        const bgStyle = { backgroundColor: "#ffffff" };
-        const textClass = "text-foreground";
-        const mutedTextClass = "text-muted-foreground";
-        const iconBgClass = isEven
-          ? "bg-purple-dark/10 border-purple-dark/20"
-          : "bg-purple-dark/20 border-purple-dark/40";
-        const iconTextClass = isEven ? "text-purple-dark" : "text-purple-dark";
+    <Section spacing="section">
+      <Container>
+        <AnimateOnScroll variant="fade-up">
+          <h2 className="text-display-sm text-center mb-12 md:mb-16 text-foreground opacity-60">
+            Our Core Values
+          </h2>
+        </AnimateOnScroll>
 
-        return (
-          <section
-            key={value.title}
-            ref={(el) => {
-              if (el) {
-                sectionRefs.current[index] = el as HTMLElement;
-              }
-            }}
-            className="snap-start h-[70vh] w-full flex items-stretch relative transition-colors duration-700 ease-in-out shrink-0"
-            style={bgStyle}
-          >
-            <div
-              className={`flex flex-col md:flex-row w-full h-full transition-all duration-1000 ease-out ${
-                isActive
-                  ? "opacity-100 translate-y-0 scale-100"
-                  : "opacity-100 translate-y-4 scale-100"
-              }`}
-            >
-              {/* Left side - Image (2/3 width on desktop) */}
-              <div className="relative w-full md:w-2/3 h-full overflow-hidden">
-                <Image
-                  src={value.image}
-                  alt={value.title}
-                  fill
-                  className="object-cover object-center"
-                />
-              </div>
+        <div className="flex flex-col gap-12 md:gap-16">
+          {coreValues.map((value, index) => {
+            const isEven = index % 2 === 0;
+            const iconBgClass = isEven
+              ? "bg-purple-dark/10 border-purple-dark/20"
+              : "bg-purple-dark/20 border-purple-dark/40";
 
-              {/* Right side - Content (1/3 width on desktop) */}
-              <div
-                className="w-full md:w-1/3 flex items-center p-6 md:p-10 lg:p-12 rounded-lg md:rounded-r-lg md:rounded-l-none"
-                style={bgStyle}
+            return (
+              <AnimateOnScroll
+                key={value.title}
+                variant={isEven ? "fade-right" : "fade-left"}
               >
-                <div className="w-full">
-                  {/* Section Title */}
-                  <h2
-                    className={`text-display-sm mb-8 md:mb-12 lg:mb-16 ${textClass} opacity-60`}
-                  >
-                    Our Core Values
-                  </h2>
-
-                  <div className="flex items-center gap-4 mb-4">
-                    <div
-                      className={`inline-flex w-16 h-16 items-center justify-center rounded-xl border border-opacity-30 shrink-0 ${iconBgClass}`}
-                    >
-                      <value.icon className={`h-8 w-8 ${iconTextClass}`} />
-                    </div>
-                    <h3
-                      className={`text-3xl md:text-4xl lg:text-5xl font-bold ${textClass}`}
-                    >
-                      {value.title}
-                    </h3>
+                <div
+                  className={`flex flex-col ${
+                    isEven ? "md:flex-row" : "md:flex-row-reverse"
+                  } rounded-2xl overflow-hidden shadow-lg bg-white`}
+                >
+                  {/* Image */}
+                  <div className="relative w-full md:w-2/3 h-64 md:h-[420px]">
+                    <Image
+                      src={value.image}
+                      alt={value.title}
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
-                  <p
-                    className={`text-base md:text-lg leading-relaxed ${mutedTextClass}`}
-                  >
-                    {value.description}
-                  </p>
+
+                  {/* Content */}
+                  <div className="w-full md:w-1/3 flex items-center p-6 md:p-10 lg:p-12">
+                    <div className="w-full">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div
+                          className={`inline-flex w-16 h-16 items-center justify-center rounded-xl border border-opacity-30 shrink-0 ${iconBgClass}`}
+                        >
+                          <value.icon className="h-8 w-8 text-purple-dark" />
+                        </div>
+                        <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
+                          {value.title}
+                        </h3>
+                      </div>
+                      <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
+                        {value.description}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </section>
-        );
-      })}
-    </div>
+              </AnimateOnScroll>
+            );
+          })}
+        </div>
+      </Container>
+    </Section>
   );
 }
 
