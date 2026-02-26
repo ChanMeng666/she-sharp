@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
@@ -38,8 +38,27 @@ const CORE_VALUES: CoreValue[] = [
   },
 ];
 
+const AUTO_PLAY_INTERVAL_MS = 2000;
+
 export function CoreValuesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const goToNext = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % CORE_VALUES.length);
+  }, []);
+
+  useEffect(() => {
+    if (paused) return;
+    const timer = setInterval(goToNext, AUTO_PLAY_INTERVAL_MS);
+    return () => clearInterval(timer);
+  }, [paused, goToNext]);
+
+  const handleSelect = (index: number) => {
+    setActiveIndex(index);
+    setPaused(true);
+    setTimeout(() => setPaused(false), AUTO_PLAY_INTERVAL_MS * 2);
+  };
 
   return (
     <Section spacing="section" className="bg-white py-16 xl:py-24 2xl:py-32">
@@ -54,7 +73,7 @@ export function CoreValuesSection() {
               return (
                 <button
                   key={value.title}
-                  onClick={() => setActiveIndex(index)}
+                  onClick={() => handleSelect(index)}
                   className={cn(
                     "group flex-1 text-left pt-3 pb-4 transition-all duration-300 relative cursor-pointer",
                     "border-t",

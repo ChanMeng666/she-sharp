@@ -116,13 +116,20 @@ export function HeroSection() {
         <div className="relative flex flex-col xl:flex-row items-start xl:items-center gap-8 md:gap-10 xl:gap-8 mt-16 sm:mt-20 md:mt-24 xl:mt-0">
           {/* Left: Content area with heading and CTA */}
           <div className="w-full xl:w-auto xl:max-w-lg 2xl:max-w-xl text-left xl:shrink-0">
-            <p className="font-brand-script text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-brand mb-3 md:mb-4">
+            <p className="font-brand-script text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4">
               Empowering futures
             </p>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl 2xl:text-8xl font-bold uppercase text-white drop-shadow-lg leading-[1.1] tracking-tight">
-              Connecting women in
-              <br />
-              Technology
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase leading-[1.1] tracking-tight">
+              <span
+                className="bg-linear-to-r from-white via-[#e8c8f0] to-[#c4c1ff] bg-clip-text text-transparent drop-shadow-lg"
+                style={{
+                  filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.3))",
+                }}
+              >
+                Connecting women in
+                <br />
+                Technology
+              </span>
             </h1>
             <div className="mt-6 sm:mt-8 md:mt-10 flex justify-start">
               <Button variant="ghost" size="lg" asChild className="px-6 bg-white/10 backdrop-blur-sm text-white border border-white/60 hover:bg-purple-dark transition-all rounded-full">
