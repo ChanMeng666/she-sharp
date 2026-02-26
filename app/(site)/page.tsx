@@ -18,10 +18,10 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <UpcomingEventSection />
       <CoreImpactSection />
       <CoreValuesSection />
       <ProgramsSection />
-      <UpcomingEventSection />
       <SponsorsSection />
       <CTASection />
     </>

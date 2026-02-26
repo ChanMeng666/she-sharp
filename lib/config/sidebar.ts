@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   BarChart3,
   BrainCircuit,
+  ClipboardList,
   type LucideIcon,
 } from "lucide-react";
 
@@ -92,6 +93,11 @@ export const adminSidebarItems: NavGroup[] = [
         title: "User Management",
         url: "/dashboard/admin/users",
         icon: Users,
+      },
+      {
+        title: "Recruitment",
+        url: "/dashboard/admin/recruitment",
+        icon: ClipboardList,
       },
       {
         title: "Mentorship",

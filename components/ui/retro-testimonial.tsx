@@ -188,7 +188,7 @@ const TestimonialCard = ({
   index,
   layout = false,
   onCardClose = () => {},
-  backgroundImage = "https://images.unsplash.com/photo-1557682250-33bd709cbe85?q=80&w=2029&auto=format&fit=crop",
+  backgroundImage = "/img/scraped/backgrounds/testimonial-bg.jpg",
 }: {
   testimonial: iTestimonial;
   index: number;

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Play, SkipBack, SkipForward, Volume2, Maximize } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
 
@@ -134,7 +134,7 @@ export function HeroSection() {
           {/* Right: Video Player */}
           <div className="w-full sm:w-[90%] md:w-[85%] lg:w-[75%] xl:flex-1 xl:max-w-2xl 2xl:max-w-4xl mx-auto xl:mx-0">
             {/* Video Container */}
-            <div className="relative aspect-video rounded-t-2xl overflow-hidden border border-white/20 border-b-0 shadow-2xl">
+            <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
               <video
                 autoPlay
                 loop
@@ -144,34 +144,6 @@ export function HeroSection() {
               >
                 <source src="/video/home-page-hero.mp4" type="video/mp4" />
               </video>
-            </div>
-
-            <div className="flex items-center justify-between px-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 border-t-0 rounded-b-2xl pointer-events-none">
-              <div className="flex items-center gap-2">
-                <span className="p-2 text-white/70">
-                  <SkipBack className="w-4 h-4" />
-                </span>
-                <span className="p-2 bg-white/20 rounded-full text-white">
-                  <Play className="w-4 h-4" />
-                </span>
-                <span className="p-2 text-white/70">
-                  <SkipForward className="w-4 h-4" />
-                </span>
-              </div>
-
-
-              <div className="flex-1 mx-4 h-1 bg-white/20 rounded-full overflow-hidden">
-                <div className="h-full w-1/3 bg-brand rounded-full" />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <span className="p-2 text-white/70">
-                  <Volume2 className="w-4 h-4" />
-                </span>
-                <span className="p-2 text-white/70">
-                  <Maximize className="w-4 h-4" />
-                </span>
-              </div>
             </div>
           </div>
         </div>

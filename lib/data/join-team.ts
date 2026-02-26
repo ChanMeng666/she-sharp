@@ -59,6 +59,34 @@ export const volunteerPaths: VolunteerPath[] = [
     applicationNote:
       "Applications open in February each year. Register your interest below.",
   },
+  {
+    id: "ex-ambassador",
+    title: "Ex-Ambassador Feedback",
+    commitment: "One-time - 5 minutes",
+    image: "/img/gallery/about-5.jpg",
+    imageAlt: "She Sharp alumni sharing experiences",
+    description: "Were you a She Sharp Ambassador? Share your experience and help us improve. Your feedback is invaluable to our community.",
+    highlights: [
+      "Share your journey",
+      "Help improve She Sharp",
+      "Stay connected with alumni",
+      "Get featured in our spotlight",
+    ],
+    responsibilities: [
+      "Complete a short feedback survey",
+      "Share what you valued most",
+      "Provide suggestions for improvement",
+      "Optionally stay connected as alumni",
+    ],
+    benefits: [
+      "Be featured in our alumni spotlight",
+      "Stay connected with the community",
+      "Help shape future programmes",
+      "Network with current ambassadors",
+    ],
+    applicationNote:
+      "Open to all current and past She Sharp ambassadors.",
+  },
 ];
 
 export const volunteerImages: TabMedia[] = [
@@ -74,6 +102,12 @@ export const volunteerImages: TabMedia[] = [
     src: "/img/gallery/about-5.jpg",
     alt: "She Sharp ambassadors team meeting",
   },
+  {
+    value: "ex-ambassador",
+    label: "Ex-Ambassador",
+    src: "/img/gallery/about-5.jpg",
+    alt: "She Sharp alumni sharing experiences",
+  },
 ];
 
 export type StatItem = {
@@ -82,7 +116,7 @@ export type StatItem = {
 };
 
 export const joinTeamStats: StatItem[] = [
-  { iconName: "route", text: "2 Paths" },
+  { iconName: "route", text: "3 Paths" },
   { iconName: "calendar", text: "Year-round" },
   { iconName: "clock", text: "Flexible Hours" },
 ];

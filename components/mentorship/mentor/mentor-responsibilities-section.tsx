@@ -130,7 +130,7 @@ export function MentorResponsibilitiesSection() {
             <div className="relative">
               <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/66e7d6d1507e385502912e7f_IMG_9898.jpg"
+                  src="/img/scraped/site/mentorship/66e7d6d1507e385502912e7f_IMG_9898_a19afc43.jpg"
                   alt="Mentorship meeting"
                   fill
                   className="object-cover"

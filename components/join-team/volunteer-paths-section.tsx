@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/layout/container";
 import { cn } from "@/lib/utils";
-import { Check, Clock, Sparkles, Users, Heart, Award } from "lucide-react";
+import { Check, Clock, Sparkles, Users, Heart, Award, MessageCircle } from "lucide-react";
 
 export type TabMedia = {
   value: string;
@@ -70,7 +70,7 @@ export function VolunteerPathsSection({
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 py-4 md:py-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-4 md:py-6">
               {volunteerPaths.slice().reverse().map((path, index) => {
                 const originalIndex = volunteerPaths.length - 1 - index;
                 return (
@@ -90,8 +90,10 @@ export function VolunteerPathsSection({
                             index === 0 ? "bg-brand" : "bg-periwinkle-dark"
                           )}
                         >
-                          {originalIndex === 0 ? (
+                          {path.id === "volunteer" ? (
                             <Users className="w-6 h-6 text-white" />
+                          ) : path.id === "ex-ambassador" ? (
+                            <MessageCircle className="w-6 h-6 text-white" />
                           ) : (
                             <Award className="w-6 h-6 text-white" />
                           )}
@@ -198,14 +200,15 @@ export function VolunteerPathsSection({
                         <Link
                           href={
                             path.id === "volunteer"
-                              ? "https://docs.google.com/forms/d/e/1FAIpQLSdTEFjOs6lLHZDGpSvoMfkckloPBMbvFA45iNhVvh1sAsUZlA/viewform"
+                              ? "/join-our-team/apply?type=volunteer"
                               : path.id === "ambassador"
-                              ? "https://docs.google.com/forms/d/e/1FAIpQLSfQCjMOvfh7OVmBZg3T7eS70xhKkB_iSnlIpjv3xJ1i-EUTyg/viewform"
+                              ? "/join-our-team/apply?type=ambassador"
+                              : path.id === "ex-ambassador"
+                              ? "/join-our-team/apply/ex-ambassador"
                               : primaryCta.href
                           }
-                          target="_blank"
                         >
-                          Apply Now
+                          {path.id === "ex-ambassador" ? "Share Feedback" : "Apply Now"}
                         </Link>
                       </Button>
                     </div>

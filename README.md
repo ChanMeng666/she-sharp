@@ -233,11 +233,13 @@ We are committed to creating an inclusive environment where women in STEM can:
 - **Database Version Control**: Migration snapshots and checkpoints
 - **Authentication**: JWT-based with bcrypt + NextAuth (OAuth)
 - **AI Integration**: Google Gemini API
-- **Email**: Resend for transactional emails
+- **Email**: Resend for transactional emails (auth, mentorship, recruitment)
+- **Notifications**: Slack Incoming Webhooks for form submission alerts
 
 **DevOps & Monitoring:**
 - **Deployment**: Vercel Edge Network
 - **Storage**: Cloudinary (image hosting)
+- **Notifications**: Slack (webhook-based alerts)
 - **Analytics**: Vercel Analytics
 - **CI/CD**: GitHub Actions
 
@@ -335,6 +337,10 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 CLOUDINARY_CLOUD_NAME="your_cloud_name"
 CLOUDINARY_API_KEY="your_api_key"
 CLOUDINARY_API_SECRET="your_api_secret"
+
+# Slack Notifications (Optional)
+SLACK_VOLUNTEER_WEBHOOK_URL="https://hooks.slack.com/services/..."
+SLACK_CONTACT_WEBHOOK_URL="https://hooks.slack.com/services/..."
 ```
 
 ## 📖 Usage
@@ -553,6 +559,7 @@ graph TB
         J[Stripe API]
         K[Google Gemini]
         L[Cloudinary]
+        P[Slack Webhooks]
     end
     
     D --> E
@@ -560,6 +567,7 @@ graph TB
     F --> J
     F --> K
     F --> L
+    F --> P
     
     subgraph "Infrastructure"
         M[Vercel Edge Network]

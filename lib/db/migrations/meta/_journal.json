@@ -113,6 +113,27 @@
       "when": 1764754780561,
       "tag": "0017_flowery_zuras",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1770683725196,
+      "tag": "0018_sour_trish_tilby",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1771740036098,
+      "tag": "0019_zippy_gertrude_yorkes",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1771915413187,
+      "tag": "0020_dashing_strong_guy",
+      "breakpoints": true
     }
   ]
 }

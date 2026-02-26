@@ -112,9 +112,10 @@ export const navigationConfig: {
       },
       children: [
         {
-          title: "Volunteer with Us",
+          title: "Join Our Team",
           href: "/join-our-team",
-          description: "Join our team and make a difference",
+          description:
+            "Explore volunteer, ambassador, and alumni paths — find the right fit for you",
           icon: UserPlus,
         },
         {

@@ -61,19 +61,19 @@ const features = [
 const sponsors: SponsorLogo[] = [
   {
     name: "HCLTech",
-    logo: "https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/6470185f85072710b161d610_hcltech-logo.svg",
+    logo: "/img/scraped/misc/6470185f85072710b161d610_hcltech-logo.svg",
   },
   {
     name: "Fonterra",
-    logo: "https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/65e50fc6d2f01ad68fb15688_fonterra.png",
+    logo: "/img/scraped/site/sponsors/65e50fc6d2f01ad68fb15688_fonterra_4f14cd01.png",
   },
   {
     name: "MYOB",
-    logo: "https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/64701860f27305f34ecc8b66_myob-logo.svg",
+    logo: "/img/scraped/misc/64701860f27305f34ecc8b66_myob-logo.svg",
   },
   {
     name: "Fisher & Paykel Healthcare",
-    logo: "https://cdn.prod.website-files.com/646193fdf4af9a2a791b1555/65d80a4331c46a8a017e669f_PNG%20-%20for%20web%2C%20video%2C%20%26%20MS%20Office_F%26P_HEALTHCARE-BLACK.png",
+    logo: "/img/scraped/site/sponsors/65d80a4331c46a8a017e669f_PNG_-_for_web_video__MS_O_d075e390.png",
   },
 ]
 

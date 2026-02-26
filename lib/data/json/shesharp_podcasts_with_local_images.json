@@ -50,7 +50,7 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/6adaUENgRCtCRl5AsTSjFu?si=VXm96TvdQLuocmiCm_rXfw",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/656449f3d01f2e91e441cff0_Podcast%20Template.png",
+        "url": "/img/scraped/podcasts/656449f3d01f2e91e441cff0_Podcast_Template_79e82070.png",
         "alt": "",
         "localPath": "assets/images/podcasts/656449f3d01f2e91e441cff0_Podcast_Template_79e82070.png"
       },
@@ -70,9 +70,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/5LdpXQRWdzkBOwix7jYG2v?si=b3f0a40653f74347",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65509ac5a0623d92b00799c5_Group%20480965680%20(1).png",
+        "url": "/img/scraped/podcasts/65509ac5a0623d92b00799c5_Group_480965680_1_4cf329c9.png",
         "alt": "Banner with two students",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65509ac5a0623d92b00799c5_Group%20480965680%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/65509ac5a0623d92b00799c5_Group%20480965680%20(1).png 800w",
+        "srcset": "/img/scraped/misc/65509ac5a0623d92b00799c5_Group_480965680_(1)-p-500.png 500w, /img/scraped/podcasts/65509ac5a0623d92b00799c5_Group_480965680_1_4cf329c9.png 800w",
         "localPath": "assets/images/podcasts/65509ac5a0623d92b00799c5_Group_480965680_1_4cf329c9.png"
       },
       "platform": "Spotify",
@@ -91,9 +91,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/3fS98C8166pKyaLeFCIZnJ?si=dAnFGyL2Qrq3Qy5HSGcJiw",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6516caff046b6bee332a81b9_Group%20480965692.png",
+        "url": "/img/scraped/podcasts/6516caff046b6bee332a81b9_Group_480965692_83c08c80.png",
         "alt": "Banner of a hand pulling toast out of a toaster",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6516caff046b6bee332a81b9_Group%20480965692-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6516caff046b6bee332a81b9_Group%20480965692-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6516caff046b6bee332a81b9_Group%20480965692-p-1080.png 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6516caff046b6bee332a81b9_Group%20480965692.png 1200w",
+        "srcset": "/img/scraped/misc/6516caff046b6bee332a81b9_Group_480965692-p-500.png 500w, /img/scraped/misc/6516caff046b6bee332a81b9_Group_480965692-p-800.png 800w, /img/scraped/misc/6516caff046b6bee332a81b9_Group_480965692-p-1080.png 1080w, /img/scraped/podcasts/6516caff046b6bee332a81b9_Group_480965692_83c08c80.png 1200w",
         "localPath": "assets/images/podcasts/6516caff046b6bee332a81b9_Group_480965692_83c08c80.png"
       },
       "platform": "Spotify",
@@ -112,9 +112,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/4M1z06uxrpetXgbK8nwE8T",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f48bfd055ab00edf0c9575_Event%20Tile_BGs%20(1).png",
+        "url": "/img/scraped/podcasts/64f48bfd055ab00edf0c9575_Event_Tile_BGs_1_ccf767f1.png",
         "alt": "Graphic with woman holding a beaker",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f48bfd055ab00edf0c9575_Event%20Tile_BGs%20(1)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f48bfd055ab00edf0c9575_Event%20Tile_BGs%20(1)-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f48bfd055ab00edf0c9575_Event%20Tile_BGs%20(1)-p-1080.png 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64f48bfd055ab00edf0c9575_Event%20Tile_BGs%20(1).png 1200w",
+        "srcset": "/img/scraped/misc/64f48bfd055ab00edf0c9575_Event_Tile_BGs_(1)-p-500.png 500w, /img/scraped/misc/64f48bfd055ab00edf0c9575_Event_Tile_BGs_(1)-p-800.png 800w, /img/scraped/misc/64f48bfd055ab00edf0c9575_Event_Tile_BGs_(1)-p-1080.png 1080w, /img/scraped/podcasts/64f48bfd055ab00edf0c9575_Event_Tile_BGs_1_ccf767f1.png 1200w",
         "localPath": "assets/images/podcasts/64f48bfd055ab00edf0c9575_Event_Tile_BGs_1_ccf767f1.png"
       },
       "platform": "Spotify",
@@ -133,9 +133,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/7xwZoJrW1N2O53q82Ox7zu?si=YfB_aFGQRve-XH2a2yHZEw",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64bb8ab537717a195533fc8a_Podcast%20Template%20(3).png",
+        "url": "/img/scraped/podcasts/64bb8ab537717a195533fc8a_Podcast_Template_3_e84474fe.png",
         "alt": "Woman speaking in front of two people ",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64bb8ab537717a195533fc8a_Podcast%20Template%20(3)-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64bb8ab537717a195533fc8a_Podcast%20Template%20(3).png 800w",
+        "srcset": "/img/scraped/misc/64bb8ab537717a195533fc8a_Podcast_Template_(3)-p-500.png 500w, /img/scraped/podcasts/64bb8ab537717a195533fc8a_Podcast_Template_3_e84474fe.png 800w",
         "localPath": "assets/images/podcasts/64bb8ab537717a195533fc8a_Podcast_Template_3_e84474fe.png"
       },
       "platform": "Spotify",
@@ -154,9 +154,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/6PoBMkylOLasUa8sS4f1GM?si=3152dd76ba1d444f&nd=1",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926803e40138d6dc0e5c02_Podcast%20Tile_Kickstart%20Your%20Career%20in%20Tech%20with%20MYOB.png",
+        "url": "/img/scraped/podcasts/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Yo_c1a6cb69.png",
         "alt": "A young women relaxing on a couch in the sunshine with a laptop",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926803e40138d6dc0e5c02_Podcast%20Tile_Kickstart%20Your%20Career%20in%20Tech%20with%20MYOB-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926803e40138d6dc0e5c02_Podcast%20Tile_Kickstart%20Your%20Career%20in%20Tech%20with%20MYOB-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926803e40138d6dc0e5c02_Podcast%20Tile_Kickstart%20Your%20Career%20in%20Tech%20with%20MYOB.png 1200w",
+        "srcset": "/img/scraped/misc/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Your_Career_in_Tech_with_MYOB-p-500.png 500w, /img/scraped/misc/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Your_Career_in_Tech_with_MYOB-p-800.png 800w, /img/scraped/podcasts/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Yo_c1a6cb69.png 1200w",
         "localPath": "assets/images/podcasts/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Yo_c1a6cb69.png"
       },
       "platform": "Spotify",
@@ -175,9 +175,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/1dSfuPifLzq4Uu6sougpxi?si=3d027606230848a7&nd=1",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926899d771e6ed62e9f52b_Podcast%20Tile_A%20Chat%20with%20Fiona%20Webby.png",
+        "url": "/img/scraped/podcasts/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with__bd179af2.png",
         "alt": "Decorative",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926899d771e6ed62e9f52b_Podcast%20Tile_A%20Chat%20with%20Fiona%20Webby-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926899d771e6ed62e9f52b_Podcast%20Tile_A%20Chat%20with%20Fiona%20Webby-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926899d771e6ed62e9f52b_Podcast%20Tile_A%20Chat%20with%20Fiona%20Webby.png 1200w",
+        "srcset": "/img/scraped/misc/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with_Fiona_Webby-p-500.png 500w, /img/scraped/misc/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with_Fiona_Webby-p-800.png 800w, /img/scraped/podcasts/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with__bd179af2.png 1200w",
         "localPath": "assets/images/podcasts/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with__bd179af2.png"
       },
       "platform": "Spotify",
@@ -196,9 +196,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/3x5nHASoOHsYY3mlbJZEQX?si=5ec634b0921145bd&nd=1",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649268ebdac5954a754425d5_Podcast%20Tile_IWD%20%23EmbraceEquality.png",
+        "url": "/img/scraped/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.png",
         "alt": "A group of women sitting around a table",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649268ebdac5954a754425d5_Podcast%20Tile_IWD%20%23EmbraceEquality-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649268ebdac5954a754425d5_Podcast%20Tile_IWD%20%23EmbraceEquality-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/649268ebdac5954a754425d5_Podcast%20Tile_IWD%20%23EmbraceEquality.png 1200w",
+        "srcset": "/img/scraped/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.png 500w, /img/scraped/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.png 800w, /img/scraped/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.png 1200w",
         "localPath": "assets/images/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.png"
       },
       "platform": "Spotify",
@@ -217,9 +217,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/5X8tMqIj5ADZVVDOBKv0ZO?si=03df8d189ed24750&nd=1",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926d5dbfcc54669c5e7d7c_Podcast%20Tile_She%20Sharp%20Bytes%20into%20Software%20Development%20with%20Security%20in%20Mind.png",
+        "url": "/img/scraped/podcasts/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_By_c188f735.png",
         "alt": "Decorative",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926d5dbfcc54669c5e7d7c_Podcast%20Tile_She%20Sharp%20Bytes%20into%20Software%20Development%20with%20Security%20in%20Mind-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926d5dbfcc54669c5e7d7c_Podcast%20Tile_She%20Sharp%20Bytes%20into%20Software%20Development%20with%20Security%20in%20Mind-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/64926d5dbfcc54669c5e7d7c_Podcast%20Tile_She%20Sharp%20Bytes%20into%20Software%20Development%20with%20Security%20in%20Mind.png 1200w",
+        "srcset": "/img/scraped/misc/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_Bytes_into_Software_Development_with_Security_in_Mind-p-500.png 500w, /img/scraped/misc/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_Bytes_into_Software_Development_with_Security_in_Mind-p-800.png 800w, /img/scraped/podcasts/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_By_c188f735.png 1200w",
         "localPath": "assets/images/podcasts/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_By_c188f735.png"
       },
       "platform": "Spotify",
@@ -238,9 +238,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/7ftBVksRgrYGBTbg0l9HO6?si=d3cb5f47f6a044f9",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494ce4d9ebcd7fa78ec60b0_Podcast%20Tile_Shaping%20the%20Future%20with%20AI%20-%20Using%20AI%20to%20Shape%20Your%20World.png",
+        "url": "/img/scraped/podcasts/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the__28d8bc10.png",
         "alt": "woman smiling",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494ce4d9ebcd7fa78ec60b0_Podcast%20Tile_Shaping%20the%20Future%20with%20AI%20-%20Using%20AI%20to%20Shape%20Your%20World-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494ce4d9ebcd7fa78ec60b0_Podcast%20Tile_Shaping%20the%20Future%20with%20AI%20-%20Using%20AI%20to%20Shape%20Your%20World-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494ce4d9ebcd7fa78ec60b0_Podcast%20Tile_Shaping%20the%20Future%20with%20AI%20-%20Using%20AI%20to%20Shape%20Your%20World.png 1200w",
+        "srcset": "/img/scraped/misc/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the_Future_with_AI_-_Using_AI_to_Shape_Your_World-p-500.png 500w, /img/scraped/misc/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the_Future_with_AI_-_Using_AI_to_Shape_Your_World-p-800.png 800w, /img/scraped/podcasts/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the__28d8bc10.png 1200w",
         "localPath": "assets/images/podcasts/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the__28d8bc10.png"
       },
       "platform": "Spotify",
@@ -259,9 +259,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/7MCUwNbUAoAexkS9LeEHBN?si=c0e74101101b48f0",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cf5d644246ba02e79ed4_Podcast%20Tile_AI%20for%20the%20Environment%20-%20Female%20Led%20Hackathon.png",
+        "url": "/img/scraped/podcasts/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_E_80bb51d3.png",
         "alt": "hackathon",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cf5d644246ba02e79ed4_Podcast%20Tile_AI%20for%20the%20Environment%20-%20Female%20Led%20Hackathon-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cf5d644246ba02e79ed4_Podcast%20Tile_AI%20for%20the%20Environment%20-%20Female%20Led%20Hackathon-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cf5d644246ba02e79ed4_Podcast%20Tile_AI%20for%20the%20Environment%20-%20Female%20Led%20Hackathon.png 1200w",
+        "srcset": "/img/scraped/misc/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_Environment_-_Female_Led_Hackathon-p-500.png 500w, /img/scraped/misc/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_Environment_-_Female_Led_Hackathon-p-800.png 800w, /img/scraped/podcasts/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_E_80bb51d3.png 1200w",
         "localPath": "assets/images/podcasts/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_E_80bb51d3.png"
       },
       "platform": "Spotify",
@@ -280,9 +280,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/3ZmaHzKEf9qL0HiUQQE72P?si=bbeb0cf0f312485f",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfb10feb550729ee1c33_Podcast%20Tile_Sharing%20a%20Career%20path_%20She%23%20Bytes%20with%20Nicole%20Lin.png",
+        "url": "/img/scraped/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.png",
         "alt": "nicole lin headshot",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfb10feb550729ee1c33_Podcast%20Tile_Sharing%20a%20Career%20path_%20She%23%20Bytes%20with%20Nicole%20Lin-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfb10feb550729ee1c33_Podcast%20Tile_Sharing%20a%20Career%20path_%20She%23%20Bytes%20with%20Nicole%20Lin-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfb10feb550729ee1c33_Podcast%20Tile_Sharing%20a%20Career%20path_%20She%23%20Bytes%20with%20Nicole%20Lin.png 1200w",
+        "srcset": "/img/scraped/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.png 500w, /img/scraped/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.png 800w, /img/scraped/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.png 1200w",
         "localPath": "assets/images/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.png"
       },
       "platform": "Spotify",
@@ -301,9 +301,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/40ctM08sUvNdAMuoq34LwM?si=5833e9c58e174610",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfe00feb550729ee4a7b_Podcast%20Tile_Mind%20Your%20own%20career.png",
+        "url": "/img/scraped/podcasts/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_ow_fd9e2b66.png",
         "alt": "woman at desk",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfe00feb550729ee4a7b_Podcast%20Tile_Mind%20Your%20own%20career-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfe00feb550729ee4a7b_Podcast%20Tile_Mind%20Your%20own%20career-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494cfe00feb550729ee4a7b_Podcast%20Tile_Mind%20Your%20own%20career.png 1200w",
+        "srcset": "/img/scraped/misc/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_own_career-p-500.png 500w, /img/scraped/misc/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_own_career-p-800.png 800w, /img/scraped/podcasts/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_ow_fd9e2b66.png 1200w",
         "localPath": "assets/images/podcasts/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_ow_fd9e2b66.png"
       },
       "platform": "Spotify",
@@ -322,9 +322,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/1cvcsFbhEHcXRaaTHsGom8?si=b3a980e1b92f4a5f&nd=1",
       "coverImage": {
-        "url": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494f876e09c314b47369d47_Podcast%20Tile_What%20is%20this%20podcast%20about_.png",
+        "url": "/img/scraped/podcasts/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_704d879d.png",
         "alt": "Young woman listening to a podcast on She Sharp Spotify podcast platform",
-        "srcset": "https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494f876e09c314b47369d47_Podcast%20Tile_What%20is%20this%20podcast%20about_-p-500.png 500w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494f876e09c314b47369d47_Podcast%20Tile_What%20is%20this%20podcast%20about_-p-800.png 800w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494f876e09c314b47369d47_Podcast%20Tile_What%20is%20this%20podcast%20about_-p-1080.png 1080w, https://cdn.prod.website-files.com/646ab5895264c7470e0c89f5/6494f876e09c314b47369d47_Podcast%20Tile_What%20is%20this%20podcast%20about_.png 1200w",
+        "srcset": "/img/scraped/misc/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_podcast_about_-p-500.png 500w, /img/scraped/misc/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_podcast_about_-p-800.png 800w, /img/scraped/misc/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_podcast_about_-p-1080.png 1080w, /img/scraped/podcasts/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_704d879d.png 1200w",
         "localPath": "assets/images/podcasts/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_704d879d.png"
       },
       "platform": "Spotify",
