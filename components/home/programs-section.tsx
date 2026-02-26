@@ -116,85 +116,83 @@ export function ProgramsSection() {
                     variant="fade-up"
                     delay={index * 100}
                   >
-                  <div
-                    className={`rounded-[50px] overflow-hidden transition-all duration-300 relative border ${
-                      isActive
-                        ? "bg-background border-foreground/30 shadow-lg shadow-brand/10 "
-                        : "bg-background border-border hover:border-foreground/30"
-                    }`}
-                  >
-                    {/* Accordion Header */}
-                    <button
-                      onClick={() => {
-                        if (isActive) {
-                          return;
-                        } else {
-                          setActiveProgram(index);
-                          setLastSelectedProgram(index);
-                        }
-                      }}
-                      className="w-full p-6 text-left flex items-center justify-between transition-colors duration-200 text-foreground "
-                    >
-                      <div className="flex items-center gap-4">
-                        <div
-                          className="p-2.5 lg:p-3 border rounded-full transition-all border-foreground/30 bg-foreground/10"
-                        >
-                          <Icon
-                            className="h-5 w-5 text-foreground"
-                          />
-                        </div>
-                        <div >
-                          <h3 className="text-2xl font-bold text-foreground">{program.title}</h3>
-                          <p className="text-muted-foreground">
-                            {program.subtitle}
-                          </p>
-                        </div>
-                      </div>
-                      {!isActive && (
-                        <div className="w-8 h-8 rounded-full flex items-center justify-center bg-foreground/10">
-                          <Plus className="w-4 h-4 text-foreground" />
-                        </div>
-                      )}
-                    </button>
-
-                    {/* Accordion Content */}
                     <div
-                      className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                        isActive ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                      }`}
+                      className={`rounded-[50px] overflow-hidden transition-all duration-300 relative border ${isActive
+                          ? "bg-background border-foreground/30 shadow-lg shadow-brand/10 "
+                          : "bg-background border-border hover:border-foreground/30"
+                        }`}
                     >
-                      <div className="px-6 pb-6 text-foreground">
-                        <p className="text-muted-foreground mb-6 leading-relaxed">
-                          {program.description}
-                        </p>
+                      {/* Accordion Header */}
+                      <button
+                        onClick={() => {
+                          if (isActive) {
+                            return;
+                          } else {
+                            setActiveProgram(index);
+                            setLastSelectedProgram(index);
+                          }
+                        }}
+                        className="w-full p-6 text-left flex items-center justify-between transition-colors duration-200 text-foreground "
+                      >
+                        <div className="flex items-center gap-4">
+                          <div
+                            className="p-2.5 lg:p-3 border rounded-full transition-all border-foreground/30 bg-foreground/10"
+                          >
+                            <Icon
+                              className="h-5 w-5 text-foreground"
+                            />
+                          </div>
+                          <div >
+                            <h3 className="text-2xl font-bold text-foreground">{program.title}</h3>
+                            <p className="text-muted-foreground">
+                              {program.subtitle}
+                            </p>
+                          </div>
+                        </div>
+                        {!isActive && (
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center bg-foreground/10">
+                            <Plus className="w-4 h-4 text-foreground" />
+                          </div>
+                        )}
+                      </button>
 
-                        {/* Features */}
-                        <ul className="space-y-3 mb-6">
-                          {program.features.map((feature, featureIndex) => {
-                            const FeatureIcon = feature.icon;
-                            return (
-                              <li
-                                key={featureIndex}
-                                className="flex items-center gap-3"
-                              >
-                                <FeatureIcon className="w-4 h-4 text-foreground/80 shrink-0" />
-                                <span className="text-sm text-muted-foreground">
-                                  {feature.text}
-                                </span>
-                              </li>
-                            );
-                          })}
-                        </ul>
+                      {/* Accordion Content */}
+                      <div
+                        className={`overflow-hidden transition-all duration-500 ease-in-out ${isActive ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                          }`}
+                      >
+                        <div className="px-6 pb-6 text-foreground">
+                          <p className="text-muted-foreground mb-6 leading-relaxed">
+                            {program.description}
+                          </p>
 
-                        {/* CTA Button */}
-                        <Link href={program.cta.href}>
-                          <Button variant="ghost" size="lg" className="border-foreground/30 ">
-                            {program.cta.text}
-                          </Button>
-                        </Link>
+                          {/* Features */}
+                          <ul className="space-y-3 mb-6">
+                            {program.features.map((feature, featureIndex) => {
+                              const FeatureIcon = feature.icon;
+                              return (
+                                <li
+                                  key={featureIndex}
+                                  className="flex items-center gap-3"
+                                >
+                                  <FeatureIcon className="w-4 h-4 text-foreground/80 shrink-0" />
+                                  <span className="text-sm text-muted-foreground">
+                                    {feature.text}
+                                  </span>
+                                </li>
+                              );
+                            })}
+                          </ul>
+
+                          {/* CTA Button */}
+                          <Link href={program.cta.href}>
+                            <Button variant="ghost" size="lg" className="border-foreground/30 ">
+                              {program.cta.text}
+                            </Button>
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                  </div>
                   </AnimateOnScroll>
                 );
               })}
