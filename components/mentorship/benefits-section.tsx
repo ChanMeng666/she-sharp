@@ -24,7 +24,7 @@ export function BenefitsSection({
   return (
     <Section className="py-16 xl:py-24 2xl:py-32 bg-muted">
       <Container size="full">
-        <div className="max-w-7xl mx-auto ">
+        <div className="max-w-8xl mx-auto ">
           {/* Header */}
           <div className="text-left mb-12 md:mb-16">
             <h2 className="text-display-sm text-foreground mb-4">

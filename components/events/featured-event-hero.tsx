@@ -79,9 +79,6 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
             {!event && (
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-center justify-center">
                 <div className="text-center px-6 max-w-2xl">
-                  <p className="text-sm uppercase tracking-widest text-white/80 mb-3">
-                    She Sharp
-                  </p>
                   <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
                     Events &amp; Workshops
                   </h2>

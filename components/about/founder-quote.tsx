@@ -14,7 +14,7 @@ export function FounderQuote() {
       <div className="absolute bottom-0 right-[10%] w-64 h-64 md:w-80 md:h-80 rounded-full bg-[#F5D5D5]/20 translate-y-1/3" />
       <div className="absolute bottom-[20%] left-[5%] w-48 h-48 md:w-64 md:h-64 rounded-full bg-[#F5D5D5]/20 -translate-x-1/2" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+      <div className="relative z-10 max-w-8xl mx-auto px-6 md:px-12 lg:px-16">
         <AnimateOnScroll variant="fade-up">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
             {/* Quote content - Left side */}

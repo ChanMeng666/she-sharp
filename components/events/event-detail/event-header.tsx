@@ -30,7 +30,7 @@ export function EventHeader({ event, className }: EventHeaderProps) {
         {/* Countdown */}
         {isFutureEvent && (
           <div className="absolute bottom-4 sm:bottom-6 lg:bottom-8 z-10 w-full">
-            <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-8xl">
               <div className="w-full max-w-[600px]">
                 <EventCountdown event={event} />
               </div>

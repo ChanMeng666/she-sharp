@@ -88,7 +88,7 @@ export function EventSpeakers({ event, className }: EventSpeakersProps) {
   return (
     <section className={className}>
       <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
           <div className="space-y-16">
             {groups.map((item, groupIndex) => (
               <SpeakerGroupSection

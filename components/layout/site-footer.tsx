@@ -54,7 +54,7 @@ export function SiteFooter() {
       {/* 向上过渡渐变 */}
       <div className="absolute top-0 left-0 right-0 h-12 bg-linear-to-t from-navy-dark to-transparent" />
 
-      <div className="px-6 sm:px-8 lg:px-12 xl:px-16 max-w-7xl mx-auto">
+      <div className="px-6 sm:px-8 lg:px-12 xl:px-16 max-w-8xl mx-auto">
         <div className="flex flex-col lg:flex-row lg:justify-between gap-8 lg:gap-12 xl:gap-16">
           {/* Left side - Newsletter & Social */}
           <div className="flex-1 max-w-md lg:max-w-lg">

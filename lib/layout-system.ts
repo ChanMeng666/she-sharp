@@ -5,7 +5,7 @@ export const layoutSystem = {
     narrow: "max-w-3xl",       // 768px - for text-heavy content
     content: "max-w-5xl",      // 1024px - standard content width
     wide: "max-w-6xl",         // 1152px - wide content display
-    full: "max-w-7xl",         // 1280px - full width layout
+    full: "max-w-8xl",         // 1440px - full width layout
   },
   
   // Consistent spacing system

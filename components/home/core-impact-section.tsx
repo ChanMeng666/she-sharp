@@ -159,7 +159,7 @@ export function CoreImpactSection() {
 
           {/* Grid */}
           <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto my-12 md:my-16 lg:my-20"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-8xl mx-auto my-12 md:my-16 lg:my-20"
             role="list"
           >
             {impactData.map((item, i) => (

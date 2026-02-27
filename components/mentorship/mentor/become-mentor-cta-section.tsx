@@ -47,7 +47,7 @@ export function BecomeMentorCTASection() {
       <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
 
       <Container size="full" className="relative z-10">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-8xl mx-auto">
           <div className="text-white">
             <h2 className="text-display-sm text-foreground mb-4 text-left">
               Interested in Becoming A Mentor?

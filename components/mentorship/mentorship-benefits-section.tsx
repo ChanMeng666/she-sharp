@@ -30,7 +30,7 @@ const CARD_CLASSES =
 export function MentorshipBenefits() {
   return (
     <section className="bg-white py-16 md:py-24 xl:py-32 border-y border-border/70">
-      <div className="max-w-7xl mx-auto px-4 lg:px-6">
+      <div className="max-w-8xl mx-auto px-4 lg:px-6">
         <div className="mb-8 md:mb-10 lg:mb-12">
           <h2 className="text-display-sm text-foreground max-w-xl mb-4">
             What You Get Out of A Mentorship Program

@@ -17,6 +17,7 @@ import { eventsV3 as scrapedEventsV3, eventsMetadata } from "./events-data";
 import { customEventsV3 } from "./events-custom";
 
 const HUMANITIX_EVENT_URLS = [
+  "https://events.humanitix.com/she-sharp-and-academyex-international-women-s-day-2026",
   "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
   "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector",
   "https://events.humanitix.com/she-sharp-scw-and-xero-code-secure-lead-the-future-women-in-cybersecurity-workshop",

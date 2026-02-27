@@ -1,7 +1,7 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import { ExternalLink, Images } from "lucide-react";
+import { Images } from "lucide-react";
 import type { GalleryAlbum } from "@/types/gallery";
 
 interface AlbumCardProps {
@@ -22,7 +22,7 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
       className="block h-full group"
       aria-label={`View ${album.title} album in Google Photos`}
     >
-      <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 rounded-[30px] aspect-[4/3]">
+      <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 rounded-[30px] aspect-[3/4]">
         {/* Cover Image */}
         <img
           src={album.coverImage}
@@ -31,12 +31,13 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
         />
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
 
-        {/* External Link Icon */}
+        {/* View Photos Badge */}
         <div className="absolute top-6 right-6 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="glass-pill bg-white/90 p-2">
-            <ExternalLink className="h-4 w-4 text-purple-dark" />
+          <div className="glass-pill bg-white px-3 py-1.5 flex items-center gap-1.5">
+            <Images className="h-3.5 w-3.5 text-purple-dark" />
+            <span className="text-xs font-medium text-purple-dark">View Photos</span>
           </div>
         </div>
 
@@ -47,13 +48,9 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
               {album.date}
             </p>
           )}
-          <h3 className={`font-bold text-white mb-2 line-clamp-2 ${compact ? "text-base" : "text-lg"}`}>
+          <h3 className={`font-bold text-white line-clamp-2 ${compact ? "text-base" : "text-lg"}`}>
             {album.title}
           </h3>
-          <div className="flex items-center gap-2 text-white/80">
-            <Images className="h-3.5 w-3.5" />
-            <span className="text-xs">View Photos</span>
-          </div>
         </div>
       </Card>
     </a>

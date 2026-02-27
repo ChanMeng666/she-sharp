@@ -51,7 +51,7 @@ export function MentorResponsibilitiesSection() {
   return (
     <Section className="py-16 xl:py-24 2xl:py-32 bg-white">
       <Container size="full">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-8xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="text-display-sm text-foreground mb-6">
