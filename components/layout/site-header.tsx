@@ -116,18 +116,22 @@ export function SiteHeader() {
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center space-x-2 transition-all duration-200 group hover:opacity-80"
+          className="flex items-center space-x-2 group"
+          aria-label="She Sharp Home"
         >
-          <div className="relative w-32 h-10">
-            <Image
-              src="/logos/she-sharp-logo.svg"
-              alt="She Sharp"
-              fill
-              sizes="128px"
-              className="object-contain logo-hover"
-              priority
-            />
-          </div>
+          <span
+            className="block w-32 h-10 bg-purple-dark transition-colors duration-300 group-hover:bg-foreground"
+            style={{
+              maskImage: "url(/logos/she-sharp-logo.svg)",
+              maskSize: "contain",
+              maskRepeat: "no-repeat",
+              maskPosition: "center",
+              WebkitMaskImage: "url(/logos/she-sharp-logo.svg)",
+              WebkitMaskSize: "contain",
+              WebkitMaskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+            }}
+          />
         </Link>
 
         {/* Desktop Navigation */}

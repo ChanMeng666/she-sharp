@@ -145,18 +145,18 @@ export default async function EventPage({ params }: EventPageProps) {
 
       {/* Speakers Section */}
       {hasAnySpeakers(event) && (
-        <div className="mt-16">
+        <div>
           <EventSpeakers event={event} />
         </div>
       )}
 
       {/* Event Sponsors (logos) */}
-      <div className="mt-16">
+      <div >
         <EventSponsors event={event} />
       </div>
 
       {/* Sponsorship Section */}
-      <div className="mt-16">
+      <div>
         <EventSponsorship event={event} />
       </div>
 

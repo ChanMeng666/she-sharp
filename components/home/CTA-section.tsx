@@ -36,7 +36,7 @@ const ICON_CLASSES = "w-8 h-8 text-periwinkle-dark";
 
 export function CTASection() {
   return (
-    <Section className="py-16 xl:py-24 2xl:py-32">
+    <Section className="py-16 xl:py-24 2xl:py-32 bg-white">
       <Container size="full">
         <AnimateOnScroll
           variant="scale"

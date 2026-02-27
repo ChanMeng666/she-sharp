@@ -238,24 +238,6 @@ export function EventSidebarPanel({
           )}
         </div>
       </div>
-
-      {/* Mobile Fixed Button */}
-      {(isFuture || (isPast && event.detailPageData.galleryUrl)) && (
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-foreground/10 lg:hidden z-50">
-          <Button
-            size="lg"
-            className="w-full"
-            onClick={
-              isPast && event.detailPageData.galleryUrl
-                ? handleViewGallery
-                : handleRegister
-            }
-          >
-            {getButtonText()}
-          </Button>
-        </div>
-      )}
-      <div className="h-20 lg:hidden" />
     </>
   );
 }
