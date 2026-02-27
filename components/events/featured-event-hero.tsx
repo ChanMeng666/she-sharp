@@ -14,10 +14,13 @@ interface FeaturedEventHeroProps {
   event?: EventV3;
 }
 
-function HeroButtons({ slug }: { slug: string }) {
+function HeroButtons({ slug, registrationUrl }: { slug: string; registrationUrl?: string }) {
   const [isHovered, setIsHovered] = useState<"details" | "register" | null>(
     null
   );
+
+  const registerHref = registrationUrl || `/events/${slug}`;
+  const isExternal = !!registrationUrl;
 
   return (
     <div className="flex gap-3">
@@ -35,7 +38,8 @@ function HeroButtons({ slug }: { slug: string }) {
         <ArrowRight className="w-5 h-5" />
       </Link>
       <Link
-        href={`/events/${slug}`}
+        href={registerHref}
+        {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         className="flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300 border-2"
         style={{
           backgroundColor: isHovered === "register" ? "#000000" : "transparent",
@@ -130,7 +134,7 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
 
                 {/* Buttons */}
                 <div className="pb-6 pr-6">
-                  <HeroButtons slug={event.slug} />
+                  <HeroButtons slug={event.slug} registrationUrl={event.detailPageData.registrationUrl} />
                 </div>
               </div>
             </>
