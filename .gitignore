@@ -73,6 +73,10 @@ WARP.md
 # Email preview files
 tmp/emails/
 
+# Local-only scripts (not for deployment)
+scripts/collect-event-from-slack.py
+scripts/requirements-slack.txt
+
 # Reference/Example projects
 reference-next-shadcn-admin-dashboard/
 nul
