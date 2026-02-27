@@ -36,7 +36,7 @@ export function JoinTeamHeroSection({
 
   return (
     <div className="bg-periwinkle-soft py-36">
-      <div className="container mx-auto max-w-7xl px-6">
+      <div className="container mx-auto max-w-8xl px-6">
         <div className="flex flex-col gap-10 lg:gap-16">
           {/* Text Content */}
           <div className="flex flex-col items-center">

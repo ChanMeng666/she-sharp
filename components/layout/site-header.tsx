@@ -105,7 +105,7 @@ export function SiteHeader() {
   return (
     <header className={cn(
       "fixed top-0 left-0 right-0 z-50",
-      "mt-2 mx-auto w-[calc(100%-2rem)] max-w-7xl",
+      "mt-2 mx-auto w-[calc(100%-2rem)] max-w-8xl",
       "rounded-full border border-white/40",
       "glass-pill",
       "transition-all duration-300 ease-out",
@@ -137,7 +137,7 @@ export function SiteHeader() {
         {/* Desktop Navigation */}
         {isMounted ? (
           <NavigationMenu className="hidden lg:flex mx-auto">
-            <NavigationMenuList>
+            <NavigationMenuList className="gap-2 xl:gap-4">
               {navigationConfig.items.map((item) => (
                 <NavigationMenuItem key={item.title}>
                   {item.children ? (
@@ -232,7 +232,7 @@ export function SiteHeader() {
         ) : (
           /* Static placeholder during SSR to prevent hydration mismatch */
           <nav className="hidden lg:flex mx-auto">
-            <ul className="flex items-center gap-1">
+            <ul className="flex items-center gap-2 xl:gap-4">
               {navigationConfig.items.map((item) => (
                 <li key={item.title} className="relative">
                   <Link

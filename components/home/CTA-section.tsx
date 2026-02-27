@@ -40,7 +40,7 @@ export function CTASection() {
       <Container size="full">
         <AnimateOnScroll
           variant="scale"
-          className="max-w-7xl mx-auto bg-periwinkle rounded-4xl p-16 mb-10"
+          className="max-w-8xl mx-auto bg-periwinkle rounded-4xl p-16 mb-10"
         >
           <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
             {/* Left side - Main heading */}

@@ -145,7 +145,7 @@ export function ScrollingFeatureShowcase({
           </div>
 
           {/* Content Grid */}
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 h-full w-full max-w-7xl mx-auto">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 h-full w-full max-w-8xl mx-auto">
             {/* Left Column: Text Content, Pagination & CTA */}
             <div
               className={cn(

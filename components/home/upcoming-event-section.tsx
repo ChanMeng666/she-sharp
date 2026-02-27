@@ -34,7 +34,7 @@ export function UpcomingEventSection() {
   return (
     <Section
       id="upcoming-event"
-      className="bg-surface-periwinkle rounded-[50px]"
+      className="px-8 md:px-12 lg:px-16 bg-white"
     >
       <Container size="full" className="mt-12 md:mt-16 lg:mt-20 mb-12 md:mb-16 lg:mb-20">
         <AnimateOnScroll
@@ -44,18 +44,18 @@ export function UpcomingEventSection() {
           <h2 className="text-display-sm text-foreground">Upcoming Event</h2>
         </AnimateOnScroll>
 
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+        <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-6">
           {/* Left side - Large image */}
           <AnimateOnScroll variant="fade-right" className="w-full lg:w-1/2">
-            <div className="relative aspect-600/380 max-w-[600px] mx-auto lg:mx-0">
+            <div className="relative aspect-3/4 max-w-[400px] mx-auto lg:mx-0 border border-muted-foreground/20 rounded-2xl">
               {/* Background div with slight tilt - responsive */}
-              <div className="absolute inset-0 bg-muted-foreground/20 rounded-[50px] transform rotate-0 md:rotate-[-4deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"></div>
+              <div className="absolute inset-0 border border-muted-foreground/20 rounded-2xl transform rotate-0 md:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"></div>
               {/* Image positioned on top */}
               <Image
                 src={featuredEvent.coverImage.url}
                 alt={featuredEvent.coverImage.alt || featuredEvent.title}
                 fill
-                className="rounded-[50px] relative z-10 object-cover"
+                className="rounded-2xl relative z-10 object-cover"
               />
             </div>
           </AnimateOnScroll>
@@ -67,11 +67,11 @@ export function UpcomingEventSection() {
           >
             <div className="relative mb-12">
               {/* Decorative elements */}
-              <div className="absolute -left-4 -top-2 opacity-20">
-                <BauhausQuarterCircle
-                  size={40}
+              <div className="absolute -left-12 -top-4 opacity-20">
+                <BauhausCircle
+                  size={60}
                   color="hsl(var(--brand))"
-                  rotation={-45}
+ 
                 />
               </div>
               <div className="absolute -right-6 top-1/2 -translate-y-1/2 opacity-15">
@@ -86,19 +86,11 @@ export function UpcomingEventSection() {
               {/* Decorative underline */}
               <div className="relative mt-4">
                 <div
-                  className="h-1 w-28 rounded-full"
+                  className="h-1 w-40 rounded-full"
                   style={{
                     background:
                       "linear-gradient(to right, hsl(var(--brand)), hsl(var(--periwinkle)))",
                   }}
-                ></div>
-                <div
-                  className="absolute left-32 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full opacity-60"
-                  style={{ backgroundColor: "hsl(var(--brand))" }}
-                ></div>
-                <div
-                  className="absolute left-32 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full opacity-40"
-                  style={{ backgroundColor: "hsl(var(--periwinkle))" }}
                 ></div>
               </div>
             </div>

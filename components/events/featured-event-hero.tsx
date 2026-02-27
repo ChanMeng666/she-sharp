@@ -83,9 +83,6 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
             {!event && (
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-center justify-center">
                 <div className="text-center px-6 max-w-2xl">
-                  <p className="text-sm uppercase tracking-widest text-white/80 mb-3">
-                    She Sharp
-                  </p>
                   <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
                     Events &amp; Workshops
                   </h2>
@@ -117,8 +114,7 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
 
               {/* Buttons container with curved corner effect */}
               <div
-                className="absolute bottom-0 right-0 pt-8 pl-8 rounded-tl-[3rem]"
-                style={{ backgroundColor: "#eee" }}
+                className="absolute bottom-0 right-0 pt-8 pl-8 rounded-tl-[3rem] bg-background"
               >
                 <div
                   className="absolute bottom-0 -left-8 w-8 h-8 bg-transparent"

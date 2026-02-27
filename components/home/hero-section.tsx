@@ -112,7 +112,7 @@ export function HeroSection() {
       <div className="absolute top-12 right-56 w-1.5 h-1.5 bg-yellow-200/80 rounded-full animate-ping" style={{ animationDuration: "2.2s", animationDelay: "0.7s" }} />
 
 
-      <Container className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-12 max-w-none xl:max-w-7xl 2xl:max-w-[1600px] mx-auto">
+      <Container className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-12 max-w-none xl:max-w-8xl mx-auto">
         <div className="relative flex flex-col xl:flex-row items-start xl:items-center gap-8 md:gap-10 xl:gap-8 mt-16 sm:mt-20 md:mt-24 xl:mt-0">
           {/* Left: Content area with heading and CTA */}
           <div className="w-full xl:w-auto xl:max-w-lg 2xl:max-w-xl text-left xl:shrink-0">
@@ -133,7 +133,7 @@ export function HeroSection() {
             </h1>
             <div className="mt-6 sm:mt-8 md:mt-10 flex justify-start">
               <Button variant="ghost" size="lg" asChild className="px-6 bg-white/10 backdrop-blur-sm text-white border border-white/60 hover:bg-purple-dark transition-all rounded-full">
-                <Link href="/events" target="_blank">Explore Our Events</Link>
+                <Link href="/events" target="_blank">Attend our upcoming event</Link>
               </Button>
             </div>
           </div>

@@ -74,9 +74,9 @@ export default function EventsPage() {
     return Array.from(cities).sort();
   }, [allEvents]);
 
-  // Filter events based on all criteria
+  // Filter events based on all criteria, then sort by date (newest first)
   const filteredEvents = useMemo(() => {
-    return allEvents.filter((event) => {
+    const filtered = allEvents.filter((event) => {
       // Search filter - title and shortDescription
       const matchesSearch =
         searchQuery === "" ||
@@ -113,6 +113,11 @@ export default function EventsPage() {
         matchesStatus
       );
     });
+
+    return filtered.sort(
+      (a, b) =>
+        parseDateString(b.date).getTime() - parseDateString(a.date).getTime()
+    );
   }, [
     allEvents,
     searchQuery,

@@ -190,8 +190,9 @@ export function VolunteerPathsSection({
                       <Button
                         asChild
                         size="lg"
+            
                         className={cn(
-                          "text-white",
+                          "text-white border-none",
                           index === 0
                             ? "bg-brand hover:bg-brand/90"
                             : "bg-periwinkle-dark hover:bg-periwinkle-dark/90"

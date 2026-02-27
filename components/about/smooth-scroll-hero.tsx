@@ -72,44 +72,43 @@ function CenterImage() {
 
   const filter = useMotionTemplate`brightness(${brightness})`;
 
+  const textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const textY = useTransform(scrollY, [0, 300], [0, -50]);
+
   return (
     <div className="sticky top-0 h-screen w-full overflow-hidden">
+      {/* Clipped container: image + gradient + text all share the same clipPath */}
       <motion.div
         className="absolute inset-0 w-full h-full"
-        style={{
-          clipPath,
-          backgroundSize,
-          opacity,
-          filter,
-          backgroundImage:
-            "url(/img/gallery/about-2.jpg)",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      />
-
-      {/* Overlay gradient for depth */}
-      <motion.div
-        className="absolute inset-0 bg-linear-to-b from-gray-50/40 via-transparent to-gray-50/60 pointer-events-none"
-        style={{ opacity }}
-      />
-
-      {/* Hero text */}
-      <motion.div
-        className="absolute inset-0 flex items-end justify-start"
-        style={{
-          opacity: useTransform(scrollY, [0, 300], [1, 0]),
-          y: useTransform(scrollY, [0, 300], [0, -50]),
-        }}
+        style={{ clipPath, opacity }}
       >
-        <div className="glass-panel text-left px-6 py-8 md:px-10 md:py-12 mb-8 ml-8 md:mb-4 md:ml-12 bg-black/40">
-          <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 tracking-tight drop-shadow-lg">
+        {/* Background image */}
+        <motion.div
+          className="absolute inset-0 w-full h-full"
+          style={{
+            backgroundSize,
+            filter,
+            backgroundImage: "url(/img/gallery/about-2.jpg)",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+
+        {/* Black gradient overlay */}
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
+
+        {/* Hero text */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 px-8 md:px-16 lg:px-24 pb-8 md:pb-14 lg:pb-16"
+          style={{ opacity: textOpacity, y: textY }}
+        >
+          <h1 className="text-white text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight drop-shadow-lg max-w-3xl mb-4">
             She Sharp
           </h1>
-          <p className="text-xl md:text-2xl text-white max-w-2xl font-light drop-shadow-md">
+          <p className="text-white text-lg md:text-2xl lg:text-3xl font-semibold leading-snug tracking-wide drop-shadow-lg max-w-3xl">
             Bridging the gender gap in STEM
           </p>
-        </div>
+        </motion.div>
       </motion.div>
     </div>
   );
@@ -117,7 +116,7 @@ function CenterImage() {
 
 function ParallaxImages() {
   return (
-    <div className="mx-auto max-w-7xl px-4 pt-[200px] relative ">
+    <div className="mx-auto max-w-8xl px-4 pt-[200px] relative ">
       <ParallaxImg
         src="/img/gallery/about-3.jpg"
         alt="She Sharp event"
