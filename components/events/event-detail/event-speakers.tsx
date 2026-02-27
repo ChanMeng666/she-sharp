@@ -21,11 +21,11 @@ function SpeakerGroupSection({ group, startIndex }: SpeakerGroupSectionProps) {
   }
 
   return (
-    <div className="space-y-8">
-      <p className="flex items-center gap-2 text-lg md:text-xl lg:text-2xl font-semibold text-foreground uppercase">
+    <div className="space-y-8 ">
+      <p className="flex items-center gap-2 text-lg md:text-xl lg:text-2xl font-bold text-foreground uppercase">
         {group.heading}
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 items-stretch ">
         {group.speakers.map((speaker, index) => {
           const memberCardData: MemberCardData = {
             id: startIndex + index,
@@ -38,7 +38,7 @@ function SpeakerGroupSection({ group, startIndex }: SpeakerGroupSectionProps) {
             linkedin: speaker.linkedin || undefined,
           };
           return (
-            <div key={startIndex + index} className="w-full h-full flex">
+            <div key={startIndex + index} className="w-full h-full flex bg-white rounded-2xl ">
               <MemberCard
                 member={memberCardData}
                 index={startIndex + index}
@@ -86,9 +86,9 @@ export function EventSpeakers({ event, className }: EventSpeakersProps) {
   }
 
   return (
-    <section className={className}>
-      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+    <section  >
+      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] ">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 ">
           <div className="space-y-16">
             {groups.map((item, groupIndex) => (
               <SpeakerGroupSection

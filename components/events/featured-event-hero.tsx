@@ -114,8 +114,7 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
 
               {/* Buttons container with curved corner effect */}
               <div
-                className="absolute bottom-0 right-0 pt-8 pl-8 rounded-tl-[3rem]"
-                style={{ backgroundColor: "#eee" }}
+                className="absolute bottom-0 right-0 pt-8 pl-8 rounded-tl-[3rem] bg-background"
               >
                 <div
                   className="absolute bottom-0 -left-8 w-8 h-8 bg-transparent"

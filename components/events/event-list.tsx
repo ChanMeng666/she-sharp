@@ -31,7 +31,7 @@ export function EventList({
   return (
     <div
       className={cn(
-        'grid gap-x-8 gap-y-20 items-stretch',
+        'grid gap-x-12 gap-y-20 items-stretch',
         columns === 1 && 'grid-cols-1',
         columns === 2 && 'grid-cols-1 sm:grid-cols-2',
         columns === 3 && 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',

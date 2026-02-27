@@ -25,7 +25,7 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <p className="text-lg font-semibold tracking-[0.2em] uppercase text-muted-foreground">
+          <p className="text-lg font-bold tracking-[0.2em] uppercase text-muted-foreground">
             Event Sponsors
           </p>
           <h2 className="mt-2 text-display-sm">Powered by our partners</h2>

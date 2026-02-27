@@ -59,7 +59,7 @@ export function EventInflectedCard({
           title={event.title}
           description={event.shortDescription.slice(0, 120) + "..."}
           tags={[]}
-          parentBackgroundColor="#eee"
+          parentBackgroundColor="var(--color-background)"
           onClick={handleClick}
           cardRounding={16}
           fontSizes={{
