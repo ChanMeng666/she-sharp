@@ -44,5 +44,111 @@
       "isFeatured": false
     }
   },
-  "events": []
+  "events": [
+    {
+      "id": 85,
+      "slug": "she-sharp-and-academyex-international-womens-day-2026",
+      "title": "She Sharp & academyEX: International Women's Day 2026",
+      "date": "March 6, 2026",
+      "coverImage": {
+        "url": "/img/events/iwd-2026-banner.png",
+        "alt": "She Sharp & academyEX International Women's Day 2026 - Together We Can Forge Gender Equality Collectively"
+      },
+      "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-and-academyex-international-womens-day-2026",
+      "shortDescription": "Join She Sharp and academyEX for an inspiring International Women's Day celebration centred on this year's theme — Give To Gain. An evening of honest conversations, shared experiences, and meaningful connections.",
+      "attendees": null,
+      "detailPageData": {
+        "url": "https://www.shesharp.org.nz/events/she-sharp-and-academyex-international-womens-day-2026",
+        "title": "She Sharp & academyEX: International Women's Day 2026",
+        "subtitle": "Celebrating women. Inspiring action. Driving equity.",
+        "date": "March 6, 2026",
+        "time": "5:00pm - 7:30pm NZDT",
+        "location": {
+          "format": "in_person",
+          "venueName": "academyEX",
+          "address": "99 Khyber Pass Road, Grafton, Auckland 1023",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "She Sharp is partnering again with academyEX for International Women's Day 2026, creating space for our community to connect, reflect, and take meaningful action toward gender equality.",
+          "This year's IWD theme, Give To Gain, is a reminder that progress grows through community. When we give our time, support, knowledge, and encouragement, we help open doors for women and girls — and everyone benefits.",
+          "Join us for a welcoming evening focused on honest conversations, shared experiences, and building connections. This event is about showing up for one another and taking small but meaningful steps together.",
+          "Tickets are available at three tiers: Donation/Koha (free), Students ($15 NZD), and Professionals ($20 NZD). No refunds."
+        ],
+        "speakers": {
+          "keynote_speakers": {
+            "heading": "Meet Our Keynote Speaker",
+            "speakers": [
+              {
+                "name": "Ana Ivanovic-Tongue",
+                "title": "Chief Delivery Officer",
+                "company": "",
+                "bio": "",
+                "image": "/img/events/iwd-2026-ana-ivanovic-tongue.jpg",
+                "linkedin": ""
+              }
+            ]
+          },
+          "guest_speakers": {
+            "heading": "Meet Our Speakers",
+            "speakers": [
+              {
+                "name": "Danubi Paim (Dani)",
+                "title": "Founder, Property Besties",
+                "company": "",
+                "bio": "",
+                "image": "/img/events/iwd-2026-danubi-paim-dani.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Wyndi Tagi",
+                "title": "Co-Founder WE Mana & The Table",
+                "company": "",
+                "bio": "",
+                "image": "/img/events/iwd-2026-wyndi-tagi.png",
+                "linkedin": ""
+              },
+              {
+                "name": "Annette Rangi",
+                "title": "GM - Digital Transformation",
+                "company": "",
+                "bio": "",
+                "image": "/img/events/iwd-2026-annette-rangi.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Camille Elemia",
+                "title": "Journalist turned Product Manager, NZME",
+                "company": "",
+                "bio": "",
+                "image": "/img/events/iwd-2026-camille-elemia.jpg",
+                "linkedin": ""
+              }
+            ]
+          }
+        },
+        "organizers": [],
+        "sponsors": {
+          "main": [
+            {
+              "name": "academyEX",
+              "logo": "/img/events/iwd-2026-academyex-logo.svg"
+            }
+          ],
+          "other": []
+        },
+        "specialSections": [],
+        "photos": [],
+        "galleryUrl": "",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-and-academyex-international-women-s-day-2026/tickets",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-academyex-international-women-s-day-2026",
+        "images": [],
+        "category": "networking",
+        "status": "upcoming",
+        "isFeatured": false,
+        "refundPolicy": "No refunds"
+      }
+    }
+  ]
 }
