@@ -212,18 +212,16 @@ export function SiteHeader() {
                       </NavigationMenuContent>
                     </>
                   ) : (
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href={item.href}
-                        onClick={(e) => handleSmoothScroll(e, item.href)}
-                        className={cn(
-                          navigationMenuTriggerStyle(),
-                          "bg-transparent text-foreground hover:bg-[#f7e5f3]/80 transition-all duration-150 rounded-full px-3 py-2"
-                        )}
-                      >
-                        {item.title}
-                      </Link>
-                    </NavigationMenuLink>
+                    <Link
+                      href={item.href}
+                      onClick={(e) => handleSmoothScroll(e, item.href)}
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "bg-transparent text-foreground hover:bg-[#f7e5f3]/80 transition-all duration-150 rounded-full px-3 py-2"
+                      )}
+                    >
+                      {item.title}
+                    </Link>
                   )}
                 </NavigationMenuItem>
               ))}

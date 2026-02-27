@@ -34,9 +34,9 @@ export function UpcomingEventSection() {
   return (
     <Section
       id="upcoming-event"
-      className="px-8 md:px-12 lg:px-16 bg-white"
+      className="px-4 md:px-8 lg:px-12 bg-white"
     >
-      <Container size="full" className="mt-12 md:mt-16 lg:mt-20 mb-12 md:mb-16 lg:mb-20">
+      <Container size="full" className="mt-12 md:mt-16 lg:mt-20">
         <AnimateOnScroll
           variant="fade-up"
           className="text-center mb-12 md:mb-16 lg:mb-20"
@@ -49,7 +49,7 @@ export function UpcomingEventSection() {
           <AnimateOnScroll variant="fade-right" className="w-full lg:w-1/2">
             <div className="relative aspect-3/4 max-w-[400px] mx-auto lg:mx-0 border border-muted-foreground/20 rounded-2xl">
               {/* Background div with slight tilt - responsive */}
-              <div className="absolute inset-0 border border-muted-foreground/20 rounded-2xl transform rotate-0 md:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"></div>
+              <div className="absolute inset-0 border border-muted-foreground/20 rounded-2xl transform rotate-0 md:rotate-8 translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"></div>
               {/* Image positioned on top */}
               <Image
                 src={featuredEvent.coverImage.url}
@@ -125,12 +125,6 @@ export function UpcomingEventSection() {
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
-
-            <div className="mt-4">
-              <Button variant="outline" asChild>
-                <Link href="/events">View all events</Link>
-              </Button>
-            </div>
           </AnimateOnScroll>
         </div>
       </Container>

@@ -67,6 +67,11 @@ export const navigationConfig: {
       ],
     },
     {
+      title: "Events",
+      href: "/events",
+      icon: Calendar,
+    },
+    {
       title: "Mentorship",
       href: "/mentorship",
       icon: GraduationCap,
@@ -95,11 +100,6 @@ export const navigationConfig: {
           icon: Award,
         },
       ],
-    },
-    {
-      title: "Events",
-      href: "/events",
-      icon: Calendar,
     },
     {
       title: "Get Involved",
