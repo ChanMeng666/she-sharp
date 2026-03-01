@@ -11,17 +11,15 @@ export const metadata: Metadata = {
 import { CoreImpactSection } from "@/components/home/core-impact-section";
 import { CoreValuesSection } from "@/components/home/core-values-section";
 import { ProgramsSection } from "@/components/home/programs-section";
-import { UpcomingEventSection } from "@/components/home/upcoming-event-section";
 import { SponsorsSection } from "@/components/home/sponsors-section";
 import { ScrollingSponsorsSection } from "@/components/home/scrolling-sponsors-section";
-import { RecentEventsSection } from "@/components/home/recent-events-section";
+import { EventsShowcaseSection } from "@/components/home/events-showcase-section";
 
 export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <UpcomingEventSection />
-      <RecentEventsSection />
+      <EventsShowcaseSection />
       <ScrollingSponsorsSection />
       <CoreImpactSection />
       <CoreValuesSection />
