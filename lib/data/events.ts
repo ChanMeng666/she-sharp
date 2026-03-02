@@ -536,3 +536,23 @@ export function hasSpecialSections(event: EventV3): boolean {
 export function hasPhotos(event: EventV3): boolean {
   return (event.detailPageData.photos?.length ?? 0) > 0;
 }
+
+/**
+ * Collect all unique sponsor logos across every event.
+ * Deduplicates by sponsor name, keeping the first occurrence.
+ */
+export function getAllSponsorLogos(): { name: string; logo: string }[] {
+  const allEvents = getAllEvents();
+  const seen = new Map<string, string>();
+
+  for (const event of allEvents) {
+    const { main = [], other = [] } = event.detailPageData.sponsors ?? {};
+    for (const sponsor of [...main, ...other]) {
+      if (sponsor.name && sponsor.logo && !seen.has(sponsor.name)) {
+        seen.set(sponsor.name, sponsor.logo);
+      }
+    }
+  }
+
+  return Array.from(seen, ([name, logo]) => ({ name, logo }));
+}
