@@ -1,30 +1,60 @@
-# Add Events (Non-Technical Guide)
+# Content Data Management Guide
 
-This guide shows how to add a new event so it appears on `/events` and the event
-detail page. It is written for non-technical users and uses a simple copy/paste
-workflow.
+This guide explains how to update content across the She Sharp website. The
+project follows a **single source of truth** principle — each piece of data lives
+in exactly one file, and all pages/components derive from it automatically.
 
-## Where to add events
+## Data Architecture Overview
 
-All custom events live in:
+```
+lib/data/json/
+  ├── events-custom.json        → Custom/manual events (you edit this)
+  ├── shesharp_events_v3.json   → Scraped events (auto-generated, do NOT edit)
+  ├── humanitix_events.json     → Humanitix enrichment data (script-only)
+  ├── shesharp_podcasts_with_local_images.json  → Podcast episodes
+  └── shesharp_news_press_with_local_images.json → Press/news items
 
-`lib/data/json/events-custom.json`
+lib/data/
+  ├── events.ts          → Merges scraped + custom events, exports helpers
+  ├── gallery-albums.ts  → Derived from events (no separate data file)
+  ├── stats.ts           → Organization statistics (single source of truth)
+  ├── sponsors.ts        → Organization-level sponsor tiers
+  ├── spotify-podcasts.ts → Podcast data adapter
+  ├── news-press.ts      → News/press data adapter
+  ├── mentors.ts         → Mentor profiles
+  ├── team.ts            → Team member profiles
+  └── ...
+```
 
-Only events inside the `events` array are shown on the website. The `template`
-section is just a reference and does not display on the site.
+### Key Principle
 
-## Quick steps
+When you add or update content, you only need to edit **one file**. The change
+automatically propagates to all pages and components that use that data.
+
+---
+
+## 1. Adding or Updating Events
+
+**File to edit:** `lib/data/json/events-custom.json`
+
+This is the single entry point for manually curated events. Changes here
+automatically affect:
+
+- `/events` — event listing page
+- `/events/[slug]` — event detail page
+- `/resources/photo-gallery` — gallery page (if `galleryUrl` is set)
+- Homepage — upcoming/recent events sections
+- Homepage — scrolling sponsor banner (from event sponsors)
+
+### Quick Steps
 
 1. Open `lib/data/json/events-custom.json`.
-2. Copy the object from the `template` section.
-3. Paste it into the `events` array (as a new entry).
-4. Replace the example values with your new event details.
+2. Copy the `template` object at the top of the file.
+3. Paste it as a new entry in the `events` array.
+4. Replace the example values with your event details.
 5. Save the file.
 
-## Example
-
-Below is a minimal example you can paste into the `events` array. Replace every
-value with your event info.
+### Example
 
 ```json
 {
@@ -74,53 +104,135 @@ value with your event info.
 }
 ```
 
-## Field-by-field checklist
+### Field-by-Field Checklist
 
-Use this checklist to ensure completeness and avoid missing data.
+#### Required fields
 
-### Required fields (must be filled)
-- `id`: A unique number. Use a new number that is not used by any other event.
-- `slug`: Lowercase, words separated by hyphens. Example: `women-in-ai-2026`.
-- `title`: Event title shown on cards and the detail page.
-- `date`: Use the format `Month Day, Year` (example: `March 5, 2026`).
-- `coverImage.url`: Poster or hero image. Use a valid public URL or `/img/...`
-  if the image exists in the `public/img` folder.
-- `detailPageUrl` and `detailPageData.url`: The event page URL.
-- `shortDescription`: One sentence. Shown on the event card.
-- `detailPageData.title`: Usually the same as `title`.
-- `detailPageData.date`: Same as `date`.
-- `detailPageData.time`: Example: `5:30pm - 7:00pm NZDT`.
-- `detailPageData.location`: Use real location details.
-- `detailPageData.fullDescription`: At least 1 paragraph (array of strings).
-- `detailPageData.status`: Use `upcoming` or `completed`.
+| Field | Description | Example |
+|-------|-------------|---------|
+| `id` | Unique number, not used by any other event | `1001` |
+| `slug` | URL-safe identifier, lowercase with hyphens | `women-in-ai-2026` |
+| `title` | Event title shown on cards and detail page | `Women in AI 2026` |
+| `date` | Format: `Month Day, Year` | `March 5, 2026` |
+| `coverImage.url` | Poster image path | `/img/my-event.jpg` |
+| `shortDescription` | One sentence for event cards | |
+| `detailPageData.time` | Include timezone | `5:30pm - 7:00pm NZDT` |
+| `detailPageData.location` | Venue details | See example above |
+| `detailPageData.fullDescription` | Array of paragraph strings | |
+| `detailPageData.status` | `"upcoming"` or `"past"` | |
 
-### Optional fields (recommended when you have the info)
-- `detailPageData.subtitle`: Short supporting line under the title.
-- `detailPageData.registrationUrl`: Ticket or registration link.
-- `detailPageData.galleryUrl`: Post-event photo gallery.
-- `detailPageData.images`: Extra images for the event detail page.
-- `detailPageData.sponsors`: Add sponsor logos if available.
-- `detailPageData.speakers`: Add speaker profiles if available.
+#### Optional fields (auto-propagating)
 
-## Tips to avoid common mistakes
+| Field | What it powers |
+|-------|---------------|
+| `detailPageData.galleryUrl` | Photo gallery page (`/resources/photo-gallery`) — album appears automatically |
+| `detailPageData.registrationUrl` | Registration button on event detail page |
+| `detailPageData.sponsors.main[]` | Event detail page + homepage scrolling sponsor banner |
+| `detailPageData.speakers` | Speaker section on event detail page |
+| `detailPageData.humanitixUrl` | Used to match/merge with scraped Humanitix data |
 
-- **Date format** must be `Month Day, Year` or the event sorting may break.
-- **Slug** must be unique. Do not reuse existing slugs.
-- **Cover image** must be reachable. If using `/img/...`, confirm the image
-  exists in `public/img`.
+### Tips
+
+- **Date format** must be `Month Day, Year` — sorting depends on this.
+- **Slug** must be unique across all events.
+- **Cover image**: place files in `public/img/` and reference as `/img/filename.jpg`.
 - **Location format** values: `in_person`, `online`, or `hybrid`.
-- **Time** should include timezone (e.g., `NZDT`, `NZST`) when possible.
+- **Gallery**: just set `galleryUrl` — the gallery page picks it up automatically. No need to edit any other file.
 
-## How to add an image
+---
 
-If you have a local poster image, place it in:
+## 2. Updating Organization Statistics
 
-`public/img/`
+**File to edit:** `lib/data/stats.ts`
 
-Then reference it like this:
+This is the single source of truth for all organization-wide numbers. Changes
+here automatically affect:
 
-`/img/my-new-event.jpg`
+- Homepage impact section (member count, event count, partner count, career stories)
+- Any future page that imports from `stats.ts`
 
-## Need help?
+### What to update
+
+```typescript
+// In lib/data/stats.ts
+export const globalStats = {
+  members: { current: 2200, ... },    // "2200+" on homepage
+  sponsors: { current: 50, ... },     // "50+" on homepage
+  events: { total: 84, ... },         // "84+" on homepage
+  impact: { careerTransitions: 500 }, // "500+" on homepage
+  ...
+};
+```
+
+Update the numbers in `globalStats` — the homepage `homeImpactData` array
+derives its display values from these numbers automatically.
+
+---
+
+## 3. Updating Organization-Level Sponsors
+
+**File to edit:** `lib/data/sponsors.ts`
+
+This file manages **organization-level sponsor tiers** (Silver, Bronze, etc.).
+These are different from per-event sponsors (which live in the event JSON).
+
+Changes here automatically affect:
+
+- Homepage "Thanks to Our Sponsors" section (tiered display)
+- Sponsorship pricing page (sponsor logo wall)
+
+### Adding a new sponsor
+
+Add a new entry to the `tieredSponsors` array:
+
+```typescript
+{
+  name: "New Company",
+  logo: "/logos/new-company-logo.svg",
+  description: "Short tagline",
+  url: "https://www.newcompany.com",
+  tier: "silver",  // "platinum" | "gold" | "silver" | "bronze"
+},
+```
+
+### Organization sponsors vs event sponsors
+
+| Type | Where it lives | What it represents |
+|------|---------------|-------------------|
+| Organization sponsor | `lib/data/sponsors.ts` | Annual partnership tier (Silver/Bronze/etc.) |
+| Event sponsor | `events-custom.json` → `detailPageData.sponsors` | Who sponsored a specific event |
+
+A company may be both — e.g., HCLTech is a Silver-tier org sponsor AND sponsors
+individual events. These are managed independently because they serve different
+purposes.
+
+---
+
+## 4. Other Data Files
+
+| Data | File to edit | Affects |
+|------|-------------|---------|
+| Podcast episodes | `lib/data/json/shesharp_podcasts_with_local_images.json` | `/resources/podcasts` page |
+| News/press items | `lib/data/json/shesharp_news_press_with_local_images.json` | `/resources/in-the-press` page |
+| Mentor profiles | `lib/data/mentors.ts` | Mentorship page mentor list |
+| Team members | `lib/data/team.ts` | About page team section |
+| Impact reports | `lib/data/impact-reports.ts` | Resources page |
+| Newsletter config | `lib/data/newsletters.ts` | Footer newsletter links |
+
+---
+
+## Summary: Where to Edit for Common Tasks
+
+| Task | Edit this file only |
+|------|-------------------|
+| Add a new event | `lib/data/json/events-custom.json` |
+| Add a photo gallery to an event | Set `galleryUrl` in the event entry above |
+| Add event sponsors | Set `sponsors` in the event entry above |
+| Update org statistics (member count, etc.) | `lib/data/stats.ts` |
+| Add/change organization sponsor tier | `lib/data/sponsors.ts` |
+| Add a podcast episode | `lib/data/json/shesharp_podcasts_with_local_images.json` |
+| Add a press/news item | `lib/data/json/shesharp_news_press_with_local_images.json` |
+
+## Need Help?
 
 If you are unsure about any field, ask a developer to confirm before publishing.

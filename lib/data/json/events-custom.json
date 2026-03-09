@@ -46,6 +46,49 @@
   },
   "events": [
     {
+      "id": 86,
+      "slug": "from-burnout-to-balance",
+      "title": "From Burnout to Balance",
+      "date": "September 20, 2023",
+      "coverImage": {
+        "url": "/img/scraped/galleries/034_From_Burnout_to_Balance.png",
+        "alt": "From Burnout to Balance event cover"
+      },
+      "detailPageUrl": "https://www.shesharp.org.nz/events/from-burnout-to-balance",
+      "shortDescription": "An event exploring strategies for managing burnout and finding balance in your career and life.",
+      "attendees": null,
+      "detailPageData": {
+        "url": "https://www.shesharp.org.nz/events/from-burnout-to-balance",
+        "title": "From Burnout to Balance",
+        "subtitle": "",
+        "date": "September 20, 2023",
+        "time": "",
+        "location": {
+          "format": "in_person",
+          "venueName": "",
+          "address": "",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [],
+        "speakers": {},
+        "organizers": [],
+        "sponsors": {
+          "main": [],
+          "other": []
+        },
+        "specialSections": [],
+        "photos": [],
+        "galleryUrl": "https://photos.app.goo.gl/PeTEUpz6rBf837ek8",
+        "registrationUrl": "",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-techwomen-nz-from-burnout-to-balance",
+        "images": [],
+        "category": "",
+        "status": "past",
+        "isFeatured": false
+      }
+    },
+    {
       "id": 85,
       "slug": "she-sharp-and-academyex-international-womens-day-2026",
       "title": "She Sharp & academyEX: International Women's Day 2026",

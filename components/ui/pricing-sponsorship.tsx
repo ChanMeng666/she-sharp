@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { tieredSponsors } from "@/lib/data/sponsors"
 
 interface SponsorshipTier {
   name: string
@@ -16,11 +17,6 @@ interface SponsorshipTier {
     yearly: number
   }
   popular?: boolean
-}
-
-interface SponsorLogo {
-  name: string
-  logo: string
 }
 
 const tiers: SponsorshipTier[] = [
@@ -56,25 +52,6 @@ const features = [
   "Social media recognition and mentions",
   "Complimentary tickets to all events",
   "Featured in annual impact report",
-]
-
-const sponsors: SponsorLogo[] = [
-  {
-    name: "HCLTech",
-    logo: "/img/scraped/misc/6470185f85072710b161d610_hcltech-logo.svg",
-  },
-  {
-    name: "Fonterra",
-    logo: "/img/scraped/site/sponsors/65e50fc6d2f01ad68fb15688_fonterra_4f14cd01.png",
-  },
-  {
-    name: "MYOB",
-    logo: "/img/scraped/misc/64701860f27305f34ecc8b66_myob-logo.svg",
-  },
-  {
-    name: "Fisher & Paykel Healthcare",
-    logo: "/img/scraped/site/sponsors/65d80a4331c46a8a017e669f_PNG_-_for_web_video__MS_O_d075e390.png",
-  },
 ]
 
 export function SponsorshipPricing() {
@@ -213,7 +190,7 @@ export function SponsorshipPricing() {
 
                 {/* Logo Wall */}
                 <div className="mt-6 flex flex-wrap items-center gap-8">
-                  {sponsors.map((sponsor) => (
+                  {tieredSponsors.map((sponsor) => (
                     <Image
                       key={sponsor.name}
                       className="h-10 w-auto"

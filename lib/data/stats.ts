@@ -1,7 +1,7 @@
-// Global statistics data management
+// Global statistics data management — single source of truth for all pages
 export const globalStats = {
   members: {
-    current: 1000,
+    current: 2200,
     label: "Members",
     description: "Active community members",
     growth: "+15% YoY",
@@ -33,6 +33,40 @@ export const globalStats = {
     salaryIncrease: 23, // average % increase
   },
 };
+
+export type ImpactItem = {
+  title: string;
+  value: string;
+  desc: string;
+  icon: string;
+};
+
+export const homeImpactData: ImpactItem[] = [
+  {
+    title: "Active Members",
+    value: `${globalStats.members.current}+`,
+    desc: "Women in tech building connections and advancing careers.",
+    icon: "/icons/members.svg",
+  },
+  {
+    title: "Events Since 2014",
+    value: `${globalStats.events.total}+`,
+    desc: "Workshops and conferences empowering women in tech.",
+    icon: "/icons/events.svg",
+  },
+  {
+    title: "Partner Companies",
+    value: `${globalStats.sponsors.current}+`,
+    desc: "Leading tech companies supporting our mission.",
+    icon: "/icons/parnership.svg",
+  },
+  {
+    title: "Career Success Stories",
+    value: `${globalStats.impact.careerTransitions}+`,
+    desc: "Women advancing careers through mentorship and networking.",
+    icon: "/icons/success.svg",
+  },
+];
 
 // Page-specific stats configurations
 export const pageStats = {

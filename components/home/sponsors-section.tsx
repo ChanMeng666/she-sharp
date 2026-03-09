@@ -6,37 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
+import { getSponsorsByTier } from "@/lib/data/sponsors";
 
-const sponsors = {
-  silver: [
-    {
-      name: "HCLTech",
-      logo: "/logos/hcltech-logo.svg",
-      description: "Technology that makes a difference",
-      url: "https://www.hcltech.com",
-    },
-    {
-      name: "Fonterra",
-      logo: "/logos/fonterra-logo.svg",
-      description: "Innovation in every byte",
-      url: "https://www.fonterra.com",
-    },
-    {
-      name: "MYOB",
-      logo: "/logos/myob-logo.svg",
-      description: "Business solutions for growth",
-      url: "https://www.myob.com",
-    },
-  ],
-  bronze: [
-    {
-      name: "Fisher & Paykel Healthcare",
-      logo: "/logos/FPHcare-logo.svg",
-      description: "Healthcare innovation",
-      url: "https://www.fphcare.com",
-    },
-  ],
-};
+const silverSponsors = getSponsorsByTier("silver");
+const bronzeSponsors = getSponsorsByTier("bronze");
 
 // Benefits removed for brevity on homepage
 
@@ -58,7 +31,7 @@ export function SponsorsSection() {
             </h3>
           </AnimateOnScroll>
           <div className="grid md:grid-cols-3 gap-16 max-w-3xl mx-auto justify-items-center">
-            {sponsors.silver.map((sponsor, index) => (
+            {silverSponsors.map((sponsor, index) => (
               <AnimateOnScroll
                 key={sponsor.name}
                 variant="fade-up"
@@ -96,7 +69,7 @@ export function SponsorsSection() {
           </AnimateOnScroll>
 
           <div className="flex justify-center max-w-2xl mx-auto">
-            {sponsors.bronze.map((sponsor) => (
+            {bronzeSponsors.map((sponsor) => (
               <AnimateOnScroll
                 key={sponsor.name}
                 variant="fade-up"

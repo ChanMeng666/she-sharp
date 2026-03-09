@@ -7,40 +7,7 @@ import { Section } from "@/components/layout/section";
 import { useInView } from "@/hooks/use-in-view";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
-
-type ImpactItem = {
-  title: string;
-  value: string;
-  desc: string;
-  icon: string;
-};
-
-const impactData: ImpactItem[] = [
-  {
-    title: "Active Members",
-    value: "2200+",
-    desc: "Women in tech building connections and advancing careers.",
-    icon: "/icons/members.svg",
-  },
-  {
-    title: "Events Since 2014",
-    value: "84+",
-    desc: "Workshops and conferences empowering women in tech.",
-    icon: "/icons/events.svg",
-  },
-  {
-    title: "Partner Companies",
-    value: "50+",
-    desc: "Leading tech companies supporting our mission.",
-    icon: "/icons/parnership.svg",
-  },
-  {
-    title: "Career Success Stories",
-    value: "500+",
-    desc: "Women advancing careers through mentorship and networking.",
-    icon: "/icons/success.svg",
-  },
-];
+import { homeImpactData, type ImpactItem } from "@/lib/data/stats";
 
 const parseTargetValue = (
   value: string
@@ -162,7 +129,7 @@ export function CoreImpactSection() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-8xl mx-auto my-12 md:my-16 lg:my-20"
             role="list"
           >
-            {impactData.map((item, i) => (
+            {homeImpactData.map((item, i) => (
               <AnimateOnScroll key={i} variant="fade-up" delay={i * 100}>
                 <StatCard
                   item={item}
