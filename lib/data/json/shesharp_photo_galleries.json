@@ -2,14 +2,15 @@
   "metadata": {
     "source": "https://www.shesharp.org.nz/media/photo-gallery",
     "scrapedAt": "2026-01-19T23:38:35.449724",
-    "totalGalleries": 76,
+    "totalGalleries": 81,
     "organization": "She Sharp New Zealand",
     "description": "Photo galleries from She Sharp events",
     "yearRange": {
       "earliest": "2014",
-      "latest": "2025"
+      "latest": "2026"
     },
     "galleriesByYear": {
+      "2026": 1,
       "2025": 10,
       "2024": 9,
       "2023": 13,
@@ -19,12 +20,27 @@
       "2019": 5,
       "2018": 6,
       "2017": 5,
-      "2016": 5,
-      "2015": 3,
+      "2016": 6,
+      "2015": 6,
       "2014": 1
     }
   },
   "galleries": [
+    {
+      "id": 0,
+      "title": "She Sharp & academyEX: International Women's Day 2026",
+      "date": "March 6, 2026",
+      "year": "2026",
+      "galleryUrl": "https://photos.app.goo.gl/H8XorWyR1mUTTM6cA",
+      "coverImage": {
+        "url": "/img/events/iwd-2026-banner.png",
+        "alt": "She Sharp & academyEX International Women's Day 2026",
+        "srcset": "",
+        "localPath": ""
+      },
+      "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery",
+      "pageNumber": 1
+    },
     {
       "id": 1,
       "title": "She Sharp & HCLTech: AI Empowerment: Shaping an Inclusive Digital Future",
@@ -1046,6 +1062,21 @@
       "pageNumber": 8
     },
     {
+      "id": 77,
+      "title": "SHE# with TRADE ME",
+      "date": "August 3, 2016",
+      "year": "2016",
+      "galleryUrl": "https://photos.app.goo.gl/dKS16iUrVsYdepXj7",
+      "coverImage": {
+        "url": "/img/scraped/covers/65646667917974cfd2f334d4_Event_Tile_BGs_7_d62d5ca8.png",
+        "alt": "SHE# with TRADE ME event tile",
+        "srcset": "",
+        "localPath": ""
+      },
+      "pageUrl": "https://www.shesharp.org.nz/events/she-with-trade-me",
+      "pageNumber": 8
+    },
+    {
       "id": 69,
       "title": "Security 101: Plugging the Data Leak",
       "date": "May 28, 2016",
@@ -1133,6 +1164,51 @@
         "localPath": "assets/images/galleries/074_She_Sharp_@_Xero_in_Wellington.jpg"
       },
       "pageUrl": "https://www.shesharp.org.nz/media/photo-gallery?10f821ec_page=9",
+      "pageNumber": 9
+    },
+    {
+      "id": 78,
+      "title": "Hacking Insecurities @ Grid AKL",
+      "date": "August 19, 2015",
+      "year": "2015",
+      "galleryUrl": "https://photos.app.goo.gl/bzB9Zfsfbftid2n69",
+      "coverImage": {
+        "url": "/img/scraped/covers/65645d256caa5e2eb48536ea_hackinglanding_44f7acf0.jpg",
+        "alt": "Hacking Insecurities event landing image",
+        "srcset": "",
+        "localPath": ""
+      },
+      "pageUrl": "https://www.shesharp.org.nz/events/hacking-insecurities-grid-akl",
+      "pageNumber": 9
+    },
+    {
+      "id": 79,
+      "title": "Agile Session with Xero",
+      "date": "June 3, 2015",
+      "year": "2015",
+      "galleryUrl": "https://photos.app.goo.gl/BApfooEpsr5SiKU1A",
+      "coverImage": {
+        "url": "/img/scraped/covers/65645ab43126fd9108ec23fe_XeroLanding_a68e2a09.jpg",
+        "alt": "Agile Session with Xero event landing image",
+        "srcset": "",
+        "localPath": ""
+      },
+      "pageUrl": "https://www.shesharp.org.nz/events/agile-session-with-xero",
+      "pageNumber": 9
+    },
+    {
+      "id": 80,
+      "title": "UX Design with IBM",
+      "date": "March 12, 2015",
+      "year": "2015",
+      "galleryUrl": "https://photos.app.goo.gl/f7dM9LCjthkiBtsZA",
+      "coverImage": {
+        "url": "/img/scraped/covers/656458c0902a2bfd76425737_IBMlanding_c6dc6e84.jpg",
+        "alt": "UX Design with IBM event landing image",
+        "srcset": "",
+        "localPath": ""
+      },
+      "pageUrl": "https://www.shesharp.org.nz/events/ux-design-with-ibm",
       "pageNumber": 9
     },
     {
