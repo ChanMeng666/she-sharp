@@ -38,11 +38,12 @@ function SpeakerGroupSection({ group, startIndex }: SpeakerGroupSectionProps) {
             linkedin: speaker.linkedin || undefined,
           };
           return (
-            <div key={startIndex + index} className="w-full h-full flex bg-white rounded-2xl ">
+            <div key={startIndex + index} className="w-full h-full flex">
               <MemberCard
                 member={memberCardData}
                 index={startIndex + index}
                 hideDescriptionOnCard={true}
+                background="bg-white"
               />
             </div>
           );

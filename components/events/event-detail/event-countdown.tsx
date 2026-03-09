@@ -70,7 +70,7 @@ export function EventCountdown({ event, className }: EventCountdownProps) {
           {/* Card with three color sections */}
           <div className="flex">
             {/* Left section - Purple/Blue */}
-            <div className="bg-brand/30 px-4 md:px-6 py-4 md:py-6 flex items-center">
+            <div className="bg-brand/60 px-4 md:px-6 py-4 md:py-6 flex items-center">
               <div>
                 <p className="text-white text-xs md:text-sm font-medium uppercase mb-1 md:mb-2">
                   SEE YOU IN
