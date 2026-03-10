@@ -9,17 +9,6 @@ import { Container } from "@/components/layout/container";
 export function HeroSection() {
   return (
     <section className="relative py-16 md:min-h-[95vh] md:flex md:items-center overflow-hidden">
-      {/* Full background image */}
-      <div className="absolute inset-0">
-        <Image
-          src="/img/bg-img.jpg"
-          alt="Background"
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
-      </div>
 
       {/* Frosted glass overlay */}
       <div className="absolute inset-0  bg-slate-500/20" />

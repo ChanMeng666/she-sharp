@@ -25,7 +25,7 @@ const BENEFITS = [
 ] as const
 
 const CARD_CLASSES =
-  "@container/card flex flex-col rounded-xl overflow-hidden border border-border/30 bg-linear-to-t from-primary/5 to-card backdrop-blur-md backdrop-saturate-150 shadow-lg shadow-black/5 hover:border-brand/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/10"
+  "@container/card flex flex-col rounded-xl overflow-hidden border border-border/30 bg-white/50 backdrop-saturate-150 shadow-sm shadow-black/5 hover:border-brand/50 hover:bg-background/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/10 focus-within:-translate-y-0.5 focus-within:shadow-xl focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20"
 
 export function MentorshipBenefits() {
   return (

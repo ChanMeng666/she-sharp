@@ -15,7 +15,7 @@ const bronzeSponsors = getSponsorsByTier("bronze");
 
 export function SponsorsSection() {
   return (
-    <Section className="overflow-hidden bg-white py-16 xl:py-24 2xl:py-32">
+    <Section className="overflow-hidden bg-white/20 py-16 xl:py-24 2xl:py-32">
       <Container size="full">
         <AnimateOnScroll variant="fade-up" className="text-center mb-12 md:mb-16 lg:mb-20">
           <h2 className="text-display-sm text-foreground">

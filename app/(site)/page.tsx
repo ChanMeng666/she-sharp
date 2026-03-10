@@ -17,7 +17,12 @@ import { EventsShowcaseSection } from "@/components/home/events-showcase-section
 
 export default function HomePage() {
   return (
-    <>
+    <div className="relative isolate">
+      <div
+        className="fixed inset-0 z-[-1] bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url(/img/bg-img.jpg)" }}
+      />
+
       <HeroSection />
       <EventsShowcaseSection />
       <ScrollingSponsorsSection />
@@ -26,6 +31,6 @@ export default function HomePage() {
       <ProgramsSection />
       <SponsorsSection />
       <CTASection />
-    </>
+    </div>
   );
 }

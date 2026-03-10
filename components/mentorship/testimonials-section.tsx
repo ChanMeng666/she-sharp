@@ -115,8 +115,13 @@ export function TestimonialsSection() {
                 <blockquote className="text-quote text-foreground mb-6 flex items-start gap-2 md:gap-8">
                   <Quote className="w-12 h-12 text-brand/30 mt-1 shrink-0 rotate-180" />
                   <span className="flex-1">{current.fullStory}</span>
-                  <Quote className="w-12 h-12 text-brand/30 mt-1 shrink-0 " />
+                  <Quote className="w-12 h-12 text-brand/30 mt-1 shrink-0" />
                 </blockquote>
+                {current.author && (
+                  <p className="text-right text-base font-semibold text-brand mr-12">
+                    — {current.author}
+                  </p>
+                )}
               </CardContent>
             </Card>
 
