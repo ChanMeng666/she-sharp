@@ -14,6 +14,7 @@ import { ProgramsSection } from "@/components/home/programs-section";
 import { SponsorsSection } from "@/components/home/sponsors-section";
 import { ScrollingSponsorsSection } from "@/components/home/scrolling-sponsors-section";
 import { EventsShowcaseSection } from "@/components/home/events-showcase-section";
+import { HomeTestimonialsSection } from "@/components/home/testimonials-section";
 
 export default function HomePage() {
   return (
@@ -29,6 +30,7 @@ export default function HomePage() {
       <CoreImpactSection />
       <CoreValuesSection />
       <ProgramsSection />
+      <HomeTestimonialsSection />
       <SponsorsSection />
       <CTASection />
     </div>
