@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
-import { 
+import {
   users,
   userRoles,
   mentorshipRelationships,
@@ -9,7 +9,6 @@ import {
   events,
   eventRegistrations,
   resources,
-  userMentorshipStats
 } from '@/lib/db/schema';
 import { sql, gte, lte, and, eq } from 'drizzle-orm';
 
@@ -123,19 +122,8 @@ export const GET = withRoles(
         )
         .groupBy(resources.resourceType);
 
-      // Top Mentors by Activity
-      const topMentors = await db
-        .select({
-          userId: userMentorshipStats.userId,
-          userName: sql<string>`(SELECT name FROM users WHERE id = ${userMentorshipStats.userId})`,
-          menteesCount: userMentorshipStats.menteesCount,
-          completedMeetings: userMentorshipStats.completedMeetings,
-          totalMeetingHours: userMentorshipStats.totalMeetingHours
-        })
-        .from(userMentorshipStats)
-        .where(sql`${userMentorshipStats.menteesCount} > 0`)
-        .orderBy(sql`${userMentorshipStats.completedMeetings} DESC`)
-        .limit(10);
+      // Top Mentors by Activity (removed - was based on unused stats table)
+      const topMentors: any[] = [];
 
       // Engagement Metrics
       const avgMeetingsPerRelationship = await db

@@ -10,13 +10,10 @@ import {
   events,
   eventRegistrations,
   resources,
-  userMentorshipStats,
-  adminPermissions,
   mentorFormSubmissions,
   menteeFormSubmissions,
 } from '@/lib/db/schema';
-import { eq, and, or, desc, gte, sql } from 'drizzle-orm';
-import { getUserPoints, getUserLevelDetails } from '@/lib/points/service';
+import { eq, and, desc, gte, sql } from 'drizzle-orm';
 
 export async function GET() {
   try {
@@ -41,36 +38,6 @@ export async function GET() {
     const isMentee = activeRoles.includes('mentee');
     const isAdmin = activeRoles.includes('admin');
 
-    // Get or create user stats
-    let [stats] = await db
-      .select()
-      .from(userMentorshipStats)
-      .where(eq(userMentorshipStats.userId, user.id))
-      .limit(1);
-
-    if (!stats) {
-      // Create initial stats
-      [stats] = await db
-        .insert(userMentorshipStats)
-        .values({
-          userId: user.id,
-          menteesCount: 0,
-          mentorsCount: 0,
-          totalMeetings: 0,
-          completedMeetings: 0,
-          totalMeetingHours: '0',
-          eventsAttended: 0,
-          eventsRegistered: 0,
-          resourcesUploaded: 0,
-          resourcesAccessed: 0,
-          statsUpdatedAt: new Date()
-        })
-        .returning();
-    }
-
-    // Get points and level data
-    const levelDetails = await getUserLevelDetails(user.id);
-
     // Get form submission status
     const [mentorForm] = await db
       .select()
@@ -91,28 +58,6 @@ export async function GET() {
         email: user.email,
         emailVerified: !!user.emailVerifiedAt,
         roles: activeRoles
-      },
-      stats: {
-        menteesCount: stats.menteesCount,
-        mentorsCount: stats.mentorsCount,
-        totalMeetings: stats.totalMeetings,
-        completedMeetings: stats.completedMeetings,
-        totalMeetingHours: parseFloat(stats.totalMeetingHours || '0'),
-        eventsAttended: stats.eventsAttended,
-        eventsRegistered: stats.eventsRegistered,
-        resourcesUploaded: stats.resourcesUploaded,
-        resourcesAccessed: stats.resourcesAccessed
-      },
-      points: {
-        current: levelDetails.currentPoints,
-        lifetime: levelDetails.lifetimePoints,
-        level: levelDetails.currentLevel.level,
-        levelName: levelDetails.currentLevel.name,
-        progressToNextLevel: levelDetails.progressToNextLevel,
-        nextLevel: levelDetails.nextLevel ? {
-          name: levelDetails.nextLevel.name,
-          minPoints: levelDetails.nextLevel.minPoints
-        } : null
       },
       formStatus: {
         mentor: mentorForm ? {

@@ -20,16 +20,6 @@ const ALL_TABLES = [
   'ai_matching_runs',
   'mentee_waiting_queue',
 
-  // Points & Gamification
-  'reward_redemptions',
-  'user_milestones',
-  'points_transactions',
-  'user_points',
-  'rewards',
-  'milestones',
-  'points_rules',
-  'experience_levels',
-
   // Meetings & Relationships
   'meetings',
   'mentorship_relationships',
@@ -58,9 +48,6 @@ const ALL_TABLES = [
   // Membership
   'membership_purchases',
   'user_memberships',
-
-  // User Statistics
-  'user_mentorship_stats',
 
   // Notifications
   'notifications',

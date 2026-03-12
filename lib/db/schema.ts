@@ -33,7 +33,6 @@ export const formStatusEnum = pgEnum('form_status', ['not_started', 'in_progress
 export const bioMethodEnum = pgEnum('bio_method', ['self_written', 'ai_generated', 'already_sent']);
 export const careerStageEnum = pgEnum('career_stage', ['undergraduate', 'postgraduate', 'early_career', 'mid_career', 'senior', 'career_transition']);
 export const menteeTypePreferenceEnum = pgEnum('mentee_type_preference', ['undergraduate', 'postgraduate', 'professional']);
-export const pointsTransactionTypeEnum = pgEnum('points_transaction_type', ['event_attendance', 'meeting_completed', 'referral_bonus', 'milestone_reward', 'redemption', 'admin_adjustment']);
 export const matchStatusEnum = pgEnum('match_status', ['pending_review', 'approved', 'rejected', 'active', 'expired']);
 export const subscriptionStatusEnum = pgEnum('subscription_status', ['active', 'past_due', 'canceled', 'incomplete', 'trialing', 'unpaid']);
 export const mbtiTypeEnum = pgEnum('mbti_type', ['INTJ', 'INTP', 'ENTJ', 'ENTP', 'INFJ', 'INFP', 'ENFJ', 'ENFP', 'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ', 'ISTP', 'ISFP', 'ESTP', 'ESFP']);
@@ -419,26 +418,6 @@ export const eventRoleAssignments = pgTable('event_role_assignments', {
   roleTypeIdx: index('event_role_assignments_role_type_idx').on(table.roleType),
 }));
 
-// User mentorship statistics cache
-export const userMentorshipStats = pgTable('user_mentorship_stats', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').notNull().unique().references(() => users.id, { onDelete: 'cascade' }),
-  menteesCount: integer('mentees_count').default(0),
-  mentorsCount: integer('mentors_count').default(0),
-  totalMeetings: integer('total_meetings').default(0),
-  completedMeetings: integer('completed_meetings').default(0),
-  totalMeetingHours: decimal('total_meeting_hours', { precision: 10, scale: 2 }).default('0'),
-  eventsAttended: integer('events_attended').default(0),
-  eventsRegistered: integer('events_registered').default(0),
-  resourcesUploaded: integer('resources_uploaded').default(0),
-  resourcesAccessed: integer('resources_accessed').default(0),
-  lastActivityAt: timestamp('last_activity_at'),
-  statsUpdatedAt: timestamp('stats_updated_at').notNull().defaultNow(),
-}, (table) => ({
-  userIdIdx: index('user_mentorship_stats_user_id_idx').on(table.userId),
-  updatedIdx: index('user_mentorship_stats_updated_idx').on(table.statsUpdatedAt),
-}));
-
 // Keep existing auth-related tables
 export const emailVerifications = pgTable('email_verifications', {
   id: serial('id').primaryKey(),
@@ -536,7 +515,6 @@ export const usersRelations = relations(users, ({ many, one }) => ({
   resourceAccessLogs: many(resourceAccessLogs),
   membership: one(userMemberships),
   adminPermissions: one(adminPermissions),
-  mentorshipStats: one(userMentorshipStats),
   activityLogs: many(activityLogs),
   notifications: many(notifications),
   emailVerifications: many(emailVerifications),
@@ -701,13 +679,6 @@ export const eventRoleAssignmentsRelations = relations(eventRoleAssignments, ({ 
   }),
 }));
 
-export const userMentorshipStatsRelations = relations(userMentorshipStats, ({ one }) => ({
-  user: one(users, {
-    fields: [userMentorshipStats.userId],
-    references: [users.id],
-  }),
-}));
-
 // Type exports
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
@@ -735,8 +706,6 @@ export type AdminPermission = typeof adminPermissions.$inferSelect;
 export type NewAdminPermission = typeof adminPermissions.$inferInsert;
 export type EventRoleAssignment = typeof eventRoleAssignments.$inferSelect;
 export type NewEventRoleAssignment = typeof eventRoleAssignments.$inferInsert;
-export type UserMentorshipStat = typeof userMentorshipStats.$inferSelect;
-export type NewUserMentorshipStat = typeof userMentorshipStats.$inferInsert;
 export type ActivityLog = typeof activityLogs.$inferSelect;
 export type NewActivityLog = typeof activityLogs.$inferInsert;
 export type Notification = typeof notifications.$inferSelect;
@@ -786,8 +755,6 @@ export enum ActivityType {
   REVIEW_APPLICATION = 'REVIEW_APPLICATION',
   GENERATE_INVITATION_CODE = 'GENERATE_INVITATION_CODE',
   USE_INVITATION_CODE = 'USE_INVITATION_CODE',
-  AWARD_POINTS = 'AWARD_POINTS',
-  REDEEM_REWARD = 'REDEEM_REWARD',
   AI_MATCH_GENERATED = 'AI_MATCH_GENERATED',
   AI_MATCH_CONFIRMED = 'AI_MATCH_CONFIRMED',
   PAYMENT_COMPLETED = 'PAYMENT_COMPLETED',
@@ -1071,124 +1038,6 @@ export const contactFormSubmissions = pgTable('contact_form_submissions', {
   statusIdx: index('contact_form_status_idx').on(table.status),
 }));
 
-// User points balance
-export const userPoints = pgTable('user_points', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').notNull().unique().references(() => users.id, { onDelete: 'cascade' }),
-  currentPoints: integer('current_points').default(0).notNull(),
-  lifetimePoints: integer('lifetime_points').default(0).notNull(),
-  experienceLevel: integer('experience_level').default(1).notNull(),
-  experienceLevelName: varchar('experience_level_name', { length: 100 }).default('Newcomer'),
-  eventsAttended: integer('events_attended').default(0).notNull(),
-  meetingsCompleted: integer('meetings_completed').default(0).notNull(),
-  lastMilestoneAchieved: varchar('last_milestone_achieved', { length: 100 }),
-  nextMilestoneTarget: integer('next_milestone_target'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-}, (table) => ({
-  userIdIdx: index('user_points_user_id_idx').on(table.userId),
-  levelIdx: index('user_points_level_idx').on(table.experienceLevel),
-}));
-
-// Points transactions
-export const pointsTransactions = pgTable('points_transactions', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-  transactionType: pointsTransactionTypeEnum('transaction_type').notNull(),
-  points: integer('points').notNull(),
-  balanceAfter: integer('balance_after').notNull(),
-  sourceEntityType: varchar('source_entity_type', { length: 50 }),
-  sourceEntityId: integer('source_entity_id'),
-  description: text('description'),
-  confirmedBy: integer('confirmed_by').references(() => users.id),
-  confirmedAt: timestamp('confirmed_at'),
-  expiresAt: timestamp('expires_at'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-}, (table) => ({
-  userIdIdx: index('points_transactions_user_id_idx').on(table.userId),
-  typeIdx: index('points_transactions_type_idx').on(table.transactionType),
-  sourceIdx: index('points_transactions_source_idx').on(table.sourceEntityType, table.sourceEntityId),
-}));
-
-// Experience levels configuration
-export const experienceLevels = pgTable('experience_levels', {
-  id: serial('id').primaryKey(),
-  level: integer('level').notNull().unique(),
-  name: varchar('name', { length: 100 }).notNull(),
-  minPoints: integer('min_points').notNull(),
-  maxPoints: integer('max_points'),
-  badgeImageUrl: varchar('badge_image_url', { length: 500 }),
-  benefits: jsonb('benefits').$type<string[]>(),
-  color: varchar('color', { length: 20 }),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-});
-
-// Points rules configuration
-export const pointsRules = pgTable('points_rules', {
-  id: serial('id').primaryKey(),
-  transactionType: pointsTransactionTypeEnum('transaction_type').notNull(),
-  eventType: eventTypeEnum('event_type'),
-  pointsAmount: integer('points_amount').notNull(),
-  description: text('description'),
-  isActive: boolean('is_active').default(true),
-  validFrom: timestamp('valid_from'),
-  validUntil: timestamp('valid_until'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-});
-
-// Milestones definition
-export const milestones = pgTable('milestones', {
-  id: serial('id').primaryKey(),
-  name: varchar('name', { length: 200 }).notNull(),
-  description: text('description'),
-  milestoneType: varchar('milestone_type', { length: 50 }).notNull(),
-  targetValue: integer('target_value').notNull(),
-  rewardPoints: integer('reward_points').default(0),
-  badgeImageUrl: varchar('badge_image_url', { length: 500 }),
-  isActive: boolean('is_active').default(true),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-});
-
-// User milestones achievements
-export const userMilestones = pgTable('user_milestones', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-  milestoneId: integer('milestone_id').notNull().references(() => milestones.id),
-  achievedAt: timestamp('achieved_at').notNull().defaultNow(),
-  pointsAwarded: integer('points_awarded'),
-}, (table) => ({
-  userMilestoneUnique: unique().on(table.userId, table.milestoneId),
-}));
-
-// Rewards catalog
-export const rewards = pgTable('rewards', {
-  id: serial('id').primaryKey(),
-  name: varchar('name', { length: 200 }).notNull(),
-  description: text('description'),
-  pointsCost: integer('points_cost').notNull(),
-  imageUrl: varchar('image_url', { length: 500 }),
-  category: varchar('category', { length: 100 }),
-  quantityAvailable: integer('quantity_available'),
-  quantityRedeemed: integer('quantity_redeemed').default(0),
-  isActive: boolean('is_active').default(true),
-  validFrom: timestamp('valid_from'),
-  validUntil: timestamp('valid_until'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-});
-
-// Reward redemptions
-export const rewardRedemptions = pgTable('reward_redemptions', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').notNull().references(() => users.id),
-  rewardId: integer('reward_id').notNull().references(() => rewards.id),
-  pointsSpent: integer('points_spent').notNull(),
-  status: varchar('status', { length: 50 }).default('pending').notNull(),
-  fulfilledAt: timestamp('fulfilled_at'),
-  fulfilledBy: integer('fulfilled_by').references(() => users.id),
-  notes: text('notes'),
-  redeemedAt: timestamp('redeemed_at').notNull().defaultNow(),
-});
-
 // Mentee waiting queue for AI matching
 export const menteeWaitingQueue = pgTable('mentee_waiting_queue', {
   id: serial('id').primaryKey(),
@@ -1347,60 +1196,6 @@ export const volunteerFormSubmissionsRelations = relations(volunteerFormSubmissi
   }),
 }));
 
-export const userPointsRelations = relations(userPoints, ({ one }) => ({
-  user: one(users, {
-    fields: [userPoints.userId],
-    references: [users.id],
-  }),
-}));
-
-export const pointsTransactionsRelations = relations(pointsTransactions, ({ one }) => ({
-  user: one(users, {
-    fields: [pointsTransactions.userId],
-    references: [users.id],
-  }),
-  confirmer: one(users, {
-    fields: [pointsTransactions.confirmedBy],
-    references: [users.id],
-    relationName: 'pointsConfirmer',
-  }),
-}));
-
-export const userMilestonesRelations = relations(userMilestones, ({ one }) => ({
-  user: one(users, {
-    fields: [userMilestones.userId],
-    references: [users.id],
-  }),
-  milestone: one(milestones, {
-    fields: [userMilestones.milestoneId],
-    references: [milestones.id],
-  }),
-}));
-
-export const milestonesRelations = relations(milestones, ({ many }) => ({
-  userMilestones: many(userMilestones),
-}));
-
-export const rewardsRelations = relations(rewards, ({ many }) => ({
-  redemptions: many(rewardRedemptions),
-}));
-
-export const rewardRedemptionsRelations = relations(rewardRedemptions, ({ one }) => ({
-  user: one(users, {
-    fields: [rewardRedemptions.userId],
-    references: [users.id],
-  }),
-  reward: one(rewards, {
-    fields: [rewardRedemptions.rewardId],
-    references: [rewards.id],
-  }),
-  fulfiller: one(users, {
-    fields: [rewardRedemptions.fulfilledBy],
-    references: [users.id],
-    relationName: 'rewardFulfiller',
-  }),
-}));
-
 export const aiMatchResultsRelations = relations(aiMatchResults, ({ one }) => ({
   mentor: one(users, {
     fields: [aiMatchResults.mentorUserId],
@@ -1460,22 +1255,6 @@ export type VolunteerFormSubmission = typeof volunteerFormSubmissions.$inferSele
 export type NewVolunteerFormSubmission = typeof volunteerFormSubmissions.$inferInsert;
 export type ContactFormSubmission = typeof contactFormSubmissions.$inferSelect;
 export type NewContactFormSubmission = typeof contactFormSubmissions.$inferInsert;
-export type UserPoint = typeof userPoints.$inferSelect;
-export type NewUserPoint = typeof userPoints.$inferInsert;
-export type PointsTransaction = typeof pointsTransactions.$inferSelect;
-export type NewPointsTransaction = typeof pointsTransactions.$inferInsert;
-export type ExperienceLevel = typeof experienceLevels.$inferSelect;
-export type NewExperienceLevel = typeof experienceLevels.$inferInsert;
-export type PointsRule = typeof pointsRules.$inferSelect;
-export type NewPointsRule = typeof pointsRules.$inferInsert;
-export type Milestone = typeof milestones.$inferSelect;
-export type NewMilestone = typeof milestones.$inferInsert;
-export type UserMilestone = typeof userMilestones.$inferSelect;
-export type NewUserMilestone = typeof userMilestones.$inferInsert;
-export type Reward = typeof rewards.$inferSelect;
-export type NewReward = typeof rewards.$inferInsert;
-export type RewardRedemption = typeof rewardRedemptions.$inferSelect;
-export type NewRewardRedemption = typeof rewardRedemptions.$inferInsert;
 export type AiMatchResult = typeof aiMatchResults.$inferSelect;
 export type NewAiMatchResult = typeof aiMatchResults.$inferInsert;
 export type AiMatchingRun = typeof aiMatchingRuns.$inferSelect;

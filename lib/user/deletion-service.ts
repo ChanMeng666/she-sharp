@@ -15,7 +15,6 @@ import {
   meetings,
   invitationCodes,
   aiMatchResults,
-  rewardRedemptions,
   ActivityType,
 } from '@/lib/db/schema';
 import { eq, or, sql } from 'drizzle-orm';
@@ -201,16 +200,8 @@ export async function processUserDeletion(
         );
       result.anonymizedTables.push('aiMatchResults');
 
-      // Step 10: Anonymize reward redemptions
-      await tx
-        .update(rewardRedemptions)
-        .set({
-          notes: null,
-        })
-        .where(eq(rewardRedemptions.userId, userId));
-      result.anonymizedTables.push('rewardRedemptions');
-
-      // Step 11: Soft delete and anonymize user record
+      // Step 10: Soft delete and anonymize user record
+      // (renumbered after removing reward redemptions anonymization)
       await tx
         .update(users)
         .set({
@@ -227,7 +218,7 @@ export async function processUserDeletion(
         .where(eq(users.id, userId));
       result.anonymizedTables.push('users');
 
-      // Step 12: Log the deletion activity (with anonymized IP)
+      // Step 11: Log the deletion activity (with anonymized IP)
       await tx.insert(activityLogs).values({
         userId: null, // Anonymize the user reference in the log
         action: ActivityType.DELETE_ACCOUNT,

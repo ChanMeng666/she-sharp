@@ -21,7 +21,6 @@ import {
   BookOpen,
   BarChart,
   Search,
-  Clock,
   Target,
   MessageSquare,
   FileText,
@@ -30,19 +29,7 @@ import {
   CheckCircle2,
   AlertCircle,
   Sparkles,
-  Bell,
-  Info
 } from 'lucide-react';
-
-interface Notification {
-  id: number;
-  type: 'event' | 'mentorship' | 'resource' | 'system';
-  title: string;
-  message: string;
-  read: boolean;
-  createdAt: string;
-  actionUrl?: string;
-}
 
 interface DashboardData {
   user: {
@@ -51,28 +38,6 @@ interface DashboardData {
     email: string;
     emailVerified: boolean;
     roles: string[];
-  };
-  stats: {
-    menteesCount: number;
-    mentorsCount: number;
-    totalMeetings: number;
-    completedMeetings: number;
-    totalMeetingHours: number;
-    eventsAttended: number;
-    eventsRegistered: number;
-    resourcesUploaded: number;
-    resourcesAccessed: number;
-  };
-  points: {
-    current: number;
-    lifetime: number;
-    level: number;
-    levelName: string;
-    progressToNextLevel: number;
-    nextLevel: {
-      name: string;
-      minPoints: number;
-    } | null;
   };
   formStatus: {
     mentor: {
@@ -106,12 +71,10 @@ interface DashboardData {
 
 export default function DynamicDashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchDashboardData();
-    fetchNotifications();
   }, []);
 
   const fetchDashboardData = async () => {
@@ -125,98 +88,6 @@ export default function DynamicDashboard() {
       console.error('Failed to fetch dashboard data:', error);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const fetchNotifications = async () => {
-    try {
-      const response = await fetch('/api/notifications');
-      if (response.ok) {
-        const data = await response.json();
-        const formattedNotifications = data.notifications.map((n: any) => ({
-          id: n.id,
-          type: n.type,
-          title: n.title,
-          message: n.message,
-          read: n.read,
-          createdAt: n.created_at,
-          actionUrl: n.action_url,
-        }));
-        setNotifications(formattedNotifications);
-      }
-    } catch (error) {
-      console.error('Failed to fetch notifications:', error);
-    }
-  };
-
-  const markAsRead = async (id: number) => {
-    try {
-      const response = await fetch('/api/notifications', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'mark_read',
-          notificationIds: [id],
-        }),
-      });
-      if (response.ok) {
-        setNotifications(prev =>
-          prev.map(n => n.id === id ? { ...n, read: true } : n)
-        );
-      }
-    } catch (error) {
-      console.error('Error marking notification as read:', error);
-    }
-  };
-
-  const markAllAsRead = async () => {
-    try {
-      const response = await fetch('/api/notifications', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'mark_all_read',
-        }),
-      });
-      if (response.ok) {
-        setNotifications(prev =>
-          prev.map(n => ({ ...n, read: true }))
-        );
-      }
-    } catch (error) {
-      console.error('Error marking all notifications as read:', error);
-    }
-  };
-
-  const getNotificationIcon = (type: string) => {
-    switch (type) {
-      case 'event':
-        return <Calendar className="h-4 w-4" />;
-      case 'mentorship':
-        return <Users className="h-4 w-4" />;
-      case 'resource':
-        return <FileText className="h-4 w-4" />;
-      case 'system':
-        return <Info className="h-4 w-4" />;
-      default:
-        return <Bell className="h-4 w-4" />;
-    }
-  };
-
-  const getTimeAgo = (date: string) => {
-    const now = new Date();
-    const notificationDate = new Date(date);
-    const diffInMs = now.getTime() - notificationDate.getTime();
-    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
-    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
-    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-
-    if (diffInMinutes < 60) {
-      return `${diffInMinutes}m ago`;
-    } else if (diffInHours < 24) {
-      return `${diffInHours}h ago`;
-    } else {
-      return `${diffInDays}d ago`;
     }
   };
 
@@ -241,7 +112,7 @@ export default function DynamicDashboard() {
     );
   }
 
-  const { user, stats, formStatus, mentor, mentee, upcomingEvents, recentResources } = data;
+  const { user, formStatus, mentor, mentee, upcomingEvents, recentResources } = data;
 
   return (
     <div className="@container/main flex flex-col gap-6">
@@ -264,70 +135,6 @@ export default function DynamicDashboard() {
           )}
         </div>
       </div>
-
-      {/* Compact Notifications */}
-      <Card className="border-border">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Bell className="h-5 w-5 text-foreground" />
-              <CardTitle className="text-lg">Notifications</CardTitle>
-              {notifications.filter(n => !n.read).length > 0 && (
-                <Badge variant="secondary" className="ml-2">
-                  {notifications.filter(n => !n.read).length} new
-                </Badge>
-              )}
-            </div>
-            {notifications.filter(n => !n.read).length > 0 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={markAllAsRead}
-              >
-                <CheckCircle2 className="mr-1 h-4 w-4" />
-                Mark all read
-              </Button>
-            )}
-          </div>
-        </CardHeader>
-        <CardContent className="pt-0">
-          {notifications.filter(n => !n.read).length > 0 ? (
-            <div className="space-y-2">
-              {notifications
-                .filter(n => !n.read)
-                .slice(0, 3)
-                .map(notification => (
-                  <div
-                    key={notification.id}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
-                    onClick={() => {
-                      markAsRead(notification.id);
-                      if (notification.actionUrl) {
-                        window.location.href = notification.actionUrl;
-                      }
-                    }}
-                  >
-                    <div className="shrink-0 p-1.5 rounded-md bg-background">
-                      {getNotificationIcon(notification.type)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm line-clamp-1">{notification.title}</p>
-                      <p className="text-xs text-muted-foreground line-clamp-1">{notification.message}</p>
-                    </div>
-                    <span className="text-xs text-muted-foreground whitespace-nowrap">
-                      {getTimeAgo(notification.createdAt)}
-                    </span>
-                  </div>
-                ))}
-            </div>
-          ) : (
-            <div className="flex items-center justify-center py-6 text-muted-foreground">
-              <CheckCircle2 className="mr-2 h-5 w-5" />
-              <span>No new notifications</span>
-            </div>
-          )}
-        </CardContent>
-      </Card>
 
       {/* Form Status Alerts */}
       {formStatus?.mentee?.status && formStatus.mentee.status !== 'approved' && (
@@ -385,7 +192,7 @@ export default function DynamicDashboard() {
           </div>
 
           {/* Mentor Stats */}
-          <div className="grid grid-cols-1 gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 @xl/main:grid-cols-2">
             <Card className="@container/card bg-gradient-to-t from-brand/10 to-card shadow-xs">
               <CardHeader>
                 <CardDescription>Current Mentees</CardDescription>
@@ -418,79 +225,6 @@ export default function DynamicDashboard() {
                 </div>
               </CardFooter>
             </Card>
-
-            <Card className="@container/card bg-gradient-to-t from-periwinkle/10 to-card shadow-xs">
-              <CardHeader>
-                <CardDescription>Total Meetings</CardDescription>
-                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
-                  {stats.totalMeetings}
-                </CardTitle>
-                <CardAction>
-                  <Badge variant="outline">
-                    <CheckCircle2 className="h-3 w-3" />
-                    {stats.completedMeetings} done
-                  </Badge>
-                </CardAction>
-              </CardHeader>
-              <CardFooter className="flex-col items-start gap-1.5 text-sm">
-                <div className="flex gap-2 font-medium">
-                  Completion rate: {stats.totalMeetings > 0
-                    ? Math.round((stats.completedMeetings / stats.totalMeetings) * 100)
-                    : 0}%
-                </div>
-                <div className="text-muted-foreground">
-                  {stats.completedMeetings} completed sessions
-                </div>
-              </CardFooter>
-            </Card>
-
-            <Card className="@container/card bg-gradient-to-t from-info/10 to-card shadow-xs">
-              <CardHeader>
-                <CardDescription>Meeting Hours</CardDescription>
-                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
-                  {stats.totalMeetingHours}h
-                </CardTitle>
-                <CardAction>
-                  <Badge variant="outline">
-                    <Clock className="h-3 w-3" />
-                    Mentoring time
-                  </Badge>
-                </CardAction>
-              </CardHeader>
-              <CardFooter className="flex-col items-start gap-1.5 text-sm">
-                <div className="flex gap-2 font-medium">
-                  Total mentoring impact
-                </div>
-                <div className="text-muted-foreground">
-                  Avg {stats.totalMeetings > 0
-                    ? (stats.totalMeetingHours / stats.totalMeetings).toFixed(1)
-                    : 0}h per session
-                </div>
-              </CardFooter>
-            </Card>
-
-            <Card className="@container/card bg-gradient-to-t from-mint/20 to-card shadow-xs">
-              <CardHeader>
-                <CardDescription>Resources Shared</CardDescription>
-                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
-                  {stats.resourcesUploaded}
-                </CardTitle>
-                <CardAction>
-                  <Badge variant="outline">
-                    <BookOpen className="h-3 w-3" />
-                    Materials
-                  </Badge>
-                </CardAction>
-              </CardHeader>
-              <CardFooter className="flex-col items-start gap-1.5 text-sm">
-                <div className="flex gap-2 font-medium">
-                  Knowledge sharing
-                </div>
-                <div className="text-muted-foreground">
-                  Uploaded by you
-                </div>
-              </CardFooter>
-            </Card>
           </div>
 
         </div>
@@ -505,7 +239,7 @@ export default function DynamicDashboard() {
           </h2>
 
           {/* Mentee Stats */}
-          <div className="grid grid-cols-1 gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 @xl/main:grid-cols-2">
             <Card className="@container/card bg-gradient-to-t from-periwinkle/10 to-card shadow-xs">
               <CardHeader>
                 <CardDescription>Active Mentors</CardDescription>
@@ -525,75 +259,6 @@ export default function DynamicDashboard() {
                 </div>
                 <div className="text-muted-foreground">
                   Currently learning from {mentee.mentors.length} mentor{mentee.mentors.length !== 1 ? 's' : ''}
-                </div>
-              </CardFooter>
-            </Card>
-
-            <Card className="@container/card bg-gradient-to-t from-brand/10 to-card shadow-xs">
-              <CardHeader>
-                <CardDescription>Sessions Attended</CardDescription>
-                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
-                  {stats.completedMeetings}
-                </CardTitle>
-                <CardAction>
-                  <Badge variant="outline">
-                    <CheckCircle2 className="h-3 w-3" />
-                    {Math.round((stats.completedMeetings / Math.max(stats.totalMeetings, 1)) * 100)}%
-                  </Badge>
-                </CardAction>
-              </CardHeader>
-              <CardFooter className="flex-col items-start gap-1.5 text-sm">
-                <div className="flex gap-2 font-medium">
-                  {stats.completedMeetings} of {stats.totalMeetings} scheduled
-                </div>
-                <div className="text-muted-foreground">
-                  Strong attendance record
-                </div>
-              </CardFooter>
-            </Card>
-
-            <Card className="@container/card bg-gradient-to-t from-info/10 to-card shadow-xs">
-              <CardHeader>
-                <CardDescription>Events Registered</CardDescription>
-                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
-                  {stats.eventsRegistered}
-                </CardTitle>
-                <CardAction>
-                  <Badge variant="outline">
-                    <Calendar className="h-3 w-3" />
-                    {stats.eventsAttended} attended
-                  </Badge>
-                </CardAction>
-              </CardHeader>
-              <CardFooter className="flex-col items-start gap-1.5 text-sm">
-                <div className="flex gap-2 font-medium">
-                  Community engagement
-                </div>
-                <div className="text-muted-foreground">
-                  {Math.round((stats.eventsAttended / Math.max(stats.eventsRegistered, 1)) * 100)}% attendance rate
-                </div>
-              </CardFooter>
-            </Card>
-
-            <Card className="@container/card bg-gradient-to-t from-mint/20 to-card shadow-xs">
-              <CardHeader>
-                <CardDescription>Resources Accessed</CardDescription>
-                <CardTitle className="text-xl font-semibold tabular-nums @[200px]/card:text-2xl @[300px]/card:text-3xl @[400px]/card:text-4xl">
-                  {stats.resourcesAccessed}
-                </CardTitle>
-                <CardAction>
-                  <Badge variant="outline">
-                    <BookOpen className="h-3 w-3" />
-                    Materials
-                  </Badge>
-                </CardAction>
-              </CardHeader>
-              <CardFooter className="flex-col items-start gap-1.5 text-sm">
-                <div className="flex gap-2 font-medium">
-                  Learning progress
-                </div>
-                <div className="text-muted-foreground">
-                  Knowledge resources
                 </div>
               </CardFooter>
             </Card>

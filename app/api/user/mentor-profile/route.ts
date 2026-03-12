@@ -7,7 +7,6 @@ import {
   userRoles,
   activityLogs,
   ActivityType,
-  userMentorshipStats
 } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 
@@ -230,31 +229,6 @@ export async function POST(request: Request) {
           .where(eq(mentorProfiles.userId, user.id));
       }
     }
-
-    // Initialize or update mentorship stats
-    await db
-      .insert(userMentorshipStats)
-      .values({
-        userId: user.id,
-        menteesCount: 0,
-        mentorsCount: 0,
-        totalMeetings: 0,
-        completedMeetings: 0,
-        totalMeetingHours: '0',
-        eventsAttended: 0,
-        eventsRegistered: 0,
-        resourcesUploaded: 0,
-        resourcesAccessed: 0,
-        lastActivityAt: new Date(),
-        statsUpdatedAt: new Date()
-      })
-      .onConflictDoUpdate({
-        target: userMentorshipStats.userId,
-        set: {
-          lastActivityAt: new Date(),
-          statsUpdatedAt: new Date()
-        }
-      });
 
     // Log profile update activity
     await db.insert(activityLogs).values({
