@@ -9,20 +9,9 @@ import { Container } from "@/components/layout/container";
 export function HeroSection() {
   return (
     <section className="relative py-16 md:min-h-[95vh] md:flex md:items-center overflow-hidden">
-      {/* Full background image */}
-      <div className="absolute inset-0">
-        <Image
-          src="/img/mind.jpg"
-          alt="Background"
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
-      </div>
 
       {/* Frosted glass overlay */}
-      <div className="absolute inset-0 backdrop-blur-xl bg-slate-500/30" />
+      <div className="absolute inset-0  bg-slate-500/20" />
 
       {/* Secondary sun glow - creates depth */}
       <div
@@ -132,7 +121,7 @@ export function HeroSection() {
               </span>
             </h1>
             <div className="mt-6 sm:mt-8 md:mt-10 flex justify-start">
-              <Button variant="ghost" size="lg" asChild className="px-6 bg-white/10 backdrop-blur-sm text-white border border-white/60 hover:bg-purple-dark transition-all rounded-full">
+              <Button variant="ghost" size="lg" asChild className="px-6 bg-white/10 backdrop-blur-sm text-white border border-white/60  hover:text-muted-foreground hover:bg-periwinkle-soft transition-all rounded-full">
                 <Link href="/events" target="_blank">Attend our upcoming event</Link>
               </Button>
             </div>

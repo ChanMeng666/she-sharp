@@ -204,7 +204,7 @@ export default function EventsPage() {
       <FeaturedEventHero event={featuredEvent} />
 
       {/* All Events Section */}
-      <Section spacing="section">
+      <Section id="past-events" spacing="section">
         <Container size="full">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
@@ -254,8 +254,8 @@ export default function EventsPage() {
                   Upcoming Only
                 </Button>
 
-                {/* Category Filter */}
-                {availableCategories.length > 0 && (
+                {/* Category Filter, disabled for now*/}
+                {/* {availableCategories.length > 0 && (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="sm" className="h-9">
@@ -285,7 +285,7 @@ export default function EventsPage() {
                       ))}
                     </DropdownMenuContent>
                   </DropdownMenu>
-                )}
+                )} */}
 
                 {/* Year Filter */}
                 <DropdownMenu>
@@ -315,8 +315,8 @@ export default function EventsPage() {
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                {/* City Filter */}
-                {availableCities.length > 0 && (
+                {/* City Filter, disabled for now*/}
+                {/* {availableCities.length > 0 && (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="sm" className="h-9">
@@ -346,7 +346,7 @@ export default function EventsPage() {
                       ))}
                     </DropdownMenuContent>
                   </DropdownMenu>
-                )}
+                )} */}
 
                 {/* Clear All Filters */}
                 {hasActiveFilters && (

@@ -192,6 +192,69 @@
         "isFeatured": false,
         "refundPolicy": "No refunds"
       }
+    },
+    {
+      "id": 87,
+      "slug": "she-sharp-candice-murray-own-your-energy",
+      "title": "She Sharp & Candice Murray: Own your Energy!",
+      "date": "April 16, 2026",
+      "coverImage": {
+        "url": "/img/events/202604-MindCoach-OwnYourEnergy.png",
+        "alt": "She Sharp & Candice Murray: Own your Energy! workshop banner"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/she-sharp-candice-murray-own-your-energy",
+      "shortDescription": "An interactive career mindset workshop with coach Candice Murray, focused on helping you consciously shift your energy so you can show up with more calm, confidence, and self-belief in the moments that matter.",
+      "attendees": null,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/she-sharp-candice-murray-own-your-energy",
+        "title": "She Sharp & Candice Murray: Own your Energy!",
+        "subtitle": "Career Mindset Workshop",
+        "date": "April 16, 2026",
+        "time": "5:00pm - 7:30pm NZDT",
+        "location": {
+          "format": "in_person",
+          "venueName": "Metlifecare",
+          "address": "Level 4, 110 Carlton Gore Road, Newmarket",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "How you feel directly impacts how you show up at work and in life. In this engaging and practical workshop, Career Mindset Coach Candice Murray will guide you through how to consciously choose and access the emotional state that would be most helpful right now — whether that is calm, confidence, self-belief, or happiness.",
+          "You will learn powerful, easy-to-use tools that help you shift your energy on demand, so you can perform at your best in the moments that matter, from important conversations to everyday challenges.",
+          "The session is designed to be interactive, supportive, and fun, creating a safe space to reflect, participate, and experiment with new ways of thinking and responding. You will leave feeling energised and equipped with practical tools you can immediately apply in both your career and personal life.",
+          "The event flow includes time for registration and networking, a 90-minute workshop, and post-workshop networking to connect with other attendees."
+        ],
+        "speakers": {
+          "keynote_speakers": {
+            "heading": "Meet Our Speaker",
+            "speakers": [
+              {
+                "name": "Candice Murray",
+                "title": "Career Mindset Coach",
+                "company": "",
+                "bio": "Candice Murray is a Career Mindset Coach recognised as one of Influence Digest Media's Top Coaches in Auckland for 2024 and 2025. She has delivered workshops for organisations including AWS, Spark New Zealand, and AUT University, helping professionals build confidence, clarity, and momentum. Drawing on her own background in tech, she is known for her warm, relatable facilitation style and her ability to translate mindset concepts into practical, real-world tools.",
+                "image": "/img/events/202604-CandiceMurrary.jpg"
+              }
+            ]
+          }
+        },
+        "organizers": [],
+        "sponsors": {
+          "main": [    {
+            "name": "metlifecare",
+            "logo": "/img/events/metlifecare.png"
+          }],
+          "other": []
+        },
+        "specialSections": [],
+        "photos": [],
+        "galleryUrl": "",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-and-own-your-energy",
+        "images": [],
+        "category": "workshop",
+        "status": "upcoming",
+        "isFeatured": false
+      }
     }
   ]
 }

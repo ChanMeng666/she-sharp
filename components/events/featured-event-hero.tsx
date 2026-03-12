@@ -105,8 +105,8 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
             <>
               {/* title in bottom left */}
               <div className="absolute bottom-0 left-0 w-1/2 md:w-2/5 p-6">
-                <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-2xl px-6 py-4 md:px-8 md:py-6 shadow-lg h-full flex items-center">
-                  <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg">
+                <div className="backdrop-blur-md bg-white/90 border border-white/80 rounded-2xl px-6 py-4 md:px-8 md:py-6 shadow-xl h-full flex items-center">
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground">
                     {event.title}
                   </h3>
                 </div>

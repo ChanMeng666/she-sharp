@@ -14,18 +14,25 @@ import { ProgramsSection } from "@/components/home/programs-section";
 import { SponsorsSection } from "@/components/home/sponsors-section";
 import { ScrollingSponsorsSection } from "@/components/home/scrolling-sponsors-section";
 import { EventsShowcaseSection } from "@/components/home/events-showcase-section";
+import { HomeTestimonialsSection } from "@/components/home/testimonials-section";
 
 export default function HomePage() {
   return (
-    <>
+    <div className="relative isolate">
+      <div
+        className="fixed inset-0 z-[-1] bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url(/img/bg-img.jpg)" }}
+      />
+
       <HeroSection />
       <EventsShowcaseSection />
       <ScrollingSponsorsSection />
       <CoreImpactSection />
       <CoreValuesSection />
       <ProgramsSection />
+      <HomeTestimonialsSection />
       <SponsorsSection />
       <CTASection />
-    </>
+    </div>
   );
 }

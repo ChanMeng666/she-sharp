@@ -111,7 +111,7 @@ export function CoreImpactSection() {
   const reduceMotion = usePrefersReducedMotion();
 
   return (
-    <Section className="bg-background" aria-labelledby="impact-heading">
+    <Section className="bg-white/20" aria-labelledby="impact-heading">
       <div ref={ref} className="relative">
         <Container size="full">
           {/* Header */}

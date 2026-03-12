@@ -103,7 +103,7 @@ export function ProgramsSection() {
           </AnimateOnScroll>
 
           {/* Accordion Layout */}
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
             {/* Left Column - Accordion */}
             <div className="space-y-4">
               {programs.map((program, index) => {
@@ -198,29 +198,35 @@ export function ProgramsSection() {
               })}
             </div>
 
-            {/* Right Column - Image */}
+            {/* Right Column - fixed container to prevent CLS */}
+            <div className="hidden lg:flex items-center min-h-[500px] pt-12">
             <AnimateOnScroll variant="fade-left" className="relative w-full md:w-4/5 mx-auto">
-              {/* Background div with slight tilt - responsive */}
               <div
                 className="absolute inset-0 border border-foreground/30 rounded-[50px] transform rotate-0 md:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
-              ></div>
+              />
               <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-[50px] overflow-hidden z-10">
-                <Image
-                  src={programs[lastSelectedProgram].image}
-                  alt={programs[lastSelectedProgram].title}
-                  fill
-                  className="object-cover transition-opacity duration-200 ease-in-out"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
+                {programs.map((program, index) => (
+                  <Image
+                    key={program.id}
+                    src={program.image}
+                    alt={program.title}
+                    fill
+                    className={`object-cover transition-opacity duration-500 ease-in-out ${
+                      lastSelectedProgram === index ? "opacity-100" : "opacity-0"
+                    }`}
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority={index === 0}
+                  />
+                ))}
 
                 {/* Image overlay content */}
-                <div className="absolute bottom-6 left-6 z-10 transition-all duration-500 ease-in-out">
+                <div className="absolute bottom-6 left-6 z-10">
                   <div className="glass-panel px-4 py-3">
                     <div className="text-white">
-                      <div className="text-stat text-3xl mb-1 transition-all duration-300">
+                      <div className="text-stat text-3xl mb-1">
                         {programs[lastSelectedProgram].stats.primary}
                       </div>
-                      <div className="text-lg opacity-90 transition-all duration-300">
+                      <div className="text-lg opacity-90">
                         {programs[lastSelectedProgram].stats.secondary}
                       </div>
                     </div>
@@ -228,6 +234,42 @@ export function ProgramsSection() {
                 </div>
               </div>
             </AnimateOnScroll>
+            </div>
+
+            {/* Mobile image (shown below accordion on small screens) */}
+            <div className="lg:hidden">
+              <AnimateOnScroll variant="fade-up" className="relative w-full md:w-4/5 mx-auto">
+                <div
+                  className="absolute inset-0 border border-foreground/30 rounded-[50px] transform rotate-0 md:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
+                />
+                <div className="relative w-full h-[300px] md:h-[400px] rounded-[50px] overflow-hidden z-10">
+                  {programs.map((program, index) => (
+                    <Image
+                      key={program.id}
+                      src={program.image}
+                      alt={program.title}
+                      fill
+                      className={`object-cover transition-opacity duration-500 ease-in-out ${
+                        lastSelectedProgram === index ? "opacity-100" : "opacity-0"
+                      }`}
+                      sizes="100vw"
+                    />
+                  ))}
+                  <div className="absolute bottom-6 left-6 z-10">
+                    <div className="glass-panel px-4 py-3">
+                      <div className="text-white">
+                        <div className="text-stat text-3xl mb-1">
+                          {programs[lastSelectedProgram].stats.primary}
+                        </div>
+                        <div className="text-lg opacity-90">
+                          {programs[lastSelectedProgram].stats.secondary}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </AnimateOnScroll>
+            </div>
           </div>
         </Container>
       </Section>

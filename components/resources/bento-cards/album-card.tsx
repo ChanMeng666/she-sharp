@@ -22,7 +22,7 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
       className="block h-full group"
       aria-label={`View ${album.title} album in Google Photos`}
     >
-      <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 rounded-[30px] aspect-[3/4]">
+      <Card className="relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 rounded-[30px] aspect-3/4">
         {/* Cover Image */}
         <img
           src={album.coverImage}
@@ -31,7 +31,7 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
         />
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/25 to-transparent" />
 
         {/* View Photos Badge */}
         <div className="absolute top-6 right-6 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
