@@ -262,7 +262,7 @@ export async function GET() {
       };
 
       dashboardData.quickActions.push(
-        { label: 'Find Mentors', href: '/dashboard/mentors', icon: 'Search' },
+        { label: 'Find Mentors', href: '/mentorship', icon: 'Search' },
         { label: 'My Mentors', href: '/dashboard/mentorship', icon: 'Users' }
       );
 
@@ -310,8 +310,8 @@ export async function GET() {
     dashboardData.recentResources = recentResources;
 
     dashboardData.quickActions.push(
-      { label: 'Browse Events', href: '/dashboard/events', icon: 'Calendar' },
-      { label: 'Resources', href: '/dashboard/resources', icon: 'BookOpen' }
+      { label: 'Browse Events', href: '/events', icon: 'Calendar' },
+      { label: 'Resources', href: '/resources', icon: 'BookOpen' }
     );
 
     return NextResponse.json(dashboardData);

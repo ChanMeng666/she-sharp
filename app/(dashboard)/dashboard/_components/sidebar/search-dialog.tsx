@@ -6,14 +6,11 @@ import {
   Home,
   Calendar,
   Users,
-  BookOpen,
   UserCircle,
   Heart,
   BarChart3,
   Search,
   Award,
-  CheckCircle,
-  Download,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,20 +27,11 @@ const searchItems = [
   // Overview
   { group: "Overview", icon: Home, label: "Dashboard", url: "/dashboard" },
 
-  // Events
-  { group: "Events", icon: Calendar, label: "Browse Events", url: "/dashboard/events" },
-  { group: "Events", icon: CheckCircle, label: "My Registrations", url: "/dashboard/events/my-registrations" },
-
   // Mentorship
-  { group: "Mentorship", icon: Users, label: "Find Mentors", url: "/dashboard/mentors" },
   { group: "Mentorship", icon: Heart, label: "My Mentorship", url: "/dashboard/mentorship" },
   { group: "Mentorship", icon: Calendar, label: "Meetings", url: "/dashboard/meetings" },
   { group: "Mentorship", icon: UserCircle, label: "Mentor Profile", url: "/dashboard/mentor-profile" },
   { group: "Mentorship", icon: UserCircle, label: "Mentee Profile", url: "/dashboard/mentee-profile" },
-
-  // Resources
-  { group: "Resources", icon: BookOpen, label: "Browse Resources", url: "/dashboard/resources" },
-  { group: "Resources", icon: Download, label: "My Downloads", url: "/dashboard/resources/downloads" },
 
   // Account
   { group: "Account", icon: UserCircle, label: "Account Settings", url: "/dashboard/account" },

@@ -21,7 +21,6 @@ import {
   Settings,
   Shield,
   Users,
-  Activity,
   Mail,
   LogOut,
   LayoutDashboard,
@@ -128,9 +127,39 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
     );
   }
 
-  // Not logged in - no button shown
+  // Not logged in - show Sign In / Sign Up buttons
   if (!user) {
-    return null;
+    if (variant === 'mobile') {
+      return (
+        <div className="flex flex-col gap-2 pt-4 border-t border-[#f7e5f3]">
+          <Link href="/sign-in" className="w-full">
+            <Button variant="outline" size="lg" className="w-full">
+              Sign In
+            </Button>
+          </Link>
+          <Link href="/sign-up" className="w-full">
+            <Button size="lg" className="w-full bg-brand hover:bg-brand/90 text-white">
+              Sign Up
+            </Button>
+          </Link>
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex items-center gap-2">
+        <Link href="/sign-in">
+          <Button variant="outline" size="sm">
+            Sign In
+          </Button>
+        </Link>
+        <Link href="/sign-up">
+          <Button size="sm" className="bg-brand hover:bg-brand/90 text-white">
+            Sign Up
+          </Button>
+        </Link>
+      </div>
+    );
   }
 
   // Mobile variant - simplified menu
@@ -327,13 +356,6 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
                 <Link href="/dashboard/account">
                   <User className="mr-2 h-4 w-4" />
                   <span>Account Settings</span>
-                </Link>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem asChild className="cursor-pointer">
-                <Link href="/dashboard/activity">
-                  <Activity className="mr-2 h-4 w-4" />
-                  <span>Activity</span>
                 </Link>
               </DropdownMenuItem>
 

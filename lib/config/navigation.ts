@@ -164,8 +164,8 @@ export const navigationConfig: {
   ],
   buttons: [
     {
-      title: "Explore Events",   // will change to "Join Membership" when membership is live
-      href: "/events", // will change to "/membership" when membership is live
+      title: "Join Membership",
+      href: "/membership",
       variant: "brand",
     },
   ],  

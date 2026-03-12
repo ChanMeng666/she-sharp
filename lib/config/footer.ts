@@ -84,13 +84,6 @@ export const footerConfig = {
     { name: "Terms of Service", href: "/terms-of-service" },
   ] as FooterLink[],
 
-  // simplifiedNavLinks: [
-  //   { name: "Mentorship", href: "/mentorship" },
-  //   { name: "Events", href: "/events" },
-  //   { name: "Donate", href: "/donate" },
-  //   { name: "Join Our Team", href: "/join-our-team" },
-  // ] as FooterLink[],
-
   charityInfo: {
     name: "She Sharp",
     registrationNumber: "CC57025",

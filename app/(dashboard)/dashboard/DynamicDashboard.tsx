@@ -612,7 +612,7 @@ export default function DynamicDashboard() {
                 <CardTitle>Upcoming Events</CardTitle>
                 <CardDescription>Don't miss these opportunities</CardDescription>
               </div>
-              <Link href="/dashboard/events">
+              <Link href="/events">
                 <Button variant="outline" size="sm">
                   View all
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -656,7 +656,7 @@ export default function DynamicDashboard() {
                 <CardTitle>Recent Resources</CardTitle>
                 <CardDescription>Latest learning materials</CardDescription>
               </div>
-              <Link href="/dashboard/resources">
+              <Link href="/resources">
                 <Button variant="outline" size="sm">
                   View all
                   <ArrowRight className="ml-2 h-4 w-4" />
