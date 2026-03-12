@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { getUser, getUserWithTeam } from '@/lib/db/queries';
-import { db } from '@/lib/db/drizzle';
-import { teamMembers } from '@/lib/db/schema';
+import { getUser } from '@/lib/db/queries';
 import { comparePasswords } from '@/lib/auth/session';
-import { eq, and } from 'drizzle-orm';
 import { z } from 'zod';
 import { processUserDeletion } from '@/lib/user/deletion-service';
 
@@ -70,7 +67,6 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const userWithTeam = await getUserWithTeam(user.id);
     const ipAddress = request.headers.get('x-forwarded-for') || 'unknown';
 
     // Process comprehensive user deletion with data cleanup
@@ -82,18 +78,6 @@ export async function DELETE(request: NextRequest) {
         { error: 'Failed to delete account. Please try again or contact support.' },
         { status: 500 }
       );
-    }
-
-    // Remove from team if applicable
-    if (userWithTeam?.teamId) {
-      await db
-        .delete(teamMembers)
-        .where(
-          and(
-            eq(teamMembers.userId, user.id),
-            eq(teamMembers.teamId, userWithTeam.teamId)
-          )
-        );
     }
 
     // Clear session cookie

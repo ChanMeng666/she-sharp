@@ -10,8 +10,6 @@ import {
   users,
   userRoles,
   userMemberships,
-  teams,
-  teamMembers,
   activityLogs,
   mentorProfiles,
   menteeProfiles,
@@ -63,10 +61,8 @@ async function resetDatabase() {
     'invitation_codes',
     'resources',
     'events',
-    'team_members',
     'user_memberships',
     'user_roles',
-    'teams',
     'users',
   ];
 
@@ -85,7 +81,7 @@ async function resetDatabase() {
 async function createAdminUser() {
   console.log('👤 Creating admin user...');
 
-  const adminEmail = 'admin@shesharp.co.nz';
+  const adminEmail = 'admin@shesharp.org.nz';
   const adminPassword = 'Admin123!';  // Change this in production!
   const adminName = 'System Admin';
 
@@ -128,19 +124,6 @@ async function createAdminUser() {
   });
 
   console.log(`  ✓ Created premium membership`);
-
-  // Create team for admin
-  const [team] = await db.insert(teams).values({
-    name: `${adminName}'s Team`,
-  }).returning();
-
-  await db.insert(teamMembers).values({
-    userId: adminUser.id,
-    teamId: team.id,
-    role: 'owner',
-  });
-
-  console.log(`  ✓ Created team`);
 
   console.log('\n✅ Admin user created successfully!');
   console.log('═══════════════════════════════════════');

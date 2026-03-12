@@ -38,7 +38,6 @@ export const matchStatusEnum = pgEnum('match_status', ['pending_review', 'approv
 export const subscriptionStatusEnum = pgEnum('subscription_status', ['active', 'past_due', 'canceled', 'incomplete', 'trialing', 'unpaid']);
 export const mbtiTypeEnum = pgEnum('mbti_type', ['INTJ', 'INTP', 'ENTJ', 'ENTP', 'INFJ', 'INFP', 'ENFJ', 'ENFP', 'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ', 'ISTP', 'ISFP', 'ESTP', 'ESFP']);
 export const genderEnum = pgEnum('gender', ['female', 'male', 'non_binary', 'prefer_not_to_say', 'other']);
-export const skillCategoryEnum = pgEnum('skill_category', ['soft_basic', 'soft_expert', 'industry_basic', 'industry_expert']);
 export const meetingFormatEnum = pgEnum('meeting_format', ['online', 'in_person', 'hybrid']);
 export const queueStatusEnum = pgEnum('queue_status', ['waiting', 'matching_in_progress', 'matched', 'expired', 'cancelled']);
 export const confidenceLevelEnum = pgEnum('confidence_level', ['high', 'medium', 'low']);
@@ -356,7 +355,6 @@ export const userMemberships = pgTable('user_memberships', {
 // Activity logs (keeping for audit trail)
 export const activityLogs = pgTable('activity_logs', {
   id: serial('id').primaryKey(),
-  teamId: integer('team_id'), // Legacy field, kept for backward compatibility
   userId: integer('user_id').references(() => users.id),
   action: text('action').notNull(),
   entityType: varchar('entity_type', { length: 50 }), // user, relationship, event, resource
@@ -419,20 +417,6 @@ export const eventRoleAssignments = pgTable('event_role_assignments', {
   eventIdx: index('event_role_assignments_event_idx').on(table.eventId),
   userIdx: index('event_role_assignments_user_idx').on(table.userId),
   roleTypeIdx: index('event_role_assignments_role_type_idx').on(table.roleType),
-}));
-
-// Membership features configuration
-export const membershipFeatures = pgTable('membership_features', {
-  id: serial('id').primaryKey(),
-  tier: membershipTierEnum('tier').notNull(),
-  featureName: varchar('feature_name', { length: 100 }).notNull(),
-  featureValue: jsonb('feature_value'),
-  description: text('description'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-}, (table) => ({
-  uniqueTierFeature: unique().on(table.tier, table.featureName),
-  tierIdx: index('membership_features_tier_idx').on(table.tier),
 }));
 
 // User mentorship statistics cache
@@ -717,10 +701,6 @@ export const eventRoleAssignmentsRelations = relations(eventRoleAssignments, ({ 
   }),
 }));
 
-export const membershipFeaturesRelations = relations(membershipFeatures, ({ }) => ({
-  // No direct relations, this is a configuration table
-}));
-
 export const userMentorshipStatsRelations = relations(userMentorshipStats, ({ one }) => ({
   user: one(users, {
     fields: [userMentorshipStats.userId],
@@ -755,8 +735,6 @@ export type AdminPermission = typeof adminPermissions.$inferSelect;
 export type NewAdminPermission = typeof adminPermissions.$inferInsert;
 export type EventRoleAssignment = typeof eventRoleAssignments.$inferSelect;
 export type NewEventRoleAssignment = typeof eventRoleAssignments.$inferInsert;
-export type MembershipFeature = typeof membershipFeatures.$inferSelect;
-export type NewMembershipFeature = typeof membershipFeatures.$inferInsert;
 export type UserMentorshipStat = typeof userMentorshipStats.$inferSelect;
 export type NewUserMentorshipStat = typeof userMentorshipStats.$inferInsert;
 export type ActivityLog = typeof activityLogs.$inferSelect;
@@ -895,47 +873,6 @@ export const membershipPurchases = pgTable('membership_purchases', {
   statusIdx: index('membership_purchases_status_idx').on(table.subscriptionStatus),
   periodEndIdx: index('membership_purchases_period_end_idx').on(table.periodEnd),
 }));
-
-// Membership benefits configuration
-export const membershipBenefits = pgTable('membership_benefits', {
-  id: serial('id').primaryKey(),
-  tier: membershipTierEnum('tier').notNull(),
-  benefitKey: varchar('benefit_key', { length: 100 }).notNull(),
-  benefitName: varchar('benefit_name', { length: 200 }).notNull(),
-  description: text('description'),
-  isIncluded: boolean('is_included').default(false),
-  quantityLimit: integer('quantity_limit'),
-  sortOrder: integer('sort_order').default(0),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-}, (table) => ({
-  tierBenefitUnique: unique().on(table.tier, table.benefitKey),
-}));
-
-// Skill options (predefined + custom)
-export const skillOptions = pgTable('skill_options', {
-  id: serial('id').primaryKey(),
-  category: skillCategoryEnum('category').notNull(),
-  name: varchar('name', { length: 200 }).notNull(),
-  description: text('description'),
-  isSystemDefined: boolean('is_system_defined').default(true),
-  usageCount: integer('usage_count').default(0),
-  createdBy: integer('created_by').references(() => users.id),
-  isActive: boolean('is_active').default(true),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-}, (table) => ({
-  categoryNameUnique: unique().on(table.category, table.name),
-  categoryIdx: index('skill_options_category_idx').on(table.category),
-}));
-
-// Industry options
-export const industryOptions = pgTable('industry_options', {
-  id: serial('id').primaryKey(),
-  name: varchar('name', { length: 200 }).notNull().unique(),
-  description: text('description'),
-  isActive: boolean('is_active').default(true),
-  sortOrder: integer('sort_order').default(0),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-});
 
 // Mentor form submissions
 export const mentorFormSubmissions = pgTable('mentor_form_submissions', {
@@ -1515,12 +1452,6 @@ export type InvitationCodeUsage = typeof invitationCodeUsages.$inferSelect;
 export type NewInvitationCodeUsage = typeof invitationCodeUsages.$inferInsert;
 export type MembershipPurchase = typeof membershipPurchases.$inferSelect;
 export type NewMembershipPurchase = typeof membershipPurchases.$inferInsert;
-export type MembershipBenefit = typeof membershipBenefits.$inferSelect;
-export type NewMembershipBenefit = typeof membershipBenefits.$inferInsert;
-export type SkillOption = typeof skillOptions.$inferSelect;
-export type NewSkillOption = typeof skillOptions.$inferInsert;
-export type IndustryOption = typeof industryOptions.$inferSelect;
-export type NewIndustryOption = typeof industryOptions.$inferInsert;
 export type MentorFormSubmission = typeof mentorFormSubmissions.$inferSelect;
 export type NewMentorFormSubmission = typeof mentorFormSubmissions.$inferInsert;
 export type MenteeFormSubmission = typeof menteeFormSubmissions.$inferSelect;
@@ -1552,75 +1483,3 @@ export type NewAiMatchingRun = typeof aiMatchingRuns.$inferInsert;
 export type MenteeWaitingQueue = typeof menteeWaitingQueue.$inferSelect;
 export type NewMenteeWaitingQueue = typeof menteeWaitingQueue.$inferInsert;
 
-// Legacy team-related tables (to be removed in future migration)
-export const teams = pgTable('teams', {
-  id: serial('id').primaryKey(),
-  name: varchar('name', { length: 100 }).notNull(),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-  // Legacy Stripe fields (no longer used, kept for backward compatibility)
-  stripeCustomerId: text('stripe_customer_id').unique(),
-  stripeSubscriptionId: text('stripe_subscription_id').unique(),
-  stripeProductId: text('stripe_product_id'),
-  planName: varchar('plan_name', { length: 50 }),
-  subscriptionStatus: varchar('subscription_status', { length: 20 }),
-});
-
-export const teamMembers = pgTable('team_members', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').notNull().references(() => users.id),
-  teamId: integer('team_id').notNull().references(() => teams.id),
-  role: varchar('role', { length: 50 }).notNull(),
-  joinedAt: timestamp('joined_at').notNull().defaultNow(),
-});
-
-export const invitations = pgTable('invitations', {
-  id: serial('id').primaryKey(),
-  teamId: integer('team_id').notNull().references(() => teams.id),
-  email: varchar('email', { length: 255 }).notNull(),
-  role: varchar('role', { length: 50 }).notNull(),
-  invitedBy: integer('invited_by').notNull().references(() => users.id),
-  invitedAt: timestamp('invited_at').notNull().defaultNow(),
-  status: varchar('status', { length: 20 }).notNull().default('pending'),
-});
-
-// Legacy relations (kept for backward compatibility)
-export const teamsRelations = relations(teams, ({ many }) => ({
-  teamMembers: many(teamMembers),
-  invitations: many(invitations),
-}));
-
-export const invitationsRelations = relations(invitations, ({ one }) => ({
-  team: one(teams, {
-    fields: [invitations.teamId],
-    references: [teams.id],
-  }),
-  invitedBy: one(users, {
-    fields: [invitations.invitedBy],
-    references: [users.id],
-  }),
-}));
-
-export const teamMembersRelations = relations(teamMembers, ({ one }) => ({
-  user: one(users, {
-    fields: [teamMembers.userId],
-    references: [users.id],
-  }),
-  team: one(teams, {
-    fields: [teamMembers.teamId],
-    references: [teams.id],
-  }),
-}));
-
-// Legacy type exports
-export type Team = typeof teams.$inferSelect;
-export type NewTeam = typeof teams.$inferInsert;
-export type TeamMember = typeof teamMembers.$inferSelect;
-export type NewTeamMember = typeof teamMembers.$inferInsert;
-export type Invitation = typeof invitations.$inferSelect;
-export type NewInvitation = typeof invitations.$inferInsert;
-export type TeamDataWithMembers = Team & {
-  teamMembers: (TeamMember & {
-    user: Pick<User, 'id' | 'name' | 'email'>;
-  })[];
-};

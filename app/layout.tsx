@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { DM_Sans, Plus_Jakarta_Sans, Carattere } from 'next/font/google';
-import { getUser, getTeamForUser } from '@/lib/db/queries';
+import { getUser } from '@/lib/db/queries';
 import { serializeData } from '@/lib/utils';
 import { SWRConfig } from 'swr';
 import { CookieBanner } from '@/components/cookie-banner';
@@ -60,11 +60,6 @@ async function getSerializedUser() {
   return serializeData(user);
 }
 
-async function getSerializedTeam() {
-  const team = await getTeamForUser();
-  return serializeData(team);
-}
-
 export default function RootLayout({
   children
 }: {
@@ -83,7 +78,6 @@ export default function RootLayout({
                 // Serialize data to convert Date objects to ISO strings
                 // This prevents "Received an instance of Date" serialization errors
                 '/api/user': getSerializedUser(),
-                '/api/team': getSerializedTeam()
               }
             }}
           >

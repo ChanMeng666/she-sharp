@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
-import { activityLogs, users, teams, teamMembers, adminPermissions } from '@/lib/db/schema';
-import { eq, and, or, gte, lte, desc, asc, sql, isNull } from 'drizzle-orm';
+import { activityLogs, users, adminPermissions } from '@/lib/db/schema';
+import { eq, and, gte, lte, desc, sql } from 'drizzle-orm';
 import { getUser } from '@/lib/db/queries';
 
 export async function GET(request: NextRequest) {
@@ -46,41 +46,8 @@ export async function GET(request: NextRequest) {
     // Scope filtering
     if (scope === 'personal' || !scope) {
       conditions.push(eq(activityLogs.userId, user.id));
-    } else if (scope === 'team') {
-      // Get user's team IDs from teamMembers table
-      const userTeams = await db
-        .select({ teamId: teamMembers.teamId })
-        .from(teamMembers)
-        .where(eq(teamMembers.userId, user.id));
-      
-      if (userTeams.length > 0) {
-        // Get all team members' user IDs
-        const teamMemberIds = await db
-          .select({ userId: teamMembers.userId })
-          .from(teamMembers)
-          .where(or(...userTeams.map(t => eq(teamMembers.teamId, t.teamId))));
-        
-        const userIds = teamMemberIds.map(m => m.userId);
-        if (userIds.length > 0) {
-          conditions.push(
-            or(...userIds.map(id => eq(activityLogs.userId, id)))
-          );
-        }
-      } else {
-        // User has no teams, return empty result
-        return NextResponse.json({
-          logs: [],
-          pagination: {
-            page,
-            limit,
-            totalCount: 0,
-            totalPages: 0,
-            hasMore: false,
-          },
-        });
-      }
     }
-    // For 'all' scope (admin only), no user/team filtering
+    // For 'all' scope (admin only), no user filtering
 
     // Date filtering
     if (startDate) {

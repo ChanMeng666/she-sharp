@@ -57,8 +57,6 @@ const ALL_TABLES = [
 
   // Membership
   'membership_purchases',
-  'membership_benefits',
-  'membership_features',
   'user_memberships',
 
   // User Statistics
@@ -83,15 +81,6 @@ const ALL_TABLES = [
 
   // User Roles
   'user_roles',
-
-  // Configuration tables
-  'skill_options',
-  'industry_options',
-
-  // Legacy tables
-  'invitations',
-  'team_members',
-  'teams',
 
   // Core user table (last, as many tables reference it)
   'users',

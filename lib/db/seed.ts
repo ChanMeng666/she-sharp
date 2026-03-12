@@ -1,5 +1,5 @@
 import { db } from './drizzle';
-import { users, teams, teamMembers, userMemberships, userRoles, adminPermissions } from './schema';
+import { users, userMemberships, userRoles, adminPermissions } from './schema';
 import { hashPassword } from '@/lib/auth/session';
 
 async function seed() {
@@ -13,7 +13,6 @@ async function seed() {
       {
         email: email,
         passwordHash: passwordHash,
-        // Removed role field - using new role activation system
       },
     ])
     .returning();
@@ -49,19 +48,6 @@ async function seed() {
     canManageContent: true,
     canVerifyMentors: true,
     canManageEvents: true
-  });
-
-  const [team] = await db
-    .insert(teams)
-    .values({
-      name: 'Test Team',
-    })
-    .returning();
-
-  await db.insert(teamMembers).values({
-    teamId: team.id,
-    userId: user.id,
-    role: 'owner',
   });
 }
 
