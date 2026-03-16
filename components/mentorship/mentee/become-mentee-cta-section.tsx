@@ -4,14 +4,12 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Clock, Calendar, Users, Zap } from "lucide-react";
+import { Clock, Calendar, Users, Zap, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export function BecomeMenteeCTASection() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Mock deadline - replace with actual deadline
   const applicationDeadline = new Date('2026-03-31T23:59:59');
@@ -101,11 +99,11 @@ export function BecomeMenteeCTASection() {
                 <Button
                   asChild
                   size="lg"
-                  variant="outline"
-                  className="border-white text-white hover:bg-white/10 w-fit mt-4 bg-brand"
+                  className="bg-white text-purple-dark hover:bg-white/90 w-fit mt-4 text-base font-bold px-8 py-6 h-auto shadow-lg shadow-black/20 group transition-all duration-300 hover:shadow-xl hover:shadow-black/30 hover:scale-[1.02]"
                 >
-                  <Link href="/mentorship/mentee/apply">
+                  <Link href="/mentorship/mentee/apply" className="inline-flex items-center gap-3">
                     Apply to Become a Mentee
+                    <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                   </Link>
                 </Button>
 

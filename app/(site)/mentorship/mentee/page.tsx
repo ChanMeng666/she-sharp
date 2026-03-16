@@ -5,6 +5,7 @@ import { BenefitsSection } from "@/components/mentorship/benefits-section";
 import { Trophy, Rocket, Users } from "lucide-react";
 import { MenteeResponsibilitiesSection } from "@/components/mentorship/mentee/mentee-responsibilities-section";
 import { BecomeMenteeCTASection } from "@/components/mentorship/mentee/become-mentee-cta-section";
+import { StickyApplyBar } from "@/components/mentorship/sticky-apply-bar";
 
 export default function MenteeApplicationPage() {
   return (
@@ -51,6 +52,12 @@ export default function MenteeApplicationPage() {
       <MenteeResponsibilitiesSection />
 
       <BecomeMenteeCTASection />
+
+      <StickyApplyBar
+        href="/mentorship/mentee/apply"
+        label="Apply to Become a Mentee"
+        accentColor="bg-purple-dark"
+      />
     </>
   );
 }
