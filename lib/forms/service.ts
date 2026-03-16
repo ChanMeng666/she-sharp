@@ -15,7 +15,7 @@ import {
   ActivityType,
 } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
-import { createMentorApprovalCode } from '@/lib/invitations/service';
+import { createMentorApprovalCode, createMenteeApprovalCode } from '@/lib/invitations/service';
 import { sendInvitationCodeEmail } from '@/lib/email/service';
 
 // =======================
@@ -270,6 +270,135 @@ export async function reviewMentorForm(
   }
 }
 
+/**
+ * Reviews mentee form (admin action).
+ */
+export async function reviewMenteeForm(
+  formId: number,
+  reviewerId: number,
+  decision: 'approved' | 'rejected',
+  notes?: string
+): Promise<{ success: boolean; invitationCode?: string; error?: string }> {
+  try {
+    const [form] = await db
+      .select()
+      .from(menteeFormSubmissions)
+      .where(eq(menteeFormSubmissions.id, formId))
+      .limit(1);
+
+    if (!form) {
+      return { success: false, error: 'Form not found' };
+    }
+
+    if (form.status !== 'submitted') {
+      return { success: false, error: 'Form is not in submitted status' };
+    }
+
+    await db
+      .update(menteeFormSubmissions)
+      .set({
+        status: decision,
+        reviewedAt: new Date(),
+        reviewedBy: reviewerId,
+        reviewNotes: notes,
+        updatedAt: new Date(),
+      })
+      .where(eq(menteeFormSubmissions.id, formId));
+
+    // Log activity
+    await db.insert(activityLogs).values({
+      userId: reviewerId,
+      action: ActivityType.REVIEW_APPLICATION,
+      entityType: 'mentee_form',
+      entityId: formId,
+      metadata: { decision, notes },
+    });
+
+    // If approved and user not registered, generate invitation code
+    if (decision === 'approved' && form.email && !form.userId) {
+      const invitationCode = await createMenteeApprovalCode(
+        form.email,
+        reviewerId,
+        form.id,
+        notes
+      );
+
+      await sendInvitationCodeEmail(form.email, {
+        invitationCode: invitationCode.code,
+        codeType: 'mentee_approved',
+        expiresAt: invitationCode.expiresAt || undefined,
+        message: 'Your mentee application has been approved! Use this code to complete your registration.',
+      });
+
+      return { success: true, invitationCode: invitationCode.code };
+    }
+
+    // If approved and user exists, activate mentee role and create profile
+    if (decision === 'approved' && form.userId) {
+      const [existingRole] = await db
+        .select()
+        .from(userRoles)
+        .where(
+          and(
+            eq(userRoles.userId, form.userId),
+            eq(userRoles.roleType, 'mentee')
+          )
+        )
+        .limit(1);
+
+      if (!existingRole) {
+        await db.insert(userRoles).values({
+          userId: form.userId,
+          roleType: 'mentee',
+          isActive: true,
+        });
+      } else if (!existingRole.isActive) {
+        await db
+          .update(userRoles)
+          .set({ isActive: true })
+          .where(eq(userRoles.id, existingRole.id));
+      }
+
+      // Create or update mentee profile
+      const [existingProfile] = await db
+        .select()
+        .from(menteeProfiles)
+        .where(eq(menteeProfiles.userId, form.userId))
+        .limit(1);
+
+      const profileData = {
+        bio: form.bio,
+        careerStage: form.currentStage,
+        learningGoals: [form.longTermGoals, form.shortTermGoals].filter(Boolean) as string[],
+        preferredExpertiseAreas: form.preferredIndustries || [],
+        preferredMeetingFrequency: form.preferredMeetingFrequency,
+        currentChallenge: form.whyMentor,
+        mbtiType: form.mbtiType,
+        photoUrl: form.photoUrl,
+        formSubmissionId: form.id,
+        profileCompletedAt: new Date(),
+      };
+
+      if (!existingProfile) {
+        await db.insert(menteeProfiles).values({
+          userId: form.userId,
+          ...profileData,
+        });
+      } else {
+        await db
+          .update(menteeProfiles)
+          .set(profileData)
+          .where(eq(menteeProfiles.userId, form.userId));
+      }
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error reviewing mentee form:', error);
+    return { success: false, error: 'Failed to review form' };
+  }
+}
+
 // =======================
 // Mentee Form Operations
 // =======================
@@ -376,73 +505,6 @@ export async function submitMenteeForm(
       entityType: 'mentee_form',
       entityId: form.id,
     });
-
-    // Auto-approve mentee forms and activate role
-    await db
-      .update(menteeFormSubmissions)
-      .set({
-        status: 'approved',
-        reviewedAt: new Date(),
-        updatedAt: new Date(),
-      })
-      .where(eq(menteeFormSubmissions.userId, userId));
-
-    // Check if mentee role already exists
-    const [existingRole] = await db
-      .select()
-      .from(userRoles)
-      .where(
-        and(
-          eq(userRoles.userId, userId),
-          eq(userRoles.roleType, 'mentee')
-        )
-      )
-      .limit(1);
-
-    if (!existingRole) {
-      await db.insert(userRoles).values({
-        userId,
-        roleType: 'mentee',
-        isActive: true,
-      });
-    } else if (!existingRole.isActive) {
-      await db
-        .update(userRoles)
-        .set({ isActive: true })
-        .where(eq(userRoles.id, existingRole.id));
-    }
-
-    // Create or update mentee profile
-    const [existingProfile] = await db
-      .select()
-      .from(menteeProfiles)
-      .where(eq(menteeProfiles.userId, userId))
-      .limit(1);
-
-    const profileData = {
-      bio: form.bio,
-      careerStage: form.currentStage,
-      learningGoals: [form.longTermGoals, form.shortTermGoals].filter(Boolean) as string[],
-      preferredExpertiseAreas: form.preferredIndustries || [],
-      preferredMeetingFrequency: form.preferredMeetingFrequency,
-      currentChallenge: form.whyMentor,
-      mbtiType: form.mbtiType,
-      photoUrl: form.photoUrl,
-      formSubmissionId: form.id,
-      profileCompletedAt: new Date(),
-    };
-
-    if (!existingProfile) {
-      await db.insert(menteeProfiles).values({
-        userId,
-        ...profileData,
-      });
-    } else {
-      await db
-        .update(menteeProfiles)
-        .set(profileData)
-        .where(eq(menteeProfiles.userId, userId));
-    }
 
     return { success: true };
   } catch (error) {

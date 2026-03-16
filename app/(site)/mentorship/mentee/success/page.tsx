@@ -12,16 +12,16 @@ function PaymentSuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const alreadyPaid = searchParams.get('already_paid');
+  const submitted = searchParams.get('submitted');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Verify session if needed
-    if (sessionId || alreadyPaid) {
+    if (sessionId || alreadyPaid || submitted) {
       setLoading(false);
     } else {
       setLoading(false);
     }
-  }, [sessionId, alreadyPaid]);
+  }, [sessionId, alreadyPaid, submitted]);
 
   if (loading) {
     return (
@@ -36,6 +36,70 @@ function PaymentSuccessContent() {
       >
         <div className="absolute inset-0 glass-overlay"></div>
         <Loader2 className="h-8 w-8 animate-spin text-foreground relative z-10" />
+      </div>
+    );
+  }
+
+  // Application submitted for review (free registration flow)
+  if (submitted) {
+    return (
+      <div
+        className="min-h-screen pt-24 md:pt-32 pb-16 relative"
+        style={{
+          backgroundImage: 'url(/img/bauhaus-1764928803893.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 glass-overlay"></div>
+        <div className="container mx-auto px-4 max-w-lg relative z-10">
+          <Card className="glass-card rounded-[50px]">
+            <CardContent className="pt-8 text-center">
+              <div className="w-20 h-20 bg-green-100 border-2 border-green-300 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="h-12 w-12 text-green-600" />
+              </div>
+              <h1 className="text-3xl font-bold text-foreground mb-3">
+                Application Submitted!
+              </h1>
+              <p className="text-gray-600 mb-6">
+                Thank you for applying to the She Sharp Mentorship Program. Our team will review your application within 5-7 business days.
+              </p>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-left">
+                <h3 className="font-semibold text-foreground mb-2">
+                  What happens next?
+                </h3>
+                <ol className="text-base text-gray-600 space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
+                      1
+                    </span>
+                    <span>Our team reviews your application</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
+                      2
+                    </span>
+                    <span>
+                      If approved, you&apos;ll receive an email with your invitation code
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
+                      3
+                    </span>
+                    <span>Use the code to create your account and start your mentorship journey!</span>
+                  </li>
+                </ol>
+              </div>
+              <Link href="/">
+                <Button variant="default" className="w-full">
+                  Return to Home
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     );
   }

@@ -28,7 +28,7 @@ export const resourceAccessLevelEnum = pgEnum('resource_access_level', ['public'
 
 // New enums for business logic update
 export const invitationCodeStatusEnum = pgEnum('invitation_code_status', ['active', 'used', 'expired', 'revoked']);
-export const invitationCodeTypeEnum = pgEnum('invitation_code_type', ['payment', 'mentor_approved', 'admin_generated']);
+export const invitationCodeTypeEnum = pgEnum('invitation_code_type', ['payment', 'mentor_approved', 'mentee_approved', 'admin_generated']);
 export const formStatusEnum = pgEnum('form_status', ['not_started', 'in_progress', 'submitted', 'approved', 'rejected']);
 export const bioMethodEnum = pgEnum('bio_method', ['self_written', 'ai_generated', 'already_sent']);
 export const careerStageEnum = pgEnum('career_stage', ['undergraduate', 'postgraduate', 'early_career', 'mid_career', 'senior', 'career_transition']);

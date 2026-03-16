@@ -322,7 +322,8 @@ export default function UserManagement() {
 
     setSubmittingReview(true);
     try {
-      const response = await fetch(`/api/admin/mentors/applications/${reviewingUser.applicationInfo.id}/review`, {
+      const appType = reviewingUser.applicationInfo.type === 'mentee' ? 'mentees' : 'mentors';
+      const response = await fetch(`/api/admin/${appType}/applications/${reviewingUser.applicationInfo.id}/review`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

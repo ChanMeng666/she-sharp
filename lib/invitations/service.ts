@@ -31,7 +31,7 @@ function generateCodeString(): string {
 }
 
 export interface CreateInvitationCodeParams {
-  codeType: 'payment' | 'mentor_approved' | 'admin_generated';
+  codeType: 'payment' | 'mentor_approved' | 'mentee_approved' | 'admin_generated';
   maxUses?: number;
   expiresAt?: Date;
   purchaseId?: number;
@@ -313,7 +313,7 @@ export async function revokeInvitationCode(
  */
 export async function getInvitationCodes(options: {
   status?: 'active' | 'used' | 'expired' | 'revoked';
-  codeType?: 'payment' | 'mentor_approved' | 'admin_generated';
+  codeType?: 'payment' | 'mentor_approved' | 'mentee_approved' | 'admin_generated';
   generatedBy?: number;
   limit?: number;
   offset?: number;
@@ -446,6 +446,28 @@ export async function createMentorApprovalCode(
     targetRole: 'mentor',
     linkedFormId,
     linkedFormType: 'mentor',
+  });
+}
+
+/**
+ * Creates invitation code after mentee application approval.
+ * Links code to mentee form submission.
+ */
+export async function createMenteeApprovalCode(
+  menteeEmail: string,
+  approvedBy: number,
+  linkedFormId: number,
+  notes?: string
+): Promise<InvitationCode> {
+  return createInvitationCode({
+    codeType: 'mentee_approved',
+    maxUses: 1,
+    generatedBy: approvedBy,
+    generatedFor: menteeEmail,
+    notes: notes || 'Generated after mentee application approval',
+    targetRole: 'mentee',
+    linkedFormId,
+    linkedFormType: 'mentee',
   });
 }
 

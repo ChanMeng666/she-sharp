@@ -1,0 +1,1 @@
+ALTER TYPE "public"."invitation_code_type" ADD VALUE 'mentee_approved' BEFORE 'admin_generated';

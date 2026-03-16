@@ -500,7 +500,7 @@ export async function sendInvitationCodeEmail(
   email: string,
   details: {
     invitationCode: string;
-    codeType: 'mentor_approved' | 'admin_generated';
+    codeType: 'mentor_approved' | 'mentee_approved' | 'admin_generated';
     expiresAt?: Date;
     message?: string;
   }
@@ -510,10 +510,16 @@ export async function sendInvitationCodeEmail(
     : (process.env.BASE_URL || 'http://localhost:3000');
   const signUpUrl = `${baseUrl}/sign-up?code=${details.invitationCode}`;
 
-  const isApproval = details.codeType === 'mentor_approved';
-  const title = isApproval ? 'Your Mentor Application is Approved!' : 'Your She Sharp Invitation';
-  const greeting = isApproval
+  const isApproval = details.codeType === 'mentor_approved' || details.codeType === 'mentee_approved';
+  const title = details.codeType === 'mentor_approved'
+    ? 'Your Mentor Application is Approved!'
+    : details.codeType === 'mentee_approved'
+    ? 'Your Mentee Application is Approved!'
+    : 'Your She Sharp Invitation';
+  const greeting = details.codeType === 'mentor_approved'
     ? 'Congratulations! Your application to become a mentor at She Sharp has been approved.'
+    : details.codeType === 'mentee_approved'
+    ? 'Your application to join the She Sharp Mentorship Program as a mentee has been approved.'
     : 'You have been invited to join She Sharp!';
 
   const html = `

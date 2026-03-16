@@ -416,7 +416,7 @@ export default function MenteeApplyPage() {
         return;
       }
 
-      router.push(`/mentorship/mentee/payment?id=${data.submissionId}`);
+      router.push(`/mentorship/mentee/success?submitted=true`);
     } catch (error) {
       setErrors({ email: "Failed to submit application. Please try again." });
       setLoading(false);

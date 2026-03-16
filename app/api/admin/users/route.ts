@@ -342,7 +342,38 @@ export const GET = withRoles(
         };
       });
 
-      // Transform public applications (no filter on search for now, will be done client-side)
+      // Fetch public mentee applications (userId is NULL) - only pending/submitted ones
+      const publicMenteeApplications = await db
+        .select({
+          id: menteeFormSubmissions.id,
+          email: menteeFormSubmissions.email,
+          fullName: menteeFormSubmissions.fullName,
+          photoUrl: menteeFormSubmissions.photoUrl,
+          phone: menteeFormSubmissions.phone,
+          city: menteeFormSubmissions.city,
+          mbtiType: menteeFormSubmissions.mbtiType,
+          status: menteeFormSubmissions.status,
+          submittedAt: menteeFormSubmissions.submittedAt,
+          createdAt: menteeFormSubmissions.createdAt,
+          currentJobTitle: menteeFormSubmissions.currentJobTitle,
+          currentIndustry: menteeFormSubmissions.currentIndustry,
+          currentStage: menteeFormSubmissions.currentStage,
+          bio: menteeFormSubmissions.bio,
+          reviewNotes: menteeFormSubmissions.reviewNotes,
+        })
+        .from(menteeFormSubmissions)
+        .where(
+          and(
+            isNull(menteeFormSubmissions.userId),
+            or(
+              eq(menteeFormSubmissions.status, 'submitted'),
+              eq(menteeFormSubmissions.status, 'in_progress')
+            )
+          )
+        )
+        .orderBy(desc(menteeFormSubmissions.submittedAt));
+
+      // Transform public mentor applications
       const publicRecords = publicApplications
         .filter(app => {
           if (!searchQuery) return true;
@@ -396,8 +427,50 @@ export const GET = withRoles(
           };
         });
 
+      // Transform public mentee applications
+      const publicMenteeRecords = publicMenteeApplications
+        .filter(app => {
+          if (!searchQuery) return true;
+          const searchLower = searchQuery.toLowerCase();
+          return (
+            (app.fullName?.toLowerCase().includes(searchLower)) ||
+            (app.email?.toLowerCase().includes(searchLower))
+          );
+        })
+        .map(app => ({
+          id: app.id,
+          recordType: 'public_application' as const,
+          recordId: `app_mentee_${app.id}`,
+          userId: null,
+          applicationId: app.id,
+          name: app.fullName,
+          email: app.email || '',
+          image: app.photoUrl,
+          phone: app.phone,
+          roles: [] as string[],
+          membershipTier: 'free' as const,
+          accountStatus: 'pending_registration' as const,
+          createdAt: app.createdAt.toISOString(),
+          lastLoginAt: null,
+          company: null,
+          jobTitle: app.currentJobTitle,
+          city: app.city,
+          mbtiType: app.mbtiType,
+          applicationStatus: 'pending' as const,
+          applicationInfo: {
+            id: app.id,
+            type: 'mentee',
+            status: app.status === 'submitted' ? 'pending' : 'under_review',
+            submittedAt: app.submittedAt?.toISOString() || app.createdAt.toISOString(),
+            bio: app.bio,
+            reviewNotes: app.reviewNotes,
+          },
+          mentorInfo: null,
+          menteeInfo: null,
+        }));
+
       // Combine all records
-      allRecords = [...allRecords, ...publicRecords];
+      allRecords = [...allRecords, ...publicRecords, ...publicMenteeRecords];
 
       // Apply filters
       if (roleFilter && roleFilter !== 'all') {
@@ -433,7 +506,7 @@ export const GET = withRoles(
       // Calculate stats
       const stats = {
         totalUsers: usersData.length,
-        totalPublicApplications: publicApplications.length,
+        totalPublicApplications: publicApplications.length + publicMenteeApplications.length,
         pendingApplications: allRecords.filter(r => r.applicationStatus === 'pending').length,
         byRole: {
           admin: allRecords.filter(r => r.roles.includes('admin')).length,
