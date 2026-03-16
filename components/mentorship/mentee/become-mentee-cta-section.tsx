@@ -104,14 +104,9 @@ export function BecomeMenteeCTASection() {
                   variant="outline"
                   className="border-white text-white hover:bg-white/10 w-fit mt-4 bg-brand"
                 >
-                  <a
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSeiNe0btTXNLsJeIsMape05630fK1SLdldO9Ty3x8QbLd6B6w/viewform?usp=sf_link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2"
-                  >
+                  <Link href="/mentorship/mentee/apply">
                     Apply to Become a Mentee
-                  </a>
+                  </Link>
                 </Button>
 
                 <p className="text-base text-white/80">

@@ -102,14 +102,9 @@ export function BecomeMentorCTASection() {
                   variant="outline"
                   className="border-white text-white hover:bg-white/10 w-fit mt-4 bg-periwinkle-dark"
                 >
-                  <a
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSd00tgJNa8BQM8wVtLHz7We_AQ1zRT0yVYcFP_hZlpwEVAHlQ/viewform?usp=sf_link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2"
-                  >
+                  <Link href="/mentorship/mentor/apply">
                     Apply to be a Mentor
-                  </a>
+                  </Link>
                 </Button>
 
                 <p className="text-base text-white/80">

@@ -2,12 +2,11 @@
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Button } from "@/components/ui/button";
+
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ExternalLink, ChevronDown, MessageSquare, Target, Lightbulb, TrendingUp, CheckCircle } from "lucide-react";
+import { ChevronDown, MessageSquare, Target, Lightbulb, TrendingUp, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import Link from "next/link";
 
 const responsibilityCategories = {
   communication: {
@@ -109,32 +108,8 @@ export function MenteeResponsibilitiesSection() {
                 })}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  asChild
-                  size="lg"
-                  variant="brand"
-                >
-                  <a
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSeiNe0btTXNLsJeIsMape05630fK1SLdldO9Ty3x8QbLd6B6w/viewform?usp=sf_link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 "
-                  >
-                    Start Your Journey
-                  </a>
-                </Button>
-                <Button 
-                  asChild 
-                  size="lg" 
-                  variant="outline"
-                  className="border-brand text-brand hover:bg-brand/50 hover:text-white transition-colors"
-                >
-                  <Link href="/mentorship#how-it-works">
-                    Learn How It Works
-                  </Link>
-                </Button>
-              </div>
+
+
             </div>
 
             {/* Image with overlay info */}

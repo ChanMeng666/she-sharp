@@ -2,12 +2,11 @@
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Button } from "@/components/ui/button";
+
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {  ChevronDown, Heart, Compass, MessageSquare, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import Link from "next/link";
 
 const responsibilityCategories = {
   commitment: {
@@ -98,32 +97,8 @@ export function MentorResponsibilitiesSection() {
                 })}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  asChild 
-                  size="lg" 
-                  variant="brand"
-                >
-                  <a 
-                    href="https://forms.gle/msvCzw3qevVnPRvv7" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2"
-                  >
-                    Become a mentor            
-                  </a>
-                </Button>
-                <Button 
-                  asChild 
-                  size="lg" 
-                  variant="outline"
-                  className="border-purple-dark text-purple-dark hover:bg-purple-dark/50 hover:text-white transition-colors"
-                >
-                  <Link href="/mentorship#how-it-works">
-                    Learn How It Works
-                  </Link>
-                </Button>
-              </div>
+
+
             </div>
 
             {/* Image with overlay info */}
