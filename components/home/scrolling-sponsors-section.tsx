@@ -177,6 +177,7 @@ export function ScrollingSponsorsSection() {
           opacity={0.9}
           gapPx={80}
           duration={40}
+          reverse
         />
 
         {/* Row 2 - reversed direction */}
