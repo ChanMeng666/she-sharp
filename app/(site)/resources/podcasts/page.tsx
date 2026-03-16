@@ -18,7 +18,7 @@ export default function PodcastsPage() {
   const showEmbedUrl = getSpotifyShowEmbedUrl();
 
   return (
-    <Section spacing="section" className="py-16 md:py-24 lg:py-32">
+    <Section spacing="section" className="py-24 lg:py-36">
       <Container size="full">
         <div className="mb-10 md:mb-14 max-w-3xl">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">

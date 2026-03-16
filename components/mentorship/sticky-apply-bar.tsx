@@ -31,21 +31,20 @@ export function StickyApplyBar({
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-50 transition-all duration-500 ${
-        visible
-          ? "translate-y-0 opacity-100"
-          : "translate-y-full opacity-0"
-      }`}
+      className={`fixed bottom-0 left-0 right-0 z-50 transition-all duration-500 ${visible
+        ? "translate-y-0 opacity-100"
+        : "translate-y-full opacity-0"
+        }`}
     >
       <div className={`${accentColor} border-t border-white/20 shadow-[0_-4px_20px_rgba(0,0,0,0.15)] backdrop-blur-md`}>
-        <div className="container mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+        <div className="container mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-4">
           <p className="text-white font-medium text-sm md:text-base hidden sm:block">
             Ready to start your journey?
           </p>
           <Button
             asChild
-            size="lg"
-            className="bg-white text-foreground hover:bg-white/90 font-bold px-6 md:px-8 h-11 shadow-md group transition-all duration-300 hover:shadow-lg hover:scale-[1.02] w-full sm:w-auto"
+            size="default"
+            className="bg-white border-none text-foreground hover:bg-white/80 hover:text-foreground font-bold px-6 md:px-8 h-11 shadow-md group transition-all duration-300 hover:shadow-lg hover:scale-[1.02] w-full sm:w-auto"
           >
             <Link href={href} className="inline-flex items-center justify-center gap-2">
               {label}

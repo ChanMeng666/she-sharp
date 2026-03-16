@@ -240,7 +240,7 @@ export function ProgramsSection() {
             <div className="lg:hidden">
               <AnimateOnScroll variant="fade-up" className="relative w-full md:w-4/5 mx-auto">
                 <div
-                  className="absolute inset-0 border border-foreground/30 rounded-[50px] transform rotate-0 md:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
+                  className="absolute inset-0 border border-foreground/30 rounded-[50px] transform rotate-0 lg:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
                 />
                 <div className="relative w-full h-[300px] md:h-[400px] rounded-[50px] overflow-hidden z-10">
                   {programs.map((program, index) => (
