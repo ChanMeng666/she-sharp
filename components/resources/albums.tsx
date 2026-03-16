@@ -96,7 +96,7 @@ export function GalleryAlbumsGrid() {
   const hasActiveFilters = selectedYears.length > 0 || searchQuery !== "";
 
   return (
-    <Section spacing="section" className="py-16 md:py-24 lg:py-32">
+    <Section spacing="section" className="py-24 lg:py-36">
       <Container size="full">
         {/* Header */}
         <div className="mb-10 md:mb-14">

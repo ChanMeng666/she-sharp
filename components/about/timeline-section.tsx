@@ -150,11 +150,11 @@ export function TimelineSection() {
   return (
     <Section noPadding className="bg-white">
       <Container size="full">
-        <div className="text-center pt-16 md:pt-24 px-4">
+        <div className="pt-12 md:pt-24 px-4">
           <h2 className="text-display-sm text-primary text-left">
             A Deep Dive into Our Journey
           </h2>
-          <p className="mt-6 sm:mt-8 text-md lg:text-lg text-muted-foreground max-w-2xl text-left leading-relaxed">
+          <p className="mt-4 sm:mt-6 md:mt-8 text-sm md:text-md lg:text-lg text-muted-foreground max-w-2xl text-left leading-relaxed ">
             From a small launch event in 2014 to a thriving community of 2200+
             members across New Zealand
           </p>
