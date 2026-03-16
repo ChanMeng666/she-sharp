@@ -38,7 +38,7 @@ export function StickyApplyBar({
       }`}
     >
       <div className={`${accentColor} border-t border-white/20 shadow-[0_-4px_20px_rgba(0,0,0,0.15)] backdrop-blur-md`}>
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+        <div className="container mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
           <p className="text-white font-medium text-sm md:text-base hidden sm:block">
             Ready to start your journey?
           </p>
