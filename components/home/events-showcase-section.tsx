@@ -104,16 +104,16 @@ function SimpleEventCard({ event }: { event: EventV3 }) {
         />
       </div>
 
-      <div className="p-2 md:p-4 flex flex-col gap-2">
-        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+      <div className="p-3 sm:p-4 flex flex-col gap-1.5 sm:gap-2">
+        <span className="text-[10px] sm:text-xs font-medium text-muted-foreground uppercase tracking-wider">
           {isUpcoming ? "Upcoming" : "Past Event"}
         </span>
 
-        <h3 className="text-sm md:text-base font-bold text-foreground leading-snug group-hover:text-brand transition-colors duration-200">
+        <h3 className="text-xs sm:text-sm md:text-base font-bold text-foreground leading-snug group-hover:text-brand transition-colors duration-200 line-clamp-2">
           {truncateTitle(event.title)}
         </h3>
 
-        <span className="text-xs md:text-sm text-muted-foreground">
+        <span className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">
           {formattedDate}
         </span>
       </div>
@@ -142,11 +142,11 @@ export function EventsShowcaseSection() {
           <h2 className="text-display-sm text-foreground">Recent events</h2>
         </AnimateOnScroll>
 
-        <div className="flex flex-col lg:flex-row gap-12 items-center justify-center px-4 md:px-8 ">
+        <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 items-stretch px-4 md:px-8">
           {/* Left: Featured event */}
           {featuredEvent && (
             <AnimateOnScroll variant="fade-right" className="w-full lg:w-1/2">
-              <div className="aspect-4/5 h-[720px] rounded-2xl overflow-hidden">
+              <div className="relative aspect-3/4 sm:aspect-4/5 lg:h-[720px] lg:aspect-auto rounded-2xl overflow-hidden">
                 <FeaturedEventCard event={featuredEvent} />
               </div>
             </AnimateOnScroll>
@@ -154,7 +154,7 @@ export function EventsShowcaseSection() {
 
           {/* Right: 2x2 grid */}
           {sideEvents.length > 0 && (
-            <div className="w-full lg:w-1/2 grid grid-cols-2 gap-4 md:gap-8">
+            <div className="w-full lg:w-1/2 grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
               {sideEvents.map((event, index) => (
                 <AnimateOnScroll
                   key={event.slug}
