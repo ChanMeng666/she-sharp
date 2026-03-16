@@ -1,3 +1,5 @@
+"use client";
+
 import { MentorshipHeroSection } from "@/components/mentorship/mentorship-hero-section";
 import { BenefitsSection } from "@/components/mentorship/benefits-section";
 import { Trophy, Rocket, Users } from "lucide-react";
