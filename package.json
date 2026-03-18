@@ -115,6 +115,7 @@
   "devDependencies": {
     "@types/canvas-confetti": "^1.9.0",
     "baseline-browser-mapping": "^2.9.4",
+    "csv-parse": "^6.2.0",
     "prettier": "^3.6.2"
   }
 }

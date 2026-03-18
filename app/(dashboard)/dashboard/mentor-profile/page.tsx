@@ -224,16 +224,6 @@ export default function MentorProfilePage() {
   };
 
   const handleSave = async () => {
-    // Validation
-    if (!profile.jobTitle || !profile.yearsExperience) {
-      toast.error('Please fill in your job title and years of experience');
-      return;
-    }
-    if (profile.softSkillsExpert.length === 0 && profile.industrySkillsExpert.length === 0) {
-      toast.error('Please select at least one expert skill');
-      return;
-    }
-
     setIsSaving(true);
     try {
       const response = await fetch('/api/user/mentor-profile', {
