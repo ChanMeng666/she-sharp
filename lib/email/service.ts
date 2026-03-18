@@ -1,5 +1,15 @@
 import { Resend } from 'resend';
 
+/**
+ * Get the base URL for email links
+ */
+export function getBaseUrl(): string {
+  if (process.env.NODE_ENV === 'development' && process.env.BASE_URL?.includes('vercel.app')) {
+    return 'http://localhost:3000';
+  }
+  return process.env.BASE_URL || 'http://localhost:3000';
+}
+
 interface EmailOptions {
   to: string;
   subject: string;
@@ -121,10 +131,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
  * Send verification email
  */
 export async function sendVerificationEmail(email: string, token: string) {
-  // Use localhost in development mode when BASE_URL is production
-  const baseUrl = process.env.NODE_ENV === 'development' && process.env.BASE_URL?.includes('vercel.app') 
-    ? 'http://localhost:3000' 
-    : (process.env.BASE_URL || 'http://localhost:3000');
+  const baseUrl = getBaseUrl();
   const verificationUrl = `${baseUrl}/verify-email?token=${token}`;
 
   const html = `
@@ -197,7 +204,7 @@ If you didn't create an account, please ignore this email.
  * Send password reset email
  */
 export async function sendPasswordResetEmail(email: string, token: string) {
-  const resetUrl = `${process.env.BASE_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
+  const resetUrl = `${getBaseUrl()}/reset-password?token=${token}`;
 
   const html = `
     <!DOCTYPE html>
@@ -277,10 +284,7 @@ export async function sendInvitationEmail(
   role: string,
   invitationId: number
 ) {
-  // Use localhost in development mode when BASE_URL is production
-  const baseUrl = process.env.NODE_ENV === 'development' && process.env.BASE_URL?.includes('vercel.app') 
-    ? 'http://localhost:3000' 
-    : (process.env.BASE_URL || 'http://localhost:3000');
+  const baseUrl = getBaseUrl();
   const inviteUrl = `${baseUrl}/sign-up?inviteId=${invitationId}`;
 
   const html = `
@@ -372,9 +376,7 @@ export async function sendPaymentConfirmationEmail(
     amount: string;
   }
 ) {
-  const baseUrl = process.env.NODE_ENV === 'development' && process.env.BASE_URL?.includes('vercel.app')
-    ? 'http://localhost:3000'
-    : (process.env.BASE_URL || 'http://localhost:3000');
+  const baseUrl = getBaseUrl();
   const signUpUrl = `${baseUrl}/sign-up?code=${details.invitationCode}`;
   const expiryDate = new Date(details.expiresAt).toLocaleDateString('en-NZ', {
     year: 'numeric',
@@ -505,9 +507,7 @@ export async function sendInvitationCodeEmail(
     message?: string;
   }
 ) {
-  const baseUrl = process.env.NODE_ENV === 'development' && process.env.BASE_URL?.includes('vercel.app')
-    ? 'http://localhost:3000'
-    : (process.env.BASE_URL || 'http://localhost:3000');
+  const baseUrl = getBaseUrl();
   const signUpUrl = `${baseUrl}/sign-up?code=${details.invitationCode}`;
 
   const isApproval = details.codeType === 'mentor_approved' || details.codeType === 'mentee_approved';

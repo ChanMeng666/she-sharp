@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { getBaseUrl } from '@/lib/email/service';
 
 export async function GET() {
   try {
@@ -121,6 +122,6 @@ export async function GET() {
   } catch (error) {
     console.error('Complete signout error:', error);
     // Still redirect on error
-    return NextResponse.redirect(new URL('/', process.env.NEXTAUTH_URL || 'http://localhost:3000'));
+    return NextResponse.redirect(new URL('/', getBaseUrl()));
   }
 }

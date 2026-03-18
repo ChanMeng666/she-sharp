@@ -3,14 +3,7 @@
  * Uses Resend via the shared sendEmail utility.
  */
 
-import { sendEmail } from '@/lib/email/service';
-
-function getBaseUrl(): string {
-  if (process.env.NODE_ENV === 'development' && process.env.BASE_URL?.includes('vercel.app')) {
-    return 'http://localhost:3000';
-  }
-  return process.env.BASE_URL || 'http://localhost:3000';
-}
+import { sendEmail, getBaseUrl } from '@/lib/email/service';
 
 const TYPE_LABELS: Record<string, string> = {
   ambassador: 'Ambassador',
