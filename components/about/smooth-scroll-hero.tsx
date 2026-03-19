@@ -40,7 +40,7 @@ const LERP = 0.08;
 const WHEEL_SPEED = 0.75;
 const MAX_DELTA = 120;
 const SNAP_MS = 450;
-const EXIT_THRESHOLD = 0.25;
+const OVERSCROLL_EXIT = 60;
 
 export default function SmoothScrollHero() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -78,6 +78,7 @@ export default function SmoothScrollHero() {
     let rafId = 0;
     let prevDot = 0;
     let hintGone = false;
+    let overscroll = 0;
 
     const minTgt = -(N - 1) * sH;
 
@@ -166,17 +167,29 @@ export default function SmoothScrollHero() {
         Math.min(e.deltaY * WHEEL_SPEED, MAX_DELTA),
         -MAX_DELTA
       );
+
+      // At last slide, scrolling down — accumulate overscroll
+      if (delta > 0 && tgtY <= minTgt + 2) {
+        overscroll += delta;
+        if (overscroll >= OVERSCROLL_EXIT) {
+          active = false;
+          tgtY = minTgt;
+          overscroll = 0;
+          // Kick-start page scroll so user doesn't need an extra scroll
+          window.scrollBy(0, 1);
+          return;
+        }
+        e.preventDefault();
+        return;
+      }
+
       const newTgt = tgtY - delta;
 
       // Scrolling up past first slide — let page handle
       if (newTgt > sH * 0.05) return;
 
-      // Scrolling down past last slide — release to page
-      if (newTgt < minTgt - sH * EXIT_THRESHOLD) {
-        active = false;
-        tgtY = minTgt;
-        return;
-      }
+      // Reset overscroll when not at boundary
+      overscroll = 0;
 
       e.preventDefault();
       isSnap = false;
@@ -203,11 +216,13 @@ export default function SmoothScrollHero() {
       // Swiping down (scroll up) past first slide
       if (newTgt > sH * 0.05) return;
 
-      // Swiping up (scroll down) past last slide
-      if (newTgt < minTgt - sH * EXIT_THRESHOLD) {
+      // Swiping up (scroll down) past last slide — exit with small threshold
+      if (newTgt < minTgt - OVERSCROLL_EXIT) {
         active = false;
         tgtY = minTgt;
         isDrag = false;
+        overscroll = 0;
+        window.scrollBy(0, 1);
         return;
       }
 
@@ -224,6 +239,7 @@ export default function SmoothScrollHero() {
     function onPageScroll() {
       if (!active && window.scrollY <= 2) {
         active = true;
+        overscroll = 0;
         // Re-enter at last slide
         curY = minTgt;
         tgtY = minTgt;
