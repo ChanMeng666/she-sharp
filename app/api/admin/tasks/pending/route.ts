@@ -51,7 +51,7 @@ export const GET = withRoles(
           task: 'Review mentee applications',
           count: pendingMentees,
           priority: 'high' as const,
-          href: '/dashboard/admin/mentees'
+          href: '/dashboard/admin/users?application=has_pending'
         },
         {
           task: 'Review AI match suggestions',

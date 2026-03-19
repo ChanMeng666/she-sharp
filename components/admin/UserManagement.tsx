@@ -1304,8 +1304,8 @@ export default function UserManagement() {
               </DialogTitle>
               <DialogDescription>
                 {reviewAction === 'approve'
-                  ? `Are you sure you want to approve ${reviewingUser?.name || 'this user'}'s mentor application?`
-                  : `Are you sure you want to reject ${reviewingUser?.name || 'this user'}'s mentor application?`
+                  ? `Are you sure you want to approve ${reviewingUser?.name || 'this user'}'s ${reviewingUser?.applicationInfo?.type || 'mentor'} application?`
+                  : `Are you sure you want to reject ${reviewingUser?.name || 'this user'}'s ${reviewingUser?.applicationInfo?.type || 'mentor'} application?`
                 }
               </DialogDescription>
             </DialogHeader>
