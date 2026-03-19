@@ -1,0 +1,26 @@
+@layer utilities {
+  .card-sm {
+    border-radius: var(--radius-card-sm);
+    overflow: hidden;
+  }
+
+  .card-md {
+    border-radius: var(--radius-card-md);
+    overflow: hidden;
+  }
+
+  .card-lg {
+    border-radius: var(--radius-card-lg);
+    overflow: hidden;
+  }
+
+  .card-glass {
+    @apply border border-border/30 bg-white/50 backdrop-blur-md backdrop-saturate-150
+           shadow-lg shadow-black/5 transition-all duration-300;
+  }
+
+  .card-interactive {
+    @apply hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/10
+           hover:border-brand/50 hover:bg-background/60;
+  }
+}

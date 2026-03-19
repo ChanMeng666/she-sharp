@@ -1,0 +1,20 @@
+@layer utilities {
+  /* Dashboard Background Gradient */
+  .dashboard-bg {
+    background: linear-gradient(165deg,
+        hsl(var(--dashboard-bg-start)) 0%,
+        hsl(var(--dashboard-bg-mid)) 40%,
+        hsl(var(--dashboard-bg-end)) 100%) !important;
+    min-height: 100svh;
+  }
+
+  /* Make dashboard sidebar transparent to show continuous gradient */
+  .dashboard-bg [data-slot="sidebar-inner"] {
+    background: transparent !important;
+  }
+
+  /* Ensure sidebar-wrapper fills entire viewport */
+  .dashboard-bg[data-slot="sidebar-wrapper"] {
+    min-height: 100svh !important;
+  }
+}

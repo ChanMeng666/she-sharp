@@ -109,7 +109,7 @@ export function CoreValuesSection() {
         </AnimateOnScroll>
 
         <AnimateOnScroll variant="fade-up">
-          <div className="relative w-full aspect-16/9 overflow-hidden rounded-lg shadow-xl">
+          <div className="relative w-full aspect-16/9 card-lg shadow-xl">
             {CORE_VALUES.map((value, index) => (
               <div
                 key={value.title}

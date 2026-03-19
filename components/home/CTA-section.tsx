@@ -31,8 +31,8 @@ const CTA_ITEMS = [
 const BUTTON_CLASSES =
   "border border-ghost-white text-ghost-white bg-transparent hover:bg-ghost-white/10";
 const ICON_CONTAINER_CLASSES =
-  "w-18 h-18 bg-ghost-white rounded-full flex items-center justify-center mb-4";
-const ICON_CLASSES = "w-8 h-8 text-periwinkle-dark";
+  "w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-ghost-white rounded-full flex items-center justify-center mb-4";
+const ICON_CLASSES = "w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-periwinkle-dark";
 
 export function CTASection() {
   return (
@@ -40,7 +40,7 @@ export function CTASection() {
       <Container size="full">
         <AnimateOnScroll
           variant="scale"
-          className="max-w-8xl mx-auto bg-periwinkle rounded-4xl p-16 mb-10"
+          className="max-w-8xl mx-auto bg-periwinkle card-lg p-6 sm:p-8 md:p-12 lg:p-16 mb-6 sm:mb-8 md:mb-10"
         >
           <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
             {/* Left side - Main heading */}

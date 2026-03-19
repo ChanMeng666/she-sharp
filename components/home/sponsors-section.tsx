@@ -30,7 +30,7 @@ export function SponsorsSection() {
               SILVER
             </h3>
           </AnimateOnScroll>
-          <div className="grid md:grid-cols-3 gap-16 max-w-3xl mx-auto justify-items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 lg:gap-16 max-w-3xl mx-auto justify-items-center">
             {silverSponsors.map((sponsor, index) => (
               <AnimateOnScroll
                 key={sponsor.name}
@@ -46,7 +46,7 @@ export function SponsorsSection() {
                   title={sponsor.description}
                   className="block"
                 >
-                  <div className="relative h-20 w-56 sm:w-64 flex items-center justify-center shrink-0">
+                  <div className="relative h-14 w-40 sm:h-16 sm:w-48 md:h-20 md:w-56 lg:w-64 flex items-center justify-center shrink-0">
                     <Image
                       src={sponsor.logo}
                       alt={sponsor.name}
@@ -82,7 +82,7 @@ export function SponsorsSection() {
                   title={sponsor.description}
                   className="block"
                 >
-                  <div className="relative h-20 w-56 sm:w-64 flex items-center justify-center shrink-0">
+                  <div className="relative h-14 w-40 sm:h-16 sm:w-48 md:h-20 md:w-56 lg:w-64 flex items-center justify-center shrink-0">
                     <Image
                       src={sponsor.logo}
                       alt={sponsor.name}

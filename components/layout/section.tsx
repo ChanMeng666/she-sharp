@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { HTMLAttributes } from "react";
-import { layoutSystem, getSectionSpacing } from "@/lib/layout-system";
+import { layoutSystem, getSectionSpacing } from "@/lib/design-system";
 
 interface SectionProps extends HTMLAttributes<HTMLElement> {
   children: React.ReactNode;

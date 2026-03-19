@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { getContainer } from "@/lib/layout-system";
+import { getContainer } from "@/lib/design-system";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { LegalNav } from "@/components/ui/legal-nav";
