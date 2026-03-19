@@ -13,6 +13,7 @@ function PaymentSuccessContent() {
   const sessionId = searchParams.get('session_id');
   const alreadyPaid = searchParams.get('already_paid');
   const submitted = searchParams.get('submitted');
+  const programme = searchParams.get('programme');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -40,8 +41,11 @@ function PaymentSuccessContent() {
     );
   }
 
-  // Application submitted for review (free registration flow)
+  // Application submitted for review (free registration flow or programme flow)
   if (submitted) {
+    const isProgramme = !!programme;
+    const programmeName = programme === 'her-waka' ? 'HER WAKA' : programme;
+
     return (
       <div
         className="min-h-screen pt-24 md:pt-32 pb-16 relative"
@@ -63,7 +67,9 @@ function PaymentSuccessContent() {
                 Application Submitted!
               </h1>
               <p className="text-gray-600 mb-6">
-                Thank you for applying to the She Sharp Mentorship Program. Our team will review your application within 5-7 business days.
+                {isProgramme
+                  ? `Your ${programmeName} programme application has been received. Our team will review your application shortly.`
+                  : 'Thank you for applying to the She Sharp Mentorship Program. Our team will review your application within 5-7 business days.'}
               </p>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-left">
                 <h3 className="font-semibold text-foreground mb-2">

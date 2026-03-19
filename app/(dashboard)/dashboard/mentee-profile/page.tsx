@@ -168,6 +168,36 @@ const initialProfile: ProfileData = {
   mbtiType: '',
 };
 
+function MenteeProgrammeBadge() {
+  const [programmeName, setProgrammeName] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch('/api/user/mentee-profile')
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data?.profile?.programmeName) {
+          setProgrammeName(data.profile.programmeName);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  if (!programmeName) return null;
+
+  return (
+    <Card>
+      <CardContent className="pt-6">
+        <div className="flex items-center gap-3">
+          <Badge variant="outline" className="bg-[#f7e5f3] text-brand border-brand/30 px-3 py-1">
+            {programmeName}
+          </Badge>
+          <span className="text-sm text-muted-foreground">Programme participant</span>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function MenteeProfilePage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -260,6 +290,9 @@ export default function MenteeProfilePage() {
       </div>
 
       <div className="space-y-6">
+        {/* Programme Badge (read-only, shown only if mentee is in a programme) */}
+        <MenteeProgrammeBadge />
+
         {/* Photo Upload */}
         <Card>
           <CardHeader>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { submitPublicMentorForm, type PublicMentorFormData } from '@/lib/forms/service';
+import { sendMentorApplicationConfirmationEmail } from '@/lib/email/mentorship-emails';
 import { z } from 'zod';
 
 // Validation schema for public mentor form
@@ -62,6 +63,11 @@ export async function POST(request: NextRequest) {
     if (!result.success) {
       return NextResponse.json({ error: result.error }, { status: 400 });
     }
+
+    // Fire-and-forget confirmation email
+    sendMentorApplicationConfirmationEmail(data.email, {
+      applicantName: data.fullName,
+    }).catch(err => console.error('Failed to send mentor confirmation email:', err));
 
     return NextResponse.json({
       success: true,

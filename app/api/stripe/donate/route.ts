@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripeClient } from "@/lib/stripe/config";
+import { getBaseUrl } from "@/lib/email/service";
 
 const VALID_AMOUNTS = [10, 25, 50, 100];
 
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     const stripe = getStripeClient();
-    const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+    const baseUrl = getBaseUrl();
 
     // Create checkout session for one-time payment
     const session = await stripe.checkout.sessions.create({

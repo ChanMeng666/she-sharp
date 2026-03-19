@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createCheckoutSession } from '@/lib/stripe/service';
 import { getUser } from '@/lib/db/queries';
+import { getBaseUrl } from '@/lib/email/service';
 
 /**
  * POST /api/stripe/checkout
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest) {
     // Check if user is logged in
     const user = await getUser();
 
-    const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+    const baseUrl = getBaseUrl();
     const session = await createCheckoutSession({
       email,
       userId: user?.id,

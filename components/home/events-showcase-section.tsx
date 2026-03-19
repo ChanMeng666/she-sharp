@@ -38,7 +38,7 @@ function FeaturedEventCard({ event }: { event: EventV3 }) {
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="group relative block h-full rounded-2xl overflow-hidden"
+      className="group relative block h-full card-lg"
     >
       <Image
         src={event.coverImage.url}
@@ -91,7 +91,7 @@ function SimpleEventCard({ event }: { event: EventV3 }) {
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="group block h-full rounded-2xl border border-muted-foreground/10 bg-white overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+      className="group block h-full card-sm border border-muted-foreground/10 bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
     >
       <div className="relative aspect-16/10 overflow-hidden">
         <Image
@@ -142,11 +142,11 @@ export function EventsShowcaseSection() {
           <h2 className="text-display-sm text-foreground">Recent events</h2>
         </AnimateOnScroll>
 
-        <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 items-stretch px-4 md:px-8">
+        <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 items-stretch">
           {/* Left: Featured event */}
           {featuredEvent && (
             <AnimateOnScroll variant="fade-right" className="w-full lg:w-1/2">
-              <div className="relative aspect-3/4 sm:aspect-4/5 lg:h-[720px] lg:aspect-auto rounded-2xl overflow-hidden">
+              <div className="relative aspect-3/4 sm:aspect-4/5 md:aspect-square lg:h-[620px] xl:h-[720px] lg:aspect-auto card-lg">
                 <FeaturedEventCard event={featuredEvent} />
               </div>
             </AnimateOnScroll>

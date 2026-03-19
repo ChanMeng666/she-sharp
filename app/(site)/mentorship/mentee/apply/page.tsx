@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -176,6 +176,7 @@ interface FormData {
   phone: string;
   gender: string;
   age: string;
+  programmeSlug: string;
   // Step 2: Location & Background
   city: string;
   preferredMeetingFormat: string;
@@ -205,6 +206,7 @@ const initialFormData: FormData = {
   phone: "",
   gender: "",
   age: "",
+  programmeSlug: "",
   city: "",
   preferredMeetingFormat: "",
   currentStage: "",
@@ -232,14 +234,43 @@ const steps = [
   { id: 5, title: "Review", icon: FileText },
 ];
 
-export default function MenteeApplyPage() {
+interface ProgrammeInfo {
+  name: string;
+  slug: string;
+  status: string;
+  isFull: boolean;
+  description?: string;
+  partnerOrganisation?: string;
+}
+
+function MenteeApplyForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
     {}
   );
+  const [programmeInfo, setProgrammeInfo] = useState<ProgrammeInfo | null>(null);
+
+  // Auto-detect programme from URL param
+  useEffect(() => {
+    const programme = searchParams.get('programme');
+    if (programme) {
+      fetch(`/api/programmes/${encodeURIComponent(programme)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.programme) {
+            setProgrammeInfo(data.programme);
+            if (data.programme.status === 'active' && !data.programme.isFull) {
+              setFormData((prev) => ({ ...prev, programmeSlug: data.programme.slug }));
+            }
+          }
+        })
+        .catch(() => {});
+    }
+  }, [searchParams]);
 
   // Custom skill input states
   const [customSoftSkillBasic, setCustomSoftSkillBasic] = useState("");
@@ -394,7 +425,14 @@ export default function MenteeApplyPage() {
       );
       const checkData = await checkResponse.json();
 
-      if (checkData.exists && !checkData.paymentCompleted) {
+      if (checkData.exists && checkData.paymentCompleted) {
+        // Already paid — go to success
+        router.push(`/mentorship/mentee/success?submitted=true`);
+        return;
+      }
+
+      if (checkData.exists && !checkData.paymentCompleted && !formData.programmeSlug) {
+        // Existing submission without payment and no programme — go to payment
         router.push(`/mentorship/mentee/payment?id=${checkData.submissionId}`);
         return;
       }
@@ -405,6 +443,7 @@ export default function MenteeApplyPage() {
         body: JSON.stringify({
           ...formData,
           age: formData.age ? parseInt(formData.age) : undefined,
+          programmeSlug: formData.programmeSlug || undefined,
         }),
       });
 
@@ -416,7 +455,17 @@ export default function MenteeApplyPage() {
         return;
       }
 
-      router.push(`/mentorship/mentee/success?submitted=true`);
+      if (data.requiresPayment === false) {
+        // Programme doesn't require payment — go to success
+        const params = new URLSearchParams({ submitted: 'true' });
+        if (formData.programmeSlug) {
+          params.set('programme', formData.programmeSlug);
+        }
+        router.push(`/mentorship/mentee/success?${params.toString()}`);
+      } else {
+        // Requires payment — go to payment
+        router.push(`/mentorship/mentee/payment?id=${data.submissionId}`);
+      }
     } catch (error) {
       setErrors({ email: "Failed to submit application. Please try again." });
       setLoading(false);
@@ -550,6 +599,86 @@ export default function MenteeApplyPage() {
               {errors.gender && (
                 <p className="text-sm text-red-500">{errors.gender}</p>
               )}
+            </div>
+
+            <div className="h-px bg-border" />
+
+            {/* Programme Affiliation */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-1.5">
+                <Label>Programme Affiliation</Label>
+                <HintIcon hint="Select how you are joining the mentorship programme." />
+              </div>
+
+              {programmeInfo && programmeInfo.status === 'active' && !programmeInfo.isFull && formData.programmeSlug === programmeInfo.slug && (
+                <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-4 mb-2">
+                  <p className="text-sm text-brand font-medium">
+                    You&apos;re applying as a {programmeInfo.name} participant
+                  </p>
+                  {programmeInfo.partnerOrganisation && (
+                    <p className="text-xs text-[#1f1e44] mt-1">
+                      Partner: {programmeInfo.partnerOrganisation}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {programmeInfo && (programmeInfo.status !== 'active' || programmeInfo.isFull) && (
+                <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-2">
+                  <p className="text-sm text-orange-700">
+                    {programmeInfo.isFull
+                      ? `The ${programmeInfo.name} programme is currently full. You can still apply as a general applicant.`
+                      : `The ${programmeInfo.name} programme is no longer accepting applications. You can still apply as a general applicant.`}
+                  </p>
+                </div>
+              )}
+
+              <RadioGroup
+                value={formData.programmeSlug || "general"}
+                onValueChange={(v) =>
+                  updateField("programmeSlug", v === "general" ? "" : v)
+                }
+                className="space-y-3"
+              >
+                <div className="flex items-start space-x-3 rounded-lg border p-4 cursor-pointer hover:bg-muted/50 transition-colors">
+                  <RadioGroupItem
+                    value="general"
+                    id="programme-general"
+                    className="mt-0.5"
+                  />
+                  <div>
+                    <Label
+                      htmlFor="programme-general"
+                      className="font-medium cursor-pointer"
+                    >
+                      General Application
+                    </Label>
+                    <p className="text-sm text-muted-foreground mt-0.5">
+                      I am applying independently to the She Sharp mentorship programme.
+                    </p>
+                  </div>
+                </div>
+
+                <div className={`flex items-start space-x-3 rounded-lg border p-4 cursor-pointer hover:bg-muted/50 transition-colors ${programmeInfo && (programmeInfo.status !== 'active' || programmeInfo.isFull) ? 'opacity-50 pointer-events-none' : ''}`}>
+                  <RadioGroupItem
+                    value="her-waka"
+                    id="programme-her-waka"
+                    className="mt-0.5"
+                    disabled={programmeInfo?.isFull || (programmeInfo?.status !== 'active' && programmeInfo?.slug === 'her-waka')}
+                  />
+                  <div>
+                    <Label
+                      htmlFor="programme-her-waka"
+                      className="font-medium cursor-pointer"
+                    >
+                      HER WAKA Programme Participant
+                    </Label>
+                    <p className="text-sm text-muted-foreground mt-0.5">
+                      I am participating in the HER WAKA programme (MSD referral).
+                    </p>
+                  </div>
+                </div>
+              </RadioGroup>
             </div>
           </div>
         );
@@ -1506,19 +1635,44 @@ export default function MenteeApplyPage() {
               </div>
             </div>
 
-            {/* Payment Info */}
-            <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
-              <h3 className="font-semibold text-brand mb-2">
-                Next Step: Payment
-              </h3>
-              <p className="text-sm text-[#1f1e44] leading-relaxed">
-                After submitting, you&apos;ll be redirected to complete your
-                membership payment of{" "}
-                <span className="font-semibold">$100 NZD/year</span>. Upon
-                successful payment, you&apos;ll receive an invitation code to
-                complete your registration.
-              </p>
-            </div>
+            {/* Programme Affiliation */}
+            {formData.programmeSlug && (
+              <div className="bg-[#f7e5f3]/50 rounded-lg p-5 space-y-4">
+                <h3 className="font-semibold text-foreground flex items-center gap-2 pb-2 border-b border-border">
+                  Programme
+                </h3>
+                <div className="text-sm">
+                  <span className="inline-flex items-center bg-[#f7e5f3] text-brand px-3 py-1 rounded-full text-xs font-medium">
+                    {formData.programmeSlug === 'her-waka' ? 'HER WAKA' : formData.programmeSlug}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {!formData.programmeSlug && (
+              <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
+                <h3 className="font-semibold text-foreground flex items-center gap-2 pb-2 border-b border-border">
+                  Programme
+                </h3>
+                <p className="text-sm text-muted-foreground">General Application</p>
+              </div>
+            )}
+
+            {/* Payment Info — only shown for general applicants */}
+            {!formData.programmeSlug && (
+              <div className="bg-[#f7e5f3] border border-brand/30 rounded-lg p-5">
+                <h3 className="font-semibold text-brand mb-2">
+                  Next Step: Payment
+                </h3>
+                <p className="text-sm text-[#1f1e44] leading-relaxed">
+                  After submitting, you&apos;ll be redirected to complete your
+                  membership payment of{" "}
+                  <span className="font-semibold">$100 NZD/year</span>. Upon
+                  successful payment, you&apos;ll receive an invitation code to
+                  complete your registration.
+                </p>
+              </div>
+            )}
           </div>
         );
     }
@@ -1536,7 +1690,7 @@ export default function MenteeApplyPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 mt-8">
-              Apply as Mentee
+              {formData.programmeSlug === 'her-waka' ? 'Apply as HER WAKA Mentee' : 'Apply as Mentee'}
             </h2>
             <Card className="shadow-lg">
               <CardHeader className="pb-6">
@@ -1589,7 +1743,9 @@ export default function MenteeApplyPage() {
                   {currentStep === 4 &&
                     "Share your goals and personality type"}
                   {currentStep === 5 &&
-                    "Review your application before proceeding to payment"}
+                    (formData.programmeSlug
+                      ? "Review your application before submitting"
+                      : "Review your application before proceeding to payment")}
                 </CardDescription>
               </CardHeader>
 
@@ -1628,7 +1784,7 @@ export default function MenteeApplyPage() {
                         </>
                       ) : (
                         <>
-                          Submit & Continue to Payment
+                          {formData.programmeSlug ? 'Submit Application' : 'Submit & Continue to Payment'}
                           <ChevronRight className="h-4 w-4 ml-1" />
                         </>
                       )}
@@ -1662,5 +1818,19 @@ export default function MenteeApplyPage() {
         </div>
       </section>
     </WarpBackground>
+  );
+}
+
+export default function MenteeApplyPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-brand" />
+        </div>
+      }
+    >
+      <MenteeApplyForm />
+    </Suspense>
   );
 }

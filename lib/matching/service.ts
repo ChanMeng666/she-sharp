@@ -16,6 +16,8 @@ import {
   ActivityType,
   activityLogs,
   notifications,
+  mentorProgrammeAssignments,
+  programmes,
 } from '@/lib/db/schema';
 import { eq, and, ne, notInArray, desc, sql, asc } from 'drizzle-orm';
 import type {
@@ -114,6 +116,33 @@ async function getAvailableMentors(): Promise<MentorMatchInput[]> {
 }
 
 /**
+ * Get available mentors assigned to a specific programme
+ */
+async function getAvailableMentorsForProgramme(programmeId: number): Promise<MentorMatchInput[]> {
+  const assignments = await db
+    .select({
+      mentorUserId: mentorProgrammeAssignments.mentorUserId,
+      maxMenteesInProgramme: mentorProgrammeAssignments.maxMenteesInProgramme,
+      currentMenteesInProgramme: mentorProgrammeAssignments.currentMenteesInProgramme,
+    })
+    .from(mentorProgrammeAssignments)
+    .where(eq(mentorProgrammeAssignments.programmeId, programmeId));
+
+  if (assignments.length === 0) return [];
+
+  // Filter to mentors with capacity in this programme
+  const eligibleAssignments = assignments.filter(
+    a => (a.currentMenteesInProgramme || 0) < (a.maxMenteesInProgramme || 2)
+  );
+
+  if (eligibleAssignments.length === 0) return [];
+
+  const allMentors = await getAvailableMentors();
+  const assignedIds = new Set(eligibleAssignments.map(a => a.mentorUserId));
+  return allMentors.filter(m => assignedIds.has(m.userId));
+}
+
+/**
  * Get mentee profile with form data
  */
 async function getMenteeProfile(menteeUserId: number): Promise<MenteeMatchInput | null> {
@@ -149,6 +178,18 @@ async function getMenteeProfile(menteeUserId: number): Promise<MenteeMatchInput 
     city: menteeData.form?.city || null,
     preferredMeetingFormat: menteeData.form?.preferredMeetingFormat || null,
   };
+}
+
+/**
+ * Get the programmeId for a mentee from their form submission
+ */
+async function getMenteeProgrammeId(menteeUserId: number): Promise<number | null> {
+  const [form] = await db
+    .select({ programmeId: menteeFormSubmissions.programmeId })
+    .from(menteeFormSubmissions)
+    .where(eq(menteeFormSubmissions.userId, menteeUserId))
+    .limit(1);
+  return form?.programmeId ?? null;
 }
 
 /**
@@ -266,8 +307,11 @@ export async function generateMatchesForMentee(
 
   const excludeMentorIds = new Set(existingRelationships.map(r => r.mentorId));
 
-  // Get available mentors
-  const availableMentors = await getAvailableMentors();
+  // Get available mentors (programme-filtered if applicable)
+  const menteeProgrammeId = await getMenteeProgrammeId(menteeUserId);
+  const availableMentors = menteeProgrammeId
+    ? await getAvailableMentorsForProgramme(menteeProgrammeId)
+    : await getAvailableMentors();
   const eligibleMentors = availableMentors.filter(m => !excludeMentorIds.has(m.userId));
 
   if (eligibleMentors.length === 0) {
@@ -347,7 +391,7 @@ export async function generateMatchesForMentee(
  */
 export async function runBatchMatching(
   triggeredBy?: number,
-  options: BatchMatchingOptions = {}
+  options: BatchMatchingOptions & { programmeId?: number } = {}
 ): Promise<BatchMatchingResult> {
   const { limit = 50, notifyOnMatch = false } = options;
 
@@ -355,9 +399,10 @@ export async function runBatchMatching(
   const [run] = await db
     .insert(aiMatchingRuns)
     .values({
-      runType: 'batch',
+      runType: options.programmeId ? 'programme_batch' : 'batch',
       status: 'running',
       triggeredBy,
+      programmeId: options.programmeId,
       menteesProcessed: 0,
       matchesGenerated: 0,
       totalApiCalls: 0,
@@ -701,6 +746,7 @@ export async function reviewMatchSuggestion(
           menteeUserId: match.match.menteeUserId,
           status: 'active',
           startedAt: new Date(),
+          programmeId: match.match.programmeId,
         })
         .returning();
 
@@ -720,6 +766,21 @@ export async function reviewMatchSuggestion(
           currentMenteesCount: sql`${mentorProfiles.currentMenteesCount} + 1`,
         })
         .where(eq(mentorProfiles.userId, match.match.mentorUserId));
+
+      // Increment programme assignment count if applicable
+      if (match.match.programmeId) {
+        await db
+          .update(mentorProgrammeAssignments)
+          .set({
+            currentMenteesInProgramme: sql`${mentorProgrammeAssignments.currentMenteesInProgramme} + 1`,
+          })
+          .where(
+            and(
+              eq(mentorProgrammeAssignments.mentorUserId, match.match.mentorUserId),
+              eq(mentorProgrammeAssignments.programmeId, match.match.programmeId)
+            )
+          );
+      }
 
       // Remove mentee from queue if present
       await removeFromQueue(match.match.menteeUserId);
@@ -854,6 +915,7 @@ export async function getPendingMatches(): Promise<MatchSuggestionWithDetails[]>
     suggestedFocusAreas: r.match.suggestedFocusAreas as string[] | null,
     matchingFactors: r.match.matchingFactors as MatchResult['matchingFactors'] | null,
     status: r.match.status as 'pending_review',
+    programmeId: r.match.programmeId,
     createdAt: r.match.createdAt,
     // Detailed mentor profile
     mentorProfile: {
@@ -1126,6 +1188,168 @@ export async function getUnmatchedMentees(): Promise<{
   );
 
   return results;
+}
+
+/**
+ * Run AI matching between manually selected mentor and mentee groups
+ */
+export async function runManualGroupMatching(
+  mentorUserIds: number[],
+  menteeUserIds: number[],
+  triggeredBy: number
+): Promise<BatchMatchingResult> {
+  const [run] = await db
+    .insert(aiMatchingRuns)
+    .values({
+      runType: 'manual_group',
+      status: 'running',
+      triggeredBy,
+      menteesProcessed: 0,
+      matchesGenerated: 0,
+      totalApiCalls: 0,
+      totalTokensUsed: 0,
+    })
+    .returning();
+
+  let totalMatches = 0;
+  let totalProcessed = 0;
+  const errors: string[] = [];
+  let totalTokens = 0;
+  let totalApiCalls = 0;
+  const processingTimes: number[] = [];
+  const scores: number[] = [];
+
+  try {
+    // Get mentor profiles from the specified IDs
+    const allMentors = await getAvailableMentors();
+    const selectedMentors = allMentors.filter(m => mentorUserIds.includes(m.userId));
+
+    for (const menteeUserId of menteeUserIds) {
+      try {
+        const mentee = await getMenteeProfile(menteeUserId);
+        if (!mentee) continue;
+
+        totalProcessed++;
+
+        for (const mentor of selectedMentors) {
+          try {
+            const { result: aiResult, usage, fromCache, processingTime } =
+              await generateAIMatchWithFallback(mentor, mentee);
+
+            totalTokens += usage.total;
+            if (!fromCache) totalApiCalls++;
+            if (processingTime) processingTimes.push(processingTime);
+
+            if (aiResult.overallScore >= MIN_MATCH_SCORE) {
+              // Check if match already exists
+              const [existing] = await db
+                .select()
+                .from(aiMatchResults)
+                .where(
+                  and(
+                    eq(aiMatchResults.mentorUserId, mentor.userId),
+                    eq(aiMatchResults.menteeUserId, mentee.userId)
+                  )
+                )
+                .limit(1);
+
+              if (!existing) {
+                // Determine programmeId if all mentees share the same programme
+                const menteeProgrammeId = await getMenteeProgrammeId(mentee.userId);
+
+                await db.insert(aiMatchResults).values({
+                  mentorUserId: mentor.userId,
+                  menteeUserId: mentee.userId,
+                  overallScore: aiResult.overallScore.toString(),
+                  mbtiCompatibilityScore: aiResult.scores.mbtiCompatibility.toString(),
+                  skillMatchScore: aiResult.scores.skillAlignment.toString(),
+                  goalAlignmentScore: aiResult.scores.goalAlignment.toString(),
+                  industryMatchScore: aiResult.scores.industryMatch.toString(),
+                  logisticsScore: aiResult.scores.logistics?.toString(),
+                  aiExplanation: aiResult.explanation,
+                  aiRecommendation: aiResult.recommendation,
+                  confidenceLevel: aiResult.confidenceLevel,
+                  potentialChallenges: aiResult.matchingFactors.challenges,
+                  suggestedFocusAreas: aiResult.matchingFactors.growthOpportunities,
+                  matchingFactors: {
+                    strengths: aiResult.matchingFactors.strengths,
+                    challenges: aiResult.matchingFactors.challenges,
+                    growthOpportunities: aiResult.matchingFactors.growthOpportunities,
+                  },
+                  processingTimeMs: processingTime,
+                  tokenUsage: usage,
+                  aiModelVersion: isOpenAIConfigured() ? 'gpt-4o-mini' : 'fallback-v1',
+                  matchingAlgorithm: 'manual-group-ai',
+                  programmeId: menteeProgrammeId,
+                  status: 'pending_review',
+                  expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+                });
+                totalMatches++;
+                scores.push(aiResult.overallScore);
+              }
+            }
+          } catch (error) {
+            errors.push(`Mentor ${mentor.userId} x Mentee ${menteeUserId}: ${String(error)}`);
+          }
+        }
+      } catch (error) {
+        errors.push(`Mentee ${menteeUserId}: ${String(error)}`);
+      }
+    }
+
+    const averageScore = scores.length > 0
+      ? scores.reduce((a, b) => a + b, 0) / scores.length
+      : 0;
+    const avgProcessingTime = processingTimes.length > 0
+      ? processingTimes.reduce((a, b) => a + b, 0) / processingTimes.length
+      : 0;
+
+    await db
+      .update(aiMatchingRuns)
+      .set({
+        status: 'completed',
+        completedAt: new Date(),
+        menteesProcessed: totalProcessed,
+        matchesGenerated: totalMatches,
+        totalApiCalls,
+        totalTokensUsed: totalTokens,
+        averageProcessingTimeMs: Math.round(avgProcessingTime),
+        summary: {
+          totalMentees: totalProcessed,
+          totalMentors: selectedMentors.length,
+          matchesCreated: totalMatches,
+          averageScore: Math.round(averageScore * 10) / 10,
+          errors,
+        },
+      })
+      .where(eq(aiMatchingRuns.id, run.id));
+
+    await invalidateStatsCache();
+
+    return {
+      runId: run.id,
+      totalProcessed,
+      matchesGenerated: totalMatches,
+      queueUpdates: 0,
+      cacheHits: 0,
+      errors,
+      averageScore,
+      totalApiCalls,
+      totalTokensUsed: totalTokens,
+      averageProcessingTimeMs: Math.round(avgProcessingTime),
+    };
+  } catch (error) {
+    await db
+      .update(aiMatchingRuns)
+      .set({
+        status: 'failed',
+        completedAt: new Date(),
+        errorDetails: { errors: [{ menteeId: 0, error: String(error), timestamp: new Date().toISOString() }] },
+        summary: { totalMentees: totalProcessed, totalMentors: 0, matchesCreated: totalMatches, averageScore: 0, errors: [String(error)] },
+      })
+      .where(eq(aiMatchingRuns.id, run.id));
+    throw error;
+  }
 }
 
 // Re-export queue service functions for convenience

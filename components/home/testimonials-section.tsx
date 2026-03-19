@@ -56,7 +56,7 @@ const VISIBLE_COUNT_DESKTOP = 3;
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
-    <article className="flex flex-col h-full rounded-xl overflow-hidden border border-border/30 bg-white/50 backdrop-blur-md backdrop-saturate-150 shadow-lg shadow-black/5 hover:border-brand/50 hover:bg-background/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/10">
+    <article className="flex flex-col h-full card-md card-glass card-interactive">
       <div className="p-6 flex flex-col h-full">
         <Quote className="w-8 h-8 text-brand/30 rotate-180 mb-4 shrink-0" />
         <p className="text-base text-foreground leading-relaxed flex-1">

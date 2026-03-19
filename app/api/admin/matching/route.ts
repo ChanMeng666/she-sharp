@@ -3,6 +3,7 @@ import { getUser } from '@/lib/db/queries';
 import { isUserAdmin } from '@/lib/auth/permissions';
 import {
   runBatchMatching,
+  runManualGroupMatching,
   getPendingMatches,
   getMentorWithCandidates,
   getMatchingRunHistory,
@@ -69,6 +70,7 @@ export async function GET(request: NextRequest) {
     const view = searchParams.get('view') || 'list';
     const includeQueue = searchParams.get('includeQueue') === 'true';
     const includeUnmatched = searchParams.get('includeUnmatched') === 'true';
+    const programmeId = searchParams.get('programmeId') ? parseInt(searchParams.get('programmeId')!) : undefined;
 
     // Fetch core data in parallel
     const [stats, runHistory, capacity] = await Promise.all([
@@ -144,6 +146,7 @@ export async function GET(request: NextRequest) {
       queue: queueData,
       unmatched: unmatchedData,
       systemStatus,
+      programmeFilter: programmeId || null,
     };
 
     const serialized = safeSerialize(responseData);
@@ -179,30 +182,62 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    // Parse optional configuration from request body
-    let options = {};
+    // Parse request body
+    let body: Record<string, unknown> = {};
     try {
-      const body = await request.json();
-      options = {
-        limit: body.limit,
-        maxCandidatesPerMentee: body.maxCandidatesPerMentee,
-        notifyOnMatch: body.notifyOnMatch,
-        preFilterThreshold: body.preFilterThreshold,
-      };
-      // Remove undefined values
-      Object.keys(options).forEach(key => {
-        if ((options as Record<string, unknown>)[key] === undefined) {
-          delete (options as Record<string, unknown>)[key];
-        }
-      });
+      body = await request.json();
     } catch {
-      // Empty body is fine, use defaults
+      // Empty body is fine for regular batch matching
     }
 
-    const result = await runBatchMatching(user.id, options);
+    // Check if this is a manual group matching request
+    if (body.mentorUserIds && body.menteeUserIds) {
+      const mentorUserIds = body.mentorUserIds as number[];
+      const menteeUserIds = body.menteeUserIds as number[];
+
+      if (!Array.isArray(mentorUserIds) || !Array.isArray(menteeUserIds) ||
+          mentorUserIds.length === 0 || menteeUserIds.length === 0) {
+        return NextResponse.json(
+          { error: 'mentorUserIds and menteeUserIds must be non-empty arrays' },
+          { status: 400 }
+        );
+      }
+
+      const result = await runManualGroupMatching(mentorUserIds, menteeUserIds, user.id);
+
+      return NextResponse.json({
+        success: true,
+        type: 'manual_group',
+        runId: result.runId,
+        matchesGenerated: result.matchesGenerated,
+        totalProcessed: result.totalProcessed,
+        averageScore: result.averageScore,
+        totalApiCalls: result.totalApiCalls,
+        totalTokensUsed: result.totalTokensUsed,
+        errors: result.errors.length > 0 ? result.errors : undefined,
+      });
+    }
+
+    // Regular batch matching
+    const options: Record<string, unknown> = {
+      limit: body.limit,
+      maxCandidatesPerMentee: body.maxCandidatesPerMentee,
+      notifyOnMatch: body.notifyOnMatch,
+      preFilterThreshold: body.preFilterThreshold,
+      programmeId: body.programmeId,
+    };
+    // Remove undefined values
+    Object.keys(options).forEach(key => {
+      if (options[key] === undefined) {
+        delete options[key];
+      }
+    });
+
+    const result = await runBatchMatching(user.id, options as any);
 
     return NextResponse.json({
       success: true,
+      type: 'batch',
       runId: result.runId,
       matchesGenerated: result.matchesGenerated,
       totalProcessed: result.totalProcessed,

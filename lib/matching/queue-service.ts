@@ -28,7 +28,8 @@ const QUEUE_EXPIRY_DAYS = parseInt(process.env.MATCHING_QUEUE_EXPIRY_DAYS || '90
 export async function addToWaitingQueue(
   menteeUserId: number,
   bestMatchScore?: number,
-  notes?: string
+  notes?: string,
+  programmeId?: number
 ): Promise<{ success: boolean; queuePosition: number; queueEntryId: number }> {
   // Check if already in queue
   const [existing] = await db
@@ -64,6 +65,7 @@ export async function addToWaitingQueue(
       bestMatchScore: bestMatchScore?.toString(),
       expiresAt,
       notes,
+      programmeId,
     })
     .returning();
 
@@ -211,13 +213,18 @@ export async function incrementMatchAttempts(menteeUserId: number): Promise<void
  */
 export async function getWaitingQueue(
   limit: number = 50,
-  offset: number = 0
+  offset: number = 0,
+  programmeId?: number
 ): Promise<{ entries: QueueEntryWithDetails[]; total: number }> {
   // Get total count
   const [countResult] = await db
     .select({ count: sql<number>`count(*)::int` })
     .from(menteeWaitingQueue)
-    .where(eq(menteeWaitingQueue.status, 'waiting'));
+    .where(
+      programmeId
+        ? and(eq(menteeWaitingQueue.status, 'waiting'), eq(menteeWaitingQueue.programmeId, programmeId))
+        : eq(menteeWaitingQueue.status, 'waiting')
+    );
 
   const total = countResult?.count || 0;
 
@@ -232,7 +239,11 @@ export async function getWaitingQueue(
     .from(menteeWaitingQueue)
     .innerJoin(users, eq(menteeWaitingQueue.menteeUserId, users.id))
     .leftJoin(menteeFormSubmissions, eq(menteeWaitingQueue.menteeUserId, menteeFormSubmissions.userId))
-    .where(eq(menteeWaitingQueue.status, 'waiting'))
+    .where(
+      programmeId
+        ? and(eq(menteeWaitingQueue.status, 'waiting'), eq(menteeWaitingQueue.programmeId, programmeId))
+        : eq(menteeWaitingQueue.status, 'waiting')
+    )
     .orderBy(desc(menteeWaitingQueue.priority), asc(menteeWaitingQueue.joinedAt))
     .limit(limit)
     .offset(offset);
@@ -259,11 +270,15 @@ export async function getWaitingQueue(
 /**
  * Get queue entries ready for processing (sorted by priority)
  */
-export async function getQueueForProcessing(limit: number = 20): Promise<number[]> {
+export async function getQueueForProcessing(limit: number = 20, programmeId?: number): Promise<number[]> {
   const entries = await db
     .select({ menteeUserId: menteeWaitingQueue.menteeUserId })
     .from(menteeWaitingQueue)
-    .where(eq(menteeWaitingQueue.status, 'waiting'))
+    .where(
+      programmeId
+        ? and(eq(menteeWaitingQueue.status, 'waiting'), eq(menteeWaitingQueue.programmeId, programmeId))
+        : eq(menteeWaitingQueue.status, 'waiting')
+    )
     .orderBy(desc(menteeWaitingQueue.priority), asc(menteeWaitingQueue.joinedAt))
     .limit(limit);
 
@@ -273,7 +288,7 @@ export async function getQueueForProcessing(limit: number = 20): Promise<number[
 /**
  * Get queue statistics
  */
-export async function getQueueStats(): Promise<{
+export async function getQueueStats(programmeId?: number): Promise<{
   totalWaiting: number;
   averageWaitDays: number;
   highPriorityCount: number;
@@ -287,7 +302,11 @@ export async function getQueueStats(): Promise<{
       expiringSoon: sql<number>`count(*) filter (where ${menteeWaitingQueue.expiresAt} < (now() + interval '7 days'))::int`,
     })
     .from(menteeWaitingQueue)
-    .where(eq(menteeWaitingQueue.status, 'waiting'));
+    .where(
+      programmeId
+        ? and(eq(menteeWaitingQueue.status, 'waiting'), eq(menteeWaitingQueue.programmeId, programmeId))
+        : eq(menteeWaitingQueue.status, 'waiting')
+    );
 
   return {
     totalWaiting: stats?.totalWaiting || 0,

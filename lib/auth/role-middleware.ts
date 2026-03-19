@@ -58,9 +58,14 @@ export async function checkAdminPermissions(
     .where(eq(adminPermissions.userId, userId))
     .limit(1);
 
-  if (!perms) return false;
+  if (!perms) {
+    // No explicit permission row means the admin has all default permissions.
+    // The admin_permissions schema defaults every column to true, so a missing
+    // row is equivalent to "all permissions granted".
+    return true;
+  }
 
-  return requiredPermissions.every(permission => 
+  return requiredPermissions.every(permission =>
     perms[permission as keyof typeof perms] === true
   );
 }
@@ -157,9 +162,12 @@ async function checkUserHasAnyAdminPermission(
     .where(eq(adminPermissions.userId, userId))
     .limit(1);
 
-  if (!perms) return false;
+  if (!perms) {
+    // No explicit permission row — treat as all defaults granted (all true).
+    return true;
+  }
 
-  return requiredPermissions.some(permission => 
+  return requiredPermissions.some(permission =>
     perms[permission as keyof typeof perms] === true
   );
 }

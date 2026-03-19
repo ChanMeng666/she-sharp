@@ -1,54 +1,16 @@
 /**
  * Email templates for the recruitment lifecycle.
- * Uses Resend via the shared sendEmail utility.
+ * Uses Resend via the shared sendEmail utility and branded layout.
  */
 
-import { sendEmail } from '@/lib/email/service';
-
-function getBaseUrl(): string {
-  if (process.env.NODE_ENV === 'development' && process.env.BASE_URL?.includes('vercel.app')) {
-    return 'http://localhost:3000';
-  }
-  return process.env.BASE_URL || 'http://localhost:3000';
-}
+import { sendEmail, getBaseUrl } from '@/lib/email/service';
+import { brandedEmailLayout, brandButton, infoBox, warningBox, BRAND } from '@/lib/email/layout';
 
 const TYPE_LABELS: Record<string, string> = {
   ambassador: 'Ambassador',
   volunteer: 'Event Volunteer',
   ex_ambassador: 'Ex-Ambassador',
 };
-
-function emailLayout(title: string, headerColor: string, bodyHtml: string): string {
-  return `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <title>${title} - She Sharp</title>
-      <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: ${headerColor}; color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-        .content { background: #f9f9f9; padding: 30px; border: 1px solid #e0e0e0; border-top: none; }
-        .button { display: inline-block; padding: 12px 30px; background: #9b2e83; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
-        .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; border-radius: 0 0 10px 10px; }
-        .step-list { margin: 15px 0; padding-left: 20px; }
-        .step-list li { margin: 8px 0; }
-        .info-box { background: #fff; border: 1px solid #e0e0e0; padding: 15px; border-radius: 5px; margin: 15px 0; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        ${bodyHtml}
-        <div class="footer">
-          <p>&copy; ${new Date().getFullYear()} She Sharp. Empowering women in STEM.</p>
-          <p>Questions? Contact us at <a href="mailto:people@shesharp.org.nz">people@shesharp.org.nz</a></p>
-        </div>
-      </div>
-    </body>
-    </html>
-  `;
-}
 
 // ============================================================================
 // 1. Application Confirmation Email
@@ -67,30 +29,26 @@ export async function sendApplicationConfirmationEmail(
 ): Promise<boolean> {
   const typeLabel = TYPE_LABELS[data.applicationType] || data.applicationType;
 
-  const html = emailLayout('Thank You for Your Application', 'linear-gradient(135deg, #9b2e83, #6b1d5e)', `
-    <div class="header">
-      <h1>Thank You for Your Application!</h1>
-    </div>
-    <div class="content">
+  const html = brandedEmailLayout({
+    title: 'Thank You for Your Application!',
+    preheader: `We've received your ${typeLabel} application.`,
+    bodyHtml: `
       <p>Hi ${data.applicantName},</p>
       <p>We've received your <strong>${typeLabel}</strong> application and we're excited to learn more about you!</p>
 
-      <div class="info-box">
-        <h3 style="margin-top: 0;">What Happens Next?</h3>
-        <ol class="step-list">
-          <li>Our team will review your application</li>
-          <li>We'll be in touch within 5-7 business days</li>
-          <li>If you have questions, contact <a href="mailto:people@shesharp.org.nz">people@shesharp.org.nz</a></li>
+      ${infoBox(`
+        <h3 style="margin-top: 0; color: ${BRAND.purpleDark};">What Happens Next?</h3>
+        <ol style="margin: 15px 0; padding-left: 20px;">
+          <li style="margin: 8px 0;">Our team will review your application</li>
+          <li style="margin: 8px 0;">We'll be in touch within 5-7 business days</li>
+          <li style="margin: 8px 0;">If you have questions, contact <a href="mailto:mentoring@shesharp.org.nz" style="color: ${BRAND.purpleDark};">mentoring@shesharp.org.nz</a></li>
         </ol>
-      </div>
+      `)}
 
       <p>In the meantime, check out our upcoming events and connect with us on social media!</p>
-
-      <div style="text-align: center;">
-        <a href="${getBaseUrl()}/events" class="button" style="color: white;">Browse Events</a>
-      </div>
-    </div>
-  `);
+      ${brandButton('Browse Events', `${getBaseUrl()}/events`)}
+    `,
+  });
 
   const text = `
 Hi ${data.applicantName},
@@ -100,7 +58,7 @@ We've received your ${typeLabel} application and we're excited to learn more abo
 What Happens Next:
 1. Our team will review your application
 2. We'll be in touch within 5-7 business days
-3. If you have questions, contact people@shesharp.org.nz
+3. If you have questions, contact mentoring@shesharp.org.nz
 
 Browse our events: ${getBaseUrl()}/events
   `;
@@ -130,34 +88,37 @@ export async function sendInterviewInvitationEmail(
   data: InterviewInvitationData
 ): Promise<boolean> {
   const typeLabel = TYPE_LABELS[data.applicationType] || data.applicationType;
-  const contactEmail = data.contactEmail || 'people@shesharp.org.nz';
+  const contactEmail = data.contactEmail || 'mentoring@shesharp.org.nz';
 
   const interviewDetailsHtml = data.interviewDate
-    ? `<div class="info-box"><h3 style="margin-top:0;">Interview Details</h3><p><strong>Date:</strong> ${data.interviewDate}</p>${data.interviewNotes ? `<p><strong>Notes:</strong> ${data.interviewNotes}</p>` : ''}</div>`
+    ? `<div style="background: #ffffff; border: 1px solid #e0e0e0; padding: 15px; border-radius: 5px; margin: 15px 0;">
+        <h3 style="margin-top: 0; color: ${BRAND.purpleDark};">Interview Details</h3>
+        <p><strong>Date:</strong> ${data.interviewDate}</p>
+        ${data.interviewNotes ? `<p><strong>Notes:</strong> ${data.interviewNotes}</p>` : ''}
+      </div>`
     : `<p>We'll follow up with available times shortly.</p>`;
 
-  const html = emailLayout('Interview Invitation', 'linear-gradient(135deg, #2e7d32, #1b5e20)', `
-    <div class="header" style="background: linear-gradient(135deg, #2e7d32, #1b5e20);">
-      <h1>Great News! Interview Invitation</h1>
-    </div>
-    <div class="content">
+  const html = brandedEmailLayout({
+    title: 'Great News! Interview Invitation',
+    preheader: `We were impressed with your ${typeLabel} application!`,
+    bodyHtml: `
       <p>Hi ${data.applicantName},</p>
       <p>We were impressed with your <strong>${typeLabel}</strong> application and would love to chat!</p>
 
       ${interviewDetailsHtml}
 
-      <div class="info-box">
-        <h3 style="margin-top: 0;">Preparation Tips</h3>
-        <ul class="step-list">
-          <li>Be yourself! We want to get to know the real you</li>
-          <li>Think about what you'd like to contribute to She Sharp</li>
-          <li>Prepare any questions you have for us</li>
+      ${infoBox(`
+        <h3 style="margin-top: 0; color: ${BRAND.purpleDark};">Preparation Tips</h3>
+        <ul style="margin: 15px 0; padding-left: 20px;">
+          <li style="margin: 8px 0;">Be yourself! We want to get to know the real you</li>
+          <li style="margin: 8px 0;">Think about what you'd like to contribute to She Sharp</li>
+          <li style="margin: 8px 0;">Prepare any questions you have for us</li>
         </ul>
-      </div>
+      `)}
 
-      <p>If you need to reschedule, please reply to this email or contact <a href="mailto:${contactEmail}">${contactEmail}</a>.</p>
-    </div>
-  `);
+      <p>If you need to reschedule, please reply to this email or contact <a href="mailto:${contactEmail}" style="color: ${BRAND.purpleDark};">${contactEmail}</a>.</p>
+    `,
+  });
 
   const text = `
 Hi ${data.applicantName},
@@ -218,16 +179,15 @@ export async function sendApplicationApprovedEmail(
   const nextSteps = data.nextSteps || defaultNextSteps[data.applicationType] || [];
 
   const nextStepsHtml = nextSteps.length > 0
-    ? `<ul class="step-list">${nextSteps.map(s => `<li>${s}</li>`).join('')}</ul>`
+    ? `<ul style="margin: 15px 0; padding-left: 20px;">${nextSteps.map(s => `<li style="margin: 8px 0;">${s}</li>`).join('')}</ul>`
     : '';
 
-  const html = emailLayout('Welcome to She Sharp', 'linear-gradient(135deg, #9b2e83, #6b1d5e)', `
-    <div class="header">
-      <h1>Welcome to She Sharp!</h1>
-    </div>
-    <div class="content">
+  const html = brandedEmailLayout({
+    title: 'Welcome to She Sharp!',
+    preheader: `Your ${typeLabel} application has been approved!`,
+    bodyHtml: `
       <div style="text-align: center; margin-bottom: 20px;">
-        <span style="background: #4caf50; color: white; padding: 8px 20px; border-radius: 20px; display: inline-block; font-size: 14px;">Application Approved</span>
+        <span style="background: ${BRAND.successGreen}; color: white; padding: 8px 20px; border-radius: 20px; display: inline-block; font-size: 14px; font-weight: bold;">Application Approved</span>
       </div>
 
       <p>Hi ${data.applicantName},</p>
@@ -235,18 +195,14 @@ export async function sendApplicationApprovedEmail(
 
       ${data.welcomeMessage ? `<p>${data.welcomeMessage}</p>` : ''}
 
-      ${nextSteps.length > 0 ? `
-        <div class="info-box">
-          <h3 style="margin-top: 0;">Next Steps</h3>
-          ${nextStepsHtml}
-        </div>
-      ` : ''}
+      ${nextSteps.length > 0 ? infoBox(`
+        <h3 style="margin-top: 0; color: ${BRAND.purpleDark};">Next Steps</h3>
+        ${nextStepsHtml}
+      `) : ''}
 
-      <div style="text-align: center;">
-        <a href="${getBaseUrl()}" class="button" style="color: white;">Visit She Sharp</a>
-      </div>
-    </div>
-  `);
+      ${brandButton('Visit She Sharp', getBaseUrl())}
+    `,
+  });
 
   const text = `
 Hi ${data.applicantName},
@@ -282,28 +238,23 @@ export async function sendApplicationRejectedEmail(
 ): Promise<boolean> {
   const typeLabel = TYPE_LABELS[data.applicationType] || data.applicationType;
 
-  const html = emailLayout('Application Update', '#333333', `
-    <div class="header" style="background: #333333;">
-      <h1>Application Update</h1>
-    </div>
-    <div class="content">
+  const html = brandedEmailLayout({
+    title: 'Application Update',
+    preheader: `Update on your ${typeLabel} application at She Sharp.`,
+    bodyHtml: `
       <p>Hi ${data.applicantName},</p>
       <p>Thank you for your interest in the <strong>${typeLabel}</strong> role at She Sharp. After careful review, we're unable to move forward with your application at this time.</p>
 
-      ${data.feedbackMessage ? `
-        <div class="info-box">
-          <h3 style="margin-top: 0;">Feedback</h3>
-          <p>${data.feedbackMessage}</p>
-        </div>
-      ` : ''}
+      ${data.feedbackMessage ? infoBox(`
+        <h3 style="margin-top: 0; color: ${BRAND.purpleDark};">Feedback</h3>
+        <p style="margin-bottom: 0;">${data.feedbackMessage}</p>
+      `) : ''}
 
       <p>We encourage you to attend our events and stay connected with the She Sharp community. You're always welcome to apply again in the future!</p>
 
-      <div style="text-align: center;">
-        <a href="${getBaseUrl()}/events" class="button" style="color: white;">Browse Our Events</a>
-      </div>
-    </div>
-  `);
+      ${brandButton('Browse Our Events', `${getBaseUrl()}/events`)}
+    `,
+  });
 
   const text = `
 Hi ${data.applicantName},
@@ -345,33 +296,32 @@ export async function sendOnboardingEmail(
   const typeLabel = TYPE_LABELS[data.applicationType] || data.applicationType;
 
   const checklist = [
-    data.ndaLink ? `<li>Sign NDA - <a href="${data.ndaLink}">Review & Sign</a></li>` : '<li>Sign NDA (link coming soon)</li>',
-    data.slackInviteLink ? `<li>Join Slack workspace - <a href="${data.slackInviteLink}">Join Here</a></li>` : '<li>Join Slack workspace (invite coming soon)</li>',
-    '<li>Attend next Monday meeting</li>',
-    `<li>Review our <a href="${getBaseUrl()}/volunteers/code-of-conduct">Code of Conduct</a></li>`,
+    data.ndaLink ? `<li style="margin: 8px 0;">Sign NDA - <a href="${data.ndaLink}" style="color: ${BRAND.purpleDark};">Review & Sign</a></li>` : '<li style="margin: 8px 0;">Sign NDA (link coming soon)</li>',
+    data.slackInviteLink ? `<li style="margin: 8px 0;">Join Slack workspace - <a href="${data.slackInviteLink}" style="color: ${BRAND.purpleDark};">Join Here</a></li>` : '<li style="margin: 8px 0;">Join Slack workspace (invite coming soon)</li>',
+    '<li style="margin: 8px 0;">Attend next Monday meeting</li>',
+    `<li style="margin: 8px 0;">Review our <a href="${getBaseUrl()}/volunteers/code-of-conduct" style="color: ${BRAND.purpleDark};">Code of Conduct</a></li>`,
   ];
 
-  const html = emailLayout("Let's Get Started", 'linear-gradient(135deg, #9b2e83, #8982ff)', `
-    <div class="header" style="background: linear-gradient(135deg, #9b2e83, #8982ff);">
-      <h1>Let's Get Started!</h1>
-    </div>
-    <div class="content">
+  const html = brandedEmailLayout({
+    title: "Let's Get Started!",
+    preheader: `Welcome to the She Sharp team as a ${typeLabel}!`,
+    bodyHtml: `
       <p>Hi ${data.applicantName},</p>
       <p>Welcome to the She Sharp team as a <strong>${typeLabel}</strong>! Here's everything you need to get started:</p>
 
-      <div class="info-box">
-        <h3 style="margin-top: 0;">Onboarding Checklist</h3>
-        <ul class="step-list">
+      ${infoBox(`
+        <h3 style="margin-top: 0; color: ${BRAND.purpleDark};">Onboarding Checklist</h3>
+        <ul style="margin: 15px 0; padding-left: 20px;">
           ${checklist.join('\n          ')}
         </ul>
-      </div>
+      `)}
 
       ${data.mondayMeetingInfo ? `<p><strong>Monday Meeting:</strong> ${data.mondayMeetingInfo}</p>` : ''}
       ${data.nextEventDate ? `<p><strong>Next Event:</strong> ${data.nextEventDate}</p>` : ''}
 
-      <p>If you have any questions, don't hesitate to reach out to <a href="mailto:people@shesharp.org.nz">people@shesharp.org.nz</a>.</p>
-    </div>
-  `);
+      <p>If you have any questions, don't hesitate to reach out to <a href="mailto:mentoring@shesharp.org.nz" style="color: ${BRAND.purpleDark};">mentoring@shesharp.org.nz</a>.</p>
+    `,
+  });
 
   const text = `
 Hi ${data.applicantName},
@@ -386,7 +336,7 @@ Welcome to the She Sharp team as a ${typeLabel}! Here's your onboarding checklis
 ${data.mondayMeetingInfo ? `Monday Meeting: ${data.mondayMeetingInfo}` : ''}
 ${data.nextEventDate ? `Next Event: ${data.nextEventDate}` : ''}
 
-Questions? Contact people@shesharp.org.nz
+Questions? Contact mentoring@shesharp.org.nz
   `;
 
   return sendEmail({
@@ -410,25 +360,18 @@ export async function sendNDAReminderEmail(
   email: string,
   data: NDAReminderData
 ): Promise<boolean> {
-  const html = emailLayout('NDA - Action Required', 'linear-gradient(135deg, #e65100, #bf360c)', `
-    <div class="header" style="background: linear-gradient(135deg, #e65100, #bf360c);">
-      <h1>NDA - Action Required</h1>
-    </div>
-    <div class="content">
+  const html = brandedEmailLayout({
+    title: 'NDA - Action Required',
+    preheader: 'Please review and sign the NDA to complete your onboarding.',
+    bodyHtml: `
       <p>Hi ${data.applicantName},</p>
       <p>Please review and sign the Non-Disclosure Agreement (NDA) to complete your onboarding with She Sharp.</p>
 
-      ${data.ndaLink ? `
-        <div style="text-align: center;">
-          <a href="${data.ndaLink}" class="button" style="color: white;">Review & Sign NDA</a>
-        </div>
-      ` : '<p>The NDA document will be shared with you shortly.</p>'}
+      ${data.ndaLink ? brandButton('Review & Sign NDA', data.ndaLink) : '<p>The NDA document will be shared with you shortly.</p>'}
 
-      <div class="info-box">
-        <p style="margin: 0;"><strong>Note:</strong> The NDA must be signed before you can start participating in team activities. If you have questions about the agreement, please contact <a href="mailto:people@shesharp.org.nz">people@shesharp.org.nz</a>.</p>
-      </div>
-    </div>
-  `);
+      ${warningBox(`<strong>Note:</strong> The NDA must be signed before you can start participating in team activities. If you have questions about the agreement, please contact <a href="mailto:mentoring@shesharp.org.nz" style="color: ${BRAND.warningOrange};">mentoring@shesharp.org.nz</a>.`)}
+    `,
+  });
 
   const text = `
 Hi ${data.applicantName},
@@ -439,7 +382,7 @@ ${data.ndaLink ? `Sign here: ${data.ndaLink}` : 'The NDA document will be shared
 
 The NDA must be signed before you can start participating in team activities.
 
-Questions? Contact people@shesharp.org.nz
+Questions? Contact mentoring@shesharp.org.nz
   `;
 
   return sendEmail({

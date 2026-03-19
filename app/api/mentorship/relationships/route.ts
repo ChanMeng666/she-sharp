@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
-import { mentorshipRelationships, users, mentorProfiles, menteeProfiles } from '@/lib/db/schema';
+import { mentorshipRelationships, users, mentorProfiles, menteeProfiles, programmes } from '@/lib/db/schema';
 import { eq, or } from 'drizzle-orm';
 import { getUser } from '@/lib/db/queries';
 
@@ -98,6 +98,17 @@ export async function GET(request: NextRequest) {
           }
         }
 
+        // Get programme name if applicable
+        let programmeName: string | null = null;
+        if (rel.programmeId) {
+          const [programme] = await db
+            .select({ name: programmes.name })
+            .from(programmes)
+            .where(eq(programmes.id, rel.programmeId))
+            .limit(1);
+          programmeName = programme?.name ?? null;
+        }
+
         return {
           id: rel.id,
           mentorId: rel.mentorUserId,
@@ -121,6 +132,8 @@ export async function GET(request: NextRequest) {
           menteeImage: menteeData?.image || null,
           mentorRole,
           menteeGoals,
+          programmeId: rel.programmeId,
+          programmeName,
         };
       })
     );

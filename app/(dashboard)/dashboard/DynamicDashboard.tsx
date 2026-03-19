@@ -69,6 +69,87 @@ interface DashboardData {
   quickActions: any[];
 }
 
+function ProgrammeStatusCard() {
+  const [programme, setProgramme] = useState<{
+    name: string;
+    status: string;
+    startDate: string | null;
+    endDate: string | null;
+    partnerOrganisation: string | null;
+  } | null>(null);
+
+  useEffect(() => {
+    fetch('/api/user/mentee-profile')
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data?.profile?.programmeInfo) {
+          setProgramme(data.profile.programmeInfo);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  if (!programme) return null;
+
+  const isCompleted = programme.status === 'completed';
+
+  if (isCompleted) {
+    return (
+      <Card className="border-brand/30 bg-[#f7e5f3]/30">
+        <CardContent className="pt-6">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 bg-brand/10 rounded-full flex items-center justify-center">
+              <CheckCircle2 className="h-5 w-5 text-brand" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold">{programme.name} Programme Completed</h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Thank you for participating! Your mentorship relationship has concluded.
+              </p>
+              <div className="flex gap-2 mt-3">
+                <Link href="/membership">
+                  <Button size="sm" variant="brand">Become a Premium Member</Button>
+                </Link>
+                <Link href="/events">
+                  <Button size="sm" variant="outline">Browse Events</Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="border-brand/30 bg-gradient-to-r from-[#f7e5f3]/30 to-card">
+      <CardContent className="pt-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <Target className="h-5 w-5 text-brand" />
+              <h3 className="font-semibold">{programme.name} Programme</h3>
+            </div>
+            {programme.startDate && programme.endDate && (
+              <p className="text-sm text-muted-foreground mt-1">
+                {new Date(programme.startDate).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: 'numeric' })}
+                {' '}&mdash;{' '}
+                {new Date(programme.endDate).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: 'numeric' })}
+              </p>
+            )}
+            {programme.partnerOrganisation && (
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Partner: {programme.partnerOrganisation}
+              </p>
+            )}
+          </div>
+          <Badge className="bg-green-100 text-green-700">Active</Badge>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function DynamicDashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -237,6 +318,8 @@ export default function DynamicDashboard() {
             <BookOpen className="h-6 w-6 text-periwinkle" />
             Mentee Dashboard
           </h2>
+
+          <ProgrammeStatusCard />
 
           {/* Mentee Stats */}
           <div className="grid grid-cols-1 gap-4 @xl/main:grid-cols-2">

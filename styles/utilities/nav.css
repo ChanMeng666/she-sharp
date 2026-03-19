@@ -1,0 +1,57 @@
+@layer utilities {
+  /* Logo hover effect - black to brand purple (#9b2e83) */
+  .logo-hover {
+    filter: brightness(0);
+    transition: filter 0.2s ease;
+  }
+
+  .logo-hover:hover {
+    filter: brightness(0) saturate(100%) invert(28%) sepia(50%) saturate(1500%) hue-rotate(290deg) brightness(95%) contrast(95%);
+  }
+
+  /* Navigation Glass Effect - Frosted glass */
+  .nav-glass {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Dropdown Glass Effect - Frosted glass */
+  .dropdown-glass {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Navigation hover/active states with brand purple */
+  .nav-item-hover:hover,
+  .nav-item-hover:focus {
+    background: rgba(247, 229, 243, 0.8);
+    /* Purple Light #f7e5f3 */
+  }
+
+  .nav-item-active,
+  .nav-item-hover[data-state="open"] {
+    background: rgba(247, 229, 243, 0.9);
+    /* Purple Light #f7e5f3 */
+  }
+
+  /* Featured section background variants */
+  .featured-bg-purple {
+    background: linear-gradient(135deg, #f7e5f3 0%, #fdf2fa 100%);
+  }
+
+  .featured-bg-periwinkle {
+    background: linear-gradient(135deg, #f4f4fa 0%, #f8f8ff 100%);
+  }
+
+  .featured-bg-navy {
+    background: linear-gradient(135deg, #eaf2ff 0%, #f5f8ff 100%);
+  }
+
+  .featured-bg-mint {
+    background: linear-gradient(135deg, #effefb 0%, #f7fffd 100%);
+  }
+}

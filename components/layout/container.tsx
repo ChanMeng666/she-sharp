@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { layoutSystem, getContainer } from "@/lib/layout-system";
+import { layoutSystem, getContainer } from "@/lib/design-system";
 
 interface ContainerProps {
   children: React.ReactNode;

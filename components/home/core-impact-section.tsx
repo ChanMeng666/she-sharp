@@ -64,11 +64,11 @@ function StatCard({
   return (
     <article
       role="listitem"
-      className={`rounded-xl overflow-hidden border border-border/30 bg-white/50 backdrop-blur-md backdrop-saturate-150 shadow-lg shadow-black/5 hover:border-brand/50 hover:bg-background/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/10 focus-within:-translate-y-0.5 focus-within:shadow-xl focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20 ${className ?? ""}`}
+      className={`card-md card-glass card-interactive focus-within:-translate-y-0.5 focus-within:shadow-xl focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20 ${className ?? ""}`}
       tabIndex={0}
       aria-labelledby={`stat-${item.title.toLowerCase().replace(/\s+/g, "-")}-title`}
     >
-      <div className="p-5 w-full h-80 flex flex-col justify-between">
+      <div className="p-5 w-full h-auto min-h-[260px] sm:min-h-[280px] md:min-h-[300px] lg:min-h-[320px] flex flex-col justify-between">
         <div className="relative w-10 h-10 shrink-0" aria-hidden="true">
           <Image
             src={item.icon}
@@ -80,7 +80,7 @@ function StatCard({
 
         <div>
           <div
-            className="text-6xl font-extrabold tabular-nums tracking-tight mb-4 text-brand"
+            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tabular-nums tracking-tight mb-4 text-brand"
             aria-live="polite"
             aria-atomic="true"
           >
@@ -126,7 +126,7 @@ export function CoreImpactSection() {
 
           {/* Grid */}
           <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-8xl mx-auto my-12 md:my-16 lg:my-20"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 max-w-8xl mx-auto my-12 md:my-16 lg:my-20"
             role="list"
           >
             {homeImpactData.map((item, i) => (

@@ -40,6 +40,7 @@ export const genderEnum = pgEnum('gender', ['female', 'male', 'non_binary', 'pre
 export const meetingFormatEnum = pgEnum('meeting_format', ['online', 'in_person', 'hybrid']);
 export const queueStatusEnum = pgEnum('queue_status', ['waiting', 'matching_in_progress', 'matched', 'expired', 'cancelled']);
 export const confidenceLevelEnum = pgEnum('confidence_level', ['high', 'medium', 'low']);
+export const programmeStatusEnum = pgEnum('programme_status', ['draft', 'active', 'closed', 'completed', 'archived']);
 
 export const volunteerCurrentStatusEnum = pgEnum('volunteer_current_status', [
   'high_school_student', 'university_student', 'industry', 'sponsor_partner', 'other'
@@ -158,12 +159,14 @@ export const mentorshipRelationships = pgTable('mentorship_relationships', {
   relationshipGoals: text('relationship_goals'),
   mentorNotes: text('mentor_notes'),
   menteeNotes: text('mentee_notes'),
+  programmeId: integer('programme_id').references(() => programmes.id),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 }, (table) => ({
   mentorIdx: index('relationships_mentor_idx').on(table.mentorUserId),
   menteeIdx: index('relationships_mentee_idx').on(table.menteeUserId),
   statusIdx: index('relationships_status_idx').on(table.status),
+  programmeIdx: index('relationships_programme_idx').on(table.programmeId),
 }));
 
 // Meetings
@@ -766,7 +769,54 @@ export enum ActivityType {
   AI_SCREEN_VOLUNTEER = 'AI_SCREEN_VOLUNTEER',
   SUBMIT_EX_AMBASSADOR_FORM = 'SUBMIT_EX_AMBASSADOR_FORM',
   SUBMIT_CONTACT_FORM = 'SUBMIT_CONTACT_FORM',
+  // Programme activity types
+  CREATE_PROGRAMME = 'CREATE_PROGRAMME',
+  UPDATE_PROGRAMME = 'UPDATE_PROGRAMME',
+  COMPLETE_PROGRAMME = 'COMPLETE_PROGRAMME',
+  ASSIGN_MENTOR_TO_PROGRAMME = 'ASSIGN_MENTOR_TO_PROGRAMME',
+  REMOVE_MENTOR_FROM_PROGRAMME = 'REMOVE_MENTOR_FROM_PROGRAMME',
 }
+
+// ============================================================================
+// PROGRAMME MANAGEMENT
+// ============================================================================
+
+// Programmes table
+export const programmes = pgTable('programmes', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 200 }).notNull(),
+  slug: varchar('slug', { length: 100 }).notNull().unique(),
+  description: text('description'),
+  status: programmeStatusEnum('status').notNull().default('draft'),
+  startDate: timestamp('start_date'),
+  endDate: timestamp('end_date'),
+  applicationDeadline: timestamp('application_deadline'),
+  maxMentees: integer('max_mentees'),
+  currentMenteeCount: integer('current_mentee_count').notNull().default(0),
+  requiresPayment: boolean('requires_payment').notNull().default(true),
+  partnerOrganisation: varchar('partner_organisation', { length: 200 }),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  slugIdx: index('programmes_slug_idx').on(table.slug),
+  statusIdx: index('programmes_status_idx').on(table.status),
+}));
+
+// Mentor programme assignments
+export const mentorProgrammeAssignments = pgTable('mentor_programme_assignments', {
+  id: serial('id').primaryKey(),
+  mentorUserId: integer('mentor_user_id').notNull().references(() => users.id),
+  programmeId: integer('programme_id').notNull().references(() => programmes.id),
+  assignedAt: timestamp('assigned_at').notNull().defaultNow(),
+  assignedBy: integer('assigned_by').references(() => users.id),
+  maxMenteesInProgramme: integer('max_mentees_in_programme').default(2),
+  currentMenteesInProgramme: integer('current_mentees_in_programme').notNull().default(0),
+  notes: text('notes'),
+}, (table) => ({
+  mentorProgrammeUnique: unique().on(table.mentorUserId, table.programmeId),
+  mentorIdx: index('mentor_programme_mentor_idx').on(table.mentorUserId),
+  programmeIdx: index('mentor_programme_programme_idx').on(table.programmeId),
+}));
 
 // ============================================================================
 // NEW TABLES FOR BUSINESS LOGIC UPDATE
@@ -938,6 +988,7 @@ export const menteeFormSubmissions = pgTable('mentee_form_submissions', {
   // MBTI
   mbtiType: mbtiTypeEnum('mbti_type'),
   preferredMeetingFrequency: varchar('preferred_meeting_frequency', { length: 50 }),
+  programmeId: integer('programme_id').references(() => programmes.id),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 }, (table) => ({
@@ -945,6 +996,7 @@ export const menteeFormSubmissions = pgTable('mentee_form_submissions', {
   statusIdx: index('mentee_form_submissions_status_idx').on(table.status),
   emailIdx: index('mentee_form_submissions_email_idx').on(table.email),
   paymentIdx: index('mentee_form_submissions_payment_idx').on(table.paymentCompleted),
+  programmeIdx: index('mentee_form_submissions_programme_idx').on(table.programmeId),
 }));
 
 // Volunteer/Ambassador form submissions
@@ -1051,6 +1103,7 @@ export const menteeWaitingQueue = pgTable('mentee_waiting_queue', {
   notifiedAt: timestamp('notified_at'),
   expiresAt: timestamp('expires_at'),
   notes: text('notes'),
+  programmeId: integer('programme_id').references(() => programmes.id),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 }, (table) => ({
@@ -1058,6 +1111,7 @@ export const menteeWaitingQueue = pgTable('mentee_waiting_queue', {
   statusIdx: index('waiting_queue_status_idx').on(table.status),
   priorityIdx: index('waiting_queue_priority_idx').on(table.priority),
   bestScoreIdx: index('waiting_queue_best_score_idx').on(table.bestMatchScore),
+  programmeIdx: index('waiting_queue_programme_idx').on(table.programmeId),
 }));
 
 // AI match results
@@ -1095,6 +1149,7 @@ export const aiMatchResults = pgTable('ai_match_results', {
   reviewedAt: timestamp('reviewed_at'),
   reviewNotes: text('review_notes'),
   relationshipId: integer('relationship_id').references(() => mentorshipRelationships.id),
+  programmeId: integer('programme_id').references(() => programmes.id),
   expiresAt: timestamp('expires_at'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
@@ -1104,6 +1159,7 @@ export const aiMatchResults = pgTable('ai_match_results', {
   menteeIdx: index('ai_match_results_mentee_idx').on(table.menteeUserId),
   statusIdx: index('ai_match_results_status_idx').on(table.status),
   scoreIdx: index('ai_match_results_score_idx').on(table.overallScore),
+  programmeIdx: index('ai_match_results_programme_idx').on(table.programmeId),
 }));
 
 // AI matching runs (batch records)
@@ -1122,6 +1178,7 @@ export const aiMatchingRuns = pgTable('ai_matching_runs', {
   totalTokensUsed: integer('total_tokens_used').default(0),
   averageProcessingTimeMs: integer('average_processing_time_ms'),
   errorDetails: jsonb('error_details').$type<{ errors: Array<{ menteeId: number; error: string; timestamp: string }> }>(),
+  programmeId: integer('programme_id').references(() => programmes.id),
   summary: jsonb('summary').$type<{
     totalMentees: number;
     totalMentors: number;
@@ -1133,6 +1190,34 @@ export const aiMatchingRuns = pgTable('ai_matching_runs', {
   }>(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
+
+// ============================================================================
+// RELATIONS FOR PROGRAMME TABLES
+// ============================================================================
+
+export const programmesRelations = relations(programmes, ({ many }) => ({
+  mentorAssignments: many(mentorProgrammeAssignments),
+  menteeFormSubmissions: many(menteeFormSubmissions),
+  mentorshipRelationships: many(mentorshipRelationships),
+  waitingQueue: many(menteeWaitingQueue),
+  matchResults: many(aiMatchResults),
+}));
+
+export const mentorProgrammeAssignmentsRelations = relations(mentorProgrammeAssignments, ({ one }) => ({
+  mentor: one(users, {
+    fields: [mentorProgrammeAssignments.mentorUserId],
+    references: [users.id],
+  }),
+  programme: one(programmes, {
+    fields: [mentorProgrammeAssignments.programmeId],
+    references: [programmes.id],
+  }),
+  assignedByUser: one(users, {
+    fields: [mentorProgrammeAssignments.assignedBy],
+    references: [users.id],
+    relationName: 'programmeAssigner',
+  }),
+}));
 
 // ============================================================================
 // RELATIONS FOR NEW TABLES
@@ -1261,4 +1346,8 @@ export type AiMatchingRun = typeof aiMatchingRuns.$inferSelect;
 export type NewAiMatchingRun = typeof aiMatchingRuns.$inferInsert;
 export type MenteeWaitingQueue = typeof menteeWaitingQueue.$inferSelect;
 export type NewMenteeWaitingQueue = typeof menteeWaitingQueue.$inferInsert;
+export type Programme = typeof programmes.$inferSelect;
+export type NewProgramme = typeof programmes.$inferInsert;
+export type MentorProgrammeAssignment = typeof mentorProgrammeAssignments.$inferSelect;
+export type NewMentorProgrammeAssignment = typeof mentorProgrammeAssignments.$inferInsert;
 

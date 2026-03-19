@@ -7,7 +7,7 @@ export const layoutSystem = {
     wide: "max-w-6xl",         // 1152px - wide content display
     full: "max-w-8xl",         // 1440px - full width layout
   },
-  
+
   // Consistent spacing system
   spacing: {
     section: {
@@ -27,7 +27,7 @@ export const layoutSystem = {
       combined: "py-4 md:py-6",
     },
   },
-  
+
   // Grid systems for different layouts
   grids: {
     // Standard content grid
@@ -52,7 +52,7 @@ export const layoutSystem = {
       gap: "gap-4",
     },
   },
-  
+
   // Responsive breakpoints
   breakpoints: {
     sm: "640px",   // Mobile landscape
@@ -61,7 +61,7 @@ export const layoutSystem = {
     xl: "1280px",  // Desktop
     "2xl": "1536px", // Large screens
   },
-  
+
   // Layout patterns for different page types
   patterns: {
     // Asymmetric split layout
@@ -84,7 +84,7 @@ export const layoutSystem = {
       alternating: "md:flex-row-reverse",
     },
   },
-  
+
   // Common layout utilities
   utils: {
     // Center content
@@ -97,6 +97,31 @@ export const layoutSystem = {
     hero: "min-h-[60vh] lg:min-h-[70vh]",
     // Reading width
     prose: "max-w-prose mx-auto",
+  },
+};
+
+// Design system presets
+export const designSystem = {
+  radius: {
+    sm: "card-sm",      // 30px
+    md: "card-md",      // 40px
+    lg: "card-lg",      // 50px
+    full: "rounded-full",
+  },
+  cards: {
+    glass: "card-glass",
+    interactive: "card-interactive",
+  },
+  padding: {
+    card: "p-4 sm:p-5 md:p-6",
+    section: "p-6 sm:p-8 md:p-12 lg:p-16",
+    container: "px-4 sm:px-6 lg:px-8",
+  },
+  gap: {
+    tight: "gap-3 sm:gap-4 md:gap-5",
+    normal: "gap-4 sm:gap-5 md:gap-6",
+    wide: "gap-6 sm:gap-8 md:gap-10 lg:gap-12",
+    section: "gap-8 sm:gap-10 md:gap-12 lg:gap-16",
   },
 };
 

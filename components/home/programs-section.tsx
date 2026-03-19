@@ -117,7 +117,7 @@ export function ProgramsSection() {
                     delay={index * 100}
                   >
                     <div
-                      className={`rounded-[50px] overflow-hidden transition-all duration-300 relative border ${isActive
+                      className={`card-lg transition-all duration-300 relative border ${isActive
                           ? "bg-background border-foreground/30 shadow-lg shadow-brand/10 "
                           : "bg-background border-border hover:border-foreground/30"
                         }`}
@@ -202,9 +202,9 @@ export function ProgramsSection() {
             <div className="hidden lg:flex items-center min-h-[500px] pt-12">
             <AnimateOnScroll variant="fade-left" className="relative w-full md:w-4/5 mx-auto">
               <div
-                className="absolute inset-0 border border-foreground/30 rounded-[50px] transform rotate-0 md:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
+                className="absolute inset-0 border border-foreground/30 card-lg transform rotate-0 md:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
               />
-              <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-[50px] overflow-hidden z-10">
+              <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] card-lg z-10">
                 {programs.map((program, index) => (
                   <Image
                     key={program.id}
@@ -240,9 +240,9 @@ export function ProgramsSection() {
             <div className="lg:hidden">
               <AnimateOnScroll variant="fade-up" className="relative w-full md:w-4/5 mx-auto">
                 <div
-                  className="absolute inset-0 border border-foreground/30 rounded-[50px] transform rotate-0 lg:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
+                  className="absolute inset-0 border border-foreground/30 card-lg transform rotate-0 lg:rotate-[-10deg] translate-x-0 md:translate-x-[-10px] translate-y-[-10px]"
                 />
-                <div className="relative w-full h-[300px] md:h-[400px] rounded-[50px] overflow-hidden z-10">
+                <div className="relative w-full h-[300px] md:h-[400px] card-lg z-10">
                   {programs.map((program, index) => (
                     <Image
                       key={program.id}

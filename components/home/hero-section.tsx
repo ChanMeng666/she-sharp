@@ -92,8 +92,8 @@ export function HeroSection() {
       <div className="absolute top-20 right-40 w-2 h-2 bg-white/80 rounded-full animate-ping" style={{ animationDuration: "2s" }} />
       <div className="absolute top-32 right-60 w-1.5 h-1.5 bg-yellow-200/70 rounded-full animate-ping" style={{ animationDuration: "3s", animationDelay: "0.5s" }} />
       <div className="absolute top-48 right-32 w-1 h-1 bg-white/60 rounded-full animate-ping" style={{ animationDuration: "2.5s", animationDelay: "1s" }} />
-      <div className="absolute top-16 right-80 w-1.5 h-1.5 bg-yellow-100/80 rounded-full animate-ping" style={{ animationDuration: "3.5s", animationDelay: "0.3s" }} />
-      <div className="absolute top-40 right-96 w-1 h-1 bg-white/70 rounded-full animate-ping" style={{ animationDuration: "2.8s", animationDelay: "0.8s" }} />
+      <div className="hidden sm:block absolute top-16 right-80 w-1.5 h-1.5 bg-yellow-100/80 rounded-full animate-ping" style={{ animationDuration: "3.5s", animationDelay: "0.3s" }} />
+      <div className="hidden sm:block absolute top-40 right-96 w-1 h-1 bg-white/70 rounded-full animate-ping" style={{ animationDuration: "2.8s", animationDelay: "0.8s" }} />
 
       {/* Additional sparkles for more depth */}
       <div className="absolute top-24 right-20 w-1 h-1 bg-yellow-300/90 rounded-full animate-ping" style={{ animationDuration: "1.8s", animationDelay: "0.2s" }} />
@@ -130,7 +130,7 @@ export function HeroSection() {
           {/* Right: Video Player */}
           <div className="w-full sm:w-[90%] md:w-[85%] lg:w-[75%] xl:flex-1 xl:max-w-2xl 2xl:max-w-4xl mx-auto xl:mx-0">
             {/* Video Container */}
-            <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
+            <div className="relative aspect-video card-lg border border-white/20 shadow-2xl">
               <video
                 autoPlay
                 loop
