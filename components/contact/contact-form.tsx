@@ -107,7 +107,7 @@ export function ContactForm() {
 
   if (isSuccess) {
     return (
-      <div className="bg-white rounded-[32px] p-8 md:p-10 shadow-lg text-center">
+      <div className="bg-white card-sm p-6 sm:p-8 md:p-10 shadow-lg text-center">
         <div className="flex justify-center mb-4">
           <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center">
             <CheckCircle2 className="h-8 w-8 text-green-600" />
@@ -134,9 +134,9 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white/0 rounded-[32px] p-0 md:p-0"
+      className="bg-white card-sm p-6 sm:p-8 md:p-10 shadow-lg"
     >
-      <div className="space-y-6">
+      <div className="space-y-5 sm:space-y-6">
         {/* Full Name */}
         <div className="space-y-2">
           <Label htmlFor="fullName" className="text-navy-dark font-medium">
@@ -149,7 +149,7 @@ export function ContactForm() {
             value={formData.fullName}
             onChange={handleChange}
             placeholder="Enter your name"
-            className={`h-12 rounded-xl bg-white border-gray-200 focus:border-brand ${
+            className={`h-12 rounded-2xl bg-white border-gray-200 focus:border-brand ${
               errors.fullName ? "border-red-500" : ""
             }`}
           />
@@ -170,7 +170,7 @@ export function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email address"
-            className={`h-12 rounded-xl bg-white border-gray-200 focus:border-brand ${
+            className={`h-12 rounded-2xl bg-white border-gray-200 focus:border-brand ${
               errors.email ? "border-red-500" : ""
             }`}
           />
@@ -191,7 +191,7 @@ export function ContactForm() {
             value={formData.organisation}
             onChange={handleChange}
             placeholder="Enter your organisation"
-            className="h-12 rounded-xl bg-white border-gray-200 focus:border-brand"
+            className="h-12 rounded-2xl bg-white border-gray-200 focus:border-brand"
           />
         </div>
 
@@ -207,7 +207,7 @@ export function ContactForm() {
             onChange={handleChange}
             placeholder="Enter your message"
             rows={5}
-            className={`rounded-xl bg-white border-gray-200 focus:border-brand resize-y ${
+            className={`rounded-2xl bg-white border-gray-200 focus:border-brand resize-y ${
               errors.message ? "border-red-500" : ""
             }`}
           />
@@ -218,13 +218,13 @@ export function ContactForm() {
 
         {/* Error Message */}
         {submitError && (
-          <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
+          <div className="p-4 bg-red-50 border border-red-200 rounded-2xl">
             <p className="text-sm text-red-700">{submitError}</p>
           </div>
         )}
 
         {/* Submit Button */}
-        <div className="flex justify-center pt-2">
+        <div className="flex justify-start sm:justify-center pt-2 sm:pt-4">
           <Button
             type="submit"
             disabled={isSubmitting}

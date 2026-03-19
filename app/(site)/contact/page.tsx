@@ -17,16 +17,16 @@ export default function ContactPage() {
     return (
         <Section className="bg-[#f7e5f3]">
             <Container size="full">
-                <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-20 items-start py-16 md:py-24 lg:py-32">
+                <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-8 sm:gap-10 md:gap-12 lg:gap-20 lg:items-start pt-8 sm:pt-12 md:pt-16 lg:pt-20 pb-8 sm:pb-12 md:pb-16">
                     {/* Left side - Headline & Social Links */}
                     <div className="flex flex-col justify-center">
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-navy-dark leading-tight tracking-tight">
+                        <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-black text-navy-dark leading-tight tracking-tight">
                             Let&apos;s Connect,
                             <br />
                             Say Hello to Get the Ball Rolling
                         </h1>
 
-                        <p className="mt-8 text-lg text-paragraph max-w-xl">
+                        <p className="mt-8 text-lg text-paragraph sm:max-w-lg md:max-w-xl">
                             From questions about our events and how we make an impact to
                             featuring us in the media, we&apos;d love to hear from you!
                         </p>
@@ -36,7 +36,7 @@ export default function ContactPage() {
                             <p className="text-md font-semibold text-navy-dark/60 uppercase tracking-wide mb-4">
                                 Follow Us
                             </p>
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex flex-wrap gap-2 sm:gap-3">
                                 {footerConfig.socialLinks.map((social) => {
                                     const Icon =
                                         socialIcons[social.icon as keyof typeof socialIcons];
@@ -46,7 +46,7 @@ export default function ContactPage() {
                                             href={social.href}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="p-3 border border-navy-dark/20 rounded-full bg-white/50 hover:bg-brand hover:border-brand hover:text-white text-navy-dark transition-all duration-200"
+                                            className="p-2.5 sm:p-3 border border-navy-dark/20 rounded-full bg-white/50 hover:bg-brand hover:border-brand hover:text-white text-navy-dark transition-all duration-200"
                                             aria-label={`Follow us on ${social.name}`}
                                         >
                                             <Icon className="h-5 w-5" />
