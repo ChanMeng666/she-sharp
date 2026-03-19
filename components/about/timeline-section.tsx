@@ -150,7 +150,7 @@ export function TimelineSection() {
   return (
     <Section noPadding className="bg-white">
       <Container size="full">
-        <div className="pt-12 md:pt-24 px-4">
+        <div className="pt-16 md:pt-24 px-4">
           <h2 className="text-display-sm text-primary text-left">
             A Deep Dive into Our Journey
           </h2>

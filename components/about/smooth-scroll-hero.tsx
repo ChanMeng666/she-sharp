@@ -1,193 +1,160 @@
 "use client";
 
-import { ReactLenis } from "lenis/react";
-import {
-  motion,
-  useMotionTemplate,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { useRef } from "react";
 
-const SECTION_HEIGHT = 1500;
+const slides = [
+  {
+    src: "/img/gallery/about-2.jpg",
+    title: "She Sharp",
+    subtitle: "Bridging the gender gap in STEM",
+  },
+  {
+    src: "/img/gallery/about-3.jpg",
+    title: "Connect",
+    subtitle: "Building professional networks for women in tech",
+  },
+  {
+    src: "/img/gallery/about-1.jpg",
+    title: "Inspire",
+    subtitle: "Showcasing diverse careers in STEM fields",
+  },
+  {
+    src: "/img/about-4.jpg",
+    title: "Empower",
+    subtitle: "Supporting career development and growth",
+  },
+  {
+    src: "/img/about-5.jpg",
+    title: "Community",
+    subtitle: "2200+ members across New Zealand",
+  },
+];
 
-interface ParallaxImgProps {
-  src: string;
-  alt: string;
-  start: number;
-  end: number;
-  className?: string;
+function SlideImage({
+  slide,
+  index,
+  total,
+  progress,
+}: {
+  slide: (typeof slides)[number];
+  index: number;
+  total: number;
+  progress: ReturnType<typeof useScroll>["scrollYProgress"];
+}) {
+  const segmentStart = index / total;
+  const segmentEnd = (index + 1) / total;
+  const fadeInEnd = segmentStart + 0.3 / total;
+  const fadeOutStart = segmentEnd - 0.3 / total;
+
+  const opacity = useTransform(progress, (v) => {
+    if (index === 0) {
+      // First slide: fully visible at start, fade out at end
+      if (v <= fadeOutStart) return 1;
+      if (v >= segmentEnd) return 0;
+      return 1 - (v - fadeOutStart) / (segmentEnd - fadeOutStart);
+    }
+    if (v <= segmentStart) return 0;
+    if (v <= fadeInEnd) return (v - segmentStart) / (fadeInEnd - segmentStart);
+    if (v <= fadeOutStart) return 1;
+    if (index === total - 1) return 1; // Last slide stays visible
+    if (v >= segmentEnd) return 0;
+    return 1 - (v - fadeOutStart) / (segmentEnd - fadeOutStart);
+  });
+
+  const scale = useTransform(progress, (v) => {
+    if (v < segmentStart || v > segmentEnd) return 1;
+    const mid = (segmentStart + segmentEnd) / 2;
+    if (v <= mid) return 1 + 0.05 * ((v - segmentStart) / (mid - segmentStart));
+    return 1.05 - 0.05 * ((v - mid) / (segmentEnd - mid));
+  });
+
+  return (
+    <motion.div className="absolute inset-0" style={{ opacity }}>
+      <motion.img
+        src={slide.src}
+        alt={slide.title}
+        className="absolute inset-0 w-full h-full object-cover object-center"
+        style={{ scale }}
+      />
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
+      {/* Text overlay */}
+      <div className="absolute bottom-0 left-0 right-0 px-6 sm:px-8 md:px-16 lg:px-24 pb-24 sm:pb-20 md:pb-14 lg:pb-16">
+        <h1 className="text-white text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight drop-shadow-lg max-w-3xl mb-3 md:mb-4">
+          {slide.title}
+        </h1>
+        <p className="text-white text-base sm:text-lg md:text-2xl lg:text-3xl font-semibold leading-snug tracking-wide drop-shadow-lg max-w-3xl">
+          {slide.subtitle}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+function ScrollIndicator({
+  progress,
+  total,
+}: {
+  progress: ReturnType<typeof useScroll>["scrollYProgress"];
+  total: number;
+}) {
+  const activeIndex = useTransform(progress, (v) =>
+    Math.min(Math.floor(v * total), total - 1)
+  );
+
+  return (
+    <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 glass-pill flex gap-2 px-4 py-2">
+      {Array.from({ length: total }).map((_, i) => (
+        <IndicatorDot key={i} index={i} activeIndex={activeIndex} />
+      ))}
+    </div>
+  );
+}
+
+function IndicatorDot({
+  index,
+  activeIndex,
+}: {
+  index: number;
+  activeIndex: MotionValue<number>;
+}) {
+  const isActive = useTransform(activeIndex, (v) => (v === index ? 1 : 0));
+  const bg = useTransform(isActive, (v) =>
+    v === 1 ? "var(--color-brand)" : "rgba(255,255,255,0.5)"
+  );
+  const dotScale = useTransform(isActive, (v) => (v === 1 ? 1.3 : 1));
+
+  return (
+    <motion.div
+      className="w-2.5 h-2.5 rounded-full transition-colors"
+      style={{ backgroundColor: bg, scale: dotScale }}
+    />
+  );
 }
 
 export default function SmoothScrollHero() {
-  return (
-    <div className="bg-gray-50">
-      <ReactLenis
-        root
-        options={{
-          lerp: 0.05,
-          smoothWheel: true,
-        }}
-      >
-        <Hero />
-      </ReactLenis>
-    </div>
-  );
-}
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: containerRef });
 
-function Hero() {
   return (
     <div
-      style={{ height: `calc(${SECTION_HEIGHT}px + 100vh)` }}
-      className="relative w-full"
+      ref={containerRef}
+      style={{ height: `${slides.length * 100}vh` }}
+      className="relative"
     >
-      <CenterImage />
-      <ParallaxImages />
-      <div className="absolute bottom-0 left-0 right-0 h-96 bg-linear-to-b from-gray-50/0 via-gray-50/50 to-gray-50" />
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        {slides.map((slide, i) => (
+          <SlideImage
+            key={i}
+            slide={slide}
+            index={i}
+            total={slides.length}
+            progress={scrollYProgress}
+          />
+        ))}
+        <ScrollIndicator progress={scrollYProgress} total={slides.length} />
+      </div>
     </div>
-  );
-}
-
-function CenterImage() {
-  const { scrollY } = useScroll();
-
-  const clip1 = useTransform(scrollY, [0, 1500], [5, 0]);
-  const clip2 = useTransform(scrollY, [0, 1500], [95, 100]);
-
-  const clipPath = useMotionTemplate`polygon(${clip1}% ${clip1}%, ${clip2}% ${clip1}%, ${clip2}% ${clip2}%, ${clip1}% ${clip2}%)`;
-
-  const backgroundSize = useTransform(
-    scrollY,
-    [0, SECTION_HEIGHT + 500],
-    ["150%", "110%"]
-  );
-
-  const opacity = useTransform(
-    scrollY,
-    [SECTION_HEIGHT, SECTION_HEIGHT + 500],
-    [1, 0]
-  );
-
-  const brightness = useTransform(scrollY, [0, SECTION_HEIGHT], [0.6, 1]);
-
-  const filter = useMotionTemplate`brightness(${brightness})`;
-
-  const textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const textY = useTransform(scrollY, [0, 300], [0, -50]);
-
-  return (
-    <div className="sticky top-0 h-screen w-full overflow-hidden">
-      {/* Clipped container: image + gradient + text all share the same clipPath */}
-      <motion.div
-        className="absolute inset-0 w-full h-full"
-        style={{ clipPath, opacity }}
-      >
-        {/* Background image */}
-        <motion.div
-          className="absolute inset-0 w-full h-full"
-          style={{
-            backgroundSize,
-            filter,
-            backgroundImage: "url(/img/gallery/about-2.jpg)",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-
-        {/* Black gradient overlay */}
-        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
-
-        {/* Hero text */}
-        <motion.div
-          className="absolute bottom-0 left-0 right-0 px-8 md:px-16 lg:px-24 pb-8 md:pb-14 lg:pb-16"
-          style={{ opacity: textOpacity, y: textY }}
-        >
-          <h1 className="text-white text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight drop-shadow-lg max-w-3xl mb-4">
-            She Sharp
-          </h1>
-          <p className="text-white text-lg md:text-2xl lg:text-3xl font-semibold leading-snug tracking-wide drop-shadow-lg max-w-3xl">
-            Bridging the gender gap in STEM
-          </p>
-        </motion.div>
-      </motion.div>
-    </div>
-  );
-}
-
-function ParallaxImages() {
-  return (
-    <div className="mx-auto max-w-8xl px-4 pt-[200px] relative ">
-      <ParallaxImg
-        src="/img/gallery/about-3.jpg"
-        alt="She Sharp event"
-        start={-300}
-        end={300}
-        className="w-1/2 rounded-2xl "
-      />
-      <ParallaxImg
-        src="/img/gallery/about-1.jpg"
-        alt="She Sharp community"
-        start={200}
-        end={-300}
-        className="mx-auto w-3/5 rounded-2xl -mt-48"
-      />
-      <ParallaxImg
-        src="/img/about-4.jpg"
-        alt="She Sharp workshop"
-        start={-250}
-        end={250}
-        className="ml-auto w-1/2 rounded-2xl  -mt-40"
-      />
-      <ParallaxImg
-        src="/img/about-5.jpg"
-        alt="She Sharp networking"
-        start={100}
-        end={-400}
-        className="ml-32 w-3/5 rounded-2xl -mt-24"
-      />
-    </div>
-  );
-}
-
-function ParallaxImg({ className, alt, src, start, end }: ParallaxImgProps) {
-  const ref = useRef<HTMLImageElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: [`${start}px end`, `end ${end * -1}px`],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0.75, 1], [1, 0]);
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.5, 0.75, 1],
-    [0.8, 1.05, 1, 0.85]
-  );
-
-  const y = useTransform(scrollYProgress, [0, 1], [start, end]);
-  const transform = useMotionTemplate`translateY(${y}px) scale(${scale})`;
-
-  const clip1 = useTransform(scrollYProgress, [0, 0.3], [15, 0]);
-  const clip2 = useTransform(scrollYProgress, [0, 0.3], [85, 100]);
-  const clipPath = useMotionTemplate`polygon(${clip1}% ${clip1}%, ${clip2}% ${clip1}%, ${clip2}% ${clip2}%, ${clip1}% ${clip2}%)`;
-
-  const brightness = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.7, 1],
-    [0.7, 1, 1, 0.7]
-  );
-
-  const filter = useMotionTemplate`brightness(${brightness})`;
-
-  return (
-    <motion.div className={className} style={{ opacity }}>
-      <motion.img
-        src={src}
-        alt={alt}
-        className="w-full h-full object-cover"
-        ref={ref}
-        style={{ transform, clipPath, filter }}
-      />
-    </motion.div>
   );
 }

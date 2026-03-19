@@ -45,8 +45,8 @@ export function MemberCard({
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <article
           onClick={() => setIsDialogOpen(true)}
-          className={`group relative w-full ${background} rounded-2xl overflow-hidden
-                      transition-all duration-300 hover:shadow-lg hover:-translate-y-1
+          className={`group relative w-full ${background} card-md card-interactive
+                      transition-all duration-300
                       focus-within:ring-4 focus-within:ring-brand/50 cursor-pointer`}
         >
           <div className="p-6 sm:p-8">
@@ -112,7 +112,7 @@ export function MemberCard({
         </article>
 
         <DialogContent
-          className="max-w-4xl lg:max-w-5xl max-h-[90vh] overflow-y-auto p-10 md:p-12"
+          className="max-w-4xl lg:max-w-5xl max-h-[90vh] overflow-y-auto p-10 md:p-12 !rounded-[var(--radius-card-md)]"
           hideCloseButton
         >
           <div className="flex items-start justify-between mb-6 md:mb-8">
