@@ -134,7 +134,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white card-sm p-6 sm:p-8 md:p-10 shadow-lg"
+      className="p-0"
     >
       <div className="space-y-5 sm:space-y-6">
         {/* Full Name */}
