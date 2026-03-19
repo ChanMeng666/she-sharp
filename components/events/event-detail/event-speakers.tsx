@@ -21,11 +21,11 @@ function SpeakerGroupSection({ group, startIndex }: SpeakerGroupSectionProps) {
   }
 
   return (
-    <div className="space-y-8 ">
+    <div className="space-y-6 md:space-y-8">
       <p className="flex items-center gap-2 text-lg md:text-xl lg:text-2xl font-bold text-foreground uppercase">
         {group.heading}
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 items-stretch ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 items-stretch">
         {group.speakers.map((speaker, index) => {
           const memberCardData: MemberCardData = {
             id: startIndex + index,
@@ -89,8 +89,8 @@ export function EventSpeakers({ event, className }: EventSpeakersProps) {
   return (
     <section  >
       <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] ">
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 ">
-          <div className="space-y-16">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 md:pb-20 lg:pb-24">
+          <div className="space-y-8 sm:space-y-10 md:space-y-12 lg:space-y-16">
             {groups.map((item, groupIndex) => (
               <SpeakerGroupSection
                 key={groupIndex}

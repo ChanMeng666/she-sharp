@@ -109,7 +109,7 @@ export function EventSidebarPanel({
       {isPast && (
         <div
           className={cn(
-            "relative border border-white/20 overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
+            "relative border border-border overflow-hidden card-sm bg-muted/50 backdrop-blur-md p-5 sm:p-6 md:p-8 lg:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
             className
           )}
         >
@@ -124,11 +124,11 @@ export function EventSidebarPanel({
       {/* Location Card */}
       <div
         className={cn(
-          "relative border border-white/20 overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
+          "relative border border-border overflow-hidden card-sm bg-muted/50 backdrop-blur-md p-5 sm:p-6 md:p-8 lg:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
           isPast && "mt-6"
         )}
       >
-        <div className="space-y-8">
+        <div className="space-y-6 md:space-y-8">
           <p className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground uppercase">
             Time & Location
           </p>
@@ -176,7 +176,7 @@ export function EventSidebarPanel({
 
                 {/* Only show Copy and Map buttons for future events */}
                 {!isPast && (
-                  <div className="flex gap-2 pl-7">
+                  <div className="flex gap-2 pl-6 sm:pl-7">
                     {(location.address || location.venueName) && (
                       <Button
                         variant="outline"
@@ -211,7 +211,7 @@ export function EventSidebarPanel({
 
           {/* Refund Policy - only show for future events */}
           {isFuture && event.detailPageData.refundPolicy && (
-            <div className="pt-2 border-t border-white/10">
+            <div className="pt-2 border-t border-border">
               <p className="text-xs text-muted-foreground">
                 <span className="font-medium">Refund Policy:</span>{" "}
                 {event.detailPageData.refundPolicy}

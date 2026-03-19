@@ -17,7 +17,7 @@ export function EventHeader({ event, className }: EventHeaderProps) {
   return (
     <div className={cn("", className)}>
       {/* Cover Image */}
-      <div className="relative h-64 md:h-80 lg:h-96 xl:h-[28rem] overflow-hidden">
+      <div className="relative h-64 sm:h-72 md:h-80 lg:h-96 xl:h-[28rem] 2xl:h-[32rem] overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={event.coverImage.url}
@@ -31,7 +31,7 @@ export function EventHeader({ event, className }: EventHeaderProps) {
         {isFutureEvent && (
           <div className="absolute bottom-4 sm:bottom-6 lg:bottom-8 z-10 w-full">
             <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-8xl">
-              <div className="w-full max-w-[600px]">
+              <div className="w-full max-w-[90vw] sm:max-w-[600px]">
                 <EventCountdown event={event} />
               </div>
             </div>

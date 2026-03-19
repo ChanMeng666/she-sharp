@@ -82,13 +82,13 @@ export function EventSpecialSections({
   }
 
   return (
-    <div className={cn("space-y-8", className)}>
+    <div className={cn("space-y-6 md:space-y-8", className)}>
       {sections.map((section, index) => (
         <div
           key={index}
-          className="rounded-2xl bg-muted/40 border border-border p-6 md:p-8"
+          className="rounded-[var(--radius-card-sm)] bg-muted/40 border border-border p-4 sm:p-5 md:p-6 lg:p-8"
         >
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
             {getIconForType(section.type)}
             <h3 className="text-xl font-semibold text-foreground">
               {section.title}

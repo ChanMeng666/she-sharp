@@ -102,16 +102,16 @@ export default async function EventPage({ params }: EventPageProps) {
             </span>
           </Link>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 lg:gap-12 items-start">
             {/* Main Content - Left Column */}
-            <div className="lg:col-span-7 xl:col-span-8 space-y-12">
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-12">
+            <div className="lg:col-span-7 xl:col-span-8 space-y-8 md:space-y-12">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6 md:mb-8 lg:mb-12">
                 {event.title}
               </h1>
 
               {/* Subtitle if available */}
               {event.detailPageData.subtitle && (
-                <p className="text-xl text-muted-foreground -mt-8">
+                <p className="text-xl text-muted-foreground -mt-4 md:-mt-8">
                   {event.detailPageData.subtitle}
                 </p>
               )}
@@ -125,7 +125,7 @@ export default async function EventPage({ params }: EventPageProps) {
                 />
               )}
 
-              <div className="w-full md:pr-8">
+              <div className="w-full md:pr-6 lg:pr-8">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={event.coverImage.url}
@@ -162,19 +162,19 @@ export default async function EventPage({ params }: EventPageProps) {
 
       {/* Photos Section */}
       {hasPhotos(event) && (
-        <div className="bg-white">
+        <div className="bg-background">
           <EventPhotos event={event} />
         </div>
       )}
 
       {/* Related Events */}
       {relatedEvents.length > 0 && (
-        <Section spacing="section" className="bg-muted pb-24">
+        <Section spacing="section" className="bg-muted pb-12 sm:pb-16 md:pb-20 lg:pb-24">
           <Container size="full">
             <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground mb-8 uppercase">
               More Events
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
               {relatedEvents.map((relatedEvent) => (
                 <EventCard key={relatedEvent.slug} event={relatedEvent} />
               ))}

@@ -66,21 +66,21 @@ export function EventCountdown({ event, className }: EventCountdownProps) {
   return (
     <div className={className}>
       <div className="w-full">
-        <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl backdrop-blur-sm">
+        <div className="relative rounded-[var(--radius-card-sm)] md:rounded-[var(--radius-card-md)] overflow-hidden shadow-2xl backdrop-blur-sm">
           {/* Card with three color sections */}
           <div className="flex">
             {/* Left section - Purple/Blue */}
-            <div className="bg-brand/60 px-4 md:px-6 py-4 md:py-6 flex items-center">
+            <div className="bg-brand/60 px-4 sm:px-5 md:px-6 py-4 sm:py-5 md:py-6 flex items-center">
               <div>
                 <p className="text-white text-xs md:text-sm font-medium uppercase mb-1 md:mb-2">
                   SEE YOU IN
                 </p>
-                <div className="h-0.5 w-12 md:w-24 bg-white"></div>
+                <div className="h-0.5 w-8 sm:w-12 md:w-24 bg-white"></div>
               </div>
             </div>
 
             {/* Middle section - Dark Grey */}
-            <div className="bg-foreground/90 px-4 md:px-6 py-4 md:py-6 flex-1 flex items-center justify-around gap-2 md:gap-4">
+            <div className="bg-foreground/90 px-4 sm:px-5 md:px-6 py-4 sm:py-5 md:py-6 flex-1 flex items-center justify-around gap-2 md:gap-4">
               <div className="text-center">
                 <div className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-0.5 md:mb-1">
                   {String(timeLeft.days).padStart(2, "0")}
@@ -100,7 +100,7 @@ export function EventCountdown({ event, className }: EventCountdownProps) {
             </div>
 
             {/* Right section - White */}
-            <div className="bg-white/95 px-4 md:px-6 py-4 md:py-6 flex-1 flex items-center justify-around gap-2 md:gap-4">
+            <div className="bg-white/95 px-4 sm:px-5 md:px-6 py-4 sm:py-5 md:py-6 flex-1 flex items-center justify-around gap-2 md:gap-4">
               <div className="text-center">
                 <div className="text-xl md:text-3xl lg:text-4xl font-bold text-foreground mb-0.5 md:mb-1">
                   {String(timeLeft.minutes).padStart(2, "0")}

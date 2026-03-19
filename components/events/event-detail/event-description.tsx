@@ -17,7 +17,7 @@ export function EventDescription({ event, className }: EventDescriptionProps) {
 
   return (
     <div className={className}>
-      <div className="relative overflow-hidden rounded-3xl py-8 md:py-10 pr-8 md:pr-10 pl-0">
+      <div className="relative overflow-hidden py-6 md:py-8 pr-0">
         <div className="space-y-4">
           <p className="flex items-center gap-2 text-lg md:text-xl lg:text-2xl font-semibold text-foreground uppercase">
             About this event

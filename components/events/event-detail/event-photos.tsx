@@ -18,11 +18,11 @@ export function EventPhotos({ event, className }: EventPhotosProps) {
   const photos = event.detailPageData.photos;
 
   return (
-    <section id="event-photos" className={cn("space-y-8 py-24", className)}>
-      <h2 className="text-display-sm uppercase text-center mb-12">
+    <section id="event-photos" className={cn("space-y-8 py-12 sm:py-16 md:py-20 lg:py-24", className)}>
+      <h2 className="text-display-sm uppercase text-center mb-6 sm:mb-8 md:mb-12">
         A taste of the Event
       </h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
         {photos.map((photo, index) => (
           <div key={index} className="aspect-square overflow-hidden bg-muted">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -35,7 +35,7 @@ export function EventPhotos({ event, className }: EventPhotosProps) {
         ))}
       </div>
       {event.detailPageData.galleryUrl && (
-        <div className="flex justify-center mt-12">
+        <div className="flex justify-center mt-6 sm:mt-8 md:mt-12">
           <Button
             variant="brand"
             size="lg"
