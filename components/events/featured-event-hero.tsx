@@ -61,10 +61,10 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
   return (
     <Section spacing="section">
       <Container size="full">
-        <div className="relative w-full h-[500px] md:h-[600px] rounded-2xl overflow-hidden mt-12">
+        <div className="relative w-full h-[320px] sm:h-[400px] md:h-[500px] lg:h-[600px] card-md overflow-hidden mt-12">
           {/* Image */}
           <div
-            className="absolute inset-0 overflow-hidden rounded-2xl"
+            className="absolute inset-0 overflow-hidden card-md"
             onMouseEnter={() => setIsImageHovered(true)}
             onMouseLeave={() => setIsImageHovered(false)}
           >
@@ -83,7 +83,7 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
             {!event && (
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-center justify-center">
                 <div className="text-center px-6 max-w-2xl">
-                  <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
                     Events &amp; Workshops
                   </h2>
                   <p className="text-base md:text-lg text-white/80 mb-8 leading-relaxed">
@@ -104,8 +104,8 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
           {event && (
             <>
               {/* title in bottom left */}
-              <div className="absolute bottom-0 left-0 w-1/2 md:w-2/5 p-6">
-                <div className="backdrop-blur-md bg-white/90 border border-white/80 rounded-2xl px-6 py-4 md:px-8 md:py-6 shadow-xl h-full flex items-center">
+              <div className="absolute bottom-0 left-0 w-3/4 sm:w-3/5 md:w-2/5 lg:w-1/3 p-6">
+                <div className="backdrop-blur-md bg-white/90 border border-white/80 rounded-[var(--radius-card-sm)] px-6 py-4 md:px-8 md:py-6 shadow-xl h-full flex items-center">
                   <h3 className="text-2xl md:text-3xl font-bold text-foreground">
                     {event.title}
                   </h3>
@@ -114,25 +114,25 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
 
               {/* Buttons container with curved corner effect */}
               <div
-                className="absolute bottom-0 right-0 pt-8 pl-8 rounded-tl-[3rem] bg-background"
+                className="absolute bottom-0 right-0 pt-5 pl-5 sm:pt-6 sm:pl-6 md:pt-8 md:pl-8 rounded-tl-[2rem] sm:rounded-tl-[2.5rem] md:rounded-tl-[3rem] bg-background"
               >
                 <div
                   className="absolute bottom-0 -left-8 w-8 h-8 bg-transparent"
                   style={{
                     borderBottomRightRadius: "2rem",
-                    boxShadow: "0.5rem 0.5rem 0 0.5rem #eee",
+                    boxShadow: "0.5rem 0.5rem 0 0.5rem hsl(var(--background))",
                   }}
                 />
                 <div
                   className="absolute -top-8 right-0 w-8 h-8 bg-transparent"
                   style={{
                     borderBottomRightRadius: "2rem",
-                    boxShadow: "0.5rem 0.5rem 0 0.5rem #eee",
+                    boxShadow: "0.5rem 0.5rem 0 0.5rem hsl(var(--background))",
                   }}
                 />
 
                 {/* Buttons */}
-                <div className="pb-6 pr-6">
+                <div className="pb-4 pr-4 sm:pb-5 sm:pr-5 md:pb-6 md:pr-6">
                   <HeroButtons slug={event.slug} registrationUrl={event.detailPageData.registrationUrl} />
                 </div>
               </div>

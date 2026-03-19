@@ -23,7 +23,7 @@ export function EventList({
   if (events.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">{emptyMessage}</p>
+        <p className="text-muted-foreground">{emptyMessage}</p>
       </div>
     );
   }
@@ -31,7 +31,7 @@ export function EventList({
   return (
     <div
       className={cn(
-        'grid gap-x-12 gap-y-20 items-stretch',
+        'grid gap-x-6 gap-y-10 md:gap-x-8 md:gap-y-12 lg:gap-x-10 lg:gap-y-16 items-stretch',
         columns === 1 && 'grid-cols-1',
         columns === 2 && 'grid-cols-1 sm:grid-cols-2',
         columns === 3 && 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
@@ -79,7 +79,7 @@ export function EventSection({
         <div>
           <h2 className="text-display-sm text-foreground">{title}</h2>
           {description && (
-            <p className="mt-1 text-gray-600">{description}</p>
+            <p className="mt-1 text-muted-foreground">{description}</p>
           )}
         </div>
         {showSeeAll && seeAllHref && (

@@ -199,7 +199,7 @@ export default function EventsPage() {
   };
 
   return (
-    <div className="min-h-screen mb-24">
+    <div className="min-h-screen mb-12 sm:mb-16 md:mb-20 lg:mb-24">
       {/* Hero Section - Featured event with fallback image */}
       <FeaturedEventHero event={featuredEvent} />
 
@@ -208,7 +208,7 @@ export default function EventsPage() {
         <Container size="full">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
                 All Events
               </h2>
               <p className="text-muted-foreground text-lg mt-4">
@@ -220,7 +220,7 @@ export default function EventsPage() {
           {/* Search and Filter Controls */}
           <div className="space-y-4 mb-8">
             {/* Search Bar and Filter Buttons - Same row on md+, two rows on smaller screens */}
-            <div className="flex flex-col md:flex-row gap-16 md:items-center">
+            <div className="flex flex-col md:flex-row gap-4 md:gap-8 lg:gap-16 md:items-center">
               {/* Search Bar */}
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -428,7 +428,7 @@ export default function EventsPage() {
 
           {/* Load More Button */}
           {hasMoreEvents && (
-            <div className="flex justify-center mt-16">
+            <div className="flex justify-center mt-8 sm:mt-10 md:mt-12 lg:mt-16">
               <Button
                 variant="outline"
                 size="lg"

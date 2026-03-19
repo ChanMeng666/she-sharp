@@ -50,7 +50,7 @@ export function EventInflectedCard({
 
   return (
     <div
-      className={cn("relative flex flex-col h-full min-h-[480px]", className)}
+      className={cn("relative flex flex-col h-full min-h-[360px] sm:min-h-[400px] md:min-h-[480px]", className)}
     >
       <div className="flex-1 min-h-0">
         <InflectedCard
@@ -61,7 +61,7 @@ export function EventInflectedCard({
           tags={[]}
           parentBackgroundColor="var(--color-background)"
           onClick={handleClick}
-          cardRounding={16}
+          cardRounding={30}
           fontSizes={{
             title: "1.25rem",
             description: "1rem",
@@ -89,7 +89,7 @@ export function EventInflectedCard({
       </div>
 
       {/* Date, time and location info below the card - aligned to bottom */}
-      <div className="px-2 flex items-start gap-12 mt-auto ">
+      <div className="px-2 flex items-start gap-4 sm:gap-6 md:gap-8 lg:gap-12 mt-auto ">
         {/* Prominent date display */}
         <div className="text-left shrink-0">
           <p className="text-2xl font-bold text-foreground">

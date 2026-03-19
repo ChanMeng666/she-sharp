@@ -41,7 +41,7 @@ export function EventCard({
         className={cn(
           "group h-full overflow-hidden transition-all duration-300 py-0",
           "hover:shadow-xl hover:-translate-y-1",
-          "border border-[#f4f4fa] rounded-3xl ",
+          "border border-border card-sm",
           isPast && "opacity-75"
         )}
       >
@@ -63,7 +63,7 @@ export function EventCard({
           <div className="absolute inset-0 bg-foreground/30" />
 
           {/* Top Badges */}
-          <div className="absolute top-3 left-3 right-3 flex justify-between items-start">
+          <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex justify-between items-start">
             {/* Format Badge */}
             <Badge
               variant="secondary"
@@ -100,7 +100,7 @@ export function EventCard({
           )}
         </div>
 
-        <CardContent className="p-4 space-y-3">
+        <CardContent className="p-4 sm:p-5 md:p-6 space-y-3">
           {/* Date & Time */}
           <div className="flex items-center gap-2 text-sm text-foreground font-medium">
             <Calendar className="w-4 h-4 text-[#8982ff]" />
@@ -145,7 +145,7 @@ export function EventCard({
 
           {/* Attendees */}
           {event.attendees && event.attendees > 0 && (
-            <div className="flex items-center gap-3 pt-2 border-t border-[#f4f4fa]">
+            <div className="flex items-center gap-3 pt-2 border-t border-border">
               <div className="flex items-center gap-1 text-sm text-muted-foreground">
                 <Users className="w-4 h-4" />
                 <span>{event.attendees} attended</span>
