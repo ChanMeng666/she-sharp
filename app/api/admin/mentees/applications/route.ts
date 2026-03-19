@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
-import { menteeFormSubmissions, users } from '@/lib/db/schema';
-import { eq, or, desc } from 'drizzle-orm';
+import { menteeFormSubmissions, users, programmes } from '@/lib/db/schema';
+import { eq, or, desc, and } from 'drizzle-orm';
 
 /**
  * GET /api/admin/mentees/applications
@@ -17,6 +17,7 @@ export const GET = withRoles(
     try {
       const { searchParams } = new URL(req.url);
       const statusFilter = searchParams.get('status') || 'pending';
+      const programmeIdFilter = searchParams.get('programmeId');
 
       let statusCondition;
       if (statusFilter === 'pending' || statusFilter === 'submitted') {
@@ -59,14 +60,21 @@ export const GET = withRoles(
           reviewedAt: menteeFormSubmissions.reviewedAt,
           reviewedBy: menteeFormSubmissions.reviewedBy,
           reviewNotes: menteeFormSubmissions.reviewNotes,
+          programmeId: menteeFormSubmissions.programmeId,
           createdAt: menteeFormSubmissions.createdAt,
           userName: users.name,
+          programmeName: programmes.name,
           userEmail: users.email,
           userImage: users.image,
         })
         .from(menteeFormSubmissions)
         .leftJoin(users, eq(menteeFormSubmissions.userId, users.id))
-        .where(statusCondition)
+        .leftJoin(programmes, eq(menteeFormSubmissions.programmeId, programmes.id))
+        .where(
+          programmeIdFilter
+            ? and(statusCondition!, eq(menteeFormSubmissions.programmeId, parseInt(programmeIdFilter)))
+            : statusCondition
+        )
         .orderBy(desc(menteeFormSubmissions.submittedAt));
 
       const formattedApplications = submissions.map(app => {
@@ -109,6 +117,8 @@ export const GET = withRoles(
           mbtiType: app.mbtiType,
           submittedAt: app.submittedAt?.toISOString() || app.createdAt.toISOString(),
           reviewedAt: app.reviewedAt?.toISOString(),
+          programmeId: app.programmeId,
+          programmeName: (app as any).programmeName || null,
           reviewNotes: app.reviewNotes,
           status: uiStatus,
         };
@@ -121,10 +131,18 @@ export const GET = withRoles(
         rejected: submissions.filter(s => s.status === 'rejected').length,
       };
 
+      // Add programme breakdown to stats
+      const programmeBreakdown: Record<string, number> = {};
+      for (const s of submissions) {
+        const pName = (s as any).programmeName || 'General';
+        programmeBreakdown[pName] = (programmeBreakdown[pName] || 0) + 1;
+      }
+
       return NextResponse.json({
         applications: formattedApplications,
         total: formattedApplications.length,
         stats,
+        programmeBreakdown,
       });
     } catch (error) {
       console.error('Error fetching mentee applications:', error);

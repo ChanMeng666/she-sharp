@@ -43,6 +43,7 @@ export interface CreateInvitationCodeParams {
   targetRole?: 'mentor' | 'mentee' | 'admin';
   linkedFormId?: number;
   linkedFormType?: 'mentor' | 'mentee';
+  programmeId?: number;
 }
 
 /**
@@ -101,7 +102,9 @@ export async function createInvitationCode(params: CreateInvitationCodeParams): 
     generatedBy,
     generatedFor,
     notes,
-    metadata,
+    metadata: params.programmeId
+      ? { ...metadata, programmeId: params.programmeId }
+      : metadata,
     targetRole,
     linkedFormId,
     linkedFormType,
@@ -457,7 +460,8 @@ export async function createMenteeApprovalCode(
   menteeEmail: string,
   approvedBy: number,
   linkedFormId: number,
-  notes?: string
+  notes?: string,
+  programmeId?: number
 ): Promise<InvitationCode> {
   return createInvitationCode({
     codeType: 'mentee_approved',
@@ -468,6 +472,7 @@ export async function createMenteeApprovalCode(
     targetRole: 'mentee',
     linkedFormId,
     linkedFormType: 'mentee',
+    programmeId,
   });
 }
 

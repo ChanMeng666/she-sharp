@@ -32,6 +32,8 @@ const publicMenteeFormSchema = z.object({
   mbtiType: z.string().optional(),
   preferredMeetingFrequency: z.string().optional(),
   photoUrl: z.string().optional(),
+  // Programme
+  programmeSlug: z.string().optional(),
 });
 
 /**
@@ -61,7 +63,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       submissionId: result.submissionId,
-      message: 'Your application has been submitted successfully. Please proceed to payment.',
+      requiresPayment: result.requiresPayment ?? true,
+      message: result.requiresPayment === false
+        ? 'Your application has been submitted successfully.'
+        : 'Your application has been submitted successfully. Please proceed to payment.',
     });
   } catch (error) {
     console.error('Error processing public mentee form:', error);
@@ -113,12 +118,22 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ exists: false });
     }
 
+    // Resolve programme name if applicable
+    let programmeName: string | null = null;
+    if (form.programmeId) {
+      const { getProgrammeById } = await import('@/lib/programmes/service');
+      const programme = await getProgrammeById(form.programmeId);
+      programmeName = programme?.name ?? null;
+    }
+
     return NextResponse.json({
       exists: true,
       status: form.status,
       submissionId: form.id,
       paymentCompleted: form.paymentCompleted,
       submittedAt: form.submittedAt,
+      programmeId: form.programmeId,
+      programmeName,
     });
   } catch (error) {
     console.error('Error checking mentee form status:', error);

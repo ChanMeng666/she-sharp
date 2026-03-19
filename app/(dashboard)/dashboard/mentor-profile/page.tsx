@@ -189,6 +189,95 @@ const initialProfile: ProfileData = {
   isAcceptingMentees: true,
 };
 
+interface ProgrammeAssignment {
+  assignment: {
+    maxMenteesInProgramme: number | null;
+    currentMenteesInProgramme: number;
+    assignedAt: string;
+  };
+  programme: {
+    id: number;
+    name: string;
+    slug: string;
+    status: string;
+    startDate: string | null;
+    endDate: string | null;
+    partnerOrganisation: string | null;
+  };
+}
+
+function ProgrammeAssignmentsSection() {
+  const [assignments, setAssignments] = useState<ProgrammeAssignment[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/user/mentor-profile/programmes')
+      .then(res => res.ok ? res.json() : { assignments: [] })
+      .then(data => setAssignments(data.assignments || []))
+      .catch(() => {})
+      .finally(() => setLoaded(true));
+  }, []);
+
+  if (!loaded || assignments.length === 0) {
+    return loaded ? (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            My Programme Assignments
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">
+            You are not currently assigned to any specific programmes. You may receive mentees from the general applicant pool.
+          </p>
+        </CardContent>
+      </Card>
+    ) : null;
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Target className="h-5 w-5" />
+          My Programme Assignments
+        </CardTitle>
+        <CardDescription>
+          Assigned by admin. Contact admin for changes.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {assignments.map((a) => (
+          <div key={a.programme.id} className="rounded-lg border p-4 space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="font-medium">{a.programme.name}</div>
+              <Badge variant="outline" className={
+                a.programme.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'
+              }>
+                {a.programme.status}
+              </Badge>
+            </div>
+            {a.programme.partnerOrganisation && (
+              <p className="text-sm text-muted-foreground">
+                Partner: {a.programme.partnerOrganisation}
+              </p>
+            )}
+            <div className="text-sm text-muted-foreground">
+              {a.programme.startDate && a.programme.endDate
+                ? `${new Date(a.programme.startDate).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: 'numeric' })} - ${new Date(a.programme.endDate).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: 'numeric' })}`
+                : 'Dates TBD'}
+            </div>
+            <div className="text-sm">
+              {a.assignment.currentMenteesInProgramme}/{a.assignment.maxMenteesInProgramme ?? '?'} mentees assigned
+            </div>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function MentorProfilePage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -761,6 +850,9 @@ export default function MentorProfilePage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Programme Assignments (read-only) */}
+        <ProgrammeAssignmentsSection />
 
         {/* Save Button */}
         <div className="flex justify-end gap-4">

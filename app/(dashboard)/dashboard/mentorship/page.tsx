@@ -47,6 +47,8 @@ interface Relationship {
   menteeGoals?: string[];
   totalMeetings?: number;
   nextMeetingDate?: string;
+  programmeId?: number;
+  programmeName?: string;
 }
 
 interface MentorFormData {
@@ -439,10 +441,17 @@ export default function MentorshipDashboard() {
                           <CardTitle className="text-lg">
                             {userRole === 'mentee' ? relationship.mentorName : relationship.menteeName}
                           </CardTitle>
-                          <CardDescription>
-                            {userRole === 'mentee' ? 'Your Mentor' : 'Your Mentee'}
-                            {relationship.mentorRole && userRole === 'mentee' && (
-                              <span className="ml-2">• {relationship.mentorRole}</span>
+                          <CardDescription className="flex items-center gap-2 flex-wrap">
+                            <span>
+                              {userRole === 'mentee' ? 'Your Mentor' : 'Your Mentee'}
+                              {relationship.mentorRole && userRole === 'mentee' && (
+                                <span className="ml-2">• {relationship.mentorRole}</span>
+                              )}
+                            </span>
+                            {relationship.programmeName && (
+                              <Badge variant="outline" className="bg-[#f7e5f3] text-brand border-brand/30 text-xs">
+                                {relationship.programmeName}
+                              </Badge>
                             )}
                           </CardDescription>
                         </div>

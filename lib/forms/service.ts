@@ -14,9 +14,10 @@ import {
   type MenteeFormSubmission,
   ActivityType,
 } from '@/lib/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, sql } from 'drizzle-orm';
 import { createMentorApprovalCode, createMenteeApprovalCode } from '@/lib/invitations/service';
 import { sendInvitationCodeEmail } from '@/lib/email/service';
+import { programmes } from '@/lib/db/schema';
 
 // =======================
 // Mentor Form Operations
@@ -753,17 +754,65 @@ export interface PublicMenteeFormData {
   mbtiType?: string;
   preferredMeetingFrequency?: string;
   photoUrl?: string;
+  // Programme
+  programmeSlug?: string;
+}
+
+/**
+ * Resolves programme from slug and validates it is accepting applications.
+ */
+async function resolveProgramme(slug: string): Promise<{
+  programmeId: number;
+  requiresPayment: boolean;
+  error?: undefined;
+} | { programmeId?: undefined; requiresPayment?: undefined; error: string }> {
+  const [programme] = await db
+    .select()
+    .from(programmes)
+    .where(eq(programmes.slug, slug))
+    .limit(1);
+
+  if (!programme) {
+    return { error: 'Programme not found' };
+  }
+
+  if (programme.status !== 'active') {
+    if (programme.applicationDeadline && new Date() <= programme.applicationDeadline) {
+      // Allow late applications before deadline even if status is 'closed'
+    } else {
+      return { error: 'This programme is no longer accepting applications' };
+    }
+  }
+
+  if (programme.maxMentees && programme.currentMenteeCount >= programme.maxMentees) {
+    return { error: 'This programme is currently full. You can still apply as a general applicant.' };
+  }
+
+  return { programmeId: programme.id, requiresPayment: programme.requiresPayment };
 }
 
 /**
  * Submits a public mentee application (no authentication required).
  * Creates a form submission with email instead of userId.
- * User will pay after form submission.
+ * User will pay after form submission (unless programme waives payment).
  */
 export async function submitPublicMenteeForm(
   data: PublicMenteeFormData
-): Promise<{ success: boolean; submissionId?: number; error?: string }> {
+): Promise<{ success: boolean; submissionId?: number; requiresPayment?: boolean; error?: string }> {
   try {
+    // Resolve programme if specified
+    let programmeId: number | null = null;
+    let requiresPayment = true;
+
+    if (data.programmeSlug) {
+      const programmeResult = await resolveProgramme(data.programmeSlug);
+      if (programmeResult.error) {
+        return { success: false, error: programmeResult.error };
+      }
+      programmeId = programmeResult.programmeId!;
+      requiresPayment = programmeResult.requiresPayment!;
+    }
+
     // Check if email already has a submission
     const [existing] = await db
       .select()
@@ -772,13 +821,23 @@ export async function submitPublicMenteeForm(
       .limit(1);
 
     if (existing) {
-      // If payment already completed, don't allow resubmission
-      if (existing.paymentCompleted) {
+      // If payment already completed and same programme, don't allow resubmission
+      if (existing.paymentCompleted && existing.programmeId === programmeId) {
         return { success: false, error: 'An application with this email has already been paid for' };
       }
       if (existing.status === 'approved') {
         return { success: false, error: 'An application with this email has already been approved' };
       }
+
+      // Handle programme change: adjust counts
+      const oldProgrammeId = existing.programmeId;
+      if (oldProgrammeId && oldProgrammeId !== programmeId) {
+        await db
+          .update(programmes)
+          .set({ currentMenteeCount: sql`${programmes.currentMenteeCount} - 1` })
+          .where(eq(programmes.id, oldProgrammeId));
+      }
+
       // Allow update if in progress or rejected
       await db
         .update(menteeFormSubmissions)
@@ -805,6 +864,9 @@ export async function submitPublicMenteeForm(
           mbtiType: data.mbtiType as any,
           preferredMeetingFrequency: data.preferredMeetingFrequency,
           photoUrl: data.photoUrl,
+          programmeId,
+          paymentCompleted: !requiresPayment,
+          paymentCompletedAt: !requiresPayment ? new Date() : null,
           status: 'submitted',
           submittedAt: new Date(),
           reviewedAt: null,
@@ -814,7 +876,15 @@ export async function submitPublicMenteeForm(
         })
         .where(eq(menteeFormSubmissions.id, existing.id));
 
-      return { success: true, submissionId: existing.id };
+      // Increment new programme count if changed
+      if (programmeId && oldProgrammeId !== programmeId) {
+        await db
+          .update(programmes)
+          .set({ currentMenteeCount: sql`${programmes.currentMenteeCount} + 1` })
+          .where(eq(programmes.id, programmeId));
+      }
+
+      return { success: true, submissionId: existing.id, requiresPayment };
     }
 
     // Create new submission
@@ -844,13 +914,23 @@ export async function submitPublicMenteeForm(
         mbtiType: data.mbtiType as any,
         preferredMeetingFrequency: data.preferredMeetingFrequency,
         photoUrl: data.photoUrl,
+        programmeId,
         status: 'submitted',
         submittedAt: new Date(),
-        paymentCompleted: false,
+        paymentCompleted: !requiresPayment,
+        paymentCompletedAt: !requiresPayment ? new Date() : null,
       })
       .returning();
 
-    return { success: true, submissionId: submission.id };
+    // Increment programme mentee count
+    if (programmeId) {
+      await db
+        .update(programmes)
+        .set({ currentMenteeCount: sql`${programmes.currentMenteeCount} + 1` })
+        .where(eq(programmes.id, programmeId));
+    }
+
+    return { success: true, submissionId: submission.id, requiresPayment };
   } catch (error) {
     console.error('Error submitting public mentee form:', error);
     return { success: false, error: 'Failed to submit application' };

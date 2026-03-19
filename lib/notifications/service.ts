@@ -361,6 +361,55 @@ export class NotificationService {
   }
 
   /**
+   * Notify mentee when their programme is completed
+   */
+  static async notifyProgrammeCompleted(menteeUserId: number, programmeName: string) {
+    await NotificationService.createNotification({
+      userId: menteeUserId,
+      type: 'mentorship',
+      title: `${programmeName} Programme Completed`,
+      message: `Your ${programmeName} programme has ended. Thank you for participating! Continue your professional journey with She Sharp.`,
+      actionUrl: '/dashboard',
+      actionLabel: 'View Dashboard',
+      metadata: { programmeName },
+    });
+  }
+
+  /**
+   * Notify mentor when a programme they're assigned to is completed
+   */
+  static async notifyMentorProgrammeCompleted(
+    mentorUserId: number,
+    programmeName: string,
+    menteeCount: number
+  ) {
+    await NotificationService.createNotification({
+      userId: mentorUserId,
+      type: 'mentorship',
+      title: `${programmeName} Programme Completed`,
+      message: `The ${programmeName} programme has completed. ${menteeCount} mentee relationship(s) have been concluded.`,
+      actionUrl: '/dashboard/mentorship',
+      actionLabel: 'View Mentorship',
+      metadata: { programmeName, menteeCount },
+    });
+  }
+
+  /**
+   * Notify mentor when they are assigned to a programme
+   */
+  static async notifyMentorProgrammeAssignment(mentorUserId: number, programmeName: string) {
+    await NotificationService.createNotification({
+      userId: mentorUserId,
+      type: 'mentorship',
+      title: 'Programme Assignment',
+      message: `You've been assigned to the ${programmeName} programme. Check your profile for details.`,
+      actionUrl: '/dashboard/mentor-profile',
+      actionLabel: 'View Details',
+      metadata: { programmeName },
+    });
+  }
+
+  /**
    * Get unread notification count for a user
    */
   static async getUnreadCount(userId: number): Promise<number> {
