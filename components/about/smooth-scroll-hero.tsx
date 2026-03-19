@@ -135,7 +135,10 @@ function IndicatorDot({
 
 export default function SmoothScrollHero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef });
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
 
   return (
     <div
