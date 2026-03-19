@@ -3,6 +3,7 @@ import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import {
   mentorFormSubmissions,
+  menteeFormSubmissions,
   menteeWaitingQueue,
   aiMatchResults,
 } from '@/lib/db/schema';
@@ -20,6 +21,12 @@ export const GET = withRoles(
         .select({ pendingMentors: sql<number>`count(*)` })
         .from(mentorFormSubmissions)
         .where(eq(mentorFormSubmissions.status, 'submitted'));
+
+      // Get pending mentee applications count
+      const [{ pendingMentees }] = await db
+        .select({ pendingMentees: sql<number>`count(*)` })
+        .from(menteeFormSubmissions)
+        .where(eq(menteeFormSubmissions.status, 'submitted'));
 
       // Get mentees waiting for matching
       const [{ waitingMentees }] = await db
@@ -39,6 +46,12 @@ export const GET = withRoles(
           count: pendingMentors,
           priority: 'high' as const,
           href: '/dashboard/admin/users?application=pending'
+        },
+        {
+          task: 'Review mentee applications',
+          count: pendingMentees,
+          priority: 'high' as const,
+          href: '/dashboard/admin/mentees'
         },
         {
           task: 'Review AI match suggestions',

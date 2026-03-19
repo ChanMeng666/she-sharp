@@ -10,6 +10,7 @@ import {
   BrainCircuit,
   ClipboardList,
   FolderKanban,
+  FileCheck,
   type LucideIcon,
 } from "lucide-react";
 
@@ -105,6 +106,7 @@ export const adminSidebarItems: NavGroup[] = [
         icon: GraduationCap,
         subItems: [
           { title: "Programmes", url: "/dashboard/admin/programmes", icon: FolderKanban },
+          { title: "Mentee Applications", url: "/dashboard/admin/mentees", icon: FileCheck },
           { title: "AI Matching", url: "/dashboard/admin/matching", icon: BrainCircuit },
           { title: "Active Relationships", url: "/dashboard/admin/mentors/relationships", icon: Users },
           { title: "Meeting Analytics", url: "/dashboard/admin/mentors/meetings", icon: BarChart3 },

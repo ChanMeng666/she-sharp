@@ -763,9 +763,10 @@ export interface PublicMenteeFormData {
  */
 async function resolveProgramme(slug: string): Promise<{
   programmeId: number;
+  programmeName: string;
   requiresPayment: boolean;
   error?: undefined;
-} | { programmeId?: undefined; requiresPayment?: undefined; error: string }> {
+} | { programmeId?: undefined; programmeName?: undefined; requiresPayment?: undefined; error: string }> {
   const [programme] = await db
     .select()
     .from(programmes)
@@ -788,7 +789,7 @@ async function resolveProgramme(slug: string): Promise<{
     return { error: 'This programme is currently full. You can still apply as a general applicant.' };
   }
 
-  return { programmeId: programme.id, requiresPayment: programme.requiresPayment };
+  return { programmeId: programme.id, programmeName: programme.name, requiresPayment: programme.requiresPayment };
 }
 
 /**
@@ -798,11 +799,12 @@ async function resolveProgramme(slug: string): Promise<{
  */
 export async function submitPublicMenteeForm(
   data: PublicMenteeFormData
-): Promise<{ success: boolean; submissionId?: number; requiresPayment?: boolean; error?: string }> {
+): Promise<{ success: boolean; submissionId?: number; requiresPayment?: boolean; programmeName?: string; error?: string }> {
   try {
     // Resolve programme if specified
     let programmeId: number | null = null;
     let requiresPayment = true;
+    let programmeName: string | undefined;
 
     if (data.programmeSlug) {
       const programmeResult = await resolveProgramme(data.programmeSlug);
@@ -811,6 +813,7 @@ export async function submitPublicMenteeForm(
       }
       programmeId = programmeResult.programmeId!;
       requiresPayment = programmeResult.requiresPayment!;
+      programmeName = programmeResult.programmeName;
     }
 
     // Check if email already has a submission
@@ -884,7 +887,7 @@ export async function submitPublicMenteeForm(
           .where(eq(programmes.id, programmeId));
       }
 
-      return { success: true, submissionId: existing.id, requiresPayment };
+      return { success: true, submissionId: existing.id, requiresPayment, programmeName };
     }
 
     // Create new submission
@@ -930,7 +933,7 @@ export async function submitPublicMenteeForm(
         .where(eq(programmes.id, programmeId));
     }
 
-    return { success: true, submissionId: submission.id, requiresPayment };
+    return { success: true, submissionId: submission.id, requiresPayment, programmeName };
   } catch (error) {
     console.error('Error submitting public mentee form:', error);
     return { success: false, error: 'Failed to submit application' };
