@@ -25,11 +25,11 @@ const BENEFITS = [
 ] as const
 
 const CARD_CLASSES =
-  "@container/card flex flex-col rounded-xl overflow-hidden border border-border/30 bg-white/50 backdrop-saturate-150 shadow-sm shadow-black/5 hover:border-brand/50 hover:bg-background/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/10 focus-within:-translate-y-0.5 focus-within:shadow-xl focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20"
+  "@container/card flex flex-col card-sm overflow-hidden border border-border/30 bg-white/50 backdrop-saturate-150 shadow-sm shadow-black/5 hover:border-brand/50 hover:bg-background/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/10 focus-within:-translate-y-0.5 focus-within:shadow-xl focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20"
 
 export function MentorshipBenefits() {
   return (
-    <section className="bg-white py-16 md:py-24 xl:py-32 border-y border-border/70">
+    <section className="bg-white py-16 border-y border-border/70">
       <div className="max-w-8xl mx-auto px-4 lg:px-6">
         <div className="mb-8 md:mb-10 lg:mb-12">
           <h2 className="text-display-sm text-foreground max-w-xl mb-4">
@@ -41,7 +41,7 @@ export function MentorshipBenefits() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 px-1 md:px-0 py-4 md:py-6 min-h-[260px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 px-1 md:px-0 py-4 md:py-6 min-h-[260px]">
           {BENEFITS.map((benefit, index) => (
             <Card key={index} className={CARD_CLASSES}>
               <CardHeader>

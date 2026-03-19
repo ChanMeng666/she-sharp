@@ -140,7 +140,7 @@ export default function TimeLine_01({
                 {/* Content column */}
                 <article
                   className={
-                    "flex-1 flex flex-col rounded-[50px] border p-6 transition-all duration-300" +
+                    "flex-1 flex flex-col card-lg border p-6 transition-all duration-300" +
                     (isActive
                       ? colorTheme === "navy"
                         ? " border-navy/20 bg-navy shadow-lg"
@@ -194,7 +194,7 @@ export default function TimeLine_01({
                       <div className="overflow-hidden">
                         <div className="space-y-4">
                           {entry.items && entry.items.length > 0 && (
-                            <div className="rounded-[30px]  p-4">
+                            <div className="card-sm  p-4">
                               <ul className="space-y-2">
                                 {entry.items.map((item, itemIndex) => (
                                   <li

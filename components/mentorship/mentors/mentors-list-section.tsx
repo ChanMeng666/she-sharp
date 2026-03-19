@@ -16,7 +16,7 @@ export function MentorsListSection() {
   }));
 
   return (
-    <Section id="mentors-list" className="py-16 xl:py-24 2xl:py-32 bg-background">
+    <Section id="mentors-list" className="py-16 bg-background">
       <Container size="full">
         <div className="space-y-12">
           <div className="text-center">
@@ -28,7 +28,7 @@ export function MentorsListSection() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 py-4 md:py-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 py-4 md:py-6">
             {memberCards.map((member, index) => (
               <MemberCard
                 key={member.id ?? `mentor-${index}`}

@@ -5,7 +5,7 @@ import { Section } from "@/components/layout/section";
 
 export function MentorshipCTASection() {
   return (
-    <Section className="bg-white py-16 md:py-24 xl:py-32">
+    <Section className="bg-white py-16">
       <Container size="full">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
