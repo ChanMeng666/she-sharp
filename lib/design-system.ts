@@ -125,8 +125,14 @@ export const designSystem = {
   },
 };
 
-// Dashboard layout presets for admin pages
+// Dashboard layout presets for all dashboard pages
 export const dashboardLayout = {
+  // Common card layout presets
+  cardHeader: "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2",
+  cardMeta: "flex flex-wrap items-center gap-2 sm:gap-4 text-sm",
+  actionRow: "flex flex-wrap gap-2",
+  infoGrid: "grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4",
+  cardItem: "flex items-start gap-3 min-w-0",
   // Stats grid with smooth breakpoint progression
   statsGrid: {
     compact: "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3",

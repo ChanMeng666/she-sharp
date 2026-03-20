@@ -437,8 +437,8 @@ export default function MentorshipDashboard() {
                             {getInitials(userRole === 'mentee' ? relationship.mentorName : relationship.menteeName)}
                           </AvatarFallback>
                         </Avatar>
-                        <div>
-                          <CardTitle className="text-lg">
+                        <div className="min-w-0">
+                          <CardTitle className="text-lg break-words">
                             {userRole === 'mentee' ? relationship.mentorName : relationship.menteeName}
                           </CardTitle>
                           <CardDescription className="flex items-center gap-2 flex-wrap">
@@ -463,7 +463,7 @@ export default function MentorshipDashboard() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex items-center gap-6 text-sm text-muted-foreground">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-6 text-sm text-muted-foreground">
                       <span className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
                         Started {new Date(relationship.startedAt!).toLocaleDateString()}
@@ -504,8 +504,8 @@ export default function MentorshipDashboard() {
                             {getInitials(userRole === 'mentor' ? application.menteeName : application.mentorName)}
                           </AvatarFallback>
                         </Avatar>
-                        <div>
-                          <CardTitle className="text-lg">
+                        <div className="min-w-0">
+                          <CardTitle className="text-lg break-words">
                             {userRole === 'mentor' ? application.menteeName : application.mentorName}
                           </CardTitle>
                           <CardDescription>
@@ -530,7 +530,7 @@ export default function MentorshipDashboard() {
                     )}
 
                     {userRole === 'mentor' ? (
-                      <div className="flex gap-2">
+                      <div className="flex flex-wrap gap-2">
                         <Button
                           size="sm"
                           variant="outline"
@@ -656,7 +656,7 @@ export default function MentorshipDashboard() {
                 <div className="px-8 py-8 space-y-8">
                   {/* Profile Header Card */}
                   <div className="bg-surface-purple rounded-xl p-6">
-                    <div className="flex items-start gap-5">
+                    <div className="flex items-start gap-3 sm:gap-5">
                       <Avatar className="h-20 w-20 border-2 border-brand/20 shadow-md">
                         <AvatarImage src={selectedMentorDetails.formData?.photoUrl || selectedMentorDetails.image || undefined} />
                         <AvatarFallback className="text-lg bg-brand/10 text-brand">{getInitials(selectedMentorDetails.name)}</AvatarFallback>
@@ -666,7 +666,7 @@ export default function MentorshipDashboard() {
                           {selectedMentorDetails.formData?.fullName || selectedMentorDetails.name}
                         </h3>
                         {(selectedMentorDetails.formData?.jobTitle || selectedMentorDetails.jobTitle) && (
-                          <p className="text-muted-foreground text-base">
+                          <p className="text-muted-foreground text-base break-words">
                             {selectedMentorDetails.formData?.jobTitle || selectedMentorDetails.jobTitle}
                             {(selectedMentorDetails.formData?.company || selectedMentorDetails.company) && (
                               <> at <span className="font-medium">{selectedMentorDetails.formData?.company || selectedMentorDetails.company}</span></>
@@ -690,7 +690,7 @@ export default function MentorshipDashboard() {
                   </div>
 
                   {/* Quick Info Grid */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {selectedMentorDetails.formData?.city && (
                       <div className="flex items-center gap-3 p-3 rounded-lg bg-navy-light">
                         <MapPin className="h-5 w-5 text-info shrink-0" />
@@ -921,7 +921,7 @@ export default function MentorshipDashboard() {
               <div className="px-8 py-8 space-y-8">
                 {/* Profile Header Card */}
                 <div className="bg-periwinkle-light rounded-xl p-6">
-                  <div className="flex items-start gap-5">
+                  <div className="flex items-start gap-3 sm:gap-5">
                     <Avatar className="h-20 w-20 border-2 border-periwinkle/20 shadow-md">
                       <AvatarImage src={selectedMenteeDetails.formData?.photoUrl || selectedMenteeDetails.image || undefined} />
                       <AvatarFallback className="text-lg bg-periwinkle/10 text-periwinkle">{getInitials(selectedMenteeDetails.name)}</AvatarFallback>
@@ -931,7 +931,7 @@ export default function MentorshipDashboard() {
                         {selectedMenteeDetails.formData?.fullName || selectedMenteeDetails.name}
                       </h3>
                       {selectedMenteeDetails.formData?.currentJobTitle && (
-                        <p className="text-muted-foreground text-base">
+                        <p className="text-muted-foreground text-base break-words">
                           {selectedMenteeDetails.formData.currentJobTitle}
                           {selectedMenteeDetails.formData.currentIndustry && (
                             <> in <span className="font-medium">
@@ -950,7 +950,7 @@ export default function MentorshipDashboard() {
                 </div>
 
                 {/* Quick Info Grid */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {selectedMenteeDetails.formData?.city && (
                     <div className="flex items-center gap-3 p-3 rounded-lg bg-navy-light">
                       <MapPin className="h-5 w-5 text-info shrink-0" />

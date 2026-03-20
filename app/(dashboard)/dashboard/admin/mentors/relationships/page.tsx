@@ -788,7 +788,7 @@ export default function MentorRelationshipsPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0 space-y-1">
-                    <p className="font-medium truncate">{selectedRelationship.mentor.name}</p>
+                    <p className="font-medium break-words">{selectedRelationship.mentor.name}</p>
                     <p className="text-sm text-muted-foreground break-all">{selectedRelationship.mentor.email}</p>
                     {(selectedRelationship.mentor.jobTitle || selectedRelationship.mentor.company) && (
                       <p className="text-sm break-words">
@@ -837,7 +837,7 @@ export default function MentorRelationshipsPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0 space-y-1">
-                    <p className="font-medium truncate">{selectedRelationship.mentee.name}</p>
+                    <p className="font-medium break-words">{selectedRelationship.mentee.name}</p>
                     <p className="text-sm text-muted-foreground break-all">{selectedRelationship.mentee.email}</p>
                     {(selectedRelationship.mentee.jobTitle || selectedRelationship.mentee.industry) && (
                       <p className="text-sm break-words">
@@ -919,7 +919,7 @@ export default function MentorRelationshipsPage() {
                   </div>
                   <div className="p-3 bg-muted/50 rounded-lg">
                     <p className="text-xs text-muted-foreground">Meeting Frequency</p>
-                    <p className="text-sm font-medium mt-1 truncate">
+                    <p className="text-sm font-medium mt-1 break-words">
                       {selectedRelationship.meetingFrequency || 'Not set'}
                     </p>
                   </div>

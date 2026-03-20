@@ -167,9 +167,9 @@ export default function MeetingsPage() {
   const MeetingCard = ({ meeting }: { meeting: Meeting }) => (
     <Card>
       <CardHeader>
-        <div className="flex justify-between items-start">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
           <div>
-            <CardTitle className="text-lg">
+            <CardTitle className="text-lg break-words">
               Meeting with {meeting.otherUser.name}
             </CardTitle>
             <CardDescription className="mt-1">
@@ -185,7 +185,7 @@ export default function MeetingsPage() {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
             {meeting.durationMinutes} min
@@ -237,7 +237,7 @@ export default function MeetingsPage() {
           </div>
         )}
 
-        <div className="flex gap-2 pt-4">
+        <div className="flex flex-wrap gap-2 pt-4">
           {meeting.status === 'scheduled' && new Date(meeting.scheduledAt) > new Date() && (
             <>
               {meeting.meetingLink && (
@@ -272,7 +272,7 @@ export default function MeetingsPage() {
   if (loading) {
     return (
       <div className="container mx-auto p-8">
-        <div className="grid gap-6">
+        <div className="grid gap-4 sm:gap-6">
           {[1, 2, 3].map((i) => (
             <Card key={i}>
               <CardHeader>
@@ -291,7 +291,7 @@ export default function MeetingsPage() {
 
   return (
     <div className="container mx-auto p-8">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-bold">Meetings</h1>
           <p className="text-muted-foreground mt-2">Manage your mentorship meetings</p>
@@ -405,7 +405,7 @@ export default function MeetingsPage() {
 
         <TabsContent value="upcoming" className="mt-6">
           {meetings.upcoming.length > 0 ? (
-            <div className="grid gap-6">
+            <div className="grid gap-4 sm:gap-6">
               {meetings.upcoming.map((meeting) => (
                 <MeetingCard key={meeting.id} meeting={meeting} />
               ))}
@@ -427,7 +427,7 @@ export default function MeetingsPage() {
 
         <TabsContent value="past" className="mt-6">
           {meetings.past.length > 0 ? (
-            <div className="grid gap-6">
+            <div className="grid gap-4 sm:gap-6">
               {meetings.past.map((meeting) => (
                 <MeetingCard key={meeting.id} meeting={meeting} />
               ))}
@@ -444,7 +444,7 @@ export default function MeetingsPage() {
 
         <TabsContent value="cancelled" className="mt-6">
           {meetings.cancelled.length > 0 ? (
-            <div className="grid gap-6">
+            <div className="grid gap-4 sm:gap-6">
               {meetings.cancelled.map((meeting) => (
                 <MeetingCard key={meeting.id} meeting={meeting} />
               ))}

@@ -412,8 +412,8 @@ export default function MatchingManagementPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="min-w-0">
-                    <p className="font-semibold text-sm sm:text-base truncate">{match.mentorName}</p>
-                    <p className="text-xs text-muted-foreground truncate">
+                    <p className="font-semibold text-sm sm:text-base break-words">{match.mentorName}</p>
+                    <p className="text-xs text-muted-foreground break-words">
                       {mentor?.jobTitle || 'Mentor'}
                       {mentor?.company && ` @ ${mentor.company}`}
                     </p>
@@ -449,8 +449,8 @@ export default function MatchingManagementPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="min-w-0">
-                    <p className="font-semibold text-sm sm:text-base truncate">{match.menteeName}</p>
-                    <p className="text-xs text-muted-foreground truncate">
+                    <p className="font-semibold text-sm sm:text-base break-words">{match.menteeName}</p>
+                    <p className="text-xs text-muted-foreground break-words">
                       {mentee?.currentJobTitle || mentee?.careerStage || 'Mentee'}
                       {mentee?.currentIndustry && ` in ${mentee.currentIndustry}`}
                     </p>

@@ -124,7 +124,7 @@ function ProgrammeStatusCard() {
   return (
     <Card className="border-brand/30 bg-gradient-to-r from-[#f7e5f3]/30 to-card">
       <CardContent className="pt-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
             <div className="flex items-center gap-2">
               <Target className="h-5 w-5 text-brand" />
@@ -262,7 +262,7 @@ export default function DynamicDashboard() {
       {/* Mentor Section */}
       {mentor && (
         <div className="flex flex-col gap-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <h2 className="text-2xl font-semibold flex items-center gap-2">
               <Users className="h-6 w-6 text-brand" />
               Mentor Dashboard
@@ -372,14 +372,14 @@ export default function DynamicDashboard() {
             <div className="space-y-3">
               {upcomingEvents.slice(0, 3).map((event: any) => (
                 <div key={event.id} className="flex items-center justify-between p-3 rounded-lg border transition-colors hover:bg-accent">
-                  <div className="flex-1">
-                    <p className="font-medium">{event.title}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium break-words">{event.title}</p>
                     <p className="text-sm text-muted-foreground flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
                       {new Date(event.startTime).toLocaleDateString()} at {new Date(event.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap shrink-0">
                     {event.isRegistered && (
                       <Badge variant="default">
                         <CheckCircle2 className="h-3 w-3 mr-1" />
