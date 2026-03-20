@@ -103,6 +103,8 @@ export function InfiniteSlider({
         style={{
           display: "flex",
           flexDirection: direction === "horizontal" ? "row" : "column",
+          width: direction === "horizontal" ? "max-content" : undefined,
+          height: direction === "vertical" ? "max-content" : undefined,
           gap: `${gap}px`,
           transform: translateOutput,
         }}

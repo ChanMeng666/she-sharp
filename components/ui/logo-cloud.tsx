@@ -38,10 +38,10 @@ export function LogoCloud({
         {logos.map((logo, index) => (
           <div
             key={index}
-            className="flex items-center justify-center w-24 md:w-32 h-8 md:h-10 shrink-0"
+            className="flex items-center justify-center shrink-0"
           >
             <img
-              className="max-w-full max-h-full object-contain"
+              className="h-8 md:h-10 w-auto max-w-[160px] md:max-w-[200px] object-contain"
               src={logo.src}
               alt={logo.alt}
             />
