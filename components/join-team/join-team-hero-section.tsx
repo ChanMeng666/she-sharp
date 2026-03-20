@@ -35,9 +35,9 @@ export function JoinTeamHeroSection({
   const rightImages = GALLERY_IMAGES.slice(3);
 
   return (
-    <div className="bg-periwinkle-soft py-24 lg:py-36">
-      <div className="container mx-auto max-w-8xl px-6">
-        <div className="flex flex-col gap-10 lg:gap-16">
+    <div className="bg-periwinkle-soft py-16 md:py-24 lg:py-32">
+      <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-16">
           {/* Text Content */}
           <div className="flex flex-col items-center">
             <h1 className="text-display-sm text-white mb-4 text-center">
@@ -52,7 +52,7 @@ export function JoinTeamHeroSection({
 
             {/* Stats with icons */}
             {stats.length > 0 && (
-              <div className="flex flex-wrap gap-10 mb-8 justify-center">
+              <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-10 mb-8 justify-center">
                 {stats.map((stat, i) => {
                   const Icon = iconMap[stat.iconName];
                   return (
@@ -72,13 +72,13 @@ export function JoinTeamHeroSection({
 
           {/* Image Gallery Section */}
           <div className="w-full">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
               {/* Left Column: Two images stacked */}
-              <div className="flex flex-col gap-4 md:gap-6">
+              <div className="flex flex-col gap-4 sm:gap-5 md:gap-6">
                 {leftImages.map((image) => (
                   <div
                     key={image.src}
-                    className="relative w-full aspect-4/3 overflow-hidden rounded-2xl"
+                    className="relative w-full aspect-4/3 card-sm"
                   >
                     <Image
                       src={image.src}
@@ -92,24 +92,24 @@ export function JoinTeamHeroSection({
               </div>
 
               {/* Center Column: Large image */}
-              <div className="relative w-full overflow-hidden rounded-2xl flex items-center justify-center">
+              <div className="relative w-full card-sm flex items-center justify-center">
                 <Image
                   src={centerImage.src}
                   alt={centerImage.alt}
                   width={0}
                   height={0}
-                  className="w-full h-auto rounded-2xl"
+                  className="w-full h-auto"
                   sizes="(max-width: 768px) 100vw, 33vw"
                   priority
                 />
               </div>
 
               {/* Right Column: Two images stacked */}
-              <div className="flex flex-col gap-4 md:gap-6">
+              <div className="flex flex-col gap-4 sm:gap-5 md:gap-6">
                 {rightImages.map((image) => (
                   <div
                     key={image.src}
-                    className="relative w-full aspect-4/3 overflow-hidden rounded-2xl"
+                    className="relative w-full aspect-4/3 card-sm"
                   >
                     <Image
                       src={image.src}

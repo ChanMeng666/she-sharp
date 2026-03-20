@@ -1,9 +1,8 @@
 import { Metadata } from "next";
 import { JoinTeamHeroSection } from "@/components/join-team/join-team-hero-section";
-import { VolunteerPathsSection } from "@/components/join-team/volunteer-paths-section";
+import { PricingComparison } from "@/components/ui/pricing-section-with-comparison";
 import { JoinTeamTestimonialsSection } from "@/components/join-team/testimonials-section";
 import {
-  volunteerImages,
   volunteerPaths,
   joinTeamStats,
   joinTeamContent,
@@ -23,17 +22,7 @@ export default function JoinOurTeamPage() {
         description={joinTeamContent.description}
         stats={joinTeamStats}
       />
-      <VolunteerPathsSection
-        title={joinTeamContent.title}
-        description={joinTeamContent.description}
-        stats={joinTeamStats.map(stat => stat.text)}
-        volunteerPaths={volunteerPaths}
-        tabs={volunteerImages}
-        primaryCta={{
-          label: "Apply Now",
-          href: "mailto:people@shesharp.org.nz",
-        }}
-      />
+      <PricingComparison volunteerPaths={volunteerPaths} />
       <JoinTeamTestimonialsSection />
     </section>
   );

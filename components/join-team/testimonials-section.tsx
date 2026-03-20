@@ -60,15 +60,15 @@ export function JoinTeamTestimonialsSection() {
     );
 
     return (
-        <section className="w-full bg-muted/30 py-16 xl:py-24 2xl:py-32">
+        <section className="w-full bg-muted/30 py-16 md:py-20 lg:py-24 xl:py-28">
             <Container size="full">
-                <div className="mb-12">
+                <div>
                     {/* Header with title and navigation */}
-                    <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+                        <h2 className="text-display-sm text-foreground">
                             What People Say About She Sharp
                         </h2>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 shrink-0">
                             <Button
                                 variant="ghost"
                                 size="icon"
@@ -97,11 +97,11 @@ export function JoinTeamTestimonialsSection() {
                     </div>
 
                     {/* Testimonials Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 py-4 md:py-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-8">
                         {visibleTestimonials.map((testimonial, index) => (
                             <Card
                                 key={`${currentIndex + index}-${testimonial.name}`}
-                                className="p-6 bg-white shadow-sm hover:shadow-md transition-shadow flex flex-col"
+                                className="card-sm p-4 sm:p-5 md:p-6 bg-white shadow-sm hover:shadow-md transition-all duration-300 flex flex-col"
                             >
                                 <p className="text-base text-foreground mb-6 leading-relaxed flex-1">
                                     {testimonial.content}
