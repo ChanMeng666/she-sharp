@@ -17,4 +17,39 @@
   .dashboard-bg[data-slot="sidebar-wrapper"] {
     min-height: 100svh !important;
   }
+
+  /* Kanban responsive container: vertical on mobile, horizontal on lg+ */
+  .dashboard-kanban {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 1024px) {
+    .dashboard-kanban {
+      flex-direction: row;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+    }
+  }
+
+  /* Kanban column sizing */
+  .dashboard-kanban-column {
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .dashboard-kanban-column {
+      width: 14rem;
+      flex-shrink: 0;
+    }
+  }
+
+  /* Mobile data card base */
+  .dashboard-data-card {
+    padding: 1rem;
+    border-radius: var(--radius);
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--card));
+  }
 }

@@ -223,7 +223,7 @@ export default function MentorMeetingsPage() {
 
       {/* Key Metrics Summary */}
       {!loading && (
-        <div className="flex flex-wrap items-center gap-6 text-sm">
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm">
           <div className="flex items-center gap-2">
             <Video className="h-4 w-4 text-navy" />
             <span className="text-navy font-medium">Total Meetings</span>
@@ -389,8 +389,7 @@ export default function MentorMeetingsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            {loading ? (
+          {loading ? (
               <div className="space-y-4">
                 {[...Array(5)].map((_, i) => (
                   <div key={i} className="flex items-center space-x-4">
@@ -407,6 +406,95 @@ export default function MentorMeetingsPage() {
                 <p>No meetings found</p>
               </div>
             ) : (
+              <>
+                {/* Mobile Card View */}
+                <div className="block lg:hidden space-y-3">
+                  {filteredMeetings.map((meeting) => (
+                    <div key={meeting.id} className="p-4 rounded-lg border bg-card">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <p className="text-sm font-medium">{meeting.mentor}</p>
+                          <p className="text-xs text-muted-foreground">with {meeting.mentee}</p>
+                        </div>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                              <MoreVertical className="w-4 h-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem>
+                              <Eye className="w-4 h-4 mr-2" />
+                              View Details
+                            </DropdownMenuItem>
+                            {meeting.recordingAvailable && (
+                              <DropdownMenuItem>
+                                <Monitor className="w-4 h-4 mr-2" />
+                                View Recording
+                              </DropdownMenuItem>
+                            )}
+                            <DropdownMenuItem>
+                              <FileText className="w-4 h-4 mr-2" />
+                              View Notes
+                            </DropdownMenuItem>
+                            {meeting.status === 'scheduled' && (
+                              <>
+                                <DropdownMenuItem>
+                                  <Edit className="w-4 h-4 mr-2" />
+                                  Reschedule
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem className="text-foreground">
+                                  <XCircle className="w-4 h-4 mr-2" />
+                                  Cancel Meeting
+                                </DropdownMenuItem>
+                              </>
+                            )}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        {getStatusBadge(meeting.status)}
+                        <div className="flex items-center gap-1">
+                          {getMeetingTypeIcon(meeting.type)}
+                          <span className="text-xs capitalize">{meeting.type.replace('_', ' ')}</span>
+                        </div>
+                        {meeting.rating ? (
+                          <span className="flex items-center gap-0.5 text-xs">
+                            <Star className="w-3 h-3 text-brand fill-brand" />
+                            {meeting.rating}
+                          </span>
+                        ) : null}
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {new Date(meeting.date).toLocaleDateString()}
+                          {' '}
+                          {new Date(meeting.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                        {meeting.duration > 0 && (
+                          <span className="flex items-center gap-1">
+                            <Timer className="w-3 h-3" />
+                            {meeting.duration} min
+                          </span>
+                        )}
+                      </div>
+                      {(meeting.topics || []).length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {meeting.topics.map(topic => (
+                            <Badge key={topic} variant="secondary" className="text-xs">
+                              {topic}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Desktop Table View */}
+                <div className="hidden lg:block overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -520,8 +608,9 @@ export default function MentorMeetingsPage() {
                 ))}
                 </TableBody>
               </Table>
+                </div>
+              </>
             )}
-          </div>
         </CardContent>
       </Card>
     </div>

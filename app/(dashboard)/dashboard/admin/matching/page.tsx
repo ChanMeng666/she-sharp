@@ -402,18 +402,18 @@ export default function MatchingManagementPage() {
           <div className="flex items-start justify-between">
             <div className="flex-1">
               {/* Main Match Header */}
-              <div className="flex items-center gap-4 mb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3">
                 {/* Mentor Info */}
-                <div className="flex items-center gap-3">
-                  <Avatar className="h-12 w-12 border-2 border-muted">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <Avatar className="h-10 w-10 sm:h-12 sm:w-12 border-2 border-muted shrink-0">
                     <AvatarImage src={match.mentorImage || undefined} alt={match.mentorName} />
                     <AvatarFallback className="bg-muted text-foreground font-semibold">
                       {getInitials(match.mentorName)}
                     </AvatarFallback>
                   </Avatar>
-                  <div>
-                    <p className="font-semibold text-base">{match.mentorName}</p>
-                    <p className="text-xs text-muted-foreground">
+                  <div className="min-w-0">
+                    <p className="font-semibold text-sm sm:text-base truncate">{match.mentorName}</p>
+                    <p className="text-xs text-muted-foreground truncate">
                       {mentor?.jobTitle || 'Mentor'}
                       {mentor?.company && ` @ ${mentor.company}`}
                     </p>
@@ -432,25 +432,25 @@ export default function MatchingManagementPage() {
                   </div>
                 </div>
 
-                {/* Match Arrow */}
-                <div className="flex flex-col items-center px-3">
+                {/* Match Score */}
+                <div className="flex sm:flex-col items-center gap-2 sm:px-3">
                   <Badge className={`${getScoreColor(match.overallScore)} font-bold`}>
                     {match.overallScore.toFixed(0)}%
                   </Badge>
-                  <TrendingUp className="h-4 w-4 text-brand mt-1" />
+                  <TrendingUp className="h-4 w-4 text-brand" />
                 </div>
 
                 {/* Mentee Info */}
-                <div className="flex items-center gap-3">
-                  <Avatar className="h-12 w-12 border-2 border-muted">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <Avatar className="h-10 w-10 sm:h-12 sm:w-12 border-2 border-muted shrink-0">
                     <AvatarImage src={match.menteeImage || undefined} alt={match.menteeName} />
                     <AvatarFallback className="bg-muted text-foreground font-semibold">
                       {getInitials(match.menteeName)}
                     </AvatarFallback>
                   </Avatar>
-                  <div>
-                    <p className="font-semibold text-base">{match.menteeName}</p>
-                    <p className="text-xs text-muted-foreground">
+                  <div className="min-w-0">
+                    <p className="font-semibold text-sm sm:text-base truncate">{match.menteeName}</p>
+                    <p className="text-xs text-muted-foreground truncate">
                       {mentee?.currentJobTitle || mentee?.careerStage || 'Mentee'}
                       {mentee?.currentIndustry && ` in ${mentee.currentIndustry}`}
                     </p>
@@ -886,7 +886,7 @@ export default function MatchingManagementPage() {
         )}
 
         {/* Stats Summary */}
-        <div className="flex flex-wrap items-center gap-6 text-sm">
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm">
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-info" />
             <span className="text-info font-medium">Pending</span>
@@ -931,33 +931,33 @@ export default function MatchingManagementPage() {
 
         {/* Tabs */}
         <Tabs defaultValue="unmatched" className="space-y-4">
-          <div className="flex justify-between items-center">
-            <TabsList>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+            <TabsList className="w-full sm:w-auto overflow-x-auto">
               <TabsTrigger value="unmatched">
-                Unmatched Users
+                Unmatched
                 {(unmatchedMentors.length + unmatchedMentees.length) > 0 && (
-                  <Badge variant="secondary" className="ml-2">
+                  <Badge variant="secondary" className="ml-1.5">
                     {unmatchedMentors.length + unmatchedMentees.length}
                   </Badge>
                 )}
               </TabsTrigger>
               <TabsTrigger value="pending">
-                Pending Matches
+                Pending
                 {pendingCount > 0 && (
-                  <Badge variant="secondary" className="ml-2">
+                  <Badge variant="secondary" className="ml-1.5">
                     {pendingCount}
                   </Badge>
                 )}
               </TabsTrigger>
               <TabsTrigger value="queue">
-                Waiting Queue
+                Queue
                 {queueTotal > 0 && (
-                  <Badge variant="secondary" className="ml-2">
+                  <Badge variant="secondary" className="ml-1.5">
                     {queueTotal}
                   </Badge>
                 )}
               </TabsTrigger>
-              <TabsTrigger value="history">Run History</TabsTrigger>
+              <TabsTrigger value="history">History</TabsTrigger>
             </TabsList>
 
             {/* View Toggle for Pending Matches */}

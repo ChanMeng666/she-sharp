@@ -166,8 +166,50 @@ export default function ApplicationsTable({ applications, onRefresh }: Applicati
         </div>
       )}
 
-      {/* Table */}
-      <div className="overflow-x-auto rounded-lg border">
+      {/* Mobile Card View */}
+      <div className="block lg:hidden space-y-3">
+        {applications.map(app => (
+          <div key={app.id} className="p-4 rounded-lg border bg-card">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  checked={selectedIds.has(app.id)}
+                  onCheckedChange={() => toggleOne(app.id)}
+                  aria-label={`Select ${app.firstName} ${app.lastName}`}
+                />
+                <div>
+                  <p className="font-medium text-sm">{app.firstName} {app.lastName}</p>
+                  <p className="text-xs text-muted-foreground truncate max-w-[200px]">{app.email}</p>
+                </div>
+              </div>
+              <Link href={`/dashboard/admin/recruitment/${app.id}`}>
+                <Button variant="ghost" size="sm">
+                  <Eye className="h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge className={`${getTypeBadgeClass(app.type)} text-xs`}>
+                {formatType(app.type)}
+              </Badge>
+              <Badge className={`${getStageBadgeClass(app.recruitmentStage)} text-xs`}>
+                {formatStage(app.recruitmentStage)}
+              </Badge>
+              {app.aiScreeningResult ? (
+                getAIScoreBadge(app.aiScreeningResult)
+              ) : null}
+              <span className="text-xs text-muted-foreground ml-auto">
+                {app.submittedAt
+                  ? new Date(app.submittedAt).toLocaleDateString()
+                  : new Date(app.createdAt).toLocaleDateString()}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop Table View */}
+      <div className="hidden lg:block overflow-x-auto rounded-lg border">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b bg-muted/50">

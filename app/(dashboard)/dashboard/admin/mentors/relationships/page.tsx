@@ -375,7 +375,7 @@ export default function MentorRelationshipsPage() {
       )}
 
       {/* Statistics */}
-      <div className="flex flex-wrap items-center gap-6 text-sm">
+      <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm">
         <div className="flex items-center gap-2">
           <Clock className="h-4 w-4 text-info" />
           <span className="text-info font-medium">Pending</span>
@@ -455,8 +455,7 @@ export default function MentorRelationshipsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            {loading ? (
+          {loading ? (
               <div className="space-y-4">
                 {[...Array(5)].map((_, i) => (
                   <div key={i} className="flex items-center space-x-4">
@@ -474,6 +473,104 @@ export default function MentorRelationshipsPage() {
                 <p>No relationships found</p>
               </div>
             ) : (
+              <>
+                {/* Mobile Card View */}
+                <div className="block lg:hidden space-y-3">
+                  {filteredRelationships.map((relationship) => (
+                    <div key={relationship.id} className="p-4 rounded-lg border bg-card">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          {getStatusBadge(relationship.status)}
+                          {relationship.satisfactionScore !== null && (
+                            <span className="text-xs text-muted-foreground flex items-center gap-1">
+                              <Star className="w-3 h-3" />
+                              {relationship.satisfactionScore}
+                            </span>
+                          )}
+                        </div>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                              <MoreVertical className="w-4 h-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem onClick={() => handleViewDetails(relationship)}>
+                              <Eye className="w-4 h-4 mr-2" />
+                              View Details
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            {(relationship.status === 'active' || relationship.status === 'at_risk' || relationship.status === 'pending') && (
+                              <DropdownMenuItem onClick={() => handleChangeStatus(relationship, 'paused')}>
+                                <Pause className="w-4 h-4 mr-2" />
+                                Pause
+                              </DropdownMenuItem>
+                            )}
+                            {relationship.status === 'paused' && (
+                              <DropdownMenuItem onClick={() => handleChangeStatus(relationship, 'active')}>
+                                <Play className="w-4 h-4 mr-2" />
+                                Resume
+                              </DropdownMenuItem>
+                            )}
+                            {relationship.status !== 'completed' && relationship.status !== 'rejected' && (
+                              <>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem className="text-foreground" onClick={() => handleEndRelationship(relationship)}>
+                                  <Trash2 className="w-4 h-4 mr-2" />
+                                  End
+                                </DropdownMenuItem>
+                              </>
+                            )}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                      {/* Mentor -> Mentee */}
+                      <div className="space-y-2 mb-3">
+                        <div className="flex items-center gap-2">
+                          <Avatar className="w-8 h-8">
+                            <AvatarImage src={relationship.mentor.avatar || ''} />
+                            <AvatarFallback className="text-xs">
+                              {relationship.mentor.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <p className="font-medium text-sm">{relationship.mentor.name}</p>
+                            <p className="text-xs text-muted-foreground">Mentor</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Avatar className="w-8 h-8">
+                            <AvatarImage src={relationship.mentee.avatar || ''} />
+                            <AvatarFallback className="text-xs">
+                              {relationship.mentee.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <p className="font-medium text-sm">{relationship.mentee.name}</p>
+                            <p className="text-xs text-muted-foreground">Mentee</p>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Progress */}
+                      <div className="flex items-center gap-2 mb-2">
+                        <Progress value={relationship.progress} className="h-2 flex-1" />
+                        <span className="text-xs font-medium">{relationship.progress}%</span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <Target className="w-3 h-3" />
+                          {relationship.sessionsCompleted}/{relationship.totalSessions} sessions
+                        </span>
+                        {relationship.startedAt && (
+                          <span>Started {new Date(relationship.startedAt).toLocaleDateString()}</span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Desktop Table View */}
+                <div className="hidden lg:block overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -663,8 +760,9 @@ export default function MentorRelationshipsPage() {
                 ))}
                 </TableBody>
               </Table>
+                </div>
+              </>
             )}
-          </div>
         </CardContent>
       </Card>
 

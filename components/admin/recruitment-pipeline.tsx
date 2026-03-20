@@ -19,6 +19,8 @@ import {
 } from '@dnd-kit/sortable';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useMediaQuery } from '@/hooks/use-media-query';
 import type { Application } from '@/components/admin/recruitment-dashboard';
 
 interface RecruitmentPipelineProps {
@@ -155,8 +157,68 @@ function PipelineCardOverlay({ application }: { application: Application }) {
   );
 }
 
+// Mobile collapsible stage card
+function MobileStageCard({
+  column,
+}: {
+  column: { key: string; label: string; color: string; applications: Application[] };
+}) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div className={`bg-muted/30 rounded-lg border border-t-4 ${column.color}`}>
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full p-3 flex items-center justify-between border-b"
+      >
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-semibold">{column.label}</h3>
+          <Badge variant="secondary" className="text-xs">
+            {column.applications.length}
+          </Badge>
+        </div>
+        {expanded ? (
+          <ChevronUp className="h-4 w-4 text-muted-foreground" />
+        ) : (
+          <ChevronDown className="h-4 w-4 text-muted-foreground" />
+        )}
+      </button>
+      {expanded && (
+        <div className="p-2 space-y-2">
+          {column.applications.length === 0 ? (
+            <div className="flex items-center justify-center h-12 text-xs text-muted-foreground">
+              No applications
+            </div>
+          ) : (
+            column.applications.map(app => (
+              <div
+                key={app.id}
+                className="p-3 bg-background rounded-lg border shadow-sm"
+              >
+                <p className="font-medium text-sm truncate">
+                  {app.firstName} {app.lastName}
+                </p>
+                <div className="flex flex-wrap items-center gap-1 mt-1.5">
+                  <Badge className={`${getTypeBadgeClass(app.type)} text-[10px] px-1.5 py-0`}>
+                    {formatType(app.type)}
+                  </Badge>
+                  {getRecommendationBadge(app.aiScreeningResult)}
+                </div>
+                <p className="text-[11px] text-muted-foreground mt-1.5">
+                  {formatRelativeDate(app.submittedAt || app.createdAt)}
+                </p>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function RecruitmentPipeline({ applications, onStageChange }: RecruitmentPipelineProps) {
   const [activeApplication, setActiveApplication] = useState<Application | null>(null);
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -208,6 +270,18 @@ export default function RecruitmentPipeline({ applications, onStageChange }: Rec
     }
   };
 
+  // Mobile: collapsible vertical stage cards
+  if (!isDesktop) {
+    return (
+      <div className="space-y-3">
+        {columnData.map(column => (
+          <MobileStageCard key={column.key} column={column} />
+        ))}
+      </div>
+    );
+  }
+
+  // Desktop: horizontal kanban with drag-and-drop
   return (
     <DndContext
       sensors={sensors}

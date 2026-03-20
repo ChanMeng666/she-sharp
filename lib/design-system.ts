@@ -125,6 +125,36 @@ export const designSystem = {
   },
 };
 
+// Dashboard layout presets for admin pages
+export const dashboardLayout = {
+  // Stats grid with smooth breakpoint progression
+  statsGrid: {
+    compact: "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3",
+    wide: "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3",
+  },
+  // Filter bar responsive stacking
+  filterBar: {
+    container: "flex flex-col sm:flex-row gap-3",
+    select: "w-full sm:w-[180px]",
+    search: "relative flex-1",
+  },
+  // Page header with title + actions
+  pageHeader: "flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4",
+  // Inline stats row
+  inlineStats: "flex flex-wrap items-center gap-4 sm:gap-6 text-sm",
+  // Mobile card view (hidden on desktop)
+  mobileCardView: "block lg:hidden space-y-3",
+  // Desktop table view (hidden on mobile)
+  desktopTableView: "hidden lg:block overflow-x-auto",
+  // Kanban layout
+  kanban: {
+    container: "flex flex-col lg:flex-row gap-3 lg:overflow-x-auto lg:pb-4",
+    column: "w-full lg:w-56 lg:flex-shrink-0",
+  },
+  // Tabs + view toggle row
+  tabsRow: "flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3",
+};
+
 // Helper function to combine layout classes
 export function layoutClasses(...classes: (string | undefined | false)[]): string {
   return classes.filter(Boolean).join(" ");

@@ -258,14 +258,14 @@ export default function ProgrammeManagementPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold">Programme Management</h1>
           <p className="text-muted-foreground">
             Manage mentorship programmes, assign mentors, and track progress
           </p>
         </div>
-        <Button onClick={openCreate}>
+        <Button onClick={openCreate} className="self-start sm:self-auto">
           <Plus className="h-4 w-4 mr-2" />
           Create Programme
         </Button>
