@@ -99,7 +99,7 @@ export function GalleryAlbumsGrid() {
     <Section spacing="section" className="py-24 lg:py-36">
       <Container size="full">
         {/* Header */}
-        <div className="mb-10 md:mb-14">
+        <div className="mb-8 sm:mb-10 md:mb-14">
           <h1 className="text-display-sm">Photo Gallery</h1>
           <p className="mt-3 text-base md:text-lg text-muted-foreground max-w-2xl">
             Explore highlights from She Sharp events, workshops, and community
@@ -109,7 +109,7 @@ export function GalleryAlbumsGrid() {
 
         {/* Search and Filter Controls */}
         <div className="space-y-4 mb-8">
-          <div className="flex flex-col md:flex-row gap-6 md:gap-16 md:items-center">
+          <div className="flex flex-col md:flex-row items-start gap-4 sm:gap-6 md:gap-8 md:items-center">
             {/* Search Bar */}
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -202,13 +202,13 @@ export function GalleryAlbumsGrid() {
 
         {/* Albums Grid */}
         {displayedAlbums.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
             {displayedAlbums.map((album) => (
               <AlbumCard key={album.googlePhotosUrl} album={album} />
             ))}
           </div>
         ) : (
-          <div className="text-center py-16">
+          <div className="card-sm text-center py-16 bg-muted/30">
             <p className="text-lg text-muted-foreground">
               No albums found. Try adjusting your search or filters.
             </p>
@@ -222,7 +222,7 @@ export function GalleryAlbumsGrid() {
               variant="outline"
               size="lg"
               onClick={handleLoadMore}
-              className="h-12 px-8 text-base"
+              className="h-12 px-8 text-base card-sm"
             >
               Load More
             </Button>
