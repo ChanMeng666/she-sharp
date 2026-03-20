@@ -127,19 +127,14 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
     );
   }
 
-  // Not logged in - show Sign In / Sign Up buttons
+  // Not logged in - show Sign In button (sign-in page has tabs to switch to sign-up)
   if (!user) {
     if (variant === 'mobile') {
       return (
         <div className="flex flex-col gap-2 pt-4 border-t border-[#f7e5f3]">
           <Link href="/sign-in" className="w-full">
-            <Button variant="outline" size="lg" className="w-full">
+            <Button variant="brand" size="lg" className="w-full">
               Sign In
-            </Button>
-          </Link>
-          <Link href="/sign-up" className="w-full">
-            <Button size="lg" className="w-full bg-brand hover:bg-brand/90 text-white">
-              Sign Up
             </Button>
           </Link>
         </div>
@@ -147,18 +142,11 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
     }
 
     return (
-      <div className="flex items-center gap-2">
-        <Link href="/sign-in">
-          <Button variant="outline" size="sm">
-            Sign In
-          </Button>
-        </Link>
-        <Link href="/sign-up">
-          <Button size="sm" className="bg-brand hover:bg-brand/90 text-white">
-            Sign Up
-          </Button>
-        </Link>
-      </div>
+      <Link href="/sign-in">
+        <Button variant="brand" size="sm">
+          Sign In
+        </Button>
+      </Link>
     );
   }
 

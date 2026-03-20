@@ -31,14 +31,6 @@ import { cn } from "@/lib/utils";
 import { navigationConfig } from "@/lib/config/navigation";
 import { UserNav } from "./user-nav";
 
-// Featured section background colors (light palette variants)
-const featuredBgColors: Record<string, string> = {
-  "About": "bg-[#f7e5f3]", // Purple Light
-  "Mentorship": "bg-[#f4f4fa]", // Periwinkle Light
-  "Get Involved": "bg-[#eaf2ff]", // Navy Light
-  "Resources": "bg-[#effefb]", // Mint Light
-};
-
 export function SiteHeader() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -148,67 +140,35 @@ export function SiteHeader() {
                         </span>
                       </NavigationMenuTrigger>
                       <NavigationMenuContent className="nav-dropdown-enter nav-dropdown-enter-active">
-                        <div className="flex w-[800px]">
-                          {/* Left side - Navigation links */}
-                          <div className="flex-1 p-6">
-                            <ul className="space-y-1">
-                              {item.children.map((child) => (
-                                <li key={child.title}>
-                                  <NavigationMenuLink asChild>
-                                    <Link
-                                      href={child.href}
-                                      onClick={(e) => handleSmoothScroll(e, child.href)}
-                                      className="flex items-start gap-3 rounded-lg p-3 transition-all duration-150 hover:bg-[#f7e5f3]/80 focus:bg-[#f7e5f3]/80 group"
-                                    >
-                                      {child.icon && (
-                                        <div className="mt-0.5">
-                                          <child.icon className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors duration-150" />
-                                        </div>
-                                      )}
-                                      <div className="flex-1">
-                                        <div className="text-sm font-bold text-foreground group-hover:text-foreground transition-colors duration-150">
-                                          {child.title}
-                                        </div>
-                                        {child.description && (
-                                          <p className="mt-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-150">
-                                            {child.description}
-                                          </p>
-                                        )}
-                                      </div>
-                                    </Link>
-                                  </NavigationMenuLink>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          {/* Right side - Featured section */}
-                          {item.image && (
-                            <Link
-                              href={item.image.href}
-                              className="relative w-80 overflow-hidden group rounded-r-[50px]"
-                            >
-                              {/* Content */}
-                              <div className={cn(
-                                "relative h-full flex items-center justify-center transition-all duration-300",
-                                featuredBgColors[item.title] || "bg-muted",
-                                "group-hover:opacity-90"
-                              )}>
-                                <div className="text-center p-6">
-                                  <div className="text-sm font-medium text-muted-foreground mb-1">
-                                    Featured
+                        <ul className="w-[480px] space-y-1 p-6">
+                          {item.children.map((child) => (
+                            <li key={child.title}>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  href={child.href}
+                                  onClick={(e) => handleSmoothScroll(e, child.href)}
+                                  className="flex items-start gap-3 rounded-lg p-3 transition-all duration-150 hover:bg-[#f7e5f3]/80 focus:bg-[#f7e5f3]/80 group"
+                                >
+                                  {child.icon && (
+                                    <div className="mt-0.5">
+                                      <child.icon className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors duration-150" />
+                                    </div>
+                                  )}
+                                  <div className="flex-1">
+                                    <div className="text-sm font-bold text-foreground group-hover:text-foreground transition-colors duration-150">
+                                      {child.title}
+                                    </div>
+                                    {child.description && (
+                                      <p className="mt-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-150">
+                                        {child.description}
+                                      </p>
+                                    )}
                                   </div>
-                                  <div className="text-lg font-bold text-foreground">
-                                    {item.image.alt}
-                                  </div>
-                                  <div className="mt-2 text-sm text-muted-foreground group-hover:text-foreground transition-opacity duration-300">
-                                    Explore →
-                                  </div>
-                                </div>
-                              </div>
-                            </Link>
-                          )}
-                        </div>
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                          ))}
+                        </ul>
                       </NavigationMenuContent>
                     </>
                   ) : (
@@ -350,16 +310,6 @@ export function SiteHeader() {
                               {child.title}
                             </Link>
                           ))}
-                          {/* Featured image link */}
-                          {item.image && (
-                            <Link
-                              href={item.image.href}
-                              className="flex items-center gap-2 py-2 text-sm text-[#1f1e44]/70 hover:text-brand transition-all duration-150 hover:bg-[#f7e5f3] rounded-lg px-2 -mx-2"
-                              onClick={() => setIsOpen(false)}
-                            >
-                              {item.image.alt}
-                            </Link>
-                          )}
                         </div>
                       </CollapsibleContent>
                     </Collapsible>

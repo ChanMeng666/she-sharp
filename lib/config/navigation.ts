@@ -24,11 +24,6 @@ export interface NavigationItem {
   description?: string;
   icon?: LucideIcon;
   children?: NavigationItem[];
-  image?: {
-    src: string;
-    alt: string;
-    href: string;
-  };
 }
 
 export interface NavigationButton {
@@ -46,11 +41,6 @@ export const navigationConfig: {
       title: "About",
       href: "/about",
       icon: Users,
-      image: {
-        src: "/img/mesh-954.png",
-        alt: "About She Sharp",
-        href: "/about",
-      },
       children: [
         {
           title: "Our History",
@@ -75,11 +65,6 @@ export const navigationConfig: {
       title: "Mentorship",
       href: "/mentorship",
       icon: GraduationCap,
-      image: {
-        src: "/img/mesh-954.png",
-        alt: "Meet Our Mentors",
-        href: "/mentorship#mentors-list",
-      },
       children: [
         {
           title: "About the Programme",
@@ -105,11 +90,6 @@ export const navigationConfig: {
       title: "Get Involved",
       href: "/join-our-team",
       icon: HandHeart,
-      image: {
-        src: "/img/mesh-152.png",
-        alt: "Donate",
-        href: "/donate",
-      },
       children: [
         {
           title: "Join Our Team",
@@ -130,11 +110,6 @@ export const navigationConfig: {
       title: "Resources",
       href: "/resources",
       icon: Library,
-      image: {
-        src: "/img/mesh-152.png",
-        alt: "Resource Library",
-        href: "/resources",
-      },
       children: [
         {
           title: "Photo Gallery",
