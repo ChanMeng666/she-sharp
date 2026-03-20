@@ -21,6 +21,7 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
       <SidebarInset
         className={cn(
           "peer-data-[variant=inset]:!mr-2 peer-data-[variant=inset]:peer-data-[state=collapsed]:!mr-auto",
+          "min-w-0",
         )}
       >
         <header
@@ -34,7 +35,7 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
             <SidebarTrigger className="-ml-1" />
           </div>
         </header>
-        <div className="flex-1 min-w-0 overflow-x-hidden p-3 sm:p-4 md:p-6 lg:p-8">
+        <div className="flex-1 min-w-0 overflow-x-auto p-3 sm:p-4 md:p-6 lg:p-8">
           {children}
         </div>
       </SidebarInset>

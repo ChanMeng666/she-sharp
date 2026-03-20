@@ -937,152 +937,194 @@ export default function UserManagement() {
                 <div className="block lg:hidden space-y-3">
                   {users.map((user) => (
                     <Card key={user.recordId} className="p-4">
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex items-start space-x-3 flex-1">
-                          <Checkbox
-                            checked={selectedUsers.includes(user.recordId)}
-                            onCheckedChange={(checked) => handleSelectUser(user.recordId, checked as boolean)}
-                          />
-                          <Avatar className="w-12 h-12">
-                            <AvatarImage src={user.image || undefined} alt={user.name || ''} />
-                            <AvatarFallback className="bg-muted text-foreground">
-                              {getInitials(user.name)}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <p className="font-medium text-foreground truncate">{user.name || 'Unknown User'}</p>
-                              {user.recordType === 'public_application' && (
-                                <Badge className="bg-muted text-foreground text-xs">
-                                  <UserPlus className="w-3 h-3 mr-1" />
-                                  Pending Reg
-                                </Badge>
-                              )}
-                            </div>
-                            <p className="text-sm text-muted-foreground truncate">{user.email}</p>
-                            {(user.jobTitle || user.company) && (
-                              <p className="text-xs text-muted-foreground truncate mt-0.5">
-                                {user.jobTitle}{user.jobTitle && user.company ? ' @ ' : ''}{user.company}
-                              </p>
-                            )}
-                          </div>
+                      <div className="flex items-start gap-2 mb-3">
+                        <Checkbox
+                          className="mt-1 shrink-0"
+                          checked={selectedUsers.includes(user.recordId)}
+                          onCheckedChange={(checked) => handleSelectUser(user.recordId, checked as boolean)}
+                        />
+                        <Avatar className="w-10 h-10 shrink-0">
+                          <AvatarImage src={user.image || undefined} alt={user.name || ''} />
+                          <AvatarFallback className="bg-muted text-foreground">
+                            {getInitials(user.name)}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-foreground truncate">{user.name || 'Unknown User'}</p>
+                          <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+                          {(user.jobTitle || user.company) && (
+                            <p className="text-xs text-muted-foreground truncate mt-0.5">
+                              {user.jobTitle}{user.jobTitle && user.company ? ' @ ' : ''}{user.company}
+                            </p>
+                          )}
                         </div>
-                        <Button variant="ghost" size="icon" onClick={() => toggleRowExpansion(user.recordId)}>
+                        <Button variant="ghost" size="icon" className="shrink-0 h-8 w-8" onClick={() => toggleRowExpansion(user.recordId)}>
                           {expandedRows.has(user.recordId) ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                         </Button>
                       </div>
 
-                      <div className="space-y-2 text-sm">
-                        <div className="flex items-center justify-between">
-                          <span className="text-brand font-medium flex items-center gap-1">
-                            <Shield className="w-3 h-3" />
-                            Roles:
-                          </span>
-                          <div className="flex flex-wrap gap-1 justify-end">
-                            {user.roles.length > 0 ? user.roles.map((role) => (
-                              <Badge key={role} variant="secondary" className={cn('text-xs', getRoleBadgeColor(role))}>
-                                {role}
-                              </Badge>
-                            )) : <span className="text-xs text-muted-foreground">None</span>}
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <span className="text-navy font-medium flex items-center gap-1">
-                            <CheckCircle className="w-3 h-3" />
-                            Status:
-                          </span>
-                          {getStatusBadge(user.accountStatus)}
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground font-medium flex items-center gap-1">
-                            <CreditCard className="w-3 h-3" />
-                            Tier:
-                          </span>
-                          <Badge variant="secondary" className={cn('text-xs', getMembershipBadgeColor(user.membershipTier))}>
-                            {user.membershipTier}
+                      {/* Summary badges */}
+                      <div className="flex flex-wrap items-center gap-1.5 mb-2">
+                        {user.roles.length > 0 ? user.roles.map((role) => (
+                          <Badge key={role} variant="secondary" className={cn('text-xs', getRoleBadgeColor(role))}>
+                            {role}
                           </Badge>
-                        </div>
+                        )) : <Badge variant="secondary" className="text-xs">No roles</Badge>}
+                        {getStatusBadge(user.accountStatus)}
+                        <Badge variant="secondary" className={cn('text-xs', getMembershipBadgeColor(user.membershipTier))}>
+                          {user.membershipTier}
+                        </Badge>
+                        {user.recordType === 'public_application' && (
+                          <Badge className="bg-muted text-foreground text-xs">
+                            <UserPlus className="w-3 h-3 mr-1" />
+                            Pending
+                          </Badge>
+                        )}
+                        {user.applicationStatus === 'pending' && getApplicationBadge(user.applicationStatus)}
+                        {user.mentorInfo?.isVerified && getMentorStatusBadge(user.mentorInfo.status)}
+                      </div>
 
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground font-medium flex items-center gap-1">
-                            <Calendar className="w-3 h-3" />
-                            Joined:
+                      {/* Quick info row */}
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                        <span>Joined {new Date(user.createdAt).toLocaleDateString()}</span>
+                        <span>Active: {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}</span>
+                        {user.city && (
+                          <span className="flex items-center gap-0.5">
+                            <MapPin className="w-3 h-3" />
+                            {user.city}
                           </span>
-                          <span className="text-xs text-muted-foreground">
-                            {new Date(user.createdAt).toLocaleDateString()}
-                          </span>
-                        </div>
-
-                        {user.applicationStatus === 'pending' && (
-                          <div className="flex items-center justify-between">
-                            <span className="text-info font-medium flex items-center gap-1">
-                              <Clock className="w-3 h-3" />
-                              Application:
-                            </span>
-                            {getApplicationBadge(user.applicationStatus)}
-                          </div>
+                        )}
+                        {user.mbtiType && (
+                          <Badge className="text-[10px] px-1.5 py-0 bg-badge-mentee-bg text-badge-mentee-fg border border-periwinkle/30">
+                            <Brain className="w-2.5 h-2.5 mr-0.5" />
+                            {user.mbtiType}
+                          </Badge>
                         )}
                       </div>
 
+                      {/* Expanded content - matches desktop */}
                       {expandedRows.has(user.recordId) && (
-                        <div className="mt-4 pt-4 border-t">
-                          <div className="space-y-3">
-                            {/* Activity */}
-                            <div className="grid grid-cols-2 gap-2 text-xs">
-                              <div>
-                                <p className="text-muted-foreground">Last Active</p>
-                                <p className="font-medium">{user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}</p>
+                        <div className="mt-4 pt-4 border-t space-y-4">
+                          {/* Profile Details */}
+                          {(user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio) && (
+                            <div>
+                              <p className="text-xs text-navy font-medium mb-1">Bio</p>
+                              <p className="text-sm text-muted-foreground whitespace-pre-wrap break-words">
+                                {user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio}
+                              </p>
+                            </div>
+                          )}
+
+                          {(user.mentorInfo?.expertise || user.applicationInfo?.expertise) && (
+                            <div>
+                              <p className="text-xs text-periwinkle font-medium mb-1">Expertise</p>
+                              <div className="flex flex-wrap gap-1">
+                                {(user.mentorInfo?.expertise || user.applicationInfo?.expertise || []).map((skill, idx) => (
+                                  <Badge key={idx} variant="secondary" className="text-xs bg-badge-mentee-bg text-badge-mentee-fg">{skill}</Badge>
+                                ))}
                               </div>
-                              {user.city && (
-                                <div>
-                                  <p className="text-muted-foreground">Location</p>
-                                  <p className="font-medium flex items-center gap-1">
-                                    <MapPin className="w-3 h-3" />
-                                    {user.city}
-                                  </p>
+                            </div>
+                          )}
+
+                          {(user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl) && (
+                            <div className="flex items-center gap-2 text-sm">
+                              <LinkIcon className="w-3 h-3 text-info" />
+                              <a
+                                href={user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl || '#'}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-info hover:underline truncate"
+                              >
+                                LinkedIn Profile
+                              </a>
+                            </div>
+                          )}
+
+                          {/* Mentor metrics */}
+                          {user.mentorInfo && user.mentorInfo.isVerified && (
+                            <div className="pt-2 border-t space-y-1.5">
+                              <p className="text-xs text-brand font-medium">Mentor Metrics</p>
+                              <div className="grid grid-cols-3 gap-2 text-xs">
+                                <div className="flex items-center gap-1">
+                                  <Star className="w-3 h-3 text-brand fill-brand" />
+                                  <span className="font-medium">{user.mentorInfo.avgRating?.toFixed(1) || 'N/A'}</span>
                                 </div>
+                                <div className="flex items-center gap-1">
+                                  <Users className="w-3 h-3 text-periwinkle" />
+                                  <span>{user.mentorInfo.activeMentees}/{user.mentorInfo.totalMentees} mentees</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <MessageSquare className="w-3 h-3 text-info" />
+                                  <span>{user.mentorInfo.totalSessions} sessions</span>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Mentee info */}
+                          {user.menteeInfo && (
+                            <div className="pt-2 border-t space-y-1.5">
+                              <p className="text-xs text-periwinkle font-medium">Mentee Info</p>
+                              {user.menteeInfo.careerStage && (
+                                <p className="text-xs">Career Stage: <span className="capitalize">{user.menteeInfo.careerStage.replace(/_/g, ' ')}</span></p>
                               )}
-                              {user.mbtiType && (
-                                <div>
-                                  <p className="text-muted-foreground">MBTI</p>
-                                  <Badge className="text-xs px-1.5 py-0 bg-badge-mentee-bg text-badge-mentee-fg border border-periwinkle/30">
-                                    <Brain className="w-2.5 h-2.5 mr-0.5" />
-                                    {user.mbtiType}
-                                  </Badge>
-                                </div>
-                              )}
-                              {user.mentorInfo?.isVerified && (
-                                <div>
-                                  <p className="text-muted-foreground">Mentor Status</p>
-                                  {getMentorStatusBadge(user.mentorInfo.status)}
-                                </div>
+                              {user.menteeInfo.currentIndustry && (
+                                <p className="text-xs text-muted-foreground">Industry: {formatIndustry(user.menteeInfo.currentIndustry)}</p>
                               )}
                             </div>
+                          )}
 
-                            {/* Application actions */}
-                            {user.applicationStatus === 'pending' && user.applicationInfo && (
-                              <div className="flex gap-2">
-                                <Button
-                                  size="sm"
-                                  variant="default"
-                                  className="flex-1"
-                                  onClick={() => openReviewDialog(user, 'approve')}
-                                >
-                                  <Check className="w-4 h-4 mr-1" />
-                                  Approve
-                                </Button>
-                                <Button
-                                  size="sm"
-                                  variant="destructive"
-                                  className="flex-1"
-                                  onClick={() => openReviewDialog(user, 'reject')}
-                                >
-                                  <X className="w-4 h-4 mr-1" />
-                                  Reject
-                                </Button>
+                          {/* Application info */}
+                          {user.applicationInfo && (
+                            <div className="pt-2 border-t space-y-1.5">
+                              <p className="text-xs text-info font-medium">Application ({user.applicationInfo.type})</p>
+                              <div className="text-xs space-y-1">
+                                <p>Status: <Badge variant="outline" className="ml-1 text-xs">{user.applicationInfo.status}</Badge></p>
+                                {user.applicationInfo.submittedAt && (
+                                  <p className="text-muted-foreground">
+                                    Submitted: {new Date(user.applicationInfo.submittedAt).toLocaleDateString()}
+                                  </p>
+                                )}
+                                {user.applicationInfo.availabilityHoursPerMonth && (
+                                  <p className="text-muted-foreground">
+                                    Availability: {user.applicationInfo.availabilityHoursPerMonth}h/month
+                                  </p>
+                                )}
                               </div>
+                            </div>
+                          )}
+
+                          {/* Application actions */}
+                          {user.applicationStatus === 'pending' && user.applicationInfo && (
+                            <div className="flex gap-2 pt-2">
+                              <Button
+                                size="sm"
+                                variant="default"
+                                className="flex-1"
+                                onClick={() => openReviewDialog(user, 'approve')}
+                              >
+                                <Check className="w-4 h-4 mr-1" />
+                                Approve
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                className="flex-1"
+                                onClick={() => openReviewDialog(user, 'reject')}
+                              >
+                                <X className="w-4 h-4 mr-1" />
+                                Reject
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Quick actions */}
+                          <div className="flex gap-2 pt-2">
+                            {user.recordType === 'registered_user' && (
+                              <Button variant="outline" size="sm" onClick={() => openEditDialog(user)}>
+                                <Edit className="w-3 h-3 mr-1" />
+                                Edit
+                              </Button>
                             )}
                           </div>
                         </div>
