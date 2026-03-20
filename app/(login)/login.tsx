@@ -37,17 +37,17 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
   }, [state, router]);
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Left side - Form */}
-      <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white">
+      <div className="flex-1 flex items-center justify-center py-8 px-4 sm:py-10 sm:px-6 md:py-12 lg:px-8 bg-white">
         <div className="w-full max-w-md">
           {/* Logo */}
-          <div className="mb-8 flex justify-center">
+          <div className="mb-6 sm:mb-8 flex justify-center">
             <Link
               href="/"
               className="flex items-center space-x-2 transition-all duration-200 group hover:opacity-80"
             >
-              <div className="relative w-32 h-10">
+              <div className="relative w-28 h-9 sm:w-32 sm:h-10">
                 <Image
                   src="/logos/she-sharp-logo.svg"
                   alt="She Sharp"
@@ -80,30 +80,30 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
           {/* Tab Navigation */}
           <Tabs
             defaultValue={mode === "signin" ? "signin" : "signup"}
-            className="mb-6"
+            className="mb-4 sm:mb-6"
           >
-            <TabsList className="grid w-full grid-cols-2 h-14 rounded-[50px] p-1.5">
-              <TabsTrigger value="signin" asChild className="h-full rounded-[40px]">
+            <TabsList className="grid w-full grid-cols-2 h-12 sm:h-14 rounded-[var(--radius-card-lg)] p-1.5">
+              <TabsTrigger value="signin" asChild className="h-full rounded-[var(--radius-card-md)]">
                 <Link href="/sign-in">Log in</Link>
               </TabsTrigger>
-              <TabsTrigger value="signup" asChild className="h-full rounded-[40px]">
+              <TabsTrigger value="signup" asChild className="h-full rounded-[var(--radius-card-md)]">
                 <Link href="/sign-up">Create account</Link>
               </TabsTrigger>
             </TabsList>
           </Tabs>
 
           {/* Form Card */}
-          <Card className="rounded-[32px] border-0 shadow-lg">
-            <CardContent className="p-8">
+          <Card className="card-md border-0 shadow-lg">
+            <CardContent className="p-5 sm:p-6 md:p-8">
               <div className="mb-6">
-                <h2 className="text-lg font-medium text-foreground mb-2">
+                <h2 className="text-base sm:text-lg font-medium text-foreground mb-2">
                   {mode === "signin"
                     ? "Welcome back"
                     : "Create your account and start empowering your tech career"}
                 </h2>
               </div>
 
-              <form className="space-y-4" action={formAction}>
+              <form className="space-y-3 sm:space-y-4" action={formAction}>
                 <input type="hidden" name="redirect" value={redirect || ""} />
                 <input type="hidden" name="priceId" value={priceId || ""} />
                 <input type="hidden" name="inviteId" value={inviteId || ""} />
@@ -206,7 +206,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                 )}
 
                 {state?.error && (
-                  <div className="p-3 bg-red-50 border border-red-200 rounded-md">
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-xl">
                     <div className="text-red-700 text-sm">{state.error}</div>
                   </div>
                 )}
@@ -251,16 +251,18 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
       </div>
 
       {/* Right side - Image (hidden on mobile) */}
-      <div className="hidden lg:block lg:flex-1 relative">
-        <Image
-          src="/img/signup.png"
-          alt="She Sharp Community"
-          fill
-          className="object-cover"
-          priority
-        />
-        {/* Optional gradient overlay for better aesthetics */}
-        <div className="absolute inset-0 bg-linear-to-r from-white/20 to-transparent" />
+      <div className="hidden lg:block lg:flex-1 relative p-3">
+        <div className="relative w-full h-full overflow-hidden rounded-[var(--radius-card-lg)]">
+          <Image
+            src="/img/signup.png"
+            alt="She Sharp Community"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Optional gradient overlay for better aesthetics */}
+          <div className="absolute inset-0 bg-linear-to-r from-white/20 to-transparent" />
+        </div>
       </div>
     </div>
   );

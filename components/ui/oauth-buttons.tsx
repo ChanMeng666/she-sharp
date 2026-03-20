@@ -7,7 +7,7 @@ interface OAuthButtonsProps {
 
 export function OAuthButtons({ mode }: OAuthButtonsProps) {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-2 gap-2 sm:gap-3">
       <OAuthForm provider="google">
         <Button
           type="submit"
