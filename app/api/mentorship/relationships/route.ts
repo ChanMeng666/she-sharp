@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
-import { mentorshipRelationships, users, mentorProfiles, menteeProfiles, programmes } from '@/lib/db/schema';
+import { mentorshipRelationships, users, mentorProfiles, menteeProfiles, mentorFormSubmissions, menteeFormSubmissions, programmes } from '@/lib/db/schema';
 import { eq, or } from 'drizzle-orm';
 import { getUser } from '@/lib/db/queries';
 
@@ -22,79 +22,86 @@ export async function GET(request: NextRequest) {
         )
       );
 
-    // Enrich relationships with user information
+    // Collect all unique mentor and mentee user IDs for batch fetching
+    const mentorUserIds = [...new Set(allRelationships.map(r => r.mentorUserId))];
+    const menteeUserIds = [...new Set(allRelationships.map(r => r.menteeUserId))];
+
+    // Batch fetch mentor data with form fallback
+    const mentorDataMap = new Map<number, { name: string | null; email: string; image: string | null; jobTitle: string | null; company: string | null }>();
+    if (mentorUserIds.length > 0) {
+      for (const mentorId of mentorUserIds) {
+        const [result] = await db
+          .select({
+            name: users.name,
+            email: users.email,
+            userImage: users.image,
+            profilePhotoUrl: mentorProfiles.photoUrl,
+            formPhotoUrl: mentorFormSubmissions.photoUrl,
+            profileJobTitle: mentorProfiles.jobTitle,
+            profileCompany: mentorProfiles.company,
+            formJobTitle: mentorFormSubmissions.jobTitle,
+            formCompany: mentorFormSubmissions.company,
+          })
+          .from(users)
+          .leftJoin(mentorProfiles, eq(mentorProfiles.userId, users.id))
+          .leftJoin(mentorFormSubmissions, eq(mentorFormSubmissions.userId, users.id))
+          .where(eq(users.id, mentorId))
+          .limit(1);
+
+        if (result) {
+          mentorDataMap.set(mentorId, {
+            name: result.name,
+            email: result.email,
+            image: result.formPhotoUrl || result.profilePhotoUrl || result.userImage || null,
+            jobTitle: result.formJobTitle || result.profileJobTitle || null,
+            company: result.formCompany || result.profileCompany || null,
+          });
+        }
+      }
+    }
+
+    // Batch fetch mentee data with form fallback
+    const menteeDataMap = new Map<number, { name: string | null; email: string; image: string | null; learningGoals: string[] | null }>();
+    if (menteeUserIds.length > 0) {
+      for (const menteeId of menteeUserIds) {
+        const [result] = await db
+          .select({
+            name: users.name,
+            email: users.email,
+            userImage: users.image,
+            profilePhotoUrl: menteeProfiles.photoUrl,
+            formPhotoUrl: menteeFormSubmissions.photoUrl,
+            learningGoals: menteeProfiles.learningGoals,
+          })
+          .from(users)
+          .leftJoin(menteeProfiles, eq(menteeProfiles.userId, users.id))
+          .leftJoin(menteeFormSubmissions, eq(menteeFormSubmissions.userId, users.id))
+          .where(eq(users.id, menteeId))
+          .limit(1);
+
+        if (result) {
+          menteeDataMap.set(menteeId, {
+            name: result.name,
+            email: result.email,
+            image: result.formPhotoUrl || result.profilePhotoUrl || result.userImage || null,
+            learningGoals: result.learningGoals as string[] | null,
+          });
+        }
+      }
+    }
+
+    // Enrich relationships with cached data
     const enrichedRelationships = await Promise.all(
       allRelationships.map(async (rel) => {
-        let mentorData = null;
-        let menteeData = null;
-        let mentorRole = null;
-        let menteeGoals = null;
+        const mentorData = mentorDataMap.get(rel.mentorUserId) || null;
+        const menteeData = menteeDataMap.get(rel.menteeUserId) || null;
 
-        // Get mentor user data
-        if (rel.mentorUserId) {
-          const [mentorUser] = await db
-            .select()
-            .from(users)
-            .where(eq(users.id, rel.mentorUserId))
-            .limit(1);
-          
-          if (mentorUser) {
-            mentorData = {
-              name: mentorUser.name,
-              email: mentorUser.email,
-              image: mentorUser.image,
-            };
-
-            // Get mentor profile for active relationships
-            if (rel.status === 'active') {
-              const [mentorProfile] = await db
-                .select({
-                  jobTitle: mentorProfiles.jobTitle,
-                  company: mentorProfiles.company,
-                })
-                .from(mentorProfiles)
-                .where(eq(mentorProfiles.userId, rel.mentorUserId))
-                .limit(1);
-              
-              if (mentorProfile) {
-                mentorRole = mentorProfile.jobTitle;
-                if (mentorProfile.company) {
-                  mentorRole += ` at ${mentorProfile.company}`;
-                }
-              }
-            }
-          }
-        }
-
-        // Get mentee user data
-        if (rel.menteeUserId) {
-          const [menteeUser] = await db
-            .select()
-            .from(users)
-            .where(eq(users.id, rel.menteeUserId))
-            .limit(1);
-          
-          if (menteeUser) {
-            menteeData = {
-              name: menteeUser.name,
-              email: menteeUser.email,
-              image: menteeUser.image,
-            };
-
-            // Get mentee profile for active relationships
-            if (rel.status === 'active') {
-              const [menteeProfile] = await db
-                .select({
-                  learningGoals: menteeProfiles.learningGoals,
-                })
-                .from(menteeProfiles)
-                .where(eq(menteeProfiles.userId, rel.menteeUserId))
-                .limit(1);
-              
-              if (menteeProfile) {
-                menteeGoals = menteeProfile.learningGoals;
-              }
-            }
+        // Build mentor role string
+        let mentorRole: string | null = null;
+        if (rel.status === 'active' && mentorData) {
+          mentorRole = mentorData.jobTitle || null;
+          if (mentorRole && mentorData.company) {
+            mentorRole += ` at ${mentorData.company}`;
           }
         }
 
@@ -131,7 +138,7 @@ export async function GET(request: NextRequest) {
           menteeEmail: menteeData?.email || null,
           menteeImage: menteeData?.image || null,
           mentorRole,
-          menteeGoals,
+          menteeGoals: rel.status === 'active' ? (menteeData?.learningGoals || null) : null,
           programmeId: rel.programmeId,
           programmeName,
         };

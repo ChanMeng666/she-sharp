@@ -154,14 +154,31 @@ export async function GET() {
         .where(eq(menteeProfiles.userId, user.id))
         .limit(1);
 
-      // Get active mentors
+      // Get active mentors with form → profile fallback
       const activeMentors = await db
         .select({
           relationship: mentorshipRelationships,
           mentorName: sql<string>`(SELECT name FROM users WHERE id = ${mentorshipRelationships.mentorUserId})`,
           mentorEmail: sql<string>`(SELECT email FROM users WHERE id = ${mentorshipRelationships.mentorUserId})`,
-          mentorTitle: sql<string>`(SELECT job_title FROM mentor_profiles WHERE user_id = ${mentorshipRelationships.mentorUserId})`,
-          mentorCompany: sql<string>`(SELECT company FROM mentor_profiles WHERE user_id = ${mentorshipRelationships.mentorUserId})`
+          mentorImage: sql<string>`(
+            SELECT COALESCE(
+              (SELECT photo_url FROM mentor_form_submissions WHERE user_id = ${mentorshipRelationships.mentorUserId} LIMIT 1),
+              (SELECT photo_url FROM mentor_profiles WHERE user_id = ${mentorshipRelationships.mentorUserId} LIMIT 1),
+              (SELECT image FROM users WHERE id = ${mentorshipRelationships.mentorUserId})
+            )
+          )`,
+          mentorTitle: sql<string>`(
+            SELECT COALESCE(
+              (SELECT job_title FROM mentor_form_submissions WHERE user_id = ${mentorshipRelationships.mentorUserId} LIMIT 1),
+              (SELECT job_title FROM mentor_profiles WHERE user_id = ${mentorshipRelationships.mentorUserId})
+            )
+          )`,
+          mentorCompany: sql<string>`(
+            SELECT COALESCE(
+              (SELECT company FROM mentor_form_submissions WHERE user_id = ${mentorshipRelationships.mentorUserId} LIMIT 1),
+              (SELECT company FROM mentor_profiles WHERE user_id = ${mentorshipRelationships.mentorUserId})
+            )
+          )`,
         })
         .from(mentorshipRelationships)
         .where(
@@ -195,6 +212,7 @@ export async function GET() {
           relationshipId: m.relationship.id,
           name: m.mentorName,
           email: m.mentorEmail,
+          image: m.mentorImage || null,
           title: m.mentorTitle,
           company: m.mentorCompany,
           startedAt: m.relationship.startedAt,

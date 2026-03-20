@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
-import { meetings, mentorshipRelationships, users, activityLogs, ActivityType } from '@/lib/db/schema';
+import { meetings, mentorshipRelationships, users, mentorProfiles, menteeProfiles, mentorFormSubmissions, menteeFormSubmissions, activityLogs, ActivityType } from '@/lib/db/schema';
 import { eq, and, or, gte, lte, desc, asc } from 'drizzle-orm';
 import { getUser } from '@/lib/db/queries';
 
@@ -84,15 +84,33 @@ export async function GET(request: NextRequest) {
         const isMentor = relationship.mentorUserId === user.id;
         const otherUserId = isMentor ? relationship.menteeUserId : relationship.mentorUserId;
 
-        const [otherUser] = await db
+        // Fetch other user with form → profile → user image fallback
+        const [otherUserRaw] = await db
           .select({
             name: users.name,
             email: users.email,
-            image: users.image,
+            userImage: users.image,
+            mentorProfilePhoto: mentorProfiles.photoUrl,
+            menteeProfilePhoto: menteeProfiles.photoUrl,
+            mentorFormPhoto: mentorFormSubmissions.photoUrl,
+            menteeFormPhoto: menteeFormSubmissions.photoUrl,
           })
           .from(users)
+          .leftJoin(mentorProfiles, eq(mentorProfiles.userId, users.id))
+          .leftJoin(menteeProfiles, eq(menteeProfiles.userId, users.id))
+          .leftJoin(mentorFormSubmissions, eq(mentorFormSubmissions.userId, users.id))
+          .leftJoin(menteeFormSubmissions, eq(menteeFormSubmissions.userId, users.id))
           .where(eq(users.id, otherUserId))
           .limit(1);
+
+        const otherUser = otherUserRaw ? {
+          name: otherUserRaw.name,
+          email: otherUserRaw.email,
+          image: (isMentor
+            ? (otherUserRaw.menteeFormPhoto || otherUserRaw.menteeProfilePhoto)
+            : (otherUserRaw.mentorFormPhoto || otherUserRaw.mentorProfilePhoto)
+          ) || otherUserRaw.userImage || null,
+        } : null;
 
         return {
           ...meeting,

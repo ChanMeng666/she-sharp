@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
-import { mentorProfiles, users, userRoles } from '@/lib/db/schema';
+import { mentorProfiles, mentorFormSubmissions, users, userRoles } from '@/lib/db/schema';
 import { eq, and, ilike, or, sql, gte, lte } from 'drizzle-orm';
 
 export async function GET(request: NextRequest) {
@@ -55,20 +55,27 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Get mentors with their user info
-    const mentors = await db
+    // Get mentors with their user info and form submission data
+    const rawMentors = await db
       .select({
         id: mentorProfiles.id,
         userId: mentorProfiles.userId,
         name: users.name,
         email: users.email,
-        image: users.image,
+        userImage: users.image,
+        profilePhotoUrl: mentorProfiles.photoUrl,
+        formPhotoUrl: mentorFormSubmissions.photoUrl,
         expertiseAreas: mentorProfiles.expertiseAreas,
         yearsExperience: mentorProfiles.yearsExperience,
-        jobTitle: mentorProfiles.jobTitle,
-        company: mentorProfiles.company,
-        bio: mentorProfiles.bio,
-        linkedinUrl: mentorProfiles.linkedinUrl,
+        profileJobTitle: mentorProfiles.jobTitle,
+        profileCompany: mentorProfiles.company,
+        profileBio: mentorProfiles.bio,
+        profileLinkedinUrl: mentorProfiles.linkedinUrl,
+        formJobTitle: mentorFormSubmissions.jobTitle,
+        formCompany: mentorFormSubmissions.company,
+        formBio: mentorFormSubmissions.bio,
+        formLinkedinUrl: mentorFormSubmissions.linkedinUrl,
+        formYearsExperience: mentorFormSubmissions.yearsExperience,
         availabilityHoursPerMonth: mentorProfiles.availabilityHoursPerMonth,
         maxMentees: mentorProfiles.maxMentees,
         currentMenteesCount: mentorProfiles.currentMenteesCount,
@@ -79,10 +86,32 @@ export async function GET(request: NextRequest) {
       .from(mentorProfiles)
       .innerJoin(users, eq(mentorProfiles.userId, users.id))
       .innerJoin(userRoles, eq(users.id, userRoles.userId))
+      .leftJoin(mentorFormSubmissions, eq(mentorProfiles.userId, mentorFormSubmissions.userId))
       .where(and(...conditions))
       .limit(limit)
       .offset(offset)
-      .orderBy(sql`${mentorProfiles.yearsExperience} DESC NULLS LAST`);
+      .orderBy(sql`COALESCE(${mentorFormSubmissions.yearsExperience}, ${mentorProfiles.yearsExperience}) DESC NULLS LAST`);
+
+    // Apply form → profile → user fallback chain
+    const mentors = rawMentors.map(m => ({
+      id: m.id,
+      userId: m.userId,
+      name: m.name,
+      email: m.email,
+      image: m.formPhotoUrl || m.profilePhotoUrl || m.userImage || null,
+      expertiseAreas: m.expertiseAreas,
+      yearsExperience: m.formYearsExperience ?? m.yearsExperience,
+      jobTitle: m.formJobTitle || m.profileJobTitle,
+      company: m.formCompany || m.profileCompany,
+      bio: m.formBio || m.profileBio,
+      linkedinUrl: m.formLinkedinUrl || m.profileLinkedinUrl,
+      availabilityHoursPerMonth: m.availabilityHoursPerMonth,
+      maxMentees: m.maxMentees,
+      currentMenteesCount: m.currentMenteesCount,
+      isAcceptingMentees: m.isAcceptingMentees,
+      profileCompletedAt: m.profileCompletedAt,
+      verifiedAt: m.verifiedAt,
+    }));
 
     // Get total count for pagination
     const countQuery = await db
@@ -90,6 +119,7 @@ export async function GET(request: NextRequest) {
       .from(mentorProfiles)
       .innerJoin(users, eq(mentorProfiles.userId, users.id))
       .innerJoin(userRoles, eq(users.id, userRoles.userId))
+      .leftJoin(mentorFormSubmissions, eq(mentorProfiles.userId, mentorFormSubmissions.userId))
       .where(and(...conditions));
 
     const totalCount = Number(countQuery[0]?.count || 0);
