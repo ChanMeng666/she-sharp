@@ -386,10 +386,11 @@ All endpoints listed below have been audited and confirmed to use the `form → 
 | Endpoint | File | Status |
 |----------|------|--------|
 | `GET /api/mentors` | `app/api/mentors/route.ts` | Fixed (was profile-only) |
-| `GET /api/mentors/[id]` | `app/api/mentors/[id]/route.ts` | Correct |
+| `GET /api/mentors/[id]` | `app/api/mentors/[id]/route.ts` | Fixed (base object was users-only) |
+| `GET /api/mentees/[id]` | `app/api/mentees/[id]/route.ts` | Fixed (base object was users-only) |
 | `GET /api/user/profile-photo` | `app/api/user/profile-photo/route.ts` | Fixed (was missing form) |
-| `GET /api/user/mentor-profile` | `app/api/user/mentor-profile/route.ts` | Correct |
-| `GET /api/user/mentee-profile` | `app/api/user/mentee-profile/route.ts` | Correct |
+| `GET /api/user/mentor-profile` | `app/api/user/mentor-profile/route.ts` | Fixed (photoUrl priority was reversed) |
+| `GET /api/user/mentee-profile` | `app/api/user/mentee-profile/route.ts` | Fixed (photoUrl was missing profile fallback) |
 | `GET /api/mentorship/relationships` | `app/api/mentorship/relationships/route.ts` | Fixed (was users-only) |
 | `GET /api/meetings` | `app/api/meetings/route.ts` | Fixed (was users-only) |
 | `GET /api/dashboard/overview` | `app/api/dashboard/overview/route.ts` | Fixed (was profile-only) |
@@ -398,6 +399,7 @@ All endpoints listed below have been audited and confirmed to use the `form → 
 | `GET /api/admin/mentors/applications` | `app/api/admin/mentors/applications/route.ts` | Correct |
 | `GET /api/admin/mentees/applications` | `app/api/admin/mentees/applications/route.ts` | Correct |
 | `GET /api/admin/mentors/relationships` | `app/api/admin/mentors/relationships/route.ts` | Correct |
+| `GET /api/admin/mentors/meetings` | `app/api/admin/mentors/meetings/route.ts` | Fixed (was users-only, no photos) |
 | `GET /api/admin/matching` | `app/api/admin/matching/route.ts` | Correct |
 | Matching service functions | `lib/matching/service.ts` | Correct |
 | Queue service functions | `lib/matching/queue-service.ts` | Correct |
