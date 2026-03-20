@@ -235,10 +235,12 @@ export async function getWaitingQueue(
       userName: users.name,
       userEmail: users.email,
       userImage: users.image,
+      profilePhotoUrl: menteeProfiles.photoUrl,
       menteeForm: menteeFormSubmissions,
     })
     .from(menteeWaitingQueue)
     .innerJoin(users, eq(menteeWaitingQueue.menteeUserId, users.id))
+    .leftJoin(menteeProfiles, eq(menteeWaitingQueue.menteeUserId, menteeProfiles.userId))
     .leftJoin(menteeFormSubmissions, eq(menteeWaitingQueue.menteeUserId, menteeFormSubmissions.userId))
     .where(
       programmeId
@@ -255,7 +257,7 @@ export async function getWaitingQueue(
     menteeUserId: e.queue.menteeUserId,
     menteeName: e.userName || 'Unknown',
     menteeEmail: e.userEmail,
-    menteeImage: e.userImage,
+    menteeImage: e.menteeForm?.photoUrl || e.profilePhotoUrl || e.userImage || null,
     joinedAt: e.queue.joinedAt,
     status: e.queue.status as QueueStatus,
     priority: e.queue.priority || 0,
