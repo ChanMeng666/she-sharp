@@ -48,10 +48,10 @@ export function MentorResponsibilitiesSection() {
   };
 
   return (
-    <Section className="py-16 xl:py-24 2xl:py-32 bg-white">
+    <Section className="py-16 bg-white">
       <Container size="full">
         <div className="max-w-8xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+          <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10 items-start">
             <div>
               <h2 className="text-display-sm text-foreground mb-6">
                 What it means to be a <span className="text-brand">mentor</span>
@@ -70,7 +70,7 @@ export function MentorResponsibilitiesSection() {
                     <Collapsible key={key} open={isOpen}>
                       <CollapsibleTrigger
                         onClick={() => toggleItem(key)}
-                        className="w-full bg-white rounded-[100px] p-4 shadow-sm hover:shadow-md transition-shadow"
+                        className="w-full bg-white rounded-full p-4 shadow-sm hover:shadow-md transition-shadow"
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
@@ -103,7 +103,7 @@ export function MentorResponsibilitiesSection() {
 
             {/* Image with overlay info */}
             <div className="relative">
-              <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl">
+              <div className="relative aspect-square card-sm overflow-hidden shadow-xl">
                 <Image
                   src="/img/scraped/site/mentorship/66e7d6d1507e385502912e7f_IMG_9898_a19afc43.jpg"
                   alt="Mentorship meeting"
@@ -114,14 +114,14 @@ export function MentorResponsibilitiesSection() {
                 <div className="absolute inset-0 bg-linear-to-t from-navy-dark/60 via-transparent to-transparent" />
 
                 {/* Overlay content */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 md:p-6 text-white">
                   <h3 className="text-xl font-semibold mb-2">Mentorship in Action</h3>
                   <p className="text-base opacity-90">Guiding the next generation of women in STEM</p>
                 </div>
               </div>
 
               {/* Floating commitment card */}
-              <div className="absolute -top-4 -right-4 bg-periwinkle-dark/70 backdrop-blur-sm rounded-lg p-6 shadow-lg hidden lg:block">
+              <div className="absolute -top-4 -right-4 bg-periwinkle-dark/70 backdrop-blur-sm card-sm p-6 shadow-lg hidden lg:block">
                 <p className="text-white font-semibold text-base">Time Commitment</p>
                 <p className="text-white text-base mt-1">2-4 hours per month</p>
               </div>
