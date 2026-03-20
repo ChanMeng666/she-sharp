@@ -44,6 +44,12 @@ export const navigationConfig: {
       icon: Users,
       children: [
         {
+          title: "About She Sharp",
+          href: "/about",
+          description: "Our mission, vision, and the story behind She Sharp",
+          icon: Users,
+        },
+        {
           title: "Our History",
           href: "/about#timeline",
           description: "A deep dive into our journey since 2014",
@@ -124,6 +130,12 @@ export const navigationConfig: {
       href: "/resources",
       icon: Library,
       children: [
+        {
+          title: "Resource Library",
+          href: "/resources",
+          description: "Explore all resources including newsletters and media",
+          icon: Library,
+        },
         {
           title: "Photo Gallery",
           href: "/resources/photo-gallery",
