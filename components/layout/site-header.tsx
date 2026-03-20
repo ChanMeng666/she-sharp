@@ -147,7 +147,7 @@ export function SiteHeader() {
                                 <Link
                                   href={child.href}
                                   onClick={(e) => handleSmoothScroll(e, child.href)}
-                                  className="flex items-start gap-3 rounded-lg p-3 transition-all duration-150 hover:bg-[#f7e5f3]/80 focus:bg-[#f7e5f3]/80 group"
+                                  className="flex items-start gap-3 rounded-[26px] p-3 transition-all duration-150 hover:bg-[#f7e5f3]/80 focus:bg-[#f7e5f3]/80 group"
                                 >
                                   {child.icon && (
                                     <div className="mt-0.5">
