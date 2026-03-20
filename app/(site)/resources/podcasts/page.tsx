@@ -18,9 +18,9 @@ export default function PodcastsPage() {
   const showEmbedUrl = getSpotifyShowEmbedUrl();
 
   return (
-    <Section spacing="section" className="py-24 lg:py-36">
+    <Section spacing="section" className="py-16 md:py-24 lg:py-32">
       <Container size="full">
-        <div className="mb-10 md:mb-14 max-w-3xl">
+        <div className="mb-8 sm:mb-10 md:mb-14 lg:mb-16 max-w-3xl">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
             She Sharp Talks
           </h1>
@@ -32,8 +32,8 @@ export default function PodcastsPage() {
         </div>
 
         {/* Show embed */}
-        <div className="mb-12">
-          <div className="overflow-hidden rounded-3xl shadow-lg">
+        <div className="mb-8 sm:mb-10 md:mb-12">
+          <div className="card-responsive-lg shadow-lg">
             <iframe
               src={showEmbedUrl}
               width="100%"
@@ -47,15 +47,15 @@ export default function PodcastsPage() {
         </div>
 
         {/* Featured episodes */}
-        <div className="space-y-6">
-          <h2 className="text-xl md:text-2xl font-semibold">
+        <div className="space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold">
             Featured episodes
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
             {FEATURED_EPISODES.map((episode) => (
               <div
                 key={episode.id}
-                className="overflow-hidden rounded-3xl shadow-md bg-background"
+                className="card-responsive-sm shadow-md bg-background"
               >
                 <iframe
                   src={getSpotifyEpisodeEmbedUrl(episode.id)}
