@@ -34,7 +34,7 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
             <SidebarTrigger className="-ml-1" />
           </div>
         </header>
-        <div className="flex-1 p-3 sm:p-4 md:p-6 lg:p-8">
+        <div className="flex-1 min-w-0 overflow-x-hidden p-3 sm:p-4 md:p-6 lg:p-8">
           {children}
         </div>
       </SidebarInset>

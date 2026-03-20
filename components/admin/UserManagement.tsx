@@ -31,6 +31,8 @@ import {
   Check,
   X,
   Phone,
+  CreditCard,
+  Calendar,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -993,6 +995,26 @@ export default function UserManagement() {
                           {getStatusBadge(user.accountStatus)}
                         </div>
 
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground font-medium flex items-center gap-1">
+                            <CreditCard className="w-3 h-3" />
+                            Tier:
+                          </span>
+                          <Badge variant="secondary" className={cn('text-xs', getMembershipBadgeColor(user.membershipTier))}>
+                            {user.membershipTier}
+                          </Badge>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground font-medium flex items-center gap-1">
+                            <Calendar className="w-3 h-3" />
+                            Joined:
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {new Date(user.createdAt).toLocaleDateString()}
+                          </span>
+                        </div>
+
                         {user.applicationStatus === 'pending' && (
                           <div className="flex items-center justify-between">
                             <span className="text-info font-medium flex items-center gap-1">
@@ -1006,8 +1028,40 @@ export default function UserManagement() {
 
                       {expandedRows.has(user.recordId) && (
                         <div className="mt-4 pt-4 border-t">
-                          {/* Simplified mobile expanded content */}
                           <div className="space-y-3">
+                            {/* Activity */}
+                            <div className="grid grid-cols-2 gap-2 text-xs">
+                              <div>
+                                <p className="text-muted-foreground">Last Active</p>
+                                <p className="font-medium">{user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}</p>
+                              </div>
+                              {user.city && (
+                                <div>
+                                  <p className="text-muted-foreground">Location</p>
+                                  <p className="font-medium flex items-center gap-1">
+                                    <MapPin className="w-3 h-3" />
+                                    {user.city}
+                                  </p>
+                                </div>
+                              )}
+                              {user.mbtiType && (
+                                <div>
+                                  <p className="text-muted-foreground">MBTI</p>
+                                  <Badge className="text-xs px-1.5 py-0 bg-badge-mentee-bg text-badge-mentee-fg border border-periwinkle/30">
+                                    <Brain className="w-2.5 h-2.5 mr-0.5" />
+                                    {user.mbtiType}
+                                  </Badge>
+                                </div>
+                              )}
+                              {user.mentorInfo?.isVerified && (
+                                <div>
+                                  <p className="text-muted-foreground">Mentor Status</p>
+                                  {getMentorStatusBadge(user.mentorInfo.status)}
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Application actions */}
                             {user.applicationStatus === 'pending' && user.applicationInfo && (
                               <div className="flex gap-2">
                                 <Button
