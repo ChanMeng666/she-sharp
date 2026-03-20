@@ -34,7 +34,7 @@ export function MentorshipHeroSection({
     <section className="w-full bg-background">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full">
         {/* Top Left: Customizable Background with Text */}
-        <div className={`${topLeftBgColor} ${topLeftTextColor} flex items-center justify-center p-6 sm:p-8 md:p-12 lg:p-16 min-h-[280px] sm:min-h-[350px] md:min-h-[500px]`}>
+        <div className={`${topLeftBgColor} ${topLeftTextColor} flex items-center justify-center p-6 sm:p-8 md:p-12 lg:p-16 min-h-[200px] sm:min-h-[280px] md:min-h-[400px] lg:min-h-[500px]`}>
           <div className="text-center md:text-left">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight leading-tight">
               {typeof topLeftTitle === 'string' ? (
@@ -82,7 +82,7 @@ export function MentorshipHeroSection({
         </div>
 
         {/* Bottom Right: White Background with Text */}
-        <div className={`${bottomRightBgColor} text-foreground flex items-center justify-center p-6 sm:p-8 md:p-12 lg:p-16 min-h-[280px] sm:min-h-[350px] md:min-h-[500px]`}>
+        <div className={`${bottomRightBgColor} text-foreground flex items-center justify-center p-6 sm:p-8 md:p-12 lg:p-16 min-h-[200px] sm:min-h-[280px] md:min-h-[400px] lg:min-h-[500px]`}>
           <div className="max-w-lg">
             <h2 className="text-display-sm text-navy mb-6 leading-tight">
               {bottomRightTitle}

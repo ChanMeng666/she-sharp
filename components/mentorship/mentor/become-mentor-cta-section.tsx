@@ -39,30 +39,30 @@ export function BecomeMentorCTASection() {
       {/* Background decoration */}
       <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
 
-      <div className="relative z-10 py-16 md:py-20 md:mb-30">
+      <div className="relative z-10 py-16 md:py-20">
         <Container size="full">
           <div className="max-w-8xl mx-auto">
             <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center text-white">
               {/* Left: Title + Countdown */}
               <div className="flex flex-col gap-12">
                 <div>
-                  <h2 className="text-display-sm text-foreground mb-4 text-left">
+                  <h2 className="text-display-sm text-white mb-4 text-left">
                     Interested in Becoming A Mentor?
                   </h2>
-                  <p className="text-base md:text-lg text-muted-foreground max-w-2xl text-left">
+                  <p className="text-base md:text-lg text-white/80 max-w-2xl text-left">
                     Join our community of mentors and help shape the next generation of women in STEM
                   </p>
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <p className="text-lg opacity-80 text-left font-semibold">
+                  <p className="text-lg text-white/80 text-left font-semibold">
                     Application Deadline
                   </p>
                   <div className="flex gap-4 flex-wrap max-w-xl">
                     {Object.entries(timeLeft).map(([unit, value]) => (
                       <Card
                         key={unit}
-                        className="bg-white/10 backdrop-blur-sm border-white/20 flex-1 min-w-[100px]"
+                        className="bg-white/10 backdrop-blur-sm border-white/20 flex-1 min-w-[70px] sm:min-w-[100px] card-sm"
                       >
                         <CardContent className="p-4 text-center">
                           <div className="text-3xl font-bold text-white">{value}</div>
