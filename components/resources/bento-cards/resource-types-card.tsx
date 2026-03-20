@@ -39,14 +39,14 @@ const resourceTypes = [
  */
 export function ResourceTypesCard() {
   return (
-    <Card className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 rounded-[50px]">
-      <CardHeader className="pb-3">
+    <Card className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 rounded-[var(--radius-card-sm)] md:rounded-[var(--radius-card-md)] lg:rounded-[var(--radius-card-lg)] overflow-hidden">
+      <CardHeader className="pb-2 sm:pb-3">
         <CardTitle className="text-lg">Resources</CardTitle>
         <CardDescription>
           Explore our content library
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex items-center justify-center gap-4">
+      <CardContent className="flex items-center justify-center gap-3 sm:gap-4 px-4 pb-4 sm:px-5 sm:pb-5 md:px-6 md:pb-6">
         {resourceTypes.map((type) => (
           <div
             key={type.label}

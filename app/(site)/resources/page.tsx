@@ -15,7 +15,7 @@ export default function ResourcesPage() {
       <Section className="bg-transparent py-16 md:py-24 lg:py-32" noPadding>
         <Container size="full">
           <div className="mb-8 md:mb-12">
-            <h1 className="text-center text-4xl font-bold tracking-tight">
+            <h1 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
               Resource Library
             </h1>
             <p className="text-center text-lg text-muted-foreground mt-2">

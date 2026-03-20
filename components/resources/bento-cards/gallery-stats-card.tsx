@@ -20,7 +20,7 @@ interface GalleryStatsCardProps {
  */
 export function GalleryStatsCard({ stats }: GalleryStatsCardProps) {
   return (
-    <Card className="flex h-full flex-col justify-between bg-linear-to-br from-purple-50 to-purple-100/50 dark:from-purple-950/50 dark:to-purple-900/30 p-8 border-purple-200/50 dark:border-purple-800/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 rounded-[50px]">
+    <Card className="flex h-full flex-col justify-between bg-linear-to-br from-purple-50 to-purple-100/50 dark:from-purple-950/50 dark:to-purple-900/30 p-4 sm:p-5 md:p-6 lg:p-8 border-purple-200/50 dark:border-purple-800/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 rounded-[var(--radius-card-sm)] md:rounded-[var(--radius-card-md)] lg:rounded-[var(--radius-card-lg)] overflow-hidden">
       {/* Header */}
       <div className="space-y-6">
         <div className="flex items-center gap-3">

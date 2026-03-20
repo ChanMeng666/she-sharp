@@ -15,7 +15,7 @@ interface ImpactReportsCardProps {
  */
 export function ImpactReportsCard({ reports }: ImpactReportsCardProps) {
   return (
-    <Card className="relative h-full w-full overflow-hidden transition-all duration-300 hover:shadow-lg rounded-[50px] group">
+    <Card className="relative h-full w-full overflow-hidden transition-all duration-300 hover:shadow-lg rounded-[var(--radius-card-sm)] md:rounded-[var(--radius-card-md)] lg:rounded-[var(--radius-card-lg)] group">
       {/* Background Image */}
       <img
         src="/img/impact.jpg"
@@ -24,11 +24,11 @@ export function ImpactReportsCard({ reports }: ImpactReportsCardProps) {
       />
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/5" />
 
-      <div className="relative z-10 p-8 flex flex-col h-full">
+      <div className="relative z-10 p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col h-full">
         {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3 mb-4 md:mb-6">
           <div className="p-2.5 bg-white/20 backdrop-blur-sm rounded-xl">
             <FileText className="h-5 w-5 text-white" />
           </div>

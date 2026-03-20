@@ -11,7 +11,7 @@ import {
 export const metadata: Metadata = {
   title: "Podcasts | She Sharp Talks",
   description:
-    "Listen to She Sharp Talks – conversations with women leading innovation in technology.",
+    "Listen to She Sharp Talks \u2013 conversations with women leading innovation in technology.",
 };
 
 export default function PodcastsPage() {
@@ -74,4 +74,3 @@ export default function PodcastsPage() {
     </Section>
   );
 }
-

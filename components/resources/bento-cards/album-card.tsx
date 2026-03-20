@@ -31,7 +31,7 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
         />
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/25 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/15 to-transparent" />
 
         {/* View Photos Badge */}
         <div className="absolute top-4 right-4 sm:top-5 sm:right-5 md:top-6 md:right-6 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

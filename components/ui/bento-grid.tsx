@@ -150,8 +150,8 @@ export const BentoGrid2x2 = ({
       initial="hidden"
       animate="visible"
       className={cn(
-        "grid w-full grid-cols-1 gap-6 md:grid-cols-2 md:grid-rows-2",
-        "auto-rows-[minmax(240px,auto)]",
+        "grid w-full grid-cols-1 gap-4 sm:gap-5 md:gap-6 md:grid-cols-2 md:grid-rows-2",
+        "auto-rows-[minmax(200px,auto)] md:auto-rows-[minmax(240px,auto)]",
         className
       )}
     >

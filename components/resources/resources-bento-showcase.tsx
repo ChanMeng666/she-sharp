@@ -17,7 +17,7 @@ import { SPOTIFY_SHOW } from "@/lib/data/spotify-podcasts";
 export function ResourcesBentoShowcase() {
   return (
     <BentoGrid2x2
-      className="max-w-5xl mx-auto"
+      className="max-w-6xl mx-auto"
       // Photo Gallery (links to /resources/photo-gallery)
       topLeft={<PhotoGalleryPreviewCard />}
       // Podcast (links to /resources/podcasts)

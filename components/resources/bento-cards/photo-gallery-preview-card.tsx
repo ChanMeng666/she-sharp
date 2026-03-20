@@ -25,7 +25,7 @@ export function PhotoGalleryPreviewCard() {
         )}
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
         {/* Badge */}
         <div className="absolute top-4 left-4 sm:top-5 sm:left-5 md:top-6 md:left-6 z-10">
@@ -45,12 +45,11 @@ export function PhotoGalleryPreviewCard() {
               Browse photo albums from our workshops, networking events, and community gatherings.
             </p>
           </div>
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/90 text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-            <ArrowUpRight className="h-6 w-6" />
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/90 text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+            <ArrowUpRight className="h-5 w-5" />
           </div>
         </div>
       </Card>
     </Link>
   );
 }
-
