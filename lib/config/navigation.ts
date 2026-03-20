@@ -16,6 +16,7 @@ import {
   Mail,
   ChartGantt,
   UsersRound,
+  Heart,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -84,6 +85,12 @@ export const navigationConfig: {
           description: "Apply to share your expertise and guide others",
           icon: Award,
         },
+        {
+          title: "Meet Our Mentors",
+          href: "/mentorship#mentors-list",
+          description: "Browse profiles of our experienced mentors",
+          icon: UsersRound,
+        },
       ],
     },
     {
@@ -103,6 +110,12 @@ export const navigationConfig: {
           href: "/sponsors/corporate-sponsorship",
           description: "Partner with us to support women in STEM",
           icon: Building2,
+        },
+        {
+          title: "Donate",
+          href: "/donate",
+          description: "Support our mission to empower women in STEM",
+          icon: Heart,
         },
       ],
     },
