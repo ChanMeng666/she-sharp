@@ -44,7 +44,7 @@ export function StickyApplyBar({
           <Button
             asChild
             size="default"
-            className="bg-white border-none text-foreground hover:bg-white/80 hover:text-foreground font-bold px-6 md:px-8 h-11 shadow-md group transition-all duration-300 hover:shadow-lg hover:scale-[1.02] w-full sm:w-auto"
+            className="bg-white border-none text-foreground hover:bg-white/80 hover:text-foreground font-bold px-6 sm:px-8 h-11 shadow-md group transition-all duration-300 hover:shadow-lg hover:scale-[1.02] w-full sm:w-auto"
           >
             <Link href={href} className="inline-flex items-center justify-center gap-2">
               {label}

@@ -22,18 +22,18 @@ export function BenefitsSection({
   benefits,
 }: BenefitsSectionProps) {
   return (
-    <Section className="py-16 xl:py-24 2xl:py-32 bg-muted">
+    <Section className="py-16 bg-muted">
       <Container size="full">
         <div className="max-w-8xl mx-auto ">
           {/* Header */}
-          <div className="text-left mb-12 md:mb-16">
+          <div className="text-left mb-8 sm:mb-10 md:mb-12">
             <h2 className="text-display-sm text-foreground mb-4">
               {title}
             </h2>
           </div>
 
           {/* Benefits Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 py-4 md:py-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10 py-4 md:py-6">
             {benefits.map((benefit, index) => {
               const Icon = benefit.icon;
 
@@ -43,7 +43,7 @@ export function BenefitsSection({
                   className="flex flex-col items-start text-left"
                 >
                   {/* Icon */}
-                  <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 border-2 border-white bg-white">
+                  <div className="w-16 h-16 card-sm flex items-center justify-center mb-6 border-2 border-white bg-white">
                     <Icon
                       className="w-8 h-8 text-brand"
                       strokeWidth={1.5}
