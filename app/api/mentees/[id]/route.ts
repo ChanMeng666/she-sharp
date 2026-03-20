@@ -71,18 +71,29 @@ export async function GET(
       );
     }
 
-    // Build the mentee object manually to avoid any serialization issues
+    // Get form submission data for fallback (always needed for base fields like photo)
+    const [menteeForm] = await db
+      .select({
+        photoUrl: menteeFormSubmissions.photoUrl,
+        bio: menteeFormSubmissions.bio,
+        currentStage: menteeFormSubmissions.currentStage,
+      })
+      .from(menteeFormSubmissions)
+      .where(eq(menteeFormSubmissions.userId, menteeProfile.userId))
+      .limit(1);
+
+    // Build the mentee object with form → profile → user fallback
     const mentee = {
       id: menteeProfile.id,
       userId: menteeProfile.userId,
       name: user.name,
       email: user.email,
-      image: user.image || null,
+      image: menteeForm?.photoUrl || menteeProfile.photoUrl || user.image || null,
       learningGoals: menteeProfile.learningGoals || [],
-      careerStage: menteeProfile.careerStage || null,
+      careerStage: menteeForm?.currentStage || menteeProfile.careerStage || null,
       preferredExpertiseAreas: menteeProfile.preferredExpertiseAreas || [],
       preferredMeetingFrequency: menteeProfile.preferredMeetingFrequency || null,
-      bio: menteeProfile.bio || null,
+      bio: menteeForm?.bio || menteeProfile.bio || null,
       currentChallenge: menteeProfile.currentChallenge || null,
       profileCompletedAt: menteeProfile.profileCompletedAt || null,
     };

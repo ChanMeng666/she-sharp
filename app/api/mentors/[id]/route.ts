@@ -71,19 +71,33 @@ export async function GET(
       );
     }
 
-    // Build the mentor object manually to avoid any serialization issues
+    // Get form submission data for fallback (always needed for base fields like photo)
+    const [mentorForm] = await db
+      .select({
+        photoUrl: mentorFormSubmissions.photoUrl,
+        jobTitle: mentorFormSubmissions.jobTitle,
+        company: mentorFormSubmissions.company,
+        bio: mentorFormSubmissions.bio,
+        linkedinUrl: mentorFormSubmissions.linkedinUrl,
+        yearsExperience: mentorFormSubmissions.yearsExperience,
+      })
+      .from(mentorFormSubmissions)
+      .where(eq(mentorFormSubmissions.userId, mentorProfile.userId))
+      .limit(1);
+
+    // Build the mentor object with form → profile → user fallback
     const mentor = {
       id: mentorProfile.id,
       userId: mentorProfile.userId,
       name: user.name,
       email: user.email,
-      image: user.image || null,
+      image: mentorForm?.photoUrl || mentorProfile.photoUrl || user.image || null,
       expertiseAreas: mentorProfile.expertiseAreas || [],
-      yearsExperience: mentorProfile.yearsExperience || 0,
-      jobTitle: mentorProfile.jobTitle || null,
-      company: mentorProfile.company || null,
-      bio: mentorProfile.bio || null,
-      linkedinUrl: mentorProfile.linkedinUrl || null,
+      yearsExperience: mentorForm?.yearsExperience ?? mentorProfile.yearsExperience ?? 0,
+      jobTitle: mentorForm?.jobTitle || mentorProfile.jobTitle || null,
+      company: mentorForm?.company || mentorProfile.company || null,
+      bio: mentorForm?.bio || mentorProfile.bio || null,
+      linkedinUrl: mentorForm?.linkedinUrl || mentorProfile.linkedinUrl || null,
       availabilityHoursPerMonth: mentorProfile.availabilityHoursPerMonth || 0,
       maxMentees: mentorProfile.maxMentees || 3,
       currentMenteesCount: mentorProfile.currentMenteesCount || 0,

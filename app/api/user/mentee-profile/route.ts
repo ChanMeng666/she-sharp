@@ -44,7 +44,7 @@ export async function GET() {
       profileCompletedAt: profile?.profileCompletedAt,
 
       // From mentee_form_submissions (additional fields)
-      photoUrl: formData?.photoUrl || '',
+      photoUrl: formData?.photoUrl || profile?.photoUrl || '',
       fullName: formData?.fullName || user.name || '',
       gender: formData?.gender || '',
       age: formData?.age || null,

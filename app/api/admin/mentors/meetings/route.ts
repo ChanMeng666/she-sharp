@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
-import { meetings, mentorshipRelationships, users } from '@/lib/db/schema';
+import { meetings, mentorshipRelationships, users, mentorFormSubmissions, menteeFormSubmissions, mentorProfiles, menteeProfiles } from '@/lib/db/schema';
 import { eq, sql, desc, and, gte, lte } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/pg-core';
 
@@ -20,7 +20,7 @@ export const GET = withRoles(
       const limit = parseInt(searchParams.get('limit') || '50');
       const offset = parseInt(searchParams.get('offset') || '0');
 
-      // Fetch meetings with participant info
+      // Fetch meetings with participant info and form fallback
       const meetingsList = await db
         .select({
           id: meetings.id,
@@ -35,27 +35,41 @@ export const GET = withRoles(
           menteeFeedback: meetings.menteeFeedback,
           rating: meetings.rating,
           createdAt: meetings.createdAt,
-          // Mentor info
+          // Mentor info with form fallback
           mentorName: mentorUser.name,
           mentorEmail: mentorUser.email,
-          // Mentee info
+          mentorUserImage: mentorUser.image,
+          mentorFormName: mentorFormSubmissions.fullName,
+          mentorFormPhoto: mentorFormSubmissions.photoUrl,
+          mentorProfilePhoto: mentorProfiles.photoUrl,
+          // Mentee info with form fallback
           menteeName: menteeUser.name,
           menteeEmail: menteeUser.email,
+          menteeUserImage: menteeUser.image,
+          menteeFormName: menteeFormSubmissions.fullName,
+          menteeFormPhoto: menteeFormSubmissions.photoUrl,
+          menteeProfilePhoto: menteeProfiles.photoUrl,
         })
         .from(meetings)
         .innerJoin(mentorshipRelationships, eq(meetings.relationshipId, mentorshipRelationships.id))
         .innerJoin(mentorUser, eq(mentorshipRelationships.mentorUserId, mentorUser.id))
         .innerJoin(menteeUser, eq(mentorshipRelationships.menteeUserId, menteeUser.id))
+        .leftJoin(mentorFormSubmissions, eq(mentorshipRelationships.mentorUserId, mentorFormSubmissions.userId))
+        .leftJoin(mentorProfiles, eq(mentorshipRelationships.mentorUserId, mentorProfiles.userId))
+        .leftJoin(menteeFormSubmissions, eq(mentorshipRelationships.menteeUserId, menteeFormSubmissions.userId))
+        .leftJoin(menteeProfiles, eq(mentorshipRelationships.menteeUserId, menteeProfiles.userId))
         .orderBy(desc(meetings.scheduledAt))
         .limit(limit)
         .offset(offset);
 
-      // Format meetings data
+      // Format meetings data with form → profile → user fallback
       const meetingsData = meetingsList.map(meeting => ({
         id: meeting.id,
         relationshipId: meeting.relationshipId,
-        mentor: meeting.mentorName,
-        mentee: meeting.menteeName,
+        mentor: meeting.mentorFormName || meeting.mentorName,
+        mentorImage: meeting.mentorFormPhoto || meeting.mentorProfilePhoto || meeting.mentorUserImage || null,
+        mentee: meeting.menteeFormName || meeting.menteeName,
+        menteeImage: meeting.menteeFormPhoto || meeting.menteeProfilePhoto || meeting.menteeUserImage || null,
         date: meeting.scheduledAt,
         duration: meeting.durationMinutes || 0,
         type: meeting.meetingLink ? 'video' : 'in_person',

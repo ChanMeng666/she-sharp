@@ -49,7 +49,7 @@ export async function GET() {
       verifiedAt: profile?.verifiedAt,
 
       // From mentor_form_submissions (additional fields)
-      photoUrl: profile?.photoUrl || formData?.photoUrl || '',
+      photoUrl: formData?.photoUrl || profile?.photoUrl || '',
       mbtiType: profile?.mbtiType || formData?.mbtiType || '',
       fullName: formData?.fullName || user.name || '',
       gender: formData?.gender || '',
