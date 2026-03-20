@@ -254,8 +254,6 @@ export default function MatchingManagementPage() {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [viewMode, setViewMode] = useState<'list' | 'grouped'>('list');
-  const [showDebug, setShowDebug] = useState(false);
-  const [rawApiResponse, setRawApiResponse] = useState<unknown>(null);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -263,7 +261,6 @@ export default function MatchingManagementPage() {
       const response = await fetch(`/api/admin/matching?view=${viewMode}&includeQueue=true&includeUnmatched=true`);
       if (response.ok) {
         const data = await response.json();
-        setRawApiResponse(data);
         setMatchesData(data.matches);
         setRunHistory(data.runHistory || []);
         setStats(data.stats || null);
@@ -1419,85 +1416,6 @@ export default function MatchingManagementPage() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        {/* Debug Panel */}
-        <Card className="border-orange-500 mt-8">
-          <CardHeader className="cursor-pointer" onClick={() => setShowDebug(!showDebug)}>
-            <CardTitle className="text-orange-600 text-sm">
-              🔧 Debug: Avatar Data Inspector {showDebug ? '(click to collapse)' : '(click to expand)'}
-            </CardTitle>
-          </CardHeader>
-          {showDebug && (
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold text-sm mb-1">Queue Entries (menteeImage field):</h4>
-                  <pre className="bg-muted p-3 rounded text-xs overflow-auto max-h-60 select-all">
-                    {JSON.stringify(
-                      queueEntries.map(e => ({
-                        id: e.id,
-                        menteeName: e.menteeName,
-                        menteeImage: e.menteeImage,
-                      })),
-                      null,
-                      2
-                    )}
-                  </pre>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-sm mb-1">Grouped View Mentors (mentorImage field):</h4>
-                  <pre className="bg-muted p-3 rounded text-xs overflow-auto max-h-60 select-all">
-                    {JSON.stringify(
-                      matchesData?.mentors?.map(m => ({
-                        mentorUserId: m.mentorUserId,
-                        mentorName: m.mentorName,
-                        mentorImage: m.mentorImage,
-                        candidateImages: m.candidates.map(c => ({
-                          menteeName: c.menteeName,
-                          menteeImage: c.menteeImage,
-                          mentorImage: c.mentorImage,
-                        })),
-                      })) || 'No grouped data (switch to grouped view)',
-                      null,
-                      2
-                    )}
-                  </pre>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-sm mb-1">List View Matches (image fields):</h4>
-                  <pre className="bg-muted p-3 rounded text-xs overflow-auto max-h-60 select-all">
-                    {JSON.stringify(
-                      matchesData?.matches?.map(m => ({
-                        id: m.id,
-                        mentorName: m.mentorName,
-                        mentorImage: m.mentorImage,
-                        menteeName: m.menteeName,
-                        menteeImage: m.menteeImage,
-                      })) || 'No list data (switch to list view)',
-                      null,
-                      2
-                    )}
-                  </pre>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-sm mb-1">Raw API Response (full):</h4>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="mb-2"
-                    onClick={() => {
-                      navigator.clipboard.writeText(JSON.stringify(rawApiResponse, null, 2));
-                    }}
-                  >
-                    Copy Full API Response to Clipboard
-                  </Button>
-                  <pre className="bg-muted p-3 rounded text-xs overflow-auto max-h-96 select-all">
-                    {JSON.stringify(rawApiResponse, null, 2)}
-                  </pre>
-                </div>
-              </div>
-            </CardContent>
-          )}
-        </Card>
       </div>
     </TooltipProvider>
   );
