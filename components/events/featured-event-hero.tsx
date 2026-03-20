@@ -3,10 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Calendar, Clock, MapPin } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import type { EventV3 } from "@/types/event";
+import {
+  formatEventDate,
+  getDaysUntilEvent,
+  getEventDisplayTime,
+} from "@/lib/data/events";
 
 const FALLBACK_HERO_IMAGE = "/img/2026.jpg";
 
@@ -23,7 +28,7 @@ function HeroButtons({ slug, registrationUrl }: { slug: string; registrationUrl?
   const isExternal = !!registrationUrl;
 
   return (
-    <div className="flex gap-3">
+    <div className="flex flex-wrap gap-3">
       <Link
         href={`/events/${slug}`}
         className="flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300"
@@ -55,93 +60,142 @@ function HeroButtons({ slug, registrationUrl }: { slug: string; registrationUrl?
   );
 }
 
-export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
+function FallbackHero() {
   const [isImageHovered, setIsImageHovered] = useState(false);
 
   return (
-    <Section spacing="section">
-      <Container size="full">
-        <div className="relative w-full h-[320px] sm:h-[400px] md:h-[500px] lg:h-[600px] card-md overflow-hidden mt-12">
-          {/* Image */}
-          <div
-            className="absolute inset-0 overflow-hidden card-md"
-            onMouseEnter={() => setIsImageHovered(true)}
-            onMouseLeave={() => setIsImageHovered(false)}
-          >
-            <Image
-              src={event ? event.coverImage.url : FALLBACK_HERO_IMAGE}
-              alt={event ? (event.coverImage.alt || event.title) : "She Sharp events"}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-top transition-transform duration-300"
-              style={{
-                transform: isImageHovered ? "scale(1.05)" : "scale(1)",
-              }}
-            />
-
-            {!event && (
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-center justify-center">
-                <div className="text-center px-6 max-w-2xl">
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-                    Events &amp; Workshops
-                  </h2>
-                  <p className="text-base md:text-lg text-white/80 mb-8 leading-relaxed">
-                    We bring women in tech together through workshops, panels, and networking events. Stay tuned for upcoming opportunities.
-                  </p>
-                  <Link
-                    href="#past-events"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium bg-white text-black hover:bg-white/90 transition-colors"
-                  >
-                    See Past Events
-                    <ArrowRight className="w-5 h-5" />
-                  </Link>
-                </div>
-              </div>
-            )}
+    <div className="relative w-full h-[320px] sm:h-[400px] md:h-[500px] lg:h-[600px] card-md overflow-hidden mt-12">
+      <div
+        className="absolute inset-0 overflow-hidden card-md"
+        onMouseEnter={() => setIsImageHovered(true)}
+        onMouseLeave={() => setIsImageHovered(false)}
+      >
+        <Image
+          src={FALLBACK_HERO_IMAGE}
+          alt="She Sharp events"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-top transition-transform duration-300"
+          style={{
+            transform: isImageHovered ? "scale(1.05)" : "scale(1)",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-center justify-center">
+          <div className="text-center px-6 max-w-2xl">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+              Events &amp; Workshops
+            </h2>
+            <p className="text-base md:text-lg text-white/80 mb-8 leading-relaxed">
+              We bring women in tech together through workshops, panels, and networking events. Stay tuned for upcoming opportunities.
+            </p>
+            <Link
+              href="#past-events"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium bg-white text-black hover:bg-white/90 transition-colors"
+            >
+              See Past Events
+              <ArrowRight className="w-5 h-5" />
+            </Link>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-          {event && (
-            <>
-              {/* title in bottom left */}
-              <div className="absolute bottom-0 left-0 w-3/4 sm:w-3/5 md:w-2/5 lg:w-1/3 p-6">
-                <div className="backdrop-blur-md bg-white/90 border border-white/80 rounded-[var(--radius-card-sm)] px-6 py-4 md:px-8 md:py-6 shadow-xl h-full flex items-center">
-                  <h3 className="text-2xl md:text-3xl font-bold text-foreground">
-                    {event.title}
-                  </h3>
-                </div>
-              </div>
+function FeaturedEventContent({ event }: { event: EventV3 }) {
+  const [isImageHovered, setIsImageHovered] = useState(false);
 
-              {/* Buttons container with curved corner effect */}
-              <div
-                className="absolute bottom-0 right-0 pt-5 pl-5 sm:pt-6 sm:pl-6 md:pt-8 md:pl-8 rounded-tl-[2rem] sm:rounded-tl-[2.5rem] md:rounded-tl-[3rem] bg-background"
-              >
-                <div
-                  className="absolute bottom-0 -left-8 w-8 h-8 bg-transparent"
-                  style={{
-                    borderBottomRightRadius: "2rem",
-                    boxShadow: "0.5rem 0.5rem 0 0.5rem hsl(var(--background))",
-                  }}
-                />
-                <div
-                  className="absolute -top-8 right-0 w-8 h-8 bg-transparent"
-                  style={{
-                    borderBottomRightRadius: "2rem",
-                    boxShadow: "0.5rem 0.5rem 0 0.5rem hsl(var(--background))",
-                  }}
-                />
+  const daysUntil = getDaysUntilEvent(event);
+  const displayTime = getEventDisplayTime(event);
+  const location = event.detailPageData.location;
+  const locationLabel = location?.venueName
+    ? `${location.venueName}${location.city ? `, ${location.city}` : ""}`
+    : location?.city || null;
 
-                {/* Buttons */}
-                <div className="pb-4 pr-4 sm:pb-5 sm:pr-5 md:pb-6 md:pr-6">
-                  <HeroButtons slug={event.slug} registrationUrl={event.detailPageData.registrationUrl} />
-                </div>
-              </div>
-            </>
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 mt-12 items-stretch">
+      {/* Left: Event information */}
+      <div className="flex flex-col justify-center order-2 lg:order-1 py-2 lg:py-8">
+        {/* Countdown badge */}
+        {daysUntil > 0 && (
+          <div className="mb-6">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#9b2e83]/10 text-[#9b2e83] text-sm font-semibold">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#9b2e83] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#9b2e83]" />
+              </span>
+              {daysUntil === 1 ? "Tomorrow" : `In ${daysUntil} days`}
+            </span>
+          </div>
+        )}
+
+        {/* Title */}
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-foreground leading-tight mb-6">
+          {event.title}
+        </h2>
+
+        {/* Event meta info */}
+        <div className="flex flex-col gap-3 mb-6 text-muted-foreground">
+          <div className="flex items-center gap-3">
+            <Calendar className="w-5 h-5 shrink-0" />
+            <span className="text-base md:text-lg">{formatEventDate(event, "full")}</span>
+          </div>
+          {displayTime && (
+            <div className="flex items-center gap-3">
+              <Clock className="w-5 h-5 shrink-0" />
+              <span className="text-base md:text-lg">{displayTime}</span>
+            </div>
+          )}
+          {locationLabel && (
+            <div className="flex items-center gap-3">
+              <MapPin className="w-5 h-5 shrink-0" />
+              <span className="text-base md:text-lg">{locationLabel}</span>
+            </div>
           )}
         </div>
+
+        {/* Description */}
+        {event.shortDescription && (
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-8 line-clamp-3">
+            {event.shortDescription}
+          </p>
+        )}
+
+        {/* Action buttons */}
+        <HeroButtons slug={event.slug} registrationUrl={event.detailPageData.registrationUrl} />
+      </div>
+
+      {/* Right: Cover image */}
+      <div className="order-1 lg:order-2">
+        <div
+          className="relative w-full aspect-4/5 card-md overflow-hidden"
+          onMouseEnter={() => setIsImageHovered(true)}
+          onMouseLeave={() => setIsImageHovered(false)}
+        >
+          <Image
+            src={event.coverImage.url}
+            alt={event.coverImage.alt || event.title}
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover object-top transition-transform duration-500"
+            style={{
+              transform: isImageHovered ? "scale(1.03)" : "scale(1)",
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
+  return (
+    <Section spacing="section">
+      <Container size="full">
+        {event ? <FeaturedEventContent event={event} /> : <FallbackHero />}
       </Container>
     </Section>
   );
 }
-
-
