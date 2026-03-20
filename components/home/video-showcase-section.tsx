@@ -3,7 +3,6 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
-import { VideoPlayer } from "@/components/ui/video-thumbnail-player";
 
 const videos = {
   featured: {
@@ -38,10 +37,15 @@ export function VideoShowcaseSection() {
 
         {/* Featured Video */}
         <AnimateOnScroll variant="fade-up" className="mb-8">
-          <VideoPlayer
-            videoId={videos.featured.videoId}
-            title={videos.featured.title}
-          />
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden">
+            <iframe
+              src={`https://www.youtube.com/embed/${videos.featured.videoId}`}
+              title={videos.featured.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 h-full w-full"
+            />
+          </div>
         </AnimateOnScroll>
 
         {/* Grid Videos */}
@@ -52,7 +56,15 @@ export function VideoShowcaseSection() {
               variant="fade-up"
               delay={index * 100}
             >
-              <VideoPlayer videoId={video.videoId} title={video.title} />
+              <div className="relative w-full aspect-video rounded-xl overflow-hidden">
+                <iframe
+                  src={`https://www.youtube.com/embed/${video.videoId}`}
+                  title={video.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full"
+                />
+              </div>
             </AnimateOnScroll>
           ))}
         </div>
