@@ -234,6 +234,7 @@ export async function getWaitingQueue(
       queue: menteeWaitingQueue,
       userName: users.name,
       userEmail: users.email,
+      userImage: users.image,
       menteeForm: menteeFormSubmissions,
     })
     .from(menteeWaitingQueue)
@@ -254,6 +255,7 @@ export async function getWaitingQueue(
     menteeUserId: e.queue.menteeUserId,
     menteeName: e.userName || 'Unknown',
     menteeEmail: e.userEmail,
+    menteeImage: e.userImage,
     joinedAt: e.queue.joinedAt,
     status: e.queue.status as QueueStatus,
     priority: e.queue.priority || 0,

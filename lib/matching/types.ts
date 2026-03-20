@@ -152,6 +152,7 @@ export interface QueueEntryWithDetails {
   menteeUserId: number;
   menteeName: string;
   menteeEmail: string;
+  menteeImage: string | null;
   joinedAt: Date;
   status: QueueStatus;
   priority: number;
@@ -232,6 +233,7 @@ export interface MentorWithCandidates {
   mentorUserId: number;
   mentorName: string;
   mentorEmail: string;
+  mentorImage: string | null;
   company: string | null;
   jobTitle: string | null;
   currentMentees: number;

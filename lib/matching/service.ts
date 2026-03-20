@@ -969,6 +969,7 @@ export async function getMentorWithCandidates(): Promise<MentorWithCandidates[]>
         mentorUserId: match.mentorUserId,
         mentorName: match.mentorName,
         mentorEmail: match.mentorEmail,
+        mentorImage: match.mentorImage,
         company: match.mentorProfile?.company || null,
         jobTitle: match.mentorProfile?.jobTitle || null,
         currentMentees: match.mentorProfile?.currentMenteesCount || 0,

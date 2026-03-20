@@ -127,6 +127,7 @@ interface MentorWithCandidates {
   mentorUserId: number;
   mentorName: string;
   mentorEmail: string;
+  mentorImage?: string | null;
   company: string | null;
   jobTitle: string | null;
   currentMentees: number;
@@ -140,6 +141,7 @@ interface QueueEntry {
   menteeUserId: number;
   menteeName: string;
   menteeEmail: string;
+  menteeImage?: string | null;
   joinedAt: string;
   status: string;
   priority: number;
@@ -1188,7 +1190,12 @@ export default function MatchingManagementPage() {
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle className="flex items-center gap-2">
-                          <Users className="h-5 w-5 text-foreground" />
+                          <Avatar className="h-6 w-6 border">
+                            <AvatarImage src={mentor.mentorImage || undefined} alt={mentor.mentorName} />
+                            <AvatarFallback className="bg-muted text-foreground text-xs font-semibold">
+                              {getInitials(mentor.mentorName)}
+                            </AvatarFallback>
+                          </Avatar>
                           {mentor.mentorName}
                         </CardTitle>
                         <CardDescription>
@@ -1238,9 +1245,12 @@ export default function MatchingManagementPage() {
                         className="flex items-center justify-between p-4 bg-muted/50 rounded-lg"
                       >
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
-                            <UserPlus className="h-5 w-5 text-foreground" />
-                          </div>
+                          <Avatar className="h-10 w-10 border">
+                            <AvatarImage src={entry.menteeImage || undefined} alt={entry.menteeName} />
+                            <AvatarFallback className="bg-muted text-foreground font-semibold">
+                              {getInitials(entry.menteeName)}
+                            </AvatarFallback>
+                          </Avatar>
                           <div>
                             <p className="font-medium">{entry.menteeName}</p>
                             <p className="text-sm text-muted-foreground">
