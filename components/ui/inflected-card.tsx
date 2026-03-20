@@ -152,6 +152,7 @@ export const InflectedCard: React.FC<InflectedCardProps> = ({
                 unoptimized={image.startsWith('/img/')}
                 style={{
                   objectFit: 'cover',
+                  objectPosition: 'center top',
                   transition: 'transform 0.3s ease',
                   willChange: 'transform',
                   transform: isImageHovered
@@ -323,7 +324,7 @@ export const InflectedCard: React.FC<InflectedCardProps> = ({
         .inflected-cardInner {
           position: relative;
           width: 100%;
-          height: 18.75rem;
+          height: 26rem;
           background: var(--parent-bg);
           border-radius: var(--card-rounding);
           border-bottom-right-radius: 0;
@@ -430,11 +431,11 @@ export const InflectedCard: React.FC<InflectedCardProps> = ({
           opacity: 0.8;
         }
         @media (max-width: 640px) {
-          .inflected-cardInner { height: 14rem; }
+          .inflected-cardInner { height: 18rem; }
           .inflected-icon { width: 4.5rem; height: 4.5rem; }
         }
         @media (min-width: 641px) and (max-width: 1023px) {
-          .inflected-cardInner { height: 16rem; }
+          .inflected-cardInner { height: 22rem; }
           .inflected-icon { width: 5rem; height: 5rem; }
         }
       `}</style>

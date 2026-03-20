@@ -93,12 +93,12 @@ function SimpleEventCard({ event }: { event: EventV3 }) {
       href={`/events/${event.slug}`}
       className="group block h-full card-sm border border-muted-foreground/10 bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
     >
-      <div className="relative aspect-16/10 overflow-hidden">
+      <div className="relative aspect-4/5 overflow-hidden">
         <Image
           src={displayImage}
           alt={event.title}
           fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           unoptimized={displayImage.startsWith("/img/")}
         />

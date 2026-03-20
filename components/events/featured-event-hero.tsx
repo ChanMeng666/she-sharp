@@ -74,7 +74,7 @@ export function FeaturedEventHero({ event }: FeaturedEventHeroProps) {
               fill
               priority
               sizes="100vw"
-              className="object-cover transition-transform duration-300"
+              className="object-cover object-top transition-transform duration-300"
               style={{
                 transform: isImageHovered ? "scale(1.05)" : "scale(1)",
               }}
