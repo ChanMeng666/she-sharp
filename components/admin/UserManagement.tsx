@@ -668,7 +668,7 @@ export default function UserManagement() {
                   href={user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-info hover:underline truncate"
+                  className="text-info hover:underline break-words"
                 >
                   LinkedIn Profile
                 </a>
@@ -950,10 +950,10 @@ export default function UserManagement() {
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-foreground truncate">{user.name || 'Unknown User'}</p>
-                          <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+                          <p className="font-medium text-foreground break-words">{user.name || 'Unknown User'}</p>
+                          <p className="text-sm text-muted-foreground break-all">{user.email}</p>
                           {(user.jobTitle || user.company) && (
-                            <p className="text-xs text-muted-foreground truncate mt-0.5">
+                            <p className="text-xs text-muted-foreground break-words mt-0.5">
                               {user.jobTitle}{user.jobTitle && user.company ? ' @ ' : ''}{user.company}
                             </p>
                           )}
@@ -1033,7 +1033,7 @@ export default function UserManagement() {
                                 href={user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl || '#'}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-info hover:underline truncate"
+                                className="text-info hover:underline break-words"
                               >
                                 LinkedIn Profile
                               </a>
