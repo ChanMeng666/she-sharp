@@ -9,28 +9,28 @@ const menteeFeatures: FeatureItem[] = [
   {
     id: 1,
     title: "Communication",
-    image: "/img/scraped/site/mentorship/66e7d7462e0faf4e732c4cf1_IMG_9889_416482b4.jpg",
+    image: "/img/scraped/site/mentorship/mentee-communication.jpg",
     description:
       "Actively engage in the mentorship by communicating regularly with your mentor. Clearly share your goals, challenges, and needs, and provide regular updates on your progress so your mentor can best support you.",
   },
   {
     id: 2,
     title: "Goal Setting",
-    image: "https://placehold.co/800x600/e8d5f5/9b2e83?text=Goal+Setting",
+    image: "/img/scraped/site/mentorship/mentee-goal-setting.jpg",
     description:
       "Team up with your mentor to pinpoint personal and professional goals. Proactively set and pursue identified objectives, tracking progress and adjusting goals as needed throughout your mentorship journey.",
   },
   {
     id: 3,
     title: "Learning & Growth",
-    image: "https://placehold.co/800x600/d5e8f5/2e5a83?text=Learning+%26+Growth",
+    image: "/img/scraped/site/mentorship/mentee-learning-growth.jpg",
     description:
       "Listen carefully to advice given by your mentor and accept constructive criticism with an open mind. Embrace opportunities to think critically and expand your knowledge in new directions.",
   },
   {
     id: 4,
     title: "Development",
-    image: "https://placehold.co/800x600/d5f5e8/2e8353?text=Development",
+    image: "/img/scraped/site/mentorship/mentee-development.jpg",
     description:
       "Strive for continuous growth and improvement by taking initiative in your learning journey. Apply learned concepts to real-world situations and actively seek new challenges to accelerate your development.",
   },

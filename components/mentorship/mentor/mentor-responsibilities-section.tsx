@@ -23,7 +23,7 @@ const mentorFeatures: FeatureItem[] = [
   {
     id: 3,
     title: "Communication",
-    image: "https://placehold.co/800x600/e8d5f5/9b2e83?text=Communication",
+    image: "/img/scraped/site/mentorship/mentor-communication.jpg",
     description:
       "Listen to what your mentee needs rather than just pushing your own thoughts. Create a safe space for open dialogue and don't hesitate to give constructive feedback that helps them grow both personally and professionally.",
   },
