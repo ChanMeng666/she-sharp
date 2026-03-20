@@ -20,40 +20,40 @@ export function PressGrid() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-[minmax(200px,auto)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 auto-rows-[minmax(220px,auto)] md:auto-rows-[minmax(200px,auto)]">
           {newsPressItems.map((item, index) => {
             // Make specific cards span 2 rows for visual interest
             const isTall = index === 1 || index === 4;
 
             const content = (
-              <Card className={`relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 rounded-[32px] bg-black ${isTall ? "" : "aspect-[4/3]"}`}>
+              <Card className={`relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 card-sm bg-black ${isTall ? "min-h-[280px] md:min-h-0" : "aspect-[3/2] sm:aspect-[4/3]"}`}>
                 {/* Background image */}
                 <img
                   src={item.coverImage}
                   alt={item.title}
-                  className="absolute inset-0 h-full w-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
+                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
 
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
 
                 {/* External link badge */}
                 {item.externalLink && (
-                  <div className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/85 px-3 py-1 text-xs font-medium text-gray-900">
+                  <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/85 px-3 py-1 text-xs font-medium text-gray-900">
                     <ExternalLink className="h-3.5 w-3.5" />
                     <span>Read article</span>
                   </div>
                 )}
 
                 {/* Content */}
-                <div className="absolute inset-x-5 bottom-5 z-10">
+                <div className="absolute inset-x-4 bottom-4 sm:inset-x-5 sm:bottom-5 md:inset-x-6 md:bottom-6 z-10">
                   <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/70">
                     {new Date(item.isoDate).toLocaleDateString("en-NZ", {
                       month: "long",
                       year: "numeric",
                     })}
                   </p>
-                  <h2 className={`mt-2 font-semibold text-white leading-snug ${isTall ? "text-xl md:text-2xl line-clamp-4" : "text-lg md:text-xl line-clamp-3"}`}>
+                  <h2 className={`mt-2 font-semibold text-white leading-snug ${isTall ? "text-lg sm:text-xl md:text-2xl line-clamp-3 sm:line-clamp-4" : "text-base sm:text-lg md:text-xl line-clamp-2 sm:line-clamp-3"}`}>
                     {item.title}
                   </h2>
                 </div>
@@ -61,8 +61,8 @@ export function PressGrid() {
             );
 
             const wrapperClass = isTall
-              ? "group block h-full md:row-span-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-foreground rounded-[32px]"
-              : "group block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-foreground rounded-[32px]";
+              ? "group block h-full md:row-span-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-foreground card-sm"
+              : "group block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-foreground card-sm";
 
             return item.externalLink ? (
               <a
