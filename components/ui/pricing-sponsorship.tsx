@@ -61,8 +61,8 @@ export function SponsorshipPricing() {
   const currentTier = tiers.find((t) => t.level === selectedTier) || tiers[2]
 
   return (
-    <div className="relative py-24 lg:py-36 bg-[#eaf2ff]">
-      <div className="mx-auto max-w-5xl px-6">
+    <div className="relative py-16 bg-[#eaf2ff]">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-balance text-display-sm text-[#1f1e44]">
@@ -74,11 +74,11 @@ export function SponsorshipPricing() {
         </div>
 
         {/* Main Card */}
-        <div className="mt-8 md:mt-16">
-          <div className="relative rounded-[50px] bg-white shadow-sm overflow-hidden">
-            <div className="grid items-center gap-12 divide-y divide-[#1f1e44]/10 p-8 md:p-12 md:grid-cols-2 md:divide-x md:divide-y-0">
+        <div className="mt-6 sm:mt-8 md:mt-12 lg:mt-16">
+          <div className="relative rounded-[var(--radius-card-sm)] md:rounded-[var(--radius-card-md)] lg:rounded-[var(--radius-card-lg)] bg-white shadow-sm overflow-hidden">
+            <div className="grid items-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 divide-y divide-[#1f1e44]/10 p-5 sm:p-6 md:p-8 lg:p-12 md:grid-cols-2 md:divide-x md:divide-y-0">
               {/* Left Side */}
-              <div className="pb-12 text-center md:pb-0 md:pr-12">
+              <div className="pb-6 sm:pb-8 text-center md:pb-0 md:pr-8 lg:pr-12">
                 {/* Tier Selector */}
                 <div className="mb-6">
                   <div className="inline-flex flex-wrap justify-center gap-1 p-1 rounded-full border border-[#1f1e44]/10">
@@ -88,7 +88,7 @@ export function SponsorshipPricing() {
                         type="button"
                         onClick={() => setSelectedTier(tier.level)}
                         className={cn(
-                          "relative rounded-full px-4 py-2 text-sm font-medium transition-all",
+                          "relative rounded-full px-2.5 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium transition-all",
                           selectedTier === tier.level
                             ? "bg-[#1f1e44] text-white"
                             : "text-[#1f1e44]/60 hover:text-[#1f1e44]"
@@ -103,16 +103,16 @@ export function SponsorshipPricing() {
                   </div>
                 </div>
 
-                <h3 className="text-xl font-semibold text-[#1f1e44]">
+                <h3 className="text-lg sm:text-xl font-semibold text-[#1f1e44]">
                   {currentTier.name} Partnership
                 </h3>
-                <p className="mt-1 text-[#1f1e44]/50">
+                <p className="mt-1 text-sm sm:text-base text-[#1f1e44]/50">
                   {currentTier.description}
                 </p>
 
                 {/* Price */}
-                <div className="my-8">
-                  <span className="text-5xl font-bold text-[#1f1e44]">
+                <div className="my-5 sm:my-6 md:my-8">
+                  <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#1f1e44]">
                     ${isYearly
                       ? currentTier.price.yearly.toLocaleString()
                       : currentTier.price.monthly.toLocaleString()}
@@ -123,7 +123,7 @@ export function SponsorshipPricing() {
                 </div>
 
                 {/* Interval Toggle */}
-                <div className="mb-8">
+                <div className="mb-5 sm:mb-6 md:mb-8">
                   <div className="inline-flex rounded-full border border-[#1f1e44]/10 p-1">
                     <button
                       type="button"
@@ -159,7 +159,7 @@ export function SponsorshipPricing() {
                   </Link>
                 </Button>
 
-                <p className="mt-4 text-sm text-[#1f1e44]/60">
+                <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-[#1f1e44]/60">
                   <Link
                     href="mailto:industry@shesharp.org.nz"
                     className="underline underline-offset-2 hover:text-[#8982ff] transition-colors"
@@ -168,37 +168,36 @@ export function SponsorshipPricing() {
                   </Link>
                 </p>
 
-                <p className="mt-2 text-sm text-[#1f1e44]/40">
+                <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm text-[#1f1e44]/40">
                   All packages are customizable
                 </p>
               </div>
 
               {/* Right Side */}
-              <div className="relative pt-12 md:pl-12 md:pt-0">
+              <div className="relative pt-6 sm:pt-8 md:pl-8 lg:pl-12 md:pt-0">
                 <ul role="list" className="space-y-4">
                   {features.map((item, index) => (
                     <li key={index} className="flex items-center gap-3">
                       <Check className="size-4 text-[#8982ff]" strokeWidth={2.5} />
-                      <span className="text-[#1f1e44]">{item}</span>
+                      <span className="text-sm sm:text-base text-[#1f1e44]">{item}</span>
                     </li>
                   ))}
                 </ul>
 
-                <p className="mt-8 text-sm text-[#1f1e44]/40">
+                <p className="mt-5 sm:mt-6 md:mt-8 text-xs sm:text-sm text-[#1f1e44]/40">
                   Organisations supporting our mission:
                 </p>
 
                 {/* Logo Wall */}
-                <div className="mt-6 flex flex-wrap items-center gap-8">
+                <div className="mt-6 flex flex-wrap items-center gap-4 sm:gap-6 md:gap-8">
                   {tieredSponsors.map((sponsor) => (
                     <Image
                       key={sponsor.name}
-                      className="h-10 w-auto"
+                      className="h-7 sm:h-8 md:h-10 w-auto"
                       src={sponsor.logo}
                       alt={sponsor.name}
                       height={40}
                       width={120}
-                      style={{ height: "40px", width: "auto" }}
                     />
                   ))}
                 </div>
