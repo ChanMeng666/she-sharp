@@ -11,8 +11,8 @@ import { cn } from "@/lib/utils";
 
 export function MembershipTiers() {
   return (
-    <Section spacing="section" className="py-16 md:py-24 lg:py-32 bg-[#eaf2ff]">
-      <Container size="full">
+    <Section className="py-16 md:py-24 lg:py-32 bg-[#eaf2ff]" noPadding>
+      <Container size="wide">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-display-sm text-foreground mb-4">
             Choose Your Membership
@@ -23,12 +23,12 @@ export function MembershipTiers() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
           {membershipTiers.map((tier) => (
             <Card
               key={tier.id}
               className={cn(
-                "relative flex flex-col p-6 md:p-8 rounded-[32px] border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1",
+                "relative flex flex-col p-4 sm:p-6 md:p-8 rounded-[var(--radius-card-sm)] border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1",
                 tier.isPopular
                   ? "border-brand bg-white shadow-lg"
                   : "border-transparent bg-white"
@@ -55,7 +55,7 @@ export function MembershipTiers() {
               {/* Price */}
               <div className="mb-6">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-4xl md:text-5xl font-bold text-foreground">
+                  <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
                     ${tier.price}
                   </span>
                   {tier.price > 0 && (
@@ -88,7 +88,7 @@ export function MembershipTiers() {
                     )}
                     <span
                       className={cn(
-                        "text-sm",
+                        "text-sm sm:text-base",
                         feature.included
                           ? "text-foreground"
                           : "text-muted-foreground/60"

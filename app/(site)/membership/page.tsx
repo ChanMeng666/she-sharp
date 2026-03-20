@@ -15,7 +15,7 @@ export default function MembershipPage() {
   return (
     <>
       {/* Hero Section */}
-      <Section spacing="section" className=" bg-[#f7e5f3]">
+      <Section className="bg-[#f7e5f3]" noPadding>
         <Container size="full">
           <div className="max-w-3xl mx-auto text-center py-16 md:py-24 lg:py-32">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
