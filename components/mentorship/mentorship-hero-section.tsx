@@ -31,7 +31,7 @@ export function MentorshipHeroSection({
   bottomRightBgColor = "bg-white",
 }: MentorshipHeroSectionProps) {
   return (
-    <section className="w-full bg-background">
+    <section className="w-full bg-background pt-20 md:pt-24">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full">
         {/* Top Left: Customizable Background with Text */}
         <div className={`${topLeftBgColor} ${topLeftTextColor} flex items-center justify-center p-6 sm:p-8 md:p-12 lg:p-16 min-h-[200px] sm:min-h-[280px] md:min-h-[400px] lg:min-h-[500px]`}>

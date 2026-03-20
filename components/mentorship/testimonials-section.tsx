@@ -48,13 +48,13 @@ export function TestimonialsSection() {
         </div>
 
         <div className="mx-auto max-w-5xl py-4 md:py-6">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col md:flex-row md:items-center gap-4">
             {/* Left Arrow */}
             <Button
               onClick={prevTestimonial}
               variant="outline"
               size="icon"
-              className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 rounded-full border border-brand hover:border-brand hover:bg-brand/20 hover:text-brand-foreground bg-background shadow-sm shrink-0 transition-all duration-300"
+              className="hidden md:flex h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 rounded-full border border-brand hover:border-brand hover:bg-brand/20 hover:text-brand-foreground bg-background shadow-sm shrink-0 transition-all duration-300"
             >
               <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-brand" />
             </Button>
@@ -130,9 +130,29 @@ export function TestimonialsSection() {
               onClick={nextTestimonial}
               variant="outline"
               size="icon"
-              className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 rounded-full border border-brand hover:border-brand hover:bg-brand/20 hover:text-brand-foreground bg-background shadow-sm shrink-0 transition-all duration-300"
+              className="hidden md:flex h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 rounded-full border border-brand hover:border-brand hover:bg-brand/20 hover:text-brand-foreground bg-background shadow-sm shrink-0 transition-all duration-300"
             >
               <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-brand" />
+            </Button>
+          </div>
+
+          {/* Mobile Navigation Buttons */}
+          <div className="flex md:hidden justify-center items-center gap-6 mt-4">
+            <Button
+              onClick={prevTestimonial}
+              variant="outline"
+              size="icon"
+              className="h-10 w-10 rounded-full border border-brand hover:border-brand hover:bg-brand/20 hover:text-brand-foreground bg-background shadow-sm transition-all duration-300"
+            >
+              <ChevronLeft className="h-5 w-5 text-brand" />
+            </Button>
+            <Button
+              onClick={nextTestimonial}
+              variant="outline"
+              size="icon"
+              className="h-10 w-10 rounded-full border border-brand hover:border-brand hover:bg-brand/20 hover:text-brand-foreground bg-background shadow-sm transition-all duration-300"
+            >
+              <ChevronRight className="h-5 w-5 text-brand" />
             </Button>
           </div>
 
