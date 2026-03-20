@@ -406,6 +406,15 @@ BASE_URL=http://localhost:3000         # Application URL
    - Use `getUser()` for authentication
    - Use `checkUserRoles()` for role-based access
 
+9. **Reading mentor/mentee data (CRITICAL)**:
+   - **Dual-table architecture**: Mentor and mentee data is split across `*_form_submissions` (primary) and `*_profiles` (subset). See `docs/database/MENTOR_MENTEE_DATA_GUIDE.md` for full details.
+   - **Mandatory fallback chain** for ALL queries: `form_submissions.field → profiles.field → users.field → null`
+   - **Photo/image**: Always `formSubmissions.photoUrl → profiles.photoUrl → users.image`. Never use `users.image` alone — it is null for most form-imported users.
+   - **Form-only fields** (no profile equivalent): `city`, `phone`, `gender`, `softSkillsExpert`, `industrySkillsExpert`, `preferredIndustries`, `preferredMeetingFormat`, `longTermGoals`, `shortTermGoals`, `whyMentor`, `currentJobTitle`, `currentIndustry`
+   - **Profile-only fields**: `currentMenteesCount`, `isAcceptingMentees`, `verifiedAt`, `learningGoals`, `currentChallenge`
+   - **When writing**: Profile edit endpoints must update BOTH `*_profiles` AND `*_form_submissions` tables simultaneously.
+   - **Lesson learned**: Reading from `users.image` or `*_profiles` alone caused invisible avatars across 10 API endpoints (2026-03-20 incident).
+
 ## Brand Guidelines
 
 **Colors** (defined in `/styles/colors.css`):
