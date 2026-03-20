@@ -422,7 +422,7 @@ export default function DynamicDashboard() {
                     </div>
                     <div>
                       <p className="font-medium">{resource.title}</p>
-                      <p className="text-sm text-muted-foreground line-clamp-1">{resource.description}</p>
+                      <p className="text-sm text-muted-foreground break-words">{resource.description}</p>
                     </div>
                   </div>
                   <Badge variant="outline">{resource.accessLevel}</Badge>

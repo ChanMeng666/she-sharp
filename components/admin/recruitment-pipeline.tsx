@@ -125,7 +125,7 @@ function PipelineCard({ application }: { application: Application }) {
       {...listeners}
       className="p-3 bg-background rounded-lg border shadow-sm cursor-grab active:cursor-grabbing hover:shadow-md transition-shadow"
     >
-      <p className="font-medium text-sm truncate">
+      <p className="font-medium text-sm break-words">
         {application.firstName} {application.lastName}
       </p>
       <div className="flex flex-wrap items-center gap-1 mt-1.5">
@@ -145,7 +145,7 @@ function PipelineCard({ application }: { application: Application }) {
 function PipelineCardOverlay({ application }: { application: Application }) {
   return (
     <div className="p-3 bg-background rounded-lg border-2 border-brand shadow-lg w-56">
-      <p className="font-medium text-sm truncate">
+      <p className="font-medium text-sm break-words">
         {application.firstName} {application.lastName}
       </p>
       <div className="flex flex-wrap items-center gap-1 mt-1.5">
@@ -195,7 +195,7 @@ function MobileStageCard({
                 key={app.id}
                 className="p-3 bg-background rounded-lg border shadow-sm"
               >
-                <p className="font-medium text-sm truncate">
+                <p className="font-medium text-sm break-words">
                   {app.firstName} {app.lastName}
                 </p>
                 <div className="flex flex-wrap items-center gap-1 mt-1.5">

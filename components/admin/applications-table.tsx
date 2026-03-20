@@ -179,7 +179,7 @@ export default function ApplicationsTable({ applications, onRefresh }: Applicati
                 />
                 <div>
                   <p className="font-medium text-sm">{app.firstName} {app.lastName}</p>
-                  <p className="text-xs text-muted-foreground truncate max-w-[200px]">{app.email}</p>
+                  <p className="text-xs text-muted-foreground break-all">{app.email}</p>
                 </div>
               </div>
               <Link href={`/dashboard/admin/recruitment/${app.id}`}>
