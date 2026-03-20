@@ -16,8 +16,8 @@ interface LogoCloudProps {
 
 export function LogoCloud({
   logos,
-  duration = 40,
-  durationOnHover = 80,
+  duration = 80,
+  durationOnHover = 160,
   gap = 56,
 }: LogoCloudProps) {
   return (
@@ -38,10 +38,10 @@ export function LogoCloud({
         {logos.map((logo, index) => (
           <div
             key={index}
-            className="flex items-center justify-center shrink-0"
+            className="flex items-center justify-center shrink-0 w-[100px] md:w-[120px] h-[40px] md:h-[48px]"
           >
             <img
-              className="h-8 md:h-10 w-auto max-w-[160px] md:max-w-[200px] object-contain"
+              className="max-w-full max-h-full w-auto h-auto object-contain"
               src={logo.src}
               alt={logo.alt}
             />

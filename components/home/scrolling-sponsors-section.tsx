@@ -3,14 +3,10 @@
 import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
 import { LogoCloud } from "@/components/ui/logo-cloud";
-import { getAllSponsorLogos } from "@/lib/data/events";
+import { scrollingSponsorLogos } from "@/lib/data/sponsors";
 
 export function ScrollingSponsorsSection() {
-  const allLogos = getAllSponsorLogos();
-
-  if (allLogos.length === 0) return null;
-
-  const logos = allLogos.map((sponsor) => ({
+  const logos = scrollingSponsorLogos.map((sponsor) => ({
     src: sponsor.logo,
     alt: sponsor.name,
   }));

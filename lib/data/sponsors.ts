@@ -64,3 +64,53 @@ export const tieredSponsors: TieredSponsor[] = [
 
 export const getSponsorsByTier = (tier: SponsorTier): TieredSponsor[] =>
   tieredSponsors.filter((s) => s.tier === tier);
+
+/**
+ * Curated sponsor logos for the homepage scrolling section.
+ * All files are clean SVGs stored in /public/img/sponsors/.
+ */
+export interface ScrollingSponsorLogo {
+  name: string;
+  logo: string;
+}
+
+export const scrollingSponsorLogos: ScrollingSponsorLogo[] = [
+  { name: "HCLTech", logo: "/img/sponsors/hcltech.svg" },
+  { name: "Vector", logo: "/img/sponsors/vector.svg" },
+  { name: "Xero", logo: "/img/sponsors/xero.svg" },
+  { name: "Secure Code Warrior", logo: "/img/sponsors/secure-code-warrior.svg" },
+  { name: "Fonterra", logo: "/img/sponsors/fonterra.svg" },
+  { name: "Hewlett Packard Enterprise", logo: "/img/sponsors/hpe.svg" },
+  { name: "MYOB", logo: "/img/sponsors/myob.svg" },
+  { name: "Deloitte", logo: "/img/sponsors/deloitte.svg" },
+  { name: "AI Forum New Zealand", logo: "/img/sponsors/aifnz.svg" },
+  { name: "Fisher & Paykel Healthcare", logo: "/img/sponsors/fph.svg" },
+  { name: "Fiserv", logo: "/img/sponsors/fiserv.svg" },
+  { name: "Woolworths", logo: "/img/sponsors/woolworths.svg" },
+  { name: "Google", logo: "/img/sponsors/google.svg" },
+  { name: "Trade Me", logo: "/img/sponsors/trade-me.svg" },
+  { name: "Westpac", logo: "/img/sponsors/westpac.svg" },
+  { name: "Grid AKL", logo: "/img/sponsors/grid-akl.svg" },
+  { name: "IBM", logo: "/img/sponsors/ibm.svg" },
+  { name: "Orion Health", logo: "/img/sponsors/orion-health.svg" },
+  { name: "Microsoft", logo: "/img/sponsors/microsoft.svg" },
+  { name: "Flexware", logo: "/img/sponsors/flexware.svg" },
+  { name: "AUT", logo: "/img/sponsors/aut.svg" },
+  { name: "Pushpay", logo: "/img/sponsors/pushpay.svg" },
+  { name: "Nyriad", logo: "/img/sponsors/nyriad.svg" },
+  { name: "Vend", logo: "/img/sponsors/vend.svg" },
+  { name: "Air New Zealand", logo: "/img/sponsors/air-new-zealand.svg" },
+  { name: "Centrality", logo: "/img/sponsors/centrality.svg" },
+  { name: "AWS", logo: "/img/sponsors/aws.svg" },
+  { name: "Wāhine Kākano", logo: "/img/sponsors/wahine-kakano.svg" },
+  { name: "Workday", logo: "/img/sponsors/workday.svg" },
+  { name: "Fergus", logo: "/img/sponsors/fergus.svg" },
+  { name: "EY", logo: "/img/sponsors/ey.svg" },
+  { name: "Geo AR Games", logo: "/img/sponsors/geo-ar-games.svg" },
+  { name: "Kiwibank", logo: "/img/sponsors/kiwibank.svg" },
+  { name: "Countdown", logo: "/img/sponsors/countdown.svg" },
+  { name: "ANZ", logo: "/img/sponsors/anz.svg" },
+  { name: "academyEX", logo: "/img/sponsors/academyex.svg" },
+  { name: "Metlifecare", logo: "/img/sponsors/metlifecare.svg" },
+  { name: "Auckland Council", logo: "/img/sponsors/auckland-council.svg" },
+];
