@@ -61,7 +61,7 @@ export function SponsorshipPricing() {
   const currentTier = tiers.find((t) => t.level === selectedTier) || tiers[2]
 
   return (
-    <div className="relative py-16 bg-[#eaf2ff]">
+    <div className="relative pt-28 pb-16 md:pt-24 bg-[#eaf2ff]">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">

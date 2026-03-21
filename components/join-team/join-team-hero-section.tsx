@@ -35,7 +35,7 @@ export function JoinTeamHeroSection({
   const rightImages = GALLERY_IMAGES.slice(3);
 
   return (
-    <div className="bg-periwinkle-soft py-16 md:py-24 lg:py-32">
+    <div className="bg-periwinkle-soft pt-28 pb-16 md:py-24 lg:py-32">
       <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-16">
           {/* Text Content */}
