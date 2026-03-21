@@ -66,7 +66,7 @@ const MAINTENANCE_HTML = `<!DOCTYPE html>
       We're working to bring you a better experience and will be back online shortly.
     </p>
     <hr class="divider">
-    <p class="footer">&copy; 2024 <span class="brand">She Sharp</span> &mdash; Connecting Women in Technology</p>
+    <p class="footer">&copy; 2026 <span class="brand">She Sharp</span> &mdash; Connecting Women in Technology</p>
   </div>
 </body>
 </html>`;
