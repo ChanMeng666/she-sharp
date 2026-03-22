@@ -217,62 +217,6 @@ If you didn't request this password reset, please ignore this email and your pas
   });
 }
 
-/**
- * Send team invitation email
- */
-export async function sendInvitationEmail(
-  email: string,
-  teamName: string,
-  role: string,
-  invitationId: number
-) {
-  const baseUrl = getBaseUrl();
-  const inviteUrl = `${baseUrl}/sign-up?inviteId=${invitationId}`;
-
-  const html = brandedEmailLayout({
-    title: "You're Invited to Join a Team!",
-    preheader: `You've been invited to join ${teamName} on She Sharp.`,
-    bodyHtml: `
-      <h2 style="color: ${BRAND.purpleDark}; margin-top: 0;">Team Invitation</h2>
-      <p>You've been invited to join <strong>${teamName}</strong> on She Sharp as a <span style="background: ${BRAND.purpleLight}; color: ${BRAND.purpleDark}; padding: 4px 10px; border-radius: 4px; display: inline-block; font-weight: bold;">${role.toUpperCase()}</span>.</p>
-
-      ${infoBox(`
-        <p style="margin: 0;"><strong>Team:</strong> ${teamName}</p>
-        <p style="margin: 4px 0 0;"><strong>Role:</strong> ${role.charAt(0).toUpperCase() + role.slice(1)}</p>
-        <p style="margin: 4px 0 0;"><strong>Platform:</strong> She Sharp</p>
-      `)}
-
-      <p>Click the button below to accept this invitation and create your account:</p>
-      ${brandButton('Accept Invitation', inviteUrl)}
-      <p style="color: #666; font-size: 14px;">Or copy and paste this link into your browser:</p>
-      ${linkBox(inviteUrl)}
-      <p style="color: #666; font-size: 14px;">This invitation link will expire in 7 days.</p>
-    `,
-    footerExtra: '<p style="margin: 0; font-size: 12px;">If you didn\'t expect this invitation, you can safely ignore this email.</p>',
-  });
-
-  const text = `
-Team Invitation - She Sharp
-
-You've been invited to join ${teamName} on She Sharp as a ${role}.
-
-Click this link to accept the invitation and create your account:
-${inviteUrl}
-
-This invitation link will expire in 7 days.
-
-If you didn't expect this invitation, you can safely ignore this email.
-
-© ${new Date().getFullYear()} She Sharp. Empowering women in STEM.
-  `;
-
-  return sendEmail({
-    to: email,
-    subject: `Invitation to join ${teamName} - She Sharp`,
-    html,
-    text,
-  });
-}
 
 /**
  * Send payment confirmation email with invitation code

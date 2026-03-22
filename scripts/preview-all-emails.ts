@@ -27,7 +27,7 @@ process.env.NODE_ENV = 'production';
 
 // ---------- imports (after env setup) ----------
 
-import { sendVerificationEmail, sendPasswordResetEmail, sendInvitationEmail, sendPaymentConfirmationEmail, sendInvitationCodeEmail } from '../lib/email/service';
+import { sendVerificationEmail, sendPasswordResetEmail, sendPaymentConfirmationEmail, sendInvitationCodeEmail } from '../lib/email/service';
 import { sendApplicationConfirmationEmail, sendInterviewInvitationEmail, sendApplicationApprovedEmail, sendApplicationRejectedEmail, sendOnboardingEmail, sendNDAReminderEmail } from '../lib/email/recruitment-emails';
 import { sendMentorApplicationConfirmationEmail, sendMenteeApplicationConfirmationEmail } from '../lib/email/mentorship-emails';
 import { sendMatchApprovalNotifications, sendQueueUpdateNotification, sendAddedToQueueNotification, sendQueueExpiredNotification, sendBatchMatchingSummaryToAdmin } from '../lib/matching/email-service';
@@ -41,21 +41,17 @@ type EmailTask = { name: string; fn: () => Promise<boolean | { mentorSent: boole
 // ---------- define all templates ----------
 
 const templates: EmailTask[] = [
-  // --- service.ts (5) ---
+  // --- service.ts (4) ---
   {
-    name: '1/16  Verification Email',
+    name: '1/15  Verification Email',
     fn: () => sendVerificationEmail(targetEmail, 'mock-verification-token-abc123'),
   },
   {
-    name: '2/16  Password Reset Email',
+    name: '2/15  Password Reset Email',
     fn: () => sendPasswordResetEmail(targetEmail, 'mock-reset-token-xyz789'),
   },
   {
-    name: '3/16  Team Invitation Email',
-    fn: () => sendInvitationEmail(targetEmail, 'She Sharp Engineering', 'admin', 42),
-  },
-  {
-    name: '4/16  Payment Confirmation Email',
+    name: '3/15  Payment Confirmation Email',
     fn: () => sendPaymentConfirmationEmail(targetEmail, {
       invitationCode: 'SHESHARP-2026-ABCD',
       membershipTier: 'annual',
@@ -64,7 +60,7 @@ const templates: EmailTask[] = [
     }),
   },
   {
-    name: '5/16  Invitation Code Email (Mentor Approved)',
+    name: '4/15  Invitation Code Email (Mentor Approved)',
     fn: () => sendInvitationCodeEmail(targetEmail, {
       invitationCode: 'MENTOR-WELCOME-1234',
       codeType: 'mentor_approved',
@@ -75,7 +71,7 @@ const templates: EmailTask[] = [
 
   // --- recruitment-emails.ts (6) ---
   {
-    name: '6/16  Application Confirmation (Ambassador)',
+    name: '5/15  Application Confirmation (Ambassador)',
     fn: () => sendApplicationConfirmationEmail(targetEmail, {
       applicantName: 'Jane Doe',
       applicantEmail: targetEmail,
@@ -84,7 +80,7 @@ const templates: EmailTask[] = [
     }),
   },
   {
-    name: '7/16  Interview Invitation',
+    name: '6/15  Interview Invitation',
     fn: () => sendInterviewInvitationEmail(targetEmail, {
       applicantName: 'Jane Doe',
       applicationType: 'ambassador',
@@ -94,7 +90,7 @@ const templates: EmailTask[] = [
     }),
   },
   {
-    name: '8/16  Application Approved',
+    name: '7/15  Application Approved',
     fn: () => sendApplicationApprovedEmail(targetEmail, {
       applicantName: 'Jane Doe',
       applicationType: 'ambassador',
@@ -102,7 +98,7 @@ const templates: EmailTask[] = [
     }),
   },
   {
-    name: '9/16  Application Rejected',
+    name: '8/15  Application Rejected',
     fn: () => sendApplicationRejectedEmail(targetEmail, {
       applicantName: 'Jane Doe',
       applicationType: 'volunteer',
@@ -110,7 +106,7 @@ const templates: EmailTask[] = [
     }),
   },
   {
-    name: '10/16 Onboarding Email',
+    name: '9/15  Onboarding Email',
     fn: () => sendOnboardingEmail(targetEmail, {
       applicantName: 'Jane Doe',
       applicationType: 'ambassador',
@@ -121,7 +117,7 @@ const templates: EmailTask[] = [
     }),
   },
   {
-    name: '11/16 NDA Reminder',
+    name: '10/15 NDA Reminder',
     fn: () => sendNDAReminderEmail(targetEmail, {
       applicantName: 'Jane Doe',
       ndaLink: 'https://docs.google.com/document/d/example-nda',
@@ -130,13 +126,13 @@ const templates: EmailTask[] = [
 
   // --- mentorship-emails.ts (2) ---
   {
-    name: '12/16 Mentor Application Confirmation',
+    name: '11/15 Mentor Application Confirmation',
     fn: () => sendMentorApplicationConfirmationEmail(targetEmail, {
       applicantName: 'Alice Smith',
     }),
   },
   {
-    name: '13/16 Mentee Application Confirmation',
+    name: '12/15 Mentee Application Confirmation',
     fn: () => sendMenteeApplicationConfirmationEmail(targetEmail, {
       applicantName: 'Bob Chen',
       programmeName: 'HER WAKA',
@@ -146,7 +142,7 @@ const templates: EmailTask[] = [
 
   // --- matching/email-service.ts (4+1 = 5, but match sends 2 emails to same address) ---
   {
-    name: '14/16 Match Approval (Mentor + Mentee)',
+    name: '13/15 Match Approval (Mentor + Mentee)',
     fn: () => sendMatchApprovalNotifications({
       mentorName: 'Dr. Sarah Johnson',
       mentorEmail: targetEmail,
@@ -158,23 +154,23 @@ const templates: EmailTask[] = [
     }),
   },
   {
-    name: '15/16 Queue Update Notification',
+    name: '14/15 Queue Update Notification',
     fn: () => sendQueueUpdateNotification(targetEmail, 'Emily Wang', 3, '2-3 weeks'),
   },
   {
-    name: '16/16 Added to Queue Notification',
+    name: '15/15 Added to Queue Notification',
     fn: () => sendAddedToQueueNotification(targetEmail, 'Emily Wang', 7, '4-6 weeks'),
   },
 ];
 
-// Bonus: queue expired + admin summary (18 total sends)
+// Bonus: queue expired + admin summary (17 total sends)
 const bonusTemplates: EmailTask[] = [
   {
-    name: '17/18 Queue Expired Notification',
+    name: '16/17 Queue Expired Notification',
     fn: () => sendQueueExpiredNotification(targetEmail, 'Emily Wang'),
   },
   {
-    name: '18/18 Batch Matching Admin Summary',
+    name: '17/17 Batch Matching Admin Summary',
     fn: () => sendBatchMatchingSummaryToAdmin(targetEmail, {
       totalProcessed: 24,
       matchesGenerated: 8,
