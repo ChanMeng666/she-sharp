@@ -25,7 +25,7 @@ export const POST = withRoles(
       }
 
       const body = await req.json();
-      const { action, notes } = body;
+      const { action, notes, isTestUser } = body;
 
       if (!action || !['approve', 'reject'].includes(action)) {
         return NextResponse.json(
@@ -44,7 +44,7 @@ export const POST = withRoles(
       }
 
       const decision = action === 'approve' ? 'approved' : 'rejected';
-      const result = await reviewMenteeForm(applicationId, adminUserId, decision, notes);
+      const result = await reviewMenteeForm(applicationId, adminUserId, decision, notes, isTestUser);
 
       if (!result.success) {
         return NextResponse.json(

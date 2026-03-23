@@ -31,7 +31,7 @@ function generateCodeString(): string {
 }
 
 export interface CreateInvitationCodeParams {
-  codeType: 'payment' | 'mentor_approved' | 'mentee_approved' | 'admin_generated';
+  codeType: 'payment' | 'mentor_approved' | 'mentee_approved' | 'admin_generated' | 'test';
   maxUses?: number;
   expiresAt?: Date;
   purchaseId?: number;
@@ -437,10 +437,11 @@ export async function createMentorApprovalCode(
   mentorEmail: string,
   approvedBy: number,
   linkedFormId: number,
-  notes?: string
+  notes?: string,
+  isTestUser?: boolean
 ): Promise<InvitationCode> {
   return createInvitationCode({
-    codeType: 'mentor_approved',
+    codeType: isTestUser ? 'test' : 'mentor_approved',
     maxUses: 1,
     generatedBy: approvedBy,
     generatedFor: mentorEmail,
@@ -461,10 +462,11 @@ export async function createMenteeApprovalCode(
   approvedBy: number,
   linkedFormId: number,
   notes?: string,
-  programmeId?: number
+  programmeId?: number,
+  isTestUser?: boolean
 ): Promise<InvitationCode> {
   return createInvitationCode({
-    codeType: 'mentee_approved',
+    codeType: isTestUser ? 'test' : 'mentee_approved',
     maxUses: 1,
     generatedBy: approvedBy,
     generatedFor: menteeEmail,
@@ -498,6 +500,34 @@ export async function createAdminCode(
     generatedFor: options.recipientEmail,
     notes: options.notes || 'Admin-generated invitation code',
     targetRole: options.targetRole,
+  });
+}
+
+/**
+ * Creates a test invitation code for test user registration.
+ * Supports multiple uses and longer expiration for batch testing.
+ */
+export async function createTestInvitationCode(
+  adminUserId: number,
+  options?: {
+    maxUses?: number;
+    expiresInDays?: number;
+    recipientEmail?: string;
+    targetRole?: 'mentor' | 'mentee' | 'admin';
+    notes?: string;
+  }
+): Promise<InvitationCode> {
+  const expiresAt = new Date();
+  expiresAt.setDate(expiresAt.getDate() + (options?.expiresInDays || 30));
+
+  return createInvitationCode({
+    codeType: 'test',
+    maxUses: options?.maxUses || 50,
+    expiresAt,
+    generatedBy: adminUserId,
+    generatedFor: options?.recipientEmail,
+    notes: options?.notes || 'Test invitation code for testing purposes',
+    targetRole: options?.targetRole,
   });
 }
 

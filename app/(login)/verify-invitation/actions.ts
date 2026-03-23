@@ -87,6 +87,7 @@ export const verifyOAuthInvitationCode = validatedAction(verifySchema, async (da
     .set({
       inviteCodeVerifiedAt: new Date(),
       registeredViaInviteCode: codeValidation.code?.id,
+      isTestUser: codeValidation.code?.codeType === 'test',
       updatedAt: new Date(),
     })
     .where(eq(users.id, userId));

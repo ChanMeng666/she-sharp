@@ -195,7 +195,8 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
   const newUser: NewUser = {
     email,
     passwordHash,
-    registeredViaInviteCode: codeValidation.code?.id
+    registeredViaInviteCode: codeValidation.code?.id,
+    isTestUser: codeValidation.code?.codeType === 'test',
   };
 
   const [createdUser] = await db.insert(users).values(newUser).returning();

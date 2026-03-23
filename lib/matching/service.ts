@@ -312,7 +312,20 @@ export async function generateMatchesForMentee(
   const availableMentors = menteeProgrammeId
     ? await getAvailableMentorsForProgramme(menteeProgrammeId)
     : await getAvailableMentors();
-  const eligibleMentors = availableMentors.filter(m => !excludeMentorIds.has(m.userId));
+
+  // Isolate test users: only match test mentors with test mentees, and vice versa
+  const [menteeUser] = await db.select({ isTestUser: users.isTestUser }).from(users).where(eq(users.id, menteeUserId)).limit(1);
+  const menteeIsTest = menteeUser?.isTestUser ?? false;
+
+  const mentorUserIds = availableMentors.map(m => m.userId);
+  const mentorTestStatus = mentorUserIds.length > 0
+    ? await db.select({ id: users.id, isTestUser: users.isTestUser }).from(users).where(sql`${users.id} IN (${sql.join(mentorUserIds.map(id => sql`${id}`), sql`, `)})`)
+    : [];
+  const testStatusMap = new Map(mentorTestStatus.map(u => [u.id, u.isTestUser]));
+
+  const eligibleMentors = availableMentors.filter(m =>
+    !excludeMentorIds.has(m.userId) && (testStatusMap.get(m.userId) ?? false) === menteeIsTest
+  );
 
   if (eligibleMentors.length === 0) {
     return [];

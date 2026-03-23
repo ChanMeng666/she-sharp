@@ -21,6 +21,7 @@ export const GET = withRoles(
       const statusFilter = searchParams.get('status');
       const membershipFilter = searchParams.get('membership');
       const applicationFilter = searchParams.get('application'); // 'all' | 'has_pending' | 'no_application'
+      const userTypeFilter = searchParams.get('userType'); // 'all' | 'real' | 'test'
       const searchQuery = searchParams.get('search');
 
       const offset = (page - 1) * limit;
@@ -40,6 +41,12 @@ export const GET = withRoles(
         );
       }
 
+      if (userTypeFilter === 'real') {
+        userConditions.push(eq(users.isTestUser, false));
+      } else if (userTypeFilter === 'test') {
+        userConditions.push(eq(users.isTestUser, true));
+      }
+
       // Fetch registered users with their detailed info
       const usersData = await db
         .select({
@@ -48,6 +55,7 @@ export const GET = withRoles(
           email: users.email,
           image: users.image,
           phone: users.phone,
+          isTestUser: users.isTestUser,
           createdAt: users.createdAt,
           lastLoginAt: users.lastLoginAt,
           // Mentor profile data
@@ -194,6 +202,7 @@ export const GET = withRoles(
         email: string;
         image: string | null;
         phone: string | null;
+        isTestUser: boolean;
         roles: string[];
         membershipTier: 'free' | 'basic' | 'premium';
         accountStatus: 'active' | 'inactive' | 'suspended' | 'pending_registration';
@@ -301,6 +310,7 @@ export const GET = withRoles(
           email: user.email,
           image: displayImage,
           phone: user.phone,
+          isTestUser: user.isTestUser,
           roles: user.roles || [],
           membershipTier: user.membershipTier as 'free' | 'basic' | 'premium',
           accountStatus,
@@ -399,6 +409,7 @@ export const GET = withRoles(
             email: app.email || '',
             image: app.photoUrl,
             phone: app.phone,
+            isTestUser: false,
             roles: [] as string[],
             membershipTier: 'free' as const,
             accountStatus: 'pending_registration' as const,
@@ -447,6 +458,7 @@ export const GET = withRoles(
           email: app.email || '',
           image: app.photoUrl,
           phone: app.phone,
+          isTestUser: false,
           roles: [] as string[],
           membershipTier: 'free' as const,
           accountStatus: 'pending_registration' as const,
@@ -506,6 +518,7 @@ export const GET = withRoles(
       // Calculate stats
       const stats = {
         totalUsers: usersData.length,
+        testUsers: usersData.filter(u => u.isTestUser).length,
         totalPublicApplications: publicApplications.length + publicMenteeApplications.length,
         pendingApplications: allRecords.filter(r => r.applicationStatus === 'pending').length,
         byRole: {

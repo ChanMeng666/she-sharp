@@ -140,7 +140,8 @@ export async function reviewMentorForm(
   formId: number,
   reviewerId: number,
   decision: 'approved' | 'rejected',
-  notes?: string
+  notes?: string,
+  isTestUser?: boolean
 ): Promise<{ success: boolean; invitationCode?: string; error?: string }> {
   try {
     const [form] = await db
@@ -183,7 +184,8 @@ export async function reviewMentorForm(
         form.email,
         reviewerId,
         form.id,  // Link to mentor form submission
-        notes
+        notes,
+        isTestUser
       );
 
       // Send email with invitation code
@@ -278,7 +280,8 @@ export async function reviewMenteeForm(
   formId: number,
   reviewerId: number,
   decision: 'approved' | 'rejected',
-  notes?: string
+  notes?: string,
+  isTestUser?: boolean
 ): Promise<{ success: boolean; invitationCode?: string; error?: string }> {
   try {
     const [form] = await db
@@ -321,7 +324,9 @@ export async function reviewMenteeForm(
         form.email,
         reviewerId,
         form.id,
-        notes
+        notes,
+        undefined, // programmeId
+        isTestUser
       );
 
       await sendInvitationCodeEmail(form.email, {

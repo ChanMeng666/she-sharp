@@ -31,15 +31,15 @@ export async function GET(request: NextRequest) {
     const startDate = searchParams.get('startDate') || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
     const endDate = searchParams.get('endDate') || new Date().toISOString();
 
-    // 1. User Statistics
+    // 1. User Statistics (excludes test users)
     const userStats = await db.execute(sql`
-      SELECT 
+      SELECT
         COUNT(*) as total_users,
         COUNT(CASE WHEN created_at >= ${startDate} THEN 1 END) as new_users,
         COUNT(CASE WHEN email_verified_at IS NOT NULL THEN 1 END) as verified_users,
         COUNT(CASE WHEN last_login_at >= NOW() - INTERVAL '7 days' THEN 1 END) as active_users
       FROM users
-      WHERE deleted_at IS NULL
+      WHERE deleted_at IS NULL AND is_test_user = false
     `);
 
     // 2. Mentorship Statistics
@@ -96,20 +96,21 @@ export async function GET(request: NextRequest) {
       ORDER BY date DESC
     `);
 
-    // 7. User Growth Trend (last 12 months)
+    // 7. User Growth Trend (last 12 months, excludes test users)
     const userGrowth = await db.execute(sql`
-      SELECT 
+      SELECT
         TO_CHAR(created_at, 'YYYY-MM') as month,
         COUNT(*) as new_users
       FROM users
       WHERE created_at >= NOW() - INTERVAL '12 months'
+        AND is_test_user = false
       GROUP BY TO_CHAR(created_at, 'YYYY-MM')
       ORDER BY month
     `);
 
-    // 8. Top Mentors
+    // 8. Top Mentors (excludes test users)
     const topMentors = await db.execute(sql`
-      SELECT 
+      SELECT
         u.name,
         u.email,
         mp.years_experience,
@@ -117,7 +118,7 @@ export async function GET(request: NextRequest) {
         COUNT(DISTINCT mr.id) as total_relationships,
         AVG(m.rating)::numeric(3,2) as avg_meeting_rating
       FROM mentor_profiles mp
-      JOIN users u ON mp.user_id = u.id
+      JOIN users u ON mp.user_id = u.id AND u.is_test_user = false
       LEFT JOIN mentorship_relationships mr ON mr.mentor_user_id = u.id
       LEFT JOIN meetings m ON m.relationship_id = mr.id AND m.status = 'completed'
       GROUP BY u.id, u.name, u.email, mp.years_experience, mp.current_mentees_count
@@ -144,7 +145,7 @@ export async function GET(request: NextRequest) {
         (SELECT COUNT(*) FROM email_queue WHERE status = 'pending') as pending_emails,
         (SELECT COUNT(*) FROM email_queue WHERE status = 'failed' AND attempts >= max_attempts) as failed_emails,
         (SELECT COUNT(*) FROM activity_logs WHERE created_at >= NOW() - INTERVAL '1 hour') as recent_activities,
-        (SELECT COUNT(*) FROM users WHERE last_login_at >= NOW() - INTERVAL '24 hours') as daily_active_users
+        (SELECT COUNT(*) FROM users WHERE last_login_at >= NOW() - INTERVAL '24 hours' AND is_test_user = false) as daily_active_users
     `);
 
     return NextResponse.json({
@@ -255,6 +256,7 @@ async function generateUserReport(startDate: string, endDate: string) {
     LEFT JOIN event_registrations er ON er.user_id = u.id
     LEFT JOIN activity_logs al ON al.user_id = u.id
     WHERE u.created_at >= ${startDate} AND u.created_at <= ${endDate}
+      AND u.is_test_user = false
     GROUP BY u.id, u.name, u.email, u.created_at, u.last_login_at, u.email_verified_at
     ORDER BY u.created_at DESC
   `);
@@ -271,8 +273,8 @@ async function generateMentorshipReport(startDate: string, endDate: string) {
       COUNT(m.id) as meeting_count,
       AVG(m.rating)::numeric(3,2) as avg_rating
     FROM mentorship_relationships mr
-    JOIN users mentor ON mr.mentor_user_id = mentor.id
-    JOIN users mentee ON mr.mentee_user_id = mentee.id
+    JOIN users mentor ON mr.mentor_user_id = mentor.id AND mentor.is_test_user = false
+    JOIN users mentee ON mr.mentee_user_id = mentee.id AND mentee.is_test_user = false
     LEFT JOIN meetings m ON m.relationship_id = mr.id
     WHERE mr.created_at >= ${startDate} AND mr.created_at <= ${endDate}
     GROUP BY mr.id, mentor.name, mentee.name

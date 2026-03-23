@@ -159,6 +159,7 @@ interface UnifiedUser {
   email: string;
   image: string | null;
   phone: string | null;
+  isTestUser: boolean;
   roles: string[];
   membershipTier: 'free' | 'basic' | 'premium';
   accountStatus: 'active' | 'inactive' | 'suspended' | 'pending_registration';
@@ -176,6 +177,7 @@ interface UnifiedUser {
 
 interface Stats {
   totalUsers: number;
+  testUsers: number;
   totalPublicApplications: number;
   pendingApplications: number;
   byRole: { admin: number; mentor: number; mentee: number };
@@ -189,6 +191,7 @@ export default function UserManagement() {
   const initialStatus = searchParams.get('status') || 'all';
   const initialMembership = searchParams.get('membership') || 'all';
   const initialApplication = searchParams.get('application') || 'all';
+  const initialUserType = searchParams.get('userType') || 'all';
 
   const [users, setUsers] = useState<UnifiedUser[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
@@ -197,6 +200,7 @@ export default function UserManagement() {
   const [statusFilter, setStatusFilter] = useState<string>(initialStatus);
   const [membershipFilter, setMembershipFilter] = useState<string>(initialMembership);
   const [applicationFilter, setApplicationFilter] = useState<string>(initialApplication);
+  const [userTypeFilter, setUserTypeFilter] = useState<string>(initialUserType);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
@@ -245,6 +249,7 @@ export default function UserManagement() {
       if (statusFilter !== 'all') params.append('status', statusFilter);
       if (membershipFilter !== 'all') params.append('membership', membershipFilter);
       if (applicationFilter !== 'all') params.append('application', applicationFilter);
+      if (userTypeFilter !== 'all') params.append('userType', userTypeFilter);
       if (searchQuery) params.append('search', searchQuery);
 
       const response = await fetch(`/api/admin/users?${params}`);
@@ -263,7 +268,7 @@ export default function UserManagement() {
     } finally {
       setLoading(false);
     }
-  }, [currentPage, roleFilter, statusFilter, membershipFilter, applicationFilter, sortBy, sortOrder, searchQuery]);
+  }, [currentPage, roleFilter, statusFilter, membershipFilter, applicationFilter, userTypeFilter, sortBy, sortOrder, searchQuery]);
 
   useEffect(() => {
     fetchUsers();
@@ -276,10 +281,13 @@ export default function UserManagement() {
     const urlMembership = searchParams.get('membership') || 'all';
     const urlApplication = searchParams.get('application') || 'all';
 
+    const urlUserType = searchParams.get('userType') || 'all';
+
     if (urlRole !== roleFilter) setRoleFilter(urlRole);
     if (urlStatus !== statusFilter) setStatusFilter(urlStatus);
     if (urlMembership !== membershipFilter) setMembershipFilter(urlMembership);
     if (urlApplication !== applicationFilter) setApplicationFilter(urlApplication);
+    if (urlUserType !== userTypeFilter) setUserTypeFilter(urlUserType);
   }, [searchParams]);
 
   // Handle role toggle
@@ -864,6 +872,17 @@ export default function UserManagement() {
                     <SelectItem value="no_application">No Application</SelectItem>
                   </SelectContent>
                 </Select>
+
+                <Select value={userTypeFilter} onValueChange={(v) => { setUserTypeFilter(v); setCurrentPage(1); }}>
+                  <SelectTrigger className="w-full lg:w-36">
+                    <SelectValue placeholder="User Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Users</SelectItem>
+                    <SelectItem value="real">Real Users</SelectItem>
+                    <SelectItem value="test">Test Users</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
@@ -950,7 +969,10 @@ export default function UserManagement() {
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-foreground break-words">{user.name || 'Unknown User'}</p>
+                          <p className="font-medium text-foreground break-words">
+                            {user.name || 'Unknown User'}
+                            {user.isTestUser && <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>}
+                          </p>
                           <p className="text-sm text-muted-foreground break-all">{user.email}</p>
                           {(user.jobTitle || user.company) && (
                             <p className="text-xs text-muted-foreground break-words mt-0.5">
@@ -1179,6 +1201,9 @@ export default function UserManagement() {
                                 <div>
                                   <div className="flex items-center gap-2">
                                     <p className="font-medium text-foreground">{user.name || 'Unknown User'}</p>
+                                    {user.isTestUser && (
+                                      <Badge variant="outline" className="text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                                    )}
                                     {user.recordType === 'public_application' && (
                                       <Badge className="bg-muted text-foreground text-xs">
                                         <UserPlus className="w-3 h-3 mr-1" />
