@@ -18,10 +18,10 @@ Supports mentorship programs, networking events, and career development with AI-
 
 <!-- SHIELD GROUP -->
 
-[![GitHub stars](https://img.shields.io/github/stars/ChanMeng666/she-sharp?style=flat-square)](https://github.com/ChanMeng666/she-sharp/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/ChanMeng666/she-sharp?style=flat-square)](https://github.com/ChanMeng666/she-sharp/forks)
-[![GitHub issues](https://img.shields.io/github/issues/ChanMeng666/she-sharp?style=flat-square)](https://github.com/ChanMeng666/she-sharp/issues)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](https://github.com/ChanMeng666/she-sharp/blob/main/LICENSE)<br/>
+[![GitHub stars](https://img.shields.io/github/stars/NZ-SheSharp/she-sharp?style=flat-square)](https://github.com/NZ-SheSharp/she-sharp/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/NZ-SheSharp/she-sharp?style=flat-square)](https://github.com/NZ-SheSharp/she-sharp/forks)
+[![GitHub issues](https://img.shields.io/github/issues/NZ-SheSharp/she-sharp?style=flat-square)](https://github.com/NZ-SheSharp/she-sharp/issues)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](https://github.com/NZ-SheSharp/she-sharp/blob/main/LICENSE)<br/>
 [![Next.js](https://img.shields.io/badge/Next.js-15.4.0-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
@@ -30,8 +30,8 @@ Supports mentorship programs, networking events, and career development with AI-
 
 **Share Project Repository**
 
-[![Share on X](https://img.shields.io/badge/-share%20on%20x-black?labelColor=black&logo=x&logoColor=white&style=flat-square)](https://x.com/intent/tweet?hashtags=WomenInSTEM&text=Check%20out%20She%20Sharp%20-%20Empowering%20women%20in%20technology&url=https%3A%2F%2Fgithub.com%2FChanMeng666%2Fshe-sharp)
-[![Share on LinkedIn](https://img.shields.io/badge/-share%20on%20linkedin-black?labelColor=black&logo=linkedin&logoColor=white&style=flat-square)](https://linkedin.com/sharing/share-offsite/?url=https://github.com/ChanMeng666/she-sharp)
+[![Share on X](https://img.shields.io/badge/-share%20on%20x-black?labelColor=black&logo=x&logoColor=white&style=flat-square)](https://x.com/intent/tweet?hashtags=WomenInSTEM&text=Check%20out%20She%20Sharp%20-%20Empowering%20women%20in%20technology&url=https%3A%2F%2Fgithub.com%2FNZ-SheSharp%2Fshe-sharp)
+[![Share on LinkedIn](https://img.shields.io/badge/-share%20on%20linkedin-black?labelColor=black&logo=linkedin&logoColor=white&style=flat-square)](https://linkedin.com/sharing/share-offsite/?url=https://github.com/NZ-SheSharp/she-sharp)
 
 <sup>🌟 Pioneering the future of diversity in STEM. Built for the next generation of women in technology.</sup>
 
@@ -99,7 +99,7 @@ She Sharp is a comprehensive mentorship platform dedicated to bridging the gende
 
 | [![Demo](https://img.shields.io/badge/TRY%20DEMO-ONLINE-9b2e83?labelColor=black&logo=vercel&style=for-the-badge)](https://she-sharp.vercel.app/) | Experience our platform without installation! |
 | :--- | :--- |
-| [![GitHub](https://img.shields.io/badge/GITHUB-REPO-181717?labelColor=black&logo=github&style=for-the-badge)](https://github.com/ChanMeng666/she-sharp) | Explore the source code and contribute! |
+| [![GitHub](https://img.shields.io/badge/GITHUB-REPO-181717?labelColor=black&logo=github&style=for-the-badge)](https://github.com/NZ-SheSharp/she-sharp) | Explore the source code and contribute! |
 
 > [!TIP]
 > **⭐ Star us on GitHub** to receive all release notifications and updates!
@@ -107,8 +107,8 @@ She Sharp is a comprehensive mentorship platform dedicated to bridging the gende
 <details>
   <summary><kbd>⭐ Star History</kbd></summary>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ChanMeng666%2Fshe-sharp&theme=dark&type=Date">
-    <img width="100%" src="https://api.star-history.com/svg?repos=ChanMeng666%2Fshe-sharp&type=Date">
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=NZ-SheSharp%2Fshe-sharp&theme=dark&type=Date">
+    <img width="100%" src="https://api.star-history.com/svg?repos=NZ-SheSharp%2Fshe-sharp&type=Date">
   </picture>
 </details>
 
@@ -272,7 +272,7 @@ Before you begin, ensure you have the following installed:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/ChanMeng666/she-sharp.git
+   git clone https://github.com/NZ-SheSharp/she-sharp.git
    cd she-sharp
    ```
 
@@ -1309,7 +1309,7 @@ flowchart TD
 
 1. **Fork the repository**
    ```bash
-   git clone https://github.com/ChanMeng666/she-sharp.git
+   git clone https://github.com/NZ-SheSharp/she-sharp.git
    ```
 
 2. **Create a feature branch**
@@ -1402,7 +1402,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Organization Contact
 
 - **Website**: [https://she-sharp.vercel.app/](https://she-sharp.vercel.app/)
-- **Repository**: [https://github.com/ChanMeng666/she-sharp](https://github.com/ChanMeng666/she-sharp)
+- **Repository**: [https://github.com/NZ-SheSharp/she-sharp](https://github.com/NZ-SheSharp/she-sharp)
 - **Email**: info@shesharp.org
 - **LinkedIn**: [She Sharp LinkedIn](https://linkedin.com/company/shesharp)
 - **Twitter**: [@SheSharpOrg](https://twitter.com/shesharporg)
@@ -1418,8 +1418,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For support, please:
 1. Check the [Documentation](#documentation)
-2. Search [existing issues](https://github.com/ChanMeng666/she-sharp/issues)
-3. Create a [new issue](https://github.com/ChanMeng666/she-sharp/issues/new)
+2. Search [existing issues](https://github.com/NZ-SheSharp/she-sharp/issues)
+3. Create a [new issue](https://github.com/NZ-SheSharp/she-sharp/issues/new)
 
 ## 🙏 Acknowledgments
 
@@ -1604,8 +1604,8 @@ A: Please read our [Contributing Guidelines](#contributing) and follow the devel
 **Q: Where can I get help?**
 A: 
 - Check the [Documentation](#documentation)
-- Search [existing issues](https://github.com/ChanMeng666/she-sharp/issues)
-- Create a [new issue](https://github.com/ChanMeng666/she-sharp/issues/new)
+- Search [existing issues](https://github.com/NZ-SheSharp/she-sharp/issues)
+- Create a [new issue](https://github.com/NZ-SheSharp/she-sharp/issues/new)
 - Contact the developer
 
 </details>
@@ -1630,7 +1630,7 @@ A:
 
 <a href="https://she-sharp.vercel.app/">Live Site</a>
 ·
-<a href="https://github.com/ChanMeng666/she-sharp">GitHub</a>
+<a href="https://github.com/NZ-SheSharp/she-sharp">GitHub</a>
 ·
 <a href="https://www.linkedin.com/in/chanmeng666/">LinkedIn</a>
 ·
@@ -1638,9 +1638,9 @@ A:
 
 <br/><br/>
 
-[![GitHub stars](https://img.shields.io/github/stars/ChanMeng666/she-sharp?style=social)](https://github.com/ChanMeng666/she-sharp/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/ChanMeng666/she-sharp?style=social)](https://github.com/ChanMeng666/she-sharp/forks)
-[![GitHub watchers](https://img.shields.io/github/watchers/ChanMeng666/she-sharp?style=social)](https://github.com/ChanMeng666/she-sharp/watchers)
+[![GitHub stars](https://img.shields.io/github/stars/NZ-SheSharp/she-sharp?style=social)](https://github.com/NZ-SheSharp/she-sharp/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/NZ-SheSharp/she-sharp?style=social)](https://github.com/NZ-SheSharp/she-sharp/forks)
+[![GitHub watchers](https://img.shields.io/github/watchers/NZ-SheSharp/she-sharp?style=social)](https://github.com/NZ-SheSharp/she-sharp/watchers)
 
 </div>
 
