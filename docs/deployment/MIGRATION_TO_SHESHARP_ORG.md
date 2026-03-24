@@ -90,7 +90,7 @@ All references to `she-sharp.vercel.app` updated to `she-sharp-zeta.vercel.app` 
 | Database (DATABASE_URL, PG*, POSTGRES_*) | 14 vars | Identical to old production |
 | Authentication (AUTH_SECRET, NEXTAUTH_SECRET) | 2 vars | Identical |
 | Cloudinary (CLOUDINARY_*) | 3 vars | Identical |
-| AI Keys (OPENAI_API_KEY, GOOGLE_GENERATIVE_AI_API_KEY) | 2 vars | Identical |
+| AI Keys (OPENAI_API_KEY) | 1 var | Identical |
 | Slack (SLACK_VOLUNTEER_WEBHOOK_URL, SLACK_CONTACT_WEBHOOK_URL, SLACK_BOT_TOKEN) | 3 vars | Correct |
 | URLs (BASE_URL, NEXTAUTH_URL, AUTH_URL) | 3 vars | Updated to new domain |
 | OAuth (GITHUB_CLIENT_*, GOOGLE_CLIENT_*) | 4 vars | New She Sharp org credentials |

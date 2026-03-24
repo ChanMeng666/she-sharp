@@ -26,7 +26,7 @@ Supports mentorship programs, networking events, and career development with AI-
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
 [![Neon](https://img.shields.io/badge/Database-Neon-green?style=flat-square)](https://neon.tech/)
-[![Gemini AI](https://img.shields.io/badge/AI-Gemini-orange?style=flat-square&logo=google)](https://ai.google.dev/)
+[![OpenAI](https://img.shields.io/badge/AI-OpenAI-412991?style=flat-square&logo=openai)](https://platform.openai.com/)
 
 **Share Project Repository**
 
@@ -94,7 +94,7 @@ She Sharp is a comprehensive mentorship platform dedicated to bridging the gende
 > [!NOTE]
 > - Node.js >= 20.0 required
 > - PostgreSQL database required for data storage (Neon recommended)
-> - Google Gemini API key required for AI features
+> - OpenAI GPT API key required for AI features
 > - All payment features have been removed for security reasons
 
 | [![Demo](https://img.shields.io/badge/TRY%20DEMO-ONLINE-9b2e83?labelColor=black&logo=vercel&style=for-the-badge)](https://she-sharp-zeta.vercel.app/) | Experience our platform without installation! |
@@ -142,7 +142,7 @@ We are committed to creating an inclusive environment where women in STEM can:
 - **Support Options** - Multiple donation channels and sponsorship opportunities
 
 #### 🤖 **AI-Powered Assistant**
-- **Smart Chatbot** - Google Gemini-powered assistant for instant help
+- **Smart Chatbot** - OpenAI GPT-powered assistant for instant help
 - **Contextual Responses** - Organization-specific knowledge and guidance
 - **24/7 Availability** - Always available to answer questions
 - **Multilingual Support** - Assists users in their preferred language
@@ -179,7 +179,7 @@ We are committed to creating an inclusive environment where women in STEM can:
 - **Advanced Database Management** - Migration versioning, automatic snapshots, rollback capabilities
 - **Real-time Features** - Dynamic dashboards with live data synchronization
 - **Component Architecture** - shadcn/ui with custom design system and Radix UI primitives
-- **AI Integration** - Google Gemini-powered intelligent assistant
+- **AI Integration** - OpenAI GPT-powered intelligent assistant
 - **Performance Optimization** - Edge deployment with CDN and intelligent caching
 - **Security-First Design** - No payment processing, focus on core community features
 
@@ -232,7 +232,7 @@ We are committed to creating an inclusive environment where women in STEM can:
 - **Database**: PostgreSQL (Neon) with Drizzle ORM
 - **Database Version Control**: Migration snapshots and checkpoints
 - **Authentication**: JWT-based with bcrypt + NextAuth (OAuth)
-- **AI Integration**: Google Gemini API
+- **AI Integration**: OpenAI GPT API
 - **Email**: Resend for transactional emails (auth, mentorship, recruitment)
 - **Notifications**: Slack Incoming Webhooks for form submission alerts
 
@@ -323,8 +323,6 @@ AUTH_GOOGLE_SECRET="your-google-oauth-client-secret"
 AUTH_GITHUB_ID="your-github-oauth-client-id"
 AUTH_GITHUB_SECRET="your-github-oauth-client-secret"
 
-# Google AI
-GOOGLE_GENERATIVE_AI_API_KEY="your-gemini-api-key"
 
 # Email Service (Resend)
 RESEND_API_KEY="re_..."
@@ -557,7 +555,7 @@ graph TB
     subgraph "External Services"
         I[JWT Auth]
         J[Stripe API]
-        K[Google Gemini]
+        K[OpenAI GPT]
         L[Cloudinary]
         P[Slack Webhooks]
     end
@@ -589,7 +587,7 @@ sequenceDiagram
     participant A as API Routes
     participant D as Database
     participant S as Stripe
-    participant G as Gemini AI
+    participant G as OpenAI
     
     U->>F: User Action
     F->>A: API Request

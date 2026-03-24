@@ -132,7 +132,7 @@ Located in `/app/` root directory (8 pages):
 - **Media Hub**: Podcasts, newsletters, photo galleries, press coverage
 - **Support Options**: Donation and corporate sponsorship pages
 - **Contact System**: Contact forms with DB storage and Slack notifications
-- **AI Chatbot**: Google Gemini-powered assistant
+- **AI Chatbot**: OpenAI GPT-4o-mini powered assistant
 
 ### Technology Stack
 - **Framework**: Next.js 15.4.0 with App Router
