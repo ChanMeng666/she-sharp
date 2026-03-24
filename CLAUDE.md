@@ -456,6 +456,12 @@ BASE_URL=http://localhost:3000         # Application URL
 - **Scripts run locally**: Any script under `scripts/` that sends emails or generates URLs must require the caller to pass `BASE_URL` explicitly (e.g., `BASE_URL=https://she-sharp-zeta.vercel.app npx tsx scripts/...`), and must guard against localhost values at startup (see `scripts/resend-mentor-invitations.ts` for the pattern).
 - **Lesson learned**: Duplicated inline `BASE_URL` fallback logic caused 25 mentor invitation emails to contain `localhost:3000` URLs (2026-03-19 incident).
 
+### Vercel Environment Variable Rules
+- **Always use `printf`, never `echo`**: When setting Vercel env vars via CLI, always use `printf 'value' | vercel env add VAR production` — never `echo`. `echo` appends a trailing newline (`\n`) that becomes part of the stored value, corrupting it silently.
+- **Strip quotes when copying from `.env` files**: Values in `.env` files are often wrapped in double quotes (e.g., `KEY="value"`). When extracting for upload, strip them: `tr -d '"'`.
+- **Verify after bulk upload**: After setting multiple env vars, run `vercel env pull` and check for trailing `\n` with: `grep -P '\\\\n"' .env.pulled`
+- **Lesson learned**: Using `echo` to pipe values into `vercel env add` caused 10 env vars to be stored with trailing `\n` in the personal Vercel project (2026-03-24 migration incident). The corrupted values were then propagated when copying to the She Sharp Vercel project.
+
 ### Code Development Practices
 - **Focused implementation**: Address only the requested task without extra features
 - **Efficient coding**: Always seek the most token-efficient implementation
