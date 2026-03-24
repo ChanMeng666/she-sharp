@@ -16,6 +16,7 @@ import { ScrollingSponsorsSection } from "@/components/home/scrolling-sponsors-s
 import { EventsShowcaseSection } from "@/components/home/events-showcase-section";
 import { HomeTestimonialsSection } from "@/components/home/testimonials-section";
 import { VideoShowcaseSection } from "@/components/home/video-showcase-section";
+import { HerWakaSection } from "@/components/home/her-waka-section";
 
 export default function HomePage() {
   return (
@@ -31,6 +32,7 @@ export default function HomePage() {
       <CoreImpactSection />
       <CoreValuesSection />
       <ProgramsSection />
+      <HerWakaSection />
       <VideoShowcaseSection />
       <HomeTestimonialsSection />
       <SponsorsSection />

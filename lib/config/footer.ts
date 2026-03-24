@@ -17,6 +17,12 @@ export interface SocialLink {
 export const footerConfig = {
   sections: [
     {
+      title: "Programmes",
+      links: [
+        { name: "HER WAKA", href: "https://herwaka.shesharp.org.nz/" },
+      ],
+    },
+    {
       title: "Mentorship",
       links: [
         { name: "About the Programme", href: "/mentorship" },

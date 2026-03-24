@@ -127,17 +127,31 @@ export function SiteFooter() {
                       {section.title}
                     </h4>
                     <ul className="space-y-2 lg:space-y-4">
-                      {section.links.map((link) => (
-                        <li key={link.name}>
-                          <Link
-                            href={link.href}
-                            onClick={(e) => handleSmoothScroll(e, link.href)}
-                            className="relative inline-block text-xs lg:text-base text-white/80 hover:text-purple-mid transition-colors after:content-[''] after:absolute after:w-0 after:h-px after:bottom-[-2px] after:left-0 after:bg-current after:transition-all after:duration-200 hover:after:w-full"
-                          >
-                            {link.name}
-                          </Link>
-                        </li>
-                      ))}
+                      {section.links.map((link) => {
+                        const isExternal = link.href.startsWith("http");
+                        return (
+                          <li key={link.name}>
+                            <Link
+                              href={link.href}
+                              {...(isExternal
+                                ? {
+                                    target: "_blank",
+                                    rel: "noopener noreferrer",
+                                  }
+                                : {})}
+                              onClick={(e) =>
+                                !isExternal && handleSmoothScroll(e, link.href)
+                              }
+                              className="relative inline-block text-xs lg:text-base text-white/80 hover:text-purple-mid transition-colors after:content-[''] after:absolute after:w-0 after:h-px after:bottom-[-2px] after:left-0 after:bg-current after:transition-all after:duration-200 hover:after:w-full"
+                            >
+                              {link.name}
+                              {isExternal && (
+                                <ExternalLink className="inline-block ml-1 h-3 w-3" />
+                              )}
+                            </Link>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 ))}
@@ -166,19 +180,32 @@ export function SiteFooter() {
                     <CollapsibleContent className="footer-accordion-content">
                       <div className="pb-3 md:pb-4">
                         <ul className="space-y-2 md:space-y-3 ml-4">
-                          {section.links.map((link) => (
-                            <li key={link.name}>
-                              <Link
-                                href={link.href}
-                                onClick={(e) =>
-                                  handleSmoothScroll(e, link.href)
-                                }
-                                className="text-xs md:text-sm text-white/80 hover:text-purple-mid transition-colors block py-1"
-                              >
-                                {link.name}
-                              </Link>
-                            </li>
-                          ))}
+                          {section.links.map((link) => {
+                            const isExternal = link.href.startsWith("http");
+                            return (
+                              <li key={link.name}>
+                                <Link
+                                  href={link.href}
+                                  {...(isExternal
+                                    ? {
+                                        target: "_blank",
+                                        rel: "noopener noreferrer",
+                                      }
+                                    : {})}
+                                  onClick={(e) =>
+                                    !isExternal &&
+                                    handleSmoothScroll(e, link.href)
+                                  }
+                                  className="text-xs md:text-sm text-white/80 hover:text-purple-mid transition-colors block py-1"
+                                >
+                                  {link.name}
+                                  {isExternal && (
+                                    <ExternalLink className="inline-block ml-1 h-3 w-3" />
+                                  )}
+                                </Link>
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                     </CollapsibleContent>
