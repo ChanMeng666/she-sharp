@@ -124,9 +124,9 @@ pnpm dev
 
 Local development uses `.env.local` for environment variables. No changes needed for local dev workflow.
 
-#### 2. Pushing Code & Auto-Deployment
+#### 2. Pushing Code & Deployment
 
-**Git push to `main` branch automatically triggers Vercel deployment.**
+**Git push to `main` branch automatically triggers deployment via GitHub Actions.**
 
 ```bash
 git add <files>
@@ -134,34 +134,48 @@ git commit -m "feat: description of change"
 git push origin main
 ```
 
-After pushing, Vercel will:
-1. Detect the new commit via GitHub integration
-2. Automatically start a production build
-3. Deploy to `https://she-sharp-zeta.vercel.app`
+After pushing:
+1. GitHub Actions workflow (`.github/workflows/deploy.yml`) triggers automatically
+2. The workflow calls Vercel API to create a production deployment
+3. Vercel builds and deploys to `https://she-sharp-zeta.vercel.app`
 
-You can monitor deployment status at:
-- Vercel Dashboard: https://vercel.com/she-sharp1/she-sharp/deployments
-- Or via CLI: `vercel list --scope she-sharp1`
+> **Why GitHub Actions instead of Vercel's native Git integration?**
+> Vercel Pro teams require the git commit author to be a verified team member. Since the She Sharp Vercel account has only one seat (`shesharpnz`) to minimize costs ($20/month), commits authored by `chanmeng` are blocked by Vercel's native Git integration. The GitHub Actions workflow bypasses this by using the Vercel API directly with a stored token.
 
-#### 3. If Auto-Deployment Doesn't Trigger
+Monitor deployment status at:
+- **GitHub Actions**: https://github.com/NZ-SheSharp/she-sharp/actions
+- **Vercel Dashboard**: https://vercel.com/she-sharp1/she-sharp/deployments
+- **CLI**: `vercel list --scope she-sharp1`
 
-If a deployment is blocked (e.g., git author not recognized), use the Vercel API to trigger manually:
+#### 3. Manual Deployment (if needed)
+
+If GitHub Actions fails or you need to deploy without pushing:
 
 ```bash
-# Make sure you're logged into shesharpnz Vercel account
+# Option A: Deploy via CLI (must be logged into shesharpnz account)
 vercel whoami  # Should show: shesharpnz
-
-# Option A: Deploy via CLI
 vercel --prod --scope she-sharp1 --yes
 
-# Option B: Deploy via API (if CLI auth issues)
+# Option B: Deploy via API
 curl -X POST -H "Authorization: Bearer <VERCEL_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{"name":"she-sharp","project":"she-sharp","target":"production","gitSource":{"type":"github","org":"NZ-SheSharp","repo":"she-sharp","ref":"main"}}' \
   "https://api.vercel.com/v13/deployments?teamId=she-sharp1"
 ```
 
-To get a Vercel token: visit https://vercel.com/account/tokens or check `~/.config/com.vercel.cli/Data/auth.json` (or `%APPDATA%/com.vercel.cli/Data/auth.json` on Windows).
+To get a Vercel token: visit https://vercel.com/account/tokens or check `%APPDATA%/com.vercel.cli/Data/auth.json` on Windows.
+
+#### 4. Maintaining the VERCEL_TOKEN GitHub Secret
+
+The `VERCEL_TOKEN` stored in GitHub Secrets is used by the deploy workflow. If the token expires:
+
+1. Login to Vercel as `shesharpnz`
+2. Go to https://vercel.com/account/tokens
+3. Create a new token (recommended: set a long expiration or "No expiration")
+4. Update the GitHub secret:
+   ```bash
+   gh secret set VERCEL_TOKEN --repo NZ-SheSharp/she-sharp --body "NEW_TOKEN_HERE"
+   ```
 
 #### 4. Switching Vercel Accounts
 

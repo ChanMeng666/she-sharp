@@ -1,0 +1,28 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel Production Deployment
+        run: |
+          curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "name": "she-sharp",
+              "project": "she-sharp",
+              "target": "production",
+              "gitSource": {
+                "type": "github",
+                "org": "NZ-SheSharp",
+                "repo": "she-sharp",
+                "ref": "main"
+              }
+            }' \
+            "https://api.vercel.com/v13/deployments?teamId=she-sharp1" \
+            | jq '{url: .url, readyState: .readyState}'
