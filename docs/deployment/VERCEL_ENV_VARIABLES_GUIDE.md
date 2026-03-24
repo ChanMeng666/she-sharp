@@ -91,10 +91,12 @@ vercel env rm VAR_NAME production --scope she-sharp1 --yes
 printf 'new_value' | vercel env add VAR_NAME production --scope she-sharp1 --force
 ```
 
+> **Note:** After changing environment variables, you must redeploy for changes to take effect. Push a commit to trigger the GitHub Actions deploy workflow, or deploy manually with `vercel pull && vercel build --prod && vercel deploy --prebuilt --prod`.
+
 ### Pull to Local
 
 ```bash
-# For local development
+# For local development (must be logged into shesharpnz account)
 vercel env pull .env.local --environment production --scope she-sharp1
 
 # Remember to change URLs to localhost after pulling:
