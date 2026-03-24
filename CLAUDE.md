@@ -453,7 +453,7 @@ BASE_URL=http://localhost:3000         # Application URL
 
 ### URL Construction Rules
 - **Always use `getBaseUrl()`**: All user-facing URL construction (emails, redirects, Stripe callbacks) must use `getBaseUrl()` from `lib/email/service.ts`. Never inline `process.env.BASE_URL || 'http://localhost:3000'`.
-- **Scripts run locally**: Any script under `scripts/` that sends emails or generates URLs must require the caller to pass `BASE_URL` explicitly (e.g., `BASE_URL=https://she-sharp.vercel.app npx tsx scripts/...`), and must guard against localhost values at startup (see `scripts/resend-mentor-invitations.ts` for the pattern).
+- **Scripts run locally**: Any script under `scripts/` that sends emails or generates URLs must require the caller to pass `BASE_URL` explicitly (e.g., `BASE_URL=https://she-sharp-she-sharp1.vercel.app npx tsx scripts/...`), and must guard against localhost values at startup (see `scripts/resend-mentor-invitations.ts` for the pattern).
 - **Lesson learned**: Duplicated inline `BASE_URL` fallback logic caused 25 mentor invitation emails to contain `localhost:3000` URLs (2026-03-19 incident).
 
 ### Code Development Practices

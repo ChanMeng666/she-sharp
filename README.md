@@ -8,11 +8,11 @@ An innovative non-profit platform that leverages cutting-edge technology to empo
 Supports mentorship programs, networking events, and career development with AI-powered assistance.<br/>
 **FREE** community platform for women in technology.
 
-[Official Site](https://she-sharp.vercel.app/) · [Events](#events) · [Mentorship](#mentorship) · [Documentation](#documentation) · [Contact](#contact)
+[Official Site](https://she-sharp-she-sharp1.vercel.app/) · [Events](#events) · [Mentorship](#mentorship) · [Documentation](#documentation) · [Contact](#contact)
 
 <br/>
 
-[![🚀 Visit Live Site 🚀](https://gradient-svg-generator.vercel.app/api/svg?text=%F0%9F%9A%80Visit%20Live%20Site%F0%9F%9A%80&color=ffffff&height=60&gradientType=radial&duration=6s&color0=9b2e83&template=pride-rainbow)](https://she-sharp.vercel.app/)
+[![🚀 Visit Live Site 🚀](https://gradient-svg-generator.vercel.app/api/svg?text=%F0%9F%9A%80Visit%20Live%20Site%F0%9F%9A%80&color=ffffff&height=60&gradientType=radial&duration=6s&color0=9b2e83&template=pride-rainbow)](https://she-sharp-she-sharp1.vercel.app/)
 
 <br/>
 
@@ -97,7 +97,7 @@ She Sharp is a comprehensive mentorship platform dedicated to bridging the gende
 > - Google Gemini API key required for AI features
 > - All payment features have been removed for security reasons
 
-| [![Demo](https://img.shields.io/badge/TRY%20DEMO-ONLINE-9b2e83?labelColor=black&logo=vercel&style=for-the-badge)](https://she-sharp.vercel.app/) | Experience our platform without installation! |
+| [![Demo](https://img.shields.io/badge/TRY%20DEMO-ONLINE-9b2e83?labelColor=black&logo=vercel&style=for-the-badge)](https://she-sharp-she-sharp1.vercel.app/) | Experience our platform without installation! |
 | :--- | :--- |
 | [![GitHub](https://img.shields.io/badge/GITHUB-REPO-181717?labelColor=black&logo=github&style=for-the-badge)](https://github.com/NZ-SheSharp/she-sharp) | Explore the source code and contribute! |
 
@@ -1401,7 +1401,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Organization Contact
 
-- **Website**: [https://she-sharp.vercel.app/](https://she-sharp.vercel.app/)
+- **Website**: [https://she-sharp-she-sharp1.vercel.app/](https://she-sharp-she-sharp1.vercel.app/)
 - **Repository**: [https://github.com/NZ-SheSharp/she-sharp](https://github.com/NZ-SheSharp/she-sharp)
 - **Email**: info@shesharp.org
 - **LinkedIn**: [She Sharp LinkedIn](https://linkedin.com/company/shesharp)
@@ -1628,7 +1628,7 @@ A:
 
 <br/>
 
-<a href="https://she-sharp.vercel.app/">Live Site</a>
+<a href="https://she-sharp-she-sharp1.vercel.app/">Live Site</a>
 ·
 <a href="https://github.com/NZ-SheSharp/she-sharp">GitHub</a>
 ·

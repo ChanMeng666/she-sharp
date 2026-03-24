@@ -5,11 +5,11 @@
  * This script is developer-only and must be run from the local project directory.
  *
  * Usage:
- *   BASE_URL=https://she-sharp.vercel.app npx tsx scripts/send-admin-invitation.ts <email> [--dry-run]
+ *   BASE_URL=https://she-sharp-she-sharp1.vercel.app npx tsx scripts/send-admin-invitation.ts <email> [--dry-run]
  *
  * Examples:
- *   BASE_URL=https://she-sharp.vercel.app npx tsx scripts/send-admin-invitation.ts admin@example.com --dry-run
- *   BASE_URL=https://she-sharp.vercel.app npx tsx scripts/send-admin-invitation.ts admin@example.com
+ *   BASE_URL=https://she-sharp-she-sharp1.vercel.app npx tsx scripts/send-admin-invitation.ts admin@example.com --dry-run
+ *   BASE_URL=https://she-sharp-she-sharp1.vercel.app npx tsx scripts/send-admin-invitation.ts admin@example.com
  */
 
 import 'dotenv/config';
@@ -20,14 +20,14 @@ const targetEmail = process.argv[2];
 const isDryRun = process.argv.includes('--dry-run');
 
 if (!targetEmail || !targetEmail.includes('@')) {
-  console.error('\nUsage: BASE_URL=https://she-sharp.vercel.app npx tsx scripts/send-admin-invitation.ts <email> [--dry-run]\n');
+  console.error('\nUsage: BASE_URL=https://she-sharp-she-sharp1.vercel.app npx tsx scripts/send-admin-invitation.ts <email> [--dry-run]\n');
   process.exit(1);
 }
 
 const baseUrl = process.env.BASE_URL;
 if (!baseUrl || baseUrl.includes('localhost')) {
   console.error('ERROR: BASE_URL must be set to the production URL.');
-  console.error('Usage: BASE_URL=https://she-sharp.vercel.app npx tsx scripts/send-admin-invitation.ts <email>');
+  console.error('Usage: BASE_URL=https://she-sharp-she-sharp1.vercel.app npx tsx scripts/send-admin-invitation.ts <email>');
   process.exit(1);
 }
 
