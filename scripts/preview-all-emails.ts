@@ -2,7 +2,7 @@
  * Send all email templates with mock data to a test address for visual preview.
  *
  * Usage:
- *   BASE_URL=https://she-sharp-she-sharp1.vercel.app npx tsx scripts/preview-all-emails.ts <email>
+ *   BASE_URL=https://she-sharp-zeta.vercel.app npx tsx scripts/preview-all-emails.ts <email>
  *
  * Requires RESEND_API_KEY in .env / .env.local.
  */

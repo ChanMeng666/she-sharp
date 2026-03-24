@@ -24,7 +24,7 @@ For embedding QR codes in web pages:
 import { QRCodeDisplay } from '@/components/ui/qr-code';
 
 <QRCodeDisplay
-  url="https://she-sharp-she-sharp1.vercel.app/mentorship/mentee/apply?programme=her-waka"
+  url="https://she-sharp-zeta.vercel.app/mentorship/mentee/apply?programme=her-waka"
   size={256}
   label="Scan to apply"
   showDownload
@@ -80,7 +80,7 @@ For posters, flyers, and other print materials, use the Node.js script approach 
 const QRCode = require('qrcode');
 const fs = require('fs');
 
-const url = 'https://she-sharp-she-sharp1.vercel.app/mentorship/mentee/apply?programme=her-waka';
+const url = 'https://she-sharp-zeta.vercel.app/mentorship/mentee/apply?programme=her-waka';
 const logoSvg = fs.readFileSync('public/logos/she-sharp-logo-purple-dark-130x130.svg', 'utf8');
 const logoContent = logoSvg.replace(/<svg[^>]*>/, '').replace(/<\/svg>/, '');
 
@@ -136,7 +136,7 @@ QRCode.toString(url, {
   <!-- URL hint -->
   <text x="${canvasW / 2}" y="${qrY + qrSize + 72}" text-anchor="middle"
         font-family="Inter, system-ui, sans-serif" font-size="11"
-        fill="#94a3b8">she-sharp-she-sharp1.vercel.app/your/path</text>
+        fill="#94a3b8">she-sharp-zeta.vercel.app/your/path</text>
   <!-- Bottom branding -->
   <line x1="140" y1="${canvasH - 52}" x2="${canvasW - 140}" y2="${canvasH - 52}" stroke="#f1e6ef"/>
   <text x="${canvasW / 2}" y="${canvasH - 24}" text-anchor="middle"

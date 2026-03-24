@@ -5,8 +5,8 @@
  * contained incorrect (localhost) URLs.
  *
  * Usage:
- *   BASE_URL=https://she-sharp-she-sharp1.vercel.app npx tsx scripts/resend-mentor-invitations.ts --dry-run
- *   BASE_URL=https://she-sharp-she-sharp1.vercel.app npx tsx scripts/resend-mentor-invitations.ts
+ *   BASE_URL=https://she-sharp-zeta.vercel.app npx tsx scripts/resend-mentor-invitations.ts --dry-run
+ *   BASE_URL=https://she-sharp-zeta.vercel.app npx tsx scripts/resend-mentor-invitations.ts
  */
 
 import { db } from '../lib/db/drizzle';
@@ -23,7 +23,7 @@ async function main() {
 
   if (!baseUrl || baseUrl.includes('localhost')) {
     console.error('ERROR: BASE_URL must be set to the production URL.');
-    console.error('Usage: BASE_URL=https://she-sharp-she-sharp1.vercel.app npx tsx scripts/resend-mentor-invitations.ts');
+    console.error('Usage: BASE_URL=https://she-sharp-zeta.vercel.app npx tsx scripts/resend-mentor-invitations.ts');
     process.exit(1);
   }
 
