@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +14,7 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PasswordInput } from "@/components/ui/password-strength";
 import { OAuthButtons } from "@/components/ui/oauth-buttons";
-import { Loader2 } from "lucide-react";
+import { Loader2, CheckCircle2 } from "lucide-react";
 import { signIn, signUp } from "./actions";
 import { ActionState } from "@/lib/auth/middleware";
 
@@ -29,12 +29,86 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
     { error: "" }
   );
 
+  // OAuth invitation code pre-validation state (signup mode only)
+  const [oauthInviteCode, setOauthInviteCode] = useState(
+    searchParams.get("code") || ""
+  );
+  const [isCodeValidated, setIsCodeValidated] = useState(false);
+  const [isValidating, setIsValidating] = useState(false);
+  const [codeError, setCodeError] = useState("");
+  const [codeInfo, setCodeInfo] = useState("");
+
   // Handle successful action with redirect
   useEffect(() => {
     if (state?.success && state?.redirectTo) {
       router.push(state.redirectTo);
     }
   }, [state, router]);
+
+  // Validate invitation code and set cookie for OAuth flow
+  const validateCodeForOAuth = useCallback(async () => {
+    const code = oauthInviteCode.trim();
+    if (!code) {
+      setCodeError("Please enter your invitation code.");
+      return;
+    }
+
+    setIsValidating(true);
+    setCodeError("");
+    setCodeInfo("");
+
+    try {
+      // Step 1: Validate the code
+      const validateRes = await fetch("/api/invitation-codes/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code }),
+      });
+      const validateData = await validateRes.json();
+
+      if (!validateData.valid) {
+        setCodeError(validateData.error || "Invalid invitation code.");
+        setIsCodeValidated(false);
+        return;
+      }
+
+      // Step 2: Set the cookie for OAuth flow
+      const cookieRes = await fetch("/api/auth/set-invite-cookie", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code }),
+      });
+      const cookieData = await cookieRes.json();
+
+      if (!cookieData.success) {
+        setCodeError(cookieData.error || "Failed to prepare invitation code.");
+        setIsCodeValidated(false);
+        return;
+      }
+
+      setIsCodeValidated(true);
+      setCodeInfo(
+        cookieData.isEmailSpecific
+          ? "Code verified. Please use the email associated with this code for OAuth sign-up."
+          : "Code verified. You can now sign up with Google or GitHub."
+      );
+    } catch {
+      setCodeError("Failed to validate code. Please try again.");
+      setIsCodeValidated(false);
+    } finally {
+      setIsValidating(false);
+    }
+  }, [oauthInviteCode]);
+
+  // Reset validation when code changes
+  const handleCodeChange = (value: string) => {
+    setOauthInviteCode(value);
+    if (isCodeValidated) {
+      setIsCodeValidated(false);
+      setCodeInfo("");
+    }
+    setCodeError("");
+  };
 
   return (
     <div className="relative min-h-screen flex items-center justify-center py-8 px-4 sm:py-10 sm:px-6 md:py-12">
@@ -251,8 +325,55 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                   </div>
                 </div>
 
-                <div className="mt-4 space-y-2">
-                  <OAuthButtons mode={mode} />
+                {/* OAuth invitation code pre-validation (signup mode only) */}
+                {mode === "signup" && (
+                  <div className="mt-4 space-y-2">
+                    <div className="flex gap-2">
+                      <Input
+                        type="text"
+                        value={oauthInviteCode}
+                        onChange={(e) => handleCodeChange(e.target.value)}
+                        placeholder="Enter invitation code for OAuth"
+                        className="uppercase flex-1"
+                        maxLength={20}
+                        disabled={isValidating}
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={validateCodeForOAuth}
+                        disabled={isValidating || isCodeValidated || !oauthInviteCode.trim()}
+                        className="shrink-0"
+                      >
+                        {isValidating ? (
+                          <Loader2 className="animate-spin h-4 w-4" />
+                        ) : isCodeValidated ? (
+                          <CheckCircle2 className="h-4 w-4 text-green-600" />
+                        ) : (
+                          "Verify"
+                        )}
+                      </Button>
+                    </div>
+                    {codeError && (
+                      <p className="text-xs text-red-600">{codeError}</p>
+                    )}
+                    {codeInfo && (
+                      <p className="text-xs text-green-600">{codeInfo}</p>
+                    )}
+                  </div>
+                )}
+
+                <div className={mode === "signup" ? "mt-2 space-y-2" : "mt-4 space-y-2"}>
+                  <OAuthButtons
+                    mode={mode}
+                    disabled={mode === "signup" && !isCodeValidated}
+                  />
+                  {mode === "signup" && !isCodeValidated && (
+                    <p className="text-xs text-center text-gray-400">
+                      Verify your invitation code above to enable OAuth sign-up
+                    </p>
+                  )}
                 </div>
               </div>
             </CardContent>
