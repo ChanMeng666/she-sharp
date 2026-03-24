@@ -34,6 +34,8 @@ yarn-error.log*
 .env.vercel.*
 .env.backup.*
 .env.local.backup.*
+.env.personal-vercel
+.env.shesharp-vercel
 .env-backups/
 
 # vercel
