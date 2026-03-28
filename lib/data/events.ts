@@ -284,10 +284,12 @@ export function getInPersonEvents(): EventV3[] {
 }
 
 /**
- * Get featured event - returns the nearest upcoming event
+ * Get featured event - returns an explicitly featured event, or the nearest upcoming event
  */
 export function getFeaturedEvent(): EventV3 | undefined {
-  const upcoming = getUpcomingEvents(1);
+  const upcoming = getUpcomingEvents();
+  const featured = upcoming.find((e) => e.detailPageData.isFeatured);
+  if (featured) return featured;
   return upcoming.length > 0 ? upcoming[0] : undefined;
 }
 

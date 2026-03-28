@@ -143,7 +143,7 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
 
     return (
       <Link href="/sign-in">
-        <Button variant="brand" size="sm">
+        <Button variant="outline" size="lg">
           Sign In
         </Button>
       </Link>
