@@ -12,7 +12,7 @@ export function ScrollingSponsorsSection() {
   }));
 
   return (
-    <Section className="bg-white overflow-hidden pt-4 md:pt-8">
+    <Section className="bg-white overflow-hidden pt-4">
       <Container size="full">
         <h2 className="text-xl md:text-2xl text-gray-400 text-center mb-10 md:mb-14">
           Sponsors who have supported our events
