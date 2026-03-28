@@ -38,41 +38,39 @@ function FeaturedEventCard({ event }: { event: EventV3 }) {
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="group relative block h-full card-lg"
+      className="group block card-lg border border-muted-foreground/10 bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 overflow-hidden"
     >
-      <Image
-        src={event.coverImage.url}
-        alt={event.coverImage.alt || event.title}
-        fill
-        className="object-cover transition-transform duration-700 group-hover:scale-105"
-        sizes="(max-width: 1024px) 100vw, 50vw"
-        priority
-      />
+      <div className="relative aspect-3/4 sm:aspect-4/5 md:aspect-square lg:h-[620px] xl:h-[720px] lg:aspect-auto overflow-hidden">
+        <Image
+          src={event.coverImage.url}
+          alt={event.coverImage.alt || event.title}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          priority
+        />
+      </div>
 
-      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
-
-      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-10 flex flex-col gap-3">
+      <div className="p-5 md:p-6 lg:p-8 flex flex-col gap-2.5">
         <div className="flex items-center gap-3">
-          <span className="bg-brand text-white text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+          <span className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider">
             {dateLabel}
           </span>
-          <span className="text-white/80 text-sm font-medium">{formatLabel}</span>
+          <span className="text-xs sm:text-sm text-muted-foreground">{formatLabel}</span>
         </div>
 
-        <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-tight">
+        <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-foreground leading-snug group-hover:text-brand transition-colors duration-200">
           {event.title}
         </h3>
 
-        <p className="text-white/80 text-sm md:text-base leading-relaxed line-clamp-2 max-w-lg">
+        <p className="text-sm md:text-base text-muted-foreground leading-relaxed line-clamp-2">
           {description}
         </p>
 
-        <div className="mt-2">
-          <span className="inline-flex items-center gap-1.5 text-white font-semibold text-lg group-hover:underline transition-all">
-            Register
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </span>
-        </div>
+        <span className="inline-flex items-center gap-1.5 text-brand font-semibold text-sm md:text-lg group-hover:underline transition-all mt-1">
+          Register
+          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+        </span>
       </div>
     </Link>
   );
@@ -91,9 +89,9 @@ function SimpleEventCard({ event }: { event: EventV3 }) {
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="group block h-full card-sm border border-muted-foreground/10 bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+      className="group flex flex-col h-full card-sm border border-muted-foreground/10 bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 overflow-hidden"
     >
-      <div className="relative aspect-4/5 overflow-hidden">
+      <div className="relative aspect-4/5 lg:aspect-auto lg:flex-1 lg:min-h-0 overflow-hidden">
         <Image
           src={displayImage}
           alt={event.title}
@@ -146,20 +144,19 @@ export function EventsShowcaseSection() {
           {/* Left: Featured event */}
           {featuredEvent && (
             <AnimateOnScroll variant="fade-right" className="w-full lg:w-1/2">
-              <div className="relative aspect-3/4 sm:aspect-4/5 md:aspect-square lg:h-[620px] xl:h-[720px] lg:aspect-auto card-lg">
-                <FeaturedEventCard event={featuredEvent} />
-              </div>
+              <FeaturedEventCard event={featuredEvent} />
             </AnimateOnScroll>
           )}
 
           {/* Right: 2x2 grid */}
           {sideEvents.length > 0 && (
-            <div className="w-full lg:w-1/2 grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+            <div className="w-full lg:w-1/2 grid grid-cols-2 lg:grid-rows-2 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
               {sideEvents.map((event, index) => (
                 <AnimateOnScroll
                   key={event.slug}
                   variant="fade-up"
                   delay={index * 80}
+                  className="h-full"
                 >
                   <SimpleEventCard event={event} />
                 </AnimateOnScroll>

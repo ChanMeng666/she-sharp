@@ -240,16 +240,229 @@
         },
         "organizers": [],
         "sponsors": {
-          "main": [    {
-            "name": "metlifecare",
-            "logo": "/img/events/metlifecare.png"
-          }],
+          "main": [
+            {
+              "name": "metlifecare",
+              "logo": "/img/events/metlifecare.png"
+            }
+          ],
           "other": []
         },
         "specialSections": [],
         "photos": [],
         "galleryUrl": "",
         "registrationUrl": "https://events.humanitix.com/she-sharp-and-own-your-energy",
+        "images": [],
+        "category": "workshop",
+        "status": "upcoming",
+        "isFeatured": true
+      }
+    },
+    {
+      "id": 88,
+      "slug": "her-waka",
+      "title": "HER WAKA — Navigating Pathways into Sustainable Employment",
+      "date": "March 25, 2026",
+      "coverImage": {
+        "url": "/img/events/2026-Her-Waka.png",
+        "alt": "HER WAKA — Navigating pathways into sustainable employment, delivered by SheSharp in Auckland"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/her-waka",
+      "shortDescription": "A dynamic, employment-focused programme delivered by SheSharp for MSD clients ready to strengthen their pathway into work. March session theme: AI & The Future of Work.",
+      "attendees": null,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/her-waka",
+        "title": "HER WAKA — Navigating Pathways into Sustainable Employment",
+        "subtitle": "AI & The Future of Work — March 2026",
+        "date": "March 25, 2026",
+        "time": "",
+        "location": {
+          "format": "in_person",
+          "venueName": "",
+          "address": "",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "HER WAKA is a dynamic, employment-focused programme delivered by SheSharp in Auckland for Ministry of Social Development clients who are ready to strengthen their pathway into work. Running monthly from March to June 2026, each session is a cohesive, repeatable event designed to build job readiness, confidence, and practical understanding of the New Zealand labour market.",
+          "Each two-hour programme brings together up to 25 participants in a supportive, high-impact environment that blends inspiration, practical skills, and direct employer insight. Through real conversations and structured learning, participants gain clarity on how to position themselves confidently and competitively in today's job market.",
+          "Our March HER WAKA session focuses on Artificial Intelligence and the evolving tech job market in 2026. Participants can look forward to a dynamic AI Panel Discussion featuring industry professionals, a short hands-on workshop exploring practical AI tools and how they are shaping workplaces, and a special guest speaker from RCSA sharing insights into the 2026 tech hiring landscape and what employers are looking for.",
+          "This session will help participants understand how AI is influencing job opportunities, recruitment trends, and the skills that matter most right now.",
+          "HER WAKA is more than an event — it is a practical, supportive step toward sustainable employment and long-term workforce participation."
+        ],
+        "speakers": {
+          "panel_speakers": {
+            "heading": "Meet Our Panelists",
+            "speakers": [
+              {
+                "name": "Nikita Kumari",
+                "title": "PMP-certified Product and Project Manager",
+                "company": "",
+                "bio": "Nikita Kumari is a PMP-certified Product and Project Manager with over 6 years of experience delivering AI and digital products in the B2B SaaS space. She began her career as a Python developer, building a strong technical foundation before moving into product and agile delivery roles. Her work includes AI and machine learning initiatives focused on improving decision-making, automating workflows, and enhancing user experience. Now based in Auckland, she shares insights for professionals building careers in product, tech, and AI.",
+                "image": "/img/events/HerWaka-NikitaKumari.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Chan Meng",
+                "title": "Senior AI/ML Infrastructure and Full-Stack Engineer",
+                "company": "Gavigo / Sanicle",
+                "bio": "Chan Meng is a Senior AI/ML Infrastructure and Full-Stack Engineer specialising in generative AI, autonomous agentic systems, and scalable cloud-native applications. She is a Founding Engineer at Gavigo and CTO at Sanicle. Her work includes advanced RAG architectures, LLM orchestration, and microservices. With a Master's in Applied Computing and a background in mathematics education, Chan combines strong technical expertise with leadership, speaking globally at events including UN CSW69 and mentoring women in STEM.",
+                "image": "/img/events/HerWaka-ChanMeng.png",
+                "linkedin": ""
+              },
+              {
+                "name": "Meeta Patel",
+                "title": "Programme Lead and Lead Facilitator, Leading Change for Good",
+                "company": "academyEX",
+                "bio": "Dr Patel is Programme Lead and Lead Facilitator for Leading Change for Good at AcademyEX, with a career spanning industry, research, and academia. With a background as a research scientist, she spent many years in applied research before moving into education. Outside of professional work, she is an Ambassador for She Sharp, driven by a strong belief in equity and the power of people to create change.",
+                "image": "/img/events/HerWaka-MeetaPatel.jpg",
+                "linkedin": ""
+              }
+            ]
+          },
+          "guest_speakers": {
+            "heading": "Meet Our Guest Speakers",
+            "speakers": [
+              {
+                "name": "Abe Naus",
+                "title": "General Manager",
+                "company": "Potentia",
+                "bio": "Abe Naus is General Manager of Potentia. He is an experienced IT, Projects and Change Recruiter who has been working in recruitment for the past 16 years. He's built a strong reputation in the local market, priding himself on providing a premium service for both clients and candidates. His recruitment team's areas of expertise include Project Services, DevOps, Big Data & Analytics, Architects, Developers, Test Analysts, Business Analysts, AI, and Agile skilled individuals.",
+                "image": "/img/events/Abe-Naus.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Paul Kelly",
+                "title": "Business Manager and Principal Consultant",
+                "company": "Absolute IT",
+                "bio": "Paul Kelly is a Business Manager and Principal Consultant at Absolute IT, bringing extensive experience in the technology recruitment sector across New Zealand.",
+                "image": "/img/events/Paul-Kelly.png",
+                "linkedin": ""
+              },
+              {
+                "name": "Neekee Reshamwala",
+                "title": "Business Manager for Auckland",
+                "company": "Randstad Digital",
+                "bio": "Neekee Reshamwala brings over a decade of experience in recruitment, particularly within the banking, finance, insurance, and government industries. She is passionate about connecting top talent with leading organisations. Before joining Randstad Digital, Neekee held senior leadership roles in the recruitment industry. She holds a Master's degree in Business Management from Massey University and has an in-depth understanding of Auckland's job market.",
+                "image": "/img/events/Neekee-Reshamwala.png",
+                "linkedin": ""
+              }
+            ]
+          }
+        },
+        "organizers": [],
+        "sponsors": {
+          "main": [
+            {
+              "name": "Ministry of Social Development",
+              "logo": "/sponsors/msd-logo.svg"
+            }
+          ],
+          "other": []
+        },
+        "specialSections": [
+          {
+            "type": "info",
+            "title": "What to Expect",
+            "content": [
+              "Inspirational speakers sharing authentic employment journeys and practical lessons from navigating the New Zealand workforce",
+              "Employer and recruiter panels offering direct insight into current hiring expectations",
+              "Practical job-readiness sessions focused on professional presentation, interview confidence, and effective employer engagement",
+              "Clear and accessible employment rights guidance",
+              "Structured networking opportunities with employers, recruiters, and industry representatives"
+            ]
+          }
+        ],
+        "photos": [],
+        "galleryUrl": "https://photos.google.com/share/AF1QipM5dbet9NOwlZiDGRDdyJjyzu9jf01v1eJM3mRTLQZK7X9rfyNggUjWFDY7oQR2Og?key=MFJMNzBLcE5JYU1Fa2lhMzNWZ2h5OGdfbmN3UFRR",
+        "registrationUrl": "https://shesharp.org.nz/events/her-waka",
+        "images": [],
+        "category": "workshop",
+        "status": "upcoming",
+        "isFeatured": false
+      }
+    },
+    {
+      "id": 89,
+      "slug": "her-waka-april-2026",
+      "title": "Her Waka (April 2026) — #IAmRemarkable & Vibe Coding",
+      "date": "April 7, 2026",
+      "coverImage": {
+        "url": "/img/events/2026-Her-Waka.png",
+        "alt": "Her Waka April 2026 — #IAmRemarkable & Vibe Coding, delivered by SheSharp in Auckland"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/her-waka-april-2026",
+      "shortDescription": "The second HER WAKA cohort focuses on building confidence through the #IAmRemarkable workshop and exploring Vibe Coding — using free AI tools to build a personal website through natural conversation.",
+      "attendees": null,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/her-waka-april-2026",
+        "title": "Her Waka (April 2026) — #IAmRemarkable & Vibe Coding",
+        "subtitle": "#IAmRemarkable & Vibe Coding",
+        "date": "April 7, 2026",
+        "time": "",
+        "location": {
+          "format": "in_person",
+          "venueName": "",
+          "address": "",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "The second cohort of the HER WAKA series continues with a session focused on building confidence, celebrating achievements, and exploring practical AI tools.",
+          "We will begin with #IAmRemarkable, a global movement that encourages everyone, especially those from underrepresented groups, to celebrate their achievements and challenge the stigma around self-promotion. In this engaging 50-minute workshop, She Sharp Founder and Director Dr Mahsa McCauley (Mohaghegh) will guide participants through practical exercises to help recognise achievements, own your story, and confidently share your impact.",
+          "We will also introduce Vibe Coding, showing how anyone, even without a technical background, can use free AI tools to build and launch their own personal website through simple, natural conversations with AI.",
+          "As with the first cohort, RCSA will also be joining this session to share valuable insights on the current job market and support participants with practical job-seeking guidance.",
+          "HER WAKA is a dynamic, employment-focused programme delivered by SheSharp in Auckland for Ministry of Social Development clients who are ready to strengthen their pathway into work. Running monthly from March to June 2026, each session is a cohesive, repeatable event designed to build job readiness, confidence, and practical understanding of the New Zealand labour market."
+        ],
+        "speakers": {
+          "keynote_speakers": {
+            "heading": "Meet Our Speakers",
+            "speakers": [
+              {
+                "name": "Dr. Mahsa McCauley (Mohaghegh)",
+                "title": "Associate Professor at AUT and Chair AI Forum",
+                "company": "She Sharp / AUT",
+                "bio": "Dr. Mahsa McCauley is Founder and Director of She Sharp Charitable Trust. As Chair of AI Forum NZ and Associate Professor of AI at AUT, she researches AI, machine learning, IoT and cybersecurity. She serves on boards of NZTech, EdTechNZ and World Summit Awards, advancing AI strategy, education and SDG projects. Appointed Communication and Information Commissioner for NZ National Commission for UNESCO in January 2026, she leads efforts to uphold freedom of expression, expand information access and foster ethical ecosystems.",
+                "image": "/img/events/HerWaka-DrMahsaMcCauley.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Chan Meng",
+                "title": "Senior AI/ML Infrastructure and Full-Stack Engineer",
+                "company": "Gavigo / Sanicle",
+                "bio": "Chan Meng is a Senior AI/ML Infrastructure and Full-Stack Engineer specialising in generative AI, autonomous agentic systems, and scalable cloud-native applications. She is a Founding Engineer at Gavigo and CTO at Sanicle, leading end-to-end technical delivery using Next.js, Node.js, Python, Docker, and Kubernetes. Her work includes advanced RAG architectures, LLM orchestration, and microservices. With a Master's in Applied Computing and a background in mathematics education, Chan combines strong technical expertise with leadership, speaking globally at events including UN CSW69 and mentoring women in STEM.",
+                "image": "/img/events/HerWaka-ChanMeng.png",
+                "linkedin": ""
+              }
+            ]
+          }
+        },
+        "organizers": [],
+        "sponsors": {
+          "main": [
+            {
+              "name": "Ministry of Social Development",
+              "logo": "/sponsors/msd-logo.svg"
+            }
+          ],
+          "other": []
+        },
+        "specialSections": [
+          {
+            "type": "info",
+            "title": "What to Expect",
+            "content": [
+              "Inspirational speakers sharing authentic employment journeys and practical lessons from navigating the New Zealand workforce",
+              "Employer and recruiter panels offering direct insight into current hiring expectations",
+              "Practical job-readiness sessions focused on professional presentation, interview confidence, and effective employer engagement",
+              "Clear and accessible employment rights guidance",
+              "Structured networking opportunities with employers, recruiters, and industry representatives"
+            ]
+          }
+        ],
+        "photos": [],
+        "galleryUrl": "",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-ministry-of-social-development-academyex-her-waka-april-2026",
         "images": [],
         "category": "workshop",
         "status": "upcoming",
