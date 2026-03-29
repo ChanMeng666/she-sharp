@@ -295,10 +295,24 @@ export async function getProgrammeStats(programmeId: number) {
       )
     );
 
+  // Count mentees excluding test users (for display as capacity count)
+  const [realMenteeCount] = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(menteeFormSubmissions)
+    .leftJoin(users, eq(menteeFormSubmissions.userId, users.id))
+    .where(
+      and(
+        eq(menteeFormSubmissions.programmeId, programmeId),
+        sql`${menteeFormSubmissions.status} IN ('submitted', 'approved')`,
+        sql`(${users.isTestUser} = false OR ${users.id} IS NULL)`
+      )
+    );
+
   return {
     menteeApplications: Number(menteeCount?.count ?? 0),
     mentorCount: Number(mentorCount?.count ?? 0),
     activeRelationships: Number(activeRelCount?.count ?? 0),
     pendingApplications: Number(pendingAppCount?.count ?? 0),
+    realMenteeCount: Number(realMenteeCount?.count ?? 0),
   };
 }
