@@ -55,6 +55,7 @@ import {
   Video,
   MessageSquare,
   Star,
+  FlaskConical,
 } from 'lucide-react';
 
 interface MentorProfileDetails {
@@ -150,6 +151,7 @@ interface QueueEntry {
   waitDays: number;
   preferredIndustries: string[];
   careerStage: string | null;
+  isTestUser: boolean;
 }
 
 interface UnmatchedMentor {
@@ -168,6 +170,7 @@ interface UnmatchedMentor {
   preferredIndustries: string[];
   city: string | null;
   createdAt: string;
+  isTestUser: boolean;
 }
 
 interface UnmatchedMentee {
@@ -184,6 +187,7 @@ interface UnmatchedMentee {
   createdAt: string;
   inQueue: boolean;
   queuePosition: number | null;
+  isTestUser: boolean;
 }
 
 interface MatchingStats {
@@ -1023,7 +1027,12 @@ export default function MatchingManagementPage() {
                                 </AvatarFallback>
                               </Avatar>
                               <div>
-                                <p className="font-medium">{mentor.name}</p>
+                                <p className="font-medium">
+                                  {mentor.name}
+                                  {mentor.isTestUser && (
+                                    <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                                  )}
+                                </p>
                                 <p className="text-sm text-muted-foreground">
                                   {mentor.jobTitle || 'Mentor'}
                                   {mentor.company && ` @ ${mentor.company}`}
@@ -1090,7 +1099,12 @@ export default function MatchingManagementPage() {
                                 </AvatarFallback>
                               </Avatar>
                               <div>
-                                <p className="font-medium">{mentee.name}</p>
+                                <p className="font-medium">
+                                  {mentee.name}
+                                  {mentee.isTestUser && (
+                                    <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                                  )}
+                                </p>
                                 <p className="text-sm text-muted-foreground">
                                   {mentee.currentJobTitle || mentee.careerStage?.replace(/_/g, ' ') || 'Mentee'}
                                   {mentee.currentIndustry && ` in ${mentee.currentIndustry}`}
@@ -1252,7 +1266,12 @@ export default function MatchingManagementPage() {
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="font-medium">{entry.menteeName}</p>
+                            <p className="font-medium">
+                              {entry.menteeName}
+                              {entry.isTestUser && (
+                                <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                              )}
+                            </p>
                             <p className="text-sm text-muted-foreground">
                               {entry.careerStage || 'Career stage not specified'}
                             </p>
