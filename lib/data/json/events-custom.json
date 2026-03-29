@@ -468,6 +468,103 @@
         "status": "upcoming",
         "isFeatured": false
       }
+    },
+    {
+      "id": 90,
+      "slug": "her-waka-may-2026",
+      "title": "Her Waka (May 2026) — Navigating Pathways into Sustainable Employment",
+      "date": "May 5, 2026",
+      "coverImage": {
+        "url": "/img/events/her-waka-may-2026.png",
+        "alt": "Her Waka May 2026 — Navigating pathways into sustainable employment, delivered by SheSharp, Ministry of Social Development and academyEX"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/her-waka-may-2026",
+      "shortDescription": "The third HER WAKA cohort continues with a focus on real-world job readiness, featuring a cybersecurity panel discussion and practical insights to help participants navigate their next career step with confidence.",
+      "attendees": null,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/her-waka-may-2026",
+        "title": "Her Waka (May 2026) — Navigating Pathways into Sustainable Employment",
+        "subtitle": "Navigating Pathways into Sustainable Employment",
+        "date": "May 5, 2026",
+        "time": "12:00pm - 2:00pm NZST",
+        "location": {
+          "format": "in_person",
+          "venueName": "academyEX",
+          "address": "99 Khyber Pass Road, Grafton, Auckland 1023",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "Ready to take your next step into meaningful work? HER WAKA is a dynamic, confidence-building employment programme designed to help you move forward with clarity, capability and purpose.",
+          "Delivered by SheSharp, Ministry of Social Development and academyEX, each monthly cohort brings together up to 25 participants for a supportive and energising experience focused on real-world job readiness. This is not just about finding a job. It is about understanding the market, backing yourself, and building a pathway toward sustainable, future-focused employment.",
+          "Through HER WAKA, you will: discover how the New Zealand job market really works and where opportunities are growing; learn what employers and recruiters are looking for and how to stand out; strengthen your CV, interview skills, and professional presence; understand your employment rights so you can step into work informed and empowered; and build confidence, communication skills, and connections that support long-term success.",
+          "With practical tools, employer insights, and a welcoming learning environment, HER WAKA is designed to help you feel prepared, capable, and ready to navigate your next chapter.",
+          "Join us and take your next step forward with confidence."
+        ],
+        "speakers": {
+          "panel_speakers": {
+            "heading": "Meet Our Panelists",
+            "speakers": [
+              {
+                "name": "Prasanth",
+                "title": "",
+                "company": "",
+                "bio": "",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Paula Gair",
+                "title": "",
+                "company": "academyEX",
+                "bio": "",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Swapna Soni",
+                "title": "",
+                "company": "",
+                "bio": "",
+                "image": "",
+                "linkedin": ""
+              }
+            ]
+          }
+        },
+        "organizers": [],
+        "sponsors": {
+          "main": [
+            {
+              "name": "Ministry of Social Development",
+              "logo": "/sponsors/msd-logo.svg"
+            }
+          ],
+          "other": []
+        },
+        "specialSections": [
+          {
+            "type": "info",
+            "title": "What to Expect",
+            "content": [
+              "Inspirational speakers sharing authentic employment journeys and practical lessons from navigating the New Zealand workforce",
+              "Employer and recruiter panels offering direct insight into current hiring expectations",
+              "Practical job-readiness sessions focused on professional presentation, interview confidence, and effective employer engagement",
+              "Clear and accessible employment rights guidance",
+              "Structured networking opportunities with employers, recruiters, and industry representatives"
+            ]
+          }
+        ],
+        "photos": [],
+        "galleryUrl": "",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-ministry-of-social-development-academyex-her-waka-may-2026",
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-ministry-of-social-development-academyex-her-waka-may-2026",
+        "images": [],
+        "category": "workshop",
+        "status": "upcoming",
+        "isFeatured": false,
+        "refundPolicy": "No refunds"
+      }
     }
   ]
 }
