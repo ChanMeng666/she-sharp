@@ -153,6 +153,31 @@ export const PATCH = withRoles(
         });
       }
 
+      if (action === 'toggle_test_user') {
+        const newValue = !existingUser.isTestUser;
+        await db
+          .update(users)
+          .set({
+            isTestUser: newValue,
+            updatedAt: new Date(),
+          })
+          .where(eq(users.id, userId));
+
+        await db.insert(activityLogs).values({
+          userId: adminUserId,
+          action: newValue ? 'user_marked_test' : 'user_unmarked_test',
+          entityType: 'user',
+          entityId: userId,
+          metadata: { isTestUser: newValue },
+        });
+
+        return NextResponse.json({
+          success: true,
+          message: newValue ? 'User marked as test user' : 'User unmarked as test user',
+          isTestUser: newValue,
+        });
+      }
+
       // General update (for editing user details)
       const allowedFields = ['name', 'phone'];
       const filteredUpdate: Record<string, any> = {};
