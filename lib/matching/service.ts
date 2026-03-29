@@ -446,12 +446,16 @@ export async function runBatchMatching(
       const unmatched = await db
         .select({ userId: menteeProfiles.userId })
         .from(menteeProfiles)
+        .innerJoin(users, eq(menteeProfiles.userId, users.id))
         .where(
-          sql`NOT EXISTS (
-            SELECT 1 FROM ${mentorshipRelationships}
-            WHERE ${mentorshipRelationships.menteeUserId} = ${menteeProfiles.userId}
-            AND ${mentorshipRelationships.status} IN ('pending', 'active')
-          )`
+          and(
+            eq(users.isTestUser, false),
+            sql`NOT EXISTS (
+              SELECT 1 FROM ${mentorshipRelationships}
+              WHERE ${mentorshipRelationships.menteeUserId} = ${menteeProfiles.userId}
+              AND ${mentorshipRelationships.status} IN ('pending', 'active')
+            )`
+          )
         )
         .limit(limit);
 

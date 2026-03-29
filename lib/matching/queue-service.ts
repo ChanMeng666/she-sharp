@@ -280,10 +280,11 @@ export async function getQueueForProcessing(limit: number = 20, programmeId?: nu
   const entries = await db
     .select({ menteeUserId: menteeWaitingQueue.menteeUserId })
     .from(menteeWaitingQueue)
+    .innerJoin(users, eq(menteeWaitingQueue.menteeUserId, users.id))
     .where(
       programmeId
-        ? and(eq(menteeWaitingQueue.status, 'waiting'), eq(menteeWaitingQueue.programmeId, programmeId))
-        : eq(menteeWaitingQueue.status, 'waiting')
+        ? and(eq(menteeWaitingQueue.status, 'waiting'), eq(menteeWaitingQueue.programmeId, programmeId), eq(users.isTestUser, false))
+        : and(eq(menteeWaitingQueue.status, 'waiting'), eq(users.isTestUser, false))
     )
     .orderBy(desc(menteeWaitingQueue.priority), asc(menteeWaitingQueue.joinedAt))
     .limit(limit);
