@@ -39,15 +39,14 @@ export const GET = withRoles(
           eq(users.isTestUser, false)
         ));
 
-      // Get pending AI match results that need review (excludes test users)
+      // Get pending AI match results that need review (excludes matches where either mentor or mentee is a test user)
       const [{ pendingMatches }] = await db
         .select({ pendingMatches: sql<number>`count(*)` })
         .from(aiMatchResults)
-        .innerJoin(users, eq(aiMatchResults.menteeUserId, users.id))
-        .where(and(
-          eq(aiMatchResults.status, 'pending_review'),
-          eq(users.isTestUser, false)
-        ));
+        .where(sql`${aiMatchResults.status} = 'pending_review'
+          AND NOT EXISTS (
+            SELECT 1 FROM users WHERE users.id IN (${aiMatchResults.menteeUserId}, ${aiMatchResults.mentorUserId}) AND users.is_test_user = true
+          )`);
 
       const tasks = [
         {
