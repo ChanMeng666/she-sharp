@@ -42,15 +42,17 @@ export async function GET(request: NextRequest) {
       WHERE deleted_at IS NULL AND is_test_user = false
     `);
 
-    // 2. Mentorship Statistics
+    // 2. Mentorship Statistics (excludes test users)
     const mentorshipStats = await db.execute(sql`
-      SELECT 
-        COUNT(DISTINCT mentor_user_id) as total_mentors,
-        COUNT(DISTINCT mentee_user_id) as total_mentees,
-        COUNT(CASE WHEN status = 'active' THEN 1 END) as active_relationships,
-        COUNT(CASE WHEN status = 'pending' THEN 1 END) as pending_requests,
-        COUNT(CASE WHEN created_at >= ${startDate} THEN 1 END) as new_relationships
-      FROM mentorship_relationships
+      SELECT
+        COUNT(DISTINCT mr.mentor_user_id) as total_mentors,
+        COUNT(DISTINCT mr.mentee_user_id) as total_mentees,
+        COUNT(CASE WHEN mr.status = 'active' THEN 1 END) as active_relationships,
+        COUNT(CASE WHEN mr.status = 'pending' THEN 1 END) as pending_requests,
+        COUNT(CASE WHEN mr.created_at >= ${startDate} THEN 1 END) as new_relationships
+      FROM mentorship_relationships mr
+      JOIN users mentor ON mr.mentor_user_id = mentor.id AND mentor.is_test_user = false
+      JOIN users mentee ON mr.mentee_user_id = mentee.id AND mentee.is_test_user = false
     `);
 
     // 3. Event Statistics
@@ -73,26 +75,31 @@ export async function GET(request: NextRequest) {
       FROM resources
     `);
 
-    // 5. Meeting Statistics
+    // 5. Meeting Statistics (excludes test users)
     const meetingStats = await db.execute(sql`
-      SELECT 
+      SELECT
         COUNT(*) as total_meetings,
-        COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed_meetings,
-        COUNT(CASE WHEN status = 'cancelled' THEN 1 END) as cancelled_meetings,
-        AVG(CASE WHEN rating IS NOT NULL THEN rating END)::numeric(3,2) as avg_rating
-      FROM meetings
-      WHERE scheduled_at >= ${startDate} AND scheduled_at <= ${endDate}
+        COUNT(CASE WHEN m.status = 'completed' THEN 1 END) as completed_meetings,
+        COUNT(CASE WHEN m.status = 'cancelled' THEN 1 END) as cancelled_meetings,
+        AVG(CASE WHEN m.rating IS NOT NULL THEN m.rating END)::numeric(3,2) as avg_rating
+      FROM meetings m
+      JOIN mentorship_relationships mr ON m.relationship_id = mr.id
+      JOIN users mentor ON mr.mentor_user_id = mentor.id AND mentor.is_test_user = false
+      JOIN users mentee ON mr.mentee_user_id = mentee.id AND mentee.is_test_user = false
+      WHERE m.scheduled_at >= ${startDate} AND m.scheduled_at <= ${endDate}
     `);
 
-    // 6. Activity Trends (last 30 days)
+    // 6. Activity Trends (last 30 days, excludes test users)
     const activityTrends = await db.execute(sql`
-      SELECT 
-        DATE(created_at) as date,
+      SELECT
+        DATE(al.created_at) as date,
         COUNT(*) as count,
-        action
-      FROM activity_logs
-      WHERE created_at >= NOW() - INTERVAL '30 days'
-      GROUP BY DATE(created_at), action
+        al.action
+      FROM activity_logs al
+      LEFT JOIN users u ON al.user_id = u.id
+      WHERE al.created_at >= NOW() - INTERVAL '30 days'
+        AND (u.is_test_user = false OR al.user_id IS NULL)
+      GROUP BY DATE(al.created_at), al.action
       ORDER BY date DESC
     `);
 
