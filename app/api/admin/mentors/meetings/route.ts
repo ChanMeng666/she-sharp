@@ -49,6 +49,8 @@ export const GET = withRoles(
           menteeFormName: menteeFormSubmissions.fullName,
           menteeFormPhoto: menteeFormSubmissions.photoUrl,
           menteeProfilePhoto: menteeProfiles.photoUrl,
+          mentorIsTestUser: mentorUser.isTestUser,
+          menteeIsTestUser: menteeUser.isTestUser,
         })
         .from(meetings)
         .innerJoin(mentorshipRelationships, eq(meetings.relationshipId, mentorshipRelationships.id))
@@ -78,6 +80,8 @@ export const GET = withRoles(
         topics: meeting.topicsDiscussed || [],
         notes: meeting.mentorNotes || meeting.menteeFeedback,
         recordingAvailable: !!meeting.recordingUrl,
+        mentorIsTestUser: meeting.mentorIsTestUser,
+        menteeIsTestUser: meeting.menteeIsTestUser,
       }));
 
       // Get overall statistics

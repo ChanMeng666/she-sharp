@@ -72,6 +72,8 @@ export const GET = withRoles(
           // Mentee profile info
           menteeCareerStage: menteeProfile.careerStage,
           menteeLearningGoals: menteeProfile.learningGoals,
+          mentorIsTestUser: mentorUser.isTestUser,
+          menteeIsTestUser: menteeUser.isTestUser,
         })
         .from(mentorshipRelationships)
         .innerJoin(mentorUser, eq(mentorshipRelationships.mentorUserId, mentorUser.id))
@@ -138,6 +140,7 @@ export const GET = withRoles(
             mbtiType: rel.mentorFormMbti,
             yearsExperience: rel.mentorYearsExp,
             expertise: (rel.mentorExpertise as string[]) || [],
+            isTestUser: rel.mentorIsTestUser,
           },
           mentee: {
             id: rel.menteeUserId,
@@ -150,6 +153,7 @@ export const GET = withRoles(
             industry: rel.menteeFormIndustry,
             careerStage: rel.menteeFormCareerStage || rel.menteeCareerStage,
             learningGoals: (rel.menteeLearningGoals as string[]) || [],
+            isTestUser: rel.menteeIsTestUser,
           },
           status: displayStatus,
           startedAt: rel.startedAt,
