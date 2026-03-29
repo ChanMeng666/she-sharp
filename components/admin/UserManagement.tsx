@@ -15,6 +15,7 @@ import {
   Trash2,
   Shield,
   Eye,
+  FlaskConical,
   MapPin,
   Briefcase,
   GraduationCap,
@@ -217,6 +218,7 @@ export default function UserManagement() {
   const [reviewNotes, setReviewNotes] = useState('');
   const [reviewingUser, setReviewingUser] = useState<UnifiedUser | null>(null);
   const [submittingReview, setSubmittingReview] = useState(false);
+  const [reviewIsTestUser, setReviewIsTestUser] = useState(false);
 
   // User action dialog state
   const [actionDialogOpen, setActionDialogOpen] = useState(false);
@@ -319,11 +321,41 @@ export default function UserManagement() {
     }
   };
 
+  // Handle toggle test user status
+  const [togglingTestUser, setTogglingTestUser] = useState<number | null>(null);
+  const handleToggleTestUser = async (user: UnifiedUser) => {
+    setTogglingTestUser(user.id);
+    try {
+      const response = await fetch(`/api/admin/users/${user.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'toggle_test_user' }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(prev => prev.map(u => {
+          if (u.id === user.id) {
+            return { ...u, isTestUser: data.isTestUser };
+          }
+          return u;
+        }));
+        // Refresh to update stats
+        fetchUsers();
+      }
+    } catch (error) {
+      console.error('Failed to toggle test user status:', error);
+    } finally {
+      setTogglingTestUser(null);
+    }
+  };
+
   // Handle application review
   const openReviewDialog = (user: UnifiedUser, action: 'approve' | 'reject') => {
     setReviewingUser(user);
     setReviewAction(action);
     setReviewNotes('');
+    setReviewIsTestUser(false);
     setReviewDialogOpen(true);
   };
 
@@ -339,6 +371,7 @@ export default function UserManagement() {
         body: JSON.stringify({
           action: reviewAction,
           notes: reviewNotes,
+          ...(reviewAction === 'approve' && reviewIsTestUser ? { isTestUser: true } : {}),
         }),
       });
 
@@ -786,6 +819,11 @@ export default function UserManagement() {
               <Shield className="w-4 h-4 text-navy" />
               <span className="text-navy font-medium">Admins</span>
               <span className="font-bold text-lg">{stats.byRole.admin}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FlaskConical className="w-4 h-4 text-orange-500" />
+              <span className="text-orange-500 font-medium">Test Users</span>
+              <span className="font-bold text-lg">{stats.testUsers}</span>
             </div>
           </div>
         )}
@@ -1340,6 +1378,14 @@ export default function UserManagement() {
                                     <>
                                       <DropdownMenuSeparator />
                                       <DropdownMenuItem
+                                        onClick={() => handleToggleTestUser(user)}
+                                        disabled={togglingTestUser === user.id}
+                                      >
+                                        <FlaskConical className="w-4 h-4 mr-2" />
+                                        {user.isTestUser ? 'Remove Test User Mark' : 'Mark as Test User'}
+                                      </DropdownMenuItem>
+                                      <DropdownMenuSeparator />
+                                      <DropdownMenuItem
                                         onClick={() => openUserActionDialog(user, 'suspend')}
                                       >
                                         <Ban className="w-4 h-4 mr-2" />
@@ -1455,6 +1501,21 @@ export default function UserManagement() {
                   rows={4}
                 />
               </div>
+              {reviewAction === 'approve' && (
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="review-test-user"
+                    checked={reviewIsTestUser}
+                    onCheckedChange={(checked) => setReviewIsTestUser(checked === true)}
+                  />
+                  <Label
+                    htmlFor="review-test-user"
+                    className="text-sm text-muted-foreground cursor-pointer"
+                  >
+                    Mark as test user
+                  </Label>
+                </div>
+              )}
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setReviewDialogOpen(false)}>
