@@ -235,6 +235,7 @@ export async function getWaitingQueue(
       userName: users.name,
       userEmail: users.email,
       userImage: users.image,
+      isTestUser: users.isTestUser,
       profilePhotoUrl: menteeProfiles.photoUrl,
       menteeForm: menteeFormSubmissions,
     })
@@ -266,6 +267,7 @@ export async function getWaitingQueue(
     waitDays: Math.floor((now.getTime() - new Date(e.queue.joinedAt).getTime()) / (1000 * 60 * 60 * 24)),
     preferredIndustries: (e.menteeForm?.preferredIndustries as string[]) || [],
     careerStage: e.menteeForm?.currentStage || null,
+    isTestUser: e.isTestUser,
   }));
 
   return { entries: entriesWithDetails, total };
@@ -306,10 +308,11 @@ export async function getQueueStats(programmeId?: number): Promise<{
       expiringSoon: sql<number>`count(*) filter (where ${menteeWaitingQueue.expiresAt} < (now() + interval '7 days'))::int`,
     })
     .from(menteeWaitingQueue)
+    .innerJoin(users, eq(menteeWaitingQueue.menteeUserId, users.id))
     .where(
       programmeId
-        ? and(eq(menteeWaitingQueue.status, 'waiting'), eq(menteeWaitingQueue.programmeId, programmeId))
-        : eq(menteeWaitingQueue.status, 'waiting')
+        ? and(eq(menteeWaitingQueue.status, 'waiting'), eq(menteeWaitingQueue.programmeId, programmeId), eq(users.isTestUser, false))
+        : and(eq(menteeWaitingQueue.status, 'waiting'), eq(users.isTestUser, false))
     );
 
   return {

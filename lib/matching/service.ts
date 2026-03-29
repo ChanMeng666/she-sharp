@@ -1078,6 +1078,7 @@ export async function getUnmatchedMentors(): Promise<{
   preferredIndustries: string[];
   city: string | null;
   createdAt: Date;
+  isTestUser: boolean;
 }[]> {
   const mentors = await db
     .select({
@@ -1085,6 +1086,7 @@ export async function getUnmatchedMentors(): Promise<{
       name: users.name,
       email: users.email,
       image: users.image,
+      isTestUser: users.isTestUser,
       profilePhotoUrl: mentorProfiles.photoUrl,
       company: mentorProfiles.company,
       jobTitle: mentorProfiles.jobTitle,
@@ -1129,6 +1131,7 @@ export async function getUnmatchedMentors(): Promise<{
     preferredIndustries: (m.formPreferredIndustries as string[]) || [],
     city: m.formCity || null,
     createdAt: m.createdAt,
+    isTestUser: m.isTestUser,
   }));
 }
 
@@ -1149,6 +1152,7 @@ export async function getUnmatchedMentees(): Promise<{
   createdAt: Date;
   inQueue: boolean;
   queuePosition: number | null;
+  isTestUser: boolean;
 }[]> {
   // Get mentees without active/pending relationships
   const mentees = await db
@@ -1157,6 +1161,7 @@ export async function getUnmatchedMentees(): Promise<{
       name: users.name,
       email: users.email,
       image: users.image,
+      isTestUser: users.isTestUser,
       profilePhotoUrl: menteeProfiles.photoUrl,
       careerStage: menteeProfiles.careerStage,
       mbtiType: menteeProfiles.mbtiType,
@@ -1201,6 +1206,7 @@ export async function getUnmatchedMentees(): Promise<{
         createdAt: m.createdAt,
         inQueue,
         queuePosition,
+        isTestUser: m.isTestUser,
       };
     })
   );
