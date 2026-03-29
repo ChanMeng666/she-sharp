@@ -161,6 +161,7 @@ export interface QueueEntryWithDetails {
   waitDays: number;
   preferredIndustries: string[];
   careerStage: string | null;
+  isTestUser: boolean;
 }
 
 // Detailed mentor profile for match display
