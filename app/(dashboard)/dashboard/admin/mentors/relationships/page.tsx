@@ -116,6 +116,7 @@ interface MentorInfo {
   mbtiType: string | null;
   yearsExperience: number | null;
   expertise: string[];
+  isTestUser: boolean;
 }
 
 interface MenteeInfo {
@@ -129,6 +130,7 @@ interface MenteeInfo {
   industry: string | null;
   careerStage: string | null;
   learningGoals: string[];
+  isTestUser: boolean;
 }
 
 interface Relationship {
@@ -534,7 +536,12 @@ export default function MentorRelationshipsPage() {
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="font-medium text-sm">{relationship.mentor.name}</p>
+                            <p className="font-medium text-sm flex items-center flex-wrap gap-1">
+                              {relationship.mentor.name}
+                              {relationship.mentor.isTestUser && (
+                                <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                              )}
+                            </p>
                             <p className="text-xs text-muted-foreground">Mentor</p>
                           </div>
                         </div>
@@ -546,7 +553,12 @@ export default function MentorRelationshipsPage() {
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="font-medium text-sm">{relationship.mentee.name}</p>
+                            <p className="font-medium text-sm flex items-center flex-wrap gap-1">
+                              {relationship.mentee.name}
+                              {relationship.mentee.isTestUser && (
+                                <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                              )}
+                            </p>
                             <p className="text-xs text-muted-foreground">Mentee</p>
                           </div>
                         </div>
@@ -594,7 +606,12 @@ export default function MentorRelationshipsPage() {
                           </AvatarFallback>
                         </Avatar>
                         <div className="space-y-0.5">
-                          <p className="font-medium text-sm">{relationship.mentor.name}</p>
+                          <p className="font-medium text-sm flex items-center flex-wrap gap-1">
+                            {relationship.mentor.name}
+                            {relationship.mentor.isTestUser && (
+                              <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                            )}
+                          </p>
                           {(relationship.mentor.jobTitle || relationship.mentor.company) && (
                             <p className="text-xs text-muted-foreground">
                               {relationship.mentor.jobTitle}
@@ -627,7 +644,12 @@ export default function MentorRelationshipsPage() {
                           </AvatarFallback>
                         </Avatar>
                         <div className="space-y-0.5">
-                          <p className="font-medium text-sm">{relationship.mentee.name}</p>
+                          <p className="font-medium text-sm flex items-center flex-wrap gap-1">
+                            {relationship.mentee.name}
+                            {relationship.mentee.isTestUser && (
+                              <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                            )}
+                          </p>
                           {(relationship.mentee.jobTitle || relationship.mentee.industry) && (
                             <p className="text-xs text-muted-foreground">
                               {relationship.mentee.jobTitle}
@@ -788,7 +810,12 @@ export default function MentorRelationshipsPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0 space-y-1">
-                    <p className="font-medium break-words">{selectedRelationship.mentor.name}</p>
+                    <p className="font-medium break-words flex items-center flex-wrap gap-1">
+                      {selectedRelationship.mentor.name}
+                      {selectedRelationship.mentor.isTestUser && (
+                        <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                      )}
+                    </p>
                     <p className="text-sm text-muted-foreground break-all">{selectedRelationship.mentor.email}</p>
                     {(selectedRelationship.mentor.jobTitle || selectedRelationship.mentor.company) && (
                       <p className="text-sm break-words">
@@ -837,7 +864,12 @@ export default function MentorRelationshipsPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0 space-y-1">
-                    <p className="font-medium break-words">{selectedRelationship.mentee.name}</p>
+                    <p className="font-medium break-words flex items-center flex-wrap gap-1">
+                      {selectedRelationship.mentee.name}
+                      {selectedRelationship.mentee.isTestUser && (
+                        <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                      )}
+                    </p>
                     <p className="text-sm text-muted-foreground break-all">{selectedRelationship.mentee.email}</p>
                     {(selectedRelationship.mentee.jobTitle || selectedRelationship.mentee.industry) && (
                       <p className="text-sm break-words">
@@ -966,12 +998,22 @@ export default function MentorRelationshipsPage() {
             <div className="py-4">
               <div className="flex items-center gap-4 p-3 bg-muted rounded-lg">
                 <div className="flex-1">
-                  <p className="font-medium">{selectedRelationship.mentor.name}</p>
+                  <p className="font-medium flex items-center flex-wrap gap-1">
+                    {selectedRelationship.mentor.name}
+                    {selectedRelationship.mentor.isTestUser && (
+                      <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                    )}
+                  </p>
                   <p className="text-sm text-muted-foreground">Mentor</p>
                 </div>
                 <span className="text-muted-foreground">↔</span>
                 <div className="flex-1 text-right">
-                  <p className="font-medium">{selectedRelationship.mentee.name}</p>
+                  <p className="font-medium flex items-center justify-end flex-wrap gap-1">
+                    {selectedRelationship.mentee.name}
+                    {selectedRelationship.mentee.isTestUser && (
+                      <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                    )}
+                  </p>
                   <p className="text-sm text-muted-foreground">Mentee</p>
                 </div>
               </div>
@@ -1001,12 +1043,22 @@ export default function MentorRelationshipsPage() {
             <div className="space-y-4 py-4">
               <div className="flex items-center gap-4 p-3 bg-muted rounded-lg">
                 <div className="flex-1">
-                  <p className="font-medium">{selectedRelationship.mentor.name}</p>
+                  <p className="font-medium flex items-center flex-wrap gap-1">
+                    {selectedRelationship.mentor.name}
+                    {selectedRelationship.mentor.isTestUser && (
+                      <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                    )}
+                  </p>
                   <p className="text-sm text-muted-foreground">Mentor</p>
                 </div>
                 <span className="text-muted-foreground">↔</span>
                 <div className="flex-1 text-right">
-                  <p className="font-medium">{selectedRelationship.mentee.name}</p>
+                  <p className="font-medium flex items-center justify-end flex-wrap gap-1">
+                    {selectedRelationship.mentee.name}
+                    {selectedRelationship.mentee.isTestUser && (
+                      <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                    )}
+                  </p>
                   <p className="text-sm text-muted-foreground">Mentee</p>
                 </div>
               </div>

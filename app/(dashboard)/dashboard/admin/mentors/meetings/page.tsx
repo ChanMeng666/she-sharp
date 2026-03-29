@@ -66,6 +66,8 @@ interface Meeting {
   relationshipId: number;
   mentor: string;
   mentee: string;
+  mentorIsTestUser: boolean;
+  menteeIsTestUser: boolean;
   date: string;
   duration: number;
   type: string;
@@ -413,8 +415,18 @@ export default function MentorMeetingsPage() {
                     <div key={meeting.id} className="p-4 rounded-lg border bg-card">
                       <div className="flex items-start justify-between mb-2">
                         <div>
-                          <p className="text-sm font-medium">{meeting.mentor}</p>
-                          <p className="text-xs text-muted-foreground">with {meeting.mentee}</p>
+                          <p className="text-sm font-medium flex items-center flex-wrap gap-1">
+                            {meeting.mentor}
+                            {meeting.mentorIsTestUser && (
+                              <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                            )}
+                          </p>
+                          <p className="text-xs text-muted-foreground flex items-center flex-wrap gap-1">
+                            with {meeting.mentee}
+                            {meeting.menteeIsTestUser && (
+                              <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                            )}
+                          </p>
                         </div>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
@@ -512,8 +524,18 @@ export default function MentorMeetingsPage() {
                   <TableRow key={meeting.id}>
                     <TableCell>
                       <div className="space-y-1">
-                        <p className="text-sm font-medium">{meeting.mentor}</p>
-                        <p className="text-xs text-muted-foreground">with {meeting.mentee}</p>
+                        <p className="text-sm font-medium flex items-center flex-wrap gap-1">
+                          {meeting.mentor}
+                          {meeting.mentorIsTestUser && (
+                            <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                          )}
+                        </p>
+                        <p className="text-xs text-muted-foreground flex items-center flex-wrap gap-1">
+                          with {meeting.mentee}
+                          {meeting.menteeIsTestUser && (
+                            <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>
+                          )}
+                        </p>
                       </div>
                     </TableCell>
                     <TableCell>
