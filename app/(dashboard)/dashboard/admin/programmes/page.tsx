@@ -51,6 +51,7 @@ interface ProgrammeStats {
   mentorCount: number;
   activeRelationships: number;
   pendingApplications: number;
+  realMenteeCount: number;
 }
 
 interface Programme {
@@ -304,11 +305,11 @@ export default function ProgrammeManagementPage() {
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Mentees</span>
                     <span className="font-medium">
-                      {p.currentMenteeCount}/{p.maxMentees}
+                      {p.stats.realMenteeCount}/{p.maxMentees}
                     </span>
                   </div>
                   <Progress
-                    value={(p.currentMenteeCount / p.maxMentees) * 100}
+                    value={(p.stats.realMenteeCount / p.maxMentees) * 100}
                     className="h-2"
                   />
                 </div>
