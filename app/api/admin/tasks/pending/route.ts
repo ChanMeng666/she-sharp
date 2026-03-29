@@ -6,8 +6,9 @@ import {
   menteeFormSubmissions,
   menteeWaitingQueue,
   aiMatchResults,
+  users,
 } from '@/lib/db/schema';
-import { sql, eq } from 'drizzle-orm';
+import { sql, eq, and } from 'drizzle-orm';
 
 // Admin-only pending tasks endpoint
 export const GET = withRoles(
@@ -28,17 +29,25 @@ export const GET = withRoles(
         .from(menteeFormSubmissions)
         .where(eq(menteeFormSubmissions.status, 'submitted'));
 
-      // Get mentees waiting for matching
+      // Get mentees waiting for matching (excludes test users)
       const [{ waitingMentees }] = await db
         .select({ waitingMentees: sql<number>`count(*)` })
         .from(menteeWaitingQueue)
-        .where(eq(menteeWaitingQueue.status, 'waiting'));
+        .innerJoin(users, eq(menteeWaitingQueue.menteeUserId, users.id))
+        .where(and(
+          eq(menteeWaitingQueue.status, 'waiting'),
+          eq(users.isTestUser, false)
+        ));
 
-      // Get pending AI match results that need review
+      // Get pending AI match results that need review (excludes test users)
       const [{ pendingMatches }] = await db
         .select({ pendingMatches: sql<number>`count(*)` })
         .from(aiMatchResults)
-        .where(eq(aiMatchResults.status, 'pending_review'));
+        .innerJoin(users, eq(aiMatchResults.menteeUserId, users.id))
+        .where(and(
+          eq(aiMatchResults.status, 'pending_review'),
+          eq(users.isTestUser, false)
+        ));
 
       const tasks = [
         {
