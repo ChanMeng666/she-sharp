@@ -382,3 +382,126 @@ ${details.expiresAt ? `This code expires on ${new Date(details.expiresAt).toLoca
     text,
   });
 }
+
+/**
+ * Send a friendly reminder email to mentors who haven't completed registration.
+ * Different tone from the original approval email — explains the URL change.
+ */
+export async function sendMentorReminderEmail(
+  email: string,
+  details: {
+    invitationCode: string;
+    expiresAt?: Date;
+    mentorName?: string;
+  }
+) {
+  const baseUrl = getBaseUrl();
+  const signUpUrl = `${baseUrl}/sign-up?code=${details.invitationCode}`;
+  const firstName = details.mentorName?.split(' ')[0] || '';
+  const greeting = firstName ? `Hi ${firstName},` : 'Hi,';
+
+  const html = brandedEmailLayout({
+    title: 'Complete Your Mentor Registration',
+    preheader: 'Your invitation code is ready — it only takes a few minutes to get started.',
+    bodyHtml: `
+      ${infoBox('<strong>Registration Reminder</strong>')}
+      <p>${greeting}</p>
+      <p>We'd love to have you on board as a mentor at She Sharp! Your registration is still pending and we wanted to make sure you have everything you need to get started.</p>
+      <p style="color: #666;"><em>Please note: our website address has recently changed. If you previously tried to register using an earlier email, please use the updated link below instead.</em></p>
+
+      ${codeBox(details.invitationCode, 'Your Invitation Code:')}
+
+      <p>Click the button below to complete your registration — it only takes a few minutes:</p>
+      ${brandButton('Complete Registration', signUpUrl)}
+
+      <p style="color: #666; font-size: 14px;">Or copy and paste this link into your browser: ${signUpUrl}</p>
+      ${details.expiresAt ? `<p style="color: #999; font-size: 12px;">This code expires on ${new Date(details.expiresAt).toLocaleDateString('en-NZ')}.</p>` : ''}
+      <p>If you have any questions, feel free to reach out to us. We look forward to welcoming you to the She Sharp mentorship community!</p>
+    `,
+  });
+
+  const text = `
+Friendly Reminder: Complete Your She Sharp Mentor Registration
+
+${greeting}
+
+We'd love to have you on board as a mentor at She Sharp! Your registration is still pending.
+
+Please note: our website address has recently changed. If you previously tried to register using an earlier email, please use the updated link below instead.
+
+YOUR INVITATION CODE: ${details.invitationCode}
+
+Complete your registration at:
+${signUpUrl}
+
+${details.expiresAt ? `This code expires on ${new Date(details.expiresAt).toLocaleDateString('en-NZ')}.` : ''}
+
+If you have any questions, feel free to reach out. We look forward to welcoming you!
+
+© ${new Date().getFullYear()} She Sharp. Empowering women in STEM.
+  `;
+
+  return sendEmail({
+    to: email,
+    subject: 'Friendly Reminder: Complete Your She Sharp Mentor Registration',
+    html,
+    text,
+  });
+}
+
+/**
+ * Send a URL update notification to existing users.
+ * Used when the deployment domain changes.
+ */
+export async function sendUrlUpdateEmail(
+  email: string,
+  details: {
+    userName?: string;
+  }
+) {
+  const baseUrl = getBaseUrl();
+  const dashboardUrl = `${baseUrl}/dashboard`;
+  const firstName = details.userName?.split(' ')[0] || '';
+  const greeting = firstName ? `Hi ${firstName},` : 'Hi,';
+
+  const html = brandedEmailLayout({
+    title: 'She Sharp Has a New Home',
+    preheader: 'We have moved to a new web address — update your bookmark!',
+    bodyHtml: `
+      ${infoBox('<strong>Website Update</strong>')}
+      <p>${greeting}</p>
+      <p>We wanted to let you know that She Sharp has moved to a new web address. Please update your bookmark to continue accessing your account and dashboard.</p>
+
+      <p style="font-size: 16px; text-align: center; margin: 20px 0;"><strong>${baseUrl}</strong></p>
+
+      ${brandButton('Visit She Sharp', dashboardUrl)}
+
+      <p style="color: #666; font-size: 14px;">Or copy and paste this link into your browser: ${dashboardUrl}</p>
+      <p>All your account data and mentor profile remain unchanged. If you have any questions, don't hesitate to reach out.</p>
+    `,
+  });
+
+  const text = `
+She Sharp Has a New Home — Update Your Bookmark
+
+${greeting}
+
+She Sharp has moved to a new web address. Please update your bookmark:
+
+${baseUrl}
+
+Visit your dashboard at:
+${dashboardUrl}
+
+All your account data and mentor profile remain unchanged.
+
+© ${new Date().getFullYear()} She Sharp. Empowering women in STEM.
+  `;
+
+  return sendEmail({
+    to: email,
+    subject: 'She Sharp Has a New Home — Update Your Bookmark',
+    html,
+    text,
+  });
+}
