@@ -209,10 +209,12 @@ export default function DynamicDashboard() {
             </Badge>
           ))}
           {!user.emailVerified && (
-            <Badge variant="destructive">
-              <AlertCircle className="h-3 w-3 mr-1" />
-              Email not verified
-            </Badge>
+            <Link href="/dashboard/account">
+              <Badge variant="destructive" className="cursor-pointer hover:bg-destructive/80 transition-colors">
+                <AlertCircle className="h-3 w-3 mr-1" />
+                Email not verified
+              </Badge>
+            </Link>
           )}
         </div>
       </div>
