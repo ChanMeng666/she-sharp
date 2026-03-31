@@ -41,6 +41,11 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
   // Handle successful action with redirect
   useEffect(() => {
     if (state?.success && state?.redirectTo) {
+      if (state?.warning) {
+        // Delay redirect to let user read the warning
+        const timer = setTimeout(() => router.push(state.redirectTo), 4000);
+        return () => clearTimeout(timer);
+      }
       router.push(state.redirectTo);
     }
   }, [state, router]);
@@ -292,6 +297,12 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                 {state?.error && (
                   <div className="p-3 bg-red-50 border border-red-200 rounded-xl">
                     <div className="text-red-700 text-sm">{state.error}</div>
+                  </div>
+                )}
+
+                {state?.warning && (
+                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                    <div className="text-amber-700 text-sm">{state.warning}</div>
                   </div>
                 )}
 
