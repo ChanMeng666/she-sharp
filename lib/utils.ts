@@ -68,3 +68,16 @@ export function serializeData<T>(data: T): T {
 
   return data;
 }
+
+/**
+ * Masks an email address for display, showing only the first character
+ * of the local part and the full domain.
+ * Example: "nanthan.singaravel@myob.com" → "n***@myob.com"
+ */
+export function maskEmail(email: string): string {
+  const atIndex = email.indexOf('@');
+  if (atIndex <= 0) return '***';
+  const local = email.substring(0, atIndex);
+  const domain = email.substring(atIndex);
+  return `${local.charAt(0)}***${domain}`;
+}
