@@ -1,5 +1,6 @@
+import { redirect } from 'next/navigation';
 import { db } from '@/lib/db/drizzle';
-import { userRoles } from '@/lib/db/schema';
+import { User, userRoles } from '@/lib/db/schema';
 import { and, eq } from 'drizzle-orm';
 
 export async function isUserAdmin(userId: number): Promise<boolean> {
@@ -48,4 +49,15 @@ export async function getUserRole(userId: number, roleType: 'admin' | 'mentor' |
     .limit(1);
 
   return role.length > 0;
+}
+
+/**
+ * Ensures OAuth users have completed invitation code verification.
+ * Credential users (with passwordHash) pass through — they verified during signup.
+ * Call this in dashboard layouts/pages after getUser().
+ */
+export function ensureUserVerified(user: User): void {
+  if (user.passwordHash) return;
+  if (user.inviteCodeVerifiedAt) return;
+  redirect('/verify-invitation');
 }

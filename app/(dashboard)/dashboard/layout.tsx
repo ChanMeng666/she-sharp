@@ -1,6 +1,9 @@
 import { ReactNode } from "react";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { getUser } from "@/lib/db/queries";
+import { ensureUserVerified } from "@/lib/auth/permissions";
 import { AppSidebar } from "./_components/sidebar/app-sidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
@@ -12,6 +15,12 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardLayout({ children }: Readonly<{ children: ReactNode }>) {
+  const user = await getUser();
+  if (!user) {
+    redirect('/sign-in');
+  }
+  ensureUserVerified(user);
+
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
 
