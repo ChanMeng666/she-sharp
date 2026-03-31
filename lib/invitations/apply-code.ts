@@ -1,4 +1,5 @@
 import { eq, and } from 'drizzle-orm';
+import { maskEmail } from '@/lib/utils';
 import { db } from '@/lib/db/drizzle';
 import {
   users,
@@ -48,9 +49,10 @@ export async function applyInvitationCode(
     codeValidation.code.generatedFor &&
     codeValidation.code.generatedFor.toLowerCase() !== userEmail.toLowerCase()
   ) {
+    const maskedTarget = maskEmail(codeValidation.code.generatedFor);
     return {
       success: false,
-      error: 'This invitation code is not valid for your email address.',
+      error: `This invitation code was generated for ${maskedTarget}. Please sign in with that email address, or contact admin for assistance.`,
     };
   }
 

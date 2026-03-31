@@ -1,7 +1,8 @@
 'use server';
 
 import { z } from 'zod';
-import { and, eq, sql } from 'drizzle-orm';
+import { and, eq, sql, ne, ilike, isNull } from 'drizzle-orm';
+import { maskEmail } from '@/lib/utils';
 import { db } from '@/lib/db/drizzle';
 import {
   User,
@@ -168,7 +169,7 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
   if (codeValidation.code?.generatedFor &&
       codeValidation.code.generatedFor.toLowerCase() !== email.toLowerCase()) {
     return {
-      error: 'This invitation code is not valid for this email address.',
+      error: `This invitation code was generated for ${maskEmail(codeValidation.code.generatedFor)}. Please sign in with that email address, or contact admin for assistance.`,
       email,
       password: '',
       invitationCode
@@ -367,6 +368,27 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
     }
   }
 
+  // Check for existing users with same name (non-blocking warning)
+  let duplicateNameWarning: string | undefined;
+  const [updatedUser] = await db.select({ name: users.name }).from(users).where(eq(users.id, createdUser.id)).limit(1);
+  if (updatedUser?.name) {
+    const sameNameUsers = await db
+      .select({ id: users.id })
+      .from(users)
+      .where(
+        and(
+          ilike(users.name, updatedUser.name),
+          ne(users.id, createdUser.id),
+          isNull(users.deletedAt)
+        )
+      )
+      .limit(1);
+
+    if (sameNameUsers.length > 0) {
+      duplicateNameWarning = 'An account with a similar name already exists. If that\'s you, please sign in with your original email instead.';
+    }
+  }
+
   // Log activity
   await db.insert(activityLogs).values({
     userId: createdUser.id,
@@ -395,7 +417,8 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
   // This avoids Date serialization issues with Server Actions
   return {
     success: true,
-    redirectTo: '/dashboard'
+    redirectTo: '/dashboard',
+    warning: duplicateNameWarning,
   };
 });
 
