@@ -178,6 +178,36 @@ export const PATCH = withRoles(
         });
       }
 
+      if (action === 'verify_email') {
+        if (existingUser.emailVerifiedAt) {
+          return NextResponse.json(
+            { error: 'User email is already verified' },
+            { status: 400 }
+          );
+        }
+
+        await db
+          .update(users)
+          .set({
+            emailVerifiedAt: new Date(),
+            updatedAt: new Date(),
+          })
+          .where(eq(users.id, userId));
+
+        await db.insert(activityLogs).values({
+          userId: adminUserId,
+          action: 'admin_verify_email',
+          entityType: 'user',
+          entityId: userId,
+          metadata: { verifiedByAdmin: true },
+        });
+
+        return NextResponse.json({
+          success: true,
+          message: 'User email verified successfully',
+        });
+      }
+
       // General update (for editing user details)
       const allowedFields = ['name', 'phone'];
       const filteredUpdate: Record<string, any> = {};

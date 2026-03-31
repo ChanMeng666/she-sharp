@@ -34,6 +34,7 @@ import {
   Phone,
   CreditCard,
   Calendar,
+  MailCheck,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -161,6 +162,7 @@ interface UnifiedUser {
   image: string | null;
   phone: string | null;
   isTestUser: boolean;
+  emailVerifiedAt: string | null;
   roles: string[];
   membershipTier: 'free' | 'basic' | 'premium';
   accountStatus: 'active' | 'inactive' | 'suspended' | 'pending_registration';
@@ -347,6 +349,33 @@ export default function UserManagement() {
       console.error('Failed to toggle test user status:', error);
     } finally {
       setTogglingTestUser(null);
+    }
+  };
+
+  // Handle verify email
+  const [verifyingEmail, setVerifyingEmail] = useState<number | null>(null);
+  const handleVerifyEmail = async (user: UnifiedUser) => {
+    setVerifyingEmail(user.id);
+    try {
+      const response = await fetch(`/api/admin/users/${user.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'verify_email' }),
+      });
+
+      if (response.ok) {
+        setUsers(prev => prev.map(u => {
+          if (u.id === user.id) {
+            return { ...u, emailVerifiedAt: new Date().toISOString() };
+          }
+          return u;
+        }));
+        fetchUsers();
+      }
+    } catch (error) {
+      console.error('Failed to verify email:', error);
+    } finally {
+      setVerifyingEmail(null);
     }
   };
 
@@ -1376,6 +1405,18 @@ export default function UserManagement() {
                                   )}
                                   {user.recordType === 'registered_user' && (
                                     <>
+                                      {!user.emailVerifiedAt && (
+                                        <>
+                                          <DropdownMenuSeparator />
+                                          <DropdownMenuItem
+                                            onClick={() => handleVerifyEmail(user)}
+                                            disabled={verifyingEmail === user.id}
+                                          >
+                                            <MailCheck className="w-4 h-4 mr-2" />
+                                            Verify Email
+                                          </DropdownMenuItem>
+                                        </>
+                                      )}
                                       <DropdownMenuSeparator />
                                       <DropdownMenuItem
                                         onClick={() => handleToggleTestUser(user)}
