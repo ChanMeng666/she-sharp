@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { X, ArrowUpRight } from "lucide-react";
 import { LinkedInIcon } from "@/components/ui/social-icons";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 export interface MemberCardData {
@@ -30,6 +31,16 @@ interface MemberCardProps {
   hideDescriptionOnCard?: boolean;
 }
 
+const DESCRIPTION_PLACEHOLDER = "More details coming soon — stay tuned!";
+
+function AvatarFallback({ name, sizeClass }: { name: string; sizeClass?: string }) {
+  return (
+    <div className={`w-full h-full bg-brand flex items-center justify-center text-brand-foreground font-bold ${sizeClass ?? "text-4xl"}`}>
+      {name.charAt(0)}
+    </div>
+  );
+}
+
 export function MemberCard({
   member,
   index,
@@ -39,6 +50,12 @@ export function MemberCard({
 }: MemberCardProps) {
   const [imageError, setImageError] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const hasImage = !!member.image && !imageError;
+  const hasDescription = !!member.description.trim();
+  const displayDescription = hasDescription
+    ? member.description
+    : DESCRIPTION_PLACEHOLDER;
 
   return (
     <>
@@ -52,7 +69,7 @@ export function MemberCard({
           <div className="p-6 sm:p-8">
             <div className="relative mb-6">
               <div className="w-32 h-32 mx-auto rounded-full overflow-hidden ring-4 ring-white shadow-lg">
-                {!imageError ? (
+                {hasImage ? (
                   <img
                     src={member.image}
                     alt={`${member.name}, ${member.title}`}
@@ -61,9 +78,7 @@ export function MemberCard({
                     onError={() => setImageError(true)}
                   />
                 ) : (
-                  <div className="w-full h-full bg-brand flex items-center justify-center text-brand-foreground text-4xl font-bold">
-                    {member.name.charAt(0)}
-                  </div>
+                  <AvatarFallback name={member.name} />
                 )}
               </div>
             </div>
@@ -86,12 +101,17 @@ export function MemberCard({
                   </a>
                 )}
               </div>
-              <p className="text-sm sm:text-base font-medium text-brand mb-4">
-                {member.title}
-              </p>
+              {member.title && (
+                <p className="text-sm sm:text-base font-medium text-brand mb-4">
+                  {member.title}
+                </p>
+              )}
               {!hideDescriptionOnCard && (
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed line-clamp-3 mb-3">
-                  {member.description}
+                <p className={cn(
+                  "text-sm sm:text-base leading-relaxed line-clamp-3 mb-3",
+                  hasDescription ? "text-muted-foreground" : "text-muted-foreground/60 italic"
+                )}>
+                  {displayDescription}
                 </p>
               )}
               <button
@@ -133,9 +153,11 @@ export function MemberCard({
                   </a>
                 )}
               </div>
-              <p className="text-base md:text-lg font-medium text-brand text-left">
-                {member.title}
-              </p>
+              {member.title && (
+                <p className="text-base md:text-lg font-medium text-brand text-left">
+                  {member.title}
+                </p>
+              )}
             </DialogHeader>
             <DialogClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none px-2 py-0.5 flex items-center justify-center shrink-0 ml-4">
               <X className="h-5 w-5" />
@@ -145,7 +167,7 @@ export function MemberCard({
           <div className="flex flex-col md:flex-row gap-8 md:gap-10">
             <div className="shrink-0 flex flex-col items-center md:items-start">
               <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden ring-4 ring-brand/20 mx-auto md:mx-0">
-                {!imageError ? (
+                {hasImage ? (
                   <Image
                     src={member.image}
                     alt={`${member.name}, ${member.title}`}
@@ -154,16 +176,17 @@ export function MemberCard({
                     onError={() => setImageError(true)}
                   />
                 ) : (
-                  <div className="w-full h-full bg-brand flex items-center justify-center text-brand-foreground text-4xl md:text-5xl font-bold">
-                    {member.name.charAt(0)}
-                  </div>
+                  <AvatarFallback name={member.name} sizeClass="text-4xl md:text-5xl" />
                 )}
               </div>
             </div>
 
             <div className="flex-1 flex items-start">
-              <DialogDescription className="text-sm md:text-base text-foreground leading-relaxed whitespace-pre-line w-full">
-                {member.description}
+              <DialogDescription className={cn(
+                "text-sm md:text-base leading-relaxed whitespace-pre-line w-full",
+                hasDescription ? "text-foreground" : "text-muted-foreground italic"
+              )}>
+                {displayDescription}
               </DialogDescription>
             </div>
           </div>

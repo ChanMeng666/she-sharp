@@ -140,7 +140,7 @@ export default function SmoothScrollHero() {
         if (bg) {
           const target = (-curY - i * sH) * 0.15;
           pxV[i] += (target - pxV[i]) * 0.1;
-          bg.style.transform = `translateY(${pxV[i].toFixed(1)}px) scale(1.3)`;
+          bg.style.transform = `translateY(${pxV[i].toFixed(1)}px) scale(1.1)`;
         }
       }
 
@@ -295,7 +295,7 @@ export default function SmoothScrollHero() {
               bgEls.current[i] = el;
             }}
             className="absolute will-change-transform"
-            style={{ inset: "-20%" }}
+            style={{ inset: "-10%" }}
           >
             <img
               src={slide.src}
