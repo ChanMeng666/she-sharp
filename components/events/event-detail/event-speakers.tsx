@@ -32,9 +32,9 @@ function SpeakerGroupSection({ group, startIndex }: SpeakerGroupSectionProps) {
             name: speaker.name,
             image: speaker.image || "",
             description: speaker.bio || "",
-            title: speaker.company
-              ? `${speaker.title}, ${speaker.company}`
-              : speaker.title,
+            title: speaker.title
+              ? [speaker.title, speaker.company].filter(Boolean).join(", ")
+              : "",
             linkedin: speaker.linkedin || undefined,
           };
           return (
