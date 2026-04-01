@@ -226,14 +226,23 @@
         ],
         "speakers": {
           "keynote_speakers": {
-            "heading": "Meet Our Speaker",
+            "heading": "Meet Our Speakers",
             "speakers": [
               {
                 "name": "Candice Murray",
                 "title": "Career Mindset Coach",
                 "company": "",
                 "bio": "Candice Murray is a Career Mindset Coach recognised as one of Influence Digest Media's Top Coaches in Auckland for 2024 and 2025. She has delivered workshops for organisations including AWS, Spark New Zealand, and AUT University, helping professionals build confidence, clarity, and momentum. Drawing on her own background in tech, she is known for her warm, relatable facilitation style and her ability to translate mindset concepts into practical, real-world tools.",
-                "image": "/img/events/202604-CandiceMurrary.jpg"
+                "image": "/img/events/202604-CandiceMurrary.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Tim Aynsley",
+                "title": "Chief Information Officer",
+                "company": "Metlifecare",
+                "bio": "Tim joined Metlifecare in August 2024 and brings strong digital and technology transformation leadership expertise to the team with over 20 years of experience in senior technology roles, most recently as Head of Technology at Mercury. Tim was a finalist for CIO of the Year in the NZ CIO Awards 2024.",
+                "image": "/img/events/202604-tim-aynsley.jpg",
+                "linkedin": ""
               }
             ]
           }
@@ -242,13 +251,24 @@
         "sponsors": {
           "main": [
             {
-              "name": "metlifecare",
+              "name": "Metlifecare",
               "logo": "/img/events/metlifecare.png"
             }
           ],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "agenda",
+            "title": "Event Flow",
+            "content": [
+              "5:00pm to 5:30pm — Registration & Networking",
+              "5:30pm to 6:00pm — Welcome & Opening Remarks",
+              "6:00pm to 7:15pm — Workshop with Candice Murray",
+              "7:15pm to 7:30pm — Closing and Continued Networking"
+            ]
+          }
+        ],
         "photos": [],
         "galleryUrl": "",
         "registrationUrl": "https://events.humanitix.com/she-sharp-and-own-your-energy",
