@@ -408,7 +408,7 @@
       "title": "Her Waka (April 2026) — #IAmRemarkable & Vibe Coding",
       "date": "April 7, 2026",
       "coverImage": {
-        "url": "/img/events/2026-Her-Waka.png",
+        "url": "/img/events/202605-MSDIAmRemarkable.png",
         "alt": "Her Waka April 2026 — #IAmRemarkable & Vibe Coding, delivered by SheSharp in Auckland"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka-april-2026",
@@ -492,11 +492,11 @@
     {
       "id": 90,
       "slug": "her-waka-may-2026",
-      "title": "Her Waka (May 2026) — Navigating Pathways into Sustainable Employment",
+      "title": "Her Waka (May 2026) — Cybersecurity Workshop",
       "date": "May 5, 2026",
       "coverImage": {
-        "url": "/img/events/her-waka-may-2026.png",
-        "alt": "Her Waka May 2026 — Navigating pathways into sustainable employment, delivered by SheSharp, Ministry of Social Development and academyEX"
+        "url": "/img/events/202605-MSDCybersecurity.png",
+        "alt": "Her Waka May 2026 — Cybersecurity Workshop, delivered by SheSharp, Ministry of Social Development and academyEX"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka-may-2026",
       "shortDescription": "The third HER WAKA cohort continues with a focus on real-world job readiness, featuring a cybersecurity panel discussion and practical insights to help participants navigate their next career step with confidence.",
@@ -515,11 +515,9 @@
           "country": "New Zealand"
         },
         "fullDescription": [
-          "Ready to take your next step into meaningful work? HER WAKA is a dynamic, confidence-building employment programme designed to help you move forward with clarity, capability and purpose.",
-          "Delivered by SheSharp, Ministry of Social Development and academyEX, each monthly cohort brings together up to 25 participants for a supportive and energising experience focused on real-world job readiness. This is not just about finding a job. It is about understanding the market, backing yourself, and building a pathway toward sustainable, future-focused employment.",
-          "Through HER WAKA, you will: discover how the New Zealand job market really works and where opportunities are growing; learn what employers and recruiters are looking for and how to stand out; strengthen your CV, interview skills, and professional presence; understand your employment rights so you can step into work informed and empowered; and build confidence, communication skills, and connections that support long-term success.",
-          "With practical tools, employer insights, and a welcoming learning environment, HER WAKA is designed to help you feel prepared, capable, and ready to navigate your next chapter.",
-          "Join us and take your next step forward with confidence."
+          "The third cohort of the HER WAKA series continues with a session focused on cybersecurity.",
+          "You will hear from three industry experts through short lightning talks, each sharing their unique perspective and experience in the cybersecurity space. This is an opportunity for participants to gain a broader understanding of the field, the different pathways into it, and the real-world challenges and opportunities it presents.",
+          "NOTE: This event is strictly by invitation only."
         ],
         "speakers": {
           "panel_speakers": {
@@ -563,6 +561,15 @@
           "other": []
         },
         "specialSections": [
+          {
+            "type": "info",
+            "title": "About Her Waka",
+            "content": [
+              "Ready to take your next step into meaningful work?",
+              "HER WAKA is a dynamic, employment-focused programme delivered by SheSharp in Auckland for Ministry of Social Development clients who are ready to strengthen their pathway into work. Running monthly from March to June 2026, each session is a cohesive, repeatable event designed to build job readiness, confidence, and practical understanding of the New Zealand labour market.",
+              "Each two-hour programme brings together up to 25 participants in a supportive, high-impact environment that blends inspiration, practical skills, and direct employer insight. Through real conversations and structured learning, participants gain clarity on how to position themselves confidently and competitively in today’s job market."
+            ]
+          },
           {
             "type": "info",
             "title": "What to Expect",
