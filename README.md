@@ -1386,7 +1386,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
           <img src="https://cdn.simpleicons.org/gmail/EA4335" width="20" height="20" alt="Gmail"/>
           Email
         </a> •
-        <a href="https://chanmeng.live/">
+        <a href="https://chanmeng.org/">
           <img src="https://cdn.simpleicons.org/internetexplorer/0078D4" width="20" height="20" alt="Website"/>
           Portfolio
         </a>
@@ -1410,7 +1410,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Developer**: [Chan Meng](https://github.com/ChanMeng666)
 - **Email**: [chanmeng.dev@gmail.com](mailto:chanmeng.dev@gmail.com)
 - **LinkedIn**: [chanmeng666](https://www.linkedin.com/in/chanmeng666/)
-- **Portfolio**: [chanmeng.live](https://chanmeng.live/)
+- **Portfolio**: [chanmeng.org](https://chanmeng.org/)
 
 ### Support
 
@@ -1632,7 +1632,7 @@ A:
 ·
 <a href="https://www.linkedin.com/in/chanmeng666/">LinkedIn</a>
 ·
-<a href="https://chanmeng.live/">Portfolio</a>
+<a href="https://chanmeng.org/">Portfolio</a>
 
 <br/><br/>
 
