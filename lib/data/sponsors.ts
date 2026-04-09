@@ -33,6 +33,27 @@ export const tieredSponsors: TieredSponsor[] = [
     tier: "silver",
   },
   {
+    name: "Les Mills",
+    logo: "/img/sponsors/lesmills_logo.svg",
+    description: "Inspiring the world to move",
+    url: "https://www.lesmills.co.nz/",
+    tier: "silver",
+  },
+  {
+    name: "MYOB",
+    logo: "/img/sponsors/myob.svg",
+    description: "Business management platform",
+    url: "https://www.myob.com/nz",
+    tier: "silver",
+  },
+  {
+    name: "AUT",
+    logo: "/img/sponsors/aut.svg",
+    description: "Auckland University of Technology",
+    url: "https://www.aut.ac.nz/",
+    tier: "silver",
+  },
+  {
     name: "academyEX",
     logo: "/sponsors/aex-logo.png",
     description: "New Zealand's only private postgraduate institute for mid-career professionals",
