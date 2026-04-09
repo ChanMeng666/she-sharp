@@ -19,7 +19,7 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
   if (!user) {
     redirect('/sign-in');
   }
-  ensureUserVerified(user);
+  await ensureUserVerified(user);
 
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";

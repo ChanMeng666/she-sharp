@@ -171,6 +171,17 @@ export const PUT = withRoles(
           ));
       }
 
+      // Auto-set inviteCodeVerifiedAt for OAuth users who lack it
+      await db.update(users)
+        .set({ inviteCodeVerifiedAt: new Date(), updatedAt: new Date() })
+        .where(
+          and(
+            eq(users.id, userId),
+            isNull(users.inviteCodeVerifiedAt),
+            isNull(users.passwordHash)
+          )
+        );
+
       return NextResponse.json({ success: true });
     } catch (error) {
       console.error('Error updating user role:', error);

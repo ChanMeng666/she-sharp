@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db/drizzle';
-import { User, userRoles } from '@/lib/db/schema';
+import { User, users, userRoles } from '@/lib/db/schema';
 import { and, eq } from 'drizzle-orm';
 
 export async function isUserAdmin(userId: number): Promise<boolean> {
@@ -54,10 +54,28 @@ export async function getUserRole(userId: number, roleType: 'admin' | 'mentor' |
 /**
  * Ensures OAuth users have completed invitation code verification.
  * Credential users (with passwordHash) pass through — they verified during signup.
+ * Defense-in-depth: users with active roles (assigned by admin) also pass through,
+ * and their inviteCodeVerifiedAt is auto-backfilled for future fast checks.
  * Call this in dashboard layouts/pages after getUser().
  */
-export function ensureUserVerified(user: User): void {
+export async function ensureUserVerified(user: User): Promise<void> {
   if (user.passwordHash) return;
   if (user.inviteCodeVerifiedAt) return;
+
+  // Fallback: allow users with active roles (e.g., assigned by admin)
+  const activeRoles = await db
+    .select({ id: userRoles.id })
+    .from(userRoles)
+    .where(and(eq(userRoles.userId, user.id), eq(userRoles.isActive, true)))
+    .limit(1);
+
+  if (activeRoles.length > 0) {
+    // Auto-backfill so future checks skip the DB query
+    await db.update(users)
+      .set({ inviteCodeVerifiedAt: new Date(), updatedAt: new Date() })
+      .where(eq(users.id, user.id));
+    return;
+  }
+
   redirect('/verify-invitation');
 }
