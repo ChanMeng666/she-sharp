@@ -263,6 +263,17 @@ export const POST = withRoles(
                 )
               );
 
+            // Auto-set inviteCodeVerifiedAt for OAuth users who lack it
+            await db.update(users)
+              .set({ inviteCodeVerifiedAt: new Date(), updatedAt: new Date() })
+              .where(
+                and(
+                  inArray(users.id, targetUserIds),
+                  isNull(users.inviteCodeVerifiedAt),
+                  isNull(users.passwordHash)
+                )
+              );
+
             affectedCount = targetUserIds.length;
 
             // Log activity
