@@ -18,7 +18,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
       "shortDescription": "Join us for an inspiring evening on how AI is helping people unlock new levels of creativity, productivity, and innovation.",
-      "attendees": null,
+      "attendees": 68,
+      "checkedIn": 55,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
         "title": "She Sharp & HCLTech: AI Empowerment: Shaping an Inclusive Digital Future",
@@ -196,7 +197,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-vector-future-ready-data-ai-digital-innovation-inclusive-careers-at-vector",
       "shortDescription": "Join us for an inspiring evening with Vector as we explore how technology is transforming the energy sector.",
-      "attendees": null,
+      "attendees": 93,
+      "checkedIn": 67,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-vector-future-ready-data-ai-digital-innovation-inclusive-careers-at-vector",
         "title": "Future-Ready: Data, AI, Digital Innovation & Inclusive Careers at Vector",
@@ -320,7 +322,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/code-secure",
       "shortDescription": "🎉Free t-shirts, coding challenges, and a community of women in tech — all in one workshop!Join Xero,Secure Code Warrior, andShe Sharpfor a hands-on workshop built just for you. This is your space tolearn, connect, and growalongside an empowering community of women in tech. 💖",
-      "attendees": null,
+      "attendees": 62,
+      "checkedIn": 52,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/code-secure",
         "title": "Code Secure. Lead the Future: Women in Cybersecurity Workshop",
@@ -352,7 +355,7 @@
           "• Bring your laptop and charger to take part in the coding challenges.",
           "• An intro video will be sent to you before the event so you can get familiar with the platform.",
           "• You’ll also receive a reminder email 2 days and 1 day before the event to make sure you’re all set to join.",
-          "Whether you’re just curious or ready to level up, this workshop is for YOU. ✨"       
+          "Whether you’re just curious or ready to level up, this workshop is for YOU. ✨"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -475,7 +478,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/business-and-technology-transformation-through-platforms-and-products",
       "shortDescription": "Join a dynamic panel discussion featuring three diverse, experienced, and growth-minded women who are driving meaningful change within Fonterra’s Products and Platforms landscape. This session will explore the transformational shift toward a product and platform-centric approach, highlighting the pivotal role it plays in shaping the future of IT delivery and unlocking greater business outcomes.",
-      "attendees": null,
+      "attendees": 96,
+      "checkedIn": 61,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/business-and-technology-transformation-through-platforms-and-products",
         "title": "Business and Technology Transformation Through Platforms and Products",
@@ -597,7 +601,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/thrive-your-career-your-story",
       "shortDescription": "Are you a soon-to-be graduate, a recent graduate, or a professional ready for a career move? This event is designed just for you.",
-      "attendees": null,
+      "attendees": 98,
+      "checkedIn": 68,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/thrive-your-career-your-story",
         "title": "THRIVE: Your Career, Your Story",
@@ -932,6 +937,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/ai-hackathon-festival-2025",
       "shortDescription": "AI Forum is hosting the 2025 AI Hackathon across Aotearoa.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/ai-hackathon-festival-2025",
         "title": "AI Hackathon Festival 2025",
@@ -1222,6 +1228,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/ethnic-advantage-conference",
       "shortDescription": "She Sharp will be at theEthnic Advantage Conference 2025, a powerful one-day event bringing together over 300 ethnic community leaders, service providers, faith leaders, government agencies, and more to explore the role of ethnic communities in social cohesion and resilience.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/ethnic-advantage-conference",
         "title": "Ethnic Advantage Conference",
@@ -1272,7 +1279,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/tech-that-matches-your-vibe-find-your-perfect-fit",
       "shortDescription": "Discover how your unique strengths can shape your tech journey in this exciting lightning-style event! Hear from 6 inspiring speakers as they share how they’ve harnessed their unique talents to thrive in their roles and overcome challenges. Whether you’re exploring tech careers or seeking clarity on where you might fit, this event will spark ideas and help you uncover your potential.",
-      "attendees": null,
+      "attendees": 63,
+      "checkedIn": 45,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/tech-that-matches-your-vibe-find-your-perfect-fit",
         "title": "“Tech That Matches Your Vibe: Find Your Perfect Fit”",
@@ -1446,7 +1454,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/iamremarkable",
       "shortDescription": "#IAmRemarkable is a global movement that empowers everyone, including under represented groups, to celebrate their achievements in the workplace and beyond, while challenging the social perception around self-promotion. At the heart of our movement is a 60 minute workshop open to everyone, hosted by our very own She Sharp founder and director- Dr Mahsa McCauley (Mohaghegh).",
-      "attendees": null,
+      "attendees": 63,
+      "checkedIn": 24,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/iamremarkable",
         "title": "#IAmRemarkable",
@@ -1523,7 +1532,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-academy-ex-international-womens-day",
       "shortDescription": "She Sharp’s International Women’s Day (IWD) event is scheduled for March 14 at academyEX. Join us for an inspiring evening celebrating women in tech, featuring engaging discussions, networking opportunities, and community connections. The registration starts at 4.30 pm, and the event kicks off at 5 PM—don’t miss it!",
-      "attendees": null,
+      "attendees": 75,
+      "checkedIn": 57,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-academy-ex-international-womens-day",
         "title": "She Sharp & academyEX: International Women's Day",
@@ -1664,7 +1674,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/google-educator-conference-2024",
       "shortDescription": "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
-      "attendees": null,
+      "attendees": 122,
+      "checkedIn": 76,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/google-educator-conference-2024",
         "title": "Google Educator Conference",
@@ -1888,7 +1899,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/the-role-of-technology-in-sustainable-development",
       "shortDescription": "Discuss how technology can be used to address environmental challenges and promote sustainability focusing on green Tech.",
-      "attendees": null,
+      "attendees": 78,
+      "checkedIn": 49,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/the-role-of-technology-in-sustainable-development",
         "title": "The Role of Technology in Sustainable Development",
@@ -2063,7 +2075,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-10-year-anniversary",
       "shortDescription": "Join us for a special celebration as we mark a decade of bridging the gender gap in STEM!SheSharp is on a mission to challenge misconceptions about the tech industry and empower the next generation of women to pursue careers in STEM through events, networking, and career development opportunities.",
-      "attendees": null,
+      "attendees": 127,
+      "checkedIn": 95,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-10-year-anniversary",
         "title": "She Sharp 10-Year Anniversary",
@@ -2267,7 +2280,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/harness-the-power-of-data-and-ai",
       "shortDescription": "Harness The Power of Generative Al: A Deep Dive into Fonterra's Al Journey. Join us for an enlightening session on how Fonterra, a global dairy nutrition company, has harnessed the power of Artificial Intelligence (Al) to revolutionise their entire value chain which produces 30% of the world's dairy exports from nutritious New Zealand farms. What's in Store? Al in Action: Get an overview Of how Fo",
-      "attendees": null,
+      "attendees": 165,
+      "checkedIn": 112,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/harness-the-power-of-data-and-ai",
         "title": "Harness the Power of Data and AI",
@@ -2435,6 +2449,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/ai-for-the-environment-hackathon-festival-2024",
       "shortDescription": "AI Forum is hosting the 2024 AI Hackathon across Aotearoa and the South Pacific.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/ai-for-the-environment-hackathon-festival-2024",
         "title": "AI for the Environment Hackathon Festival 2024",
@@ -2455,9 +2470,8 @@
           "Each hackathon team will pitch to a judging panel and regional winners will be announced. AIForum national judging panel will then select finalists to pitch their idea at the 2024 Aotearoa AI Summit, 11 September in Auckland.",
           "This year, the AI Hackathon festival will be expanding on the problems to solve beyond the five key environmental outcomes (AI for the Environment Report 2022) to include Kaitiakitanga, embracing our connection to the land and surrounding natural environment fulfilling our roles as custodians.",
           "The problems to solve are based on the six key environmental outcomes (AI for the Environment Report 2022). They have expanded these to make them more relevant to all participants in 2024.",
-        "The cases are sourced from NGOs and citizen science groups to provide real problems to solve that are relevant to each location. These organisations provide subject matter expertise ahead of time and on the day. Participants are also welcome to bring their own problems to solve and we encourage early sharing of these ideas so we can help provide data sets and technology support.",
-        "Participants will learn new skills, create connections and make an impact."
-        
+          "The cases are sourced from NGOs and citizen science groups to provide real problems to solve that are relevant to each location. These organisations provide subject matter expertise ahead of time and on the day. Participants are also welcome to bring their own problems to solve and we encourage early sharing of these ideas so we can help provide data sets and technology support.",
+          "Participants will learn new skills, create connections and make an impact."
         ],
         "speakers": {},
         "organizers": [],
@@ -2514,7 +2528,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/f-p-hackathon",
       "shortDescription": "Fisher and Paykel Healthcare will be hosting an AI Hackathon on July 26th – 28th kicking off with a keynote from Nicholas Fourie, VP of ICT.Are you ready to embark on an exhilarating journey of creativity, problem-solving, and innovation? In a world where innovation is the lifeblood of progress, we often find ourselves bogged down by repetitive tasks, mundane processes, and administrative burdens.",
-      "attendees": null,
+      "attendees": 259,
+      "checkedIn": 101,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/f-p-hackathon",
         "title": "F&P Hackathon",
@@ -3018,7 +3033,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/bank-on-yourself",
       "shortDescription": "Are nerves holding you back? Fear not! Join Fiserv’s empowering workshop, “Banking on Yourself” and be inspired by those who carved their own paths. Fiserv, a Fortune 200 leader in mobile banking, is fuelled by the talent and dedication of our team. We're leading the way because of the brilliant minds we invest in. Discover the power of self-belief, we’ll even equip you with a successful toolkit t",
-      "attendees": null,
+      "attendees": 96,
+      "checkedIn": 77,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/bank-on-yourself",
         "title": "Bank on Yourself",
@@ -3159,7 +3175,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/own-the-unexpected",
       "shortDescription": "Join us for an empowering evening as Les Mills International shines a spotlight on the unconventional routes many have taken to enter and navigate the technology industry. Expect to hear powerful stories if resilience, innovation, and success. Furthermore, we'll be exploring the theme of being underestimated - a common experience for many women and minorities in STEM. But rather than viewing it as",
-      "attendees": null,
+      "attendees": 109,
+      "checkedIn": 95,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/own-the-unexpected",
         "title": "Own the Unexpected",
@@ -3340,7 +3357,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/embracing-bias",
       "shortDescription": "How to use cognitive biases to design great products, services, and your life! Join us for an evening at MYOB where we’ll focus on the importance of understanding human behaviour. While technical qualifications can be a gateway to working in software design, we need people from all backgrounds to design meaningful products and services. This talk will speak to the vital contributions human-centred",
-      "attendees": null,
+      "attendees": 74,
+      "checkedIn": 50,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/embracing-bias",
         "title": "Embracing Bias",
@@ -3443,7 +3461,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/international-womens-day-2",
       "shortDescription": "Join us for our annual breakfast event at Woolworths. We will celebrate women’s achievements, raise awareness about discrimination and take action to drive gender parity. Let’s have the opportunity to network and come together to leave the event with actionable outcomes to #inspireinclusion.",
-      "attendees": null,
+      "attendees": 108,
+      "checkedIn": 70,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/international-womens-day-2",
         "title": "International Women's Day",
@@ -3531,7 +3550,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/google-educator-conference-2023",
       "shortDescription": "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
-      "attendees": null,
+      "attendees": 123,
+      "checkedIn": 91,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/google-educator-conference-2023",
         "title": "Google Educator Conference 2023",
@@ -3741,7 +3761,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-storytellers-series-2-0",
       "shortDescription": "SheSharp is delighted to announce Storytellers Series 2.0 after an overwhelming response from our first series!",
-      "attendees": null,
+      "attendees": 37,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-storytellers-series-2-0",
         "title": "SHE# Storytellers Series 2.0",
@@ -3834,7 +3855,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-storytellers-series",
       "shortDescription": "Whilst 2020 started off with a bang, the start of a new decade, it quickly turned into unprecedented times. Yes, we’ve heard the word ‘unprecedented’ a lot over the past few months, but the truth is, the world just wasn’t prepared for what was quickly evolving to be the biggest pandemic of this generation. For us here, in little ol’ New Zealand, Kiwis too, persevered, making sacrifices for the pre",
-      "attendees": null,
+      "attendees": 269,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-storytellers-series",
         "title": "SHE# Storytellers Series",
@@ -3964,6 +3986,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-orion-health",
       "shortDescription": "Over 50 (mainly high school students) joined us for our first She# event of 2017 held at Orion Health. We started the workshop with some ice breakers and team building games so everyone became for comfortable and familiar with one another.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-orion-health",
         "title": "SHE# @ ORION HEALTH",
@@ -4051,6 +4074,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/superhero-daughter-day",
       "shortDescription": "SheSharp, OMGTech, Colab AUT and Tech Girl Movement collaborated for Superhero Daughter Day 2017",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/superhero-daughter-day",
         "title": "SUPERHERO DAUGHTER DAY",
@@ -4106,6 +4130,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-fisher-paykel",
       "shortDescription": "On a sunny Thursday morning during half term a group of female high school and university students headed out to the Fisher and Paykel Healthcare offices in East Tamaki. We’d all come to find out more about this iconic Kiwi company founded in 1934 and their pioneering work create medical apparatus for healthcare.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-fisher-paykel",
         "title": "SHE# @ FISHER & PAYKEL",
@@ -4184,6 +4209,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-with-trade-me",
       "shortDescription": "We had Ruth, the Head of UX Design at Trade Me, give us a lesson on how she has overcome her fears of public speaking and some effective skills on how to present effectively.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-with-trade-me",
         "title": "SHE# with TRADE ME",
@@ -4271,6 +4297,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-westpac",
       "shortDescription": "This event took place in the heart of Auckland CBD at Westpac’s head office. We heard from the inspiring DawieOlivers, Westpac’s Chief Information Officer, and his team on what they do at Westpac and their focus on the importnace of diversity of thought.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-westpac",
         "title": "She Sharp @ Westpac",
@@ -4362,6 +4389,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-xero-in-wellington",
       "shortDescription": "Wellington’s first SheSharp event was sponsored by Xero and 920 Career Agents as well as Orion Health, Unitec and Google and was held at Xero with a team of SheSharp members who travelled down from Auckland. The event was sold out, with over 60 women attending from around Wellington, some even travelling in from other cities around New Zealand.In addition to secondary and tertiary students, there ",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-xero-in-wellington",
         "title": "She Sharp @ Xero in Wellington",
@@ -4453,6 +4481,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/hacking-insecurities-grid-akl",
       "shortDescription": "Imposter Syndrome is a long talked about topic that many people in the tech industry suffer from (not just women, either!). It’s that feeling of not being good enough or that you don’t deserve to be where you are today. We often think we’re alone in this mindset; but most people feel this way at some point in their career!",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/hacking-insecurities-grid-akl",
         "title": "Hacking Insecurities @ Grid AKL",
@@ -4541,6 +4570,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/agile-session-with-xero",
       "shortDescription": "SheSharp and the Hi Tech Company of the year, Xero, brought together an action-packed evening with women from all fields of technology. There were plenty of opportunities to network with the women of Xero and find out about what Xero has to offer.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/agile-session-with-xero",
         "title": "Agile Session with Xero",
@@ -4629,6 +4659,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/ux-design-with-ibm",
       "shortDescription": "SheSharp joined with IBM for an awesome event that gave women the opportuniy to connect with lots of industry professionals. We had a guest speaker from IBM tell us about her story and journey to project management with IBM. We also had a hands-on session all about User Experience in app development.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/ux-design-with-ibm",
         "title": "UX Design with IBM",
@@ -4719,6 +4750,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-anita-borg-celebration",
       "shortDescription": "The Google Anita Borg Scholarship Alumni and SheSharp together hosted the Anita Borg birthday celebration to commemorate the truly inspiring woman she was. This was an event that happened globally in honour of Anita. We shared her incredible journey, stories and how she helped form a path for women to enter the computer world. She had such a strong passion for encouraging women into technology and",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-anita-borg-celebration",
         "title": "She Sharp Anita Borg Celebration",
@@ -4807,6 +4839,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-launch-event",
       "shortDescription": "She Sharp had the official launch event with Orion Health at their Grafton offices. This included a Scrum workshop and plenty of opportunity to network with Orion employees as well as other women in technical fields. Guest speakers from Orion Health, Diana Venter and Tegan Harrison shared some of their stories of being a woman in software development and also talked about some of Orion Health’s pr",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-launch-event",
         "title": "She Sharp Launch Event",
@@ -4897,6 +4930,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-microsoft",
       "shortDescription": "This event brought speakers from various parts of the tech industry together for an evening of demos, lightning talks, networking and cupcakes. We were even lucky enough to get to try out the first ever Microsoft HoloLens in New Zealand!",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-microsoft",
         "title": "She Sharp @ Microsoft",
@@ -5057,6 +5091,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/security-101-plugging-the-data-leak",
       "shortDescription": "The awesome team at Flexware came and ran a security workshop with us. This involved learning about Ciphers, encrypting and decrpyting and working with Arduinos. The aim was to emphasise to everyone just how critical security is in addition to learning the basics of how it works. Check out the Flexware team below.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/security-101-plugging-the-data-leak",
         "title": "Security 101: Plugging the Data Leak",
@@ -5143,7 +5178,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-evening-with-google",
       "shortDescription": "About 100 attendees joined SheSharp and Google team from Sydney for an evening at GridAKL. The first session addressed the issue of unconscious bias with Google sharing their training and knowledge around this area. This proved to be a great insight into how one of the biggest tech companies in the world is addressing the issue of diversity.",
-      "attendees": null,
+      "attendees": 100,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-evening-with-google",
         "title": "She Sharp - An Evening with Google",
@@ -5236,6 +5272,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/app-inventor-workshop-orion-health",
       "shortDescription": "Our first SheSharp event of 2016 was held at the Orion Health Head office in Auckland with over 40 female high school students from across Auckland attending.The morning kicked off with a team building challenge to break the ice and get the creative juices flowing.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/app-inventor-workshop-orion-health",
         "title": "App Inventor Workshop @ Orion Health",
@@ -5323,7 +5360,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/online-quiz-night-celebrating-ada-lovelace-day",
       "shortDescription": "We have another amazing event coming up on the 15th October with our lovely She Sharp Alumni, Ruth James speaking at the Event! The event is to celebrate Ada Lovelace Day! In sponsorship with Xero!",
-      "attendees": null,
+      "attendees": 31,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/online-quiz-night-celebrating-ada-lovelace-day",
         "title": "Online Quiz Night celebrating Ada Lovelace Day",
@@ -5409,6 +5447,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/imagine-zone-techweek",
       "shortDescription": "TheMinistry of EducationandNZTechpartnered up to host the Tech21 Summit, to inspire ākonga (learners) into technology careers. The one day Summit aimed to spark inspiration for year 7–10  ākonga while showcasing tech innovation and creativity, plus offering the opportunity to find out more about Technology Learning career pathways.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/imagine-zone-techweek",
         "title": "Imagine Zone - TechWeek",
@@ -5492,6 +5531,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/women-in-ai-for-social-good",
       "shortDescription": "From healthcare, to finance, education and government, artificial intelligence (AI) is reshaping every part of our lives. It is also helping solve some of the world’s greatest challenges. However, women account for less than 25 percent of the AI workforce.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/women-in-ai-for-social-good",
         "title": "Women in AI for social good",
@@ -5649,6 +5689,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/auckland-tech-grand-tour",
       "shortDescription": "We wrapped up 2017 with an Auckland Tech Grand Tour of some of the biggest names in the local tech scene. Transport and lunch was provided for the female university and high school students that went on a whistle stop tour.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/auckland-tech-grand-tour",
         "title": "AUCKLAND TECH GRAND TOUR",
@@ -5736,6 +5777,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-pushpay",
       "shortDescription": "We had our event with PushPay on 19th Oct, 2017 and it was about the DevOps concepts and how it is bringing cultural change in industry. We had 3 awesome speakers from 3 different tech companies in Auckland, Lisa Helm from 2degree, Alix Klingenberg from Push pay and Rashmi Modhwadia from Orion Health.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-pushpay",
         "title": "SHE# @ PUSHPAY",
@@ -5828,6 +5870,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-techweek-2017",
       "shortDescription": "Come along to hear outstanding women give quick insightful talks about their challenges, inspiration and motivations around solving real world problems using technology. This inspiring group include a wide range of experience from award winning high school and university students to working professionals, demonstrating that inspiration can happen at any age!",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-techweek-2017",
         "title": "SHE# @ TECHWEEK",
@@ -5910,6 +5953,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-with-google-aut",
       "shortDescription": "“Googlers” from Google Sydney joined us for a bias busting workshop that was open to all students and professionals.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-with-google-aut",
         "title": "SHE# with GOOGLE @ AUT",
@@ -6003,6 +6047,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-nyriad",
       "shortDescription": "Nyriad is our platinum sponsor and held their very first event with us on 26th July, 2018. Nyriad is a New Zealand exascale software company specialising in advance data storage solutions for big data and high performing computing.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-nyriad",
         "title": "She Sharp @ Nyriad",
@@ -6090,6 +6135,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/vision-board-grid-akl",
       "shortDescription": "Lynda Clements (UoA) and Judy MacFarlaine (AUT), who have conducted these workshops previously, talked a bit about what Vision Boards are and how they can help us direct our attention and intention for our goals and desires.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/vision-board-grid-akl",
         "title": "Vision Board @ Grid AKL",
@@ -6179,6 +6225,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-techweek",
       "shortDescription": "The event was about learning project management skill and how these concepts can be used by anyone in our daily lives.The workshop provided an introduction to the basics of project management as well as tools and techniques to help develop skills to become a great project manager leading successful projects.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-techweek",
         "title": "She Sharp @ TechWeek",
@@ -6261,6 +6308,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-vend",
       "shortDescription": "A joint event with Vend, held on 26th April, taught the women about real-world that Vend solves. They also shared their why, why they do the things they do and how they do. We also heard from Jade, Joanna and Novia, some of the senior women from product, design and engineering. The event also gave the attendees to work on a problem which simulated the Challenges faced in a real world scenario.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-vend",
         "title": "She Sharp @ VEND",
@@ -6346,7 +6394,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-with-google-codelab",
       "shortDescription": "We partnered with our gold sponsor again this year for the annual SheSharp with Google event. Over 50 attendees, from students to working professionals, joined us for this midday event held on Monday 26th March at AUT city campus.",
-      "attendees": null,
+      "attendees": 50,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-with-google-codelab",
         "title": "SHE# with Google Codelab",
@@ -6441,6 +6490,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/design-thinking",
       "shortDescription": "The event was facilitated by representation from the Digital UX department, Product Owners, as well as current interns at Air New Zealand.We were introduced to Design Thinking as “A problem solving approach, particularly applicable to fuzzy or wicked problems – making it well suited to design human experiences”.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/design-thinking",
         "title": "Design Thinking",
@@ -6530,6 +6580,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-centrality",
       "shortDescription": "Unless you have been living under a rock, you will have heard of blockchain.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-centrality",
         "title": "She Sharp @ Centrality",
@@ -6664,7 +6715,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/google-end-of-year-event",
       "shortDescription": "Come celebrate the holiday season with us, reflect on the past year, and hear from diverse role models in tech and inspirations for the future!",
-      "attendees": null,
+      "attendees": 100,
+      "checkedIn": 74,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/google-end-of-year-event",
         "title": "SHE CELEBRATES",
@@ -6828,6 +6880,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-amazon-web-services-aws",
       "shortDescription": "She# was proud to hold an incredible event at Amazon Web Services on a very inspiring topic: The Amazon Culture of Innovation. Attendees enjoyed listening to AWS’s Katrien Pagenaer, the NZ Sales Manager at AWS as she talked about the the key innovation fostering ideas followed by Amazon that helped it grow from an online books retailer to an e-commerce and computing giant. This was followed by a h",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-amazon-web-services-aws",
         "title": "SHE# @ AMAZON WEB SERVICES (AWS)",
@@ -6933,6 +6986,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-wahine-kakano",
       "shortDescription": "Wāhine Kākano is New Zealand’s premier young women’s festival where young women between the ages of 16-22 years can attend a wide range of workshops which will equip them with skills and confidence required to take on their careers.",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-wahine-kakano",
         "title": "SHE# @ WĀHINE KĀKANO",
@@ -7021,6 +7075,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-workday",
       "shortDescription": "She# in collaboration with Workday developed an interactive evening exploring the world of Cyber Security. The attendees were divided into groups for an exiting session of cyber-security quiz and the winners received Workday goodies. We were also delighted to hear from a panel of four Workday employees about their journeys into this industry. The evening was brought to a close by a demonstration o",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-workday",
         "title": "SHE# @ WORKDAY",
@@ -7110,7 +7165,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-deloitte",
       "shortDescription": "She# was delighted to be invited to Deloitte for a Chatbot Design Workshop. Over 40 attendees were split into teams to develop a Chatbot solution in a case study presented by Deloitte. Experienced Deloitte consultants mentored each team to ensure they had the necessary guidance. Teams elected four members to talk to the “client” and understand the client requirements for the solution. Finally, a s",
-      "attendees": null,
+      "attendees": 40,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-deloitte",
         "title": "SHE# @ DELOITTE",
@@ -7255,7 +7311,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/women-in-tech-and-trades",
       "shortDescription": "This month’s event was all about women in tech and trades who are proving that they are more than just a diversity quota filler & industry leaders who are setting a new benchmark for inclusivity every day.",
-      "attendees": null,
+      "attendees": 52,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/women-in-tech-and-trades",
         "title": "Women in Tech and Trades",
@@ -7409,7 +7466,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/technological-change-workplace-workforce-impacts",
       "shortDescription": "Technological change will continue to reshape the workplace and workforce. It's up to us, as individuals, organisations, and societies, to shape this future collaboratively, ensuring that technological change benefits everyone.",
-      "attendees": null,
+      "attendees": 88,
+      "checkedIn": 71,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/technological-change-workplace-workforce-impacts",
         "title": "Technological Change - Workplace & Workforce Impacts",
@@ -7619,7 +7677,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/robotic-process-automation",
       "shortDescription": "We invite you to take part in our automation challenge, which will have you working in teams to develop an automated solution for a basic use case. There will be experienced developers on hand to help you through your solution, but with limited time this will definitely be a challenge. We have prepared some pre-work to help you prepare for the day, however the software we will be using (UiPath) is",
-      "attendees": null,
+      "attendees": 50,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/robotic-process-automation",
         "title": "Robotic Process Automation Workshop",
@@ -7743,7 +7802,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-techweek-envision-the-future",
       "shortDescription": "Join She Sharp for an inspiring and thought-provoking panel on the future of leadership in technology. 2020 has brought unprecedented challenges to the forefront of humanity. With a crisis comes opportunities. Learn how we can harness the power of human ingenuity to create a better tomorrow. Topics to be discussed will include:",
-      "attendees": null,
+      "attendees": 109,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-techweek-envision-the-future",
         "title": "She Sharp Techweek: Envision The Future",
@@ -7820,7 +7880,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/shesharp-future-ready",
       "shortDescription": "Join She Sharp for an inspirational and empowering panel on STEM Careers for our future generations. The recent times have taught us that if there is anything that the future holds is the impact technology will have on our day-to-day. We hope to inspire and guide you to learn more about various STEM pathways.",
-      "attendees": null,
+      "attendees": 168,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/shesharp-future-ready",
         "title": "SheSharp Future Ready",
@@ -7906,7 +7967,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/the-truths-to-gaming-and-start-up",
       "shortDescription": "“The Truths to Gaming and Start-up - SheSharp Edition” is organised by SheSharp, in collaboration with Geo AR Games & the New Zealand Game Developers Association (NZGDA). If you’re interested in Gaming, Augmented Reality, and Development, then this is an event you don’t want to miss!",
-      "attendees": null,
+      "attendees": 53,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/the-truths-to-gaming-and-start-up",
         "title": "The Truths to Gaming and Start-up",
@@ -8060,7 +8122,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/girls-night-out",
       "shortDescription": "We partnered with Xero to give people an opportunity to have a much needed night out to end 2020 with a bang!",
-      "attendees": null,
+      "attendees": 75,
+      "checkedIn": 1,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/girls-night-out",
         "title": "Girls Night Out",
@@ -8191,7 +8254,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/inspire-her-te-whakatipuranga-wahine",
       "shortDescription": "At She Sharp, our mission is to actively engage a broader range of Maori and Pasifika female students by equipping them with the knowledge, network, and skills to enter STEM industries. We are dedicated to inspiring and empowering the next generation of talent from these communities to explore and embrace the dynamic world of STEM and the digital domain through immersive hands-on workshops on topi",
-      "attendees": null,
+      "attendees": 126,
+      "checkedIn": 58,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/inspire-her-te-whakatipuranga-wahine",
         "title": "Inspire Her: Te Whakatipuranga Wahine",
@@ -8471,7 +8535,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/ada-lovelace-day",
       "shortDescription": "Join us to celebrate Ada Lovelace Day and International Day of the Girls. We are delighted to present two wonderful speakers for this event – Ankita and Elina. Hear their stories and be inspired!",
-      "attendees": null,
+      "attendees": 31,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/ada-lovelace-day",
         "title": "Ada Lovelace Day",
@@ -8559,7 +8624,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/women-in-data-and-analytics",
       "shortDescription": "Join us ONLINE on Tuesday 30th November for a jam-packed evening!",
-      "attendees": null,
+      "attendees": 60,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/women-in-data-and-analytics",
         "title": "Women in Data and Analytics",
@@ -8672,7 +8738,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2021-iamremarkable",
       "shortDescription": "#IamRemarkable is a Google initiative empowering women and other underrepresented groups to celebrate their achievements in the workplace and beyond.",
-      "attendees": null,
+      "attendees": 61,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2021-iamremarkable",
         "title": "IamRemarkable",
@@ -8734,7 +8801,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2021-international-womens-day",
       "shortDescription": "SheSharp is delighted to announce our first community event of the year: We are partnering with MYOB to celebrate International Women’s Day! There will be team challenges, fun quizzes, and general fun and interactive awesomeness. So bring your A-game along! This is a great event to bring along your work colleagues to network and reconnect with others you haven’t had the opportunity to meet in pers",
-      "attendees": null,
+      "attendees": 76,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2021-international-womens-day",
         "title": "International Women's Day",
@@ -8911,6 +8979,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/ai-for-the-environment-hackathon-festival",
       "shortDescription": "AI Forum NZ is hosting an AI for the Environment Hackathon Festival across Aotearoa, Australia and the South Pacific. Do you have a passion for saving the planet, starting in our backyard? The winners will pitch their solutions at the AI Summit on 21 September in Auckland.This event will be hosted in partnership with academyEX on August 11th and 12th, kicking off with an inspiring keynote from Fra",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/ai-for-the-environment-hackathon-festival",
         "title": "AI for the Environment Hackathon Festival",
@@ -8999,7 +9068,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/fonterra-a-legendairy-career",
       "shortDescription": "Good Together: by complementing technical expertise with power skills, the opportunities are endless",
-      "attendees": null,
+      "attendees": 120,
+      "checkedIn": 100,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/fonterra-a-legendairy-career",
         "title": "A Legendairy Career",
@@ -9167,6 +9237,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/tomorrow-expo-tech-week",
       "shortDescription": "We had a wonderful time at the NZTech Techweek NZ Tomorrow Expo, where we showcased our work dedicated to empowering women in tech.We were delighted to welcome many groups of students visiting from diverse range of Auckland schools who were eager to learn more about STEM, robotics, AR and VR. They had a chance to try out some of our activities, such as programming a robot, virtual reality and expl",
       "attendees": null,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/tomorrow-expo-tech-week",
         "title": "Tomorrow Expo",
@@ -9238,7 +9309,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2023-the-buzz-about-banking",
       "shortDescription": "Hear the experiences of Kiwibank executives and engage in an innovation roadmap workshop!",
-      "attendees": null,
+      "attendees": 90,
+      "checkedIn": 52,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2023-the-buzz-about-banking",
         "title": "The Buzz about Banking",
@@ -9364,7 +9436,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2022-break-the-bias",
       "shortDescription": "International Women’s Day is fast approaching and She Sharp is partnering with AWS to bring you an inspirational evening where we talk all about #breakingthebias!",
-      "attendees": null,
+      "attendees": 86,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2022-break-the-bias",
         "title": "Break the Bias",
@@ -9559,7 +9632,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2022-women-in-security",
       "shortDescription": "Join us at the AWS Office in Auckland for this special event recognising individuals, initiatives, and organisations that are changing the norms, reconditioning the way we think about diversity, inclusion, and equity, and shaping a new normal for the security industry in Aotearoa.",
-      "attendees": null,
+      "attendees": 98,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2022-women-in-security",
         "title": "Women in Security",
@@ -9790,7 +9864,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2022-mind-your-own-career",
       "shortDescription": "She Sharp is teaming up with MYOB to discuss the diversity of careers in technology and the multiple pathways we can take to achieve our dream job in STEM. Come along and engage with an expert team of MYOB panellists who will highlight some of the pathways that can be followed which lead to a career in Technology, participate in a guided workshop to help discover our deep-set motivations and Q&A w",
-      "attendees": null,
+      "attendees": 73,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2022-mind-your-own-career",
         "title": "Mind your own Career",
@@ -9932,7 +10007,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2022-women-igniting-tech",
       "shortDescription": "Surround yourself with great women: Stories of the women who have ignited our passion for careers in Technology. Enjoy a networking breakfast and surround yourself with great women. She Sharp and Countdown collaborate to bring you first-hand the real stories of the women who are igniting our passion for careers in Technology. Join our breakfast session and see what you can learn to help you re/ign",
-      "attendees": null,
+      "attendees": 67,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2022-women-igniting-tech",
         "title": "Women Igniting Tech",
@@ -10134,7 +10210,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2022-navigating-the-workplace-as-a-woman",
       "shortDescription": "We operate in an unusual world that has seen workplaces and normal operating models change from the norms that we have been used to. Navigating the “new normal” can be challenging for both new starters in the tech industry settling in, as well as for managers and teams helping their junior staff find their pathways and build networks in often remote or disrupted working environments.",
-      "attendees": null,
+      "attendees": 87,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2022-navigating-the-workplace-as-a-woman",
         "title": "Navigating the Workplace as a Woman",
@@ -10312,7 +10389,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2023-innovation-unleashed",
       "shortDescription": "Some of the world’s leading companies use Deloitte’s 10 Types of Innovation Framework to create innovative products.",
-      "attendees": null,
+      "attendees": 90,
+      "checkedIn": 62,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2023-innovation-unleashed",
         "title": "Innovation Unleashed",
@@ -10442,7 +10520,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2022-ai-enviro-hack",
       "shortDescription": "She Sharp Hackathon is an all-female-led and non-binary 32 hour hackathon, which aims to help individuals to understand they belong in tech and that there are various roles you can have in the tech industry. Do you have a passion to save the planet, starting in our backyard? We’re bringing to life practical examples from the AI Forum’s recently published AI for Environment in Aotearoa New Zealand ",
-      "attendees": null,
+      "attendees": 105,
+      "checkedIn": 80,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2022-ai-enviro-hack",
         "title": "AI Enviro Hack",
@@ -10750,7 +10829,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2022-she-celebrates",
       "shortDescription": "She Sharp is delighted to present She Celebrates: A reflection on the past year and Inspiration for the future! Come and join us for an evening of Reflection and Inspiration presented by a variety of motivational speakers from STEM-related industries and hosted by AWS and She Sharp. This fantastic opportunity will introduce you to new and exciting ideas for the future, while providing a space to n",
-      "attendees": null,
+      "attendees": 102,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2022-she-celebrates",
         "title": "She Celebrates",
@@ -10939,7 +11019,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2022-shaping-the-future-with-ai",
       "shortDescription": "The world is constantly evolving. Digital technologies are transforming exponentially from day to day and Artificial Intelligence has changed the way we interact with the world around us. We can find information through conversations with machines, instantly translate written and verbal language and even have our own personal digital assistant.",
-      "attendees": null,
+      "attendees": 115,
+      "checkedIn": 28,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2022-shaping-the-future-with-ai",
         "title": "Shaping the future with AI",
@@ -11036,7 +11117,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2023-international-womens-day",
       "shortDescription": "For International Women’s Day, She Sharp is partnering with Countdown and inviting you to #embraceequity and kick-start your day. Let’s challenge gender stereotypes, call out discrimination, draw attention to bias, and seek out inclusion in all aspects of our personal and professional lives.",
-      "attendees": null,
+      "attendees": 96,
+      "checkedIn": 73,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2023-international-womens-day",
         "title": "International Women’s Day",
@@ -11157,7 +11239,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/2023-kickstart-your-career-in-tech-with-myob",
       "shortDescription": "This event is aimed at providing women with insights and opportunities to pursue a career in the tech industry.",
-      "attendees": null,
+      "attendees": 86,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/2023-kickstart-your-career-in-tech-with-myob",
         "title": "Kickstart your Career in Tech with MYOB",
