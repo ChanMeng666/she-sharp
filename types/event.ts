@@ -226,5 +226,6 @@ export interface EventV3 {
   detailPageUrl: string;
   shortDescription: string;
   attendees: number | null;
+  checkedIn: number | null;
   detailPageData: EventDetailPageData;
 }

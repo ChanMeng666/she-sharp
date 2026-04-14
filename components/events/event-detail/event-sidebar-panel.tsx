@@ -9,6 +9,7 @@ import {
   ExternalLink,
   Copy,
   Check,
+  Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EventV3 } from "@/types/event";
@@ -113,10 +114,16 @@ export function EventSidebarPanel({
             className
           )}
         >
-          <div className="space-y-6">
+          <div className="space-y-4">
             <p className="text-lg text-muted-foreground text-center">
               This event has ended
             </p>
+            {event.attendees != null && event.attendees > 0 && (
+              <div className="flex items-center justify-center gap-2 text-muted-foreground">
+                <Users className="w-5 h-5" />
+                <span className="text-base">{event.attendees} attendees</span>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -205,6 +212,15 @@ export function EventSidebarPanel({
                     )}
                   </div>
                 )}
+              </div>
+            )}
+            {/* Attendees - show for non-past events with data */}
+            {!isPast && event.attendees != null && event.attendees > 0 && (
+              <div className="flex items-center gap-3 text-base">
+                <Users className="w-5 h-5 text-muted-foreground" />
+                <span className="text-foreground">
+                  {event.attendees} registered
+                </span>
               </div>
             )}
           </div>
