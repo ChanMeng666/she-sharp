@@ -130,7 +130,7 @@ export function EventInflectedCard({
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Users className="w-4 h-4 text-brand shrink-0" />
               <span>
-                {event.attendees} {isPast ? "attended" : "registered"}
+                {event.attendees} registered
               </span>
             </div>
           )}
