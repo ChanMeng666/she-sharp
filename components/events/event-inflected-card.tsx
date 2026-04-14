@@ -1,10 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ArrowRight, MapPin, Clock, Video } from "lucide-react";
+import { ArrowRight, MapPin, Clock, Video, Users } from "lucide-react";
 import { InflectedCard } from "@/components/ui/inflected-card";
 import { EventV3 } from "@/types/event";
-import { getEventDisplayTime, parseDateString } from "@/lib/data/events";
+import { getEventDisplayTime, isPastEvent, parseDateString } from "@/lib/data/events";
 import { cn } from "@/lib/utils";
 import {
   Tooltip,
@@ -47,6 +47,8 @@ export function EventInflectedCard({
   const locationStr = isOnline
     ? "Online"
     : location.venueName || location.city || "";
+
+  const isPast = isPastEvent(event);
 
   return (
     <div
@@ -123,6 +125,14 @@ export function EventInflectedCard({
                 {locationStr}
               </TooltipContent>
             </Tooltip>
+          )}
+          {event.attendees != null && event.attendees > 0 && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Users className="w-4 h-4 text-brand shrink-0" />
+              <span>
+                {event.attendees} {isPast ? "attended" : "registered"}
+              </span>
+            </div>
           )}
         </div>
       </div>
