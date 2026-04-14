@@ -11,6 +11,7 @@
     "detailPageUrl": "https://www.shesharp.org.nz/events/example-event-slug",
     "shortDescription": "Short summary shown on the events list.",
     "attendees": null,
+    "checkedIn": null,
     "detailPageData": {
       "url": "https://www.shesharp.org.nz/events/example-event-slug",
       "title": "Example Event Title",
@@ -56,7 +57,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/from-burnout-to-balance",
       "shortDescription": "An event exploring strategies for managing burnout and finding balance in your career and life.",
-      "attendees": null,
+      "attendees": 106,
+      "checkedIn": 75,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/from-burnout-to-balance",
         "title": "From Burnout to Balance",
@@ -99,7 +101,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-and-academyex-international-womens-day-2026",
       "shortDescription": "Join She Sharp and academyEX for an inspiring International Women's Day celebration centred on this year's theme — Give To Gain. An evening of honest conversations, shared experiences, and meaningful connections.",
-      "attendees": null,
+      "attendees": 103,
+      "checkedIn": 72,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/she-sharp-and-academyex-international-womens-day-2026",
         "title": "She Sharp & academyEX: International Women's Day 2026",
@@ -204,7 +207,8 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/she-sharp-candice-murray-own-your-energy",
       "shortDescription": "An interactive career mindset workshop with coach Candice Murray, focused on helping you consciously shift your energy so you can show up with more calm, confidence, and self-belief in the moments that matter.",
-      "attendees": null,
+      "attendees": 68,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/she-sharp-candice-murray-own-your-energy",
         "title": "She Sharp & Candice Murray: Own your Energy!",
@@ -289,7 +293,8 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka",
       "shortDescription": "A dynamic, employment-focused programme delivered by SheSharp for MSD clients ready to strengthen their pathway into work. March session theme: AI & The Future of Work.",
-      "attendees": null,
+      "attendees": 39,
+      "checkedIn": 27,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/her-waka",
         "title": "HER WAKA — Navigating Pathways into Sustainable Employment",
@@ -413,7 +418,8 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka-april-2026",
       "shortDescription": "The second HER WAKA cohort focuses on building confidence through the #IAmRemarkable workshop and exploring Vibe Coding — using free AI tools to build a personal website through natural conversation.",
-      "attendees": null,
+      "attendees": 32,
+      "checkedIn": 24,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/her-waka-april-2026",
         "title": "Her Waka (April 2026) — #IAmRemarkable & Vibe Coding",
@@ -500,7 +506,8 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka-may-2026",
       "shortDescription": "The third HER WAKA cohort continues with a focus on real-world job readiness, featuring a cybersecurity panel discussion and practical insights to help participants navigate their next career step with confidence.",
-      "attendees": null,
+      "attendees": 5,
+      "checkedIn": 0,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/her-waka-may-2026",
         "title": "Her Waka (May 2026) — Navigating Pathways into Sustainable Employment",

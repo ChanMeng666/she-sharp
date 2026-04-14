@@ -148,7 +148,9 @@ export function EventCard({
             <div className="flex items-center gap-3 pt-2 border-t border-border">
               <div className="flex items-center gap-1 text-sm text-muted-foreground">
                 <Users className="w-4 h-4" />
-                <span>{event.attendees} attended</span>
+                <span>
+                  {event.attendees} {isPast ? "attended" : "registered"}
+                </span>
               </div>
             </div>
           )}
