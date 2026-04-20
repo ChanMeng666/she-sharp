@@ -29,17 +29,22 @@ function getOpenAI(): OpenAI {
  * JSON Schema for structured output — a loose mirror of EventPatchSchema
  * that satisfies OpenAI's strict-mode requirements.
  */
+// Non-strict schema: OpenAI strict mode requires additionalProperties: false
+// on every object, but our `fields` and `event` properties intentionally hold
+// arbitrary EventV3 subfields whose shape the model can pick freely. We rely
+// on Zod validation (EventPatchSchema) to guarantee structural correctness
+// after receiving the output.
 const RESPONSE_JSON_SCHEMA = {
   name: "EventPatch",
-  strict: true,
+  strict: false,
   schema: {
     type: "object",
     properties: {
       op: { type: "string", enum: ["update", "create", "clarify"] },
       eventSlug: { type: "string" },
       summary: { type: "string" },
-      fields: { type: "object", additionalProperties: true },
-      event: { type: "object", additionalProperties: true },
+      fields: { type: "object" },
+      event: { type: "object" },
       imageChecklist: {
         type: "array",
         items: {
@@ -49,14 +54,12 @@ const RESPONSE_JSON_SCHEMA = {
             description: { type: "string" },
             alreadyExists: { type: "boolean" },
           },
-          required: ["path", "description", "alreadyExists"],
-          additionalProperties: false,
+          required: ["path", "description"],
         },
       },
       question: { type: "string" },
     },
-    required: ["op", "eventSlug", "summary", "fields", "event", "imageChecklist", "question"],
-    additionalProperties: false,
+    required: ["op"],
   },
 } as const;
 
