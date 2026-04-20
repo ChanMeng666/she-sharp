@@ -1,10 +1,77 @@
 # Slack Event Extraction: Claude Code Tutorial
 
-This document is a step-by-step guide for **Claude Code** to automatically extract event data from a Slack channel and update the She Sharp website.
+> **PRIMARY workflow: use the `/event` Slack slash command** (see
+> [Slack Event Bot Setup](#slack-event-bot-setup-primary-workflow) below).
+> The Python script documented here is kept as a **fallback** for bulk
+> historical imports or when the hosted bot is unavailable.
 
 ---
 
-## Overview
+## Slack Event Bot Setup (primary workflow)
+
+The hosted bot lives on the existing Vercel deployment. Admin types
+`/event <free-form description>` in any event's Slack channel, and the bot:
+
+1. Acknowledges within 3 seconds.
+2. Fetches the channel history + sponsor inventory, and asks OpenAI to
+   produce a structured patch against `lib/data/json/events-custom.json`.
+3. Writes the patch to a `slack-bot-drafts/<id>` Git branch (no PR yet).
+4. Posts an ephemeral preview with JSON diff, image checklist, and
+   `Confirm & Open PR` / `Cancel` buttons.
+5. On Confirm: opens a PR to `main`. Admin locally checks out the
+   branch, drops any listed images in `public/img/events/`, pushes, and
+   merges. Vercel auto-deploys.
+
+### One-time Slack app setup
+
+1. https://api.slack.com/apps → Create New App → From scratch → "She Sharp Event Bot" → pick workspace.
+2. **Slash Commands** → Create New Command:
+   - Command: `/event`
+   - Request URL: `https://she-sharp-zeta.vercel.app/api/slack/events`
+   - Short Description: `Update an event's data via the bot`
+   - Usage Hint: `<what to update, free text>`
+3. **Interactivity & Shortcuts** → toggle on:
+   - Request URL: `https://she-sharp-zeta.vercel.app/api/slack/events/interactive`
+4. **OAuth & Permissions** → Bot Token Scopes:
+   - `commands`, `chat:write`, `channels:history`, `channels:read`,
+     `groups:history`, `groups:read`
+5. Install to Workspace. Copy the Bot User OAuth Token.
+6. **Basic Information** → copy the Signing Secret.
+7. Invite bot to each event channel: `/invite @SheSharpEventBot`.
+
+### One-time environment variable setup (Vercel)
+
+Run from the project root (use `printf`, never `echo` — see
+[CLAUDE.md](../../CLAUDE.md)):
+
+```bash
+printf 'xoxb-your-token' | vercel env add SLACK_BOT_TOKEN production
+printf 'your-signing-secret' | vercel env add SLACK_SIGNING_SECRET production
+printf 'U01ABC,U02DEF' | vercel env add SLACK_ALLOWED_USER_IDS production
+printf 'github_pat_xxx' | vercel env add GITHUB_BOT_TOKEN production
+printf 'NZ-SheSharp/she-sharp' | vercel env add GITHUB_REPO production
+printf 'main' | vercel env add GITHUB_REPO_DEFAULT_BRANCH production
+```
+
+The GitHub PAT should be a **fine-grained** token scoped to the
+`NZ-SheSharp/she-sharp` repo with `contents: write` and
+`pull_requests: write` permissions.
+
+### Conventions enforced by the bot
+
+See `lib/slack-bot/conventions.ts` for the authoritative rules loaded
+into the AI system prompt. Summary:
+
+- Event images: `/img/events/<event-slug>-<descriptive>.<ext>`
+- Cover: `/img/events/<event-slug>-cover.<ext>`
+- Sponsor logos: prefer canonical `/img/sponsors/<sponsor-slug>.svg`;
+  only fall back to `/img/events/<event-slug>-<sponsor-slug>-logo.svg`
+  when no canonical exists. Image checklist tells the admin which files
+  to place locally.
+
+---
+
+## Legacy: Python extraction script
 
 The local Python script `scripts/collect-event-from-slack.py` reads all messages from a specified Slack channel, sends them to OpenAI for structured extraction, and saves the results to a timestamped folder under `~/Downloads`. Claude Code then reads those results and updates the website.
 

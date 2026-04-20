@@ -118,6 +118,8 @@ function main() {
     byPath.set(r.path, arr);
   }
   for (const [p, sources] of byPath.entries()) {
+    // Skip template placeholders (e.g., "/img/events/<slug>-<desc>.<ext>")
+    if (p.includes("<") || p.includes(">")) continue;
     const abs = join(REPO_ROOT, "public", p.replace(/^\//, ""));
     if (!existsSync(abs)) missing.push({ path: p, sources });
   }
