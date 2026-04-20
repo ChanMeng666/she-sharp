@@ -9,8 +9,13 @@
 import { readdirSync, existsSync } from "fs";
 import { join, extname, basename } from "path";
 
-const SPONSORS_DIR = "public/img/sponsors";
 const IMAGE_EXTS = new Set([".svg", ".png", ".jpg", ".jpeg", ".webp"]);
+const CANDIDATE_ROOTS = [
+  "public/img/sponsors",
+  // Next.js serverless functions run from `.next/standalone/` on Vercel
+  // where `public/` may be a sibling path; try both variants.
+  ".next/standalone/public/img/sponsors",
+];
 
 let cache: string[] | null = null;
 
@@ -23,17 +28,20 @@ let cache: string[] | null = null;
 export function getSponsorSlugs(): string[] {
   if (cache) return cache;
 
-  const abs = join(process.cwd(), SPONSORS_DIR);
-  if (!existsSync(abs)) {
-    cache = [];
+  for (const root of CANDIDATE_ROOTS) {
+    const abs = join(process.cwd(), root);
+    if (!existsSync(abs)) continue;
+    const slugs = readdirSync(abs)
+      .filter((f) => IMAGE_EXTS.has(extname(f).toLowerCase()))
+      .map((f) => basename(f, extname(f)).toLowerCase());
+    cache = [...new Set(slugs)].sort();
     return cache;
   }
 
-  const slugs = readdirSync(abs)
-    .filter((f) => IMAGE_EXTS.has(extname(f).toLowerCase()))
-    .map((f) => basename(f, extname(f)).toLowerCase());
-
-  cache = [...new Set(slugs)].sort();
+  // If we can't scan the directory at runtime, fall back to empty list —
+  // the AI will still work, it just won't know about existing sponsors and
+  // will propose placeholder paths (admin can correct manually).
+  cache = [];
   return cache;
 }
 

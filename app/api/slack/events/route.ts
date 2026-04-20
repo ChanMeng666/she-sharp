@@ -10,8 +10,6 @@
  */
 
 import { after } from "next/server";
-import { readFileSync } from "fs";
-import { join } from "path";
 
 import {
   buildAckMessage,
@@ -31,8 +29,11 @@ import { respondToSlack } from "@/lib/slack-bot/slack-client";
 import { SlackBotError, InvalidSignatureError } from "@/lib/slack-bot/errors";
 import { verifySlackSignature } from "@/lib/slack-bot/verify";
 import { nanoid } from "nanoid";
-
-const EVENTS_JSON_PATH = "lib/data/json/events-custom.json";
+// Importing the JSON file directly is the Next.js-safe way: webpack bundles it
+// into the serverless function. Using readFileSync() from lib/ at runtime is
+// unreliable on Vercel because those files are only bundled if webpack traces
+// them via import.
+import eventsCustomData from "@/lib/data/json/events-custom.json";
 
 export async function POST(request: Request): Promise<Response> {
   const rawBody = await request.text();
@@ -88,7 +89,7 @@ async function processCommand(params: {
   try {
     const snapshot = await fetchChannelSnapshot(params.channelId);
 
-    const currentJsonText = readFileSync(join(process.cwd(), EVENTS_JSON_PATH), "utf8");
+    const currentJsonText = JSON.stringify(eventsCustomData, null, 2);
 
     const patch = await extractEventPatch({
       userCommand: params.userCommand,
@@ -133,7 +134,10 @@ async function processCommand(params: {
       }),
     );
   } catch (e) {
-    const message = e instanceof SlackBotError ? e.userMessage : "Unexpected error. Check Vercel logs.";
+    const detail = e instanceof Error ? `${e.name}: ${e.message}` : String(e);
+    const message = e instanceof SlackBotError
+      ? e.userMessage
+      : `Unexpected error — ${detail}`;
     await respondToSlack(params.responseUrl, buildErrorMessage(message));
     console.error("[slack-bot] processCommand failed:", e);
   }
