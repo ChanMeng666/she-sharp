@@ -79,6 +79,9 @@ tmp/emails/
 scripts/collect-event-from-slack.py
 scripts/requirements-slack.txt
 
+# Generated audit reports (local tooling output, not tracked)
+scripts/audit-report.json
+
 # Reference/Example projects
 reference-next-shadcn-admin-dashboard/
 nul
