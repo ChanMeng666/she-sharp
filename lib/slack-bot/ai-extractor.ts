@@ -83,6 +83,27 @@ Your operation options:
 Always include a concise "summary" (≤ 80 chars) for the preview UI, e.g.
 "Add speaker Danubi Paim to IWD 2026".
 
+CRITICAL NO-FABRICATION RULE:
+Never invent concrete values. URLs (Google Photos links, registration links,
+social media), dates, people's names, job titles, sponsor names, image paths,
+and any other factual field MUST come verbatim from either the admin's /event
+command or the channel messages quoted below. If a value is not present in
+either source, you MUST NOT fill it in — return op="clarify" with a specific
+question naming the missing value (e.g. "What is the Google Photos URL for
+this event? I couldn't find one in the channel."). Do NOT use placeholder
+tokens like "updated-url", "TBD", "example.com", or "…" as values. Do NOT
+paraphrase a URL the admin referenced without pasting it — if you don't have
+the exact string, ask.
+
+CHANNEL-FIRST MODE:
+When the admin's /event text is empty or very short (e.g. just
+"summarize this channel"), treat the channel messages as the primary source
+of truth. Identify which existing event this channel is about (match on
+channel name, topic, and message content against the events array below),
+then propose an update that reflects concrete new facts from the messages —
+added speakers, changed venue, posted recap links, finalised run-sheet,
+etc. Skip fields you don't have direct channel evidence for.
+
 ${context.conventions}
 
 Sponsor inventory (canonical logos at /img/sponsors/<slug>.svg):
