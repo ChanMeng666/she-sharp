@@ -207,8 +207,8 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/she-sharp-candice-murray-own-your-energy",
       "shortDescription": "An interactive career mindset workshop with coach Candice Murray, focused on helping you consciously shift your energy so you can show up with more calm, confidence, and self-belief in the moments that matter.",
-      "attendees": 68,
-      "checkedIn": 0,
+      "attendees": 81,
+      "checkedIn": 60,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/she-sharp-candice-murray-own-your-energy",
         "title": "She Sharp & Candice Murray: Own your Energy!",
@@ -274,11 +274,11 @@
           }
         ],
         "photos": [],
-        "galleryUrl": "",
+        "galleryUrl": "https://photos.app.goo.gl/u7g7yTUbDYBukfyE6",
         "registrationUrl": "https://events.humanitix.com/she-sharp-and-own-your-energy",
         "images": [],
         "category": "workshop",
-        "status": "upcoming",
+        "status": "completed",
         "isFeatured": true
       }
     },
