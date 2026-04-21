@@ -67,15 +67,13 @@ export async function POST(request: Request): Promise<Response> {
     return Response.json({ response_type: "ephemeral", text: msg });
   }
 
-  if (!text.trim()) {
-    return Response.json({
-      response_type: "ephemeral",
-      text: "Usage: `/event <free-form description of the update>`",
-    });
-  }
+  // Empty /event means "summarise this channel and propose an update to the
+  // matching event". AI uses channel history as primary source.
+  const userCommand = text.trim() ||
+    "Summarise this channel's recent activity and propose an update to the matching event. Use ONLY concrete facts from the channel messages.";
 
   // Kick off background work that will post the preview via response_url.
-  after(() => processCommand({ channelId, userId, userCommand: text, responseUrl }));
+  after(() => processCommand({ channelId, userId, userCommand, responseUrl }));
 
   return Response.json(buildAckMessage());
 }

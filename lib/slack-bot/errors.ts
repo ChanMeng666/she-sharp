@@ -54,3 +54,10 @@ export class GitHubError extends SlackBotError {
     this.name = "GitHubError";
   }
 }
+
+export class ChannelAccessError extends SlackBotError {
+  constructor(detail: string, userMessage: string) {
+    super(`Slack channel access failed: ${detail}`, userMessage);
+    this.name = "ChannelAccessError";
+  }
+}
