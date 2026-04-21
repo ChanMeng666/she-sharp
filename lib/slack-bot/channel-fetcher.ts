@@ -7,12 +7,14 @@
  * same sort ordering, TypeScript-native.
  */
 
+import { ChannelAccessError } from "./errors";
 import { getSlackClient } from "./slack-client";
 
 interface ChannelSnapshot {
   name: string;
   topic: string;
   messageText: string;
+  messageCount: number;
 }
 
 /** Number of top-level messages to fetch. Keep modest to stay within OpenAI context budget. */
@@ -21,11 +23,21 @@ const MESSAGE_LIMIT = 50;
 export async function fetchChannelSnapshot(channelId: string): Promise<ChannelSnapshot> {
   const slack = getSlackClient();
 
-  const info = await slack.conversations.info({ channel: channelId });
+  let info;
+  try {
+    info = await slack.conversations.info({ channel: channelId });
+  } catch (e) {
+    throw translateSlackError(e, "conversations.info");
+  }
   const name = info.channel?.name ?? channelId;
   const topic = info.channel?.topic?.value ?? "";
 
-  const history = await slack.conversations.history({ channel: channelId, limit: MESSAGE_LIMIT });
+  let history;
+  try {
+    history = await slack.conversations.history({ channel: channelId, limit: MESSAGE_LIMIT });
+  } catch (e) {
+    throw translateSlackError(e, "conversations.history");
+  }
   const messages = history.messages ?? [];
 
   // Fetch thread replies for messages with reply_count > 0
@@ -71,5 +83,35 @@ export async function fetchChannelSnapshot(channelId: string): Promise<ChannelSn
     }
   }
 
-  return { name, topic, messageText: lines.join("\n") };
+  if (all.length === 0) {
+    throw new ChannelAccessError(
+      `channel ${name} (${channelId}) returned 0 usable messages`,
+      `No messages found in #${name}. If the bot was just added, wait a moment and retry. Otherwise make sure the channel actually contains event details and that the bot is a member (run \`/invite @She Sharp Event Bot\`).`,
+    );
+  }
+
+  return { name, topic, messageText: lines.join("\n"), messageCount: all.length };
+}
+
+function translateSlackError(e: unknown, api: string): ChannelAccessError {
+  const code =
+    (e as { data?: { error?: string } })?.data?.error ??
+    (e instanceof Error ? e.message : String(e));
+
+  if (code === "not_in_channel" || code === "channel_not_found") {
+    return new ChannelAccessError(
+      `${api} failed: ${code}`,
+      "I'm not a member of this channel. Please run `/invite @She Sharp Event Bot` in the channel, then try again.",
+    );
+  }
+  if (code === "missing_scope") {
+    return new ChannelAccessError(
+      `${api} failed: missing_scope`,
+      "The bot is missing required Slack scopes (`channels:history` / `groups:history`). Reinstall the app from the Slack admin console.",
+    );
+  }
+  return new ChannelAccessError(
+    `${api} failed: ${code}`,
+    `Could not read channel history (${code}). Check bot membership and scopes.`,
+  );
 }
