@@ -71,7 +71,8 @@ file for the She Sharp website from Slack. You produce STRUCTURED operations
 Your operation options:
 - op="update": modify fields on an existing event. Set eventSlug to the slug
   of the event being modified, and put only the changing fields in "fields".
-  "fields" may contain nested paths the server will merge into the event.
+  "fields" is deep-merged into the event, so use NESTED paths (e.g.
+  {"detailPageData": {"galleryUrl": "..."}}), NOT flat keys at the event root.
   Leave "event" as an empty object and "question" as an empty string.
 - op="create": create a new event. Populate "event" with as much of the
   EventV3 structure as you can. Leave "eventSlug" empty, "fields" as empty
@@ -79,6 +80,26 @@ Your operation options:
 - op="clarify": when the admin's request is ambiguous or you are not
   confident which event they mean. Populate "question" with your clarifying
   question. Leave the other fields empty / empty string / empty object.
+
+CRITICAL SCHEMA CONSISTENCY RULES — must obey all four:
+1. REUSE EXISTING FIELD NAMES. Never invent synonym field names. The summary
+   below lists each event's existing URL slots. If you want to attach a
+   Google Photos album, use "galleryUrl" (the established name). Do NOT
+   create "photosUrl", "googlePhotosUrl", "gphotos", or similar.
+2. FILL EMPTY SLOTS FIRST. If an event already has a matching field set to
+   "" or [], fill that field — do not add a new sibling field next to it.
+3. RESPECT NESTING. URL and content fields (galleryUrl, registrationUrl,
+   humanitixUrl, humanitixId, photos, images, speakers, sponsors, location,
+   specialSections, coverImage, fullDescription, etc.) live INSIDE
+   "detailPageData" on each event, not at the event root. Event-root fields
+   are only: id, slug, title, date, coverImage, detailPageUrl,
+   shortDescription, attendees, checkedIn, detailPageData.
+4. KNOWN URL CONVENTIONS (use these names verbatim, inside detailPageData):
+   - galleryUrl → Google Photos album / recap gallery link
+   - registrationUrl → ticket / RSVP page
+   - humanitixUrl → Humanitix event page
+   - humanitixId → Humanitix event ID (string)
+   - url → event detail page URL on shesharp.org.nz
 
 Always include a concise "summary" (≤ 80 chars) for the preview UI, e.g.
 "Add speaker Danubi Paim to IWD 2026".
@@ -187,16 +208,35 @@ function collapseByOp(raw: Record<string, unknown>): unknown {
 
 /**
  * Produce a compact summary of the events JSON for the system prompt
- * context. Full JSON is too large; we send slug + title + status.
+ * context. Full JSON is too large; we send slug + title + status plus a
+ * per-event snapshot of the URL slots so the model can see which fields
+ * already exist (and which are empty, i.e. available to fill) without
+ * inventing synonym names.
  */
 export function summariseEventsForPrompt(eventsJsonText: string): string {
   try {
     const data = JSON.parse(eventsJsonText) as {
-      events?: Array<{ slug: string; title: string; date: string; detailPageData?: { status?: string } }>;
+      events?: Array<{
+        slug: string;
+        title: string;
+        date: string;
+        detailPageData?: Record<string, unknown>;
+      }>;
     };
     const events = data.events ?? [];
+    const URL_SLOTS = ["galleryUrl", "registrationUrl", "humanitixUrl", "humanitixId", "url"];
     return events
-      .map((e) => `- slug="${e.slug}" title="${e.title}" date="${e.date}" status="${e.detailPageData?.status ?? "unknown"}"`)
+      .map((e) => {
+        const d = e.detailPageData ?? {};
+        const status = typeof d.status === "string" ? d.status : "unknown";
+        const slotLines = URL_SLOTS.map((slot) => {
+          const v = d[slot];
+          if (v === undefined) return `    ${slot}: (not present)`;
+          if (v === "" || (Array.isArray(v) && v.length === 0)) return `    ${slot}: (empty — available to fill)`;
+          return `    ${slot}: set`;
+        }).join("\n");
+        return `- slug="${e.slug}" title="${e.title}" date="${e.date}" status="${status}"\n${slotLines}`;
+      })
       .join("\n");
   } catch {
     return "(could not parse events-custom.json)";
