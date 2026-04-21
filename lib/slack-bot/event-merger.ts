@@ -3,8 +3,11 @@
  * updated JSON as a pretty-printed string (ready to commit to Git).
  *
  * Pure function: does not mutate its inputs, does not touch the fs.
+ * Runs schema validation (enum + required-field checks) before applying.
  */
 
+import { SchemaValidationError } from "./errors";
+import { validatePatchForMerge } from "./event-schema";
 import type { ValidatedEventPatch } from "./schema";
 
 interface EventsFile {
@@ -22,12 +25,18 @@ export function applyPatch(currentJsonText: string, patch: ValidatedEventPatch):
   const events = [...data.events];
 
   if (patch.op === "update") {
+    const issues = validatePatchForMerge("update", patch.fields as Record<string, unknown>);
+    if (issues.length > 0) throw new SchemaValidationError(issues);
+
     const idx = events.findIndex((e) => e.slug === patch.eventSlug);
     if (idx === -1) {
       throw new Error(`Event not found: slug=${patch.eventSlug}`);
     }
     events[idx] = deepMerge(events[idx], patch.fields);
   } else if (patch.op === "create") {
+    const issues = validatePatchForMerge("create", patch.event as Record<string, unknown>);
+    if (issues.length > 0) throw new SchemaValidationError(issues);
+
     const maxId = events.reduce((m, e) => Math.max(m, Number(e.id ?? 0)), 0);
     const newEvent = { ...patch.event, id: patch.event.id ?? maxId + 1 };
     events.unshift(newEvent as Record<string, unknown>);

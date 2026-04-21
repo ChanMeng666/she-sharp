@@ -11,6 +11,7 @@ import OpenAI from "openai";
 
 import { InvalidPatchError } from "./errors";
 import { EventPatchSchema, type ValidatedEventPatch } from "./schema";
+import { schemaBlock } from "./event-schema";
 import { conventionsBlock } from "./conventions";
 import type { ExtractionContext } from "./types";
 
@@ -81,25 +82,19 @@ Your operation options:
   confident which event they mean. Populate "question" with your clarifying
   question. Leave the other fields empty / empty string / empty object.
 
-CRITICAL SCHEMA CONSISTENCY RULES — must obey all four:
+CRITICAL SCHEMA CONSISTENCY RULES — must obey all three:
 1. REUSE EXISTING FIELD NAMES. Never invent synonym field names. The summary
    below lists each event's existing URL slots. If you want to attach a
    Google Photos album, use "galleryUrl" (the established name). Do NOT
    create "photosUrl", "googlePhotosUrl", "gphotos", or similar.
 2. FILL EMPTY SLOTS FIRST. If an event already has a matching field set to
    "" or [], fill that field — do not add a new sibling field next to it.
-3. RESPECT NESTING. URL and content fields (galleryUrl, registrationUrl,
-   humanitixUrl, humanitixId, photos, images, speakers, sponsors, location,
-   specialSections, coverImage, fullDescription, etc.) live INSIDE
-   "detailPageData" on each event, not at the event root. Event-root fields
-   are only: id, slug, title, date, coverImage, detailPageUrl,
-   shortDescription, attendees, checkedIn, detailPageData.
-4. KNOWN URL CONVENTIONS (use these names verbatim, inside detailPageData):
-   - galleryUrl → Google Photos album / recap gallery link
-   - registrationUrl → ticket / RSVP page
-   - humanitixUrl → Humanitix event page
-   - humanitixId → Humanitix event ID (string)
-   - url → event detail page URL on shesharp.org.nz
+3. RESPECT NESTING. URL and content fields listed under "Required
+   detailPageData fields" below live INSIDE "detailPageData", never at the
+   event root. The only event-root fields are the 10 listed under "Required
+   top-level fields (EventV3)".
+
+${schemaBlock()}
 
 Always include a concise "summary" (≤ 80 chars) for the preview UI, e.g.
 "Add speaker Danubi Paim to IWD 2026".
