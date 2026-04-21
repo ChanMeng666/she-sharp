@@ -61,3 +61,16 @@ export class ChannelAccessError extends SlackBotError {
     this.name = "ChannelAccessError";
   }
 }
+
+export class SchemaValidationError extends SlackBotError {
+  constructor(issues: ReadonlyArray<{ path: string; message: string }>) {
+    const lines = issues.map((i) => `• ${i.path} — ${i.message}`);
+    super(
+      `Patch failed schema validation:\n${lines.join("\n")}`,
+      `The proposed change doesn't match the event schema:\n${lines.join(
+        "\n",
+      )}\n\nPlease rephrase your /event command with values that fit the schema (see lib/slack-bot/event-schema.ts).`,
+    );
+    this.name = "SchemaValidationError";
+  }
+}
