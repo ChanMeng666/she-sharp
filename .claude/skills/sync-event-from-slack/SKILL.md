@@ -184,6 +184,17 @@ Wait for the user to say "apply", "commit", or similar. If they
 want to tweak anything (wrong image classification, prefer a
 different bio wording), do it and re-present the plan.
 
+**No-op short-circuit**: in UPDATE mode, if the computed JSON patch
+is empty, no images need (re-)downloading, and no orphans need
+removing, skip the full plan and emit a single line:
+
+```
+UPDATE no-op — <slug> already in sync with #<channel>
+```
+
+Then stop. There's nothing for the user to apply or veto, and a
+full plan just adds noise.
+
 ### Step 7 — Apply
 
 When the user approves:
