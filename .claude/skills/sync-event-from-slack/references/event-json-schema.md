@@ -88,7 +88,7 @@ Each entry in `events` looks like:
 | `shortDescription` | 1–2 sentences, < 200 chars. Used in event listings. |
 | `attendees` | `null` before the event; integer after. Do not guess. |
 | `checkedIn` | `0` before event. |
-| `detailPageData.subtitle` | Short tagline (e.g., "LinkedIn Masterclass Workshop"). |
+| `detailPageData.subtitle` | Short caption — at most ~40 characters, one phrase (e.g., "LinkedIn Masterclass Workshop", "Career Panel Discussion"). Do **not** derive from body-description paragraphs; the phrase often has to be invented for the UI. In UPDATE mode, preserve the existing subtitle unless it's obviously stale (wrong event or speaker). |
 | `detailPageData.time` | Format: `"5:00pm - 7:30pm NZST"`. |
 | `detailPageData.location.format` | One of `"in_person"`, `"online"`, `"hybrid"`. |
 | `detailPageData.location.{venueName,address,city,country}` | Full physical address when `in_person`. |
@@ -118,3 +118,30 @@ If an entry with the given `slug` already exists:
 - Keep the existing `id`.
 - Do not regenerate images that already exist at the target path *unless* the Slack source contains a strictly newer file (check file size + newer `ts`).
 - Diff field-by-field; only overwrite fields where the Slack content differs meaningfully (whitespace-only changes can be skipped).
+
+## CREATE vs UPDATE asymmetry
+
+CREATE mode takes Slack as the only input — nothing pre-existing to
+defer to. UPDATE mode has two authoritative sources, and they govern
+different aspects:
+
+- **Slack** is authoritative for **semantic content**: what was said,
+  new facts, corrections, added agenda items, updated dates/venues.
+- **Existing JSON** is authoritative for **editorial polish**:
+  typography (em-dash vs hyphen), curly vs straight quotes, spacing,
+  minor articles ("the" before a program name), and the short-caption
+  subtitle an editor chose for the UI.
+
+Rules, applied in order:
+
+1. Identical semantics, different typography → keep existing JSON value.
+2. Semantically different → prefer Slack; surface the change in the
+   dry-run plan so the user can veto.
+3. `id` never changes on UPDATE — preserve.
+4. `attendees` and `checkedIn` are set by operations outside this
+   skill (post-event reconciliation) — never overwrite on re-sync.
+5. `subtitle` is usually editor-curated; keep existing unless empty
+   or clearly referring to the wrong event.
+
+The point of re-syncing is to let genuinely new information flow
+into the site. It is not to re-render already-polished copy.
