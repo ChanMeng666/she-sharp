@@ -68,8 +68,12 @@ lib/db/checkpoints/
 *.temp
 *~
 
-# Claude AI
-.claude/
+# Claude AI — ignore personal state (settings.local.json etc.) but keep skills tracked.
+.claude/*
+!.claude/skills/
+# Cached skill artifacts (channel dumps, downloaded docx/images for extraction) — local-only.
+.cache/
+.claude/skills/**/.cache/
 WARP.md
 
 # Email preview files
