@@ -67,14 +67,18 @@
         "location": {
           "format": "in_person",
           "venueName": "AUT, Building WZ416",
-          "address": "",
+          "address": "55 Wellesley Street East, Auckland 1010",
           "city": "Auckland",
           "country": "New Zealand"
         },
         "fullDescription": [
-          "In today’s changing world of work, your LinkedIn® profile is more than a CV - it’s your personal brand and your gateway to opportunity.",
-          "Businesses are looking for more meaningful connections, and the way you present yourself online can directly influence your career outcomes.",
-          "This masterclass will help you take control of your narrative and position yourself with clarity and confidence."
+          "In today’s changing world of work, your LinkedIn® profile is more than a CV. It is your personal brand, your digital presence and often the first impression you make before a conversation even begins.",
+          "Opportunities are no longer only applied for — they are discovered. Recruiters, hiring managers and businesses are actively searching for people with the right skills, mindset and visibility.",
+          "How you show up on LinkedIn directly influences what finds you.",
+          "This session is led by Stuart Little, Creative Lead for THRIVE and Director of Agency8. Through his work supporting professionals, businesses and large-scale programmes across New Zealand, Stuart brings a real-world perspective on how LinkedIn is actually being used today to identify, assess and connect with talent for a changed market.",
+          "Rather than focusing on theory, this workshop draws on practical insight, current hiring trends and proven strategies that help people move from having a profile to building a presence that creates momentum.",
+          "You will gain a clearer understanding of how to position yourself, how to be found, and how to use LinkedIn as a tool that works for you consistently.",
+          "Through the THRIVE programme you will be supported to build a LinkedIn® presence that reflects who you are, what you do, and how you work. The focus is not just on creating a profile, but on positioning yourself in a way that attracts the right opportunities and builds long-term career momentum."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -82,9 +86,9 @@
             "speakers": [
               {
                 "name": "Stuart Little",
-                "title": "THRIVE Program Presenter",
-                "company": "THRIVE",
-                "bio": "Stuart Little is part of THRIVE, a program offering free digital services to New Zealanders to help them create LinkedIn profiles that reflect who they are and what they do, focusing on getting noticed and hired.",
+                "title": "Creative Lead, THRIVE & Director of Agency8",
+                "company": "THRIVE / Agency8",
+                "bio": "Stuart Little, Creative Lead for THRIVE and Director of Agency8. Through his work supporting professionals, businesses and large-scale programmes across New Zealand, Stuart brings a real-world perspective on how LinkedIn is actually being used today to identify, assess and connect with talent for a changed market.",
                 "image": "/img/events/event-aut-linkedin-15-may-2026-stuart-little.jpg",
                 "linkedin": "https://www.linkedin.com/in/stuart-little"
               }
@@ -95,7 +99,7 @@
         "sponsors": {
           "main": [
             {
-              "name": "AUT",
+              "name": "AUT (Engineering, Computer and Mathematical Sciences)",
               "logo": "/img/sponsors/aut.svg"
             }
           ],
@@ -107,16 +111,17 @@
             "title": "What You’ll Learn",
             "content": [
               "How to build a strong personal brand on LinkedIn®",
-              "How to position your skills and experience effectively",
-              "What employers and recruiters are really looking for",
-              "How to create a profile that attracts the right opportunities"
+              "How to position your skills and experience with clarity and relevance",
+              "What employers and recruiters are actually looking for in 2026",
+              "How to create a profile that attracts the right opportunities",
+              "How to move from simply having a profile to building a visible, active presence"
             ]
           },
           {
             "type": "why-attend",
             "title": "Why Attend",
             "content": [
-              "Gain practical insights to improve your LinkedIn® presence, build confidence in how you show up online, and learn how to attract - not chase - opportunities."
+              "Gain practical insights to improve your LinkedIn® presence, build confidence in how you show up online, and learn how to attract — not chase — opportunities."
             ]
           }
         ],
