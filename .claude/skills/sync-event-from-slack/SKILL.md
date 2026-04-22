@@ -111,6 +111,32 @@ there (pinned > speaker-authored > latest thread reply > top-level
 team confirmations). When multiple conflicting versions exist,
 choose by the rules; do not paraphrase.
 
+#### UPDATE mode: preserve editorial polish
+
+When the target slug already exists in `events-custom.json`, you are
+not starting from scratch — a human editor has likely layered polish
+over the raw Slack source (em-dashes instead of hyphens, curly quotes
+for apostrophes, a trimmed "the", a short UI-friendly subtitle).
+
+The "authoritative-content" rules determine **semantic** content
+(what's being said) — they do not override **editorial polish** (how
+it's being said). For each field:
+
+- If the only difference between the existing JSON text and the
+  Slack-derived text is stylistic — punctuation, curly vs. straight
+  quotes, spacing, a redundant article, minor word order — **prefer
+  the existing JSON**. Re-writing polished copy on every sync is a
+  regression, not a feature.
+- If the Slack source contains genuinely new information (a new
+  date, a changed venue, an added agenda bullet, a speaker
+  correction), **the Slack version wins** — that's the whole point
+  of re-syncing.
+- When unsure whether a difference is semantic or stylistic, treat
+  it as stylistic and preserve existing.
+
+This is the inverse asymmetry of CREATE mode, where Slack is the
+only input and nothing needs preserving.
+
 Core fields to produce:
 
 - `slug` (from user or channel name)
@@ -167,7 +193,10 @@ When the user approves:
 2. Patch `lib/data/json/events-custom.json`. Preserve existing
    entries exactly — only touch the target event. Use `id =
    max(existing) + 1` for creates; keep the existing `id` for
-   updates.
+   updates. If the patch changes any image path (extension change,
+   filename change, slug change), `git rm` the old file so an
+   orphan doesn't linger — the CI gate only catches broken
+   references forward, not stale files left behind.
 3. Run the CI gate:
    ```
    npx tsx scripts/verify-image-paths.ts

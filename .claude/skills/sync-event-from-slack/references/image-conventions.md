@@ -26,11 +26,19 @@ should match the speaker's full name (first + last), lowercased with hyphens
 and any diacritics stripped — e.g., `Stuart Little` → `stuart-little`,
 `Sofía García` → `sofia-garcia`.
 
-## Extension preservation
+## Extension is derived from Slack, not from the current JSON
 
-Use the original extension from Slack's `files.filetype` field (`png` stays
-`png`, `jpg` stays `jpg`). Do not re-encode. If the filetype is `jpeg`,
-normalize to `.jpg`.
+Trust Slack's `files.filetype` field as the authoritative source for the
+file extension. Do not re-encode. Normalizations:
+
+- `jpeg` → `.jpg`
+- Everything else — preserve as-is.
+
+On UPDATE, if the existing JSON references `…-cover.png` but the Slack
+source file is JPEG bytes, the skill should propose renaming the target
+to `…-cover.jpg` and removing the old `.png` file. Wrong extensions
+silently work in browsers (MIME sniffing) but corrupt future automation
+and confuse anyone reading the repo.
 
 ## Classifying images from a channel
 
@@ -66,3 +74,13 @@ Slack API calls and preserves git history).
   own assets even if visually similar.
 - Do **not** embed external URLs (Canva links, CDN links) in the JSON —
   always download, rename, and commit.
+
+## Orphan cleanup on re-sync
+
+When a re-sync changes an image path (extension fix, slug change,
+speaker rename), the old file remains on disk until explicitly
+removed. `verify-image-paths.ts` only catches references → missing
+files, not missing references → orphan files sitting in the repo.
+
+Always pair a path change with `git rm <old_path>`. List the removals
+in the dry-run plan so the user can veto before they happen.
