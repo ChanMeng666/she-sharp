@@ -47,6 +47,90 @@
   },
   "events": [
     {
+      "slug": "event-aut-linkedin-15-may-2026",
+      "title": "Making LinkedIn Work for You with Stuart Little, presented by She Sharp and AUT",
+      "date": "May 15, 2026",
+      "coverImage": {
+        "url": "/img/events/event-aut-linkedin-15-may-2026-cover.png",
+        "alt": "Making LinkedIn Work for You with Stuart Little event cover"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/event-aut-linkedin-15-may-2026",
+      "shortDescription": "A masterclass to help you build a strong personal brand on LinkedIn and attract the right opportunities.",
+      "attendees": null,
+      "checkedIn": 0,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/event-aut-linkedin-15-may-2026",
+        "title": "Making LinkedIn Work for You with Stuart Little, presented by She Sharp and AUT",
+        "subtitle": "LinkedIn Masterclass Workshop",
+        "date": "May 15, 2026",
+        "time": "5:00pm - 7:30pm NZST",
+        "location": {
+          "format": "in_person",
+          "venueName": "AUT, Building WZ416",
+          "address": "",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "In today’s changing world of work, your LinkedIn® profile is more than a CV - it’s your personal brand and your gateway to opportunity.",
+          "Businesses are looking for more meaningful connections, and the way you present yourself online can directly influence your career outcomes.",
+          "This masterclass will help you take control of your narrative and position yourself with clarity and confidence."
+        ],
+        "speakers": {
+          "keynote_speakers": {
+            "heading": "Meet Our Speaker",
+            "speakers": [
+              {
+                "name": "Stuart Little",
+                "title": "THRIVE Program Presenter",
+                "company": "THRIVE",
+                "bio": "Stuart Little is part of THRIVE, a program offering free digital services to New Zealanders to help them create LinkedIn profiles that reflect who they are and what they do, focusing on getting noticed and hired.",
+                "image": "/img/events/event-aut-linkedin-15-may-2026-stuart-little.jpg",
+                "linkedin": "https://www.linkedin.com/in/stuart-little"
+              }
+            ]
+          }
+        },
+        "organizers": [],
+        "sponsors": {
+          "main": [
+            {
+              "name": "AUT",
+              "logo": "/img/sponsors/aut.svg"
+            }
+          ],
+          "other": []
+        },
+        "specialSections": [
+          {
+            "type": "agenda",
+            "title": "What You’ll Learn",
+            "content": [
+              "How to build a strong personal brand on LinkedIn®",
+              "How to position your skills and experience effectively",
+              "What employers and recruiters are really looking for",
+              "How to create a profile that attracts the right opportunities"
+            ]
+          },
+          {
+            "type": "why-attend",
+            "title": "Why Attend",
+            "content": [
+              "Gain practical insights to improve your LinkedIn® presence, build confidence in how you show up online, and learn how to attract - not chase - opportunities."
+            ]
+          }
+        ],
+        "photos": [],
+        "galleryUrl": "",
+        "registrationUrl": "https://events.humanitix.com/making-linkedin-work-for-you-with-stuart-little-presented-by-she-sharp-and-aut",
+        "images": [],
+        "category": "workshop",
+        "status": "upcoming",
+        "isFeatured": false
+      },
+      "id": 91
+    },
+    {
       "id": 86,
       "slug": "from-burnout-to-balance",
       "title": "From Burnout to Balance",
