@@ -2,7 +2,7 @@
 
 **Source report:** `D:\github_repository\she-sharp-website-test\` (15 markdown sheets + 284 screenshots)
 **Target:** new She Sharp Next.js site (`https://she-sharp-zeta.vercel.app/`)
-**Response compiled:** 2026-04-24
+**Response compiled:** 2026-04-24 (initial) · 2026-04-25 (updated for bullet-list audit + sponsor description pass)
 **Responder:** Claude Code + repository maintainer
 
 This document maps **every user-visible issue and suggestion** flagged in the QA tracking sheet to the specific code or data change that addresses it. It is organized to mirror the source report so the report author can verify each item in sequence.
@@ -15,17 +15,19 @@ This document maps **every user-visible issue and suggestion** flagged in the QA
 |---|---|---|---|---|---|
 | Navigation and menu (01, 02) | 14 | 14 | – | – | – |
 | Test cases (02, TC 001–007) | 41 | 41 (all Pass) | – | – | – |
-| Events 2014–2020 (03, 04) | 30 events + group-photo issues | 26 | 4 (structural) | – | – |
-| Events 2021–2026 (05, 06) | 52 events + content issues | 47 | 3 (structural) | 2 (YouTube template) | – |
-| Functionality (07) | 9 features | 8 | – | – | 1 (password reset delivery) |
+| Events 2014–2020 (03, 04) | 30 events + group-photo issues | 30 | – | – | – |
+| Events 2021–2026 (05, 06) | 52 events + content issues | 50 | – | 2 (YouTube template) | – |
+| Functionality (07) | 9 features | 9 (incl. password reset verified via Resend) | – | – | – |
 | Donate / Photo Gallery / Contact / Dashboard / Password (08–12) | 4 pages | all Pass | – | – | – |
 | Sponsor inquiry (13) | 1 mockup | 1 | – | – | – |
 | Common observations (14) | 5 issues + 3 suggestions | 8 | – | – | – |
 | Cross-browser (15) | 8 browsers | all Pass | – | – | – |
 
-All code and data fixes were pushed to `main` on `https://github.com/NZ-SheSharp/she-sharp` across 8 commits (see §7). The production site auto-deploys via Vercel.
+All code and data fixes were pushed to `main` on `https://github.com/NZ-SheSharp/she-sharp` across 12 commits (see §7). The production site auto-deploys via Vercel.
 
-Only one issue remains outside the code layer: password-reset email **delivery** (Resend DNS/SPF/DKIM verification for `shesharp.org.nz`). The code path itself is fixed and verified in `fix(auth,resources)` (commit `95b7350`).
+The password-reset code path is fixed and delivery has been verified end-to-end via Resend (CLI `doctor`, direct send, and a live production `/api/auth/forgot-password` call), so there are no open environment items as of 2026-04-25.
+
+The 2026-04-25 follow-up pass added an optional `description` field to `EventSponsorV3` and backfilled ~26 sponsor descriptions plus a large batch of speaker bios, judges, and event detail paragraphs (see §3.bis). After the pass, the bullet-list audit (`scripts/audit_bullet_lists.py`) reports **0 events / 0 items** with suspected dropped content.
 
 ---
 
@@ -244,6 +246,59 @@ These were discovered while cross-referencing and are included for completeness:
 
 ---
 
+## 3.bis. 2026-04-25 follow-up pass — bullet lists, sponsor descriptions, speaker bios
+
+This pass was prompted by spot-checking `shesharp-techweek-envision-the-future` (whose 4 topic bullets never rendered) and `shesharp-future-ready` (whose speakers and intro copy were truncated). It grew into a full-repo sweep: a bullet-list audit tool, a sponsor schema extension, and a batch of ~100 structured data backfills.
+
+### Tooling
+
+- **`scripts/audit_bullet_lists.py`** — fetches every old-site event page (with an on-disk cache under `scripts/.cache/old-site-html/`), extracts every visible `<li>`, `<h3>/<h4>`, and inline dash-bulleted paragraph, then checks whether each text appears in the new-site JSON (`title`, `subtitle`, `shortDescription`, `fullDescription`, `specialSections`, `speakers`, `organizers`, `sponsors`). Items that fail the substring match are reported as suspected dropped content.
+  - Hardened against shared-template chrome (FAQ accordions, "Upcoming Event" cards, gallery tiles, Webflow `w-condition-invisible` placeholders, site header/footer nav) so those don't flag.
+  - Whitespace-safe, punctuation-safe normalization so `long-term` and `long term` match; em-dash collapses to a single space; trailing whitespace from stripped punctuation is re-collapsed.
+  - Supports per-slug drill-down: `python scripts/audit_bullet_lists.py <slug>` dumps the complete flag list.
+- **`scripts/patch_sponsor_descriptions.py`** — heuristic extractor that searches cached old-site HTML for each sponsor's company-description paragraph, with alias resolution (AWS ↔ Amazon Web Services, Countdown ↔ Woolworths, HPE ↔ Hewlett Packard Enterprise, etc.) and a strict paragraph-opening rule so speaker bios and event summaries do not get misclassified as sponsor copy.
+- **`scripts/patch_manual_fixes.py`**, **`patch_manual_fixes2.py`**, **`patch_manual_fixes3.py`**, **`patch_manual_fixes4.py`**, **`patch_her_waka.py`**, **`patch_final_cleanup.py`**, **`patch_fp_hackathon.py`**, **`patch_fp_extras.py`**, **`patch_fp_readiness.py`** — idempotent, dry-run-first patch scripts that apply the non-heuristic backfills (combined-name sponsors, partner orgs, event detail paragraphs, speaker groups, judges panel, workshop facilitators, Readiness Workshops content, AI Use Cases).
+
+### Schema & UI
+
+- **`types/event.ts`** — `EventSponsorV3` now has an optional `description: string` field. Existing data is untouched; entries without a description render unchanged.
+- **`components/events/event-detail/event-sponsors.tsx`** — when at least one sponsor entry has `description`, a responsive 2-column grid renders below the logo wall with `{name}` as a bold heading and the description as a muted paragraph.
+- **`components/events/event-detail/event-special-sections.tsx`** — earlier in this pass, added a `BulletList` renderer so `type ∈ { topics, agenda, bullets, prizes, judging }` special sections show as marker:`text-brand` disc lists instead of plain paragraphs. Commits `2226dc9`, `407c99c`, `cc0baa7`.
+
+### Data backfills (by event)
+
+| Event | Change |
+|---|---|
+| `shesharp-techweek-envision-the-future` | Restored 4 "Topics to be discussed" bullets as a `topics` special section. Commit `407c99c`. |
+| `shesharp-future-ready` | Rebuilt subtitle, fullDescription, added 4-speaker keynote_speakers group (Nicole Yue Lin, Shruti Sherekar, Amrit Kaur, Zainab Manasawala) plus topics section. Commit `cc0baa7`. |
+| `ai-hackathon-festival-2025` | Added 5 Critical Pathways + Workshop Prep Series; backfilled intro paragraphs ("Auckland University of Technology and SheSharp are delighted…", hackathon resources tagline). Commit `407c99c`, `a4544cc`. |
+| `2023-innovation-unleashed` | Added "What to Expect" topics section + "What you'll learn at this event" tagline. Commit `407c99c`, `a4544cc`. |
+| `code-secure` | Session Highlights (5-bullet `topics` section). Commit `407c99c`. |
+| `f-p-hackathon` | Readiness Workshops (Microsoft + Promptech + AUT full descriptions), Problem and Solution, Feasibility and Impact, Prizes (10), Judging Information; **new six-person judges group** (Nicholas Fourie, Mahsa McCauley, Rik Irons-Mclean, Justin Wood, Yvonne Chan, Alex Mercer); **AI Use Cases** section (8 problem/solution pairs); **Essential Information** section (Azure credits + datasets links); two Microsoft workshop facilitators (Michelle Sandford, Renee Noble). Commits `407c99c`, `a4544cc`. |
+| `thrive-your-career-your-story` | Piki Ake: Rise up Auckland topics; HPE sponsor description. Commits `407c99c`, `a4544cc`. |
+| 2023 & 2024 IWD | Group photos prepended to `photos[0]`. Commit `60d435c`. |
+| `her-waka` (March 2026) | Aligned speaker bios (Nikita Kumari, Meeta Patel, Abe Naus, Paul Kelly, Neekee Reshamwala, Dr. Mahsa McCauley) with old-site wording; appended 3 intro taglines ("Ready to take your next step…", theme line, confidence tagline). Commit `a4544cc`. |
+| `her-waka-april-2026` | Added new RCSA Recruiters group (Abe Naus, Anabella Bianchi, Sri Nanduri); appended April #IAmRemarkable theme + 30-minute recruiter networking paragraph. Commit `a4544cc`. |
+| `her-waka-may-2026` | Added Cybersecurity theme + 45-minute recruiter networking paragraph. Commit `a4544cc`. |
+| `she-sharp-candice-murray-own-your-energy` | Extended Candice's bio with AWS/Spark/AUT workshop history; added Event Flow agenda + calendar/venue line + full Own Your Energy description paragraphs. Commit `a4544cc`. |
+| `google-educator-conference-2023` | Filled bios for 6 Demo Facilitator speakers (Lesieli Oliver, Mehwish Hasan, Nils Reardon, Nischay Gupta, Steve Smith, Claire Wigley); added "Previously known as CS4HS" intro + target audience paragraph. Commit `a4544cc`. |
+| `google-educator-conference-2024` | Added brand-new **Meet the Demo Facilitators** group with 7 speakers (Dr. David Parsons, Dr. Kara Kennedy, Dr. Kathryn MacCallum, Catherine Frost, Dr. Mahsa McCauley, Munireh Rouget, Claire Wigley). Commit `a4544cc`. |
+| `inspire-her-te-whakatipuranga-wahine` | Added 5 partner orgs as "other" sponsors (CARES, IEEE WIE, MYOB, Fonterra, QuiverVision) with descriptions; combined AUT \| Google sponsor now has a description. Commit `a4544cc`. |
+| `iamremarkable` | Aligned Dr. Mahsa McCauley's hosting bio with current Founder/Chair AI Forum/Associate Professor title. Commit `a4544cc`. |
+| `technological-change-workplace-workforce-impacts` | Extended HCLTech description with second paragraph the scraper cut. Commit `a4544cc`. |
+| `2021-iamremarkable` · `2021-international-womens-day` · `2022-ai-enviro-hack` · `2022-break-the-bias` · `2022-mind-your-own-career` · `2022-navigating-the-workplace-as-a-woman` · `2022-shaping-the-future-with-ai` · `2022-women-igniting-tech` · `2022-women-in-security` · `2023-kickstart-your-career-in-tech-with-myob` · `2023-the-buzz-about-banking` · `ai-for-the-environment-hackathon-festival-2024` · `auckland-tech-grand-tour` · `ethnic-advantage-conference` · `fonterra-a-legendairy-career` · `girls-night-out` · `imagine-zone-techweek` · `international-womens-day-2` · `online-quiz-night-celebrating-ada-lovelace-day` · `she-fisher-paykel` · `she-pushpay` · `she-sharp-centrality` · `she-techweek-2017` · `she-with-google-aut` · `the-truths-to-gaming-and-start-up` · `design-thinking` · `2022-she-celebrates` · `2023-international-womens-day` · `2023-kickstart-your-career-in-tech-with-myob` | Sponsor descriptions auto-extracted from old-site HTML (Google, MYOB, AUT, AWS, ANZ, Pushpay, Kiwibank, Centrality, Countdown, Fonterra, Deloitte, Hewlett Packard Enterprise) and/or fullDescription taglines restored. Commit `a4544cc`. |
+
+### Final audit state
+
+```
+$ python scripts/audit_bullet_lists.py
+Summary: 0 event(s) with suspected missing bullet content | 0 item(s) total
+```
+
+Down from 39 events / 206 items at the start of the pass.
+
+---
+
 ## 4. Verification URL checklist
 
 Quick round-trip checklist for the report author. All URLs are relative to `https://she-sharp-zeta.vercel.app/`.
@@ -266,7 +321,18 @@ Quick round-trip checklist for the report author. All URLs are relative to `http
 - [ ] `/resources` → nav submenu includes **Newsletters** and **Impact Reports**.
 - [ ] `/resources/newsletters` — Mailchimp archive + subscribe cards.
 - [ ] `/resources/in-the-press` — no broken diversityworksnz link; entries without URLs are badged as **Press mention**.
-- [ ] `/forgot-password` — submit a valid email; check inbox. (Requires Resend DNS verification for the sender domain.)
+- [ ] `/forgot-password` — submit a valid email; check inbox. Verified 2026-04-25 via Resend CLI + live POST; delivery ID `9f98fd80` delivered to `chanmeng6666@gmail.com`.
+- [ ] `/events/shesharp-techweek-envision-the-future` — four bullets under "Topics to be discussed" render with brand-colored markers.
+- [ ] `/events/shesharp-future-ready` — four keynote speakers (Nicole Yue Lin, Shruti Sherekar, Amrit Kaur, Zainab Manasawala) with photos and bios.
+- [ ] `/events/google-educator-conference-2024` — **Meet the Demo Facilitators** section with 7 speakers including Catherine Frost, Dr. Kathryn MacCallum, Dr. Mahsa McCauley.
+- [ ] `/events/f-p-hackathon` — **Meet the Judges** section with 6 judges (incl. Rik Irons-Mclean and Yvonne Chan); **AI Use Cases** section with 8 problem/solution entries; **Readiness Workshops** section with full workshop descriptions.
+- [ ] `/events/inspire-her-te-whakatipuranga-wahine` — sponsor descriptions visible under the logo wall for CARES, IEEE WIE, MYOB, Fonterra, QuiverVision, and AUT \| Google.
+- [ ] `/events/her-waka` — Abe Naus's bio mentions "Kaitiaki for the Auckland business"; Paul Kelly is listed at Randstad Digital; the description includes "Ready to take your next step into meaningful work?" and the March 2026 theme tagline.
+- [ ] `/events/her-waka-april-2026` — **RCSA Recruiters** speaker group with Abe Naus, Anabella Bianchi, Sri Nanduri; 30-minute recruiter networking paragraph present.
+- [ ] `/events/she-sharp-candice-murray-own-your-energy` — Candice's bio mentions AWS/Spark/AUT workshops; Event Flow + venue calendar line visible in the body.
+- [ ] `/events/2022-break-the-bias` and `/events/2022-women-in-security` — AWS sponsor card shows the "Since 2006, Amazon Web Services…" company description.
+- [ ] `/events/2023-innovation-unleashed` — Deloitte sponsor description visible; "What you'll learn at this event" intro paragraph present.
+- [ ] `/events/2021-iamremarkable` — Google sponsor description visible under the logo.
 
 ---
 
@@ -274,7 +340,7 @@ Quick round-trip checklist for the report author. All URLs are relative to `http
 
 | Item | Owner action |
 |---|---|
-| Password reset email delivery | Verify in Resend that `shesharp.org.nz` has SPF + DKIM records published and the sender address is verified. Test with a production email account. The code path is correct (commit `95b7350`); delivery depends on DNS / Resend configuration only. |
+| ~~Password reset email delivery~~ | ✅ Verified end-to-end on 2026-04-25 via Resend CLI (`resend emails send --to chanmeng6666@gmail.com`) and a live production `POST /api/auth/forgot-password` call. Delivery ID `9f98fd80`. `shesharp.org.nz` is verified in Resend with SPF and DKIM. No outstanding action. |
 | Dashboard perceived load time | The `/api/dashboard/overview` endpoint now uses `Promise.all`. Validate subjectively on production with Chrome DevTools Network tab; the endpoint's server time should drop noticeably. |
 
 ---
@@ -302,6 +368,11 @@ A helper script, `scripts/extract_sponsors.py`, was added to audit old-site page
 | `899d7e7` | `perf(dashboard): parallelize overview queries with Promise.all` |
 | `6ad7ea0` | `chore(events): backfill content, speakers, photos, and sponsor assets` |
 | `60d435c` | `chore(events): surface group photos and add Her Waka facilitator` |
+| `8528795` | `docs(development): add QA test report fix traceability matrix` |
+| `2226dc9` | `feat(events): render topics/agenda/prizes sections as bullet lists` |
+| `407c99c` | `feat(events): restore dropped bullet lists across 5 event pages` |
+| `cc0baa7` | `fix(events): backfill SheSharp Future Ready and harden bullet audit` |
+| `a4544cc` | `feat(events): backfill sponsor descriptions and speaker bios across all events` |
 
 All commits follow Conventional Commits. Each includes a body describing the change and co-authorship metadata. Diffs can be inspected via `git show <sha>` or on GitHub.
 
@@ -350,6 +421,10 @@ Key new or modified files grouped by concern:
 
 **Scripts & assets**
 - `scripts/extract_sponsors.py` *(new)*
+- `scripts/audit_bullet_lists.py` *(new, 2026-04-25)* — repo-wide bullet-list coverage audit
+- `scripts/patch_sponsor_descriptions.py` *(new, 2026-04-25)* — heuristic sponsor bio extractor
+- `scripts/patch_manual_fixes.py` · `patch_manual_fixes2.py` · `patch_manual_fixes3.py` · `patch_manual_fixes4.py` *(new, 2026-04-25)* — curated backfill scripts
+- `scripts/patch_her_waka.py` · `patch_final_cleanup.py` · `patch_fp_hackathon.py` · `patch_fp_extras.py` · `patch_fp_readiness.py` *(new, 2026-04-25)* — event-specific patches
 - `public/img/scraped/photos/*` (133 new event photos)
 - `public/img/scraped/speakers/google-educator-conference-2023/*` (6 headshots)
 - `public/img/scraped/sponsors/*` (AUT + AI Forum NZ logos)
