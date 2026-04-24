@@ -5,9 +5,9 @@ import { TeamSection } from "@/components/about/team-section";
 import { TimelineSection } from "@/components/about/timeline-section";
 import { useScrollToHash } from "@/hooks/use-scroll-to-hash";
 import { FounderQuote } from "@/components/about/founder-quote";
+import { OurJourneyVideo } from "@/components/about/our-journey-video";
 
 export default function AboutPage() {
-  // 使用自定义 hook 处理 hash 滚动
   useScrollToHash();
 
   return (
@@ -15,7 +15,8 @@ export default function AboutPage() {
 
       <SmoothScrollHero />
       <FounderQuote />
-      
+      <OurJourneyVideo />
+
       <div id="timeline">
         <TimelineSection />
       </div>
