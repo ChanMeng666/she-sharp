@@ -67,6 +67,22 @@ NAV_CHROME = {
     # Event recommendation card titles that repeat across every event
     "her waka may 2026", "her waka june 2026", "her waka april 2026",
     "her waka march 2026", "her waka 2026",
+    # FAQ accordion content on event pages leaks in as <li>; always skip.
+    "frequently asked questions",
+}
+
+# Heading text that signals the containing DOM block is shared chrome
+# (e.g. upcoming-event cards, FAQ accordions) and therefore the items it
+# introduces should be ignored rather than treated as missing bullets.
+CHROME_HEADINGS = {
+    "frequently asked questions",
+    "come to our next event",
+    "upcoming event",
+    "next event",
+    "more events",
+    "a taste of the event",
+    "event poster",
+    "event gallery",
 }
 
 # Matches bare "Month DD, YYYY" / "Monday, DD Month YYYY" event-date strings.
@@ -99,6 +115,16 @@ BOILERPLATE_FRAGMENTS = [
     "available datasets and technology resources",
     "register here for this workshop",
     "session creates a safe place to play",
+    # Boilerplate CTA card text on every event page.
+    "find out more about this event",
+    # Duplicated speaker-card bios on old site (same 22-word intro reused
+    # across 3+ headings so the scraper flags them for every one).
+    "as a user experience designer in the medical device industry",
+    # Paul Kelly's original title that the scraper attached to the wrong
+    # heading card (DOM proximity artifact on old site).
+    "business manager and principal consultant absolut",
+    # Old-site Geri Harris bio opener copied under adjacent speaker cards.
+    "geri harris is a senior lecturer in the aut business school",
 ]
 
 
@@ -148,7 +174,10 @@ def is_hidden(el) -> bool:
 def normalize(text: str) -> str:
     text = unicodedata.normalize("NFKC", text)
     text = re.sub(r"\s+", " ", text).strip().lower()
-    text = re.sub(r"[^a-z0-9 ]", "", text)
+    # Replace punctuation with space so "long-term" matches "long term" and
+    # em-dashes between words collapse cleanly, then re-collapse whitespace.
+    text = re.sub(r"[^a-z0-9 ]", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
     return text
 
 
@@ -189,6 +218,10 @@ def extract_visible_list_items(html: str) -> list[dict]:
         if len(text.split()) < 3:
             return
         if any(frag in n for frag in BOILERPLATE_FRAGMENTS):
+            return
+        # Skip items whose nearest heading marks them as shared template
+        # chrome (FAQ accordions, upcoming-event cards, gallery tiles).
+        if heading and normalize(heading) in CHROME_HEADINGS:
             return
         # Skip bare event dates — they are already present in event.date.
         if DATE_REGEX.match(text):
@@ -267,6 +300,11 @@ def collect_event_text(event: dict) -> str:
     for o in dp.get("organizers") or []:
         for fld in ("name", "title", "company", "bio"):
             pieces.append(o.get(fld) or "")
+    sponsors = dp.get("sponsors") or {}
+    for key in ("main", "other"):
+        for sp in sponsors.get(key) or []:
+            for fld in ("name", "description"):
+                pieces.append(sp.get(fld) or "")
     # Normalize the haystack the same way we normalize <li> text so that
     # punctuation differences (e.g. "People:" vs "people") don't hide a match.
     return normalize(" ".join(pieces))
@@ -331,11 +369,15 @@ def audit_events(target_slugs: list[str] | None = None) -> int:
         events_with_gaps += 1
         total_missing += len(missing)
         print(f"\n=== {slug} — {len(missing)} missing bullet(s) ===")
-        for it in missing[:15]:
+        # When a specific slug is passed, dump the full list; otherwise cap
+        # the output at the first 15 items per event.
+        cap = None if target_slugs else 15
+        shown = missing if cap is None else missing[:cap]
+        for it in shown:
             head = it["heading"] or "?"
             print(f"  [{head}] {it['text'][:180]}")
-        if len(missing) > 15:
-            print(f"  ... and {len(missing) - 15} more")
+        if cap is not None and len(missing) > cap:
+            print(f"  ... and {len(missing) - cap} more")
 
     print(
         f"\nSummary: {events_with_gaps} event(s) with suspected missing bullet "
