@@ -5,6 +5,7 @@ export { EventSpeakers } from './event-speakers';
 export { EventSidebarPanel } from './event-sidebar-panel';
 export { EventCountdown } from './event-countdown';
 export { EventPhotos } from './event-photos';
+export { EventFeaturedPhoto } from './event-featured-photo';
 export { EventSponsorship } from './event-sponsorship';
 export { EventSponsors } from './event-sponsors';
 export { EventSpecialSections } from './event-special-sections';

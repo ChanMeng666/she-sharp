@@ -1,10 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { ArrowRight, MapPin, Clock, Video, Users } from "lucide-react";
 import { InflectedCard } from "@/components/ui/inflected-card";
 import { EventV3 } from "@/types/event";
-import { getEventDisplayTime, isPastEvent, parseDateString } from "@/lib/data/events";
+import { getEventDisplayTime, parseDateString } from "@/lib/data/events";
 import { cn } from "@/lib/utils";
 import {
   Tooltip,
@@ -15,44 +15,36 @@ import {
 interface EventInflectedCardProps {
   event: EventV3;
   className?: string;
-  index?: number;
 }
 
 export function EventInflectedCard({
   event,
   className,
-  index = 0,
 }: EventInflectedCardProps) {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push(`/events/${event.slug}`);
-  };
-
-  // Use event coverImage, fallback to She Sharp logo if not available
+  const eventHref = `/events/${event.slug}`;
   const displayImage = event.coverImage?.url || "/logos/she-sharp-logo.svg";
 
-  // Format date parts for prominent display
   const eventDate = parseDateString(event.date);
   const dayOfWeek = eventDate.toLocaleDateString("en-US", { weekday: "long" });
   const month = eventDate.toLocaleDateString("en-US", { month: "short" });
   const day = eventDate.getDate();
+  const year = eventDate.getFullYear();
   const displayTime = getEventDisplayTime(event);
 
-  // Check if event is online
   const location = event.detailPageData.location;
   const isOnline = location.format === "online";
-
-  // Location string - show venue for in-person, "Online" for online events
   const locationStr = isOnline
     ? "Online"
     : location.venueName || location.city || "";
 
-  const isPast = isPastEvent(event);
-
   return (
-    <div
-      className={cn("relative flex flex-col h-full min-h-[360px] sm:min-h-[400px] md:min-h-[480px]", className)}
+    <Link
+      href={eventHref}
+      aria-label={event.title}
+      className={cn(
+        "relative flex flex-col h-full min-h-[360px] sm:min-h-[400px] md:min-h-[480px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 rounded-[30px]",
+        className
+      )}
     >
       <div className="flex-1 min-h-0">
         <InflectedCard
@@ -62,7 +54,6 @@ export function EventInflectedCard({
           description={event.shortDescription.slice(0, 120) + "..."}
           tags={[]}
           parentBackgroundColor="var(--color-background)"
-          onClick={handleClick}
           cardRounding={30}
           fontSizes={{
             title: "1.25rem",
@@ -98,7 +89,9 @@ export function EventInflectedCard({
             <span className="uppercase font-medium mr-1">{month}</span>
             {day}
           </p>
-          <p className="text-base text-muted-foreground">{dayOfWeek}</p>
+          <p className="text-base text-muted-foreground">
+            {dayOfWeek}, {year}
+          </p>
         </div>
 
         {/* Time and location */}
@@ -136,6 +129,6 @@ export function EventInflectedCard({
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

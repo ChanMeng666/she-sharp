@@ -147,6 +147,11 @@ export interface EventSpeakersV3 {
   panel_speakers?: EventSpeakerGroup;
   guest_speakers?: EventSpeakerGroup;
   panel_facilitators?: EventSpeakerGroup;
+  hosts?: EventSpeakerGroup;
+  mentors?: EventSpeakerGroup;
+  panelists?: EventSpeakerGroup;
+  workshop_facilitators?: EventSpeakerGroup;
+  readiness_workshop_facilitators?: EventSpeakerGroup;
 }
 
 // Sponsor in V3 format

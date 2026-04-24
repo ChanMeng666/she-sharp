@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { EventV3 } from "@/types/event";
 import {
   formatEventDate,
+  hasPhotos,
   isFutureDate,
   isPastEvent,
 } from "@/lib/data/events";
@@ -90,6 +91,17 @@ export function EventSidebarPanel({
       window.open(event.detailPageData.galleryUrl, "_blank");
     }
   };
+
+  const handleViewPhotos = () => {
+    const el = document.getElementById("event-photos");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const hasLocalPhotos = hasPhotos(event);
+  const showViewPhotosFallback =
+    isPast && hasLocalPhotos && !event.detailPageData.galleryUrl;
 
   const handleCopyAddress = async () => {
     const fullAddress = [location.venueName, location.address, location.city]
@@ -249,6 +261,20 @@ export function EventSidebarPanel({
                 }
               >
                 {getButtonText()}
+              </Button>
+            </div>
+          )}
+
+          {/* Fallback CTA for past events that have local photos but no external gallery */}
+          {showViewPhotosFallback && (
+            <div className="space-y-4">
+              <Button
+                size="lg"
+                variant="brand"
+                className="w-full"
+                onClick={handleViewPhotos}
+              >
+                View Photos
               </Button>
             </div>
           )}
