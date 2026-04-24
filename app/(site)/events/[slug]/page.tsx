@@ -19,6 +19,7 @@ import {
   EventSponsorship,
   EventSponsors,
   EventSpecialSections,
+  EventFeaturedPhoto,
 } from "@/components/events/event-detail";
 import { EventCard } from "@/components/events/event-card";
 import { Container } from "@/components/layout/container";
@@ -116,6 +117,9 @@ export default async function EventPage({ params }: EventPageProps) {
                 </p>
               )}
 
+              {/* Featured group photo - displayed prominently before description */}
+              <EventFeaturedPhoto event={event} />
+
               <EventDescription event={event} />
 
               {/* Special Sections (workshop prep, videos, etc.) */}
@@ -124,15 +128,6 @@ export default async function EventPage({ params }: EventPageProps) {
                   sections={event.detailPageData.specialSections}
                 />
               )}
-
-              <div className="w-full md:pr-6 lg:pr-8">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={event.coverImage.url}
-                  alt={event.coverImage.alt || event.title}
-                  className="w-full h-auto"
-                />
-              </div>
             </div>
 
             {/* Sidebar - Right Column */}

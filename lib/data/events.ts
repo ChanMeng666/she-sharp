@@ -349,7 +349,7 @@ export function formatEventDate(
   const date = parseDateString(event.date);
   const options: Intl.DateTimeFormatOptions =
     style === "short"
-      ? { month: "short", day: "numeric" }
+      ? { month: "short", day: "numeric", year: "numeric" }
       : style === "full"
         ? { weekday: "long", year: "numeric", month: "long", day: "numeric" }
         : { weekday: "short", month: "short", day: "numeric", year: "numeric" };
@@ -511,7 +511,12 @@ export function hasAnySpeakers(event: EventV3): boolean {
     (speakers.keynote_speakers?.speakers?.length ?? 0) > 0 ||
     (speakers.panel_speakers?.speakers?.length ?? 0) > 0 ||
     (speakers.guest_speakers?.speakers?.length ?? 0) > 0 ||
-    (speakers.panel_facilitators?.speakers?.length ?? 0) > 0
+    (speakers.panel_facilitators?.speakers?.length ?? 0) > 0 ||
+    (speakers.hosts?.speakers?.length ?? 0) > 0 ||
+    (speakers.mentors?.speakers?.length ?? 0) > 0 ||
+    (speakers.panelists?.speakers?.length ?? 0) > 0 ||
+    (speakers.workshop_facilitators?.speakers?.length ?? 0) > 0 ||
+    (speakers.readiness_workshop_facilitators?.speakers?.length ?? 0) > 0
   );
 }
 

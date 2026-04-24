@@ -15,25 +15,32 @@ export function EventPhotos({ event, className }: EventPhotosProps) {
     return null;
   }
 
-  const photos = event.detailPageData.photos;
+  // Skip photos[0] because EventFeaturedPhoto already shows it above the description
+  const photos = event.detailPageData.photos.slice(1);
+
+  if (photos.length === 0 && !event.detailPageData.galleryUrl) {
+    return null;
+  }
 
   return (
     <section id="event-photos" className={cn("space-y-8 py-12 sm:py-16 md:py-20 lg:py-24", className)}>
       <h2 className="text-display-sm uppercase text-center mb-6 sm:mb-8 md:mb-12">
         A taste of the Event
       </h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
-        {photos.map((photo, index) => (
-          <div key={index} className="aspect-square overflow-hidden bg-muted">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={photo.url}
-              alt={photo.alt || `${event.title} photo ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        ))}
-      </div>
+      {photos.length > 0 && (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
+          {photos.map((photo, index) => (
+            <div key={index} className="aspect-square overflow-hidden bg-muted">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={photo.url}
+                alt={photo.alt || `${event.title} photo ${index + 2}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      )}
       {event.detailPageData.galleryUrl && (
         <div className="flex justify-center mt-6 sm:mt-8 md:mt-12">
           <Button
