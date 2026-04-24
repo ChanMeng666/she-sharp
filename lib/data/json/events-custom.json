@@ -560,6 +560,19 @@
                 "linkedin": "https://www.linkedin.com/in/neekee-r-270a9185/"
               }
             ]
+          },
+          "hosts": {
+            "heading": "Facilitator",
+            "speakers": [
+              {
+                "name": "Dr. Mahsa McCauley",
+                "title": "Associate Professor at AUT, Chair AI Forum, Founder & Director of She Sharp",
+                "company": "AUT",
+                "bio": "Dr. Mahsa McCauley (Mohaghegh) founded She Sharp Charitable Trust. She is Associate Professor at AUT and Chair of the AI Forum New Zealand.",
+                "image": "/img/scraped/photos/69ae758e75cb901b6270b2d2_LSS02450-EDITWEBRES_Original_ac1bbcde.jpg",
+                "linkedin": ""
+              }
+            ]
           }
         },
         "organizers": [],
