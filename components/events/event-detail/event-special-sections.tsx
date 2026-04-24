@@ -2,7 +2,7 @@
 
 import { EventSpecialSection } from "@/types/event";
 import { cn } from "@/lib/utils";
-import { ExternalLink, Video, FileText, Lightbulb, Link2 } from "lucide-react";
+import { ExternalLink, Video, FileText, Lightbulb, Link2, ListChecks } from "lucide-react";
 
 interface EventSpecialSectionsProps {
   sections: EventSpecialSection[];
@@ -60,9 +60,27 @@ function getIconForType(type: string) {
     case "related_links":
     case "links":
       return <Link2 className="w-5 h-5 text-brand" />;
+    case "topics":
+    case "agenda":
+    case "bullets":
+    case "prizes":
+    case "judging":
+      return <ListChecks className="w-5 h-5 text-brand" />;
     default:
       return <FileText className="w-5 h-5 text-brand" />;
   }
+}
+
+function BulletList({ items }: { items: string[] }) {
+  return (
+    <ul className="space-y-2 list-disc pl-5 marker:text-brand">
+      {items.map((item, i) => (
+        <li key={i} className="text-muted-foreground pl-1">
+          {item}
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 function SpecialSectionContent({ content }: { content: string }) {
@@ -187,6 +205,12 @@ export function EventSpecialSections({
           sectionType === "related-links" ||
           sectionType === "related_links" ||
           sectionType === "links";
+        const isBulletList =
+          sectionType === "topics" ||
+          sectionType === "agenda" ||
+          sectionType === "bullets" ||
+          sectionType === "prizes" ||
+          sectionType === "judging";
 
         return (
           <div
@@ -203,6 +227,10 @@ export function EventSpecialSections({
               <YouTubeEmbeds items={section.content} />
             ) : isRelatedLinks ? (
               <RelatedLinks items={section.content} />
+            ) : isBulletList ? (
+              <BulletList
+                items={section.content.filter((item) => item !== section.title)}
+              />
             ) : (
               <div className="space-y-4">
                 {section.content.map((item, i) => {

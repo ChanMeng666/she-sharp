@@ -1298,6 +1298,17 @@
         },
         "specialSections": [
           {
+            "type": "topics",
+            "title": "The 5 Critical Pathways",
+            "content": [
+              "People: End poverty and hunger in all forms",
+              "Planet: Protect from degradation through sustainable practices",
+              "Prosperity: Ensure prosperous and fulfilling lives",
+              "Peace: Foster peaceful, just and inclusive societies",
+              "Partnership: Mobilise resources for sustainable development"
+            ]
+          },
+          {
             "type": "agenda",
             "title": "Workshop Prep Series",
             "content": [
@@ -8414,7 +8425,18 @@
           "main": [],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "topics",
+            "title": "Topics to be discussed",
+            "content": [
+              "How do we accelerate innovation and find transformative solutions to critical issues faced by organizations and navigate the evolving industry landscape and the new normal?",
+              "How do we harness the power of cutting-edge emerging technologies for impact and agility?",
+              "What do we need to do to bring about more diversity within the tech sector (a diverse workforce, environment, culture, ways of working, thinking)?",
+              "How can New Zealanders leverage our unique advantages to unleash our full potential?"
+            ]
+          }
+        ],
         "photos": [
           {
             "url": "/img/scraped/photos/6502ac694a311a648c74804e_Techweek_b545500e.jpg",
