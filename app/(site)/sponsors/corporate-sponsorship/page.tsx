@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { SponsorshipPricing } from "@/components/ui/pricing-sponsorship";
+import { SponsorInquiryForm } from "@/components/sponsors/sponsor-inquiry-form";
 
 export const metadata: Metadata = {
   title: "Corporate Sponsorship | She Sharp",
@@ -8,5 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default function CorporateSponsorshipPage() {
-  return <SponsorshipPricing />;
+  return (
+    <>
+      <SponsorshipPricing />
+      <SponsorInquiryForm />
+    </>
+  );
 }
