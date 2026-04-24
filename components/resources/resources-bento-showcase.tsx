@@ -23,7 +23,11 @@ export function ResourcesBentoShowcase() {
       // Podcast (links to /resources/podcasts)
       topRight={<PodcastPreviewCard show={SPOTIFY_SHOW} />}
       // Impact Reports
-      bottomLeft={<ImpactReportsCard reports={impactReports} />}
+      bottomLeft={
+        <div id="impact-reports" className="scroll-mt-28 h-full w-full">
+          <ImpactReportsCard reports={impactReports} />
+        </div>
+      }
       // In the Press (links to /resources/in-the-press)
       bottomRight={<PressHighlightCard />}
     />
