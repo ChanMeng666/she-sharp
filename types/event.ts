@@ -158,6 +158,7 @@ export interface EventSpeakersV3 {
 export interface EventSponsorV3 {
   name: string;
   logo: string;
+  description?: string;
 }
 
 // Sponsors grouped by type
