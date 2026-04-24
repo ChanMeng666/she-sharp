@@ -26,7 +26,7 @@ export function PressGrid() {
             const isTall = index === 1 || index === 4;
 
             const content = (
-              <Card className={`relative h-full w-full overflow-hidden border-0 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 card-sm bg-black ${isTall ? "min-h-[280px] md:min-h-0" : "aspect-[3/2] sm:aspect-[4/3]"}`}>
+              <Card className={`relative h-full w-full overflow-hidden border-0 shadow-lg card-sm bg-black ${item.externalLink ? "transition-all duration-300 hover:shadow-xl hover:-translate-y-1" : ""} ${isTall ? "min-h-[280px] md:min-h-0" : "aspect-[3/2] sm:aspect-[4/3]"}`}>
                 {/* Background image */}
                 <img
                   src={item.coverImage}
@@ -37,13 +37,17 @@ export function PressGrid() {
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
-                {/* External link badge */}
-                {item.externalLink && (
-                  <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/85 px-3 py-1 text-xs font-medium text-gray-900">
-                    <ExternalLink className="h-3.5 w-3.5" />
-                    <span>Read article</span>
-                  </div>
-                )}
+                {/* External link badge or plain "Press mention" tag */}
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/85 px-3 py-1 text-xs font-medium text-gray-900">
+                  {item.externalLink ? (
+                    <>
+                      <ExternalLink className="h-3.5 w-3.5" />
+                      <span>Read article</span>
+                    </>
+                  ) : (
+                    <span>Press mention</span>
+                  )}
+                </div>
 
                 {/* Content */}
                 <div className="absolute inset-x-4 bottom-4 sm:inset-x-5 sm:bottom-5 md:inset-x-6 md:bottom-6 z-10">
