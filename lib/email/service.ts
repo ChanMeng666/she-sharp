@@ -450,6 +450,69 @@ If you have any questions, feel free to reach out. We look forward to welcoming 
 }
 
 /**
+ * Sends a reminder email to an approved mentee who has not yet completed
+ * registration. Mirrors sendMentorReminderEmail but with mentee-specific copy.
+ */
+export async function sendMenteeReminderEmail(
+  email: string,
+  details: {
+    invitationCode: string;
+    expiresAt?: Date;
+    menteeName?: string;
+  }
+) {
+  const baseUrl = getBaseUrl();
+  const signUpUrl = `${baseUrl}/sign-up?code=${details.invitationCode}`;
+  const firstName = details.menteeName?.split(' ')[0] || '';
+  const greeting = firstName ? `Hi ${firstName},` : 'Hi,';
+
+  const html = brandedEmailLayout({
+    title: 'Complete Your Mentee Registration',
+    preheader: 'Your invitation code is ready — it only takes a few minutes to get started.',
+    bodyHtml: `
+      ${infoBox('<strong>Registration Reminder</strong>')}
+      <p>${greeting}</p>
+      <p>We're excited to welcome you to the She Sharp Mentorship Program! Your application has been approved, but we noticed you haven't completed your registration yet.</p>
+
+      ${codeBox(details.invitationCode, 'Your Invitation Code:')}
+
+      <p>Click the button below to finish setting up your account and get matched with a mentor — it only takes a few minutes:</p>
+      ${brandButton('Complete Registration', signUpUrl)}
+
+      <p style="color: #666; font-size: 14px;">Or copy and paste this link into your browser: ${signUpUrl}</p>
+      ${details.expiresAt ? `<p style="color: #999; font-size: 12px;">This code expires on ${new Date(details.expiresAt).toLocaleDateString('en-NZ')}.</p>` : ''}
+      <p>If you have any questions or no longer wish to participate, please reply to this email and let us know. We'd love to have you join the community!</p>
+    `,
+  });
+
+  const text = `
+Friendly Reminder: Complete Your She Sharp Mentee Registration
+
+${greeting}
+
+We're excited to welcome you to the She Sharp Mentorship Program! Your application has been approved, but we noticed you haven't completed your registration yet.
+
+YOUR INVITATION CODE: ${details.invitationCode}
+
+Complete your registration at:
+${signUpUrl}
+
+${details.expiresAt ? `This code expires on ${new Date(details.expiresAt).toLocaleDateString('en-NZ')}.` : ''}
+
+If you have any questions or no longer wish to participate, please reply to this email and let us know.
+
+© ${new Date().getFullYear()} She Sharp. Empowering women in STEM.
+  `;
+
+  return sendEmail({
+    to: email,
+    subject: 'Friendly Reminder: Complete Your She Sharp Mentee Registration',
+    html,
+    text,
+  });
+}
+
+/**
  * Send a URL update notification to existing users.
  * Used when the deployment domain changes.
  */
