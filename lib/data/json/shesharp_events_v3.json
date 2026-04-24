@@ -933,7 +933,8 @@
           "main": [
             {
               "name": "Hewlett Packard Enterprise (HPE)",
-              "logo": "/img/scraped/sponsors/685be8a935b7d87e8784ee82_color-logo_1155892e.png"
+              "logo": "/img/scraped/sponsors/685be8a935b7d87e8784ee82_color-logo_1155892e.png",
+              "description": "Hewlett Packard Enterprise is a global edge-to-cloud company that helps organisations accelerate outcomes by unlocking value from all their data, everywhere. HPE delivers unique, open and intelligent technology solutions across edge, hybrid cloud and AI, backed by a proven track record in enterprise IT."
             }
           ],
           "other": []
@@ -1141,7 +1142,11 @@
           "AI Forum is hosting the 2025 AI Hackathon across Aotearoa.",
           "Who can join? Anyone who wants to solve real-world problems across 5 critical pathways:",
           "With only 5 years left to achieve the 2030 SDGs and 84% of targets off-track, the AI Hackathon brings together diverse minds to create technological solutions for our most pressing global challenges. You'll learn new skills, create connections, make an impact and network with mentors in our safe space to play and promote AI for Good.",
-          "Each hackathon team will pitch their solution to a judging panel and regional winners will be announced. Our national judging panel will then select 4 finalists to pitch their idea at the 2025 Aotearoa AI Summit, 18 September in Auckland, where the audience votes for the national winner."
+          "Each hackathon team will pitch their solution to a judging panel and regional winners will be announced. Our national judging panel will then select 4 finalists to pitch their idea at the 2025 Aotearoa AI Summit, 18 September in Auckland, where the audience votes for the national winner.",
+          "Auckland University of Technology (AUT) and SheSharp are delighted to be hosting this event this year, and we invite you to join us and solve real-world environmental problems with AI.",
+          "Registrations are open now. To register click on \"Register for Event\" and select date (15-16 August, 2025) and location (Auckland — AUT and SheSharp).",
+          "Everything in one place to power your hackathon journey. Find essential info on logistics, training materials, datasets, and mentorship — all organized for quick access.",
+          "Join us for \"Become hack-fit\" — your first step to hackathon readiness. Mark the dates for the rest of the series: ➡️ 22 July — Tell the Story with AI; ➡️ 24 July — Design Thinking with AI; ➡️ 29 July — Accessible Futures; ➡️ 31 July — Agentic Frameworks. Join us in preparing to solve problems that really matter."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -1231,7 +1236,7 @@
               },
               {
                 "name": "Alan Dent",
-                "title": "",
+                "title": "Director - Auckland AI & Emerging Technology",
                 "company": "",
                 "bio": "Alan has been working in higher education and IT for many years. He built his first web page the same year the Power Macintosh launched and started his career migrating databases from hierarchical to relational models—helping him dodge Y2K chaos. Since then, he’s helped embed every major tech shift into higher education. His roles have included head of IT, manager across Student & Research Administration, consultant, (briefly) University Librarian, and now Director of Data, Technology Risk & Policy. He’s also domain lead for the Higher Education Data Reference Model, adopted by thousands of universities worldwide. He’s especially excited about how AI can boost his average Python skills to clean up messy data.",
                 "image": "/img/scraped/speakers/689c66e3e624d2e6868f26cb_WEB2_02_Alan_Dent_66756313.jpg",
@@ -1548,7 +1553,8 @@
         "fullDescription": [
           "She Sharp will be at theEthnic Advantage Conference 2025, a powerful one-day event bringing together over 300 ethnic community leaders, service providers, faith leaders, government agencies, and more to explore the role of ethnic communities in social cohesion and resilience.",
           "Visit our She Sharp stall during registration and break times to learn more about our mission to empower women in STEM, upcoming opportunities, and how you can get involved.",
-          "We look forward to connecting with you!"
+          "We look forward to connecting with you!",
+          "She Sharp will be at the Ethnic Advantage Conference 2025, a powerful one-day event bringing together over 300 ethnic community leaders, service providers, faith leaders, government representatives and advocates committed to a stronger, more inclusive Aotearoa."
         ],
         "speakers": {},
         "organizers": [],
@@ -1794,9 +1800,9 @@
             "speakers": [
               {
                 "name": "Dr. Mahsa McCauley (Mohaghegh)",
-                "title": "Founder of She Sharp and Senior lecturer at AUT",
+                "title": "Associate Professor at AUT and Chair AI Forum",
                 "company": "",
-                "bio": "Dr. Mahsa McCauley is the founder and the director of She Sharp , an Associate Professor in the School of Computer, Engineering and Mathematical Sciences at Auckland University of Technology and Chair of the AI Forum New Zealand. An internationally recognised leader in AI and machine learning, Dr. McCauley also serves on the boards of NZTech, EdTechNZ and the AI Research Association, where she contributes to shaping the future of AI policy and research in New Zealand. Internationally, she has engaged as a Fulbright Scholar at North Carolina A&T State University, applying AI to agriculture and cybersecurity challenges.",
+                "bio": "Dr. Mahsa McCauley is Founder and Director of She Sharp Charitable Trust. As Chair of AI Forum NZ and Associate Professor of AI at AUT, she researches AI, machine learning, IoT and data science, and leads an academic programme to inspire and grow the next generation of women in technology across Aotearoa New Zealand.",
                 "image": "/img/scraped/speakers/66dea1a04e2eb7c1275a9b08_Mahsa_fe511a05.png",
                 "linkedin": "https://nz.linkedin.com/in/mahsamohaghegh"
               }
@@ -2045,7 +2051,9 @@
         "fullDescription": [
           "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
           "The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.",
-          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms."
+          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.",
+          "Previously known as CS4HS, the Google Educator Conference is back for 2024!",
+          "The audience is High School Teachers who teach Computer Science, Digital Technologies, STEM or related subjects; teachers who are looking to refresh or add on to their skills; plus ICT curriculum leaders, primary school teachers and school librarians."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -2118,6 +2126,67 @@
                 "company": "",
                 "bio": "Paul Savage, Senior Product Marketer at Kami, brings a unique blend of educational expertise and product innovation to the workshop. With a background as a former adult education teacher and over 20 years of global product marketing experience. His mission is to bring educators tools that break down barriers in education, ensuring equitable learning opportunities for all students. Paul’s passion for blending pedagogy with technology drives his commitment to transforming classrooms into engaging, supportive environments for students of all backgrounds.",
                 "image": "/img/scraped/speakers/670c9279065093d7fd6b92ec_Paul_Savage_Workshop_Spea_eb2624c7.png",
+                "linkedin": ""
+              }
+            ]
+          },
+          "guest_speakers": {
+            "heading": "Meet the Demo Facilitators",
+            "speakers": [
+              {
+                "name": "Dr. David Parsons",
+                "title": "Research Director, academyEX",
+                "company": "academyEX",
+                "bio": "David Parsons is the Research Director at academyEX and Adjunct Professor at the University of Canterbury. His experience includes academic roles at Southampton Solent University in the UK and Massey University in New Zealand, and senior professional roles in the international software industry. He holds a PhD in Information Technology and has research interests in the role of AI and digital technologies in education, agile and lean thinking, curriculum design and contemporary software development. He has produced over 200 publications, including several books on software development and education.",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Dr. Kara Kennedy",
+                "title": "Principal - AI Literacy Institute",
+                "company": "AI Literacy Institute",
+                "bio": "Kara Kennedy, PhD, is a scholar, author and educator in the areas of digital and AI literacy and science fiction. She launched the AI Literacy Institute for resources and guidance on Generative AI topics, and her AI guides have been shared and translated by educators around the world. She has presented on digital and AI literacy at conferences in the US, Australia and NZ and published journal articles on digital and information literacy and on the gender gap in Wikipedia.",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Dr. Kathryn MacCallum",
+                "title": "Associate Professor, University of Canterbury",
+                "company": "University of Canterbury",
+                "bio": "Kathryn MacCallum is an Associate Professor of Digital Education Futures at the University of Canterbury. As Director of the Digital Education Futures Lab, she leads a community of researchers exploring digital technologies in education across all contexts, from kindergarten to tertiary education. Kathryn's research focuses on the role and impact of technology in education, particularly how emerging technologies like AI can support the development of digital literacies and how this shifts educational practices and norms.",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Catherine Frost",
+                "title": "Lead Writer Technology, Ministry of Education",
+                "company": "Ministry of Education",
+                "bio": "Catherine is currently Lead Writer in the Technology learning area in the Ministry of Education for the curriculum refresh Te Mātaiaho. Teaching across all sectors — first in the 1990s in the UK and since 2004 in Aotearoa New Zealand — Catherine has almost 30 years' experience in Technology education, leadership, strategy and curriculum development. She is passionate about curriculum and the potential of emerging technologies to transform learning.",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Dr. Mahsa McCauley (Mohaghegh)",
+                "title": "Associate Professor at AUT and Chair AI Forum",
+                "company": "She Sharp / AUT / AI Forum NZ",
+                "bio": "Dr. Mahsa McCauley is Founder and Director of She Sharp Charitable Trust. As Chair of AI Forum NZ and Associate Professor of AI at AUT, she researches AI, machine learning, IoT and cybersecurity. She serves on boards of NZTech, EdTechNZ and World Summit Awards, advancing AI strategy, education and SDG projects.",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Munireh Rouget",
+                "title": "Deputy Chair - TENZ Council",
+                "company": "TENZ Council / Fraser High School",
+                "bio": "Munireh serves as the Deputy Chair on the TENZ council and is Poutakawaenga mō te Pūtake Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle. She earned her Master's in Computer Sciences from Université Paul Sabatier in France and began her career as a Software Engineer, crafting e-commerce websites for major international companies. In 2021 she made the exciting decision to become a teacher, aiming to enhance diversity and inclusion in Computer Sciences and Digital Technologies. Now, as the Leader of Learning for Digital Technology at Fraser High School, she strives to empower learners.",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Claire Wigley",
+                "title": "Teacher at Spotswood College New Plymouth",
+                "company": "Spotswood College",
+                "bio": "Claire is a dedicated teacher at Spotswood College in New Plymouth, focused on teaching 21st-century skills. With a background in textiles technology, she has expanded her expertise to encompass various areas of the Technology Curriculum, from cooking to coding and laser cutting. As an Inquiry Specialist teacher, Claire integrates Design Thinking into her lessons and in 2023 took on the role of council member at TENZ.",
+                "image": "",
                 "linkedin": ""
               }
             ]
@@ -2821,7 +2890,8 @@
           "This year, the AI Hackathon festival will be expanding on the problems to solve beyond the five key environmental outcomes (AI for the Environment Report 2022) to include Kaitiakitanga, embracing our connection to the land and surrounding natural environment fulfilling our roles as custodians.",
           "The problems to solve are based on the six key environmental outcomes (AI for the Environment Report 2022). They have expanded these to make them more relevant to all participants in 2024.",
           "The cases are sourced from NGOs and citizen science groups to provide real problems to solve that are relevant to each location. These organisations provide subject matter expertise ahead of time and on the day. Participants are also welcome to bring their own problems to solve and we encourage early sharing of these ideas so we can help provide data sets and technology support.",
-          "Participants will learn new skills, create connections and make an impact."
+          "Participants will learn new skills, create connections and make an impact.",
+          "Who can join? Anyone who wants to solve real-world problems in protecting our water resources, fighting climate change, reducing pollution, managing land use, preserving biodiversity or increasing waste recycling."
         ],
         "speakers": {},
         "organizers": [],
@@ -2829,7 +2899,8 @@
           "main": [
             {
               "name": "AI Forum NewZealand",
-              "logo": "/img/scraped/sponsors/667a27c0775567ddfcee9f8b_AIFNZ_logo_horiz_gradient_b1d9f3f3.png"
+              "logo": "/img/scraped/sponsors/667a27c0775567ddfcee9f8b_AIFNZ_logo_horiz_gradient_b1d9f3f3.png",
+              "description": "The AI Forum NZ is New Zealand's leading body for artificial intelligence, connecting government, industry, academia and community to grow a thriving, inclusive, ethical AI ecosystem across Aotearoa. The Forum hosts the annual AI Hackathon across Aotearoa and the South Pacific to spark student, researcher and professional collaboration."
             }
           ],
           "other": []
@@ -2910,7 +2981,11 @@
           "longitude": 174.878403
         },
         "fullDescription": [
-          "Fisher and Paykel Healthcare will be hosting an AI Hackathon on July 26th – 28th kicking off with a keynote from Nicholas Fourie, VP of ICT.Are you ready to embark on an exhilarating journey of creativity, problem-solving, and innovation? In a world where innovation is the lifeblood of progress, we often find ourselves bogged down by repetitive tasks, mundane processes, and administrative burdens. Let’s Break Free from Drudgery!Join us at the AI Hackathon and be part of the movement to liberate innovation from the shackles of monotony. Together, we’ll build a smarter, more efficient future.At this exciting event, you’ll acquire fresh skills, connect with fellow enthusiasts, and engage with sponsors and mentors. After intense collaboration, your team will showcase your project to a panel of judges who will determine the winner. Hackathons provide an inclusive environment where diverse skill sets converge to tackle real-world challenges."
+          "Fisher and Paykel Healthcare will be hosting an AI Hackathon on July 26th – 28th kicking off with a keynote from Nicholas Fourie, VP of ICT.Are you ready to embark on an exhilarating journey of creativity, problem-solving, and innovation? In a world where innovation is the lifeblood of progress, we often find ourselves bogged down by repetitive tasks, mundane processes, and administrative burdens. Let’s Break Free from Drudgery!Join us at the AI Hackathon and be part of the movement to liberate innovation from the shackles of monotony. Together, we’ll build a smarter, more efficient future.At this exciting event, you’ll acquire fresh skills, connect with fellow enthusiasts, and engage with sponsors and mentors. After intense collaboration, your team will showcase your project to a panel of judges who will determine the winner. Hackathons provide an inclusive environment where diverse skill sets converge to tackle real-world challenges.",
+          "Brought to you by She Sharp & Fisher And Paykel Healthcare — Friday, July 26th - Sunday, July 28th, 2024.",
+          "Judging panel of 6 judges (see below), led by Dr Mahsa McCauley - Founder Director of She Sharp.",
+          "The theme of the \"F&P AI Hackathon with She Sharp\" is about breaking free from drudgery and using innovation and technology to address repetitive tasks, mundane processes, and administrative burdens. Participants are expected to align their proposed solutions to address one or more of the 8 use cases provided in the brief.",
+          "Need some essential information? Access the AI Hackathon Essential Information Sheet from the resources panel to find logistics, training materials, datasets and mentorship details."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -2997,7 +3072,7 @@
                 "name": "Chris Campbell",
                 "title": "User Experience Manager-Fisher & Paykel Healthcare",
                 "company": "",
-                "bio": "As a User Experience Designer in the medical device industry, I have a diverse background in experience design and  interaction design. My expertise lies in System Thinking, User Experience, Device User Interface Design, and Human-Computer Interaction . Throughout my career, I’ve successfully led user-centric projects and guided creative teams to develop a diverse array of products. More recently I have been exploring the opportunities AI can offers in within the healthcare sector.",
+                "bio": "I am a passionate technology evangelist who loves working at the intersection of business challenge, design and cutting-edge engineering. As User Experience Manager at Fisher & Paykel Healthcare, I help teams translate complex clinical and industrial problems into intuitive, impactful experiences for clinicians and patients.",
                 "image": "/img/scraped/speakers/66998dd3330e2b89cb3d05dc_ChrisCampbell_a9adffa9.jpg",
                 "linkedin": "https://www.linkedin.com/in/chrishcampbell/"
               },
@@ -3122,6 +3197,80 @@
                 "linkedin": "https://www.linkedin.com/in/zeeshanejaz/"
               }
             ]
+          },
+          "panel_speakers": {
+            "heading": "MEET THE JUDGES",
+            "speakers": [
+              {
+                "name": "Nicholas Fourie",
+                "title": "Vice President of ICT - Fisher & Paykel Healthcare",
+                "company": "Fisher & Paykel Healthcare",
+                "bio": "Nicholas Fourie has been the Vice President of Information & Communication Technology at Fisher & Paykel Healthcare since February 2017. Since joining the company in 2007, he has held various systems engineering and management roles. Before his tenure at Fisher & Paykel, Nicholas worked for the South African division of BHP Billiton. He holds a Diploma in Computer Engineering from Damelin School of Information Technology in South Africa. Nicholas has also served on the Computer and Mathematical Sciences Industry Advisory Board for Auckland University of Technology (AUT). Regularly featured in the CIO50 New Zealand Top Award Winners, Nicholas achieved the number one ranking and won the prestigious award in 2023.",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Mahsa McCauley (Mohaghegh)",
+                "title": "Founder and Chair - She Sharp",
+                "company": "She Sharp",
+                "bio": "Dr. Mahsa McCauley is the founder and the director of She Sharp, an Associate Professor in the School of Computer, Engineering and Mathematical Sciences at Auckland University of Technology and Chair of the AI Forum New Zealand. An internationally recognised leader in AI and machine learning, Dr. McCauley also serves on the boards of NZTech, EdTechNZ and the AI Research Association, where she contributes to shaping the future of AI policy and research in New Zealand. Internationally, she has engaged as a Fulbright Scholar at North Carolina A&T State University, applying AI to agriculture and cybersecurity challenges.",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Rik Irons-Mclean",
+                "title": "CTO, Enterprise Commercial - Microsoft AU & NZ",
+                "company": "Microsoft AU & NZ",
+                "bio": "Rik Irons-Mclean is a global leader focused on delivering business outcomes through data and digital tech adoption. As CTO, Rik drives outcomes through strategic data and digital tech adoption. Previously, he led Sustainability Sales Enablement at Microsoft and UK Strategy for manufacturing, energy and resources. With 13 years at Cisco, Rik held global roles in energy, IoT, security and digital transformation, including Chief Architect (CTO) for all industries. He authors books, contributes to industry papers, and serves on boards for energy, manufacturing, sustainability, IoT and digital skills. He's part of Australia's Climate Leaders Coalition and Sustainability Tech Council, holding an MBA in international leadership and MIEMA and CEnv sustainability accreditations.",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Justin Wood",
+                "title": "Director - Deloitte New Zealand",
+                "company": "Deloitte New Zealand",
+                "bio": "Justin has worked in technology for most of his career and has a long history working in Integration and specifically APIs across a range of industries but mostly in the financial sector. He has designed and implemented applications on public Cloud since the early days when there were only a handful of services available from Amazon Web Services.",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Yvonne Chan",
+                "title": "Associate Dean | Board Director - AUT",
+                "company": "AUT",
+                "bio": "Meet Yvonne – a passionate advocate for authentic collaboration and transdisciplinary innovation driving positive social impact. As the Associate Dean and Director of Engagement for the Faculty of Design and Creative Technologies at AUT University, she fosters connections between academia, industry, government and the community. With a background in Smart and high-performance textiles, Yvonne's expertise spans textiles, fashion, colour, culture and technology.",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Alex Mercer",
+                "title": "Group Head of Marketing and Communications - Datacom",
+                "company": "Datacom",
+                "bio": "Alex Mercer has worked across the Asia Pacific region and the U.S. for organisations such as Microsoft, Xero, Orion Health, NEXT Foundation, the Giving Pledge, Datacom, and Delightful Communications. Her career highlights include collaborating with talented leaders and achieving significant milestones. Alex is passionate about tech and enjoys navigating and leading through change using her brand marketing and communications skills, often handling crisis issues. She is also dedicated to New Zealand's social enterprise and business growth, actively investing in entrepreneurial businesses and helping to establish ArcAngels, an organisation that supports women-founded businesses.",
+                "image": "",
+                "linkedin": ""
+              }
+            ]
+          },
+          "workshop_facilitators": {
+            "heading": "Readiness Workshop Facilitators",
+            "speakers": [
+              {
+                "name": "Michelle Sandford",
+                "title": "Developer Engagement Lead Asia - Microsoft",
+                "company": "Microsoft",
+                "bio": "Tedx Speaker, developer community mentor, Microsoftie and international conference speaker. Michelle lives at the heart of the coding community and helps drive awareness and engagement around technology topics that matter — AI, cybersecurity and empowering the next generation of developers.",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Renee Noble",
+                "title": "Python Cloud Advocate - Microsoft",
+                "company": "Microsoft",
+                "bio": "Renee spends her time spread over a number of roles trying to improve the tech education offerings for people of all ages and levels of experience, particularly women and girls. She runs the Code Like a Girl workshops at schools around the country and speaks regularly at Python meetups.",
+                "image": "",
+                "linkedin": ""
+              }
+            ]
           }
         },
         "organizers": [
@@ -3164,9 +3313,9 @@
             "type": "agenda",
             "title": "Readiness Workshops",
             "content": [
-              "Build your own AI Powered Web App — with Michelle Sandford & Renee Noble",
-              "Iterative process and strategies for prompt development — with Amir Mohammadi",
-              "Supercharge Your Solutions with Generative AI — with Geri Harris"
+              "Build your own AI Powered Web App — Microsoft is offering two 2-hour workshops to help students prepare for the AI Hackathon. These sessions will teach students how to build AI models and integrate them into applications. These virtual workshops will be held on Tuesday July 16th for part 1, and Wednesday July 17th for part 2, both at 12-2pm NZT. Facilitators: Michelle Sandford (Developer Engagement Lead Asia - Microsoft) and Renee Noble (Python Cloud Advocate - Microsoft).",
+              "Iterative process and strategies for prompt development — Promptech is offering a one-hour workshop to help students understand the architecture of large language models, providing an introduction to prompt engineering. This session will help students craft effective prompts. This virtual session will be held on Monday July 22nd at 6-7 pm NZT. Facilitator: Amir Mohammadi (Founder & Director - Promptech).",
+              "Supercharge Your Solutions with Generative AI — Join us for an interactive session where we'll explore cutting-edge generative AI tools that can accelerate your projects. From idea generation to data analysis, discover how AI can enhance creativity and productivity. This session will be held on Saturday July 27th at 12:00 NZT. Facilitator: Geri Harris (Senior Lecturer - AUT Business School)."
             ]
           },
           {
@@ -3218,6 +3367,28 @@
               "The solutions must involve a technology innovation, which can include the innovative use of existing technology.",
               "The technology used must incorporate elements of AI, and the team must explain what these are and how they are utilized.",
               "If the team has completed any work prior to the event, they must disclose what work was done and their starting point."
+            ]
+          },
+          {
+            "type": "topics",
+            "title": "AI Use Cases",
+            "content": [
+              "Problem: Manual analysis of customer feedback is laborious and prone to bias. Solution: An AI system that can generate automated summaries of customer feedback, highlighting key themes and concerns.",
+              "Problem: Creating and maintaining training materials for new technology platforms is time-consuming. Solution: An AI system that can reformat, recompile and update various media types to keep training materials current.",
+              "Problem: Manual checking and marking of VOU documents is prone to error and time-consuming. Solution: An AI system that can automatically mark VOUs against an answer sheet and populate the results into reporting tools.",
+              "Problem: Manual extraction of information for weekly SAP update emails is time-consuming. Solution: An AI system that can draft automated emails using predefined templates and populate them from SAP data.",
+              "Problem: Finding consistent answers to marketing-related questions is challenging. Solution: A centralised location where all relevant marketing knowledge material is stored and can be queried through natural language.",
+              "Problem: Creating thumbnails for PDFs in the central storage location is labor-intensive. Solution: An AI system that can automate the thumbnail creation process.",
+              "Problem: Writing test protocols and testing summaries is labor-intensive. Solution: An AI system that can automatically formulate test protocols and summaries from provided requirements.",
+              "Problem: Updating and standardizing procedures is time-consuming. Solution: An AI system that can extract key points from existing procedures and reproduce a draft procedure in a new standardised format."
+            ]
+          },
+          {
+            "type": "info",
+            "title": "Essential Information",
+            "content": [
+              "Learning Resources: A wide range of learning resources is available for students, including free Azure for Students credits worth USD 100.",
+              "Where to look for datasets? Access a diverse range of datasets, suitable for various use cases, including Free Public Data Sets for Analysis, Google Dataset Search, health statistics datasets, Kaggle healthcare datasets, LINZ Data Service, Machinehack, NZ Datasets and OpenML."
             ]
           }
         ],
@@ -3914,7 +4085,8 @@
         "fullDescription": [
           "Join us for our annual breakfast event at Woolworths. We will celebrate women’s achievements, raise awareness about discrimination and take action to drive gender parity. Let’s have the opportunity to network and come together to leave the event with actionable outcomes to #inspireinclusion.",
           "‌Kathryn is currently the Chief Analytics Officer for Woolworths NZ, helping one of NZ's biggest businesses on a data-led transformation.",
-          "‌Kathryn is in awe of the New Zealand data talent and believes that bringing different skillsets together will drive positive outcomes for individuals, teams, business and end customers."
+          "‌Kathryn is in awe of the New Zealand data talent and believes that bringing different skillsets together will drive positive outcomes for individuals, teams, business and end customers.",
+          "Kathryn is a Brit, a twin mum, a swimmer and a wannabe travel writer — and she leaves a data trail to this effect!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -4023,7 +4195,9 @@
         "fullDescription": [
           "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
           "The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.",
-          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms."
+          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.",
+          "Previously known as CS4HS, the Google Educator Conference is back for 2023!",
+          "The audience is High School Teachers who teach Computer Science, Digital Technologies, STEM or related subjects; teachers who are looking to refresh or add on to their skills; plus ICT curriculum leaders, primary school teachers and school librarians."
         ],
         "speakers": {
           "panel_facilitators": {
@@ -4115,15 +4289,15 @@
                 "name": "Lesieli Oliver",
                 "title": "ImmerseHer \"Virtual Reality\" Workshop Lead",
                 "company": "",
-                "bio": "Lesieli, a proud Tongan, founder and Chief Visionary Officer of Lālanga. Lālanga is dedicated to championing Maori-Pasifika student success, empowering educators and school leaders with innovative mentoring programs, products like the Lālanga ToolBox, and tech solutions. She recently completed her Masters Research focusing on digital solutions to improve Maori-Pasifika student success. Lālanga ToolBox is currently used by 2,000 primary students in Auckland decile one schools. She received the University of Auckland 2023 40 Under 40 Alumni Inspiring Leaders Award.",
+                "bio": "Lesieli, a proud Tongan, founder and Chief visionary officer of Lālanga, is dedicated to championing Māori-Pasifika student success. Lālanga empowers educators and school leaders with innovative mentoring programs, products like the Lālanga ToolBox, and tech solutions. Lesieli recently completed her Masters Research, focusing on digital solutions to improve the success of Māori-Pasifika students, addressing issues such as truancy, wellbeing and academic challenges. Lālanga ToolBox is currently used by 2,000 primary students in Auckland decile one schools. She received the University of Auckland 2023 '40 Under 40' Alumni Inspiring Leaders Award and has launched a charity to empower Pasifika students and families through education.",
                 "image": "/img/scraped/speakers/google-educator-conference-2023/lesieli-oliver.png",
                 "linkedin": ""
               },
               {
                 "name": "Mehwish Hasan",
-                "title": "Education Ambassador, QuiverVision",
+                "title": "Introduction to Augment Reality Workshop Lead",
                 "company": "QuiverVision",
-                "bio": "",
+                "bio": "Mehwish Hasan, a devoted educator and the Computer Science Curriculum Leader at ACG Sunderland in Auckland, is on a mission to bring excitement to students' learning. With a background in telecommunications engineering, Mehwish has become New Zealand's inaugural QuiverVision Ambassador, weaving technology into education. Through the Quiver App, students transform static, coloured images into dynamic, interactive augmented-reality marvels — sparking creativity and curiosity.",
                 "image": "/img/scraped/speakers/google-educator-conference-2023/mehwish-hasan.jpg",
                 "linkedin": ""
               },
@@ -4131,7 +4305,7 @@
                 "name": "Nils Reardon",
                 "title": "Introduction to Augmented Reality Workshop Lead",
                 "company": "",
-                "bio": "",
+                "bio": "Nils has been the CEO of QuiverVision since 2014, who brings a wealth of experience with a background in commerce and law. With an LLB (first class hons.) and a Commerce Degree (economics major), he honed his skills during six years at some of New Zealand's leading law firms before embarking on his journey with QuiverVision. Nils is the driving force behind the company's success and sets the course for its strategic direction. He also oversees the domains of finance and business management, ensuring the organisation operates at its peak potential.",
                 "image": "/img/scraped/speakers/google-educator-conference-2023/nils-reardon.jpeg",
                 "linkedin": ""
               },
@@ -4139,7 +4313,7 @@
                 "name": "Nischay Gupta",
                 "title": "Introduction to Augmented Reality Workshop Lead",
                 "company": "",
-                "bio": "",
+                "bio": "Nischay is an experienced consultant in the tech sector. He has played a pivotal role in optimising operations & aligning strategies with QuiverVision's goals & objectives. Nischay led the launch of a new interactive EdTech product at QuiverVision to enable engaging learning experience, benefitting over 35,000+ teachers & 100,000+ students worldwide within the first year of rollout. He holds a Master's degree in Engineering (1st-class hons.) at the University of Auckland.",
                 "image": "/img/scraped/speakers/google-educator-conference-2023/nischay-gupta.png",
                 "linkedin": ""
               },
@@ -4147,7 +4321,7 @@
                 "name": "Steve Smith",
                 "title": "Google for Education, NZ Program Manager",
                 "company": "Google",
-                "bio": "",
+                "bio": "Steve has been a High School Social Studies and Geography teacher for the last 16 years in New Zealand since returning from teaching in London for two years. Steve worked to bring Google for Education tools into classrooms across Aotearoa and now serves as NZ Program Manager, Google for Education.",
                 "image": "/img/scraped/speakers/google-educator-conference-2023/steve-smith.jpeg",
                 "linkedin": ""
               },
@@ -4155,8 +4329,16 @@
                 "name": "Claire Wigley",
                 "title": "Teacher, Spotswood College",
                 "company": "Spotswood College",
-                "bio": "",
+                "bio": "Claire is currently a teacher at the innovative Spotswood College in New Plymouth. With a focus on teaching 21st-century skills, Claire's background lies in textiles technology, with teaching experience spanning year 1 to year 10. Over the past eight years, she has expanded her knowledge to cover many areas of the Technology Curriculum, from cooking to coding and laser cutting. As an Inquiry Specialist teacher, Claire integrates Design Thinking into her lessons. In 2023 she took on the role of council member at TENZ.",
                 "image": "/img/scraped/speakers/google-educator-conference-2023/claire-wigley.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Lesieli Oliver — Education Ambassador, QuiverVision",
+                "title": "Education Ambassador, QuiverVision",
+                "company": "QuiverVision / Lālanga",
+                "bio": "Lesieli, a proud Tongan, founder and Chief Visionary Officer of Lālanga, is also an Education Ambassador with QuiverVision, championing Māori-Pasifika student success through augmented-reality learning experiences.",
+                "image": "",
                 "linkedin": ""
               }
             ]
@@ -4167,7 +4349,8 @@
           "main": [
             {
               "name": "Google",
-              "logo": "/img/scraped/sponsors/668087b14f8661617a3d0482_Google-Logo_ce9e3de1.png"
+              "logo": "/img/scraped/sponsors/668087b14f8661617a3d0482_Google-Logo_ce9e3de1.png",
+              "description": "Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington. The team works to help Kiwis find new ways to collaborate, reach audiences and get things done. Google is committed to helping all Kiwis with the digital knowledge and capabilities they need now and in the future."
             }
           ],
           "other": []
@@ -4794,7 +4977,8 @@
           "main": [
             {
               "name": "Fisher & Paykel Healthcare",
-              "logo": "/img/scraped/sponsors/65c339c639f3ad4217c879a4_fisherpaykel-newlogo_6333f818.gif"
+              "logo": "/img/scraped/sponsors/65c339c639f3ad4217c879a4_fisherpaykel-newlogo_6333f818.gif",
+              "description": "Fisher & Paykel Healthcare is a global leader in the design, manufacture and marketing of medical devices used in respiratory care, acute care and the treatment of obstructive sleep apnea. Headquartered in Auckland, New Zealand, the company's products are sold in over 120 countries worldwide."
             }
           ],
           "other": []
@@ -6013,7 +6197,8 @@
         },
         "fullDescription": [
           "We have another amazing event coming up on the 15th October with our lovely She Sharp Alumni, Ruth James speaking at the Event! The event is to celebrate Ada Lovelace Day! In sponsorship with Xero!",
-          "Ada Lovelace Day was founded in 2009 by Suw Charman-Anderson to celebrate the achievements of women in science, technology, engineering and maths (STEM)."
+          "Ada Lovelace Day was founded in 2009 by Suw Charman-Anderson to celebrate the achievements of women in science, technology, engineering and maths (STEM).",
+          "Our amazingly talented speaker, Ruth James is going to do the same by telling us about her journey in tech. She Sharp is honoured to have Ruth join us to celebrate this day!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -6118,7 +6303,9 @@
         "fullDescription": [
           "The Ministry of EducationandNZTechpartnered up to host the Tech21 Summit, to inspire ākonga (learners) into technology careers. The one day Summit aimed to spark inspiration for year 7–10  ākonga while showcasing tech innovation and creativity, plus offering the opportunity to find out more about Technology Learning career pathways.",
           "The Tech21 Summithad a number of young entrepreneurs and digital disruptors sharing their stories with more than a thousand 12 to 14 year olds to inspire them into a career in tech. Plus, a special live performance by Kings at Tech21!",
-          "SheSharp and Women in Tech (AUT) were at ‘The Imagine Zone,’ which is the space for ākonga (learners) to touch, feel, see and imagine their future in tech. We connected ākonga and tech sector – navigating through our digital future."
+          "SheSharp and Women in Tech (AUT) were at ‘The Imagine Zone,’ which is the space for ākonga (learners) to touch, feel, see and imagine their future in tech. We connected ākonga and tech sector – navigating through our digital future.",
+          "The Ministry of Education and NZTech partnered up to host the Tech21 Summit, to inspire ākonga (learners) into technology careers. The one-day Summit aimed to spark inspiration for young Kiwis by introducing them to the wide range of opportunities in technology.",
+          "The Tech21 Summit had a number of young entrepreneurs and digital disruptors sharing their stories with more than a thousand 12 to 14 year olds to inspire them into a career in tech."
         ],
         "speakers": {},
         "organizers": [],
@@ -6365,7 +6552,8 @@
           "main": [
             {
               "name": "AUT, Orion Health, Xero, Air New Zealand, Trade Me",
-              "logo": "/img/scraped/sponsors/655bd34ff3393da7a1fa8640_SponsorLogos_2ec3aced.png"
+              "logo": "/img/scraped/sponsors/655bd34ff3393da7a1fa8640_SponsorLogos_2ec3aced.png",
+              "description": "The Auckland Tech Grand Tour was proudly co-hosted with AUT, Orion Health, Xero, Air New Zealand and Trade Me — five of Aotearoa's most prominent technology employers — giving She Sharp students and professionals behind-the-scenes access to their engineering, product and design teams on a single day."
             }
           ],
           "other": []
@@ -6454,7 +6642,8 @@
           "main": [
             {
               "name": "Pushpay",
-              "logo": "/img/scraped/sponsors/655d096727afc025cc65a506_Group_480965695_33df325d.png"
+              "logo": "/img/scraped/sponsors/655d096727afc025cc65a506_Group_480965695_33df325d.png",
+              "description": "Pushpay Holdings Limited, known as Pushpay, is a donor management system for charities. Pushpay puts the needs and satisfaction of its customers first, striving to provide the best possible experience and service. Teamwork: Pushpay values collaboration and teamwork, recognizing that the best results come from working together and supporting each other."
             }
           ],
           "other": []
@@ -6538,7 +6727,8 @@
         },
         "fullDescription": [
           "Come along to hear outstanding women give quick insightful talks about their challenges, inspiration and motivations around solving real world problems using technology. This inspiring group include a wide range of experience from award winning high school and university students to working professionals, demonstrating that inspiration can happen at any age!",
-          "Is a non-profit series focused on building capability and relationships within communities. What makes it special is that it is driven by the purpose of celebrating and empowering everyday people who are doing incredible things. We focus on sharing stories that may otherwise not be heard."
+          "Is a non-profit series focused on building capability and relationships within communities. What makes it special is that it is driven by the purpose of celebrating and empowering everyday people who are doing incredible things. We focus on sharing stories that may otherwise not be heard.",
+          "It's no secret that, for many years now, men have been the dominant voices in the technology sector. She# is here to change that. We aim to encourage women in computer science, computer engineering, software engineering, IT, and all other tech-related fields."
         ],
         "speakers": {},
         "organizers": [],
@@ -6630,7 +6820,8 @@
           "main": [
             {
               "name": "Google, AUT",
-              "logo": "/img/scraped/sponsors/655d08d6004ecb421ea266bc_Group_480965693_9b246621.png"
+              "logo": "/img/scraped/sponsors/655d08d6004ecb421ea266bc_Group_480965693_9b246621.png",
+              "description": "Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington. AUT is focused on providing exceptional student opportunities, learning experiences, and graduate success by impactful research and industry connectivity."
             }
           ],
           "other": []
@@ -7155,7 +7346,8 @@
         "fullDescription": [
           "The event was facilitated by representation from the Digital UX department, Product Owners, as well as current interns at Air New Zealand.We were introduced to Design Thinking as “A problem solving approach, particularly applicable to fuzzy or wicked problems – making it well suited to design human experiences”.",
           "This was shortly followed by the instruction that – Design Thinking is experiential. To learn it, you have to do it……..so, we did!",
-          "This design sprint workshop was a great introductory session for both students and professionals with no first time experience. It was highly creative and encouraging us all to think outside of the box and push through our inhibitions or preconceived ideas. It was also very interactive and encourage consultant discussion and evaluation with a partner (ie, the stranger sitting next to you!)The key takeaway was looking at ways you could use Design Thinking in your everyday life.The material provide by Stanford is open source and a great way to introduce the concept of design thinking to groups or teams that are looking to solve a problem – i’d highly recommend giving it a go!"
+          "This design sprint workshop was a great introductory session for both students and professionals with no first time experience. It was highly creative and encouraging us all to think outside of the box and push through our inhibitions or preconceived ideas. It was also very interactive and encourage consultant discussion and evaluation with a partner (ie, the stranger sitting next to you!)The key takeaway was looking at ways you could use Design Thinking in your everyday life.The material provide by Stanford is open source and a great way to introduce the concept of design thinking to groups or teams that are looking to solve a problem – i’d highly recommend giving it a go!",
+          "Start with design — Stanford d.school."
         ],
         "speakers": {},
         "organizers": [],
@@ -7256,7 +7448,8 @@
         "fullDescription": [
           "Unless you have been living under a rock, you will have heard of blockchain.",
           "Blockchain is one of the most important inventions since the Internet. It’s powering systems for supply chain, fintech, mobility, digital identity and yes, eventrading virtual cats. But, what exactly is Blockchain? How does it work? And most importantly, how do you decide if it’s right for your idea or business?",
-          "Join us at the event to learn the ins and outs of this emerging technology and blockchain based projects happening around New Zealand. Hear from the industry experts from Centrality, Yabble, and Āhau, about their blockchain journey. We will also conduct an Ideathon, where our experts will show you how easy it is to get started on blockchain programming. So team up and design your very own blockchain application to win a prize for the best concept. Drinks and nibbles will be provided to accompany this brainstorming."
+          "Join us at the event to learn the ins and outs of this emerging technology and blockchain based projects happening around New Zealand. Hear from the industry experts from Centrality, Yabble, and Āhau, about their blockchain journey. We will also conduct an Ideathon, where our experts will show you how easy it is to get started on blockchain programming. So team up and design your very own blockchain application to win a prize for the best concept. Drinks and nibbles will be provided to accompany this brainstorming.",
+          "What is Blockchain?"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -7294,7 +7487,8 @@
           "main": [
             {
               "name": "Centrality",
-              "logo": "/img/scraped/sponsors/6550a40de810cddcba44e3ea_Group_480965681_2_7a1aa454.png"
+              "logo": "/img/scraped/sponsors/6550a40de810cddcba44e3ea_Group_480965681_2_7a1aa454.png",
+              "description": "Centrality is a New Zealand-based company and tech venture platform. They leverage blockchain, AI, IoT and other emerging technologies to create an advanced and connected world. They’re fostering a user-centric approach and open-source culture to build the infrastructure for the emerging decentralised web. The ecosystem of Centrality is growing with developers, ventures, partnered businesses and startups that are passionate about creating a thriving decentralised future together."
             }
           ],
           "other": []
@@ -7662,7 +7856,8 @@
           "main": [
             {
               "name": "Wāhine Kākano",
-              "logo": "/img/scraped/sponsors/6550a4b18009cb2c998dab40_Group_480965682_afe1b06b.png"
+              "logo": "/img/scraped/sponsors/6550a4b18009cb2c998dab40_Group_480965682_afe1b06b.png",
+              "description": "Wāhine Kākano is New Zealand’s premier young women’s festival where young women between the ages of 16-22 years can attend a wide range of workshops which will equip them with skills and confidence required to take on their careers."
             }
           ],
           "other": []
@@ -8204,7 +8399,8 @@
           "main": [
             {
               "name": "HCLTech",
-              "logo": "/img/scraped/sponsors/6507a857e1ff55e6b2ff2bd5_HCLTECH_d456bf9c.png"
+              "logo": "/img/scraped/sponsors/6507a857e1ff55e6b2ff2bd5_HCLTECH_d456bf9c.png",
+              "description": "HCLTech has been delivering industry-leading capabilities centered around Digital, Engineering and Cloud, powered by a broad portfolio of technology and business services software. Their differentiated propositions serve some of New Zealand's leading organizations across key industry verticals including Banking and Insurance, Primary Industry and Public Sector."
             }
           ],
           "other": []
@@ -8673,7 +8869,9 @@
         "fullDescription": [
           "“The Truths to Gaming and Start-up - SheSharp Edition” is organised by SheSharp, in collaboration with Geo AR Games & the New Zealand Game Developers Association (NZGDA). If you’re interested in Gaming, Augmented Reality, and Development, then this is an event you don’t want to miss!",
           "Hear the inspiring story of Melanie, CEO of Geo AR Games, and learn how she grew her start-up and worked on national as well as international projects! It’s quite difficult for women to make it in the gaming industry and many females go through the stereotypical work environment. Melanie has some great tips for young women out there who are looking for a career in gaming, and how to make it in the industry! The gaming world needs women, like Talia Pua, Carol Taka and Vaanipriya Diwan, who are part of the panel on the night!",
-          "Although this event features all female speakers, anyone can attend; from high school/university students to professionals far into their careers, people of all genders, aspiring entrepreneurs, are all welcome. We have a range of activities lined up, such as networking, gaming, and play-testing sessions."
+          "Although this event features all female speakers, anyone can attend; from high school/university students to professionals far into their careers, people of all genders, aspiring entrepreneurs, are all welcome. We have a range of activities lined up, such as networking, gaming, and play-testing sessions.",
+          "'The Truths to Gaming and Start-up - SheSharp Edition' is organised by SheSharp, in collaboration with Geo AR Games & the New Zealand Game Developers Association (NZGDA).",
+          "Melanie Langlotz is the founder of Geo AR Games and the ideas person behind the product range. She has a varied 20-year background from both a technical and management perspective in the Entertainment and Media industry, and holds a Post Grad Diploma in Entrepreneurship and a Diploma in Business Coaching. Mel has been through two business incubators, Start-up Chile and Lightning Lab, which provided the springboard for Geo AR Games' first products \"Sharks in the Park\" and later \"Magical Park\"."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -8681,7 +8879,7 @@
             "speakers": [
               {
                 "name": "Melanie Langlotz",
-                "title": "OUR SPEAKER",
+                "title": "Interaction and Play Designer | Playwright | Actor",
                 "company": "",
                 "bio": "Melanie Langlotz is the founder of Geo AR Games and the ideas person behind the product range. She has got a varied 20 years background from both a technical and management perspective in the Entertainment and Media industry and holds a Post Grad Diploma in Entrepreneurship, a Diploma in Business Coaching. She has spent the last 7 years immersing herself in game psychology and Augmented Reality. Her original AR WORLD idea goes back to Feb 2011 with the first prototype being developed back in 2012.Mel has been through 2 business incubators: Start-up Chile and Lightning Lab, which provided the springboard for Geo AR Games, our first product \"Sharks in the Park\" and later on \"Magical Park\".‍",
                 "image": "/img/scraped/speakers/64f93a9f9a746969321b2fdc_1516268653905_8077adf4.jpg",
@@ -8824,7 +9022,8 @@
           "We partnered with Xero to give people an opportunity to have a much needed night out to end 2020 with a bang!",
           "SheSharp and Xero hosted a Girl’s Night Out to bring together like-minded women interested in tech for a night of fun, interaction and challenges. As unprecedented this year has been, where most of us have interacted online via zoom calls or google hangouts, it’s time (and safe) for us to have an in person event. You don’t have to have a vast knowledge of tech or the tech sector to come along.",
           "There were team challenges, fun quizzes and general fun and interactive awesomeness. So people brought their A-game along! This was a great event to network and reconnect with others we haven’t had the opportunity to meet in person over the last few months!",
-          "This event was open to all students (18+) and working professionals! Food and Drinks (No Alcohol) were provided!"
+          "This event was open to all students (18+) and working professionals! Food and Drinks (No Alcohol) were provided!",
+          "SheSharp's last event of the year, and our first in-person event post-COVID!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -8958,7 +9157,9 @@
           "At She Sharp, our mission is to actively engage a broader range of Maori and Pasifika female students by equipping them with the knowledge, network, and skills to enter STEM industries. We are dedicated to inspiring and empowering the next generation of talent from these communities to explore and embrace the dynamic world of STEM and the digital domain through immersive hands-on workshops on topics such as AI, AR, and robotics.",
           "On Wednesday, October 11th, we will be hosting our first STEM conference for Maori and Pasifika girls in years 11-13. The event will take place at AUT (South Campus, Manukau). We are thrilled to offer this free event, as it aligns with our goal of empowering Pasifika girls as future leaders in STEM.",
           "The conference will commence at 9:00 am - 3pm and will include hands-on workshops in Robotics, Artificial Intelligence, Virtual Reality, and Augmented Reality. Additionally, we will feature Pasifika experts and role models in the STEM fields. Our aim is to ignite curiosity and inspire students about potential careers in technology.",
-          "In her practice, She seeks to uphold Te Tiriti o Waitangi and values the historical ties between Tangata Whenua and Tangata Moana. Jacoba is deeply invested in Pacific ECE nationwide and advancing culturally affirming teaching across NZ. Her Pacific research affiliations include advisory roles with MoE (Pacific) and Whatu Ora, and she serves as a research advisor for TLRI."
+          "In her practice, She seeks to uphold Te Tiriti o Waitangi and values the historical ties between Tangata Whenua and Tangata Moana. Jacoba is deeply invested in Pacific ECE nationwide and advancing culturally affirming teaching across NZ. Her Pacific research affiliations include advisory roles with MoE (Pacific) and Whatu Ora, and she serves as a research advisor for TLRI.",
+          "See the agenda here.",
+          "Click here for AUT Scholarships."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -9094,10 +9295,37 @@
           "main": [
             {
               "name": "AUT | Google",
-              "logo": "/img/scraped/sponsors/65004346b9ab4bbae8679f01_logo_27edb705.png"
+              "logo": "/img/scraped/sponsors/65004346b9ab4bbae8679f01_logo_27edb705.png",
+              "description": "AUT is focused on providing exceptional student opportunities, learning experiences, and graduate success by impactful research and industry connectivity. Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington, supporting Aotearoa's transition into a thriving digital economy."
             }
           ],
-          "other": []
+          "other": [
+            {
+              "name": "Centre for Automation and Robotic Engineering Science",
+              "logo": "",
+              "description": "CARES is an interdisciplinary research hub with a mission to create inspiring and innovative robotic technologies that improve societal wellbeing."
+            },
+            {
+              "name": "IEEE WIE",
+              "logo": "",
+              "description": "IEEE Women in Engineering (WIE) is a global network of IEEE members and volunteers dedicated to promoting women engineers and scientists and inspiring girls around the world to follow their academic interests in a career in engineering."
+            },
+            {
+              "name": "MYOB",
+              "logo": "",
+              "description": "MYOB is a business management platform designed to unleash the potential of businesses across Australia and New Zealand! As the #originalstartup, our roots are in finance and accounting software, but today we empower more than 1.3 million businesses across every stage of their journey."
+            },
+            {
+              "name": "Fonterra",
+              "logo": "",
+              "description": "Fonterra Cooperative Group is the world's largest exporter of dairy products, a leader in dairy science and innovation, owner of a significant portfolio of brands in Asia Pacific, and a partner to many of the world's leading food service companies."
+            },
+            {
+              "name": "QuiverVision",
+              "logo": "",
+              "description": "QuiverVision is an augmented reality research company that produces both branded content and the technology to transform that content into personalized, immersive experiences."
+            }
+          ]
         },
         "specialSections": [],
         "photos": [
@@ -9481,7 +9709,8 @@
         },
         "fullDescription": [
           "#IamRemarkable is a Google initiative empowering women and other underrepresented groups to celebrate their achievements in the workplace and beyond.",
-          "This program aims to:1. Improve the motivation and self-promotion skills of women and underrepresented groups.2. Change social perceptions and refresh the conversation around self-promotion."
+          "This program aims to:1. Improve the motivation and self-promotion skills of women and underrepresented groups.2. Change social perceptions and refresh the conversation around self-promotion.",
+          "This program aims to: 1. Improve the motivation and self-promotion skills of women and underrepresented groups. 2. Change social perceptions and refresh the conversation around self-promotion."
         ],
         "speakers": {},
         "organizers": [],
@@ -9489,7 +9718,8 @@
           "main": [
             {
               "name": "Google",
-              "logo": "/img/scraped/sponsors/64f5b7128c4d66cd02b473d0_google-logo_2f53236e.png"
+              "logo": "/img/scraped/sponsors/64f5b7128c4d66cd02b473d0_google-logo_2f53236e.png",
+              "description": "Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington. The team works to help Kiwis find new ways to collaborate, reach audiences and get things done. Google is committed to helping all Kiwis with the digital knowledge and capabilities they need now and in the future."
             }
           ],
           "other": []
@@ -9622,7 +9852,8 @@
           "main": [
             {
               "name": "myob",
-              "logo": "/img/scraped/sponsors/64791e65d98fbc885241532a_Sponsor_MYOB_46ced734.png"
+              "logo": "/img/scraped/sponsors/64791e65d98fbc885241532a_Sponsor_MYOB_46ced734.png",
+              "description": "MYOB, is a business management platform designed to unleash the potential of businesses across Australia and New Zealand! As the #originalstartup, our roots are in finance and accounting software, but today we are so much more. We help our Aussie and Kiwi customers unleash their full potential, giving them the tools to Start, Survive and Succeed: all in the one place."
             }
           ],
           "other": []
@@ -9884,7 +10115,8 @@
           "main": [
             {
               "name": "Fonterra",
-              "logo": "/img/scraped/sponsors/64bb4e82778125db8750032d_Fonterra-logo_00084548.png"
+              "logo": "/img/scraped/sponsors/64bb4e82778125db8750032d_Fonterra-logo_00084548.png",
+              "description": "Fonterra is New Zealand’s largest business, a dairy co-operative owned by 9,000 farmer shareholders, employing more than 19,000 people across 40 countries. We believe that food and nutrition are essential to sustain us today and for future generations to thrive. We farm naturally and because of this, we are proud to have one of the lowest carbon footprints on farm in the world."
             }
           ],
           "other": []
@@ -10066,7 +10298,8 @@
         "fullDescription": [
           "Hear the experiences of Kiwibank executives and engage in an innovation roadmap workshop!",
           "Join us to discover how you can grow your career at Kiwibank while shaping the future of banking in Aotearoa.‍",
-          "Spaces are limited, so secure a place now if you haven’t already. We have special prizes and giveaways for those who attend the event.‍"
+          "Spaces are limited, so secure a place now if you haven’t already. We have special prizes and giveaways for those who attend the event.‍",
+          "See you there!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -10096,7 +10329,8 @@
           "main": [
             {
               "name": "Kiwibank",
-              "logo": "/img/scraped/sponsors/64977dfd29667aac31a0726a_Kiwibank_Sponsor_Block_Im_19b613b8.png"
+              "logo": "/img/scraped/sponsors/64977dfd29667aac31a0726a_Kiwibank_Sponsor_Block_Im_19b613b8.png",
+              "description": "Kiwibank is 100% New Zealand-owned—our purpose is built around three big goals; Tamariki are better off, Kiwi are better off and Aotearoa is better off. This drives everything we do to ensure we're making a real difference as a business."
             }
           ],
           "other": []
@@ -10189,7 +10423,8 @@
           "longitude": 174.7635465
         },
         "fullDescription": [
-          "International Women’s Day is fast approaching and She Sharp is partnering with AWS to bring you an inspirational evening where we talk all about #breakingthebias!"
+          "International Women’s Day is fast approaching and She Sharp is partnering with AWS to bring you an inspirational evening where we talk all about #breakingthebias!",
+          "Come along to enjoy some fireside chats by amazing panelists, an interactive workshop and a short quiz. Please join us to celebrate and honour the women you know, the women who inspire you, and the women who've helped you find your voice."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -10264,7 +10499,8 @@
           "main": [
             {
               "name": "AWS",
-              "logo": "/img/scraped/sponsors/648684aa51d3e1c28b6b0e55_AWS_V2_aa64f531.png"
+              "logo": "/img/scraped/sponsors/648684aa51d3e1c28b6b0e55_AWS_V2_aa64f531.png",
+              "description": "Since 2006, Amazon Web Services has been the world’s most comprehensive and broadly adopted cloud. AWS has been continually expanding its services to support virtually any workload, and it now has more than 200 fully featured services for compute, storage, databases, networking, analytics, machine learning and artificial intelligence (AI), Internet of Things (IoT), mobile, security, hybrid, virtual and augmented reality (VR and AR), media, and application development, deployment, and management. Millions of customers—including the fastest-growing startups, largest enterprises, and leading government agencies—trust AWS to power their infrastructure, become more agile, and lower costs."
             }
           ],
           "other": []
@@ -10483,7 +10719,8 @@
           "main": [
             {
               "name": "AWS",
-              "logo": "/img/scraped/sponsors/6482558ee6213b74fbbc84bb_Sponsor_AWS_4dfa0a03.png"
+              "logo": "/img/scraped/sponsors/6482558ee6213b74fbbc84bb_Sponsor_AWS_4dfa0a03.png",
+              "description": "Since 2006, Amazon Web Services has been the world’s most comprehensive and broadly adopted cloud. AWS has been continually expanding its services to support virtually any workload, and it now has more than 200 fully featured services for compute, storage, databases, networking, analytics, machine learning and artificial intelligence (AI), Internet of Things (IoT), mobile, security, hybrid, virtual and augmented reality (VR and AR), media, and application development, deployment, and management. Millions of customers—including the fastest-growing startups, largest enterprises, and leading government agencies—trust AWS to power their infrastructure, become more agile, and lower costs."
             }
           ],
           "other": []
@@ -10650,7 +10887,8 @@
           "main": [
             {
               "name": "MYOB",
-              "logo": "/img/scraped/sponsors/64791e65d98fbc885241532a_Sponsor_MYOB_46ced734.png"
+              "logo": "/img/scraped/sponsors/64791e65d98fbc885241532a_Sponsor_MYOB_46ced734.png",
+              "description": "MYOB, is a business management platform designed to unleash the potential of businesses across Australia and New Zealand! As the #originalstartup, our roots are in finance and accounting software, but today we are so much more. We help our Aussie and Kiwi customers unleash their full potential, giving them the tools to Start, Survive and Succeed: all in the one place."
             }
           ],
           "other": []
@@ -10751,7 +10989,8 @@
           "longitude": 174.7487792
         },
         "fullDescription": [
-          "Surround yourself with great women: Stories of the women who have ignited our passion for careers in Technology. Enjoy a networking breakfast and surround yourself with great women. She Sharp and Countdown collaborate to bring you first-hand the real stories of the women who are igniting our passion for careers in Technology. Join our breakfast session and see what you can learn to help you re/ignite the flame of your technology career. You will hear from key talent across our Analytics and Insights, Product, Strategy & Transformation and Engineering practices. Hear how they have navigated their careers and learn useful tips as to the art of networking and really owning your career path."
+          "Surround yourself with great women: Stories of the women who have ignited our passion for careers in Technology. Enjoy a networking breakfast and surround yourself with great women. She Sharp and Countdown collaborate to bring you first-hand the real stories of the women who are igniting our passion for careers in Technology. Join our breakfast session and see what you can learn to help you re/ignite the flame of your technology career. You will hear from key talent across our Analytics and Insights, Product, Strategy & Transformation and Engineering practices. Hear how they have navigated their careers and learn useful tips as to the art of networking and really owning your career path.",
+          "Steph is a Product Leader with more than 10 years of experience working in e-commerce, product development and digital transformation across New Zealand retail."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -10829,7 +11068,8 @@
           "main": [
             {
               "name": "Countdown",
-              "logo": "/img/scraped/sponsors/648684914b483faf4f184473_Countdown_V2_6f8ca9df.png"
+              "logo": "/img/scraped/sponsors/648684914b483faf4f184473_Countdown_V2_6f8ca9df.png",
+              "description": "Woolworths New Zealand proudly owns and operates over 185 Countdown supermarkets in New Zealand. We are the country’s largest private sector employer, with 20,000 New Zealanders employed in our stores, support offices, processing plants and distribution centres. Our goal is to provide the best possible convenience, value, range and quality to the 2.5 million Kiwis we serve each week in our stores."
             }
           ],
           "other": []
@@ -11013,7 +11253,8 @@
           "main": [
             {
               "name": "ANZ",
-              "logo": "/img/scraped/sponsors/64867abfca23855740d7eb4b_Sponsor_ANZ_12fc2f33.png"
+              "logo": "/img/scraped/sponsors/64867abfca23855740d7eb4b_Sponsor_ANZ_12fc2f33.png",
+              "description": "At ANZ our purpose is to shape a world where people and communities thrive. We’re making this happen by improving our customers’ financial wellbeing so they can achieve incredible things – be it buying their home, building a business or saving for things big or small."
             }
           ],
           "other": []
@@ -11128,7 +11369,8 @@
         "fullDescription": [
           "Some of the world’s leading companies use Deloitte’s 10 Types of Innovation Framework to create innovative products.",
           "When you’re building technology, it’s important to think about more than just the features your product delivers. To be successful, you also need to build out extensions to your application or system that connects with the wider ecosystem. The result is building more than just an app, but a platform and service that customers love and stay with.",
-          "Deloitte brings together more than 1,700 specialists providing New Zealand's widest range of high quality professional services. We focus on audit, tax, technology & systems, strategy, performance improvements, risk management, corporate finance, business recovery, forensics and accounting services."
+          "Deloitte brings together more than 1,700 specialists providing New Zealand's widest range of high quality professional services. We focus on audit, tax, technology & systems, strategy, performance improvements, risk management, corporate finance, business recovery, forensics and accounting services.",
+          "What you'll learn at this event:"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -11158,7 +11400,8 @@
           "main": [
             {
               "name": "Deloitte",
-              "logo": "/img/scraped/sponsors/64792861d175aee4e8785a53_Sponsor_Deloitte_82629c7c.png"
+              "logo": "/img/scraped/sponsors/64792861d175aee4e8785a53_Sponsor_Deloitte_82629c7c.png",
+              "description": "Deloitte brings together more than 1,700 specialists providing New Zealand's widest range of high quality professional services. We focus on audit, tax, technology & systems, strategy, performance improvements, risk management, corporate finance, business recovery, forensics and accounting services."
             }
           ],
           "other": []
@@ -11418,7 +11661,8 @@
           "main": [
             {
               "name": "AUT",
-              "logo": "/img/scraped/sponsors/64867d8b283f6ebb86e205c9_Sponsor_AUT_1463e915.png"
+              "logo": "/img/scraped/sponsors/64867d8b283f6ebb86e205c9_Sponsor_AUT_1463e915.png",
+              "description": "AUT is the second largest university in Aotearoa New Zealand. We have been a university since 2000, but a place of learning for 120 years."
             }
           ],
           "other": []
@@ -11643,7 +11887,8 @@
           "main": [
             {
               "name": "AWS",
-              "logo": "/img/scraped/sponsors/648684aa51d3e1c28b6b0e55_AWS_V2_aa64f531.png"
+              "logo": "/img/scraped/sponsors/648684aa51d3e1c28b6b0e55_AWS_V2_aa64f531.png",
+              "description": "Since 2006, Amazon Web Services has been the world’s most comprehensive and broadly adopted cloud. AWS has been continually expanding its services to support virtually any workload, and it now has more than 200 fully featured services for compute, storage, databases, networking, analytics, machine learning and artificial intelligence (AI), Internet of Things (IoT), mobile, security, hybrid, virtual and augmented reality (VR and AR), media, and application development, deployment, and management. Millions of customers—including the fastest-growing startups, largest enterprises, and leading government agencies—trust AWS to power their infrastructure, become more agile, and lower costs."
             }
           ],
           "other": []
@@ -11761,7 +12006,8 @@
         },
         "fullDescription": [
           "The world is constantly evolving. Digital technologies are transforming exponentially from day to day and Artificial Intelligence has changed the way we interact with the world around us. We can find information through conversations with machines, instantly translate written and verbal language and even have our own personal digital assistant.",
-          "Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington. The team works to help Kiwis find new ways to collaborate, reach audiences and get things done. Google is committed to helping all Kiwis with the digital knowledge and capabilities they need now and in the future."
+          "Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington. The team works to help Kiwis find new ways to collaborate, reach audiences and get things done. Google is committed to helping all Kiwis with the digital knowledge and capabilities they need now and in the future.",
+          "In this interactive workshop, hosted by Google, we will learn more about the use of Artificial Intelligence, how to get involved and build AI applications. With awareness of the topic, we will also discuss the ethical considerations of AI in our everyday lives."
         ],
         "speakers": {},
         "organizers": [],
@@ -11769,7 +12015,8 @@
           "main": [
             {
               "name": "Google",
-              "logo": "/img/scraped/sponsors/64867b5b51d3e1c28b66b801_Sponsor_Google_0f6c6a93.png"
+              "logo": "/img/scraped/sponsors/64867b5b51d3e1c28b66b801_Sponsor_Google_0f6c6a93.png",
+              "description": "Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington. The team works to help Kiwis find new ways to collaborate, reach audiences and get things done. Google is committed to helping all Kiwis with the digital knowledge and capabilities they need now and in the future."
             }
           ],
           "other": []
@@ -11882,7 +12129,8 @@
           "main": [
             {
               "name": "Countdown",
-              "logo": "/img/scraped/sponsors/648684914b483faf4f184473_Countdown_V2_6f8ca9df.png"
+              "logo": "/img/scraped/sponsors/648684914b483faf4f184473_Countdown_V2_6f8ca9df.png",
+              "description": "Woolworths New Zealand proudly owns and operates over 185 Countdown supermarkets in New Zealand. We are the country’s largest private sector employer, with 20,000 New Zealanders employed in our stores, support offices, processing plants and distribution centres. Our goal is to provide the best possible convenience, value, range and quality to the 2.5 million Kiwis we serve each week in our stores."
             }
           ],
           "other": []
@@ -11985,7 +12233,8 @@
         "fullDescription": [
           "This event is aimed at providing women with insights and opportunities to pursue a career in the tech industry.",
           "Whether you're looking to start a career in tech, or you're already working in the industry and looking to grow your skills and network, this event is for you. With the support of MYOB, we hope to inspire and empower women to pursue their passions and achieve their career goals.",
-          "With hands-on experience in DevOps and Azure hosting platforms, Anshu excels in leveraging cutting-edge technology for optimal results. As a dynamic leader and research professional, she has spearheaded numerous successful Agile and Waterfall-driven initiatives. Anshu's commitment to excellence and her proactive approach to staying updated on industry trends make her a valuable asset to any team."
+          "With hands-on experience in DevOps and Azure hosting platforms, Anshu excels in leveraging cutting-edge technology for optimal results. As a dynamic leader and research professional, she has spearheaded numerous successful Agile and Waterfall-driven initiatives. Anshu's commitment to excellence and her proactive approach to staying updated on industry trends make her a valuable asset to any team.",
+          "Attendees will have the chance to hear from experienced professionals in the tech industry, who will be sharing their personal stories, experiences and insights on how to navigate the early stages of a career in technology."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -12031,7 +12280,8 @@
           "main": [
             {
               "name": "MYOB",
-              "logo": "/img/scraped/sponsors/64791e65d98fbc885241532a_Sponsor_MYOB_46ced734.png"
+              "logo": "/img/scraped/sponsors/64791e65d98fbc885241532a_Sponsor_MYOB_46ced734.png",
+              "description": "MYOB, is a business management platform designed to unleash the potential of businesses across Australia and New Zealand! As the #originalstartup, our roots are in finance and accounting software, but today we are so much more. We help our Aussie and Kiwi customers unleash their full potential, giving them the tools to Start, Survive and Succeed: all in the one place."
             }
           ],
           "other": []
