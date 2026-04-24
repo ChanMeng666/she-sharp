@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createPasswordResetToken } from '@/lib/auth/password-reset';
+import { sendPasswordResetEmail } from '@/lib/email/service';
 import { z } from 'zod';
 
 const forgotPasswordSchema = z.object({
@@ -12,8 +13,8 @@ export async function POST(request: NextRequest) {
     const { email } = forgotPasswordSchema.parse(body);
 
     // Get IP and user agent for security logging
-    const ipAddress = request.headers.get('x-forwarded-for') || 
-                     request.headers.get('x-real-ip') || 
+    const ipAddress = request.headers.get('x-forwarded-for') ||
+                     request.headers.get('x-real-ip') ||
                      undefined;
     const userAgent = request.headers.get('user-agent') || undefined;
 
@@ -22,6 +23,16 @@ export async function POST(request: NextRequest) {
       ipAddress || undefined,
       userAgent || undefined
     );
+
+    // Deliver the reset link if a token was issued. We intentionally swallow
+    // email errors so the response does not reveal whether the account exists.
+    if (result.success && result.token && result.email) {
+      try {
+        await sendPasswordResetEmail(result.email, result.token);
+      } catch (emailError) {
+        console.error('Failed to send password reset email:', emailError);
+      }
+    }
 
     // Always return success for security (don't reveal if email exists)
     return NextResponse.json({
