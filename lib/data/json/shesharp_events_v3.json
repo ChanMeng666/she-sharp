@@ -6116,8 +6116,8 @@
           "longitude": 174.7571161
         },
         "fullDescription": [
-          "TheMinistry of EducationandNZTechpartnered up to host the Tech21 Summit, to inspire ākonga (learners) into technology careers. The one day Summit aimed to spark inspiration for year 7–10  ākonga while showcasing tech innovation and creativity, plus offering the opportunity to find out more about Technology Learning career pathways.",
-          "TheTech21 Summithad a number of young entrepreneurs and digital disruptors sharing their stories with more than a thousand 12 to 14 year olds to inspire them into a career in tech. Plus, a special live performance by Kings at Tech21!",
+          "The Ministry of EducationandNZTechpartnered up to host the Tech21 Summit, to inspire ākonga (learners) into technology careers. The one day Summit aimed to spark inspiration for year 7–10  ākonga while showcasing tech innovation and creativity, plus offering the opportunity to find out more about Technology Learning career pathways.",
+          "The Tech21 Summithad a number of young entrepreneurs and digital disruptors sharing their stories with more than a thousand 12 to 14 year olds to inspire them into a career in tech. Plus, a special live performance by Kings at Tech21!",
           "SheSharp and Women in Tech (AUT) were at ‘The Imagine Zone,’ which is the space for ākonga (learners) to touch, feel, see and imagine their future in tech. We connected ākonga and tech sector – navigating through our digital future."
         ],
         "speakers": {},
@@ -8539,7 +8539,7 @@
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/shesharp-future-ready",
         "title": "SheSharp Future Ready",
-        "subtitle": "Get Future Ready with She Sharp!",
+        "subtitle": "Take part in the exciting careers available in our technology driven future!",
         "date": "",
         "time": "",
         "location": {
@@ -8550,21 +8550,42 @@
           "country": "New Zealand"
         },
         "fullDescription": [
-          "We will be discussing the following topics:– What career options are available? What are the unique opportunities in tech where you can get involved?– How can you get yourself across the latest technology trends outside of the classroom?– What role does personal development play in building the right mindset to tackle the uncertainties of tomorrow? What does it mean to have a personal brand?– What should you consider to plan for your tertiary education?",
-          "Shruti Sherekar (Business Analyst & Agile Consultant, IAG)",
-          "Amrit Kaur (Tech, Strategy & Transformation Consultant, Deloitte)",
-          "Zainab Manasawala (Produce Development Engineer, Fisher & Paykel)"
+          "Join She Sharp for an inspirational and empowering panel on STEM Careers for our future generations. The recent times have taught us that if there is anything that the future holds is the impact technology will have on our day-to-day. We hope to inspire and guide you to learn more about various STEM pathways."
         ],
         "speakers": {
           "keynote_speakers": {
             "heading": "Meet the speakers",
             "speakers": [
               {
+                "name": "Nicole Yue Lin",
+                "title": "Data Scientist",
+                "company": "Spark",
+                "bio": "",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Shruti Sherekar",
+                "title": "Business Analyst & Agile Consultant",
+                "company": "IAG",
+                "bio": "",
+                "image": "",
+                "linkedin": ""
+              },
+              {
                 "name": "Amrit Kaur",
-                "title": "",
-                "company": "",
+                "title": "Tech, Strategy & Transformation Consultant",
+                "company": "Deloitte",
                 "bio": "Since COVID-19, Amrit has been working with Ministry of Health on NZ’s COVID-19 response in the role of a Digital BA for the National Border Solution. Over her short career, Amrit has developed technical and non-technical skills in the tech world and likes to be involved in a holistic way in the work she is doing.",
-                "image": "/img/scraped/speakers/64780d3b4165a94ec7bb0eaa_1_Amrit_Kaur_09af20a5.png",
+                "image": "",
+                "linkedin": ""
+              },
+              {
+                "name": "Zainab Manasawala",
+                "title": "Produce Development Engineer",
+                "company": "Fisher & Paykel",
+                "bio": "",
+                "image": "",
                 "linkedin": ""
               }
             ]
@@ -8575,7 +8596,18 @@
           "main": [],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "topics",
+            "title": "We will be discussing the following topics",
+            "content": [
+              "What career options are available? What are the unique opportunities in tech where you can get involved?",
+              "How can you get yourself across the latest technology trends outside of the classroom?",
+              "What role does personal development play in building the right mindset to tackle the uncertainties of tomorrow? What does it mean to have a personal brand?",
+              "What should you consider to plan for your tertiary education?"
+            ]
+          }
+        ],
         "photos": [
           {
             "url": "/img/scraped/photos/6502ad2893a2ab2a52abd30b_Future-Ready-1_29e03576.png",
