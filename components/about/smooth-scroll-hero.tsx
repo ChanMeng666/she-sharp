@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useEffect, useLayoutEffect } from "react";
+import { useRef, useEffect, useLayoutEffect, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const slides = [
   {
@@ -46,8 +47,15 @@ export default function SmoothScrollHero() {
   const rootRef = useRef<HTMLDivElement>(null);
   const slideEls = useRef<(HTMLDivElement | null)[]>([]);
   const bgEls = useRef<(HTMLDivElement | null)[]>([]);
-  const dotEls = useRef<(HTMLDivElement | null)[]>([]);
+  const dotEls = useRef<(HTMLElement | null)[]>([]);
   const hintRef = useRef<HTMLDivElement>(null);
+  const goToSlideRef = useRef<((index: number) => void) | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const goTo = (index: number) => {
+    const clamped = Math.max(0, Math.min(index, N - 1));
+    goToSlideRef.current?.(clamped);
+  };
 
   // Set initial slide positions synchronously before paint to avoid flash
   useLayoutEffect(() => {
@@ -107,6 +115,7 @@ export default function SmoothScrollHero() {
       const idx = Math.max(0, Math.min(Math.round(-curY / sH), N - 1));
       if (idx === prevDot) return;
       prevDot = idx;
+      setActiveIndex(idx);
       for (let i = 0; i < N; i++) {
         const dot = dotEls.current[i];
         if (!dot) continue;
@@ -115,6 +124,21 @@ export default function SmoothScrollHero() {
         dot.style.transform = i === idx ? "scale(1.3)" : "scale(1)";
       }
     }
+
+    // Expose programmatic navigation so arrow buttons and dot clicks can advance slides
+    goToSlideRef.current = (index: number) => {
+      if (!active) {
+        active = true;
+        overscroll = 0;
+      }
+      const goal = clamp(-index * sH);
+      isSnap = true;
+      snapT = Date.now();
+      snapFrom = tgtY;
+      snapGoal = goal;
+      tgtY = goal;
+      lastT = Date.now();
+    };
 
     function animate() {
       const now = Date.now();
@@ -321,21 +345,50 @@ export default function SmoothScrollHero() {
         </div>
       ))}
 
-      {/* Scroll indicator dots */}
+      {/* Previous slide button */}
+      <button
+        type="button"
+        onClick={() => goTo(activeIndex - 1)}
+        disabled={activeIndex === 0}
+        aria-label="Previous slide"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white/10 hover:bg-white/25 border border-white/30 text-white backdrop-blur-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+      >
+        <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+      </button>
+
+      {/* Next slide button */}
+      <button
+        type="button"
+        onClick={() => goTo(activeIndex + 1)}
+        disabled={activeIndex === N - 1}
+        aria-label="Next slide"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white/10 hover:bg-white/25 border border-white/30 text-white backdrop-blur-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+      >
+        <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
+      </button>
+
+      {/* Scroll indicator dots (clickable) */}
       <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 glass-pill flex gap-2 px-4 py-2">
         {slides.map((_, i) => (
-          <div
+          <button
             key={i}
-            ref={(el) => {
-              dotEls.current[i] = el;
-            }}
-            className="w-2.5 h-2.5 rounded-full transition-all duration-200"
-            style={{
-              backgroundColor:
-                i === 0 ? "var(--color-brand)" : "rgba(255,255,255,0.5)",
-              transform: i === 0 ? "scale(1.3)" : "scale(1)",
-            }}
-          />
+            type="button"
+            onClick={() => goTo(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className="h-6 w-6 flex items-center justify-center -m-1.5"
+          >
+            <span
+              ref={(el) => {
+                dotEls.current[i] = el;
+              }}
+              className="block w-2.5 h-2.5 rounded-full transition-all duration-200"
+              style={{
+                backgroundColor:
+                  i === 0 ? "var(--color-brand)" : "rgba(255,255,255,0.5)",
+                transform: i === 0 ? "scale(1.3)" : "scale(1)",
+              }}
+            />
+          </button>
         ))}
       </div>
 
