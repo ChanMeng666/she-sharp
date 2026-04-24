@@ -89,3 +89,7 @@ scripts/audit-report.json
 # Reference/Example projects
 reference-next-shadcn-admin-dashboard/
 nul
+
+# Audit script HTML cache
+scripts/.cache/
+scripts/__pycache__/
