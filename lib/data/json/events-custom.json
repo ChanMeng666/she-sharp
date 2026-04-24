@@ -472,8 +472,8 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "",
-          "address": "",
+          "venueName": "academyEX",
+          "address": "99 Khyber Pass Road, Grafton, Auckland 1023",
           "city": "Auckland",
           "country": "New Zealand"
         },
@@ -597,8 +597,8 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "",
-          "address": "",
+          "venueName": "academyEX",
+          "address": "99 Khyber Pass Road, Grafton, Auckland 1023",
           "city": "Auckland",
           "country": "New Zealand"
         },
@@ -674,7 +674,7 @@
         "alt": "Her Waka May 2026 — Cybersecurity Workshop, delivered by SheSharp, Ministry of Social Development and academyEX"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka-may-2026",
-      "shortDescription": "The third HER WAKA cohort continues with a focus on real-world job readiness, featuring a cybersecurity panel discussion and practical insights to help participants navigate their next career step with confidence.",
+      "shortDescription": "The third HER WAKA cohort continues with a focus on real-world job readiness, featuring cybersecurity lightning talks and practical insights to help participants navigate their next career step with confidence.",
       "attendees": 5,
       "checkedIn": 0,
       "detailPageData": {
@@ -697,7 +697,7 @@
         ],
         "speakers": {
           "panel_speakers": {
-            "heading": "Meet Our Panelists",
+            "heading": "Meet Our Lightning Talk Speakers",
             "speakers": [
               {
                 "name": "Prasanth",
