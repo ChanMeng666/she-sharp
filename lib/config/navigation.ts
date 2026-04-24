@@ -17,6 +17,8 @@ import {
   ChartGantt,
   UsersRound,
   Heart,
+  BarChart3,
+  Newspaper,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -153,6 +155,18 @@ export const navigationConfig: {
           href: "/resources/podcasts",
           description: "Listen to She Sharp Talks and featured episodes",
           icon: Mic,
+        },
+        {
+          title: "Newsletters",
+          href: "/resources/newsletters",
+          description: "Read our monthly newsletter archive",
+          icon: Newspaper,
+        },
+        {
+          title: "Impact Reports",
+          href: "/resources#impact-reports",
+          description: "Read our annual reports on community impact",
+          icon: BarChart3,
         },
       ],
     },
