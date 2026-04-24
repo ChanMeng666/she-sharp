@@ -22,34 +22,55 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Get user roles
-    const roles = await db
-      .select()
-      .from(userRoles)
-      .where(
-        and(
-          eq(userRoles.userId, user.id),
-          eq(userRoles.isActive, true)
+    // Fetch roles, form statuses, and common data in parallel — they're independent.
+    const [
+      roles,
+      mentorFormRows,
+      menteeFormRows,
+      upcomingEventsRaw,
+      recentResources,
+    ] = await Promise.all([
+      db
+        .select()
+        .from(userRoles)
+        .where(
+          and(eq(userRoles.userId, user.id), eq(userRoles.isActive, true))
+        ),
+      db
+        .select()
+        .from(mentorFormSubmissions)
+        .where(eq(mentorFormSubmissions.userId, user.id))
+        .limit(1),
+      db
+        .select()
+        .from(menteeFormSubmissions)
+        .where(eq(menteeFormSubmissions.userId, user.id))
+        .limit(1),
+      db
+        .select({ event: events, registration: eventRegistrations })
+        .from(events)
+        .leftJoin(
+          eventRegistrations,
+          and(
+            eq(eventRegistrations.eventId, events.id),
+            eq(eventRegistrations.userId, user.id)
+          )
         )
-      );
+        .where(gte(events.startTime, new Date()))
+        .orderBy(events.startTime)
+        .limit(5),
+      db
+        .select()
+        .from(resources)
+        .orderBy(desc(resources.uploadedAt))
+        .limit(5),
+    ]);
 
-    const activeRoles = roles.map(r => r.roleType);
+    const mentorForm = mentorFormRows[0];
+    const menteeForm = menteeFormRows[0];
+    const activeRoles = roles.map((r) => r.roleType);
     const isMentor = activeRoles.includes('mentor');
     const isMentee = activeRoles.includes('mentee');
-    const isAdmin = activeRoles.includes('admin');
-
-    // Get form submission status
-    const [mentorForm] = await db
-      .select()
-      .from(mentorFormSubmissions)
-      .where(eq(mentorFormSubmissions.userId, user.id))
-      .limit(1);
-
-    const [menteeForm] = await db
-      .select()
-      .from(menteeFormSubmissions)
-      .where(eq(menteeFormSubmissions.userId, user.id))
-      .limit(1);
 
     const dashboardData: any = {
       user: {
@@ -77,44 +98,47 @@ export async function GET() {
 
     // Mentor-specific data
     if (isMentor) {
-      const [mentorProfile] = await db
-        .select()
-        .from(mentorProfiles)
-        .where(eq(mentorProfiles.userId, user.id))
-        .limit(1);
-
-      // Get active mentees
-      const activeMentorships = await db
-        .select({
-          relationship: mentorshipRelationships,
-          menteeName: sql<string>`(SELECT name FROM users WHERE id = ${mentorshipRelationships.menteeUserId})`,
-          menteeEmail: sql<string>`(SELECT email FROM users WHERE id = ${mentorshipRelationships.menteeUserId})`
-        })
-        .from(mentorshipRelationships)
-        .where(
-          and(
-            eq(mentorshipRelationships.mentorUserId, user.id),
-            eq(mentorshipRelationships.status, 'active')
-          )
-        );
-
-      // Get upcoming meetings as mentor
-      const upcomingMentorMeetings = await db
-        .select({
-          meeting: meetings,
-          menteeName: sql<string>`(SELECT name FROM users WHERE id = ${mentorshipRelationships.menteeUserId})`
-        })
-        .from(meetings)
-        .innerJoin(mentorshipRelationships, eq(meetings.relationshipId, mentorshipRelationships.id))
-        .where(
-          and(
-            eq(mentorshipRelationships.mentorUserId, user.id),
-            eq(meetings.status, 'scheduled'),
-            gte(meetings.scheduledAt, new Date())
-          )
-        )
-        .orderBy(meetings.scheduledAt)
-        .limit(5);
+      const [mentorProfileRows, activeMentorships, upcomingMentorMeetings] =
+        await Promise.all([
+          db
+            .select()
+            .from(mentorProfiles)
+            .where(eq(mentorProfiles.userId, user.id))
+            .limit(1),
+          db
+            .select({
+              relationship: mentorshipRelationships,
+              menteeName: sql<string>`(SELECT name FROM users WHERE id = ${mentorshipRelationships.menteeUserId})`,
+              menteeEmail: sql<string>`(SELECT email FROM users WHERE id = ${mentorshipRelationships.menteeUserId})`,
+            })
+            .from(mentorshipRelationships)
+            .where(
+              and(
+                eq(mentorshipRelationships.mentorUserId, user.id),
+                eq(mentorshipRelationships.status, 'active')
+              )
+            ),
+          db
+            .select({
+              meeting: meetings,
+              menteeName: sql<string>`(SELECT name FROM users WHERE id = ${mentorshipRelationships.menteeUserId})`,
+            })
+            .from(meetings)
+            .innerJoin(
+              mentorshipRelationships,
+              eq(meetings.relationshipId, mentorshipRelationships.id)
+            )
+            .where(
+              and(
+                eq(mentorshipRelationships.mentorUserId, user.id),
+                eq(meetings.status, 'scheduled'),
+                gte(meetings.scheduledAt, new Date())
+              )
+            )
+            .orderBy(meetings.scheduledAt)
+            .limit(5),
+        ]);
+      const mentorProfile = mentorProfileRows[0];
 
       dashboardData.mentor = {
         profile: mentorProfile,
@@ -148,14 +172,14 @@ export async function GET() {
 
     // Mentee-specific data
     if (isMentee) {
-      const [menteeProfile] = await db
-        .select()
-        .from(menteeProfiles)
-        .where(eq(menteeProfiles.userId, user.id))
-        .limit(1);
-
-      // Get active mentors with form → profile fallback
-      const activeMentors = await db
+      const [menteeProfileRows, activeMentors, upcomingMenteeMeetings] =
+        await Promise.all([
+          db
+            .select()
+            .from(menteeProfiles)
+            .where(eq(menteeProfiles.userId, user.id))
+            .limit(1),
+          db
         .select({
           relationship: mentorshipRelationships,
           mentorName: sql<string>`(SELECT name FROM users WHERE id = ${mentorshipRelationships.mentorUserId})`,
@@ -180,31 +204,34 @@ export async function GET() {
             )
           )`,
         })
-        .from(mentorshipRelationships)
-        .where(
-          and(
-            eq(mentorshipRelationships.menteeUserId, user.id),
-            eq(mentorshipRelationships.status, 'active')
-          )
-        );
-
-      // Get upcoming meetings as mentee
-      const upcomingMenteeMeetings = await db
-        .select({
-          meeting: meetings,
-          mentorName: sql<string>`(SELECT name FROM users WHERE id = ${mentorshipRelationships.mentorUserId})`
-        })
-        .from(meetings)
-        .innerJoin(mentorshipRelationships, eq(meetings.relationshipId, mentorshipRelationships.id))
-        .where(
-          and(
-            eq(mentorshipRelationships.menteeUserId, user.id),
-            eq(meetings.status, 'scheduled'),
-            gte(meetings.scheduledAt, new Date())
-          )
-        )
-        .orderBy(meetings.scheduledAt)
-        .limit(5);
+            .from(mentorshipRelationships)
+            .where(
+              and(
+                eq(mentorshipRelationships.menteeUserId, user.id),
+                eq(mentorshipRelationships.status, 'active')
+              )
+            ),
+          db
+            .select({
+              meeting: meetings,
+              mentorName: sql<string>`(SELECT name FROM users WHERE id = ${mentorshipRelationships.mentorUserId})`,
+            })
+            .from(meetings)
+            .innerJoin(
+              mentorshipRelationships,
+              eq(meetings.relationshipId, mentorshipRelationships.id)
+            )
+            .where(
+              and(
+                eq(mentorshipRelationships.menteeUserId, user.id),
+                eq(meetings.status, 'scheduled'),
+                gte(meetings.scheduledAt, new Date())
+              )
+            )
+            .orderBy(meetings.scheduledAt)
+            .limit(5),
+        ]);
+      const menteeProfile = menteeProfileRows[0];
 
       dashboardData.mentee = {
         profile: menteeProfile,
@@ -239,37 +266,11 @@ export async function GET() {
     // Admin-specific data removed - admins are redirected to /dashboard/admin
     // This endpoint now only serves mentor/mentee dashboard data
 
-    // Common data for all users
-    // Upcoming events
-    const upcomingEvents = await db
-      .select({
-        event: events,
-        registration: eventRegistrations
-      })
-      .from(events)
-      .leftJoin(
-        eventRegistrations,
-        and(
-          eq(eventRegistrations.eventId, events.id),
-          eq(eventRegistrations.userId, user.id)
-        )
-      )
-      .where(gte(events.startTime, new Date()))
-      .orderBy(events.startTime)
-      .limit(5);
-
-    dashboardData.upcomingEvents = upcomingEvents.map(e => ({
+    // Populate common data (already fetched at top in parallel with roles/forms).
+    dashboardData.upcomingEvents = upcomingEventsRaw.map((e) => ({
       ...e.event,
-      isRegistered: !!e.registration
+      isRegistered: !!e.registration,
     }));
-
-    // Recent resources
-    const recentResources = await db
-      .select()
-      .from(resources)
-      .orderBy(desc(resources.uploadedAt))
-      .limit(5);
-
     dashboardData.recentResources = recentResources;
 
     dashboardData.quickActions.push(
