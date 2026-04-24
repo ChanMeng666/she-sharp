@@ -450,6 +450,17 @@
               "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
               "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
             ]
+          },
+          {
+            "type": "topics",
+            "title": "Session Highlights",
+            "content": [
+              "Every participant gets a free t-shirt on the day.",
+              "Tackle real-world vulnerable code challenges — identify the problem, find the insecure code, and fix the vulnerability.",
+              "Choose from a range of programming languages (like Java Spring, Python, JavaScript, and Ruby). For those just starting out, there’s also a beginner-friendly pseudocode option to help you learn as you go.",
+              "Hear lightning talks from four inspiring women leaders who’ll share their journeys, spark ideas, and highlight real pathways into cybersecurity.",
+              "Collaborate and connect with like-minded women and female-identifying participants, building confidence and breaking barriers together."
+            ]
           }
         ],
         "photos": [
@@ -927,7 +938,18 @@
           ],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "topics",
+            "title": "Piki Ake: Rise up Auckland",
+            "content": [
+              "Personal Branding — Learn how to present yourself confidently and authentically in the job market.",
+              "Assessing CVs — Get expert feedback on how to strengthen your CV to stand out from the crowd.",
+              "Interview Strategies — Discover practical tips to prepare for and succeed in interviews.",
+              "Mentorship Guidance — Hear from experienced professionals and gain valuable career advice tailored to your goals."
+            ]
+          }
+        ],
         "photos": [
           {
             "url": "/img/scraped/photos/686237b2c1b15cec7645e530_Elevate___HR-13_1_3b8b2b05.jpg",
@@ -3148,11 +3170,22 @@
             ]
           },
           {
-            "type": "judging",
-            "title": "Judging Criteria",
+            "type": "topics",
+            "title": "Problem and Solution",
             "content": [
-              "Problem and Solution: How well does the team identify a real-world problem and design an AI-driven solution?",
-              "Feasibility and Impact: How realistic is the proposed solution, and what measurable impact could it have?"
+              "The team must demonstrate a clear understanding of the problem they are solving.",
+              "The team must explain how their solution effectively solves the identified problem.",
+              "The pitch should be clear and concise in its presentation."
+            ]
+          },
+          {
+            "type": "topics",
+            "title": "Feasibility and Impact",
+            "content": [
+              "The solution must be technically feasible and able to be implemented.",
+              "The solution must have the potential to solve the problem effectively and create a meaningful impact.",
+              "Each judge will individually evaluate the teams based on the criteria above.",
+              "The judging panel will then discuss and come to a consensus on the winners in each category: Best Pitch, Best Technical Solution, People’s Choice Award, and the overall Winner of the year’s AI Hackathon."
             ]
           },
           {
@@ -3169,6 +3202,22 @@
               "One (1) confirmed internship place sponsored by Deloitte",
               "Free tickets to all remaining four (4) She Sharp events for the rest of the year, valued over $500",
               "Credit in AI services + three (3) months free mentorship; first team receives $500 and second team receives $200 from Promptech"
+            ]
+          },
+          {
+            "type": "topics",
+            "title": "Judging Information",
+            "content": [
+              "Held on 28th July 2024",
+              "The international judges join together via Zoom",
+              "5-minute pitch from each team",
+              "Judging panel of 6 judges, led by Dr. Mahsa McCauley — Founder and Director of She Sharp",
+              "4 Winners for this event: Best Pitch, Best Technical Solution, People’s Choice Award, and Winner of this year’s AI Hackathon",
+              "Theme: breaking free from drudgery and using innovation and technology to address repetitive tasks, mundane processes, and administrative burdens.",
+              "Participants are expected to align their proposed solutions to address one or more of the 8 use cases provided in the brief.",
+              "The solutions must involve a technology innovation, which can include the innovative use of existing technology.",
+              "The technology used must incorporate elements of AI, and the team must explain what these are and how they are utilized.",
+              "If the team has completed any work prior to the event, they must disclose what work was done and their starting point."
             ]
           }
         ],
@@ -11082,7 +11131,17 @@
           ],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "topics",
+            "title": "What to Expect",
+            "content": [
+              "A hands-on walk-through of Deloitte’s 10 Types of Innovation framework by applying it to an imaginary product. You’ll be able to take these learnings into your own work.",
+              "How small changes in your product can result in big changes for your customers and the uptake of your platform.",
+              "Put the Framework into action — split up into groups of 5 to create the next viral technology!"
+            ]
+          }
+        ],
         "photos": [
           {
             "url": "/img/scraped/photos/64978c23a0ebb88792c4e9a6_Photo_with_Deloitte_Brand_184c052a.jpg",
