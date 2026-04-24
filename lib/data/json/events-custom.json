@@ -47,6 +47,86 @@
   },
   "events": [
     {
+      "id": 92,
+      "slug": "her-waka-june-2026",
+      "title": "Her Waka (June 2026) — Personal Branding & Growth Tips",
+      "date": "June 2, 2026",
+      "coverImage": {
+        "url": "",
+        "alt": "Her Waka June 2026 — Personal Branding & Growth Tips, delivered by SheSharp, Ministry of Social Development and academyEX"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/her-waka-june-2026",
+      "shortDescription": "The fourth HER WAKA cohort focuses on personal branding and career growth strategy with Andrea Halal — learn to treat your career like a Go-To-Market plan and use LinkedIn to build visibility, credibility, and genuine professional networks.",
+      "attendees": null,
+      "checkedIn": null,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/her-waka-june-2026",
+        "title": "Her Waka (June 2026) — Personal Branding & Growth Tips",
+        "subtitle": "Personal Branding & Growth Tips",
+        "date": "June 2, 2026",
+        "time": "",
+        "location": {
+          "format": "in_person",
+          "venueName": "",
+          "address": "",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "The fourth cohort of the HER WAKA series focuses on personal branding and career growth — treating your career like a Go-To-Market strategy.",
+          "Andrea Halal, Tech Marketing Leader at Ideqa and creator of Big Leap Energy, will share how she rebuilt her network and professional credibility after moving to New Zealand with no local connections. Drawing on nine years of marketing experience across TV, production, advertising, brand management, and B2B marketing, Andrea will walk participants through the practical steps for building visibility and trust when you are new, relocating, or pivoting.",
+          "Expect a grounded, strategy-driven session on using LinkedIn as a career tool (not a highlight reel), on why positioning matters as much as performance, and on how relationships quietly compound over time.",
+          "As with every HER WAKA cohort, RCSA will join the session to share insights on the current New Zealand job market and offer practical guidance on job-seeking.",
+          "HER WAKA is a dynamic, employment-focused programme delivered by SheSharp in Auckland for Ministry of Social Development clients who are ready to strengthen their pathway into work. Running monthly from March to June 2026, each session is a cohesive, repeatable event designed to build job readiness, confidence, and practical understanding of the New Zealand labour market."
+        ],
+        "speakers": {
+          "keynote_speakers": {
+            "heading": "Meet Our Speaker",
+            "speakers": [
+              {
+                "name": "Andrea Halal",
+                "title": "Tech Marketing Leader | Building Your Career GTM Strategy",
+                "company": "Ideqa / Big Leap Energy",
+                "bio": "Andrea Halal is a Tech Marketing Leader at Ideqa driving B2B growth across ANZ, and the creator of Big Leap Energy — a career Go-To-Market methodology for tech professionals building visibility, credibility, and networks from scratch. After relocating to New Zealand with no local connections, she applied marketing thinking to her own career and rebuilt from zero. She is Ambassador Lead and Operations Strategy at The Marketing Club AU/NZ, writes and speaks on personal branding, LinkedIn as a career tool, and the mindset of showing up before you feel ready.",
+                "image": "/img/events/her-waka-june-2026-andrea-halal.jpg",
+                "linkedin": ""
+              }
+            ]
+          }
+        },
+        "organizers": [],
+        "sponsors": {
+          "main": [
+            {
+              "name": "Ministry of Social Development",
+              "logo": "/img/sponsors/msd.svg"
+            }
+          ],
+          "other": []
+        },
+        "specialSections": [
+          {
+            "type": "info",
+            "title": "What to Expect",
+            "content": [
+              "Inspirational speakers sharing authentic employment journeys and practical lessons from navigating the New Zealand workforce",
+              "Employer and recruiter panels offering direct insight into current hiring expectations",
+              "Practical job-readiness sessions focused on professional presentation, interview confidence, and effective employer engagement",
+              "Clear and accessible employment rights guidance",
+              "Structured networking opportunities with employers, recruiters, and industry representatives"
+            ]
+          }
+        ],
+        "photos": [],
+        "galleryUrl": "",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-ministry-of-social-development-academyex-her-waka-june-2026",
+        "images": [],
+        "category": "workshop",
+        "status": "upcoming",
+        "isFeatured": false
+      }
+    },
+    {
       "slug": "event-aut-linkedin-15-may-2026",
       "title": "Making LinkedIn Work for You with Stuart Little, presented by She Sharp and AUT",
       "date": "May 15, 2026",
