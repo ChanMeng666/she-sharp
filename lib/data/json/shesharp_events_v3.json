@@ -271,7 +271,36 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/68e07910a8f710b7f087da5b_Shona_Irving_ddffda22.jpg",
+            "alt": "Shona Irving"
+          },
+          {
+            "url": "/img/scraped/photos/68e0799e93e217abf557f66c_Evelyn_Hunsenger_aee4c570.jpg",
+            "alt": "evelyn-hunserger"
+          },
+          {
+            "url": "/img/scraped/photos/68e079d737c5fe190af8a4e7_Karen_Ip_0685644a.jpg",
+            "alt": "Karen Ip"
+          },
+          {
+            "url": "/img/scraped/photos/68e07a47ba04d345599b06d9_Adriana_Yong_c442f92d.jpg",
+            "alt": "Adriana Yong"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.google.com/share/AF1QipONHHOewHzAoTCFLQBO3Ho4yMOqWKZN-hUuruuwyfvYHj0p7CC1K9vvURQNuVklHg?key=V0hMc1BoRE9nZko5RU9RRUx0dWs2QzUtSDFfQkVR",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -423,7 +452,36 @@
             ]
           }
         ],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/68b6d4469334d9d88ba87f63_Copy_of_Fatemah_Beydoun_90431fe5.jpg",
+            "alt": "Fatemah Beydoun"
+          },
+          {
+            "url": "/img/scraped/photos/68b6d4fdd1e862785575b4cb_Suzy_Clarke-Headshot_7dfbd4f9.jpg",
+            "alt": "Executive GM of Security, Xero"
+          },
+          {
+            "url": "/img/scraped/photos/68baac28c7eeb2d9347c4dd1_MehikaManochBio_7b9283e2.jpg",
+            "alt": "profile pic of mehika"
+          },
+          {
+            "url": "/img/scraped/photos/6477d34fd4a7dba0fe2b6467_2_Mahsa_McCauley_9ecfe9bb.png",
+            "alt": "Masha McCauley a women with long dark brown hair "
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.app.goo.gl/4CWo8WBuM1rfg63q9",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -500,19 +558,6 @@
           "Join a dynamic panel discussion featuring three diverse, experienced, and growth-minded women who are driving meaningful change within Fonterra’s Products and Platforms landscape. This session will explore the transformational shift toward a product and platform-centric approach, highlighting the pivotal role it plays in shaping the future of IT delivery and unlocking greater business outcomes."
         ],
         "speakers": {
-          "guest_speakers": {
-            "heading": "Meet Our Guest Speaker",
-            "speakers": [
-              {
-                "name": "Vicky Enkhsaikhan",
-                "title": "women in tech advocate, educator, and GenAI expert",
-                "company": "",
-                "bio": "The unique possibilities technology presents for indigenous communities is at the heart of Vicky Enkhsaikhan’s journey from a nomadic childhood in the Gobi Desert to becoming the co-founder of the Empasoft Institute of Technology in Ulaanbaatar, Mongolia.Vicky has witnessed and supported the use of GenAI and other technologies by local software companies to protect and further her language and culture, while advocating for women in tech and providing access to education in her home country and beyond.",
-                "image": "/img/scraped/speakers/68b3779bdd6358872971f627_image_5b88ed84.png",
-                "linkedin": ""
-              }
-            ]
-          },
           "panel_speakers": {
             "heading": "Meet our speakers",
             "speakers": [
@@ -541,6 +586,19 @@
                 "linkedin": ""
               }
             ]
+          },
+          "keynote_speakers": {
+            "heading": "Meet Our Guest Speaker",
+            "speakers": [
+              {
+                "name": "Vicky Enkhsaikhan",
+                "title": "women in tech advocate, educator, and GenAI expert",
+                "company": "",
+                "bio": "The unique possibilities technology presents for indigenous communities is at the heart of Vicky Enkhsaikhan’s journey from a nomadic childhood in the Gobi Desert to becoming the co-founder of the Empasoft Institute of Technology in Ulaanbaatar, Mongolia.Vicky has witnessed and supported the use of GenAI and other technologies by local software companies to protect and further her language and culture, while advocating for women in tech and providing access to education in her home country and beyond.",
+                "image": "/img/scraped/speakers/68b3779bdd6358872971f627_image_5b88ed84.png",
+                "linkedin": ""
+              }
+            ]
           }
         },
         "organizers": [],
@@ -554,7 +612,36 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/68b3779bdd6358872971f627_image_5b88ed84.png",
+            "alt": "Vicky Enkhsaikhan"
+          },
+          {
+            "url": "/img/scraped/photos/689c67fcaafaf0049b7cfdca_Aileen_Collins_1_40c0c0ce.jpg",
+            "alt": "Aileen Collins"
+          },
+          {
+            "url": "/img/scraped/photos/689c68228cdc8d1eadfa5cfb_TraceyConnor_1_40a8247e.JPG",
+            "alt": "Tracey Connor"
+          },
+          {
+            "url": "/img/scraped/photos/68a6c5e2b8bb64dd5904a4f0_Kritika_1321f3f2.jpg",
+            "alt": "Kritika Law"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.app.goo.gl/TYrx8hrvrp4rbAS19",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -841,7 +928,84 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/686237b2c1b15cec7645e530_Elevate___HR-13_1_3b8b2b05.jpg",
+            "alt": "Kathryn Sandford"
+          },
+          {
+            "url": "/img/scraped/photos/66eba9db021d85dadb5ab595_IMG_1237_5595123d.jpg",
+            "alt": "Libby Lavrova"
+          },
+          {
+            "url": "/img/scraped/photos/686b6d61e7e3158e2b7a52da_Kai_Ping_Lew_d3611578.jpeg",
+            "alt": "Kai Ping (KP) Lew"
+          },
+          {
+            "url": "/img/scraped/photos/686b6e21a47aef2bb4fc3bae_vivientu_0d80ef20.jpg",
+            "alt": "Vivien Tu"
+          },
+          {
+            "url": "/img/scraped/photos/686b6e7dbaea94f8cf28eb91_Jamini_Patel_26272c64.jpeg",
+            "alt": "Jamini Patel"
+          },
+          {
+            "url": "/img/scraped/photos/686b6f0c2c7d0f5245da92de_Isuru_Fernandez_9283fc7d.jpeg",
+            "alt": "Isuru Fernando"
+          },
+          {
+            "url": "/img/scraped/photos/68874aeb3141ace212fb2f33_Caro_Gao_c9fc7f9e.jpeg",
+            "alt": "Caro Gao"
+          },
+          {
+            "url": "/img/scraped/photos/686b6fb262ce6721b047dc0e_Dalia_a2ccc235.png",
+            "alt": "Dalia Raphael"
+          },
+          {
+            "url": "/img/scraped/photos/686b7028bf8b5d7ad362879c_Irene_Naidu_d78410be.jpeg",
+            "alt": "Irene Naidu"
+          },
+          {
+            "url": "/img/scraped/photos/6477d34fd4a7dba0fe2b6467_2_Mahsa_McCauley_9ecfe9bb.png",
+            "alt": "Masha McCauley a women with long dark brown hair "
+          },
+          {
+            "url": "/img/scraped/photos/686b70ceb433ebe7308b30ea_Maria_Clamor_240b5bd7.jpeg",
+            "alt": "Maria Clamor"
+          },
+          {
+            "url": "/img/scraped/photos/686b7136426b1f78f21f3888_Matthew_Hall-White_5a9708c5.jpeg",
+            "alt": "Matthew Hall-White"
+          },
+          {
+            "url": "/img/scraped/photos/686b71b0049053d3559cdcb4_Justine_Hinton__732119d4.jpeg",
+            "alt": "Justine Hinton"
+          },
+          {
+            "url": "/img/scraped/photos/686b84f65184c0729d860632_1719309249585_1f147f31.jpeg",
+            "alt": "Prasanth Pavithran"
+          },
+          {
+            "url": "/img/scraped/photos/6878ba01658d0d8fcc46ebe9_Tuhi_Cooper_b65cf080.jpeg",
+            "alt": "Tuhi Cooper"
+          },
+          {
+            "url": "/img/scraped/photos/68874b7242b76ac2043c88f5_IMG_7827_30841b38.jpeg",
+            "alt": "Bahareh Jalili-Moghaddam"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.app.goo.gl/58coFzFj2FfWbFMp7",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -1120,11 +1284,117 @@
         },
         "organizers": [],
         "sponsors": {
-          "main": [],
+          "main": [
+            {
+              "name": "Sponsor",
+              "logo": "/img/scraped/sponsors/685b99d07fd43017405f42ba_667a27c0775567ddfcee9f8b_AIFNZ_43c3ee93.png"
+            },
+            {
+              "name": "Sponsor",
+              "logo": "/img/scraped/sponsors/647018601697362ad73172bc_aut-logo_21fc10e2.svg"
+            }
+          ],
           "other": []
         },
-        "specialSections": [],
-        "photos": [],
+        "specialSections": [
+          {
+            "type": "agenda",
+            "title": "Workshop Prep Series",
+            "content": [
+              "17 July — \"Become Hack-Fit\": Your first step to hackathon readiness",
+              "22 July — Tell the Story with AI",
+              "24 July — Design Thinking with AI",
+              "29 July — Accessible Futures: Honouring Indigenous Custodianship in the Digital Age",
+              "31 July — Agentic Frameworks"
+            ]
+          }
+        ],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/689454587ec5f00ec724894a_alejandro-davila-nz-conical_4b8fba04.jpg",
+            "alt": "Alejandro Davila"
+          },
+          {
+            "url": "/img/scraped/photos/689c57b44e8448a103408b6e_Michael_Fielding_7026a74a.jpeg",
+            "alt": "Michael Fielding"
+          },
+          {
+            "url": "/img/scraped/photos/689c5866a7764e99fc366d18_Maria_Mingallon_e8778ae6.jpeg",
+            "alt": "Maria Mingallon"
+          },
+          {
+            "url": "/img/scraped/photos/689c589fe620176eb7c46185_Richard_Copus_b0e2b175.jpeg",
+            "alt": "Richard Copus"
+          },
+          {
+            "url": "/img/scraped/photos/6477d34fd4a7dba0fe2b6467_2_Mahsa_McCauley_9ecfe9bb.png",
+            "alt": "Masha McCauley a women with long dark brown hair "
+          },
+          {
+            "url": "/img/scraped/photos/689c689db85b3744f18ee181_Nigel_Hunt_44d6bdd7.jpeg",
+            "alt": "Nigel Hunt"
+          },
+          {
+            "url": "/img/scraped/photos/689c69916ee21e10a099900b_tanya-gray_Tanya_Gray_c551cdd9.jpg",
+            "alt": "Tanya Gray"
+          },
+          {
+            "url": "/img/scraped/photos/686b84f65184c0729d860632_1719309249585_1f147f31.jpeg",
+            "alt": "Prasanth Pavithran"
+          },
+          {
+            "url": "/img/scraped/photos/689c604bc48ae4b3a5f034b0_Talita_Ekandjo_Talita_Ekandjo_76955f52.jpg",
+            "alt": "Talita Ekandjo"
+          },
+          {
+            "url": "/img/scraped/photos/689c66e3e624d2e6868f26cb_WEB2_02_Alan_Dent_66756313.jpg",
+            "alt": "Alan Dent"
+          },
+          {
+            "url": "/img/scraped/photos/66833ab7ab9af673a80d47af_geri_e8b364da.jpeg",
+            "alt": "profile of geris"
+          },
+          {
+            "url": "/img/scraped/photos/689c616e7d30faa0c152b994_IMG_8757_06c67bb3.jpg",
+            "alt": "Shae Parsons"
+          },
+          {
+            "url": "/img/scraped/photos/689c65caa1d0876274f8e62e_image_3e610ecd.png",
+            "alt": "Isha Sangrolkar"
+          },
+          {
+            "url": "/img/scraped/photos/689c636f80d02fba831c735d_Chan_Meng_30c603e4.png",
+            "alt": "Chan Meng"
+          },
+          {
+            "url": "/img/scraped/photos/689c6244262a9408738b1f0c_yesha_0e2b0115.jpg",
+            "alt": "Yesha Kaniyawala"
+          },
+          {
+            "url": "/img/scraped/photos/689c62f76e3510bde29f9bb9_cindy-luo_Cindy_Luo_588d0ac8.png",
+            "alt": "Cindy Luo"
+          },
+          {
+            "url": "/img/scraped/photos/689c6892a2dd65a7070d2cb0_Ji_Ruan_3060d647.jpeg",
+            "alt": "Ji Ruan"
+          },
+          {
+            "url": "/img/scraped/photos/652774fc247ee7d771e65d2c_Sara_124a374e.png",
+            "alt": "Sara Ghafoor"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.app.goo.gl/GUQBZCNDV7X5Jx5d6",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -1254,7 +1524,20 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.app.goo.gl/FUVC4aR3vPgvRzK57",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -1487,13 +1770,47 @@
             ]
           }
         },
-        "organizers": [],
+        "organizers": [
+          {
+            "name": "Dr. Mahsa McCauley",
+            "title": "Associate Professor at AUT, Founder & Director of She Sharp",
+            "company": "AUT",
+            "bio": "Dr. Mahsa McCauley (Mohaghegh) founded She Sharp Charitable Trust, serves as Associate Professor at AUT and Chair of the AI Forum. She researches AI, machine learning, IoT, and cybersecurity, serves on multiple boards including NZTech and EdTechNZ, and was appointed Communication and Information Commissioner for NZ National Commission for UNESCO in January 2026.",
+            "image": "",
+            "linkedin": ""
+          }
+        ],
         "sponsors": {
           "main": [],
           "other": []
         },
-        "specialSections": [],
-        "photos": [],
+        "specialSections": [
+          {
+            "type": "related-links",
+            "title": "Learn more",
+            "content": [
+              "Visit the #IAmRemarkable global movement: https://www.rmrkblty.org/iamremarkable"
+            ]
+          }
+        ],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/69ae758e75cb901b6270b2d2_LSS02450-EDITWEBRES_Original_ac1bbcde.jpg",
+            "alt": "mahsa-mccauley-mohaghegh-gec"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.app.goo.gl/Q7DK7YfkSDVweWPZ7",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -2485,7 +2802,20 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -2547,11 +2877,7 @@
           "longitude": 174.878403
         },
         "fullDescription": [
-          "Fisher and Paykel Healthcare will be hosting an AI Hackathon on July 26th – 28th kicking off with a keynote from Nicholas Fourie, VP of ICT.Are you ready to embark on an exhilarating journey of creativity, problem-solving, and innovation? In a world where innovation is the lifeblood of progress, we often find ourselves bogged down by repetitive tasks, mundane processes, and administrative burdens. Let’s Break Free from Drudgery!Join us at the AI Hackathon and be part of the movement to liberate ",
-          "Nicholas Fourie has been the Vice President of Information & Communication Technology at Fisher & Paykel Healthcare since February 2017. Since joining the company in 2007, he has held various systems engineering and management roles. Before his tenure at Fisher & Paykel, Nicholas worked for the South African division of BHP Billiton. He holds a Diploma in Computer Engineering from Damelin School of Information Technology in South Africa.",
-          "Nicholas has also served on the Computer and Mathematical Sciences Industry Advisory Board for Auckland University of Technology (AUT). Regularly featured in the CIO50 New Zealand Top Award Winners, Nicholas achieved the number one ranking and won the prestigious award in 2023.",
-          "Dr. Mahsa McCauley is the founder and the director of She Sharp , an Associate Professor in the School of Computer, Engineering and Mathematical Sciences at Auckland University of Technology and Chair of the AI Forum New Zealand. An internationally recognised leader in AI and machine learning, Dr. McCauley also serves on the boards of NZTech, EdTechNZ and the AI Research Association, where she contributes to shaping the future of AI policy and research in New Zealand. Internationally, she has en",
-          "As CTO, Rik drives outcomes through strategic data and digital tech adoption. Previously, he led Sustainability Sales Enablement at Microsoft and UK Strategy for manufacturing, energy, and resources. With 13 years at Cisco, Rik held global roles in energy, IoT, security, and digital transformation, including Chief Architect (CTO) for all industries. A leader in global conferences, Rik authors books, contributes to industry papers, and serves on boards for energy, manufacturing, sustainability, I"
+          "Fisher and Paykel Healthcare will be hosting an AI Hackathon on July 26th – 28th kicking off with a keynote from Nicholas Fourie, VP of ICT.Are you ready to embark on an exhilarating journey of creativity, problem-solving, and innovation? In a world where innovation is the lifeblood of progress, we often find ourselves bogged down by repetitive tasks, mundane processes, and administrative burdens. Let’s Break Free from Drudgery!Join us at the AI Hackathon and be part of the movement to liberate innovation from the shackles of monotony. Together, we’ll build a smarter, more efficient future.At this exciting event, you’ll acquire fresh skills, connect with fellow enthusiasts, and engage with sponsors and mentors. After intense collaboration, your team will showcase your project to a panel of judges who will determine the winner. Hackathons provide an inclusive environment where diverse skill sets converge to tackle real-world challenges."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -2800,7 +3126,41 @@
           ],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "agenda",
+            "title": "Readiness Workshops",
+            "content": [
+              "Build your own AI Powered Web App — with Michelle Sandford & Renee Noble",
+              "Iterative process and strategies for prompt development — with Amir Mohammadi",
+              "Supercharge Your Solutions with Generative AI — with Geri Harris"
+            ]
+          },
+          {
+            "type": "judging",
+            "title": "Judging Criteria",
+            "content": [
+              "Problem and Solution: How well does the team identify a real-world problem and design an AI-driven solution?",
+              "Feasibility and Impact: How realistic is the proposed solution, and what measurable impact could it have?"
+            ]
+          },
+          {
+            "type": "prizes",
+            "title": "Prizes to be won",
+            "content": [
+              "Engraved trophy for winning teams sponsored by She Sharp",
+              "Two (2) AI Summit tickets each valued over $1,595, sponsored by AI Forum",
+              "Four (4) $250 Prezzy cards from Fisher & Paykel",
+              "Four (4) $250 Prezzy cards from Deloitte",
+              "Eight (8) $150 Prezzy cards from Fisher & Paykel",
+              "Five (5) $100 Prezzy cards from AUT",
+              "Five (5) $100 Prezzy cards from Datacom",
+              "One (1) confirmed internship place sponsored by Deloitte",
+              "Free tickets to all remaining four (4) She Sharp events for the rest of the year, valued over $500",
+              "Credit in AI services + three (3) months free mentorship; first team receives $500 and second team receives $200 from Promptech"
+            ]
+          }
+        ],
         "photos": [
           {
             "url": "/img/scraped/photos/66a9546b78531c808b3a5d15_4_637d15f8.jpg",
@@ -3052,10 +3412,7 @@
           "longitude": 174.7735703
         },
         "fullDescription": [
-          "Are nerves holding you back? Fear not! Join Fiserv’s empowering workshop, “Banking on Yourself” and be inspired by those who carved their own paths. Fiserv, a Fortune 200 leader in mobile banking, is fuelled by the talent and dedication of our team. We're leading the way because of the brilliant minds we invest in. Discover the power of self-belief, we’ll even equip you with a successful toolkit that you can take away. Shatter limitations, own your value with unshakeable confidence, while master",
-          "Throughout my eleven-year tenure at Fiserv, I found the most fulfilment in moments where conventional processes fell short of meeting business demands, necessitating creative thinking and bold leadership to instigate change. I consider myself fortunate to have had exceptional mentors early in my career and continuous opportunities for personal and professional development through confronting challenges head-on. Additionally, I prioritise transparency by openly acknowledging my strengths and area",
-          "Kiran is a proactive .NET developer with 14 years experience in the analysis/ development/testing/deployment of Windows and web based applications using C#, ASP.Net, .NetCore, Azure and WPF, creating rich UI experiences along with worldwide client focused support, with demonstrable success multitasking under pressure to tight deadlines in the development team as well as individually, also developed extensive background in full software development life cycle. This includes requirement, gathering",
-          "Jazmin is a scrum master and intermediate software developer who is also an active member of the Fiserv Women tech organising committee, where she helps empower other women in tech! She worked with Fiserv during her AUT R&D project Consequently joined Fiserv’s internship program after graduation then, secured herself a role as a Junior Software Developer"
+          "Are nerves holding you back? Fear not! Join Fiserv’s empowering workshop, “Banking on Yourself” and be inspired by those who carved their own paths. Fiserv, a Fortune 200 leader in mobile banking, is fuelled by the talent and dedication of our team. We're leading the way because of the brilliant minds we invest in. Discover the power of self-belief, we’ll even equip you with a successful toolkit that you can take away. Shatter limitations, own your value with unshakeable confidence, while mastering the elevator pitch to promote yourself effectively and chase your dreams. Don't wait for permission - back yourself and take control of your journey!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -3194,11 +3551,7 @@
           "longitude": 174.7568309
         },
         "fullDescription": [
-          "Join us for an empowering evening as Les Mills International shines a spotlight on the unconventional routes many have taken to enter and navigate the technology industry. Expect to hear powerful stories if resilience, innovation, and success. Furthermore, we'll be exploring the theme of being underestimated - a common experience for many women and minorities in STEM. But rather than viewing it as a setback, we'll discuss how it can be harnessed as a powerful tool for exceeding expectations and ",
-          "After studying Biological Sciences at university, Micayla had never dreamed of pursuing a career in software but was presented with an opportunity in the tech industry. From IT helpdesk to Tech Lead, Micayla's career in software engineering has spanned IT management, DevOps engineering, and technical leadership. She finds herself eight years later, evolved from supporting users to currently leading a feature team to drive technical vision and solutions.",
-          "Before getting into product, Liz has had a varied career across digital marketing, events management, project management, digital production and eCommerce. Originally from Auckland, she has worked in London and Melbourne, and enjoys the variety that comes with working for a global company. Liz graduated with a BA/BCom in Communications and Marketing from Otago University with no plans to work in digital or tech, but is still loving it after more than 15 years in the industry.",
-          "Effy likes to describe working in digital product as ‘advanced cat herding’! While she holds degrees in mechanical engineering and psychology, Effy has chosen to flex her career into a variety of different spaces in the tech industry; from web dev to account management, UX design to team leadership. She prides herself on being a jack of all trades, and on finding creative yet simple solutions to the right problems.",
-          "Macy has been working in the industry for 9 years, from university to her current job. Her career path has been quite straightforward, including working in front-end and full-stack engineering, but she also loves to do project management work, and help in product delivery. Her advice is to be a tech person, she always thinks tech is used to serve the business. There are no ‘female’ developers, we are all developers!"
+          "Join us for an empowering evening as Les Mills International shines a spotlight on the unconventional routes many have taken to enter and navigate the technology industry. Expect to hear powerful stories if resilience, innovation, and success. Furthermore, we'll be exploring the theme of being underestimated - a common experience for many women and minorities in STEM. But rather than viewing it as a setback, we'll discuss how it can be harnessed as a powerful tool for exceeding expectations and breaking barriers. Don't miss this opportunity to connect, learn, and be inspired."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -3376,9 +3729,7 @@
           "longitude": 174.7635465
         },
         "fullDescription": [
-          "How to use cognitive biases to design great products, services, and your life! Join us for an evening at MYOB where we’ll focus on the importance of understanding human behaviour. While technical qualifications can be a gateway to working in software design, we need people from all backgrounds to design meaningful products and services. This talk will speak to the vital contributions human-centred designers make in the tech industry. Hazel Halim and Annabelle Yoon will take you through what cogn",
-          "Annabelle is a qualitative Design Researcher with experience leading research to launch new products and services and improve existing ones. She distils complex findings into simple actionable insights and is a champion of the user. With a background in art and design, Annabelle enjoys impacting the design process through research, and collaborating with others to design amazing customer experiences. Annabelle’s experience includes working at agencies in Toronto and Sydney and for Yahoo! and Wes",
-          "Born in Bulgaria and raised in Turkey, Hazel pursued design studies in both Turkey and Italy, gaining insights into contrasts, shifting context. Having lived and worked in many countries, Hazel possesses a keen ability to navigate diverse environments. Initially arriving in Aotearoa for a six-month mission, she now finds herself almost five years later, deeply rooted in the kiwi culture. With a background in Service and Systems design, some of Hazel’s work includes mentoring start-ups in the soc"
+          "How to use cognitive biases to design great products, services, and your life! Join us for an evening at MYOB where we’ll focus on the importance of understanding human behaviour. While technical qualifications can be a gateway to working in software design, we need people from all backgrounds to design meaningful products and services. This talk will speak to the vital contributions human-centred designers make in the tech industry. Hazel Halim and Annabelle Yoon will take you through what cognitive biases are and how to recognise and use them in your work, study, or personal life!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -3414,7 +3765,28 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/65e8b2441d0ebbd30c2bbcb4_Annabelle_Yoon_Headshot_b64e23c4.jpeg",
+            "alt": "Annabelle Yoon Headshot"
+          },
+          {
+            "url": "/img/scraped/photos/65e8b284cd0cc1fc20d30c6a_Hazel_Photo_1_6bc8cc77.jpeg",
+            "alt": "Hazel Headshot"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.app.goo.gl/brA5VppyZx9mAU2V9",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -3481,7 +3853,6 @@
         },
         "fullDescription": [
           "Join us for our annual breakfast event at Woolworths. We will celebrate women’s achievements, raise awareness about discrimination and take action to drive gender parity. Let’s have the opportunity to network and come together to leave the event with actionable outcomes to #inspireinclusion.",
-          "‌The power of data is what links her multifaceted career steps together, starting as a strategy consultant and moving into in-house roles in different industries where growth was tied to data insights, loyalty and digital customer experience.",
           "‌Kathryn is currently the Chief Analytics Officer for Woolworths NZ, helping one of NZ's biggest businesses on a data-led transformation.",
           "‌Kathryn is in awe of the New Zealand data talent and believes that bringing different skillsets together will drive positive outcomes for individuals, teams, business and end customers."
         ],
@@ -3511,7 +3882,24 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/65c32737e83dd843e3f12a83_Kathryn_Byrne_Photo_483efbad.jpg",
+            "alt": "Kathryn Byrne Profile"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.app.goo.gl/4nECHs1jrfg1X33g8",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -3571,9 +3959,7 @@
         "fullDescription": [
           "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
           "The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.",
-          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.",
-          "Lesieli, a proud Tongan, founder and Chief visionary officer of Lālanga, Lālanga dedicated to championing Maori-Pasifika student success. It empowers educators, school leaders with innovative mentoring programs, products like the Lālanga ToolBox, and tech solutions.",
-          "Lesieli recently completed her Masters Research, focusing on digital solutions to improve the success of Maori-Pasifika students, addressing issues such as truancy, wellbeing, and academic challenges. Lālanga ToolBox, currently being used by 2,000 primary students in Auckland decile one schools. She received the University of Auckland 2023, 40 under 40 Alumni Inspiring leaders award and has launched a charity to empower Pasifika students and families through education."
+          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms."
         ],
         "speakers": {
           "panel_facilitators": {
@@ -3657,6 +4043,59 @@
                 "linkedin": ""
               }
             ]
+          },
+          "guest_speakers": {
+            "heading": "Demo Facilitators",
+            "speakers": [
+              {
+                "name": "Lesieli Oliver",
+                "title": "ImmerseHer \"Virtual Reality\" Workshop Lead",
+                "company": "",
+                "bio": "Lesieli, a proud Tongan, founder and Chief Visionary Officer of Lālanga. Lālanga is dedicated to championing Maori-Pasifika student success, empowering educators and school leaders with innovative mentoring programs, products like the Lālanga ToolBox, and tech solutions. She recently completed her Masters Research focusing on digital solutions to improve Maori-Pasifika student success. Lālanga ToolBox is currently used by 2,000 primary students in Auckland decile one schools. She received the University of Auckland 2023 40 Under 40 Alumni Inspiring Leaders Award.",
+                "image": "/img/scraped/speakers/google-educator-conference-2023/lesieli-oliver.png",
+                "linkedin": ""
+              },
+              {
+                "name": "Mehwish Hasan",
+                "title": "Education Ambassador, QuiverVision",
+                "company": "QuiverVision",
+                "bio": "",
+                "image": "/img/scraped/speakers/google-educator-conference-2023/mehwish-hasan.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Nils Reardon",
+                "title": "Introduction to Augmented Reality Workshop Lead",
+                "company": "",
+                "bio": "",
+                "image": "/img/scraped/speakers/google-educator-conference-2023/nils-reardon.jpeg",
+                "linkedin": ""
+              },
+              {
+                "name": "Nischay Gupta",
+                "title": "Introduction to Augmented Reality Workshop Lead",
+                "company": "",
+                "bio": "",
+                "image": "/img/scraped/speakers/google-educator-conference-2023/nischay-gupta.png",
+                "linkedin": ""
+              },
+              {
+                "name": "Steve Smith",
+                "title": "Google for Education, NZ Program Manager",
+                "company": "Google",
+                "bio": "",
+                "image": "/img/scraped/speakers/google-educator-conference-2023/steve-smith.jpeg",
+                "linkedin": ""
+              },
+              {
+                "name": "Claire Wigley",
+                "title": "Teacher, Spotswood College",
+                "company": "Spotswood College",
+                "bio": "",
+                "image": "/img/scraped/speakers/google-educator-conference-2023/claire-wigley.jpg",
+                "linkedin": ""
+              }
+            ]
           }
         },
         "organizers": [],
@@ -3670,7 +4109,80 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/64f71ff4f0d7a07cddcab389_Screen_Shot_2023-09-05_at_8.32_fda10c36.png",
+            "alt": "Profile picture of Lesieli Oliver"
+          },
+          {
+            "url": "/img/scraped/photos/651401b525c36574d67a3413_Mehwish_Hasan_Headshot_748d3f0b.jpg",
+            "alt": "Mehwish Hasan"
+          },
+          {
+            "url": "/img/scraped/photos/64f9b9ed7b6f7c9f95bec1ff_Nils_Reardon_ffbf439b.jpeg",
+            "alt": "Profile photo of Nils"
+          },
+          {
+            "url": "/img/scraped/photos/64f9bac5ab2e282389ae1f5d_Screen_Shot_2023-09-07_at_7.57_0887bd99.png",
+            "alt": "Profile photo of Nischay"
+          },
+          {
+            "url": "/img/scraped/photos/65084a6f7eff201d67564fb5_steve_smith_photo_9e4ce7f3.jpeg",
+            "alt": "Steve Smith"
+          },
+          {
+            "url": "/img/scraped/photos/654b416bc4182bc0aac67822_Claire_Wigley_photo_e1a219dd.jpg",
+            "alt": "Claire Wigley"
+          },
+          {
+            "url": "/img/scraped/photos/6523c77644a849818c9b981a_Alex_Ward_4_e5a3ee7d.jpg",
+            "alt": "Alex Ward"
+          },
+          {
+            "url": "/img/scraped/photos/6523c7864dd8dc8744a0f0f9_christopher-mende-photo_1_422cf8d3.jpeg",
+            "alt": "Christopher Mende"
+          },
+          {
+            "url": "/img/scraped/photos/651660618bc5c515a1dbf189_Gottschalk_photo_2_1cb1f73b.jpg",
+            "alt": "Jennifer Gottschalk"
+          },
+          {
+            "url": "/img/scraped/photos/65291784ce92e9979573177e_Julie_1_dd9752f2.png",
+            "alt": "Julie McMahon"
+          },
+          {
+            "url": "/img/scraped/photos/654b43a1b3fadccbb7f5f797_20231108_093807_cabc2a81.jpg",
+            "alt": "Aaron Overington"
+          },
+          {
+            "url": "/img/scraped/photos/650ce04b820846784cf43d08_Evo_d781ea1f.png",
+            "alt": "Profile Picture"
+          },
+          {
+            "url": "/img/scraped/photos/65487d1ddf1bfe388e81605e_Malcolm_Clarke_1265a5cc.jpg",
+            "alt": "Malcolm Clarke"
+          },
+          {
+            "url": "/img/scraped/photos/654873b6b75117a8e86f956a_Shanon_O'Connor_cf39d369.JPG",
+            "alt": "Shanon O'Connor"
+          },
+          {
+            "url": "/img/scraped/photos/65487ca84dd34ae38960f123_Tracy_Henderson_3acf1e35.jpeg",
+            "alt": "Tracy Henderson"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.google.com/share/AF1QipPpmlI7QXynCZ_KqLEZu_aQ3asmC4A1gw6OQdWU3G_yo93MWkH2LYLsp7GVJZn8xw?pli=1&key=UGxZdGllaGZPVUNudG95dFFJaTdWYTJmckNhQlJR",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -3779,9 +4291,7 @@
         "fullDescription": [
           "SheSharp is delighted to announce Storytellers Series 2.0 after an overwhelming response from our first series!",
           "This time around we had the honour to bring some more amazing speakers to you all!",
-          "Each session will feature a presentation and Q&A from our featured guest speakers on their career journey & industry topics.",
-          "Sai Honig is a multipotentialite who has worked in differing roles in various industries. Prior to information security, Sai was an aerospace design engineer and financial/ operational auditing. Sai’s IT experience is in the governance, audit, supply chain, risk management, and security. Her industrial experience includes manufacturing, healthcare, education, and financial services.",
-          "Sai is technical but not a programmer. She flourish the most in a security role that works right across the business, consultatively bringing security \"into the real world\" for the average staff member. Sai is passionate in helping others and promoting a wider understanding of cybersecurity."
+          "Each session will feature a presentation and Q&A from our featured guest speakers on their career journey & industry topics."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -3812,7 +4322,28 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/648251d9d24696d449324c43_3_Sai_Honig _a1e42948.png",
+            "alt": "Headshot of Sai Honig"
+          },
+          {
+            "url": "/img/scraped/photos/65238fe6a9f45e134cbffae0_Screen_Shot_2023-10-09_at_1.30_164b757f.png",
+            "alt": "Profile photo of Divya"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.app.goo.gl/5Co2mqzaYwJXytE7A",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -3871,11 +4402,8 @@
           "country": "New Zealand"
         },
         "fullDescription": [
-          "Whilst 2020 started off with a bang, the start of a new decade, it quickly turned into unprecedented times. Yes, we’ve heard the word ‘unprecedented’ a lot over the past few months, but the truth is, the world just wasn’t prepared for what was quickly evolving to be the biggest pandemic of this generation. For us here, in little ol’ New Zealand, Kiwis too, persevered, making sacrifices for the preservation of the lives of others. She Sharp, in recognising these difficult times, decided to launch",
-          "Thanks to everyone who was able to join us during May – June for the She Sharp Storytellers Series. Over five weeks, She Sharp hosted a range of tech leaders, from the likes of Google and Microsoft. We had participants tuning in from all around Aotearoa and across APAC. We hope that you were able to gain inspiration, motivation, and some new connections through the platform during these challenging times.",
-          "Saba’s mission in life is to do her best in creating a better future for humanity and all that lives around us. She has quite a diverse experience in the tech industry from hands-on coding to leading multi-million dollar transformation projects.Saba developed an in-depth passion for artificial intelligence back in 2017 and has dedicated her life outside of work to this topic ever since. She recently submitted her master thesis which focused on understanding the why behind the warnings about the ",
-          "Tash Bettridge (Te whānau-a-apanui, ngapuhi, pakeha) is an award-winning woman in security, having co-founded the New Zealand Network for Women in Security, she was recognised in the global SIA Women in Security Forum Power 100 in 2022, Women in Security Awards Aotearoa Indigenous Advocate, amongst numerous industry accolades for her work advocating for diversity in cybersecurity, as well as initiatives that empower Māori and Pacific People.",
-          "Lena is a Lecturer in Business Information Systems and the founder of the Early Career Academics forum at AUT. After completing her degree in international business and economics in Austria, France and Germany, she completed her PhD in Austria and New Zealand. Her research focuses on conversational agents and the impact on the human workforce, Artificial Intelligence, digital disconnection and robotic process automation. Her work has been published in top journals such as the Journal of Travel R"
+          "Whilst 2020 started off with a bang, the start of a new decade, it quickly turned into unprecedented times. Yes, we’ve heard the word ‘unprecedented’ a lot over the past few months, but the truth is, the world just wasn’t prepared for what was quickly evolving to be the biggest pandemic of this generation. For us here, in little ol’ New Zealand, Kiwis too, persevered, making sacrifices for the preservation of the lives of others. She Sharp, in recognising these difficult times, decided to launch a series of interactive, digital sessions, inviting female leaders in tech to share their career journeys and experiences.",
+          "Thanks to everyone who was able to join us during May – June for the She Sharp Storytellers Series. Over five weeks, She Sharp hosted a range of tech leaders, from the likes of Google and Microsoft. We had participants tuning in from all around Aotearoa and across APAC. We hope that you were able to gain inspiration, motivation, and some new connections through the platform during these challenging times."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -3930,7 +4458,40 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/64f7bd97700193c77acbca98_saba-samiei_d40a5a30.jpg",
+            "alt": "Saba Samiei"
+          },
+          {
+            "url": "/img/scraped/photos/648252262f2d3942579598c7_4_Tash_Bettridge _f16fe9ab.png",
+            "alt": "Headshot of Tash Bettridge"
+          },
+          {
+            "url": "/img/scraped/photos/64fe6be4b23a976cbc99cf2f_Dr_Lena_f02e3800.png",
+            "alt": "Dr Lena Waizenegger"
+          },
+          {
+            "url": "/img/scraped/photos/64fe6d05a1cce20956d4e278_Alisa_Edwards_07a4e89b.png",
+            "alt": "Alisa Edwards"
+          },
+          {
+            "url": "/img/scraped/photos/64fe6ee6176be51b08818d6e_Paola_ea35f63e.png",
+            "alt": "Paola Golledge"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -4002,7 +4563,7 @@
         },
         "fullDescription": [
           "Over 50 (mainly high school students) joined us for our first She# event of 2017 held at Orion Health. We started the workshop with some ice breakers and team building games so everyone became for comfortable and familiar with one another.",
-          "Using the workbooks and USB’s provided, students worked in pairs or individually to create a game using the platform Construct 2. After a morning of writing code and testing the game we broke for lunch refueling on pizza! This was then followed by a presentation by our guest speaker, Niamh Fitzgerald, a game developer and Media Design Student. Niamh shared her experience and insight into the NZ game development scene – she became an instant hit with the students with a prolonged and very positiv"
+          "Using the workbooks and USB’s provided, students worked in pairs or individually to create a game using the platform Construct 2. After a morning of writing code and testing the game we broke for lunch refueling on pizza! This was then followed by a presentation by our guest speaker, Niamh Fitzgerald, a game developer and Media Design Student. Niamh shared her experience and insight into the NZ game development scene – she became an instant hit with the students with a prolonged and very positive and interactive Q&A session."
         ],
         "speakers": {},
         "organizers": [],
@@ -4100,7 +4661,20 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.app.goo.gl/Na5RAHcxDDm5MrGb9",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -4146,7 +4720,7 @@
         },
         "fullDescription": [
           "On a sunny Thursday morning during half term a group of female high school and university students headed out to the Fisher and Paykel Healthcare offices in East Tamaki. We’d all come to find out more about this iconic Kiwi company founded in 1934 and their pioneering work create medical apparatus for healthcare.",
-          "We kicked the session off with some ice breaker games so everyone felt comfortable and familiar with each other. The team at Fisher and Paykel Healthcare then introduced themselves and gave an overview of the company, its challenges and achievements. This lead seamlessly into the group activity whereby the students worked in teams to come up with a solution to attached a breathing ventilator to a premature baby. They created prototypes using and a box of equipment provided and a toy baby! At the",
+          "We kicked the session off with some ice breaker games so everyone felt comfortable and familiar with each other. The team at Fisher and Paykel Healthcare then introduced themselves and gave an overview of the company, its challenges and achievements. This lead seamlessly into the group activity whereby the students worked in teams to come up with a solution to attached a breathing ventilator to a premature baby. They created prototypes using and a box of equipment provided and a toy baby! At the end of the challenge the students then presented their idea and creations to the group.",
           "After a quick lunch and networking session with some of the female engineers at Fisher and Paykel Healthcare we then kicked off the afternoon session with a panel discussion. This was an insightful and inspiring session with a group of female engineers who came from different backgrounds and teams within the company. It was a great illustration of the variety of engineering roles and disciplines Fisher and Paykel Healthcare products used.",
           "By the end of our visit all our students were excited and inspired to pursue their dreams as engineers! Big thank you to Mandy McAlwee and the team at Fisher and Paykel Healthcare for having us."
         ],
@@ -4218,8 +4792,8 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "Fisher &amp; Paykel Healthcare Campus",
-          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
+          "venueName": "",
+          "address": "",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -4407,7 +4981,7 @@
           "longitude": 174.7821066
         },
         "fullDescription": [
-          "Wellington’s first SheSharp event was sponsored by Xero and 920 Career Agents as well as Orion Health, Unitec and Google and was held at Xero with a team of SheSharp members who travelled down from Auckland. The event was sold out, with over 60 women attending from around Wellington, some even travelling in from other cities around New Zealand.In addition to secondary and tertiary students, there were also industry members from a range of companies including Xero, 920 Career Agents, Fonde, Catal",
+          "Wellington’s first SheSharp event was sponsored by Xero and 920 Career Agents as well as Orion Health, Unitec and Google and was held at Xero with a team of SheSharp members who travelled down from Auckland. The event was sold out, with over 60 women attending from around Wellington, some even travelling in from other cities around New Zealand.In addition to secondary and tertiary students, there were also industry members from a range of companies including Xero, 920 Career Agents, Fonde, Catalyst, Assurity , Orion Health, IBM and VizExplorer. Attendees participated in professional development activities around Agile and held discussions on issues faced in various spaces such as industry, tertiary and secondary education.",
           "The event also included a panel of women from Xero who shared successes, challenges and experiences from their own journeys. Feedback from participants was very encouraging, many commenting on the level of professionalism of the event and on the value and necessity of such a group to continue in Wellington.Read about out awesome panelists from Xero below."
         ],
         "speakers": {},
@@ -4497,7 +5071,7 @@
         },
         "fullDescription": [
           "Imposter Syndrome is a long talked about topic that many people in the tech industry suffer from (not just women, either!). It’s that feeling of not being good enough or that you don’t deserve to be where you are today. We often think we’re alone in this mindset; but most people feel this way at some point in their career!",
-          "We had a presentation from Michelle about what imposter syndrome is and how to overcome this barrier that is stopping you from being awesome! Her life motto is to stop complaining and start changing and say yes to anything that doesn’t kill you. Her presentation was inspiring and led onto group discussions about a range of topics related to imposter syndrome. We had talks about our overuse of the words “sorry ” and “just” as well as what we thought our best traits were and whether perfect life-b"
+          "We had a presentation from Michelle about what imposter syndrome is and how to overcome this barrier that is stopping you from being awesome! Her life motto is to stop complaining and start changing and say yes to anything that doesn’t kill you. Her presentation was inspiring and led onto group discussions about a range of topics related to imposter syndrome. We had talks about our overuse of the words “sorry ” and “just” as well as what we thought our best traits were and whether perfect life-balance was achievable. The event was a definite success, made possible thanks to the awesome location at GridAKL and our amazing Guest Speaker Michelle Dickinson. It was empowering and encouraged everyone to start saying yes to things! Michelle also shared what success and leadership meant to her and urged others to do the same. Video of the event coming soon!"
         ],
         "speakers": {},
         "organizers": [],
@@ -4668,8 +5242,8 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "Fisher &amp; Paykel Healthcare Campus",
-          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
+          "venueName": "",
+          "address": "",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -4950,9 +5524,7 @@
         "fullDescription": [
           "This event brought speakers from various parts of the tech industry together for an evening of demos, lightning talks, networking and cupcakes. We were even lucky enough to get to try out the first ever Microsoft HoloLens in New Zealand!",
           "Our speakers included Federica from Orion Health, Lance from Trade Me, Ella from Spark Ventures and Donna and Rocky from Microsoft. Attendees got to hear about analytics, the cute smart bin, Microsoft HoloLens and precision medicine.",
-          "Read more about our fantastic lightning speakers below!",
-          "Donna, Microsoft NZ's Services Director since 2010, oversees Consulting and Support, driving Microsoft's Enterprise Customer empowerment. Returning in 2016 as Business Strategy Director, she concentrates on the Subsidiary’s growth and transformation strategy. Previously, Donna dedicated 15 years to the Airline Industry in NZ and Australia, shaping IT strategy, leading e-commerce, digital transformation, and marketing solutions. Post her 2004 departure from Air NZ, Donna served as CIO at Coca-Col",
-          "Rocky, pioneers holographic computing in the evolving era of technology. Microsoft's HoloLens stands as the world’s initial fully untethered holographic computer, seamlessly merging the digital and physical domains. This innovation unlocks vast possibilities for Microsoft, its clientele, and collaborators. Driving this initiative aligns with his overarching goal of fostering the Digital Society."
+          "Read more about our fantastic lightning speakers below!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -5377,9 +5949,7 @@
         },
         "fullDescription": [
           "We have another amazing event coming up on the 15th October with our lovely She Sharp Alumni, Ruth James speaking at the Event! The event is to celebrate Ada Lovelace Day! In sponsorship with Xero!",
-          "Ada Lovelace Day was founded in 2009 by Suw Charman-Anderson to celebrate the achievements of women in science, technology, engineering and maths (STEM).",
-          "Our amazingly talented speaker, Ruth James is going to do the same by telling us about her journey in tech. She Sharp is honoured to have Ruth join us to celebrate this day!",
-          "Ruth fell into the NZ tech industry by complete fluke when she arrived in the country thirteen years ago! Her first job was as a receptionist for a tech company (Fronde), since then she’s worked for a number of New Zealand technology companies and currently works at Xero as their Tech Outreach and Engage Coordinator. In the last seven years she has become increasingly active in encouraging the next generation of Kiwi’s into the tech sector. She has thrown herself at every opportunity going where"
+          "Ada Lovelace Day was founded in 2009 by Suw Charman-Anderson to celebrate the achievements of women in science, technology, engineering and maths (STEM)."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -5407,7 +5977,24 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/6562d4f14f5963423a071387_Screen_Shot_2023-11-26_at_6.17_393faee8.png",
+            "alt": "Profile of Ruth James smiling"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.app.goo.gl/KmMQByWYpxDE4yoz7",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -5547,10 +6134,7 @@
         },
         "fullDescription": [
           "From healthcare, to finance, education and government, artificial intelligence (AI) is reshaping every part of our lives. It is also helping solve some of the world’s greatest challenges. However, women account for less than 25 percent of the AI workforce.",
-          "Please join our next event to discuss women in AI for social good. Be inspired byDr Mahsa Mohaghegh’svision to increase female participation in AI, for the benefit of all. She will be joined by a panel of guest speakers to explore female-led AI that’s good for the world. Join the conversation, network and create valuable connections.",
-          "Dr. Mahsa McCauley is the founder and the director of She Sharp , an Associate Professor in the School of Computer, Engineering and Mathematical Sciences at Auckland University of Technology and Chair of the AI Forum New Zealand. An internationally recognised leader in AI and machine learning, Dr. McCauley also serves on the boards of NZTech, EdTechNZ and the AI Research Association, where she contributes to shaping the future of AI policy and research in New Zealand. Internationally, she has en",
-          "Jean is the VP and co-founder of the Onit AI Center of Excellence. Jean worked as a lawyer before becoming the COO and VP of Legal at McCarthyFinch, a legal AI venture that was acquired by Onit. While there, she helped build the business from infancy to acquisition and lead product and technology development. Jean was named Emerging ICT Leader of the Year 2019 and is a founding executive of LegalTech NZ.",
-          "Heather is a growth-oriented leader passionate about bringing world-changing technologies to market and scaling social impact. She is a data-driven strategist experienced in developing and leading go-to-market, communications, and sustainability initiatives at start-ups and multi-national organizations. Most recently, Heather served as the VP of Marketing and Strategic Partnerships at Sama, a leading San Francisco based machine learning company focused on producing high quality training data for"
+          "Please join our next event to discuss women in AI for social good. Be inspired byDr Mahsa Mohaghegh’svision to increase female participation in AI, for the benefit of all. She will be joined by a panel of guest speakers to explore female-led AI that’s good for the world. Join the conversation, network and create valuable connections."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -5705,10 +6289,11 @@
         },
         "fullDescription": [
           "We wrapped up 2017 with an Auckland Tech Grand Tour of some of the biggest names in the local tech scene. Transport and lunch was provided for the female university and high school students that went on a whistle stop tour.",
-          "We left from the meet up point at AUT City Campus and heading to the first destination – Orion Health. Here the students had a introduction to the product cycle – from concept to creation (aka shippable product!) by Sherry Tung, Business Analyst at Orion. Sherry presented on how Orion Health refined and iterated ideas and concepts throughout the product cycle and talked about the challenges and innovations that occur along the way. Rounding off the session was a panel discussion with some of the",
-          "After this the students all boarded the bus again and headed down the hill to Parnell and to the Xero office. They were greeted with lunch on arrival and a talk by Gareth Cronin, Executive General Manager – Partner Products. Gareth talked about diversity and inclusion not only being paramount for staff to flourish, but that it also produced stronger business outcomes and better reflected the diverse community of customers and partners Xero interacts with every day. This was then followed by a pr",
-          "After this the group then jumped back on the bus again and heads down to Wynyard quarter and to the Air New Zealand Head Office. Here a team Product Owners, Developers and Quality Assurers introduced themselves and talked about their work. The group was then split into two smaller groups which consequently encouraging a more intimate conversation between the presenters and attendees. The Air New Zealand team talked to one team about Oscar, the Air New Zealand chatbot that used AI to help with cu",
-          "It wasn’t long before the students were on the bus again and heading to their final destination of the tour, Trade Me. Here they were greeted by Grace Benedek Rooney, a Developer at Trade Me, who talked about what it is like to be a developer. Developers at Trade Me work in teams, use a variety of tools in order to deliver cool and useful products. She also talked about how as a developer, you get to help people in their lives without meeting them in person. Her example was about a student movin"
+          "We left from the meet up point at AUT City Campus and heading to the first destination – Orion Health. Here the students had a introduction to the product cycle – from concept to creation (aka shippable product!) by Sherry Tung, Business Analyst at Orion. Sherry presented on how Orion Health refined and iterated ideas and concepts throughout the product cycle and talked about the challenges and innovations that occur along the way. Rounding off the session was a panel discussion with some of the brightest young women in Orion who shared stories of how they landed in the tech world.",
+          "After this the students all boarded the bus again and headed down the hill to Parnell and to the Xero office. They were greeted with lunch on arrival and a talk by Gareth Cronin, Executive General Manager – Partner Products. Gareth talked about diversity and inclusion not only being paramount for staff to flourish, but that it also produced stronger business outcomes and better reflected the diverse community of customers and partners Xero interacts with every day. This was then followed by a presentation from Ruth James, Happiness Engineer at Xero who talked about what Xero was actively doing to ensure they encourage and maintained a diverse and inclusive workplace for all their staff.",
+          "After this the group then jumped back on the bus again and heads down to Wynyard quarter and to the Air New Zealand Head Office. Here a team Product Owners, Developers and Quality Assurers introduced themselves and talked about their work. The group was then split into two smaller groups which consequently encouraging a more intimate conversation between the presenters and attendees. The Air New Zealand team talked to one team about Oscar, the Air New Zealand chatbot that used AI to help with customer queries.The other group had more of a ‘fireside chat’ about what it really looked like to work at Air New Zealand, encouraging questions from the floor. After about 30 min, each group swapped over.",
+          "It wasn’t long before the students were on the bus again and heading to their final destination of the tour, Trade Me. Here they were greeted by Grace Benedek Rooney, a Developer at Trade Me, who talked about what it is like to be a developer. Developers at Trade Me work in teams, use a variety of tools in order to deliver cool and useful products. She also talked about how as a developer, you get to help people in their lives without meeting them in person. Her example was about a student moving out of home. They can use Trade Me to find a flat, furnish the flat, find a job to support their studies and buy a car after saving their paychecks. For students wanting to find internships, Grace recommended the Summer of Tech programme which is how she landed her first roles in tech. Summer of Tech offers free training for students then connects them to organisations where they can work in a paid and meaningful role.",
+          "Having spent six and half hours on a whirlwind tour of some of New Zealand’s biggest and most successful tech companies it was time to head back to AUT and conclude what had been a highly successful event."
         ],
         "speakers": {},
         "organizers": [],
@@ -5786,8 +6371,8 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "Fisher &amp; Paykel Healthcare Campus",
-          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
+          "venueName": "",
+          "address": "",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -5962,8 +6547,8 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "Fisher &amp; Paykel Healthcare Campus",
-          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
+          "venueName": "",
+          "address": "",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -5973,8 +6558,7 @@
         "fullDescription": [
           "“Googlers” from Google Sydney joined us for a bias busting workshop that was open to all students and professionals.",
           "The aim of the workshop was to reduce bias and promote inclusion to create impact and innovation. We had a interactive learning experience with Googlers to demonstarte how to contribute to an inclusive culture at university and beyond.",
-          "Of course, there was plenty of Google swag given away and attendees got a unique opportunity to talk to Googlers and ask questions about their work life and “Googley-ness”!",
-          "Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington. The team works to help Kiwis find new ways to collaborate, reach audiences and get things done. Google is committed to helping all Kiwis with the digital knowledge and capabilities they need now and in the future."
+          "Of course, there was plenty of Google swag given away and attendees got a unique opportunity to talk to Googlers and ask questions about their work life and “Googley-ness”!"
         ],
         "speakers": {},
         "organizers": [],
@@ -6404,8 +6988,8 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "Fisher &amp; Paykel Healthcare Campus",
-          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
+          "venueName": "",
+          "address": "",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -6507,7 +7091,7 @@
         "fullDescription": [
           "The event was facilitated by representation from the Digital UX department, Product Owners, as well as current interns at Air New Zealand.We were introduced to Design Thinking as “A problem solving approach, particularly applicable to fuzzy or wicked problems – making it well suited to design human experiences”.",
           "This was shortly followed by the instruction that – Design Thinking is experiential. To learn it, you have to do it……..so, we did!",
-          "This design sprint workshop was a great introductory session for both students and professionals with no first time experience. It was highly creative and encouraging us all to think outside of the box and push through our inhibitions or preconceived ideas. It was also very interactive and encourage consultant discussion and evaluation with a partner (ie, the stranger sitting next to you!)The key takeaway was looking at ways you could use Design Thinking in your everyday life.The material provid"
+          "This design sprint workshop was a great introductory session for both students and professionals with no first time experience. It was highly creative and encouraging us all to think outside of the box and push through our inhibitions or preconceived ideas. It was also very interactive and encourage consultant discussion and evaluation with a partner (ie, the stranger sitting next to you!)The key takeaway was looking at ways you could use Design Thinking in your everyday life.The material provide by Stanford is open source and a great way to introduce the concept of design thinking to groups or teams that are looking to solve a problem – i’d highly recommend giving it a go!"
         ],
         "speakers": {},
         "organizers": [],
@@ -6520,7 +7104,15 @@
           ],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "related-links",
+            "title": "Start with design",
+            "content": [
+              "Stanford d.school — A Virtual Crash Course in Design Thinking: https://dschool.stanford.edu/resources-collections/a-virtual-crash-course-in-design-thinking"
+            ]
+          }
+        ],
         "photos": [
           {
             "url": "/img/scraped/photos/654b2ce92f6435d5f3ce7938_28947377_1015549049578851_1882c5f1.jpg",
@@ -6600,8 +7192,7 @@
         "fullDescription": [
           "Unless you have been living under a rock, you will have heard of blockchain.",
           "Blockchain is one of the most important inventions since the Internet. It’s powering systems for supply chain, fintech, mobility, digital identity and yes, eventrading virtual cats. But, what exactly is Blockchain? How does it work? And most importantly, how do you decide if it’s right for your idea or business?",
-          "Join us at the event to learn the ins and outs of this emerging technology and blockchain based projects happening around New Zealand. Hear from the industry experts from Centrality, Yabble, and Āhau, about their blockchain journey. We will also conduct an Ideathon, where our experts will show you how easy it is to get started on blockchain programming. So team up and design your very own blockchain application to win a prize for the best concept. Drinks and nibbles will be provided to accompany",
-          "Centrality is a New Zealand-based company and tech venture platform. They leverage blockchain, AI, IoT and other emerging technologies to create an advanced and connected world. They’re fostering a user-centric approach and open-source culture to build the infrastructure for the emerging decentralised web. The ecosystem of Centrality is growing with developers, ventures, partnered businesses and startups that are passionate about creating a thriving decentralised future together."
+          "Join us at the event to learn the ins and outs of this emerging technology and blockchain based projects happening around New Zealand. Hear from the industry experts from Centrality, Yabble, and Āhau, about their blockchain journey. We will also conduct an Ideathon, where our experts will show you how easy it is to get started on blockchain programming. So team up and design your very own blockchain application to win a prize for the best concept. Drinks and nibbles will be provided to accompany this brainstorming."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -6735,10 +7326,7 @@
         },
         "fullDescription": [
           "Come celebrate the holiday season with us, reflect on the past year, and hear from diverse role models in tech and inspirations for the future!",
-          "Hannah partners with New Zealand's most sophisticated advertisers to leverage Google AI as a multiplier for solid performance strategy and expertise. She works closely with marketing leaders to unlock opportunities for profitable growth through smarter use of data, experimentation, and organisational change management.",
-          "With experience working across tech, agencies, and start-ups across APAC, Hannah is a firm believer in the power of people + AI to balance insight with action, create new value, and achieve more together.",
-          "Knight is the co-founder and CEO of Relab, a leading software platform designed to assist real estate professionals by providing data, insights, and workflow solutions. Prior to Relab he held various roles at Datacom, Spark, and Air New Zealand over 15 years. Alongside his business commitments, Knight has a keen interest in property technology and he lectures the PropPrac 709 – Advanced Property Analytics course at University of Auckland. Outside work, he enjoys football and mountain biking with",
-          "Kriv Naicker, Founder and MD of Synaptec NZ, a trailblazer in Exponential & Disruptive Technology. Specializing in IoT, AR/VR, Drones, Cloud, Blockchain, 5G, AI, and ML. Visionary leader, founded NZ Internet of Things Alliance, serving as Executive Director and current Board Chair."
+          "With experience working across tech, agencies, and start-ups across APAC, Hannah is a firm believer in the power of people + AI to balance insight with action, create new value, and achieve more together."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -6895,7 +7483,7 @@
           "country": "New Zealand"
         },
         "fullDescription": [
-          "She# was proud to hold an incredible event at Amazon Web Services on a very inspiring topic: The Amazon Culture of Innovation. Attendees enjoyed listening to AWS’s Katrien Pagenaer, the NZ Sales Manager at AWS as she talked about the the key innovation fostering ideas followed by Amazon that helped it grow from an online books retailer to an e-commerce and computing giant. This was followed by a hands-on workshop that saw teams brainstorming to come up with their very own innovation, and pitchin"
+          "She# was proud to hold an incredible event at Amazon Web Services on a very inspiring topic: The Amazon Culture of Innovation. Attendees enjoyed listening to AWS’s Katrien Pagenaer, the NZ Sales Manager at AWS as she talked about the the key innovation fostering ideas followed by Amazon that helped it grow from an online books retailer to an e-commerce and computing giant. This was followed by a hands-on workshop that saw teams brainstorming to come up with their very own innovation, and pitching it to the judges just like an Amazon employee would!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -7084,8 +7672,8 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "Fisher &amp; Paykel Healthcare Campus",
-          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
+          "venueName": "",
+          "address": "",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -7175,8 +7763,8 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "Fisher &amp; Paykel Healthcare Campus",
-          "address": "15 Maurice Paykel Place, East Tāmaki, Auckland 2013, New Zealand",
+          "venueName": "",
+          "address": "",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.9353732,174.878403&query_place_id=ChIJ70H3WHNMDW0RjG5-cBuoGaA",
@@ -7184,8 +7772,7 @@
           "longitude": 174.878403
         },
         "fullDescription": [
-          "She# was delighted to be invited to Deloitte for a Chatbot Design Workshop. Over 40 attendees were split into teams to develop a Chatbot solution in a case study presented by Deloitte. Experienced Deloitte consultants mentored each team to ensure they had the necessary guidance. Teams elected four members to talk to the “client” and understand the client requirements for the solution. Finally, a solution was presented by each team. Pizza, Drinks, and Networking saw the evening to a close!",
-          "Justin has worked in technology for most of his career and has a long history working in Integration and specifically APIs across a range of industries but mostly in the financial sector. He has designed and implemented applications on public Cloud since the early days when there were only a handful of services available from Amazon Web Services"
+          "She# was delighted to be invited to Deloitte for a Chatbot Design Workshop. Over 40 attendees were split into teams to develop a Chatbot solution in a case study presented by Deloitte. Experienced Deloitte consultants mentored each team to ensure they had the necessary guidance. Teams elected four members to talk to the “client” and understand the client requirements for the solution. Finally, a solution was presented by each team. Pizza, Drinks, and Networking saw the evening to a close!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -7332,9 +7919,7 @@
         "fullDescription": [
           "This month’s event was all about women in tech and trades who are proving that they are more than just a diversity quota filler & industry leaders who are setting a new benchmark for inclusivity every day.",
           "It was an evening where we shined the spotlight on women. Industry leaders spoke about why they have not settled for a seat on the sidelines, and how they are setting a new benchmark for inclusivity everyday.",
-          "“Diversity is an invitation to the party, Inclusion is about an invitation to dance”",
-          "Chris is the newly appointed Chief Technology and Product Officer at Fergus, leading their engineering, product and design teams. Chris is a SaaS veteran, having worked for several global success stories such as PushPay, Orion Health and most recently, AskNicely. What's even better is his passion for building awesome software that delivers for its customers, the hard-working trades using Fergus being the best example.",
-          "I am a software engineer deeply entrenched in cloud services, my main focus is on backend development, where I leverage a suite of AWS services to architect, design and develop robust solutions. From crafting microservices to optimizing data flow, I orchestrate systems that seamlessly handle user requests. I ensure infrastructure as code is deployed consistently and efficiently. This synergy of services empowers me to create backend architectures that are resilient, scalable, and poised to adapt"
+          "“Diversity is an invitation to the party, Inclusion is about an invitation to dance”"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -7486,8 +8071,6 @@
         },
         "fullDescription": [
           "Technological change will continue to reshape the workplace and workforce. It's up to us, as individuals, organisations, and societies, to shape this future collaboratively, ensuring that technological change benefits everyone.",
-          "Lara is a seasoned senior executive with nearly 40 years of experience in the energy, mining, and technology sectors, spanning government-owned, public, and private settings. She has operated in numerous roles at company, division, and functional levels, in both corporate and site environments, in Australia and overseas. Lara holds undergraduate and post graduate qualifications including a Bachelor of Business, Certified Practicing Accountant (CPA), Masters of Business Administration (MBA), and ",
-          "Roz is the Chief People Officer for Livestock Improvement Corporation (LIC), leading the People & Performance Group which builds and sustains a high performing and engaged workforce. That team look after a range of areas like employee experience, employment relations, OD & Talent, H&S and Environment.",
           "Roz has been in this role since August 2017 and prior to that worked at Fletcher Building in a variety of senior human resource leadership roles. She has held human resource positions at blue chip organisations such as Vodafone, Foxtel, Frucor Beverages, Hudson Global Resources, andLion.",
           "When Roz isn’t a CPO she is busy wrangling two young sons, a husband and a very adventurous Labrador who loves stealing unattended socks!"
         ],
@@ -7696,9 +8279,7 @@
           "longitude": 174.7689278
         },
         "fullDescription": [
-          "We invite you to take part in our automation challenge, which will have you working in teams to develop an automated solution for a basic use case. There will be experienced developers on hand to help you through your solution, but with limited time this will definitely be a challenge. We have prepared some pre-work to help you prepare for the day, however the software we will be using (UiPath) is designed to be low-code with plenty of drag-and-drop options so we believe you’ll be able to develo",
-          "Priyanka is a leader in EY’s technology advisory practice. With a focus on automation she helps clients understand how processes can be improved through a combination of technology and process improvement. She studied Mathematics at university and joined EY on their graduate programme in the UK, later moving to New Zealand to join the Auckland team. Whilst every day is different, her role these days can be simplified into three parts; helping clients solve business problems (delivery), pursuing ",
-          "Thashnee is a senior service designer and the Agile lead for NZ at EY with 10+ years’ experience across various sectors. She has a passion for getting teams to deliver outcomes that matter to their customers and thrives on bridging the gap between design and delivery with the ability to coach teams through each of these areas. Her first job out of campus was an IT lecturer after which she joined a global software delivery consultancy. She has worked in various roles within software delivery incl"
+          "We invite you to take part in our automation challenge, which will have you working in teams to develop an automated solution for a basic use case. There will be experienced developers on hand to help you through your solution, but with limited time this will definitely be a challenge. We have prepared some pre-work to help you prepare for the day, however the software we will be using (UiPath) is designed to be low-code with plenty of drag-and-drop options so we believe you’ll be able to develop part of your solution intuition alone. The challenge will be run in a hackathon-style and there will be prizes for the winning team."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -7899,8 +8480,7 @@
           "We will be discussing the following topics:– What career options are available? What are the unique opportunities in tech where you can get involved?– How can you get yourself across the latest technology trends outside of the classroom?– What role does personal development play in building the right mindset to tackle the uncertainties of tomorrow? What does it mean to have a personal brand?– What should you consider to plan for your tertiary education?",
           "Shruti Sherekar (Business Analyst & Agile Consultant, IAG)",
           "Amrit Kaur (Tech, Strategy & Transformation Consultant, Deloitte)",
-          "Zainab Manasawala (Produce Development Engineer, Fisher & Paykel)",
-          "Since COVID-19, Amrit has been working with Ministry of Health on NZ’s COVID-19 response in the role of a Digital BA for the National Border Solution. Over her short career, Amrit has developed technical and non-technical skills in the tech world and likes to be involved in a holistic way in the work she is doing."
+          "Zainab Manasawala (Produce Development Engineer, Fisher & Paykel)"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -7987,10 +8567,8 @@
         },
         "fullDescription": [
           "“The Truths to Gaming and Start-up - SheSharp Edition” is organised by SheSharp, in collaboration with Geo AR Games & the New Zealand Game Developers Association (NZGDA). If you’re interested in Gaming, Augmented Reality, and Development, then this is an event you don’t want to miss!",
-          "Hear the inspiring story of Melanie, CEO of Geo AR Games, and learn how she grew her start-up and worked on national as well as international projects! It’s quite difficult for women to make it in the gaming industry and many females go through the stereotypical work environment. Melanie has some great tips for young women out there who are looking for a career in gaming, and how to make it in the industry! The gaming world needs women, like Talia Pua, Carol Taka and Vaanipriya Diwan, who are pa",
-          "Although this event features all female speakers, anyone can attend; from high school/university students to professionals far into their careers, people of all genders, aspiring entrepreneurs, are all welcome. We have a range of activities lined up, such as networking, gaming, and play-testing sessions.",
-          "Talia is equal parts a performer and designer of playful interactions. Her body of work spans across multiple disciplines including, but not limited to, game and play, installation work, theatre-making and performance. She has worked with AUT, Geo AR, MOTAT, Red Leap Theatre and Proudly Asian Theatre. In 2019 she was awarded a Gold Pin for her board game 'Continuum' at the Best Awards.",
-          "Carol is a freelance Maori Game Designer. She is working as a junior Developer with GeoAR, doing game design and programming amongst other things. She has a Bachelor of Creative Technologies and this has supported her journey in the industry. She enjoys working with Augmented Reality and Virtual Reality and hopes to work more with those in relation to her Maori heritage."
+          "Hear the inspiring story of Melanie, CEO of Geo AR Games, and learn how she grew her start-up and worked on national as well as international projects! It’s quite difficult for women to make it in the gaming industry and many females go through the stereotypical work environment. Melanie has some great tips for young women out there who are looking for a career in gaming, and how to make it in the industry! The gaming world needs women, like Talia Pua, Carol Taka and Vaanipriya Diwan, who are part of the panel on the night!",
+          "Although this event features all female speakers, anyone can attend; from high school/university students to professionals far into their careers, people of all genders, aspiring entrepreneurs, are all welcome. We have a range of activities lined up, such as networking, gaming, and play-testing sessions."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -8141,8 +8719,7 @@
           "We partnered with Xero to give people an opportunity to have a much needed night out to end 2020 with a bang!",
           "SheSharp and Xero hosted a Girl’s Night Out to bring together like-minded women interested in tech for a night of fun, interaction and challenges. As unprecedented this year has been, where most of us have interacted online via zoom calls or google hangouts, it’s time (and safe) for us to have an in person event. You don’t have to have a vast knowledge of tech or the tech sector to come along.",
           "There were team challenges, fun quizzes and general fun and interactive awesomeness. So people brought their A-game along! This was a great event to network and reconnect with others we haven’t had the opportunity to meet in person over the last few months!",
-          "This event was open to all students (18+) and working professionals! Food and Drinks (No Alcohol) were provided!",
-          "Mumbi is the Security Risk & Compliance Specialist. She has been with the security team at Xero for almost 2 years. Before her career in security, Mumbi worked in the finance sector approving mortgages and home loans. She has a degree in Computer Science which was obtained at Kabarak University in Kenya - her motherland. Mumbi moved to Aotearoa NZ back in 2015 to study a Masters of Service-Oriented Computing at AUT. Since then, she’s developed a passion for security - and all things Kiwi!"
+          "This event was open to all students (18+) and working professionals! Food and Drinks (No Alcohol) were provided!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -8276,7 +8853,6 @@
           "At She Sharp, our mission is to actively engage a broader range of Maori and Pasifika female students by equipping them with the knowledge, network, and skills to enter STEM industries. We are dedicated to inspiring and empowering the next generation of talent from these communities to explore and embrace the dynamic world of STEM and the digital domain through immersive hands-on workshops on topics such as AI, AR, and robotics.",
           "On Wednesday, October 11th, we will be hosting our first STEM conference for Maori and Pasifika girls in years 11-13. The event will take place at AUT (South Campus, Manukau). We are thrilled to offer this free event, as it aligns with our goal of empowering Pasifika girls as future leaders in STEM.",
           "The conference will commence at 9:00 am - 3pm and will include hands-on workshops in Robotics, Artificial Intelligence, Virtual Reality, and Augmented Reality. Additionally, we will feature Pasifika experts and role models in the STEM fields. Our aim is to ignite curiosity and inspire students about potential careers in technology.",
-          "Jacoba Matapo has ancestral ties to Siumu Samoa, and Leiden Holland. She has over 15 years in educational leadership, spanning ITE and ECE management. She has led key Pasifika education projects, Adept in digital design, she led research collaborations like the Wayfinding Pasifika success project and the Pepe Meamea research project(indigenising pedagogy in ECE).",
           "In her practice, She seeks to uphold Te Tiriti o Waitangi and values the historical ties between Tangata Whenua and Tangata Moana. Jacoba is deeply invested in Pacific ECE nationwide and advancing culturally affirming teaching across NZ. Her Pacific research affiliations include advisory roles with MoE (Pacific) and Whatu Ora, and she serves as a research advisor for TLRI."
         ],
         "speakers": {
@@ -8552,9 +9128,7 @@
         },
         "fullDescription": [
           "Join us to celebrate Ada Lovelace Day and International Day of the Girls. We are delighted to present two wonderful speakers for this event – Ankita and Elina. Hear their stories and be inspired!",
-          "We’ll also have quizzes and games and an overall fun session.",
-          "Elina whakapapa to Kazakhstan in Central Asia and has a massive keen-bean-ness (read: heart) for social justice, equity and diversity. She has worked in biomedical research, start-ups, government, and is now studying human rights. In 2019, together with her partner, Elina started an online platform called Storyo, where they've interviewed 100+ women and gender diverse folks across Aotearoa, showcasing vulnerability and changing the narrative of what success means in modern culture.",
-          "Due to the impact of COVID-19 and people moving to remote working and more businesses choosing digital solutions brought a cyber-pandemic to New Zealand. Once Ankita learnt about cyber security incidents and the very real threats companies and individuals face in the digital era, she knew she had to help. With this vision, she founded Security Lit, A company providing penetration testing and security consultancy services to SMEs. Ankita made it her mission to make cybersecurity solutions easy an"
+          "We’ll also have quizzes and games and an overall fun session."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -8585,7 +9159,28 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/64ec501ea6cca4de3256029e_Elina_-_photo_7941dcd4.jpg",
+            "alt": "Elina - profile image"
+          },
+          {
+            "url": "/img/scraped/photos/64828da52c68a7521b2c389a_3_Ankita_Dhakar_d81556cf.png",
+            "alt": "Headshot of Ankita Dhakar"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -8641,10 +9236,7 @@
         },
         "fullDescription": [
           "Join us ONLINE on Tuesday 30th November for a jam-packed evening!",
-          "Curious about career pathways in data, analytics and visualisation? Do you want to learn from industry leaders, get career advice, and participate in a hands-on Power BI workshop?We will start with a panel featuring renowned experts, Leila Etaati, Indira Bandari, Owen Auger, Sudhir Rawat, about career development as a data analytics, data engineer, and data science, what they need, and what skills we need to know.After that, we have a hands-on lab for working with Power BI, extracting data from ",
-          "Leila is the first Microsoft AI MVP in New Zealand and Australia. She has Ph.D. in Information System from the University Of Auckland. She is the Co-director and data scientist in RADACAD Company with more than 100 clients around the world. She is the co-organizer of Microsoft Business Intelligence and Power BI Use group (meetup) in Auckland with more than 1200 members as well as the co-organizer of three main conferences in Auckland: SQL Saturday Auckland, Difinity and Global AI Bootcamp 2018. ",
-          "Indira is a highly skilled and talented professional with over 15 years experience in IT. Indira has been the recipient of the Microsoft 'Most Valuable Professional' award in 2019 and 2020 along with multiple awards for academic achievement. She has extensive experience using analytical tools, especially Power BI, Tableau and SAP Business Objects along with statistical analysis tools such as SAS and programming knowledge in R, Python and SQL. She has working knowledge in the Azure suite.",
-          "Owen specialises in data modelling and visualization with Power BI, as well as financial modelling."
+          "Curious about career pathways in data, analytics and visualisation? Do you want to learn from industry leaders, get career advice, and participate in a hands-on Power BI workshop?We will start with a panel featuring renowned experts, Leila Etaati, Indira Bandari, Owen Auger, Sudhir Rawat, about career development as a data analytics, data engineer, and data science, what they need, and what skills we need to know.After that, we have a hands-on lab for working with Power BI, extracting data from a data source, then cleaning it and visualizing it to show the current situation of the data better and learning how to visualise data for better storytelling and decision making."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -8691,7 +9283,36 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/64ec4a4d2a184282fda5733e_Leila_-_photo_4e618749.png",
+            "alt": "Leila - profile image"
+          },
+          {
+            "url": "/img/scraped/photos/64ec4a9a7d1c69f7fb0be2bd_Indira_-_photo_3b5b15b4.jpg",
+            "alt": "Indira - profile image"
+          },
+          {
+            "url": "/img/scraped/photos/64ec4abc3999b3c2c5a5214f_Owen_-_photo_43e7fdc6.jpg",
+            "alt": "Owen - profile image"
+          },
+          {
+            "url": "/img/scraped/photos/64ec4adf3ce19c2c5c44653b_Sudhir_-_photo_e5855e2a.jpg",
+            "alt": "Sudhir - profile image"
+          },
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -8755,8 +9376,7 @@
         },
         "fullDescription": [
           "#IamRemarkable is a Google initiative empowering women and other underrepresented groups to celebrate their achievements in the workplace and beyond.",
-          "This program aims to:1. Improve the motivation and self-promotion skills of women and underrepresented groups.2. Change social perceptions and refresh the conversation around self-promotion.",
-          "Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington. The team works to help Kiwis find new ways to collaborate, reach audiences and get things done. Google is committed to helping all Kiwis with the digital knowledge and capabilities they need now and in the future."
+          "This program aims to:1. Improve the motivation and self-promotion skills of women and underrepresented groups.2. Change social perceptions and refresh the conversation around self-promotion."
         ],
         "speakers": {},
         "organizers": [],
@@ -8770,7 +9390,20 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -8817,11 +9450,7 @@
           "country": "New Zealand"
         },
         "fullDescription": [
-          "SheSharp is delighted to announce our first community event of the year: We are partnering with MYOB to celebrate International Women’s Day! There will be team challenges, fun quizzes, and general fun and interactive awesomeness. So bring your A-game along! This is a great event to bring along your work colleagues to network and reconnect with others you haven’t had the opportunity to meet in person over the last few months! This event is open to all ages and all genders, all students and workin",
-          "Camilla Weinstein has worked within the talent space for over 15 years and has been with MYOB for almost 4 years as the Talent Lead in New Zealand. She is a mum of 2 boys under 5, and is the Owner of Straw the Line NZ has her side hustle. She’s passionate about Talent, Employer Branding, Inclusion & Diversity, Sustainability and saving the planet one slurp at a time! As well as, spending time with her young family, exploring the world around us, snowboarding and enjoying the finer things in life",
-          "Grant McIvor is an experienced leader of product development teams. He holds a Bachelor of Engineering and a Master of Business Administration. At MYOB he is Head of Delivery for the Enterprise division where he leads the technology team to deliver ERP and Payroll solutions to help business in the mid-market. When he is not leading technology teams he likes to spend time with his family and keeping fit with a combo of running, gym and yoga.",
-          "Lindsay has been with MYOB for almost 6 years moving from Business Analyst to Delivery Manager. Driven to provide a quality solution delivered by engaged and motivated people Lindsay’s words to live by are “we rise by lifting others”.",
-          "Dene has over 18 years' combined team leadership, project and software delivery experience within the Fintech, Geospatial, Government and Sport sectors. Her passion is in leadership, coaching, and product delivery utilising Agile methodologies for continuous improvement. She enhance engagement through building collaborative and sustainable teams, while fostering a healthy, fun and productive work culture."
+          "SheSharp is delighted to announce our first community event of the year: We are partnering with MYOB to celebrate International Women’s Day! There will be team challenges, fun quizzes, and general fun and interactive awesomeness. So bring your A-game along! This is a great event to bring along your work colleagues to network and reconnect with others you haven’t had the opportunity to meet in person over the last few months! This event is open to all ages and all genders, all students and working professionals!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -8999,7 +9628,7 @@
         "fullDescription": [
           "AI Forum NZ is hosting an AI for the Environment Hackathon Festival across Aotearoa, Australia and the South Pacific. Do you have a passion for saving the planet, starting in our backyard? The winners will pitch their solutions at the AI Summit on 21 September in Auckland.This event will be hosted in partnership with academyEX on August 11th and 12th, kicking off with an inspiring keynote from Frances Valintine CNZM.",
           "The problems this year to solve, are based on the five key environmental outcomes (AI for the Environment Report 2022). These have been expanded to make them more relevant to all participants in 2023. AI Forum NZ are sourcing use cases from NGOs and citizen science groups to provide real problems to solve that are relevant to each location. These organisations provide subject matter expertise ahead of time and on the day.",
-          "‍You will learn many new skills, meet like-minded peers, and network with sponsors and mentors. At the end of the hackathon you and your team demonstrate your project in front of a judging panel who select the winner. The best four winners have a chance to pitch their idea at theAI Summit 23. Hackathons are a safe space for people from diverse skill sets to come together around a problem to solve. When forming your team, think about theDream Team Modelof hipsters, hackers, and hustlers - a good "
+          "‍You will learn many new skills, meet like-minded peers, and network with sponsors and mentors. At the end of the hackathon you and your team demonstrate your project in front of a judging panel who select the winner. The best four winners have a chance to pitch their idea at theAI Summit 23. Hackathons are a safe space for people from diverse skill sets to come together around a problem to solve. When forming your team, think about theDream Team Modelof hipsters, hackers, and hustlers - a good mix will help you to be successful.Keen to join us in solving pressing environmental problems using AI?"
         ],
         "speakers": {},
         "organizers": [],
@@ -9088,10 +9717,10 @@
         },
         "fullDescription": [
           "Good Together: by complementing technical expertise with power skills, the opportunities are endless",
-          "From grass to glass, find out how women across all aspects of Science, Technology, Engineering and Maths can apply their technical expertise and their complementary power skills to deliver goodness for generations to come. The opportunities are endless from on farm sustainability, animal science and digital solutions, through to cutting edge laboratory research at our Fonterra Research and Development Centre, exploring robotics and automation across manufacturing systems and leveraging current &",
+          "From grass to glass, find out how women across all aspects of Science, Technology, Engineering and Maths can apply their technical expertise and their complementary power skills to deliver goodness for generations to come. The opportunities are endless from on farm sustainability, animal science and digital solutions, through to cutting edge laboratory research at our Fonterra Research and Development Centre, exploring robotics and automation across manufacturing systems and leveraging current & future technology to empower our employees & optimise our business for the future.",
           "Join us in person at the Fonterra Auckland head office.",
-          "After graduating from the University of South Australia with a Bachelor of Business majoring in Information Systems and Marketing Suzanne commenced her professional career on the EDS (now HP) Graduate program. Over her 28 years in the industry, Suzanne has worked across numerous government and private organisations and is now the General Manager IT leading the business engagement team across Hire to Retire & Employee Experience and Retail & Shareholder Experience for New Zealand’s largest busine",
-          "Jeeny Then is currently in her second year of the IT Graduate Programme at Fonterra with previous experience in rotations across Enterprise Architecture, Cybersecurity, Business Analysis and Project Management departments. She's grown up as an expat in Shanghai before moving to New Zealand to complete her tertiary qualifications in Marketing, Management and Information Systems. Outside of work, she loves traveling, going to gigs, eating food and pilates."
+          "Across the evening you will learn more about Fonterra including an overview of the Early in Careers entry opportunities, hear from a panel of women about their personal experiences, spend some time exploring power skills and how these can enhance your career journey (from job application and beyond) with plenty of time for networking.",
+          "Spaces are limited and we are expecting a sold-out event, so register now to secure your place."
         ],
         "speakers": {
           "hosts": {
@@ -9251,7 +9880,9 @@
           "city": "",
           "country": "New Zealand"
         },
-        "fullDescription": [],
+        "fullDescription": [
+          "We had a wonderful time at the NZTech Techweek NZ Tomorrow Expo, where we showcased our work dedicated to empowering women in tech. We were delighted to welcome many groups of students visiting from a diverse range of Auckland schools who were eager to learn more about STEM, robotics, AR and VR. They had a chance to try out some of our activities, such as programming a robot, virtual reality and exploring an augmented reality app. We were impressed by their enthusiasm and creativity, and we hope to inspire more young women to pursue their passion for technology."
+        ],
         "speakers": {},
         "organizers": [],
         "sponsors": {
@@ -9330,9 +9961,7 @@
         "fullDescription": [
           "Hear the experiences of Kiwibank executives and engage in an innovation roadmap workshop!",
           "Join us to discover how you can grow your career at Kiwibank while shaping the future of banking in Aotearoa.‍",
-          "Spaces are limited, so secure a place now if you haven’t already. We have special prizes and giveaways for those who attend the event.‍",
-          "Hamish has a successful track record for building high performing teams, strategy, and technology to transform the customer experience and drive commercial growth. “For me the buzz about Kiwibank is the people, the purpose and the impact we have on the future of banking in Aotearoa”.",
-          "Belinda has worked in Treasury and Financial Markets roles for over 20 years in Sydney, London and now Auckland. \"For me, the buzz about Kiwibank is that it's dynamic, fast-paced and it really is Kiwi making Kiwi better off\"."
+          "Spaces are limited, so secure a place now if you haven’t already. We have special prizes and giveaways for those who attend the event.‍"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -9455,11 +10084,7 @@
           "longitude": 174.7635465
         },
         "fullDescription": [
-          "International Women’s Day is fast approaching and She Sharp is partnering with AWS to bring you an inspirational evening where we talk all about #breakingthebias!",
-          "Pip is an experienced tech executive who knows first hand what it takes to take tech products to the world. From heading up Strategy and Product at EROAD, to Product and Data Science at Dexibit, Pip now applies that unique product leadership skillset of spanning vision to tactics in her role leading strategy & operations at Amazon Web Services NZ.",
-          "I am a husband, father, artist, geek, technology enthusiast, gamer, kids play gym, food lover and travel lover. My career has led me to specialise in software and solution architecture and design, business analysis, team and process management, and helping customer digitally transform their business. I joined AWS in 2019 as the first SA Manager in NZ, leading a team of Solutions Architects helping customer solve business challenges through the use of AWS technologies. Before that I was CTO at Br",
-          "Pratima has been in the IT industry for almost 14 years. Through her tenure she has been in a multitude of roles - from being an individual contributor to leading cloud centre of excellence teams. In her current role as a solutions architect at AWS,  Pratima helps small and medium business use cloud to build successful businesses. Pratima has been a SheBuilds mentor and has spoken on various technical and non-technical topics in global conferences.",
-          "Adam is a Senior technology executive with extensive experience driving business outcomes through cloud. Skilled in Cloud Strategy and Technology, Sales, Partner Management, Go-to-market Strategy and Negotiation."
+          "International Women’s Day is fast approaching and She Sharp is partnering with AWS to bring you an inspirational evening where we talk all about #breakingthebias!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -9654,7 +10279,6 @@
           "Join us at the AWS Office in Auckland for this special event recognising individuals, initiatives, and organisations that are changing the norms, reconditioning the way we think about diversity, inclusion, and equity, and shaping a new normal for the security industry in Aotearoa.",
           "Featuring a stellar line-up of speakers from across Aotearoa's security sector, we will hear lightning talks from each of them sharing their journeys and learnings, demystifying the security industry, followed by a Q&A Panel. We'll also have fun interactive activities and opportunities for networking over yummy food and drinks, with awesome prizes up for grabs on the night.",
           "It will be a fabulous event for everyone - no matter if you know nothing about the industry, new to security, curious about the industry or a seasoned security professional! AND remember - our events are open and inclusive to all genders, females, males, nonbinary, and allies! So bring your friends or colleagues for a great night of learning and networking with the community.",
-          "Kate is currently the Security Officer at Trade Me, where she runs the security team to keep the data of millions of kiwis safe. Kate holds several governance roles in tech-adjacent organizations including Internet NZ councillor, the NZITF Board - (New Zealand Internet Task force - a body for Security professionals). Kate gives her time to many different causes in and around the tech community and is a firm believer in everyone getting a fair go no matter their background.",
           "She spent several years working in information security consulting while based in the United States – first for the Chicago-based consultancy Neohapsis, and then for Cisco after Neohapsis was acquired by Cisco in 2015."
         ],
         "speakers": {
@@ -9883,11 +10507,7 @@
           "longitude": 174.7633361
         },
         "fullDescription": [
-          "She Sharp is teaming up with MYOB to discuss the diversity of careers in technology and the multiple pathways we can take to achieve our dream job in STEM. Come along and engage with an expert team of MYOB panellists who will highlight some of the pathways that can be followed which lead to a career in Technology, participate in a guided workshop to help discover our deep-set motivations and Q&A with the MYOB and She# teams to create a composition of insights to enable us to make conscious caree",
-          "Lindsay has been with MYOB for 6 years across a variety of roles and is currently Delivery Manager for a cross functional team of developers and engineers focused on site reliability engineering. She's passionate about diversity in technology in all its forms and finding opportunities for people to thrive.",
-          "Hi, I’m Taylor. Just over a year ago, I started at MYOB in the FMA program as a protege Software Developer. Before moving to MYOB I was down in Dunedin studying a double degree in Information Systems and Marketing. Since being at MYOB I have had the opportunity to grow and navigate myself through the corporate world. I have discovered what it’s like to be a Software Developer and had the opportunity to venture outside of this expertise and work aside one of MYOB’s Business Analyst to further dev",
-          "Hi, I’m Kyle, a Senior Developer at MYOB. I’d say I’m a classic T-Shaped Full Stack Developer and have worked with C#, Jade, PowerShell etc. I strongly believe that the journey is half the fun; traditional or non-traditional, we learn from all of it and it’s what we make of it that counts",
-          "MYOB, is a business management platform designed to unleash the potential of businesses across Australia and New Zealand! As the #originalstartup, our roots are in finance and accounting software, but today we are so much more. We help our Aussie and Kiwi customers unleash their full potential, giving them the tools to Start, Survive and Succeed: all in the one place."
+          "She Sharp is teaming up with MYOB to discuss the diversity of careers in technology and the multiple pathways we can take to achieve our dream job in STEM. Come along and engage with an expert team of MYOB panellists who will highlight some of the pathways that can be followed which lead to a career in Technology, participate in a guided workshop to help discover our deep-set motivations and Q&A with the MYOB and She# teams to create a composition of insights to enable us to make conscious career choices based on our aspirations and motivations…. so YOU can definitively begin to Mind Your Own Career."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -10026,11 +10646,7 @@
           "longitude": 174.7487792
         },
         "fullDescription": [
-          "Surround yourself with great women: Stories of the women who have ignited our passion for careers in Technology. Enjoy a networking breakfast and surround yourself with great women. She Sharp and Countdown collaborate to bring you first-hand the real stories of the women who are igniting our passion for careers in Technology. Join our breakfast session and see what you can learn to help you re/ignite the flame of your technology career. You will hear from key talent across our Analytics and Insi",
-          "Mispah Carelsen is the Agile Coaching Chapter Lead at Countdown. Her journey started as a marketing manager at a tech startup, where she discovered & fell in love with the world of Agile, which is all about people & the way in which they work together to deliver value. Since that fateful time, she has played many agile roles, eventually landing on agile coaching & leading other agilists. She is passionate about making people awesome & bringing humanness back into the world of work. She is an act",
-          "Kari is an experienced senior leader, committed to improving the performance of New Zealand organisations through the increased adoption and application of emerging technology, advanced analytics and artificial intelligence. Over the past 11 years, Kari has worked with a range of iconic organisations to increase their digital and analytics maturity, executing strategies that improve customer-centricity, and operational effectiveness and achieve significant business results.",
-          "Shannon is a commercially astute Senior Product Manager with more than 10 years’ experience leading and contributing to business transformation projects that enhance product functionality and deliver customer value. With strong interpersonal skills, she is adept at working collaboratively with cross-functional teams to develop product and digital channels in agile environments. Shannon is practised at defining business requirements, developing strategy, managing budgets and leading teams having ",
-          "Shannon is a commercially astute Senior Product Manager with more than 10 years’ experience leading and contributing to business transformation projects that enhance product functionality and deliver customer value. With strong interpersonal skills, she is adept at working collaboratively with cross-functional teams to develop product and digital channels in agile environments. Shannon is practised at defining business requirements, developing strategy, managing budgets and leading teams having "
+          "Surround yourself with great women: Stories of the women who have ignited our passion for careers in Technology. Enjoy a networking breakfast and surround yourself with great women. She Sharp and Countdown collaborate to bring you first-hand the real stories of the women who are igniting our passion for careers in Technology. Join our breakfast session and see what you can learn to help you re/ignite the flame of your technology career. You will hear from key talent across our Analytics and Insights, Product, Strategy & Transformation and Engineering practices. Hear how they have navigated their careers and learn useful tips as to the art of networking and really owning your career path."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -10230,10 +10846,7 @@
         },
         "fullDescription": [
           "We operate in an unusual world that has seen workplaces and normal operating models change from the norms that we have been used to. Navigating the “new normal” can be challenging for both new starters in the tech industry settling in, as well as for managers and teams helping their junior staff find their pathways and build networks in often remote or disrupted working environments.",
-          "In this interactive in-person session, we will be talking with some of ANZ’s women in tech whose careers have been formed throughout these disruptive years. We will hear about their journeys and expectations versus the realities and how they have faced and adapted to the challenges. Supporting them we will also hear from more senior team members at ANZ on how they are helping support people to strengthen their resilience and protect their wellbeing through change.",
-          "Renay started at ANZ as a teller in the branch during university, since then she has completed the ANZ Graduate Programme and has held a number of roles including Risk Management, Business Design and now Product Ownership. Renay is currently looking after a project to allow ANZ staff members to better assist a customer to on-board with ANZ.",
-          "Reilly is currently in the Design Centre of Excellence. She started at ANZ in 2020 as a TupuToa Intern and then continued onto the Graduate programme. Reilly is a key driver of initiatives in our Māori and Pacifica in Technology ropu.",
-          "Lauren is a Technology Graduate and is currently in the Design Team. She came through the Summer of Tech Programme in 2019 and then continued onto the Technology Graduate Programme in 2021."
+          "In this interactive in-person session, we will be talking with some of ANZ’s women in tech whose careers have been formed throughout these disruptive years. We will hear about their journeys and expectations versus the realities and how they have faced and adapted to the challenges. Supporting them we will also hear from more senior team members at ANZ on how they are helping support people to strengthen their resilience and protect their wellbeing through change."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -10410,8 +11023,6 @@
         "fullDescription": [
           "Some of the world’s leading companies use Deloitte’s 10 Types of Innovation Framework to create innovative products.",
           "When you’re building technology, it’s important to think about more than just the features your product delivers. To be successful, you also need to build out extensions to your application or system that connects with the wider ecosystem. The result is building more than just an app, but a platform and service that customers love and stay with.",
-          "Tom’s advertising work has been quoted by Obama, nominated for an Emmy, turned Kobe Bryant’s retirement into the most successful sneaker launch in history, and has been twice named the most effective campaign on earth. He’s also played Coachella, toured with The Strokes and Kaiser Chiefs, and currently has a feature film in development with NZ Film Commission.",
-          "Kath has worked in IT, retail banking, construction, education, nuclear and now consulting at Deloitte. In all these places, the common threads to success have been finding solutions to complex issues, working with diverse teams, and fostering new ideas and clear thinking. When Kath’s not at work, you’ll find her in a gym lifting (relatively) heavy things and competing at Olympic weightlifting as a masters athlete.",
           "Deloitte brings together more than 1,700 specialists providing New Zealand's widest range of high quality professional services. We focus on audit, tax, technology & systems, strategy, performance improvements, risk management, corporate finance, business recovery, forensics and accounting services."
         ],
         "speakers": {
@@ -10540,10 +11151,7 @@
         },
         "fullDescription": [
           "She Sharp Hackathon is an all-female-led and non-binary 32 hour hackathon, which aims to help individuals to understand they belong in tech and that there are various roles you can have in the tech industry. Do you have a passion to save the planet, starting in our backyard? We’re bringing to life practical examples from the AI Forum’s recently published AI for Environment in Aotearoa New Zealand report.",
-          "‍Join 60+ people for a weekend of learning, building, and connecting to build your tech skills and realise that you have allies who are supporting you every step of the way.",
-          "Founder of Tech Futures Lab and The Mind Lab. Over the past 8 years across Tech Futures Lab and The Mind Lab, Frances has been instrumental in reskilling and educating 20,000 adult students in formal programmes, many thousands in short tech courses in software development and over 250,000 school aged students.",
-          "Justin has worked in technology for most of his career and has a long history working in Integration and specifically APIs across a range of industries but mostly in the financial sector. He has designed and implemented applications on public Cloud since the early days when there were only a handful of services available from Amazon Web Services",
-          "Dr. Mahsa McCauley is the founder and the director of She Sharp , an Associate Professor in the School of Computer, Engineering and Mathematical Sciences at Auckland University of Technology and Chair of the AI Forum New Zealand. An internationally recognised leader in AI and machine learning, Dr. McCauley also serves on the boards of NZTech, EdTechNZ and the AI Research Association, where she contributes to shaping the future of AI policy and research in New Zealand. Internationally, she has en"
+          "‍Join 60+ people for a weekend of learning, building, and connecting to build your tech skills and realise that you have allies who are supporting you every step of the way."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -10850,7 +11458,6 @@
         "fullDescription": [
           "She Sharp is delighted to present She Celebrates: A reflection on the past year and Inspiration for the future! Come and join us for an evening of Reflection and Inspiration presented by a variety of motivational speakers from STEM-related industries and hosted by AWS and She Sharp. This fantastic opportunity will introduce you to new and exciting ideas for the future, while providing a space to network with STEM professionals.",
           "Our guest speakers will discuss and reflect on their experiences throughout 2022 in celebration of another incredible year together. The event will be a great networking opportunity to meet with like-minded individuals, mingle with established professionals, celebrate successes and achievements, and have fun!",
-          "Alexia is the CEO of GirlBoss NZ - NZ's largest organisation for young women. Founded when Alexia was just16, GirlBoss now has 17,500 members. Alexia’s mission is to get women to the table - the boardroom tablethat is, and she believes the decisions made while young are crucial in paving the way. She has flown withNASA, received a Queen’s Young Leaders Medal for Services to the Commonwealth, is a National GeographicExplorer, Forbes 30 under 30, and the youngest person to represent New Zealand at",
           "Since 2006, Amazon Web Services has been the world’s most comprehensive and broadly adopted cloud. AWS has been continually expanding its services to support virtually any workload, and it now has more than 200 fully featured services for compute, storage, databases, networking, analytics, machine learning and artificial intelligence (AI), Internet of Things (IoT), mobile, security, hybrid, virtual and augmented reality (VR and AR), media, and application development, deployment, and management."
         ],
         "speakers": {
@@ -11138,7 +11745,6 @@
         "fullDescription": [
           "For International Women’s Day, She Sharp is partnering with Countdown and inviting you to #embraceequity and kick-start your day. Let’s challenge gender stereotypes, call out discrimination, draw attention to bias, and seek out inclusion in all aspects of our personal and professional lives.",
           "She Sharp are committed to empowering more women into STEM careers to drive gender parity into a world free from bias. Our events are an open opportunity for Everyone, regardless of gender, age, race or background, to work together in order to bridge the gender gap and better represent women within STEM fields.",
-          "Catherine is a sustainability professional with 10+ years experience delivering ambitious sustainability programmes across diverse business sectors in the UK and New Zealand. She works strategically, thinks deeply about sustainability issues and has a tested ability to build working relationships that enable success. She's driven by the belief that we are at a critical time globally - and that business has a vitally important role to play in achieving a transition to a more equitable, secure, an",
           "Woolworths New Zealand proudly owns and operates over 185 Countdown supermarkets in New Zealand. We are the country’s largest private sector employer, with 20,000 New Zealanders employed in our stores, support offices, processing plants and distribution centres. Our goal is to provide the best possible convenience, value, range and quality to the 2.5 million Kiwis we serve each week in our stores."
         ],
         "speakers": {
@@ -11260,9 +11866,7 @@
         "fullDescription": [
           "This event is aimed at providing women with insights and opportunities to pursue a career in the tech industry.",
           "Whether you're looking to start a career in tech, or you're already working in the industry and looking to grow your skills and network, this event is for you. With the support of MYOB, we hope to inspire and empower women to pursue their passions and achieve their career goals.",
-          "Anshu is a highly experienced product manager with over 20 years of experience in managing products for Enterprise SaaS and on-premises customers. Anshu has worked in a variety of industries, including Transport, Taxation & Compliance, Payroll, Records Management, Identity Services, Border Security and Passenger Management, and GIS.",
-          "With hands-on experience in DevOps and Azure hosting platforms, Anshu excels in leveraging cutting-edge technology for optimal results. As a dynamic leader and research professional, she has spearheaded numerous successful Agile and Waterfall-driven initiatives. Anshu's commitment to excellence and her proactive approach to staying updated on industry trends make her a valuable asset to any team.",
-          "I have been in the software industry for just over 9 years with 8 of those being at MYOB but my first interaction with the tech space was through a project back in 1990 when the bank I worked for decided to update their systems. This meant we could use computers for customer files regardless of where their home branch was instead of having to call the home branch to verify details, get balances etc. This gave a better customer experience and saved a lot of time for the customer and the customer "
+          "With hands-on experience in DevOps and Azure hosting platforms, Anshu excels in leveraging cutting-edge technology for optimal results. As a dynamic leader and research professional, she has spearheaded numerous successful Agile and Waterfall-driven initiatives. Anshu's commitment to excellence and her proactive approach to staying updated on industry trends make her a valuable asset to any team."
         ],
         "speakers": {
           "keynote_speakers": {
