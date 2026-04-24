@@ -53,7 +53,31 @@ NAV_CHROME = {
     "our history", "our people", "our journey", "our people",
     "meet our mentors", "meet our mentees",
     "log in", "create account",
+    # Repeating section headings and banners on every event page
+    "come to our next event", "upcoming event", "next event", "more events",
+    "our event sponsor", "our event sponsors", "other event sponsors",
+    "a taste of the event", "event poster", "event gallery",
+    "view images", "view gallery", "brought to you by",
+    "in collaboration with", "sponsored by", "presented by",
+    "meet the speakers", "meet our speakers", "meet the panel",
+    "meet our panelists", "meet our panel host", "meet our keynote speaker",
+    "meet our mentors", "meet our guest speakers", "meet the judges",
+    "meet our judges", "demo facilitators", "local event organisers",
+    "keynote speakers", "keynote speaker", "panelists",
+    # Event recommendation card titles that repeat across every event
+    "her waka may 2026", "her waka june 2026", "her waka april 2026",
+    "her waka march 2026", "her waka 2026",
 }
+
+# Matches bare "Month DD, YYYY" / "Monday, DD Month YYYY" event-date strings.
+DATE_REGEX = re.compile(
+    r"^\s*("  # optional weekday
+    r"(?:Mon|Tues|Wed|Thurs|Fri|Satur|Sun)day,?\s+)?"
+    r"(?:\d{1,2}\s+)?"  # optional day number first
+    r"(?:January|February|March|April|May|June|July|August|September|October|November|December)"
+    r"\s+\d{1,2},?\s+\d{4}\s*$",
+    re.IGNORECASE,
+)
 
 # Boilerplate text that appears on many events because of the Webflow
 # template — treat as chrome, not missing content.
@@ -129,42 +153,90 @@ def normalize(text: str) -> str:
 
 
 def extract_visible_list_items(html: str) -> list[dict]:
-    """Return a list of {heading, text} for every <li> that is visible and
-    not part of site chrome or Webflow boilerplate."""
+    """Return a list of {heading, text} for every content fragment the old
+    site shows that could get lost during a naive scrape:
+
+      - <li> elements (real bullet lists)
+      - <p> or <h3> paragraphs that embed ASCII/en-dash bullets (– / -)
+        inline — the scraper often keeps them as one flat paragraph
+      - <h3>/<h4> sub-headings that introduce a section
+
+    Each item returned is expected to appear somewhere in the new-site
+    JSON (title, subtitle, fullDescription, specialSections, speakers,
+    organizers) after normalization. If an item is missing, the new site
+    lost it during scraping.
+    """
     soup = BeautifulSoup(html, "html.parser")
 
-    # Strip <header> and <footer> entirely.
+    # Strip site chrome entirely so their contents do not leak into the audit.
     for tag in soup.find_all(["header", "footer", "nav"]):
         tag.decompose()
 
-    items = []
+    def find_nearest_heading(el):
+        node = el
+        for _ in range(25):
+            node = node.find_previous(["h1", "h2", "h3", "h4"])
+            if node is None:
+                return None
+            if not is_hidden(node):
+                return node.get_text(" ", strip=True)
+        return None
+
+    def push(items, text, heading, seen):
+        n = normalize(text)
+        if not n or n in NAV_CHROME:
+            return
+        if len(text.split()) < 3:
+            return
+        if any(frag in n for frag in BOILERPLATE_FRAGMENTS):
+            return
+        # Skip bare event dates — they are already present in event.date.
+        if DATE_REGEX.match(text):
+            return
+        # Skip attendee count badges like "109 Attendees" / "168 Attendees".
+        if re.match(r"^\d+\s+attendees?\s*$", text, re.IGNORECASE):
+            return
+        if n in seen:
+            return
+        seen.add(n)
+        items.append({"heading": heading, "text": text})
+
+    items: list[dict] = []
+    seen: set[str] = set()
+
+    # 1. Real <li> bullets
     for li in soup.find_all("li"):
         if is_hidden(li):
             continue
         text = li.get_text(" ", strip=True)
         if not text:
             continue
-        norm = normalize(text)
-        if not norm or norm in NAV_CHROME:
-            continue
-        # Skip very short (single-word) list items — these are usually tags or
-        # breadcrumb fragments.
-        if len(text.split()) < 3:
-            continue
-        if any(frag in norm for frag in BOILERPLATE_FRAGMENTS):
-            continue
+        push(items, text, find_nearest_heading(li), seen)
 
-        # Find the nearest visible heading above this li for context.
-        heading = None
-        node = li
-        for _ in range(25):
-            node = node.find_previous(["h1", "h2", "h3", "h4"])
-            if node is None:
-                break
-            if not is_hidden(node):
-                heading = node.get_text(" ", strip=True)
-                break
-        items.append({"heading": heading, "text": text})
+    # 2. Inline dash-bullets inside <p> / <h3>. Only split on "– " or " - "
+    #    when the paragraph contains multiple such dashes (guarding against
+    #    normal hyphenation). Each segment becomes its own audit item.
+    for tag in soup.find_all(["p", "h3", "h4"]):
+        if is_hidden(tag):
+            continue
+        text = tag.get_text(" ", strip=True)
+        if not text or len(text) < 30:
+            # Still push short headings so h3 taglines (e.g. subtitles) are
+            # audited, but skip boilerplate-tiny fragments handled below.
+            if len(text) < 10:
+                continue
+            push(items, text, find_nearest_heading(tag), seen)
+            continue
+        parts = re.split(r"\s*[–—]\s+|\s+-\s+", text)
+        parts = [p.strip() for p in parts if p.strip()]
+        if len(parts) >= 3:
+            # Looks like dash-bullets inline. Record each segment.
+            heading = find_nearest_heading(tag)
+            for part in parts:
+                push(items, part, heading, seen)
+        else:
+            push(items, text, find_nearest_heading(tag), seen)
+
     return items
 
 
@@ -177,6 +249,8 @@ def collect_event_text(event: dict) -> str:
     pieces.extend(dp.get("fullDescription") or [])
     pieces.append(event.get("title") or "")
     pieces.append(event.get("shortDescription") or "")
+    pieces.append(dp.get("subtitle") or "")
+    pieces.append(dp.get("title") or "")
     for section in dp.get("specialSections") or []:
         pieces.append(section.get("title") or "")
         pieces.extend(section.get("content") or [])
