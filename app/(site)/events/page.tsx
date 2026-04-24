@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Search, X, Calendar, MapPin, Tag, Clock } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
@@ -25,20 +25,83 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 
+const EVENTS_STATE_KEY = "events:list-state";
+const EVENTS_PER_PAGE = 6;
+
+interface PersistedEventsState {
+  searchQuery: string;
+  selectedYears: number[];
+  selectedCategories: string[];
+  selectedCities: string[];
+  showUpcomingOnly: boolean;
+  displayedCount: number;
+}
+
+function readPersistedState(): PersistedEventsState | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = sessionStorage.getItem(EVENTS_STATE_KEY);
+    return raw ? (JSON.parse(raw) as PersistedEventsState) : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function EventsPage() {
   const featuredEvent = getFeaturedEvent();
   const allEvents = getAllEvents();
 
-  // Search and filter state
+  // Hydrate client-only filter/pagination state from sessionStorage so
+  // browser back-navigation preserves what the user had loaded.
+  const [isHydrated, setIsHydrated] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const [showUpcomingOnly, setShowUpcomingOnly] = useState(false);
+  const [displayedCount, setDisplayedCount] = useState(EVENTS_PER_PAGE);
+  // Skip the filter-change reset effect during the initial hydration restore —
+  // otherwise restoring searchQuery etc. would immediately nuke displayedCount.
+  const justHydratedRef = useRef(false);
 
-  // Pagination state
-  const [displayedCount, setDisplayedCount] = useState(6);
-  const EVENTS_PER_PAGE = 6;
+  useEffect(() => {
+    const persisted = readPersistedState();
+    if (persisted) {
+      justHydratedRef.current = true;
+      setSearchQuery(persisted.searchQuery ?? "");
+      setSelectedYears(persisted.selectedYears ?? []);
+      setSelectedCategories(persisted.selectedCategories ?? []);
+      setSelectedCities(persisted.selectedCities ?? []);
+      setShowUpcomingOnly(persisted.showUpcomingOnly ?? false);
+      setDisplayedCount(persisted.displayedCount ?? EVENTS_PER_PAGE);
+    }
+    setIsHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isHydrated || typeof window === "undefined") return;
+    const snapshot: PersistedEventsState = {
+      searchQuery,
+      selectedYears,
+      selectedCategories,
+      selectedCities,
+      showUpcomingOnly,
+      displayedCount,
+    };
+    try {
+      sessionStorage.setItem(EVENTS_STATE_KEY, JSON.stringify(snapshot));
+    } catch {
+      // Storage may be unavailable (private mode quota); ignore.
+    }
+  }, [
+    isHydrated,
+    searchQuery,
+    selectedYears,
+    selectedCategories,
+    selectedCities,
+    showUpcomingOnly,
+    displayedCount,
+  ]);
 
   // Extract available years from events
   const availableYears = useMemo(() => {
@@ -127,10 +190,17 @@ export default function EventsPage() {
     showUpcomingOnly,
   ]);
 
-  // Reset displayed count when filters change
+  // Reset displayed count when filters change — but skip the one effect pass
+  // that runs immediately after sessionStorage restore.
   useEffect(() => {
+    if (!isHydrated) return;
+    if (justHydratedRef.current) {
+      justHydratedRef.current = false;
+      return;
+    }
     setDisplayedCount(EVENTS_PER_PAGE);
   }, [
+    isHydrated,
     searchQuery,
     selectedYears,
     selectedCategories,
@@ -417,11 +487,10 @@ export default function EventsPage() {
             events={displayedEvents}
             columns={3}
             emptyMessage="No events found. Try adjusting your search or filters."
-            renderCard={(event, index) => (
+            renderCard={(event) => (
               <EventInflectedCard
                 key={event.slug}
                 event={event}
-                index={index}
               />
             )}
           />

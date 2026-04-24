@@ -64,26 +64,26 @@ export function EventSpeakers({ event, className }: EventSpeakersProps) {
   // Calculate speaker groups with their start indices
   const groups: { group: EventSpeakerGroup; startIndex: number }[] = [];
 
-  if (speakers.keynote_speakers?.speakers?.length) {
-    groups.push({ group: speakers.keynote_speakers, startIndex: currentIndex });
-    currentIndex += speakers.keynote_speakers.speakers.length;
-  }
+  // Render groups in a stable order; any additional string-keyed groups on
+  // `speakers` render last in insertion order (e.g. hosts, mentors, panelists).
+  const orderedKeys = [
+    "hosts",
+    "keynote_speakers",
+    "panel_speakers",
+    "panelists",
+    "guest_speakers",
+    "panel_facilitators",
+    "workshop_facilitators",
+    "readiness_workshop_facilitators",
+    "mentors",
+  ] as const;
 
-  if (speakers.panel_speakers?.speakers?.length) {
-    groups.push({ group: speakers.panel_speakers, startIndex: currentIndex });
-    currentIndex += speakers.panel_speakers.speakers.length;
-  }
-
-  if (speakers.guest_speakers?.speakers?.length) {
-    groups.push({ group: speakers.guest_speakers, startIndex: currentIndex });
-    currentIndex += speakers.guest_speakers.speakers.length;
-  }
-
-  if (speakers.panel_facilitators?.speakers?.length) {
-    groups.push({
-      group: speakers.panel_facilitators,
-      startIndex: currentIndex,
-    });
+  for (const key of orderedKeys) {
+    const group = speakers[key];
+    if (group?.speakers?.length) {
+      groups.push({ group, startIndex: currentIndex });
+      currentIndex += group.speakers.length;
+    }
   }
 
   return (
