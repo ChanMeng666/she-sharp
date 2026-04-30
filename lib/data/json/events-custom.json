@@ -47,6 +47,102 @@
   },
   "events": [
     {
+      "id": 94,
+      "slug": "peyvand-academy-20-june-2026",
+      "title": "Youth Tech Series — Robotics Workshop with Peyvand Academy",
+      "date": "June 20, 2026",
+      "coverImage": {
+        "url": "/img/events/peyvand-academy-20-june-2026-cover.jpg",
+        "alt": "Youth Tech Series — Robotics Workshop, delivered by SheSharp in partnership with Peyvand Academy"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/peyvand-academy-20-june-2026",
+      "shortDescription": "A hands-on robotics workshop for young members of the Persian community aged 13–18, exploring the fundamentals of robotics through interactive activities that encourage creativity, problem-solving and teamwork.",
+      "attendees": null,
+      "checkedIn": null,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/peyvand-academy-20-june-2026",
+        "title": "Youth Tech Series — Robotics Workshop with Peyvand Academy",
+        "subtitle": "Robotics Workshop for the Persian Community Youth (Ages 13–18)",
+        "date": "June 20, 2026",
+        "time": "2:30pm - 4:30pm NZST",
+        "location": {
+          "format": "in_person",
+          "venueName": "Fruitvale Primary School",
+          "address": "",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "SheSharp, in collaboration with Peyvand Academy, is excited to host two engaging and educational workshops designed specifically for young members of the Persian community aged 13–18. These sessions aim to inspire curiosity and build foundational knowledge in emerging technologies.",
+          "In this hands-on workshop, students will explore the fundamentals of robotics through interactive activities. This session is designed to encourage creativity, problem-solving, and teamwork.",
+          "Peyvand Academy is a community-driven initiative focused on empowering young people from the Persian community through education and skill-building. It provides a supportive space for students to explore new technologies, build confidence, and connect with mentors.",
+          "NOTE: This event is by invitation only. Participants will be invited directly by Peyvand Academy. Food will be provided by the academy for attendees."
+        ],
+        "speakers": {},
+        "organizers": [],
+        "sponsors": {
+          "main": [],
+          "other": []
+        },
+        "specialSections": [],
+        "photos": [],
+        "galleryUrl": "",
+        "registrationUrl": "",
+        "images": [],
+        "category": "workshop",
+        "status": "upcoming",
+        "isFeatured": false
+      }
+    },
+    {
+      "id": 93,
+      "slug": "peyvand-academy-13-june-2026",
+      "title": "Youth Tech Series — Introduction to Artificial Intelligence with Peyvand Academy",
+      "date": "June 13, 2026",
+      "coverImage": {
+        "url": "/img/events/peyvand-academy-13-june-2026-cover.jpg",
+        "alt": "Youth Tech Series — Introduction to Artificial Intelligence, delivered by SheSharp in partnership with Peyvand Academy"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/peyvand-academy-13-june-2026",
+      "shortDescription": "An interactive AI workshop for young members of the Persian community aged 13–18, introducing key Artificial Intelligence concepts and their real-world applications.",
+      "attendees": null,
+      "checkedIn": null,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/peyvand-academy-13-june-2026",
+        "title": "Youth Tech Series — Introduction to Artificial Intelligence with Peyvand Academy",
+        "subtitle": "AI Workshop for the Persian Community Youth (Ages 13–18)",
+        "date": "June 13, 2026",
+        "time": "2:30pm - 4:30pm NZST",
+        "location": {
+          "format": "in_person",
+          "venueName": "Fruitvale Primary School",
+          "address": "",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "SheSharp, in collaboration with Peyvand Academy, is excited to host two engaging and educational workshops designed specifically for young members of the Persian community aged 13–18. These sessions aim to inspire curiosity and build foundational knowledge in emerging technologies.",
+          "This interactive session will introduce students to the world of Artificial Intelligence. Participants will learn key concepts in a simple and engaging way, understand real-world applications of AI, and explore how this technology is shaping the future.",
+          "Peyvand Academy is a community-driven initiative focused on empowering young people from the Persian community through education and skill-building. It provides a supportive space for students to explore new technologies, build confidence, and connect with mentors.",
+          "NOTE: This event is by invitation only. Participants will be invited directly by Peyvand Academy. Food will be provided by the academy for attendees."
+        ],
+        "speakers": {},
+        "organizers": [],
+        "sponsors": {
+          "main": [],
+          "other": []
+        },
+        "specialSections": [],
+        "photos": [],
+        "galleryUrl": "",
+        "registrationUrl": "https://events.humanitix.com/ai-electronics-session",
+        "images": [],
+        "category": "workshop",
+        "status": "upcoming",
+        "isFeatured": false
+      }
+    },
+    {
       "id": 92,
       "slug": "her-waka-june-2026",
       "title": "Her Waka (June 2026) — Personal Branding & Growth Tips",
