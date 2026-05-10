@@ -1324,6 +1324,42 @@ export const menteeWaitingQueueRelations = relations(menteeWaitingQueue, ({ one 
 }));
 
 // ============================================================================
+// FUNDING OPPORTUNITIES (weekly NZ government / community grant crawler)
+// ============================================================================
+
+export const fundingSourceEnum = pgEnum('funding_source', [
+  'beehive',
+  'treasury',
+  'gets',
+  'data_govt',
+  'mbie',
+  'women_govt',
+]);
+
+export const fundingOpportunities = pgTable('funding_opportunities', {
+  id: serial('id').primaryKey(),
+  source: fundingSourceEnum('source').notNull(),
+  externalId: varchar('external_id', { length: 500 }).notNull(),
+  contentHash: varchar('content_hash', { length: 64 }).notNull(),
+  title: varchar('title', { length: 500 }).notNull(),
+  url: varchar('url', { length: 1000 }).notNull(),
+  summary: text('summary'),
+  publishedAt: timestamp('published_at'),
+  deadline: timestamp('deadline'),
+  relevanceScore: integer('relevance_score'),
+  relevanceReason: text('relevance_reason'),
+  rawMetadata: jsonb('raw_metadata').$type<Record<string, unknown>>(),
+  postedToSlackAt: timestamp('posted_to_slack_at'),
+  firstSeenAt: timestamp('first_seen_at').notNull().defaultNow(),
+  lastSeenAt: timestamp('last_seen_at').notNull().defaultNow(),
+}, (table) => ({
+  sourceExternalUnique: unique('funding_source_external_unique').on(table.source, table.externalId),
+  hashIdx: index('idx_funding_content_hash').on(table.contentHash),
+  scoreIdx: index('idx_funding_relevance_score').on(table.relevanceScore),
+  firstSeenIdx: index('idx_funding_first_seen').on(table.firstSeenAt),
+}));
+
+// ============================================================================
 // TYPE EXPORTS FOR NEW TABLES
 // ============================================================================
 
@@ -1351,4 +1387,6 @@ export type Programme = typeof programmes.$inferSelect;
 export type NewProgramme = typeof programmes.$inferInsert;
 export type MentorProgrammeAssignment = typeof mentorProgrammeAssignments.$inferSelect;
 export type NewMentorProgrammeAssignment = typeof mentorProgrammeAssignments.$inferInsert;
+export type FundingOpportunity = typeof fundingOpportunities.$inferSelect;
+export type NewFundingOpportunity = typeof fundingOpportunities.$inferInsert;
 
