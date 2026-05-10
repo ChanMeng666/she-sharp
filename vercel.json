@@ -4,6 +4,10 @@
     {
       "path": "/api/cron/weekly-mentorship-stats",
       "schedule": "0 20 * * 0"
+    },
+    {
+      "path": "/api/cron/weekly-funding-crawl",
+      "schedule": "0 21 * * 0"
     }
   ]
 }
