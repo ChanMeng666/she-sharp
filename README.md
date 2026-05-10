@@ -1395,6 +1395,27 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   </table>
 </div>
 
+## 👥 Contributors
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/ChanMeng666">
+          <img src="https://github.com/ChanMeng666.png" width="100px;" alt="Chan Meng"/><br />
+          <sub><b>Chan Meng</b></sub>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/lesley-gao">
+          <img src="https://github.com/lesley-gao.png" width="100px;" alt="Lesley Gao"/><br />
+          <sub><b>Lesley Gao</b></sub>
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>
+
 ## 📞 Contact
 
 ### Organization Contact
