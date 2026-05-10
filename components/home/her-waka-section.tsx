@@ -73,7 +73,7 @@ export function HerWakaSection() {
               <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
                 HER WAKA
               </h3>
-              <p className="mt-3 text-lg md:text-xl text-muted-foreground leading-relaxed">
+              <p className="mt-3 text-lg md:text-xl text-muted-foreground leading-relaxed italic">
                 Navigating pathways into sustainable employment
               </p>
             </div>
@@ -87,8 +87,8 @@ export function HerWakaSection() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {HIGHLIGHTS.map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-purple-light/20 flex items-center justify-center shrink-0">
-                    <Icon className="w-4 h-4 text-brand" />
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0">
+                    <Icon className="w-5 h-5 text-brand" />
                   </div>
                   <span className="text-sm font-medium text-foreground">
                     {text}
@@ -104,8 +104,7 @@ export function HerWakaSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Explore HER WAKA Resources
-                  <ArrowRight className="ml-2 w-4 h-4" />
+                  Explore Resources
                 </a>
               </Button>
             </div>
