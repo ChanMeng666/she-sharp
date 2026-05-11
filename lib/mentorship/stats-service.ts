@@ -78,30 +78,24 @@ async function getFunnelCounts(
 ): Promise<FormFunnelCounts> {
   const baseFilter = nonTestUser(table.userId);
 
-  const [
-    awaitingReview,
-    approved,
-    approvedRegistered,
-    approvedNotRegistered,
-    rejected,
-    drafts,
-  ] = await Promise.all([
-    countForm(table, and(baseFilter, eq(table.status, 'submitted'))),
-    countForm(table, and(baseFilter, eq(table.status, 'approved'))),
-    countForm(
-      table,
-      and(baseFilter, eq(table.status, 'approved'), sql`${table.userId} IS NOT NULL`),
-    ),
-    countForm(
-      table,
-      and(baseFilter, eq(table.status, 'approved'), isNull(table.userId)),
-    ),
-    countForm(table, and(baseFilter, eq(table.status, 'rejected'))),
-    countForm(
-      table,
-      and(baseFilter, sql`${table.status} IN ('not_started', 'in_progress')`),
-    ),
-  ]);
+  // Serial awaits (not Promise.all) to avoid a burst of concurrent Neon connection
+  // attempts that triggered "Failed to acquire permit to connect to the database"
+  // when the cron fired on a cold pool (2026-05-11 incident).
+  const awaitingReview = await countForm(table, and(baseFilter, eq(table.status, 'submitted')));
+  const approved = await countForm(table, and(baseFilter, eq(table.status, 'approved')));
+  const approvedRegistered = await countForm(
+    table,
+    and(baseFilter, eq(table.status, 'approved'), sql`${table.userId} IS NOT NULL`),
+  );
+  const approvedNotRegistered = await countForm(
+    table,
+    and(baseFilter, eq(table.status, 'approved'), isNull(table.userId)),
+  );
+  const rejected = await countForm(table, and(baseFilter, eq(table.status, 'rejected')));
+  const drafts = await countForm(
+    table,
+    and(baseFilter, sql`${table.status} IN ('not_started', 'in_progress')`),
+  );
 
   return {
     total: awaitingReview + approved + rejected,
@@ -229,25 +223,15 @@ async function getWaitingQueueLength(): Promise<number> {
  * metric failures are not isolated (kept simple — cron handler will log + retry next week).
  */
 export async function getMentorshipStatsSnapshot(): Promise<MentorshipStatsSnapshot> {
-  const [
-    mentors,
-    mentees,
-    activeRelationships,
-    waitingQueueLength,
-    mentorAwaitingReview,
-    menteeAwaitingReview,
-    mentorApprovedNotRegistered,
-    menteeApprovedNotRegistered,
-  ] = await Promise.all([
-    getFunnelCounts(mentorFormSubmissions),
-    getFunnelCounts(menteeFormSubmissions),
-    getActiveRelationshipsCount(),
-    getWaitingQueueLength(),
-    getAwaitingReviewList(mentorFormSubmissions),
-    getAwaitingReviewList(menteeFormSubmissions),
-    getApprovedNotRegisteredList(mentorFormSubmissions),
-    getApprovedNotRegisteredList(menteeFormSubmissions),
-  ]);
+  // Sequential awaits (not Promise.all) — see note in getFunnelCounts.
+  const mentors = await getFunnelCounts(mentorFormSubmissions);
+  const mentees = await getFunnelCounts(menteeFormSubmissions);
+  const activeRelationships = await getActiveRelationshipsCount();
+  const waitingQueueLength = await getWaitingQueueLength();
+  const mentorAwaitingReview = await getAwaitingReviewList(mentorFormSubmissions);
+  const menteeAwaitingReview = await getAwaitingReviewList(menteeFormSubmissions);
+  const mentorApprovedNotRegistered = await getApprovedNotRegisteredList(mentorFormSubmissions);
+  const menteeApprovedNotRegistered = await getApprovedNotRegisteredList(menteeFormSubmissions);
 
   return {
     generatedAt: new Date(),

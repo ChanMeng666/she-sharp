@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getMentorshipStatsSnapshot } from '@/lib/mentorship/stats-service';
 import { sendMentorshipStatsNotification } from '@/lib/slack/mentorship-stats-service';
 
+export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
+
 /**
  * GET /api/cron/weekly-mentorship-stats
  * Vercel Cron entry point. Schedule (vercel.json): "0 20 * * 0"
@@ -47,6 +50,10 @@ export async function POST(request: NextRequest) {
 
 async function runJob(opts: { manual?: boolean } = {}) {
   const startedAt = Date.now();
+  console.log('[cron] weekly-mentorship-stats invoked', {
+    manual: opts.manual ?? false,
+    at: new Date().toISOString(),
+  });
   try {
     const snapshot = await getMentorshipStatsSnapshot();
     await sendMentorshipStatsNotification(snapshot);
