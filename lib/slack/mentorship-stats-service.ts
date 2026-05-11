@@ -157,17 +157,14 @@ export async function sendMentorshipStatsNotification(snapshot: MentorshipStatsS
 
   const blocks = buildBlocks(snapshot);
 
-  try {
-    const response = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ blocks }),
-    });
+  const response = await fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ blocks }),
+  });
 
-    if (!response.ok) {
-      console.error('Mentorship stats webhook failed:', response.status, await response.text());
-    }
-  } catch (error) {
-    console.error('Failed to send mentorship stats Slack notification:', error);
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Mentorship stats webhook ${response.status}: ${body}`);
   }
 }
