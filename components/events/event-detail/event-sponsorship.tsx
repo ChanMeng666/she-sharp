@@ -3,6 +3,7 @@
 import { EventV3 } from "@/types/event";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Heart, Users, Sparkles } from "lucide-react";
 
 interface EventSponsorshipProps {
@@ -89,14 +90,13 @@ export function EventSponsorship({ event, className }: EventSponsorshipProps) {
 
                   {/* Center */}
                   <div className="absolute inset-20 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center shadow-2xl">
-                    <div className="text-center">
-                      <div className="text-3xl xl:text-4xl font-bold text-white leading-none">
-                        She
-                      </div>
-                      <div className="text-3xl xl:text-4xl font-bold text-white leading-none">
-                        Sharp
-                      </div>
-                    </div>
+                    <Image
+                      src="/logos/she-sharp-logo-white.png"
+                      alt="She Sharp"
+                      width={80}
+                      height={80}
+                      className="w-14 h-14 xl:w-16 xl:h-16 object-contain"
+                    />
                   </div>
                 </div>
               </div>

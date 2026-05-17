@@ -116,74 +116,84 @@ export function EventSidebarPanel({
 
   const mapUrl = getMapUrl();
 
+  const cardClass = "rounded-2xl bg-card border border-border/60 shadow-sm p-5 sm:p-6 md:p-8";
+
+  const IconBox = ({ children }: { children: React.ReactNode }) => (
+    <div className="flex items-center justify-center w-8 h-8 rounded-lg  shrink-0">
+      {children}
+    </div>
+  );
+
   return (
     <>
-      {/* Status Card - Only show if event is past */}
+      {/* Status Card - only for past events */}
       {isPast && (
-        <div
-          className={cn(
-            "relative border border-border overflow-hidden card-sm bg-muted/50 backdrop-blur-md p-5 sm:p-6 md:p-8 lg:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
-            className
-          )}
-        >
-          <div className="space-y-4">
-            <p className="text-lg text-muted-foreground text-center">
-              This event has ended
-            </p>
+        <div className={cn(cardClass, className)}>
+          <div className="flex flex-col items-center gap-3 text-center">
+            <p className="text-sm font-medium text-foreground">This event has ended</p>
             {event.attendees != null && event.attendees > 0 && (
-              <div className="flex items-center justify-center gap-2 text-muted-foreground">
-                <Users className="w-5 h-5" />
-                <span className="text-base">{event.attendees} registered</span>
+              <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                <IconBox>
+                  <Users className="w-4 h-4 text-brand" />
+                </IconBox>
+                <span>{event.attendees} attended</span>
               </div>
             )}
           </div>
         </div>
       )}
 
-      {/* Location Card */}
-      <div
-        className={cn(
-          "relative border border-border overflow-hidden card-sm bg-muted/50 backdrop-blur-md p-5 sm:p-6 md:p-8 lg:p-10 shadow-sm hover:shadow-xl transition-all duration-300",
-          isPast && "mt-6"
-        )}
-      >
-        <div className="space-y-6 md:space-y-8">
-          <p className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground uppercase">
-            Time & Location
-          </p>
+      {/* Time & Location Card */}
+      <div className={cn(cardClass, isPast && "mt-4")}>
+        <div className="space-y-6">
+          {/* Heading */}
+          <div className="flex items-center gap-3">
+                     <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground">
+              Time & location
+            </h2>
+          </div>
 
-          <div className="space-y-4">
+          {/* Meta rows */}
+          <div className="space-y-3">
             {/* Date */}
-            <div className="flex items-center gap-3 text-base">
-              <Calendar className="w-5 h-5 text-muted-foreground" />
-              <span className="text-foreground">
+            <div className="flex items-center gap-3">
+              <IconBox>
+                <Calendar className="w-4 h-4 text-brand" />
+              </IconBox>
+              <span className="text-sm text-foreground">
                 {formatEventDate(event, "full")}
               </span>
             </div>
 
-            {/* Time - only show if available */}
+            {/* Time */}
             {timeDisplay && (
-              <div className="flex items-center gap-3 text-base">
-                <Clock className="w-5 h-5 text-muted-foreground" />
-                <span className="text-foreground">{timeDisplay}</span>
+              <div className="flex items-center gap-3">
+                <IconBox>
+                  <Clock className="w-4 h-4 text-brand" />
+                </IconBox>
+                <span className="text-sm text-foreground">{timeDisplay}</span>
               </div>
             )}
 
+            {/* Online indicator */}
             {(isOnline || isHybrid) && (
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <Video className="w-5 h-5 text-muted-foreground" />
-                  <span className="text-foreground">Online Event</span>
-                </div>
+              <div className="flex items-center gap-3">
+                <IconBox>
+                  <Video className="w-4 h-4 text-brand" />
+                </IconBox>
+                <span className="text-sm text-foreground">Online event</span>
               </div>
             )}
 
+            {/* Venue */}
             {(!isOnline || isHybrid) && location.venueName && (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-6 h-6 text-muted-foreground shrink-0 mt-0.5" />
-                  <div className="text-base">
-                    <p className="text-foreground">{location.venueName}</p>
+                  <IconBox>
+                    <MapPin className="w-4 h-4 text-brand" />
+                  </IconBox>
+                  <div className="text-sm leading-relaxed">
+                    <p className="text-foreground font-medium">{location.venueName}</p>
                     {location.address && (
                       <p className="text-muted-foreground">{location.address}</p>
                     )}
@@ -193,9 +203,8 @@ export function EventSidebarPanel({
                   </div>
                 </div>
 
-                {/* Only show Copy and Map buttons for future events */}
                 {!isPast && (
-                  <div className="flex gap-2 pl-6 sm:pl-7">
+                  <div className="flex gap-2 pl-11">
                     {(location.address || location.venueName) && (
                       <Button
                         variant="outline"
@@ -226,57 +235,55 @@ export function EventSidebarPanel({
                 )}
               </div>
             )}
-            {/* Attendees - show for non-past events with data */}
+
+            {/* Attendees */}
             {!isPast && event.attendees != null && event.attendees > 0 && (
-              <div className="flex items-center gap-3 text-base">
-                <Users className="w-5 h-5 text-muted-foreground" />
-                <span className="text-foreground">
+              <div className="flex items-center gap-3">
+                <IconBox>
+                  <Users className="w-4 h-4 text-brand" />
+                </IconBox>
+                <span className="text-sm text-foreground">
                   {event.attendees} registered
                 </span>
               </div>
             )}
           </div>
 
-          {/* Refund Policy - only show for future events */}
+          {/* Refund policy */}
           {isFuture && event.detailPageData.refundPolicy && (
-            <div className="pt-2 border-t border-border">
-              <p className="text-xs text-muted-foreground">
-                <span className="font-medium">Refund Policy:</span>{" "}
+            <div className="pt-4 border-t border-border/60">
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                <span className="font-medium text-foreground">Refund policy: </span>
                 {event.detailPageData.refundPolicy}
               </p>
             </div>
           )}
 
-          {/* CTA - Show if event date is in the future or if past event has gallery */}
+          {/* CTA */}
           {(isFuture || (isPast && event.detailPageData.galleryUrl)) && (
-            <div className="space-y-4">
-              <Button
-                size="lg"
-                variant="brand"
-                className="w-full"
-                onClick={
-                  isPast && event.detailPageData.galleryUrl
-                    ? handleViewGallery
-                    : handleRegister
-                }
-              >
-                {getButtonText()}
-              </Button>
-            </div>
+            <Button
+              size="lg"
+              variant="brand"
+              className="w-full"
+              onClick={
+                isPast && event.detailPageData.galleryUrl
+                  ? handleViewGallery
+                  : handleRegister
+              }
+            >
+              {getButtonText()}
+            </Button>
           )}
 
-          {/* Fallback CTA for past events that have local photos but no external gallery */}
           {showViewPhotosFallback && (
-            <div className="space-y-4">
-              <Button
-                size="lg"
-                variant="brand"
-                className="w-full"
-                onClick={handleViewPhotos}
-              >
-                View Photos
-              </Button>
-            </div>
+            <Button
+              size="lg"
+              variant="brand"
+              className="w-full"
+              onClick={handleViewPhotos}
+            >
+              View Photos
+            </Button>
           )}
         </div>
       </div>
