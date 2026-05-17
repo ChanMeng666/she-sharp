@@ -2,7 +2,7 @@
 
 import { EventSpecialSection } from "@/types/event";
 import { cn } from "@/lib/utils";
-import { ExternalLink, Video, FileText, Lightbulb, Link2, ListChecks } from "lucide-react";
+import { ExternalLink, Video, ListChecks } from "lucide-react";
 
 interface EventSpecialSectionsProps {
   sections: EventSpecialSection[];
@@ -49,33 +49,12 @@ function extractYouTubeId(input: string): string | null {
   return null;
 }
 
-function getIconForType(type: string) {
-  switch (type.toLowerCase()) {
-    case "workshop_preparation":
-      return <Lightbulb className="w-5 h-5 text-brand" />;
-    case "video":
-    case "youtube":
-      return <Video className="w-5 h-5 text-brand" />;
-    case "related-links":
-    case "related_links":
-    case "links":
-      return <Link2 className="w-5 h-5 text-brand" />;
-    case "topics":
-    case "agenda":
-    case "bullets":
-    case "prizes":
-    case "judging":
-      return <ListChecks className="w-5 h-5 text-brand" />;
-    default:
-      return <FileText className="w-5 h-5 text-brand" />;
-  }
-}
 
 function BulletList({ items }: { items: string[] }) {
   return (
     <ul className="space-y-2 list-disc pl-5 marker:text-brand">
       {items.map((item, i) => (
-        <li key={i} className="text-muted-foreground pl-1">
+        <li key={i} className="text-muted-foreground leading-relaxed text-pretty pl-1">
           {item}
         </li>
       ))}
@@ -118,7 +97,7 @@ function SpecialSectionContent({ content }: { content: string }) {
     );
   }
 
-  return <p className="text-muted-foreground">{content}</p>;
+  return <p className="text-muted-foreground leading-relaxed text-pretty">{content}</p>;
 }
 
 function YouTubeEmbeds({ items }: { items: string[] }) {
@@ -188,6 +167,13 @@ function RelatedLinks({ items }: { items: string[] }) {
   );
 }
 
+function normalizeTitle(title: string): string {
+  if (title === title.toUpperCase() && title.length > 3) {
+    return title.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+  return title;
+}
+
 export function EventSpecialSections({
   sections,
   className,
@@ -213,39 +199,35 @@ export function EventSpecialSections({
           sectionType === "judging";
 
         return (
-          <div
-            key={index}
-            className="rounded-[var(--radius-card-sm)] bg-muted/40 border border-border p-4 sm:p-5 md:p-6 lg:p-8"
-          >
-            <div className="flex items-center gap-3 mb-4 md:mb-6">
-              {getIconForType(section.type)}
-              <h3 className="text-xl font-semibold text-foreground">
-                {section.title}
+          <div key={index} className="py-6 md:py-8 space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="w-1 h-8 rounded-full bg-brand shrink-0" />
+              <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground">
+                {normalizeTitle(section.title)}
               </h3>
             </div>
-            {isYouTube ? (
-              <YouTubeEmbeds items={section.content} />
-            ) : isRelatedLinks ? (
-              <RelatedLinks items={section.content} />
-            ) : isBulletList ? (
-              <BulletList
-                items={section.content.filter((item) => item !== section.title)}
-              />
-            ) : (
-              <div className="space-y-4">
-                {section.content.map((item, i) => {
-                  // Skip duplicate titles
-                  if (item === section.title) {
-                    return null;
-                  }
-                  return (
-                    <div key={i}>
-                      <SpecialSectionContent content={item} />
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+            <div className="max-w-prose">
+              {isYouTube ? (
+                <YouTubeEmbeds items={section.content} />
+              ) : isRelatedLinks ? (
+                <RelatedLinks items={section.content} />
+              ) : isBulletList ? (
+                <BulletList
+                  items={section.content.filter((item) => item !== section.title)}
+                />
+              ) : (
+                <div className="space-y-3">
+                  {section.content.map((item, i) => {
+                    if (item === section.title) return null;
+                    return (
+                      <div key={i}>
+                        <SpecialSectionContent content={item} />
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         );
       })}

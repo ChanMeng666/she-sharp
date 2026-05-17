@@ -4355,81 +4355,14 @@
           ],
           "other": []
         },
-        "specialSections": [],
-        "photos": [
+        "specialSections": [
           {
-            "url": "/img/scraped/photos/64f71ff4f0d7a07cddcab389_Screen_Shot_2023-09-05_at_8.32_fda10c36.png",
-            "alt": "Profile picture of Lesieli Oliver"
-          },
-          {
-            "url": "/img/scraped/photos/651401b525c36574d67a3413_Mehwish_Hasan_Headshot_748d3f0b.jpg",
-            "alt": "Mehwish Hasan"
-          },
-          {
-            "url": "/img/scraped/photos/64f9b9ed7b6f7c9f95bec1ff_Nils_Reardon_ffbf439b.jpeg",
-            "alt": "Profile photo of Nils"
-          },
-          {
-            "url": "/img/scraped/photos/64f9bac5ab2e282389ae1f5d_Screen_Shot_2023-09-07_at_7.57_0887bd99.png",
-            "alt": "Profile photo of Nischay"
-          },
-          {
-            "url": "/img/scraped/photos/65084a6f7eff201d67564fb5_steve_smith_photo_9e4ce7f3.jpeg",
-            "alt": "Steve Smith"
-          },
-          {
-            "url": "/img/scraped/photos/654b416bc4182bc0aac67822_Claire_Wigley_photo_e1a219dd.jpg",
-            "alt": "Claire Wigley"
-          },
-          {
-            "url": "/img/scraped/photos/6523c77644a849818c9b981a_Alex_Ward_4_e5a3ee7d.jpg",
-            "alt": "Alex Ward"
-          },
-          {
-            "url": "/img/scraped/photos/6523c7864dd8dc8744a0f0f9_christopher-mende-photo_1_422cf8d3.jpeg",
-            "alt": "Christopher Mende"
-          },
-          {
-            "url": "/img/scraped/photos/651660618bc5c515a1dbf189_Gottschalk_photo_2_1cb1f73b.jpg",
-            "alt": "Jennifer Gottschalk"
-          },
-          {
-            "url": "/img/scraped/photos/65291784ce92e9979573177e_Julie_1_dd9752f2.png",
-            "alt": "Julie McMahon"
-          },
-          {
-            "url": "/img/scraped/photos/654b43a1b3fadccbb7f5f797_20231108_093807_cabc2a81.jpg",
-            "alt": "Aaron Overington"
-          },
-          {
-            "url": "/img/scraped/photos/650ce04b820846784cf43d08_Evo_d781ea1f.png",
-            "alt": "Profile Picture"
-          },
-          {
-            "url": "/img/scraped/photos/65487d1ddf1bfe388e81605e_Malcolm_Clarke_1265a5cc.jpg",
-            "alt": "Malcolm Clarke"
-          },
-          {
-            "url": "/img/scraped/photos/654873b6b75117a8e86f956a_Shanon_O'Connor_cf39d369.JPG",
-            "alt": "Shanon O'Connor"
-          },
-          {
-            "url": "/img/scraped/photos/65487ca84dd34ae38960f123_Tracy_Henderson_3acf1e35.jpeg",
-            "alt": "Tracy Henderson"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
+            "type": "youtube",
+            "title": "Event Recording",
+            "content": ["https://www.youtube.com/watch?v=Qlbdimoh4rs&t=1s"]
           }
         ],
+        "photos": [],
         "galleryUrl": "https://photos.google.com/share/AF1QipPpmlI7QXynCZ_KqLEZu_aQ3asmC4A1gw6OQdWU3G_yo93MWkH2LYLsp7GVJZn8xw?pli=1&key=UGxZdGllaGZPVUNudG95dFFJaTdWYTJmckNhQlJR",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -6455,6 +6388,10 @@
         "specialSections": [],
         "photos": [
           {
+            "url": "https://lh3.googleusercontent.com/pw/AP1GczPW9wxVYTqxmNxoma5N4KyQQNpO-lTYU1tzD8Jaf_LUy5uMna_UkdJ1vv1ismRCeWGR1nu2giAVHn9XMLs53qxGAna68DLEk1XpXaAofgwlcm4d04Wf7M0Oft75xV2rf1gZ55UU4jPbzGl6vywMLKhA=w1909-h1273-s-no-gm?authuser=0",
+            "alt": "Women in AI for Social Good group photo"
+          },
+          {
             "url": "/img/scraped/photos/6562bcbe45033320605874a9_198986570_101587762235585_b243a694.jpg",
             "alt": ""
           },
@@ -6570,6 +6507,10 @@
           },
           {
             "url": "/img/scraped/photos/655d09d99cad7d74fd8b20fa_tech-grand-tour_61f3cea0.jpg",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/655bd3efe64082464045708b_11_fa6bbc64.jpg",
             "alt": ""
           }
         ],
