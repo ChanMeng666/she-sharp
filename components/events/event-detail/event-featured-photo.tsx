@@ -20,22 +20,24 @@ export function EventFeaturedPhoto({
   }
 
   return (
-    <figure
-      className={cn(
-        "w-full overflow-hidden rounded-lg bg-muted",
-        className
-      )}
-    >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={featured.url}
-        alt={featured.alt || `${event.title} group photo`}
-        className="w-full h-auto object-cover"
-        loading="lazy"
-      />
-      {featured.alt && (
-        <figcaption className="sr-only">{featured.alt}</figcaption>
-      )}
-    </figure>
+    <div className="bg-muted py-10 sm:py-12 md:py-16 px-0 sm:px-6 lg:px-8">
+      <figure
+        className={cn(
+          "mx-auto overflow-hidden max-w-5xl rounded-none sm:rounded-2xl",
+          className
+        )}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={featured.url}
+          alt={featured.alt || `${event.title} group photo`}
+          className="w-full h-auto object-cover"
+          loading="lazy"
+        />
+        {featured.alt && (
+          <figcaption className="sr-only">{featured.alt}</figcaption>
+        )}
+      </figure>
+    </div>
   );
 }

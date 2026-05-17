@@ -28,15 +28,15 @@ export const teamMembers: TeamMember[] = [
       "Raquel is a certified Project Management Professional (PMP®) with a master’s degree in IT Project Management from AUT and over 12 years of experience in the IT industry. She has led network infrastructure, software development, and ERP projects across diverse industries in Europe, UK, US, and Philippines. Known for her adaptability, she strives for project excellence and fosters a collaborative, inclusive work environment. As an event manager at She Sharp, Raquel leverages her project management expertise to plan and organise She Sharp-led conferences & events. Inspired by She Sharp’s mission, she’s passionate about creating a diverse environment where women can grow, learn, and overcome challenges in STEM.",
     image: "/img/team/Raquel.png",
   },
-  {
-    id: 4,
-    name: "Isha Sangrolkar",
-    roles: ["Ambassador", "Website Lead"],
-    linkedin: "https://www.linkedin.com/in/isha-sangrolkar/",
-    description:
-      "Isha is pursuing her Master of Computer and Information Sciences degree at AUT, focusing on expanding her expertise in the field. With a background as a DevOps engineer at Persistent Systems in India, she brings real-world experience and technical insight to her academic journey.\n\nIsha's introduction to She Sharp came through her participation in various events organised at AUT by Dr. Mahsa. Sharing a common mission with She Sharp, Isha is dedicated to promoting gender balance within the tech industry.",
-    image: "/img/team/Isha.png",
-  },
+  // {
+  //   id: 4,
+  //   name: "Isha Sangrolkar",
+  //   roles: ["Ambassador", "Website Lead"],
+  //   linkedin: "https://www.linkedin.com/in/isha-sangrolkar/",
+  //   description:
+  //     "Isha is pursuing her Master of Computer and Information Sciences degree at AUT, focusing on expanding her expertise in the field. With a background as a DevOps engineer at Persistent Systems in India, she brings real-world experience and technical insight to her academic journey.\n\nIsha's introduction to She Sharp came through her participation in various events organised at AUT by Dr. Mahsa. Sharing a common mission with She Sharp, Isha is dedicated to promoting gender balance within the tech industry.",
+  //   image: "/img/team/Isha.png",
+  // },
   {
     id: 5,
     name: "Meeta Patel",
@@ -112,10 +112,10 @@ export const teamMembers: TeamMember[] = [
   {
     id: 13,
     name: "Lesley Gao",
-    roles: ["Ambassador", "UX/UI Designer"],
+    roles: ["Ambassador", "Website Maintenance"],
     linkedin: "https://www.linkedin.com/in/lesley-gao/",
     description:
-      "Lesley Gao is a Product Designer at Watchful, a security-tech company building AI-powered monitoring platforms. With a background in journalism, web development, and UX/UI, she has worked on projects spanning SaaS products, onboarding experiences, and AI-enabled tools, including designing the She Sharp website.\n\nLesley is passionate about gender equality and supporting programmes and events that empower and connect women in tech across Aotearoa. Outside of work, she enjoys hiking Auckland's trails, photography, and building with Lego.",
+      "Lesley Gao is a Product Designer with a background in journalism, web development, and UX/UI design. She has worked across SaaS products, onboarding experiences, and support platforms, including the design and development of the She Sharp website. \n\nShe enjoy simplifying complex workflows and turning them into intuitive digital experiences. Lesley is also passionate about supporting communities and initiatives that empower and connect women in tech across Aotearoa.\n\nOutside of work, she enjoys hiking Auckland’s trails, photography, solving jigsaw puzzles, and building Lego.",
     image: "/img/team/Lesley.png",
   },
   {

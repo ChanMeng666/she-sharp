@@ -12,10 +12,8 @@ interface SponsorshipTier {
   name: string
   level: "bronze" | "silver" | "gold" | "platinum"
   description: string
-  price: {
-    monthly: number
-    yearly: number
-  }
+  accent: string
+  accentBg: string
   popular?: boolean
 }
 
@@ -24,26 +22,30 @@ const tiers: SponsorshipTier[] = [
     name: "Bronze",
     level: "bronze",
     description: "Essential visibility and community support",
-    price: { monthly: 417, yearly: 5000 },
+    accent: "text-amber-700",
+    accentBg: "bg-amber-700",
   },
   {
     name: "Silver",
     level: "silver",
     description: "Enhanced engagement and talent access",
-    price: { monthly: 833, yearly: 10000 },
+    accent: "text-slate-500",
+    accentBg: "bg-slate-500",
   },
   {
     name: "Gold",
     level: "gold",
     description: "Premium partnership with workshop hosting",
-    price: { monthly: 1667, yearly: 20000 },
+    accent: "text-yellow-600",
+    accentBg: "bg-yellow-600",
     popular: true,
   },
   {
     name: "Platinum",
     level: "platinum",
     description: "Executive partnership with naming rights",
-    price: { monthly: 4167, yearly: 50000 },
+    accent: "text-[#8982ff]",
+    accentBg: "bg-[#8982ff]",
   },
 ]
 
@@ -62,7 +64,6 @@ const EVENT_STATS = [
 
 export function SponsorshipPricing() {
   const [selectedTier, setSelectedTier] = React.useState<string>("gold")
-  const [isYearly, setIsYearly] = React.useState(true)
 
   const currentTier = tiers.find((t) => t.level === selectedTier) || tiers[2]
 
@@ -92,6 +93,7 @@ export function SponsorshipPricing() {
 
                 {/* Left Side */}
                 <div className="flex flex-col gap-8 p-8 sm:p-10 md:p-12 lg:p-16 text-center">
+                  {/* Tier selector */}
                   <div className="inline-flex flex-wrap justify-center gap-1 p-1 rounded-full border border-[#1f1e44]/10 self-center">
                     {tiers.map((tier) => (
                       <button
@@ -99,7 +101,7 @@ export function SponsorshipPricing() {
                         type="button"
                         onClick={() => setSelectedTier(tier.level)}
                         className={cn(
-                          "rounded-full px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium transition-all",
+                          "rounded-full px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium transition-all duration-200",
                           selectedTier === tier.level
                             ? "bg-[#1f1e44] text-white"
                             : "text-[#1f1e44]/60 hover:text-[#1f1e44]"
@@ -110,52 +112,30 @@ export function SponsorshipPricing() {
                     ))}
                   </div>
 
-                  <div>
+                  {/* Tier info */}
+                  <div className="flex flex-col items-center gap-3">   
                     <h3 className="text-xl font-semibold text-[#1f1e44]">
                       {currentTier.name} Partnership
                     </h3>
-                    <p className="mt-1.5 text-base text-[#1f1e44]/50">
+                    <p className="text-base text-[#1f1e44]/50">
                       {currentTier.description}
                     </p>
                   </div>
 
-                  <div>
-                    <span className="text-4xl sm:text-5xl font-bold text-[#1f1e44]">
-                      ${isYearly
-                        ? currentTier.price.yearly.toLocaleString()
-                        : currentTier.price.monthly.toLocaleString()}
-                    </span>
-                    <span className="ml-2 text-sm text-[#1f1e44]/40">
-                      NZD / {isYearly ? "year" : "month"}
-                    </span>
+                  {/* Pricing on request */}
+                  <div className="rounded-2xl bg-muted px-6 py-5">
+                    <p className="text-sm font-medium text-[#1f1e44]/70">
+                      Pricing available on request
+                    </p>
+                    <p className="mt-1 text-xs text-[#1f1e44]/40">
+                      Packages are flexible and customised to your organisation
+                    </p>
                   </div>
 
-                  <div className="inline-flex rounded-full border border-[#1f1e44]/10 p-1 self-center">
-                    <button
-                      type="button"
-                      onClick={() => setIsYearly(false)}
-                      className={cn(
-                        "rounded-full px-5 py-2 text-sm font-medium transition-all",
-                        !isYearly ? "bg-[#8982ff] text-white" : "text-[#1f1e44]/50 hover:text-[#1f1e44]"
-                      )}
-                    >
-                      Monthly
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setIsYearly(true)}
-                      className={cn(
-                        "rounded-full px-5 py-2 text-sm font-medium transition-all",
-                        isYearly ? "bg-[#8982ff] text-white" : "text-[#1f1e44]/50 hover:text-[#1f1e44]"
-                      )}
-                    >
-                      Annual
-                    </button>
-                  </div>
-
+                  {/* CTAs */}
                   <div className="flex flex-col gap-3">
                     <Button size="lg" className="w-full" onClick={scrollToForm}>
-                      Get started
+                      Get in touch
                     </Button>
                     <Button asChild size="lg" variant="outline" className="w-full">
                       <a
@@ -168,8 +148,6 @@ export function SponsorshipPricing() {
                       </a>
                     </Button>
                   </div>
-
-                  <p className="text-xs text-[#1f1e44]/40">All packages are customizable</p>
                 </div>
 
                 {/* Right Side */}

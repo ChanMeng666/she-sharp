@@ -79,11 +79,9 @@ export default async function EventPage({ params }: EventPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Cover Image */}
+      {/* Header — branded navy hero, no image */}
       <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <div>
-          <EventHeader event={event} />
-        </div>
+        <EventHeader event={event} />
       </div>
 
       {/* Main Content Section */}
@@ -92,7 +90,7 @@ export default async function EventPage({ params }: EventPageProps) {
           {/* Back to Events Link */}
           <Link
             href="/events"
-            className="inline-flex items-center gap-1 text-muted-foreground hover:text-brand transition-all duration-300 font-bold group mb-6 uppercase"
+            className="inline-flex items-center gap-1 text-muted-foreground hover:text-brand transition-all duration-300 font-medium group mb-6"
           >
             <span className="flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 ">
               <ArrowLeft className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-0.5 text-brand" />
@@ -106,19 +104,15 @@ export default async function EventPage({ params }: EventPageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 lg:gap-12 items-start">
             {/* Main Content - Left Column */}
             <div className="lg:col-span-7 xl:col-span-8 space-y-8 md:space-y-12">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6 md:mb-8 lg:mb-12">
-                {event.title}
-              </h1>
-
-              {/* Subtitle if available */}
-              {event.detailPageData.subtitle && (
-                <p className="text-xl text-muted-foreground -mt-4 md:-mt-8">
-                  {event.detailPageData.subtitle}
-                </p>
-              )}
-
-              {/* Featured group photo - displayed prominently before description */}
-              <EventFeaturedPhoto event={event} />
+              {/* Cover Image — full natural dimensions, no crop */}
+              <div className="w-full overflow-hidden rounded-2xl">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={event.coverImage.url}
+                  alt={event.coverImage.alt || event.title}
+                  className="w-2/3 h-auto mx-auto rounded-2xl"
+                />
+              </div>
 
               <EventDescription event={event} />
 
@@ -145,14 +139,13 @@ export default async function EventPage({ params }: EventPageProps) {
         </div>
       )}
 
+
+      {/* Featured group photo - displayed prominently before description */}
+      <EventFeaturedPhoto event={event} />
+
       {/* Event Sponsors (logos) */}
       <div >
         <EventSponsors event={event} />
-      </div>
-
-      {/* Sponsorship Section */}
-      <div>
-        <EventSponsorship event={event} />
       </div>
 
       {/* Photos Section */}
@@ -162,12 +155,17 @@ export default async function EventPage({ params }: EventPageProps) {
         </div>
       )}
 
+      {/* Sponsorship Section */}
+      <div>
+        <EventSponsorship event={event} />
+      </div>
+
       {/* Related Events */}
       {relatedEvents.length > 0 && (
         <Section spacing="section" className="bg-muted pb-12 sm:pb-16 md:pb-20 lg:pb-24">
           <Container size="full">
-            <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground mb-8 uppercase">
-              More Events
+            <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground mb-8">
+              More events
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
               {relatedEvents.map((relatedEvent) => (

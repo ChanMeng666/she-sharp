@@ -10,6 +10,13 @@ interface EventSpeakersProps {
   className?: string;
 }
 
+function normalizeHeading(heading: string): string {
+  if (heading === heading.toUpperCase() && heading.length > 3) {
+    return heading.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+  return heading;
+}
+
 interface SpeakerGroupSectionProps {
   group: EventSpeakerGroup;
   startIndex: number;
@@ -22,8 +29,8 @@ function SpeakerGroupSection({ group, startIndex }: SpeakerGroupSectionProps) {
 
   return (
     <div className="space-y-6 md:space-y-8">
-      <p className="flex items-center gap-2 text-lg md:text-xl lg:text-2xl font-bold text-foreground uppercase">
-        {group.heading}
+      <p className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground">
+        {normalizeHeading(group.heading)}
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 items-stretch">
         {group.speakers.map((speaker, index) => {
