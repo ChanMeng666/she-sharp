@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { DM_Sans, Plus_Jakarta_Sans, Carattere } from 'next/font/google';
+import { Montserrat, Carattere } from 'next/font/google';
 import { getUser } from '@/lib/db/queries';
 import { serializeData } from '@/lib/utils';
 import { SWRConfig } from 'swr';
@@ -33,16 +33,11 @@ export const viewport: Viewport = {
   maximumScale: 1
 };
 
-const dmSans = DM_Sans({
+const montserrat = Montserrat({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  style: ['normal', 'italic'],
   variable: '--font-sans'
-});
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--font-heading'
 });
 
 const carattere = Carattere({
@@ -68,7 +63,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-background text-foreground ${dmSans.variable} ${plusJakartaSans.variable} ${carattere.variable}`}
+      className={`bg-background text-foreground ${montserrat.variable} ${carattere.variable}`}
     >
       <body className="min-h-[100dvh]">
         <Providers>
