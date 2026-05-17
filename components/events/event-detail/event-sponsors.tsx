@@ -86,11 +86,11 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
           ].filter((s) => s.description && s.description.trim().length > 0);
           if (described.length === 0) return null;
           return (
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="mt-12 flex flex-wrap justify-center gap-6">
               {described.map((sponsor, index) => (
                 <div
                   key={`desc-${sponsor.name}-${index}`}
-                  className="rounded-[var(--radius-card-sm)] border border-border bg-muted/30 p-5 md:p-6"
+                  className="w-full md:w-[calc(50%-0.75rem)] rounded-[var(--radius-card-sm)] border border-border bg-muted/30 p-5 md:p-6"
                 >
                   <h3 className="text-base font-semibold text-foreground mb-2">
                     {sponsor.name}

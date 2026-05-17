@@ -16,20 +16,19 @@ export function EventDescription({ event, className }: EventDescriptionProps) {
   }
 
   return (
-    <div className={className}>
-      <div className="relative overflow-hidden py-6 md:py-8 pr-0">
-        <div className="space-y-4">
-          <p className="flex items-center gap-2 text-lg md:text-xl lg:text-2xl font-semibold text-foreground uppercase">
-            About this event
+    <div className={cn("py-6 md:py-8 space-y-5", className)}>
+      <div className="flex items-center gap-3">
+        <div className="w-1 h-8 rounded-full bg-brand shrink-0" />
+        <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground ">
+          About This Event
+        </h2>
+      </div>
+      <div className="space-y-4 max-w-prose">
+        {fullDescription.map((paragraph, index) => (
+          <p key={index} className="text-muted-foreground leading-relaxed text-pretty">
+            {paragraph}
           </p>
-          <div className="space-y-4">
-            {fullDescription.map((paragraph, index) => (
-              <p key={index} className="text-muted-foreground leading-relaxed">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
