@@ -49,45 +49,77 @@
     {
       "id": 94,
       "slug": "peyvand-academy-20-june-2026",
-      "title": "Youth Tech Series — Robotics Workshop with Peyvand Academy",
+      "title": "Youth Tech Series — Electronics Workshop",
       "date": "June 20, 2026",
       "coverImage": {
-        "url": "/img/events/peyvand-academy-20-june-2026-cover.jpg",
-        "alt": "Youth Tech Series — Robotics Workshop, delivered by SheSharp in partnership with Peyvand Academy"
+        "url": "/img/events/peyvand-academy-20-june-2026-cover.png",
+        "alt": "Youth Tech Series — Electronics Workshop, delivered by SheSharp in partnership with Peyvand Academy, the Ministry of Education, and Little Engineers"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/peyvand-academy-20-june-2026",
-      "shortDescription": "A hands-on robotics workshop for young members of the Persian community aged 13–18, exploring the fundamentals of robotics through interactive activities that encourage creativity, problem-solving and teamwork.",
+      "shortDescription": "A hands-on electronics workshop for young participants aged 12–18, building foundational skills in electronics through practical learning — delivered by SheSharp in collaboration with Peyvand Academy, the Ministry of Education, and Little Engineers.",
       "attendees": null,
       "checkedIn": null,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/peyvand-academy-20-june-2026",
-        "title": "Youth Tech Series — Robotics Workshop with Peyvand Academy",
-        "subtitle": "Robotics Workshop for the Persian Community Youth (Ages 13–18)",
+        "title": "Youth Tech Series — Electronics Workshop",
+        "subtitle": "Electronics Workshop for Youth (Ages 12–18)",
         "date": "June 20, 2026",
         "time": "2:30pm - 4:30pm NZST",
         "location": {
           "format": "in_person",
           "venueName": "Fruitvale Primary School",
-          "address": "",
-          "city": "Auckland",
+          "address": "40 Fruitvale Road",
+          "city": "Auckland 0600",
           "country": "New Zealand"
         },
         "fullDescription": [
-          "SheSharp, in collaboration with Peyvand Academy, is excited to host two engaging and educational workshops designed specifically for young members of the Persian community aged 13–18. These sessions aim to inspire curiosity and build foundational knowledge in emerging technologies.",
-          "In this hands-on workshop, students will explore the fundamentals of robotics through interactive activities. This session is designed to encourage creativity, problem-solving, and teamwork.",
-          "Peyvand Academy is a community-driven initiative focused on empowering young people from the Persian community through education and skill-building. It provides a supportive space for students to explore new technologies, build confidence, and connect with mentors.",
-          "NOTE: This event is by invitation only. Participants will be invited directly by Peyvand Academy. Food will be provided by the academy for attendees."
+          "Join us for an interactive session diving into the world of Electronics!",
+          "SheSharp, in collaboration with Peyvand Academy, the Ministry of Education, and Little Engineers, is excited to offer a hands-on workshop for young participants aged 12–18.",
+          "This session will focus on building a foundation in electronics through practical learning. Participants will have the opportunity to explore the basics of electronics in a supportive, collaborative environment, gaining valuable skills that are crucial for the tech-driven world."
         ],
         "speakers": {},
         "organizers": [],
         "sponsors": {
-          "main": [],
+          "main": [
+            {
+              "name": "Peyvand Academy",
+              "logo": "/img/sponsors/peyvand-academy.jpg",
+              "description": ""
+            },
+            {
+              "name": "Ministry of Education",
+              "logo": "/img/sponsors/MOE.png",
+              "description": ""
+            },
+            {
+              "name": "Little Engineers",
+              "logo": "/img/sponsors/little-engineers.jpg",
+              "description": ""
+            }
+          ],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "bullets",
+            "title": "What to Expect",
+            "content": [
+              "Electronics foundations",
+              "Interactive activities and discussions",
+              "A collaborative learning environment"
+            ]
+          },
+          {
+            "type": "info",
+            "title": "Join Us",
+            "content": [
+              "We're excited to be part of this journey in inspiring the next generation of young learners."
+            ]
+          }
+        ],
         "photos": [],
         "galleryUrl": "",
-        "registrationUrl": "",
+        "registrationUrl": "https://events.humanitix.com/youth-tech-series-electronics-workshop",
         "images": [],
         "category": "workshop",
         "status": "upcoming",
@@ -97,45 +129,73 @@
     {
       "id": 93,
       "slug": "peyvand-academy-13-june-2026",
-      "title": "Youth Tech Series — Introduction to Artificial Intelligence with Peyvand Academy",
+      "title": "Youth Tech Series — AI & Electronics Workshop",
       "date": "June 13, 2026",
       "coverImage": {
-        "url": "/img/events/peyvand-academy-13-june-2026-cover.jpg",
-        "alt": "Youth Tech Series — Introduction to Artificial Intelligence, delivered by SheSharp in partnership with Peyvand Academy"
+        "url": "/img/events/peyvand-academy-13-june-2026-cover.png",
+        "alt": "Youth Tech Series — AI & Electronics Workshop, delivered by SheSharp in partnership with Peyvand Academy and the Ministry of Education"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/peyvand-academy-13-june-2026",
-      "shortDescription": "An interactive AI workshop for young members of the Persian community aged 13–18, introducing key Artificial Intelligence concepts and their real-world applications.",
+      "shortDescription": "An interactive workshop for young participants aged 12–18, exploring Artificial Intelligence concepts and basic electronics through hands-on learning — delivered by SheSharp in collaboration with Peyvand Academy and the Ministry of Education.",
       "attendees": null,
       "checkedIn": null,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/peyvand-academy-13-june-2026",
-        "title": "Youth Tech Series — Introduction to Artificial Intelligence with Peyvand Academy",
-        "subtitle": "AI Workshop for the Persian Community Youth (Ages 13–18)",
+        "title": "Youth Tech Series — AI & Electronics Workshop",
+        "subtitle": "AI & Electronics Workshop for Youth (Ages 12–18)",
         "date": "June 13, 2026",
         "time": "2:30pm - 4:30pm NZST",
         "location": {
           "format": "in_person",
           "venueName": "Fruitvale Primary School",
-          "address": "",
-          "city": "Auckland",
+          "address": "40 Fruitvale Road",
+          "city": "Auckland 0600",
           "country": "New Zealand"
         },
         "fullDescription": [
-          "SheSharp, in collaboration with Peyvand Academy, is excited to host two engaging and educational workshops designed specifically for young members of the Persian community aged 13–18. These sessions aim to inspire curiosity and build foundational knowledge in emerging technologies.",
-          "This interactive session will introduce students to the world of Artificial Intelligence. Participants will learn key concepts in a simple and engaging way, understand real-world applications of AI, and explore how this technology is shaping the future.",
-          "Peyvand Academy is a community-driven initiative focused on empowering young people from the Persian community through education and skill-building. It provides a supportive space for students to explore new technologies, build confidence, and connect with mentors.",
-          "NOTE: This event is by invitation only. Participants will be invited directly by Peyvand Academy. Food will be provided by the academy for attendees."
+          "Join us for an interactive session exploring the world of Artificial Intelligence and Electronics.",
+          "SheSharp, in collaboration with Peyvand Academy and the Ministry of Education, is hosting this workshop for young participants aged 12–18. The session aims to build foundational knowledge in emerging technologies through hands-on learning.",
+          "Participants will explore key AI concepts while gaining practical exposure to basic electronics in a supportive and collaborative environment."
         ],
         "speakers": {},
         "organizers": [],
         "sponsors": {
-          "main": [],
+          "main": [
+            {
+              "name": "Peyvand Academy",
+              "logo": "/img/sponsors/peyvand-academy.jpg",
+              "description": ""
+            },
+            {
+              "name": "Ministry of Education",
+              "logo": "/img/sponsors/MOE.png",
+              "description": ""
+            }
+          ],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "bullets",
+            "title": "What to Expect",
+            "content": [
+              "Introduction to Artificial Intelligence concepts",
+              "Basic electronics exploration",
+              "Interactive activities and discussions",
+              "A collaborative learning environment"
+            ]
+          },
+          {
+            "type": "info",
+            "title": "Join Us",
+            "content": [
+              "We're excited to be part of this journey in inspiring the next generation of young learners."
+            ]
+          }
+        ],
         "photos": [],
         "galleryUrl": "",
-        "registrationUrl": "https://events.humanitix.com/ai-electronics-session",
+        "registrationUrl": "https://events.humanitix.com/ai-electronics-workshop",
         "images": [],
         "category": "workshop",
         "status": "upcoming",

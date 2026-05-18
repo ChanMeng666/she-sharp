@@ -102,7 +102,7 @@ export function HeroSection() {
 
 
       <Container className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-12 max-w-none xl:max-w-8xl mx-auto">
-        <div className="relative flex flex-col xl:flex-row items-start xl:items-center gap-8 md:gap-10 xl:gap-8 mt-16 sm:mt-20 md:mt-24 xl:mt-0">
+        <div className="relative flex flex-col xl:flex-row items-center xl:justify-between gap-8 mt-16 sm:mt-20 md:mt-24 xl:mt-0 w-full">
           {/* Left: Content area with heading and CTA */}
           <div className="w-full xl:w-auto xl:max-w-lg 2xl:max-w-xl text-left xl:shrink-0">
             <p className="font-brand-script text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4">
