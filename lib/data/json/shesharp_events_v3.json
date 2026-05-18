@@ -4638,40 +4638,7 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/64f7bd97700193c77acbca98_saba-samiei_d40a5a30.jpg",
-            "alt": "Saba Samiei"
-          },
-          {
-            "url": "/img/scraped/photos/648252262f2d3942579598c7_4_Tash_Bettridge _f16fe9ab.png",
-            "alt": "Headshot of Tash Bettridge"
-          },
-          {
-            "url": "/img/scraped/photos/64fe6be4b23a976cbc99cf2f_Dr_Lena_f02e3800.png",
-            "alt": "Dr Lena Waizenegger"
-          },
-          {
-            "url": "/img/scraped/photos/64fe6d05a1cce20956d4e278_Alisa_Edwards_07a4e89b.png",
-            "alt": "Alisa Edwards"
-          },
-          {
-            "url": "/img/scraped/photos/64fe6ee6176be51b08818d6e_Paola_ea35f63e.png",
-            "alt": "Paola Golledge"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
-        ],
+        "photos": [],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -6574,8 +6541,7 @@
         },
         "fullDescription": [
           "We had our event with PushPay on 19th Oct, 2017 and it was about the DevOps concepts and how it is bringing cultural change in industry. We had 3 awesome speakers from 3 different tech companies in Auckland, Lisa Helm from 2degree, Alix Klingenberg from Push pay and Rashmi Modhwadia from Orion Health.",
-          "They shared their journey being in tech companies and their experience with how DevOps is changing the work flow and how it is helpful to deliver the product faster with quality. It was really great interactive event with speakers and socializing with other participant.",
-          "Pushpay Holdings Limited, known as Pushpay, isa donor management system for charities.Pushpay puts the needs and satisfaction of its customers first, striving to provide the best possible experience and service. Teamwork: Pushpay values collaboration and teamwork, recognizing that the best results come from working together and supporting each other."
+          "They shared their journey being in tech companies and their experience with how DevOps is changing the work flow and how it is helpful to deliver the product faster with quality. It was really great interactive event with speakers and socializing with other participant."
         ],
         "speakers": {},
         "organizers": [],
@@ -6591,6 +6557,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "https://lh3.googleusercontent.com/pw/AP1GczPuuCQubD-SPOXMmJrq8bd89YCQNoH_vj8VdfsxC6h2k_Svjm_rY-WJLJrdQDvHA45G88MHceepHt9my1WlgB4DpobF7jOsqgQrFzK2X2R45q1cPaD0ypDLzyeAnjW4vSJrPv1VDlkN59YHfrcJC_uc2A=w1683-h1263-s-no-gm?authuser=0",
+            "alt": "SHE# @ Pushpay group photo"
+          },
           {
             "url": "/img/scraped/photos/655b023af7eb2bb1368c00bd_1_64da56f2.jpg",
             "alt": ""
@@ -7806,6 +7776,10 @@
         "specialSections": [],
         "photos": [
           {
+            "url": "https://lh3.googleusercontent.com/pw/AP1GczPWcQIAwuDbjo76dalC1ffQP_7hXv2a-QMxxqr7L0wvK21_JO9pVQ3ZKgpE1czNFj1szXCbX-V7ThesibAA6dJGp1qdH0AfI8cTVVj_qNTsmogwf9JW1t4vxyu7zgoSbghbk-pPb6Facxd385ipYhICeQ=w1683-h1121-s-no-gm?authuser=0",
+            "alt": "SHE# @ Wāhine Kākano group photo"
+          },
+          {
             "url": "/img/scraped/photos/6541a8cd51516b079090c1dd_IMG_0402jpg-nggid03106-ng_58d580f0.jpg",
             "alt": ""
           },
@@ -8025,6 +7999,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "https://lh3.googleusercontent.com/pw/AP1GczMGAxlgn1EHMLEjTZuFPmX3s9o_BZsOgQrgsYYjp6_TGMokQYvW0yZU69XcZTpO1sNWJzDqdt0QSkhMj9HCeRhVjc4ZPrm-vg2wYdwRnSb02FIbCengkhFsxG8I_VKAtggFyZ9UbO_I08IszSCeV-e4=w1683-h1261-s-no-gm?authuser=0",
+            "alt": "SHE# @ Deloitte group photo"
+          },
           {
             "url": "/img/scraped/photos/65419c4a28a95b9120242e09_1_2acb3487.jpg",
             "alt": ""
@@ -8810,9 +8788,7 @@
         "fullDescription": [
           "“The Truths to Gaming and Start-up - SheSharp Edition” is organised by SheSharp, in collaboration with Geo AR Games & the New Zealand Game Developers Association (NZGDA). If you’re interested in Gaming, Augmented Reality, and Development, then this is an event you don’t want to miss!",
           "Hear the inspiring story of Melanie, CEO of Geo AR Games, and learn how she grew her start-up and worked on national as well as international projects! It’s quite difficult for women to make it in the gaming industry and many females go through the stereotypical work environment. Melanie has some great tips for young women out there who are looking for a career in gaming, and how to make it in the industry! The gaming world needs women, like Talia Pua, Carol Taka and Vaanipriya Diwan, who are part of the panel on the night!",
-          "Although this event features all female speakers, anyone can attend; from high school/university students to professionals far into their careers, people of all genders, aspiring entrepreneurs, are all welcome. We have a range of activities lined up, such as networking, gaming, and play-testing sessions.",
-          "'The Truths to Gaming and Start-up - SheSharp Edition' is organised by SheSharp, in collaboration with Geo AR Games & the New Zealand Game Developers Association (NZGDA).",
-          "Melanie Langlotz is the founder of Geo AR Games and the ideas person behind the product range. She has a varied 20-year background from both a technical and management perspective in the Entertainment and Media industry, and holds a Post Grad Diploma in Entrepreneurship and a Diploma in Business Coaching. Mel has been through two business incubators, Start-up Chile and Lightning Lab, which provided the springboard for Geo AR Games' first products \"Sharks in the Park\" and later \"Magical Park\"."
+          "Although this event features all female speakers, anyone can attend; from high school/university students to professionals far into their careers, people of all genders, aspiring entrepreneurs, are all welcome. We have a range of activities lined up, such as networking, gaming, and play-testing sessions."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -8865,6 +8841,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "/img/scraped/photos/6562ba02f32c4fcae5616dd6_191592422_10158730334823519_2231719664636195855_n-p-2000.jpeg",
+            "alt": "The Truths to Gaming and Start-up group photo"
+          },
           {
             "url": "/img/scraped/photos/6562b9eb6a2068e01dc55fbf_189698236_101587303346885_7ce36c1e.jpg",
             "alt": ""
@@ -9558,34 +9538,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/64ec4a4d2a184282fda5733e_Leila_-_photo_4e618749.png",
-            "alt": "Leila - profile image"
-          },
-          {
-            "url": "/img/scraped/photos/64ec4a9a7d1c69f7fb0be2bd_Indira_-_photo_3b5b15b4.jpg",
-            "alt": "Indira - profile image"
-          },
-          {
-            "url": "/img/scraped/photos/64ec4abc3999b3c2c5a5214f_Owen_-_photo_43e7fdc6.jpg",
-            "alt": "Owen - profile image"
-          },
-          {
-            "url": "/img/scraped/photos/64ec4adf3ce19c2c5c44653b_Sudhir_-_photo_e5855e2a.jpg",
-            "alt": "Sudhir - profile image"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
         ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
@@ -11213,6 +11165,10 @@
           {
             "url": "/img/scraped/photos/648291e685dc2a5060647e43_6_Featured_Image_03_V2_1a23ae7d.png",
             "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/648291e60240bdb74c5f297a_6_Featured_Image_01_V2_3a2ffa7b.png",
+            "alt": ""
           }
         ],
         "galleryUrl": "https://photos.app.goo.gl/nvrAm5Y6BKDZe8WAA",
@@ -11359,6 +11315,10 @@
           }
         ],
         "photos": [
+          {
+            "url": "https://lh3.googleusercontent.com/pw/AP1GczMy8aQcPZvoycFEWLT2Lm-6z8IJ4iNy9MWrq680fUxyGLuHuKKILbksbVaQMslpwsCcqeQkbQoadAtu40Gw7od3s8LyHVnJ4N6P4EP4jc8raJiC7q7CTLuSAihaZfiDgZFQpvR8Ata_tXH6sV7LlZP7=w1683-h1121-s-no-gm?authuser=0",
+            "alt": "Innovation Unleashed group photo"
+          },
           {
             "url": "/img/scraped/photos/64978c23a0ebb88792c4e9a6_Photo_with_Deloitte_Brand_184c052a.jpg",
             "alt": ""
@@ -11608,8 +11568,18 @@
           ],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "youtube",
+            "title": "Event Recap",
+            "content": ["https://www.youtube.com/watch?v=6pOkuR_Nxpo"]
+          }
+        ],
         "photos": [
+          {
+            "url": "https://lh3.googleusercontent.com/pw/AP1GczOiDBp-w6g2WrR5sA7i03zcZyNKIDSokP3tCux0HKsqFRY6l0PMhl7w5gEuAoUyCJHSqIVdFhOcJwzqZYnO3xkH0vsy6wrkcVQ7RCQT-fI0F2cV_TveiqPHnrzDE2y-GDyJ1udZOk75nO6xGuE4fqi8=w1683-h1121-s-no-gm?authuser=0",
+            "alt": "AI Enviro Hack group photo"
+          },
           {
             "url": "/img/scraped/photos/648f93dac88dea68852b4c53_5_Feature_Image_01_V2_b255c179.png",
             "alt": ""
@@ -11964,6 +11934,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "https://lh3.googleusercontent.com/pw/AP1GczNJ5jPTFAJ8cXGkMgEeCp_qlrUMSehUrbGaAPbJpvabQ7_lGJ_4xl5KQ8Br0i9ZhyH5xj7y-xj-D1M7wttcSN9HdNM_HvJR5BvzNuRqVu5ju6te6dSe7oaUB6LO6oVAuGBvgeYVViKsxLrlSM6ZPKLt=w1683-h971-s-no-gm?authuser=0",
+            "alt": "Shaping the future with AI group photo"
+          },
           {
             "url": "/img/scraped/photos/648a50128a1a89438134bfa4_4_Featured_Image_01_V2_3194122f.jpg",
             "alt": ""

@@ -3,7 +3,7 @@
 import { EventV3, EventSpeakerGroup, EventSpeakerV3 } from "@/types/event";
 import { MemberCard, MemberCardData } from "@/components/ui/member-card";
 import { cn } from "@/lib/utils";
-import { hasAnySpeakers } from "@/lib/data/events";
+import { hasAnySpeakers, isUpcomingEvent } from "@/lib/data/events";
 
 interface EventSpeakersProps {
   event: EventV3;
@@ -20,9 +20,10 @@ function normalizeHeading(heading: string): string {
 interface SpeakerGroupSectionProps {
   group: EventSpeakerGroup;
   startIndex: number;
+  isFutureEvent: boolean;
 }
 
-function SpeakerGroupSection({ group, startIndex }: SpeakerGroupSectionProps) {
+function SpeakerGroupSection({ group, startIndex, isFutureEvent }: SpeakerGroupSectionProps) {
   if (!group.speakers || group.speakers.length === 0) {
     return null;
   }
@@ -51,6 +52,7 @@ function SpeakerGroupSection({ group, startIndex }: SpeakerGroupSectionProps) {
                 index={startIndex + index}
                 hideDescriptionOnCard={true}
                 background="bg-white"
+                isFutureEvent={isFutureEvent}
               />
             </div>
           );
@@ -65,6 +67,7 @@ export function EventSpeakers({ event, className }: EventSpeakersProps) {
     return null;
   }
 
+  const isFuture = isUpcomingEvent(event);
   const speakers = event.detailPageData.speakers;
   let currentIndex = 0;
 
@@ -103,6 +106,7 @@ export function EventSpeakers({ event, className }: EventSpeakersProps) {
                 key={groupIndex}
                 group={item.group}
                 startIndex={item.startIndex}
+                isFutureEvent={isFuture}
               />
             ))}
           </div>
