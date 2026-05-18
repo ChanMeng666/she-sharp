@@ -1,7 +1,10 @@
 "use client";
 
-import { useRef, useEffect, useLayoutEffect, useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+
+const SLIDE_DURATION = 3500;  // ms per slide
+const FADE_MS = 900;          // crossfade duration
 
 const slides = [
   {
@@ -11,25 +14,25 @@ const slides = [
     pos: "center center",
   },
   {
-    src: "/img/gallery/about-3.jpg",
+    src: "/img/gallery/about-1.jpg",
     title: "Connect",
     subtitle: "Building professional networks for women in tech",
     pos: "center 30%",
   },
   {
-    src: "/img/gallery/about-1.jpg",
+    src: "/img/gallery/about-3.jpg",
     title: "Inspire",
     subtitle: "Showcasing diverse careers in STEM fields",
     pos: "center center",
   },
   {
-    src: "/img/about-4.jpg",
+    src: "/img/gallery/about-4.jpg",
     title: "Empower",
     subtitle: "Supporting career development and growth",
     pos: "center center",
   },
   {
-    src: "/img/about-5.jpg",
+    src: "/img/gallery/about-5.jpg",
     title: "Community",
     subtitle: "2200+ members across New Zealand",
     pos: "center center",
@@ -37,371 +40,180 @@ const slides = [
 ];
 
 const N = slides.length;
-const LERP = 0.08;
-const WHEEL_SPEED = 0.75;
-const MAX_DELTA = 120;
-const SNAP_MS = 450;
-const OVERSCROLL_EXIT = 60;
 
 export default function SmoothScrollHero() {
-  const rootRef = useRef<HTMLDivElement>(null);
-  const slideEls = useRef<(HTMLDivElement | null)[]>([]);
-  const bgEls = useRef<(HTMLDivElement | null)[]>([]);
-  const dotEls = useRef<(HTMLElement | null)[]>([]);
-  const hintRef = useRef<HTMLDivElement>(null);
-  const goToSlideRef = useRef<((index: number) => void) | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const touchStartX = useRef(0);
 
-  const goTo = (index: number) => {
-    const clamped = Math.max(0, Math.min(index, N - 1));
-    goToSlideRef.current?.(clamped);
-  };
-
-  // Set initial slide positions synchronously before paint to avoid flash
-  useLayoutEffect(() => {
-    const sH = rootRef.current?.offsetHeight || window.innerHeight;
-    for (let i = 0; i < N; i++) {
-      const el = slideEls.current[i];
-      if (el) el.style.transform = `translateY(${i * sH}px)`;
-    }
+  const goTo = useCallback((index: number) => {
+    setCurrent(((index % N) + N) % N);
   }, []);
 
+  // Auto-advance — resets timer on every slide change or pause toggle
   useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
+    if (isPaused) return;
+    const t = setTimeout(() => goTo(current + 1), SLIDE_DURATION);
+    return () => clearTimeout(t);
+  }, [current, isPaused, goTo]);
 
-    let sH = root.offsetHeight;
-    let curY = 0;
-    let tgtY = 0;
-    let lastT = Date.now();
-    let isSnap = false;
-    let snapT = 0;
-    let snapFrom = 0;
-    let snapGoal = 0;
-    let isDrag = false;
-    let dragStartY = 0;
-    let dragStartTgt = 0;
-    const pxV = new Array(N).fill(0);
-    let active = true;
-    let rafId = 0;
-    let prevDot = 0;
-    let hintGone = false;
-    let overscroll = 0;
-
-    const minTgt = -(N - 1) * sH;
-
-    function clamp(v: number) {
-      return Math.max(Math.min(v, 0), minTgt);
-    }
-
-    function doSnap() {
-      let goal = -Math.round(-tgtY / sH) * sH;
-      goal = clamp(goal);
-      if (Math.abs(tgtY - goal) < 2) return;
-      isSnap = true;
-      snapT = Date.now();
-      snapFrom = tgtY;
-      snapGoal = goal;
-    }
-
-    function tickSnap() {
-      const p = Math.min((Date.now() - snapT) / SNAP_MS, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      tgtY = snapFrom + (snapGoal - snapFrom) * ease;
-      if (p >= 1) isSnap = false;
-    }
-
-    function updateDots() {
-      const idx = Math.max(0, Math.min(Math.round(-curY / sH), N - 1));
-      if (idx === prevDot) return;
-      prevDot = idx;
-      setActiveIndex(idx);
-      for (let i = 0; i < N; i++) {
-        const dot = dotEls.current[i];
-        if (!dot) continue;
-        dot.style.backgroundColor =
-          i === idx ? "var(--color-brand)" : "rgba(255,255,255,0.5)";
-        dot.style.transform = i === idx ? "scale(1.3)" : "scale(1)";
-      }
-    }
-
-    // Expose programmatic navigation so arrow buttons and dot clicks can advance slides
-    goToSlideRef.current = (index: number) => {
-      if (!active) {
-        active = true;
-        overscroll = 0;
-      }
-      const goal = clamp(-index * sH);
-      isSnap = true;
-      snapT = Date.now();
-      snapFrom = tgtY;
-      snapGoal = goal;
-      tgtY = goal;
-      lastT = Date.now();
+  // Keyboard navigation
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") goTo(current - 1);
+      if (e.key === "ArrowRight") goTo(current + 1);
     };
-
-    function animate() {
-      const now = Date.now();
-
-      // Auto-snap after inactivity
-      if (!isSnap && !isDrag && active && now - lastT > 120) {
-        doSnap();
-      }
-      if (isSnap) tickSnap();
-
-      // Lerp current toward target
-      if (!isDrag) curY += (tgtY - curY) * LERP;
-
-      // Update each slide position + parallax
-      for (let i = 0; i < N; i++) {
-        const el = slideEls.current[i];
-        const bg = bgEls.current[i];
-        if (!el) continue;
-
-        const y = i * sH + curY;
-        el.style.transform = `translateY(${y}px)`;
-
-        if (bg) {
-          const target = (-curY - i * sH) * 0.15;
-          pxV[i] += (target - pxV[i]) * 0.1;
-          bg.style.transform = `translateY(${pxV[i].toFixed(1)}px) scale(1.1)`;
-        }
-      }
-
-      updateDots();
-
-      // Hide scroll hint after first interaction
-      if (!hintGone && Math.abs(tgtY) > 10) {
-        hintGone = true;
-        const hint = hintRef.current;
-        if (hint) {
-          hint.style.opacity = "0";
-          hint.style.transition = "opacity 0.5s";
-        }
-      }
-
-      rafId = requestAnimationFrame(animate);
-    }
-
-    // --- Wheel ---
-    function onWheel(e: WheelEvent) {
-      if (!active) return;
-
-      const delta = Math.max(
-        Math.min(e.deltaY * WHEEL_SPEED, MAX_DELTA),
-        -MAX_DELTA
-      );
-
-      // At last slide, scrolling down — accumulate overscroll
-      if (delta > 0 && tgtY <= minTgt + 2) {
-        overscroll += delta;
-        if (overscroll >= OVERSCROLL_EXIT) {
-          active = false;
-          tgtY = minTgt;
-          overscroll = 0;
-          // Kick-start page scroll so user doesn't need an extra scroll
-          window.scrollBy(0, 1);
-          return;
-        }
-        e.preventDefault();
-        return;
-      }
-
-      const newTgt = tgtY - delta;
-
-      // Scrolling up past first slide — let page handle
-      if (newTgt > sH * 0.05) return;
-
-      // Reset overscroll when not at boundary
-      overscroll = 0;
-
-      e.preventDefault();
-      isSnap = false;
-      lastT = Date.now();
-      tgtY = clamp(newTgt);
-    }
-
-    // --- Touch ---
-    function onTouchStart(e: TouchEvent) {
-      if (!active) return;
-      isDrag = true;
-      isSnap = false;
-      dragStartY = e.touches[0].clientY;
-      dragStartTgt = tgtY;
-      lastT = Date.now();
-    }
-
-    function onTouchMove(e: TouchEvent) {
-      if (!isDrag || !active) return;
-
-      const dy = e.touches[0].clientY - dragStartY;
-      const newTgt = dragStartTgt + dy * 1.2;
-
-      // Swiping down (scroll up) past first slide
-      if (newTgt > sH * 0.05) return;
-
-      // Swiping up (scroll down) past last slide — exit with small threshold
-      if (newTgt < minTgt - OVERSCROLL_EXIT) {
-        active = false;
-        tgtY = minTgt;
-        isDrag = false;
-        overscroll = 0;
-        window.scrollBy(0, 1);
-        return;
-      }
-
-      e.preventDefault();
-      tgtY = clamp(newTgt);
-      lastT = Date.now();
-    }
-
-    function onTouchEnd() {
-      isDrag = false;
-    }
-
-    // --- Re-activate when page scrolls back to top ---
-    function onPageScroll() {
-      if (!active && window.scrollY <= 2) {
-        active = true;
-        overscroll = 0;
-        // Re-enter at last slide
-        curY = minTgt;
-        tgtY = minTgt;
-      }
-    }
-
-    // --- Resize ---
-    function onResize() {
-      const newH = root!.offsetHeight;
-      if (newH === sH || newH === 0) return;
-      const currentSlide = Math.round(-curY / sH);
-      sH = newH;
-      curY = -currentSlide * sH;
-      tgtY = curY;
-    }
-
-    root.addEventListener("wheel", onWheel, { passive: false });
-    root.addEventListener("touchstart", onTouchStart, { passive: true });
-    root.addEventListener("touchmove", onTouchMove, { passive: false });
-    root.addEventListener("touchend", onTouchEnd);
-    window.addEventListener("scroll", onPageScroll);
-    window.addEventListener("resize", onResize);
-    rafId = requestAnimationFrame(animate);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      root.removeEventListener("wheel", onWheel);
-      root.removeEventListener("touchstart", onTouchStart);
-      root.removeEventListener("touchmove", onTouchMove);
-      root.removeEventListener("touchend", onTouchEnd);
-      window.removeEventListener("scroll", onPageScroll);
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [current, goTo]);
 
   return (
-    <div
-      ref={rootRef}
-      className="h-screen w-full relative overflow-hidden"
-      style={{ background: "#0a0920" }}
-    >
-      {slides.map((slide, i) => (
-        <div
-          key={i}
-          ref={(el) => {
-            slideEls.current[i] = el;
-          }}
-          className="absolute top-0 left-0 w-full h-full overflow-hidden"
-        >
-          {/* Background image with parallax — inset -20% to allow movement room */}
+    <>
+      <style>{`
+        @keyframes heroKenBurns {
+          from { transform: scale(1) translate(0%, 0%); }
+          to   { transform: scale(1.07) translate(-1.2%, -0.6%); }
+        }
+        @keyframes heroFillBar {
+          from { transform: scaleX(0); }
+          to   { transform: scaleX(1); }
+        }
+        @keyframes heroTextUp {
+          from { opacity: 0; transform: translateY(18px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+
+      <div
+        className="h-dvh w-full relative overflow-hidden select-none"
+        style={{ background: "#080717" }}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+        onTouchEnd={(e) => {
+          const dx = e.changedTouches[0].clientX - touchStartX.current;
+          if (dx > 50) goTo(current - 1);
+          else if (dx < -50) goTo(current + 1);
+        }}
+      >
+        {/* Background slides — all rendered, opacity transitions handle crossfade */}
+        {slides.map((slide, i) => (
           <div
-            ref={(el) => {
-              bgEls.current[i] = el;
+            key={i}
+            className="absolute inset-0"
+            style={{
+              opacity: i === current ? 1 : 0,
+              transition: `opacity ${FADE_MS}ms ease-in-out`,
+              zIndex: i === current ? 2 : 1,
             }}
-            className="absolute will-change-transform"
-            style={{ inset: "-10%" }}
           >
             <img
               src={slide.src}
               alt={slide.title}
-              className="w-full h-full object-cover block"
-              style={{ objectPosition: slide.pos }}
-              draggable={false}
-            />
-          </div>
-
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
-
-          {/* Text overlay */}
-          <div className="absolute bottom-0 left-0 right-0 px-6 sm:px-8 md:px-16 lg:px-24 pb-24 sm:pb-20 md:pb-14 lg:pb-16 z-[2]">
-            <h2 className="text-white text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight drop-shadow-lg max-w-3xl mb-3 md:mb-4">
-              {slide.title}
-            </h2>
-            <p className="text-white text-base sm:text-lg md:text-2xl lg:text-3xl font-semibold leading-snug tracking-wide drop-shadow-lg max-w-3xl">
-              {slide.subtitle}
-            </p>
-          </div>
-        </div>
-      ))}
-
-      {/* Previous slide button */}
-      <button
-        type="button"
-        onClick={() => goTo(activeIndex - 1)}
-        disabled={activeIndex === 0}
-        aria-label="Previous slide"
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white/10 hover:bg-white/25 border border-white/30 text-white backdrop-blur-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-      >
-        <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
-      </button>
-
-      {/* Next slide button */}
-      <button
-        type="button"
-        onClick={() => goTo(activeIndex + 1)}
-        disabled={activeIndex === N - 1}
-        aria-label="Next slide"
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white/10 hover:bg-white/25 border border-white/30 text-white backdrop-blur-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-      >
-        <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
-      </button>
-
-      {/* Scroll indicator dots (clickable) */}
-      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 glass-pill flex gap-2 px-4 py-2">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => goTo(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className="h-6 w-6 flex items-center justify-center -m-1.5"
-          >
-            <span
-              ref={(el) => {
-                dotEls.current[i] = el;
-              }}
-              className="block w-2.5 h-2.5 rounded-full transition-all duration-200"
+              className="absolute inset-0 w-full h-full object-cover"
               style={{
-                backgroundColor:
-                  i === 0 ? "var(--color-brand)" : "rgba(255,255,255,0.5)",
-                transform: i === 0 ? "scale(1.3)" : "scale(1)",
+                objectPosition: slide.pos,
+                // Ken Burns restarts each time this slide becomes active
+                animation:
+                  i === current
+                    ? `heroKenBurns ${SLIDE_DURATION + FADE_MS}ms ease-out forwards`
+                    : "none",
               }}
             />
-          </button>
+          </div>
         ))}
-      </div>
 
-      {/* Scroll hint */}
-      <div
-        ref={hintRef}
-        className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 pointer-events-none"
-      >
-        <span className="text-white/30 text-[11px] tracking-[0.12em] uppercase">
-          Scroll
-        </span>
-        <div className="w-px h-5 bg-white/20 animate-bounce" />
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 z-[3] pointer-events-none bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        <div className="absolute inset-0 z-[3] pointer-events-none bg-gradient-to-r from-black/30 to-transparent" />
+
+        {/* Grain texture */}
+        <div
+          className="absolute inset-0 z-[4] pointer-events-none opacity-[0.04]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+            backgroundSize: "160px 160px",
+          }}
+        />
+
+        {/* Slide text — key forces remount on slide change, restarting the entrance animation */}
+        <div className="absolute bottom-0 left-0 right-0 px-8 sm:px-12 md:px-16 lg:px-20 pb-24 z-[5] pointer-events-none">
+          <p
+            key={`label-${current}`}
+            className="text-white/50 text-[10px] sm:text-xs font-medium tracking-[0.3em] uppercase mb-2 sm:mb-3"
+            style={{ animation: "heroTextUp 0.55s ease-out forwards" }}
+          >
+            She Sharp
+          </p>
+          <h2
+            key={`title-${current}`}
+            className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight drop-shadow-lg max-w-2xl mb-3 sm:mb-4"
+            style={{ opacity: 0, animation: "heroTextUp 0.6s 0.07s ease-out forwards" }}
+          >
+            {slides[current].title}
+          </h2>
+          <p
+            key={`sub-${current}`}
+            className="text-white/70 text-sm sm:text-base md:text-lg font-light leading-relaxed max-w-sm sm:max-w-md"
+            style={{ opacity: 0, animation: "heroTextUp 0.6s 0.16s ease-out forwards" }}
+          >
+            {slides[current].subtitle}
+          </p>
+        </div>
+
+        {/* Arrows */}
+        <button
+          type="button"
+          onClick={() => goTo(current - 1)}
+          aria-label="Previous slide"
+          className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95"
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </button>
+        <button
+          type="button"
+          onClick={() => goTo(current + 1)}
+          aria-label="Next slide"
+          className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95"
+        >
+          <ChevronRight className="h-4 w-4" />
+        </button>
+
+        {/* Bottom bar: progress bars + slide counter */}
+        <div className="absolute bottom-6 sm:bottom-7 left-0 right-0 px-8 sm:px-12 md:px-16 lg:px-20 z-10 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => goTo(i)}
+                aria-label={`Go to slide ${i + 1}`}
+                className="relative overflow-hidden rounded-full transition-all duration-300 hover:opacity-80"
+                style={{
+                  height: "2px",
+                  width: i === current ? "40px" : "14px",
+                  backgroundColor: "rgba(255,255,255,0.22)",
+                }}
+              >
+                {i === current && (
+                  <div
+                    key={current}
+                    className="absolute inset-y-0 left-0 w-full bg-white rounded-full origin-left"
+                    style={{
+                      animation: `heroFillBar ${SLIDE_DURATION}ms linear forwards`,
+                      animationPlayState: isPaused ? "paused" : "running",
+                    }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+
+          <span className="text-white/40 text-[10px] sm:text-xs tracking-[0.2em] tabular-nums font-medium">
+            {String(current + 1).padStart(2, "0")}&thinsp;/&thinsp;{String(N).padStart(2, "0")}
+          </span>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
