@@ -44,7 +44,7 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
                   <img
                     src={sponsor.logo}
                     alt={sponsor.name}
-                    className="h-24 md:h-28 lg:h-32 w-auto object-contain opacity-90"
+                    className="h-36 md:h-44 lg:h-52 w-auto object-contain opacity-90"
                   />
                 </div>
               ))}
