@@ -27,6 +27,7 @@ function truncateTitle(title: string): string {
 
 function FeaturedEventCard({ event }: { event: EventV3 }) {
   const dateLabel = formatEventDate(event);
+  const isUpcoming = isFutureDate(event.date);
   const location = event.detailPageData.location;
   const isOnline = location.format === "online";
   const formatLabel = isOnline ? "Virtual" : "In Person";
@@ -49,6 +50,19 @@ function FeaturedEventCard({ event }: { event: EventV3 }) {
           sizes="(max-width: 1024px) 100vw, 50vw"
           priority
         />
+        {/* Upcoming / Past badge overlaid on image */}
+        <div className="absolute top-4 left-4 z-10">
+          {isUpcoming ? (
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand text-white text-xs font-semibold shadow-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+              Upcoming
+            </span>
+          ) : (
+            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-black/50 text-white text-xs font-semibold backdrop-blur-sm">
+              Past Event
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="p-5 md:p-6 lg:p-8 flex flex-col gap-2.5">
@@ -68,7 +82,7 @@ function FeaturedEventCard({ event }: { event: EventV3 }) {
         </p>
 
         <span className="inline-flex items-center gap-1.5 text-brand font-semibold text-sm md:text-lg group-hover:underline transition-all mt-1">
-          Register
+          {isUpcoming ? "Register" : "View Event"}
           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
         </span>
       </div>
@@ -103,9 +117,16 @@ function SimpleEventCard({ event }: { event: EventV3 }) {
       </div>
 
       <div className="p-3 sm:p-4 flex flex-col gap-1.5 sm:gap-2">
-        <span className="text-[10px] sm:text-xs font-medium text-muted-foreground uppercase tracking-wider">
-          {isUpcoming ? "Upcoming" : "Past Event"}
-        </span>
+        {isUpcoming ? (
+          <span className="inline-flex items-center gap-1.5 self-start px-2 py-0.5 rounded-full bg-brand text-white text-[10px] sm:text-xs font-semibold">
+            <span className="w-1 h-1 rounded-full bg-white animate-pulse" />
+            Upcoming
+          </span>
+        ) : (
+          <span className="inline-flex items-center self-start px-2 py-0.5 rounded-full bg-muted text-muted-foreground text-[10px] sm:text-xs font-semibold">
+            Past Event
+          </span>
+        )}
 
         <h3 className="text-xs sm:text-sm md:text-base font-bold text-foreground leading-snug group-hover:text-brand transition-colors duration-200 line-clamp-2">
           {truncateTitle(event.title)}
