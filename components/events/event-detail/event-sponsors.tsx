@@ -1,12 +1,51 @@
 "use client";
 
-import { EventV3 } from "@/types/event";
-import { cn } from "@/lib/utils";
+import { EventV3, EventSponsorV3 } from "@/types/event";
 import { hasAnySponsors } from "@/lib/data/events";
 
 interface EventSponsorsProps {
   event: EventV3;
   className?: string;
+}
+
+interface SponsorRowProps {
+  sponsor: EventSponsorV3;
+  id: string;
+  logoSizeClass?: string;
+}
+
+function SponsorRow({ sponsor, id, logoSizeClass = "h-28 md:h-36 lg:h-44" }: SponsorRowProps) {
+  const hasDetails = !!(sponsor.name || sponsor.description);
+
+  return (
+    <div className="flex flex-col sm:flex-row items-center sm:items-center gap-6 md:gap-10">
+      {/* Left: name + description */}
+      {hasDetails && (
+        <div className="flex-1 min-w-0 text-center sm:text-left">
+          {sponsor.name && (
+            <h3 className="text-xl font-semibold text-foreground mb-2">
+              {sponsor.name}
+            </h3>
+          )}
+          {sponsor.description && (
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {sponsor.description}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Right: logo */}
+      <div className="shrink-0 flex items-center justify-center">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={sponsor.logo}
+          alt={sponsor.name}
+          className={`${logoSizeClass} w-auto object-contain opacity-90`}
+        />
+      </div>
+    </div>
+  );
 }
 
 export function EventSponsors({ event, className }: EventSponsorsProps) {
@@ -33,76 +72,38 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
 
         {/* Main Sponsors */}
         {hasMainSponsors && (
-          <div className="mb-12">
-            <div className="flex flex-wrap justify-center gap-10 md:gap-12">
-              {sponsors.main.map((sponsor, index) => (
-                <div
-                  key={`main-${sponsor.name}-${index}`}
-                  className="flex items-center justify-center px-4"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={sponsor.logo}
-                    alt={sponsor.name}
-                    className="h-24 md:h-28 lg:h-32 w-auto object-contain opacity-90"
-                  />
-                </div>
-              ))}
-            </div>
+          <div className="space-y-4">
+            {sponsors.main.map((sponsor, index) => (
+              <SponsorRow
+                key={`main-${sponsor.name}-${index}`}
+                id={`main-${sponsor.name}-${index}`}
+                sponsor={sponsor}
+                logoSizeClass="h-28 md:h-36 lg:h-44"
+              />
+            ))}
           </div>
         )}
 
         {/* Other Sponsors */}
         {hasOtherSponsors && (
-          <div>
+          <div className={hasMainSponsors ? "mt-8" : ""}>
             {hasMainSponsors && (
               <p className="text-center text-sm text-muted-foreground mb-6 uppercase tracking-wider">
                 Additional Sponsors
               </p>
             )}
-            <div className="flex flex-wrap justify-center gap-8 md:gap-10">
+            <div className="space-y-4">
               {sponsors.other.map((sponsor, index) => (
-                <div
+                <SponsorRow
                   key={`other-${sponsor.name}-${index}`}
-                  className="flex items-center justify-center px-4"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={sponsor.logo}
-                    alt={sponsor.name}
-                    className="h-16 md:h-20 lg:h-24 w-auto object-contain opacity-80"
-                  />
-                </div>
+                  id={`other-${sponsor.name}-${index}`}
+                  sponsor={sponsor}
+                  logoSizeClass="h-20 md:h-24 lg:h-28"
+                />
               ))}
             </div>
           </div>
         )}
-
-        {/* Sponsor descriptions */}
-        {(() => {
-          const described = [
-            ...(sponsors.main || []),
-            ...(sponsors.other || []),
-          ].filter((s) => s.description && s.description.trim().length > 0);
-          if (described.length === 0) return null;
-          return (
-            <div className="mt-12 flex flex-wrap justify-center gap-6">
-              {described.map((sponsor, index) => (
-                <div
-                  key={`desc-${sponsor.name}-${index}`}
-                  className="w-full md:w-[calc(50%-0.75rem)] rounded-[var(--radius-card-sm)] border border-border bg-muted/30 p-5 md:p-6"
-                >
-                  <h3 className="text-base font-semibold text-foreground mb-2">
-                    {sponsor.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {sponsor.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          );
-        })()}
       </div>
     </section>
   );
