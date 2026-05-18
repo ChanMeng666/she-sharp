@@ -29,6 +29,7 @@ interface MemberCardProps {
   background?: string;
   accentColor?: string;
   hideDescriptionOnCard?: boolean;
+  isFutureEvent?: boolean;
 }
 
 const DESCRIPTION_PLACEHOLDER = "More details coming soon — stay tuned!";
@@ -47,12 +48,15 @@ export function MemberCard({
   background,
   accentColor,
   hideDescriptionOnCard = false,
+  isFutureEvent = true,
 }: MemberCardProps) {
   const [imageError, setImageError] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const hasImage = !!member.image && !imageError;
   const hasDescription = !!member.description.trim();
+  const showPlaceholder = !hasDescription && isFutureEvent;
+  const canOpenDialog = hasDescription || showPlaceholder;
   const displayDescription = hasDescription
     ? member.description
     : DESCRIPTION_PLACEHOLDER;
@@ -61,10 +65,10 @@ export function MemberCard({
     <>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <article
-          onClick={() => setIsDialogOpen(true)}
+          onClick={() => canOpenDialog && setIsDialogOpen(true)}
           className={`group relative w-full ${background} card-md card-interactive
                       transition-all duration-300
-                      focus-within:ring-4 focus-within:ring-brand/50 cursor-pointer`}
+                      focus-within:ring-4 focus-within:ring-brand/50 ${canOpenDialog ? "cursor-pointer" : "cursor-default"}`}
         >
           <div className="p-6 sm:p-8">
             <div className="relative mb-6">
@@ -106,7 +110,7 @@ export function MemberCard({
                   {member.title}
                 </p>
               )}
-              {!hideDescriptionOnCard && (
+              {!hideDescriptionOnCard && (hasDescription || showPlaceholder) && (
                 <p className={cn(
                   "text-sm sm:text-base leading-relaxed line-clamp-3 mb-3",
                   hasDescription ? "text-muted-foreground" : "text-muted-foreground/60 italic"
@@ -114,15 +118,17 @@ export function MemberCard({
                   {displayDescription}
                 </p>
               )}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsDialogOpen(true);
-                }}
-                className="text-sm font-medium text-brand hover:text-brand-hover transition-colors underline inline-flex items-center gap-1"
-              >
-                Learn more <ArrowUpRight className="w-4 h-4" />
-              </button>
+              {(hasDescription || showPlaceholder) && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsDialogOpen(true);
+                  }}
+                  className="text-sm font-medium text-brand hover:text-brand-hover transition-colors underline inline-flex items-center gap-1"
+                >
+                  Learn more <ArrowUpRight className="w-4 h-4" />
+                </button>
+              )}
             </div>
 
             <div
