@@ -11,12 +11,15 @@ interface EventPhotosProps {
 }
 
 export function EventPhotos({ event, className }: EventPhotosProps) {
-  if (!hasPhotos(event)) {
+  if (!hasPhotos(event) || event.detailPageData.hidePhotosSection) {
     return null;
   }
 
-  // Skip photos[0] because EventFeaturedPhoto already shows it above the description
-  const photos = event.detailPageData.photos.slice(1);
+  // Skip photos[0] because EventFeaturedPhoto already shows it above the description,
+  // unless hideFeaturedPhoto is set — then include all photos here.
+  const photos = event.detailPageData.hideFeaturedPhoto
+    ? event.detailPageData.photos
+    : event.detailPageData.photos.slice(1);
 
   if (photos.length === 0 && !event.detailPageData.galleryUrl) {
     return null;

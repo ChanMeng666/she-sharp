@@ -220,6 +220,8 @@ export interface EventDetailPageData {
   timezone?: string; // Timezone e.g. "NZDT"
   refundPolicy?: string; // Refund policy text
   humanitixUrl?: string; // Humanitix registration URL
+  hideFeaturedPhoto?: boolean;
+  hidePhotosSection?: boolean;
 }
 
 // Main V3 Event interface (matches JSON structure)

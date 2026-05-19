@@ -183,7 +183,8 @@
         "endTime": "7:30pm",
         "timezone": "NZDT",
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future"
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+        "hideFeaturedPhoto":true
       }
     },
     {
@@ -273,33 +274,9 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/68e07910a8f710b7f087da5b_Shona_Irving_ddffda22.jpg",
-            "alt": "Shona Irving"
-          },
-          {
-            "url": "/img/scraped/photos/68e0799e93e217abf557f66c_Evelyn_Hunsenger_aee4c570.jpg",
-            "alt": "evelyn-hunserger"
-          },
-          {
-            "url": "/img/scraped/photos/68e079d737c5fe190af8a4e7_Karen_Ip_0685644a.jpg",
-            "alt": "Karen Ip"
-          },
-          {
-            "url": "/img/scraped/photos/68e07a47ba04d345599b06d9_Adriana_Yong_c442f92d.jpg",
-            "alt": "Adriana Yong"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
+            "url": "/img/scraped/photos/68e076618a243929a9567b91_Vector Event poster.png",
+            "alt": "Vector Future-Ready featured photo"
+           }
         ],
         "galleryUrl": "https://photos.google.com/share/AF1QipONHHOewHzAoTCFLQBO3Ho4yMOqWKZN-hUuruuwyfvYHj0p7CC1K9vvURQNuVklHg?key=V0hMc1BoRE9nZko5RU9RRUx0dWs2QzUtSDFfQkVR",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
@@ -337,7 +314,8 @@
         "endTime": "8pm",
         "timezone": "NZDT",
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector"
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector",
+        "hidePhotosSection":true
       }
     },
     {
@@ -463,36 +441,7 @@
             ]
           }
         ],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/68b6d4469334d9d88ba87f63_Copy_of_Fatemah_Beydoun_90431fe5.jpg",
-            "alt": "Fatemah Beydoun"
-          },
-          {
-            "url": "/img/scraped/photos/68b6d4fdd1e862785575b4cb_Suzy_Clarke-Headshot_7dfbd4f9.jpg",
-            "alt": "Executive GM of Security, Xero"
-          },
-          {
-            "url": "/img/scraped/photos/68baac28c7eeb2d9347c4dd1_MehikaManochBio_7b9283e2.jpg",
-            "alt": "profile pic of mehika"
-          },
-          {
-            "url": "/img/scraped/photos/6477d34fd4a7dba0fe2b6467_2_Mahsa_McCauley_9ecfe9bb.png",
-            "alt": "Masha McCauley a women with long dark brown hair "
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/4CWo8WBuM1rfg63q9",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -623,36 +572,7 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/68b3779bdd6358872971f627_image_5b88ed84.png",
-            "alt": "Vicky Enkhsaikhan"
-          },
-          {
-            "url": "/img/scraped/photos/689c67fcaafaf0049b7cfdca_Aileen_Collins_1_40c0c0ce.jpg",
-            "alt": "Aileen Collins"
-          },
-          {
-            "url": "/img/scraped/photos/689c68228cdc8d1eadfa5cfb_TraceyConnor_1_40a8247e.JPG",
-            "alt": "Tracey Connor"
-          },
-          {
-            "url": "/img/scraped/photos/68a6c5e2b8bb64dd5904a4f0_Kritika_1321f3f2.jpg",
-            "alt": "Kritika Law"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/TYrx8hrvrp4rbAS19",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -941,94 +861,12 @@
         },
         "specialSections": [
           {
-            "type": "topics",
-            "title": "Piki Ake: Rise up Auckland",
-            "content": [
-              "Personal Branding — Learn how to present yourself confidently and authentically in the job market.",
-              "Assessing CVs — Get expert feedback on how to strengthen your CV to stand out from the crowd.",
-              "Interview Strategies — Discover practical tips to prepare for and succeed in interviews.",
-              "Mentorship Guidance — Hear from experienced professionals and gain valuable career advice tailored to your goals."
-            ]
+            "type": "collaboration",
+            "title": "In Collaboration With",
+            "content": ["/img/scraped/photos/685be97a7cc5998f7759b7c2TechbabesNZLogo.png"]
           }
         ],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/686237b2c1b15cec7645e530_Elevate___HR-13_1_3b8b2b05.jpg",
-            "alt": "Kathryn Sandford"
-          },
-          {
-            "url": "/img/scraped/photos/66eba9db021d85dadb5ab595_IMG_1237_5595123d.jpg",
-            "alt": "Libby Lavrova"
-          },
-          {
-            "url": "/img/scraped/photos/686b6d61e7e3158e2b7a52da_Kai_Ping_Lew_d3611578.jpeg",
-            "alt": "Kai Ping (KP) Lew"
-          },
-          {
-            "url": "/img/scraped/photos/686b6e21a47aef2bb4fc3bae_vivientu_0d80ef20.jpg",
-            "alt": "Vivien Tu"
-          },
-          {
-            "url": "/img/scraped/photos/686b6e7dbaea94f8cf28eb91_Jamini_Patel_26272c64.jpeg",
-            "alt": "Jamini Patel"
-          },
-          {
-            "url": "/img/scraped/photos/686b6f0c2c7d0f5245da92de_Isuru_Fernandez_9283fc7d.jpeg",
-            "alt": "Isuru Fernando"
-          },
-          {
-            "url": "/img/scraped/photos/68874aeb3141ace212fb2f33_Caro_Gao_c9fc7f9e.jpeg",
-            "alt": "Caro Gao"
-          },
-          {
-            "url": "/img/scraped/photos/686b6fb262ce6721b047dc0e_Dalia_a2ccc235.png",
-            "alt": "Dalia Raphael"
-          },
-          {
-            "url": "/img/scraped/photos/686b7028bf8b5d7ad362879c_Irene_Naidu_d78410be.jpeg",
-            "alt": "Irene Naidu"
-          },
-          {
-            "url": "/img/scraped/photos/6477d34fd4a7dba0fe2b6467_2_Mahsa_McCauley_9ecfe9bb.png",
-            "alt": "Masha McCauley a women with long dark brown hair "
-          },
-          {
-            "url": "/img/scraped/photos/686b70ceb433ebe7308b30ea_Maria_Clamor_240b5bd7.jpeg",
-            "alt": "Maria Clamor"
-          },
-          {
-            "url": "/img/scraped/photos/686b7136426b1f78f21f3888_Matthew_Hall-White_5a9708c5.jpeg",
-            "alt": "Matthew Hall-White"
-          },
-          {
-            "url": "/img/scraped/photos/686b71b0049053d3559cdcb4_Justine_Hinton__732119d4.jpeg",
-            "alt": "Justine Hinton"
-          },
-          {
-            "url": "/img/scraped/photos/686b84f65184c0729d860632_1719309249585_1f147f31.jpeg",
-            "alt": "Prasanth Pavithran"
-          },
-          {
-            "url": "/img/scraped/photos/6878ba01658d0d8fcc46ebe9_Tuhi_Cooper_b65cf080.jpeg",
-            "alt": "Tuhi Cooper"
-          },
-          {
-            "url": "/img/scraped/photos/68874b7242b76ac2043c88f5_IMG_7827_30841b38.jpeg",
-            "alt": "Bahareh Jalili-Moghaddam"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/58coFzFj2FfWbFMp7",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -1313,11 +1151,11 @@
         "sponsors": {
           "main": [
             {
-              "name": "Sponsor",
+              "name": "AI Forum New Zealand",
               "logo": "/img/scraped/sponsors/685b99d07fd43017405f42ba_667a27c0775567ddfcee9f8b_AIFNZ_43c3ee93.png"
             },
             {
-              "name": "Sponsor",
+              "name": "Auckland University of Technology",
               "logo": "/img/scraped/sponsors/647018601697362ad73172bc_aut-logo_21fc10e2.svg"
             }
           ],
@@ -1347,92 +1185,7 @@
             ]
           }
         ],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/689454587ec5f00ec724894a_alejandro-davila-nz-conical_4b8fba04.jpg",
-            "alt": "Alejandro Davila"
-          },
-          {
-            "url": "/img/scraped/photos/689c57b44e8448a103408b6e_Michael_Fielding_7026a74a.jpeg",
-            "alt": "Michael Fielding"
-          },
-          {
-            "url": "/img/scraped/photos/689c5866a7764e99fc366d18_Maria_Mingallon_e8778ae6.jpeg",
-            "alt": "Maria Mingallon"
-          },
-          {
-            "url": "/img/scraped/photos/689c589fe620176eb7c46185_Richard_Copus_b0e2b175.jpeg",
-            "alt": "Richard Copus"
-          },
-          {
-            "url": "/img/scraped/photos/6477d34fd4a7dba0fe2b6467_2_Mahsa_McCauley_9ecfe9bb.png",
-            "alt": "Masha McCauley a women with long dark brown hair "
-          },
-          {
-            "url": "/img/scraped/photos/689c689db85b3744f18ee181_Nigel_Hunt_44d6bdd7.jpeg",
-            "alt": "Nigel Hunt"
-          },
-          {
-            "url": "/img/scraped/photos/689c69916ee21e10a099900b_tanya-gray_Tanya_Gray_c551cdd9.jpg",
-            "alt": "Tanya Gray"
-          },
-          {
-            "url": "/img/scraped/photos/686b84f65184c0729d860632_1719309249585_1f147f31.jpeg",
-            "alt": "Prasanth Pavithran"
-          },
-          {
-            "url": "/img/scraped/photos/689c604bc48ae4b3a5f034b0_Talita_Ekandjo_Talita_Ekandjo_76955f52.jpg",
-            "alt": "Talita Ekandjo"
-          },
-          {
-            "url": "/img/scraped/photos/689c66e3e624d2e6868f26cb_WEB2_02_Alan_Dent_66756313.jpg",
-            "alt": "Alan Dent"
-          },
-          {
-            "url": "/img/scraped/photos/66833ab7ab9af673a80d47af_geri_e8b364da.jpeg",
-            "alt": "profile of geris"
-          },
-          {
-            "url": "/img/scraped/photos/689c616e7d30faa0c152b994_IMG_8757_06c67bb3.jpg",
-            "alt": "Shae Parsons"
-          },
-          {
-            "url": "/img/scraped/photos/689c65caa1d0876274f8e62e_image_3e610ecd.png",
-            "alt": "Isha Sangrolkar"
-          },
-          {
-            "url": "/img/scraped/photos/689c636f80d02fba831c735d_Chan_Meng_30c603e4.png",
-            "alt": "Chan Meng"
-          },
-          {
-            "url": "/img/scraped/photos/689c6244262a9408738b1f0c_yesha_0e2b0115.jpg",
-            "alt": "Yesha Kaniyawala"
-          },
-          {
-            "url": "/img/scraped/photos/689c62f76e3510bde29f9bb9_cindy-luo_Cindy_Luo_588d0ac8.png",
-            "alt": "Cindy Luo"
-          },
-          {
-            "url": "/img/scraped/photos/689c6892a2dd65a7070d2cb0_Ji_Ruan_3060d647.jpeg",
-            "alt": "Ji Ruan"
-          },
-          {
-            "url": "/img/scraped/photos/652774fc247ee7d771e65d2c_Sara_124a374e.png",
-            "alt": "Sara Ghafoor"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/GUQBZCNDV7X5Jx5d6",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -1690,6 +1443,10 @@
         "specialSections": [],
         "photos": [
           {
+            "url": "/img/scraped/photos/68341808df6e9756c26e45a4_20250522_191138-p-2000.jpg",
+            "alt": "Find Your Perfect Fit featured photo"
+           },
+          {
             "url": "/img/scraped/photos/683419ef57b19b54eb424d75_IMG_1232-min_5a90c2de.jpg",
             "alt": ""
           },
@@ -1832,24 +1589,7 @@
             ]
           }
         ],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/69ae758e75cb901b6270b2d2_LSS02450-EDITWEBRES_Original_ac1bbcde.jpg",
-            "alt": "mahsa-mccauley-mohaghegh-gec"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/Q7DK7YfkSDVweWPZ7",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -2051,9 +1791,7 @@
         "fullDescription": [
           "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
           "The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.",
-          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.",
-          "Previously known as CS4HS, the Google Educator Conference is back for 2024!",
-          "The audience is High School Teachers who teach Computer Science, Digital Technologies, STEM or related subjects; teachers who are looking to refresh or add on to their skills; plus ICT curriculum leaders, primary school teachers and school librarians."
+          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -2138,7 +1876,7 @@
                 "title": "Research Director, academyEX",
                 "company": "academyEX",
                 "bio": "David Parsons is the Research Director at academyEX and Adjunct Professor at the University of Canterbury. His experience includes academic roles at Southampton Solent University in the UK and Massey University in New Zealand, and senior professional roles in the international software industry. He holds a PhD in Information Technology and has research interests in the role of AI and digital technologies in education, agile and lean thinking, curriculum design and contemporary software development. He has produced over 200 publications, including several books on software development and education.",
-                "image": "",
+                "image": "/img/scraped/photos/66d3b444977df99baf784a0b_David Parsons.jpg",
                 "linkedin": ""
               },
               {
@@ -2146,7 +1884,7 @@
                 "title": "Principal - AI Literacy Institute",
                 "company": "AI Literacy Institute",
                 "bio": "Kara Kennedy, PhD, is a scholar, author and educator in the areas of digital and AI literacy and science fiction. She launched the AI Literacy Institute for resources and guidance on Generative AI topics, and her AI guides have been shared and translated by educators around the world. She has presented on digital and AI literacy at conferences in the US, Australia and NZ and published journal articles on digital and information literacy and on the gender gap in Wikipedia.",
-                "image": "",
+                "image": "/img/scraped/photos/66d1789a4b5f67bde73883ce_Kara.jpeg",
                 "linkedin": ""
               },
               {
@@ -2154,7 +1892,7 @@
                 "title": "Associate Professor, University of Canterbury",
                 "company": "University of Canterbury",
                 "bio": "Kathryn MacCallum is an Associate Professor of Digital Education Futures at the University of Canterbury. As Director of the Digital Education Futures Lab, she leads a community of researchers exploring digital technologies in education across all contexts, from kindergarten to tertiary education. Kathryn's research focuses on the role and impact of technology in education, particularly how emerging technologies like AI can support the development of digital literacies and how this shifts educational practices and norms.",
-                "image": "",
+                "image": "/img/scraped/photos/66d3b4038fa4a872b5117a48_Kathryn-MacCallum-head.jpg",
                 "linkedin": ""
               },
               {
@@ -2162,7 +1900,7 @@
                 "title": "Lead Writer Technology, Ministry of Education",
                 "company": "Ministry of Education",
                 "bio": "Catherine is currently Lead Writer in the Technology learning area in the Ministry of Education for the curriculum refresh Te Mātaiaho. Teaching across all sectors — first in the 1990s in the UK and since 2004 in Aotearoa New Zealand — Catherine has almost 30 years' experience in Technology education, leadership, strategy and curriculum development. She is passionate about curriculum and the potential of emerging technologies to transform learning.",
-                "image": "",
+                "image": "/img/scraped/photos/66f8f1791c37f36fc8e345a1_Catherine Frost(Demo).jpg",
                 "linkedin": ""
               },
               {
@@ -2170,7 +1908,7 @@
                 "title": "Associate Professor at AUT and Chair AI Forum",
                 "company": "She Sharp / AUT / AI Forum NZ",
                 "bio": "Dr. Mahsa McCauley is Founder and Director of She Sharp Charitable Trust. As Chair of AI Forum NZ and Associate Professor of AI at AUT, she researches AI, machine learning, IoT and cybersecurity. She serves on boards of NZTech, EdTechNZ and World Summit Awards, advancing AI strategy, education and SDG projects.",
-                "image": "",
+                "image": "/img/scraped/photos/69ae758e75cb901b6270b2d2_LSS02450-EDITWEBRES_Original.jpg",
                 "linkedin": ""
               },
               {
@@ -2178,7 +1916,7 @@
                 "title": "Deputy Chair - TENZ Council",
                 "company": "TENZ Council / Fraser High School",
                 "bio": "Munireh serves as the Deputy Chair on the TENZ council and is Poutakawaenga mō te Pūtake Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle. She earned her Master's in Computer Sciences from Université Paul Sabatier in France and began her career as a Software Engineer, crafting e-commerce websites for major international companies. In 2021 she made the exciting decision to become a teacher, aiming to enhance diversity and inclusion in Computer Sciences and Digital Technologies. Now, as the Leader of Learning for Digital Technology at Fraser High School, she strives to empower learners.",
-                "image": "",
+                "image": "/img/scraped/photos/670c7805bc6a2c73a5469191_Munireh.png",
                 "linkedin": ""
               },
               {
@@ -2186,7 +1924,7 @@
                 "title": "Teacher at Spotswood College New Plymouth",
                 "company": "Spotswood College",
                 "bio": "Claire is a dedicated teacher at Spotswood College in New Plymouth, focused on teaching 21st-century skills. With a background in textiles technology, she has expanded her expertise to encompass various areas of the Technology Curriculum, from cooking to coding and laser cutting. As an Inquiry Specialist teacher, Claire integrates Design Thinking into her lessons and in 2023 took on the role of council member at TENZ.",
-                "image": "",
+                "image": "/img/scraped/photos/654b416bc4182bc0aac67822_Claire Wigley photo-p-2000.jpg",
                 "linkedin": ""
               }
             ]
@@ -2197,8 +1935,18 @@
           "main": [],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "youtube",
+            "title": "Event Recap",
+            "content": ["https://www.youtube.com/watch?v=kONKHNGsIP4"]
+            }
+        ],
         "photos": [
+          {
+            "url": "/img/scraped/photos/674a8d448cfb51e2040934e8_Screen Shot 2024-11-30 at 4.57.41 PM.png",
+            "alt": "Google Educator Conference featured photo"
+           },
           {
             "url": "/img/scraped/photos/674a8d5a4ab1892c07bba411_Google-Educator-004_6f8b01db.jpg",
             "alt": ""
@@ -2412,6 +2160,10 @@
         "specialSections": [],
         "photos": [
           {
+            "url": "/img/scraped/photos/673ae86f262711538318c2f5_hero-p-2000.jpg",
+            "alt": "Sustainable Development featured photo"
+           },           
+          {
             "url": "/img/scraped/photos/673ae8b357bafc67dc9fb409_1_7375e11f.jpg",
             "alt": ""
           },
@@ -2588,6 +2340,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "/img/scraped/photos/671b32ca898cf47916e7f70b_Anniversary-144-p-2000.jpg",
+            "alt": "She Sharp 10-Year Anniversary featured photo"
+           },           
           {
             "url": "/img/scraped/photos/671b32e1863f1ce63745d2db_Anniversary-72_7fcc997a.jpg",
             "alt": ""
@@ -2789,6 +2545,10 @@
         "specialSections": [],
         "photos": [
           {
+            "url": "/img/scraped/photos/66d4560b9f4ef98b4255cbb5_IMG_9867-p-2000.jpg",
+            "alt": "Harness the Power of Data and AI featured photo"
+           },           
+          {
             "url": "/img/scraped/photos/66d456166a015f57e5c91bc6_IMG_9823_425d85f0.jpg",
             "alt": ""
           },
@@ -2890,8 +2650,7 @@
           "This year, the AI Hackathon festival will be expanding on the problems to solve beyond the five key environmental outcomes (AI for the Environment Report 2022) to include Kaitiakitanga, embracing our connection to the land and surrounding natural environment fulfilling our roles as custodians.",
           "The problems to solve are based on the six key environmental outcomes (AI for the Environment Report 2022). They have expanded these to make them more relevant to all participants in 2024.",
           "The cases are sourced from NGOs and citizen science groups to provide real problems to solve that are relevant to each location. These organisations provide subject matter expertise ahead of time and on the day. Participants are also welcome to bring their own problems to solve and we encourage early sharing of these ideas so we can help provide data sets and technology support.",
-          "Participants will learn new skills, create connections and make an impact.",
-          "Who can join? Anyone who wants to solve real-world problems in protecting our water resources, fighting climate change, reducing pollution, managing land use, preserving biodiversity or increasing waste recycling."
+          "Participants will learn new skills, create connections and make an impact."
         ],
         "speakers": {},
         "organizers": [],
@@ -2907,18 +2666,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
         ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
@@ -3310,6 +3057,16 @@
         },
         "specialSections": [
           {
+            "type": "youtube",
+            "title": "Event Recap",
+            "content": ["https://www.youtube.com/watch?v=wB8n2NYOSLc"]
+            },
+            {
+              "type": "youtube",
+              "title": "Opening Message from Hon Judith Collins KC MP, Minister of Science, Innovation and Technology",
+              "content": ["https://www.youtube.com/watch?v=NvAS9IacRaY"]
+              },
+          {
             "type": "agenda",
             "title": "Readiness Workshops",
             "content": [
@@ -3393,6 +3150,10 @@
           }
         ],
         "photos": [
+          {
+            "url": "/img/scraped/photos/66a953aa9ccf0dbd14588bae_hero hackathon.jpg",
+            "alt": "F&P Hackathon featured photo"
+           },
           {
             "url": "/img/scraped/photos/66a9546b78531c808b3a5d15_4_637d15f8.jpg",
             "alt": ""
@@ -3688,6 +3449,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "/img/scraped/photos/6681f40816fb4d759506b07a_IMG_9249 (1)-p-2000.jpg",
+            "alt": "Embracing Bias featured photo"
+           },
           {
             "url": "/img/scraped/photos/6681f4b5e7cc858c424a5e12_IMG_9299_1_0c4c2c45.jpg",
             "alt": ""
@@ -3998,25 +3763,9 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/65e8b2441d0ebbd30c2bbcb4_Annabelle_Yoon_Headshot_b64e23c4.jpeg",
-            "alt": "Annabelle Yoon Headshot"
-          },
-          {
-            "url": "/img/scraped/photos/65e8b284cd0cc1fc20d30c6a_Hazel_Photo_1_6bc8cc77.jpeg",
-            "alt": "Hazel Headshot"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
+            "url": "/img/scraped/photos/662736cdcd9806231f31b056_MYOB hero image-p-2000.jpg",
+            "alt": "Embracing Bias featured photo"
+           }
         ],
         "galleryUrl": "https://photos.app.goo.gl/brA5VppyZx9mAU2V9",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
@@ -4050,7 +3799,8 @@
         "endTime": "7:30pm",
         "timezone": "NZST",
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-myob-embracing-bias"
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-myob-embracing-bias",
+        "hidePhotosSection": true
       }
     },
     {
@@ -4083,10 +3833,7 @@
           "longitude": 174.7483896
         },
         "fullDescription": [
-          "Join us for our annual breakfast event at Woolworths. We will celebrate women’s achievements, raise awareness about discrimination and take action to drive gender parity. Let’s have the opportunity to network and come together to leave the event with actionable outcomes to #inspireinclusion.",
-          "‌Kathryn is currently the Chief Analytics Officer for Woolworths NZ, helping one of NZ's biggest businesses on a data-led transformation.",
-          "‌Kathryn is in awe of the New Zealand data talent and believes that bringing different skillsets together will drive positive outcomes for individuals, teams, business and end customers.",
-          "Kathryn is a Brit, a twin mum, a swimmer and a wannabe travel writer — and she leaves a data trail to this effect!"
+          "Join us for our annual breakfast event at Woolworths. We will celebrate women’s achievements, raise awareness about discrimination and take action to drive gender parity. Let’s have the opportunity to network and come together to leave the event with actionable outcomes to #inspireinclusion."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -4118,22 +3865,6 @@
           {
             "url": "/img/scraped/photos/65ee994d_IWD2024_group_woolworths.jpeg",
             "alt": "IWD 2024 group photo at Woolworths"
-          },
-          {
-            "url": "/img/scraped/photos/65c32737e83dd843e3f12a83_Kathryn_Byrne_Photo_483efbad.jpg",
-            "alt": "Kathryn Byrne Profile"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
           }
         ],
         "galleryUrl": "https://photos.app.goo.gl/4nECHs1jrfg1X33g8",
@@ -8151,6 +7882,10 @@
         "specialSections": [],
         "photos": [
           {
+            "url": "/img/scraped/photos/6562b61b80f3c207d72b776c_fergus-hero-p-2000.jpeg",
+            "alt": "Women in Tech and Trades group photo"
+          },
+          {
             "url": "/img/scraped/photos/6562b6287688a3e4760e4772_180626882_101586735591735_17cc9503.jpg",
             "alt": ""
           },
@@ -8390,10 +8125,7 @@
             "url": "/img/scraped/sponsors/6507a857e1ff55e6b2ff2bd5_HCLTECH_d456bf9c.png",
             "alt": ""
           },
-          {
-            "url": "/img/scraped/photos/65471acd33f3f73de074f5d9_20231103153143_IMG_8021_191abab5.jpg",
-            "alt": ""
-          },
+
           {
             "url": "/img/scraped/photos/65471acd135d8bd83e789101_20231103153706_IMG_8026_8ba079e0.jpg",
             "alt": ""
@@ -8423,7 +8155,8 @@
         "endTime": "6:30pm",
         "timezone": "NZDT",
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-hcl-technological-change-workplace-and-workforce-impacts"
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-hcl-technological-change-workplace-and-workforce-impacts",
+        "hideFeaturedPhoto": true
       }
     },
     {
@@ -9077,11 +8810,8 @@
         "fullDescription": [
           "At She Sharp, our mission is to actively engage a broader range of Maori and Pasifika female students by equipping them with the knowledge, network, and skills to enter STEM industries. We are dedicated to inspiring and empowering the next generation of talent from these communities to explore and embrace the dynamic world of STEM and the digital domain through immersive hands-on workshops on topics such as AI, AR, and robotics.",
           "On Wednesday, October 11th, we will be hosting our first STEM conference for Maori and Pasifika girls in years 11-13. The event will take place at AUT (South Campus, Manukau). We are thrilled to offer this free event, as it aligns with our goal of empowering Pasifika girls as future leaders in STEM.",
-          "The conference will commence at 9:00 am - 3pm and will include hands-on workshops in Robotics, Artificial Intelligence, Virtual Reality, and Augmented Reality. Additionally, we will feature Pasifika experts and role models in the STEM fields. Our aim is to ignite curiosity and inspire students about potential careers in technology.",
-          "In her practice, She seeks to uphold Te Tiriti o Waitangi and values the historical ties between Tangata Whenua and Tangata Moana. Jacoba is deeply invested in Pacific ECE nationwide and advancing culturally affirming teaching across NZ. Her Pacific research affiliations include advisory roles with MoE (Pacific) and Whatu Ora, and she serves as a research advisor for TLRI.",
-          "See the agenda here.",
-          "Click here for AUT Scholarships."
-        ],
+          "The conference will commence at 9:00 am - 3pm and will include hands-on workshops in Robotics, Artificial Intelligence, Virtual Reality, and Augmented Reality. Additionally, we will feature Pasifika experts and role models in the STEM fields. Our aim is to ignite curiosity and inspire students about potential careers in technology."
+         ],
         "speakers": {
           "keynote_speakers": {
             "heading": "Meet the Speakers",
@@ -9223,33 +8953,43 @@
           "other": [
             {
               "name": "Centre for Automation and Robotic Engineering Science",
-              "logo": "",
+              "logo": "/img/scraped/photos/6505adec246b11c3f53723c4_Group480965686.png",
               "description": "CARES is an interdisciplinary research hub with a mission to create inspiring and innovative robotic technologies that improve societal wellbeing."
             },
             {
               "name": "IEEE WIE",
-              "logo": "",
+              "logo": "/img/scraped/photos/6506eef1fa75cf63c52025c9_Group 480965686 (1).png",
               "description": "IEEE Women in Engineering (WIE) is a global network of IEEE members and volunteers dedicated to promoting women engineers and scientists and inspiring girls around the world to follow their academic interests in a career in engineering."
             },
             {
               "name": "MYOB",
-              "logo": "",
+              "logo": "/img/scraped/photos/6506ef9385186409b5f2b285_Group 480965689.png",
               "description": "MYOB is a business management platform designed to unleash the potential of businesses across Australia and New Zealand! As the #originalstartup, our roots are in finance and accounting software, but today we empower more than 1.3 million businesses across every stage of their journey."
             },
             {
               "name": "Fonterra",
-              "logo": "",
+              "logo": "/img/scraped/photos/6506efc6ce2d9d36a2b6b3db_Group 480965687.png",
               "description": "Fonterra Cooperative Group is the world's largest exporter of dairy products, a leader in dairy science and innovation, owner of a significant portfolio of brands in Asia Pacific, and a partner to many of the world's leading food service companies."
             },
             {
               "name": "QuiverVision",
-              "logo": "",
+              "logo": "/img/scraped/photos/6506f05f8e404802ea49ffbe_Group 480965690.png",
               "description": "QuiverVision is an augmented reality research company that produces both branded content and the technology to transform that content into personalized, immersive experiences."
             }
           ]
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "youtube",
+            "title": "Event Recap",
+            "content": ["https://www.youtube.com/watch?v=k9K8qTJw4aI"]
+            }
+        ],
         "photos": [
+          {
+            "url": "/img/scraped/photos/652b56eca420599d8e7fa986_w_NfqpHQ-p-2000.jpeg",
+            "alt": "Te Whakatipuranga Wahine featured photo"
+           },
           {
             "url": "/img/scraped/photos/652b5a42269c9abd616f5ec5_6FLIb3mf_7ce431c8.jpg",
             "alt": ""
@@ -9311,7 +9051,7 @@
             "alt": "Profile photo of Nischay"
           },
           {
-            "url": "/img/scraped/speakers/6505adec246b11c3f53723c4_Group_480965686_d761866c.png",
+            "url": "/img/scraped/photos/6505adec246b11c3f53723c4_Group480965686.png",
             "alt": "CARES logo"
           },
           {
@@ -9414,26 +9154,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/64ec501ea6cca4de3256029e_Elina_-_photo_7941dcd4.jpg",
-            "alt": "Elina - profile image"
-          },
-          {
-            "url": "/img/scraped/photos/64828da52c68a7521b2c389a_3_Ankita_Dhakar_d81556cf.png",
-            "alt": "Headshot of Ankita Dhakar"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
         ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
@@ -9619,18 +9339,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
         ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
@@ -10021,6 +9729,11 @@
         "specialSections": [],
         "photos": [
           {
+            "url": "/img/scraped/photos/64ec5ab7a7c91808f247585e_20230824192913_IMG_6965-2-p-2000.jpg",
+            "alt": "A Legendairy Career featured photo"
+           },
+           
+          {
             "url": "/img/scraped/photos/64ec5a06f3b88c6a60200d4d_20230824183646_IMG_6892_c4f275c3.jpg",
             "alt": ""
           },
@@ -10234,6 +9947,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "/img/scraped/photos/64c2661e5bd3fc5f860fd464_20230725185742_IMG_6478-p-2000.jpg",
+            "alt": "Innovation Unleashed featured photo"
+           },
           {
             "url": "/img/scraped/photos/64c267164a9b193611121669_20230725192413_IMG_6500_27d4896b.jpg",
             "alt": ""
@@ -10520,8 +10237,7 @@
         "fullDescription": [
           "Join us at the AWS Office in Auckland for this special event recognising individuals, initiatives, and organisations that are changing the norms, reconditioning the way we think about diversity, inclusion, and equity, and shaping a new normal for the security industry in Aotearoa.",
           "Featuring a stellar line-up of speakers from across Aotearoa's security sector, we will hear lightning talks from each of them sharing their journeys and learnings, demystifying the security industry, followed by a Q&A Panel. We'll also have fun interactive activities and opportunities for networking over yummy food and drinks, with awesome prizes up for grabs on the night.",
-          "It will be a fabulous event for everyone - no matter if you know nothing about the industry, new to security, curious about the industry or a seasoned security professional! AND remember - our events are open and inclusive to all genders, females, males, nonbinary, and allies! So bring your friends or colleagues for a great night of learning and networking with the community.",
-          "She spent several years working in information security consulting while based in the United States – first for the Chicago-based consultancy Neohapsis, and then for Cisco after Neohapsis was acquired by Cisco in 2015."
+          "It will be a fabulous event for everyone - no matter if you know nothing about the industry, new to security, curious about the industry or a seasoned security professional! AND remember - our events are open and inclusive to all genders, females, males, nonbinary, and allies! So bring your friends or colleagues for a great night of learning and networking with the community."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -10626,8 +10342,18 @@
           ],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "youtube",
+            "title": "Event Recap",
+            "content": ["https://www.youtube.com/watch?v=WIIpXoOs4tA"]
+          }
+        ],
         "photos": [
+          {
+            "url": "/img/scraped/photos/64824f126b22f174f6971717_7_Hero Image.png",
+            "alt": "Mind your own Career group photo"
+           },
           {
             "url": "/img/scraped/photos/648253e33b9679ed35e22aa4_7_Featured_Image_03_67e98597.png",
             "alt": ""
@@ -10797,6 +10523,10 @@
         "specialSections": [],
         "photos": [
           {
+            "url": "/img/scraped/photos/64867be880728ef8664e9a83_9_Hero Image-p-2000.png",
+            "alt": "Mind your own Career group photo"
+           },
+          {
             "url": "/img/scraped/photos/6486826e51d3e1c28b69ea22_9_Featured_Image_01_V2_8b90f56b.png",
             "alt": ""
           },
@@ -10890,8 +10620,7 @@
           "longitude": 174.7487792
         },
         "fullDescription": [
-          "Surround yourself with great women: Stories of the women who have ignited our passion for careers in Technology. Enjoy a networking breakfast and surround yourself with great women. She Sharp and Countdown collaborate to bring you first-hand the real stories of the women who are igniting our passion for careers in Technology. Join our breakfast session and see what you can learn to help you re/ignite the flame of your technology career. You will hear from key talent across our Analytics and Insights, Product, Strategy & Transformation and Engineering practices. Hear how they have navigated their careers and learn useful tips as to the art of networking and really owning your career path.",
-          "Steph is a Product Leader with more than 10 years of experience working in e-commerce, product development and digital transformation across New Zealand retail."
+          "Surround yourself with great women: Stories of the women who have ignited our passion for careers in Technology. Enjoy a networking breakfast and surround yourself with great women. She Sharp and Countdown collaborate to bring you first-hand the real stories of the women who are igniting our passion for careers in Technology. Join our breakfast session and see what you can learn to help you re/ignite the flame of your technology career. You will hear from key talent across our Analytics and Insights, Product, Strategy & Transformation and Engineering practices. Hear how they have navigated their careers and learn useful tips as to the art of networking and really owning your career path."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -10977,6 +10706,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "/img/scraped/photos/6486757e6e08d41008e34c1b_8_Hero Image.png",
+            "alt": "Women Igniting Tech group photo"
+           },
           {
             "url": "/img/scraped/photos/6486850468bbed71f659da55_8_Feature_Images_01_V2_502a1d99.png",
             "alt": ""
@@ -11274,7 +11007,6 @@
         "fullDescription": [
           "Some of the world’s leading companies use Deloitte’s 10 Types of Innovation Framework to create innovative products.",
           "When you’re building technology, it’s important to think about more than just the features your product delivers. To be successful, you also need to build out extensions to your application or system that connects with the wider ecosystem. The result is building more than just an app, but a platform and service that customers love and stay with.",
-          "Deloitte brings together more than 1,700 specialists providing New Zealand's widest range of high quality professional services. We focus on audit, tax, technology & systems, strategy, performance improvements, risk management, corporate finance, business recovery, forensics and accounting services.",
           "What you'll learn at this event:"
         ],
         "speakers": {
@@ -11324,9 +11056,9 @@
         ],
         "photos": [
           {
-            "url": "https://lh3.googleusercontent.com/pw/AP1GczMy8aQcPZvoycFEWLT2Lm-6z8IJ4iNy9MWrq680fUxyGLuHuKKILbksbVaQMslpwsCcqeQkbQoadAtu40Gw7od3s8LyHVnJ4N6P4EP4jc8raJiC7q7CTLuSAihaZfiDgZFQpvR8Ata_tXH6sV7LlZP7=w1683-h1121-s-no-gm?authuser=0",
-            "alt": "Innovation Unleashed group photo"
-          },
+            "url": "/img/scraped/photos/64978de92f959214febc5568_Hero Photo-p-2000.jpg",
+            "alt": "Innovation Unleashed featured photo"
+           },
           {
             "url": "/img/scraped/photos/64978c23a0ebb88792c4e9a6_Photo_with_Deloitte_Brand_184c052a.jpg",
             "alt": ""
@@ -11735,8 +11467,7 @@
         },
         "fullDescription": [
           "She Sharp is delighted to present She Celebrates: A reflection on the past year and Inspiration for the future! Come and join us for an evening of Reflection and Inspiration presented by a variety of motivational speakers from STEM-related industries and hosted by AWS and She Sharp. This fantastic opportunity will introduce you to new and exciting ideas for the future, while providing a space to network with STEM professionals.",
-          "Our guest speakers will discuss and reflect on their experiences throughout 2022 in celebration of another incredible year together. The event will be a great networking opportunity to meet with like-minded individuals, mingle with established professionals, celebrate successes and achievements, and have fun!",
-          "Since 2006, Amazon Web Services has been the world’s most comprehensive and broadly adopted cloud. AWS has been continually expanding its services to support virtually any workload, and it now has more than 200 fully featured services for compute, storage, databases, networking, analytics, machine learning and artificial intelligence (AI), Internet of Things (IoT), mobile, security, hybrid, virtual and augmented reality (VR and AR), media, and application development, deployment, and management."
+          "Our guest speakers will discuss and reflect on their experiences throughout 2022 in celebration of another incredible year together. The event will be a great networking opportunity to meet with like-minded individuals, mingle with established professionals, celebrate successes and achievements, and have fun!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -11814,6 +11545,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "/img/scraped/photos/6476e04fd3fd3c906c9533d9_3_Hero Image-p-2000.png",
+            "alt": "She Celebrates featured photo"
+           },
           {
             "url": "/img/scraped/photos/648f93af9a2304c5035bd288_3_Featured_Image_01_V2_a6143947.png",
             "alt": ""
@@ -11925,8 +11660,7 @@
         },
         "fullDescription": [
           "The world is constantly evolving. Digital technologies are transforming exponentially from day to day and Artificial Intelligence has changed the way we interact with the world around us. We can find information through conversations with machines, instantly translate written and verbal language and even have our own personal digital assistant.",
-          "Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington. The team works to help Kiwis find new ways to collaborate, reach audiences and get things done. Google is committed to helping all Kiwis with the digital knowledge and capabilities they need now and in the future.",
-          "In this interactive workshop, hosted by Google, we will learn more about the use of Artificial Intelligence, how to get involved and build AI applications. With awareness of the topic, we will also discuss the ethical considerations of AI in our everyday lives."
+          "In this interactive workshop, hosted by Google, we will learn more about the use of Artificial Intelligence, how to get involved and build AI applications. With awareness of the tools used to innovate, we will discuss the importance of how they are used and the potential impact of ethics and biases. We will also hear from Google Leaders in the AI space on how they got involved and their thoughts on AI in this changing world. Most importantly, we will equip you with the tools and resources required to build experiences and showcase how easy it is to get started with AI right now."
         ],
         "speakers": {},
         "organizers": [],
@@ -11940,12 +11674,18 @@
           ],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "youtube",
+            "title": "Event Recap",
+            "content": ["https://www.youtube.com/watch?v=dDEiCkzjsvc"]
+            }
+        ],
         "photos": [
           {
-            "url": "https://lh3.googleusercontent.com/pw/AP1GczNJ5jPTFAJ8cXGkMgEeCp_qlrUMSehUrbGaAPbJpvabQ7_lGJ_4xl5KQ8Br0i9ZhyH5xj7y-xj-D1M7wttcSN9HdNM_HvJR5BvzNuRqVu5ju6te6dSe7oaUB6LO6oVAuGBvgeYVViKsxLrlSM6ZPKLt=w1683-h971-s-no-gm?authuser=0",
-            "alt": "Shaping the future with AI group photo"
-          },
+            "url": "/img/scraped/photos/648a4ff8577433fe124067dd_4 V2_Hero Image-p-2000.jpeg",
+            "alt": "Shaping the future with AI featured photo"
+           },
           {
             "url": "/img/scraped/photos/648a50128a1a89438134bfa4_4_Featured_Image_01_V2_3194122f.jpg",
             "alt": ""
@@ -12029,8 +11769,7 @@
         },
         "fullDescription": [
           "For International Women’s Day, She Sharp is partnering with Countdown and inviting you to #embraceequity and kick-start your day. Let’s challenge gender stereotypes, call out discrimination, draw attention to bias, and seek out inclusion in all aspects of our personal and professional lives.",
-          "She Sharp are committed to empowering more women into STEM careers to drive gender parity into a world free from bias. Our events are an open opportunity for Everyone, regardless of gender, age, race or background, to work together in order to bridge the gender gap and better represent women within STEM fields.",
-          "Woolworths New Zealand proudly owns and operates over 185 Countdown supermarkets in New Zealand. We are the country’s largest private sector employer, with 20,000 New Zealanders employed in our stores, support offices, processing plants and distribution centres. Our goal is to provide the best possible convenience, value, range and quality to the 2.5 million Kiwis we serve each week in our stores."
+          "She Sharp are committed to empowering more women into STEM careers to drive gender parity into a world free from bias. Our events are an open opportunity for Everyone, regardless of gender, age, race or background, to work together in order to bridge the gender gap and better represent women within STEM fields."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -12155,9 +11894,8 @@
         },
         "fullDescription": [
           "This event is aimed at providing women with insights and opportunities to pursue a career in the tech industry.",
-          "Whether you're looking to start a career in tech, or you're already working in the industry and looking to grow your skills and network, this event is for you. With the support of MYOB, we hope to inspire and empower women to pursue their passions and achieve their career goals.",
-          "With hands-on experience in DevOps and Azure hosting platforms, Anshu excels in leveraging cutting-edge technology for optimal results. As a dynamic leader and research professional, she has spearheaded numerous successful Agile and Waterfall-driven initiatives. Anshu's commitment to excellence and her proactive approach to staying updated on industry trends make her a valuable asset to any team.",
-          "Attendees will have the chance to hear from experienced professionals in the tech industry, who will be sharing their personal stories, experiences and insights on how to navigate the early stages of a career in technology."
+           "Attendees will have the chance to hear from experienced professionals in the tech industry, who will be sharing their personal stories, experiences and insights on how to navigate the early stages of a career in technology.",
+          "Whether you're looking to start a career in tech, or you're already working in the industry and looking to grow your skills and network, this event is for you. With the support of MYOB, we hope to inspire and empower women to pursue their passions and achieve their career goals." 
         ],
         "speakers": {
           "keynote_speakers": {
@@ -12211,6 +11949,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "/img/scraped/photos/64768a070209ae05605d868b_1_Hero image_V2-p-2000.png",
+            "alt": "She Celebrates featured photo"
+           },           
           {
             "url": "/img/scraped/photos/64950e56394b63a4ef0ccb46_1_Featured_Image_01_V2_b2dc7173.png",
             "alt": ""
