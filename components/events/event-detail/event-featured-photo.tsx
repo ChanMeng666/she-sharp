@@ -12,6 +12,10 @@ export function EventFeaturedPhoto({
   event,
   className,
 }: EventFeaturedPhotoProps) {
+  if (event.detailPageData.hideFeaturedPhoto) {
+    return null;
+  }
+
   const photos = event.detailPageData.photos;
   const featured = photos && photos.length > 0 ? photos[0] : null;
 
