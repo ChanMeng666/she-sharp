@@ -623,36 +623,7 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/68b3779bdd6358872971f627_image_5b88ed84.png",
-            "alt": "Vicky Enkhsaikhan"
-          },
-          {
-            "url": "/img/scraped/photos/689c67fcaafaf0049b7cfdca_Aileen_Collins_1_40c0c0ce.jpg",
-            "alt": "Aileen Collins"
-          },
-          {
-            "url": "/img/scraped/photos/689c68228cdc8d1eadfa5cfb_TraceyConnor_1_40a8247e.JPG",
-            "alt": "Tracey Connor"
-          },
-          {
-            "url": "/img/scraped/photos/68a6c5e2b8bb64dd5904a4f0_Kritika_1321f3f2.jpg",
-            "alt": "Kritika Law"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/TYrx8hrvrp4rbAS19",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -941,94 +912,12 @@
         },
         "specialSections": [
           {
-            "type": "topics",
-            "title": "Piki Ake: Rise up Auckland",
-            "content": [
-              "Personal Branding — Learn how to present yourself confidently and authentically in the job market.",
-              "Assessing CVs — Get expert feedback on how to strengthen your CV to stand out from the crowd.",
-              "Interview Strategies — Discover practical tips to prepare for and succeed in interviews.",
-              "Mentorship Guidance — Hear from experienced professionals and gain valuable career advice tailored to your goals."
-            ]
+            "type": "collaboration",
+            "title": "In Collaboration With",
+            "content": ["/img/scraped/photos/685be97a7cc5998f7759b7c2TechbabesNZLogo.png"]
           }
         ],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/686237b2c1b15cec7645e530_Elevate___HR-13_1_3b8b2b05.jpg",
-            "alt": "Kathryn Sandford"
-          },
-          {
-            "url": "/img/scraped/photos/66eba9db021d85dadb5ab595_IMG_1237_5595123d.jpg",
-            "alt": "Libby Lavrova"
-          },
-          {
-            "url": "/img/scraped/photos/686b6d61e7e3158e2b7a52da_Kai_Ping_Lew_d3611578.jpeg",
-            "alt": "Kai Ping (KP) Lew"
-          },
-          {
-            "url": "/img/scraped/photos/686b6e21a47aef2bb4fc3bae_vivientu_0d80ef20.jpg",
-            "alt": "Vivien Tu"
-          },
-          {
-            "url": "/img/scraped/photos/686b6e7dbaea94f8cf28eb91_Jamini_Patel_26272c64.jpeg",
-            "alt": "Jamini Patel"
-          },
-          {
-            "url": "/img/scraped/photos/686b6f0c2c7d0f5245da92de_Isuru_Fernandez_9283fc7d.jpeg",
-            "alt": "Isuru Fernando"
-          },
-          {
-            "url": "/img/scraped/photos/68874aeb3141ace212fb2f33_Caro_Gao_c9fc7f9e.jpeg",
-            "alt": "Caro Gao"
-          },
-          {
-            "url": "/img/scraped/photos/686b6fb262ce6721b047dc0e_Dalia_a2ccc235.png",
-            "alt": "Dalia Raphael"
-          },
-          {
-            "url": "/img/scraped/photos/686b7028bf8b5d7ad362879c_Irene_Naidu_d78410be.jpeg",
-            "alt": "Irene Naidu"
-          },
-          {
-            "url": "/img/scraped/photos/6477d34fd4a7dba0fe2b6467_2_Mahsa_McCauley_9ecfe9bb.png",
-            "alt": "Masha McCauley a women with long dark brown hair "
-          },
-          {
-            "url": "/img/scraped/photos/686b70ceb433ebe7308b30ea_Maria_Clamor_240b5bd7.jpeg",
-            "alt": "Maria Clamor"
-          },
-          {
-            "url": "/img/scraped/photos/686b7136426b1f78f21f3888_Matthew_Hall-White_5a9708c5.jpeg",
-            "alt": "Matthew Hall-White"
-          },
-          {
-            "url": "/img/scraped/photos/686b71b0049053d3559cdcb4_Justine_Hinton__732119d4.jpeg",
-            "alt": "Justine Hinton"
-          },
-          {
-            "url": "/img/scraped/photos/686b84f65184c0729d860632_1719309249585_1f147f31.jpeg",
-            "alt": "Prasanth Pavithran"
-          },
-          {
-            "url": "/img/scraped/photos/6878ba01658d0d8fcc46ebe9_Tuhi_Cooper_b65cf080.jpeg",
-            "alt": "Tuhi Cooper"
-          },
-          {
-            "url": "/img/scraped/photos/68874b7242b76ac2043c88f5_IMG_7827_30841b38.jpeg",
-            "alt": "Bahareh Jalili-Moghaddam"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/58coFzFj2FfWbFMp7",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -1313,11 +1202,11 @@
         "sponsors": {
           "main": [
             {
-              "name": "Sponsor",
+              "name": "AI Forum New Zealand",
               "logo": "/img/scraped/sponsors/685b99d07fd43017405f42ba_667a27c0775567ddfcee9f8b_AIFNZ_43c3ee93.png"
             },
             {
-              "name": "Sponsor",
+              "name": "Auckland University of Technology",
               "logo": "/img/scraped/sponsors/647018601697362ad73172bc_aut-logo_21fc10e2.svg"
             }
           ],
@@ -1347,92 +1236,7 @@
             ]
           }
         ],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/689454587ec5f00ec724894a_alejandro-davila-nz-conical_4b8fba04.jpg",
-            "alt": "Alejandro Davila"
-          },
-          {
-            "url": "/img/scraped/photos/689c57b44e8448a103408b6e_Michael_Fielding_7026a74a.jpeg",
-            "alt": "Michael Fielding"
-          },
-          {
-            "url": "/img/scraped/photos/689c5866a7764e99fc366d18_Maria_Mingallon_e8778ae6.jpeg",
-            "alt": "Maria Mingallon"
-          },
-          {
-            "url": "/img/scraped/photos/689c589fe620176eb7c46185_Richard_Copus_b0e2b175.jpeg",
-            "alt": "Richard Copus"
-          },
-          {
-            "url": "/img/scraped/photos/6477d34fd4a7dba0fe2b6467_2_Mahsa_McCauley_9ecfe9bb.png",
-            "alt": "Masha McCauley a women with long dark brown hair "
-          },
-          {
-            "url": "/img/scraped/photos/689c689db85b3744f18ee181_Nigel_Hunt_44d6bdd7.jpeg",
-            "alt": "Nigel Hunt"
-          },
-          {
-            "url": "/img/scraped/photos/689c69916ee21e10a099900b_tanya-gray_Tanya_Gray_c551cdd9.jpg",
-            "alt": "Tanya Gray"
-          },
-          {
-            "url": "/img/scraped/photos/686b84f65184c0729d860632_1719309249585_1f147f31.jpeg",
-            "alt": "Prasanth Pavithran"
-          },
-          {
-            "url": "/img/scraped/photos/689c604bc48ae4b3a5f034b0_Talita_Ekandjo_Talita_Ekandjo_76955f52.jpg",
-            "alt": "Talita Ekandjo"
-          },
-          {
-            "url": "/img/scraped/photos/689c66e3e624d2e6868f26cb_WEB2_02_Alan_Dent_66756313.jpg",
-            "alt": "Alan Dent"
-          },
-          {
-            "url": "/img/scraped/photos/66833ab7ab9af673a80d47af_geri_e8b364da.jpeg",
-            "alt": "profile of geris"
-          },
-          {
-            "url": "/img/scraped/photos/689c616e7d30faa0c152b994_IMG_8757_06c67bb3.jpg",
-            "alt": "Shae Parsons"
-          },
-          {
-            "url": "/img/scraped/photos/689c65caa1d0876274f8e62e_image_3e610ecd.png",
-            "alt": "Isha Sangrolkar"
-          },
-          {
-            "url": "/img/scraped/photos/689c636f80d02fba831c735d_Chan_Meng_30c603e4.png",
-            "alt": "Chan Meng"
-          },
-          {
-            "url": "/img/scraped/photos/689c6244262a9408738b1f0c_yesha_0e2b0115.jpg",
-            "alt": "Yesha Kaniyawala"
-          },
-          {
-            "url": "/img/scraped/photos/689c62f76e3510bde29f9bb9_cindy-luo_Cindy_Luo_588d0ac8.png",
-            "alt": "Cindy Luo"
-          },
-          {
-            "url": "/img/scraped/photos/689c6892a2dd65a7070d2cb0_Ji_Ruan_3060d647.jpeg",
-            "alt": "Ji Ruan"
-          },
-          {
-            "url": "/img/scraped/photos/652774fc247ee7d771e65d2c_Sara_124a374e.png",
-            "alt": "Sara Ghafoor"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/GUQBZCNDV7X5Jx5d6",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -1690,6 +1494,10 @@
         "specialSections": [],
         "photos": [
           {
+            "url": "/img/scraped/photos/68341808df6e9756c26e45a4_20250522_191138-p-2000.jpg",
+            "alt": "Find Your Perfect Fit featured photo"
+           },
+          {
             "url": "/img/scraped/photos/683419ef57b19b54eb424d75_IMG_1232-min_5a90c2de.jpg",
             "alt": ""
           },
@@ -1832,24 +1640,7 @@
             ]
           }
         ],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/69ae758e75cb901b6270b2d2_LSS02450-EDITWEBRES_Original_ac1bbcde.jpg",
-            "alt": "mahsa-mccauley-mohaghegh-gec"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/Q7DK7YfkSDVweWPZ7",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -2051,9 +1842,7 @@
         "fullDescription": [
           "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
           "The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.",
-          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.",
-          "Previously known as CS4HS, the Google Educator Conference is back for 2024!",
-          "The audience is High School Teachers who teach Computer Science, Digital Technologies, STEM or related subjects; teachers who are looking to refresh or add on to their skills; plus ICT curriculum leaders, primary school teachers and school librarians."
+          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -2138,7 +1927,7 @@
                 "title": "Research Director, academyEX",
                 "company": "academyEX",
                 "bio": "David Parsons is the Research Director at academyEX and Adjunct Professor at the University of Canterbury. His experience includes academic roles at Southampton Solent University in the UK and Massey University in New Zealand, and senior professional roles in the international software industry. He holds a PhD in Information Technology and has research interests in the role of AI and digital technologies in education, agile and lean thinking, curriculum design and contemporary software development. He has produced over 200 publications, including several books on software development and education.",
-                "image": "",
+                "image": "/img/scraped/photos/66d3b444977df99baf784a0b_David Parsons.jpg",
                 "linkedin": ""
               },
               {
@@ -2146,7 +1935,7 @@
                 "title": "Principal - AI Literacy Institute",
                 "company": "AI Literacy Institute",
                 "bio": "Kara Kennedy, PhD, is a scholar, author and educator in the areas of digital and AI literacy and science fiction. She launched the AI Literacy Institute for resources and guidance on Generative AI topics, and her AI guides have been shared and translated by educators around the world. She has presented on digital and AI literacy at conferences in the US, Australia and NZ and published journal articles on digital and information literacy and on the gender gap in Wikipedia.",
-                "image": "",
+                "image": "/img/scraped/photos/66d1789a4b5f67bde73883ce_Kara.jpeg",
                 "linkedin": ""
               },
               {
@@ -2154,7 +1943,7 @@
                 "title": "Associate Professor, University of Canterbury",
                 "company": "University of Canterbury",
                 "bio": "Kathryn MacCallum is an Associate Professor of Digital Education Futures at the University of Canterbury. As Director of the Digital Education Futures Lab, she leads a community of researchers exploring digital technologies in education across all contexts, from kindergarten to tertiary education. Kathryn's research focuses on the role and impact of technology in education, particularly how emerging technologies like AI can support the development of digital literacies and how this shifts educational practices and norms.",
-                "image": "",
+                "image": "/img/scraped/photos/66d3b4038fa4a872b5117a48_Kathryn-MacCallum-head.jpg",
                 "linkedin": ""
               },
               {
@@ -2162,7 +1951,7 @@
                 "title": "Lead Writer Technology, Ministry of Education",
                 "company": "Ministry of Education",
                 "bio": "Catherine is currently Lead Writer in the Technology learning area in the Ministry of Education for the curriculum refresh Te Mātaiaho. Teaching across all sectors — first in the 1990s in the UK and since 2004 in Aotearoa New Zealand — Catherine has almost 30 years' experience in Technology education, leadership, strategy and curriculum development. She is passionate about curriculum and the potential of emerging technologies to transform learning.",
-                "image": "",
+                "image": "/img/scraped/photos/66f8f1791c37f36fc8e345a1_Catherine Frost(Demo).jpg",
                 "linkedin": ""
               },
               {
@@ -2170,7 +1959,7 @@
                 "title": "Associate Professor at AUT and Chair AI Forum",
                 "company": "She Sharp / AUT / AI Forum NZ",
                 "bio": "Dr. Mahsa McCauley is Founder and Director of She Sharp Charitable Trust. As Chair of AI Forum NZ and Associate Professor of AI at AUT, she researches AI, machine learning, IoT and cybersecurity. She serves on boards of NZTech, EdTechNZ and World Summit Awards, advancing AI strategy, education and SDG projects.",
-                "image": "",
+                "image": "/img/scraped/photos/69ae758e75cb901b6270b2d2_LSS02450-EDITWEBRES_Original.jpg",
                 "linkedin": ""
               },
               {
@@ -2178,7 +1967,7 @@
                 "title": "Deputy Chair - TENZ Council",
                 "company": "TENZ Council / Fraser High School",
                 "bio": "Munireh serves as the Deputy Chair on the TENZ council and is Poutakawaenga mō te Pūtake Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle. She earned her Master's in Computer Sciences from Université Paul Sabatier in France and began her career as a Software Engineer, crafting e-commerce websites for major international companies. In 2021 she made the exciting decision to become a teacher, aiming to enhance diversity and inclusion in Computer Sciences and Digital Technologies. Now, as the Leader of Learning for Digital Technology at Fraser High School, she strives to empower learners.",
-                "image": "",
+                "image": "/img/scraped/photos/670c7805bc6a2c73a5469191_Munireh.png",
                 "linkedin": ""
               },
               {
@@ -2186,7 +1975,7 @@
                 "title": "Teacher at Spotswood College New Plymouth",
                 "company": "Spotswood College",
                 "bio": "Claire is a dedicated teacher at Spotswood College in New Plymouth, focused on teaching 21st-century skills. With a background in textiles technology, she has expanded her expertise to encompass various areas of the Technology Curriculum, from cooking to coding and laser cutting. As an Inquiry Specialist teacher, Claire integrates Design Thinking into her lessons and in 2023 took on the role of council member at TENZ.",
-                "image": "",
+                "image": "/img/scraped/photos/654b416bc4182bc0aac67822_Claire Wigley photo-p-2000.jpg",
                 "linkedin": ""
               }
             ]
@@ -2197,8 +1986,18 @@
           "main": [],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "youtube",
+            "title": "Event Recap",
+            "content": ["https://www.youtube.com/watch?v=kONKHNGsIP4"]
+            }
+        ],
         "photos": [
+          {
+            "url": "/img/scraped/photos/674a8d448cfb51e2040934e8_Screen Shot 2024-11-30 at 4.57.41 PM.png",
+            "alt": "Google Educator Conference featured photo"
+           },
           {
             "url": "/img/scraped/photos/674a8d5a4ab1892c07bba411_Google-Educator-004_6f8b01db.jpg",
             "alt": ""
