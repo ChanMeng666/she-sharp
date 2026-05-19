@@ -4369,7 +4369,12 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/65ba0b458acbe47294621842_Hero.jpg",
+            "alt": "SHE# Storytellers Series featured photo"
+           }           
+        ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -5897,22 +5902,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6562d4f14f5963423a071387_Screen_Shot_2023-11-26_at_6.17_393faee8.png",
-            "alt": "Profile of Ruth James smiling"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
         ],
         "galleryUrl": "https://photos.app.goo.gl/KmMQByWYpxDE4yoz7",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
@@ -7149,8 +7138,7 @@
         "fullDescription": [
           "Unless you have been living under a rock, you will have heard of blockchain.",
           "Blockchain is one of the most important inventions since the Internet. It’s powering systems for supply chain, fintech, mobility, digital identity and yes, eventrading virtual cats. But, what exactly is Blockchain? How does it work? And most importantly, how do you decide if it’s right for your idea or business?",
-          "Join us at the event to learn the ins and outs of this emerging technology and blockchain based projects happening around New Zealand. Hear from the industry experts from Centrality, Yabble, and Āhau, about their blockchain journey. We will also conduct an Ideathon, where our experts will show you how easy it is to get started on blockchain programming. So team up and design your very own blockchain application to win a prize for the best concept. Drinks and nibbles will be provided to accompany this brainstorming.",
-          "What is Blockchain?"
+          "Join us at the event to learn the ins and outs of this emerging technology and blockchain based projects happening around New Zealand. Hear from the industry experts from Centrality, Yabble, and Āhau, about their blockchain journey. We will also conduct an Ideathon, where our experts will show you how easy it is to get started on blockchain programming. So team up and design your very own blockchain application to win a prize for the best concept. Drinks and nibbles will be provided to accompany this brainstorming."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -7196,6 +7184,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "/img/scraped/photos/654aa33edd99fce2e9a4e1dc_Hero Image, Centrality.jpg",
+            "alt": "She Sharp @ Centrality featured photo"
+           }, 
           {
             "url": "/img/scraped/photos/654aa2eec54d876063c27d84_C-1_efa43fe8.jpg",
             "alt": ""
@@ -7472,6 +7464,10 @@
         "specialSections": [],
         "photos": [
           {
+            "url": "/img/scraped/photos/6550a6187eddaa4291d6a85f_aws-she-p-2000.jpeg",
+            "alt": "SHE# @ AWS featured photo"
+           },            
+          {
             "url": "/img/scraped/photos/6541ef681c6f9184193e7694_12_cdc14ef6.jpg",
             "alt": ""
           },
@@ -7661,6 +7657,10 @@
         "specialSections": [],
         "photos": [
           {
+            "url": "/img/scraped/photos/6541a604ad8867c25d8760db_Workday-Hero Image.jpg",
+            "alt": "SHE# @ WORKDAY featured photo"
+           },            
+          {
             "url": "/img/scraped/photos/6541a5c09f6e33e9563ae899_IMG_2061jpg-nggid03170-ng_7c9f47f7.jpg",
             "alt": ""
           },
@@ -7790,9 +7790,9 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "https://lh3.googleusercontent.com/pw/AP1GczMGAxlgn1EHMLEjTZuFPmX3s9o_BZsOgQrgsYYjp6_TGMokQYvW0yZU69XcZTpO1sNWJzDqdt0QSkhMj9HCeRhVjc4ZPrm-vg2wYdwRnSb02FIbCengkhFsxG8I_VKAtggFyZ9UbO_I08IszSCeV-e4=w1683-h1261-s-no-gm?authuser=0",
-            "alt": "SHE# @ Deloitte group photo"
-          },
+            "url": "/img/scraped/photos/65509c0df224407ac9d28995_she-deloitte-hero-p-2000.jpeg",
+            "alt": "SHE# @ DELOITTE featured photo"
+           }, 
           {
             "url": "/img/scraped/photos/65419c4a28a95b9120242e09_1_2acb3487.jpg",
             "alt": ""
@@ -8286,6 +8286,10 @@
         "specialSections": [],
         "photos": [
           {
+            "url": "/img/scraped/photos/65013115c8690e010a0e9084_landingImage-p-2000.jpg",
+            "alt": "Robotic Process Automation featured photo"
+           },            
+          {
             "url": "/img/scraped/photos/65644d2a2f3bb75b0b5121f2_87269985_1015732284172851_e305af32.jpg",
             "alt": ""
           },
@@ -8545,7 +8549,8 @@
         "endTime": "1pm",
         "timezone": "NZST",
         "refundPolicy": "No refund policy specified.",
-        "humanitixUrl": "https://events.humanitix.com/future-ready"
+        "humanitixUrl": "https://events.humanitix.com/future-ready",
+        "hidePhotosSection":true
       }
     },
     {
@@ -8732,11 +8737,12 @@
           "country": "New Zealand"
         },
         "fullDescription": [
+                    "SheSharp's last event of the year, and our first in-person event post-COVID!",
           "We partnered with Xero to give people an opportunity to have a much needed night out to end 2020 with a bang!",
           "SheSharp and Xero hosted a Girl’s Night Out to bring together like-minded women interested in tech for a night of fun, interaction and challenges. As unprecedented this year has been, where most of us have interacted online via zoom calls or google hangouts, it’s time (and safe) for us to have an in person event. You don’t have to have a vast knowledge of tech or the tech sector to come along.",
           "There were team challenges, fun quizzes and general fun and interactive awesomeness. So people brought their A-game along! This was a great event to network and reconnect with others we haven’t had the opportunity to meet in person over the last few months!",
-          "This event was open to all students (18+) and working professionals! Food and Drinks (No Alcohol) were provided!",
-          "SheSharp's last event of the year, and our first in-person event post-COVID!"
+          "This event was open to all students (18+) and working professionals! Food and Drinks (No Alcohol) were provided!"
+
         ],
         "speakers": {
           "keynote_speakers": {
@@ -8781,6 +8787,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "/img/scraped/photos/6562ce4e4112006d55a85880_127994566_10158302174673519_7313097895441555003_n-p-2000.jpeg",
+            "alt": "Girls Night Out featured photo"
+           }, 
           {
             "url": "/img/scraped/photos/6562ce3e4112006d55a851d5_127918351_101583021738935_f45e98a9.jpg",
             "alt": ""
