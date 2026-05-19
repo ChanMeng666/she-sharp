@@ -183,7 +183,8 @@
         "endTime": "7:30pm",
         "timezone": "NZDT",
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future"
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+        "hideFeaturedPhoto":true
       }
     },
     {
@@ -273,33 +274,9 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/68e07910a8f710b7f087da5b_Shona_Irving_ddffda22.jpg",
-            "alt": "Shona Irving"
-          },
-          {
-            "url": "/img/scraped/photos/68e0799e93e217abf557f66c_Evelyn_Hunsenger_aee4c570.jpg",
-            "alt": "evelyn-hunserger"
-          },
-          {
-            "url": "/img/scraped/photos/68e079d737c5fe190af8a4e7_Karen_Ip_0685644a.jpg",
-            "alt": "Karen Ip"
-          },
-          {
-            "url": "/img/scraped/photos/68e07a47ba04d345599b06d9_Adriana_Yong_c442f92d.jpg",
-            "alt": "Adriana Yong"
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
+            "url": "/img/scraped/photos/68e076618a243929a9567b91_Vector Event poster.png",
+            "alt": "Vector Future-Ready featured photo"
+           }
         ],
         "galleryUrl": "https://photos.google.com/share/AF1QipONHHOewHzAoTCFLQBO3Ho4yMOqWKZN-hUuruuwyfvYHj0p7CC1K9vvURQNuVklHg?key=V0hMc1BoRE9nZko5RU9RRUx0dWs2QzUtSDFfQkVR",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
@@ -337,7 +314,8 @@
         "endTime": "8pm",
         "timezone": "NZDT",
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector"
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector",
+        "hidePhotosSection":true
       }
     },
     {
@@ -463,36 +441,7 @@
             ]
           }
         ],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/68b6d4469334d9d88ba87f63_Copy_of_Fatemah_Beydoun_90431fe5.jpg",
-            "alt": "Fatemah Beydoun"
-          },
-          {
-            "url": "/img/scraped/photos/68b6d4fdd1e862785575b4cb_Suzy_Clarke-Headshot_7dfbd4f9.jpg",
-            "alt": "Executive GM of Security, Xero"
-          },
-          {
-            "url": "/img/scraped/photos/68baac28c7eeb2d9347c4dd1_MehikaManochBio_7b9283e2.jpg",
-            "alt": "profile pic of mehika"
-          },
-          {
-            "url": "/img/scraped/photos/6477d34fd4a7dba0fe2b6467_2_Mahsa_McCauley_9ecfe9bb.png",
-            "alt": "Masha McCauley a women with long dark brown hair "
-          },
-          {
-            "url": "/img/scraped/photos/668d8928fec2ee6c5169631a_Screen_Shot_2024-07-10_at_7.01_efb29ba4.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668d8a34e723ee28cc7f4eed_Screen_Shot_2024-07-10_at_7.06_c8b9af35.png",
-            "alt": ""
-          },
-          {
-            "url": "/img/scraped/photos/668cb5d2a99f0698bd428cbd_iulia_05432dad.jpeg",
-            "alt": ""
-          }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/4CWo8WBuM1rfg63q9",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
