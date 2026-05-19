@@ -130,6 +130,22 @@ function YouTubeEmbeds({ items }: { items: string[] }) {
   );
 }
 
+function CollaborationLogos({ items }: { items: string[] }) {
+  return (
+    <div className="flex flex-wrap gap-6 items-center">
+      {items.map((url, i) => (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          key={i}
+          src={url}
+          alt="Collaboration partner logo"
+          className="h-64 w-auto object-contain"
+        />
+      ))}
+    </div>
+  );
+}
+
 function RelatedLinks({ items }: { items: string[] }) {
   const links = items
     .map((item) => {
@@ -187,6 +203,10 @@ export function EventSpecialSections({
       {sections.map((section, index) => {
         const sectionType = section.type.toLowerCase();
         const isYouTube = sectionType === "youtube";
+        const isCollaboration =
+          sectionType === "collaboration" ||
+          sectionType === "in-collaboration" ||
+          sectionType === "in_collaboration";
         const isRelatedLinks =
           sectionType === "related-links" ||
           sectionType === "related_links" ||
@@ -209,6 +229,8 @@ export function EventSpecialSections({
             <div className={isYouTube ? "w-full" : "max-w-prose"}>
               {isYouTube ? (
                 <YouTubeEmbeds items={section.content} />
+              ) : isCollaboration ? (
+                <CollaborationLogos items={section.content} />
               ) : isRelatedLinks ? (
                 <RelatedLinks items={section.content} />
               ) : isBulletList ? (
