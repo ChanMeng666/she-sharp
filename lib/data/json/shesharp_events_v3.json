@@ -4847,8 +4847,9 @@
           "longitude": 174.7821066
         },
         "fullDescription": [
-          "Wellington’s first SheSharp event was sponsored by Xero and 920 Career Agents as well as Orion Health, Unitec and Google and was held at Xero with a team of SheSharp members who travelled down from Auckland. The event was sold out, with over 60 women attending from around Wellington, some even travelling in from other cities around New Zealand.In addition to secondary and tertiary students, there were also industry members from a range of companies including Xero, 920 Career Agents, Fonde, Catalyst, Assurity , Orion Health, IBM and VizExplorer. Attendees participated in professional development activities around Agile and held discussions on issues faced in various spaces such as industry, tertiary and secondary education.",
-          "The event also included a panel of women from Xero who shared successes, challenges and experiences from their own journeys. Feedback from participants was very encouraging, many commenting on the level of professionalism of the event and on the value and necessity of such a group to continue in Wellington.Read about out awesome panelists from Xero below."
+          "Wellington’s first SheSharp event was sponsored by Xero and 920 Career Agents as well as Orion Health, Unitec and Google and was held at Xero with a team of SheSharp members who travelled down from Auckland. The event was sold out, with over 60 women attending from around Wellington, some even travelling in from other cities around New Zealand.",
+          "In addition to secondary and tertiary students, there were also industry members from a range of companies including Xero, 920 Career Agents, Fonde, Catalyst, Assurity , Orion Health, IBM and VizExplorer. Attendees participated in professional development activities around Agile and held discussions on issues faced in various spaces such as industry, tertiary and secondary education.",
+          "The event also included a panel of women from Xero who shared successes, challenges and experiences from their own journeys. Feedback from participants was very encouraging, many commenting on the level of professionalism of the event and on the value and necessity of such a group to continue in Wellington."
         ],
         "speakers": {},
         "organizers": [],
@@ -4863,6 +4864,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "/img/scraped/photos/65645fa76b5eb360c5d9d751_12029660_10154707074788504_8718519602444928693_o.jpg",
+            "alt": "She Sharp event featured photo"
+           }, 
           {
             "url": "/img/scraped/photos/65645fdb08a0d4794be33479_12068974_1015470707350850_0f585724.jpg",
             "alt": ""
@@ -6663,6 +6668,10 @@
         },
         "specialSections": [],
         "photos": [
+          {
+            "url": "/img/scraped/photos/65546b010427d6b98fd5b970_gridhero.jpg",
+            "alt": "She Sharp event featured photo"
+           }, 
           {
             "url": "/img/scraped/photos/65546be8d29332fb2ff7963b_36227157_1015571515167851_05724d72.jpg",
             "alt": ""
