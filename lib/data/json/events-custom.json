@@ -397,15 +397,75 @@
           "city": "Auckland",
           "country": "New Zealand"
         },
-        "fullDescription": [],
-        "speakers": {},
+        "fullDescription": [
+          "Our “From Burnout to Balance” breakfast event is going to be an enlightening morning where we delve into two vital aspects of well-being. As women, we wear many hats - we are professionals, mothers, partners, and more. It is this dance of roles that showcases our adaptability, but also puts us at a greater risk of burnout. In addition, the boundaries between work and personal life are becoming increasingly blurred.",
+          "Our incredible speakers will guide you on a journey towards achieving equilibrium in the fast-paced world of technology, looking at actionable strategies to harmonise professional ambitions with self-care.",
+          "Brigette McGregor-Macdonald will speak to discovering the power of mindfulness and provide key techniques that empower you to stay centred, enhance focus, and build resilience against burnout.‍ Maya Lee will dive into the critical connection between nutrition, health and stress management, providing insights into putting your health first for peak performance, optimising energy levels and warding off burnout. It is time to invest in your well-being, embrace balance, and unlock your full potential in both your professional and personal life.",
+          "Join us as we change the narrative from ‘Burnout’ to ‘Balance’."
+        ],
+        "speakers": {
+          "keynote_speakers": {
+            "heading": "Meet our speakers",
+            "speakers": [
+              {
+                "name": "Brigette McGregor-Macdonald",
+                "title": "Executive Coach and Faciliator",
+                "company": "",
+                "bio": "Brigette is an Executive Coach and Facilitator who helps people cut through life's noise to achieve success. Based in Auckland Brigette has developed an extensive coaching toolkit over the last 20+ years working in the leadership and development field in London, Singapore and now back in New Zealand. Brigette uses curiosity, empathy and toolkit of resources to support people to grow, change and feel less ‘stuck’. Brigette works with people to articulate their vision vs reality and to build a roadmap to tackle challenges. She has a pragmatic business focus and a personal interest and practise in how mindfulness can support business success, resilience and to find more joy in life.",
+                "image": "/img/scraped/speakers/64e6af7c3ca8e00df183f402_bridgette.jpeg",
+                "linkedin": "https://www.linkedin.com/in/brigette-mcgregor-macdonald-738b93/"
+              },
+              {
+                "name": "Maja Lee",
+                "title": "Customer Performance Marketing Lead, Sky TV",
+                "company": "",
+                "bio": "Maja is a mindful marketing leader, with a track record of driving marketing transformation for global and local brands. After the birth of her daughter, Valentina, Maja founded Foodie Babe, a baby food company focused on vegetables and spices, and she's on a mission to cultivate healthy and adventurous eaters. Currently leading the performance marketing team at Sky TV, Maja loves her work and thrives on connecting fans with top-notch sports and entertainment. She's dedicated to promoting a vibrant and healthy lifestyle, driven by her passion for nutrition, movement, and mindfulness.",
+                "image": "/img/scraped/speakers/64f48f36bca35ec50e95a6ff_Screen Shot 2023-09-03 at 9.50.12 PM.png",
+                "linkedin": "https://www.linkedin.com/in/maja-lee/"
+              }
+            ]
+          }
+        },
         "organizers": [],
         "sponsors": {
-          "main": [],
+          "main": [{
+            "name": "Techwomen NZ | AWS",
+            "logo": "/img/scraped/sponsors/64f48d1839f5ae1e373687e7_Group 2.png",
+            "description":"The TechWomen community is a group of passionate New Zealand tech, digital and ICT focused individuals from a diverse range of organisations that work together, to support the growth of women in tech roles.\n\nAmazon Web Services (AWS) is the world's most comprehensive and broadly adopted cloud, offering over 200 fully featured services from data centers globally.‍"
+          }],
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+          {
+            "url": "/img/scraped/photos/650cca0fb1bbe26b910365e6_20230920091437_IMG_7995.jpg",
+            "alt": "SHE# Storytellers Series featured photo"
+           },
+           {
+            "url": "/img/scraped/photos/650cca44c35a51b2c7856ac3_20230920090621_IMG_7945.jpg",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/650cca442bc2239222f97469_20230920075347_IMG_7597.jpg",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/650cca44383f686adb430788_20230920085103_IMG_7850.jpg",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/650cca44f7099a17d83750bb_20230920073520_IMG_7569.jpg",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/650cca443c6709f78251a927_20230920083609_IMG_7796.jpg",
+            "alt": ""
+          },
+          {
+            "url": "/img/scraped/photos/650cca444beb5604bc9bb3ee_20230920092902_IMG_8017.jpg",
+            "alt": ""
+          }
+        ],
         "galleryUrl": "https://photos.app.goo.gl/PeTEUpz6rBf837ek8",
         "registrationUrl": "",
         "humanitixUrl": "https://events.humanitix.com/she-sharp-and-techwomen-nz-from-burnout-to-balance",
