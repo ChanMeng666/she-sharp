@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { runWeeklyFundingCrawl } from '@/lib/funding/service';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 60;
+// 60s was too tight: 6 RSS/HTML source fetches + sequential OpenAI scoring batches
+// + DB writes can exceed it when the lookback window has accumulated many
+// unscored items (2026-05-18 timeout incident, repro'd 2026-05-24).
+// 300s is the Pro-plan ceiling for serverless functions.
+export const maxDuration = 300;
 
 /**
  * GET /api/cron/weekly-funding-crawl
