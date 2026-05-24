@@ -48,6 +48,10 @@ export async function POST(request: NextRequest) {
 }
 
 async function runJob(opts: { manual?: boolean } = {}) {
+  console.log('[cron] weekly-funding-crawl invoked', {
+    manual: opts.manual ?? false,
+    at: new Date().toISOString(),
+  });
   try {
     const summary = await runWeeklyFundingCrawl();
     console.log('Weekly funding crawl complete', { manual: opts.manual ?? false, ...summary });
