@@ -7,6 +7,9 @@ import { keywordScore, NEGATIVE_KEYWORDS, POSITIVE_KEYWORDS, SHE_SHARP_MISSION }
 
 const MODEL = 'gpt-4o-mini';
 const BATCH_SIZE = 5;
+// Hard cap per OpenAI call. SDK default is 10 minutes — too long for a cron with a
+// 300s function budget. If a batch hangs we fall back to the keyword scorer.
+const OPENAI_REQUEST_TIMEOUT_MS = 20_000;
 
 const SYSTEM_PROMPT = `You are a grant analyst for She Sharp, a New Zealand non-profit.
 
@@ -32,7 +35,7 @@ function getClient(): OpenAI | null {
   if (cachedClient) return cachedClient;
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) return null;
-  cachedClient = new OpenAI({ apiKey });
+  cachedClient = new OpenAI({ apiKey, timeout: OPENAI_REQUEST_TIMEOUT_MS });
   return cachedClient;
 }
 
