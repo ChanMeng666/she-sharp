@@ -186,31 +186,29 @@ export async function sendFundingDigestNotification(params: DigestParams): Promi
 
   const blocks = buildBlocks(items, params);
 
-  try {
-    const response = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ blocks }),
-    });
+  // Non-2xx / network errors propagate so the cron handler returns 500 and
+  // Vercel Monitoring surfaces the failure — silent success-without-delivery
+  // is the worst failure mode to debug (2026-05-18 incident, same root cause
+  // as mentorship-weekly-stats).
+  const response = await fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ blocks }),
+  });
 
-    if (!response.ok) {
-      const body = await response.text();
-      console.error('Funding digest webhook failed:', response.status, body);
-      return { ok: false, postedCount: 0, reason: `http_${response.status}` };
-    }
-
-    if (items.length > 0) {
-      await db
-        .update(fundingOpportunities)
-        .set({ postedToSlackAt: sql`now()` })
-        .where(
-          sql`${fundingOpportunities.id} IN (${sql.join(items.map((i) => sql`${i.id}`), sql`, `)})`,
-        );
-    }
-
-    return { ok: true, postedCount: items.length };
-  } catch (error) {
-    console.error('Failed to send funding digest Slack notification:', error);
-    return { ok: false, postedCount: 0, reason: error instanceof Error ? error.message : 'unknown' };
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Funding digest webhook ${response.status}: ${body}`);
   }
+
+  if (items.length > 0) {
+    await db
+      .update(fundingOpportunities)
+      .set({ postedToSlackAt: sql`now()` })
+      .where(
+        sql`${fundingOpportunities.id} IN (${sql.join(items.map((i) => sql`${i.id}`), sql`, `)})`,
+      );
+  }
+
+  return { ok: true, postedCount: items.length };
 }

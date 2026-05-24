@@ -111,15 +111,15 @@ export async function scoreUnscored(rows: FundingOpportunity[]): Promise<number>
     });
 
     // Drizzle does not support multi-row UPDATE with per-row values in one statement,
-    // so we issue one UPDATE per row. Batch is at most 5 → cheap.
-    await Promise.all(
-      updates.map((u) =>
-        db
-          .update(fundingOpportunities)
-          .set({ relevanceScore: u.score, relevanceReason: u.reason })
-          .where(eq(fundingOpportunities.id, u.id)),
-      ),
-    );
+    // so we issue one UPDATE per row. Sequential awaits (not Promise.all) to avoid
+    // bursts of concurrent Neon connection attempts that throttle on cold pools
+    // (same failure class as the 2026-05-11 mentorship-stats incident).
+    for (const u of updates) {
+      await db
+        .update(fundingOpportunities)
+        .set({ relevanceScore: u.score, relevanceReason: u.reason })
+        .where(eq(fundingOpportunities.id, u.id));
+    }
     scoredCount += updates.length;
   }
 
