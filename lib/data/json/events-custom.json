@@ -283,8 +283,8 @@
       }
     },
     {
-      "slug": "event-aut-linkedin-15-may-2026",
-      "title": "Making LinkedIn Work for You with Stuart Little, presented by She Sharp and AUT",
+      "slug": "making-linkedin-work-for-you-with-stuart-little",
+      "title": "Making Linkedin Work for You",
       "date": "May 15, 2026",
       "coverImage": {
         "url": "/img/events/event-aut-linkedin-15-may-2026-cover.jpg",
@@ -297,7 +297,7 @@
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/event-aut-linkedin-15-may-2026",
         "title": "Making LinkedIn Work for You with Stuart Little, presented by She Sharp and AUT",
-        "subtitle": "LinkedIn Masterclass Workshop",
+        "subtitle": "Presented by She Sharp and AUT (Engineering, Computer and Mathematical Sciences)",
         "date": "May 15, 2026",
         "time": "5:00pm - 7:30pm NZST",
         "location": {
@@ -314,19 +314,28 @@
           "This session is led by Stuart Little, Creative Strategist and Director of Agency8. Through his work supporting professionals, businesses and large-scale programmes across New Zealand, Stuart brings a real-world perspective on how LinkedIn is actually being used today to identify, assess and connect with talent for a changed job market.",
           "Rather than focusing on theory, this workshop draws on practical insight, current hiring trends and proven strategies that help people move from having a profile to building a presence that creates momentum.",
           "You will gain a clearer understanding of how to position yourself, how to be found, and how to use LinkedIn as a tool that works for you consistently.",
-          "This session will provide the knowledge to build a LinkedIn® presence that reflects who you are, what you do, and how you work. The focus is not just on creating a profile, but on positioning yourself in a way that attracts the right opportunities and builds long-term career momentum."
+          "This session will provide the knowledge to build a LinkedIn® presence that reflects who you are, what you do, and how you work. The focus is not just on creating a profile, but on positioning yourself in a way that attracts the right opportunities and builds long-term career momentum.",
+          "This workshop is presented in partnership with She Sharp and AUT (Engineering, Computer and Mathematical Sciences) as part of New Zealand’s Digital Suite."
         ],
         "speakers": {
           "keynote_speakers": {
-            "heading": "Meet Our Speaker",
+            "heading": "Meet Our Speakers",
             "speakers": [
               {
                 "name": "Stuart Little",
                 "title": "Creative Strategist and Director of Agency8",
-                "company": "Agency8",
-                "bio": "Stuart Little, Creative Strategist and Director of Agency8. Through his work supporting professionals, businesses and large-scale programmes across New Zealand, Stuart brings a real-world perspective on how LinkedIn is actually being used today to identify, assess and connect with talent for a changed job market.",
+                "company": "",
+                "bio": "Stuart Little, Creative Lead for the THRIVE and Director of Agency8. Through his work supporting professionals, businesses and large-scale programmes across New Zealand, Stuart brings a real-world perspective on how LinkedIn is actually being used today to identify, assess and connect with talent for a changed market.",
                 "image": "/img/events/event-aut-linkedin-15-may-2026-stuart-little.jpg",
                 "linkedin": "https://www.linkedin.com/in/stuart-little"
+              },
+              {
+                "name": "Janelle Wright",
+                "title": "Founder of Janelle's Recruitment",
+                "company": "",
+                "bio": "Janelle Wright is the founder of Janelle's Recruitment. She helps professionals stand out and land the right roles through personal branding, ATS-optimised CVs, LinkedIn strategy, interview coaching and proactive recruitment. Her process works. 90% of candidates secure roles, she's built a strong industry network and her LinkedIn following has grown past 9,000. Janelle has worked and coached for major global brands around the world. She takes a people-first approach with real pace behind it, so candidates don't just find a job they build a career.",
+                "image": "/img/events/event-aut-linkedin-15-may-2026-janelle-wright.jpg",
+                "linkedin": "https://www.linkedin.com/in/janellemwright/"
               }
             ]
           }
@@ -336,7 +345,7 @@
           "main": [
             {
               "name": "AUT (Engineering, Computer and Mathematical Sciences)",
-              "logo": "/img/sponsors/aut.svg"
+              "logo": "/img/scraped/sponsors/69e98fb2137e77162ffc61cf_IMG_9008.jpg"
             }
           ],
           "other": []
@@ -626,7 +635,8 @@
           "country": "New Zealand"
         },
         "fullDescription": [
-          "How you feel directly impacts how you show up at work and in life. In this engaging and practical workshop, Career Mindset Coach Candice Murray will guide you through how to consciously choose and access the emotional state that would be most helpful right now — whether that is calm, confidence, self-belief, or happiness.",
+          "How you feel directly impacts how you show up at work and in life.",
+          "In this engaging and practical workshop, Career Mindset Coach Candice Murray will guide you through how to consciously choose and access the emotional state that would be most helpful right now — whether that is calm, confidence, self-belief, or happiness.",
           "You will learn powerful, easy-to-use tools that help you shift your energy on demand, so you can perform at your best in the moments that matter, from important conversations to everyday challenges.",
           "The session is designed to be interactive, supportive, and fun, creating a safe space to reflect, participate, and experiment with new ways of thinking and responding. You will leave feeling energised and equipped with practical tools you can immediately apply in both your career and personal life.",
           "Join us for an interactive workshop with Candice Murray - we can’t wait to see you. ",
@@ -713,12 +723,13 @@
           "country": "New Zealand"
         },
         "fullDescription": [
+          "Ready to take your next step into meaningful work?",
           "HER WAKA is a dynamic, employment-focused programme delivered by SheSharp in Auckland for Ministry of Social Development clients who are ready to strengthen their pathway into work. Running monthly from March to June 2026, each session is a cohesive, repeatable event designed to build job readiness, confidence, and practical understanding of the New Zealand labour market.",
           "Each two-hour programme brings together up to 25 participants in a supportive, high-impact environment that blends inspiration, practical skills, and direct employer insight. Through real conversations and structured learning, participants gain clarity on how to position themselves confidently and competitively in today's job market.",
           "Our March HER WAKA session focuses on Artificial Intelligence and the evolving tech job market in 2026. Participants can look forward to a dynamic AI Panel Discussion featuring industry professionals, a short hands-on workshop exploring practical AI tools and how they are shaping workplaces, and a special guest speaker from RCSA sharing insights into the 2026 tech hiring landscape and what employers are looking for.",
           "This session will help participants understand how AI is influencing job opportunities, recruitment trends, and the skills that matter most right now.",
           "HER WAKA is more than an event — it is a practical, supportive step toward sustainable employment and long-term workforce participation.",
-          "Ready to take your next step into meaningful work?",
+
           "🌟 March 2026 Theme: AI & The Future of Work — our March HER WAKA session focuses on Artificial Intelligence and the evolving tech job market in 2026.",
           "Join us and take your next step forward with confidence. ✨"
         ],
@@ -982,41 +993,63 @@
         },
         "fullDescription": [
           "The third cohort of the HER WAKA series continues with a session focused on cybersecurity.",
-          "You will hear from three industry experts through short lightning talks, each sharing their unique perspective and experience in the cybersecurity space. This is an opportunity for participants to gain a broader understanding of the field, the different pathways into it, and the real-world challenges and opportunities it presents.",
-          "NOTE: This event is strictly by invitation only.",
           "🌟 May 2026 Theme: Cybersecurity Workshop — our May HER WAKA session focuses on cybersecurity awareness and the in-demand skills shaping safer digital workplaces.",
+          "You will hear from three industry experts through short lightning talks, each sharing their unique perspective and experience in the cybersecurity space. This is an opportunity for participants to gain a broader understanding of the field, the different pathways into it, and the real-world challenges and opportunities it presents.",
           "In the second half of the session, participants will take part in a 45-minute recruiter networking activity with RCSA representatives. There will be 2–3 tables set up where small groups can connect directly with recruiters, ask questions, and practise real-world conversations in a supportive environment.",
           "HER WAKA is more than an event. It is a practical, supportive step toward sustainable employment and long-term workforce participation.",
-          "Join us and take your next step forward with confidence. ✨"
+          "Join us and take your next step forward with confidence. ✨",
+          "NOTE: This event is strictly by invitation only."
         ],
         "speakers": {
-          "panel_speakers": {
-            "heading": "Meet Our Lightning Talk Speakers",
+          "keynote_speakers": {
+            "heading": "Meet Our Speakers",
             "speakers": [
-              {
-                "name": "Prasanth Pavithran",
-                "title": "Senior Business Analyst, Office of the CTO",
-                "company": "Auckland University of Technology",
-                "bio": "Prasanth Pavithran works at the intersection of business architecture, transformation, people, and technology. With an MBA and over two decades of global experience, he serves as Senior Business Analyst in the Office of the CTO at Auckland University of Technology, mapping the relationships between strategy, capability, process, and technology. Before AUT he led a business analysis team at healthAlliance and spent nearly a decade at HCL Technologies delivering large-scale SAP programmes. He has been mentoring with She Sharp since 2017.",
-                "image": "/img/events/her-waka-may-2026-prasanth-pavithran.jpg",
-                "linkedin": "https://www.linkedin.com/in/prasanth-pavithran-mba-a54ab912/"
-              },
+              
               {
                 "name": "Paula Gair",
-                "title": "Consultant, Educator & Advisor — AI, Cyber, Privacy",
-                "company": "deriskme / Tech Futures Lab",
-                "bio": "Paula Gair advises, teaches and assesses Masters students at Tech Futures Lab on multiple aspects of emerging and disruptive technology — including AI, cybersecurity, privacy, and embedding Security and Privacy by Design. As founder of deriskme, she works with families, SMEs, schools and businesses on practical cyber security, online safety, and privacy. A frequent speaker and commentator on privacy, cyber security, online safety and emerging technology, Paula advocates for safer defaults and nudges that improve outcomes for everyone, and is passionate about seeing more girls study STEAM and more women found tech companies.",
+                "title": "Consultant, Educator & Advisor",
+                "company": "",
+                "bio": "Paula specialises in the safe, responsible, and ethical use of technology. She has led digital transformation initiatives for global NGOs and businesses, living and working across 10 countries before returning to Aotearoa, NZ. Her work spans AI, cyber security, privacy, online harm, governance, risk and education. She is focused on strengthening personal and organisational capability through responsible technology use. Her master’s research examined cyber, privacy, and online risk mitigation for non technical audiences. She teaches and supervises at AcademyEX and supports leaders navigating complexity, innovation and disruption (especially in relation to AI).",
                 "image": "/img/events/her-waka-may-2026-paula-gair.jpg",
                 "linkedin": "https://www.linkedin.com/in/paulagair/"
               },
               {
                 "name": "Swapna Soni",
-                "title": "Agility Coach",
-                "company": "NZ Post",
+                "title": "Agile Coach & Change Leader",
+                "company": "",
                 "bio": "Swapna Soni is a Transformation Strategist with 8+ years of experience designing and delivering enterprise-wide change across public and private sectors in New Zealand. She currently serves as Agility Coach at NZ Post, with prior roles at Air New Zealand, Vodafone, and the Ministry of Social Development. Her work spans value-stream-led delivery models, agility-maturity uplift and ADKAR-based change strategies. Swapna brings curiosity, structure and care to help organisations reimagine their operating models and deliver change that sticks.",
                 "image": "/img/events/her-waka-may-2026-swapna-soni.jpg",
                 "linkedin": "https://www.linkedin.com/in/swapnasoni/"
+              },
+              {
+                "name": "Prasanth Pavithran",
+                "title": "Senior Business Analyst, Office of the CTO",
+                "company": "Auckland University of Technology",
+                "bio": "Prasanth is a seasoned Information Technology, Strategy, Management, and Business Architecture professional with over 24 years of global experience. Originally from Lutyens’ Delhi in India, he has called New Zealand home for the past 18 years, where he lives with his wife, two children, and their dog. He currently serves as a Senior Business Analyst within the Office of the Chief Technology Officer (OCTO) at Auckland University of Technology (AUT).\n\nBeyond his professional role, Prasanth has spent more than a decade contributing to the New Zealand community through coaching and mentoring professionals. In his personal time, he enjoys the outdoors, playing badminton, and exploring creative writing.",
+                "image": "/img/events/her-waka-may-2026-prasanth-pavithran.jpg",
+                "linkedin": "https://www.linkedin.com/in/prasanth-pavithran-mba-a54ab912/"
               }
+            ]
+          },
+          "panel_speakers": {
+            "heading": "RCSA Recruiters",
+            "speakers": [        
+              {
+                "name": "Sian (See-Ann) Clements",
+                "title": "Client Relationship & Delivery Partner at Younity",
+                "company": "",
+                "bio": "I’ve spent the past 10+ years in tech recruitment, partnering with businesses to connect them with great people but what really drives me is helping individuals find where they belong in tech. I’m naturally curious. I love understanding how technology works and learning from the people behind it but I’m equally passionate about the human side of it all. With everything changing across AI and emerging tech, I believe there’s never been a more important time to create inclusive pathways into the industry. That’s why being part of “Her Waka” really matters to us at Younity, helping more women step into tech, build confidence, and see where they fit.‍For me, it’s simple: everyone has a place; we just need to help uncover it.",
+                "image": "/img/scraped/speakers/69f7eed04c62383cc0e11ce0_Sian Clements.png",
+                "linkedin": ""
+              },
+              {
+                "name": "Jenny Martin",
+                "title": "Senior Consultant, Potentia",
+                "company": "",
+                "bio": "With two decades of recruitment experience, I’ve done it all, agency, in-house, hybrid.\n\nI’m a connector at heart; of people, ideas, and opportunities. I use my network intentionally, challenge what doesn’t make sense, and care about doing recruitment well. Being in these shoes, I've learnt empathy, adaptability, and how to truly understand people as individuals.\n\nAs a specialist in Permanent IT recruitment at Potentia, I look beyond transactions and instead partner with businesses and talent to make smart, impactful, human decisions.\n\nThe right hire doesn’t just fill a role, it changes a business. And the right move doesn’t just increase salary…it changes a life.",
+                "image": "/img/scraped/speakers/69f7ef145de29c4a79285c9d_Jen Martin.png",
+                "linkedin": ""
+              }  
             ]
           }
         },
