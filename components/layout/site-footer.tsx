@@ -270,6 +270,25 @@ export function SiteFooter() {
             © {new Date().getFullYear()} She Sharp. All rights reserved.
           </div>
         </div>
+
+        {/* Developer brand credit — Chan Meng */}
+        <div className="mt-6 flex flex-col items-center gap-2 border-t border-white/10 pt-6 text-center">
+          <a
+            href="https://github.com/ChanMeng666"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-xs text-white/70 transition-colors hover:text-white"
+          >
+            <Image src="/brand/chan-meng-monkey.svg" alt="Chan Meng" width={20} height={20} className="opacity-90" />
+            <span>Built by Chan Meng — need a custom app like this one?</span>
+          </a>
+          <a
+            href="mailto:chanmeng.dev@gmail.com"
+            className="text-xs text-white/70 transition-colors hover:text-white"
+          >
+            chanmeng.dev@gmail.com
+          </a>
+        </div>
       </div>
     </footer>
   );
