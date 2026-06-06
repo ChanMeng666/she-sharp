@@ -93,3 +93,7 @@ nul
 # Audit script HTML cache
 scripts/.cache/
 scripts/__pycache__/
+
+# LinkedIn recommendation generator output (local-only)
+.recommendations/
+/scripts/slack-recommendations
