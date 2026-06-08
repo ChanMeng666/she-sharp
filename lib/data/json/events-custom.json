@@ -274,11 +274,11 @@
           }
         ],
         "photos": [],
-        "galleryUrl": "",
+        "galleryUrl": "https://photos.app.goo.gl/rQoTv6R9xzU3enTdA",
         "registrationUrl": "https://events.humanitix.com/she-sharp-ministry-of-social-development-academyex-her-waka-june-2026",
         "images": [],
         "category": "workshop",
-        "status": "upcoming",
+        "status": "completed",
         "isFeatured": false
       }
     },
@@ -375,7 +375,7 @@
         "registrationUrl": "https://events.humanitix.com/making-linkedin-work-for-you-with-stuart-little-presented-by-she-sharp-and-aut",
         "images": [],
         "category": "workshop",
-        "status": "upcoming",
+        "status": "completed",
         "isFeatured": false
       },
       "id": 91
@@ -1091,7 +1091,7 @@
         "humanitixUrl": "https://events.humanitix.com/she-sharp-ministry-of-social-development-academyex-her-waka-may-2026",
         "images": [],
         "category": "workshop",
-        "status": "upcoming",
+        "status": "completed",
         "isFeatured": false,
         "refundPolicy": "No refunds"
       }
