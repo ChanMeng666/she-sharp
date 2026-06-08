@@ -1174,6 +1174,99 @@
         "status": "upcoming",
         "isFeatured": false
       }
+    },
+    {
+      "id": 96,
+      "slug": "aotearoa-ai-hackathon-festival-2026",
+      "title": "Aotearoa AI Hackathon Festival 2026 — AUT City Campus",
+      "date": "August 7-8, 2026",
+      "coverImage": {
+        "url": "/img/events/aotearoa-ai-hackathon-festival-2026-cover.png",
+        "alt": "Aotearoa AI Hackathon Festival 2026 event cover"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/aotearoa-ai-hackathon-festival-2026",
+      "shortDescription": "A two-day, in-person hackathon at AUT City Campus where teams build AI-enabled solutions to real-world challenges aligned to the UN Sustainable Development Goals. Venue winners advance to national judging and the Aotearoa AI Summit 2026.",
+      "attendees": null,
+      "checkedIn": 0,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/aotearoa-ai-hackathon-festival-2026",
+        "title": "Aotearoa AI Hackathon Festival 2026, hosted by AUT in partnership with She Sharp and the AI Forum",
+        "subtitle": "Two-Day AI Hackathon",
+        "date": "August 7-8, 2026",
+        "time": "Fri 7 Aug, 5:00pm – Sat 8 Aug 2026 (NZST)",
+        "location": {
+          "format": "in_person",
+          "venueName": "AUT City Campus",
+          "address": "55 Wellesley Street East, Auckland CBD, Auckland 1010",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "The Aotearoa AI Hackathon Festival is a nationwide, multi-venue hackathon held across Aotearoa New Zealand. She Sharp and the AI Forum are bringing the festival to AUT's City Campus for a two-day, in-person event on 7–8 August 2026.",
+          "Working in teams, participants create AI-enabled solutions to real-world challenges aligned to five UN Sustainable Development Goals. Day one focuses on team formation, problem definition, and building; day two on refining solutions and pitching to a local judging panel.",
+          "Each venue selects a winning team whose pitch advances to national judging, and four national finalists will be invited to pitch at the Aotearoa AI Summit 2026. No matter your experience level — around a third of participants are new to hackathons — mentors from AUT and industry will support teams throughout.",
+          "The festival is about building practical AI capability, encouraging responsible and ethical AI use, fostering collaboration across regions and sectors, and showcasing innovative, impact-driven ideas."
+        ],
+        "speakers": {
+          "keynote_speakers": {
+            "heading": "Meet Our Speakers",
+            "speakers": []
+          }
+        },
+        "organizers": [],
+        "sponsors": {
+          "main": [
+            {
+              "name": "AI Forum New Zealand",
+              "logo": "/img/sponsors/aifnz.svg"
+            },
+            {
+              "name": "AUT",
+              "logo": "/img/sponsors/aut.svg"
+            }
+          ],
+          "other": []
+        },
+        "specialSections": [
+          {
+            "type": "agenda",
+            "title": "Two-Day Format",
+            "content": [
+              "Day 1 (Friday 7 August) — Welcome, health & safety briefing, introduction to the hackathon themes, team formation, and the build begins, with ongoing mentor and technical support.",
+              "Day 2 (Saturday 8 August) — Continued building, pitch practice, final submissions, live 5-minute pitches to the local judging panel, and announcement of the venue winner.",
+              "Venue winners advance to national judging; four national finalists pitch at the Aotearoa AI Summit 2026."
+            ]
+          },
+          {
+            "type": "why-attend",
+            "title": "Why Attend",
+            "content": [
+              "Build practical, hands-on AI capability on real-world problems",
+              "Collaborate in diverse teams (3–7 people) with mentor and technical support",
+              "Learn responsible and ethical AI practices",
+              "Pitch your solution and compete to represent your venue at national judging",
+              "Open to all experience levels — beginners are welcome"
+            ]
+          },
+          {
+            "type": "info",
+            "title": "Registration",
+            "content": [
+              "Register at aihackathon.nz.",
+              "AUT students: free entry with code REDACTED.",
+              "General attendees: $10 with code REDACTED.",
+              "Mentors and supporting staff: free with code REDACTED."
+            ]
+          }
+        ],
+        "photos": [],
+        "galleryUrl": "",
+        "registrationUrl": "https://aihackathon.nz/",
+        "images": [],
+        "category": "hackathon",
+        "status": "upcoming",
+        "isFeatured": false
+      }
     }
   ]
 }
