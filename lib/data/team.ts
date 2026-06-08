@@ -67,7 +67,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: 8,
     name: "Chan Meng",
-    roles: ["Ambassador", "Website Team Lead"],
+    roles: ["Ambassador", "Website Lead"],
     linkedin: "https://www.linkedin.com/in/chanmeng666/",
     description:
       "Chan Meng is an AI Agent Architect and full-stack engineer based in Auckland, building at the intersection of AI, cultural technology, and women's health. As She Sharp's Senior Full Stack Engineer and Website Team Lead, she was recruited directly by founder Dr Mahsa Mohaghegh to lead the platform rebuild that now serves 2,200+ members. She holds a Master of Applied Computing with Distinction from Lincoln University, is a UN Women CSW 69 speaker, and received the Outstanding Mentor Award at the 2025 AI Hackathon Festival (AI Forum NZ × She Sharp × AUT). An earliest-ecosystem MCP server author, she architects production AI agents with Next.js, TypeScript, Python, and Kubernetes — and has mentored 800+ women into tech along the way.",
