@@ -1095,6 +1095,85 @@
         "isFeatured": false,
         "refundPolicy": "No refunds"
       }
+    },
+    {
+      "id": 95,
+      "slug": "she-sharp-and-myob-working-smarter",
+      "title": "Working Smarter: AI, MYOB, and the New Delivery Landscape",
+      "date": "July 30, 2026",
+      "coverImage": {
+        "url": "/img/events/she-sharp-and-myob-working-smarter-cover.png",
+        "alt": "Working Smarter: AI, MYOB, and the New Delivery Landscape event cover"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/she-sharp-and-myob-working-smarter",
+      "shortDescription": "An interactive evening exploring how MYOB teams use AI to work smarter, solve problems faster, and deliver more value — with practical use cases and a hands-on AI problem-solving activity.",
+      "attendees": null,
+      "checkedIn": 0,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/she-sharp-and-myob-working-smarter",
+        "title": "Working Smarter: AI, MYOB, and the New Delivery Landscape, presented by She Sharp and MYOB",
+        "subtitle": "AI in Practice with MYOB",
+        "date": "July 30, 2026",
+        "time": "5:00pm - 7:30pm NZST",
+        "location": {
+          "format": "in_person",
+          "venueName": "MYOB",
+          "address": "8/50 Albert Street, Auckland CBD, Auckland 1010",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "Discover how AI is helping MYOB teams work smarter, solve problems faster, and deliver more value. This interactive evening brings together students and professionals across development, product, and business teams to explore practical, real-world applications of AI.",
+          "Through a speaker session and a hands-on activity, you will see how AI is reshaping the Software Development Lifecycle (SDLC), explore use cases from across MYOB's business functions, and learn how to develop an AI mindset — understanding both the opportunities and the challenges of adopting AI.",
+          "The evening combines insight and practice: hear how MYOB is leveraging AI across the organisation, then put ideas to work in a collaborative AI problem-solving exercise supported by mentors from different MYOB teams."
+        ],
+        "speakers": {
+          "keynote_speakers": {
+            "heading": "Meet Our Speakers",
+            "speakers": []
+          }
+        },
+        "organizers": [],
+        "sponsors": {
+          "main": [
+            {
+              "name": "MYOB",
+              "logo": "/img/sponsors/myob.svg"
+            }
+          ],
+          "other": []
+        },
+        "specialSections": [
+          {
+            "type": "agenda",
+            "title": "Event Format",
+            "content": [
+              "5:00pm – 5:30pm — Registration, networking, food and refreshments",
+              "5:30pm – 6:10pm — Speaker session: AI in practice at MYOB and developing an AI mindset",
+              "6:10pm – 7:00pm — Interactive AI activity with mentor support",
+              "7:00pm – 7:30pm — Discussion, Q&A, and networking"
+            ]
+          },
+          {
+            "type": "why-attend",
+            "title": "What You'll Gain",
+            "content": [
+              "Insights into how AI is applied at MYOB in day-to-day work",
+              "An understanding of the opportunities and challenges of adopting AI",
+              "Real-world examples of AI use cases across teams and workflows",
+              "How AI is changing the software development landscape",
+              "Hands-on experience in a collaborative AI problem-solving exercise"
+            ]
+          }
+        ],
+        "photos": [],
+        "galleryUrl": "",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-and-myob-working-smarter",
+        "images": [],
+        "category": "workshop",
+        "status": "upcoming",
+        "isFeatured": false
+      }
     }
   ]
 }
