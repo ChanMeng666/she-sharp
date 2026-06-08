@@ -128,7 +128,7 @@ export function SiteHeader() {
 
         {/* Desktop Navigation */}
         {isMounted ? (
-          <NavigationMenu className="hidden lg:flex mx-auto">
+          <NavigationMenu viewport={false} className="hidden lg:flex mx-auto">
             <NavigationMenuList className="gap-2 xl:gap-4">
               {navigationConfig.items.map((item) => (
                 <NavigationMenuItem key={item.title}>
