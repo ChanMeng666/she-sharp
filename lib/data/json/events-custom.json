@@ -1217,6 +1217,10 @@
         "sponsors": {
           "main": [
             {
+              "name": "Aotearoa AI Hackathon Festival",
+              "logo": "/img/sponsors/aotearoa-ai-hackathon-festival.jpg"
+            },
+            {
               "name": "AI Forum New Zealand",
               "logo": "/img/sponsors/aifnz.svg"
             },
