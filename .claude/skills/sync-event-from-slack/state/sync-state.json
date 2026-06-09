@@ -265,6 +265,24 @@
       "lastSyncedAt": "2026-06-09T01:06:45.086Z",
       "lastSyncedCommit": ""
     },
+    "C05LRKE5UCF": {
+      "name": "events-2023-september-twnz",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "from-burnout-to-balance",
+            "eventId": 86
+          }
+        ]
+      },
+      "watermarkTs": "0",
+      "threads": {},
+      "fingerprint": "sha256:d5169b40123be1bfff3172ff6c57e167991b02a958e088f8061bbdbc586f9397",
+      "lastSyncedAt": "2026-06-09T01:45:17.341Z",
+      "lastSyncedCommit": ""
+    },
     "C05LZH9ET38": {
       "name": "events-2023-october-aut-school",
       "type": "event",
@@ -1026,12 +1044,199 @@
       "name": "event--mind-coach-april-2026",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "event",
+        "events": [
+          {
+            "slug": "she-sharp-candice-murray-own-your-energy",
+            "eventId": 87
+          }
+        ]
       },
       "watermarkTs": "1777003028.579359",
-      "threads": {},
-      "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "threads": {
+        "1771485411.086039": {
+          "replyCount": 3,
+          "latestReplyTs": "1773714921.331259"
+        },
+        "1771491370.091099": {
+          "replyCount": 1,
+          "latestReplyTs": "1771492676.773499"
+        },
+        "1771545108.213559": {
+          "replyCount": 2,
+          "latestReplyTs": "1771545331.082819"
+        },
+        "1771545232.277629": {
+          "replyCount": 5,
+          "latestReplyTs": "1771558584.170759"
+        },
+        "1771566813.089589": {
+          "replyCount": 2,
+          "latestReplyTs": "1771646728.137709"
+        },
+        "1771668784.128249": {
+          "replyCount": 4,
+          "latestReplyTs": "1771670011.088369"
+        },
+        "1771918666.784439": {
+          "replyCount": 1,
+          "latestReplyTs": "1771918910.312799"
+        },
+        "1771918677.193789": {
+          "replyCount": 2,
+          "latestReplyTs": "1771986121.936219"
+        },
+        "1771918722.040229": {
+          "replyCount": 8,
+          "latestReplyTs": "1772513449.426619"
+        },
+        "1772245534.201879": {
+          "replyCount": 4,
+          "latestReplyTs": "1772520561.730659"
+        },
+        "1772245573.486769": {
+          "replyCount": 13,
+          "latestReplyTs": "1772741809.392859"
+        },
+        "1772531894.488519": {
+          "replyCount": 5,
+          "latestReplyTs": "1772572150.997999"
+        },
+        "1772658727.082229": {
+          "replyCount": 2,
+          "latestReplyTs": "1772935389.592179"
+        },
+        "1772671146.372529": {
+          "replyCount": 2,
+          "latestReplyTs": "1772696133.053419"
+        },
+        "1773007742.526129": {
+          "replyCount": 7,
+          "latestReplyTs": "1774949049.571689"
+        },
+        "1773007836.916429": {
+          "replyCount": 4,
+          "latestReplyTs": "1773176611.302309"
+        },
+        "1773204369.871729": {
+          "replyCount": 2,
+          "latestReplyTs": "1773456037.202099"
+        },
+        "1773544341.194559": {
+          "replyCount": 8,
+          "latestReplyTs": "1773644941.230879"
+        },
+        "1773712069.790989": {
+          "replyCount": 4,
+          "latestReplyTs": "1773732405.910179"
+        },
+        "1773714793.405759": {
+          "replyCount": 32,
+          "latestReplyTs": "1773803394.324279"
+        },
+        "1773724476.086649": {
+          "replyCount": 1,
+          "latestReplyTs": "1773724554.148639"
+        },
+        "1773736633.297899": {
+          "replyCount": 13,
+          "latestReplyTs": "1773809267.881549"
+        },
+        "1773803625.603529": {
+          "replyCount": 16,
+          "latestReplyTs": "1773955830.093029"
+        },
+        "1773995516.171689": {
+          "replyCount": 10,
+          "latestReplyTs": "1774052367.044289"
+        },
+        "1774507036.452419": {
+          "replyCount": 12,
+          "latestReplyTs": "1775034657.180919"
+        },
+        "1774509168.483929": {
+          "replyCount": 3,
+          "latestReplyTs": "1774949116.349519"
+        },
+        "1774782557.038669": {
+          "replyCount": 5,
+          "latestReplyTs": "1774835928.045579"
+        },
+        "1775255842.061129": {
+          "replyCount": 3,
+          "latestReplyTs": "1775259509.759729"
+        },
+        "1775448484.122609": {
+          "replyCount": 3,
+          "latestReplyTs": "1775449012.352519"
+        },
+        "1775543749.072209": {
+          "replyCount": 1,
+          "latestReplyTs": "1775783334.238919"
+        },
+        "1775694234.605979": {
+          "replyCount": 20,
+          "latestReplyTs": "1775865076.822589"
+        },
+        "1775760632.450649": {
+          "replyCount": 2,
+          "latestReplyTs": "1775804546.836349"
+        },
+        "1775777871.496089": {
+          "replyCount": 1,
+          "latestReplyTs": "1776025046.014019"
+        },
+        "1775987069.629419": {
+          "replyCount": 35,
+          "latestReplyTs": "1776214831.995359"
+        },
+        "1776068529.958559": {
+          "replyCount": 1,
+          "latestReplyTs": "1776070973.672059"
+        },
+        "1776068674.001419": {
+          "replyCount": 1,
+          "latestReplyTs": "1776068707.282429"
+        },
+        "1776115230.801839": {
+          "replyCount": 2,
+          "latestReplyTs": "1776116116.321959"
+        },
+        "1776216215.878269": {
+          "replyCount": 1,
+          "latestReplyTs": "1776277420.136219"
+        },
+        "1776221313.109099": {
+          "replyCount": 1,
+          "latestReplyTs": "1776222803.233849"
+        },
+        "1776238149.126309": {
+          "replyCount": 1,
+          "latestReplyTs": "1776238579.077909"
+        },
+        "1776238165.146599": {
+          "replyCount": 2,
+          "latestReplyTs": "1776239593.368329"
+        },
+        "1776238284.378559": {
+          "replyCount": 1,
+          "latestReplyTs": "1776238534.492629"
+        },
+        "1776246886.489339": {
+          "replyCount": 5,
+          "latestReplyTs": "1776277384.387819"
+        },
+        "1776673347.235589": {
+          "replyCount": 3,
+          "latestReplyTs": "1776678916.236419"
+        },
+        "1776759576.568029": {
+          "replyCount": 4,
+          "latestReplyTs": "1776921258.707979"
+        }
+      },
+      "fingerprint": "sha256:f22eb4a17e71a9a52d0507d54819409ce71072125e95414cd37a242e41281a97",
+      "lastSyncedAt": "2026-06-09T01:45:13.080Z",
       "lastSyncedCommit": ""
     },
     "C0AFVNS9FEW": {
