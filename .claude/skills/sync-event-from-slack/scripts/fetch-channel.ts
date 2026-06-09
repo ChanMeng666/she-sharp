@@ -1,28 +1,43 @@
 /**
- * Dump everything the She Sharp Event Collector bot can see in a channel.
+ * Dump what the She Sharp Event Collector bot can see in a channel.
  *
  * Emits a single JSON object on stdout. Runs from the repo root and reads
  * SLACK_BOT_TOKEN from .env via dotenv.
  *
  * Usage:
- *   npx tsx .claude/skills/sync-event-from-slack/scripts/fetch-channel.ts <channelNameOrId>
+ *   # Full fetch (default — back-compatible)
+ *   npx tsx .../fetch-channel.ts <channelNameOrId>
+ *
+ *   # Incremental: only messages/threads new since a watermark ts
+ *   npx tsx .../fetch-channel.ts <channelNameOrId> --since 1717300000.123456
+ *
+ *   # Incremental using the watermark stored in the manifest for this channel
+ *   npx tsx .../fetch-channel.ts <channelNameOrId> --state
+ *
+ *   # Reuse a same-session cached payload when the channel hasn't changed
+ *   npx tsx .../fetch-channel.ts <channelNameOrId> --use-cache
  *
  * Output shape:
  * {
+ *   _meta:     { mode, since, newWatermarkTs, threadState, newCount, fromCache },
  *   channel:   { id, name, purpose, topic, num_members, created, is_archived },
- *   pinned:    [ { ts, user_id, user_name, text, files[], links[] } ],
+ *   pinned:    [ NormalizedMessage ],   // always included (canonical)
  *   bookmarks: [ { title, link, emoji, type, rank } ],
  *   users:     { [user_id]: { real_name, display_name } },
- *   messages:  [ NormalizedMessage ]
+ *   messages:  [ NormalizedMessage ]    // in incremental mode: only new/changed
  * }
  *
- * NormalizedMessage =
- *   { ts, iso, user_id, user_name, text, subtype, reactions[], files[], links[],
- *     thread: NormalizedMessage[] }
+ * `_meta.threadState` is the full current per-thread { replyCount, latestReplyTs }
+ * map — feed it (with newWatermarkTs) to update-state.ts so the next run reads
+ * only the delta. In incremental mode `messages[]` carries only new top-level
+ * messages plus any older thread that gained replies (with just its new replies).
  */
 
 import "dotenv/config";
 import { WebClient } from "@slack/web-api";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { CACHE_DIR, loadManifest, type ThreadState } from "./state-lib.ts";
 
 const token = process.env.SLACK_BOT_TOKEN;
 if (!token) {
@@ -31,11 +46,22 @@ if (!token) {
 }
 const slack = new WebClient(token);
 
-const raw = process.argv[2];
+// ---- arg parsing ----------------------------------------------------------
+const argv = process.argv.slice(2);
+const flags = new Set(argv.filter((a) => a.startsWith("--")).map((a) => a.split("=")[0]));
+const sinceFlag = argv.find((a) => a.startsWith("--since"));
+const positional = argv.filter((a) => !a.startsWith("--"));
+const raw = positional[0];
 if (!raw) {
-  console.error("Usage: fetch-channel.ts <channelNameOrId>");
+  console.error("Usage: fetch-channel.ts <channelNameOrId> [--since <ts>] [--state] [--use-cache]");
   process.exit(2);
 }
+let sinceArg: string | undefined;
+if (sinceFlag) {
+  sinceArg = sinceFlag.includes("=") ? sinceFlag.split("=")[1] : argv[argv.indexOf(sinceFlag) + 1];
+}
+const useState = flags.has("--state");
+const useCache = flags.has("--use-cache");
 
 async function resolveChannel(nameOrId: string): Promise<string> {
   if (/^[CGD][A-Z0-9]+$/i.test(nameOrId)) return nameOrId; // looks like an ID
@@ -135,18 +161,25 @@ function normalize(m: any, userName: string): NormalizedMessage {
   };
 }
 
-async function fetchThread(channelId: string, parent: NormalizedMessage, rawCount: number): Promise<void> {
+/**
+ * Fetch thread replies for a parent. When `sinceReplyTs` is given, only replies
+ * strictly newer than it are returned — this is what lets us pick up a fresh
+ * reply on an OLD thread (whose parent ts is below the top-level watermark)
+ * without re-reading the whole thread.
+ */
+async function fetchThread(
+  channelId: string,
+  parent: NormalizedMessage,
+  rawCount: number,
+  sinceReplyTs?: string,
+): Promise<void> {
   if (!rawCount || rawCount <= 0) return;
   let cursor: string | undefined;
   do {
-    const r = await slack.conversations.replies({
-      channel: channelId,
-      ts: parent.ts,
-      limit: 200,
-      cursor,
-    });
+    const r = await slack.conversations.replies({ channel: channelId, ts: parent.ts, limit: 200, cursor });
     const rest = (r.messages ?? []).slice(1); // drop parent duplicate
     for (const m of rest) {
+      if (sinceReplyTs && Number((m as any).ts) <= Number(sinceReplyTs)) continue;
       const uname = await resolveUser((m as any).user);
       parent.thread.push(normalize(m, uname));
     }
@@ -154,8 +187,46 @@ async function fetchThread(channelId: string, parent: NormalizedMessage, rawCoun
   } while (cursor);
 }
 
+function cachePath(channelId: string): string {
+  return resolve(CACHE_DIR, `${channelId}.json`);
+}
+
+/** One-message peek to learn the channel's current latest ts cheaply. */
+async function peekLatestTs(channelId: string): Promise<string> {
+  const r = await slack.conversations.history({ channel: channelId, limit: 1 });
+  return (r.messages?.[0] as any)?.ts ?? "0";
+}
+
 async function main() {
   const channelId = await resolveChannel(raw);
+
+  // Resolve the incremental watermark + prior thread state.
+  let since = sinceArg;
+  let priorThreads: Record<string, ThreadState> = {};
+  if (useState) {
+    const manifest = loadManifest();
+    const cs = manifest.channels[channelId];
+    if (cs) {
+      since = since ?? cs.watermarkTs;
+      priorThreads = cs.threads ?? {};
+    }
+  }
+  const incremental = !!since;
+
+  // Session cache: skip the full fetch when the channel hasn't moved.
+  if (useCache && existsSync(cachePath(channelId))) {
+    try {
+      const cached = JSON.parse(readFileSync(cachePath(channelId), "utf8"));
+      const latest = await peekLatestTs(channelId);
+      if (cached._meta?.newWatermarkTs === latest && !incremental) {
+        cached._meta.fromCache = true;
+        process.stdout.write(JSON.stringify(cached, null, 2));
+        return;
+      }
+    } catch {
+      /* fall through to a live fetch */
+    }
+  }
 
   // channel metadata
   const infoRes = await slack.conversations.info({ channel: channelId, include_num_members: true });
@@ -170,7 +241,7 @@ async function main() {
     is_archived: !!c?.is_archived,
   };
 
-  // pinned
+  // pinned (always — canonical regardless of watermark)
   const pinnedItems: NormalizedMessage[] = [];
   try {
     const p = await slack.pins.list({ channel: channelId });
@@ -195,7 +266,7 @@ async function main() {
     }));
   } catch {}
 
-  // full history with threads
+  // Full raw history (cheap API). Threads are expanded selectively below.
   const rawMessages: any[] = [];
   let cursor: string | undefined;
   do {
@@ -205,19 +276,67 @@ async function main() {
   } while (cursor);
   rawMessages.sort((a, b) => Number(a.ts) - Number(b.ts));
 
+  // Build the full current thread-state map (every parent that has replies),
+  // independent of what we choose to emit — the next run needs the complete map.
+  const threadState: Record<string, ThreadState> = {};
+  for (const rm of rawMessages) {
+    if ((rm.reply_count ?? 0) > 0) {
+      threadState[rm.ts] = {
+        replyCount: rm.reply_count,
+        latestReplyTs: rm.latest_reply ?? rm.ts,
+      };
+    }
+  }
+
+  const newWatermarkTs = rawMessages.length ? rawMessages[rawMessages.length - 1].ts : (since ?? "0");
+
+  // Decide which parents to emit.
   const messages: NormalizedMessage[] = [];
   for (const rm of rawMessages) {
+    const isNewTopLevel = !incremental || Number(rm.ts) > Number(since);
+    const prior = priorThreads[rm.ts];
+    const threadGrew =
+      incremental &&
+      (rm.reply_count ?? 0) > 0 &&
+      prior != null &&
+      ((rm.reply_count ?? 0) > prior.replyCount || Number(rm.latest_reply ?? 0) > Number(prior.latestReplyTs));
+
+    if (!isNewTopLevel && !threadGrew) continue;
+
     const uname = await resolveUser(rm.user);
     const n = normalize(rm, uname);
-    await fetchThread(channelId, n, rm.reply_count ?? 0);
+    // New top-level → full thread. Old-but-grown thread → only the new replies.
+    const sinceReplyTs = isNewTopLevel ? undefined : prior?.latestReplyTs;
+    await fetchThread(channelId, n, rm.reply_count ?? 0, sinceReplyTs);
     messages.push(n);
   }
 
   const users: Record<string, { real_name: string; display_name: string }> = {};
   for (const [id, v] of userCache.entries()) users[id] = v;
 
-  // stable serialization
-  process.stdout.write(JSON.stringify({ channel, pinned: pinnedItems, bookmarks, users, messages }, null, 2));
+  const payload = {
+    _meta: {
+      mode: incremental ? "incremental" : "full",
+      since: since ?? null,
+      newWatermarkTs,
+      threadState,
+      newCount: messages.length,
+      fromCache: false,
+    },
+    channel,
+    pinned: pinnedItems,
+    bookmarks,
+    users,
+    messages,
+  };
+
+  // Always refresh the session cache with the latest full/delta payload.
+  try {
+    mkdirSync(CACHE_DIR, { recursive: true });
+    writeFileSync(cachePath(channelId), JSON.stringify(payload, null, 2));
+  } catch {}
+
+  process.stdout.write(JSON.stringify(payload, null, 2));
 }
 
 main().catch((e) => {
