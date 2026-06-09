@@ -1,0 +1,2036 @@
+{
+  "version": 1,
+  "channels": {
+    "C01BAQ6ADQF": {
+      "name": "recruitment",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555703.673489",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C01DSD0HCQK": {
+      "name": "monthly-newsletter",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1780219214.503249",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C01NEKYP0CR": {
+      "name": "t-shirts",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555705.572599",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C01SU11D0G7": {
+      "name": "expo-2021-motat",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555706.583559",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C01UFNYKAGH": {
+      "name": "awards-opportunities",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555707.556409",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C020K43PBLL": {
+      "name": "events-2021-techweek-imaginezone",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555708.556449",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C025NC3QWDQ": {
+      "name": "events-2021-girl-guiding",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555709.517109",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C026C5R2QQK": {
+      "name": "expo-2021-northwest-schools",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555710.521179",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C033KNWMTGD": {
+      "name": "podcast",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555711.490919",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C0342CMEV7B": {
+      "name": "design-brand",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555712.446479",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C03J6C08WQL": {
+      "name": "team-leaves",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1780866680.849279",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C03KYCN4Z6C": {
+      "name": "expo-2022-tech22",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555714.364369",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C0438BZ7DL6": {
+      "name": "gifts",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1780559027.001549",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C0476MCR9B2": {
+      "name": "expo-2022-motat",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555716.285009",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C04P6N2SZ0D": {
+      "name": "event-ambassadors",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555717.226889",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C04PN9L7UG1": {
+      "name": "new-ambassadors-2023",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555718.197049",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C051VLT4TT2": {
+      "name": "events-planning",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555719.170639",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C052DTYUVUZ": {
+      "name": "event-techweek-otahuhucollege",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555720.113049",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C053P3ZRU64": {
+      "name": "twnz-june-21-tbc",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555721.086149",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C058E3Q065S": {
+      "name": "web-revamp-content",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555722.150819",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C05DM7PRWM7": {
+      "name": "mentorships",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1780862418.898089",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C05KPDDFT9D": {
+      "name": "website-team",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1780274274.022849",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C05LRKE5UCF": {
+      "name": "events-2023-september-twnz",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "from-burnout-to-balance",
+            "eventId": 86
+          }
+        ]
+      },
+      "watermarkTs": "0",
+      "threads": {},
+      "fingerprint": "sha256:d5169b40123be1bfff3172ff6c57e167991b02a958e088f8061bbdbc586f9397",
+      "lastSyncedAt": "2026-06-09T01:45:17.341Z",
+      "lastSyncedCommit": ""
+    },
+    "C05LZH9ET38": {
+      "name": "events-2023-october-aut-school",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555725.120439",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C05MVTQ59BJ": {
+      "name": "events-2023-google-educator-november",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555726.122139",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C05PDCPJD1N": {
+      "name": "socialmedia",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555727.098769",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C05S10ENU4U": {
+      "name": "school-and-google-events-committee",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555728.028599",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C064QA7SQAV": {
+      "name": "events-2024-feb-fiserv-hasini",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555728.996989",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C06L3HKCRD5": {
+      "name": "pr-june-digital-boost-event-shesharp-intro",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555729.960279",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C06NMR161AS": {
+      "name": "events-2024-july-fisherandpaykel-aihackathon",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555730.933779",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C06NRB1Q8KF": {
+      "name": "gridakl-sharedoffice-for-shesharp",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555731.901809",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C06Q986DV": {
+      "name": "random",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555693.918789",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.085Z",
+      "lastSyncedCommit": ""
+    },
+    "C06Q9FJNR": {
+      "name": "general",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1780924736.060429",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C06QBKPK8": {
+      "name": "team-meetings",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1780840048.907059",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C0743UGNNMU": {
+      "name": "startupweekend-auckland",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555732.846049",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C075ANENL59": {
+      "name": "security-awards-2024",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555733.806359",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C076RJ2LHEC": {
+      "name": "events-2024-august-fonterra",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555734.924089",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C077TLWSVE0": {
+      "name": "event-2024-august-aihackthon-academyex",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555735.865789",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C07FKTCU98X": {
+      "name": "announcements",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555736.909559",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C07G4CN070U": {
+      "name": "events-2024-november-google",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555737.884229",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C07G55Q0P1A": {
+      "name": "events-october-10th-anniversary",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555738.836449",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C07K2J47C48": {
+      "name": "events-2024-november-hcl",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555739.776799",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C07KH9HM2PP": {
+      "name": "events-2024-sep--summeroftech",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555740.754689",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C07MX2A9LKA": {
+      "name": "catering-10thanniv-and-google",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555741.834869",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C083VSX5W": {
+      "name": "website-admin",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555696.901349",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C08EEQC49RD": {
+      "name": "event-iwd-march-2025",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555742.937039",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C08GDT7CW23": {
+      "name": "event-myob-techwerk-may-2025",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555743.912699",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C08GMGCQHQA": {
+      "name": "event-iamremarkable-april-2025",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555744.926479",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C08GULKDVBM": {
+      "name": "event-myob-may-2025",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555746.328899",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C08UXMZTDC0": {
+      "name": "event-ethnic-conference-june-2025",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555747.336369",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C092BSZGPJB": {
+      "name": "event-xero-oct-2025",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555748.359119",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C092LHWGLG6": {
+      "name": "event-hcltech-nov21-2025",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555749.230179",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C092QQP6JQL": {
+      "name": "event-fonterra-sept-2025",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555750.232799",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C092YTH4B6V": {
+      "name": "event-techbabes-industry-july-2025",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555751.195599",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C093EN4FF9N": {
+      "name": "event-ai-forum-hackathon-aug-2025",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1780924736.203079",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C0959LH63QQ": {
+      "name": "funding-applications",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1780866105.771489",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C096M3GC3BL": {
+      "name": "event-vector-nov12-2025",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555754.321859",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C098CCM2F2T": {
+      "name": "she-sharp-policies",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555755.372069",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C0ACA3MV0R4": {
+      "name": "people",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1779859197.046229",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C0ADRAGNTTQ": {
+      "name": "event-academyex-iwd2026-6march-2026",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "she-sharp-and-academyex-international-womens-day-2026",
+            "eventId": 85
+          }
+        ]
+      },
+      "watermarkTs": "1773305096.205889",
+      "threads": {
+        "1770802912.391369": {
+          "replyCount": 1,
+          "latestReplyTs": "1770806341.722929"
+        },
+        "1770858772.715509": {
+          "replyCount": 4,
+          "latestReplyTs": "1770890605.551829"
+        },
+        "1770885289.354019": {
+          "replyCount": 3,
+          "latestReplyTs": "1770888758.686749"
+        },
+        "1770895038.479979": {
+          "replyCount": 1,
+          "latestReplyTs": "1770913646.353079"
+        },
+        "1770923211.807689": {
+          "replyCount": 1,
+          "latestReplyTs": "1770924585.600909"
+        },
+        "1770923403.698189": {
+          "replyCount": 5,
+          "latestReplyTs": "1770942039.503719"
+        },
+        "1770951016.536869": {
+          "replyCount": 3,
+          "latestReplyTs": "1770971935.615689"
+        },
+        "1770952273.320639": {
+          "replyCount": 13,
+          "latestReplyTs": "1771037749.765079"
+        },
+        "1770953876.903089": {
+          "replyCount": 2,
+          "latestReplyTs": "1770963631.300259"
+        },
+        "1770963782.858539": {
+          "replyCount": 1,
+          "latestReplyTs": "1770965091.252299"
+        },
+        "1770966525.023069": {
+          "replyCount": 11,
+          "latestReplyTs": "1770973026.392129"
+        },
+        "1771233828.251159": {
+          "replyCount": 1,
+          "latestReplyTs": "1771297316.928949"
+        },
+        "1771234935.437199": {
+          "replyCount": 1,
+          "latestReplyTs": "1771297011.498319"
+        },
+        "1771319131.734249": {
+          "replyCount": 22,
+          "latestReplyTs": "1772442944.384239"
+        },
+        "1771390776.716279": {
+          "replyCount": 21,
+          "latestReplyTs": "1771562309.490409"
+        },
+        "1771470137.179469": {
+          "replyCount": 3,
+          "latestReplyTs": "1771480473.809229"
+        },
+        "1771481611.485089": {
+          "replyCount": 2,
+          "latestReplyTs": "1771482187.708839"
+        },
+        "1771482300.984769": {
+          "replyCount": 5,
+          "latestReplyTs": "1771551789.169749"
+        },
+        "1771541178.998969": {
+          "replyCount": 1,
+          "latestReplyTs": "1771541245.764279"
+        },
+        "1771541468.645889": {
+          "replyCount": 3,
+          "latestReplyTs": "1771543182.808329"
+        },
+        "1771541698.190869": {
+          "replyCount": 1,
+          "latestReplyTs": "1771541738.090319"
+        },
+        "1771552322.085589": {
+          "replyCount": 3,
+          "latestReplyTs": "1771666515.505229"
+        },
+        "1771562018.569849": {
+          "replyCount": 1,
+          "latestReplyTs": "1771569433.010099"
+        },
+        "1771562131.961389": {
+          "replyCount": 2,
+          "latestReplyTs": "1771566867.632429"
+        },
+        "1771733550.280549": {
+          "replyCount": 1,
+          "latestReplyTs": "1771735170.036479"
+        },
+        "1771733571.216469": {
+          "replyCount": 1,
+          "latestReplyTs": "1771736670.597659"
+        },
+        "1771808100.792069": {
+          "replyCount": 13,
+          "latestReplyTs": "1771922489.819389"
+        },
+        "1771810278.069389": {
+          "replyCount": 13,
+          "latestReplyTs": "1771918823.506189"
+        },
+        "1771836680.157449": {
+          "replyCount": 1,
+          "latestReplyTs": "1771870240.080869"
+        },
+        "1771898675.353949": {
+          "replyCount": 3,
+          "latestReplyTs": "1772065129.645209"
+        },
+        "1771902626.334989": {
+          "replyCount": 5,
+          "latestReplyTs": "1771905419.621089"
+        },
+        "1771914495.231939": {
+          "replyCount": 5,
+          "latestReplyTs": "1771916531.061059"
+        },
+        "1771922979.356349": {
+          "replyCount": 2,
+          "latestReplyTs": "1771924551.574589"
+        },
+        "1771990801.414899": {
+          "replyCount": 2,
+          "latestReplyTs": "1771992578.952679"
+        },
+        "1772041680.094209": {
+          "replyCount": 2,
+          "latestReplyTs": "1772043118.542339"
+        },
+        "1772049797.534839": {
+          "replyCount": 6,
+          "latestReplyTs": "1772050400.050999"
+        },
+        "1772067886.667479": {
+          "replyCount": 2,
+          "latestReplyTs": "1772404758.649209"
+        },
+        "1772068038.430849": {
+          "replyCount": 13,
+          "latestReplyTs": "1772092308.679989"
+        },
+        "1772069970.626189": {
+          "replyCount": 3,
+          "latestReplyTs": "1772070027.882269"
+        },
+        "1772091617.355749": {
+          "replyCount": 2,
+          "latestReplyTs": "1772092158.182789"
+        },
+        "1772320863.476169": {
+          "replyCount": 1,
+          "latestReplyTs": "1772443825.182269"
+        },
+        "1772360483.874039": {
+          "replyCount": 14,
+          "latestReplyTs": "1772530667.341289"
+        },
+        "1772394077.337549": {
+          "replyCount": 9,
+          "latestReplyTs": "1772404312.736109"
+        },
+        "1772406399.111919": {
+          "replyCount": 1,
+          "latestReplyTs": "1772496840.012369"
+        },
+        "1772431486.563589": {
+          "replyCount": 30,
+          "latestReplyTs": "1772708400.340269"
+        },
+        "1772435357.815889": {
+          "replyCount": 1,
+          "latestReplyTs": "1773047067.105899"
+        },
+        "1772444413.133369": {
+          "replyCount": 14,
+          "latestReplyTs": "1772573542.114169"
+        },
+        "1772490278.493959": {
+          "replyCount": 2,
+          "latestReplyTs": "1772490493.677579"
+        },
+        "1772498020.256439": {
+          "replyCount": 1,
+          "latestReplyTs": "1772500726.842899"
+        },
+        "1772569259.617879": {
+          "replyCount": 4,
+          "latestReplyTs": "1772589988.431789"
+        },
+        "1772582755.665569": {
+          "replyCount": 3,
+          "latestReplyTs": "1772582893.868699"
+        },
+        "1772608491.420389": {
+          "replyCount": 4,
+          "latestReplyTs": "1772668369.440279"
+        },
+        "1772657973.220499": {
+          "replyCount": 9,
+          "latestReplyTs": "1772686462.779939"
+        },
+        "1772662560.130209": {
+          "replyCount": 9,
+          "latestReplyTs": "1772705922.930179"
+        },
+        "1772662901.743029": {
+          "replyCount": 7,
+          "latestReplyTs": "1772686391.654179"
+        },
+        "1772740921.993229": {
+          "replyCount": 2,
+          "latestReplyTs": "1772743255.104369"
+        },
+        "1772884905.369649": {
+          "replyCount": 6,
+          "latestReplyTs": "1772924980.453889"
+        },
+        "1772933607.405409": {
+          "replyCount": 2,
+          "latestReplyTs": "1772944172.094069"
+        }
+      },
+      "fingerprint": "sha256:81501051a00fec7bf479aa4617f3d4e862736e73424b4cbaff457da017989dd6",
+      "lastSyncedAt": "2026-06-09T01:01:18.088Z",
+      "lastSyncedCommit": ""
+    },
+    "C0ADWT94QTX": {
+      "name": "ambassador-and-volunteer-application",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555757.351769",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C0AERNZ1GKH": {
+      "name": "event-msd-series-2026",
+      "type": "event",
+      "mapping": {
+        "kind": "skip",
+        "reason": "umbrella planning channel; the 4 monthly her-waka events are synced from their own event-msd-* channels"
+      },
+      "watermarkTs": "1777003016.597469",
+      "threads": {
+        "1771485835.991949": {
+          "replyCount": 2,
+          "latestReplyTs": "1771562407.338569"
+        },
+        "1771553308.779239": {
+          "replyCount": 6,
+          "latestReplyTs": "1771709331.256829"
+        },
+        "1771832229.875289": {
+          "replyCount": 1,
+          "latestReplyTs": "1771832266.798879"
+        },
+        "1771834608.338249": {
+          "replyCount": 2,
+          "latestReplyTs": "1771982569.509759"
+        },
+        "1772095058.284139": {
+          "replyCount": 6,
+          "latestReplyTs": "1772257659.601909"
+        },
+        "1772442005.820669": {
+          "replyCount": 2,
+          "latestReplyTs": "1772442308.486479"
+        },
+        "1772478297.628199": {
+          "replyCount": 4,
+          "latestReplyTs": "1772523541.583709"
+        },
+        "1773107667.241589": {
+          "replyCount": 1,
+          "latestReplyTs": "1773194148.222939"
+        },
+        "1773732246.296349": {
+          "replyCount": 1,
+          "latestReplyTs": "1773792287.020819"
+        }
+      },
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:04:39.947Z",
+      "lastSyncedCommit": ""
+    },
+    "C0AFFS33FRR": {
+      "name": "msd-proposal",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555758.311579",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C0AFP8Q9T7D": {
+      "name": "event--mind-coach-april-2026",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "she-sharp-candice-murray-own-your-energy",
+            "eventId": 87
+          }
+        ]
+      },
+      "watermarkTs": "1777003028.579359",
+      "threads": {
+        "1771485411.086039": {
+          "replyCount": 3,
+          "latestReplyTs": "1773714921.331259"
+        },
+        "1771491370.091099": {
+          "replyCount": 1,
+          "latestReplyTs": "1771492676.773499"
+        },
+        "1771545108.213559": {
+          "replyCount": 2,
+          "latestReplyTs": "1771545331.082819"
+        },
+        "1771545232.277629": {
+          "replyCount": 5,
+          "latestReplyTs": "1771558584.170759"
+        },
+        "1771566813.089589": {
+          "replyCount": 2,
+          "latestReplyTs": "1771646728.137709"
+        },
+        "1771668784.128249": {
+          "replyCount": 4,
+          "latestReplyTs": "1771670011.088369"
+        },
+        "1771918666.784439": {
+          "replyCount": 1,
+          "latestReplyTs": "1771918910.312799"
+        },
+        "1771918677.193789": {
+          "replyCount": 2,
+          "latestReplyTs": "1771986121.936219"
+        },
+        "1771918722.040229": {
+          "replyCount": 8,
+          "latestReplyTs": "1772513449.426619"
+        },
+        "1772245534.201879": {
+          "replyCount": 4,
+          "latestReplyTs": "1772520561.730659"
+        },
+        "1772245573.486769": {
+          "replyCount": 13,
+          "latestReplyTs": "1772741809.392859"
+        },
+        "1772531894.488519": {
+          "replyCount": 5,
+          "latestReplyTs": "1772572150.997999"
+        },
+        "1772658727.082229": {
+          "replyCount": 2,
+          "latestReplyTs": "1772935389.592179"
+        },
+        "1772671146.372529": {
+          "replyCount": 2,
+          "latestReplyTs": "1772696133.053419"
+        },
+        "1773007742.526129": {
+          "replyCount": 7,
+          "latestReplyTs": "1774949049.571689"
+        },
+        "1773007836.916429": {
+          "replyCount": 4,
+          "latestReplyTs": "1773176611.302309"
+        },
+        "1773204369.871729": {
+          "replyCount": 2,
+          "latestReplyTs": "1773456037.202099"
+        },
+        "1773544341.194559": {
+          "replyCount": 8,
+          "latestReplyTs": "1773644941.230879"
+        },
+        "1773712069.790989": {
+          "replyCount": 4,
+          "latestReplyTs": "1773732405.910179"
+        },
+        "1773714793.405759": {
+          "replyCount": 32,
+          "latestReplyTs": "1773803394.324279"
+        },
+        "1773724476.086649": {
+          "replyCount": 1,
+          "latestReplyTs": "1773724554.148639"
+        },
+        "1773736633.297899": {
+          "replyCount": 13,
+          "latestReplyTs": "1773809267.881549"
+        },
+        "1773803625.603529": {
+          "replyCount": 16,
+          "latestReplyTs": "1773955830.093029"
+        },
+        "1773995516.171689": {
+          "replyCount": 10,
+          "latestReplyTs": "1774052367.044289"
+        },
+        "1774507036.452419": {
+          "replyCount": 12,
+          "latestReplyTs": "1775034657.180919"
+        },
+        "1774509168.483929": {
+          "replyCount": 3,
+          "latestReplyTs": "1774949116.349519"
+        },
+        "1774782557.038669": {
+          "replyCount": 5,
+          "latestReplyTs": "1774835928.045579"
+        },
+        "1775255842.061129": {
+          "replyCount": 3,
+          "latestReplyTs": "1775259509.759729"
+        },
+        "1775448484.122609": {
+          "replyCount": 3,
+          "latestReplyTs": "1775449012.352519"
+        },
+        "1775543749.072209": {
+          "replyCount": 1,
+          "latestReplyTs": "1775783334.238919"
+        },
+        "1775694234.605979": {
+          "replyCount": 20,
+          "latestReplyTs": "1775865076.822589"
+        },
+        "1775760632.450649": {
+          "replyCount": 2,
+          "latestReplyTs": "1775804546.836349"
+        },
+        "1775777871.496089": {
+          "replyCount": 1,
+          "latestReplyTs": "1776025046.014019"
+        },
+        "1775987069.629419": {
+          "replyCount": 35,
+          "latestReplyTs": "1776214831.995359"
+        },
+        "1776068529.958559": {
+          "replyCount": 1,
+          "latestReplyTs": "1776070973.672059"
+        },
+        "1776068674.001419": {
+          "replyCount": 1,
+          "latestReplyTs": "1776068707.282429"
+        },
+        "1776115230.801839": {
+          "replyCount": 2,
+          "latestReplyTs": "1776116116.321959"
+        },
+        "1776216215.878269": {
+          "replyCount": 1,
+          "latestReplyTs": "1776277420.136219"
+        },
+        "1776221313.109099": {
+          "replyCount": 1,
+          "latestReplyTs": "1776222803.233849"
+        },
+        "1776238149.126309": {
+          "replyCount": 1,
+          "latestReplyTs": "1776238579.077909"
+        },
+        "1776238165.146599": {
+          "replyCount": 2,
+          "latestReplyTs": "1776239593.368329"
+        },
+        "1776238284.378559": {
+          "replyCount": 1,
+          "latestReplyTs": "1776238534.492629"
+        },
+        "1776246886.489339": {
+          "replyCount": 5,
+          "latestReplyTs": "1776277384.387819"
+        },
+        "1776673347.235589": {
+          "replyCount": 3,
+          "latestReplyTs": "1776678916.236419"
+        },
+        "1776759576.568029": {
+          "replyCount": 4,
+          "latestReplyTs": "1776921258.707979"
+        }
+      },
+      "fingerprint": "sha256:f22eb4a17e71a9a52d0507d54819409ce71072125e95414cd37a242e41281a97",
+      "lastSyncedAt": "2026-06-09T01:45:13.080Z",
+      "lastSyncedCommit": ""
+    },
+    "C0AFVNS9FEW": {
+      "name": "event-msd-march-2026",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "her-waka",
+            "eventId": 88
+          }
+        ]
+      },
+      "watermarkTs": "1777003052.899939",
+      "threads": {
+        "1771560819.539109": {
+          "replyCount": 2,
+          "latestReplyTs": "1771561910.580539"
+        },
+        "1771561857.466479": {
+          "replyCount": 1,
+          "latestReplyTs": "1771561983.966569"
+        },
+        "1772177978.710129": {
+          "replyCount": 3,
+          "latestReplyTs": "1772438652.138699"
+        },
+        "1772227053.464039": {
+          "replyCount": 3,
+          "latestReplyTs": "1772348958.525089"
+        },
+        "1772439533.653349": {
+          "replyCount": 6,
+          "latestReplyTs": "1773035524.296439"
+        },
+        "1772441013.960519": {
+          "replyCount": 1,
+          "latestReplyTs": "1772441184.758729"
+        },
+        "1772477016.823549": {
+          "replyCount": 2,
+          "latestReplyTs": "1772521954.040419"
+        },
+        "1772524876.023619": {
+          "replyCount": 4,
+          "latestReplyTs": "1773035214.196599"
+        },
+        "1772604292.154949": {
+          "replyCount": 2,
+          "latestReplyTs": "1772762211.677369"
+        },
+        "1773041543.499849": {
+          "replyCount": 1,
+          "latestReplyTs": "1773041635.851189"
+        },
+        "1773050233.470869": {
+          "replyCount": 1,
+          "latestReplyTs": "1773055728.653909"
+        },
+        "1773168410.436359": {
+          "replyCount": 1,
+          "latestReplyTs": "1773208869.083599"
+        },
+        "1773312371.303459": {
+          "replyCount": 1,
+          "latestReplyTs": "1773340710.194699"
+        },
+        "1773389660.192199": {
+          "replyCount": 1,
+          "latestReplyTs": "1773396149.824519"
+        },
+        "1773393206.142309": {
+          "replyCount": 1,
+          "latestReplyTs": "1773396178.097869"
+        },
+        "1773426604.636949": {
+          "replyCount": 4,
+          "latestReplyTs": "1773478941.248759"
+        },
+        "1773648393.678319": {
+          "replyCount": 3,
+          "latestReplyTs": "1773814725.828919"
+        },
+        "1773714219.199949": {
+          "replyCount": 7,
+          "latestReplyTs": "1773732212.084509"
+        },
+        "1773815017.232259": {
+          "replyCount": 9,
+          "latestReplyTs": "1773819632.702709"
+        },
+        "1773903662.995899": {
+          "replyCount": 2,
+          "latestReplyTs": "1773966074.018179"
+        },
+        "1773986591.018619": {
+          "replyCount": 3,
+          "latestReplyTs": "1774062599.303959"
+        },
+        "1773997306.049579": {
+          "replyCount": 3,
+          "latestReplyTs": "1774152199.832869"
+        },
+        "1774294988.791139": {
+          "replyCount": 4,
+          "latestReplyTs": "1774332314.271849"
+        },
+        "1774317381.369449": {
+          "replyCount": 1,
+          "latestReplyTs": "1774335582.089799"
+        },
+        "1774320300.837249": {
+          "replyCount": 1,
+          "latestReplyTs": "1774323055.044299"
+        },
+        "1774321464.476379": {
+          "replyCount": 1,
+          "latestReplyTs": "1774323044.098419"
+        },
+        "1774322541.861379": {
+          "replyCount": 4,
+          "latestReplyTs": "1774324278.687359"
+        },
+        "1774323140.006319": {
+          "replyCount": 3,
+          "latestReplyTs": "1774328394.211599"
+        },
+        "1774330787.945999": {
+          "replyCount": 3,
+          "latestReplyTs": "1774337203.954189"
+        },
+        "1774336363.623409": {
+          "replyCount": 7,
+          "latestReplyTs": "1774343286.910369"
+        },
+        "1774415489.994669": {
+          "replyCount": 8,
+          "latestReplyTs": "1774508681.220119"
+        },
+        "1774430215.906659": {
+          "replyCount": 1,
+          "latestReplyTs": "1774493877.064439"
+        }
+      },
+      "fingerprint": "sha256:cfacdffd15546fe05252d02aa5ef78bd53120e392585ade87ecfb110d18a10c9",
+      "lastSyncedAt": "2026-06-09T01:02:38.619Z",
+      "lastSyncedCommit": ""
+    },
+    "C0AFX3C4H5Z": {
+      "name": "event-msd-may5-2026",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "her-waka-may-2026",
+            "eventId": 90
+          }
+        ]
+      },
+      "watermarkTs": "1779780032.232479",
+      "threads": {
+        "1775205252.793959": {
+          "replyCount": 6,
+          "latestReplyTs": "1775518015.318079"
+        },
+        "1775205383.871309": {
+          "replyCount": 1,
+          "latestReplyTs": "1775463582.552149"
+        },
+        "1775545753.642589": {
+          "replyCount": 2,
+          "latestReplyTs": "1775760236.781859"
+        },
+        "1775545920.862199": {
+          "replyCount": 1,
+          "latestReplyTs": "1777881517.115379"
+        },
+        "1775556412.777789": {
+          "replyCount": 4,
+          "latestReplyTs": "1775622723.553089"
+        },
+        "1776931882.550009": {
+          "replyCount": 1,
+          "latestReplyTs": "1776935965.995299"
+        },
+        "1777101261.825189": {
+          "replyCount": 3,
+          "latestReplyTs": "1777242910.027299"
+        },
+        "1777356272.008239": {
+          "replyCount": 5,
+          "latestReplyTs": "1777802182.866699"
+        },
+        "1777357148.483999": {
+          "replyCount": 6,
+          "latestReplyTs": "1777365179.086279"
+        },
+        "1777494327.809179": {
+          "replyCount": 1,
+          "latestReplyTs": "1777497434.693389"
+        },
+        "1777615964.891169": {
+          "replyCount": 1,
+          "latestReplyTs": "1777682971.012749"
+        },
+        "1777802238.140469": {
+          "replyCount": 3,
+          "latestReplyTs": "1777877163.506209"
+        },
+        "1777851399.093719": {
+          "replyCount": 6,
+          "latestReplyTs": "1777880015.922369"
+        },
+        "1777883360.527559": {
+          "replyCount": 1,
+          "latestReplyTs": "1777888243.092839"
+        },
+        "1777883771.069549": {
+          "replyCount": 1,
+          "latestReplyTs": "1777887837.209509"
+        },
+        "1778921699.489359": {
+          "replyCount": 1,
+          "latestReplyTs": "1778967265.229669"
+        }
+      },
+      "fingerprint": "sha256:8c59bdedb78295ed9aa11565a91afaae7f319b47b7f4c9826adede94d4ef7e15",
+      "lastSyncedAt": "2026-06-09T01:03:23.528Z",
+      "lastSyncedCommit": ""
+    },
+    "C0AFZAW474L": {
+      "name": "event-security-xero-october-2026",
+      "type": "event",
+      "mapping": {
+        "kind": "skip",
+        "reason": "insufficient data (only a date-poll message, no confirmed date/speaker/poster)"
+      },
+      "watermarkTs": "1777003085.752199",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:04:57.000Z",
+      "lastSyncedCommit": ""
+    },
+    "C0AG1BM4UMU": {
+      "name": "event-msd-april7--2026",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "her-waka-april-2026",
+            "eventId": 89
+          }
+        ]
+      },
+      "watermarkTs": "1777003062.810939",
+      "threads": {
+        "1773209127.142309": {
+          "replyCount": 3,
+          "latestReplyTs": "1773212895.752619"
+        },
+        "1773776818.690179": {
+          "replyCount": 1,
+          "latestReplyTs": "1773790056.177569"
+        },
+        "1773815860.826359": {
+          "replyCount": 8,
+          "latestReplyTs": "1774228004.130539"
+        },
+        "1774512833.173639": {
+          "replyCount": 6,
+          "latestReplyTs": "1774735818.751149"
+        },
+        "1774517303.968159": {
+          "replyCount": 2,
+          "latestReplyTs": "1774559604.837189"
+        },
+        "1774637811.024419": {
+          "replyCount": 3,
+          "latestReplyTs": "1774647333.953929"
+        },
+        "1774676278.263309": {
+          "replyCount": 1,
+          "latestReplyTs": "1774677652.934819"
+        },
+        "1775202401.468139": {
+          "replyCount": 6,
+          "latestReplyTs": "1775273281.347939"
+        },
+        "1775284952.916389": {
+          "replyCount": 2,
+          "latestReplyTs": "1775448912.726179"
+        },
+        "1775326277.979789": {
+          "replyCount": 1,
+          "latestReplyTs": "1775426905.325529"
+        },
+        "1775456771.936869": {
+          "replyCount": 5,
+          "latestReplyTs": "1775550518.079609"
+        },
+        "1775559334.960489": {
+          "replyCount": 4,
+          "latestReplyTs": "1775639444.012529"
+        },
+        "1775643609.533659": {
+          "replyCount": 1,
+          "latestReplyTs": "1775724962.714239"
+        },
+        "1775684965.522279": {
+          "replyCount": 3,
+          "latestReplyTs": "1775793277.387929"
+        }
+      },
+      "fingerprint": "sha256:23e7954ddefb145350642bdd7cf5196d6ae1e2784a2a331f60d53229f4b52b99",
+      "lastSyncedAt": "2026-06-09T01:03:00.524Z",
+      "lastSyncedCommit": ""
+    },
+    "C0AGGCHG2E5": {
+      "name": "event-msd-june2-2026",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "her-waka-june-2026",
+            "eventId": 92
+          }
+        ]
+      },
+      "watermarkTs": "1780827125.561969",
+      "threads": {
+        "1772435914.741019": {
+          "replyCount": 8,
+          "latestReplyTs": "1772439459.131219"
+        },
+        "1773722069.734599": {
+          "replyCount": 5,
+          "latestReplyTs": "1774301480.335739"
+        },
+        "1776844564.149659": {
+          "replyCount": 3,
+          "latestReplyTs": "1776932389.689649"
+        },
+        "1776847764.876049": {
+          "replyCount": 3,
+          "latestReplyTs": "1777020969.588849"
+        },
+        "1776984678.519179": {
+          "replyCount": 11,
+          "latestReplyTs": "1777756508.272539"
+        },
+        "1777536410.819339": {
+          "replyCount": 2,
+          "latestReplyTs": "1777574702.482269"
+        },
+        "1778055606.125859": {
+          "replyCount": 16,
+          "latestReplyTs": "1779303720.593039"
+        },
+        "1779771481.636889": {
+          "replyCount": 2,
+          "latestReplyTs": "1779780298.968629"
+        },
+        "1779860198.863559": {
+          "replyCount": 3,
+          "latestReplyTs": "1779868327.376429"
+        },
+        "1780025594.700179": {
+          "replyCount": 4,
+          "latestReplyTs": "1780112674.285849"
+        },
+        "1780119292.199919": {
+          "replyCount": 1,
+          "latestReplyTs": "1780122521.906129"
+        },
+        "1780827125.561969": {
+          "replyCount": 1,
+          "latestReplyTs": "1780858492.643809"
+        }
+      },
+      "fingerprint": "sha256:7dfce04f58c7ff901430c9bf5bd0b2ff0ecef000220d990205494286717bc818",
+      "lastSyncedAt": "2026-06-09T01:03:44.587Z",
+      "lastSyncedCommit": ""
+    },
+    "C0AGVRL0G5A": {
+      "name": "contact-form-notifications",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555759.275749",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C0AQS8K2FQQ": {
+      "name": "event-peyvand-academy-13june-and-20june",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "peyvand-academy-13-june-2026",
+            "eventId": 93
+          },
+          {
+            "slug": "peyvand-academy-20-june-2026",
+            "eventId": 94
+          }
+        ]
+      },
+      "watermarkTs": "1780964820.674639",
+      "threads": {
+        "1774947805.203089": {
+          "replyCount": 3,
+          "latestReplyTs": "1774947949.360279"
+        },
+        "1777430630.488599": {
+          "replyCount": 3,
+          "latestReplyTs": "1777525587.040119"
+        },
+        "1777578629.693419": {
+          "replyCount": 26,
+          "latestReplyTs": "1778488845.086719"
+        },
+        "1777584692.654029": {
+          "replyCount": 1,
+          "latestReplyTs": "1777584976.000529"
+        }
+      },
+      "fingerprint": "sha256:bfefac7f3c9156ec3681b91839a1bbdf805add2ebda875fe9c4b78b39abd878a",
+      "lastSyncedAt": "2026-06-09T01:04:19.973Z",
+      "lastSyncedCommit": ""
+    },
+    "C0AS0KW8KQX": {
+      "name": "event-aut-linkedin-15-may-2026",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "making-linkedin-work-for-you-with-stuart-little",
+            "eventId": 91
+          }
+        ]
+      },
+      "watermarkTs": "1779428054.318289",
+      "threads": {
+        "1776070391.702869": {
+          "replyCount": 1,
+          "latestReplyTs": "1776070426.053799"
+        },
+        "1776239880.109219": {
+          "replyCount": 1,
+          "latestReplyTs": "1776241918.680709"
+        },
+        "1776243998.201329": {
+          "replyCount": 5,
+          "latestReplyTs": "1776301164.267739"
+        },
+        "1776673830.045039": {
+          "replyCount": 2,
+          "latestReplyTs": "1776675673.212799"
+        },
+        "1776728910.766859": {
+          "replyCount": 4,
+          "latestReplyTs": "1776742207.762539"
+        },
+        "1776729570.161889": {
+          "replyCount": 3,
+          "latestReplyTs": "1776733792.570019"
+        },
+        "1776747026.940259": {
+          "replyCount": 2,
+          "latestReplyTs": "1776752128.215479"
+        },
+        "1776795827.703399": {
+          "replyCount": 3,
+          "latestReplyTs": "1776819598.612029"
+        },
+        "1776832797.181209": {
+          "replyCount": 10,
+          "latestReplyTs": "1776871084.018219"
+        },
+        "1776841076.890799": {
+          "replyCount": 5,
+          "latestReplyTs": "1776849506.943239"
+        },
+        "1776852168.681359": {
+          "replyCount": 4,
+          "latestReplyTs": "1776883468.058809"
+        },
+        "1776865647.944489": {
+          "replyCount": 3,
+          "latestReplyTs": "1776938886.112139"
+        },
+        "1776865848.002149": {
+          "replyCount": 9,
+          "latestReplyTs": "1777021583.236659"
+        },
+        "1777016063.241229": {
+          "replyCount": 16,
+          "latestReplyTs": "1777083041.735039"
+        },
+        "1777020189.072409": {
+          "replyCount": 2,
+          "latestReplyTs": "1777020635.433869"
+        },
+        "1777020730.885399": {
+          "replyCount": 2,
+          "latestReplyTs": "1777517552.924789"
+        },
+        "1777068885.895279": {
+          "replyCount": 2,
+          "latestReplyTs": "1777082363.480859"
+        },
+        "1777401751.473289": {
+          "replyCount": 1,
+          "latestReplyTs": "1777403843.242359"
+        },
+        "1777536028.927039": {
+          "replyCount": 3,
+          "latestReplyTs": "1777538335.786979"
+        },
+        "1777620480.769019": {
+          "replyCount": 2,
+          "latestReplyTs": "1777621013.389989"
+        },
+        "1777849244.767939": {
+          "replyCount": 4,
+          "latestReplyTs": "1777850179.995819"
+        },
+        "1777868184.593419": {
+          "replyCount": 1,
+          "latestReplyTs": "1777869988.435129"
+        },
+        "1777883893.741519": {
+          "replyCount": 4,
+          "latestReplyTs": "1777949610.411469"
+        },
+        "1777884452.268369": {
+          "replyCount": 4,
+          "latestReplyTs": "1778487066.194029"
+        },
+        "1777934551.836859": {
+          "replyCount": 2,
+          "latestReplyTs": "1777935633.328539"
+        },
+        "1778053546.884649": {
+          "replyCount": 6,
+          "latestReplyTs": "1778055897.514119"
+        },
+        "1778199590.840949": {
+          "replyCount": 3,
+          "latestReplyTs": "1778299108.468659"
+        },
+        "1778419822.214859": {
+          "replyCount": 23,
+          "latestReplyTs": "1778759470.469629"
+        },
+        "1778468876.643389": {
+          "replyCount": 3,
+          "latestReplyTs": "1778545133.155759"
+        },
+        "1778496295.002169": {
+          "replyCount": 1,
+          "latestReplyTs": "1778547605.783629"
+        },
+        "1778548095.528139": {
+          "replyCount": 6,
+          "latestReplyTs": "1778548895.436869"
+        },
+        "1778548993.470659": {
+          "replyCount": 4,
+          "latestReplyTs": "1778670491.878359"
+        },
+        "1778570158.024829": {
+          "replyCount": 1,
+          "latestReplyTs": "1778571105.706469"
+        },
+        "1778576862.546019": {
+          "replyCount": 3,
+          "latestReplyTs": "1778612556.345759"
+        },
+        "1778576983.021339": {
+          "replyCount": 10,
+          "latestReplyTs": "1778714811.498369"
+        },
+        "1778578684.520299": {
+          "replyCount": 1,
+          "latestReplyTs": "1778578878.141199"
+        },
+        "1778613043.246489": {
+          "replyCount": 5,
+          "latestReplyTs": "1778619478.418339"
+        },
+        "1778655744.230619": {
+          "replyCount": 2,
+          "latestReplyTs": "1778655875.835519"
+        },
+        "1778667244.223429": {
+          "replyCount": 1,
+          "latestReplyTs": "1778696265.030829"
+        },
+        "1778725230.430889": {
+          "replyCount": 3,
+          "latestReplyTs": "1778734807.796759"
+        },
+        "1778823149.145029": {
+          "replyCount": 2,
+          "latestReplyTs": "1778827242.156589"
+        },
+        "1778832885.941149": {
+          "replyCount": 2,
+          "latestReplyTs": "1779670928.300709"
+        },
+        "1778835269.506499": {
+          "replyCount": 1,
+          "latestReplyTs": "1778835325.884229"
+        },
+        "1778837189.692379": {
+          "replyCount": 4,
+          "latestReplyTs": "1778896012.318039"
+        },
+        "1779055030.403679": {
+          "replyCount": 2,
+          "latestReplyTs": "1779093748.682059"
+        },
+        "1779055159.683989": {
+          "replyCount": 2,
+          "latestReplyTs": "1779055470.629609"
+        },
+        "1779426476.794069": {
+          "replyCount": 2,
+          "latestReplyTs": "1779428054.318289"
+        }
+      },
+      "fingerprint": "sha256:be2036a02ed98ffc71e9651688a99632a81ddc63d9aeed2f3f06f65695f24a33",
+      "lastSyncedAt": "2026-06-09T01:02:09.857Z",
+      "lastSyncedCommit": ""
+    },
+    "C0B21HSF4VA": {
+      "name": "event-ai-forum-ai-hackathon-2026",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "aotearoa-ai-hackathon-festival-2026",
+            "eventId": 96
+          }
+        ]
+      },
+      "watermarkTs": "1780925237.266819",
+      "threads": {
+        "1778118947.075649": {
+          "replyCount": 1,
+          "latestReplyTs": "1778120794.177099"
+        },
+        "1780115194.015579": {
+          "replyCount": 1,
+          "latestReplyTs": "1780299916.233239"
+        },
+        "1780860021.130839": {
+          "replyCount": 2,
+          "latestReplyTs": "1780906830.750719"
+        },
+        "1780860072.032599": {
+          "replyCount": 1,
+          "latestReplyTs": "1780860084.327209"
+        },
+        "1780865474.757109": {
+          "replyCount": 2,
+          "latestReplyTs": "1780866088.415609"
+        },
+        "1780919778.564669": {
+          "replyCount": 2,
+          "latestReplyTs": "1780963107.398419"
+        }
+      },
+      "fingerprint": "sha256:41a3a725789f1ea954766266888475d342753de31dc86990a9562add068fa6a4",
+      "lastSyncedAt": "2026-06-09T01:01:37.429Z",
+      "lastSyncedCommit": ""
+    },
+    "C0B7K8BFN30": {
+      "name": "event-myob-ai-in-practice-30july-2026",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "she-sharp-and-myob-working-smarter",
+            "eventId": 95
+          }
+        ]
+      },
+      "watermarkTs": "1780954764.500039",
+      "threads": {
+        "1780375315.572929": {
+          "replyCount": 4,
+          "latestReplyTs": "1780376474.352719"
+        },
+        "1780665906.651489": {
+          "replyCount": 2,
+          "latestReplyTs": "1780905192.767009"
+        },
+        "1780713598.572869": {
+          "replyCount": 1,
+          "latestReplyTs": "1780734241.577189"
+        },
+        "1780905968.835889": {
+          "replyCount": 12,
+          "latestReplyTs": "1780939295.440359"
+        }
+      },
+      "fingerprint": "sha256:e331d1ead7680a8f0afd1d2dc417d960d0ae565be5fc9110c2a349f018ed8b16",
+      "lastSyncedAt": "2026-06-09T01:04:02.586Z",
+      "lastSyncedCommit": ""
+    },
+    "C0L3U3Z7H": {
+      "name": "goodies",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555697.838329",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "C10JB9PJ6": {
+      "name": "team-contacts",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555698.818079",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "CAX7EK06Q": {
+      "name": "expense-receipts",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555699.781849",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "CGJPELDC4": {
+      "name": "marketing",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1780556832.233329",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "CSHSGQWF6": {
+      "name": "industry",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1780114226.689319",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    },
+    "CSL6BBLQP": {
+      "name": "events-ey-2020",
+      "type": "event",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1777555702.716959",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedCommit": ""
+    }
+  }
+}
