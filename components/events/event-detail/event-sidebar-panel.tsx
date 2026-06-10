@@ -10,6 +10,7 @@ import {
   Copy,
   Check,
   Users,
+  GraduationCap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EventV3 } from "@/types/event";
@@ -233,6 +234,21 @@ export function EventSidebarPanel({
                     )}
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* Audience / who should attend */}
+            {event.detailPageData.audience && (
+              <div className="flex items-start gap-3">
+                <IconBox>
+                  <GraduationCap className="w-4 h-4 text-brand" />
+                </IconBox>
+                <div className="text-sm leading-relaxed">
+                  <p className="text-foreground font-medium">Who should attend</p>
+                  <p className="text-muted-foreground">
+                    {event.detailPageData.audience}
+                  </p>
+                </div>
               </div>
             )}
 
