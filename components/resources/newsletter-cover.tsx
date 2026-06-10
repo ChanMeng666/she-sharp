@@ -67,7 +67,11 @@ export function NewsletterCover({
 
 /** A single oversized parenthesis with flat-cut ends, matching the legacy art. */
 function Bracket({ side, color }: { side: "left" | "right"; color: string }) {
-  const d = side === "left" ? "M48,14 Q12,150 48,286" : "M12,14 Q48,150 12,286";
+  // Cubic Bézier with control points pushed outward for a fuller, rounder bow.
+  const d =
+    side === "left"
+      ? "M46,16 C4,92 4,208 46,284"
+      : "M14,16 C56,92 56,208 14,284";
   return (
     <svg
       viewBox="0 0 60 300"
