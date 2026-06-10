@@ -77,6 +77,12 @@ export const navigationConfig: {
           icon: Calendar,
         },
         {
+          title: "Google Educator Conference",
+          href: "/events/google-educator-conference",
+          description: "Highlights from our Google Educator (CS4HS) conferences",
+          icon: GraduationCap,
+        },
+        {
           title: "Photo Gallery",
           href: "/resources/photo-gallery",
           description: "Browse albums from events and community moments",

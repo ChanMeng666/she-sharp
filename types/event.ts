@@ -146,6 +146,7 @@ export interface EventSpeakersV3 {
   keynote_speakers?: EventSpeakerGroup;
   panel_speakers?: EventSpeakerGroup;
   guest_speakers?: EventSpeakerGroup;
+  demo_facilitators?: EventSpeakerGroup;
   panel_facilitators?: EventSpeakerGroup;
   hosts?: EventSpeakerGroup;
   mentors?: EventSpeakerGroup;
@@ -154,11 +155,20 @@ export interface EventSpeakersV3 {
   readiness_workshop_facilitators?: EventSpeakerGroup;
 }
 
+// A conference session (demo / keynote / workshop / panel / guest)
+export interface EventSession {
+  type: string; // "Demo" | "Keynote" | "Workshop" | "Panel" | "Guest Speaker"
+  title: string;
+  description?: string;
+  facilitators?: string[];
+}
+
 // Sponsor in V3 format
 export interface EventSponsorV3 {
   name: string;
   logo: string;
   description?: string;
+  tier?: string; // e.g. "Gold" | "Silver" | "Bronze" | "Exhibition" | "Venue"
 }
 
 // Sponsors grouped by type
@@ -202,6 +212,7 @@ export interface EventDetailPageData {
   time: string;
   location: EventLocationV3;
   fullDescription: string[];
+  sessions?: EventSession[];
   speakers: EventSpeakersV3;
   organizers: EventSpeakerV3[];
   sponsors: EventSponsorsV3;
