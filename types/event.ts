@@ -163,6 +163,32 @@ export interface EventSession {
   facilitators?: string[];
 }
 
+// One activity within a schedule time slot (a slot may run parallel sessions).
+export interface EventScheduleEntry {
+  activity: string;
+  location?: string;
+}
+
+// A time slot on the day's agenda.
+export interface EventScheduleItem {
+  time: string;
+  entries: EventScheduleEntry[];
+}
+
+// The full day agenda (the old site's schedule sub-page).
+export interface EventSchedule {
+  day: string;
+  bannerImage?: string;
+  items: EventScheduleItem[];
+}
+
+// A titled info block (resources / getting there / about the venue / contact).
+export interface EventInfoSection {
+  title: string;
+  paragraphs?: string[];
+  links?: { label: string; url: string }[];
+}
+
 // Sponsor in V3 format
 export interface EventSponsorV3 {
   name: string;
@@ -213,6 +239,9 @@ export interface EventDetailPageData {
   location: EventLocationV3;
   fullDescription: string[];
   sessions?: EventSession[];
+  schedule?: EventSchedule;
+  infoSections?: EventInfoSection[];
+  audience?: string;
   speakers: EventSpeakersV3;
   organizers: EventSpeakerV3[];
   sponsors: EventSponsorsV3;

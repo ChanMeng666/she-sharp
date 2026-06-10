@@ -2252,7 +2252,217 @@
             ],
             "description": "How do we empower students to become creators of Artificial Intelligence rather than just users? This workshop explores building our own AI from first principles while providing guidance on how to teach intermediate-level Python. Genetic algorithms are an easy stepping stone to understanding AI — turning nature into technology by using genes, inheritance and natural selection to make our code overcome the survival of the fittest!"
           }
-        ]
+        ],
+        "schedule": {
+          "day": "Thursday 21 November 2024",
+          "bannerImage": "/img/scraped/conference/hub/schedule-banner.png",
+          "items": [
+            {
+              "time": "7.45 - 8.20am",
+              "entries": [
+                {
+                  "activity": "Registration and coffee",
+                  "location": "Generator Bldg (12 Madden Street)"
+                }
+              ]
+            },
+            {
+              "time": "8.20 - 8.30am",
+              "entries": [
+                {
+                  "activity": "Welcome — Dr. Mahsa McCauley (She Sharp)",
+                  "location": "Generator Bldg (12 Madden Street)"
+                }
+              ]
+            },
+            {
+              "time": "8.30 - 9.30am",
+              "entries": [
+                {
+                  "activity": "Keynote Address: AI, What it was, What it is and What it could be — Steve Smith (NZ Program Manager, Google for Education)",
+                  "location": "Generator Bldg (12 Madden Street)"
+                },
+                {
+                  "activity": "Keynote Address: Transforming Education: The Kami Story — Alliv Samson (CGO and Co-Founder of Kami)"
+                },
+                {
+                  "activity": "Keynote Q & A"
+                }
+              ]
+            },
+            {
+              "time": "9.30 - 9.45am",
+              "entries": [
+                {
+                  "activity": "Group Photo",
+                  "location": "Generator Bldg (12 Madden Street)"
+                }
+              ]
+            },
+            {
+              "time": "9.45 - 10.15am",
+              "entries": [
+                {
+                  "activity": "Morning Tea, Expo and Networking",
+                  "location": "Generator Bldg (12 Madden Street)"
+                }
+              ]
+            },
+            {
+              "time": "10.15 - 11.45am",
+              "entries": [
+                {
+                  "activity": "Demo 1: Global Strategies for Assessing AI Literacy",
+                  "location": "Moa, Google Office"
+                },
+                {
+                  "activity": "Demo 2: Embed AI literacy into your classes using the SAIL framework",
+                  "location": "Futures Lab"
+                },
+                {
+                  "activity": "Demo 3: How can curriculum content evolve to ensure tamariki/rangatahi are 'futures-ready'?",
+                  "location": "Paua, Google Office"
+                },
+                {
+                  "activity": "Demo 4: STEMM Power: Fueling Girls' Futures through Māturanga Māori",
+                  "location": "Ninth Expedition, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "11.45 - 12.00pm",
+              "entries": [
+                {
+                  "activity": "Google office tour",
+                  "location": "Google Office"
+                }
+              ]
+            },
+            {
+              "time": "12.00 - 12.45pm",
+              "entries": [
+                {
+                  "activity": "Lunch",
+                  "location": "Google Office"
+                }
+              ]
+            },
+            {
+              "time": "12.45 - 3.00pm",
+              "entries": [
+                {
+                  "activity": "Workshop 1: Bridging the Gap: Inclusive Education and EdTech Solutions for SEN in NZ",
+                  "location": "Moa, Google Office"
+                },
+                {
+                  "activity": "Workshop 2: AI: The Personal Touch",
+                  "location": "Futures Lab"
+                },
+                {
+                  "activity": "Workshop 3: Automated Assessment of Programming for NCEA",
+                  "location": "Campfire, Google Office"
+                },
+                {
+                  "activity": "Workshop 4: Evolve! Build your own artificial intelligence with Python",
+                  "location": "Paua, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "3.00 - 3.30pm",
+              "entries": [
+                {
+                  "activity": "Afternoon tea",
+                  "location": "Moa, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "3.30 - 4.45pm",
+              "entries": [
+                {
+                  "activity": "Panel discussion",
+                  "location": "Futures Lab"
+                }
+              ]
+            },
+            {
+              "time": "4.45 - 5.00pm",
+              "entries": [
+                {
+                  "activity": "International Olympiads in AI and Informatics",
+                  "location": "Campfire, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "5.00pm",
+              "entries": [
+                {
+                  "activity": "Closing Remarks",
+                  "location": "Paua, Google Office"
+                }
+              ]
+            }
+          ]
+        },
+        "infoSections": [
+          {
+            "title": "Session resources",
+            "paragraphs": [
+              "We would like to share some resources from the event on behalf of our amazing speakers, demo and workshop facilitators."
+            ],
+            "links": [
+              {
+                "label": "Check out resources",
+                "url": "https://drive.google.com/drive/folders/1RfipgmHxjpvRNtdNRhGrNHqpKSxY5g2W"
+              },
+              {
+                "label": "View agenda poster",
+                "url": "https://www.canva.com/design/DAFu1qauTNA/o_xfPY_e00XtcBkgy8IXaA/view"
+              }
+            ]
+          },
+          {
+            "title": "Getting to the event",
+            "paragraphs": [
+              "Google Wynyard Central is in Auckland's Wynyard Quarter, well served by public transport and an easy walk from the city centre. Because of the high demand for parking in the central city, we recommend public transport or carpooling. Paid parking is available nearby at Wilson Parking."
+            ],
+            "links": [
+              {
+                "label": "Auckland Transport",
+                "url": "https://at.govt.nz"
+              },
+              {
+                "label": "Wilson Parking",
+                "url": "https://www.wilsonparking.co.nz"
+              },
+              {
+                "label": "Google Maps",
+                "url": "https://goo.gl/maps/hwrH6fhW4fYwyoWDA"
+              }
+            ]
+          },
+          {
+            "title": "About the venue",
+            "paragraphs": [
+              "The 2024 conference was hosted at Google Wynyard Central — GridAKL / Futures Lab, Generator, 12 Madden Street, Wynyard Quarter, Auckland. GridAKL is Auckland's innovation hub, bringing together technology and creative companies in a vibrant waterfront precinct."
+            ]
+          },
+          {
+            "title": "Key contact",
+            "paragraphs": [
+              "Mahsa McCauley (Mohaghegh) — for all workshop-related queries please contact the workshop organiser."
+            ],
+            "links": [
+              {
+                "label": "mahsa.mohaghegh@aut.ac.nz",
+                "url": "mailto:mahsa.mohaghegh@aut.ac.nz"
+              }
+            ]
+          }
+        ],
+        "audience": "All teachers and educators, including pre-service teachers."
       }
     },
     {
@@ -4496,7 +4706,196 @@
             ],
             "description": "Hear about the impact of cyber security breaches and exciting career pathways in Cyber Security from industry experts, and learn how to use the free Cyber Skills Aotearoa online and unplugged activities to teach cyber security concepts. Students engage by assuming the role of an ethical (white hat) hacker. Topics include sharing information online, good password practices, phishing and scam awareness, cryptography, web application security, and industry case studies aligned with NCEA. All content is available in English and te reo Māori."
           }
-        ]
+        ],
+        "schedule": {
+          "day": "Friday 17 November 2023",
+          "bannerImage": "/img/scraped/conference/hub/schedule-banner.png",
+          "items": [
+            {
+              "time": "7.45 - 8.20am",
+              "entries": [
+                {
+                  "activity": "Registration and coffee",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "8.20 - 8.30am",
+              "entries": [
+                {
+                  "activity": "Welcome — Dr. Mahsa McCauley (She Sharp)",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "8.30 - 9.30am",
+              "entries": [
+                {
+                  "activity": "Keynote Address: The future of education report — Steve Smith (Google)",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "9.30 - 9.45am",
+              "entries": [
+                {
+                  "activity": "Group Photo",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "9.45 - 10.15am",
+              "entries": [
+                {
+                  "activity": "Morning Tea",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "10.15 - 11.45am",
+              "entries": [
+                {
+                  "activity": "Demo 1: Unlock the magic of learning with Quiver's 3D Augmented Reality Workshop!",
+                  "location": "Room O4 Mao, Level 6, Google Office"
+                },
+                {
+                  "activity": "Demo 2: Google: Introduction to Digital technology curriculum and Google for Education tools",
+                  "location": "Room O5 Ninth Expedition to Everest, Level 6, Google Office"
+                },
+                {
+                  "activity": "Demo 3: ImmerseHer \"Virtual Reality\" Workshop",
+                  "location": "Room Akomanga 4.05, Level 4, Media Design School"
+                },
+                {
+                  "activity": "Demo 4: Embrace chaos: Disrupting to Design",
+                  "location": "Room Akomanga 4.06, Level 4, Media Design School"
+                }
+              ]
+            },
+            {
+              "time": "11.45 - 12.00pm",
+              "entries": [
+                {
+                  "activity": "Google office tour",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "12.00 - 12.45pm",
+              "entries": [
+                {
+                  "activity": "Lunch",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "12.45 - 3.00pm",
+              "entries": [
+                {
+                  "activity": "Workshop 1: Empower your students to learn with AI",
+                  "location": "Room Paua, Level 6, Google Office"
+                },
+                {
+                  "activity": "Workshop 2: Bring your code to life with p5.js",
+                  "location": "Room O5 Ninth Expedition to Everest, Level 6, Google Office"
+                },
+                {
+                  "activity": "Workshop 3: When it's a bug, not a feature",
+                  "location": "Room Akomanga 4.06, Level 4, Media Design School"
+                },
+                {
+                  "activity": "Workshop 4: Cyber Security Teaching and Learning Resources for the classroom",
+                  "location": "Room O4 Mao, Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "3.00 - 3.15pm",
+              "entries": [
+                {
+                  "activity": "Afternoon tea",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "3.15 - 4.30pm",
+              "entries": [
+                {
+                  "activity": "Panel discussion",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "4.30 - 6.00pm",
+              "entries": [
+                {
+                  "activity": "The Media Design School Exhibition, expo and networking drinks",
+                  "location": "Room 4.04, Level 4, Media Design School"
+                }
+              ]
+            }
+          ]
+        },
+        "infoSections": [
+          {
+            "title": "Session resources",
+            "paragraphs": [
+              "We would like to share some resources from the event on behalf of our amazing speakers, demo and workshop facilitators."
+            ],
+            "links": [
+              {
+                "label": "Check out resources",
+                "url": "https://drive.google.com/drive/folders/1ES1DQzlOfcXkdlEjaH4n5zGSDEI68Fy7"
+              }
+            ]
+          },
+          {
+            "title": "Getting to the event",
+            "paragraphs": [
+              "AUT City Campus is in the heart of Auckland and is surrounded by bus stops and close to motorway entry/exits. You can easily commute to AUT through Auckland Public Transport.",
+              "Because of the high demand for parking in the central city, AUT can't provide on-site parking for event attendees. It's a good idea to consider other transport options, like public transport or carpooling. You can park off street (pay and display) or at the nearest Wilson Parking."
+            ],
+            "links": [
+              {
+                "label": "Auckland Transport",
+                "url": "https://at.govt.nz"
+              },
+              {
+                "label": "Wilson Parking",
+                "url": "https://www.wilsonparking.co.nz"
+              }
+            ]
+          },
+          {
+            "title": "About AUT",
+            "paragraphs": [
+              "AUT is the University for the Changing World. Established in 2001, it's young, vibrant and future focused, offering outstanding opportunities for development and innovation.",
+              "AUT is in QS's top 3% of rankings and features in the Times Higher Education (THE) Top 150 universities under 50 years old. There are five faculties at AUT: Design and Creative Technologies; Culture and Society; Business, Economics and Law; Health and Environmental Sciences; and Te Ara Poutama – Faculty of Māori and Indigenous Development."
+            ]
+          },
+          {
+            "title": "Key contact",
+            "paragraphs": [
+              "Mahsa McCauley (Mohaghegh) — for all workshop-related queries please contact the workshop organiser."
+            ],
+            "links": [
+              {
+                "label": "mahsa.mohaghegh@aut.ac.nz",
+                "url": "mailto:mahsa.mohaghegh@aut.ac.nz"
+              }
+            ]
+          }
+        ],
+        "audience": "High school teachers of Computer Science, Digital Technologies, STEM or related subjects; ICT curriculum leaders, primary school teachers and school librarians."
       }
     },
     {
