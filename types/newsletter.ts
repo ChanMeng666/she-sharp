@@ -87,10 +87,16 @@ export interface NewsletterCoverTheme {
 }
 
 export const NEWSLETTER_COVER_THEMES: NewsletterCoverTheme[] = [
-  { bg: "#f4f4fa", fg: "#8982ff" }, // periwinkle-light bg, periwinkle text
-  { bg: "#9b2e83", fg: "#ffffff" }, // purple-dark bg, white text
-  { bg: "#f6e7f1", fg: "#9b2e83" }, // pink tint bg, purple-dark text
-  { bg: "#8982ff", fg: "#ffffff" }, // periwinkle bg, white text
-  { bg: "#b1f6e9", fg: "#1f1e44" }, // mint bg, navy text
-  { bg: "#f6e7f1", fg: "#8982ff" }, // pink tint bg, periwinkle text
+  { bg: "#f4f4fa", fg: "#8982ff" }, // periwinkle light / periwinkle dark
+  { bg: "#9b2e83", fg: "#ffffff" }, // purple dark / white
+  { bg: "#f7e5f3", fg: "#9b2e83" }, // purple light / purple dark
+  { bg: "#8982ff", fg: "#ffffff" }, // periwinkle dark / white
+  { bg: "#b1f6e9", fg: "#1f1e44" }, // mint dark / navy dark
+  { bg: "#1f1e44", fg: "#b1f6e9" }, // navy dark / mint dark
+  { bg: "#c846ab", fg: "#ffffff" }, // purple mid / white
+  { bg: "#eaf2ff", fg: "#1378d1" }, // navy light / accessible blue
+  { bg: "#f7e5f3", fg: "#c846ab" }, // purple light / purple mid
+  { bg: "#effefb", fg: "#8982ff" }, // mint light / periwinkle dark
+  { bg: "#eaf2ff", fg: "#1f1e44" }, // navy light / navy dark
+  { bg: "#f4f4fa", fg: "#1378d1" }, // periwinkle light / accessible blue
 ];
