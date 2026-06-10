@@ -57,6 +57,27 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
   const hasMainSponsors = sponsors.main && sponsors.main.length > 0;
   const hasOtherSponsors = sponsors.other && sponsors.other.length > 0;
 
+  // When sponsors carry tier labels (e.g. conferences), group main sponsors by
+  // tier and render a labelled row per tier in a sensible order.
+  const tieredMain = hasMainSponsors && sponsors.main.some((s) => s.tier);
+  const TIER_ORDER = [
+    "Gold",
+    "Silver",
+    "Bronze",
+    "Exhibition",
+    "Venue",
+    "Networking & Drinks",
+  ];
+  const tierGroups = tieredMain
+    ? Array.from(new Set(sponsors.main.map((s) => s.tier || "Other"))).sort(
+        (a, b) => {
+          const ia = TIER_ORDER.indexOf(a);
+          const ib = TIER_ORDER.indexOf(b);
+          return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+        }
+      )
+    : [];
+
   return (
     <section
       id="event-sponsors"
@@ -70,8 +91,33 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
           <h2 className="mt-2 text-display-sm">Powered by our partners</h2>
         </div>
 
-        {/* Main Sponsors */}
-        {hasMainSponsors && (
+        {/* Main Sponsors grouped by tier (conferences) */}
+        {tieredMain && (
+          <div className="space-y-12">
+            {tierGroups.map((tier) => (
+              <div key={tier}>
+                <p className="text-center text-sm font-bold tracking-[0.2em] uppercase text-brand mb-6">
+                  {tier}
+                </p>
+                <div className="space-y-8">
+                  {sponsors.main
+                    .filter((s) => (s.tier || "Other") === tier)
+                    .map((sponsor, index) => (
+                      <SponsorRow
+                        key={`${tier}-${sponsor.name}-${index}`}
+                        id={`${tier}-${sponsor.name}-${index}`}
+                        sponsor={sponsor}
+                        logoSizeClass="h-24 md:h-28 lg:h-32"
+                      />
+                    ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Main Sponsors (untiered) */}
+        {hasMainSponsors && !tieredMain && (
           <div className="space-y-4">
             {sponsors.main.map((sponsor, index) => (
               <SponsorRow

@@ -13,6 +13,7 @@ import {
 import {
   EventHeader,
   EventDescription,
+  EventSessions,
   EventSpeakers,
   EventSidebarPanel,
   EventPhotos,
@@ -131,6 +132,9 @@ export default async function EventPage({ params }: EventPageProps) {
           </div>
         </Container>
       </Section>
+
+      {/* Sessions Section (conference agenda) */}
+      <EventSessions event={event} />
 
       {/* Speakers Section */}
       {hasAnySpeakers(event) && (
