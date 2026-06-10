@@ -69,6 +69,20 @@ export const navigationConfig: {
       title: "Events",
       href: "/events",
       icon: Calendar,
+      children: [
+        {
+          title: "All Events",
+          href: "/events",
+          description: "Browse upcoming and past She Sharp events",
+          icon: Calendar,
+        },
+        {
+          title: "Photo Gallery",
+          href: "/resources/photo-gallery",
+          description: "Browse albums from events and community moments",
+          icon: Images,
+        },
+      ],
     },
     {
       title: "Mentorship",
@@ -137,12 +151,6 @@ export const navigationConfig: {
           href: "/resources",
           description: "Explore all resources including newsletters and media",
           icon: Library,
-        },
-        {
-          title: "Photo Gallery",
-          href: "/resources/photo-gallery",
-          description: "Browse albums from events and community moments",
-          icon: Images,
         },
         {
           title: "In the Press",
