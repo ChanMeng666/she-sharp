@@ -3,26 +3,24 @@
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { ArrowUpRight, Images } from "lucide-react";
-import { galleryAlbums } from "@/lib/data/gallery-albums";
+
+// Static cover image for the Photo Gallery preview card.
+const COVER_IMAGE = "/img/gallery/photo-gallery-cover.jpg";
 
 /**
  * Photo Gallery preview card for the resources page.
- * Links to the photo gallery page with a featured album as background.
+ * Links to the photo gallery page with a static cover image as background.
  */
 export function PhotoGalleryPreviewCard() {
-  const featured = galleryAlbums[0];
-
   return (
     <Link href="/resources/photo-gallery" className="block h-full group">
       <Card className="relative h-full w-full min-h-[300px] sm:min-h-[400px] md:min-h-[500px] border-0 shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 card-lg bg-black">
         {/* Background image */}
-        {featured && (
-          <img
-            src={featured.coverImage}
-            alt={featured.title}
-            className="absolute inset-0 h-full w-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
-          />
-        )}
+        <img
+          src={COVER_IMAGE}
+          alt="She Sharp Her Waka event"
+          className="absolute inset-0 h-full w-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
+        />
 
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
