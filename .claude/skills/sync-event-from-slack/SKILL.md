@@ -49,6 +49,27 @@ asks to apply changes ("go ahead and apply", "commit it", "run it for
 real"). This is the single most important safety property: the pipeline
 is only trustworthy when the user has seen the plan before it executes.
 
+### Never copy internal codes or private links into the repo
+
+`events-custom.json` and the pages it renders are **public**. Slack
+channels routinely carry things meant only for controlled distribution —
+access codes, promo/discount/registration codes (e.g. a student
+free-entry code, a flat-rate discount code, an `?accesscode=…` query
+param), and private "invite-only" registration or checkout links.
+**None of these may enter the data files or images** — and do not quote
+the real code values anywhere, including this skill's own docs. Strip
+them everywhere they can appear — `registrationUrl`
+query params, `fullDescription` paragraphs, `specialSections` bullets
+(especially a "Registration" section), `coverImage.alt`, sponsor notes.
+
+Publish only the **public** registration base URL and, if concessions
+exist, a neutral note that they're available via the event's official
+channel (Community Hub / organiser) — never the code itself. When unsure
+whether a token or link is internal, **leave it out and flag it in the
+dry-run plan** for the user to decide. A leaked code is not fixed by a
+later edit: it persists in public git history and must then be rewritten
+out and rotated at its source.
+
 ## Prerequisites you must verify before doing anything
 
 1. Working directory is the repo root (contains `lib/data/json/events-custom.json`).
@@ -190,7 +211,9 @@ Core fields to produce:
 - `speakers[]` (name, title, company, bio, LinkedIn, image)
 - `sponsors.main[]` (with logo path — must exist under `/img/sponsors/`)
 - `specialSections[]` (agenda + why-attend)
-- `registrationUrl` (Humanitix base, no `?accesscode=`)
+- `registrationUrl` (public base URL only — strip `?accesscode=…` and
+  never use a private invite/checkout link; see the "Never copy internal
+  codes or private links" rule above)
 - `category`, `status`, `isFeatured`
 
 ### Step 5 — Classify and plan image downloads
@@ -221,7 +244,14 @@ Mode          : CREATE (new entry) | UPDATE (slug already exists)
 Downloads     : 2 images + 1 docx (already extracted)
 JSON changes  : <inline diff summary>
 Image targets : <list of write paths>
+Redactions    : <any internal codes / private links found in Slack and
+                 deliberately left out — or "none">
 ```
+
+Always include the `Redactions` line: list every access/promo code or
+private invite link you found in the channel and kept out of the data
+(or state "none"). This makes the omission visible and lets the user
+correct you if something you treated as internal is actually public.
 
 Wait for the user to say "apply", "commit", or similar. If they
 want to tweak anything (wrong image classification, prefer a
