@@ -1,6 +1,7 @@
 import { EventV3, EventSession } from "@/types/event";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { ChevronDown } from "lucide-react";
 
 interface EventSessionsProps {
   event: EventV3;
@@ -57,22 +58,67 @@ export function EventSessions({ event }: EventSessionsProps) {
   );
 }
 
+function SessionBody({ session }: { session: EventSession }) {
+  // Prefer the structured blocks (paragraphs / sub-headings / bullet lists) that
+  // preserve the legacy accordion layout; fall back to the flat description.
+  if (session.descriptionBlocks && session.descriptionBlocks.length > 0) {
+    return (
+      <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+        {session.descriptionBlocks.map((block, i) => {
+          if (block.type === "list") {
+            return (
+              <ul key={i} className="list-disc pl-5 space-y-1.5">
+                {block.items?.map((item, j) => (
+                  <li key={j}>{item}</li>
+                ))}
+              </ul>
+            );
+          }
+          if (block.type === "subheading") {
+            return (
+              <p key={i} className="font-semibold text-foreground">
+                {block.text}
+              </p>
+            );
+          }
+          return <p key={i}>{block.text}</p>;
+        })}
+      </div>
+    );
+  }
+  if (session.description) {
+    return (
+      <p className="text-sm text-muted-foreground leading-relaxed">
+        {session.description}
+      </p>
+    );
+  }
+  return null;
+}
+
 function SessionCard({ session }: { session: EventSession }) {
+  const hasBody =
+    (session.descriptionBlocks && session.descriptionBlocks.length > 0) ||
+    !!session.description;
+
   return (
-    <div className="card-responsive-sm bg-background p-6 md:p-8 shadow-sm flex flex-col h-full">
-      <h3 className="text-base md:text-lg font-semibold text-foreground">
-        {session.title}
-      </h3>
-      {session.description && (
-        <p className="mt-3 text-sm text-muted-foreground leading-relaxed flex-1">
-          {session.description}
-        </p>
-      )}
-      {session.facilitators && session.facilitators.length > 0 && (
-        <p className="mt-4 text-sm font-medium text-brand">
-          {session.facilitators.join(", ")}
-        </p>
-      )}
-    </div>
+    <details className="card-responsive-sm bg-background p-6 md:p-8 shadow-sm group h-full [&_summary::-webkit-details-marker]:hidden">
+      <summary className="flex items-start justify-between gap-3 cursor-pointer list-none">
+        <h3 className="text-base md:text-lg font-semibold text-foreground">
+          {session.title}
+        </h3>
+        {hasBody && (
+          <ChevronDown className="mt-0.5 h-5 w-5 shrink-0 text-brand transition-transform duration-200 group-open:rotate-180" />
+        )}
+      </summary>
+      <div className="mt-4">
+        <SessionBody session={session} />
+        {session.facilitators && session.facilitators.length > 0 && (
+          <p className="mt-4 text-sm font-medium text-brand">
+            {session.facilitators.join(", ")}
+          </p>
+        )}
+      </div>
+    </details>
   );
 }

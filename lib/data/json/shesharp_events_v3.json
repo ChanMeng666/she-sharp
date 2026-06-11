@@ -2156,7 +2156,13 @@
             "facilitators": [
               "Dr. Kara Kennedy"
             ],
-            "description": "The rise of Generative AI has made it essential for students to gain AI literacy skills, yet it can be challenging to assess whether they truly understand and know how to use Generative AI technologies in ethical and responsible ways. In this session, we will explore strategies for assessing AI literacy based on quizzes, surveys, and frameworks used by educators around the world. By: Dr. Kara Kennedy - Principal - AI Literacy Institute"
+            "description": "The rise of Generative AI has made it essential for students to gain AI literacy skills, yet it can be challenging to assess whether they truly understand and know how to use Generative AI technologies in ethical and responsible ways. In this session, we will explore strategies for assessing AI literacy based on quizzes, surveys, and frameworks used by educators around the world. By: Dr. Kara Kennedy - Principal - AI Literacy Institute",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "The rise of Generative AI has made it essential for students to gain AI literacy skills, yet it can be challenging to assess whether they truly understand and know how to use Generative AI technologies in ethical and responsible ways. In this session, we will explore strategies for assessing AI literacy based on quizzes, surveys, and frameworks used by educators around the world. By: Dr. Kara Kennedy - Principal - AI Literacy Institute"
+              }
+            ]
           },
           {
             "type": "Demo",
@@ -2166,7 +2172,17 @@
               "Dr. David Parsons",
               "Dr. Mahsa McCauley (Mohaghegh)"
             ],
-            "description": "With the technology curriculum refresh currently underway, in a world where AI tools are becoming ever more pervasive, we can expect that future views of digital literacy will involve a significant level of AI literacy. The Scaffolded AI Literacy (SAIL) framework has been developed by a group of experts from Aotearoa New Zealand and overseas to provide a comprehensive guide to developing AI literacy through scaffolded levels of competency. This session will provide a brief overview of the framework before getting into the practicalities of how its knowledge, skills, and critical perspectives can be delivered to diverse learner groups in engaging and interactive ways using accessible digital tools. By: 1. Dr Kathryn MacCallum - Associate Professor of Digital Education Futures, University of Canterbury 2. Dr David Parsons - Research Director, academyEX 3. Dr Mahsa McCauley - Senior lecturer at AUT School of Engineering and Founder of She Sharp"
+            "description": "With the technology curriculum refresh currently underway, in a world where AI tools are becoming ever more pervasive, we can expect that future views of digital literacy will involve a significant level of AI literacy. The Scaffolded AI Literacy (SAIL) framework has been developed by a group of experts from Aotearoa New Zealand and overseas to provide a comprehensive guide to developing AI literacy through scaffolded levels of competency. This session will provide a brief overview of the framework before getting into the practicalities of how its knowledge, skills, and critical perspectives can be delivered to diverse learner groups in engaging and interactive ways using accessible digital tools. By: 1. Dr Kathryn MacCallum - Associate Professor of Digital Education Futures, University of Canterbury 2. Dr David Parsons - Research Director, academyEX 3. Dr Mahsa McCauley - Senior lecturer at AUT School of Engineering and Founder of She Sharp",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "With the technology curriculum refresh currently underway, in a world where AI tools are becoming ever more pervasive, we can expect that future views of digital literacy will involve a significant level of AI literacy. The Scaffolded AI Literacy (SAIL) framework has been developed by a group of experts from Aotearoa New Zealand and overseas to provide a comprehensive guide to developing AI literacy through scaffolded levels of competency. This session will provide a brief overview of the framework before getting into the practicalities of how its knowledge, skills, and critical perspectives can be delivered to diverse learner groups in engaging and interactive ways using accessible digital tools."
+              },
+              {
+                "type": "paragraph",
+                "text": "By: 1. Dr Kathryn MacCallum - Associate Professor of Digital Education Futures, University of Canterbury 2. Dr David Parsons - Research Director, academyEX 3. Dr Mahsa McCauley - Senior lecturer at AUT School of Engineering and Founder of She Sharp"
+              }
+            ]
           },
           {
             "type": "Demo",
@@ -2174,7 +2190,17 @@
             "facilitators": [
               "Catherine Frost"
             ],
-            "description": "An overview and Q&A/kōrero of how curriculum content (NZC only-not TMoA) is approaching the wero of what our next generation need to know, what is essential learning with, in, and about technology? By: Catherine Frost - Lead Writer Technology, Ministry of Education"
+            "description": "An overview and Q&A/kōrero of how curriculum content (NZC only-not TMoA) is approaching the wero of what our next generation need to know, what is essential learning with, in, and about technology? By: Catherine Frost - Lead Writer Technology, Ministry of Education",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "An overview and Q&A/kōrero of how curriculum content (NZC only-not TMoA) is approaching the wero of what our next generation need to know, what is essential learning with, in, and about technology?"
+              },
+              {
+                "type": "paragraph",
+                "text": "By: Catherine Frost - Lead Writer Technology, Ministry of Education"
+              }
+            ]
           },
           {
             "type": "Demo",
@@ -2183,7 +2209,25 @@
               "Claire Wigley",
               "Munireh Rouget"
             ],
-            "description": "Join us for an empowering workshop focused on engaging girls in STEMM. This interactive session will explore innovative strategies and practical approaches to inspire and support female students in science, technology, engineering, mathematics through a Māturanga Māori lens. Participants will gain insights into effective teaching methods, learn first hand about some of our successes , and develop tools to create a more inclusive and motivating STEMM environment. Equip yourself with the skills to help ignite a passion for STEMM in young girls and promote their continued success in these fields. By: 1. Claire Wigley - Teacher at Spotswood College New Plymouth & TENZ Council Member 2. Munireh Rouget - Deputy Chair - TENZ Council and Poutakawaenga mō te Pūtake Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle"
+            "description": "Join us for an empowering workshop focused on engaging girls in STEMM. This interactive session will explore innovative strategies and practical approaches to inspire and support female students in science, technology, engineering, mathematics through a Māturanga Māori lens. Participants will gain insights into effective teaching methods, learn first hand about some of our successes, and develop tools to create a more inclusive and motivating STEMM environment. Equip yourself with the skills to help ignite a passion for STEMM in young girls and promote their continued success in these fields. By: 1. Claire Wigley - Teacher at Spotswood College New Plymouth & TENZ Council Member 2. Munireh Rouget - Deputy Chair - TENZ Council and Poutakawaenga mō te Pūtake Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Join us for an empowering workshop focused on engaging girls in STEMM. This interactive session will explore innovative strategies and practical approaches to inspire and support female students in science, technology, engineering, mathematics through a Māturanga Māori lens."
+              },
+              {
+                "type": "paragraph",
+                "text": "Participants will gain insights into effective teaching methods, learn first hand about some of our successes, and develop tools to create a more inclusive and motivating STEMM environment."
+              },
+              {
+                "type": "paragraph",
+                "text": "Equip yourself with the skills to help ignite a passion for STEMM in young girls and promote their continued success in these fields."
+              },
+              {
+                "type": "paragraph",
+                "text": "By: 1. Claire Wigley - Teacher at Spotswood College New Plymouth & TENZ Council Member 2. Munireh Rouget - Deputy Chair - TENZ Council and Poutakawaenga mō te Pūtake Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle"
+              }
+            ]
           },
           {
             "type": "Guest Speaker",
@@ -2191,7 +2235,17 @@
             "facilitators": [
               "Margot Phillipps"
             ],
-            "description": "We will provide a comprehensive explanation of the Olympiads and delve into New Zealand's process for selecting students to represent the country. Additionally, we will discuss how teachers can offer these outstanding opportunities to their students. By: Margot Phillipps"
+            "description": "We will provide a comprehensive explanation of the Olympiads and delve into New Zealand's process for selecting students to represent the country. Additionally, we will discuss how teachers can offer these outstanding opportunities to their students. By: Margot Phillipps",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "We will provide a comprehensive explanation of the Olympiads and delve into New Zealand's process for selecting students to represent the country. Additionally, we will discuss how teachers can offer these outstanding opportunities to their students."
+              },
+              {
+                "type": "paragraph",
+                "text": "By: Margot Phillipps"
+              }
+            ]
           },
           {
             "type": "Keynote",
@@ -2199,7 +2253,17 @@
             "facilitators": [
               "Steve Smith"
             ],
-            "description": "A look back to see how we got to here. What is here and why it matters and what could the future look like for education. By: Steve Smith - NZ Program Manager, Google for Education"
+            "description": "A look back to see how we got to here. What is here and why it matters and what could the future look like for education. By: Steve Smith - NZ Program Manager, Google for Education",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "A look back to see how we got to here. What is here and why it matters and what could the future look like for education."
+              },
+              {
+                "type": "paragraph",
+                "text": "By: Steve Smith - NZ Program Manager, Google for Education"
+              }
+            ]
           },
           {
             "type": "Keynote",
@@ -2207,7 +2271,21 @@
             "facilitators": [
               "Alliv Samson"
             ],
-            "description": "Join Alliv Samson, CGO and Co-Founder of edtech app Kami, as she shares how a Kiwi startup grew from its humble beginnings in Aotearoa to empowering over 40 million users worldwide. Alliv will delve into Kami’s journey of transforming education and her passion for driving innovation in edtech. By: Alliv Samson - CGO and Co-Founder of Kami"
+            "description": "Join Alliv Samson, CGO and Co-Founder of edtech app Kami, as she shares how a Kiwi startup grew from its humble beginnings in Aotearoa to empowering over 40 million users worldwide. Alliv will delve into Kami’s journey of transforming education and her passion for driving innovation in edtech. By: Alliv Samson - CGO and Co-Founder of Kami",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Join Alliv Samson, CGO and Co-Founder of edtech app Kami, as she shares how a Kiwi startup grew from its humble beginnings in Aotearoa to empowering over 40 million users worldwide."
+              },
+              {
+                "type": "paragraph",
+                "text": "Alliv will delve into Kami’s journey of transforming education and her passion for driving innovation in edtech."
+              },
+              {
+                "type": "paragraph",
+                "text": "By: Alliv Samson - CGO and Co-Founder of Kami"
+              }
+            ]
           },
           {
             "type": "Panel",
@@ -2217,7 +2295,17 @@
               "Benny Pan",
               "Paula Gair"
             ],
-            "description": "As artificial intelligence becomes increasingly integral to various aspects of life and work, it is crucial that educational systems prepare students to navigate this new landscape. This panel will explore what AI literacy entails for primary and secondary education and discuss actionable strategies to equip students with the necessary skills and understanding. Panelists: Dr. Geri Harris Benny Pan Paula Gair"
+            "description": "As artificial intelligence becomes increasingly integral to various aspects of life and work, it is crucial that educational systems prepare students to navigate this new landscape. This panel will explore what AI literacy entails for primary and secondary education and discuss actionable strategies to equip students with the necessary skills and understanding. Panelists: Dr. Geri Harris Benny Pan Paula Gair",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "As artificial intelligence becomes increasingly integral to various aspects of life and work, it is crucial that educational systems prepare students to navigate this new landscape. This panel will explore what AI literacy entails for primary and secondary education and discuss actionable strategies to equip students with the necessary skills and understanding."
+              },
+              {
+                "type": "paragraph",
+                "text": "Panelists: Dr. Geri Harris Benny Pan Paula Gair"
+              }
+            ]
           },
           {
             "type": "Workshop",
@@ -2226,7 +2314,33 @@
               "Jessica Brennan",
               "Paul Savage"
             ],
-            "description": "Join us for a dynamic workshop designed to address the challenges and opportunities in supporting SEN students and promoting responsive education here in Aotearoa. This interactive session will be a thoughtful exploration into the unique needs of diverse learners. We’ll dive into insights from Kami’s research on SEN and demonstrate practical ways to use the app as a universal accommodation tool. Participants will be encouraged to identify pressing issues, and brainstorm innovative edtech solutions. Get ready to be a part of ideating new products, crafting actionable strategies that can be brought to life in schools, driving real change in the SEN space. Bring your laptops to make the most of this hands-on and truly rewarding experience! By: 1. Jessica Brennan - Kami - Regional Customer Manager 2. Paul Savage - Kami - Senior Product Marketer"
+            "description": "Join us for a dynamic workshop designed to address the challenges and opportunities in supporting SEN students and promoting responsive education here in Aotearoa. This interactive session will be a thoughtful exploration into the unique needs of diverse learners. We’ll dive into insights from Kami’s research on SEN and demonstrate practical ways to use the app as a universal accommodation tool. Participants will be encouraged to identify pressing issues, and brainstorm innovative edtech solutions. Get ready to be a part of ideating new products, crafting actionable strategies that can be brought to life in schools, driving real change in the SEN space. Bring your laptops to make the most of this hands-on and truly rewarding experience! By: 1. Jessica Brennan - Kami - Regional Customer Manager 2. Paul Savage - Kami - Senior Product Marketer",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Join us for a dynamic workshop designed to address the challenges and opportunities in supporting SEN students and promoting responsive education here in Aotearoa."
+              },
+              {
+                "type": "paragraph",
+                "text": "This interactive session will be a thoughtful exploration into the unique needs of diverse learners."
+              },
+              {
+                "type": "paragraph",
+                "text": "We’ll dive into insights from Kami’s research on SEN and demonstrate practical ways to use the app as a universal accommodation tool. Participants will be encouraged to identify pressing issues, and brainstorm innovative edtech solutions."
+              },
+              {
+                "type": "paragraph",
+                "text": "Get ready to be a part of ideating new products, crafting actionable strategies that can be brought to life in schools, driving real change in the SEN space."
+              },
+              {
+                "type": "paragraph",
+                "text": "Bring your laptops to make the most of this hands-on and truly rewarding experience!"
+              },
+              {
+                "type": "paragraph",
+                "text": "By: 1. Jessica Brennan - Kami - Regional Customer Manager 2. Paul Savage - Kami - Senior Product Marketer"
+              }
+            ]
           },
           {
             "type": "Workshop",
@@ -2234,7 +2348,17 @@
             "facilitators": [
               "Bex Rose"
             ],
-            "description": "In this workshop, we'll explore how AI can revolutionize teaching and learning through differentiated instruction. We'll delve into powerful tools like Diffit, Gemini, Magic School, and Questionwell, which offer personalised learning paths, targeted feedback, and adaptive assessments. By harnessing the power of AI, teachers can create more engaging, effective, and equitable classrooms where every student can thrive. By: Bex Rose - Head of Impact, Growth Culture"
+            "description": "In this workshop, we'll explore how AI can revolutionize teaching and learning through differentiated instruction. We'll delve into powerful tools like Diffit, Gemini, Magic School, and Questionwell, which offer personalised learning paths, targeted feedback, and adaptive assessments. By harnessing the power of AI, teachers can create more engaging, effective, and equitable classrooms where every student can thrive. By: Bex Rose - Head of Impact, Growth Culture",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "In this workshop, we'll explore how AI can revolutionize teaching and learning through differentiated instruction. We'll delve into powerful tools like Diffit, Gemini, Magic School, and Questionwell, which offer personalised learning paths, targeted feedback, and adaptive assessments. By harnessing the power of AI, teachers can create more engaging, effective, and equitable classrooms where every student can thrive."
+              },
+              {
+                "type": "paragraph",
+                "text": "By: Bex Rose - Head of Impact, Growth Culture"
+              }
+            ]
           },
           {
             "type": "Workshop",
@@ -2243,7 +2367,13 @@
               "Steven Rodkiss",
               "Henry Hickman"
             ],
-            "description": "The CodeRunner tool is used in dozens of Universities across NZ and internationally to assess programming ability in students. With the new NCEA standard coming in, this created a unique opportunity to take a big step forward in the assessment of NCEA programming. That was the goal of (soon to be Doctor) Henry Hickman who developed a way to leverage CodeRunner to work with NCEA as part of his PhD study. While there were challenges, the potential benefits are clear; to assist teacher to deliver a consistent assessment for all their kids and, hopefully, increase the opportunity for kids to learn to program. This workshop will give you hands on experience in the new and improved tool that will be released for the 2025 academic year. You’ll leave with a good understanding of the tool and its potential benefits for you, your students and the subject. By: 1. Steven Rodkiss - Digital Technologies Teacher, Burnside High School & member of the DTTA committee 2. Henry Hickman - PhD student, University of Canterbury"
+            "description": "The CodeRunner tool is used in dozens of Universities across NZ and internationally to assess programming ability in students. With the new NCEA standard coming in, this created a unique opportunity to take a big step forward in the assessment of NCEA programming. That was the goal of (soon to be Doctor) Henry Hickman who developed a way to leverage CodeRunner to work with NCEA as part of his PhD study. While there were challenges, the potential benefits are clear; to assist teacher to deliver a consistent assessment for all their kids and, hopefully, increase the opportunity for kids to learn to program. This workshop will give you hands on experience in the new and improved tool that will be released for the 2025 academic year. You’ll leave with a good understanding of the tool and its potential benefits for you, your students and the subject. By: 1. Steven Rodkiss - Digital Technologies Teacher, Burnside High School & member of the DTTA committee 2. Henry Hickman - PhD student, University of Canterbury",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "The CodeRunner tool is used in dozens of Universities across NZ and internationally to assess programming ability in students. With the new NCEA standard coming in, this created a unique opportunity to take a big step forward in the assessment of NCEA programming. That was the goal of (soon to be Doctor) Henry Hickman who developed a way to leverage CodeRunner to work with NCEA as part of his PhD study. While there were challenges, the potential benefits are clear; to assist teacher to deliver a consistent assessment for all their kids and, hopefully, increase the opportunity for kids to learn to program. This workshop will give you hands on experience in the new and improved tool that will be released for the 2025 academic year. You’ll leave with a good understanding of the tool and its potential benefits for you, your students and the subject. By: 1. Steven Rodkiss - Digital Technologies Teacher, Burnside High School & member of the DTTA committee 2. Henry Hickman - PhD student, University of Canterbury"
+              }
+            ]
           },
           {
             "type": "Workshop",
@@ -4331,7 +4461,7 @@
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/google-educator-conference-2023",
         "title": "Google Educator Conference 2023",
-        "subtitle": "Google Educator Conference 2023",
+        "subtitle": "Brought to you by Google and She Sharp",
         "date": "",
         "time": "",
         "location": {
@@ -4346,7 +4476,8 @@
           "The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.",
           "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.",
           "Previously known as CS4HS, the Google Educator Conference is back for 2023!",
-          "The audience is High School Teachers who teach Computer Science, Digital Technologies, STEM or related subjects; teachers who are looking to refresh or add on to their skills; plus ICT curriculum leaders, primary school teachers and school librarians."
+          "The audience is High School Teachers who teach Computer Science, Digital Technologies, STEM or related subjects; teachers who are looking to refresh or add on to their skills; plus ICT curriculum leaders, primary school teachers and school librarians.",
+          "Details are coming soon. Sign up for our newsletter and be the first to know."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -4663,7 +4794,50 @@
               "Nils Reardon",
               "Nischay Gupta"
             ],
-            "description": "Want to wow your kids or become the coolest teacher in school? Join us for an extraordinary experience as we introduce you to our Quiver App and Education Dashboard. Quiver, launched in 2013, was the world's first Augmented Reality colouring app, downloaded by over 25 Million users in 150+ countries and delivers engaging and magical experiences for all. Quiver is a one-stop shop for Augmented Reality education content and lesson plans for Pre K to Year 9 and beyond. Highlights: Interactive Learning : Witness every colored page spring to life in its own unique way, instilling a profound sense of pride and ownership in young artists. Immersive Education : The Quiver App opens doors to an immersive, educational, and inspiring world, making it an indispensable tool for both classrooms and homes. Skill Development : Watch as children develop skills and retain knowledge in a manner that defies convention. The demo will cover:- Introduction to Augmented Reality and Quiver 3D Colouring App Exploring Quiver AR Coloring Sheets Mastering Quiver Education Dashboard Unleashing the Potential of Quiver Digital Environments Dive into the World of Quiver AR Masks Exclusive Benefits for Registered Educators:- Complimentary 12-Month License : Gain access to over 250 AR coloring sheets covering Science, Math, and Social Sciences. Quiver Swag and Goodies: Exclusive merchandise, including Mugs, Pens, Stickers, and Tote Bags."
+            "description": "Want to wow your kids or become the coolest teacher in school? Join us for an extraordinary experience as we introduce you to our Quiver App and Education Dashboard. Quiver, launched in 2013, was the world's first Augmented Reality colouring app, downloaded by over 25 Million users in 150+ countries and delivers engaging and magical experiences for all. Quiver is a one-stop shop for Augmented Reality education content and lesson plans for Pre K to Year 9 and beyond. Highlights: Interactive Learning: Witness every colored page spring to life in its own unique way, instilling a profound sense of pride and ownership in young artists. Immersive Education: The Quiver App opens doors to an immersive, educational, and inspiring world, making it an indispensable tool for both classrooms and homes. Skill Development: Watch as children develop skills and retain knowledge in a manner that defies convention. The demo will cover:- Introduction to Augmented Reality and Quiver 3D Colouring App Exploring Quiver AR Coloring Sheets Mastering Quiver Education Dashboard Unleashing the Potential of Quiver Digital Environments Dive into the World of Quiver AR Masks Exclusive Benefits for Registered Educators:- Complimentary 12-Month License: Gain access to over 250 AR coloring sheets covering Science, Math, and Social Sciences. Quiver Swag and Goodies: Exclusive merchandise, including Mugs, Pens, Stickers, and Tote Bags.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Want to wow your kids or become the coolest teacher in school? Join us for an extraordinary experience as we introduce you to our Quiver App and Education Dashboard. Quiver, launched in 2013, was the world's first Augmented Reality colouring app, downloaded by over 25 Million users in 150+ countries and delivers engaging and magical experiences for all. Quiver is a one-stop shop for Augmented Reality education content and lesson plans for Pre K to Year 9 and beyond."
+              },
+              {
+                "type": "subheading",
+                "text": "Highlights:"
+              },
+              {
+                "type": "list",
+                "items": [
+                  "Interactive Learning: Witness every colored page spring to life in its own unique way, instilling a profound sense of pride and ownership in young artists.",
+                  "Immersive Education: The Quiver App opens doors to an immersive, educational, and inspiring world, making it an indispensable tool for both classrooms and homes.",
+                  "Skill Development: Watch as children develop skills and retain knowledge in a manner that defies convention."
+                ]
+              },
+              {
+                "type": "paragraph",
+                "text": "The demo will cover:-"
+              },
+              {
+                "type": "list",
+                "items": [
+                  "Introduction to Augmented Reality and Quiver 3D Colouring App",
+                  "Exploring Quiver AR Coloring Sheets",
+                  "Mastering Quiver Education Dashboard",
+                  "Unleashing the Potential of Quiver Digital Environments",
+                  "Dive into the World of Quiver AR Masks"
+                ]
+              },
+              {
+                "type": "paragraph",
+                "text": "Exclusive Benefits for Registered Educators:-"
+              },
+              {
+                "type": "list",
+                "items": [
+                  "Complimentary 12-Month License: Gain access to over 250 AR coloring sheets covering Science, Math, and Social Sciences.",
+                  "Quiver Swag and Goodies: Exclusive merchandise, including Mugs, Pens, Stickers, and Tote Bags."
+                ]
+              }
+            ]
           },
           {
             "type": "Demo",
@@ -4671,7 +4845,17 @@
             "facilitators": [
               "Steve Smith"
             ],
-            "description": "In this workshop Steve will introduce some tools to use in the classroom to help with the Digital technology curriculum — tools to create digital outcomes and promote computational thinking."
+            "description": "In this workshop Steve will introduce some tools to use in the classroom to help with the Digital technology curriculum — tools to create digital outcomes and promote computational thinking.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "In this workshop steve will introduce some tools to use in the classroom to help with the Digital technology curriculum."
+              },
+              {
+                "type": "paragraph",
+                "text": "Tools to create digital outcomes and promote computational thinking."
+              }
+            ]
           },
           {
             "type": "Demo",
@@ -4680,7 +4864,29 @@
               "Daniel Oliver",
               "Lesieli Oliver"
             ],
-            "description": "Are you ready to step into the future of technology? Welcome to \"ImmerseHer: Virtual Reality,\" where you'll embark on an exciting journey into the world of virtual reality (VR). This workshop is led by Daniel and Lesieli Oliver, founders of Lālanga, current Technology teachers themselves, holding a passion for education and technology. What to Expect: Hands-On Experience: Dive into the world of virtual reality by exploring various VR applications. Grow in your Capability: This workshop is your chance to expand your technological skills and understanding. Daniel and Lesieli will share their wealth of knowledge to empower you with the tools you need to thrive in the tech-driven future. Discover Your Place in VR: Ever wondered where you fit in the future of virtual reality? This workshop provides insights into the vast possibilities and career paths within the VR industry. You'll gain a clearer understanding of how you can contribute to shaping the future. Join Daniel and Lesieli Oliver at \"ImmerseHer: Virtual Reality Workshop\" and prepare to be amazed by the endless potential of VR technology. Whether you're a tech enthusiast or simply curious about the future, this workshop is your gateway to the exciting world of virtual reality."
+            "description": "Are you ready to step into the future of technology? Welcome to \"ImmerseHer: Virtual Reality,\" where you'll embark on an exciting journey into the world of virtual reality (VR). This workshop is led by Daniel and Lesieli Oliver, founders of Lālanga, current Technology teachers themselves, holding a passion for education and technology. What to Expect: Hands-On Experience: Dive into the world of virtual reality by exploring various VR applications. Grow in your Capability: This workshop is your chance to expand your technological skills and understanding. Daniel and Lesieli will share their wealth of knowledge to empower you with the tools you need to thrive in the tech-driven future. Discover Your Place in VR: Ever wondered where you fit in the future of virtual reality? This workshop provides insights into the vast possibilities and career paths within the VR industry. You'll gain a clearer understanding of how you can contribute to shaping the future. Join Daniel and Lesieli Oliver at \"ImmerseHer: Virtual Reality Workshop\" and prepare to be amazed by the endless potential of VR technology. Whether you're a tech enthusiast or simply curious about the future, this workshop is your gateway to the exciting world of virtual reality.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Are you ready to step into the future of technology? Welcome to \"ImmerseHer: Virtual Reality,\" where you'll embark on an exciting journey into the world of virtual reality (VR)."
+              },
+              {
+                "type": "paragraph",
+                "text": "This workshop is led by Daniel and Lesieli Oliver, founders of Lālanga, current Technology teachers themselves, holding a passion for education and technology."
+              },
+              {
+                "type": "paragraph",
+                "text": "What to Expect:"
+              },
+              {
+                "type": "paragraph",
+                "text": "Hands-On Experience: Dive into the world of virtual reality by exploring various VR applications. Grow in your Capability: This workshop is your chance to expand your technological skills and understanding. Daniel and Lesieli will share their wealth of knowledge to empower you with the tools you need to thrive in the tech-driven future. Discover Your Place in VR: Ever wondered where you fit in the future of virtual reality? This workshop provides insights into the vast possibilities and career paths within the VR industry. You'll gain a clearer understanding of how you can contribute to shaping the future."
+              },
+              {
+                "type": "paragraph",
+                "text": "Join Daniel and Lesieli Oliver at \"ImmerseHer: Virtual Reality Workshop\" and prepare to be amazed by the endless potential of VR technology. Whether you're a tech enthusiast or simply curious about the future, this workshop is your gateway to the exciting world of virtual reality."
+              }
+            ]
           },
           {
             "type": "Demo",
@@ -4688,7 +4894,17 @@
             "facilitators": [
               "Claire Wigley"
             ],
-            "description": "Join us in exploring the practical side of disrupted learning in our upcoming workshop. Using Spotswood College as an exemplary case, we'll explore the nuanced art of fostering student engagement and inquiry-based learning methodologies. Dive into the insights behind the Superstar Game of Design Thinking, a tool that encourages creative exploration and critical thinking in students. Through practical examples, understand how this approach is reshaping education at Spotswood College and beyond. Gain valuable insights into personalised learning approaches tailored to individual student needs, strengths, and passions. Discover how Spotswood College's innovative practices can be adapted to create a purpose-driven and student-centered learning environment in any educational setting. This workshop is your gateway to understanding the evolving landscape of education and harnessing the potential of disrupted learning for meaningful student development.\""
+            "description": "Join us in exploring the practical side of disrupted learning in our upcoming workshop. Using Spotswood College as an exemplary case, we'll explore the nuanced art of fostering student engagement and inquiry-based learning methodologies. Dive into the insights behind the Superstar Game of Design Thinking, a tool that encourages creative exploration and critical thinking in students. Through practical examples, understand how this approach is reshaping education at Spotswood College and beyond. Gain valuable insights into personalised learning approaches tailored to individual student needs, strengths, and passions. Discover how Spotswood College's innovative practices can be adapted to create a purpose-driven and student-centered learning environment in any educational setting. This workshop is your gateway to understanding the evolving landscape of education and harnessing the potential of disrupted learning for meaningful student development.\"",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Join us in exploring the practical side of disrupted learning in our upcoming workshop. Using Spotswood College as an exemplary case, we'll explore the nuanced art of fostering student engagement and inquiry-based learning methodologies."
+              },
+              {
+                "type": "paragraph",
+                "text": "Dive into the insights behind the Superstar Game of Design Thinking, a tool that encourages creative exploration and critical thinking in students. Through practical examples, understand how this approach is reshaping education at Spotswood College and beyond. Gain valuable insights into personalised learning approaches tailored to individual student needs, strengths, and passions. Discover how Spotswood College's innovative practices can be adapted to create a purpose-driven and student-centered learning environment in any educational setting. This workshop is your gateway to understanding the evolving landscape of education and harnessing the potential of disrupted learning for meaningful student development.\""
+              }
+            ]
           },
           {
             "type": "Keynote",
@@ -4696,7 +4912,21 @@
             "facilitators": [
               "Steve Smith"
             ],
-            "description": "Together with strategic insights practice Canvas8 and global non-profit American Institutes for Research, Google for Education conducted interviews with 94 educational experts across 24 countries to compile the future of education report. As educators work to equip students with the skills and mindsets they’ll need to navigate massive change, the experts we interviewed discussed how and why they’re rethinking the role of education. Find out how recent technological advances are evolving how we think about teaching and learning from a one-to-many model to a more personal approach to learning and the tools that can support this."
+            "description": "Together with strategic insights practice Canvas8 and global non-profit American Institutes for Research, Google for Education conducted interviews with 94 educational experts across 24 countries to compile the future of education report. As educators work to equip students with the skills and mindsets they’ll need to navigate massive change, the experts we interviewed discussed how and why they’re rethinking the role of education. Find out how recent technological advances are evolving how we think about teaching and learning from a one-to-many model to a more personal approach to learning and the tools that can support this.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Together with strategic insights practice Canvas8 and global non-profit American Institutes for Research, Google for Education conducted interviews with 94 educational experts across 24 countries to compile the future of education report."
+              },
+              {
+                "type": "paragraph",
+                "text": "As educators work to equip students with the skills and mindsets they’ll need to navigate massive change, the experts we interviewed discussed how and why they’re rethinking the role of education."
+              },
+              {
+                "type": "paragraph",
+                "text": "Find out how recent technological advances are evolving how we think about teaching and learning from a one-to-many model to a more personal approach to learning and the tools that can support this."
+              }
+            ]
           },
           {
             "type": "Workshop",
@@ -4704,7 +4934,29 @@
             "facilitators": [
               "Christopher Mende"
             ],
-            "description": "Generative AI Technical Workshop ● Hands-on labs with technical guidance using our Cloud Skills boost online environment ● Step-by-step guide on building Generative search and discovery tools We will go through the basics of generative model design, classification, extraction, summarization and everyone's hot topic, prompt engineering! Attendees will leave having built a fully functional conversational search agent."
+            "description": "Generative AI Technical Workshop ● Hands-on labs with technical guidance using our Cloud Skills boost online environment ● Step-by-step guide on building Generative search and discovery tools We will go through the basics of generative model design, classification, extraction, summarization and everyone's hot topic, prompt engineering! Attendees will leave having built a fully functional conversational search agent.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Generative AI Technical Workshop"
+              },
+              {
+                "type": "paragraph",
+                "text": "● Hands-on labs with technical guidance using our Cloud Skills boost online environment"
+              },
+              {
+                "type": "paragraph",
+                "text": "● Step-by-step guide on building Generative search and discovery tools"
+              },
+              {
+                "type": "paragraph",
+                "text": "We will go through the basics of generative model design, classification, extraction, summarization and everyone's hot topic, prompt engineering!"
+              },
+              {
+                "type": "paragraph",
+                "text": "Attendees will leave having built a fully functional conversational search agent."
+              }
+            ]
           },
           {
             "type": "Workshop",
@@ -4712,7 +4964,17 @@
             "facilitators": [
               "Alex Ward"
             ],
-            "description": "Teach the basics of programming while creating interactive procedural art. p5.js is a JavaScript library for creative coding, with a focus on making coding accessible and inclusive for educators artists, designers, and programming beginners! p5.js is free, open-source and browser based - you can start using it in your classroom today. Technology is a creative pursuit. How do we as educators provide our students with engaging content that motivates the learning of Computational Thinking? In this session Alex will focus on how to cover the basics of programming in JavaScript while giving students artistic and creative freedom to express their ideas. We will explore the long tradition of generative art and approaches to blend in Digital Technologies into other subject areas."
+            "description": "Teach the basics of programming while creating interactive procedural art. p5.js is a JavaScript library for creative coding, with a focus on making coding accessible and inclusive for educators artists, designers, and programming beginners! p5.js is free, open-source and browser based - you can start using it in your classroom today. Technology is a creative pursuit. How do we as educators provide our students with engaging content that motivates the learning of Computational Thinking? In this session Alex will focus on how to cover the basics of programming in JavaScript while giving students artistic and creative freedom to express their ideas. We will explore the long tradition of generative art and approaches to blend in Digital Technologies into other subject areas.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Teach the basics of programming while creating interactive procedural art. p5.js is a JavaScript library for creative coding, with a focus on making coding accessible and inclusive for educators artists, designers, and programming beginners! p5.js is free, open-source and browser based - you can start using it in your classroom today."
+              },
+              {
+                "type": "paragraph",
+                "text": "Technology is a creative pursuit. How do we as educators provide our students with engaging content that motivates the learning of Computational Thinking? In this session Alex will focus on how to cover the basics of programming in JavaScript while giving students artistic and creative freedom to express their ideas. We will explore the long tradition of generative art and approaches to blend in Digital Technologies into other subject areas."
+              }
+            ]
           },
           {
             "type": "Workshop",
@@ -4720,7 +4982,13 @@
             "facilitators": [
               "Jennifer Gottschalk"
             ],
-            "description": "We will explore strategies that students (and teachers) can use to successfully debug their code including how to use Chat GPT whilst ensuring authenticity. Participants are encouraged to bring their devices and broken code that needs debugging. The strategies shared are based on Python / php but will work with any language."
+            "description": "We will explore strategies that students (and teachers) can use to successfully debug their code including how to use Chat GPT whilst ensuring authenticity. Participants are encouraged to bring their devices and broken code that needs debugging. The strategies shared are based on Python / php but will work with any language.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "We will explore strategies that students (and teachers) can use to successfully debug their code including how to use Chat GPT whilst ensuring authenticity. Participants are encouraged to bring their devices and broken code that needs debugging. The strategies shared are based on Python / php but will work with any language."
+              }
+            ]
           },
           {
             "type": "Workshop",
@@ -4728,7 +4996,36 @@
             "facilitators": [
               "Julie McMahon"
             ],
-            "description": "Cyber security is an important area for both kaiako and ākonga across Aotearoa. In this workshop, participants will hear about the impact of cyber security breaches and exciting career pathways in Cyber Security from industry experts. They will learn how to utilise the free Cyber Skills Aotearoa online and unplugged activities to teach cyber security concepts in their classrooms. The Cyber Skills Aotearoa content encourages learner agency as students engage with learning cyber security concepts through assuming the role of an ethical (white hat) hacker to sleuth the answers to problems. The programme is designed to enable ākonga to navigate the online world with confidence. The workshop will cover teaching the following topics in the classroom: Sharing information online Good password practices Phishing and scam awareness Cryptography Web application security Industry case studies that are aligned with NCEA assessment requirements All content is available in both English and te reo Māori and is aligned to the Hangarau wāhanga ako and Technology learning areas. Content addresses achievement objectives and progress outcomes in the Nature of Technology, Whakaaro Rorohiko, Computational Thinking, Tangata me te Rorohiko and Designing and Developing Digital Outcomes strands."
+            "description": "Cyber security is an important area for both kaiako and ākonga across Aotearoa. In this workshop, participants will hear about the impact of cyber security breaches and exciting career pathways in Cyber Security from industry experts. They will learn how to utilise the free Cyber Skills Aotearoa online and unplugged activities to teach cyber security concepts in their classrooms. The Cyber Skills Aotearoa content encourages learner agency as students engage with learning cyber security concepts through assuming the role of an ethical (white hat) hacker to sleuth the answers to problems. The programme is designed to enable ākonga to navigate the online world with confidence. The workshop will cover teaching the following topics in the classroom: Sharing information online Good password practices Phishing and scam awareness Cryptography Web application security Industry case studies that are aligned with NCEA assessment requirements All content is available in both English and te reo Māori and is aligned to the Hangarau wāhanga ako and Technology learning areas. Content addresses achievement objectives and progress outcomes in the Nature of Technology, Whakaaro Rorohiko, Computational Thinking, Tangata me te Rorohiko and Designing and Developing Digital Outcomes strands.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Cyber security is an important area for both kaiako and ākonga across Aotearoa. In this workshop, participants will hear about the impact of cyber security breaches and exciting career pathways in Cyber Security from industry experts. They will learn how to utilise the free Cyber Skills Aotearoa online and unplugged activities to teach cyber security concepts in their classrooms."
+              },
+              {
+                "type": "paragraph",
+                "text": "The Cyber Skills Aotearoa content encourages learner agency as students engage with learning cyber security concepts through assuming the role of an ethical (white hat) hacker to sleuth the answers to problems. The programme is designed to enable ākonga to navigate the online world with confidence."
+              },
+              {
+                "type": "paragraph",
+                "text": "The workshop will cover teaching the following topics in the classroom:"
+              },
+              {
+                "type": "list",
+                "items": [
+                  "Sharing information online",
+                  "Good password practices",
+                  "Phishing and scam awareness",
+                  "Cryptography",
+                  "Web application security",
+                  "Industry case studies that are aligned with NCEA assessment requirements"
+                ]
+              },
+              {
+                "type": "paragraph",
+                "text": "All content is available in both English and te reo Māori and is aligned to the Hangarau wāhanga ako and Technology learning areas. Content addresses achievement objectives and progress outcomes in the Nature of Technology, Whakaaro Rorohiko, Computational Thinking, Tangata me te Rorohiko and Designing and Developing Digital Outcomes strands."
+              }
+            ]
           }
         ],
         "schedule": {
@@ -4925,7 +5222,11 @@
             ]
           }
         ],
-        "audience": "High school teachers of Computer Science, Digital Technologies, STEM or related subjects; ICT curriculum leaders, primary school teachers and school librarians."
+        "audience": "High school teachers of Computer Science, Digital Technologies, STEM or related subjects; ICT curriculum leaders, primary school teachers and school librarians.",
+        "introImage": {
+          "url": "/img/scraped/site/sponsors/6507d1a4ae8463918bdb21a9_IMG_5864_83a64f0a.jpg",
+          "alt": "Google Educator Conference 2023"
+        }
       }
     },
     {

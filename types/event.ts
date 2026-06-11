@@ -155,11 +155,20 @@ export interface EventSpeakersV3 {
   readiness_workshop_facilitators?: EventSpeakerGroup;
 }
 
+// A block of formatted session content (preserves the legacy accordion layout:
+// paragraphs, bold sub-headings, and bullet lists).
+export interface EventSessionBlock {
+  type: "paragraph" | "subheading" | "list";
+  text?: string; // for paragraph / subheading
+  items?: string[]; // for list
+}
+
 // A conference session (demo / keynote / workshop / panel / guest)
 export interface EventSession {
   type: string; // "Demo" | "Keynote" | "Workshop" | "Panel" | "Guest Speaker"
   title: string;
-  description?: string;
+  description?: string; // flat fallback / summary
+  descriptionBlocks?: EventSessionBlock[]; // structured content (preferred when present)
   facilitators?: string[];
 }
 
@@ -239,6 +248,7 @@ export interface EventDetailPageData {
   time: string;
   location: EventLocationV3;
   fullDescription: string[];
+  introImage?: EventPhotoV3; // optional banner shown under the intro/description
   sessions?: EventSession[];
   schedule?: EventSchedule;
   infoSections?: EventInfoSection[];
