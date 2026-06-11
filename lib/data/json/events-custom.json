@@ -1233,6 +1233,15 @@
         },
         "specialSections": [
           {
+            "type": "collaboration",
+            "title": "Hosted & Organised By",
+            "content": [
+              "AUT — Auckland University of Technology|/img/sponsors/aut.svg|https://www.aut.ac.nz/",
+              "She Sharp|/logos/she-sharp-logo-black.png|https://shesharp.org.nz/",
+              "Fisher & Paykel Healthcare|/logos/FPHcare-logo.svg|https://www.fphcare.com/nz/"
+            ]
+          },
+          {
             "type": "agenda",
             "title": "Two-Day Format",
             "content": [
@@ -1263,6 +1272,20 @@
           },
           {
             "type": "bullets",
+            "title": "2026 Venues",
+            "content": [
+              "Auckland — AUT City Campus, hosted by AUT + She Sharp, 7–8 August (this event)",
+              "Auckland — AUT, hosted by AUT + Tū Ātea, 7–8 August",
+              "Auckland — Mission Ready, 5–6 August",
+              "Auckland — Unitec, with Seen Ventures, 6–8 August",
+              "Waikato — Te Ipu o Te Mahara | Artificial Intelligence Institute, 6–7 August",
+              "Wellington — Amazon Web Services (AWS), 6–7 August",
+              "Christchurch — EPIC Innovation + Canterbury Tech, 6–7 August",
+              "More venues to be announced."
+            ]
+          },
+          {
+            "type": "bullets",
             "title": "Why Attend",
             "content": [
               "Build practical, hands-on AI capability on real-world problems",
@@ -1280,6 +1303,7 @@
               "AUT students: free entry with code REDACTED.",
               "General attendees: $10 with code REDACTED.",
               "Mentors and supporting staff: free with code REDACTED.",
+              "Enter as a team or as an individual — just let us know which when you register, and we will help solo registrants find a team on the day.",
               "Join the AUT City Campus Community Hub for the latest updates and live Q&A session dates."
             ]
           },
@@ -1317,8 +1341,8 @@
           {
             "title": "Part of a Nationwide Festival",
             "paragraphs": [
-              "The AUT City Campus event is one of several venues running across the country during the festival window of 3–10 August 2026.",
-              "2026 venues include: Auckland — AUT City Campus (with She Sharp), AUT South Campus (with Tū Ātea), Unitec (with Seen Ventures), and Mission Ready; Waikato — Te Ipu o Te Mahara | AI Institute; Wellington — Amazon Web Services (AWS); and Christchurch — EPIC Innovation with Canterbury Tech."
+              "The AUT City Campus event is one of several venues running across the country during the festival window in early August 2026.",
+              "Venues span Auckland, Waikato, Wellington and Christchurch — see the 2026 Venues list above for the host and dates at each location, with more to be announced."
             ],
             "links": [
               {
