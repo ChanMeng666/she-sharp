@@ -205,6 +205,8 @@ export interface EventSponsorV3 {
   logo: string;
   description?: string;
   tier?: string; // e.g. "Gold" | "Silver" | "Bronze" | "Exhibition" | "Venue"
+  image?: string; // optional representative photo (e.g. a networking sponsor's rep)
+  imageAlt?: string;
 }
 
 // Sponsors grouped by type
@@ -248,7 +250,7 @@ export interface EventDetailPageData {
   time: string;
   location: EventLocationV3;
   fullDescription: string[];
-  introImage?: EventPhotoV3; // optional banner shown under the intro/description
+  sponsorsImage?: EventPhotoV3; // optional banner shown within the sponsors section
   sessions?: EventSession[];
   schedule?: EventSchedule;
   infoSections?: EventInfoSection[];

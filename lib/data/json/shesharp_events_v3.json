@@ -4668,7 +4668,9 @@
               "name": "MDS",
               "logo": "/img/scraped/conference/2023/sponsors/mds.png",
               "description": "Dan Trainor, Senior Future Student Advisor. After completing a B.A. (Hons) in Screen and Media, Dan has worked as a freelance videographer and visual artist; he has immense passion for the creative industries. This enthusiasm transcends into his role as Course and Careers Advisor at MDS by encouraging the exceptional talent coming into the school and helping direct students into the amazing opportunities we have to offer.",
-              "tier": "Networking & Drinks"
+              "tier": "Networking & Drinks",
+              "image": "/img/scraped/site/sponsors/654b51d48ef3de09823e6526_Staff_-_Dan_a73a8d1c.jpg",
+              "imageAlt": "Dan Trainor"
             }
           ],
           "other": []
@@ -5223,7 +5225,7 @@
           }
         ],
         "audience": "High school teachers of Computer Science, Digital Technologies, STEM or related subjects; ICT curriculum leaders, primary school teachers and school librarians.",
-        "introImage": {
+        "sponsorsImage": {
           "url": "/img/scraped/site/sponsors/6507d1a4ae8463918bdb21a9_IMG_5864_83a64f0a.jpg",
           "alt": "Google Educator Conference 2023"
         }

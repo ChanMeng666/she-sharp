@@ -120,18 +120,6 @@ export default async function EventPage({ params }: EventPageProps) {
 
               <EventDescription event={event} />
 
-              {/* Intro banner image (legacy conference pages) */}
-              {event.detailPageData.introImage && (
-                <div className="w-full overflow-hidden rounded-2xl">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={event.detailPageData.introImage.url}
-                    alt={event.detailPageData.introImage.alt}
-                    className="w-full h-auto rounded-2xl"
-                  />
-                </div>
-              )}
-
               {/* Special Sections (workshop prep, videos, etc.) */}
               {hasSpecialSections(event) && (
                 <EventSpecialSections

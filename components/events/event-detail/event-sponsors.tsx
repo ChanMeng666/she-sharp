@@ -15,13 +15,21 @@ interface SponsorRowProps {
 }
 
 function SponsorRow({ sponsor, id, logoSizeClass = "h-28 md:h-36 lg:h-44" }: SponsorRowProps) {
-  const hasDetails = !!(sponsor.name || sponsor.description);
+  const hasDetails = !!(sponsor.name || sponsor.description || sponsor.image);
 
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-center gap-6 md:gap-10">
-      {/* Left: name + description */}
+      {/* Left: name + description (+ optional representative photo) */}
       {hasDetails && (
         <div className="flex-1 min-w-0 text-center sm:text-left">
+          {sponsor.image && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={sponsor.image}
+              alt={sponsor.imageAlt || sponsor.name}
+              className="h-24 w-24 rounded-full object-cover mb-3 mx-auto sm:mx-0"
+            />
+          )}
           {sponsor.name && (
             <h3 className="text-xl font-semibold text-foreground mb-2">
               {sponsor.name}
@@ -148,6 +156,18 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
                 />
               ))}
             </div>
+          </div>
+        )}
+
+        {/* Sponsors banner image (legacy conference pages) */}
+        {event.detailPageData.sponsorsImage && (
+          <div className="mt-12 w-full overflow-hidden rounded-2xl">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={event.detailPageData.sponsorsImage.url}
+              alt={event.detailPageData.sponsorsImage.alt}
+              className="w-full h-auto rounded-2xl"
+            />
           </div>
         )}
 
