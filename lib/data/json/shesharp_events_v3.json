@@ -4374,6 +4374,14 @@
                 "linkedin": ""
               },
               {
+                "name": "Claire Wigley",
+                "title": "Teacher, Spotswood College",
+                "company": "",
+                "bio": "Claire is currently a teacher at the innovative Spotswood College in New Plymouth. With a focus on teaching 21st-century skills, Claire's background lies in textiles technology and her teaching experience spans from year 1 to year 10. Over the past 8 years, she has expanded her knowledge to encompass various areas of the Technology Curriculum, ranging from cooking to coding and laser cutting. As an Inquiry Specialist teacher, Claire integrates the Design Thinking process into her lessons. In 2023, she took on the role of council member at TENZ and made significant contributions to their recent conference.",
+                "image": "/img/scraped/conference/2023/speakers/claire-wigley.jpg",
+                "linkedin": ""
+              },
+              {
                 "name": "Lesieli Oliver",
                 "title": "Founder & Chief Visionary Officer, Lālanga",
                 "company": "",
@@ -4404,6 +4412,14 @@
                 "bio": "Nischay is an experienced consultant in the tech sector. He has played a pivotal role in optimising operations & aligning strategies with QuiverVision's goals & objectives. Nischay led the launch of a new interactive EdTech product at QuiverVision to enable engaging learning experience, benefitting over 35,000+ teachers & 100,000+ students worldwide within the first year of rollout. He spearheads the expansion of our educational & curriculum-aligned content at Quiver. He holds a Master's degree in Engineering (1st-class hons.) at the University of Auckland. He is a research intern at Empathic Computing Lab (Auckland Bioengineering Institute) working on a project involving Virtual Reality, Biofeedback & Empathy.",
                 "image": "/img/scraped/conference/2023/speakers/nischay-gupta.png",
                 "linkedin": ""
+              },
+              {
+                "name": "Steve Smith",
+                "title": "Google for Education, NZ Program Manager",
+                "company": "",
+                "bio": "Steve has been a High School Social Studies and Geography teacher for the last 16 years in New Zealand since returning from teaching in London for 2 years. Steve worked to bring Google for Education to his school and along with a colleague trained the staff in the use of Google for education. Over 8 years, Steve passionately promoted Google Tools through workshops across New Zealand. He's Level 1 and 2 Certified Educator & Trainer, attended the 2019 Sydney Innovator Academy, and is part of the Google Earth Education Experts Group. He is now at Google's Auckland office as NZ Lead for Google for Education, aiming to empower NZ educator communities, support partners, and bring more \"Google goodness\" to education in NZ.",
+                "image": "/img/scraped/conference/2023/speakers/steve-smith.jpeg",
+                "linkedin": "https://www.linkedin.com/in/steve-smith-81816493/"
               }
             ]
           },
@@ -4520,7 +4536,7 @@
             {
               "name": "MDS",
               "logo": "/img/scraped/conference/2023/sponsors/mds.png",
-              "description": "Senior Future Student Advisor After completing a B.A. (Hons) in Screen and Media, Dan has worked as a freelance videographer and visual artist; he has immense passion for the creative industries. This enthusiasm transcends into his role as Course and Careers Advisor at MDS by encouraging the exceptional talent coming into the school and helping direct students into the amazing opportunities we have to offer.",
+              "description": "Dan Trainor, Senior Future Student Advisor. After completing a B.A. (Hons) in Screen and Media, Dan has worked as a freelance videographer and visual artist; he has immense passion for the creative industries. This enthusiasm transcends into his role as Course and Careers Advisor at MDS by encouraging the exceptional talent coming into the school and helping direct students into the amazing opportunities we have to offer.",
               "tier": "Networking & Drinks"
             }
           ],

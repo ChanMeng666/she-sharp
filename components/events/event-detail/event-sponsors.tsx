@@ -150,6 +150,11 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
             </div>
           </div>
         )}
+
+        {/* Closing thank-you to sponsors (mirrors the legacy conference pages) */}
+        <p className="mt-12 text-center text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground">
+          Thanks for the support
+        </p>
       </div>
     </section>
   );
