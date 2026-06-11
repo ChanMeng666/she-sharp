@@ -661,7 +661,7 @@ export async function sendDonationAdminEmail(details: {
   transactionId: string;
   date: Date;
 }): Promise<boolean> {
-  const adminEmail = process.env.DONATION_ADMIN_EMAIL || 'mentoring@shesharp.org.nz';
+  const adminEmail = process.env.DONATION_ADMIN_EMAIL || 'website@shesharp.org.nz';
   const dateLabel = formatDonationDate(details.date);
 
   const html = brandedEmailLayout({
