@@ -44,7 +44,7 @@ export function EventSessions({ event }: EventSessionsProps) {
                 <p className="text-lg md:text-xl font-semibold text-foreground">
                   {type === "Guest Speaker" ? "Guest Speaker" : `${type}s`}
                 </p>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-6">
+                <div className="space-y-5 md:space-y-6">
                   {items.map((session, i) => (
                     <SessionCard key={i} session={session} />
                   ))}
@@ -102,7 +102,7 @@ function SessionCard({ session }: { session: EventSession }) {
     !!session.description;
 
   return (
-    <details className="card-responsive-sm bg-background p-6 md:p-8 shadow-sm group h-full [&_summary::-webkit-details-marker]:hidden">
+    <details className="card-responsive-sm bg-background p-6 md:p-8 shadow-sm group [&_summary::-webkit-details-marker]:hidden">
       <summary className="flex items-start justify-between gap-3 cursor-pointer list-none">
         <h3 className="text-base md:text-lg font-semibold text-foreground">
           {session.title}
