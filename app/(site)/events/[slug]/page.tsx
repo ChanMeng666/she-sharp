@@ -20,6 +20,7 @@ import {
   EventSidebarPanel,
   EventPhotos,
   EventSponsorship,
+  EventDonationCta,
   EventSponsors,
   EventSpecialSections,
   EventFeaturedPhoto,
@@ -171,6 +172,9 @@ export default async function EventPage({ params }: EventPageProps) {
       <div>
         <EventSponsorship event={event} />
       </div>
+
+      {/* Donation / attend CTA (mirrors the legacy conference closing block) */}
+      <EventDonationCta />
 
       {/* Related Events */}
       {relatedEvents.length > 0 && (
