@@ -92,15 +92,37 @@ Each entry in `events` looks like:
 | `detailPageData.time` | Format: `"5:00pm - 7:30pm NZST"`. |
 | `detailPageData.location.format` | One of `"in_person"`, `"online"`, `"hybrid"`. |
 | `detailPageData.location.{venueName,address,city,country}` | Full physical address when `in_person`. |
-| `detailPageData.fullDescription` | Array of paragraphs. Prefer the speaker-authored / pinned copy over casual chat. |
+| `detailPageData.fullDescription` | Array of paragraphs. Prefer the speaker-authored / pinned copy over casual chat. Strip any internal access/promo codes or private invite links (see "No internal codes" below). |
 | `speakers.keynote_speakers.speakers[]` | One object per speaker. `title` = role, `company` = org, `image` = `/img/events/event-<slug>-<kebab-name>.<ext>`. |
 | `organizers` | Left `[]` for every existing event — do not add She Sharp here. |
 | `sponsors.main[]` | Partner orgs with own logo file under `/img/sponsors/`. If the logo doesn't exist, use an empty string for `logo` and flag it in the summary. |
-| `specialSections` | Always include both `agenda` (= "What You'll Learn") and `why-attend` if the source content has them. |
-| `registrationUrl` | Humanitix base URL (no `?accesscode=...` — those are for internal distribution). |
+| `specialSections` | Always include both `agenda` (= "What You'll Learn") and `why-attend` if the source content has them. Never build a "Registration" section that lists access/promo codes — keep concessions generic and point to the official channel. |
+| `registrationUrl` | Public registration base URL only. Strip `?accesscode=...` (internal distribution) and never substitute a private invite/checkout link. See "No internal codes" below. |
 | `status` | `"upcoming"` before the event, `"past"` after. |
 | `isFeatured` | `false` by default. Set `true` only if the user explicitly asks. |
 | `category` | Use the closest of `"workshop"`, `"panel"`, `"networking"`, `"fireside-chat"`, `"hackathon"`, `"conference"`. |
+
+## No internal codes or private links (public-data rule)
+
+This file is public. Whatever you write ships to the live site and to public
+git history. Slack channels routinely contain material meant only for
+controlled distribution; it must **never** land in `events-custom.json`:
+
+- **Access / promo / discount / registration codes** — e.g. a student
+  free-entry code, a flat-rate discount code, or any "free/discounted entry
+  with code X" wording, and `?accesscode=…` query params on registration
+  URLs. (Don't quote the real code values here either — describe them.)
+- **Private invite-only registration or checkout links** — use the public
+  registration base URL instead.
+
+These can hide in any text field: `fullDescription`, `specialSections`
+(especially a "Registration" block), `shortDescription`, `coverImage.alt`,
+sponsor descriptions. Surface that concessions exist generically and route
+people to the event's official channel for the code — never publish the code.
+List anything you redact on the dry-run plan's `Redactions` line. When unsure
+whether a token/link is internal, leave it out and ask. A leaked code can't be
+undone by a later edit — it stays in public history and must be scrubbed and
+rotated.
 
 ## Authoritative-content rules (most to least trusted)
 
