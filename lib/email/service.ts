@@ -568,3 +568,143 @@ All your account data and mentor profile remain unchanged.
     text,
   });
 }
+
+/**
+ * Formats a date as a readable NZ-style string for donation emails.
+ */
+function formatDonationDate(date: Date): string {
+  return date.toLocaleDateString('en-NZ', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+/**
+ * Send a branded donation receipt to the donor.
+ */
+export async function sendDonationReceiptEmail(
+  email: string,
+  details: {
+    amount: string;
+    currency: string;
+    transactionId: string;
+    donorName?: string;
+    date: Date;
+  }
+): Promise<boolean> {
+  const baseUrl = getBaseUrl();
+  const dateLabel = formatDonationDate(details.date);
+  const greeting = details.donorName ? `Dear ${details.donorName},` : 'Dear Friend,';
+
+  const html = brandedEmailLayout({
+    title: 'Thank You for Your Donation!',
+    preheader: `Your donation of $${details.amount} ${details.currency} has been received.`,
+    bodyHtml: `
+      ${successBadge('✓ Donation Received')}
+
+      <h2 style="color: ${BRAND.purpleDark}; margin-top: 0; text-align: center;">Thank You for Supporting Women in STEM!</h2>
+      <p>${greeting}</p>
+      <p>Your generous donation of <strong>$${details.amount} ${details.currency}</strong> has been received. Every contribution helps She Sharp bridge the gender gap through events, mentorship, and career opportunities.</p>
+
+      ${detailsCard(`
+        <h3 style="margin-top: 0; color: ${BRAND.purpleDark};">Donation Receipt</h3>
+        <p><strong>Amount:</strong> $${details.amount} ${details.currency}</p>
+        <p><strong>Date:</strong> ${dateLabel}</p>
+        <p><strong>Transaction ID:</strong> ${details.transactionId}</p>
+      `)}
+
+      <p>Please keep this email as your receipt. She Sharp is a registered non-profit organisation.</p>
+      ${brandButton('Visit She Sharp', baseUrl)}
+
+      <p style="color: #999; font-size: 12px;">If you have any questions about your donation, simply reply to this email.</p>
+    `,
+    contactEmail: 'mentoring@shesharp.org.nz',
+  });
+
+  const text = `
+Thank You for Your Donation - She Sharp
+
+${greeting}
+
+Your generous donation of $${details.amount} ${details.currency} has been received. Every contribution helps She Sharp bridge the gender gap through events, mentorship, and career opportunities.
+
+DONATION RECEIPT
+- Amount: $${details.amount} ${details.currency}
+- Date: ${dateLabel}
+- Transaction ID: ${details.transactionId}
+
+Please keep this email as your receipt. She Sharp is a registered non-profit organisation.
+
+Visit us at: ${baseUrl}
+
+© ${new Date().getFullYear()} She Sharp. Empowering women in STEM.
+Questions? Contact us at mentoring@shesharp.org.nz
+  `;
+
+  return sendEmail({
+    to: email,
+    subject: 'Your She Sharp Donation Receipt',
+    html,
+    text,
+  });
+}
+
+/**
+ * Notify the She Sharp admin that a new donation has been received.
+ */
+export async function sendDonationAdminEmail(details: {
+  donorEmail: string;
+  donorName?: string;
+  amount: string;
+  currency: string;
+  transactionId: string;
+  date: Date;
+}): Promise<boolean> {
+  const adminEmail = process.env.DONATION_ADMIN_EMAIL || 'mentoring@shesharp.org.nz';
+  const dateLabel = formatDonationDate(details.date);
+
+  const html = brandedEmailLayout({
+    title: 'New Donation Received',
+    preheader: `${details.donorName || details.donorEmail} donated $${details.amount} ${details.currency}.`,
+    bodyHtml: `
+      ${successBadge('💜 New Donation')}
+
+      <h2 style="color: ${BRAND.purpleDark}; margin-top: 0; text-align: center;">A New Donation Has Been Received</h2>
+
+      ${detailsCard(`
+        <h3 style="margin-top: 0; color: ${BRAND.purpleDark};">Donation Details</h3>
+        <p><strong>Amount:</strong> $${details.amount} ${details.currency}</p>
+        <p><strong>Donor:</strong> ${details.donorName || 'N/A'}</p>
+        <p><strong>Email:</strong> ${details.donorEmail || 'N/A'}</p>
+        <p><strong>Date:</strong> ${dateLabel}</p>
+        <p><strong>Transaction ID:</strong> ${details.transactionId}</p>
+      `)}
+
+      <p style="color: #999; font-size: 12px;">This is an automated notification. The full record is available in your Stripe Dashboard.</p>
+    `,
+    contactEmail: 'mentoring@shesharp.org.nz',
+  });
+
+  const text = `
+New Donation Received - She Sharp
+
+A new donation has been received.
+
+Donation Details:
+- Amount: $${details.amount} ${details.currency}
+- Donor: ${details.donorName || 'N/A'}
+- Email: ${details.donorEmail || 'N/A'}
+- Date: ${dateLabel}
+- Transaction ID: ${details.transactionId}
+
+This is an automated notification. The full record is available in your Stripe Dashboard.
+  `;
+
+  return sendEmail({
+    to: adminEmail,
+    subject: `New Donation: $${details.amount} ${details.currency} from ${details.donorName || details.donorEmail}`,
+    html,
+    text,
+  });
+}

@@ -6,12 +6,19 @@ import {
   users,
   activityLogs,
   menteeFormSubmissions,
+  donations,
   type NewMembershipPurchase,
+  type NewDonation,
   ActivityType,
 } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { createPaymentInvitationCode } from '@/lib/invitations/service';
-import { sendPaymentConfirmationEmail } from '@/lib/email/service';
+import {
+  sendPaymentConfirmationEmail,
+  sendDonationReceiptEmail,
+  sendDonationAdminEmail,
+} from '@/lib/email/service';
+import { sendDonationSlackNotification } from '@/lib/slack/service';
 import Stripe from 'stripe';
 
 /**
@@ -219,6 +226,110 @@ export async function handleSuccessfulPayment(
     purchaseId: purchase.id,
     invitationCode: invitationCode.code,
   };
+}
+
+/**
+ * Handles a successful one-time donation: records it, then sends the donor a
+ * receipt and notifies admins. Idempotent on the Stripe checkout session id.
+ */
+export async function handleSuccessfulDonation(
+  session: Stripe.Checkout.Session
+): Promise<{ donationId: number; alreadyProcessed: boolean }> {
+  const sessionId = session.id;
+
+  // Idempotency: webhooks may be delivered more than once.
+  const [existing] = await db
+    .select({ id: donations.id })
+    .from(donations)
+    .where(eq(donations.stripeSessionId, sessionId))
+    .limit(1);
+
+  if (existing) {
+    console.log('Donation already processed for session:', sessionId);
+    return { donationId: existing.id, alreadyProcessed: true };
+  }
+
+  const email = session.customer_details?.email || session.customer_email || '';
+  const donorName = session.customer_details?.name || undefined;
+  const amount = session.amount_total ? (session.amount_total / 100).toFixed(2) : '0.00';
+  const currency = (session.currency || 'nzd').toUpperCase();
+  const paymentIntentId =
+    typeof session.payment_intent === 'string'
+      ? session.payment_intent
+      : session.payment_intent?.id || null;
+  const date = new Date();
+
+  // Record the donation.
+  const donationData: NewDonation = {
+    stripeSessionId: sessionId,
+    stripePaymentIntentId: paymentIntentId,
+    donorEmail: email || null,
+    donorName: donorName || null,
+    amount,
+    currency,
+    status: 'completed',
+    receiptSent: false,
+    metadata: {
+      checkoutSessionId: sessionId,
+    },
+  };
+
+  const [donation] = await db.insert(donations).values(donationData).returning();
+
+  const transactionId = paymentIntentId || sessionId;
+
+  // Send donor receipt (best-effort).
+  let receiptSent = false;
+  if (email) {
+    try {
+      receiptSent = await sendDonationReceiptEmail(email, {
+        amount,
+        currency,
+        transactionId,
+        donorName,
+        date,
+      });
+    } catch (error) {
+      console.error('Failed to send donation receipt email:', error);
+    }
+  }
+
+  // Notify admins by email (best-effort).
+  try {
+    await sendDonationAdminEmail({
+      donorEmail: email,
+      donorName,
+      amount,
+      currency,
+      transactionId,
+      date,
+    });
+  } catch (error) {
+    console.error('Failed to send donation admin email:', error);
+  }
+
+  // Notify admins via Slack (best-effort).
+  try {
+    await sendDonationSlackNotification({
+      amount,
+      currency,
+      donorName,
+      donorEmail: email,
+      transactionId,
+      date,
+    });
+  } catch (error) {
+    console.error('Failed to send donation Slack notification:', error);
+  }
+
+  if (receiptSent) {
+    await db
+      .update(donations)
+      .set({ receiptSent: true })
+      .where(eq(donations.id, donation.id));
+  }
+
+  return { donationId: donation.id, alreadyProcessed: false };
 }
 
 /**
