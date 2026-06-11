@@ -1791,7 +1791,8 @@
         "fullDescription": [
           "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
           "The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.",
-          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms."
+          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.",
+          "Previously known as CS4HS, the Google Educator Conference is back for 2024!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -1992,37 +1993,37 @@
             {
               "name": "AUT",
               "logo": "/img/scraped/conference/2024/sponsors/aut.png",
-              "description": "Auckland University of Technology (AUT) is New Zealand's leading modern university and one of the largest in the country. Renowned for innovative teaching and a strong emphasis on real-world learning, AUT offers diverse programs across business, engineering, health sciences and creative technologies. AUT is a hub for cutting-edge research, focusing on areas such as artificial intelligence, sustainability and sports science, and is committed to creating a vibrant, inclusive community that prepares students for global careers.",
+              "description": "Auckland University of Technology (AUT) is New Zealand's leading modern university and one of the largest universities in the country. Renowned for its innovative teaching and strong emphasis on real-world learning, AUT offers a diverse range of programs across fields like business, engineering, health sciences, and creative technologies. Located in Auckland, the university is a hub for cutting-edge research, with a focus on areas such as artificial intelligence, sustainability, and sports science. AUT is committed to creating a vibrant, inclusive community that prepares students for global careers, making it a key player in New Zealand's educational landscape.",
               "tier": "Gold"
             },
             {
               "name": "Kami",
               "logo": "/img/scraped/conference/2024/sponsors/kami.png",
-              "description": "Kami is an instructional platform that integrates with popular LMS to offer accessible annotation, streamlined instruction and assessment, and greater insights. Kami aligns with WCAG 2.1 AA standards, supporting student-centered learning. Time-saving features enhance instruction, while AI-powered questions speed up online test prep and assessments. Everything you need for every student to succeed.",
+              "description": "Kami is an instructional platform that integrates with popular LMS to offer accessible annotation, streamlined instruction and assessment, and greater insights. Kami aligns with WCAG 2.1 AA standards, supporting student-centered learning. Time-saving features enhance instruction, while AI-powered questions speed up online test prep and assessments. Key performance metrics allow teachers to edit classwork and assessments instantly. Everything you need for every student to succeed.",
               "tier": "Gold"
             },
             {
               "name": "TENZ",
               "logo": "/img/scraped/conference/2024/sponsors/tenz.png",
-              "description": "Technology Education New Zealand (TENZ) is a non-profit professional, collaborative association promoting and supporting all levels of technology education in Aotearoa New Zealand. TENZ is organised by teachers for teachers, aiming to enhance the learning and teaching of technology by creating a well-informed, well-connected, supportive and sustainable professional community.",
+              "description": "Technology Education New Zealand (TENZ) is a non profit professional, collaborative association, promoting and supporting all levels of technology education in Aotearoa New Zealand. TENZ is organised by teachers for teachers and our aim is to enhance the learning and teaching of technology by creating a well informed, well connected, supportive, and sustainable professional community that has a strong voice and provides effective advocacy for technology education.",
               "tier": "Silver"
             },
             {
               "name": "academyEX",
               "logo": "/img/scraped/conference/2024/sponsors/academyex.png",
-              "description": "academyEX empowers diverse learners who are change makers, leaders and innovators. From micro-credentials to Masters programmes, academyEX is a community of industry experts and visionary thinkers who believe in learning that creates positive change in a fast-paced world. Their unique approach blends practical skills with forward-thinking strategies, preparing learners for the challenges of today and the possibilities of tomorrow.",
+              "description": "academyEX empowers diverse learners who are change makers, leaders and innovators. Our students range from educators, business owners, ambitious career-changers, community leaders and lifelong learners, ready to reshape their futures and do the best work of their lives. From micro-credentials to Masters programmes, we’re not your typical education provider. We’re a community of industry experts, and visionary thinkers who believe in learning that creates positive change in a fast paced world. Our unique approach blends practical skills with forward-thinking strategies, preparing you for the challenges of today and the possibilities of tomorrow. Come and meet the students who are ready to change the world alongside you. Find your EXfactor at academyEX.",
               "tier": "Exhibition"
             },
             {
               "name": "Anew",
               "logo": "/img/scraped/conference/2024/sponsors/anew.png",
-              "description": "Anew is a problem-solving company bending the linear lifecycle of single-use water bottles into a circular one — encouraging reuse before they're recycled and made anew. Anew provides packaging consultancy, design, manufacturing, bottle collection, washing and recycling: a convenient bolt-on, circular ecosystem designed to integrate with current infrastructure to enable mass adoption.",
+              "description": "Anew® is a problem-solving company and single-use bottles are a problem. At Anew we’re bending the linear lifecycle of single-use water bottles into a circular one, encouraging reuse, before they’re recycled, and made anew.Anew’s goal is to keep materials in circulation for as long as possible and enable other businesses to be more sustainable. Anew provides packaging consultancy, design, manufacturing, bottle collection, washing and recycling. The Anew® packaging system is a convenient bolt-on, circular ecosystem designed to integrate with current infrastructure to enable mass adoption.",
               "tier": "Exhibition"
             },
             {
               "name": "Auckland Unlimited",
               "logo": "/img/scraped/conference/2024/sponsors/auckland-unlimited.png",
-              "description": "Auckland Unlimited boosts Auckland's appeal for living, working, visiting, investing and doing business. As an Auckland Council-controlled organisation, it enhances cultural, social and economic benefits for residents and visitors, drives investment and innovation, supports local businesses and enriches the city's cultural vibrancy — guided by the principle of kotahitanga, or shared purpose.",
+              "description": "Auckland Unlimited boosts Auckland’s appeal for living, working, visiting, investing, and doing business. As an Auckland Council-controlled organization, it enhances cultural, social, and economic benefits for residents and visitors. Auckland Unlimited drives investment and innovation, supports local businesses, and enriches the city’s cultural vibrancy. It builds on its founding organizations' legacy to lead in growth industries and attract transformative investments, guided by the principle of kotahitanga, or shared purpose.",
               "tier": "Venue"
             }
           ],
@@ -2155,7 +2156,7 @@
             "facilitators": [
               "Dr. Kara Kennedy"
             ],
-            "description": "The rise of Generative AI has made it essential for students to gain AI literacy skills, yet it can be challenging to assess whether they truly understand and know how to use Generative AI technologies in ethical and responsible ways. In this session, we explore strategies for assessing AI literacy based on quizzes, surveys, and frameworks used by educators around the world."
+            "description": "The rise of Generative AI has made it essential for students to gain AI literacy skills, yet it can be challenging to assess whether they truly understand and know how to use Generative AI technologies in ethical and responsible ways. In this session, we will explore strategies for assessing AI literacy based on quizzes, surveys, and frameworks used by educators around the world. By: Dr. Kara Kennedy - Principal - AI Literacy Institute"
           },
           {
             "type": "Demo",
@@ -2165,7 +2166,7 @@
               "Dr. David Parsons",
               "Dr. Mahsa McCauley (Mohaghegh)"
             ],
-            "description": "With the technology curriculum refresh underway and AI tools becoming ever more pervasive, future digital literacy will involve a significant level of AI literacy. The Scaffolded AI Literacy (SAIL) framework, developed by experts from Aotearoa New Zealand and overseas, provides a comprehensive guide to developing AI literacy through scaffolded levels of competency. This session gives a brief overview of the framework before getting into the practicalities of delivering its knowledge, skills and critical perspectives to diverse learner groups using accessible digital tools."
+            "description": "With the technology curriculum refresh currently underway, in a world where AI tools are becoming ever more pervasive, we can expect that future views of digital literacy will involve a significant level of AI literacy. The Scaffolded AI Literacy (SAIL) framework has been developed by a group of experts from Aotearoa New Zealand and overseas to provide a comprehensive guide to developing AI literacy through scaffolded levels of competency. This session will provide a brief overview of the framework before getting into the practicalities of how its knowledge, skills, and critical perspectives can be delivered to diverse learner groups in engaging and interactive ways using accessible digital tools. By: 1. Dr Kathryn MacCallum - Associate Professor of Digital Education Futures, University of Canterbury 2. Dr David Parsons - Research Director, academyEX 3. Dr Mahsa McCauley - Senior lecturer at AUT School of Engineering and Founder of She Sharp"
           },
           {
             "type": "Demo",
@@ -2173,7 +2174,7 @@
             "facilitators": [
               "Catherine Frost"
             ],
-            "description": "An overview and Q&A/kōrero of how curriculum content (NZC only — not TMoA) is approaching the wero of what our next generation need to know: what is essential learning with, in, and about technology?"
+            "description": "An overview and Q&A/kōrero of how curriculum content (NZC only-not TMoA) is approaching the wero of what our next generation need to know, what is essential learning with, in, and about technology? By: Catherine Frost - Lead Writer Technology, Ministry of Education"
           },
           {
             "type": "Demo",
@@ -2182,7 +2183,7 @@
               "Claire Wigley",
               "Munireh Rouget"
             ],
-            "description": "An empowering workshop focused on engaging girls in STEMM. This interactive session explores innovative strategies and practical approaches to inspire and support female students in science, technology, engineering and mathematics through a Māturanga Māori lens. Participants gain insights into effective teaching methods and develop tools to create a more inclusive and motivating STEMM environment."
+            "description": "Join us for an empowering workshop focused on engaging girls in STEMM. This interactive session will explore innovative strategies and practical approaches to inspire and support female students in science, technology, engineering, mathematics through a Māturanga Māori lens. Participants will gain insights into effective teaching methods, learn first hand about some of our successes , and develop tools to create a more inclusive and motivating STEMM environment. Equip yourself with the skills to help ignite a passion for STEMM in young girls and promote their continued success in these fields. By: 1. Claire Wigley - Teacher at Spotswood College New Plymouth & TENZ Council Member 2. Munireh Rouget - Deputy Chair - TENZ Council and Poutakawaenga mō te Pūtake Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle"
           },
           {
             "type": "Guest Speaker",
@@ -2190,7 +2191,7 @@
             "facilitators": [
               "Margot Phillipps"
             ],
-            "description": "A comprehensive explanation of the Olympiads, delving into New Zealand's process for selecting students to represent the country, and how teachers can offer these outstanding opportunities to their students."
+            "description": "We will provide a comprehensive explanation of the Olympiads and delve into New Zealand's process for selecting students to represent the country. Additionally, we will discuss how teachers can offer these outstanding opportunities to their students. By: Margot Phillipps"
           },
           {
             "type": "Keynote",
@@ -2198,7 +2199,7 @@
             "facilitators": [
               "Steve Smith"
             ],
-            "description": "A look back to see how we got to here. What is here and why it matters, and what could the future look like for education."
+            "description": "A look back to see how we got to here. What is here and why it matters and what could the future look like for education. By: Steve Smith - NZ Program Manager, Google for Education"
           },
           {
             "type": "Keynote",
@@ -2206,7 +2207,7 @@
             "facilitators": [
               "Alliv Samson"
             ],
-            "description": "Join Alliv Samson, CGO and Co-Founder of edtech app Kami, as she shares how a Kiwi startup grew from its humble beginnings in Aotearoa to empowering over 40 million users worldwide. Alliv delves into Kami's journey of transforming education and her passion for driving innovation in edtech."
+            "description": "Join Alliv Samson, CGO and Co-Founder of edtech app Kami, as she shares how a Kiwi startup grew from its humble beginnings in Aotearoa to empowering over 40 million users worldwide. Alliv will delve into Kami’s journey of transforming education and her passion for driving innovation in edtech. By: Alliv Samson - CGO and Co-Founder of Kami"
           },
           {
             "type": "Panel",
@@ -2216,7 +2217,7 @@
               "Benny Pan",
               "Paula Gair"
             ],
-            "description": "As artificial intelligence becomes increasingly integral to life and work, it is crucial that educational systems prepare students to navigate this new landscape. This panel explores what AI literacy entails for primary and secondary education and discusses actionable strategies to equip students with the necessary skills and understanding."
+            "description": "As artificial intelligence becomes increasingly integral to various aspects of life and work, it is crucial that educational systems prepare students to navigate this new landscape. This panel will explore what AI literacy entails for primary and secondary education and discuss actionable strategies to equip students with the necessary skills and understanding. Panelists: Dr. Geri Harris Benny Pan Paula Gair"
           },
           {
             "type": "Workshop",
@@ -2225,7 +2226,7 @@
               "Jessica Brennan",
               "Paul Savage"
             ],
-            "description": "A dynamic workshop addressing the challenges and opportunities in supporting SEN students and promoting responsive education in Aotearoa. We dive into insights from Kami's research on SEN and demonstrate practical ways to use the app as a universal accommodation tool. Participants identify pressing issues, brainstorm innovative edtech solutions, and craft actionable strategies that can drive real change in the SEN space. Bring your laptops!"
+            "description": "Join us for a dynamic workshop designed to address the challenges and opportunities in supporting SEN students and promoting responsive education here in Aotearoa. This interactive session will be a thoughtful exploration into the unique needs of diverse learners. We’ll dive into insights from Kami’s research on SEN and demonstrate practical ways to use the app as a universal accommodation tool. Participants will be encouraged to identify pressing issues, and brainstorm innovative edtech solutions. Get ready to be a part of ideating new products, crafting actionable strategies that can be brought to life in schools, driving real change in the SEN space. Bring your laptops to make the most of this hands-on and truly rewarding experience! By: 1. Jessica Brennan - Kami - Regional Customer Manager 2. Paul Savage - Kami - Senior Product Marketer"
           },
           {
             "type": "Workshop",
@@ -2233,7 +2234,7 @@
             "facilitators": [
               "Bex Rose"
             ],
-            "description": "Explore how AI can revolutionize teaching and learning through differentiated instruction. We delve into powerful tools like Diffit, Gemini, Magic School and Questionwell, which offer personalised learning paths, targeted feedback and adaptive assessments — helping teachers create more engaging, effective and equitable classrooms where every student can thrive."
+            "description": "In this workshop, we'll explore how AI can revolutionize teaching and learning through differentiated instruction. We'll delve into powerful tools like Diffit, Gemini, Magic School, and Questionwell, which offer personalised learning paths, targeted feedback, and adaptive assessments. By harnessing the power of AI, teachers can create more engaging, effective, and equitable classrooms where every student can thrive. By: Bex Rose - Head of Impact, Growth Culture"
           },
           {
             "type": "Workshop",
@@ -2242,7 +2243,7 @@
               "Steven Rodkiss",
               "Henry Hickman"
             ],
-            "description": "The CodeRunner tool is used in dozens of universities across NZ and internationally to assess programming ability. With the new NCEA standard coming in, Henry Hickman developed a way to leverage CodeRunner to work with NCEA as part of his PhD study. This workshop gives hands-on experience with the new and improved tool releasing for the 2025 academic year, helping teachers deliver consistent assessment and increase opportunities for students to learn to program."
+            "description": "The CodeRunner tool is used in dozens of Universities across NZ and internationally to assess programming ability in students. With the new NCEA standard coming in, this created a unique opportunity to take a big step forward in the assessment of NCEA programming. That was the goal of (soon to be Doctor) Henry Hickman who developed a way to leverage CodeRunner to work with NCEA as part of his PhD study. While there were challenges, the potential benefits are clear; to assist teacher to deliver a consistent assessment for all their kids and, hopefully, increase the opportunity for kids to learn to program. This workshop will give you hands on experience in the new and improved tool that will be released for the 2025 academic year. You’ll leave with a good understanding of the tool and its potential benefits for you, your students and the subject. By: 1. Steven Rodkiss - Digital Technologies Teacher, Burnside High School & member of the DTTA committee 2. Henry Hickman - PhD student, University of Canterbury"
           },
           {
             "type": "Workshop",
@@ -2426,7 +2427,8 @@
           {
             "title": "Getting to the event",
             "paragraphs": [
-              "Google Wynyard Central is in Auckland's Wynyard Quarter, well served by public transport and an easy walk from the city centre. Because of the high demand for parking in the central city, we recommend public transport or carpooling. Paid parking is available nearby at Wilson Parking."
+              "AUT City Campus is in the heart of Auckland and is surrounded by bus stops and is also close to motorway entry/exits. You can easily commute to AUT through Auckland Public Transport.",
+              "Because of the high demand for parking in the central city, AUT can’t provide on-site parking for city-based students or event attendees during the day. It’s a good idea to consider other transport options, like public transport or carpooling. You can park off street (pay and display) or at the nearest Wilson Parking."
             ],
             "links": [
               {
@@ -2458,6 +2460,12 @@
               {
                 "label": "mahsa.mohaghegh@aut.ac.nz",
                 "url": "mailto:mahsa.mohaghegh@aut.ac.nz"
+              }
+            ],
+            "images": [
+              {
+                "url": "/img/scraped/site/content/64811ab760ae807f1dc87e65_Team_1_Masha_1174635c.png",
+                "alt": "Dr. Mahsa McCauley"
               }
             ]
           }
@@ -4494,25 +4502,25 @@
             {
               "name": "QuiverVision",
               "logo": "/img/scraped/conference/2023/sponsors/quivervision.png",
-              "description": "Quiver, launched in 2013, was the world's first Augmented Reality colouring app, downloaded by over 25 million users in 150+ countries. Quiver is a one-stop shop for Augmented Reality education content and lesson plans for Pre K to Year 9 and beyond, delivering engaging and magical learning experiences.",
+              "description": "Want to wow your kids or become the coolest teacher in school? Join us for an extraordinary experience as we introduce you to our Quiver App and Education Dashboard. Quiver, launched in 2013, was the world's first Augmented Reality colouring app, downloaded by over 25 Million users in 150+ countries and delivers engaging and magical experiences for all. Quiver is a one-stop shop for Augmented Reality education content and lesson plans for Pre K to Year 9 and beyond.",
               "tier": "Silver"
             },
             {
               "name": "Technology Education New Zealand (TENZ)",
               "logo": "/img/scraped/conference/2023/sponsors/technology-education-new-zealand-tenz.png",
-              "description": "Technology Education New Zealand (TENZ) is a non-profit professional, collaborative association promoting and supporting all levels of technology education in Aotearoa New Zealand. TENZ is organised by teachers for teachers, aiming to enhance the learning and teaching of technology by creating a well-informed, well-connected, supportive and sustainable professional community with a strong voice and effective advocacy for technology education.",
+              "description": "Technology Education New Zealand (TENZ) is a non profit professional, collaborative association, promoting and supporting all levels of technology education in Aotearoa New Zealand. TENZ is organised by teachers for teachers and our aim is to enhance the learning and teaching of technology by creating a well informed, well connected, supportive, and sustainable professional community that has a strong voice and provides effective advocacy for technology education.",
               "tier": "Silver"
             },
             {
               "name": "Cyclone",
               "logo": "/img/scraped/conference/2023/sponsors/cyclone.png",
-              "description": "Cyclone's specialist school IT services help schools build technology infrastructure that moves with the times, delivers learning content across devices and protects everyone from security threats. With decades of experience working with New Zealand education providers and the MOE, Cyclone provides training that empowers staff and students, backed by dedicated school IT support — all delivered with a Kiwi can-do attitude and a careful eye on the budget.",
+              "description": "Technology is playing a crucial role in the modern learning environment. It’s opening new opportunities for students, and improving processes all round. But staying ahead can take up precious time and resources. That’s where the specialist expertise of Cyclone’s school IT services comes in. We have decades of experience working with New Zealand education providers and the MOE. We help schools build technology infrastructure that moves with the times, delivers learning content across devices and protects everyone from security threats. We also provide training that empowers your staff and students, and back that up with dedicated school IT support services. . All delivered with a Kiwi can-do attitude, and a careful eye on the budget.",
               "tier": "Bronze"
             },
             {
               "name": "MDS",
               "logo": "/img/scraped/conference/2023/sponsors/mds.png",
-              "description": "MDS was the networking and drinks sponsor for the 2023 Google Educator Conference.",
+              "description": "Senior Future Student Advisor After completing a B.A. (Hons) in Screen and Media, Dan has worked as a freelance videographer and visual artist; he has immense passion for the creative industries. This enthusiasm transcends into his role as Course and Careers Advisor at MDS by encouraging the exceptional talent coming into the school and helping direct students into the amazing opportunities we have to offer.",
               "tier": "Networking & Drinks"
             }
           ],
@@ -4639,7 +4647,7 @@
               "Nils Reardon",
               "Nischay Gupta"
             ],
-            "description": "Join us for an extraordinary experience as we introduce you to the Quiver App and Education Dashboard. Quiver, launched in 2013, was the world's first Augmented Reality colouring app, downloaded by over 25 million users in 150+ countries. Witness every coloured page spring to life, opening doors to an immersive, educational and inspiring world for classrooms and homes. The demo covers an introduction to Augmented Reality and the Quiver 3D Colouring App, exploring Quiver AR Colouring Sheets, mastering the Quiver Education Dashboard, Quiver Digital Environments and AR Masks. Registered educators receive a complimentary 12-month license (250+ AR colouring sheets across Science, Math and Social Sciences) plus Quiver swag."
+            "description": "Want to wow your kids or become the coolest teacher in school? Join us for an extraordinary experience as we introduce you to our Quiver App and Education Dashboard. Quiver, launched in 2013, was the world's first Augmented Reality colouring app, downloaded by over 25 Million users in 150+ countries and delivers engaging and magical experiences for all. Quiver is a one-stop shop for Augmented Reality education content and lesson plans for Pre K to Year 9 and beyond. Highlights: Interactive Learning : Witness every colored page spring to life in its own unique way, instilling a profound sense of pride and ownership in young artists. Immersive Education : The Quiver App opens doors to an immersive, educational, and inspiring world, making it an indispensable tool for both classrooms and homes. Skill Development : Watch as children develop skills and retain knowledge in a manner that defies convention. The demo will cover:- Introduction to Augmented Reality and Quiver 3D Colouring App Exploring Quiver AR Coloring Sheets Mastering Quiver Education Dashboard Unleashing the Potential of Quiver Digital Environments Dive into the World of Quiver AR Masks Exclusive Benefits for Registered Educators:- Complimentary 12-Month License : Gain access to over 250 AR coloring sheets covering Science, Math, and Social Sciences. Quiver Swag and Goodies: Exclusive merchandise, including Mugs, Pens, Stickers, and Tote Bags."
           },
           {
             "type": "Demo",
@@ -4656,7 +4664,7 @@
               "Daniel Oliver",
               "Lesieli Oliver"
             ],
-            "description": "Step into the future of technology with \"ImmerseHer: Virtual Reality.\" Led by Daniel and Lesieli Oliver, founders of Lālanga and current Technology teachers, this hands-on workshop lets you explore various VR applications, expand your technological skills and discover where you fit in the future of virtual reality, including the vast possibilities and career paths within the VR industry."
+            "description": "Are you ready to step into the future of technology? Welcome to \"ImmerseHer: Virtual Reality,\" where you'll embark on an exciting journey into the world of virtual reality (VR). This workshop is led by Daniel and Lesieli Oliver, founders of Lālanga, current Technology teachers themselves, holding a passion for education and technology. What to Expect: Hands-On Experience: Dive into the world of virtual reality by exploring various VR applications. Grow in your Capability: This workshop is your chance to expand your technological skills and understanding. Daniel and Lesieli will share their wealth of knowledge to empower you with the tools you need to thrive in the tech-driven future. Discover Your Place in VR: Ever wondered where you fit in the future of virtual reality? This workshop provides insights into the vast possibilities and career paths within the VR industry. You'll gain a clearer understanding of how you can contribute to shaping the future. Join Daniel and Lesieli Oliver at \"ImmerseHer: Virtual Reality Workshop\" and prepare to be amazed by the endless potential of VR technology. Whether you're a tech enthusiast or simply curious about the future, this workshop is your gateway to the exciting world of virtual reality."
           },
           {
             "type": "Demo",
@@ -4664,7 +4672,7 @@
             "facilitators": [
               "Claire Wigley"
             ],
-            "description": "Explore the practical side of disrupted learning. Using Spotswood College as an exemplary case, we'll explore the art of fostering student engagement and inquiry-based learning methodologies, dive into the Superstar Game of Design Thinking, and gain insights into personalised learning approaches tailored to individual student needs, strengths and passions — creating a purpose-driven, student-centered learning environment in any educational setting."
+            "description": "Join us in exploring the practical side of disrupted learning in our upcoming workshop. Using Spotswood College as an exemplary case, we'll explore the nuanced art of fostering student engagement and inquiry-based learning methodologies. Dive into the insights behind the Superstar Game of Design Thinking, a tool that encourages creative exploration and critical thinking in students. Through practical examples, understand how this approach is reshaping education at Spotswood College and beyond. Gain valuable insights into personalised learning approaches tailored to individual student needs, strengths, and passions. Discover how Spotswood College's innovative practices can be adapted to create a purpose-driven and student-centered learning environment in any educational setting. This workshop is your gateway to understanding the evolving landscape of education and harnessing the potential of disrupted learning for meaningful student development.\""
           },
           {
             "type": "Keynote",
@@ -4672,7 +4680,7 @@
             "facilitators": [
               "Steve Smith"
             ],
-            "description": "Together with strategic insights practice Canvas8 and global non-profit American Institutes for Research, Google for Education interviewed 94 educational experts across 24 countries to compile the future of education report. Find out how recent technological advances are evolving how we think about teaching and learning — from a one-to-many model to a more personal approach to learning, and the tools that can support this."
+            "description": "Together with strategic insights practice Canvas8 and global non-profit American Institutes for Research, Google for Education conducted interviews with 94 educational experts across 24 countries to compile the future of education report. As educators work to equip students with the skills and mindsets they’ll need to navigate massive change, the experts we interviewed discussed how and why they’re rethinking the role of education. Find out how recent technological advances are evolving how we think about teaching and learning from a one-to-many model to a more personal approach to learning and the tools that can support this."
           },
           {
             "type": "Workshop",
@@ -4680,7 +4688,7 @@
             "facilitators": [
               "Christopher Mende"
             ],
-            "description": "A Generative AI technical workshop with hands-on labs using the Cloud Skills Boost online environment and a step-by-step guide to building generative search and discovery tools. We'll go through the basics of generative model design, classification, extraction, summarization and prompt engineering. Attendees leave having built a fully functional conversational search agent."
+            "description": "Generative AI Technical Workshop ● Hands-on labs with technical guidance using our Cloud Skills boost online environment ● Step-by-step guide on building Generative search and discovery tools We will go through the basics of generative model design, classification, extraction, summarization and everyone's hot topic, prompt engineering! Attendees will leave having built a fully functional conversational search agent."
           },
           {
             "type": "Workshop",
@@ -4688,7 +4696,7 @@
             "facilitators": [
               "Alex Ward"
             ],
-            "description": "Teach the basics of programming while creating interactive procedural art. p5.js is a free, open-source, browser-based JavaScript library for creative coding, focused on making coding accessible and inclusive. Alex focuses on how to cover the basics of programming in JavaScript while giving students artistic and creative freedom, exploring the long tradition of generative art and approaches to blend Digital Technologies into other subject areas."
+            "description": "Teach the basics of programming while creating interactive procedural art. p5.js is a JavaScript library for creative coding, with a focus on making coding accessible and inclusive for educators artists, designers, and programming beginners! p5.js is free, open-source and browser based - you can start using it in your classroom today. Technology is a creative pursuit. How do we as educators provide our students with engaging content that motivates the learning of Computational Thinking? In this session Alex will focus on how to cover the basics of programming in JavaScript while giving students artistic and creative freedom to express their ideas. We will explore the long tradition of generative art and approaches to blend in Digital Technologies into other subject areas."
           },
           {
             "type": "Workshop",
@@ -4696,7 +4704,7 @@
             "facilitators": [
               "Jennifer Gottschalk"
             ],
-            "description": "Explore strategies that students (and teachers) can use to successfully debug their code, including how to use ChatGPT whilst ensuring authenticity. Participants are encouraged to bring their devices and broken code that needs debugging. The strategies shared are based on Python / php but will work with any language."
+            "description": "We will explore strategies that students (and teachers) can use to successfully debug their code including how to use Chat GPT whilst ensuring authenticity. Participants are encouraged to bring their devices and broken code that needs debugging. The strategies shared are based on Python / php but will work with any language."
           },
           {
             "type": "Workshop",
@@ -4704,7 +4712,7 @@
             "facilitators": [
               "Julie McMahon"
             ],
-            "description": "Hear about the impact of cyber security breaches and exciting career pathways in Cyber Security from industry experts, and learn how to use the free Cyber Skills Aotearoa online and unplugged activities to teach cyber security concepts. Students engage by assuming the role of an ethical (white hat) hacker. Topics include sharing information online, good password practices, phishing and scam awareness, cryptography, web application security, and industry case studies aligned with NCEA. All content is available in English and te reo Māori."
+            "description": "Cyber security is an important area for both kaiako and ākonga across Aotearoa. In this workshop, participants will hear about the impact of cyber security breaches and exciting career pathways in Cyber Security from industry experts. They will learn how to utilise the free Cyber Skills Aotearoa online and unplugged activities to teach cyber security concepts in their classrooms. The Cyber Skills Aotearoa content encourages learner agency as students engage with learning cyber security concepts through assuming the role of an ethical (white hat) hacker to sleuth the answers to problems. The programme is designed to enable ākonga to navigate the online world with confidence. The workshop will cover teaching the following topics in the classroom: Sharing information online Good password practices Phishing and scam awareness Cryptography Web application security Industry case studies that are aligned with NCEA assessment requirements All content is available in both English and te reo Māori and is aligned to the Hangarau wāhanga ako and Technology learning areas. Content addresses achievement objectives and progress outcomes in the Nature of Technology, Whakaaro Rorohiko, Computational Thinking, Tangata me te Rorohiko and Designing and Developing Digital Outcomes strands."
           }
         ],
         "schedule": {
@@ -4861,8 +4869,8 @@
           {
             "title": "Getting to the event",
             "paragraphs": [
-              "AUT City Campus is in the heart of Auckland and is surrounded by bus stops and close to motorway entry/exits. You can easily commute to AUT through Auckland Public Transport.",
-              "Because of the high demand for parking in the central city, AUT can't provide on-site parking for event attendees. It's a good idea to consider other transport options, like public transport or carpooling. You can park off street (pay and display) or at the nearest Wilson Parking."
+              "AUT City Campus is in the heart of Auckland and is surrounded by bus stops and is also close to motorway entry/exits. You can easily commute to AUT through Auckland Public Transport.",
+              "Because of the high demand for parking in the central city, AUT can’t provide on-site parking for city-based students or event attendees during the day. It’s a good idea to consider other transport options, like public transport or carpooling. You can park off street (pay and display) or at the nearest Wilson Parking."
             ],
             "links": [
               {
@@ -4878,8 +4886,8 @@
           {
             "title": "About AUT",
             "paragraphs": [
-              "AUT is the University for the Changing World. Established in 2001, it's young, vibrant and future focused, offering outstanding opportunities for development and innovation.",
-              "AUT is in QS's top 3% of rankings and features in the Times Higher Education (THE) Top 150 universities under 50 years old. There are five faculties at AUT: Design and Creative Technologies; Culture and Society; Business, Economics and Law; Health and Environmental Sciences; and Te Ara Poutama – Faculty of Māori and Indigenous Development."
+              "AUT is the University for the Changing World. Established in 2001, it’s young, vibrant and future focused offering outstanding opportunities for development and innovation.",
+              "We are in QS’s top 3% of rankings and feature in the Times Higher Education (THE) Top 150 universities under 50 years old. In 2016 THE also named AUT as the 19th most international university in the world.There are five faculties at AUT: Faculty of Design and Creative Technologies, Faculty of Culture and Society; Faculty of Business, Economics and Law; Faculty of Health and Environmental Sciences, and Te Ara Poutama – Faculty of Māori and Indigenous Development."
             ]
           },
           {
@@ -4891,6 +4899,12 @@
               {
                 "label": "mahsa.mohaghegh@aut.ac.nz",
                 "url": "mailto:mahsa.mohaghegh@aut.ac.nz"
+              }
+            ],
+            "images": [
+              {
+                "url": "/img/scraped/site/content/64811ab760ae807f1dc87e65_Team_1_Masha_1174635c.png",
+                "alt": "Dr. Mahsa McCauley"
               }
             ]
           }
