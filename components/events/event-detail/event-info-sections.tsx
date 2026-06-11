@@ -35,6 +35,19 @@ export function EventInfoSections({ event }: EventInfoSectionsProps) {
                   {p}
                 </p>
               ))}
+              {section.images && section.images.length > 0 && (
+                <div className="mt-5 flex flex-wrap gap-4">
+                  {section.images.map((image, k) => (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      key={k}
+                      src={image.url}
+                      alt={image.alt}
+                      className="h-32 w-auto rounded-lg object-cover"
+                    />
+                  ))}
+                </div>
+              )}
               {section.links && section.links.length > 0 && (
                 <div className="mt-5 flex flex-wrap gap-3">
                   {section.links.map((link, k) => {

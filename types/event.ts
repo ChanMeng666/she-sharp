@@ -187,6 +187,7 @@ export interface EventInfoSection {
   title: string;
   paragraphs?: string[];
   links?: { label: string; url: string }[];
+  images?: { url: string; alt: string }[];
 }
 
 // Sponsor in V3 format
