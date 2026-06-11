@@ -1217,30 +1217,25 @@
         "sponsors": {
           "main": [
             {
-              "name": "Aotearoa AI Hackathon Festival",
-              "logo": "/img/sponsors/aotearoa-ai-hackathon-festival.jpg"
-            },
-            {
               "name": "AI Forum New Zealand",
               "logo": "/img/sponsors/aifnz.svg"
             },
             {
               "name": "AUT",
               "logo": "/img/sponsors/aut.svg"
+            },
+            {
+              "name": "She Sharp",
+              "logo": "/logos/she-sharp-logo-black.png"
+            },
+            {
+              "name": "Fisher & Paykel Healthcare",
+              "logo": "/logos/FPHcare-logo.svg"
             }
           ],
           "other": []
         },
         "specialSections": [
-          {
-            "type": "collaboration",
-            "title": "Hosted & Organised By",
-            "content": [
-              "AUT — Auckland University of Technology|/img/sponsors/aut.svg|https://www.aut.ac.nz/",
-              "She Sharp|/logos/she-sharp-logo-black.png|https://shesharp.org.nz/",
-              "Fisher & Paykel Healthcare|/logos/FPHcare-logo.svg|https://www.fphcare.com/nz/"
-            ]
-          },
           {
             "type": "agenda",
             "title": "Two-Day Format",
