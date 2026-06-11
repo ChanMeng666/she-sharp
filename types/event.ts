@@ -251,6 +251,7 @@ export interface EventDetailPageData {
   location: EventLocationV3;
   fullDescription: string[];
   sponsorsImage?: EventPhotoV3; // optional banner shown within the sponsors section
+  sponsorshipPackageUrl?: string; // "Check out our sponsorship package" link (Canva)
   sessions?: EventSession[];
   schedule?: EventSchedule;
   infoSections?: EventInfoSection[];
