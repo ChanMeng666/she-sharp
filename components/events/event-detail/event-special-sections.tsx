@@ -254,7 +254,7 @@ export function EventSpecialSections({
                 {normalizeTitle(section.title)}
               </h3>
             </div>
-            <div className={isYouTube ? "w-full" : "max-w-prose"}>
+            <div className={isYouTube || isCollaboration ? "w-full" : "max-w-prose"}>
               {isYouTube ? (
                 <YouTubeEmbeds items={section.content} />
               ) : isCollaboration ? (
