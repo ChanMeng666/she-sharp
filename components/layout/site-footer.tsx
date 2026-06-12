@@ -270,6 +270,28 @@ export function SiteFooter() {
             © {new Date().getFullYear()} She Sharp. All rights reserved.
           </div>
         </div>
+
+        {/* Developer credit */}
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 border-t border-white/10 pt-6 text-center text-xs text-white/60">
+          <span>Built by</span>
+          <a
+            href="https://github.com/ChanMeng666"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-white"
+          >
+            Chan Meng
+          </a>
+          <span>&amp;</span>
+          <a
+            href="https://github.com/lesley-gao"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-white"
+          >
+            Lesley Gao
+          </a>
+        </div>
       </div>
     </footer>
   );

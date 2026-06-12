@@ -12,8 +12,13 @@ download-and-rename work from the developer.
 
 It uses the **She Sharp Event Collector** bot (read-only). The Collector
 token is already in `.env` and has the scopes needed: `channels:history`,
-`channels:read`, `groups:history`, `groups:read`, `files:read`,
-`users:read`, `pins:read`, `bookmarks:read`.
+`channels:read`, `channels:join`, `groups:history`, `groups:read`,
+`files:read`, `users:read`, `pins:read`, `bookmarks:read`.
+
+The skill keeps a committed **memory** at `state/sync-state.json` so it knows
+what it already read, links each channel to its event(s) (slugs differ from
+channel names), reads only deltas, and short-circuits unchanged channels to a
+no-op. See `references/state-and-incremental.md` for the full model.
 
 ## When to apply
 
@@ -44,6 +49,27 @@ asks to apply changes ("go ahead and apply", "commit it", "run it for
 real"). This is the single most important safety property: the pipeline
 is only trustworthy when the user has seen the plan before it executes.
 
+### Never copy internal codes or private links into the repo
+
+`events-custom.json` and the pages it renders are **public**. Slack
+channels routinely carry things meant only for controlled distribution —
+access codes, promo/discount/registration codes (e.g. a student
+free-entry code, a flat-rate discount code, an `?accesscode=…` query
+param), and private "invite-only" registration or checkout links.
+**None of these may enter the data files or images** — and do not quote
+the real code values anywhere, including this skill's own docs. Strip
+them everywhere they can appear — `registrationUrl`
+query params, `fullDescription` paragraphs, `specialSections` bullets
+(especially a "Registration" section), `coverImage.alt`, sponsor notes.
+
+Publish only the **public** registration base URL and, if concessions
+exist, a neutral note that they're available via the event's official
+channel (Community Hub / organiser) — never the code itself. When unsure
+whether a token or link is internal, **leave it out and flag it in the
+dry-run plan** for the user to decide. A leaked code is not fixed by a
+later edit: it persists in public git history and must then be rewritten
+out and rotated at its source.
+
 ## Prerequisites you must verify before doing anything
 
 1. Working directory is the repo root (contains `lib/data/json/events-custom.json`).
@@ -55,24 +81,62 @@ is only trustworthy when the user has seen the plan before it executes.
 
 ## Workflow
 
-### Step 1 — Fetch the channel
+This skill runs in two layers. **Layer A (discovery)** finds what changed across
+the whole workspace; **Layer B (per-channel sync)** turns one channel's delta into
+event data and records state. When the user names a single channel you may jump
+straight to Layer B (the fast lane) — but still update state at the end so the next
+run stays incremental.
 
-Run:
+### Step 0 — Discover what changed (Layer A)
+
+Run the triage first whenever the ask is broad ("sync any new events from Slack",
+"check Slack for new events") or you weren't given a specific channel:
 
 ```
-npx tsx .claude/skills/sync-event-from-slack/scripts/fetch-channel.ts <channel-name-or-id>
+npx tsx .claude/skills/sync-event-from-slack/scripts/discover-channels.ts
 ```
 
-Pipe stdout to a file (output can exceed tool context limits):
+It prints a compact table — one row per channel, never message bodies — and writes
+the full machine triage to `.cache/triage.json`. Read the `action` column and act:
+
+- `incremental` → mapped event with new content → Layer B with `--state`.
+- `create?` / `create? (general-signal)` → likely a new event (an event channel
+  with no mapping yet, or a general channel whose new messages scored for event
+  content); confirm the slug with the user, then Layer B in CREATE mode.
+- `join+sync` → run `discover-channels.ts --join` to self-join, then Layer B.
+- `skip→review (new msgs)` → a settled skip that got new activity; glance and
+  decide whether to un-skip.
+- `fingerprint-stale` → the event was edited in the repo since last sync; reconcile.
+- `no-op` / `archived` / `skip` are quiet and hidden by default (`--all` shows them).
+
+Use `--propose` to get fuzzy event-match suggestions for unmapped event channels
+(a backfill aid only — verify, since names and slugs diverge). See
+`references/state-and-incremental.md` for the full action table and semantics.
+
+### Step 1 — Fetch the channel (Layer B)
+
+For a channel already in the manifest, fetch **incrementally** so only new
+messages enter context:
 
 ```
-npx tsx .claude/skills/sync-event-from-slack/scripts/fetch-channel.ts event-x > /tmp/channel.json
+npx tsx .claude/skills/sync-event-from-slack/scripts/fetch-channel.ts <channel> --state > /tmp/channel.json
 ```
 
-The JSON includes: `channel` metadata, `pinned` messages, `bookmarks`,
-a `users` dictionary (id → name), and `messages[]` with each thread
-fully expanded in a `thread` subarray. User IDs inside `text` fields
-stay as `<@U…>` — the dictionary is how you resolve them.
+`--state` reads the channel's watermark + thread state from the manifest and
+returns only the delta. For a brand-new channel (CREATE), omit `--state` for a
+full fetch. Always pipe stdout to a file (output can exceed tool context limits).
+
+The JSON includes a `_meta` block (`mode`, `since`, `newWatermarkTs`,
+`threadState`, `newCount`), `channel` metadata, `pinned` messages (always
+included — canonical), `bookmarks`, a `users` dictionary (id → name), and
+`messages[]` with each thread expanded in a `thread` subarray. In incremental
+mode `messages[]` carries only new top-level messages plus any older thread that
+gained replies (with just its new replies). User IDs inside `text` stay as
+`<@U…>` — the dictionary resolves them.
+
+**No-op fast path:** if `_meta.newCount` is 0 and the event's fingerprint is
+unchanged, there is nothing to sync — emit the UPDATE no-op line (Step 6) and skip
+to recording state (Step 7.4).
 
 ### Step 2 — Identify assets
 
@@ -147,7 +211,9 @@ Core fields to produce:
 - `speakers[]` (name, title, company, bio, LinkedIn, image)
 - `sponsors.main[]` (with logo path — must exist under `/img/sponsors/`)
 - `specialSections[]` (agenda + why-attend)
-- `registrationUrl` (Humanitix base, no `?accesscode=`)
+- `registrationUrl` (public base URL only — strip `?accesscode=…` and
+  never use a private invite/checkout link; see the "Never copy internal
+  codes or private links" rule above)
 - `category`, `status`, `isFeatured`
 
 ### Step 5 — Classify and plan image downloads
@@ -178,7 +244,14 @@ Mode          : CREATE (new entry) | UPDATE (slug already exists)
 Downloads     : 2 images + 1 docx (already extracted)
 JSON changes  : <inline diff summary>
 Image targets : <list of write paths>
+Redactions    : <any internal codes / private links found in Slack and
+                 deliberately left out — or "none">
 ```
+
+Always include the `Redactions` line: list every access/promo code or
+private invite link you found in the channel and kept out of the data
+(or state "none"). This makes the omission visible and lets the user
+correct you if something you treated as internal is actually public.
 
 Wait for the user to say "apply", "commit", or similar. If they
 want to tweak anything (wrong image classification, prefer a
@@ -214,6 +287,22 @@ When the user approves:
    ```
    If it fails, roll back all downloads, revert the JSON patch,
    and tell the user what broke. Never commit with the gate red.
+4. **Record state** so the next run stays incremental. Feed the fetch payload
+   (which carries the new watermark + thread state) to `update-state.ts`:
+   ```
+   # event mapping (repeat --slug/--event-id for a multi-event channel)
+   npx tsx .claude/skills/sync-event-from-slack/scripts/update-state.ts \
+     --from /tmp/channel.json --mapping event --slug <slug> --event-id <id>
+
+   # or, when a channel turns out to carry no site event / is deliberately skipped
+   npx tsx .claude/skills/sync-event-from-slack/scripts/update-state.ts \
+     --from /tmp/channel.json --mapping skip --reason "<why>"
+   npx tsx .claude/skills/sync-event-from-slack/scripts/update-state.ts \
+     --from /tmp/channel.json --mapping none
+   ```
+   `update-state.ts` recomputes the event fingerprint from `events-custom.json`,
+   so run it **after** the JSON patch. Commit `state/sync-state.json` alongside
+   the event change — it is the memory that makes future syncs cheap.
 
 ### Step 8 — Commit
 
@@ -248,8 +337,10 @@ Summarize:
 ## Common failure modes and how to recover
 
 **`not_in_channel` on `conversations.history`** — the Collector bot
-isn't in the channel. Ask the user to run `/invite @She Sharp Event
-Collector` in the channel, then retry.
+isn't in the channel. For a **public** channel, self-join:
+`npx tsx .../discover-channels.ts --join` (uses `channels:join`), then
+retry. For a **private** channel the bot can't self-join — ask the user
+to run `/invite @She Sharp Event Collector` in it.
 
 **`channel_not_found`** — channel name typo, or bot can't see private
 channels it isn't in. Verify with the user.
@@ -268,6 +359,25 @@ the JSON patch before the user sees a broken state.
 
 **`files.filetype` is `jpeg` not `jpg`** — normalize the target
 filename to `.jpg`. Do not re-encode the file.
+
+## State & incremental notes
+
+- **Thread subtlety:** a new reply on an *old* thread does not move the top-level
+  watermark. `--state` catches it via per-thread `replyCount`/`latestReplyTs` in
+  the manifest — so always fetch with `--state` for known channels, not a bare
+  `--since <ts>` that only filters top-level.
+- **General-channel auto-scan:** discovery reads only messages past each general
+  channel's watermark and surfaces a channel only when its event-signal score
+  clears the threshold. Scanned-but-quiet channels still advance their watermark,
+  so they aren't re-scanned. A flagged general channel is a *candidate* — confirm
+  the event and slug with the user before CREATE.
+- **Skip stickiness:** a `skip` mapping stays skipped until new activity arrives
+  (then it shows `skip→review`). Record *why* you skipped in `--reason`.
+- **Fingerprint drift:** if someone edits `events-custom.json` by hand, discovery
+  shows the channel `fingerprint-stale`. Re-sync or re-run `update-state.ts` to
+  re-baseline.
+- **Never hand-edit `state/sync-state.json`** — always go through `update-state.ts`
+  so ordering stays deterministic and the fingerprint is recomputed correctly.
 
 ## What this skill does *not* do
 

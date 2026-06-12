@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { ChatbotProvider } from "@/components/chatbot/chatbot-provider";
+import { NavDebugPanel } from "@/components/layout/nav-debug-panel";
 
 export default function SiteLayout({
   children,
@@ -13,6 +15,9 @@ export default function SiteLayout({
       <main className="flex-1">{children}</main>
       <SiteFooter />
       <ChatbotProvider />
+      <Suspense fallback={null}>
+        <NavDebugPanel />
+      </Suspense>
     </div>
   );
 }

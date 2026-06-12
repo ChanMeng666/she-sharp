@@ -274,11 +274,11 @@
           }
         ],
         "photos": [],
-        "galleryUrl": "",
+        "galleryUrl": "https://photos.app.goo.gl/rQoTv6R9xzU3enTdA",
         "registrationUrl": "https://events.humanitix.com/she-sharp-ministry-of-social-development-academyex-her-waka-june-2026",
         "images": [],
         "category": "workshop",
-        "status": "upcoming",
+        "status": "completed",
         "isFeatured": false
       }
     },
@@ -375,7 +375,7 @@
         "registrationUrl": "https://events.humanitix.com/making-linkedin-work-for-you-with-stuart-little-presented-by-she-sharp-and-aut",
         "images": [],
         "category": "workshop",
-        "status": "upcoming",
+        "status": "completed",
         "isFeatured": false
       },
       "id": 91
@@ -831,7 +831,7 @@
         ],
         "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/FKFwVTSD7RxK7Sws6",
-        "registrationUrl": "https://shesharp.org.nz/events/her-waka",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-ministry-of-social-development-academyex-her-waka",
         "images": [],
         "category": "workshop",
         "status": "completed",
@@ -1091,9 +1091,309 @@
         "humanitixUrl": "https://events.humanitix.com/she-sharp-ministry-of-social-development-academyex-her-waka-may-2026",
         "images": [],
         "category": "workshop",
+        "status": "completed",
+        "isFeatured": false,
+        "refundPolicy": "No refunds"
+      }
+    },
+    {
+      "id": 95,
+      "slug": "she-sharp-and-myob-working-smarter",
+      "title": "Working Smarter: AI, MYOB, and the New Delivery Landscape",
+      "date": "July 30, 2026",
+      "coverImage": {
+        "url": "/img/events/she-sharp-and-myob-working-smarter-cover.png",
+        "alt": "Working Smarter: AI, MYOB, and the New Delivery Landscape event cover"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/she-sharp-and-myob-working-smarter",
+      "shortDescription": "An interactive evening exploring how MYOB teams use AI to work smarter, solve problems faster, and deliver more value — with practical use cases and a hands-on AI problem-solving activity.",
+      "attendees": null,
+      "checkedIn": 0,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/she-sharp-and-myob-working-smarter",
+        "title": "Working Smarter: AI, MYOB, and the New Delivery Landscape, presented by She Sharp and MYOB",
+        "subtitle": "AI in Practice with MYOB",
+        "date": "July 30, 2026",
+        "time": "5:00pm - 7:30pm NZST",
+        "location": {
+          "format": "in_person",
+          "venueName": "MYOB",
+          "address": "8/50 Albert Street, Auckland CBD, Auckland 1010",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "Discover how AI is helping MYOB teams work smarter, solve problems faster, and deliver more value. This interactive evening brings together students and professionals across development, product, and business teams to explore practical, real-world applications of AI.",
+          "Through a speaker session and a hands-on activity, you will see how AI is reshaping the Software Development Lifecycle (SDLC), explore use cases from across MYOB's business functions, and learn how to develop an AI mindset — understanding both the opportunities and the challenges of adopting AI.",
+          "The evening combines insight and practice: hear how MYOB is leveraging AI across the organisation, then put ideas to work in a collaborative AI problem-solving exercise supported by mentors from different MYOB teams."
+        ],
+        "speakers": {
+          "keynote_speakers": {
+            "heading": "Meet Our Speakers",
+            "speakers": []
+          }
+        },
+        "organizers": [],
+        "sponsors": {
+          "main": [
+            {
+              "name": "MYOB",
+              "logo": "/img/sponsors/myob.svg"
+            }
+          ],
+          "other": []
+        },
+        "specialSections": [
+          {
+            "type": "agenda",
+            "title": "Event Format",
+            "content": [
+              "5:00pm – 5:30pm — Registration, networking, food and refreshments",
+              "5:30pm – 6:10pm — Speaker session: AI in practice at MYOB and developing an AI mindset",
+              "6:10pm – 7:00pm — Interactive AI activity with mentor support",
+              "7:00pm – 7:30pm — Discussion, Q&A, and networking"
+            ]
+          },
+          {
+            "type": "why-attend",
+            "title": "What You'll Gain",
+            "content": [
+              "Insights into how AI is applied at MYOB in day-to-day work",
+              "An understanding of the opportunities and challenges of adopting AI",
+              "Real-world examples of AI use cases across teams and workflows",
+              "How AI is changing the software development landscape",
+              "Hands-on experience in a collaborative AI problem-solving exercise"
+            ]
+          }
+        ],
+        "photos": [],
+        "galleryUrl": "",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-and-myob-working-smarter",
+        "images": [],
+        "category": "workshop",
         "status": "upcoming",
         "isFeatured": false,
         "refundPolicy": "No refunds"
+      }
+    },
+    {
+      "id": 96,
+      "slug": "aotearoa-ai-hackathon-festival-2026",
+      "title": "Aotearoa AI Hackathon Festival 2026 — AUT City Campus",
+      "date": "August 7, 2026",
+      "coverImage": {
+        "url": "/img/events/aotearoa-ai-hackathon-festival-2026-cover.png",
+        "alt": "Aotearoa AI Hackathon Festival 2026 event cover"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/aotearoa-ai-hackathon-festival-2026",
+      "shortDescription": "A two-day, in-person hackathon at AUT City Campus where teams build AI-enabled solutions to real-world challenges aligned to the UN Sustainable Development Goals. Venue winners advance to national judging and the Aotearoa AI Summit 2026.",
+      "attendees": null,
+      "checkedIn": 0,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/aotearoa-ai-hackathon-festival-2026",
+        "title": "Aotearoa AI Hackathon Festival 2026, hosted by AUT in partnership with She Sharp and the AI Forum",
+        "subtitle": "Two-Day AI Hackathon",
+        "date": "August 7, 2026",
+        "time": "Fri 7 Aug, 5:00pm – Sat 8 Aug 2026 (NZST)",
+        "location": {
+          "format": "in_person",
+          "venueName": "AUT City Campus",
+          "address": "55 Wellesley Street East, Auckland CBD, Auckland 1010",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "The Aotearoa AI Hackathon Festival is a nationwide, multi-venue hackathon held across Aotearoa New Zealand. She Sharp and the AI Forum are bringing the festival to AUT's City Campus for a two-day, in-person event on 7–8 August 2026.",
+          "Working in teams, participants create AI-enabled solutions to real-world challenges aligned to five UN Sustainable Development Goals. Day one focuses on team formation, problem definition, and building; day two on refining solutions and pitching to a local judging panel.",
+          "Each venue selects a winning team whose pitch advances to national judging, and four national finalists will be invited to pitch at the Aotearoa AI Summit 2026. No matter your experience level — around a third of participants are new to hackathons — mentors from AUT and industry will support teams throughout.",
+          "The festival is about building practical AI capability, encouraging responsible and ethical AI use, fostering collaboration across regions and sectors, and showcasing innovative, impact-driven ideas."
+        ],
+        "speakers": {
+          "keynote_speakers": {
+            "heading": "Meet Our Speakers",
+            "speakers": []
+          }
+        },
+        "organizers": [],
+        "sponsors": {
+          "main": [
+            {
+              "name": "AI Forum New Zealand",
+              "logo": "/img/sponsors/aifnz.svg"
+            },
+            {
+              "name": "AUT",
+              "logo": "/img/sponsors/aut.svg"
+            },
+            {
+              "name": "She Sharp",
+              "logo": "/logos/she-sharp-logo-black.png"
+            },
+            {
+              "name": "Fisher & Paykel Healthcare",
+              "logo": "/logos/FPHcare-logo.svg"
+            }
+          ],
+          "other": []
+        },
+        "specialSections": [
+          {
+            "type": "agenda",
+            "title": "Two-Day Format",
+            "content": [
+              "Day 1 (Friday 7 August) — Welcome, health & safety briefing, introduction to the hackathon themes, team formation, and the build begins, with ongoing mentor and technical support.",
+              "Day 2 (Saturday 8 August) — Continued building, pitch practice, final submissions, live 5-minute pitches to the local judging panel, and announcement of the venue winner.",
+              "Venue winners advance to national judging; four national finalists pitch at the Aotearoa AI Summit 2026."
+            ]
+          },
+          {
+            "type": "bullets",
+            "title": "The Challenge — Five Real-World Themes",
+            "content": [
+              "Tackling food insecurity in a food-exporting nation",
+              "Enhancing digital accessibility for all communities",
+              "Upskilling the workforce for an AI-driven future",
+              "Fostering cross-border, cross-sector collaboration",
+              "Honouring indigenous environmental custodianship (kaitiakitanga)"
+            ]
+          },
+          {
+            "type": "info",
+            "title": "How the National Festival Works",
+            "content": [
+              "The Aotearoa AI Hackathon Festival runs as a series of 48-hour hackathons hosted at venues across Aotearoa New Zealand between 3 and 10 August 2026.",
+              "Every venue records its team pitches and selects a local winner. A national judging panel then reviews the winning pitches and selects the finalists.",
+              "Four national finalists are invited to pitch live at the Aotearoa AI Summit on 18 September 2026 in Auckland, where the Summit audience votes for the winning solution and the award-winning team is announced."
+            ]
+          },
+          {
+            "type": "bullets",
+            "title": "2026 Venues",
+            "content": [
+              "Auckland — AUT City Campus, hosted by AUT + She Sharp, 7–8 August (this event)",
+              "Auckland — AUT, hosted by AUT + Tū Ātea, 7–8 August",
+              "Auckland — Mission Ready, 5–6 August",
+              "Auckland — Unitec, with Seen Ventures, 6–8 August",
+              "Waikato — Te Ipu o Te Mahara | Artificial Intelligence Institute, 6–7 August",
+              "Wellington — Amazon Web Services (AWS), 6–7 August",
+              "Christchurch — EPIC Innovation + Canterbury Tech, 6–7 August",
+              "More venues to be announced."
+            ]
+          },
+          {
+            "type": "bullets",
+            "title": "Why Attend",
+            "content": [
+              "Build practical, hands-on AI capability on real-world problems",
+              "Collaborate in diverse teams (3–7 people) with mentor and technical support",
+              "Learn responsible and ethical AI practices",
+              "Pitch your solution and compete to represent your venue at national judging",
+              "Open to all experience levels — beginners are welcome"
+            ]
+          },
+          {
+            "type": "info",
+            "title": "Registration",
+            "content": [
+              "Register online at aihackathon.nz.",
+              "Concession and complimentary places are available for AUT students, mentors and supporting staff — registration details are shared directly via the AUT City Campus Community Hub.",
+              "Enter as a team or as an individual — just let us know which when you register, and we will help solo registrants find a team on the day.",
+              "Join the AUT City Campus Community Hub for the latest updates and live Q&A session dates."
+            ]
+          },
+          {
+            "type": "related-links",
+            "title": "Helpful Links",
+            "content": [
+              "AUT City Campus Community Hub : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus",
+              "Aotearoa AI Summit : https://aotearoaai.nz",
+              "Aotearoa AI Awards : https://aotearoaai.nz/aotearoa-ai-awards-2025/",
+              "Join the AI Forum mailing list : https://aiforum.org.nz/subscribe/"
+            ]
+          }
+        ],
+        "infoSections": [
+          {
+            "title": "About the Festival — AI for Good",
+            "paragraphs": [
+              "Aotearoa AI Hackathon Festival is a nationwide kaupapa built around one idea: AI for good — building solutions that matter. Over an intense weekend, diverse teams turn real-world challenges into working, AI-enabled prototypes.",
+              "Hackathons are a safe space for a wide range of people to unite and solve problems. Building a team with a variety of skills — not just coding — is the surest path to a strong pitch."
+            ],
+            "images": [
+              {
+                "url": "/img/events/aotearoa-ai-hackathon-festival-2026-koru.jpg",
+                "alt": "An unfurling silver fern koru, symbolising new growth"
+              }
+            ],
+            "links": [
+              {
+                "label": "Visit aihackathon.nz",
+                "url": "https://aihackathon.nz"
+              }
+            ]
+          },
+          {
+            "title": "Part of a Nationwide Festival",
+            "paragraphs": [
+              "The AUT City Campus event is one of several venues running across the country during the festival window in early August 2026.",
+              "Venues span Auckland, Waikato, Wellington and Christchurch — see the 2026 Venues list above for the host and dates at each location, with more to be announced."
+            ],
+            "links": [
+              {
+                "label": "See all venues",
+                "url": "https://aihackathon.nz"
+              }
+            ]
+          },
+          {
+            "title": "Live Q&A & Community Hub",
+            "paragraphs": [
+              "From late June, the festival hosts online lunchtime Q&A sessions covering the rules of engagement, ideas, problems to solve, datasets and technology — everything you need to prepare.",
+              "Join the AUT City Campus Community Hub to be the first to know when session dates are announced, or subscribe to the AI Forum mailing list for updates."
+            ],
+            "links": [
+              {
+                "label": "Join the Community Hub",
+                "url": "https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus"
+              },
+              {
+                "label": "Subscribe for updates",
+                "url": "https://aiforum.org.nz/subscribe/"
+              }
+            ]
+          },
+          {
+            "title": "About the Venue",
+            "paragraphs": [
+              "The event is hosted in person at AUT City Campus, 55 Wellesley Street East, in the heart of Auckland's CBD — well served by public transport and within walking distance of the city centre.",
+              "Please bring your own laptop and charger. Power, Wi-Fi, mentoring and refreshments are provided on site across both days."
+            ],
+            "images": [
+              {
+                "url": "/img/events/aotearoa-ai-hackathon-festival-2026-venue.jpg",
+                "alt": "AUT City Campus building, Auckland"
+              }
+            ],
+            "links": [
+              {
+                "label": "Open in Google Maps",
+                "url": "https://www.google.com/maps/search/?api=1&query=AUT+City+Campus+55+Wellesley+Street+East+Auckland"
+              }
+            ]
+          }
+        ],
+        "photos": [
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026-koru.jpg",
+            "alt": "An unfurling silver fern koru, symbolising new growth and the spirit of the Aotearoa AI Hackathon Festival"
+          }
+        ],
+        "galleryUrl": "",
+        "registrationUrl": "https://aihackathon.nz/",
+        "images": [],
+        "category": "hackathon",
+        "status": "upcoming",
+        "isFeatured": false
       }
     }
   ]

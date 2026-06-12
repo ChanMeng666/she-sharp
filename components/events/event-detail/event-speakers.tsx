@@ -79,12 +79,13 @@ export function EventSpeakers({ event, className }: EventSpeakersProps) {
   const orderedKeys = [
     "hosts",
     "keynote_speakers",
+    "demo_facilitators",
+    "workshop_facilitators",
+    "panel_facilitators",
+    "readiness_workshop_facilitators",
     "panel_speakers",
     "panelists",
     "guest_speakers",
-    "panel_facilitators",
-    "workshop_facilitators",
-    "readiness_workshop_facilitators",
     "mentors",
   ] as const;
 

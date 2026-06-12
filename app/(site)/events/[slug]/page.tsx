@@ -13,10 +13,14 @@ import {
 import {
   EventHeader,
   EventDescription,
+  EventSessions,
+  EventSchedule,
+  EventInfoSections,
   EventSpeakers,
   EventSidebarPanel,
   EventPhotos,
   EventSponsorship,
+  EventDonationCta,
   EventSponsors,
   EventSpecialSections,
   EventFeaturedPhoto,
@@ -132,6 +136,12 @@ export default async function EventPage({ params }: EventPageProps) {
         </Container>
       </Section>
 
+      {/* Sessions Section (conference agenda) */}
+      <EventSessions event={event} />
+
+      {/* Schedule / Agenda (day-of timetable) */}
+      <EventSchedule event={event} />
+
       {/* Speakers Section */}
       {hasAnySpeakers(event) && (
         <div>
@@ -155,10 +165,16 @@ export default async function EventPage({ params }: EventPageProps) {
         </div>
       )}
 
+      {/* Info sections (resources, getting there, venue, key contact) */}
+      <EventInfoSections event={event} />
+
       {/* Sponsorship Section */}
       <div>
         <EventSponsorship event={event} />
       </div>
+
+      {/* Donation / attend CTA (mirrors the legacy conference closing block) */}
+      <EventDonationCta />
 
       {/* Related Events */}
       {relatedEvents.length > 0 && (

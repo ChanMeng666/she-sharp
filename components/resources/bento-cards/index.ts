@@ -6,3 +6,4 @@ export { ImpactReportsCard } from "./impact-reports-card";
 export { AlbumCard } from "./album-card";
 export { PressHighlightCard } from "./press-preview-card";
 export { PhotoGalleryPreviewCard } from "./photo-gallery-preview-card";
+export { NewsletterPreviewCard } from "./newsletter-preview-card";
