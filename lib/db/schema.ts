@@ -892,6 +892,24 @@ export const membershipPurchases = pgTable('membership_purchases', {
   periodEndIdx: index('membership_purchases_period_end_idx').on(table.periodEnd),
 }));
 
+// One-time donations (independent of membership subscriptions)
+export const donations = pgTable('donations', {
+  id: serial('id').primaryKey(),
+  stripeSessionId: varchar('stripe_session_id', { length: 255 }).notNull().unique(), // Idempotency key for webhook delivery
+  stripePaymentIntentId: varchar('stripe_payment_intent_id', { length: 255 }),
+  donorEmail: varchar('donor_email', { length: 255 }),
+  donorName: varchar('donor_name', { length: 255 }),
+  amount: decimal('amount', { precision: 10, scale: 2 }).notNull(),
+  currency: varchar('currency', { length: 3 }).default('NZD').notNull(),
+  status: varchar('status', { length: 50 }).default('completed').notNull(),
+  receiptSent: boolean('receipt_sent').default(false),
+  metadata: jsonb('metadata').$type<Record<string, unknown>>(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+}, (table) => ({
+  donorEmailIdx: index('donations_donor_email_idx').on(table.donorEmail),
+  createdAtIdx: index('donations_created_at_idx').on(table.createdAt),
+}));
+
 // Mentor form submissions
 export const mentorFormSubmissions = pgTable('mentor_form_submissions', {
   id: serial('id').primaryKey(),
@@ -1389,4 +1407,9 @@ export type MentorProgrammeAssignment = typeof mentorProgrammeAssignments.$infer
 export type NewMentorProgrammeAssignment = typeof mentorProgrammeAssignments.$inferInsert;
 export type FundingOpportunity = typeof fundingOpportunities.$inferSelect;
 export type NewFundingOpportunity = typeof fundingOpportunities.$inferInsert;
+<<<<<<< HEAD
+=======
+export type Donation = typeof donations.$inferSelect;
+export type NewDonation = typeof donations.$inferInsert;
+>>>>>>> f4123b9ca6169c2011155471c2d416655c50a733
 

@@ -183,8 +183,7 @@
         "endTime": "7:30pm",
         "timezone": "NZDT",
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
-        "hideFeaturedPhoto":true
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future"
       }
     },
     {
@@ -272,12 +271,7 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/68e076618a243929a9567b91_Vector Event poster.png",
-            "alt": "Vector Future-Ready featured photo"
-           }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.google.com/share/AF1QipONHHOewHzAoTCFLQBO3Ho4yMOqWKZN-hUuruuwyfvYHj0p7CC1K9vvURQNuVklHg?key=V0hMc1BoRE9nZko5RU9RRUx0dWs2QzUtSDFfQkVR",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -314,8 +308,7 @@
         "endTime": "8pm",
         "timezone": "NZDT",
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector",
-        "hidePhotosSection":true
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector"
       }
     },
     {
@@ -859,13 +852,7 @@
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "collaboration",
-            "title": "In Collaboration With",
-            "content": ["/img/scraped/photos/685be97a7cc5998f7759b7c2TechbabesNZLogo.png"]
-          }
-        ],
+        "specialSections": [],
         "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/58coFzFj2FfWbFMp7",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
@@ -1443,10 +1430,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/68341808df6e9756c26e45a4_20250522_191138-p-2000.jpg",
-            "alt": "Find Your Perfect Fit featured photo"
-           },
-          {
             "url": "/img/scraped/photos/683419ef57b19b54eb424d75_IMG_1232-min_5a90c2de.jpg",
             "alt": ""
           },
@@ -1776,70 +1759,114 @@
         "url": "https://www.shesharp.org.nz/events/google-educator-conference-2024",
         "title": "Google Educator Conference",
         "subtitle": "Brought to you by SheSharp & Google",
-        "date": "",
+        "date": "November 21, 2024",
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "GridAKL / Futures Lab / Level 4, 12 Madden St / Wynyard Qtr",
-          "address": "12 Madden Street, Auckland CBD, Auckland 1010, New Zealand",
-          "city": "",
+          "venueName": "Google Wynyard Central — GridAKL / Futures Lab",
+          "address": "12 Madden Street, Wynyard Quarter, Auckland CBD",
+          "city": "Auckland",
           "country": "New Zealand",
-          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8422463,174.7566512&query_place_id=ChIJ-cXZOfRHDW0RLMOqsYOekWI",
-          "latitude": -36.8422463,
-          "longitude": 174.7566512
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8422463,174.7566512"
         },
         "fullDescription": [
           "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
           "The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.",
-          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms."
+          "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.",
+          "Previously known as CS4HS, the Google Educator Conference is back for 2024!"
         ],
         "speakers": {
           "keynote_speakers": {
-            "heading": "MEET THE KEYNOTE SPEAKERS",
+            "heading": "Meet the Keynote Speakers",
             "speakers": [
+              {
+                "name": "Alliv Samson",
+                "title": "CGO and Co-Founder of Kami",
+                "company": "",
+                "bio": "Alliv Samson is the CGO and Co-Founder of Kami, the world's #1 digital classroom application that is transforming the way students and teachers engage and collaborate with learning resources. She is responsible for Kami's ventures into offshore markets, their marketing efforts, team growth, and user growth. Alliv graduated with a Bachelor of Arts Majors in Political Studies and Media Studies from the University of Auckland. She has mentored university students through The University of Auckland Velocity Programme and Centre for Innovation and Entrepreneurship, and her experience in computer science and freelance work has helped shape Kami into one of the fastest growing EdTech companies across the globe.",
+                "image": "/img/scraped/conference/2024/speakers/alliv-samson.jpg",
+                "linkedin": "https://www.linkedin.com/in/alliv/"
+              },
               {
                 "name": "Steve Smith",
                 "title": "Google for Education, NZ Program Manager",
                 "company": "",
                 "bio": "Steve has been a High School Social Studies and Geography teacher for the last 16 years in New Zealand since returning from teaching in London for 2 years. Steve worked to bring Google for Education to his school and along with a colleague trained the staff in the use of Google for education. Over 8 years, Steve passionately promoted Google Tools through workshops across New Zealand. He's Level 1 and 2 Certified Educator & Trainer, attended the 2019 Sydney Innovator Academy, and is part of the Google Earth Education Experts Group. He is now at Google's Auckland office as NZ Lead for Google for Education, aiming to empower NZ educator communities, support partners, and bring more \"Google goodness\" to education in NZ.",
-                "image": "/img/scraped/site/conference/65084a6f7eff201d67564fb5_steve_smith_photo_9e4ce7f3.jpg",
+                "image": "/img/scraped/conference/2024/speakers/steve-smith.jpeg",
                 "linkedin": "https://www.linkedin.com/in/steve-smith-81816493/"
-              },
-              {
-                "name": "Alliv Samson",
-                "title": "CGO and Co-Founder of Kami",
-                "company": "",
-                "bio": "Alliv Samson is the CGO and Co-Founder of Kami, the world’s #1 digital classroom application that is transforming the way students and teachers engage and collaborate with learning resources. She is responsible for Kami’s ventures into offshore markets, their marketing efforts, team growth, and user growth.Alliv graduated with a Bachelor of Arts Majors in Political Studies and Media Studies from the University of Auckland. She has mentored university students through The University of Auckland Velocity Programme and Centre for Innovation and Entrepreneurship, and her experience in computer science and freelance work has helped shape Kami into one of the fastest growing EdTech companies across the globe.‍",
-                "image": "/img/scraped/speakers/670c79e4bcb72874bd74433a_Alliv_Samson_Keynote_d15fed8d.jpg",
-                "linkedin": "https://www.linkedin.com/in/alliv/"
               }
             ]
           },
-          "panel_facilitators": {
+          "demo_facilitators": {
+            "heading": "Meet the Demo Facilitators",
+            "speakers": [
+              {
+                "name": "Catherine Frost",
+                "title": "Lead Writer Technology, Ministry of Education",
+                "company": "",
+                "bio": "Catherine is currently Lead Writer in the Technology learning area in the Ministry of Education for the curriculum refresh Te Mātaiaho. Teaching across all sectors, first in the 90's in the UK and since 2004 in Aotearoa New Zealand, Catherine has almost 30 years' experience in Technology education, leadership, strategy and curriculum development; Catherine has held a variety of advisory, consultancy and national project leadership roles, specialising in change strategy, leadership with the goal to improve the educational opportunities for all ākonga through a 'futures-ready' lens and quality learning design. She is passionate about curriculum and the potential of emerging technologies to transform educational possibilities.",
+                "image": "/img/scraped/conference/2024/speakers/catherine-frost.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Claire Wigley",
+                "title": "Teacher at Spotswood College New Plymouth",
+                "company": "",
+                "bio": "Claire is a dedicated teacher at Spotswood College in New Plymouth, focused on teaching 21st-century skills. With a background in textiles technology, she has expanded her expertise over the past 8 years to include cooking, coding, and laser cutting, covering various aspects of the Technology Curriculum. Teaching students from year 1 to year 10, Claire integrates Design Thinking into her lessons as an Inquiry Specialist. In 2023, she joined the council at TENZ and played a key role in their conference. She is passionate about inspiring young women, promoting female role models, and highlighting opportunities in STEAM fields.",
+                "image": "/img/scraped/conference/2024/speakers/claire-wigley.jpg",
+                "linkedin": "https://www.linkedin.com/in/claire-wigley-0aa200304"
+              },
+              {
+                "name": "Dr. David Parsons",
+                "title": "Research Director, academyEX",
+                "company": "",
+                "bio": "David Parsons is the Research Director at academyEX and Adjunct Professor at the University of Canterbury. His experience includes academic roles at Southampton Solent University in the UK and Massey University in New Zealand, and senior professional roles in the international software industry. He holds a PhD in Information Technology and has research interests in the role of AI and digital technologies in education, agile and lean thinking, curriculum design, and contemporary software development. He has produced over 200 publications, including several books on various aspects of software development. He is a Certified Member of the Association for Learning Technologies.",
+                "image": "/img/scraped/conference/2024/speakers/dr-david-parsons.jpg",
+                "linkedin": "https://www.linkedin.com/in/drdavidparsons/"
+              },
+              {
+                "name": "Dr. Kara Kennedy",
+                "title": "Principal - AI Literacy Institute",
+                "company": "",
+                "bio": "Kara Kennedy, PhD, is a scholar, author, and educator in the areas of digital and AI literacy and science fiction. She launched the AI Literacy Institute for resources and guidance on Generative AI topics, and her AI guides have been shared and translated by educators around the world. She has presented on digital and AI literacy at conferences in the US, Australia, and NZ and published journal articles on digital and information literacy and on the gender gap in Wikipedia. Her work as a learning advisor at the University of Canterbury and Manukau Institute of Technology has given her valuable insights into people's struggles with technology, and she is keen to help close the digital divide and the gender gap in STEM.",
+                "image": "/img/scraped/conference/2024/speakers/dr-kara-kennedy.jpeg",
+                "linkedin": "https://www.linkedin.com/in/kara-kennedy6/"
+              },
+              {
+                "name": "Dr. Kathryn MacCallum",
+                "title": "Associate Professor, University of Canterbury",
+                "company": "",
+                "bio": "Kathryn MacCallum is an Associate Professor of Digital Education Futures at the University of Canterbury. As Director of the Digital Education Futures Lab, she leads a community of researchers exploring digital technologies in education across all contexts, from kindergarten to tertiary education. Kathryn's research focuses on the role and impact of technology in education, particularly how emerging technologies like AI can support the development of digital literacies and how this shifts educational practices and norms. Her innovative work has influenced educational practices in New Zealand and internationally. Kathryn has published extensively and serves as editor-in-chief for several leading international journals.",
+                "image": "/img/scraped/conference/2024/speakers/dr-kathryn-maccallum.jpg",
+                "linkedin": "https://www.linkedin.com/in/kathrynmaccallum/"
+              },
+              {
+                "name": "Dr. Mahsa McCauley (Mohaghegh)",
+                "title": "Associate Professor at AUT and Chair AI Forum",
+                "company": "",
+                "bio": "Dr. Mahsa McCauley is Founder and Director of She Sharp Charitable Trust. As Chair of AI Forum NZ and Associate Professor of AI at AUT, she researches AI, machine learning, IoT and cybersecurity. She serves on boards of NZTech, EdTechNZ and World Summit Awards, advancing AI strategy, education and SDG projects. A recognised public speaker on AI, cybersecurity and future work, she has received honours for leadership, innovation and advocacy for diversity in tech.",
+                "image": "/img/scraped/conference/2024/speakers/dr-mahsa-mccauley-mohaghegh.jpg",
+                "linkedin": "https://nz.linkedin.com/in/mahsamohaghegh"
+              },
+              {
+                "name": "Munireh Rouget",
+                "title": "Deputy Chair - TENZ Council",
+                "company": "",
+                "bio": "Munireh serves as the Deputy Chair on the TENZ council and is Poutakawaenga mō te Pūtake Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle. She earned her Master's in Computer Sciences from Université Paul Sabatier in France and began her career as a Software Engineer, crafting e-commerce websites for major international companies. In 2021, she made the exciting decision to become a teacher, aiming to enhance diversity and inclusion in Computer Sciences and Digital Technologies. Now, as the Leader of Learning for Digital Technology at Fraser High School, she strives to empower young women and support them in their journeys in STEMM, particularly in Computer Science.",
+                "image": "/img/scraped/conference/2024/speakers/munireh-rouget.png",
+                "linkedin": "https://www.linkedin.com/in/munireh-rouget-43501a60"
+              }
+            ]
+          },
+          "workshop_facilitators": {
             "heading": "Meet the Workshop Facilitators",
             "speakers": [
               {
-                "name": "Henry Hickman",
-                "title": "PhD student at the University of Canterbury",
-                "company": "",
-                "bio": "Henry is a PhD student at the University of Canterbury, supervised by Tim Bell in the Computer Science Education Research Group, a.k.a the Department of Fun Stuff. His current area of research deals with automating the NCEA level one programming standard, which aims to save teachers time, improve student outcomes, and increase the equity of programming education nationwide. He is also a stand-up comedian, hosting comedy shows in Christchurch, and a big fan of the TV show Survivor, which he talks about weekly on his YouTube channel.",
-                "image": "/img/scraped/speakers/66f8f432e9e4ff2af1eb4244_Henry_HickmanWorkshop_78c48128.jpg",
-                "linkedin": ""
-              },
-              {
-                "name": "Steven Rodkiss",
-                "title": "Digital Technologies Teacher, Burnside High School",
-                "company": "",
-                "bio": "Steve is a digital technologies teacher at Burnside High School in Christchurch and a member of the DTTA committee. He has more than a decade of experience and takes his passion for game development and programming into his work, having created NCEA programmes of learning that let kids make games and applications for NCEA credits. Steve is committed to sharing his passion and is a founding member and content creator for Techquity, as well as having 4.3k subscribers on his game dev focussed Youtube channel!",
-                "image": "/img/scraped/speakers/66f8f4efcf9938934f400259_Steven_Rodkiss_Workshop_54c7ed88.jpg",
-                "linkedin": ""
-              },
-              {
                 "name": "Alex Ward",
-                "title": "Head of Digital Technology Kerikeri High School",
+                "title": "Senior Curriculum Leader, Rototuna Junior High School",
                 "company": "",
-                "bio": "Alex is a Teacher, Musician, and Programming Enthusiast, leads Kerikeri High School's Digital Tech department for 4 years. Now, he's taking his talents to Rototuna Junior High School in Waikato. Alex combines code and creativity to craft generative art and music, even exploring the synergy between Digital Tech and other subjects. With a Bachelors in Music and experience as a Lecturer and Programme Administrator at Massey and Victoria University, his global performances include Singapore, Korea, China, Indonesia, Australia, and Antarctica. Alex relishes the switch to Digital Tech, making technology a canvas for creativity.‍",
-                "image": "/img/scraped/site/conference/6523c77644a849818c9b981a_Alex_Ward_4_e5a3ee7d.jpg",
+                "bio": "Alex is a Teacher, Musician, and Programming Enthusiast, leads Kerikeri High School's Digital Tech department for 4 years. Now, he's taking his talents to Rototuna Junior High School in Waikato. Alex combines code and creativity to craft generative art and music, even exploring the synergy between Digital Tech and other subjects. With a Bachelors in Music and experience as a Lecturer and Programme Administrator at Massey and Victoria University, his global performances include Singapore, Korea, China, Indonesia, Australia, and Antarctica. Alex relishes the switch to Digital Tech, making technology a canvas for creativity.",
+                "image": "/img/scraped/conference/2024/speakers/alex-ward.jpg",
                 "linkedin": ""
               },
               {
@@ -1847,84 +1874,39 @@
                 "title": "Head of Impact, Growth Culture",
                 "company": "",
                 "bio": "As a seasoned education leader with over two decades of experience, Bex Rose is dedicated to empowering educators to embrace the transformative potential of artificial intelligence. With a deep understanding of the challenges and opportunities presented by AI, Bex has established herself as a passionate facilitator and mentor. In her role as Head of Impact at Growth Culture, she is also a seasoned leadership facilitator with a proven track record of guiding educational leaders to develop their skills, unlock their potential, and drive positive change. Bex is a driving force in shaping the future of education in New Zealand.",
-                "image": "/img/scraped/speakers/66f8f36ab96e685709e9032f_Bex_Rose_6727c3a6.jpg",
+                "image": "/img/scraped/conference/2024/speakers/bex-rose.jpg",
                 "linkedin": "https://www.linkedin.com/in/bex-rosenz/"
+              },
+              {
+                "name": "Henry Hickman",
+                "title": "PhD student at the University of Canterbury",
+                "company": "",
+                "bio": "Henry is a PhD student at the University of Canterbury, supervised by Tim Bell in the Computer Science Education Research Group, a.k.a the Department of Fun Stuff. His current area of research deals with automating the NCEA level one programming standard, which aims to save teachers time, improve student outcomes, and increase the equity of programming education nationwide. He is also a stand-up comedian, hosting comedy shows in Christchurch, and a big fan of the TV show Survivor, which he talks about weekly on his YouTube channel.",
+                "image": "/img/scraped/conference/2024/speakers/henry-hickman.jpeg",
+                "linkedin": ""
               },
               {
                 "name": "Jessica Brennan",
                 "title": "Kami - Regional Customer Manager",
                 "company": "",
                 "bio": "Jessica Brennan, Regional Customer Manager at Kami, started her career teaching special education in schools, and is now a valued Regional Customer Manager at Kami, delivering exceptional service and cultivating strong global client relationships.",
-                "image": "/img/scraped/speakers/670c929c526b707d50355b4b_Jessica_Brennan_Workshop_4db5787a.png",
+                "image": "/img/scraped/conference/2024/speakers/jessica-brennan.png",
                 "linkedin": ""
               },
               {
                 "name": "Paul Savage",
                 "title": "Kami - Senior Product Marketer",
                 "company": "",
-                "bio": "Paul Savage, Senior Product Marketer at Kami, brings a unique blend of educational expertise and product innovation to the workshop. With a background as a former adult education teacher and over 20 years of global product marketing experience. His mission is to bring educators tools that break down barriers in education, ensuring equitable learning opportunities for all students. Paul’s passion for blending pedagogy with technology drives his commitment to transforming classrooms into engaging, supportive environments for students of all backgrounds.",
-                "image": "/img/scraped/speakers/670c9279065093d7fd6b92ec_Paul_Savage_Workshop_Spea_eb2624c7.png",
-                "linkedin": ""
-              }
-            ]
-          },
-          "guest_speakers": {
-            "heading": "Meet the Demo Facilitators",
-            "speakers": [
-              {
-                "name": "Dr. David Parsons",
-                "title": "Research Director, academyEX",
-                "company": "academyEX",
-                "bio": "David Parsons is the Research Director at academyEX and Adjunct Professor at the University of Canterbury. His experience includes academic roles at Southampton Solent University in the UK and Massey University in New Zealand, and senior professional roles in the international software industry. He holds a PhD in Information Technology and has research interests in the role of AI and digital technologies in education, agile and lean thinking, curriculum design and contemporary software development. He has produced over 200 publications, including several books on software development and education.",
-                "image": "/img/scraped/photos/66d3b444977df99baf784a0b_David Parsons.jpg",
+                "bio": "Paul Savage, Senior Product Marketer at Kami, brings a unique blend of educational expertise and product innovation to the workshop. With a background as a former adult education teacher and over 20 years of global product marketing experience. His mission is to bring educators tools that break down barriers in education, ensuring equitable learning opportunities for all students. Paul's passion for blending pedagogy with technology drives his commitment to transforming classrooms into engaging, supportive environments for students of all backgrounds.",
+                "image": "/img/scraped/conference/2024/speakers/paul-savage.png",
                 "linkedin": ""
               },
               {
-                "name": "Dr. Kara Kennedy",
-                "title": "Principal - AI Literacy Institute",
-                "company": "AI Literacy Institute",
-                "bio": "Kara Kennedy, PhD, is a scholar, author and educator in the areas of digital and AI literacy and science fiction. She launched the AI Literacy Institute for resources and guidance on Generative AI topics, and her AI guides have been shared and translated by educators around the world. She has presented on digital and AI literacy at conferences in the US, Australia and NZ and published journal articles on digital and information literacy and on the gender gap in Wikipedia.",
-                "image": "/img/scraped/photos/66d1789a4b5f67bde73883ce_Kara.jpeg",
-                "linkedin": ""
-              },
-              {
-                "name": "Dr. Kathryn MacCallum",
-                "title": "Associate Professor, University of Canterbury",
-                "company": "University of Canterbury",
-                "bio": "Kathryn MacCallum is an Associate Professor of Digital Education Futures at the University of Canterbury. As Director of the Digital Education Futures Lab, she leads a community of researchers exploring digital technologies in education across all contexts, from kindergarten to tertiary education. Kathryn's research focuses on the role and impact of technology in education, particularly how emerging technologies like AI can support the development of digital literacies and how this shifts educational practices and norms.",
-                "image": "/img/scraped/photos/66d3b4038fa4a872b5117a48_Kathryn-MacCallum-head.jpg",
-                "linkedin": ""
-              },
-              {
-                "name": "Catherine Frost",
-                "title": "Lead Writer Technology, Ministry of Education",
-                "company": "Ministry of Education",
-                "bio": "Catherine is currently Lead Writer in the Technology learning area in the Ministry of Education for the curriculum refresh Te Mātaiaho. Teaching across all sectors — first in the 1990s in the UK and since 2004 in Aotearoa New Zealand — Catherine has almost 30 years' experience in Technology education, leadership, strategy and curriculum development. She is passionate about curriculum and the potential of emerging technologies to transform learning.",
-                "image": "/img/scraped/photos/66f8f1791c37f36fc8e345a1_Catherine Frost(Demo).jpg",
-                "linkedin": ""
-              },
-              {
-                "name": "Dr. Mahsa McCauley (Mohaghegh)",
-                "title": "Associate Professor at AUT and Chair AI Forum",
-                "company": "She Sharp / AUT / AI Forum NZ",
-                "bio": "Dr. Mahsa McCauley is Founder and Director of She Sharp Charitable Trust. As Chair of AI Forum NZ and Associate Professor of AI at AUT, she researches AI, machine learning, IoT and cybersecurity. She serves on boards of NZTech, EdTechNZ and World Summit Awards, advancing AI strategy, education and SDG projects.",
-                "image": "/img/scraped/photos/69ae758e75cb901b6270b2d2_LSS02450-EDITWEBRES_Original.jpg",
-                "linkedin": ""
-              },
-              {
-                "name": "Munireh Rouget",
-                "title": "Deputy Chair - TENZ Council",
-                "company": "TENZ Council / Fraser High School",
-                "bio": "Munireh serves as the Deputy Chair on the TENZ council and is Poutakawaenga mō te Pūtake Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle. She earned her Master's in Computer Sciences from Université Paul Sabatier in France and began her career as a Software Engineer, crafting e-commerce websites for major international companies. In 2021 she made the exciting decision to become a teacher, aiming to enhance diversity and inclusion in Computer Sciences and Digital Technologies. Now, as the Leader of Learning for Digital Technology at Fraser High School, she strives to empower learners.",
-                "image": "/img/scraped/photos/670c7805bc6a2c73a5469191_Munireh.png",
-                "linkedin": ""
-              },
-              {
-                "name": "Claire Wigley",
-                "title": "Teacher at Spotswood College New Plymouth",
-                "company": "Spotswood College",
-                "bio": "Claire is a dedicated teacher at Spotswood College in New Plymouth, focused on teaching 21st-century skills. With a background in textiles technology, she has expanded her expertise to encompass various areas of the Technology Curriculum, from cooking to coding and laser cutting. As an Inquiry Specialist teacher, Claire integrates Design Thinking into her lessons and in 2023 took on the role of council member at TENZ.",
-                "image": "/img/scraped/photos/654b416bc4182bc0aac67822_Claire Wigley photo-p-2000.jpg",
+                "name": "Steven Rodkiss",
+                "title": "Digital Technologies Teacher, Burnside High School",
+                "company": "",
+                "bio": "Steve is a digital technologies teacher at Burnside High School in Christchurch and a member of the DTTA committee. He has more than a decade of experience and takes his passion for game development and programming into his work, having created NCEA programmes of learning that let kids make games and applications for NCEA credits. Steve is committed to sharing his passion and is a founding member and content creator for Techquity, as well as having 4.3k subscribers on his game dev focussed Youtube channel!",
+                "image": "/img/scraped/conference/2024/speakers/steven-rodkiss.jpg",
                 "linkedin": ""
               }
             ]
@@ -1932,21 +1914,54 @@
         },
         "organizers": [],
         "sponsors": {
-          "main": [],
+          "main": [
+            {
+              "name": "Google",
+              "logo": "/img/scraped/conference/2024/sponsors/google.png",
+              "description": "Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington. The team works to help Kiwis find new ways to collaborate, reach audiences and get things done. Google is committed to helping all Kiwis with the digital knowledge and capabilities they need now and in the future.",
+              "tier": "Gold"
+            },
+            {
+              "name": "AUT",
+              "logo": "/img/scraped/conference/2024/sponsors/aut.png",
+              "description": "Auckland University of Technology (AUT) is New Zealand's leading modern university and one of the largest universities in the country. Renowned for its innovative teaching and strong emphasis on real-world learning, AUT offers a diverse range of programs across fields like business, engineering, health sciences, and creative technologies. Located in Auckland, the university is a hub for cutting-edge research, with a focus on areas such as artificial intelligence, sustainability, and sports science. AUT is committed to creating a vibrant, inclusive community that prepares students for global careers, making it a key player in New Zealand's educational landscape.",
+              "tier": "Gold"
+            },
+            {
+              "name": "Kami",
+              "logo": "/img/scraped/conference/2024/sponsors/kami.png",
+              "description": "Kami is an instructional platform that integrates with popular LMS to offer accessible annotation, streamlined instruction and assessment, and greater insights. Kami aligns with WCAG 2.1 AA standards, supporting student-centered learning. Time-saving features enhance instruction, while AI-powered questions speed up online test prep and assessments. Key performance metrics allow teachers to edit classwork and assessments instantly. Everything you need for every student to succeed.",
+              "tier": "Gold"
+            },
+            {
+              "name": "TENZ",
+              "logo": "/img/scraped/conference/2024/sponsors/tenz.png",
+              "description": "Technology Education New Zealand (TENZ) is a non profit professional, collaborative association, promoting and supporting all levels of technology education in Aotearoa New Zealand. TENZ is organised by teachers for teachers and our aim is to enhance the learning and teaching of technology by creating a well informed, well connected, supportive, and sustainable professional community that has a strong voice and provides effective advocacy for technology education.",
+              "tier": "Silver"
+            },
+            {
+              "name": "academyEX",
+              "logo": "/img/scraped/conference/2024/sponsors/academyex.png",
+              "description": "academyEX empowers diverse learners who are change makers, leaders and innovators. Our students range from educators, business owners, ambitious career-changers, community leaders and lifelong learners, ready to reshape their futures and do the best work of their lives. From micro-credentials to Masters programmes, we’re not your typical education provider. We’re a community of industry experts, and visionary thinkers who believe in learning that creates positive change in a fast paced world. Our unique approach blends practical skills with forward-thinking strategies, preparing you for the challenges of today and the possibilities of tomorrow. Come and meet the students who are ready to change the world alongside you. Find your EXfactor at academyEX.",
+              "tier": "Exhibition"
+            },
+            {
+              "name": "Anew",
+              "logo": "/img/scraped/conference/2024/sponsors/anew.png",
+              "description": "Anew® is a problem-solving company and single-use bottles are a problem. At Anew we’re bending the linear lifecycle of single-use water bottles into a circular one, encouraging reuse, before they’re recycled, and made anew.Anew’s goal is to keep materials in circulation for as long as possible and enable other businesses to be more sustainable. Anew provides packaging consultancy, design, manufacturing, bottle collection, washing and recycling. The Anew® packaging system is a convenient bolt-on, circular ecosystem designed to integrate with current infrastructure to enable mass adoption.",
+              "tier": "Exhibition"
+            },
+            {
+              "name": "Auckland Unlimited",
+              "logo": "/img/scraped/conference/2024/sponsors/auckland-unlimited.png",
+              "description": "Auckland Unlimited boosts Auckland’s appeal for living, working, visiting, investing, and doing business. As an Auckland Council-controlled organization, it enhances cultural, social, and economic benefits for residents and visitors. Auckland Unlimited drives investment and innovation, supports local businesses, and enriches the city’s cultural vibrancy. It builds on its founding organizations' legacy to lead in growth industries and attract transformative investments, guided by the principle of kotahitanga, or shared purpose.",
+              "tier": "Venue"
+            }
+          ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recap",
-            "content": ["https://www.youtube.com/watch?v=kONKHNGsIP4"]
-            }
-        ],
+        "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/674a8d448cfb51e2040934e8_Screen Shot 2024-11-30 at 4.57.41 PM.png",
-            "alt": "Google Educator Conference featured photo"
-           },
           {
             "url": "/img/scraped/photos/674a8d5a4ab1892c07bba411_Google-Educator-004_6f8b01db.jpg",
             "alt": ""
@@ -2052,7 +2067,460 @@
         "endTime": "6pm",
         "timezone": "NZDT",
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/2024-google-educators-conference"
+        "humanitixUrl": "https://events.humanitix.com/2024-google-educators-conference",
+        "sessions": [
+          {
+            "type": "Demo",
+            "title": "Demo 1: Global Strategies for Assessing AI Literacy",
+            "facilitators": [
+              "Dr. Kara Kennedy"
+            ],
+            "description": "The rise of Generative AI has made it essential for students to gain AI literacy skills, yet it can be challenging to assess whether they truly understand and know how to use Generative AI technologies in ethical and responsible ways. In this session, we will explore strategies for assessing AI literacy based on quizzes, surveys, and frameworks used by educators around the world. By: Dr. Kara Kennedy - Principal - AI Literacy Institute",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "The rise of Generative AI has made it essential for students to gain AI literacy skills, yet it can be challenging to assess whether they truly understand and know how to use Generative AI technologies in ethical and responsible ways. In this session, we will explore strategies for assessing AI literacy based on quizzes, surveys, and frameworks used by educators around the world. By: Dr. Kara Kennedy - Principal - AI Literacy Institute"
+              }
+            ]
+          },
+          {
+            "type": "Demo",
+            "title": "Demo 2: Embed AI literacy into your classes using the SAIL framework",
+            "facilitators": [
+              "Dr. Kathryn MacCallum",
+              "Dr. David Parsons",
+              "Dr. Mahsa McCauley (Mohaghegh)"
+            ],
+            "description": "With the technology curriculum refresh currently underway, in a world where AI tools are becoming ever more pervasive, we can expect that future views of digital literacy will involve a significant level of AI literacy. The Scaffolded AI Literacy (SAIL) framework has been developed by a group of experts from Aotearoa New Zealand and overseas to provide a comprehensive guide to developing AI literacy through scaffolded levels of competency. This session will provide a brief overview of the framework before getting into the practicalities of how its knowledge, skills, and critical perspectives can be delivered to diverse learner groups in engaging and interactive ways using accessible digital tools. By: 1. Dr Kathryn MacCallum - Associate Professor of Digital Education Futures, University of Canterbury 2. Dr David Parsons - Research Director, academyEX 3. Dr Mahsa McCauley - Senior lecturer at AUT School of Engineering and Founder of She Sharp",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "With the technology curriculum refresh currently underway, in a world where AI tools are becoming ever more pervasive, we can expect that future views of digital literacy will involve a significant level of AI literacy. The Scaffolded AI Literacy (SAIL) framework has been developed by a group of experts from Aotearoa New Zealand and overseas to provide a comprehensive guide to developing AI literacy through scaffolded levels of competency. This session will provide a brief overview of the framework before getting into the practicalities of how its knowledge, skills, and critical perspectives can be delivered to diverse learner groups in engaging and interactive ways using accessible digital tools."
+              },
+              {
+                "type": "paragraph",
+                "text": "By: 1. Dr Kathryn MacCallum - Associate Professor of Digital Education Futures, University of Canterbury 2. Dr David Parsons - Research Director, academyEX 3. Dr Mahsa McCauley - Senior lecturer at AUT School of Engineering and Founder of She Sharp"
+              }
+            ]
+          },
+          {
+            "type": "Demo",
+            "title": "Demo 3: How can curriculum content evolve to ensure tamariki/rangatahi are 'futures-ready'?",
+            "facilitators": [
+              "Catherine Frost"
+            ],
+            "description": "An overview and Q&A/kōrero of how curriculum content (NZC only-not TMoA) is approaching the wero of what our next generation need to know, what is essential learning with, in, and about technology? By: Catherine Frost - Lead Writer Technology, Ministry of Education",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "An overview and Q&A/kōrero of how curriculum content (NZC only-not TMoA) is approaching the wero of what our next generation need to know, what is essential learning with, in, and about technology?"
+              },
+              {
+                "type": "paragraph",
+                "text": "By: Catherine Frost - Lead Writer Technology, Ministry of Education"
+              }
+            ]
+          },
+          {
+            "type": "Demo",
+            "title": "Demo 4: STEMM Power: Fueling Girls' Futures through Māturanga Māori",
+            "facilitators": [
+              "Claire Wigley",
+              "Munireh Rouget"
+            ],
+            "description": "Join us for an empowering workshop focused on engaging girls in STEMM. This interactive session will explore innovative strategies and practical approaches to inspire and support female students in science, technology, engineering, mathematics through a Māturanga Māori lens. Participants will gain insights into effective teaching methods, learn first hand about some of our successes, and develop tools to create a more inclusive and motivating STEMM environment. Equip yourself with the skills to help ignite a passion for STEMM in young girls and promote their continued success in these fields. By: 1. Claire Wigley - Teacher at Spotswood College New Plymouth & TENZ Council Member 2. Munireh Rouget - Deputy Chair - TENZ Council and Poutakawaenga mō te Pūtake Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Join us for an empowering workshop focused on engaging girls in STEMM. This interactive session will explore innovative strategies and practical approaches to inspire and support female students in science, technology, engineering, mathematics through a Māturanga Māori lens."
+              },
+              {
+                "type": "paragraph",
+                "text": "Participants will gain insights into effective teaching methods, learn first hand about some of our successes, and develop tools to create a more inclusive and motivating STEMM environment."
+              },
+              {
+                "type": "paragraph",
+                "text": "Equip yourself with the skills to help ignite a passion for STEMM in young girls and promote their continued success in these fields."
+              },
+              {
+                "type": "paragraph",
+                "text": "By: 1. Claire Wigley - Teacher at Spotswood College New Plymouth & TENZ Council Member 2. Munireh Rouget - Deputy Chair - TENZ Council and Poutakawaenga mō te Pūtake Whakawhanaungatanga - Facilitator for the Whakawhanaungatanga Principle"
+              }
+            ]
+          },
+          {
+            "type": "Guest Speaker",
+            "title": "Guest Speaker Session: International Olympiads in AI and Informatics",
+            "facilitators": [
+              "Margot Phillipps"
+            ],
+            "description": "We will provide a comprehensive explanation of the Olympiads and delve into New Zealand's process for selecting students to represent the country. Additionally, we will discuss how teachers can offer these outstanding opportunities to their students. By: Margot Phillipps",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "We will provide a comprehensive explanation of the Olympiads and delve into New Zealand's process for selecting students to represent the country. Additionally, we will discuss how teachers can offer these outstanding opportunities to their students."
+              },
+              {
+                "type": "paragraph",
+                "text": "By: Margot Phillipps"
+              }
+            ]
+          },
+          {
+            "type": "Keynote",
+            "title": "Keynote 1: AI, What it was, What it is and What it could be",
+            "facilitators": [
+              "Steve Smith"
+            ],
+            "description": "A look back to see how we got to here. What is here and why it matters and what could the future look like for education. By: Steve Smith - NZ Program Manager, Google for Education",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "A look back to see how we got to here. What is here and why it matters and what could the future look like for education."
+              },
+              {
+                "type": "paragraph",
+                "text": "By: Steve Smith - NZ Program Manager, Google for Education"
+              }
+            ]
+          },
+          {
+            "type": "Keynote",
+            "title": "Keynote 2: Transforming Education: The Kami Story with Alliv Samson",
+            "facilitators": [
+              "Alliv Samson"
+            ],
+            "description": "Join Alliv Samson, CGO and Co-Founder of edtech app Kami, as she shares how a Kiwi startup grew from its humble beginnings in Aotearoa to empowering over 40 million users worldwide. Alliv will delve into Kami’s journey of transforming education and her passion for driving innovation in edtech. By: Alliv Samson - CGO and Co-Founder of Kami",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Join Alliv Samson, CGO and Co-Founder of edtech app Kami, as she shares how a Kiwi startup grew from its humble beginnings in Aotearoa to empowering over 40 million users worldwide."
+              },
+              {
+                "type": "paragraph",
+                "text": "Alliv will delve into Kami’s journey of transforming education and her passion for driving innovation in edtech."
+              },
+              {
+                "type": "paragraph",
+                "text": "By: Alliv Samson - CGO and Co-Founder of Kami"
+              }
+            ]
+          },
+          {
+            "type": "Panel",
+            "title": "Panel Discussion: Equipping Young Minds - Building AI Literacy for the Future",
+            "facilitators": [
+              "Dr. Geri Harris",
+              "Benny Pan",
+              "Paula Gair"
+            ],
+            "description": "As artificial intelligence becomes increasingly integral to various aspects of life and work, it is crucial that educational systems prepare students to navigate this new landscape. This panel will explore what AI literacy entails for primary and secondary education and discuss actionable strategies to equip students with the necessary skills and understanding. Panelists: Dr. Geri Harris Benny Pan Paula Gair",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "As artificial intelligence becomes increasingly integral to various aspects of life and work, it is crucial that educational systems prepare students to navigate this new landscape. This panel will explore what AI literacy entails for primary and secondary education and discuss actionable strategies to equip students with the necessary skills and understanding."
+              },
+              {
+                "type": "paragraph",
+                "text": "Panelists: Dr. Geri Harris Benny Pan Paula Gair"
+              }
+            ]
+          },
+          {
+            "type": "Workshop",
+            "title": "Workshop 1: Bridging the Gap: Inclusive Education and EdTech Solutions for SEN in NZ",
+            "facilitators": [
+              "Jessica Brennan",
+              "Paul Savage"
+            ],
+            "description": "Join us for a dynamic workshop designed to address the challenges and opportunities in supporting SEN students and promoting responsive education here in Aotearoa. This interactive session will be a thoughtful exploration into the unique needs of diverse learners. We’ll dive into insights from Kami’s research on SEN and demonstrate practical ways to use the app as a universal accommodation tool. Participants will be encouraged to identify pressing issues, and brainstorm innovative edtech solutions. Get ready to be a part of ideating new products, crafting actionable strategies that can be brought to life in schools, driving real change in the SEN space. Bring your laptops to make the most of this hands-on and truly rewarding experience! By: 1. Jessica Brennan - Kami - Regional Customer Manager 2. Paul Savage - Kami - Senior Product Marketer",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Join us for a dynamic workshop designed to address the challenges and opportunities in supporting SEN students and promoting responsive education here in Aotearoa."
+              },
+              {
+                "type": "paragraph",
+                "text": "This interactive session will be a thoughtful exploration into the unique needs of diverse learners."
+              },
+              {
+                "type": "paragraph",
+                "text": "We’ll dive into insights from Kami’s research on SEN and demonstrate practical ways to use the app as a universal accommodation tool. Participants will be encouraged to identify pressing issues, and brainstorm innovative edtech solutions."
+              },
+              {
+                "type": "paragraph",
+                "text": "Get ready to be a part of ideating new products, crafting actionable strategies that can be brought to life in schools, driving real change in the SEN space."
+              },
+              {
+                "type": "paragraph",
+                "text": "Bring your laptops to make the most of this hands-on and truly rewarding experience!"
+              },
+              {
+                "type": "paragraph",
+                "text": "By: 1. Jessica Brennan - Kami - Regional Customer Manager 2. Paul Savage - Kami - Senior Product Marketer"
+              }
+            ]
+          },
+          {
+            "type": "Workshop",
+            "title": "Workshop 2: AI: The Personal Touch",
+            "facilitators": [
+              "Bex Rose"
+            ],
+            "description": "In this workshop, we'll explore how AI can revolutionize teaching and learning through differentiated instruction. We'll delve into powerful tools like Diffit, Gemini, Magic School, and Questionwell, which offer personalised learning paths, targeted feedback, and adaptive assessments. By harnessing the power of AI, teachers can create more engaging, effective, and equitable classrooms where every student can thrive. By: Bex Rose - Head of Impact, Growth Culture",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "In this workshop, we'll explore how AI can revolutionize teaching and learning through differentiated instruction. We'll delve into powerful tools like Diffit, Gemini, Magic School, and Questionwell, which offer personalised learning paths, targeted feedback, and adaptive assessments. By harnessing the power of AI, teachers can create more engaging, effective, and equitable classrooms where every student can thrive."
+              },
+              {
+                "type": "paragraph",
+                "text": "By: Bex Rose - Head of Impact, Growth Culture"
+              }
+            ]
+          },
+          {
+            "type": "Workshop",
+            "title": "Workshop 3: Automated Assessment of Programming for NCEA",
+            "facilitators": [
+              "Steven Rodkiss",
+              "Henry Hickman"
+            ],
+            "description": "The CodeRunner tool is used in dozens of Universities across NZ and internationally to assess programming ability in students. With the new NCEA standard coming in, this created a unique opportunity to take a big step forward in the assessment of NCEA programming. That was the goal of (soon to be Doctor) Henry Hickman who developed a way to leverage CodeRunner to work with NCEA as part of his PhD study. While there were challenges, the potential benefits are clear; to assist teacher to deliver a consistent assessment for all their kids and, hopefully, increase the opportunity for kids to learn to program. This workshop will give you hands on experience in the new and improved tool that will be released for the 2025 academic year. You’ll leave with a good understanding of the tool and its potential benefits for you, your students and the subject. By: 1. Steven Rodkiss - Digital Technologies Teacher, Burnside High School & member of the DTTA committee 2. Henry Hickman - PhD student, University of Canterbury",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "The CodeRunner tool is used in dozens of Universities across NZ and internationally to assess programming ability in students. With the new NCEA standard coming in, this created a unique opportunity to take a big step forward in the assessment of NCEA programming. That was the goal of (soon to be Doctor) Henry Hickman who developed a way to leverage CodeRunner to work with NCEA as part of his PhD study. While there were challenges, the potential benefits are clear; to assist teacher to deliver a consistent assessment for all their kids and, hopefully, increase the opportunity for kids to learn to program. This workshop will give you hands on experience in the new and improved tool that will be released for the 2025 academic year. You’ll leave with a good understanding of the tool and its potential benefits for you, your students and the subject. By: 1. Steven Rodkiss - Digital Technologies Teacher, Burnside High School & member of the DTTA committee 2. Henry Hickman - PhD student, University of Canterbury"
+              }
+            ]
+          },
+          {
+            "type": "Workshop",
+            "title": "Workshop 4: Evolve! Build your own artificial intelligence with Python",
+            "facilitators": [
+              "Alex Ward"
+            ],
+            "description": "How do we empower students to become creators of Artificial Intelligence rather than just users? This workshop explores building our own AI from first principles while providing guidance on how to teach intermediate-level Python. Genetic algorithms are an easy stepping stone to understanding AI — turning nature into technology by using genes, inheritance and natural selection to make our code overcome the survival of the fittest!"
+          }
+        ],
+        "schedule": {
+          "day": "Thursday 21 November 2024",
+          "bannerImage": "/img/scraped/conference/hub/schedule-banner.png",
+          "items": [
+            {
+              "time": "7.45 - 8.20am",
+              "entries": [
+                {
+                  "activity": "Registration and coffee",
+                  "location": "Generator Bldg (12 Madden Street)"
+                }
+              ]
+            },
+            {
+              "time": "8.20 - 8.30am",
+              "entries": [
+                {
+                  "activity": "Welcome — Dr. Mahsa McCauley (She Sharp)",
+                  "location": "Generator Bldg (12 Madden Street)"
+                }
+              ]
+            },
+            {
+              "time": "8.30 - 9.30am",
+              "entries": [
+                {
+                  "activity": "Keynote Address: AI, What it was, What it is and What it could be — Steve Smith (NZ Program Manager, Google for Education)",
+                  "location": "Generator Bldg (12 Madden Street)"
+                },
+                {
+                  "activity": "Keynote Address: Transforming Education: The Kami Story — Alliv Samson (CGO and Co-Founder of Kami)"
+                },
+                {
+                  "activity": "Keynote Q & A"
+                }
+              ]
+            },
+            {
+              "time": "9.30 - 9.45am",
+              "entries": [
+                {
+                  "activity": "Group Photo",
+                  "location": "Generator Bldg (12 Madden Street)"
+                }
+              ]
+            },
+            {
+              "time": "9.45 - 10.15am",
+              "entries": [
+                {
+                  "activity": "Morning Tea, Expo and Networking",
+                  "location": "Generator Bldg (12 Madden Street)"
+                }
+              ]
+            },
+            {
+              "time": "10.15 - 11.45am",
+              "entries": [
+                {
+                  "activity": "Demo 1: Global Strategies for Assessing AI Literacy",
+                  "location": "Moa, Google Office"
+                },
+                {
+                  "activity": "Demo 2: Embed AI literacy into your classes using the SAIL framework",
+                  "location": "Futures Lab"
+                },
+                {
+                  "activity": "Demo 3: How can curriculum content evolve to ensure tamariki/rangatahi are 'futures-ready'?",
+                  "location": "Paua, Google Office"
+                },
+                {
+                  "activity": "Demo 4: STEMM Power: Fueling Girls' Futures through Māturanga Māori",
+                  "location": "Ninth Expedition, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "11.45 - 12.00pm",
+              "entries": [
+                {
+                  "activity": "Google office tour",
+                  "location": "Google Office"
+                }
+              ]
+            },
+            {
+              "time": "12.00 - 12.45pm",
+              "entries": [
+                {
+                  "activity": "Lunch",
+                  "location": "Google Office"
+                }
+              ]
+            },
+            {
+              "time": "12.45 - 3.00pm",
+              "entries": [
+                {
+                  "activity": "Workshop 1: Bridging the Gap: Inclusive Education and EdTech Solutions for SEN in NZ",
+                  "location": "Moa, Google Office"
+                },
+                {
+                  "activity": "Workshop 2: AI: The Personal Touch",
+                  "location": "Futures Lab"
+                },
+                {
+                  "activity": "Workshop 3: Automated Assessment of Programming for NCEA",
+                  "location": "Campfire, Google Office"
+                },
+                {
+                  "activity": "Workshop 4: Evolve! Build your own artificial intelligence with Python",
+                  "location": "Paua, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "3.00 - 3.30pm",
+              "entries": [
+                {
+                  "activity": "Afternoon tea",
+                  "location": "Moa, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "3.30 - 4.45pm",
+              "entries": [
+                {
+                  "activity": "Panel discussion",
+                  "location": "Futures Lab"
+                }
+              ]
+            },
+            {
+              "time": "4.45 - 5.00pm",
+              "entries": [
+                {
+                  "activity": "International Olympiads in AI and Informatics",
+                  "location": "Campfire, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "5.00pm",
+              "entries": [
+                {
+                  "activity": "Closing Remarks",
+                  "location": "Paua, Google Office"
+                }
+              ]
+            }
+          ]
+        },
+        "infoSections": [
+          {
+            "title": "Session resources",
+            "paragraphs": [
+              "We would like to share some resources from the event on behalf of our amazing speakers, demo and workshop facilitators."
+            ],
+            "links": [
+              {
+                "label": "Check out resources",
+                "url": "https://drive.google.com/drive/folders/1RfipgmHxjpvRNtdNRhGrNHqpKSxY5g2W"
+              },
+              {
+                "label": "View agenda poster",
+                "url": "https://www.canva.com/design/DAFu1qauTNA/o_xfPY_e00XtcBkgy8IXaA/view"
+              }
+            ]
+          },
+          {
+            "title": "Getting to the event",
+            "paragraphs": [
+              "AUT City Campus is in the heart of Auckland and is surrounded by bus stops and is also close to motorway entry/exits. You can easily commute to AUT through Auckland Public Transport.",
+              "Because of the high demand for parking in the central city, AUT can’t provide on-site parking for city-based students or event attendees during the day. It’s a good idea to consider other transport options, like public transport or carpooling. You can park off street (pay and display) or at the nearest Wilson Parking."
+            ],
+            "links": [
+              {
+                "label": "Auckland Transport",
+                "url": "https://at.govt.nz"
+              },
+              {
+                "label": "Wilson Parking",
+                "url": "https://www.wilsonparking.co.nz"
+              },
+              {
+                "label": "Google Maps",
+                "url": "https://goo.gl/maps/hwrH6fhW4fYwyoWDA"
+              }
+            ]
+          },
+          {
+            "title": "About the venue",
+            "paragraphs": [
+              "The 2024 conference was hosted at Google Wynyard Central — GridAKL / Futures Lab, Generator, 12 Madden Street, Wynyard Quarter, Auckland. GridAKL is Auckland's innovation hub, bringing together technology and creative companies in a vibrant waterfront precinct."
+            ]
+          },
+          {
+            "title": "Key contact",
+            "paragraphs": [
+              "Mahsa McCauley (Mohaghegh) — for all workshop-related queries please contact the workshop organiser."
+            ],
+            "links": [
+              {
+                "label": "mahsa.mohaghegh@aut.ac.nz",
+                "url": "mailto:mahsa.mohaghegh@aut.ac.nz"
+              }
+            ],
+            "images": [
+              {
+                "url": "/img/scraped/site/content/64811ab760ae807f1dc87e65_Team_1_Masha_1174635c.png",
+                "alt": "Dr. Mahsa McCauley"
+              }
+            ]
+          }
+        ],
+        "audience": "All teachers and educators, including pre-service teachers.",
+        "sponsorshipPackageUrl": "https://www.canva.com/design/DAGNQO_H_po/Fakzuv3ZiB4J7J3Jg-Hx8Q/view?utm_content=DAGNQO_H_po&utm_campaign=designshare&utm_medium=link&utm_source=editor"
       }
     },
     {
@@ -2159,10 +2627,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/673ae86f262711538318c2f5_hero-p-2000.jpg",
-            "alt": "Sustainable Development featured photo"
-           },           
           {
             "url": "/img/scraped/photos/673ae8b357bafc67dc9fb409_1_7375e11f.jpg",
             "alt": ""
@@ -2340,10 +2804,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/671b32ca898cf47916e7f70b_Anniversary-144-p-2000.jpg",
-            "alt": "She Sharp 10-Year Anniversary featured photo"
-           },           
           {
             "url": "/img/scraped/photos/671b32e1863f1ce63745d2db_Anniversary-72_7fcc997a.jpg",
             "alt": ""
@@ -2544,10 +3004,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/66d4560b9f4ef98b4255cbb5_IMG_9867-p-2000.jpg",
-            "alt": "Harness the Power of Data and AI featured photo"
-           },           
           {
             "url": "/img/scraped/photos/66d456166a015f57e5c91bc6_IMG_9823_425d85f0.jpg",
             "alt": ""
@@ -3055,105 +3511,8 @@
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recap",
-            "content": ["https://www.youtube.com/watch?v=wB8n2NYOSLc"]
-            },
-            {
-              "type": "youtube",
-              "title": "Opening Message from Hon Judith Collins KC MP, Minister of Science, Innovation and Technology",
-              "content": ["https://www.youtube.com/watch?v=NvAS9IacRaY"]
-              },
-          {
-            "type": "agenda",
-            "title": "Readiness Workshops",
-            "content": [
-              "Build your own AI Powered Web App — Microsoft is offering two 2-hour workshops to help students prepare for the AI Hackathon. These sessions will teach students how to build AI models and integrate them into applications. These virtual workshops will be held on Tuesday July 16th for part 1, and Wednesday July 17th for part 2, both at 12-2pm NZT. Facilitators: Michelle Sandford (Developer Engagement Lead Asia - Microsoft) and Renee Noble (Python Cloud Advocate - Microsoft).",
-              "Iterative process and strategies for prompt development — Promptech is offering a one-hour workshop to help students understand the architecture of large language models, providing an introduction to prompt engineering. This session will help students craft effective prompts. This virtual session will be held on Monday July 22nd at 6-7 pm NZT. Facilitator: Amir Mohammadi (Founder & Director - Promptech).",
-              "Supercharge Your Solutions with Generative AI — Join us for an interactive session where we'll explore cutting-edge generative AI tools that can accelerate your projects. From idea generation to data analysis, discover how AI can enhance creativity and productivity. This session will be held on Saturday July 27th at 12:00 NZT. Facilitator: Geri Harris (Senior Lecturer - AUT Business School)."
-            ]
-          },
-          {
-            "type": "topics",
-            "title": "Problem and Solution",
-            "content": [
-              "The team must demonstrate a clear understanding of the problem they are solving.",
-              "The team must explain how their solution effectively solves the identified problem.",
-              "The pitch should be clear and concise in its presentation."
-            ]
-          },
-          {
-            "type": "topics",
-            "title": "Feasibility and Impact",
-            "content": [
-              "The solution must be technically feasible and able to be implemented.",
-              "The solution must have the potential to solve the problem effectively and create a meaningful impact.",
-              "Each judge will individually evaluate the teams based on the criteria above.",
-              "The judging panel will then discuss and come to a consensus on the winners in each category: Best Pitch, Best Technical Solution, People’s Choice Award, and the overall Winner of the year’s AI Hackathon."
-            ]
-          },
-          {
-            "type": "prizes",
-            "title": "Prizes to be won",
-            "content": [
-              "Engraved trophy for winning teams sponsored by She Sharp",
-              "Two (2) AI Summit tickets each valued over $1,595, sponsored by AI Forum",
-              "Four (4) $250 Prezzy cards from Fisher & Paykel",
-              "Four (4) $250 Prezzy cards from Deloitte",
-              "Eight (8) $150 Prezzy cards from Fisher & Paykel",
-              "Five (5) $100 Prezzy cards from AUT",
-              "Five (5) $100 Prezzy cards from Datacom",
-              "One (1) confirmed internship place sponsored by Deloitte",
-              "Free tickets to all remaining four (4) She Sharp events for the rest of the year, valued over $500",
-              "Credit in AI services + three (3) months free mentorship; first team receives $500 and second team receives $200 from Promptech"
-            ]
-          },
-          {
-            "type": "topics",
-            "title": "Judging Information",
-            "content": [
-              "Held on 28th July 2024",
-              "The international judges join together via Zoom",
-              "5-minute pitch from each team",
-              "Judging panel of 6 judges, led by Dr. Mahsa McCauley — Founder and Director of She Sharp",
-              "4 Winners for this event: Best Pitch, Best Technical Solution, People’s Choice Award, and Winner of this year’s AI Hackathon",
-              "Theme: breaking free from drudgery and using innovation and technology to address repetitive tasks, mundane processes, and administrative burdens.",
-              "Participants are expected to align their proposed solutions to address one or more of the 8 use cases provided in the brief.",
-              "The solutions must involve a technology innovation, which can include the innovative use of existing technology.",
-              "The technology used must incorporate elements of AI, and the team must explain what these are and how they are utilized.",
-              "If the team has completed any work prior to the event, they must disclose what work was done and their starting point."
-            ]
-          },
-          {
-            "type": "topics",
-            "title": "AI Use Cases",
-            "content": [
-              "Problem: Manual analysis of customer feedback is laborious and prone to bias. Solution: An AI system that can generate automated summaries of customer feedback, highlighting key themes and concerns.",
-              "Problem: Creating and maintaining training materials for new technology platforms is time-consuming. Solution: An AI system that can reformat, recompile and update various media types to keep training materials current.",
-              "Problem: Manual checking and marking of VOU documents is prone to error and time-consuming. Solution: An AI system that can automatically mark VOUs against an answer sheet and populate the results into reporting tools.",
-              "Problem: Manual extraction of information for weekly SAP update emails is time-consuming. Solution: An AI system that can draft automated emails using predefined templates and populate them from SAP data.",
-              "Problem: Finding consistent answers to marketing-related questions is challenging. Solution: A centralised location where all relevant marketing knowledge material is stored and can be queried through natural language.",
-              "Problem: Creating thumbnails for PDFs in the central storage location is labor-intensive. Solution: An AI system that can automate the thumbnail creation process.",
-              "Problem: Writing test protocols and testing summaries is labor-intensive. Solution: An AI system that can automatically formulate test protocols and summaries from provided requirements.",
-              "Problem: Updating and standardizing procedures is time-consuming. Solution: An AI system that can extract key points from existing procedures and reproduce a draft procedure in a new standardised format."
-            ]
-          },
-          {
-            "type": "info",
-            "title": "Essential Information",
-            "content": [
-              "Learning Resources: A wide range of learning resources is available for students, including free Azure for Students credits worth USD 100.",
-              "Where to look for datasets? Access a diverse range of datasets, suitable for various use cases, including Free Public Data Sets for Analysis, Google Dataset Search, health statistics datasets, Kaggle healthcare datasets, LINZ Data Service, Machinehack, NZ Datasets and OpenML."
-            ]
-          }
-        ],
+        "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/66a953aa9ccf0dbd14588bae_hero hackathon.jpg",
-            "alt": "F&P Hackathon featured photo"
-           },
           {
             "url": "/img/scraped/photos/66a9546b78531c808b3a5d15_4_637d15f8.jpg",
             "alt": ""
@@ -3449,10 +3808,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6681f40816fb4d759506b07a_IMG_9249 (1)-p-2000.jpg",
-            "alt": "Embracing Bias featured photo"
-           },
           {
             "url": "/img/scraped/photos/6681f4b5e7cc858c424a5e12_IMG_9299_1_0c4c2c45.jpg",
             "alt": ""
@@ -3761,12 +4116,7 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/662736cdcd9806231f31b056_MYOB hero image-p-2000.jpg",
-            "alt": "Embracing Bias featured photo"
-           }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/brA5VppyZx9mAU2V9",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -3910,81 +4260,144 @@
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/google-educator-conference-2023",
         "title": "Google Educator Conference 2023",
-        "subtitle": "Google Educator Conference 2023",
+        "subtitle": "Brought to you by Google and She Sharp",
         "date": "",
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "GridAKL / Futures Lab / Level 4, 12 Madden St / Wynyard Qtr",
-          "address": "12 Madden Street, Auckland CBD, Auckland 1010, New Zealand",
-          "city": "",
-          "country": "New Zealand",
-          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8422463,174.7566512&query_place_id=ChIJ-cXZOfRHDW0RLMOqsYOekWI",
-          "latitude": -36.8422463,
-          "longitude": 174.7566512
+          "venueName": "AUT City Campus",
+          "address": "55 Wellesley Street East, Auckland CBD",
+          "city": "Auckland",
+          "country": "New Zealand"
         },
         "fullDescription": [
           "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
           "The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.",
           "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.",
-          "Previously known as CS4HS, the Google Educator Conference is back for 2023!",
-          "The audience is High School Teachers who teach Computer Science, Digital Technologies, STEM or related subjects; teachers who are looking to refresh or add on to their skills; plus ICT curriculum leaders, primary school teachers and school librarians."
+          "Lesieli, a proud Tongan, founder and Chief visionary officer of Lālanga, Lālanga dedicated to championing Maori-Pasifika student success. It empowers educators, school leaders with innovative mentoring programs, products like the Lālanga ToolBox, and tech solutions.",
+          "Lesieli recently completed her Masters Research, focusing on digital solutions to improve the success of Maori-Pasifika students, addressing issues such as truancy, wellbeing, and academic challenges. Lālanga ToolBox, currently being used by 2,000 primary students in Auckland decile one schools. She received the University of Auckland 2023, 40 under 40 Alumni Inspiring leaders award and has launched a charity to empower Pasifika students and families through education."
         ],
         "speakers": {
-          "panel_facilitators": {
-            "heading": "MEET THE WORKSHOP FACILITATORS",
+          "keynote_speakers": {
+            "heading": "Meet the Keynote Speakers",
+            "speakers": [
+              {
+                "name": "Steve Smith",
+                "title": "Google for Education, NZ Program Manager",
+                "company": "",
+                "bio": "Steve has been a High School Social Studies and Geography teacher for the last 16 years in New Zealand since returning from teaching in London for 2 years. Steve worked to bring Google for Education to his school and along with a colleague trained the staff in the use of Google for education. Over 8 years, Steve passionately promoted Google Tools through workshops across New Zealand. He's Level 1 and 2 Certified Educator & Trainer, attended the 2019 Sydney Innovator Academy, and is part of the Google Earth Education Experts Group. He is now at Google's Auckland office as NZ Lead for Google for Education, aiming to empower NZ educator communities, support partners, and bring more \"Google goodness\" to education in NZ.",
+                "image": "/img/scraped/conference/2023/speakers/steve-smith.jpeg",
+                "linkedin": "https://www.linkedin.com/in/steve-smith-81816493/"
+              }
+            ]
+          },
+          "demo_facilitators": {
+            "heading": "Meet the Demo Facilitators",
+            "speakers": [
+              {
+                "name": "Claire Wigley",
+                "title": "Teacher, Spotswood College",
+                "company": "",
+                "bio": "Claire is currently a teacher at the innovative Spotswood College in New Plymouth. With a focus on teaching 21st-century skills, Claire's background lies in textiles technology and her teaching experience spans from year 1 to year 10. Over the past 8 years, she has expanded her knowledge to encompass various areas of the Technology Curriculum, ranging from cooking to coding and laser cutting. As an Inquiry Specialist teacher, Claire integrates the Design Thinking process into her lessons. In 2023, she took on the role of council member at TENZ and made significant contributions to their recent conference.",
+                "image": "/img/scraped/conference/2023/speakers/claire-wigley.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Lesieli Oliver",
+                "title": "Founder & Chief Visionary Officer, Lālanga",
+                "company": "",
+                "bio": "Lesieli, a proud Tongan, founder and Chief visionary officer of Lālanga, dedicated to championing Maori-Pasifika student success. It empowers educators and school leaders with innovative mentoring programs, products like the Lālanga ToolBox, and tech solutions. Lesieli recently completed her Masters Research, focusing on digital solutions to improve the success of Maori-Pasifika students, addressing issues such as truancy, wellbeing, and academic challenges. The Lālanga ToolBox is currently being used by 2,000 primary students in Auckland decile one schools. She received the University of Auckland 2023, 40 under 40 Alumni Inspiring leaders award and has launched a charity to empower Pasifika students and families through education.",
+                "image": "/img/scraped/conference/2023/speakers/lesieli-oliver.png",
+                "linkedin": ""
+              },
+              {
+                "name": "Mehwish Hasan",
+                "title": "Education Ambassador, QuiverVision",
+                "company": "",
+                "bio": "Mehwish Hasan, a devoted educator, and the Computer Science Curriculum Leader at ACG Sunderland in Auckland is on a mission to bring excitement to the students' learning experiences. With a background in telecommunications engineering, Mehwish's unique perspective has led her to become New Zealand's inaugural QuiverVision Ambassador. This distinctive role empowers her to weave technology into education truly remarkably. Through the Quiver App, students can transform static, coloured images into dynamic, interactive marvels through augmented reality. This ingenious approach sparks creativity and guarantees that learning remains engaging and enjoyable.",
+                "image": "/img/scraped/conference/2023/speakers/mehwish-hasan.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Nils Reardon",
+                "title": "CEO, QuiverVision",
+                "company": "",
+                "bio": "Nils has been the CEO of QuiverVision since 2014, who brings a wealth of experience with a background in commerce and law. With an LLB (first class hons.) and a Commerce Degree (economics major), he honed his skills during six years at some of New Zealand's leading law firms before embarking on his journey with QuiverVision. Nils is the driving force behind the company's success and sets the course for its strategic direction. He also oversees the domains of finance and business management, ensuring the organisation operates at its peak potential. Nils is excited to see schools adopting technology that enhances the learning experience for both students and educators alike.",
+                "image": "/img/scraped/conference/2023/speakers/nils-reardon.jpeg",
+                "linkedin": ""
+              },
+              {
+                "name": "Nischay Gupta",
+                "title": "Consultant, QuiverVision",
+                "company": "",
+                "bio": "Nischay is an experienced consultant in the tech sector. He has played a pivotal role in optimising operations & aligning strategies with QuiverVision's goals & objectives. Nischay led the launch of a new interactive EdTech product at QuiverVision to enable engaging learning experience, benefitting over 35,000+ teachers & 100,000+ students worldwide within the first year of rollout. He spearheads the expansion of our educational & curriculum-aligned content at Quiver. He holds a Master's degree in Engineering (1st-class hons.) at the University of Auckland. He is a research intern at Empathic Computing Lab (Auckland Bioengineering Institute) working on a project involving Virtual Reality, Biofeedback & Empathy.",
+                "image": "/img/scraped/conference/2023/speakers/nischay-gupta.png",
+                "linkedin": ""
+              },
+              {
+                "name": "Steve Smith",
+                "title": "Google for Education, NZ Program Manager",
+                "company": "",
+                "bio": "Steve has been a High School Social Studies and Geography teacher for the last 16 years in New Zealand since returning from teaching in London for 2 years. Steve worked to bring Google for Education to his school and along with a colleague trained the staff in the use of Google for education. Over 8 years, Steve passionately promoted Google Tools through workshops across New Zealand. He's Level 1 and 2 Certified Educator & Trainer, attended the 2019 Sydney Innovator Academy, and is part of the Google Earth Education Experts Group. He is now at Google's Auckland office as NZ Lead for Google for Education, aiming to empower NZ educator communities, support partners, and bring more \"Google goodness\" to education in NZ.",
+                "image": "/img/scraped/conference/2023/speakers/steve-smith.jpeg",
+                "linkedin": "https://www.linkedin.com/in/steve-smith-81816493/"
+              }
+            ]
+          },
+          "workshop_facilitators": {
+            "heading": "Meet the Workshop Facilitators",
             "speakers": [
               {
                 "name": "Alex Ward",
-                "title": "Head of Digital Technology Kerikeri High School",
+                "title": "Head of Digital Technology, Kerikeri High School",
                 "company": "",
-                "bio": "Alex is a Teacher, Musician, and Programming Enthusiast, leads Kerikeri High School's Digital Tech department for 4 years. Now, he's taking his talents to Rototuna Junior High School in Waikato. Alex combines code and creativity to craft generative art and music, even exploring the synergy between Digital Tech and other subjects. With a Bachelors in Music and experience as a Lecturer and Programme Administrator at Massey and Victoria University, his global performances include Singapore, Korea, China, Indonesia, Australia, and Antarctica. Alex relishes the switch to Digital Tech, making technology a canvas for creativity.‍",
-                "image": "/img/scraped/site/conference/6523c77644a849818c9b981a_Alex_Ward_4_e5a3ee7d.jpg",
+                "bio": "Alex is a Teacher, Musician, and Programming Enthusiast, leads Kerikeri High School's Digital Tech department for 4 years. Now, he's taking his talents to Rototuna Junior High School in Waikato. Alex combines code and creativity to craft generative art and music, even exploring the synergy between Digital Tech and other subjects. With a Bachelors in Music and experience as a Lecturer and Programme Administrator at Massey and Victoria University, his global performances include Singapore, Korea, China, Indonesia, Australia, and Antarctica. Alex relishes the switch to Digital Tech, making technology a canvas for creativity.",
+                "image": "/img/scraped/conference/2023/speakers/alex-ward.jpg",
                 "linkedin": ""
               },
               {
                 "name": "Christopher Mende",
                 "title": "Customer Engineering, Google Cloud NZ",
                 "company": "",
-                "bio": "Christopher is the engineering lead for Google Cloud’s digital native customers. He’s closely involved with NZ businesses creating a pathway for their journey to Cloud and AI, his work being showcased across industries and the globe.Christopher is also a facilitator in the Google Innovation Labs team that brings concepts to life using a methodology heavily focused on customer empathy. His work here involves joining the best of Google tech with market shaping concepts to move the needle on an organization's innovation journey.",
-                "image": "/img/scraped/site/conference/6523c7864dd8dc8744a0f0f9_christopher-mende-photo_1_422cf8d3.jpg",
+                "bio": "Christopher is the engineering lead for Google Cloud's digital native customers. He's closely involved with NZ businesses creating a pathway for their journey to Cloud and AI, his work being showcased across industries and the globe. Christopher is also a facilitator in the Google Innovation Labs team that brings concepts to life using a methodology heavily focused on customer empathy. His work here involves joining the best of Google tech with market shaping concepts to move the needle on an organization's innovation journey.",
+                "image": "/img/scraped/conference/2023/speakers/christopher-mende.jpeg",
                 "linkedin": ""
               },
               {
                 "name": "Jennifer Gottschalk",
                 "title": "Digital Technologies Teacher, Massey High School",
                 "company": "",
-                "bio": "Jennifer currently teaches Digital Technology at Massey High School where she pushes, prods, cajoles and otherwise encourages her students (from year 9 to year 13) to become effective programmers and designers.  Over the years Jennifer has contributed resources for teaching web design, databases (php / sql) and programming to TKI.  She also administers the Usability / Heuristics Fails (and Successes) Facebook group where teachers and their students are encouraged to post examples of good and bad usability.",
-                "image": "/img/scraped/site/conference/651660618bc5c515a1dbf189_Gottschalk_photo_2_1cb1f73b.jpg",
+                "bio": "Jennifer currently teaches Digital Technology at Massey High School where she pushes, prods, cajoles and otherwise encourages her students (from year 9 to year 13) to become effective programmers and designers. Over the years Jennifer has contributed resources for teaching web design, databases (php / sql) and programming to TKI. She also administers the Usability / Heuristics Fails (and Successes) Facebook group where teachers and their students are encouraged to post examples of good and bad usability.",
+                "image": "/img/scraped/conference/2023/speakers/jennifer-gottschalk.jpg",
                 "linkedin": ""
               },
               {
                 "name": "Julie McMahon",
-                "title": "Lead Educator Grok Academy",
+                "title": "Lead Educator, Grok Academy",
                 "company": "",
-                "bio": "Julie, with over 30 years in Digital Technologies education, passionately inspires students to pursue careers in the field. She co-developed New Zealand's Digital Technologies curriculum, excelling in standards writing, leading assessment panels, and resource creation. Julie supports teachers through workshops and leadership roles, including DTTA's President. She's a curriculum lecturer at the University of Otago's Masters of Education Programme and earned the Ali Chivers Teacher of Influence Award and TENZ award for Subject Leadership in Technology Education, solidifying her as a luminary in the field.‍",
-                "image": "/img/scraped/site/conference/65291784ce92e9979573177e_Julie_1_dd9752f2.png",
+                "bio": "Julie, with over 30 years in Digital Technologies education, passionately inspires students to pursue careers in the field. She co-developed New Zealand's Digital Technologies curriculum, excelling in standards writing, leading assessment panels, and resource creation. Julie supports teachers through workshops and leadership roles, including DTTA's President. She's a curriculum lecturer at the University of Otago's Masters of Education Programme and earned the Ali Chivers Teacher of Influence Award and TENZ award for Subject Leadership in Technology Education, solidifying her as a luminary in the field.",
+                "image": "/img/scraped/conference/2023/speakers/julie-mcmahon.png",
                 "linkedin": ""
               }
             ]
           },
-          "panel_speakers": {
-            "heading": "MEET THE PANELISTS",
+          "panelists": {
+            "heading": "Meet the Panelists",
             "speakers": [
               {
                 "name": "Aaron Overington",
-                "title": "Education Strategist at Cyclone Computers",
+                "title": "Education Strategist, Cyclone Computers",
                 "company": "",
-                "bio": "Aaron has over 30 years of IT experience in diverse markets such as market research, freight, aviation, special education and disability. The last six and and half years have been in education, as the IT and Digital Learning Manager for a global school and more recently as the education strategist at Cyclone Computers. In this role Aaron works with kura across the motu to maximise the use of technology in the classroom to improve learning outcomes for all learners. He is also constantly looking at ways to address digital equity challenges schools face.",
-                "image": "/img/scraped/site/conference/654b43a1b3fadccbb7f5f797_20231108_093807_cabc2a81.jpg",
+                "bio": "Aaron has over 30 years of IT experience in diverse markets such as market research, freight, aviation, special education and disability. The last six and a half years have been in education, as the IT and Digital Learning Manager for a global school and more recently as the education strategist at Cyclone Computers. In this role Aaron works with kura across the motu to maximise the use of technology in the classroom to improve learning outcomes for all learners. He is also constantly looking at ways to address digital equity challenges schools face.",
+                "image": "/img/scraped/conference/2023/speakers/aaron-overington.jpg",
                 "linkedin": ""
               },
               {
                 "name": "Evo Leota-Tupou",
-                "title": "Founder of Pacific Kids' Learning",
+                "title": "Founder, Pacific Kids' Learning",
                 "company": "",
-                "bio": "Evo Leota-Tupou, an entrepreneur, mother of five, founder of Pacific Kids' Learning in Ōtara. Evo actively engages in the EdTech community, focusing on Digital Learning and STEAM. She serves Executive Council of EdTechNZ and a member of Tech Women NZ. Evo is a representative on the Pacific Advisory Panel for Auckland Council and contributes to the National AI and Algorithm Expert Advisory Group for Te Whatu Ora. She advocates for neurodiverse learners and children with disabilities.Before returning to Auckland, Evo was in South Korea, she witnessed educational inequities and technological advancements in classes. Her mission is to build positive community outcomes for children, and linking early education to future opportunities.",
-                "image": "/img/scraped/site/conference/650ce04b820846784cf43d08_Evo_d781ea1f.png",
+                "bio": "Evo Leota-Tupou, an entrepreneur, mother of five, founder of Pacific Kids' Learning in Ōtara. Evo actively engages in the EdTech community, focusing on Digital Learning and STEAM. She serves on the Executive Council of EdTechNZ and is a member of Tech Women NZ. Evo is a representative on the Pacific Advisory Panel for Auckland Council and contributes to the National AI and Algorithm Expert Advisory Group for Te Whatu Ora. She advocates for neurodiverse learners and children with disabilities. Before returning to Auckland, Evo was in South Korea, where she witnessed educational inequities and technological advancements in classes. Her mission is to build positive community outcomes for children, linking early education to future opportunities.",
+                "image": "/img/scraped/conference/2023/speakers/evo-leota-tupou.png",
                 "linkedin": ""
               },
               {
@@ -3992,23 +4405,23 @@
                 "title": "President, Digital Technologies Teachers Aotearoa",
                 "company": "",
                 "bio": "Malcolm has had 23 years of experience teaching Computing and Digital Technologies, 15 of which has been within NZ. He is happy to be known for being an 'early adopter' of all things related to education. Malcolm's journey in Aotearoa started off as Head of Digital Technologies at Secondary level teaching up to NCEA Level 3. This then led to gaining a position as the Edtech Educator at The Mind Lab in Wellington. This is where he further developed his passion for tinkering and trying new ideas out with coding and electronic peripherals in DigiTech. Malcolm is currently working at Kōwhai Intermediate School in Auckland where he has been the Specialist Digital Technologies teacher for the last five years.",
-                "image": "/img/scraped/site/conference/65487d1ddf1bfe388e81605e_Malcolm_Clarke_1265a5cc.jpg",
+                "image": "/img/scraped/conference/2023/speakers/malcolm-clarke.jpg",
                 "linkedin": ""
               },
               {
                 "name": "Shanon O'Connor",
-                "title": "Founder and Director of Tōnui Collab",
+                "title": "Founder and Director, Tōnui Collab",
                 "company": "",
-                "bio": "Shanon O'Connor (Ngāti Porou, Ngāi Tahu) is the Founder and Director of Tōnui Collab, a kaupapa Māori driven STEMM learning provider, creating  opportunities for rangatahi in te Tairāwhiti to explore the diversity and intersection of Science, Technology, Engineering, Maths and Mātauranga Māori so that the potential of rangatahi Māori to be STEMM leaders and innovators can be realised. Shanon is a founding board member of Te Matarau, the Māori Tech Association and also is a Council Member for EdTech NZ.",
-                "image": "/img/scraped/site/conference/654873b6b75117a8e86f956a_Shanon_OConnor_cf39d369.jpg",
+                "bio": "Shanon O'Connor (Ngāti Porou, Ngāi Tahu) is the Founder and Director of Tōnui Collab, a kaupapa Māori driven STEMM learning provider, creating opportunities for rangatahi in te Tairāwhiti to explore the diversity and intersection of Science, Technology, Engineering, Maths and Mātauranga Māori so that the potential of rangatahi Māori to be STEMM leaders and innovators can be realised. Shanon is a founding board member of Te Matarau, the Māori Tech Association and also is a Council Member for EdTech NZ.",
+                "image": "/img/scraped/conference/2023/speakers/shanon-o-connor.jpg",
                 "linkedin": ""
               },
               {
                 "name": "Tracy Henderson",
-                "title": "Project Manager at University of Canterbury - CSER",
+                "title": "Project Manager, University of Canterbury - CSER",
                 "company": "",
-                "bio": "Tracy Henderson is experienced at leading Digital Technologies in the primary to pre-NCEA area. She has led numerous successful “seed” projects to refine and learn how best to support teachers and school leaders to be empowered to teach and lead Digital Technologies in their schools and Communities of Learning / Kāhui Ako. She volunteers as secretary of the Digital Technologies Teachers Aotearoa (DTTA) subject association where she enjoys facilitating and implementing plans that support all teachers in Aotearoa. Her role at UC Computer Science Education Research Group (the “Department of Fun Stuff”) focuses on carving new pathways and opportunities to empower teachers.",
-                "image": "/img/scraped/site/conference/65487ca84dd34ae38960f123_Tracy_Henderson_3acf1e35.jpg",
+                "bio": "Tracy Henderson is experienced at leading Digital Technologies in the primary to pre-NCEA area. She has led numerous successful \"seed\" projects to refine and learn how best to support teachers and school leaders to be empowered to teach and lead Digital Technologies in their schools and Communities of Learning / Kāhui Ako. She volunteers as secretary of the Digital Technologies Teachers Aotearoa (DTTA) subject association where she enjoys facilitating and implementing plans that support all teachers in Aotearoa. Her role at UC Computer Science Education Research Group (the \"Department of Fun Stuff\") focuses on carving new pathways and opportunities to empower teachers.",
+                "image": "/img/scraped/conference/2023/speakers/tracy-henderson.jpeg",
                 "linkedin": ""
               }
             ]
@@ -4080,19 +4493,12 @@
           "main": [
             {
               "name": "Google",
-              "logo": "/img/scraped/sponsors/668087b14f8661617a3d0482_Google-Logo_ce9e3de1.png",
-              "description": "Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington. The team works to help Kiwis find new ways to collaborate, reach audiences and get things done. Google is committed to helping all Kiwis with the digital knowledge and capabilities they need now and in the future."
+              "logo": "/img/scraped/sponsors/668087b14f8661617a3d0482_Google-Logo_ce9e3de1.png"
             }
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recording",
-            "content": ["https://www.youtube.com/watch?v=Qlbdimoh4rs&t=1s"]
-          }
-        ],
+        "specialSections": [],
         "photos": [],
         "galleryUrl": "https://photos.google.com/share/AF1QipPpmlI7QXynCZ_KqLEZu_aQ3asmC4A1gw6OQdWU3G_yo93MWkH2LYLsp7GVJZn8xw?pli=1&key=UGxZdGllaGZPVUNudG95dFFJaTdWYTJmckNhQlJR",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
@@ -4170,7 +4576,450 @@
         "endTime": "6pm",
         "timezone": "NZDT",
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/google-educators-conference"
+        "humanitixUrl": "https://events.humanitix.com/google-educators-conference",
+        "sessions": [
+          {
+            "type": "Demo",
+            "title": "Demo 1: Unlock the magic of learning with Quiver's 3D Augmented Reality Workshop!",
+            "facilitators": [
+              "Mehwish Hasan",
+              "Nils Reardon",
+              "Nischay Gupta"
+            ],
+            "description": "Want to wow your kids or become the coolest teacher in school? Join us for an extraordinary experience as we introduce you to our Quiver App and Education Dashboard. Quiver, launched in 2013, was the world's first Augmented Reality colouring app, downloaded by over 25 Million users in 150+ countries and delivers engaging and magical experiences for all. Quiver is a one-stop shop for Augmented Reality education content and lesson plans for Pre K to Year 9 and beyond. Highlights: Interactive Learning: Witness every colored page spring to life in its own unique way, instilling a profound sense of pride and ownership in young artists. Immersive Education: The Quiver App opens doors to an immersive, educational, and inspiring world, making it an indispensable tool for both classrooms and homes. Skill Development: Watch as children develop skills and retain knowledge in a manner that defies convention. The demo will cover:- Introduction to Augmented Reality and Quiver 3D Colouring App Exploring Quiver AR Coloring Sheets Mastering Quiver Education Dashboard Unleashing the Potential of Quiver Digital Environments Dive into the World of Quiver AR Masks Exclusive Benefits for Registered Educators:- Complimentary 12-Month License: Gain access to over 250 AR coloring sheets covering Science, Math, and Social Sciences. Quiver Swag and Goodies: Exclusive merchandise, including Mugs, Pens, Stickers, and Tote Bags.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Want to wow your kids or become the coolest teacher in school? Join us for an extraordinary experience as we introduce you to our Quiver App and Education Dashboard. Quiver, launched in 2013, was the world's first Augmented Reality colouring app, downloaded by over 25 Million users in 150+ countries and delivers engaging and magical experiences for all. Quiver is a one-stop shop for Augmented Reality education content and lesson plans for Pre K to Year 9 and beyond."
+              },
+              {
+                "type": "subheading",
+                "text": "Highlights:"
+              },
+              {
+                "type": "list",
+                "items": [
+                  "Interactive Learning: Witness every colored page spring to life in its own unique way, instilling a profound sense of pride and ownership in young artists.",
+                  "Immersive Education: The Quiver App opens doors to an immersive, educational, and inspiring world, making it an indispensable tool for both classrooms and homes.",
+                  "Skill Development: Watch as children develop skills and retain knowledge in a manner that defies convention."
+                ]
+              },
+              {
+                "type": "paragraph",
+                "text": "The demo will cover:-"
+              },
+              {
+                "type": "list",
+                "items": [
+                  "Introduction to Augmented Reality and Quiver 3D Colouring App",
+                  "Exploring Quiver AR Coloring Sheets",
+                  "Mastering Quiver Education Dashboard",
+                  "Unleashing the Potential of Quiver Digital Environments",
+                  "Dive into the World of Quiver AR Masks"
+                ]
+              },
+              {
+                "type": "paragraph",
+                "text": "Exclusive Benefits for Registered Educators:-"
+              },
+              {
+                "type": "list",
+                "items": [
+                  "Complimentary 12-Month License: Gain access to over 250 AR coloring sheets covering Science, Math, and Social Sciences.",
+                  "Quiver Swag and Goodies: Exclusive merchandise, including Mugs, Pens, Stickers, and Tote Bags."
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Demo",
+            "title": "Demo 2: Google - Introduction to Digital technology curriculum and Google for Education tools",
+            "facilitators": [
+              "Steve Smith"
+            ],
+            "description": "In this workshop Steve will introduce some tools to use in the classroom to help with the Digital technology curriculum — tools to create digital outcomes and promote computational thinking.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "In this workshop steve will introduce some tools to use in the classroom to help with the Digital technology curriculum."
+              },
+              {
+                "type": "paragraph",
+                "text": "Tools to create digital outcomes and promote computational thinking."
+              }
+            ]
+          },
+          {
+            "type": "Demo",
+            "title": "Demo 3: ImmerseHer \"Virtual Reality\" Workshop Lead",
+            "facilitators": [
+              "Daniel Oliver",
+              "Lesieli Oliver"
+            ],
+            "description": "Are you ready to step into the future of technology? Welcome to \"ImmerseHer: Virtual Reality,\" where you'll embark on an exciting journey into the world of virtual reality (VR). This workshop is led by Daniel and Lesieli Oliver, founders of Lālanga, current Technology teachers themselves, holding a passion for education and technology. What to Expect: Hands-On Experience: Dive into the world of virtual reality by exploring various VR applications. Grow in your Capability: This workshop is your chance to expand your technological skills and understanding. Daniel and Lesieli will share their wealth of knowledge to empower you with the tools you need to thrive in the tech-driven future. Discover Your Place in VR: Ever wondered where you fit in the future of virtual reality? This workshop provides insights into the vast possibilities and career paths within the VR industry. You'll gain a clearer understanding of how you can contribute to shaping the future. Join Daniel and Lesieli Oliver at \"ImmerseHer: Virtual Reality Workshop\" and prepare to be amazed by the endless potential of VR technology. Whether you're a tech enthusiast or simply curious about the future, this workshop is your gateway to the exciting world of virtual reality.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Are you ready to step into the future of technology? Welcome to \"ImmerseHer: Virtual Reality,\" where you'll embark on an exciting journey into the world of virtual reality (VR)."
+              },
+              {
+                "type": "paragraph",
+                "text": "This workshop is led by Daniel and Lesieli Oliver, founders of Lālanga, current Technology teachers themselves, holding a passion for education and technology."
+              },
+              {
+                "type": "paragraph",
+                "text": "What to Expect:"
+              },
+              {
+                "type": "paragraph",
+                "text": "Hands-On Experience: Dive into the world of virtual reality by exploring various VR applications. Grow in your Capability: This workshop is your chance to expand your technological skills and understanding. Daniel and Lesieli will share their wealth of knowledge to empower you with the tools you need to thrive in the tech-driven future. Discover Your Place in VR: Ever wondered where you fit in the future of virtual reality? This workshop provides insights into the vast possibilities and career paths within the VR industry. You'll gain a clearer understanding of how you can contribute to shaping the future."
+              },
+              {
+                "type": "paragraph",
+                "text": "Join Daniel and Lesieli Oliver at \"ImmerseHer: Virtual Reality Workshop\" and prepare to be amazed by the endless potential of VR technology. Whether you're a tech enthusiast or simply curious about the future, this workshop is your gateway to the exciting world of virtual reality."
+              }
+            ]
+          },
+          {
+            "type": "Demo",
+            "title": "Demo 4: Embrace chaos: Disrupting to Design",
+            "facilitators": [
+              "Claire Wigley"
+            ],
+            "description": "Join us in exploring the practical side of disrupted learning in our upcoming workshop. Using Spotswood College as an exemplary case, we'll explore the nuanced art of fostering student engagement and inquiry-based learning methodologies. Dive into the insights behind the Superstar Game of Design Thinking, a tool that encourages creative exploration and critical thinking in students. Through practical examples, understand how this approach is reshaping education at Spotswood College and beyond. Gain valuable insights into personalised learning approaches tailored to individual student needs, strengths, and passions. Discover how Spotswood College's innovative practices can be adapted to create a purpose-driven and student-centered learning environment in any educational setting. This workshop is your gateway to understanding the evolving landscape of education and harnessing the potential of disrupted learning for meaningful student development.\"",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Join us in exploring the practical side of disrupted learning in our upcoming workshop. Using Spotswood College as an exemplary case, we'll explore the nuanced art of fostering student engagement and inquiry-based learning methodologies."
+              },
+              {
+                "type": "paragraph",
+                "text": "Dive into the insights behind the Superstar Game of Design Thinking, a tool that encourages creative exploration and critical thinking in students. Through practical examples, understand how this approach is reshaping education at Spotswood College and beyond. Gain valuable insights into personalised learning approaches tailored to individual student needs, strengths, and passions. Discover how Spotswood College's innovative practices can be adapted to create a purpose-driven and student-centered learning environment in any educational setting. This workshop is your gateway to understanding the evolving landscape of education and harnessing the potential of disrupted learning for meaningful student development.\""
+              }
+            ]
+          },
+          {
+            "type": "Keynote",
+            "title": "Keynote - The future of education report",
+            "facilitators": [
+              "Steve Smith"
+            ],
+            "description": "Together with strategic insights practice Canvas8 and global non-profit American Institutes for Research, Google for Education conducted interviews with 94 educational experts across 24 countries to compile the future of education report. As educators work to equip students with the skills and mindsets they’ll need to navigate massive change, the experts we interviewed discussed how and why they’re rethinking the role of education. Find out how recent technological advances are evolving how we think about teaching and learning from a one-to-many model to a more personal approach to learning and the tools that can support this.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Together with strategic insights practice Canvas8 and global non-profit American Institutes for Research, Google for Education conducted interviews with 94 educational experts across 24 countries to compile the future of education report."
+              },
+              {
+                "type": "paragraph",
+                "text": "As educators work to equip students with the skills and mindsets they’ll need to navigate massive change, the experts we interviewed discussed how and why they’re rethinking the role of education."
+              },
+              {
+                "type": "paragraph",
+                "text": "Find out how recent technological advances are evolving how we think about teaching and learning from a one-to-many model to a more personal approach to learning and the tools that can support this."
+              }
+            ]
+          },
+          {
+            "type": "Workshop",
+            "title": "Workshop 1: Empower your students to learn with AI",
+            "facilitators": [
+              "Christopher Mende"
+            ],
+            "description": "Generative AI Technical Workshop ● Hands-on labs with technical guidance using our Cloud Skills boost online environment ● Step-by-step guide on building Generative search and discovery tools We will go through the basics of generative model design, classification, extraction, summarization and everyone's hot topic, prompt engineering! Attendees will leave having built a fully functional conversational search agent.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Generative AI Technical Workshop"
+              },
+              {
+                "type": "paragraph",
+                "text": "● Hands-on labs with technical guidance using our Cloud Skills boost online environment"
+              },
+              {
+                "type": "paragraph",
+                "text": "● Step-by-step guide on building Generative search and discovery tools"
+              },
+              {
+                "type": "paragraph",
+                "text": "We will go through the basics of generative model design, classification, extraction, summarization and everyone's hot topic, prompt engineering!"
+              },
+              {
+                "type": "paragraph",
+                "text": "Attendees will leave having built a fully functional conversational search agent."
+              }
+            ]
+          },
+          {
+            "type": "Workshop",
+            "title": "Workshop 2: Generative Art - Bring Your Code to Life with JavaScript and p5.js",
+            "facilitators": [
+              "Alex Ward"
+            ],
+            "description": "Teach the basics of programming while creating interactive procedural art. p5.js is a JavaScript library for creative coding, with a focus on making coding accessible and inclusive for educators artists, designers, and programming beginners! p5.js is free, open-source and browser based - you can start using it in your classroom today. Technology is a creative pursuit. How do we as educators provide our students with engaging content that motivates the learning of Computational Thinking? In this session Alex will focus on how to cover the basics of programming in JavaScript while giving students artistic and creative freedom to express their ideas. We will explore the long tradition of generative art and approaches to blend in Digital Technologies into other subject areas.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Teach the basics of programming while creating interactive procedural art. p5.js is a JavaScript library for creative coding, with a focus on making coding accessible and inclusive for educators artists, designers, and programming beginners! p5.js is free, open-source and browser based - you can start using it in your classroom today."
+              },
+              {
+                "type": "paragraph",
+                "text": "Technology is a creative pursuit. How do we as educators provide our students with engaging content that motivates the learning of Computational Thinking? In this session Alex will focus on how to cover the basics of programming in JavaScript while giving students artistic and creative freedom to express their ideas. We will explore the long tradition of generative art and approaches to blend in Digital Technologies into other subject areas."
+              }
+            ]
+          },
+          {
+            "type": "Workshop",
+            "title": "Workshop 3: When it's a bug, not a feature...",
+            "facilitators": [
+              "Jennifer Gottschalk"
+            ],
+            "description": "We will explore strategies that students (and teachers) can use to successfully debug their code including how to use Chat GPT whilst ensuring authenticity. Participants are encouraged to bring their devices and broken code that needs debugging. The strategies shared are based on Python / php but will work with any language.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "We will explore strategies that students (and teachers) can use to successfully debug their code including how to use Chat GPT whilst ensuring authenticity. Participants are encouraged to bring their devices and broken code that needs debugging. The strategies shared are based on Python / php but will work with any language."
+              }
+            ]
+          },
+          {
+            "type": "Workshop",
+            "title": "Workshop 4: Cyber Security Teaching and Learning Resources for the classroom",
+            "facilitators": [
+              "Julie McMahon"
+            ],
+            "description": "Cyber security is an important area for both kaiako and ākonga across Aotearoa. In this workshop, participants will hear about the impact of cyber security breaches and exciting career pathways in Cyber Security from industry experts. They will learn how to utilise the free Cyber Skills Aotearoa online and unplugged activities to teach cyber security concepts in their classrooms. The Cyber Skills Aotearoa content encourages learner agency as students engage with learning cyber security concepts through assuming the role of an ethical (white hat) hacker to sleuth the answers to problems. The programme is designed to enable ākonga to navigate the online world with confidence. The workshop will cover teaching the following topics in the classroom: Sharing information online Good password practices Phishing and scam awareness Cryptography Web application security Industry case studies that are aligned with NCEA assessment requirements All content is available in both English and te reo Māori and is aligned to the Hangarau wāhanga ako and Technology learning areas. Content addresses achievement objectives and progress outcomes in the Nature of Technology, Whakaaro Rorohiko, Computational Thinking, Tangata me te Rorohiko and Designing and Developing Digital Outcomes strands.",
+            "descriptionBlocks": [
+              {
+                "type": "paragraph",
+                "text": "Cyber security is an important area for both kaiako and ākonga across Aotearoa. In this workshop, participants will hear about the impact of cyber security breaches and exciting career pathways in Cyber Security from industry experts. They will learn how to utilise the free Cyber Skills Aotearoa online and unplugged activities to teach cyber security concepts in their classrooms."
+              },
+              {
+                "type": "paragraph",
+                "text": "The Cyber Skills Aotearoa content encourages learner agency as students engage with learning cyber security concepts through assuming the role of an ethical (white hat) hacker to sleuth the answers to problems. The programme is designed to enable ākonga to navigate the online world with confidence."
+              },
+              {
+                "type": "paragraph",
+                "text": "The workshop will cover teaching the following topics in the classroom:"
+              },
+              {
+                "type": "list",
+                "items": [
+                  "Sharing information online",
+                  "Good password practices",
+                  "Phishing and scam awareness",
+                  "Cryptography",
+                  "Web application security",
+                  "Industry case studies that are aligned with NCEA assessment requirements"
+                ]
+              },
+              {
+                "type": "paragraph",
+                "text": "All content is available in both English and te reo Māori and is aligned to the Hangarau wāhanga ako and Technology learning areas. Content addresses achievement objectives and progress outcomes in the Nature of Technology, Whakaaro Rorohiko, Computational Thinking, Tangata me te Rorohiko and Designing and Developing Digital Outcomes strands."
+              }
+            ]
+          }
+        ],
+        "schedule": {
+          "day": "Friday 17 November 2023",
+          "bannerImage": "/img/scraped/conference/hub/schedule-banner.png",
+          "items": [
+            {
+              "time": "7.45 - 8.20am",
+              "entries": [
+                {
+                  "activity": "Registration and coffee",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "8.20 - 8.30am",
+              "entries": [
+                {
+                  "activity": "Welcome — Dr. Mahsa McCauley (She Sharp)",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "8.30 - 9.30am",
+              "entries": [
+                {
+                  "activity": "Keynote Address: The future of education report — Steve Smith (Google)",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "9.30 - 9.45am",
+              "entries": [
+                {
+                  "activity": "Group Photo",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "9.45 - 10.15am",
+              "entries": [
+                {
+                  "activity": "Morning Tea",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "10.15 - 11.45am",
+              "entries": [
+                {
+                  "activity": "Demo 1: Unlock the magic of learning with Quiver's 3D Augmented Reality Workshop!",
+                  "location": "Room O4 Mao, Level 6, Google Office"
+                },
+                {
+                  "activity": "Demo 2: Google: Introduction to Digital technology curriculum and Google for Education tools",
+                  "location": "Room O5 Ninth Expedition to Everest, Level 6, Google Office"
+                },
+                {
+                  "activity": "Demo 3: ImmerseHer \"Virtual Reality\" Workshop",
+                  "location": "Room Akomanga 4.05, Level 4, Media Design School"
+                },
+                {
+                  "activity": "Demo 4: Embrace chaos: Disrupting to Design",
+                  "location": "Room Akomanga 4.06, Level 4, Media Design School"
+                }
+              ]
+            },
+            {
+              "time": "11.45 - 12.00pm",
+              "entries": [
+                {
+                  "activity": "Google office tour",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "12.00 - 12.45pm",
+              "entries": [
+                {
+                  "activity": "Lunch",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "12.45 - 3.00pm",
+              "entries": [
+                {
+                  "activity": "Workshop 1: Empower your students to learn with AI",
+                  "location": "Room Paua, Level 6, Google Office"
+                },
+                {
+                  "activity": "Workshop 2: Bring your code to life with p5.js",
+                  "location": "Room O5 Ninth Expedition to Everest, Level 6, Google Office"
+                },
+                {
+                  "activity": "Workshop 3: When it's a bug, not a feature",
+                  "location": "Room Akomanga 4.06, Level 4, Media Design School"
+                },
+                {
+                  "activity": "Workshop 4: Cyber Security Teaching and Learning Resources for the classroom",
+                  "location": "Room O4 Mao, Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "3.00 - 3.15pm",
+              "entries": [
+                {
+                  "activity": "Afternoon tea",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "3.15 - 4.30pm",
+              "entries": [
+                {
+                  "activity": "Panel discussion",
+                  "location": "Level 6, Google Office"
+                }
+              ]
+            },
+            {
+              "time": "4.30 - 6.00pm",
+              "entries": [
+                {
+                  "activity": "The Media Design School Exhibition, expo and networking drinks",
+                  "location": "Room 4.04, Level 4, Media Design School"
+                }
+              ]
+            }
+          ]
+        },
+        "infoSections": [
+          {
+            "title": "Session resources",
+            "paragraphs": [
+              "We would like to share some resources from the event on behalf of our amazing speakers, demo and workshop facilitators."
+            ],
+            "links": [
+              {
+                "label": "Check out resources",
+                "url": "https://drive.google.com/drive/folders/1ES1DQzlOfcXkdlEjaH4n5zGSDEI68Fy7"
+              }
+            ]
+          },
+          {
+            "title": "Getting to the event",
+            "paragraphs": [
+              "AUT City Campus is in the heart of Auckland and is surrounded by bus stops and is also close to motorway entry/exits. You can easily commute to AUT through Auckland Public Transport.",
+              "Because of the high demand for parking in the central city, AUT can’t provide on-site parking for city-based students or event attendees during the day. It’s a good idea to consider other transport options, like public transport or carpooling. You can park off street (pay and display) or at the nearest Wilson Parking."
+            ],
+            "links": [
+              {
+                "label": "Auckland Transport",
+                "url": "https://at.govt.nz"
+              },
+              {
+                "label": "Wilson Parking",
+                "url": "https://www.wilsonparking.co.nz"
+              }
+            ]
+          },
+          {
+            "title": "About AUT",
+            "paragraphs": [
+              "AUT is the University for the Changing World. Established in 2001, it’s young, vibrant and future focused offering outstanding opportunities for development and innovation.",
+              "We are in QS’s top 3% of rankings and feature in the Times Higher Education (THE) Top 150 universities under 50 years old. In 2016 THE also named AUT as the 19th most international university in the world.There are five faculties at AUT: Faculty of Design and Creative Technologies, Faculty of Culture and Society; Faculty of Business, Economics and Law; Faculty of Health and Environmental Sciences, and Te Ara Poutama – Faculty of Māori and Indigenous Development."
+            ]
+          },
+          {
+            "title": "Key contact",
+            "paragraphs": [
+              "Mahsa McCauley (Mohaghegh) — for all workshop-related queries please contact the workshop organiser."
+            ],
+            "links": [
+              {
+                "label": "mahsa.mohaghegh@aut.ac.nz",
+                "url": "mailto:mahsa.mohaghegh@aut.ac.nz"
+              }
+            ],
+            "images": [
+              {
+                "url": "/img/scraped/site/content/64811ab760ae807f1dc87e65_Team_1_Masha_1174635c.png",
+                "alt": "Dr. Mahsa McCauley"
+              }
+            ]
+          }
+        ],
+        "audience": "High school teachers of Computer Science, Digital Technologies, STEM or related subjects; ICT curriculum leaders, primary school teachers and school librarians.",
+        "sponsorshipPackageUrl": "https://www.canva.com/design/DAFs0MyHjGk/RKaZXrAN-jfIIrLY0ID5lA/view",
+        "sponsorsImage": {
+          "url": "/img/scraped/site/sponsors/6507d1a4ae8463918bdb21a9_IMG_5864_83a64f0a.jpg",
+          "alt": "Google Educator Conference 2023"
+        }
       }
     },
     {
@@ -4348,12 +5197,7 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/65ba0b458acbe47294621842_Hero.jpg",
-            "alt": "SHE# Storytellers Series featured photo"
-           }           
-        ],
+        "photos": [],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -4435,10 +5279,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65ba0798b7750e7eb959843c_16836256_10154372570468519_6332026673018678655_o.jpg",
-            "alt": "SHE# @ ORION HEALTH featured photo"
-           }, 
           {
             "url": "/img/scraped/photos/65ba07eba5b400627a218a0b_16991972_1015437256840351_c80438e6.jpg",
             "alt": ""
@@ -4592,10 +5432,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/65c33978e9b4a65c2a7ffb7c_FP-3-ov7gf1zr22yatloqdhxr8k1t15qpvymmcstxjj1wa4.jpg",
-            "alt": "she-fisher-Paykel featured photo"
-           }, 
-          {
             "url": "/img/scraped/photos/65c33994fec707521a5ddd9f_FP-2-ov7gf0oigqecyzt8axpp_f6088c7f.jpg",
             "alt": ""
           },
@@ -4675,10 +5511,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6563e88031018c5d48551c4c_M-Hero.jpg",
-            "alt": "SHE# with TRADE ME featured photo"
-           }, 
           {
             "url": "/img/scraped/photos/656465bbc76d08cd73a0f97b_T1_c069a1bb.jpg",
             "alt": ""
@@ -4767,10 +5599,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65646120cb3caafd60c9544a_12309651_10154852580013504_966342953789852816_o-p-2000.jpg",
-            "alt": "She Sharp @ Westpac featured photo"
-           },
           {
             "url": "/img/scraped/photos/65646191b691a341f398c54a_12314192_1015485258291350_72666ccb.jpg",
             "alt": ""
@@ -4865,10 +5693,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/65645fa76b5eb360c5d9d751_12029660_10154707074788504_8718519602444928693_o.jpg",
-            "alt": "She Sharp event featured photo"
-           }, 
-          {
             "url": "/img/scraped/photos/65645fdb08a0d4794be33479_12068974_1015470707350850_0f585724.jpg",
             "alt": ""
           },
@@ -4958,10 +5782,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/65645d5017f1224a49ed0d8f_11894393_10154551246968504_2099418341455218149_o.jpg",
-            "alt": "Hacking Insecurities @ Grid AKL featured photo"
-           },
-          {
             "url": "/img/scraped/photos/65645d895146ad8bdd874aff_11223890_1015455124221350_be650d57.jpg",
             "alt": ""
           },
@@ -5050,10 +5870,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65645ae9d01f2e91e44e9ccb_11401590_10154268290883504_989934460941502789_n.jpg",
-            "alt": "Agile Session with Xero featured photo"
-           },
           {
             "url": "/img/scraped/photos/65645b300f250472ee145aa0_11401039_1015426828944850_e0142361.jpg",
             "alt": ""
@@ -5146,10 +5962,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/656458f642b122e97b641af2_10987455_10153960427083504_3455512168669768831_n.jpg",
-            "alt": "UX Design with IBM featured photo"
-           },
-          {
             "url": "/img/scraped/photos/65645946bdabeafc163f98ad_11041801_1015396042581850_595958e3.jpg",
             "alt": ""
           },
@@ -5238,10 +6050,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6564559a29bdda8b1d93044d_10360540_10153787685418504_5780293828849614691_n.jpg",
-            "alt": "Anita Borg Celebration featured photo"
-           },
           {
             "url": "/img/scraped/photos/656455cacfec611b54c65fb9_10922426_1015378768535850_c92cfad8.jpg",
             "alt": ""
@@ -5333,10 +6141,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65643d3d7688a3e476f8cdc9_1520821_10153149531773504_6870258751502016174_n.jpeg",
-            "alt": "She Sharp Launch Event featured photo"
-           },           
           {
             "url": "/img/scraped/photos/65643df8dcbd1d3b7f533ea6_10402400_1015314952468850_289f695d.jpg",
             "alt": ""
@@ -5477,10 +6281,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/6563e88031018c5d48551c4c_M-Hero.jpg",
-            "alt": "She Sharp @ Microsoft featured photo"
-           },           
-          {
             "url": "/img/scraped/photos/6563e89b8e06822e36609d15_M-2_4f59e2ec.jpg",
             "alt": ""
           },
@@ -5589,10 +6389,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/65630824f38869b5202a762b_Hero-Flex.jpg",
-            "alt": "Security 101 featured photo"
-           },
-          {
             "url": "/img/scraped/photos/6563084480771fa9604514a8_flex3_e71cd38b.jpg",
             "alt": ""
           },
@@ -5686,10 +6482,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/6562eb042570f4009f7e01c6_HeroImage_Google.jpg",
-            "alt": "An Evening with Google featured photo"
-           },
-          {
             "url": "/img/scraped/photos/6562eb26caf05b0668b7e64d_G-1_823998ae.jpg",
             "alt": ""
           },
@@ -5778,10 +6570,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6562e7d02e529075a4b96cef_Hero Image.jpg",
-            "alt": "App Inventor Workshop featured photo"
-           },
           {
             "url": "/img/scraped/photos/6562e7f34692fcaade20082c_1_877efe87.jpg",
             "alt": ""
@@ -6098,10 +6886,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "https://lh3.googleusercontent.com/pw/AP1GczPW9wxVYTqxmNxoma5N4KyQQNpO-lTYU1tzD8Jaf_LUy5uMna_UkdJ1vv1ismRCeWGR1nu2giAVHn9XMLs53qxGAna68DLEk1XpXaAofgwlcm4d04Wf7M0Oft75xV2rf1gZ55UU4jPbzGl6vywMLKhA=w1909-h1273-s-no-gm?authuser=0",
-            "alt": "Women in AI for Social Good group photo"
-          },
-          {
             "url": "/img/scraped/photos/6562bcbe45033320605874a9_198986570_101587762235585_b243a694.jpg",
             "alt": ""
           },
@@ -6208,10 +6992,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/655b3706915c4758fa6aa7d0_HeroImage.jpg",
-            "alt": "AUCKLAND TECH GRAND TOUR featured photo"
-           }, 
-          {
             "url": "/img/scraped/photos/655bd3efe64082464045708b_11_fa6bbc64.jpg",
             "alt": ""
           },
@@ -6300,10 +7080,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "https://lh3.googleusercontent.com/pw/AP1GczPuuCQubD-SPOXMmJrq8bd89YCQNoH_vj8VdfsxC6h2k_Svjm_rY-WJLJrdQDvHA45G88MHceepHt9my1WlgB4DpobF7jOsqgQrFzK2X2R45q1cPaD0ypDLzyeAnjW4vSJrPv1VDlkN59YHfrcJC_uc2A=w1683-h1263-s-no-gm?authuser=0",
-            "alt": "SHE# @ Pushpay group photo"
-          },
           {
             "url": "/img/scraped/photos/655b023af7eb2bb1368c00bd_1_64da56f2.jpg",
             "alt": ""
@@ -6483,10 +7259,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/655532ee3f16fee07996d032_Google Hero Image.jpg",
-            "alt": "SHE# with GOOGLE featured photo"
-           }, 
-          {
             "url": "/img/scraped/photos/655532e2e68328af427e98e7_Landing_Photo_c32814f5.jpg",
             "alt": ""
           },
@@ -6579,10 +7351,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/6554712fce744f2e9788d715_nyriadlanding.jpg",
-            "alt": "She Sharp @ Nyriad featured photo"
-           }, 
-          {
             "url": "/img/scraped/photos/6554716daa1f871ebaa26e93_37981277_1015578832343851_4a17df33.jpg",
             "alt": ""
           },
@@ -6668,10 +7436,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65546b010427d6b98fd5b970_gridhero.jpg",
-            "alt": "She Sharp event featured photo"
-           }, 
           {
             "url": "/img/scraped/photos/65546be8d29332fb2ff7963b_36227157_1015571515167851_05724d72.jpg",
             "alt": ""
@@ -6847,10 +7611,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/65546481c859ae8f34bf1e90_hero.jpg",
-            "alt": "She Sharp @ VEND featured photo"
-           }, 
-          {
             "url": "/img/scraped/photos/655d0f13600c5bf2678977a1_vend_fb4df6fc.jpg",
             "alt": ""
           },
@@ -6941,10 +7701,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/654b30aacf7202fb42aa88df_29063956_10155498141678519_2956349907200783114_o.jpg",
-            "alt": "SHE# with Google Codelab featured photo"
-           }, 
           {
             "url": "/img/scraped/photos/654b30faeaa165f7e688f2e5_28954196_1015549814082851_78f342ba.jpg",
             "alt": ""
@@ -7044,10 +7800,6 @@
           }
         ],
         "photos": [
-          {
-            "url": "/img/scraped/photos/655d0ddb8153550f70d7db1b_design-thinkinh-hero.jpeg",
-            "alt": "Design Thinking featured photo"
-           }, 
           {
             "url": "/img/scraped/photos/654b2ce92f6435d5f3ce7938_28947377_1015549049578851_1882c5f1.jpg",
             "alt": ""
@@ -7172,10 +7924,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/654aa33edd99fce2e9a4e1dc_Hero Image, Centrality.jpg",
-            "alt": "She Sharp @ Centrality featured photo"
-           }, 
           {
             "url": "/img/scraped/photos/654aa2eec54d876063c27d84_C-1_efa43fe8.jpg",
             "alt": ""
@@ -7452,10 +8200,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/6550a6187eddaa4291d6a85f_aws-she-p-2000.jpeg",
-            "alt": "SHE# @ AWS featured photo"
-           },            
-          {
             "url": "/img/scraped/photos/6541ef681c6f9184193e7694_12_cdc14ef6.jpg",
             "alt": ""
           },
@@ -7645,10 +8389,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/6541a604ad8867c25d8760db_Workday-Hero Image.jpg",
-            "alt": "SHE# @ WORKDAY featured photo"
-           },            
-          {
             "url": "/img/scraped/photos/6541a5c09f6e33e9563ae899_IMG_2061jpg-nggid03170-ng_7c9f47f7.jpg",
             "alt": ""
           },
@@ -7777,10 +8517,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65509c0df224407ac9d28995_she-deloitte-hero-p-2000.jpeg",
-            "alt": "SHE# @ DELOITTE featured photo"
-           }, 
           {
             "url": "/img/scraped/photos/65419c4a28a95b9120242e09_1_2acb3487.jpg",
             "alt": ""
@@ -8172,7 +8908,10 @@
             "url": "/img/scraped/sponsors/6507a857e1ff55e6b2ff2bd5_HCLTECH_d456bf9c.png",
             "alt": ""
           },
-
+          {
+            "url": "/img/scraped/photos/65471acd33f3f73de074f5d9_20231103153143_IMG_8021_191abab5.jpg",
+            "alt": ""
+          },
           {
             "url": "/img/scraped/photos/65471acd135d8bd83e789101_20231103153706_IMG_8026_8ba079e0.jpg",
             "alt": ""
@@ -8273,10 +9012,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65013115c8690e010a0e9084_landingImage-p-2000.jpg",
-            "alt": "Robotic Process Automation featured photo"
-           },            
           {
             "url": "/img/scraped/photos/65644d2a2f3bb75b0b5121f2_87269985_1015732284172851_e305af32.jpg",
             "alt": ""
@@ -8537,8 +9272,7 @@
         "endTime": "1pm",
         "timezone": "NZST",
         "refundPolicy": "No refund policy specified.",
-        "humanitixUrl": "https://events.humanitix.com/future-ready",
-        "hidePhotosSection":true
+        "humanitixUrl": "https://events.humanitix.com/future-ready"
       }
     },
     {
@@ -8725,12 +9459,11 @@
           "country": "New Zealand"
         },
         "fullDescription": [
-                    "SheSharp's last event of the year, and our first in-person event post-COVID!",
           "We partnered with Xero to give people an opportunity to have a much needed night out to end 2020 with a bang!",
           "SheSharp and Xero hosted a Girl’s Night Out to bring together like-minded women interested in tech for a night of fun, interaction and challenges. As unprecedented this year has been, where most of us have interacted online via zoom calls or google hangouts, it’s time (and safe) for us to have an in person event. You don’t have to have a vast knowledge of tech or the tech sector to come along.",
           "There were team challenges, fun quizzes and general fun and interactive awesomeness. So people brought their A-game along! This was a great event to network and reconnect with others we haven’t had the opportunity to meet in person over the last few months!",
-          "This event was open to all students (18+) and working professionals! Food and Drinks (No Alcohol) were provided!"
-
+          "This event was open to all students (18+) and working professionals! Food and Drinks (No Alcohol) were provided!",
+          "Mumbi is the Security Risk & Compliance Specialist. She has been with the security team at Xero for almost 2 years. Before her career in security, Mumbi worked in the finance sector approving mortgages and home loans. She has a degree in Computer Science which was obtained at Kabarak University in Kenya - her motherland. Mumbi moved to Aotearoa NZ back in 2015 to study a Masters of Service-Oriented Computing at AUT. Since then, she’s developed a passion for security - and all things Kiwi!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -8775,10 +9508,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6562ce4e4112006d55a85880_127994566_10158302174673519_7313097895441555003_n-p-2000.jpeg",
-            "alt": "Girls Night Out featured photo"
-           }, 
           {
             "url": "/img/scraped/photos/6562ce3e4112006d55a851d5_127918351_101583021738935_f45e98a9.jpg",
             "alt": ""
@@ -8867,8 +9596,10 @@
         "fullDescription": [
           "At She Sharp, our mission is to actively engage a broader range of Maori and Pasifika female students by equipping them with the knowledge, network, and skills to enter STEM industries. We are dedicated to inspiring and empowering the next generation of talent from these communities to explore and embrace the dynamic world of STEM and the digital domain through immersive hands-on workshops on topics such as AI, AR, and robotics.",
           "On Wednesday, October 11th, we will be hosting our first STEM conference for Maori and Pasifika girls in years 11-13. The event will take place at AUT (South Campus, Manukau). We are thrilled to offer this free event, as it aligns with our goal of empowering Pasifika girls as future leaders in STEM.",
-          "The conference will commence at 9:00 am - 3pm and will include hands-on workshops in Robotics, Artificial Intelligence, Virtual Reality, and Augmented Reality. Additionally, we will feature Pasifika experts and role models in the STEM fields. Our aim is to ignite curiosity and inspire students about potential careers in technology."
-         ],
+          "The conference will commence at 9:00 am - 3pm and will include hands-on workshops in Robotics, Artificial Intelligence, Virtual Reality, and Augmented Reality. Additionally, we will feature Pasifika experts and role models in the STEM fields. Our aim is to ignite curiosity and inspire students about potential careers in technology.",
+          "Jacoba Matapo has ancestral ties to Siumu Samoa, and Leiden Holland. She has over 15 years in educational leadership, spanning ITE and ECE management. She has led key Pasifika education projects, Adept in digital design, she led research collaborations like the Wayfinding Pasifika success project and the Pepe Meamea research project(indigenising pedagogy in ECE).",
+          "In her practice, She seeks to uphold Te Tiriti o Waitangi and values the historical ties between Tangata Whenua and Tangata Moana. Jacoba is deeply invested in Pacific ECE nationwide and advancing culturally affirming teaching across NZ. Her Pacific research affiliations include advisory roles with MoE (Pacific) and Whatu Ora, and she serves as a research advisor for TLRI."
+        ],
         "speakers": {
           "keynote_speakers": {
             "heading": "Meet the Speakers",
@@ -9035,18 +9766,8 @@
             }
           ]
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recap",
-            "content": ["https://www.youtube.com/watch?v=k9K8qTJw4aI"]
-            }
-        ],
+        "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/652b56eca420599d8e7fa986_w_NfqpHQ-p-2000.jpeg",
-            "alt": "Te Whakatipuranga Wahine featured photo"
-           },
           {
             "url": "/img/scraped/photos/652b5a42269c9abd616f5ec5_6FLIb3mf_7ce431c8.jpg",
             "alt": ""
@@ -9786,11 +10507,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/64ec5ab7a7c91808f247585e_20230824192913_IMG_6965-2-p-2000.jpg",
-            "alt": "A Legendairy Career featured photo"
-           },
-           
-          {
             "url": "/img/scraped/photos/64ec5a06f3b88c6a60200d4d_20230824183646_IMG_6892_c4f275c3.jpg",
             "alt": ""
           },
@@ -10004,10 +10720,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/64c2661e5bd3fc5f860fd464_20230725185742_IMG_6478-p-2000.jpg",
-            "alt": "Innovation Unleashed featured photo"
-           },
           {
             "url": "/img/scraped/photos/64c267164a9b193611121669_20230725192413_IMG_6500_27d4896b.jpg",
             "alt": ""
@@ -10399,18 +11111,8 @@
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recap",
-            "content": ["https://www.youtube.com/watch?v=WIIpXoOs4tA"]
-          }
-        ],
+        "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/64824f126b22f174f6971717_7_Hero Image.png",
-            "alt": "Mind your own Career group photo"
-           },
           {
             "url": "/img/scraped/photos/648253e33b9679ed35e22aa4_7_Featured_Image_03_67e98597.png",
             "alt": ""
@@ -10579,10 +11281,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/64867be880728ef8664e9a83_9_Hero Image-p-2000.png",
-            "alt": "Mind your own Career group photo"
-           },
           {
             "url": "/img/scraped/photos/6486826e51d3e1c28b69ea22_9_Featured_Image_01_V2_8b90f56b.png",
             "alt": ""
@@ -10763,10 +11461,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6486757e6e08d41008e34c1b_8_Hero Image.png",
-            "alt": "Women Igniting Tech group photo"
-           },
           {
             "url": "/img/scraped/photos/6486850468bbed71f659da55_8_Feature_Images_01_V2_502a1d99.png",
             "alt": ""
@@ -11113,10 +11807,6 @@
         ],
         "photos": [
           {
-            "url": "/img/scraped/photos/64978de92f959214febc5568_Hero Photo-p-2000.jpg",
-            "alt": "Innovation Unleashed featured photo"
-           },
-          {
             "url": "/img/scraped/photos/64978c23a0ebb88792c4e9a6_Photo_with_Deloitte_Brand_184c052a.jpg",
             "alt": ""
           },
@@ -11365,18 +12055,8 @@
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recap",
-            "content": ["https://www.youtube.com/watch?v=6pOkuR_Nxpo"]
-          }
-        ],
+        "specialSections": [],
         "photos": [
-          {
-            "url": "https://lh3.googleusercontent.com/pw/AP1GczOiDBp-w6g2WrR5sA7i03zcZyNKIDSokP3tCux0HKsqFRY6l0PMhl7w5gEuAoUyCJHSqIVdFhOcJwzqZYnO3xkH0vsy6wrkcVQ7RCQT-fI0F2cV_TveiqPHnrzDE2y-GDyJ1udZOk75nO6xGuE4fqi8=w1683-h1121-s-no-gm?authuser=0",
-            "alt": "AI Enviro Hack group photo"
-          },
           {
             "url": "/img/scraped/photos/648f93dac88dea68852b4c53_5_Feature_Image_01_V2_b255c179.png",
             "alt": ""
@@ -11603,10 +12283,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/6476e04fd3fd3c906c9533d9_3_Hero Image-p-2000.png",
-            "alt": "She Celebrates featured photo"
-           },
-          {
             "url": "/img/scraped/photos/648f93af9a2304c5035bd288_3_Featured_Image_01_V2_a6143947.png",
             "alt": ""
           },
@@ -11731,18 +12407,8 @@
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recap",
-            "content": ["https://www.youtube.com/watch?v=dDEiCkzjsvc"]
-            }
-        ],
+        "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/648a4ff8577433fe124067dd_4 V2_Hero Image-p-2000.jpeg",
-            "alt": "Shaping the future with AI featured photo"
-           },
           {
             "url": "/img/scraped/photos/648a50128a1a89438134bfa4_4_Featured_Image_01_V2_3194122f.jpg",
             "alt": ""
@@ -11951,8 +12617,10 @@
         },
         "fullDescription": [
           "This event is aimed at providing women with insights and opportunities to pursue a career in the tech industry.",
-           "Attendees will have the chance to hear from experienced professionals in the tech industry, who will be sharing their personal stories, experiences and insights on how to navigate the early stages of a career in technology.",
-          "Whether you're looking to start a career in tech, or you're already working in the industry and looking to grow your skills and network, this event is for you. With the support of MYOB, we hope to inspire and empower women to pursue their passions and achieve their career goals." 
+          "Whether you're looking to start a career in tech, or you're already working in the industry and looking to grow your skills and network, this event is for you. With the support of MYOB, we hope to inspire and empower women to pursue their passions and achieve their career goals.",
+          "Anshu is a highly experienced product manager with over 20 years of experience in managing products for Enterprise SaaS and on-premises customers. Anshu has worked in a variety of industries, including Transport, Taxation & Compliance, Payroll, Records Management, Identity Services, Border Security and Passenger Management, and GIS.",
+          "With hands-on experience in DevOps and Azure hosting platforms, Anshu excels in leveraging cutting-edge technology for optimal results. As a dynamic leader and research professional, she has spearheaded numerous successful Agile and Waterfall-driven initiatives. Anshu's commitment to excellence and her proactive approach to staying updated on industry trends make her a valuable asset to any team.",
+          "I have been in the software industry for just over 9 years with 8 of those being at MYOB but my first interaction with the tech space was through a project back in 1990 when the bank I worked for decided to update their systems. This meant we could use computers for customer files regardless of where their home branch was instead of having to call the home branch to verify details, get balances etc. This gave a better customer experience and saved a lot of time for the customer and the customer "
         ],
         "speakers": {
           "keynote_speakers": {
@@ -12006,10 +12674,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/64768a070209ae05605d868b_1_Hero image_V2-p-2000.png",
-            "alt": "She Celebrates featured photo"
-           },           
           {
             "url": "/img/scraped/photos/64950e56394b63a4ef0ccb46_1_Featured_Image_01_V2_b2dc7173.png",
             "alt": ""

@@ -77,12 +77,30 @@ interface ContactNotificationData {
   message: string;
 }
 
+interface DonationNotificationData {
+  amount: string;
+  currency: string;
+  donorName?: string | null;
+  donorEmail?: string | null;
+  transactionId: string;
+  date: Date;
+}
+
 function getWebhookUrl(): string | null {
   return process.env.SLACK_VOLUNTEER_WEBHOOK_URL?.trim() || null;
 }
 
 function getContactWebhookUrl(): string | null {
   return process.env.SLACK_CONTACT_WEBHOOK_URL?.trim() || null;
+}
+
+// Donations post to their own channel if configured, otherwise reuse the contact channel.
+function getDonationWebhookUrl(): string | null {
+  return (
+    process.env.SLACK_DONATION_WEBHOOK_URL?.trim() ||
+    process.env.SLACK_CONTACT_WEBHOOK_URL?.trim() ||
+    null
+  );
 }
 
 async function sendSlackMessage(blocks: Record<string, unknown>[]): Promise<void> {
@@ -312,4 +330,62 @@ export async function sendContactSlackNotification(data: ContactNotificationData
   ];
 
   await sendContactSlackMessage(blocks);
+}
+
+async function sendDonationSlackMessage(blocks: Record<string, unknown>[]): Promise<void> {
+  const webhookUrl = getDonationWebhookUrl();
+  if (!webhookUrl) {
+    console.warn('No donation/contact Slack webhook configured, skipping notification');
+    return;
+  }
+
+  try {
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ blocks }),
+    });
+
+    if (!response.ok) {
+      console.error('Slack donation webhook failed:', response.status, await response.text());
+    }
+  } catch (error) {
+    console.error('Failed to send Slack donation notification:', error);
+  }
+}
+
+/**
+ * Sends a Slack notification when a new donation is received.
+ */
+export async function sendDonationSlackNotification(data: DonationNotificationData): Promise<void> {
+  const dateLabel = data.date.toLocaleDateString('en-NZ', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const fields = [
+    { type: 'mrkdwn', text: `*Amount:*\n$${data.amount} ${data.currency}` },
+    { type: 'mrkdwn', text: `*Donor:*\n${data.donorName || 'N/A'}` },
+    { type: 'mrkdwn', text: `*Email:*\n${data.donorEmail || 'N/A'}` },
+    { type: 'mrkdwn', text: `*Date:*\n${dateLabel}` },
+  ];
+
+  const blocks: Record<string, unknown>[] = [
+    {
+      type: 'header',
+      text: { type: 'plain_text', text: '💜 New Donation Received', emoji: true },
+    },
+    {
+      type: 'section',
+      fields,
+    },
+    {
+      type: 'context',
+      elements: [{ type: 'mrkdwn', text: `Transaction ID: ${data.transactionId}` }],
+    },
+    { type: 'divider' },
+  ];
+
+  await sendDonationSlackMessage(blocks);
 }

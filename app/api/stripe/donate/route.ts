@@ -11,7 +11,7 @@ const VALID_AMOUNTS = [10, 25, 50, 100];
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { amount, email } = body;
+    const { amount } = body;
 
     // Validate amount
     if (!amount || !VALID_AMOUNTS.includes(amount)) {
@@ -28,7 +28,6 @@ export async function POST(request: NextRequest) {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
-      customer_email: email || undefined,
       line_items: [
         {
           price_data: {

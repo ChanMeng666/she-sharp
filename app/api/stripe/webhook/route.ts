@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   constructWebhookEvent,
   handleSuccessfulPayment,
+  handleSuccessfulDonation,
   handleSubscriptionCancelled,
   handleSubscriptionRenewed,
 } from '@/lib/stripe/service';
@@ -39,8 +40,13 @@ export async function POST(request: NextRequest) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
         if (session.payment_status === 'paid') {
-          const result = await handleSuccessfulPayment(session);
-          console.log('Payment processed:', result);
+          if (session.metadata?.type === 'donation') {
+            const result = await handleSuccessfulDonation(session);
+            console.log('Donation processed:', result);
+          } else {
+            const result = await handleSuccessfulPayment(session);
+            console.log('Payment processed:', result);
+          }
         }
         break;
       }

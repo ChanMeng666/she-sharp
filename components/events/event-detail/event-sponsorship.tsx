@@ -63,17 +63,35 @@ export function EventSponsorship({ event, className }: EventSponsorshipProps) {
                   ))}
                 </div>
 
-                <Button
-                  asChild
-                  size="lg"
-                  variant="brand"
-                  className="bg-white text-brand hover:bg-white/90 font-semibold group shadow-lg"
-                >
-                  <Link href="/sponsors/corporate-sponsorship">
-                    Become a Sponsor
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </Button>
+                <div className="flex flex-wrap justify-center lg:justify-start gap-4">
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="brand"
+                    className="bg-white text-brand hover:bg-white/90 font-semibold group shadow-lg"
+                  >
+                    <Link href="/sponsors/corporate-sponsorship">
+                      Become a Sponsor
+                      <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </Button>
+                  {event.detailPageData.sponsorshipPackageUrl && (
+                    <Button
+                      asChild
+                      size="lg"
+                      variant="outline"
+                      className="border-white/60 bg-transparent text-white hover:bg-white/10 font-semibold"
+                    >
+                      <Link
+                        href={event.detailPageData.sponsorshipPackageUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Check out our sponsorship package
+                      </Link>
+                    </Button>
+                  )}
+                </div>
               </div>
 
               {/* Right: Decorative visual */}

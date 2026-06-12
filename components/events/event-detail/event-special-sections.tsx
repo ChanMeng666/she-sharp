@@ -131,17 +131,45 @@ function YouTubeEmbeds({ items }: { items: string[] }) {
 }
 
 function CollaborationLogos({ items }: { items: string[] }) {
+  // Each item is either a bare logo path, or a pipe-delimited
+  // "Alt text|/logo/path.svg|https://optional-link". Pipe is a safe delimiter
+  // (it never appears in URLs, paths, or org names).
+  const logos = items.map((raw) => {
+    const parts = raw.split("|").map((s) => s.trim());
+    if (parts.length >= 2) {
+      return { alt: parts[0], src: parts[1], href: parts[2] || undefined };
+    }
+    return { alt: "Partner logo", src: parts[0], href: undefined };
+  });
+
   return (
-    <div className="flex flex-wrap gap-6 items-center">
-      {items.map((url, i) => (
+    <div className="flex flex-wrap gap-8 md:gap-12 items-center">
+      {logos.map((logo, i) => {
         // eslint-disable-next-line @next/next/no-img-element
-        <img
-          key={i}
-          src={url}
-          alt="Collaboration partner logo"
-          className="h-64 w-auto object-contain"
-        />
-      ))}
+        const img = (
+          <img
+            src={logo.src}
+            alt={logo.alt}
+            className="h-14 sm:h-16 md:h-20 w-auto object-contain"
+          />
+        );
+        return logo.href ? (
+          <a
+            key={i}
+            href={logo.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={logo.alt}
+            className="inline-flex items-center transition-opacity hover:opacity-80"
+          >
+            {img}
+          </a>
+        ) : (
+          <div key={i} className="inline-flex items-center">
+            {img}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -226,7 +254,7 @@ export function EventSpecialSections({
                 {normalizeTitle(section.title)}
               </h3>
             </div>
-            <div className={isYouTube ? "w-full" : "max-w-prose"}>
+            <div className={isYouTube || isCollaboration ? "w-full" : "max-w-prose"}>
               {isYouTube ? (
                 <YouTubeEmbeds items={section.content} />
               ) : isCollaboration ? (

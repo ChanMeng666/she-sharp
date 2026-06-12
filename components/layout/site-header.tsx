@@ -7,14 +7,11 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Sheet,
   SheetContent,
@@ -126,67 +123,76 @@ export function SiteHeader() {
           />
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation — click-to-open dropdowns (Radix DropdownMenu).
+            Click-triggered + portaled menus eliminate the hover-timing races
+            that made the old hover NavigationMenu swallow navigation clicks. */}
         {isMounted ? (
-          <NavigationMenu className="hidden lg:flex mx-auto">
-            <NavigationMenuList className="gap-2 xl:gap-4">
+          <nav className="hidden lg:flex mx-auto">
+            <ul className="flex items-center gap-2 xl:gap-4">
               {navigationConfig.items.map((item) => (
-                <NavigationMenuItem key={item.title}>
+                <li key={item.title}>
                   {item.children ? (
-                    <>
-                      <NavigationMenuTrigger className="bg-transparent text-foreground hover:bg-[#f7e5f3]/80 data-[state=open]:bg-[#f7e5f3]/90 transition-all duration-150 rounded-full px-3 py-2">
-                        <span className="flex items-center gap-1">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button
+                          type="button"
+                          className="group inline-flex items-center gap-1 bg-transparent text-foreground hover:bg-[#f7e5f3]/80 data-[state=open]:bg-[#f7e5f3]/90 transition-all duration-150 rounded-full px-3 py-2 text-sm font-medium outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                        >
                           {item.title}
-                        </span>
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent className="nav-dropdown-enter nav-dropdown-enter-active">
-                        <ul className="w-[480px] space-y-1 p-3">
-                          {item.children.map((child) => (
-                            <li key={child.title}>
-                              <NavigationMenuLink asChild>
-                                <Link
-                                  href={child.href}
-                                  onClick={(e) => handleSmoothScroll(e, child.href)}
-                                  className="flex items-start gap-3 rounded-[24px] p-3 transition-all duration-150 hover:bg-brand-light focus:bg-[#f7e5f3]/80 group"
-                                >
-                                  {child.icon && (
-                                    <div className="mt-0.5 px-2">
-                                      <child.icon className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors duration-150" />
-                                    </div>
-                                  )}
-                                  <div className="flex-1 px-2">
-                                    <div className="text-sm font-bold text-foreground group-hover:text-foreground transition-colors duration-150">
-                                      {child.title}
-                                    </div>
-                                    {child.description && (
-                                      <p className="mt-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-150">
-                                        {child.description}
-                                      </p>
-                                    )}
-                                  </div>
-                                </Link>
-                              </NavigationMenuLink>
-                            </li>
-                          ))}
-                        </ul>
-                      </NavigationMenuContent>
-                    </>
+                          <ChevronDown
+                            className="size-3 transition-transform duration-200 group-data-[state=open]:rotate-180"
+                            aria-hidden="true"
+                          />
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        align="start"
+                        sideOffset={8}
+                        className="w-[480px] space-y-1 rounded-[28px] border border-white/50 bg-white/95 p-3 shadow-lg backdrop-blur"
+                      >
+                        {item.children.map((child) => (
+                          <DropdownMenuItem
+                            key={child.title}
+                            asChild
+                            className="group flex items-start gap-3 rounded-[24px] p-3 transition-all duration-150 hover:bg-brand-light focus:bg-[#f7e5f3]/80 data-[highlighted]:bg-[#f7e5f3]/80 cursor-pointer"
+                          >
+                            <Link
+                              href={child.href}
+                              onClick={(e) => handleSmoothScroll(e, child.href)}
+                            >
+                              {child.icon && (
+                                <div className="mt-0.5 px-2">
+                                  <child.icon className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors duration-150" />
+                                </div>
+                              )}
+                              <div className="flex-1 px-2">
+                                <div className="text-sm font-bold text-foreground group-hover:text-foreground transition-colors duration-150">
+                                  {child.title}
+                                </div>
+                                {child.description && (
+                                  <p className="mt-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-150">
+                                    {child.description}
+                                  </p>
+                                )}
+                              </div>
+                            </Link>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   ) : (
                     <Link
                       href={item.href}
                       onClick={(e) => handleSmoothScroll(e, item.href)}
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "bg-transparent text-foreground hover:bg-[#f7e5f3]/80 transition-all duration-150 rounded-full px-3 py-2"
-                      )}
+                      className="inline-flex items-center rounded-full bg-transparent px-3 py-2 text-sm font-medium text-foreground hover:bg-[#f7e5f3]/80 transition-all duration-150"
                     >
                       {item.title}
                     </Link>
                   )}
-                </NavigationMenuItem>
+                </li>
               ))}
-            </NavigationMenuList>
-          </NavigationMenu>
+            </ul>
+          </nav>
         ) : (
           /* Static placeholder during SSR to prevent hydration mismatch */
           <nav className="hidden lg:flex mx-auto">

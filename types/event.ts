@@ -146,12 +146,60 @@ export interface EventSpeakersV3 {
   keynote_speakers?: EventSpeakerGroup;
   panel_speakers?: EventSpeakerGroup;
   guest_speakers?: EventSpeakerGroup;
+  demo_facilitators?: EventSpeakerGroup;
   panel_facilitators?: EventSpeakerGroup;
   hosts?: EventSpeakerGroup;
   mentors?: EventSpeakerGroup;
   panelists?: EventSpeakerGroup;
   workshop_facilitators?: EventSpeakerGroup;
   readiness_workshop_facilitators?: EventSpeakerGroup;
+<<<<<<< HEAD
+=======
+}
+
+// A block of formatted session content (preserves the legacy accordion layout:
+// paragraphs, bold sub-headings, and bullet lists).
+export interface EventSessionBlock {
+  type: "paragraph" | "subheading" | "list";
+  text?: string; // for paragraph / subheading
+  items?: string[]; // for list
+}
+
+// A conference session (demo / keynote / workshop / panel / guest)
+export interface EventSession {
+  type: string; // "Demo" | "Keynote" | "Workshop" | "Panel" | "Guest Speaker"
+  title: string;
+  description?: string; // flat fallback / summary
+  descriptionBlocks?: EventSessionBlock[]; // structured content (preferred when present)
+  facilitators?: string[];
+}
+
+// One activity within a schedule time slot (a slot may run parallel sessions).
+export interface EventScheduleEntry {
+  activity: string;
+  location?: string;
+}
+
+// A time slot on the day's agenda.
+export interface EventScheduleItem {
+  time: string;
+  entries: EventScheduleEntry[];
+}
+
+// The full day agenda (the old site's schedule sub-page).
+export interface EventSchedule {
+  day: string;
+  bannerImage?: string;
+  items: EventScheduleItem[];
+}
+
+// A titled info block (resources / getting there / about the venue / contact).
+export interface EventInfoSection {
+  title: string;
+  paragraphs?: string[];
+  links?: { label: string; url: string }[];
+  images?: { url: string; alt: string }[];
+>>>>>>> f4123b9ca6169c2011155471c2d416655c50a733
 }
 
 // Sponsor in V3 format
@@ -159,6 +207,12 @@ export interface EventSponsorV3 {
   name: string;
   logo: string;
   description?: string;
+<<<<<<< HEAD
+=======
+  tier?: string; // e.g. "Gold" | "Silver" | "Bronze" | "Exhibition" | "Venue"
+  image?: string; // optional representative photo (e.g. a networking sponsor's rep)
+  imageAlt?: string;
+>>>>>>> f4123b9ca6169c2011155471c2d416655c50a733
 }
 
 // Sponsors grouped by type
@@ -202,6 +256,12 @@ export interface EventDetailPageData {
   time: string;
   location: EventLocationV3;
   fullDescription: string[];
+  sponsorsImage?: EventPhotoV3; // optional banner shown within the sponsors section
+  sponsorshipPackageUrl?: string; // "Check out our sponsorship package" link (Canva)
+  sessions?: EventSession[];
+  schedule?: EventSchedule;
+  infoSections?: EventInfoSection[];
+  audience?: string;
   speakers: EventSpeakersV3;
   organizers: EventSpeakerV3[];
   sponsors: EventSponsorsV3;
