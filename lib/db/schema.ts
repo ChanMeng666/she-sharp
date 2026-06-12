@@ -1407,9 +1407,6 @@ export type MentorProgrammeAssignment = typeof mentorProgrammeAssignments.$infer
 export type NewMentorProgrammeAssignment = typeof mentorProgrammeAssignments.$inferInsert;
 export type FundingOpportunity = typeof fundingOpportunities.$inferSelect;
 export type NewFundingOpportunity = typeof fundingOpportunities.$inferInsert;
-<<<<<<< HEAD
-=======
 export type Donation = typeof donations.$inferSelect;
 export type NewDonation = typeof donations.$inferInsert;
->>>>>>> f4123b9ca6169c2011155471c2d416655c50a733
 
