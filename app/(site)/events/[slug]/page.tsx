@@ -178,7 +178,7 @@ export default async function EventPage({ params }: EventPageProps) {
 
       {/* Related Events */}
       {relatedEvents.length > 0 && (
-        <Section spacing="section" className="bg-muted pb-12 sm:pb-16 md:pb-20 lg:pb-24">
+        <Section spacing="section" className="bg-muted pb-20 lg:pb-24">
           <Container size="full">
             <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground mb-8">
               More events
