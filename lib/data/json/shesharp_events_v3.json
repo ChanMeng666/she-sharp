@@ -183,8 +183,7 @@
         "endTime": "7:30pm",
         "timezone": "NZDT",
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
-        "hideFeaturedPhoto": true
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future"
       }
     },
     {
@@ -272,12 +271,7 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/68e076618a243929a9567b91_Vector Event poster.png",
-            "alt": "Vector Future-Ready featured photo"
-          }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.google.com/share/AF1QipONHHOewHzAoTCFLQBO3Ho4yMOqWKZN-hUuruuwyfvYHj0p7CC1K9vvURQNuVklHg?key=V0hMc1BoRE9nZko5RU9RRUx0dWs2QzUtSDFfQkVR",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -314,8 +308,7 @@
         "endTime": "8pm",
         "timezone": "NZDT",
         "refundPolicy": "No refunds",
-        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector",
-        "hidePhotosSection": true
+        "humanitixUrl": "https://events.humanitix.com/she-sharp-and-vector-powering-possibility-women-in-tech-vector"
       }
     },
     {
@@ -859,15 +852,7 @@
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "collaboration",
-            "title": "In Collaboration With",
-            "content": [
-              "/img/scraped/photos/685be97a7cc5998f7759b7c2TechbabesNZLogo.png"
-            ]
-          }
-        ],
+        "specialSections": [],
         "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/58coFzFj2FfWbFMp7",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
@@ -1445,10 +1430,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/68341808df6e9756c26e45a4_20250522_191138-p-2000.jpg",
-            "alt": "Find Your Perfect Fit featured photo"
-          },
-          {
             "url": "/img/scraped/photos/683419ef57b19b54eb424d75_IMG_1232-min_5a90c2de.jpg",
             "alt": ""
           },
@@ -1929,56 +1910,6 @@
                 "linkedin": ""
               }
             ]
-          },
-          "panelists": {
-            "heading": "Meet the Panelists",
-            "speakers": [
-              {
-                "name": "Benny Pan",
-                "title": "Science teacher, Rototuna Senior High",
-                "company": "",
-                "bio": "Benny has been a Science teacher at Rototuna Senior High for 5 years, pioneering AI tool integration in the classroom and teaching prompt engineering. He leads a project with the Asia-Europe Foundation to develop a personal AI coach for students and facilitates a nationwide program with Teach Development Aotearoa to empower educators in AI literacy. As a member of AI Forum Aotearoa, he contributes to the education sector and LLM working group. With certifications from Google and Deeplearning.AI, Benny leverages technology to create human-centric, critical thinking-driven learning environments.",
-                "image": "/img/scraped/conference/2024/speakers/benny-pan.jpeg",
-                "linkedin": "http://linkedin.com/in/benny-pan-71803b237"
-              },
-              {
-                "name": "Chris Pearce",
-                "title": "Software Engineer, Google Research",
-                "company": "",
-                "bio": "His goals are to generate fundamental advances in AI and computing, and apply those advances to drive significant benefits to New Zealand, Google and society at large.",
-                "image": "/img/scraped/conference/2024/speakers/chris-pearce.png",
-                "linkedin": "https://www.linkedin.com/in/chris-pearce-417243/"
-              },
-              {
-                "name": "Dr. Geri Harris",
-                "title": "Senior Lecturer, AUT Business School",
-                "company": "",
-                "bio": "Geri Harris is a senior lecturer at AUT Business School. She is a technology futurist, who seeks solutions to real-world problems across disciplines. With a PhD in Information Systems from UNSW Sydney, she has lectured technology and business subjects for 12+ years and has 13+ years of consulting experience. Her philosophy is to inspire collaboration, knowledge sharing, and innovation; challenging the status quo. Geri is passionate about integrating AI into all aspects of education.",
-                "image": "/img/scraped/conference/2024/speakers/dr-geri-harris.jpeg",
-                "linkedin": "https://www.linkedin.com/in/dr-geri-harris-69537a13"
-              },
-              {
-                "name": "Paula Gair",
-                "title": "Consultant, Educator, Advisor",
-                "company": "",
-                "bio": "Paula specialises in the safe, responsible, and ethical use of technology. She has led digital transformation initiatives for global NGOs and businesses, living and working across 10 countries before returning to Aotearoa, NZ. Her work spans AI, cyber security, privacy, online harm, governance, risk and education. She is focused on strengthening personal and organisational capability through responsible technology use. Her master's research examined cyber, privacy, and online risk mitigation for non technical audiences. She teaches and supervises at academyEX and supports leaders navigating complexity, innovation and disruption (especially in relation to AI).",
-                "image": "/img/scraped/conference/2024/speakers/paula-gair.png",
-                "linkedin": "http://www.linkedin.com/in/paulagair"
-              }
-            ]
-          },
-          "guest_speakers": {
-            "heading": "Meet the Guest Speaker",
-            "speakers": [
-              {
-                "name": "Margot Phillipps",
-                "title": "Executive Director, Informatics Olympiad",
-                "company": "",
-                "bio": "Margot is a retired educator and programmer who began her career as a Polytech lecturer before spending 20 years teaching Maths and Computing, including NCEA and Cambridge systems. Frustrated by the lack of programming in the NZ curriculum, she became involved with CSTA and NZACDITT, co-authoring the report Evaluation of Technology Achievement Standards for use in New Zealand Secondary School Computing Education, which contributed to the 2011 DT Achievement Standards process. Since 2006, she has served as Executive Director of the Informatics Olympiad, established Bebras in NZ, and organized PC4G to improve gender balance in computing, especially at the IOI level.",
-                "image": "/img/scraped/conference/2024/speakers/margot-phillipps.jpg",
-                "linkedin": ""
-              }
-            ]
           }
         },
         "organizers": [],
@@ -2029,20 +1960,8 @@
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recap",
-            "content": [
-              "https://www.youtube.com/watch?v=kONKHNGsIP4"
-            ]
-          }
-        ],
+        "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/674a8d448cfb51e2040934e8_Screen Shot 2024-11-30 at 4.57.41 PM.png",
-            "alt": "Google Educator Conference featured photo"
-          },
           {
             "url": "/img/scraped/photos/674a8d5a4ab1892c07bba411_Google-Educator-004_6f8b01db.jpg",
             "alt": ""
@@ -2709,10 +2628,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/673ae86f262711538318c2f5_hero-p-2000.jpg",
-            "alt": "Sustainable Development featured photo"
-          },
-          {
             "url": "/img/scraped/photos/673ae8b357bafc67dc9fb409_1_7375e11f.jpg",
             "alt": ""
           },
@@ -2889,10 +2804,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/671b32ca898cf47916e7f70b_Anniversary-144-p-2000.jpg",
-            "alt": "She Sharp 10-Year Anniversary featured photo"
-          },
           {
             "url": "/img/scraped/photos/671b32e1863f1ce63745d2db_Anniversary-72_7fcc997a.jpg",
             "alt": ""
@@ -3094,10 +3005,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/66d4560b9f4ef98b4255cbb5_IMG_9867-p-2000.jpg",
-            "alt": "Harness the Power of Data and AI featured photo"
-          },
-          {
             "url": "/img/scraped/photos/66d456166a015f57e5c91bc6_IMG_9823_425d85f0.jpg",
             "alt": ""
           },
@@ -3214,7 +3121,8 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+        ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -3603,109 +3511,8 @@
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recap",
-            "content": [
-              "https://www.youtube.com/watch?v=wB8n2NYOSLc"
-            ]
-          },
-          {
-            "type": "youtube",
-            "title": "Opening Message from Hon Judith Collins KC MP, Minister of Science, Innovation and Technology",
-            "content": [
-              "https://www.youtube.com/watch?v=NvAS9IacRaY"
-            ]
-          },
-          {
-            "type": "agenda",
-            "title": "Readiness Workshops",
-            "content": [
-              "Build your own AI Powered Web App — Microsoft is offering two 2-hour workshops to help students prepare for the AI Hackathon. These sessions will teach students how to build AI models and integrate them into applications. These virtual workshops will be held on Tuesday July 16th for part 1, and Wednesday July 17th for part 2, both at 12-2pm NZT. Facilitators: Michelle Sandford (Developer Engagement Lead Asia - Microsoft) and Renee Noble (Python Cloud Advocate - Microsoft).",
-              "Iterative process and strategies for prompt development — Promptech is offering a one-hour workshop to help students understand the architecture of large language models, providing an introduction to prompt engineering. This session will help students craft effective prompts. This virtual session will be held on Monday July 22nd at 6-7 pm NZT. Facilitator: Amir Mohammadi (Founder & Director - Promptech).",
-              "Supercharge Your Solutions with Generative AI — Join us for an interactive session where we'll explore cutting-edge generative AI tools that can accelerate your projects. From idea generation to data analysis, discover how AI can enhance creativity and productivity. This session will be held on Saturday July 27th at 12:00 NZT. Facilitator: Geri Harris (Senior Lecturer - AUT Business School)."
-            ]
-          },
-          {
-            "type": "topics",
-            "title": "Problem and Solution",
-            "content": [
-              "The team must demonstrate a clear understanding of the problem they are solving.",
-              "The team must explain how their solution effectively solves the identified problem.",
-              "The pitch should be clear and concise in its presentation."
-            ]
-          },
-          {
-            "type": "topics",
-            "title": "Feasibility and Impact",
-            "content": [
-              "The solution must be technically feasible and able to be implemented.",
-              "The solution must have the potential to solve the problem effectively and create a meaningful impact.",
-              "Each judge will individually evaluate the teams based on the criteria above.",
-              "The judging panel will then discuss and come to a consensus on the winners in each category: Best Pitch, Best Technical Solution, People’s Choice Award, and the overall Winner of the year’s AI Hackathon."
-            ]
-          },
-          {
-            "type": "prizes",
-            "title": "Prizes to be won",
-            "content": [
-              "Engraved trophy for winning teams sponsored by She Sharp",
-              "Two (2) AI Summit tickets each valued over $1,595, sponsored by AI Forum",
-              "Four (4) $250 Prezzy cards from Fisher & Paykel",
-              "Four (4) $250 Prezzy cards from Deloitte",
-              "Eight (8) $150 Prezzy cards from Fisher & Paykel",
-              "Five (5) $100 Prezzy cards from AUT",
-              "Five (5) $100 Prezzy cards from Datacom",
-              "One (1) confirmed internship place sponsored by Deloitte",
-              "Free tickets to all remaining four (4) She Sharp events for the rest of the year, valued over $500",
-              "Credit in AI services + three (3) months free mentorship; first team receives $500 and second team receives $200 from Promptech"
-            ]
-          },
-          {
-            "type": "topics",
-            "title": "Judging Information",
-            "content": [
-              "Held on 28th July 2024",
-              "The international judges join together via Zoom",
-              "5-minute pitch from each team",
-              "Judging panel of 6 judges, led by Dr. Mahsa McCauley — Founder and Director of She Sharp",
-              "4 Winners for this event: Best Pitch, Best Technical Solution, People’s Choice Award, and Winner of this year’s AI Hackathon",
-              "Theme: breaking free from drudgery and using innovation and technology to address repetitive tasks, mundane processes, and administrative burdens.",
-              "Participants are expected to align their proposed solutions to address one or more of the 8 use cases provided in the brief.",
-              "The solutions must involve a technology innovation, which can include the innovative use of existing technology.",
-              "The technology used must incorporate elements of AI, and the team must explain what these are and how they are utilized.",
-              "If the team has completed any work prior to the event, they must disclose what work was done and their starting point."
-            ]
-          },
-          {
-            "type": "topics",
-            "title": "AI Use Cases",
-            "content": [
-              "Problem: Manual analysis of customer feedback is laborious and prone to bias. Solution: An AI system that can generate automated summaries of customer feedback, highlighting key themes and concerns.",
-              "Problem: Creating and maintaining training materials for new technology platforms is time-consuming. Solution: An AI system that can reformat, recompile and update various media types to keep training materials current.",
-              "Problem: Manual checking and marking of VOU documents is prone to error and time-consuming. Solution: An AI system that can automatically mark VOUs against an answer sheet and populate the results into reporting tools.",
-              "Problem: Manual extraction of information for weekly SAP update emails is time-consuming. Solution: An AI system that can draft automated emails using predefined templates and populate them from SAP data.",
-              "Problem: Finding consistent answers to marketing-related questions is challenging. Solution: A centralised location where all relevant marketing knowledge material is stored and can be queried through natural language.",
-              "Problem: Creating thumbnails for PDFs in the central storage location is labor-intensive. Solution: An AI system that can automate the thumbnail creation process.",
-              "Problem: Writing test protocols and testing summaries is labor-intensive. Solution: An AI system that can automatically formulate test protocols and summaries from provided requirements.",
-              "Problem: Updating and standardizing procedures is time-consuming. Solution: An AI system that can extract key points from existing procedures and reproduce a draft procedure in a new standardised format."
-            ]
-          },
-          {
-            "type": "info",
-            "title": "Essential Information",
-            "content": [
-              "Learning Resources: A wide range of learning resources is available for students, including free Azure for Students credits worth USD 100.",
-              "Where to look for datasets? Access a diverse range of datasets, suitable for various use cases, including Free Public Data Sets for Analysis, Google Dataset Search, health statistics datasets, Kaggle healthcare datasets, LINZ Data Service, Machinehack, NZ Datasets and OpenML."
-            ]
-          }
-        ],
+        "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/66a953aa9ccf0dbd14588bae_hero hackathon.jpg",
-            "alt": "F&P Hackathon featured photo"
-          },
           {
             "url": "/img/scraped/photos/66a9546b78531c808b3a5d15_4_637d15f8.jpg",
             "alt": ""
@@ -4001,10 +3808,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6681f40816fb4d759506b07a_IMG_9249 (1)-p-2000.jpg",
-            "alt": "Embracing Bias featured photo"
-          },
           {
             "url": "/img/scraped/photos/6681f4b5e7cc858c424a5e12_IMG_9299_1_0c4c2c45.jpg",
             "alt": ""
@@ -4313,12 +4116,7 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/662736cdcd9806231f31b056_MYOB hero image-p-2000.jpg",
-            "alt": "Embracing Bias featured photo"
-          }
-        ],
+        "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/brA5VppyZx9mAU2V9",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -4476,9 +4274,8 @@
           "The Google Educator Conference is designed for digital technology teachers—training them in STEM subjects and creative ways to present these in New Zealand classrooms.",
           "The purpose of the conference is to upskill all our valuable educators such as primary, intermediate, high school by presenting ideas to engage students with new technologies so they can be better equipped for the needs of twenty-first century learning.",
           "Teachers will be equipped with the ability to tap into the creativity and enthusiasm that many students have for technology. And they’ll be exposed to exciting ways of presenting these technologies and master new skills that can directly shape the future of computer science in their classrooms.",
-          "Previously known as CS4HS, the Google Educator Conference is back for 2023!",
-          "The audience is High School Teachers who teach Computer Science, Digital Technologies, STEM or related subjects; teachers who are looking to refresh or add on to their skills; plus ICT curriculum leaders, primary school teachers and school librarians.",
-          "Details are coming soon. Sign up for our newsletter and be the first to know."
+          "Lesieli, a proud Tongan, founder and Chief visionary officer of Lālanga, Lālanga dedicated to championing Maori-Pasifika student success. It empowers educators, school leaders with innovative mentoring programs, products like the Lālanga ToolBox, and tech solutions.",
+          "Lesieli recently completed her Masters Research, focusing on digital solutions to improve the success of Maori-Pasifika students, addressing issues such as truancy, wellbeing, and academic challenges. Lālanga ToolBox, currently being used by 2,000 primary students in Auckland decile one schools. She received the University of Auckland 2023, 40 under 40 Alumni Inspiring leaders award and has launched a charity to empower Pasifika students and families through education."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -4628,6 +4425,67 @@
                 "linkedin": ""
               }
             ]
+          },
+          "guest_speakers": {
+            "heading": "Demo Facilitators",
+            "speakers": [
+              {
+                "name": "Lesieli Oliver",
+                "title": "ImmerseHer \"Virtual Reality\" Workshop Lead",
+                "company": "",
+                "bio": "Lesieli, a proud Tongan, founder and Chief visionary officer of Lālanga, is dedicated to championing Māori-Pasifika student success. Lālanga empowers educators and school leaders with innovative mentoring programs, products like the Lālanga ToolBox, and tech solutions. Lesieli recently completed her Masters Research, focusing on digital solutions to improve the success of Māori-Pasifika students, addressing issues such as truancy, wellbeing and academic challenges. Lālanga ToolBox is currently used by 2,000 primary students in Auckland decile one schools. She received the University of Auckland 2023 '40 Under 40' Alumni Inspiring Leaders Award and has launched a charity to empower Pasifika students and families through education.",
+                "image": "/img/scraped/speakers/google-educator-conference-2023/lesieli-oliver.png",
+                "linkedin": ""
+              },
+              {
+                "name": "Mehwish Hasan",
+                "title": "Introduction to Augment Reality Workshop Lead",
+                "company": "QuiverVision",
+                "bio": "Mehwish Hasan, a devoted educator and the Computer Science Curriculum Leader at ACG Sunderland in Auckland, is on a mission to bring excitement to students' learning. With a background in telecommunications engineering, Mehwish has become New Zealand's inaugural QuiverVision Ambassador, weaving technology into education. Through the Quiver App, students transform static, coloured images into dynamic, interactive augmented-reality marvels — sparking creativity and curiosity.",
+                "image": "/img/scraped/speakers/google-educator-conference-2023/mehwish-hasan.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Nils Reardon",
+                "title": "Introduction to Augmented Reality Workshop Lead",
+                "company": "",
+                "bio": "Nils has been the CEO of QuiverVision since 2014, who brings a wealth of experience with a background in commerce and law. With an LLB (first class hons.) and a Commerce Degree (economics major), he honed his skills during six years at some of New Zealand's leading law firms before embarking on his journey with QuiverVision. Nils is the driving force behind the company's success and sets the course for its strategic direction. He also oversees the domains of finance and business management, ensuring the organisation operates at its peak potential.",
+                "image": "/img/scraped/speakers/google-educator-conference-2023/nils-reardon.jpeg",
+                "linkedin": ""
+              },
+              {
+                "name": "Nischay Gupta",
+                "title": "Introduction to Augmented Reality Workshop Lead",
+                "company": "",
+                "bio": "Nischay is an experienced consultant in the tech sector. He has played a pivotal role in optimising operations & aligning strategies with QuiverVision's goals & objectives. Nischay led the launch of a new interactive EdTech product at QuiverVision to enable engaging learning experience, benefitting over 35,000+ teachers & 100,000+ students worldwide within the first year of rollout. He holds a Master's degree in Engineering (1st-class hons.) at the University of Auckland.",
+                "image": "/img/scraped/speakers/google-educator-conference-2023/nischay-gupta.png",
+                "linkedin": ""
+              },
+              {
+                "name": "Steve Smith",
+                "title": "Google for Education, NZ Program Manager",
+                "company": "Google",
+                "bio": "Steve has been a High School Social Studies and Geography teacher for the last 16 years in New Zealand since returning from teaching in London for two years. Steve worked to bring Google for Education tools into classrooms across Aotearoa and now serves as NZ Program Manager, Google for Education.",
+                "image": "/img/scraped/speakers/google-educator-conference-2023/steve-smith.jpeg",
+                "linkedin": ""
+              },
+              {
+                "name": "Claire Wigley",
+                "title": "Teacher, Spotswood College",
+                "company": "Spotswood College",
+                "bio": "Claire is currently a teacher at the innovative Spotswood College in New Plymouth. With a focus on teaching 21st-century skills, Claire's background lies in textiles technology, with teaching experience spanning year 1 to year 10. Over the past eight years, she has expanded her knowledge to cover many areas of the Technology Curriculum, from cooking to coding and laser cutting. As an Inquiry Specialist teacher, Claire integrates Design Thinking into her lessons. In 2023 she took on the role of council member at TENZ.",
+                "image": "/img/scraped/speakers/google-educator-conference-2023/claire-wigley.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Lesieli Oliver — Education Ambassador, QuiverVision",
+                "title": "Education Ambassador, QuiverVision",
+                "company": "QuiverVision / Lālanga",
+                "bio": "Lesieli, a proud Tongan, founder and Chief Visionary Officer of Lālanga, is also an Education Ambassador with QuiverVision, championing Māori-Pasifika student success through augmented-reality learning experiences.",
+                "image": "",
+                "linkedin": ""
+              }
+            ]
           }
         },
         "organizers": [],
@@ -4635,75 +4493,14 @@
           "main": [
             {
               "name": "Google",
-              "logo": "/img/scraped/conference/2023/sponsors/google.png",
-              "description": "Google supports all Kiwis towards a digital future. Google New Zealand started with just one person in 2007 and has grown to around 50 people now based in Auckland and Wellington. The team works to help Kiwis find new ways to collaborate, reach audiences and get things done. Google is committed to helping all Kiwis with the digital knowledge and capabilities they need now and in the future.",
-              "tier": "Gold"
-            },
-            {
-              "name": "QuiverVision",
-              "logo": "/img/scraped/conference/2023/sponsors/quivervision.png",
-              "description": "Want to wow your kids or become the coolest teacher in school? Join us for an extraordinary experience as we introduce you to our Quiver App and Education Dashboard. Quiver, launched in 2013, was the world's first Augmented Reality colouring app, downloaded by over 25 Million users in 150+ countries and delivers engaging and magical experiences for all. Quiver is a one-stop shop for Augmented Reality education content and lesson plans for Pre K to Year 9 and beyond.",
-              "tier": "Silver"
-            },
-            {
-              "name": "Technology Education New Zealand (TENZ)",
-              "logo": "/img/scraped/conference/2023/sponsors/technology-education-new-zealand-tenz.png",
-              "description": "Technology Education New Zealand (TENZ) is a non profit professional, collaborative association, promoting and supporting all levels of technology education in Aotearoa New Zealand. TENZ is organised by teachers for teachers and our aim is to enhance the learning and teaching of technology by creating a well informed, well connected, supportive, and sustainable professional community that has a strong voice and provides effective advocacy for technology education.",
-              "tier": "Silver"
-            },
-            {
-              "name": "Cyclone",
-              "logo": "/img/scraped/conference/2023/sponsors/cyclone.png",
-              "description": "Technology is playing a crucial role in the modern learning environment. It’s opening new opportunities for students, and improving processes all round. But staying ahead can take up precious time and resources. That’s where the specialist expertise of Cyclone’s school IT services comes in. We have decades of experience working with New Zealand education providers and the MOE. We help schools build technology infrastructure that moves with the times, delivers learning content across devices and protects everyone from security threats. We also provide training that empowers your staff and students, and back that up with dedicated school IT support services. . All delivered with a Kiwi can-do attitude, and a careful eye on the budget.",
-              "tier": "Bronze"
-            },
-            {
-              "name": "MDS",
-              "logo": "/img/scraped/conference/2023/sponsors/mds.png",
-              "description": "Dan Trainor, Senior Future Student Advisor. After completing a B.A. (Hons) in Screen and Media, Dan has worked as a freelance videographer and visual artist; he has immense passion for the creative industries. This enthusiasm transcends into his role as Course and Careers Advisor at MDS by encouraging the exceptional talent coming into the school and helping direct students into the amazing opportunities we have to offer.",
-              "tier": "Networking & Drinks",
-              "image": "/img/scraped/site/sponsors/654b51d48ef3de09823e6526_Staff_-_Dan_a73a8d1c.jpg",
-              "imageAlt": "Dan Trainor"
+              "logo": "/img/scraped/sponsors/668087b14f8661617a3d0482_Google-Logo_ce9e3de1.png"
             }
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recording",
-            "content": [
-              "https://www.youtube.com/watch?v=Qlbdimoh4rs&t=1s"
-            ]
-          }
-        ],
-        "photos": [
-          {
-            "url": "/img/scraped/conference/2023/photos/photo-1.jpg",
-            "alt": "Google Educator Conference 2023 photo"
-          },
-          {
-            "url": "/img/scraped/conference/2023/photos/photo-2.jpg",
-            "alt": "Google Educator Conference 2023 photo"
-          },
-          {
-            "url": "/img/scraped/conference/2023/photos/photo-3.jpg",
-            "alt": "Google Educator Conference 2023 photo"
-          },
-          {
-            "url": "/img/scraped/conference/2023/photos/photo-4.jpg",
-            "alt": "Google Educator Conference 2023 photo"
-          },
-          {
-            "url": "/img/scraped/conference/2023/photos/photo-5.jpg",
-            "alt": "Google Educator Conference 2023 photo"
-          },
-          {
-            "url": "/img/scraped/conference/2023/photos/photo-6.jpg",
-            "alt": "Google Educator Conference 2023 photo"
-          }
-        ],
-        "galleryUrl": "https://photos.app.goo.gl/F7tcyAYeTZsNrw9r5",
+        "specialSections": [],
+        "photos": [],
+        "galleryUrl": "https://photos.google.com/share/AF1QipPpmlI7QXynCZ_KqLEZu_aQ3asmC4A1gw6OQdWU3G_yo93MWkH2LYLsp7GVJZn8xw?pli=1&key=UGxZdGllaGZPVUNudG95dFFJaTdWYTJmckNhQlJR",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
           {
@@ -5400,12 +5197,7 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [
-          {
-            "url": "/img/scraped/photos/65ba0b458acbe47294621842_Hero.jpg",
-            "alt": "SHE# Storytellers Series featured photo"
-          }
-        ],
+        "photos": [],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -5487,10 +5279,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65ba0798b7750e7eb959843c_16836256_10154372570468519_6332026673018678655_o.jpg",
-            "alt": "SHE# @ ORION HEALTH featured photo"
-          },
           {
             "url": "/img/scraped/photos/65ba07eba5b400627a218a0b_16991972_1015437256840351_c80438e6.jpg",
             "alt": ""
@@ -5644,10 +5432,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/65c33978e9b4a65c2a7ffb7c_FP-3-ov7gf1zr22yatloqdhxr8k1t15qpvymmcstxjj1wa4.jpg",
-            "alt": "she-fisher-Paykel featured photo"
-          },
-          {
             "url": "/img/scraped/photos/65c33994fec707521a5ddd9f_FP-2-ov7gf0oigqecyzt8axpp_f6088c7f.jpg",
             "alt": ""
           },
@@ -5727,10 +5511,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6563e88031018c5d48551c4c_M-Hero.jpg",
-            "alt": "SHE# with TRADE ME featured photo"
-          },
           {
             "url": "/img/scraped/photos/656465bbc76d08cd73a0f97b_T1_c069a1bb.jpg",
             "alt": ""
@@ -5819,10 +5599,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65646120cb3caafd60c9544a_12309651_10154852580013504_966342953789852816_o-p-2000.jpg",
-            "alt": "She Sharp @ Westpac featured photo"
-          },
           {
             "url": "/img/scraped/photos/65646191b691a341f398c54a_12314192_1015485258291350_72666ccb.jpg",
             "alt": ""
@@ -5917,10 +5693,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/65645fa76b5eb360c5d9d751_12029660_10154707074788504_8718519602444928693_o.jpg",
-            "alt": "She Sharp event featured photo"
-          },
-          {
             "url": "/img/scraped/photos/65645fdb08a0d4794be33479_12068974_1015470707350850_0f585724.jpg",
             "alt": ""
           },
@@ -6010,10 +5782,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/65645d5017f1224a49ed0d8f_11894393_10154551246968504_2099418341455218149_o.jpg",
-            "alt": "Hacking Insecurities @ Grid AKL featured photo"
-          },
-          {
             "url": "/img/scraped/photos/65645d895146ad8bdd874aff_11223890_1015455124221350_be650d57.jpg",
             "alt": ""
           },
@@ -6102,10 +5870,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65645ae9d01f2e91e44e9ccb_11401590_10154268290883504_989934460941502789_n.jpg",
-            "alt": "Agile Session with Xero featured photo"
-          },
           {
             "url": "/img/scraped/photos/65645b300f250472ee145aa0_11401039_1015426828944850_e0142361.jpg",
             "alt": ""
@@ -6198,10 +5962,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/656458f642b122e97b641af2_10987455_10153960427083504_3455512168669768831_n.jpg",
-            "alt": "UX Design with IBM featured photo"
-          },
-          {
             "url": "/img/scraped/photos/65645946bdabeafc163f98ad_11041801_1015396042581850_595958e3.jpg",
             "alt": ""
           },
@@ -6290,10 +6050,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6564559a29bdda8b1d93044d_10360540_10153787685418504_5780293828849614691_n.jpg",
-            "alt": "Anita Borg Celebration featured photo"
-          },
           {
             "url": "/img/scraped/photos/656455cacfec611b54c65fb9_10922426_1015378768535850_c92cfad8.jpg",
             "alt": ""
@@ -6385,10 +6141,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65643d3d7688a3e476f8cdc9_1520821_10153149531773504_6870258751502016174_n.jpeg",
-            "alt": "She Sharp Launch Event featured photo"
-          },
           {
             "url": "/img/scraped/photos/65643df8dcbd1d3b7f533ea6_10402400_1015314952468850_289f695d.jpg",
             "alt": ""
@@ -6529,10 +6281,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/6563e88031018c5d48551c4c_M-Hero.jpg",
-            "alt": "She Sharp @ Microsoft featured photo"
-          },
-          {
             "url": "/img/scraped/photos/6563e89b8e06822e36609d15_M-2_4f59e2ec.jpg",
             "alt": ""
           },
@@ -6641,10 +6389,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/65630824f38869b5202a762b_Hero-Flex.jpg",
-            "alt": "Security 101 featured photo"
-          },
-          {
             "url": "/img/scraped/photos/6563084480771fa9604514a8_flex3_e71cd38b.jpg",
             "alt": ""
           },
@@ -6738,10 +6482,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/6562eb042570f4009f7e01c6_HeroImage_Google.jpg",
-            "alt": "An Evening with Google featured photo"
-          },
-          {
             "url": "/img/scraped/photos/6562eb26caf05b0668b7e64d_G-1_823998ae.jpg",
             "alt": ""
           },
@@ -6830,10 +6570,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6562e7d02e529075a4b96cef_Hero Image.jpg",
-            "alt": "App Inventor Workshop featured photo"
-          },
           {
             "url": "/img/scraped/photos/6562e7f34692fcaade20082c_1_877efe87.jpg",
             "alt": ""
@@ -6937,7 +6673,8 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+        ],
         "galleryUrl": "https://photos.app.goo.gl/KmMQByWYpxDE4yoz7",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -7149,10 +6886,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/women-in-ai-for-social-good_group-photo.jpg",
-            "alt": "Women in AI for Social Good group photo"
-          },
-          {
             "url": "/img/scraped/photos/6562bcbe45033320605874a9_198986570_101587762235585_b243a694.jpg",
             "alt": ""
           },
@@ -7259,10 +6992,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/655b3706915c4758fa6aa7d0_HeroImage.jpg",
-            "alt": "AUCKLAND TECH GRAND TOUR featured photo"
-          },
-          {
             "url": "/img/scraped/photos/655bd3efe64082464045708b_11_fa6bbc64.jpg",
             "alt": ""
           },
@@ -7351,10 +7080,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/she-pushpay_group-photo.jpg",
-            "alt": "SHE# @ Pushpay group photo"
-          },
           {
             "url": "/img/scraped/photos/655b023af7eb2bb1368c00bd_1_64da56f2.jpg",
             "alt": ""
@@ -7534,10 +7259,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/655532ee3f16fee07996d032_Google Hero Image.jpg",
-            "alt": "SHE# with GOOGLE featured photo"
-          },
-          {
             "url": "/img/scraped/photos/655532e2e68328af427e98e7_Landing_Photo_c32814f5.jpg",
             "alt": ""
           },
@@ -7630,10 +7351,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/6554712fce744f2e9788d715_nyriadlanding.jpg",
-            "alt": "She Sharp @ Nyriad featured photo"
-          },
-          {
             "url": "/img/scraped/photos/6554716daa1f871ebaa26e93_37981277_1015578832343851_4a17df33.jpg",
             "alt": ""
           },
@@ -7719,10 +7436,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65546b010427d6b98fd5b970_gridhero.jpg",
-            "alt": "She Sharp event featured photo"
-          },
           {
             "url": "/img/scraped/photos/65546be8d29332fb2ff7963b_36227157_1015571515167851_05724d72.jpg",
             "alt": ""
@@ -7898,10 +7611,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/65546481c859ae8f34bf1e90_hero.jpg",
-            "alt": "She Sharp @ VEND featured photo"
-          },
-          {
             "url": "/img/scraped/photos/655d0f13600c5bf2678977a1_vend_fb4df6fc.jpg",
             "alt": ""
           },
@@ -7992,10 +7701,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/654b30aacf7202fb42aa88df_29063956_10155498141678519_2956349907200783114_o.jpg",
-            "alt": "SHE# with Google Codelab featured photo"
-          },
           {
             "url": "/img/scraped/photos/654b30faeaa165f7e688f2e5_28954196_1015549814082851_78f342ba.jpg",
             "alt": ""
@@ -8095,10 +7800,6 @@
           }
         ],
         "photos": [
-          {
-            "url": "/img/scraped/photos/655d0ddb8153550f70d7db1b_design-thinkinh-hero.jpeg",
-            "alt": "Design Thinking featured photo"
-          },
           {
             "url": "/img/scraped/photos/654b2ce92f6435d5f3ce7938_28947377_1015549049578851_1882c5f1.jpg",
             "alt": ""
@@ -8223,10 +7924,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/654aa33edd99fce2e9a4e1dc_Hero Image, Centrality.jpg",
-            "alt": "She Sharp @ Centrality featured photo"
-          },
           {
             "url": "/img/scraped/photos/654aa2eec54d876063c27d84_C-1_efa43fe8.jpg",
             "alt": ""
@@ -8503,10 +8200,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/6550a6187eddaa4291d6a85f_aws-she-p-2000.jpeg",
-            "alt": "SHE# @ AWS featured photo"
-          },
-          {
             "url": "/img/scraped/photos/6541ef681c6f9184193e7694_12_cdc14ef6.jpg",
             "alt": ""
           },
@@ -8696,10 +8389,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/6541a604ad8867c25d8760db_Workday-Hero Image.jpg",
-            "alt": "SHE# @ WORKDAY featured photo"
-          },
-          {
             "url": "/img/scraped/photos/6541a5c09f6e33e9563ae899_IMG_2061jpg-nggid03170-ng_7c9f47f7.jpg",
             "alt": ""
           },
@@ -8828,10 +8517,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65509c0df224407ac9d28995_she-deloitte-hero-p-2000.jpeg",
-            "alt": "SHE# @ DELOITTE featured photo"
-          },
           {
             "url": "/img/scraped/photos/65419c4a28a95b9120242e09_1_2acb3487.jpg",
             "alt": ""
@@ -9224,6 +8909,10 @@
             "alt": ""
           },
           {
+            "url": "/img/scraped/photos/65471acd33f3f73de074f5d9_20231103153143_IMG_8021_191abab5.jpg",
+            "alt": ""
+          },
+          {
             "url": "/img/scraped/photos/65471acd135d8bd83e789101_20231103153706_IMG_8026_8ba079e0.jpg",
             "alt": ""
           },
@@ -9323,10 +9012,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/65013115c8690e010a0e9084_landingImage-p-2000.jpg",
-            "alt": "Robotic Process Automation featured photo"
-          },
           {
             "url": "/img/scraped/photos/65644d2a2f3bb75b0b5121f2_87269985_1015732284172851_e305af32.jpg",
             "alt": ""
@@ -9587,8 +9272,7 @@
         "endTime": "1pm",
         "timezone": "NZST",
         "refundPolicy": "No refund policy specified.",
-        "humanitixUrl": "https://events.humanitix.com/future-ready",
-        "hidePhotosSection": true
+        "humanitixUrl": "https://events.humanitix.com/future-ready"
       }
     },
     {
@@ -9775,11 +9459,11 @@
           "country": "New Zealand"
         },
         "fullDescription": [
-          "SheSharp's last event of the year, and our first in-person event post-COVID!",
           "We partnered with Xero to give people an opportunity to have a much needed night out to end 2020 with a bang!",
           "SheSharp and Xero hosted a Girl’s Night Out to bring together like-minded women interested in tech for a night of fun, interaction and challenges. As unprecedented this year has been, where most of us have interacted online via zoom calls or google hangouts, it’s time (and safe) for us to have an in person event. You don’t have to have a vast knowledge of tech or the tech sector to come along.",
           "There were team challenges, fun quizzes and general fun and interactive awesomeness. So people brought their A-game along! This was a great event to network and reconnect with others we haven’t had the opportunity to meet in person over the last few months!",
-          "This event was open to all students (18+) and working professionals! Food and Drinks (No Alcohol) were provided!"
+          "This event was open to all students (18+) and working professionals! Food and Drinks (No Alcohol) were provided!",
+          "Mumbi is the Security Risk & Compliance Specialist. She has been with the security team at Xero for almost 2 years. Before her career in security, Mumbi worked in the finance sector approving mortgages and home loans. She has a degree in Computer Science which was obtained at Kabarak University in Kenya - her motherland. Mumbi moved to Aotearoa NZ back in 2015 to study a Masters of Service-Oriented Computing at AUT. Since then, she’s developed a passion for security - and all things Kiwi!"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -9824,10 +9508,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6562ce4e4112006d55a85880_127994566_10158302174673519_7313097895441555003_n-p-2000.jpeg",
-            "alt": "Girls Night Out featured photo"
-          },
           {
             "url": "/img/scraped/photos/6562ce3e4112006d55a851d5_127918351_101583021738935_f45e98a9.jpg",
             "alt": ""
@@ -9916,7 +9596,9 @@
         "fullDescription": [
           "At She Sharp, our mission is to actively engage a broader range of Maori and Pasifika female students by equipping them with the knowledge, network, and skills to enter STEM industries. We are dedicated to inspiring and empowering the next generation of talent from these communities to explore and embrace the dynamic world of STEM and the digital domain through immersive hands-on workshops on topics such as AI, AR, and robotics.",
           "On Wednesday, October 11th, we will be hosting our first STEM conference for Maori and Pasifika girls in years 11-13. The event will take place at AUT (South Campus, Manukau). We are thrilled to offer this free event, as it aligns with our goal of empowering Pasifika girls as future leaders in STEM.",
-          "The conference will commence at 9:00 am - 3pm and will include hands-on workshops in Robotics, Artificial Intelligence, Virtual Reality, and Augmented Reality. Additionally, we will feature Pasifika experts and role models in the STEM fields. Our aim is to ignite curiosity and inspire students about potential careers in technology."
+          "The conference will commence at 9:00 am - 3pm and will include hands-on workshops in Robotics, Artificial Intelligence, Virtual Reality, and Augmented Reality. Additionally, we will feature Pasifika experts and role models in the STEM fields. Our aim is to ignite curiosity and inspire students about potential careers in technology.",
+          "Jacoba Matapo has ancestral ties to Siumu Samoa, and Leiden Holland. She has over 15 years in educational leadership, spanning ITE and ECE management. She has led key Pasifika education projects, Adept in digital design, she led research collaborations like the Wayfinding Pasifika success project and the Pepe Meamea research project(indigenising pedagogy in ECE).",
+          "In her practice, She seeks to uphold Te Tiriti o Waitangi and values the historical ties between Tangata Whenua and Tangata Moana. Jacoba is deeply invested in Pacific ECE nationwide and advancing culturally affirming teaching across NZ. Her Pacific research affiliations include advisory roles with MoE (Pacific) and Whatu Ora, and she serves as a research advisor for TLRI."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -10084,20 +9766,8 @@
             }
           ]
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recap",
-            "content": [
-              "https://www.youtube.com/watch?v=k9K8qTJw4aI"
-            ]
-          }
-        ],
+        "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/652b56eca420599d8e7fa986_w_NfqpHQ-p-2000.jpeg",
-            "alt": "Te Whakatipuranga Wahine featured photo"
-          },
           {
             "url": "/img/scraped/photos/652b5a42269c9abd616f5ec5_6FLIb3mf_7ce431c8.jpg",
             "alt": ""
@@ -10261,7 +9931,8 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+        ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -10364,7 +10035,8 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+        ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -10444,7 +10116,8 @@
           "other": []
         },
         "specialSections": [],
-        "photos": [],
+        "photos": [
+        ],
         "galleryUrl": "",
         "registrationUrl": "https://register.charities.govt.nz/Charity/CC57025",
         "images": [
@@ -10834,10 +10507,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/64ec5ab7a7c91808f247585e_20230824192913_IMG_6965-2-p-2000.jpg",
-            "alt": "A Legendairy Career featured photo"
-          },
-          {
             "url": "/img/scraped/photos/64ec5a06f3b88c6a60200d4d_20230824183646_IMG_6892_c4f275c3.jpg",
             "alt": ""
           },
@@ -11051,10 +10720,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/64c2661e5bd3fc5f860fd464_20230725185742_IMG_6478-p-2000.jpg",
-            "alt": "Innovation Unleashed featured photo"
-          },
           {
             "url": "/img/scraped/photos/64c267164a9b193611121669_20230725192413_IMG_6500_27d4896b.jpg",
             "alt": ""
@@ -11446,20 +11111,8 @@
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recap",
-            "content": [
-              "https://www.youtube.com/watch?v=WIIpXoOs4tA"
-            ]
-          }
-        ],
+        "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/64824f126b22f174f6971717_7_Hero Image.png",
-            "alt": "Mind your own Career group photo"
-          },
           {
             "url": "/img/scraped/photos/648253e33b9679ed35e22aa4_7_Featured_Image_03_67e98597.png",
             "alt": ""
@@ -11628,10 +11281,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/64867be880728ef8664e9a83_9_Hero Image-p-2000.png",
-            "alt": "Mind your own Career group photo"
-          },
           {
             "url": "/img/scraped/photos/6486826e51d3e1c28b69ea22_9_Featured_Image_01_V2_8b90f56b.png",
             "alt": ""
@@ -11812,10 +11461,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/6486757e6e08d41008e34c1b_8_Hero Image.png",
-            "alt": "Women Igniting Tech group photo"
-          },
           {
             "url": "/img/scraped/photos/6486850468bbed71f659da55_8_Feature_Images_01_V2_502a1d99.png",
             "alt": ""
@@ -12162,10 +11807,6 @@
         ],
         "photos": [
           {
-            "url": "/img/scraped/photos/64978de92f959214febc5568_Hero Photo-p-2000.jpg",
-            "alt": "Innovation Unleashed featured photo"
-          },
-          {
             "url": "/img/scraped/photos/64978c23a0ebb88792c4e9a6_Photo_with_Deloitte_Brand_184c052a.jpg",
             "alt": ""
           },
@@ -12414,20 +12055,8 @@
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recap",
-            "content": [
-              "https://www.youtube.com/watch?v=6pOkuR_Nxpo"
-            ]
-          }
-        ],
+        "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/2022-ai-enviro-hack_group-photo.jpg",
-            "alt": "AI Enviro Hack group photo"
-          },
           {
             "url": "/img/scraped/photos/648f93dac88dea68852b4c53_5_Feature_Image_01_V2_b255c179.png",
             "alt": ""
@@ -12654,10 +12283,6 @@
         "specialSections": [],
         "photos": [
           {
-            "url": "/img/scraped/photos/6476e04fd3fd3c906c9533d9_3_Hero Image-p-2000.png",
-            "alt": "She Celebrates featured photo"
-          },
-          {
             "url": "/img/scraped/photos/648f93af9a2304c5035bd288_3_Featured_Image_01_V2_a6143947.png",
             "alt": ""
           },
@@ -12782,20 +12407,8 @@
           ],
           "other": []
         },
-        "specialSections": [
-          {
-            "type": "youtube",
-            "title": "Event Recap",
-            "content": [
-              "https://www.youtube.com/watch?v=dDEiCkzjsvc"
-            ]
-          }
-        ],
+        "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/648a4ff8577433fe124067dd_4 V2_Hero Image-p-2000.jpeg",
-            "alt": "Shaping the future with AI featured photo"
-          },
           {
             "url": "/img/scraped/photos/648a50128a1a89438134bfa4_4_Featured_Image_01_V2_3194122f.jpg",
             "alt": ""
@@ -13004,8 +12617,10 @@
         },
         "fullDescription": [
           "This event is aimed at providing women with insights and opportunities to pursue a career in the tech industry.",
-          "Attendees will have the chance to hear from experienced professionals in the tech industry, who will be sharing their personal stories, experiences and insights on how to navigate the early stages of a career in technology.",
-          "Whether you're looking to start a career in tech, or you're already working in the industry and looking to grow your skills and network, this event is for you. With the support of MYOB, we hope to inspire and empower women to pursue their passions and achieve their career goals."
+          "Whether you're looking to start a career in tech, or you're already working in the industry and looking to grow your skills and network, this event is for you. With the support of MYOB, we hope to inspire and empower women to pursue their passions and achieve their career goals.",
+          "Anshu is a highly experienced product manager with over 20 years of experience in managing products for Enterprise SaaS and on-premises customers. Anshu has worked in a variety of industries, including Transport, Taxation & Compliance, Payroll, Records Management, Identity Services, Border Security and Passenger Management, and GIS.",
+          "With hands-on experience in DevOps and Azure hosting platforms, Anshu excels in leveraging cutting-edge technology for optimal results. As a dynamic leader and research professional, she has spearheaded numerous successful Agile and Waterfall-driven initiatives. Anshu's commitment to excellence and her proactive approach to staying updated on industry trends make her a valuable asset to any team.",
+          "I have been in the software industry for just over 9 years with 8 of those being at MYOB but my first interaction with the tech space was through a project back in 1990 when the bank I worked for decided to update their systems. This meant we could use computers for customer files regardless of where their home branch was instead of having to call the home branch to verify details, get balances etc. This gave a better customer experience and saved a lot of time for the customer and the customer "
         ],
         "speakers": {
           "keynote_speakers": {
@@ -13059,10 +12674,6 @@
         },
         "specialSections": [],
         "photos": [
-          {
-            "url": "/img/scraped/photos/64768a070209ae05605d868b_1_Hero image_V2-p-2000.png",
-            "alt": "She Celebrates featured photo"
-          },
           {
             "url": "/img/scraped/photos/64950e56394b63a4ef0ccb46_1_Featured_Image_01_V2_b2dc7173.png",
             "alt": ""
