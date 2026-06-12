@@ -1,9 +1,5 @@
 import { Metadata } from "next";
-import Link from "next/link";
-import { Section } from "@/components/layout/section";
-import { Container } from "@/components/layout/container";
-import { Button } from "@/components/ui/button";
-import { MembershipBenefits, MembershipTiers } from "@/components/membership";
+import { MembershipBenefits, MembershipHero, MembershipTiers } from "@/components/membership";
 
 export const metadata: Metadata = {
   title: "Membership | She Sharp",
@@ -14,33 +10,15 @@ export const metadata: Metadata = {
 export default function MembershipPage() {
   return (
     <>
-      {/* Hero Section */}
-      <Section className="bg-[#f7e5f3]" noPadding>
-        <Container size="full">
-          <div className="max-w-3xl mx-auto text-center pt-28 pb-16 md:py-24 lg:py-32">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Become a Member
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-              Join a thriving community of women in tech. Get access to
-              mentorship, exclusive events, career resources, and meaningful
-              connections that will accelerate your growth.
-            </p>
-            <Link href="/sign-up">
-              <Button variant="brand" size="lg">
-                Join Now
-              </Button>
-            </Link>
-          </div>
-        </Container>
-      </Section>
+      <MembershipHero />
 
-      {/* Benefits Section */}
-      <MembershipBenefits />
+      <div id="benefits">
+        <MembershipBenefits />
+      </div>
 
-      {/* Tiers Section */}
-      <MembershipTiers />
+      <div id="membership-plans">
+        <MembershipTiers />
+      </div>
     </>
   );
 }
-

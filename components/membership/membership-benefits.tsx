@@ -22,9 +22,9 @@ export function MembershipBenefits() {
           {membershipBenefits.map((benefit, index) => (
             <div
               key={index}
-              className="group p-4 sm:p-5 md:p-6 card-sm bg-[#f7e5f3]/30 hover:bg-[#f7e5f3]/60 transition-all duration-300"
+              className="group p-4 sm:p-5 md:p-6 card-sm bg-[#f7e5f3]/30 "
             >
-              <div className="w-14 h-14 rounded-2xl bg-brand/10 flex items-center justify-center mb-5 group-hover:bg-brand/20 transition-colors">
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ">
                 <benefit.icon className="w-7 h-7 text-brand" />
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-3">
