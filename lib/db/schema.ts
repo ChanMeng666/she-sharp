@@ -1409,4 +1409,3 @@ export type FundingOpportunity = typeof fundingOpportunities.$inferSelect;
 export type NewFundingOpportunity = typeof fundingOpportunities.$inferInsert;
 export type Donation = typeof donations.$inferSelect;
 export type NewDonation = typeof donations.$inferInsert;
-
