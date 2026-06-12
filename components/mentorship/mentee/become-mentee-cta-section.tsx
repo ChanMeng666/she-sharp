@@ -39,7 +39,7 @@ export function BecomeMenteeCTASection() {
       {/* Background decoration */}
       <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
 
-      <div className="relative z-10 py-16">
+      <div className="relative z-10 pt-16 pb-24 lg:pb-28">
         <Container size="full">
           <div className="max-w-8xl mx-auto">
             <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-center text-white">
