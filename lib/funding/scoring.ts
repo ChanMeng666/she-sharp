@@ -10,11 +10,14 @@ const BATCH_SIZE = 5;
 // Hard cap per OpenAI call. SDK default is 10 minutes — too long for a cron with a
 // 300s function budget. If a batch hangs we fall back to the keyword scorer.
 const OPENAI_REQUEST_TIMEOUT_MS = 20_000;
+<<<<<<< HEAD
+=======
 // Number of OpenAI batches in flight at once. gpt-4o-mini's rate limits (millions
 // of TPM on paid tiers) easily accommodate this, and Vercel Pro has plenty of
 // concurrent-invocation budget. 4 cuts the scoring wall-clock by ~70% for the
 // weekly cron's typical 30-50 unscored rows without saturating either side.
 const OPENAI_CONCURRENCY = 4;
+>>>>>>> f4123b9ca6169c2011155471c2d416655c50a733
 
 const SYSTEM_PROMPT = `You are a grant analyst for She Sharp, a New Zealand non-profit.
 
@@ -90,6 +93,10 @@ async function scoreBatch(client: OpenAI, batch: FundingOpportunity[]): Promise<
 }
 
 /**
+<<<<<<< HEAD
+ * Scores all rows whose `relevance_score IS NULL` and persists results to the DB.
+ * Returns the number of rows scored.
+=======
  * Runs `worker` over `items` with at most `limit` in-flight at once.
  * Order of results matches order of inputs. Failures bubble up — callers wrap
  * the worker if they want per-item fallback.
@@ -120,11 +127,49 @@ async function mapWithConcurrency<T, R>(
  * cheap; per-batch failures degrade to the keyword scorer). DB UPDATEs run strictly
  * sequentially after scoring completes — defends the Neon cold-pool connection-burst
  * limit (see 2026-05-11 mentorship-stats incident).
+>>>>>>> f4123b9ca6169c2011155471c2d416655c50a733
  */
 export async function scoreUnscored(rows: FundingOpportunity[]): Promise<number> {
   if (rows.length === 0) return 0;
 
   const client = getClient();
+<<<<<<< HEAD
+  let scoredCount = 0;
+
+  for (let i = 0; i < rows.length; i += BATCH_SIZE) {
+    const batch = rows.slice(i, i + BATCH_SIZE);
+    let scoreMap: Map<string, { score: number; reason: string }> | null = null;
+
+    if (client) {
+      try {
+        scoreMap = await scoreBatch(client, batch);
+      } catch (err) {
+        console.warn('[funding] OpenAI batch failed, falling back to keyword scorer:', err instanceof Error ? err.message : err);
+      }
+    }
+
+    const ids: number[] = [];
+    const updates = batch.map((o) => {
+      const result = scoreMap?.get(o.externalId) ?? fallbackScore(o);
+      ids.push(o.id);
+      return { id: o.id, ...result };
+    });
+
+    // Drizzle does not support multi-row UPDATE with per-row values in one statement,
+    // so we issue one UPDATE per row. Sequential awaits (not Promise.all) to avoid
+    // bursts of concurrent Neon connection attempts that throttle on cold pools
+    // (same failure class as the 2026-05-11 mentorship-stats incident).
+    for (const u of updates) {
+      await db
+        .update(fundingOpportunities)
+        .set({ relevanceScore: u.score, relevanceReason: u.reason })
+        .where(eq(fundingOpportunities.id, u.id));
+    }
+    scoredCount += updates.length;
+  }
+
+  return scoredCount;
+=======
 
   const batches: FundingOpportunity[][] = [];
   for (let i = 0; i < rows.length; i += BATCH_SIZE) {
@@ -166,4 +211,5 @@ export async function scoreUnscored(rows: FundingOpportunity[]): Promise<number>
   }
 
   return updates.length;
+>>>>>>> f4123b9ca6169c2011155471c2d416655c50a733
 }

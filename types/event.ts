@@ -153,6 +153,8 @@ export interface EventSpeakersV3 {
   panelists?: EventSpeakerGroup;
   workshop_facilitators?: EventSpeakerGroup;
   readiness_workshop_facilitators?: EventSpeakerGroup;
+<<<<<<< HEAD
+=======
 }
 
 // A block of formatted session content (preserves the legacy accordion layout:
@@ -197,6 +199,7 @@ export interface EventInfoSection {
   paragraphs?: string[];
   links?: { label: string; url: string }[];
   images?: { url: string; alt: string }[];
+>>>>>>> f4123b9ca6169c2011155471c2d416655c50a733
 }
 
 // Sponsor in V3 format
@@ -204,9 +207,12 @@ export interface EventSponsorV3 {
   name: string;
   logo: string;
   description?: string;
+<<<<<<< HEAD
+=======
   tier?: string; // e.g. "Gold" | "Silver" | "Bronze" | "Exhibition" | "Venue"
   image?: string; // optional representative photo (e.g. a networking sponsor's rep)
   imageAlt?: string;
+>>>>>>> f4123b9ca6169c2011155471c2d416655c50a733
 }
 
 // Sponsors grouped by type

@@ -31,6 +31,11 @@ export const dataGovtSource: FundingSource = {
     const timeout = setTimeout(() => controller.abort(), 25_000);
 
     try {
+<<<<<<< HEAD
+      const res = await fetch(API_URL, {
+        signal: controller.signal,
+        headers: { 'User-Agent': 'SheSharp-Funding-Crawler/1.0 (+https://shesharp.org.nz)' },
+=======
       // catalogue.data.govt.nz sits behind Imperva CDN, which blocks generic
       // datacenter clients (Vercel egress) by serving an HTML JS challenge page
       // instead of JSON. Sending browser-realistic headers gets us through in
@@ -48,10 +53,13 @@ export const dataGovtSource: FundingSource = {
           'Sec-Fetch-Site': 'same-origin',
           'Referer': 'https://catalogue.data.govt.nz/',
         },
+>>>>>>> f4123b9ca6169c2011155471c2d416655c50a733
       });
       if (!res.ok) {
         throw new Error(`CKAN API returned ${res.status}`);
       }
+<<<<<<< HEAD
+=======
 
       const contentType = res.headers.get('content-type') ?? '';
       if (!contentType.includes('application/json')) {
@@ -61,6 +69,7 @@ export const dataGovtSource: FundingSource = {
         return [];
       }
 
+>>>>>>> f4123b9ca6169c2011155471c2d416655c50a733
       const data = (await res.json()) as CkanResponse;
       if (!data.success || !data.result?.results) return [];
 
