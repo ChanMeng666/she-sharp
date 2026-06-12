@@ -568,8 +568,6 @@ All your account data and mentor profile remain unchanged.
     text,
   });
 }
-<<<<<<< HEAD
-=======
 
 /**
  * Formats a date as a readable NZ-style string for donation emails.
@@ -710,4 +708,3 @@ This is an automated notification. The full record is available in your Stripe D
     text,
   });
 }
->>>>>>> f4123b9ca6169c2011155471c2d416655c50a733

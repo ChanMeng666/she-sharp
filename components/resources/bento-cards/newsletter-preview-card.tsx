@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowUpRight, Mail } from "lucide-react";
 
 // Static cover image for the Newsletters preview card.
-const COVER_IMAGE = "/img/newsletters-cover.jpg";
+const COVER_IMAGE = "/img/newsletter.jpg";
 
 /**
  * Newsletters preview card for the resources page.

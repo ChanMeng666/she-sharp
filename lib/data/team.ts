@@ -115,7 +115,7 @@ export const teamMembers: TeamMember[] = [
     roles: ["Ambassador", "Website Maintenance"],
     linkedin: "https://www.linkedin.com/in/lesley-gao/",
     description:
-      "Lesley Gao is a Product Designer with a background in journalism, web development, and UX/UI design. She has worked across SaaS products, onboarding experiences, and support platforms, including the design and development of the She Sharp website. \n\nShe enjoy simplifying complex workflows and turning them into intuitive digital experiences. Lesley is also passionate about supporting communities and initiatives that empower and connect women in tech across Aotearoa.\n\nOutside of work, she enjoys hiking Auckland’s trails, photography, solving jigsaw puzzles, and building Lego.",
+      "Lesley Gao is a Product Designer who combines design thinking with front-end development skills to create thoughtful and user-centred digital experiences. She has worked on a variety of digital products, from early concepts through to implementation, including the design and development of the She Sharp website. \n\nShe enjoys simplifying complex workflows and turning them into intuitive digital experiences. She is also passionate about supporting communities and initiatives that help women gain greater visibility, representation, and influence in the technology sector.\n\nOutside of work, she enjoys hiking Auckland’s trails, photography, solving jigsaw puzzles, and building Lego.",
     image: "/img/team/Lesley.png",
   },
   {
