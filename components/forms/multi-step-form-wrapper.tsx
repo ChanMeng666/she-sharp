@@ -164,16 +164,19 @@ export function MultiStepFormWrapper({
   return (
     <section className="w-full bg-background text-foreground">
       {/* Hero */}
-      <div className="bg-gradient-to-b from-brand/5 to-background py-12 md:py-16">
+      <div className="bg-gradient-to-b from-brand/5 to-background pt-28 pb-12 md:pt-32 md:pb-16">
         <Container size="content">
-          <div className="max-w-2xl mx-auto text-center space-y-3">
+          <div className="max-w-2xl mx-auto">
             <Link
               href={backLink.href}
-              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-2"
+              className="group -ml-2 mb-4 inline-flex items-center gap-1.5 rounded-md px-2 py-2 text-sm text-muted-foreground transition-colors hover:text-brand hover:underline hover:underline-offset-6
+            "
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" />
               {backLink.label}
             </Link>
+          </div>
+          <div className="max-w-2xl mx-auto text-center space-y-3">
             <h1 className="text-display-sm md:text-display-md text-foreground">
               {title}
             </h1>

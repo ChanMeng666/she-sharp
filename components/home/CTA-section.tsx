@@ -31,7 +31,7 @@ const CTA_ITEMS = [
 const BUTTON_CLASSES =
   "border border-ghost-white text-ghost-white bg-transparent hover:bg-ghost-white/10";
 const ICON_CONTAINER_CLASSES =
-  "w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-ghost-white rounded-full flex items-center justify-center mb-4";
+  "shrink-0 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-18 lg:h-18 bg-ghost-white rounded-full flex items-center justify-center lg:mb-4";
 const ICON_CLASSES = "w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-periwinkle-dark";
 
 export function CTASection() {
@@ -62,14 +62,16 @@ export function CTASection() {
                     key={item.href}
                     variant="fade-up"
                     delay={item.delay}
-                    className="flex-1 max-w-lg mx-auto text-left flex flex-col items-start"
+                    className="flex-1 max-w-lg text-left flex flex-col items-start"
                   >
-                    <div className={ICON_CONTAINER_CLASSES}>
-                      <Icon className={ICON_CLASSES} />
+                    <div className="flex items-center gap-3 mb-3 lg:flex-col lg:items-start lg:gap-0 lg:mb-0">
+                      <div className={ICON_CONTAINER_CLASSES}>
+                        <Icon className={ICON_CLASSES} />
+                      </div>
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-ghost-white lg:mb-3">
+                        {item.title}
+                      </h3>
                     </div>
-                    <h3 className="text-2xl font-semibold text-ghost-white mb-3">
-                      {item.title}
-                    </h3>
                     <p className="text-ghost-white/80 leading-relaxed mb-6">
                       {item.description}
                     </p>
