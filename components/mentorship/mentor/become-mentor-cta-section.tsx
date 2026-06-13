@@ -35,27 +35,24 @@ export function BecomeMentorCTASection() {
   }, []);
 
   return (
-    <Section className="bg-linear-to-br from-periwinkle-light via-periwinkle-mid to-periwinkle-dark relative overflow-hidden" noPadding>
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
-
-      <div className="relative z-10 pt-16 md:pt-20 pb-24 lg:pb-28">
+    <Section className="bg-periwinkle-soft relative overflow-hidden" noPadding>
+      <div className="pt-16 md:pt-20 pb-24 lg:pb-28">
         <Container size="full">
           <div className="max-w-8xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center text-white">
+            <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center ">
               {/* Left: Title + Countdown */}
               <div className="flex flex-col gap-12">
                 <div>
-                  <h2 className="text-display-sm text-white mb-4 text-left">
+                  <h2 className="text-display-sm  mb-4 text-left">
                     Interested in Becoming A Mentor?
                   </h2>
-                  <p className="text-base md:text-lg text-white/80 max-w-2xl text-left">
+                  <p className="text-base md:text-lg text-muted-foreground/80 max-w-2xl text-left">
                     Join our community of mentors and help shape the next generation of women in STEM
                   </p>
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <p className="text-lg text-white/80 text-left font-semibold">
+                  <p className="text-lg text-muted-foreground/80 text-left font-semibold">
                     Application Deadline
                   </p>
                   <div className="flex gap-4 flex-wrap max-w-xl">
@@ -65,8 +62,8 @@ export function BecomeMentorCTASection() {
                         className="bg-white/10 backdrop-blur-sm border-white/20 flex-1 min-w-[70px] sm:min-w-[100px] card-sm"
                       >
                         <CardContent className="p-4 text-center">
-                          <div className="text-3xl font-bold text-white">{value}</div>
-                          <div className="text-sm text-white/80 capitalize">{unit}</div>
+                          <div className="text-3xl font-bold">{value}</div>
+                          <div className="text-sm text-muted-foreground/80 capitalize">{unit}</div>
                         </CardContent>
                       </Card>
                     ))}
@@ -87,9 +84,9 @@ export function BecomeMentorCTASection() {
                   </Link>
                 </Button>
 
-                <p className="text-base text-white/80 text-center">
+                <p className="text-base text-muted-foreground/80 text-center">
                   Questions?{" "}
-                  <Link href="/contact" className="hover:underline font-medium text-white">
+                  <Link href="/contact" className="hover:underline font-medium">
                     Contact our support team
                   </Link>
                 </p>
