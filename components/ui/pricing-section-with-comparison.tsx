@@ -59,7 +59,7 @@ export function PricingComparison({
         </div>
 
         {/* Path cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
           {paths.map((path) => {
             const isAmbassador = path.id === "ambassador";
             const responsibilities = path.responsibilities.slice(0, 4);

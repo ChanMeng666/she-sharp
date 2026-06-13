@@ -113,6 +113,32 @@
     opacity: 1;
   }
 
+  /* Marquee */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .animate-marquee {
+    animation: marquee 28s linear infinite;
+    display: flex;
+    width: max-content;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee { animation: none; }
+  }
+
+  /* Hero fade-up entrance */
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-hero-fade-up {
+    animation: heroFadeUp 0.7s ease-out both;
+  }
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
 
