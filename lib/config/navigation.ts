@@ -139,12 +139,6 @@ export const navigationConfig: {
           description: "Partner with us to support women in STEM",
           icon: Building2,
         },
-        {
-          title: "Donate",
-          href: "/donate",
-          description: "Support our mission to empower women in STEM",
-          icon: Heart,
-        },
       ],
     },
     {
@@ -183,6 +177,11 @@ export const navigationConfig: {
           icon: BarChart3,
         },
       ],
+    },
+    {
+      title: "Donate",
+      href: "/donate",
+      icon: Heart,
     },
     {
       title: "Contact",
