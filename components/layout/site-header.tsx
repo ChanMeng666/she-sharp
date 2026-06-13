@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -238,148 +239,221 @@ export function SiteHeader() {
         {isMounted ? (
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="ml-auto lg:hidden">
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-lg"
+              <button
+                type="button"
+                aria-label="Toggle menu"
+                className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#f7e5f3]/80 text-brand transition-all duration-200 hover:bg-[#f7e5f3] hover:scale-105 active:scale-95"
               >
-                {isOpen ? (
-                  <X className="h-5 w-5" />
-                ) : (
-                  <Menu className="h-5 w-5" />
-                )}
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-          <SheetContent
-            side="right"
-            className="w-[300px] sm:w-[400px] p-0 overflow-y-auto bg-white border-l border-[#f7e5f3] shadow-xl"
-          >
-            {/* Mobile Header - Purple Dark background */}
-            <div className="bg-brand p-6 relative overflow-hidden">
-              <SheetTitle className="text-white text-xl font-bold relative z-10">
-                Menu
-              </SheetTitle>
-              {/* Background Logo - Purple version */}
-              <div className="absolute bottom-0 right-0 transform translate-x-1/4 translate-y-1/4 opacity-20">
-                <div className="relative w-32 h-32">
-                  <Image
-                    src="/logos/she-sharp-logo-purple-dark-130x130.svg"
-                    alt=""
-                    width={130}
-                    height={130}
-                    className="object-contain"
-                    aria-hidden="true"
-                  />
-                </div>
-              </div>
-            </div>
-            
-            {/* Mobile Navigation */}
-            <nav className="flex flex-col p-6">
-              {navigationConfig.items.map((item, index) => (
-                <div
-                  key={item.title}
-                  className="border-b border-[#f7e5f3] last:border-0 mobile-menu-item"
-                  style={{ animationDelay: `${index * 0.05}s` }}
-                >
-                  {item.children ? (
-                    <Collapsible
-                      open={openMobileMenus.includes(item.title)}
-                      onOpenChange={() => toggleMobileMenu(item.title)}
-                    >
-                      <CollapsibleTrigger className="flex w-full items-center justify-between py-4 text-left text-base font-medium text-[#1f1e44] hover:bg-[#f7e5f3] transition-all duration-150 rounded-lg px-2 -mx-2">
-                        <span className="flex items-center gap-2">
-                          {item.icon && <item.icon className="h-4 w-4 text-brand" />}
-                          {item.title}
-                        </span>
-                        <ChevronDown
-                          className={cn(
-                            "h-4 w-4 text-brand transition-transform duration-150",
-                            openMobileMenus.includes(item.title) && "rotate-180"
-                          )}
-                        />
-                      </CollapsibleTrigger>
-                      <CollapsibleContent className="pb-4">
-                        <div className="ml-6 space-y-1">
-                          {item.children.map((child) => (
-                            <Link
-                              key={child.title}
-                              href={child.href}
-                              className="flex items-center gap-2 py-2 text-sm font-bold text-[#1f1e44]/70 hover:text-brand transition-all duration-150 hover:bg-[#f7e5f3] rounded-lg px-2 -mx-2"
-                              onClick={(e) => {
-                                handleSmoothScroll(e, child.href);
-                                setIsOpen(false);
-                              }}
-                            >
-                              {child.icon && <child.icon className="h-3 w-3" />}
-                              {child.title}
-                            </Link>
-                          ))}
-                        </div>
-                      </CollapsibleContent>
-                    </Collapsible>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      className="flex items-center gap-2 py-4 text-base font-medium text-[#1f1e44] hover:bg-[#f7e5f3] transition-all duration-150 rounded-lg px-2 -mx-2"
-                      onClick={(e) => {
-                        handleSmoothScroll(e, item.href);
-                        setIsOpen(false);
-                      }}
-                    >
-                      {item.icon && <item.icon className="h-4 w-4 text-brand" />}
-                      {item.title}
-                    </Link>
+                <span
+                  className={cn(
+                    "absolute transition-all duration-200",
+                    isOpen ? "opacity-100 rotate-0" : "opacity-0 rotate-90"
                   )}
+                >
+                  <X className="h-5 w-5" />
+                </span>
+                <span
+                  className={cn(
+                    "absolute transition-all duration-200",
+                    isOpen ? "opacity-0 -rotate-90" : "opacity-100 rotate-0"
+                  )}
+                >
+                  <Menu className="h-5 w-5" />
+                </span>
+              </button>
+            </SheetTrigger>
+
+            <SheetContent
+              side="right"
+              className="w-full sm:w-[420px] p-0 flex flex-col border-none shadow-2xl overflow-hidden"
+            >
+              {/* Thin rainbow accent strip */}
+              <div className="h-[3px] w-full flex-shrink-0 bg-gradient-to-r from-brand via-[#8982ff] to-[#b1f6e9]" />
+
+              {/* Header — dark gradient with decorative elements */}
+              <div className="relative flex-shrink-0 overflow-hidden bg-gradient-to-br from-[#1f1e44] via-[#2a2462] to-brand px-6 pt-6 pb-8">
+                {/* Ambient blobs */}
+                <div className="pointer-events-none absolute -top-12 -right-12 h-48 w-48 rounded-full bg-[#8982ff]/25 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-[#b1f6e9]/15 blur-3xl" />
+
+                {/* Dot-grid watermark */}
+                <div className="pointer-events-none absolute right-5 bottom-5 grid grid-cols-5 gap-[5px] opacity-[0.18]">
+                  {Array.from({ length: 25 }).map((_, i) => (
+                    <div key={i} className="h-[3px] w-[3px] rounded-full bg-white" />
+                  ))}
                 </div>
-              ))}
-              
-              {/* Mobile CTA Buttons */}
-              <div className="mt-6 space-y-3">
+
+                {/* Close button */}
+                <SheetClose className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white transition-all duration-200 hover:bg-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50">
+                  <X className="h-4 w-4" />
+                  <span className="sr-only">Close menu</span>
+                </SheetClose>
+
+                {/* She Sharp logo (white) */}
+                <span
+                  className="relative z-10 mb-3 block h-8 w-28 bg-white"
+                  style={{
+                    maskImage: "url(/logos/she-sharp-logo.svg)",
+                    maskSize: "contain",
+                    maskRepeat: "no-repeat",
+                    maskPosition: "left center",
+                    WebkitMaskImage: "url(/logos/she-sharp-logo.svg)",
+                    WebkitMaskSize: "contain",
+                    WebkitMaskRepeat: "no-repeat",
+                    WebkitMaskPosition: "left center",
+                  }}
+                />
+
+                {/* Accessible title (visually styled as tagline) */}
+                <SheetTitle className="relative z-10 text-sm font-normal tracking-wide text-white/70">
+                  Bridging the gender gap in STEM
+                </SheetTitle>
+              </div>
+
+              {/* Scrollable navigation */}
+              <div className="flex-1 overflow-y-auto overscroll-contain">
+                <nav className="px-3 py-4" aria-label="Mobile navigation">
+                  {navigationConfig.items.map((item, index) => (
+                    <div
+                      key={item.title}
+                      className="mobile-nav-item"
+                      style={{ animationDelay: `${index * 55}ms` }}
+                    >
+                      {item.children ? (
+                        <Collapsible
+                          open={openMobileMenus.includes(item.title)}
+                          onOpenChange={() => toggleMobileMenu(item.title)}
+                        >
+                          <CollapsibleTrigger className="group flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left transition-all duration-200 hover:bg-[#f7e5f3]/60 data-[state=open]:bg-[#f7e5f3]/70">
+                            {item.icon && (
+                              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand/10 to-brand/20 transition-all duration-200 group-hover:from-brand/20 group-hover:to-brand/30 group-data-[state=open]:from-brand/20 group-data-[state=open]:to-brand/30">
+                                <item.icon className="h-4 w-4 text-brand" />
+                              </div>
+                            )}
+                            <span className="flex-1 text-[15px] font-semibold text-[#1f1e44]">
+                              {item.title}
+                            </span>
+                            <div
+                              className={cn(
+                                "flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-brand/10 transition-all duration-200",
+                                openMobileMenus.includes(item.title)
+                                  ? "rotate-180 bg-brand/20"
+                                  : ""
+                              )}
+                            >
+                              <ChevronDown className="h-3 w-3 text-brand" />
+                            </div>
+                          </CollapsibleTrigger>
+
+                          <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+                            <div className="mb-1 ml-4 mt-1 space-y-0.5 border-l-2 border-brand/15 pl-4">
+                              {item.children.map((child) => (
+                                <Link
+                                  key={child.title}
+                                  href={child.href}
+                                  className="group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-150 hover:bg-[#f7e5f3]/60"
+                                  onClick={(e) => {
+                                    handleSmoothScroll(e, child.href);
+                                    setIsOpen(false);
+                                  }}
+                                >
+                                  {child.icon && (
+                                    <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg border border-[#f7e5f3] bg-white shadow-sm">
+                                      <child.icon className="h-3.5 w-3.5 text-brand" />
+                                    </div>
+                                  )}
+                                  <div className="min-w-0 flex-1">
+                                    <p className="text-sm font-medium leading-tight text-[#1f1e44]">
+                                      {child.title}
+                                    </p>
+                                    {child.description && (
+                                      <p className="mt-0.5 truncate text-xs text-[#1f1e44]/50">
+                                        {child.description}
+                                      </p>
+                                    )}
+                                  </div>
+                                </Link>
+                              ))}
+                            </div>
+                          </CollapsibleContent>
+                        </Collapsible>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          className="group flex items-center gap-3 rounded-2xl px-3 py-3 transition-all duration-200 hover:bg-[#f7e5f3]/60"
+                          onClick={(e) => {
+                            handleSmoothScroll(e, item.href);
+                            setIsOpen(false);
+                          }}
+                        >
+                          {item.icon && (
+                            <div
+                              className={cn(
+                                "flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl transition-all duration-200",
+                                item.title === "Donate"
+                                  ? "bg-gradient-to-br from-[#f7e5f3] to-[#ecc5e2] group-hover:from-[#e8b8d8] group-hover:to-[#dfa0ca]"
+                                  : "bg-gradient-to-br from-brand/10 to-brand/20 group-hover:from-brand/20 group-hover:to-brand/30"
+                              )}
+                            >
+                              <item.icon className="h-4 w-4 text-brand" />
+                            </div>
+                          )}
+                          <span className="flex-1 text-[15px] font-semibold text-[#1f1e44]">
+                            {item.title}
+                          </span>
+                        </Link>
+                      )}
+                    </div>
+                  ))}
+                </nav>
+              </div>
+
+              {/* Bottom — CTA + User nav */}
+              <div className="flex-shrink-0 space-y-3 border-t border-[#f7e5f3] bg-gradient-to-t from-[#fdf9fc] to-white px-4 pb-6 pt-4">
                 {navigationConfig.buttons.map((button) => (
                   <Button
                     key={button.title}
                     variant={button.variant}
                     size="lg"
                     asChild
-                    className="w-full transition-all duration-150"
+                    className="h-12 w-full rounded-2xl text-base font-semibold shadow-md shadow-brand/20 transition-all duration-150"
                     onClick={() => setIsOpen(false)}
                   >
                     <Link href={button.href}>{button.title}</Link>
                   </Button>
                 ))}
+                <div>
+                  <UserNav variant="mobile" />
+                </div>
               </div>
-              
-              {/* Mobile User Navigation */}
-              <div className="mt-6">
-                <UserNav variant="mobile" />
-              </div>
-            </nav>
-          </SheetContent>
-        </Sheet>
+            </SheetContent>
+          </Sheet>
         ) : (
           /* Static placeholder for mobile menu during SSR */
-          <Button
-            variant="outline"
-            size="lg"
-            className="ml-auto lg:hidden rounded-lg"
+          <button
+            type="button"
+            aria-label="Toggle menu"
+            className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#f7e5f3]/80 text-brand lg:hidden"
           >
             <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle menu</span>
-          </Button>
-        )}
+          </button>
+
+)}
       </div>
 
-      {/* Desktop Navigation Underline Animation */}
       <style jsx>{`
         @keyframes slideIn {
-          from {
-            transform: scaleX(0);
-          }
-          to {
-            transform: scaleX(1);
-          }
+          from { transform: scaleX(0); }
+          to   { transform: scaleX(1); }
+        }
+
+        @keyframes mobileNavSlideIn {
+          from { opacity: 0; transform: translateX(14px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .mobile-nav-item {
+          animation: mobileNavSlideIn 0.22s ease-out both;
         }
       `}</style>
     </header>
