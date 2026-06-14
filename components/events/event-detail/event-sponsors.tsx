@@ -2,6 +2,11 @@
 
 import { EventV3, EventSponsorV3 } from "@/types/event";
 import { hasAnySponsors } from "@/lib/data/events";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface EventSponsorsProps {
   event: EventV3;
@@ -12,6 +17,40 @@ interface SponsorRowProps {
   sponsor: EventSponsorV3;
   id: string;
   logoSizeClass?: string;
+}
+
+function isLogoOnly(sponsor: EventSponsorV3): boolean {
+  return !sponsor.description && !sponsor.image;
+}
+
+interface SponsorLogoGridProps {
+  sponsors: EventSponsorV3[];
+  logoSizeClass?: string;
+}
+
+function SponsorLogoGrid({
+  sponsors,
+  logoSizeClass = "h-20 md:h-24 lg:h-28",
+}: SponsorLogoGridProps) {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-10 md:gap-x-16 lg:gap-x-20">
+      {sponsors.map((sponsor, index) => (
+        <Tooltip key={`${sponsor.name}-${index}`}>
+          <TooltipTrigger asChild>
+            <div className="flex items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={sponsor.logo}
+                alt={sponsor.name}
+                className={`${logoSizeClass} w-auto max-w-[220px] object-contain opacity-90 transition-opacity duration-300 hover:opacity-100`}
+              />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>{sponsor.name}</TooltipContent>
+        </Tooltip>
+      ))}
+    </div>
+  );
 }
 
 function SponsorRow({ sponsor, id, logoSizeClass = "h-28 md:h-36 lg:h-44" }: SponsorRowProps) {
@@ -107,18 +146,28 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
                 <p className="text-center text-sm font-bold tracking-[0.2em] uppercase text-brand mb-6">
                   {tier}
                 </p>
-                <div className="space-y-8">
-                  {sponsors.main
-                    .filter((s) => (s.tier || "Other") === tier)
-                    .map((sponsor, index) => (
-                      <SponsorRow
-                        key={`${tier}-${sponsor.name}-${index}`}
-                        id={`${tier}-${sponsor.name}-${index}`}
-                        sponsor={sponsor}
-                        logoSizeClass="h-24 md:h-28 lg:h-32"
-                      />
-                    ))}
-                </div>
+                {(() => {
+                  const tierSponsors = sponsors.main.filter(
+                    (s) => (s.tier || "Other") === tier
+                  );
+                  return tierSponsors.every(isLogoOnly) ? (
+                    <SponsorLogoGrid
+                      sponsors={tierSponsors}
+                      logoSizeClass="h-20 md:h-24 lg:h-28"
+                    />
+                  ) : (
+                    <div className="space-y-8">
+                      {tierSponsors.map((sponsor, index) => (
+                        <SponsorRow
+                          key={`${tier}-${sponsor.name}-${index}`}
+                          id={`${tier}-${sponsor.name}-${index}`}
+                          sponsor={sponsor}
+                          logoSizeClass="h-24 md:h-28 lg:h-32"
+                        />
+                      ))}
+                    </div>
+                  );
+                })()}
               </div>
             ))}
           </div>
@@ -126,16 +175,23 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
 
         {/* Main Sponsors (untiered) */}
         {hasMainSponsors && !tieredMain && (
-          <div className="space-y-4">
-            {sponsors.main.map((sponsor, index) => (
-              <SponsorRow
-                key={`main-${sponsor.name}-${index}`}
-                id={`main-${sponsor.name}-${index}`}
-                sponsor={sponsor}
-                logoSizeClass="h-28 md:h-36 lg:h-44"
-              />
-            ))}
-          </div>
+          sponsors.main.every(isLogoOnly) ? (
+            <SponsorLogoGrid
+              sponsors={sponsors.main}
+              logoSizeClass="h-20 md:h-24 lg:h-28"
+            />
+          ) : (
+            <div className="space-y-4">
+              {sponsors.main.map((sponsor, index) => (
+                <SponsorRow
+                  key={`main-${sponsor.name}-${index}`}
+                  id={`main-${sponsor.name}-${index}`}
+                  sponsor={sponsor}
+                  logoSizeClass="h-28 md:h-36 lg:h-44"
+                />
+              ))}
+            </div>
+          )
         )}
 
         {/* Other Sponsors */}
@@ -146,16 +202,23 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
                 Additional Sponsors
               </p>
             )}
-            <div className="space-y-4">
-              {sponsors.other.map((sponsor, index) => (
-                <SponsorRow
-                  key={`other-${sponsor.name}-${index}`}
-                  id={`other-${sponsor.name}-${index}`}
-                  sponsor={sponsor}
-                  logoSizeClass="h-20 md:h-24 lg:h-28"
-                />
-              ))}
-            </div>
+            {sponsors.other.every(isLogoOnly) ? (
+              <SponsorLogoGrid
+                sponsors={sponsors.other}
+                logoSizeClass="h-16 md:h-20 lg:h-24"
+              />
+            ) : (
+              <div className="space-y-4">
+                {sponsors.other.map((sponsor, index) => (
+                  <SponsorRow
+                    key={`other-${sponsor.name}-${index}`}
+                    id={`other-${sponsor.name}-${index}`}
+                    sponsor={sponsor}
+                    logoSizeClass="h-20 md:h-24 lg:h-28"
+                  />
+                ))}
+              </div>
+            )}
           </div>
         )}
 
