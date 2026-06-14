@@ -37,7 +37,7 @@ export async function POST(req: Request) {
 
 Key information about She Sharp:
 - Founded in 2014, empowering women in technology
-- 2200+ members, 50+ sponsors, 84+ events since inception
+- 3000+ members, 50+ sponsors, 94+ events since inception
 - Core programmes: Mentorship Programme, THRIVE leadership programme, networking events, workshops
 - Mission: Connection, Inspiration, and Empowerment for women in STEM
 - Services: Career development, job board, community forums, technical workshops

@@ -1,7 +1,7 @@
 // Global statistics data management — single source of truth for all pages
 export const globalStats = {
   members: {
-    current: 2200,
+    current: 3000,
     label: "Members",
     description: "Active community members",
     growth: "+15% YoY",
@@ -12,7 +12,7 @@ export const globalStats = {
     description: "Corporate partners",
   },
   events: {
-    total: 84,
+    total: 94,
     label: "Events",
     description: "Since 2014",
     yearly: 12,

@@ -156,9 +156,9 @@ here automatically affect:
 ```typescript
 // In lib/data/stats.ts
 export const globalStats = {
-  members: { current: 2200, ... },    // "2200+" on homepage
+  members: { current: 3000, ... },    // "2200+" on homepage
   sponsors: { current: 50, ... },     // "50+" on homepage
-  events: { total: 84, ... },         // "84+" on homepage
+  events: { total: 94, ... },         // "84+" on homepage
   impact: { careerTransitions: 500 }, // "500+" on homepage
   ...
 };
