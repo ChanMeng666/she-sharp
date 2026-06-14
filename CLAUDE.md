@@ -424,9 +424,9 @@ BASE_URL=http://localhost:3000         # Application URL
 - Navy, Mint: Supporting colors
 
 **Key Statistics**:
-- 2200+ Members
+- 3000+ Members
 - 50+ Sponsors
-- 84+ Events Since 2014
+- 94+ Events Since 2014
 
 **Core Commitments**:
 1. **Connection**: Building professional networks
