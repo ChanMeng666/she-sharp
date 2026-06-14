@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { HelpCircle } from "lucide-react"
+import { HelpCircle, type LucideIcon } from "lucide-react"
 import {
   Tooltip,
   TooltipContent,
@@ -13,9 +13,15 @@ interface HintIconProps {
   hint: string
   className?: string
   side?: "top" | "right" | "bottom" | "left"
+  icon?: LucideIcon
 }
 
-export function HintIcon({ hint, className, side = "top" }: HintIconProps) {
+export function HintIcon({
+  hint,
+  className,
+  side = "top",
+  icon: Icon = HelpCircle,
+}: HintIconProps) {
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -36,7 +42,7 @@ export function HintIcon({ hint, className, side = "top" }: HintIconProps) {
           setOpen(!open)
         }}
       >
-        <HelpCircle className="h-4 w-4" />
+        <Icon className="h-4 w-4" />
         <span className="sr-only">More information</span>
       </TooltipTrigger>
       <TooltipContent
