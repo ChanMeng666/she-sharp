@@ -1,0 +1,65 @@
+{
+  "project": "she-sharp",
+  "baseUrl": "https://she-sharp-zeta.vercel.app",
+  "outDir": "docs/showcase",
+  "loginWall": false,
+
+  "viewports": {
+    "desktop": { "width": 1920, "height": 1080, "deviceScaleFactor": 2 },
+    "mobile":  { "width": 390,  "height": 844,  "deviceScaleFactor": 3, "isMobile": true }
+  },
+
+  "reducedMotion": "reduce",
+
+  "setup": [
+    { "action": "click", "selector": "button:has-text('Accept all')", "optional": true },
+    { "action": "wait", "ms": 400 }
+  ],
+
+  "pages": [
+    {
+      "label": "hero",
+      "url": "/",
+      "viewport": "desktop",
+      "fullPage": false,
+      "before": [
+        { "action": "wait", "ms": 1000 }
+      ]
+    },
+    {
+      "label": "events-full",
+      "url": "/events",
+      "viewport": "desktop",
+      "fullPage": true,
+      "maxHeight": 5000
+    },
+    {
+      "label": "mentorship",
+      "url": "/mentorship",
+      "viewport": "desktop",
+      "fullPage": false
+    },
+    {
+      "label": "mobile-home",
+      "url": "/",
+      "viewport": "mobile",
+      "fullPage": false,
+      "before": [
+        { "action": "wait", "ms": 800 }
+      ]
+    }
+  ],
+
+  "demo": {
+    "size": { "width": 1280, "height": 720 },
+    "stepPauseMs": 400,
+    "steps": [
+      { "action": "goto", "url": "/events", "timeoutMs": 3000 },
+      { "action": "wait", "ms": 1200 },
+      { "action": "scroll", "by": 400 },
+      { "action": "wait", "ms": 800 },
+      { "action": "scroll", "by": 400 },
+      { "action": "wait", "ms": 600 }
+    ]
+  }
+}
