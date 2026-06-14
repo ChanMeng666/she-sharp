@@ -57,6 +57,7 @@ export default function MenteeApplicationPage() {
         href="/mentorship/mentee/apply"
         label="Apply to Become a Mentee"
         accentColor="bg-purple-dark"
+        hideAtId="become-mentee-cta"
       />
     </>
   );

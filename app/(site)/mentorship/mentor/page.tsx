@@ -56,6 +56,7 @@ export default function BecomeMentorPage() {
         href="/mentorship/mentor/apply"
         label="Apply to be a Mentor"
         accentColor="bg-periwinkle-dark"
+        hideAtId="become-mentor-cta"
       />
     </>
   );
