@@ -150,7 +150,12 @@ export function EventsShowcaseSection() {
 
   const shortfall = SIDE_CARD_COUNT - upcoming.length;
   const past = shortfall > 0 ? getPastEvents(shortfall) : [];
-  const sideEvents = [...upcoming, ...past].slice(0, SIDE_CARD_COUNT);
+  const sideEvents = [...upcoming, ...past]
+    .sort(
+      (a, b) =>
+        parseDateString(b.date).getTime() - parseDateString(a.date).getTime()
+    )
+    .slice(0, SIDE_CARD_COUNT);
 
   if (!featuredEvent && sideEvents.length === 0) return null;
 
