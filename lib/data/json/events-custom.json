@@ -1227,7 +1227,7 @@
             },
             {
               "name": "She Sharp",
-              "logo": "/logos/she-sharp-logo-black.png"
+              "logo": "/logos/she-sharp-logo-purple.svg"
             },
             {
               "name": "Fisher & Paykel Healthcare",
@@ -1370,7 +1370,7 @@
             ],
             "images": [
               {
-                "url": "/img/events/aotearoa-ai-hackathon-festival-2026-venue.jpg",
+                "url": "/img/events/aotearoa-ai-hackathon-festival-2026-venue.webp",
                 "alt": "AUT City Campus building, Auckland"
               }
             ],
