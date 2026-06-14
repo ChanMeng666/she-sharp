@@ -14,7 +14,8 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PasswordInput } from "@/components/ui/password-strength";
 import { OAuthButtons } from "@/components/ui/oauth-buttons";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { HintIcon } from "@/components/ui/hint-icon";
+import { Loader2, CheckCircle2, Info } from "lucide-react";
 import { signIn, signUp } from "./actions";
 import { ActionState } from "@/lib/auth/middleware";
 
@@ -116,53 +117,36 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center py-8 px-4 sm:py-10 sm:px-6 md:py-12">
+    <div className="relative min-h-screen flex items-start justify-center pt-16 pb-8 px-4 sm:pt-20 sm:pb-10 sm:px-6 md:pt-24 md:pb-12">
       {/* Background Image */}
       <Image
-        src="/img/signup.png"
+        src="/img/bg-img.jpg"
         alt=""
         fill
         className="object-cover"
         priority
       />
       {/* Overlay for readability */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-xs" />
 
       {/* Centered Form */}
       <div className="relative z-10 w-full max-w-md">
         {/* Logo */}
         <div className="mb-6 sm:mb-8 flex justify-center">
-            <Link
-              href="/"
-              className="flex items-center space-x-2 transition-all duration-200 group hover:opacity-80"
-            >
-              <div className="relative w-28 h-9 sm:w-32 sm:h-10">
-                <Image
-                  src="/logos/she-sharp-logo.svg"
-                  alt="She Sharp"
-                  fill
-                  sizes="128px"
-                  className="object-contain transition-all duration-200 group-active:scale-95"
-                  style={{
-                    filter: 'brightness(0) invert(1)',
-                  }}
-                  priority
-                />
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
-                  style={{
-                    background: '#ffffff',
-                    maskImage: 'url(/logos/she-sharp-logo.svg)',
-                    maskSize: 'contain',
-                    maskRepeat: 'no-repeat',
-                    maskPosition: 'center',
-                    WebkitMaskImage: 'url(/logos/she-sharp-logo.svg)',
-                    WebkitMaskSize: 'contain',
-                    WebkitMaskRepeat: 'no-repeat',
-                    WebkitMaskPosition: 'center',
-                  }}
-                />
-              </div>
+            <Link href="/" aria-label="She Sharp Home" className="group">
+              <span
+                className="block w-28 h-9 sm:w-32 sm:h-10 bg-white transition-colors duration-200 group-hover:bg-purple-dark"
+                style={{
+                  maskImage: 'url(/logos/she-sharp-logo-purple.svg)',
+                  maskSize: 'contain',
+                  maskRepeat: 'no-repeat',
+                  maskPosition: 'center',
+                  WebkitMaskImage: 'url(/logos/she-sharp-logo-purple.svg)',
+                  WebkitMaskSize: 'contain',
+                  WebkitMaskRepeat: 'no-repeat',
+                  WebkitMaskPosition: 'center',
+                }}
+              />
             </Link>
           </div>
 
@@ -251,12 +235,19 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
 
                 {mode === "signup" && (
                   <div className="space-y-2">
-                    <Label
-                      htmlFor="invitationCode"
-                      className="text-sm font-medium text-foreground"
-                    >
-                      Invitation Code
-                    </Label>
+                    <div className="flex items-center gap-1.5">
+                      <Label
+                        htmlFor="invitationCode"
+                        className="text-sm font-medium text-foreground"
+                      >
+                        Invitation Code
+                      </Label>
+                      <HintIcon
+                        icon={Info}
+                        side="right"
+                        hint="She Sharp accounts are invitation-only to keep our community safe and verified. You'll receive an invitation code after applying to the mentorship programme or being invited by our team."
+                      />
+                    </div>
                     <Input
                       id="invitationCode"
                       name="invitationCode"
@@ -269,8 +260,8 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                     />
                     <p className="text-xs text-gray-500">
                       Don&apos;t have an invitation code?{" "}
-                      <Link href="/membership" className="text-foreground hover:underline">
-                        Apply for membership
+                      <Link href="/mentorship" className="text-foreground hover:underline">
+                        Join mentorship first
                       </Link>
                     </p>
                   </div>
