@@ -69,9 +69,9 @@ const impactCards = [
 ];
 
 const stats = [
-  { value: "2200+", label: "Members Empowered", sub: "and growing every year" },
+  { value: "3000+", label: "Members Empowered", sub: "and growing every year" },
   { value: "50+", label: "Corporate Sponsors", sub: "backing our mission" },
-  { value: "84+", label: "Events Since 2014", sub: "across New Zealand" },
+  { value: "94+", label: "Events Since 2014", sub: "across New Zealand" },
 ];
 
 export default function DonatePage() {
