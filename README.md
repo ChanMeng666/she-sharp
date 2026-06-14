@@ -87,7 +87,7 @@ Supports mentorship programs, networking events, and career development with AI-
   <img src="public/images/homepage-hero.png" alt="She Sharp Homepage" width="800"/>
 </div>
 
-She Sharp is a comprehensive mentorship platform dedicated to bridging the gender gap in STEM fields. Founded in 2014, we've built a thriving community of over 1000+ women in technology, supported by 50+ corporate partners, and have hosted 84+ events to empower women in their STEM careers.
+She Sharp is a comprehensive mentorship platform dedicated to bridging the gender gap in STEM fields. Founded in 2014, we've built a thriving community of over 3000 women in technology, supported by 50+ corporate partners, and have hosted 94+ events to empower women in their STEM careers.
 
 **🚀 Revolutionary Dual-Role System**: Users can seamlessly switch between mentor and mentee roles, enabling them to both guide others and learn from experienced professionals simultaneously - a unique approach that maximizes growth opportunities and creates a dynamic learning ecosystem.
 
@@ -122,9 +122,9 @@ We are committed to creating an inclusive environment where women in STEM can:
 
 ### Key Impact Metrics
 
-- 🎯 **1000+** Active Community Members
+- 🎯 **3000+** Active Community Members
 - 🤝 **50+** Corporate Partners & Sponsors
-- 📅 **84+** Events Since 2014
+- 📅 **94+** Events Since 2014
 - 👩‍🏫 **18** Industry Mentors
 - 📈 **85%** Mentorship Success Rate
 - 🚀 **5-6x** Higher Promotion Likelihood for Mentees
