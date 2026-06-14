@@ -35,7 +35,7 @@ export function BecomeMentorCTASection() {
   }, []);
 
   return (
-    <Section className="bg-periwinkle-soft relative overflow-hidden" noPadding>
+    <Section id="become-mentor-cta" className="bg-periwinkle-soft relative overflow-hidden" noPadding>
       <div className="pt-16 md:pt-20 pb-24 lg:pb-28">
         <Container size="full">
           <div className="max-w-8xl mx-auto">

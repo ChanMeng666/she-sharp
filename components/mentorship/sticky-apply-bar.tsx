@@ -9,25 +9,45 @@ interface StickyApplyBarProps {
   href: string;
   label: string;
   accentColor?: string;
+  /** Id of a section that, once scrolled into view, hides the bar. */
+  hideAtId?: string;
 }
 
 export function StickyApplyBar({
   href,
   label,
   accentColor = "bg-brand",
+  hideAtId,
 }: StickyApplyBarProps) {
-  const [visible, setVisible] = useState(false);
+  const [scrolledPastHero, setScrolledPastHero] = useState(false);
+  const [hideSectionInView, setHideSectionInView] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       // Show after scrolling past the hero (roughly 600px)
-      setVisible(window.scrollY > 600);
+      setScrolledPastHero(window.scrollY > 600);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!hideAtId) return;
+
+    const target = document.getElementById(hideAtId);
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setHideSectionInView(entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [hideAtId]);
+
+  const visible = scrolledPastHero && !hideSectionInView;
 
   return (
     <div

@@ -35,7 +35,7 @@ export function BecomeMenteeCTASection() {
   }, []);
 
   return (
-    <Section className="bg-[#9b2e83] relative overflow-hidden" noPadding>
+    <Section id="become-mentee-cta" className="bg-[#9b2e83] relative overflow-hidden" noPadding>
       <div className="pt-16 pb-24 lg:pb-28">
         <Container size="full">
           <div className="max-w-8xl mx-auto">
