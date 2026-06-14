@@ -190,9 +190,15 @@ export const navigationConfig: {
     },
   ],
   buttons: [
+    // TODO: Re-enable "Join Membership" once the membership logic is finalized.
+    // {
+    //   title: "Join Membership",
+    //   href: "/membership",
+    //   variant: "brand",
+    // },
     {
-      title: "Join Membership",
-      href: "/membership",
+      title: "Join Mentorship",
+      href: "/mentorship",
       variant: "brand",
     },
   ],  
