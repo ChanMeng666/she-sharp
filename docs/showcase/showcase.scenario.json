@@ -12,8 +12,8 @@
   "reducedMotion": "reduce",
 
   "setup": [
-    { "action": "click", "selector": "button:has-text('Accept all')", "optional": true },
-    { "action": "wait", "ms": 400 }
+    { "action": "click", "selector": "button:has-text('Accept all')", "optional": true, "timeoutMs": 5000 },
+    { "action": "wait", "ms": 500 }
   ],
 
   "pages": [
@@ -23,7 +23,7 @@
       "viewport": "desktop",
       "fullPage": false,
       "before": [
-        { "action": "wait", "ms": 1000 }
+        { "action": "wait", "ms": 2000 }
       ]
     },
     {
@@ -31,13 +31,19 @@
       "url": "/events",
       "viewport": "desktop",
       "fullPage": true,
-      "maxHeight": 5000
+      "maxHeight": 5000,
+      "before": [
+        { "action": "wait", "ms": 1500 }
+      ]
     },
     {
       "label": "mentorship",
       "url": "/mentorship",
       "viewport": "desktop",
-      "fullPage": false
+      "fullPage": false,
+      "before": [
+        { "action": "wait", "ms": 1500 }
+      ]
     },
     {
       "label": "mobile-home",
@@ -45,7 +51,7 @@
       "viewport": "mobile",
       "fullPage": false,
       "before": [
-        { "action": "wait", "ms": 800 }
+        { "action": "wait", "ms": 2000 }
       ]
     }
   ],
@@ -54,12 +60,14 @@
     "size": { "width": 1280, "height": 720 },
     "stepPauseMs": 400,
     "steps": [
-      { "action": "goto", "url": "/events", "timeoutMs": 3000 },
-      { "action": "wait", "ms": 1200 },
-      { "action": "scroll", "by": 400 },
-      { "action": "wait", "ms": 800 },
-      { "action": "scroll", "by": 400 },
-      { "action": "wait", "ms": 600 }
+      { "action": "goto", "url": "/", "timeoutMs": 15000 },
+      { "action": "wait", "ms": 2000 },
+      { "action": "scroll", "by": 500 },
+      { "action": "wait", "ms": 1800 },
+      { "action": "scroll", "by": 500 },
+      { "action": "wait", "ms": 1800 },
+      { "action": "goto", "url": "/mentorship", "timeoutMs": 12000 },
+      { "action": "wait", "ms": 2000 }
     ]
   }
 }
