@@ -11,6 +11,7 @@ import { Providers } from './providers';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.shesharp.org.nz'),
   title: 'She Sharp - Connecting Women in Technology',
   description: 'She Sharp is on a mission to bridge the gender gap in STEM, one woman at a time. Through events, networking, and career development opportunities.',
   keywords: ['STEM', 'women', 'technology', 'mentorship', 'New Zealand', 'She Sharp'],
@@ -26,6 +27,20 @@ export const metadata: Metadata = {
     locale: 'en_NZ',
     url: 'https://www.shesharp.org.nz',
     siteName: 'She Sharp',
+    images: [
+      {
+        url: '/og-cover.png',
+        width: 1200,
+        height: 630,
+        alt: 'She Sharp — connecting women in technology',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'She Sharp - Connecting Women in Technology',
+    description: 'Connecting women in tech through events, mentorship & careers.',
+    images: ['/og-cover.png'],
   },
 };
 
