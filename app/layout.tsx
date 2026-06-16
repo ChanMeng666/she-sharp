@@ -11,7 +11,7 @@ import { Providers } from './providers';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.shesharp.org.nz'),
+  metadataBase: new URL('https://she-sharp-zeta.vercel.app'),
   title: 'She Sharp - Connecting Women in Technology',
   description: 'She Sharp is on a mission to bridge the gender gap in STEM, one woman at a time. Through events, networking, and career development opportunities.',
   keywords: ['STEM', 'women', 'technology', 'mentorship', 'New Zealand', 'She Sharp'],
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     description: 'She Sharp is on a mission to bridge the gender gap in STEM, one woman at a time. Through events, networking, and career development opportunities.',
     type: 'website',
     locale: 'en_NZ',
-    url: 'https://www.shesharp.org.nz',
+    url: 'https://she-sharp-zeta.vercel.app',
     siteName: 'She Sharp',
     images: [
       {
