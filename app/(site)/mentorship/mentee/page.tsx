@@ -54,7 +54,7 @@ export default function MenteeApplicationPage() {
       <BecomeMenteeCTASection />
 
       <StickyApplyBar
-        href="/mentorship/mentee/apply"
+        href="/mentorship/coming-soon"
         label="Apply to Become a Mentee"
         accentColor="bg-purple-dark"
         hideAtId="become-mentee-cta"

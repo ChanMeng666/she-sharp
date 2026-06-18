@@ -196,10 +196,11 @@ export const navigationConfig: {
     //   href: "/membership",
     //   variant: "brand",
     // },
-    {
-      title: "Join Mentorship",
-      href: "/mentorship",
-      variant: "brand",
-    },
-  ],  
+    // TODO: Re-enable "Join Mentorship" once the mentorship programme reopens.
+    // {
+    //   title: "Join Mentorship",
+    //   href: "/mentorship",
+    //   variant: "brand",
+    // },
+  ],
 };

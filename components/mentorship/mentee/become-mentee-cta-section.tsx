@@ -78,7 +78,7 @@ export function BecomeMenteeCTASection() {
                   size="lg"
                   className="bg-white border-none text-brand hover:bg-white/90 text-lg font-bold px-12 py-4 h-auto shadow-lg shadow-black/20 group transition-all duration-300 hover:text-foreground hover:shadow-md hover:shadow-black/30 hover:scale-[1.02]"
                 >
-                  <Link href="/mentorship/mentee/apply" className="inline-flex items-center gap-3">
+                  <Link href="/mentorship/coming-soon" className="inline-flex items-center gap-3">
                     Apply to Become a Mentee
                     <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                   </Link>
