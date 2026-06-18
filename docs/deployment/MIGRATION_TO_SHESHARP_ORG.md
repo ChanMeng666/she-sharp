@@ -1,6 +1,8 @@
 # She Sharp Project Migration Documentation
 
 > Migration completed on **2026-03-24**. This document records the full migration process from personal accounts to She Sharp official organization accounts.
+>
+> **Note (2026-06-19):** the production domain has since moved from `she-sharp-zeta.vercel.app` to the official **`https://www.shesharp.org.nz`**. The Vercel URLs below are kept as a historical record of the 2026-03-24 migration — for current setup use the official domain.
 
 ## Migration Overview
 

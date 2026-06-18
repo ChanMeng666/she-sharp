@@ -27,11 +27,11 @@ The hosted bot lives on the existing Vercel deployment. Admin types
 1. https://api.slack.com/apps → Create New App → From scratch → "She Sharp Event Bot" → pick workspace.
 2. **Slash Commands** → Create New Command:
    - Command: `/event`
-   - Request URL: `https://she-sharp-zeta.vercel.app/api/slack/events`
+   - Request URL: `https://www.shesharp.org.nz/api/slack/events`
    - Short Description: `Update an event's data via the bot`
    - Usage Hint: `<what to update, free text>`
 3. **Interactivity & Shortcuts** → toggle on:
-   - Request URL: `https://she-sharp-zeta.vercel.app/api/slack/events/interactive`
+   - Request URL: `https://www.shesharp.org.nz/api/slack/events/interactive`
 4. **OAuth & Permissions** → Bot Token Scopes:
    - `commands`, `chat:write`, `channels:history`, `channels:read`,
      `groups:history`, `groups:read`

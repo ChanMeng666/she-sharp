@@ -109,15 +109,15 @@ vercel env pull .env.local --environment production --scope she-sharp1
 
 | Variable | Local Development | Production |
 |----------|------------------|------------|
-| `AUTH_URL` | `http://localhost:3000` | `https://she-sharp-zeta.vercel.app` |
-| `BASE_URL` | `http://localhost:3000` | `https://she-sharp-zeta.vercel.app` |
-| `NEXTAUTH_URL` | `http://localhost:3000` | `https://she-sharp-zeta.vercel.app` |
+| `AUTH_URL` | `http://localhost:3000` | `https://www.shesharp.org.nz` |
+| `BASE_URL` | `http://localhost:3000` | `https://www.shesharp.org.nz` |
+| `NEXTAUTH_URL` | `http://localhost:3000` | `https://www.shesharp.org.nz` |
 
 ### Variables That Are Identical Across Environments
 
 All other variables (database, API keys, OAuth credentials, Stripe keys, etc.) use the same values in both local and production, because:
 - The database (Neon) is shared
-- OAuth apps accept both `localhost:3000` and `she-sharp-zeta.vercel.app` callback URLs
+- OAuth apps accept both `localhost:3000` and `www.shesharp.org.nz` callback URLs
 - API keys are account-level, not environment-specific
 
 ### Variables Not Present Locally

@@ -46,10 +46,10 @@ vercel --prod --force
 
 ```bash
 # Should return HTTP 503 with the maintenance HTML page
-curl -s -o /dev/null -w "HTTP Status: %{http_code}" https://she-sharp-zeta.vercel.app/
+curl -s -o /dev/null -w "HTTP Status: %{http_code}" https://www.shesharp.org.nz/
 
 # API routes should also return 503
-curl -s -o /dev/null -w "HTTP Status: %{http_code}" https://she-sharp-zeta.vercel.app/api/events
+curl -s -o /dev/null -w "HTTP Status: %{http_code}" https://www.shesharp.org.nz/api/events
 ```
 
 ## How to Disable (Restore Site)

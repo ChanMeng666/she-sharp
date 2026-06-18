@@ -194,7 +194,7 @@ Each of the following was discovered during this project. Each is numbered for r
 
 **Symptom**: `/ .github/workflows/deploy.yml` runs Vercel deploy only on push to `main`. PRs don't get preview URLs. Visual verification must happen post-merge.
 
-**Solution**: For risky PRs, merge during a low-traffic window and verify within minutes on the deployed Vercel URL (`https://she-sharp-zeta.vercel.app`). Keep `git revert <sha> && git push` as a 30-second rollback. For future work, consider adding a Vercel preview job that runs on PRs.
+**Solution**: For risky PRs, merge during a low-traffic window and verify within minutes on the deployed Vercel URL (`https://www.shesharp.org.nz`). Keep `git revert <sha> && git push` as a 30-second rollback. For future work, consider adding a Vercel preview job that runs on PRs.
 
 ### P-3. Shared image referenced by multiple events
 
@@ -359,7 +359,7 @@ When creating a new Slack app in this repository, prefer the manifest route — 
     "slash_commands": [
       {
         "command": "/yourcommand",
-        "url": "https://she-sharp-zeta.vercel.app/api/slack/your-endpoint",
+        "url": "https://www.shesharp.org.nz/api/slack/your-endpoint",
         "description": "What the command does",
         "usage_hint": "<args hint>",
         "should_escape": false
@@ -381,7 +381,7 @@ When creating a new Slack app in this repository, prefer the manifest route — 
   "settings": {
     "interactivity": {
       "is_enabled": true,
-      "request_url": "https://she-sharp-zeta.vercel.app/api/slack/your-endpoint/interactive"
+      "request_url": "https://www.shesharp.org.nz/api/slack/your-endpoint/interactive"
     },
     "org_deploy_enabled": false,
     "socket_mode_enabled": false,
@@ -495,7 +495,7 @@ flowchart LR
 
     subgraph Prod
         VR[Vercel deploy]
-        URL[she-sharp-zeta.vercel.app]
+        URL[www.shesharp.org.nz]
     end
 
     DEV --> TC
