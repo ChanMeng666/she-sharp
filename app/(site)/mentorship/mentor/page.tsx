@@ -53,7 +53,7 @@ export default function BecomeMentorPage() {
       <BecomeMentorCTASection />
 
       <StickyApplyBar
-        href="/mentorship/mentor/apply"
+        href="/mentorship/coming-soon"
         label="Apply to be a Mentor"
         accentColor="bg-periwinkle-dark"
         hideAtId="become-mentor-cta"
