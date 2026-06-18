@@ -5,9 +5,9 @@
  * to a new deployment URL and they should update their bookmarks.
  *
  * Usage:
- *   BASE_URL=https://she-sharp-zeta.vercel.app npx tsx scripts/send-url-update.ts --dry-run
- *   BASE_URL=https://she-sharp-zeta.vercel.app npx tsx scripts/send-url-update.ts --test user@example.com
- *   BASE_URL=https://she-sharp-zeta.vercel.app npx tsx scripts/send-url-update.ts
+ *   BASE_URL=https://www.shesharp.org.nz npx tsx scripts/send-url-update.ts --dry-run
+ *   BASE_URL=https://www.shesharp.org.nz npx tsx scripts/send-url-update.ts --test user@example.com
+ *   BASE_URL=https://www.shesharp.org.nz npx tsx scripts/send-url-update.ts
  */
 
 import 'dotenv/config';
@@ -21,7 +21,7 @@ const isTestMode = testIdx !== -1;
 
 if (isTestMode && (!testEmail || !testEmail.includes('@'))) {
   console.error('ERROR: --test requires a valid email address.');
-  console.error('Usage: BASE_URL=https://she-sharp-zeta.vercel.app npx tsx scripts/send-url-update.ts --test user@example.com');
+  console.error('Usage: BASE_URL=https://www.shesharp.org.nz npx tsx scripts/send-url-update.ts --test user@example.com');
   process.exit(1);
 }
 
@@ -31,7 +31,7 @@ const baseUrl = process.env.BASE_URL;
 
 if (!baseUrl || baseUrl.includes('localhost')) {
   console.error('ERROR: BASE_URL must be set to the production URL.');
-  console.error('Usage: BASE_URL=https://she-sharp-zeta.vercel.app npx tsx scripts/send-url-update.ts');
+  console.error('Usage: BASE_URL=https://www.shesharp.org.nz npx tsx scripts/send-url-update.ts');
   process.exit(1);
 }
 

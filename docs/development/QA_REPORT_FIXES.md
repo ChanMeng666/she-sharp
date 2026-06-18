@@ -1,7 +1,7 @@
 # QA Test Report — Fixes and Verification Guide
 
 **Source report:** `D:\github_repository\she-sharp-website-test\` (15 markdown sheets + 284 screenshots)
-**Target:** new She Sharp Next.js site (`https://she-sharp-zeta.vercel.app/`)
+**Target:** new She Sharp Next.js site (`https://www.shesharp.org.nz/`)
 **Response compiled:** 2026-04-24 (initial) · 2026-04-25 (updated for bullet-list audit + sponsor description pass)
 **Responder:** Claude Code + repository maintainer
 
@@ -301,7 +301,7 @@ Down from 39 events / 206 items at the start of the pass.
 
 ## 4. Verification URL checklist
 
-Quick round-trip checklist for the report author. All URLs are relative to `https://she-sharp-zeta.vercel.app/`.
+Quick round-trip checklist for the report author. All URLs are relative to `https://www.shesharp.org.nz/`.
 
 - [ ] `/about` — "Our Journey" YouTube embed visible; hero carousel has `‹` / `›` buttons and 7 clickable dots.
 - [ ] `/events` — every card shows a year (e.g. "Tuesday, 2026"); middle-click opens in a new tab.
