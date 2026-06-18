@@ -1,6 +1,6 @@
 {
   "project": "she-sharp",
-  "baseUrl": "https://she-sharp-zeta.vercel.app",
+  "baseUrl": "https://www.shesharp.org.nz",
   "outDir": "docs/showcase",
   "loginWall": false,
 
