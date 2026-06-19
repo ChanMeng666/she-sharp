@@ -121,7 +121,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: 14,
     name: "Nikita Kumari",
-    roles: ["Ambassador", "Marketing"],
+    roles: ["Ambassador", "Event Manager"],
     linkedin: "https://www.linkedin.com/in/iamnikitakumari/",
     description:
       "Nikita Kumari is a Project Leader passionate about creating meaningful digital experiences. Over the past 5+ years, she has worked across B2B SaaS and AI-driven products and projects, leading cross-functional teams and blending strategy, design, and technology to deliver solutions that genuinely help people. She enjoys simplifying complexity, empowering teams, and turning ideas into impactful, well-executed products.\n\nOriginally from India and now based in New Zealand, Nikita thrives in diverse, collaborative environments where learning never stops. She's passionate about supporting women in tech and believes in sharing knowledge to lift others as she grows. Outside of work, she enjoys exploring cafés, mentoring, and connecting with like-minded communities.",
