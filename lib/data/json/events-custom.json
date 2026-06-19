@@ -73,9 +73,8 @@
           "country": "New Zealand"
         },
         "fullDescription": [
-          "Join us for an interactive session diving into the world of Electronics!",
-          "SheSharp, in collaboration with Peyvand Academy, the Ministry of Education, and Little Engineers, is excited to offer a hands-on workshop for young participants aged 12–18.",
-          "This session will focus on building a foundation in electronics through practical learning. Participants will have the opportunity to explore the basics of electronics in a supportive, collaborative environment, gaining valuable skills that are crucial for the tech-driven world."
+          "Join Little Engineers for a fun, hands-on STEM workshop designed to spark curiosity and creativity in young minds!",
+          "SheSharp, in collaboration with Peyvand Academy, the Ministry of Education, and Little Engineers, is excited to offer a hands-on workshop for young participants aged 12–18."
         ],
         "speakers": {},
         "organizers": [],
@@ -101,19 +100,10 @@
         },
         "specialSections": [
           {
-            "type": "bullets",
+            "type": "info",
             "title": "What to Expect",
             "content": [
-              "Electronics foundations",
-              "Interactive activities and discussions",
-              "A collaborative learning environment"
-            ]
-          },
-          {
-            "type": "info",
-            "title": "Join Us",
-            "content": [
-              "We're excited to be part of this journey in inspiring the next generation of young learners."
+              "Children will explore the exciting world of electricity through interactive experiments, including working with resistors and LEDs, building series and parallel circuits, creating light dimmers, generating electricity, and discovering how motors work. Our workshop makes science and engineering accessible, engaging, and enjoyable, helping children learn through play, experimentation, and discovery."
             ]
           }
         ],
