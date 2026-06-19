@@ -193,12 +193,55 @@
             ]
           }
         ],
-        "photos": [],
-        "galleryUrl": "",
+        "infoSections": [
+          {
+            "title": "Workshop Resources",
+            "paragraphs": [
+              "Explore the AI teaching resource shared during the workshop — a hands-on guide to building three fun IoT toys with Claude and a Makey Makey board, created by Chan Meng."
+            ],
+            "links": [
+              {
+                "label": "Touch the World, Talk to Code — Build IoT Toys",
+                "url": "https://chanmeng666.github.io/makey-makey-iot-slides/#1"
+              }
+            ]
+          }
+        ],
+        "photos": [
+          {
+            "url": "/img/events/peyvand-academy-13-june-2026-photo-1.webp",
+            "alt": "Workshop participants and SheSharp facilitators gather for a group photo with the SheSharp sign at the Youth Tech Series AI & Electronics Workshop"
+          },
+          {
+            "url": "/img/events/peyvand-academy-13-june-2026-photo-2.webp",
+            "alt": "Young participants seated in the school hall watching the AI & Electronics Workshop presentation"
+          },
+          {
+            "url": "/img/events/peyvand-academy-13-june-2026-photo-3.webp",
+            "alt": "A SheSharp facilitator presenting AI concepts to youth participants at Fruitvale Primary School"
+          },
+          {
+            "url": "/img/events/peyvand-academy-13-june-2026-photo-4.webp",
+            "alt": "Participants raising their hands to take part in the interactive AI session"
+          },
+          {
+            "url": "/img/events/peyvand-academy-13-june-2026-photo-5.webp",
+            "alt": "Young participants taking part in a hands-on electronics activity"
+          },
+          {
+            "url": "/img/events/peyvand-academy-13-june-2026-photo-6.webp",
+            "alt": "Youth learners exploring a hands-on STEM activity at the workshop"
+          },
+          {
+            "url": "/img/events/peyvand-academy-13-june-2026-photo-7.webp",
+            "alt": "Participants collaborating during the hands-on workshop session"
+          }
+        ],
+        "galleryUrl": "https://drive.google.com/drive/folders/1bWy_uH_WHFQiVnuxqAWR-O9yvce6iKcj",
         "registrationUrl": "https://events.humanitix.com/ai-electronics-workshop",
         "images": [],
         "category": "workshop",
-        "status": "upcoming",
+        "status": "past",
         "isFeatured": false
       }
     },
