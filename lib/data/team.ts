@@ -67,7 +67,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: 8,
     name: "Chan Meng",
-    roles: ["Ambassador", "Website Lead"],
+    roles: ["Ambassador", "Website Team Lead"],
     linkedin: "https://www.linkedin.com/in/chanmeng666/",
     description:
       "Chan Meng is an AI Agent Architect and full-stack engineer based in Auckland, building at the intersection of AI, cultural technology, and women's health. As She Sharp's Senior Full Stack Engineer and Website Team Lead, she was recruited directly by founder Dr Mahsa Mohaghegh to lead the platform rebuild that now serves 2,200+ members. She holds a Master of Applied Computing with Distinction from Lincoln University, is a UN Women CSW 69 speaker, and received the Outstanding Mentor Award at the 2025 AI Hackathon Festival (AI Forum NZ × She Sharp × AUT). An earliest-ecosystem MCP server author, she architects production AI agents with Next.js, TypeScript, Python, and Kubernetes — and has mentored 800+ women into tech along the way.",
@@ -115,7 +115,7 @@ export const teamMembers: TeamMember[] = [
     roles: ["Ambassador", "Website Maintenance"],
     linkedin: "https://www.linkedin.com/in/lesley-gao/",
     description:
-      "Lesley Gao is a Product Designer who combines design thinking with front-end development skills to create thoughtful and user-centred digital experiences. She has worked on a variety of digital products, from early concepts through to implementation, including the design and development of the She Sharp website. \n\nShe enjoys simplifying complex workflows and turning them into intuitive digital experiences. She is also passionate about supporting communities and initiatives that help women gain greater visibility, representation, and influence in the technology sector.\n\nOutside of work, she enjoys hiking Auckland’s trails, photography, solving jigsaw puzzles, and building Lego.",
+      "Lesley Gao is a Product Designer with a background in journalism, web development, and UX/UI design. She has worked across SaaS products, onboarding experiences, and support platforms, including the design and development of the She Sharp website. \n\nShe enjoy simplifying complex workflows and turning them into intuitive digital experiences. Lesley is also passionate about supporting communities and initiatives that empower and connect women in tech across Aotearoa.\n\nOutside of work, she enjoys hiking Auckland’s trails, photography, solving jigsaw puzzles, and building Lego.",
     image: "/img/team/Lesley.png",
   },
   {
@@ -126,6 +126,24 @@ export const teamMembers: TeamMember[] = [
     description:
       "Nikita Kumari is a Project Leader passionate about creating meaningful digital experiences. Over the past 5+ years, she has worked across B2B SaaS and AI-driven products and projects, leading cross-functional teams and blending strategy, design, and technology to deliver solutions that genuinely help people. She enjoys simplifying complexity, empowering teams, and turning ideas into impactful, well-executed products.\n\nOriginally from India and now based in New Zealand, Nikita thrives in diverse, collaborative environments where learning never stops. She's passionate about supporting women in tech and believes in sharing knowledge to lift others as she grows. Outside of work, she enjoys exploring cafés, mentoring, and connecting with like-minded communities.",
     image: "/img/team/Nikita.png",
+  },
+  {
+    id: 15,
+    name: "Tharaneetharan Thavarasan",
+    roles: ["Ambassador", "Events Coordinator"],
+    linkedin: "https://www.linkedin.com/in/tharaneetharan-thavarasan-52754940",
+    description:
+      "Tharaneetharan is a motivated and adaptable IT professional with a strong background in ERP systems, Business Analysis, and Data Analytics. He recently completed a Master of Information Technology, specializing in Data Science and Artificial Intelligence from Auckland Institute of Studies, New Zealand. This academic journey has enabled him to combine his business systems expertise with modern analytical and AI-driven approaches.\n\nHe is passionate about learning emerging technologies and exploring how Data Analytics and Artificial Intelligence can be applied to solve real-world business challenges and create meaningful value for organizations. As an ERP professional, he has worked as a Functional Consultant across SAP FICO, Microsoft Dynamics AX, and Microsoft Dynamics 365 Finance & Operations.\n\nThroughout his career, he has supported finance and supply chain business processes, reporting, system enhancements, migration activities, and end-user support. These experiences have helped him develop a strong understanding of how technology can improve operational efficiency, streamline business processes, and support data-driven decision-making.\n\nAs a She Sharp Ambassador, Tharaneetharan is excited to support women in technology through event coordination, community engagement, and event support activities. He also contributes to monthly newsletter preparation, website testing, and web design improvement initiatives.\n\nHis interests include Data Analytics, Artificial Intelligence, Machine Learning, Data Science, ERP Systems, Business Analytics, Business Technology, Front-end development, Software Testing and Digital Transformation. Outside of work, he enjoys travelling, photography, reading books and newspapers, listening to music, and playing sports. He believes that sports help develop teamwork, discipline, resilience, and a healthy work-life balance. He is also passionate about supporting and helping others in their learning and growth.",
+    image: "/img/team/Tharanee.png",
+  },
+  {
+    id: 16,
+    name: "Nirmala Chinnappan",
+    roles: ["Ambassador", "Event Manager"],
+    linkedin: "https://www.linkedin.com/in/nirmalachinnappan/",
+    description:
+      "Nirmala is an Event and Project Management professional with over 18 years of experience delivering meaningful experiences that connect people, celebrate culture, and drive lasting impact. Her career spans event coordination, project management and IT systems administration; bridging strategy, technology, and community to produce solutions that are both innovative and people-centered. She holds a Master of IT Project Management from Auckland University of Technology, underpinning her practice with academic rigour and strategic depth.\n\nAs Event Manager at She Sharp, Nirmala helps in the planning and execution of She Sharp's signature conferences and events, creating professional platforms where women in STEM can grow, connect, and thrive. Deeply aligned with She Sharp's mission, she is committed to fostering inclusive environments that champion diversity, dismantle barriers, and empower the next generation of women in technology.",
+    image: "/img/team/Nirmala.png",
   }
 ];
 
