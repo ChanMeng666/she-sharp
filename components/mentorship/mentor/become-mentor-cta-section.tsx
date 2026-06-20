@@ -1,88 +1,70 @@
-"use client";
-
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import { ApplicationCountdown } from "@/components/mentorship/application-countdown";
+import { ArrowRight, Mail } from "lucide-react";
 import Link from "next/link";
+import { isMentorshipOpen } from "@/lib/config/mentorship";
+import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 
 export function BecomeMentorCTASection() {
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-
-  // Mock deadline - replace with actual deadline
-  const applicationDeadline = new Date('2026-03-31T23:59:59');
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date();
-      const difference = applicationDeadline.getTime() - now.getTime();
-
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((difference / 1000 / 60) % 60);
-        const seconds = Math.floor((difference / 1000) % 60);
-
-        setTimeLeft({ days, hours, minutes, seconds });
-      } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
+  const applicationsOpen = isMentorshipOpen();
 
   return (
     <Section id="become-mentor-cta" className="bg-periwinkle-soft relative overflow-hidden" noPadding>
       <div className="pt-16 md:pt-20 pb-24 lg:pb-28">
         <Container size="full">
           <div className="max-w-8xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center ">
-              {/* Left: Title + Countdown */}
+            <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
               <div className="flex flex-col gap-12">
                 <div>
-                  <h2 className="text-display-sm  mb-4 text-left">
+                  {!applicationsOpen && (
+                    <span className="inline-flex w-fit items-center rounded-full bg-periwinkle-dark/10 px-4 py-1.5 text-sm font-semibold text-periwinkle-dark ring-1 ring-periwinkle-dark/20 mb-6">
+                      Applications currently closed
+                    </span>
+                  )}
+                  <h2 className="text-display-sm mb-4 text-left">
                     Interested in Becoming A Mentor?
                   </h2>
                   <p className="text-base md:text-lg text-muted-foreground/80 max-w-2xl text-left">
-                    Join our community of mentors and help shape the next generation of women in STEM
+                    {applicationsOpen
+                      ? "Join our community of mentors and help shape the next generation of women in STEM"
+                      : "Applications for this year's programme have closed, but we're always growing our community of mentors. Subscribe to our newsletter to be the first to know when mentor applications reopen for the next cohort."}
                   </p>
                 </div>
 
-                <div className="flex flex-col gap-4">
-                  <p className="text-lg text-muted-foreground/80 text-left font-semibold">
-                    Application Deadline
-                  </p>
-                  <div className="flex gap-4 flex-wrap max-w-xl">
-                    {Object.entries(timeLeft).map(([unit, value]) => (
-                      <Card
-                        key={unit}
-                        className="bg-white/10 backdrop-blur-sm border-white/20 flex-1 min-w-[70px] sm:min-w-[100px] card-sm"
-                      >
-                        <CardContent className="p-4 text-center">
-                          <div className="text-3xl font-bold">{value}</div>
-                          <div className="text-sm text-muted-foreground/80 capitalize">{unit}</div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
+                {applicationsOpen && <ApplicationCountdown variant="onLight" />}
               </div>
 
-              {/* Right: Apply button + contact */}
-              <div className="flex flex-col items-center md:items-center gap-6">
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-white border-none text-periwinkle-dark hover:bg-white/90 text-lg font-bold px-12 py-4 h-auto shadow-lg shadow-black/20 group transition-all duration-300 hover:text-foreground hover:shadow-md hover:shadow-black/30 hover:scale-[1.02]"
-                >
-                  <Link href="/mentorship/coming-soon" className="inline-flex items-center gap-3">
-                    Apply to be a Mentor
-                    <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                  </Link>
-                </Button>
+              <div className="flex flex-col items-center gap-6">
+                {applicationsOpen ? (
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-white border-none text-periwinkle-dark hover:bg-white/90 text-lg font-bold px-12 py-4 h-auto shadow-lg shadow-black/20 group transition-all duration-300 hover:text-foreground hover:shadow-md hover:shadow-black/30 hover:scale-[1.02]"
+                  >
+                    <Link href="/mentorship/mentor/apply" className="inline-flex items-center gap-3">
+                      Apply to be a Mentor
+                      <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-white border-none text-periwinkle-dark hover:bg-white/90 text-lg font-bold px-12 py-4 h-auto shadow-lg shadow-black/20 group transition-all duration-300 hover:text-foreground hover:shadow-md hover:shadow-black/30 hover:scale-[1.02]"
+                  >
+                    <a
+                      href={MAILCHIMP_CONFIG.subscribeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-3"
+                    >
+                      <Mail className="h-5 w-5" />
+                      Subscribe for Updates
+                    </a>
+                  </Button>
+                )}
 
                 <p className="text-base text-muted-foreground/80 text-center">
                   Questions?{" "}
