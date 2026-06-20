@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import TimeLine_01, { TimeLine_01Entry } from "@/components/ui/release-time-line";
+import { isMentorshipOpen } from "@/lib/config/mentorship";
+import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 import {
   Calendar,
   Handshake,
@@ -14,6 +17,7 @@ import {
   Users,
   HeartHandshake,
   Award,
+  Mail,
 } from "lucide-react";
 
 const TAB_VALUES = {
@@ -122,7 +126,7 @@ export function HowItWorksSection() {
   const [activeRole, setActiveRole] = useState<(typeof TAB_VALUES)[keyof typeof TAB_VALUES]>(
     TAB_VALUES.mentee,
   );
-
+  const applicationsOpen = isMentorshipOpen();
   const isMentee = activeRole === TAB_VALUES.mentee;
   const ctaHref = isMentee ? "/mentorship/mentee" : "/mentorship/mentor";
   const ctaLabel = isMentee ? "Apply as Mentee" : "Apply as Mentor";
@@ -130,7 +134,6 @@ export function HowItWorksSection() {
   return (
     <Section id="how-it-works" className="py-16 bg-navy-light">
       <Container size="full">
-        {/* Header */}
         <div className="text-center mb-8">
           <h2 className="text-display-sm text-foreground mb-4">
             How the Programme Works
@@ -139,7 +142,6 @@ export function HowItWorksSection() {
             Your path to meaningful mentorship connections
           </p>
 
-          {/* Tabs */}
           <Tabs
             value={activeRole}
             onValueChange={(value) => {
@@ -183,15 +185,35 @@ export function HowItWorksSection() {
             </TabsContent>
           </Tabs>
 
-          <div className="mt-16 flex justify-center">
-            <Button
-              variant={isMentee ? "brand" : "secondary"}
-              size="lg"
-              className="h-14 px-10 text-lg transition-all duration-150"
-              asChild
-            >
-              <a href={ctaHref}>{ctaLabel}</a>
-            </Button>
+          <div className="mt-16 flex flex-col items-center gap-4">
+            {applicationsOpen ? (
+              <Button
+                variant={isMentee ? "brand" : "secondary"}
+                size="lg"
+                className="h-14 px-10 text-lg transition-all duration-150"
+                asChild
+              >
+                <Link href={ctaHref}>{ctaLabel}</Link>
+              </Button>
+            ) : (
+              <>
+                <p className="text-base text-muted-foreground max-w-3xl">
+                  Applications for this year&apos;s Mentorship Programme are now closed. Subscribe
+                  to our newsletter to be the first to hear when applications reopen for the next
+                  cohort.
+                </p>
+                <Button variant="brand" size="lg" asChild>
+                  <a
+                    href={MAILCHIMP_CONFIG.subscribeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Mail className="h-5 w-5" />
+                    Subscribe for Updates
+                  </a>
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </Container>
