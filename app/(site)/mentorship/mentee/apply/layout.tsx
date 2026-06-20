@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { isMentorshipOpen } from "@/lib/config/mentorship";
 
 export const metadata: Metadata = {
   title: "Apply as Mentee | She Sharp",
@@ -11,5 +13,9 @@ export default function MenteeApplyLayout({
 }: {
   children: React.ReactNode;
 }) {
+  if (!isMentorshipOpen()) {
+    redirect("/mentorship/mentee");
+  }
+
   return <>{children}</>;
 }
