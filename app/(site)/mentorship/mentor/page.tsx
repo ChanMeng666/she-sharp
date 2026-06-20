@@ -6,8 +6,10 @@ import { Trophy, Rocket, Users } from "lucide-react";
 import { BecomeMentorCTASection } from "@/components/mentorship/mentor/become-mentor-cta-section";
 import { MentorResponsibilitiesSection } from "@/components/mentorship/mentor/mentor-responsibilities-section";
 import { StickyApplyBar } from "@/components/mentorship/sticky-apply-bar";
+import { isMentorshipOpen } from "@/lib/config/mentorship";
 
 export default function BecomeMentorPage() {
+  const applicationsOpen = isMentorshipOpen();
   return (
     <>
       <MentorshipHeroSection
@@ -52,12 +54,14 @@ export default function BecomeMentorPage() {
 
       <BecomeMentorCTASection />
 
-      <StickyApplyBar
-        href="/mentorship/coming-soon"
-        label="Apply to be a Mentor"
-        accentColor="bg-periwinkle-dark"
-        hideAtId="become-mentor-cta"
-      />
+      {applicationsOpen && (
+        <StickyApplyBar
+          href="/mentorship/mentor/apply"
+          label="Apply to be a Mentor"
+          accentColor="bg-periwinkle-dark"
+          hideAtId="become-mentor-cta"
+        />
+      )}
     </>
   );
 }

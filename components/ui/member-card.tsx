@@ -66,11 +66,11 @@ export function MemberCard({
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <article
           onClick={() => canOpenDialog && setIsDialogOpen(true)}
-          className={`group relative w-full ${background} card-md card-interactive
+          className={`group relative w-full h-full ${background} card-md card-interactive
                       transition-all duration-300
                       focus-within:ring-4 focus-within:ring-brand/50 ${canOpenDialog ? "cursor-pointer" : "cursor-default"}`}
         >
-          <div className="p-6 sm:p-8">
+          <div className="flex flex-col h-full p-6 sm:p-8">
             <div className="relative mb-6">
               <div className="w-32 h-32 mx-auto rounded-full overflow-hidden ring-4 ring-white shadow-lg">
                 {hasImage ? (
@@ -87,7 +87,7 @@ export function MemberCard({
               </div>
             </div>
 
-            <div className="text-center">
+            <div className="flex flex-col flex-1 text-center">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <h3 className="text-xl sm:text-2xl font-bold text-foreground">
                   {member.name}
@@ -124,7 +124,7 @@ export function MemberCard({
                     e.stopPropagation();
                     setIsDialogOpen(true);
                   }}
-                  className="text-sm font-medium text-brand hover:text-brand-hover transition-colors underline inline-flex items-center gap-1"
+                  className="mt-auto text-sm font-medium text-brand hover:text-brand-hover transition-colors underline inline-flex items-center justify-center gap-1"
                 >
                   Learn more <ArrowUpRight className="w-4 h-4" />
                 </button>

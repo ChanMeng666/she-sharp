@@ -21,7 +21,7 @@ export default function NotFound() {
 
   return (
     <StandalonePageLayout>
-      <div className="relative min-h-[calc(100vh-12rem)] pt-24 pb-16 px-4 bg-[#f4f4fa]">
+      <div className="relative min-h-[calc(100vh-12rem)] py-24 px-4 bg-[#f4f4fa]">
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 -right-32 w-64 h-64 bg-[#f7e5f3] rounded-full blur-3xl opacity-60"></div>
@@ -30,7 +30,7 @@ export default function NotFound() {
         </div>
 
         <div className="flex items-center justify-center min-h-full">
-          <div className="w-full max-w-lg relative z-10 bg-white border border-[#eaf2ff] shadow-xl rounded-2xl">
+          <div className="w-full max-w-lg relative z-10">
             <div className="p-12 text-center space-y-8">
               {/* 404 Number Display */}
               <div className="relative">
@@ -47,7 +47,7 @@ export default function NotFound() {
                 <h1 className="text-3xl font-bold text-[#1f1e44]">
                   Oops! Page not found
                 </h1>
-                <p className="text-[#1f1e44]/70 text-lg leading-relaxed max-w-md mx-auto">
+                <p className="text-foreground text-lg leading-relaxed max-w-md mx-auto">
                   The page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL.
                 </p>
               </div>
@@ -65,35 +65,10 @@ export default function NotFound() {
                     Back to Home
                   </Link>
                 </Button>
-
-                <div className="flex gap-3">
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="lg"
-                    className="flex-1"
-                  >
-                    <Link href="/dashboard">
-                      <ArrowLeft className="mr-2 h-4 w-4" />
-                      Dashboard
-                    </Link>
-                  </Button>
-
-                  <Button
-                    onClick={handleRefresh}
-                    variant="outline"
-                    size="lg"
-                    className="flex-1"
-                    disabled={!mounted}
-                  >
-                    <RefreshCw className="mr-2 h-4 w-4" />
-                    Refresh
-                  </Button>
-                </div>
               </div>
 
               {/* Help Text */}
-              <div className="pt-4 border-t border-[#eaf2ff]">
+              <div>
                 <p className="text-sm text-[#1f1e44]/60">
                   Need help?{' '}
                   <Link href="/contact" className="text-brand hover:text-[#c846ab] underline transition-colors">
