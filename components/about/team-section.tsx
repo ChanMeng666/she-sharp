@@ -36,7 +36,7 @@ export function TeamSection() {
               linkedin: member.linkedin,
             };
             return (
-              <div key={member.id ?? index} role="listitem">
+              <div key={member.id ?? index} role="listitem" className="h-full">
                 <MemberCard
                   member={memberCardData}
                   index={index}
