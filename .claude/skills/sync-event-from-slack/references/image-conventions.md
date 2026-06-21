@@ -83,17 +83,22 @@ only handles Slack files, so for these:
   (match the count of a sibling event's gallery), preferring wide/contextual
   shots over close-ups of individual faces.
 - **Google Photos album** (`photos.app.goo.gl/…` / `photos.google.com/share/…`):
-  resists bulk download. Use it only as a visual reference for curating; pull the
-  actual files from the matching Drive folder, or ask the user to share a Drive
-  folder.
+  resists bulk download — use it as the visual reference for curating, and pull
+  the actual files from the matching Drive folder (or ask the user for one). But
+  it **is the preferred `galleryUrl`** (see below): a curated album is far more
+  visitor-friendly than a raw Drive folder of mixed photos + videos.
 - **Convert to `.webp`** before committing (the project ships no `sharp`/`cwebp`
   binary — use Python `Pillow`): resize to ≤1600px wide, quality ≈82,
   `ImageOps.exif_transpose` first so phone photos aren't sideways. Target
   ~100–250 kB each.
 
-`galleryUrl` in the JSON **is** an allowed public external link (the Drive
-folder), distinct from a photo's `url`/`src` which must always be a committed
-local `/img/events/…` path.
+`galleryUrl` is the target of the page's **"View Gallery"** button
+(`event-photos.tsx` → `window.open`), so it must be the link you actually want
+visitors to land on — **prefer the curated Google Photos album** (`photos.app.goo.gl/…`)
+over the raw Drive folder when both exist. It is the one allowed public external
+link; a photo's `url`/`src` must always be a committed local `/img/events/…` path.
+The Drive folder is for *downloading source images*, not necessarily the button
+target.
 
 ## Post-event gallery update mode
 
