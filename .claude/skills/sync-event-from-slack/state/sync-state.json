@@ -3446,11 +3446,11 @@
           "latestReplyTs": "1781915191.900569"
         }
       },
-      "fingerprint": "sha256:36c78c7ba46e8bdab487b8ddbcc9f5805b981b3ad56a51e49c364ceb09bab2db",
-      "lastSyncedAt": "2026-06-21T14:04:25.685Z",
+      "fingerprint": "sha256:3d5e1198e7541a7f0bfaf0897ded7cd5152ace7e2f235ab938b42ea7ffc5394f",
+      "lastSyncedAt": "2026-06-21T14:33:57.144Z",
       "lastSyncedCommit": "",
-      "digest": "Two Youth Tech Series workshops at Fruitvale Primary (13 & 20 June 2026), both past. Galleries published — 13 June: 7 webp; 20 June: 7 webp added 2026-06-22 from the event's public Google Drive folder (galleryUrl set). Photos came from Google Drive (gdown), not Slack files. Open item: swap 13 June galleryUrl to a Google Photos album once that link is posted by the organiser.",
-      "digestAt": "2026-06-21T14:04:25.685Z"
+      "digest": "Two Youth Tech Series workshops at Fruitvale Primary (13 & 20 June 2026), both past. Galleries published — 13 June: 7 webp; 20 June: 7 webp added 2026-06-22 from the event's public Google Drive folder. galleryUrl (the View Gallery button) = the curated Google Photos album, NOT the Drive folder: 20 June -> https://photos.app.goo.gl/jsB72BDGQWKt9Rbu7. Photos came from Drive via gdown, not Slack files. Open: set 13 June galleryUrl to its Google Photos album once the organiser posts that link.",
+      "digestAt": "2026-06-21T14:33:57.143Z"
     },
     "C0AS0KW8KQX": {
       "name": "event-aut-linkedin-15-may-2026",
