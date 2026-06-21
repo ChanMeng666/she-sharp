@@ -107,12 +107,41 @@
             ]
           }
         ],
-        "photos": [],
-        "galleryUrl": "",
+        "photos": [
+          {
+            "url": "/img/events/peyvand-academy-20-june-2026-photo-1.webp",
+            "alt": "The school hall set up for the Youth Tech Series Electronics Workshop, with the SheSharp welcome screen at the front"
+          },
+          {
+            "url": "/img/events/peyvand-academy-20-june-2026-photo-2.webp",
+            "alt": "Participants and SheSharp facilitators gathering before the hands-on electronics session"
+          },
+          {
+            "url": "/img/events/peyvand-academy-20-june-2026-photo-3.webp",
+            "alt": "A SheSharp facilitator guiding young participants through a hands-on electronics activity"
+          },
+          {
+            "url": "/img/events/peyvand-academy-20-june-2026-photo-4.webp",
+            "alt": "Young participants working together on an electronics activity at the workshop"
+          },
+          {
+            "url": "/img/events/peyvand-academy-20-june-2026-photo-5.webp",
+            "alt": "A participant building a circuit during the hands-on electronics workshop"
+          },
+          {
+            "url": "/img/events/peyvand-academy-20-june-2026-photo-6.webp",
+            "alt": "Youth participants collaborating on electronics experiments across the workshop hall"
+          },
+          {
+            "url": "/img/events/peyvand-academy-20-june-2026-photo-7.webp",
+            "alt": "Participants engaged in hands-on electronics activities at Fruitvale Primary School"
+          }
+        ],
+        "galleryUrl": "https://drive.google.com/drive/folders/1nwBE04aCaggsFVCumAFnpOKtLBzJHfdy",
         "registrationUrl": "https://events.humanitix.com/youth-tech-series-electronics-workshop",
         "images": [],
         "category": "workshop",
-        "status": "upcoming",
+        "status": "past",
         "isFeatured": false
       }
     },
