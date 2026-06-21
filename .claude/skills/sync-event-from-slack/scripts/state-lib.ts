@@ -19,8 +19,22 @@ const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 export const SKILL_ROOT = resolve(SCRIPT_DIR, "..");
 export const STATE_PATH = resolve(SKILL_ROOT, "state", "sync-state.json");
 export const CACHE_DIR = resolve(SKILL_ROOT, ".cache");
-/** events file, relative to the repo root (two levels above .claude) */
-export const EVENTS_PATH = resolve(SKILL_ROOT, "..", "..", "..", "lib", "data", "json", "events-custom.json");
+/** repo root (three levels above the skill root: …/.claude/skills/<skill>) */
+export const REPO_ROOT = resolve(SKILL_ROOT, "..", "..", "..");
+/** The one events file this skill WRITES. */
+export const EVENTS_PATH = resolve(REPO_ROOT, "lib", "data", "json", "events-custom.json");
+/**
+ * Every events file the site READS. The public `/events` listing merges the
+ * skill-managed file with scraped/legacy sources, so a slug can already be
+ * published in one of these even though it is absent from events-custom.json.
+ * Cross-checking all of them is what stops discovery from proposing a duplicate
+ * "create?" for an event that already has a live page (the 2026-06-22 Aug-2025
+ * hackathon false-positive). Same `{ events: [{ slug, title }] }` shape.
+ */
+export const PUBLISHED_EVENT_FILES = [
+  EVENTS_PATH,
+  resolve(REPO_ROOT, "lib", "data", "json", "shesharp_events_v3.json"),
+];
 
 // ---------------------------------------------------------------------------
 // Manifest types
@@ -49,6 +63,13 @@ export interface ChannelState {
   fingerprint: string; // sha256:… of the mapped event's salient fields ("" when none)
   lastSyncedAt: string;
   lastSyncedCommit: string;
+  // Sediment of what was UNDERSTOOD from this channel last sync: a few sentences
+  // on the event state + open items. Carried back into the next run (via
+  // fetch-channel's `_meta.priorDigest`) so the model re-orients from the digest
+  // + the small new delta instead of re-reading the whole channel. Optional and
+  // omitted when empty to keep existing manifest entries byte-stable.
+  digest?: string;
+  digestAt?: string;
 }
 
 export interface Manifest {
@@ -80,7 +101,7 @@ export function saveManifest(m: Manifest): void {
   const ordered: Manifest = { version: m.version ?? 1, channels: {} };
   for (const id of Object.keys(m.channels).sort()) {
     const c = m.channels[id];
-    ordered.channels[id] = {
+    const entry: ChannelState = {
       name: c.name,
       type: c.type,
       mapping: c.mapping,
@@ -90,6 +111,13 @@ export function saveManifest(m: Manifest): void {
       lastSyncedAt: c.lastSyncedAt,
       lastSyncedCommit: c.lastSyncedCommit,
     };
+    // Only emit digest fields when set — channels never given a digest stay
+    // byte-identical to their pre-digest serialization.
+    if (c.digest) {
+      entry.digest = c.digest;
+      entry.digestAt = c.digestAt ?? "";
+    }
+    ordered.channels[id] = entry;
   }
   const tmp = `${STATE_PATH}.tmp`;
   writeFileSync(tmp, JSON.stringify(ordered, null, 2) + "\n");
@@ -126,6 +154,66 @@ export function loadEvents(): any[] {
   } catch {
     return [];
   }
+}
+
+export interface PublishedEvent {
+  slug: string;
+  title: string;
+  source: string; // basename of the file it came from
+  custom: boolean; // true when from events-custom.json (this skill owns it)
+}
+
+/**
+ * Union of every slug the site can render, across all published sources (not
+ * just the skill-managed events-custom.json). Used by discovery to tell a
+ * genuinely-new event channel apart from one whose page already exists in a
+ * scraped/legacy file — the latter should be `skip`, not `create?`.
+ */
+export function loadPublishedEvents(): PublishedEvent[] {
+  const out: PublishedEvent[] = [];
+  for (const path of PUBLISHED_EVENT_FILES) {
+    const base = path.split(/[\\/]/).pop() ?? path;
+    const custom = path === EVENTS_PATH;
+    try {
+      const events = JSON.parse(readFileSync(path, "utf8")).events ?? [];
+      for (const e of events) {
+        if (e?.slug) out.push({ slug: e.slug, title: e.title ?? "", source: base, custom });
+      }
+    } catch {
+      /* a missing/unreadable source just contributes no slugs */
+    }
+  }
+  return out;
+}
+
+/**
+ * Best-effort parse of a human-readable event date ("June 20, 2026",
+ * "20 June 2026", "Fri 7 Aug, 5:00pm – Sat 8 Aug 2026") to epoch ms, or null
+ * when it can't be read. Used only to flag events whose date has passed but
+ * whose status is still future — never for anything that must be exact.
+ */
+export function parseEventDateMs(date: string | undefined): number | null {
+  if (!date) return null;
+  const MONTH = "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec";
+  const year = date.match(/\b(20\d\d)\b/)?.[1];
+  const candidates = [date];
+  // "Month Day, Year" — the dominant form ("June 20, 2026").
+  const md = date.match(new RegExp(`((?:${MONTH})[a-z]*\\s+\\d{1,2}).*?(20\\d\\d)`, "i"));
+  if (md) candidates.push(`${md[1]} ${md[2]}`);
+  // "Day Month" (… Year) — ranges like "Fri 7 Aug … Sat 8 Aug 2026". Take the
+  // LAST day+month pair (the event's end) and pin the trailing year.
+  if (year) {
+    const dm = [...date.matchAll(new RegExp(`(\\d{1,2})\\s+(${MONTH})[a-z]*`, "gi"))];
+    if (dm.length) {
+      const last = dm[dm.length - 1];
+      candidates.push(`${last[1]} ${last[2]} ${year}`);
+    }
+  }
+  for (const c of candidates) {
+    const t = Date.parse(c);
+    if (!Number.isNaN(t)) return t;
+  }
+  return null;
 }
 
 /**

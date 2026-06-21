@@ -2407,8 +2407,10 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-21T13:34:32.250Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-06-21T14:04:44.676Z",
+      "lastSyncedCommit": "",
+      "digest": "AI Forum hackathon Aug 2025 — ALREADY PUBLISHED at /events/ai-hackathon-festival-2025 (lives in shesharp_events_v3.json, a scraped source this skill does not manage). Channel is a retrospective (lessons-learned, runsheet). Skip; do not create a duplicate in events-custom.json.",
+      "digestAt": "2026-06-21T14:04:44.675Z"
     },
     "C0959LH63QQ": {
       "name": "funding-applications",
@@ -3222,8 +3224,10 @@
       "watermarkTs": "1781841605.185089",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-21T13:34:26.306Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-06-21T14:04:40.367Z",
+      "lastSyncedCommit": "",
+      "digest": "Security/Xero workshop tentatively October 2026. As of 2026-06-22 only planning-session scheduling chatter — no confirmed date, speaker, or poster. Keep skipped until a poster/date/speaker lands.",
+      "digestAt": "2026-06-21T14:04:40.367Z"
     },
     "C0AG1BM4UMU": {
       "name": "event-msd-april7--2026",
@@ -3443,8 +3447,10 @@
         }
       },
       "fingerprint": "sha256:36c78c7ba46e8bdab487b8ddbcc9f5805b981b3ad56a51e49c364ceb09bab2db",
-      "lastSyncedAt": "2026-06-21T13:34:09.107Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-06-21T14:04:25.685Z",
+      "lastSyncedCommit": "",
+      "digest": "Two Youth Tech Series workshops at Fruitvale Primary (13 & 20 June 2026), both past. Galleries published — 13 June: 7 webp; 20 June: 7 webp added 2026-06-22 from the event's public Google Drive folder (galleryUrl set). Photos came from Google Drive (gdown), not Slack files. Open item: swap 13 June galleryUrl to a Google Photos album once that link is posted by the organiser.",
+      "digestAt": "2026-06-21T14:04:25.685Z"
     },
     "C0AS0KW8KQX": {
       "name": "event-aut-linkedin-15-may-2026",
@@ -3693,8 +3699,10 @@
         }
       },
       "fingerprint": "sha256:0d3694fd4519872ec9b38695357559ac648163c83b2f2837ec83d6675b1565a0",
-      "lastSyncedAt": "2026-06-21T13:34:20.750Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-06-21T14:04:35.869Z",
+      "lastSyncedCommit": "",
+      "digest": "Aotearoa AI Hackathon Festival (Fri 7 - Sat 8 Aug 2026, AUT City Campus). Live at aihackathon.nz; two-day time + reg URL already in repo. WARNING: channel carries AUT discount/access codes (student free, general, mentor/staff) — never publish them in the JSON/page. No event-data changes pending.",
+      "digestAt": "2026-06-21T14:04:35.868Z"
     },
     "C0B7K8BFN30": {
       "name": "event-myob-ai-in-practice-30july-2026",
@@ -3736,8 +3744,10 @@
         }
       },
       "fingerprint": "sha256:e331d1ead7680a8f0afd1d2dc417d960d0ae565be5fc9110c2a349f018ed8b16",
-      "lastSyncedAt": "2026-06-21T13:34:15.451Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-06-21T14:04:31.230Z",
+      "lastSyncedCommit": "",
+      "digest": "She Sharp x MYOB 'Working Smarter: AI, MYOB, and the New Delivery Landscape' (30 July 2026, 5:00-7:30pm, MYOB 50 Albert St). Page complete: title/subtitle/time/agenda all set; 5pm registration confirmed. Recent Slack is logistics only (runsheet, poster tweaks, free-ticket winner email). No event-data changes pending.",
+      "digestAt": "2026-06-21T14:04:31.229Z"
     },
     "C0L3U3Z7H": {
       "name": "goodies",

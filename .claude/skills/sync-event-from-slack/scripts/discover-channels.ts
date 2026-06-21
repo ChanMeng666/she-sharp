@@ -28,12 +28,15 @@ import {
   CACHE_DIR,
   classifyChannel,
   detectEventSignal,
+  findEventBySlug,
   fingerprintForMapping,
-  loadEvents,
   loadManifest,
+  loadPublishedEvents,
+  parseEventDateMs,
   SIGNAL_THRESHOLD,
   type ChannelType,
   type Mapping,
+  type PublishedEvent,
 } from "./state-lib.ts";
 
 const token = process.env.SLACK_BOT_TOKEN;
@@ -129,15 +132,19 @@ function tokens(s: string): Set<string> {
   );
 }
 
-function bestEventMatch(channelName: string, events: any[]): { slug: string; id: number; score: number } | null {
+function bestPublishedMatch(
+  channelName: string,
+  events: PublishedEvent[],
+): { slug: string; score: number; source: string; custom: boolean } | null {
   const ct = tokens(channelName);
-  let best: { slug: string; id: number; score: number } | null = null;
+  let best: { slug: string; score: number; source: string; custom: boolean } | null = null;
   for (const e of events) {
     const et = tokens(`${e.slug} ${e.title}`);
     let overlap = 0;
     for (const t of ct) if (et.has(t)) overlap++;
     const score = ct.size ? overlap / ct.size : 0;
-    if (score > 0 && (!best || score > best.score)) best = { slug: e.slug, id: e.id, score };
+    if (score > 0 && (!best || score > best.score))
+      best = { slug: e.slug, score, source: e.source, custom: e.custom };
   }
   return best && best.score >= 0.34 ? best : null;
 }
@@ -158,7 +165,9 @@ interface Row {
   signalHits: string[];
   evidence: string;
   fingerprintStale: boolean;
-  propose: { slug: string; id: number; score: number } | null;
+  staleStatus: string; // non-empty when a mapped event's date has passed but status is still future
+  published: { slug: string; score: number; source: string; custom: boolean } | null;
+  digest: string;
   action: string;
 }
 
@@ -170,10 +179,15 @@ function decideAction(r: Row): string {
     if (!r.mapping || r.mapping.kind === "none") {
       // Unseen or "scanned, no site event": only resurface on new activity.
       if (!r.hasNew) return "no-op";
-      return r.propose ? `create? (≈${r.propose.slug})` : "create?";
+      // A page may already exist in a NON-skill source (scraped/legacy). Don't
+      // propose creating a duplicate — point at the published slug to map/skip.
+      if (r.published && !r.published.custom)
+        return `exists? (≈${r.published.slug} @${r.published.source})`;
+      return r.published ? `create? (≈${r.published.slug})` : "create?";
     }
     // mapped to an event
     if (r.fingerprintStale) return "fingerprint-stale (event edited)";
+    if (r.staleStatus) return `stale-status (${r.staleStatus})`;
     return r.hasNew ? "incremental" : "no-op";
   }
   // general
@@ -185,7 +199,8 @@ function decideAction(r: Row): string {
 async function main() {
   const channels = await listChannels();
   const manifest = loadManifest();
-  const events = loadEvents();
+  const published = loadPublishedEvents();
+  const nowMs = Date.now();
 
   if (doJoin) {
     for (const c of channels) {
@@ -254,14 +269,29 @@ async function main() {
 
     // Fingerprint freshness for mapped events (did events-custom.json change?).
     let fingerprintStale = false;
+    let staleStatus = "";
     if (mapping?.kind === "event") {
       const current = fingerprintForMapping(mapping);
       fingerprintStale = !!cs && cs.fingerprint !== "" && current !== "" && current !== cs.fingerprint;
+      // A mapped event whose date has passed but whose status is still future is
+      // overdue for a post-event pass (flip to past, add the gallery). This is
+      // the 20-June Peyvand miss made cheap to catch.
+      for (const e of mapping.events) {
+        const ev = findEventBySlug(e.slug);
+        const status = ev?.detailPageData?.status ?? ev?.status ?? "";
+        const dateMs = parseEventDateMs(ev?.date ?? ev?.detailPageData?.date);
+        if (dateMs != null && dateMs < nowMs && status && !/past|complete|done|archived/i.test(status)) {
+          staleStatus = `${e.slug}: ${status}`;
+          break;
+        }
+      }
     }
 
-    const propose =
-      doPropose && type === "event" && (!mapping || mapping.kind === "none")
-        ? bestEventMatch(c.name, events)
+    // Cross-source published match for unmapped event channels (always — cheap
+    // local read), so an already-live page becomes `exists?`, not `create?`.
+    const published_match =
+      type === "event" && (!mapping || mapping.kind === "none")
+        ? bestPublishedMatch(c.name, published)
         : null;
 
     const row: Row = {
@@ -278,7 +308,9 @@ async function main() {
       signalHits,
       evidence,
       fingerprintStale,
-      propose,
+      staleStatus,
+      published: published_match,
+      digest: cs?.digest ?? "",
       action: "",
     };
     row.action = decideAction(row);
@@ -322,7 +354,15 @@ async function main() {
     if (r.evidence && r.signalScore >= SIGNAL_THRESHOLD) {
       lines.push(pad("", 12) + `↳ ${r.signalHits.join(",")}: "${r.evidence}"`);
     }
-    if (r.propose) lines.push(pad("", 12) + `↳ propose →${r.propose.slug} (id ${r.propose.id}, ${(r.propose.score * 100) | 0}%)`);
+    // Published-match hint: always for an already-live (non-custom) page; for a
+    // custom-source fuzzy guess only when --propose is asked for (backfill).
+    if (r.published && (!r.published.custom || doPropose)) {
+      const where = r.published.custom ? "events-custom.json" : r.published.source;
+      lines.push(pad("", 12) + `↳ match →${r.published.slug} @${where} (${(r.published.score * 100) | 0}%)`);
+    }
+    // Prior digest — what was understood last sync. Lets the reader re-orient
+    // from one line instead of re-reading the channel.
+    if (r.digest) lines.push(pad("", 12) + `↳ digest: ${r.digest.replace(/\s+/g, " ").slice(0, 150)}`);
   }
   if (!showAll && quiet.length) lines.push("", `(${quiet.length} quiet channels hidden — pass --all to show)`);
   lines.push("", `Full machine triage: ${triagePath}`);

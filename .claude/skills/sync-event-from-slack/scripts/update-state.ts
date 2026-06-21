@@ -21,6 +21,11 @@
  *   --channel <id> --name <n> --watermark <ts>   (manual, when no --from)
  *   --type event|general         (default: inferred from name)
  *   --commit <sha>               record the commit that carried this sync
+ *   --digest "<text>"            sediment what was understood this run (event
+ *                                state + open items); carried back next run so
+ *                                Slack isn't re-read. Repeat to read from a file
+ *                                with --digest-file <path> instead. Omit to keep
+ *                                the prior digest; --digest "" clears it.
  */
 
 import {
@@ -95,6 +100,13 @@ function main() {
   const manifest = loadManifest();
   const prev = manifest.channels[channelId];
   const mergedThreads = { ...(prev?.threads ?? {}), ...threads };
+
+  // Digest: explicit --digest/--digest-file wins; otherwise inherit the prior.
+  const digestFile = arg("--digest-file");
+  const digestArg = digestFile ? readFileSync(digestFile, "utf8").trim() : arg("--digest");
+  const digest = digestArg !== undefined ? digestArg.trim() : prev?.digest ?? "";
+  const digestAt = digestArg !== undefined && digestArg.trim() ? nowIso() : prev?.digestAt ?? "";
+
   const next: ChannelState = {
     name,
     type,
@@ -104,12 +116,13 @@ function main() {
     fingerprint: fingerprint || (kind === "event" ? prev?.fingerprint ?? "" : ""),
     lastSyncedAt: nowIso(),
     lastSyncedCommit: arg("--commit") ?? prev?.lastSyncedCommit ?? "",
+    ...(digest ? { digest, digestAt } : {}),
   };
 
   // Avoid timestamp churn: if nothing material changed, keep the prior entry
   // (incl. its lastSyncedAt) so a no-op re-record leaves the manifest byte-stable.
   const material = (c?: ChannelState) =>
-    c && JSON.stringify({ n: c.name, t: c.type, m: c.mapping, w: c.watermarkTs, th: c.threads, f: c.fingerprint });
+    c && JSON.stringify({ n: c.name, t: c.type, m: c.mapping, w: c.watermarkTs, th: c.threads, f: c.fingerprint, d: c.digest ?? "" });
   if (prev && material(prev) === material(next)) {
     process.stdout.write(`no change for ${channelId} (${name})\n`);
     return;
@@ -119,7 +132,16 @@ function main() {
 
   process.stdout.write(
     JSON.stringify(
-      { channel: channelId, name, type, mapping, watermarkTs, threadCount: Object.keys(next.threads).length, fingerprint: next.fingerprint },
+      {
+        channel: channelId,
+        name,
+        type,
+        mapping,
+        watermarkTs,
+        threadCount: Object.keys(next.threads).length,
+        fingerprint: next.fingerprint,
+        digest: next.digest ?? "",
+      },
       null,
       2,
     ) + "\n",

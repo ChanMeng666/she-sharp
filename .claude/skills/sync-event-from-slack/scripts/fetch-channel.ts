@@ -19,7 +19,7 @@
  *
  * Output shape:
  * {
- *   _meta:     { mode, since, newWatermarkTs, threadState, newCount, fromCache },
+ *   _meta:     { mode, since, newWatermarkTs, threadState, newCount, priorDigest, fromCache },
  *   channel:   { id, name, purpose, topic, num_members, created, is_archived },
  *   pinned:    [ NormalizedMessage ],   // always included (canonical)
  *   bookmarks: [ { title, link, emoji, type, rank } ],
@@ -203,12 +203,14 @@ async function main() {
   // Resolve the incremental watermark + prior thread state.
   let since = sinceArg;
   let priorThreads: Record<string, ThreadState> = {};
+  let priorDigest = "";
   if (useState) {
     const manifest = loadManifest();
     const cs = manifest.channels[channelId];
     if (cs) {
       since = since ?? cs.watermarkTs;
       priorThreads = cs.threads ?? {};
+      priorDigest = cs.digest ?? "";
     }
   }
   const incremental = !!since;
@@ -321,6 +323,9 @@ async function main() {
       newWatermarkTs,
       threadState,
       newCount: messages.length,
+      // What was understood last sync — read this FIRST to re-orient, then read
+      // only the new messages below rather than re-deriving from scratch.
+      priorDigest,
       fromCache: false,
     },
     channel,
