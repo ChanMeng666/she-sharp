@@ -78,6 +78,10 @@ out and rotated at its source.
    dependencies; absence means the user is in the wrong project.
 4. `mammoth` in `devDependencies` is optional — if absent, `.docx` extraction
    falls back to a built-in extractor. Note this in your plan summary.
+5. For **post-event galleries only**: `gdown` (Google Drive folder download) and
+   Python `Pillow` (webp conversion). Both are external tools, not repo deps —
+   verify they're on PATH when a gallery pass is needed (see
+   `references/image-conventions.md`). Not required for normal CREATE/UPDATE.
 
 ## Workflow
 
@@ -103,14 +107,25 @@ the full machine triage to `.cache/triage.json`. Read the `action` column and ac
 - `create?` / `create? (general-signal)` → likely a new event (an event channel
   with no mapping yet, or a general channel whose new messages scored for event
   content); confirm the slug with the user, then Layer B in CREATE mode.
+- `exists? (≈slug @source)` → a page for this channel **already exists in a
+  non-skill data source** (e.g. `shesharp_events_v3.json`). Do **not** create a
+  duplicate — map the channel as `skip` (reason: already published there), or
+  map it to the slug if you intend this skill to take ownership. This guard
+  prevents the "the 2025 event is missing" illusion: events live across more than
+  one file and only `events-custom.json` is skill-managed.
 - `join+sync` → run `discover-channels.ts --join` to self-join, then Layer B.
 - `skip→review (new msgs)` → a settled skip that got new activity; glance and
   decide whether to un-skip.
 - `fingerprint-stale` → the event was edited in the repo since last sync; reconcile.
+- `stale-status (slug: <status>)` → a mapped event whose date has passed but whose
+  status is still future → run the **post-event gallery** pass (flip status to
+  `past`, add the gallery; see `references/image-conventions.md`).
 - `no-op` / `archived` / `skip` are quiet and hidden by default (`--all` shows them).
 
-Use `--propose` to get fuzzy event-match suggestions for unmapped event channels
-(a backfill aid only — verify, since names and slugs diverge). See
+A `↳ digest:` line under a row is the **prior understanding** carried from the last
+sync — read it first; it often answers "what is this and what's left to do" without
+reading any messages. Use `--propose` for fuzzy event-match suggestions on unmapped
+channels (backfill aid — verify, since names and slugs diverge). See
 `references/state-and-incremental.md` for the full action table and semantics.
 
 ### Step 1 — Fetch the channel (Layer B)
@@ -127,12 +142,25 @@ returns only the delta. For a brand-new channel (CREATE), omit `--state` for a
 full fetch. Always pipe stdout to a file (output can exceed tool context limits).
 
 The JSON includes a `_meta` block (`mode`, `since`, `newWatermarkTs`,
-`threadState`, `newCount`), `channel` metadata, `pinned` messages (always
-included — canonical), `bookmarks`, a `users` dictionary (id → name), and
+`threadState`, `newCount`, `priorDigest`), `channel` metadata, `pinned` messages
+(always included — canonical), `bookmarks`, a `users` dictionary (id → name), and
 `messages[]` with each thread expanded in a `thread` subarray. In incremental
 mode `messages[]` carries only new top-level messages plus any older thread that
 gained replies (with just its new replies). User IDs inside `text` stay as
 `<@U…>` — the dictionary resolves them.
+
+**Read the delta with `render-delta.ts` — never `head`/`tail` the raw JSON.**
+
+```
+npx tsx .claude/skills/sync-event-from-slack/scripts/render-delta.ts /tmp/channel.json
+```
+
+It prints the `priorDigest` first (the prior understanding — read it to
+re-orient), then pinned/bookmarks, then **every** new message and reply in order
+with files/links flagged. It bounds each message's length but never trims the
+*set* of messages, so you cannot miss the late thread that carries the one thing
+that changed (a confirmed date, a post-event photo album). Dumping the JSON with
+`node -e … | head` silently drops the tail and has caused real misses — don't.
 
 **No-op fast path:** if `_meta.newCount` is 0 and the event's fingerprint is
 unchanged, there is nothing to sync — emit the UPDATE no-op line (Step 6) and skip
@@ -288,18 +316,28 @@ When the user approves:
    If it fails, roll back all downloads, revert the JSON patch,
    and tell the user what broke. Never commit with the gate red.
 4. **Record state** so the next run stays incremental. Feed the fetch payload
-   (which carries the new watermark + thread state) to `update-state.ts`:
+   (which carries the new watermark + thread state) to `update-state.ts`, and
+   **always pass `--digest`** — a few sentences sedimenting what you now
+   understand about this channel's event(s) + any open items. The digest is
+   carried back next run (as `_meta.priorDigest` and the discovery `↳ digest:`
+   line) so the model re-orients from it instead of re-reading the channel:
    ```
    # event mapping (repeat --slug/--event-id for a multi-event channel)
    npx tsx .claude/skills/sync-event-from-slack/scripts/update-state.ts \
-     --from /tmp/channel.json --mapping event --slug <slug> --event-id <id>
+     --from /tmp/channel.json --mapping event --slug <slug> --event-id <id> \
+     --digest "<what this event is; what's published; what's still open>"
 
    # or, when a channel turns out to carry no site event / is deliberately skipped
    npx tsx .claude/skills/sync-event-from-slack/scripts/update-state.ts \
-     --from /tmp/channel.json --mapping skip --reason "<why>"
+     --from /tmp/channel.json --mapping skip --reason "<why>" \
+     --digest "<why skipped; what would change that>"
    npx tsx .claude/skills/sync-event-from-slack/scripts/update-state.ts \
      --from /tmp/channel.json --mapping none
    ```
+   A good digest names the event, its date/venue, what is already published, the
+   redaction landmines (codes/private links to keep out), and the next open item.
+   Omitting `--digest` keeps the prior one; `--digest ""` clears it. Pass long
+   text via `--digest-file <path>` if it's unwieldy on the command line.
    `update-state.ts` recomputes the event fingerprint from `events-custom.json`,
    so run it **after** the JSON patch. Commit `state/sync-state.json` alongside
    the event change — it is the memory that makes future syncs cheap.

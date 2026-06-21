@@ -15,11 +15,15 @@ Relative path as stored in `events-custom.json` is always `/img/events/<filename
 Naming is derived from the event `slug` to keep search/grep easy and avoid
 collisions. Lower-case, kebab-case, ASCII only.
 
+The prefix is the event **`slug`** (newer slugs do not start with `event-`, e.g.
+`peyvand-academy-20-june-2026`). Substitute the real slug for `<slug>` below.
+
 | Role | Pattern | Example |
 |---|---|---|
-| Cover poster | `event-<slug>-cover.<ext>` | `event-aut-linkedin-15-may-2026-cover.png` |
-| Speaker photo | `event-<slug>-<kebab-speaker-name>.<ext>` | `event-aut-linkedin-15-may-2026-stuart-little.jpg` |
-| Sponsor-specific asset (rare) | `event-<slug>-<sponsor>.<ext>` | `event-aut-linkedin-15-may-2026-aut.png` |
+| Cover poster | `<slug>-cover.<ext>` | `peyvand-academy-20-june-2026-cover.png` |
+| Speaker photo | `<slug>-<kebab-speaker-name>.<ext>` | `event-aut-linkedin-15-may-2026-stuart-little.jpg` |
+| Gallery photo (post-event) | `<slug>-photo-<n>.webp` | `peyvand-academy-20-june-2026-photo-1.webp` |
+| Sponsor-specific asset (rare) | `<slug>-<sponsor>.<ext>` | `event-aut-linkedin-15-may-2026-aut.png` |
 
 The skill already receives `<slug>` from the user. Speaker-name kebab-case
 should match the speaker's full name (first + last), lowercased with hyphens
@@ -67,13 +71,50 @@ Before downloading, check whether the target path already has a file with
 identical size. If so, skip the download and reuse the existing file (saves
 Slack API calls and preserves git history).
 
+## Galleries and external photo sources (post-event)
+
+Event photos are usually **not** Slack `url_private` files — teams post them to a
+Google Drive folder or Google Photos album, or a Canva design. `download-file.ts`
+only handles Slack files, so for these:
+
+- **Google Drive folder** (`drive.google.com/drive/folders/<id>`): download with
+  `gdown --folder "<url>" -O <scratch-dir>`. A public folder needs no auth. It
+  may contain videos and unsorted shots — curate to ~6–8 representative stills
+  (match the count of a sibling event's gallery), preferring wide/contextual
+  shots over close-ups of individual faces.
+- **Google Photos album** (`photos.app.goo.gl/…` / `photos.google.com/share/…`):
+  resists bulk download. Use it only as a visual reference for curating; pull the
+  actual files from the matching Drive folder, or ask the user to share a Drive
+  folder.
+- **Convert to `.webp`** before committing (the project ships no `sharp`/`cwebp`
+  binary — use Python `Pillow`): resize to ≤1600px wide, quality ≈82,
+  `ImageOps.exif_transpose` first so phone photos aren't sideways. Target
+  ~100–250 kB each.
+
+`galleryUrl` in the JSON **is** an allowed public external link (the Drive
+folder), distinct from a photo's `url`/`src` which must always be a committed
+local `/img/events/…` path.
+
+## Post-event gallery update mode
+
+When an event's date has passed (discovery flags `stale-status`) and a photo
+album exists, run a gallery pass — mirror a sibling event already in this shape:
+
+1. Download + curate + convert as above → `<slug>-photo-<n>.webp`.
+2. In the event's `detailPageData`: set `status` to `"past"`, set `galleryUrl`
+   to the public album link, and populate `photos[]` with one
+   `{ url, alt }` per webp (descriptive alt text).
+3. Run the CI gate; commit. No speakers/agenda change — this is purely the
+   post-event addition.
+
 ## Forbidden image sources
 
 - Do **not** pull images from `scripts/` scratch areas or temp paths.
 - Do **not** re-use images from other events' slugs. Every event gets its
   own assets even if visually similar.
-- Do **not** embed external URLs (Canva links, CDN links) in the JSON —
-  always download, rename, and commit.
+- Do **not** embed an external URL as a photo's `url`/`src` (Canva links, CDN
+  links) — always download, convert, rename, and commit the bytes. (The separate
+  `galleryUrl` field is the one place a public album link is allowed.)
 
 ## Orphan cleanup on re-sync
 
