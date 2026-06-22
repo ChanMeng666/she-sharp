@@ -133,7 +133,7 @@ export const teamMembers: TeamMember[] = [
     roles: ["Ambassador", "Events Coordinator"],
     linkedin: "https://www.linkedin.com/in/tharaneetharan-thavarasan-52754940",
     description:
-      "Tharaneetharan is a motivated and adaptable IT professional with a strong background in ERP systems, Business Analysis, and Data Analytics. He recently completed a Master of Information Technology, specializing in Data Science and Artificial Intelligence from Auckland Institute of Studies, New Zealand. This academic journey has enabled him to combine his business systems expertise with modern analytical and AI-driven approaches.\n\nHe is passionate about learning emerging technologies and exploring how Data Analytics and Artificial Intelligence can be applied to solve real-world business challenges and create meaningful value for organizations. As an ERP professional, he has worked as a Functional Consultant across SAP FICO, Microsoft Dynamics AX, and Microsoft Dynamics 365 Finance & Operations.\n\nThroughout his career, he has supported finance and supply chain business processes, reporting, system enhancements, migration activities, and end-user support. These experiences have helped him develop a strong understanding of how technology can improve operational efficiency, streamline business processes, and support data-driven decision-making.\n\nAs a She Sharp Ambassador, Tharaneetharan is excited to support women in technology through event coordination, community engagement, and event support activities. He also contributes to monthly newsletter preparation, website testing, and web design improvement initiatives.\n\nHis interests include Data Analytics, Artificial Intelligence, Machine Learning, Data Science, ERP Systems, Business Analytics, Business Technology, Front-end development, Software Testing and Digital Transformation. Outside of work, he enjoys travelling, photography, reading books and newspapers, listening to music, and playing sports. He believes that sports help develop teamwork, discipline, resilience, and a healthy work-life balance. He is also passionate about supporting and helping others in their learning and growth.",
+      "Tharaneetharan is a motivated and adaptable IT professional with a strong background in ERP systems, Business Analysis, and Data Analytics. He recently completed a Master of Information Technology, specializing in Data Science and Artificial Intelligence from AIS, New Zealand. He is passionate about learning emerging technologies and exploring how Data Analytics and Artificial Intelligence can be applied to solve real-world business challenges and create meaningful value for organizations. . As an ERP professional, he has worked as a Functional Consultant across SAP FICO, Microsoft Dynamics AX, and Microsoft Dynamics 365 Finance & Operations.\n\nAs a She Sharp Ambassador, Tharaneetharan is excited to support women in technology through event coordination, community engagement, and event support activities. He also contributes to monthly newsletter preparation. Outside of work, he enjoys travelling, photography, reading books, listening to music, and playing sports.",
     image: "/img/team/Tharanee.png",
   },
   {
@@ -144,6 +144,15 @@ export const teamMembers: TeamMember[] = [
     description:
       "Nirmala is an Event and Project Management professional with over 18 years of experience delivering meaningful experiences that connect people, celebrate culture, and drive lasting impact. Her career spans event coordination, project management and IT systems administration; bridging strategy, technology, and community to produce solutions that are both innovative and people-centered. She holds a Master of IT Project Management from Auckland University of Technology, underpinning her practice with academic rigour and strategic depth.\n\nAs Event Manager at She Sharp, Nirmala helps in the planning and execution of She Sharp's signature conferences and events, creating professional platforms where women in STEM can grow, connect, and thrive. Deeply aligned with She Sharp's mission, she is committed to fostering inclusive environments that champion diversity, dismantle barriers, and empower the next generation of women in technology.",
     image: "/img/team/Nirmala.png",
+  },
+  {
+    id: 17,
+    name: "Moksha Shah",
+    roles: ["Ambassador", "Event Manager"],
+    linkedin: "https://www.linkedin.com/in/mokshashah/",
+    description:
+      "I am an IT Project Coordinator and Event Manager who thrives on turning complex plans into seamless, successful community experiences. Leveraging a background in stakeholder engagement and project governance, I bring structure and collaborative energy to organizing impactful initiatives for SheSharp.",
+    image: "/img/team/Moksha.png",
   }
 ];
 
