@@ -12,14 +12,17 @@ Status legend: ☐ todo · ◐ in progress · ☑ done. Update as work lands.
 
 ## P0 — High impact, do first
 
-### ☐ 1. Add 301 redirects for stale pre-migration URLs
+### ☑ 1. Add 301 redirects for stale pre-migration URLs — DONE 2026-06-23
+**Done**: Added `redirects()` to `next.config.ts` (permanent/308) covering the
+confirmed dead paths plus `/about-us/*` and a `/media/*` catch-all → `/resources`.
+Verified locally: each old URL 308s to the correct target; live routes unaffected.
+
 **Why**: The search index still serves the old URL structure, and all of them
-now return **404** on production (verified 2026-06-23). 404s waste link equity
+returned **404** on production (verified 2026-06-23). 404s waste link equity
 and leave crawlers/users on dead ends; 301s consolidate signals onto the current
 URLs and speed de-indexing of the old ones.
 
-**Where**: `next.config.ts` → add a `redirects()` function. Confirmed dead → new
-mapping (all currently 404):
+**Where**: `next.config.ts` → `redirects()`. Mapping shipped (all were 404):
 
 | Old (indexed, 404) | New (301 target) |
 | --- | --- |
