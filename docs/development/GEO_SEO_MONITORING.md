@@ -72,6 +72,50 @@ Run the target queries above in each engine; record whether shesharp.org.nz is
 cited, its position, and whether the link is present. A lightweight spreadsheet
 is enough to trend the KPIs.
 
+## Baseline snapshot — 2026-06-23 (at launch)
+
+Captured the same day the SEO/GEO work shipped and the sitemap was submitted, so
+this reflects the **pre-optimization index state** — search/AI engines have not
+yet re-crawled with the new infrastructure. Use it as the "before" for measuring
+lift over the coming weeks.
+
+**Method**: ran each target query via web search (the retrieval layer that feeds
+AI answer engines — Bing→ChatGPT/Copilot, Google→AI Overviews) and recorded
+whether `shesharp.org.nz` appears in results and whether it's reflected in the
+generated summary. This is a retrieval-layer proxy; complement with live
+in-browser ChatGPT/Perplexity/Claude checks for true generative citations.
+
+| Target query | In results (position) | Reflected in AI summary | Notes |
+| --- | --- | --- | --- |
+| women in tech New Zealand organisation | Yes (#5) | **No** | Lost to TechWomen & Women in Tech NZ; She Sharp omitted from the summarized org list. |
+| She Sharp New Zealand (brand) | Yes (#1–6, 9) | Yes (dominant) | Strong brand presence **but stale index** — see below. |
+| STEM mentorship programme for women NZ | Yes (#2–3) | Yes | Cited alongside AUT WiT, ShadowTech, IYM. |
+| tech events for women in Auckland | Yes (#5) | Yes (brief) | Also a She Sharp Humanitix event surfaced. |
+| how to volunteer with women in tech NZ | Yes (#2) | Yes ("SheSharp") | Good — cited near the top. |
+
+**Key baseline findings (the "before" problems to fix):**
+
+1. **Stale / dead URLs indexed.** The brand query surfaces the *old* pre-migration
+   URL structure — `/about-us`, `/media/news-and-press`, `/contact-us`,
+   `/mentorship/mentorship-program`, `/media/podcasts` — none of which match the
+   current routes (`/about`, `/resources/in-the-press`, `/contact`, `/mentorship`,
+   `/resources/podcasts`). A competing old domain `shesharp.co.nz` also appears.
+   The new sitemap + canonicals should drive re-crawling to the correct URLs;
+   **watch GSC for the old URLs dropping out and the new ones getting indexed.**
+2. **Outdated facts in AI answers.** Summaries quoted "over 8,000 women" and
+   "1,500 members", inconsistent with the site's stated 3000+ members. The new
+   `llms.txt` / `llms-full.txt` / Organization JSON-LD assert current figures —
+   watch whether AI summaries converge on them.
+3. **Weak on broad category queries.** For the generic "women in tech NZ
+   organisation" query, She Sharp is retrieved but not cited; TechWomen and Women
+   in Tech NZ dominate. Opportunity: stronger topical content + structured data.
+4. **Strong on specific intents.** Mentorship, events, and volunteering queries
+   already surface and cite She Sharp near the top — defend and build on these.
+
+**Re-run cadence**: repeat this table monthly. Success = old URLs gone from the
+index, current facts (3000+ members, CC57025) reflected in AI answers, and She
+Sharp appearing in the broad "women in tech NZ" answer.
+
 ## Maintenance notes
 
 - **Title template gotcha:** the root template `%s | She Sharp` does NOT cascade
