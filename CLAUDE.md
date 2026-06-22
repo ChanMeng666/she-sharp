@@ -330,6 +330,28 @@ These files contain static content that can be updated without database changes:
 5. **Type Safety**: Leverage TypeScript and Drizzle's type inference
 6. **Caching**: Match results and mentor profiles cached for performance
 
+## SEO & GEO (Generative Engine Optimization)
+
+The site is optimized for both search engines and generative engines (ChatGPT, Claude, Perplexity, Google AI Overviews). Added 2026-06-23; live on production with the sitemap submitted to Google Search Console and Bing.
+
+**Source of truth**: `lib/seo/site.ts` — canonical origin, org facts, social links. Keep in sync with `metadataBase` in `app/layout.tsx` and `footerConfig` in `lib/config/footer.ts`.
+
+**Generated routes** (Next.js metadata routes — independent of the root `force-dynamic`):
+- `app/robots.ts` — allows crawling (minus dashboard/api/auth), explicitly authorizes AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, …), advertises the sitemap.
+- `app/sitemap.ts` — static routes (in `STATIC_ROUTES`) + every event slug via `getAllEvents()`.
+- `app/manifest.ts` — PWA manifest (brand purple `#9b2e83`).
+- `public/llms.txt` (static AI guide) + `app/llms-full.txt/route.ts` (dynamic full index from events/team/stats/press).
+
+**Structured data**: `lib/seo/schema.ts` builders + `components/seo/json-ld.tsx`. Organization/NGO + WebSite injected in root layout; Event + BreadcrumbList in `app/(site)/events/[slug]/page.tsx`.
+
+**Inline AI hints**: `components/seo/geo-head.tsx` emits `<script type="text/llms.txt">` on home/events/mentorship/donate.
+
+**Two metadata gotchas (do not regress):**
+1. **Title template** `%s | She Sharp` (root layout) does NOT cascade through an intermediate layout that sets its own string `title`. Pages under `events/layout`, `mentorship/mentor/layout`, `mentorship/mentee/layout` must give child pages an explicit `title: { absolute: "X | She Sharp" }`.
+2. **No root-level `alternates.canonical`** — it cascades to every page and makes them all canonicalize to the homepage. Set canonicals per page (the home page sets its own `/`).
+
+**Docs**: implementation tutorial (reusable for other projects) in `docs/development/GEO_SEO_IMPLEMENTATION_GUIDE.md`; ongoing monitoring/KPIs in `docs/development/GEO_SEO_MONITORING.md`.
+
 ## Environment Configuration
 
 Required environment variables (see `.env.example`):
