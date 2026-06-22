@@ -20,9 +20,9 @@ export const metadata: Metadata = {
   },
   description: 'She Sharp is on a mission to bridge the gender gap in STEM, one woman at a time. Through events, networking, and career development opportunities.',
   keywords: ['STEM', 'women', 'technology', 'mentorship', 'New Zealand', 'She Sharp'],
-  alternates: {
-    canonical: '/',
-  },
+  // No root-level canonical: it would cascade to every page lacking its own and
+  // make them all canonicalize to the homepage. The home page sets its own "/"
+  // canonical; other pages self-canonicalize to their URL when none is set.
   icons: {
     icon: [
       { url: '/logos/she-sharp-logo-purple-dark-130x130.svg', type: 'image/svg+xml' },

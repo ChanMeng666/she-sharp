@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: { absolute: "Google Educator Conference | She Sharp" },
   description:
     "The Google Educator Conference (formerly CS4HS), brought to you by Google and She Sharp, upskills New Zealand's digital technology educators. Explore the 2023 and 2024 editions.",
+  // Self-canonical; otherwise this page inherits the events layout's "/events"
+  // canonical and reads as a duplicate of the events index.
+  alternates: { canonical: "/events/google-educator-conference" },
 };
 
 const EDITIONS = [
