@@ -9,7 +9,7 @@ import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 import { getAllNewsletters } from "@/lib/data/newsletters-manual";
 
 export const metadata: Metadata = {
-  title: "Newsletters | She Sharp",
+  title: "Newsletters",
   description:
     "Read past issues of the She Sharp newsletter or subscribe to receive updates on events, mentorship, and community news.",
 };

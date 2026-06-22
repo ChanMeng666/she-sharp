@@ -28,6 +28,8 @@ import {
 import { EventCard } from "@/components/events/event-card";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { JsonLd } from "@/components/seo/json-ld";
+import { eventSchema, breadcrumbSchema } from "@/lib/seo/schema";
 
 interface EventPageProps {
   params: Promise<{
@@ -50,7 +52,7 @@ export async function generateMetadata({
 
   if (!event) {
     return {
-      title: "Event Not Found | She Sharp",
+      title: { absolute: "Event Not Found | She Sharp" },
     };
   }
 
@@ -60,13 +62,17 @@ export async function generateMetadata({
     "";
 
   return {
-    title: `${event.title} | She Sharp Events`,
+    title: { absolute: `${event.title} | She Sharp` },
     description,
+    alternates: {
+      canonical: `/events/${slug}`,
+    },
     openGraph: {
       title: event.title,
       description,
       images: [event.coverImage.url],
-      type: "website",
+      type: "article",
+      url: `/events/${slug}`,
     },
   };
 }
@@ -83,6 +89,16 @@ export default async function EventPage({ params }: EventPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
+      <JsonLd
+        data={[
+          eventSchema(event),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Events", path: "/events" },
+            { name: event.title, path: `/events/${event.slug}` },
+          ]),
+        ]}
+      />
       {/* Header — branded navy hero, no image */}
       <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
         <EventHeader event={event} />
