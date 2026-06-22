@@ -38,23 +38,34 @@ Use `permanent: true`. Also audit for other legacy paths (e.g. `/media/*`,
 URL returns `308/301` to the new target (Next emits 308 for permanent redirects,
 which search engines treat as 301-equivalent).
 
-### ☐ 2. Retire the competing old domain `shesharp.co.nz`
+### ☐ 2. Retire the competing old domain `shesharp.co.nz` — needs owner action
 **Why**: Baseline showed `shesharp.co.nz` still ranking — a duplicate-content /
 brand-dilution risk against the canonical `shesharp.org.nz`.
 
-**Where**: DNS/hosting (Cloudflare) — **browser/infra task, not code**. Set a
-domain-level 301 redirect `shesharp.co.nz/*` → `https://www.shesharp.org.nz/*`,
-or at minimum point it at the canonical site. Confirm with the owner whether the
-`.co.nz` domain is still controlled.
+**Status (2026-06-23)**: The domain is **NOT on Cloudflare** — it's on Freeparking
+nameservers (`ns.freeparking.co.nz`) with an A record to `43.245.52.70` (Syrahost),
+so the old `.co.nz` site is likely still live. Cloudflare Redirect Rules can't be
+used as-is. **Recommended path**: set a permanent (301) URL forward directly in
+the Freeparking control panel (`shesharp.co.nz` + `www` → `https://www.shesharp.org.nz`,
+path-preserving if offered). Only migrate the zone to Cloudflare if Freeparking
+can't do a 301. **Open questions for the owner**: do we control the Freeparking
+account, and do we want to keep this domain at all (vs. let it lapse)?
 
-### ☐ 3. Request re-crawl / removal of dead URLs in GSC
+### ◐ 3. Request re-crawl / clean up GSC — indexing done; cleanup pending
 **Why**: Accelerate replacing stale results with current ones.
 
-**Where**: Google Search Console — **browser task**. After task 1 ships: use
-**URL Inspection → Request indexing** on the key new URLs (`/about`, `/contact`,
-`/resources/in-the-press`, `/mentorship`), and optionally **Removals** for the
-worst dead URLs. Clean up the legacy "Couldn't fetch" sitemap entries (deletion
-is irreversible — confirm first).
+**Status (2026-06-23)**:
+- **Done**: Requested indexing (URL Inspection) for `/about`, `/contact`,
+  `/resources/in-the-press`, `/resources/podcasts`, `/mentorship` — all added to a
+  priority crawl queue (used the **Domain** property; the URL-prefix property
+  rejected the www URLs).
+- **Pending owner confirm**: delete the **15 junk sitemap entries** (individual
+  page paths wrongly submitted as sitemaps on 2026-05-04, all 0-page / erroring) —
+  keep only `sitemap.xml`. Recommended: delete all 15 (removing a sitemap
+  submission does not deindex pages).
+- **Deferred (optional)**: temporary Removals for the 5 old dead URLs. Skipped for
+  now — the 301s are the durable fix; revisit only if old URLs still rank
+  prominently in ~2–3 weeks, and use exact-URL (not prefix) removals.
 
 ---
 
