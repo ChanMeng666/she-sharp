@@ -2,7 +2,7 @@ import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
 
 export const metadata = {
-  title: "Accessibility Statement | She Sharp",
+  title: "Accessibility Statement",
   description: "She Sharp's commitment to digital accessibility and making our website usable for everyone.",
 };
 

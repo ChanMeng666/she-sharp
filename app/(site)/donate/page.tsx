@@ -1,11 +1,13 @@
 import { Metadata } from "next";
 import { GraduationCap, Sparkles, Heart } from "lucide-react";
 import { DonateForm } from "@/components/donate/donate-form";
+import { GeoHead, GEO_INSTRUCTIONS } from "@/components/seo/geo-head";
 
 export const metadata: Metadata = {
-  title: "Donate | She Sharp",
+  title: "Donate",
   description:
     "Support She Sharp's mission to empower women in STEM. Your donation helps fund mentorship programmes, workshops, and events across New Zealand.",
+  alternates: { canonical: "/donate" },
 };
 
 const marqueeWords = [
@@ -79,6 +81,7 @@ export default function DonatePage() {
 
   return (
     <main className="overflow-x-hidden w-full">
+      <GeoHead instructions={GEO_INSTRUCTIONS.donate} />
 
       {/* ── ATTENTION: Hero ── */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#1f1e44] via-[#2d2868] to-[#9b2e83] flex items-center min-h-[90vh]">

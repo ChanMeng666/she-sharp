@@ -9,9 +9,10 @@ import {
 } from "@/lib/data/join-team";
 
 export const metadata: Metadata = {
-  title: "Join Our Team | She Sharp",
+  title: "Join Our Team",
   description:
     "Become a volunteer or ambassador at She Sharp. Join our passionate community working to bridge the gender gap in STEM across New Zealand.",
+  alternates: { canonical: "/join-our-team" },
 };
 
 export default function JoinOurTeamPage() {

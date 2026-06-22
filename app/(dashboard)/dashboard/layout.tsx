@@ -9,7 +9,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Dashboard | She Sharp",
+  title: "Dashboard",
   description:
     "Access your She Sharp dashboard to manage your profile, mentorship, meetings, and account settings.",
 };
