@@ -16,7 +16,6 @@ import {
   Mail,
   ChartGantt,
   UsersRound,
-  Heart,
   BarChart3,
   Newspaper,
 } from "lucide-react";
@@ -179,17 +178,17 @@ export const navigationConfig: {
       ],
     },
     {
-      title: "Donate",
-      href: "/donate",
-      icon: Heart,
-    },
-    {
       title: "Contact",
       href: "/contact",
       icon: Mail,
     },
   ],
   buttons: [
+    {
+      title: "Donate",
+      href: "/donate",
+      variant: "brand",
+    },
     // TODO: Re-enable "Join Membership" once the membership logic is finalized.
     // {
     //   title: "Join Membership",

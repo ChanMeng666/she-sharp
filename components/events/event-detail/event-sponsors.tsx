@@ -42,7 +42,7 @@ function SponsorLogoGrid({
               <img
                 src={sponsor.logo}
                 alt={sponsor.name}
-                className={`${logoSizeClass} w-auto max-w-[220px] object-contain opacity-90 transition-opacity duration-300 hover:opacity-100`}
+                className={`${logoSizeClass} w-auto max-w-[220px] object-contain transition-opacity duration-300`}
               />
             </div>
           </TooltipTrigger>
