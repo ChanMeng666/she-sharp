@@ -58,7 +58,7 @@ needs the Crazy Domains/Freeparking login the owner doesn't hold. **Optional
 follow-up**: ask internally who controls that registrar account to flip 302→301.
 Otherwise the canonical-side signals on `.org.nz` will consolidate it over time.
 
-### ◐ 3. Request re-crawl / clean up GSC — indexing done; cleanup pending
+### ☑ 3. Request re-crawl / clean up GSC — DONE 2026-06-23
 **Why**: Accelerate replacing stale results with current ones.
 
 **Status (2026-06-23)**:
@@ -66,13 +66,12 @@ Otherwise the canonical-side signals on `.org.nz` will consolidate it over time.
   `/resources/in-the-press`, `/resources/podcasts`, `/mentorship` — all added to a
   priority crawl queue (used the **Domain** property; the URL-prefix property
   rejected the www URLs).
-- **Pending owner confirm**: delete the **15 junk sitemap entries** (individual
-  page paths wrongly submitted as sitemaps on 2026-05-04, all 0-page / erroring) —
-  keep only `sitemap.xml`. Recommended: delete all 15 (removing a sitemap
-  submission does not deindex pages).
-- **Deferred (optional)**: temporary Removals for the 5 old dead URLs. Skipped for
-  now — the 301s are the durable fix; revisit only if old URLs still rank
-  prominently in ~2–3 weeks, and use exact-URL (not prefix) removals.
+- **Done**: Deleted all **15 junk sitemap entries** (individual page paths wrongly
+  submitted as sitemaps on 2026-05-04). The Sitemaps list now shows only
+  `sitemap.xml` — Success, 119 URLs (GSC will re-fetch to 121 on its own).
+- **Skipped (by decision)**: temporary Removals for the 5 old dead URLs — the 301s
+  are the durable fix. Revisit only if old URLs still rank prominently in ~2–3
+  weeks, using exact-URL (not prefix) removals.
 
 ---
 
