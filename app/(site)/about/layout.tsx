@@ -1,4 +1,7 @@
 import { Metadata } from "next";
+import { JsonLd } from "@/components/seo/json-ld";
+import { personSchema } from "@/lib/seo/schema";
+import { teamMembers } from "@/lib/data/team";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -12,6 +15,12 @@ export default function AboutLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      {/* Person structured data for the team shown on this page. */}
+      <JsonLd data={teamMembers.map((member) => personSchema(member))} />
+      {children}
+    </>
+  );
 }
 

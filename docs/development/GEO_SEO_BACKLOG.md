@@ -60,29 +60,28 @@ is irreversible — confirm first).
 
 ## P1 — Strengthen topical authority & structured data
 
-### ☐ 4. FAQPage structured data on key pages
+### ☐ 4. FAQPage structured data on key pages — BLOCKED (needs FAQ content first)
 **Why**: FAQ schema is strong for both rich results and AI extraction (LLMs love
 Q&A pairs). Helps the "broad category" weakness from the baseline.
 
-**Where**: Add an `faqSchema(items)` builder in `lib/seo/schema.ts`; inject via
-`<JsonLd>` on `/mentorship` (the "how it works" content) and `/donate` /
-`/sponsors/corporate-sponsorship` (common questions). Keep visible on-page copy
-matching the schema (Google requires the answer to be present on the page).
+**Status (2026-06-23)**: Deferred. The `/mentorship` "How the Programme Works"
+section is a **step timeline** (Apply → Get Paired → Meet & Grow), not Q&A, and
+no other page has genuine FAQ content. Google requires FAQPage schema to match
+visible Q&A on the page — adding it without real FAQ copy would violate the
+guidelines. **Prerequisite**: author a visible FAQ section (e.g. on `/mentorship`
+or `/donate`) first, then add an `faqSchema(items)` builder and inject it.
 
-### ☐ 5. Person + team structured data on `/about`
-**Why**: Surfaces leadership (e.g. founder Dr. Mahsa McCauley) as entities AIs can
-attribute quotes/facts to.
+### ☑ 5. Person + team structured data on `/about` — DONE 2026-06-23
+**Done**: Added `personSchema(member)` to `lib/seo/schema.ts` and inject
+`teamMembers.map(personSchema)` via `<JsonLd>` in `app/(site)/about/layout.tsx`.
+Emits a Person node per team member shown on the page (name, jobTitle from roles,
+`worksFor` → Organization @id, `sameAs` LinkedIn, image, trimmed bio). Verified:
+16 Person nodes render on `/about`, founder Mahsa McCauley included. Matches the
+visible team grid (`components/about/team-section.tsx`).
 
-**Where**: `organizationSchema()` could gain `founder` / `employee` Person nodes,
-or add a `personSchema()` and emit on `/about` from `lib/data/team.ts`. Keep it to
-the core team; do not enumerate 120+ mentors.
-
-### ☐ 6. Add the mentor/mentee landing pages to the sitemap
-**Why**: `/mentorship/mentor` and `/mentorship/mentee` are indexable, footer-linked
-landing pages but are **not** in `STATIC_ROUTES` (only `/mentorship` and the
-`/apply` sub-pages are). They should be discoverable.
-
-**Where**: `app/sitemap.ts` → add both paths (priority ~0.7).
+### ☑ 6. Add the mentor/mentee landing pages to the sitemap — DONE 2026-06-23
+**Done**: Added `/mentorship/mentor` and `/mentorship/mentee` (priority 0.7) to
+`STATIC_ROUTES` in `app/sitemap.ts`. Sitemap now 121 URLs.
 
 ### ☐ 7. Per-page OG/share images
 **Why**: Better social/AI preview cards; currently all pages share `/og-cover.png`.
