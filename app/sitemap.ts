@@ -22,6 +22,8 @@ const STATIC_ROUTES: Array<{
     changeFrequency: "yearly",
   },
   { path: "/mentorship", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/mentorship/mentor", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/mentorship/mentee", priority: 0.7, changeFrequency: "monthly" },
   { path: "/mentorship/mentor/apply", priority: 0.6, changeFrequency: "monthly" },
   { path: "/mentorship/mentee/apply", priority: 0.6, changeFrequency: "monthly" },
   { path: "/resources", priority: 0.7, changeFrequency: "weekly" },

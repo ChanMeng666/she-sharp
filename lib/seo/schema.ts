@@ -185,6 +185,36 @@ export function eventSchema(event: EventV3) {
   };
 }
 
+/**
+ * Person node for a team member. Use only for people actually shown on the page
+ * (e.g. the /about team grid) so the structured data matches visible content.
+ * `worksFor` references the Organization node by @id.
+ */
+export function personSchema(member: {
+  name: string;
+  roles?: readonly string[];
+  linkedin?: string;
+  image?: string;
+  description?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: member.name,
+    jobTitle: member.roles?.length ? member.roles.join(", ") : undefined,
+    worksFor: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      "@id": ORGANIZATION_ID,
+    },
+    sameAs: member.linkedin ? [member.linkedin] : undefined,
+    image: member.image ? toAbsolute(member.image) : undefined,
+    description: member.description
+      ? member.description.replace(/\s+/g, " ").trim().slice(0, 500)
+      : undefined,
+  };
+}
+
 /** BreadcrumbList from an ordered list of {name, path} crumbs. */
 export function breadcrumbSchema(items: Array<{ name: string; path: string }>) {
   return {
