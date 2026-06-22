@@ -38,18 +38,25 @@ Use `permanent: true`. Also audit for other legacy paths (e.g. `/media/*`,
 URL returns `308/301` to the new target (Next emits 308 for permanent redirects,
 which search engines treat as 301-equivalent).
 
-### ☐ 2. Retire the competing old domain `shesharp.co.nz` — needs owner action
-**Why**: Baseline showed `shesharp.co.nz` still ranking — a duplicate-content /
-brand-dilution risk against the canonical `shesharp.org.nz`.
+### ☑ 2. Old domain `shesharp.co.nz` — RESOLVED ENOUGH (deprioritized)
+**Why (original)**: Baseline showed `shesharp.co.nz` URLs in results — a feared
+duplicate-content / brand-dilution risk.
 
-**Status (2026-06-23)**: The domain is **NOT on Cloudflare** — it's on Freeparking
-nameservers (`ns.freeparking.co.nz`) with an A record to `43.245.52.70` (Syrahost),
-so the old `.co.nz` site is likely still live. Cloudflare Redirect Rules can't be
-used as-is. **Recommended path**: set a permanent (301) URL forward directly in
-the Freeparking control panel (`shesharp.co.nz` + `www` → `https://www.shesharp.org.nz`,
-path-preserving if offered). Only migrate the zone to Cloudflare if Freeparking
-can't do a 301. **Open questions for the owner**: do we control the Freeparking
-account, and do we want to keep this domain at all (vs. let it lapse)?
+**Status (2026-06-23) — not actually a problem**: `shesharp.co.nz` already
+**302-redirects to `shesharp.org.nz`** for every path (verified:
+`curl -sI http://shesharp.co.nz/` → `302 Location: http://shesharp.org.nz`). So it
+is **not serving competing content**; the baseline simply reflects old `.co.nz`
+pages Google indexed before this forward existed, which a 302 (vs 301) is slow to
+drop. WHOIS: registered via **Crazy Domains** (Dreamscape), created 2015-03-12,
+privacy-protected, updated 2026-03-19 (i.e. around the `.org.nz` migration → likely
+still org-controlled, but **not under the current owner's account**).
+
+**Decision**: Deprioritized — not blocking. The only remaining gain is cosmetic
+(upgrade the **302 → 301** and point straight to `https://www.shesharp.org.nz`
+with path preserved instead of the current `http://shesharp.org.nz` chain), which
+needs the Crazy Domains/Freeparking login the owner doesn't hold. **Optional
+follow-up**: ask internally who controls that registrar account to flip 302→301.
+Otherwise the canonical-side signals on `.org.nz` will consolidate it over time.
 
 ### ◐ 3. Request re-crawl / clean up GSC — indexing done; cleanup pending
 **Why**: Accelerate replacing stale results with current ones.
