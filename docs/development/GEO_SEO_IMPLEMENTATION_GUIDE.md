@@ -173,6 +173,31 @@ export async function GET() {
 
 Link `/llms-full.txt` from `public/llms.txt` so crawlers find it.
 
+### 1d. Legacy URL redirects (if the site was migrated)
+
+If the site changed its URL structure (a redesign or domain/CMS migration),
+search indexes and AI engines will still hold the **old** URLs. If those now
+404, you lose link equity and users/bots hit dead ends. Add permanent (301)
+redirects to the current routes.
+
+```ts
+// next.config.ts — Next emits 308 for permanent:true (301-equivalent to engines)
+async redirects() {
+  return [
+    { source: "/about-us", destination: "/about", permanent: true },
+    { source: "/media/:path*", destination: "/resources", permanent: true }, // catch-all last
+    // … one per legacy path; more specific rules before catch-alls (first match wins)
+  ];
+}
+```
+
+How to find the legacy paths: run the brand query in a search engine and note
+which old URLs still appear, and/or read GSC's **Pages → Not indexed → 404**
+report once data accrues. Verify each old path returns `308/301` to the right
+target and that live routes are unaffected. Also check for a **competing old
+domain** (e.g. a `.co.nz` vs `.org.nz`) — ideally 301 it to the canonical host
+(registrar/DNS task).
+
 ---
 
 ## Step 2 — Structured data (JSON-LD)
@@ -403,10 +428,11 @@ See `GEO_SEO_MONITORING.md` for the KPI list and recurring checks. In short:
 - [ ] `app/robots.ts` — AI crawlers authorized, sitemap advertised, private paths disallowed.
 - [ ] `app/sitemap.ts` — static table + dynamic content; no 404/disabled URLs.
 - [ ] `public/llms.txt` + `app/llms-full.txt/route.ts`.
-- [ ] `components/seo/json-ld.tsx` + `lib/seo/schema.ts`; Org+WebSite site-wide; domain type on detail pages; BreadcrumbList.
+- [ ] `components/seo/json-ld.tsx` + `lib/seo/schema.ts`; Org+WebSite site-wide; domain type on detail pages; BreadcrumbList; Person on team/about (only people shown on the page).
 - [ ] Root `title` template; child suffixes removed; **no root canonical**; home self-canonical.
 - [ ] `app/manifest.ts` + PNG favicons.
 - [ ] (Optional) `components/seo/geo-head.tsx` on key pages.
+- [ ] (If migrated) `next.config.ts` `redirects()` for legacy 404 URLs; consider a competing old domain.
 - [ ] Local verify: build + curl (robots/sitemap/llms/manifest/JSON-LD/titles/canonicals); watch for stale-server.
 - [ ] Production verify + Rich Results Test.
 - [ ] GSC: domain property verified, sitemap submitted (Success).

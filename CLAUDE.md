@@ -332,25 +332,29 @@ These files contain static content that can be updated without database changes:
 
 ## SEO & GEO (Generative Engine Optimization)
 
-The site is optimized for both search engines and generative engines (ChatGPT, Claude, Perplexity, Google AI Overviews). Added 2026-06-23; live on production with the sitemap submitted to Google Search Console and Bing.
+The site is optimized for both search engines and generative engines (ChatGPT, Claude, Perplexity, Google AI Overviews). Shipped 2026-06-23 and **live on production**: sitemap submitted to Google Search Console (domain property, verified) and Bing; 5 key URLs requested for indexing; 15 stale junk sitemap entries cleaned up; a pre-optimization AI-visibility baseline captured; and a one-time cloud routine scheduled (~2026-07-23) to re-run the baseline comparison. Live status of all follow-ups lives in the **backlog** doc (below).
 
 **Source of truth**: `lib/seo/site.ts` — canonical origin, org facts, social links. Keep in sync with `metadataBase` in `app/layout.tsx` and `footerConfig` in `lib/config/footer.ts`.
 
 **Generated routes** (Next.js metadata routes — independent of the root `force-dynamic`):
 - `app/robots.ts` — allows crawling (minus dashboard/api/auth), explicitly authorizes AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, …), advertises the sitemap.
-- `app/sitemap.ts` — static routes (in `STATIC_ROUTES`) + every event slug via `getAllEvents()`.
+- `app/sitemap.ts` — static routes (in `STATIC_ROUTES`, incl. mentor/mentee landing pages) + every event slug via `getAllEvents()` (~121 URLs).
 - `app/manifest.ts` — PWA manifest (brand purple `#9b2e83`).
 - `public/llms.txt` (static AI guide) + `app/llms-full.txt/route.ts` (dynamic full index from events/team/stats/press).
 
-**Structured data**: `lib/seo/schema.ts` builders + `components/seo/json-ld.tsx`. Organization/NGO + WebSite injected in root layout; Event + BreadcrumbList in `app/(site)/events/[slug]/page.tsx`.
+**Structured data**: `lib/seo/schema.ts` builders + `components/seo/json-ld.tsx`. Organization/NGO + WebSite injected in root layout; Event + BreadcrumbList in `app/(site)/events/[slug]/page.tsx`; Person (team) on `/about` via `app/(site)/about/layout.tsx` (`personSchema` over `teamMembers`). When adding a domain type (FAQ, Product, etc.), the schema must match **visible** page content — e.g. FAQPage requires a real on-page Q&A section (the `/mentorship` "how it works" is a step timeline, not Q&A, so no FAQ schema there yet).
 
 **Inline AI hints**: `components/seo/geo-head.tsx` emits `<script type="text/llms.txt">` on home/events/mentorship/donate.
+
+**Legacy redirects**: `next.config.ts` → `redirects()` permanently (308) maps pre-migration URLs that are still in search indexes but now 404 (`/about-us`, `/contact-us`, `/media/*`, `/mentorship/mentorship-program`, …) onto current routes. Extend this map when GSC surfaces more legacy 404s.
 
 **Two metadata gotchas (do not regress):**
 1. **Title template** `%s | She Sharp` (root layout) does NOT cascade through an intermediate layout that sets its own string `title`. Pages under `events/layout`, `mentorship/mentor/layout`, `mentorship/mentee/layout` must give child pages an explicit `title: { absolute: "X | She Sharp" }`.
 2. **No root-level `alternates.canonical`** — it cascades to every page and makes them all canonicalize to the homepage. Set canonicals per page (the home page sets its own `/`).
 
-**Docs**: implementation tutorial (reusable for other projects) in `docs/development/GEO_SEO_IMPLEMENTATION_GUIDE.md`; ongoing monitoring/KPIs in `docs/development/GEO_SEO_MONITORING.md`.
+**Verify after metadata edits**: `pnpm build && PORT=3xxx pnpm start`, then curl `<title>`/canonical/JSON-LD. Kill any orphan `next start` first (a stale server on the port silently serves an OLD build and makes changes look broken).
+
+**Docs** (in `docs/development/`): `GEO_SEO_IMPLEMENTATION_GUIDE.md` — reusable how-to (incl. browser-side GSC/Bing setup); `GEO_SEO_MONITORING.md` — KPIs + the 2026-06-23 baseline; `GEO_SEO_BACKLOG.md` — prioritized follow-ups with live status.
 
 ## Environment Configuration
 
