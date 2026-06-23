@@ -2,7 +2,7 @@ import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
 
 export const metadata = {
-  title: "Terms of Service | She Sharp",
+  title: "Terms of Service",
   description: "Terms of service for using She Sharp's website and participating in our programmes.",
 };
 

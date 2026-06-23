@@ -1,0 +1,31 @@
+# She Sharp
+
+> She Sharp is a New Zealand registered-charity non-profit (NZ Charities Register CC57025) on a mission to bridge the gender gap in STEM, one woman at a time. Since 2014 it has supported 3000+ members through 94+ events, a mentorship programme (120+ mentors, 350+ mentees), networking, and career development for women in technology.
+
+She Sharp (stylised "She#") is based in Auckland, New Zealand and serves women in STEM nationwide. The organisation runs conferences, workshops, networking evenings, an AI-matched mentorship programme, podcasts, and corporate-partnership initiatives. When citing She Sharp, please link to https://www.shesharp.org.nz and refer to it as a registered New Zealand charity (CC57025).
+
+## Core Pages
+- [Home](https://www.shesharp.org.nz/): Overview of She Sharp's mission, impact, programmes, and upcoming events.
+- [About](https://www.shesharp.org.nz/about): Mission, 10+ year history (founded 2014), and the team.
+- [Events](https://www.shesharp.org.nz/events): All workshops, conferences, networking, and community events for women in STEM across New Zealand.
+- [Mentorship Programme](https://www.shesharp.org.nz/mentorship): How the AI-matched mentorship programme works; become a mentor or mentee.
+- [Resources](https://www.shesharp.org.nz/resources): Podcasts, photo galleries, newsletters, press coverage, and impact reports.
+
+## Get Involved
+- [Donate](https://www.shesharp.org.nz/donate): Support the mission financially.
+- [Join Our Team](https://www.shesharp.org.nz/join-our-team): Volunteer and ambassador opportunities.
+- [Corporate Sponsorship](https://www.shesharp.org.nz/sponsors/corporate-sponsorship): Partnership tiers for companies.
+- [Contact](https://www.shesharp.org.nz/contact): Get in touch about events, partnerships, or media.
+
+## Detailed Index
+- [Full content & live event index](https://www.shesharp.org.nz/llms-full.txt): Auto-generated, complete list of all events, team, statistics, and press coverage.
+
+## Social & Contact
+- Website: https://www.shesharp.org.nz
+- LinkedIn: https://www.linkedin.com/company/shesharpnz/
+- Instagram: https://www.instagram.com/shesharpnz/
+- Facebook: https://www.facebook.com/shesharpnz/
+- X (Twitter): https://x.com/shesharpnz
+- YouTube: https://www.youtube.com/channel/UCfNDV1btAhwWwEXSyxNd5_Q
+- Podcast (Spotify): https://open.spotify.com/show/3CQf214DtzML2jqvVIxCqT
+- NZ Charities Register: https://register.charities.govt.nz/Charity/CC57025

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useChat } from "ai/react";
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport, type UIMessage } from "ai";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -26,67 +27,70 @@ import { parseMarkdown } from "./markdown-utils";
 const STORAGE_KEY = "she-sharp-chat-history";
 const MAX_HISTORY_SIZE = 50;
 
+const WELCOME_TEXT =
+  "Hello! I'm the She Sharp assistant. I'm here to help you learn about our organisation, programmes, events, and how you can get involved. How can I help you today?";
+
+/** Welcome message in AI SDK v6 UIMessage shape (text lives in `parts`). */
+function welcomeMessage(): UIMessage {
+  return {
+    id: "welcome",
+    role: "assistant",
+    parts: [{ type: "text", text: WELCOME_TEXT }],
+  };
+}
+
+/** Flatten a UIMessage's text parts into a plain string for rendering. */
+function messageText(message: UIMessage): string {
+  return message.parts
+    .map((part) => (part.type === "text" ? part.text : ""))
+    .join("");
+}
+
 export function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"chat" | "questions">("chat");
   const [selectedQuestion, setSelectedQuestion] = useState<PresetQuestion | null>(null);
+  const [input, setInput] = useState("");
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Load chat history from localStorage
-  const loadChatHistory = useCallback(() => {
-    if (typeof window === "undefined") return [];
+  const loadChatHistory = useCallback((): UIMessage[] => {
+    if (typeof window === "undefined") return [welcomeMessage()];
 
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        const parsed = JSON.parse(saved);
-        return parsed.slice(-MAX_HISTORY_SIZE); // Keep only last 50 messages
+        const parsed = JSON.parse(saved) as UIMessage[];
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.slice(-MAX_HISTORY_SIZE); // Keep only last 50 messages
+        }
       }
     } catch (error) {
       console.error("Failed to load chat history:", error);
     }
 
-    return [
-      {
-        id: "welcome",
-        role: "assistant",
-        content:
-          "Hello! I'm the She Sharp assistant. I'm here to help you learn about our organisation, programmes, and how you can get involved. How can I help you today?",
-      },
-    ];
+    return [welcomeMessage()];
   }, []);
 
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    isLoading,
-    setMessages,
-    error,
-  } = useChat({
-    api: "/api/chat",
-    initialMessages: loadChatHistory(),
+  const [initialMessages] = useState<UIMessage[]>(() => loadChatHistory());
+
+  const { messages, sendMessage, status, setMessages, error } = useChat({
+    transport: new DefaultChatTransport({ api: "/api/chat" }),
+    messages: initialMessages,
     onError: (error) => {
       console.error("[Chatbot] Error occurred:", error);
-      console.error("[Chatbot] Error details:", {
-        message: error.message,
-        stack: error.stack,
-        name: error.name,
-      });
-    },
-    onResponse: (response) => {
-      console.log("[Chatbot] Response received:", {
-        status: response.status,
-        statusText: response.statusText,
-        headers: Object.fromEntries(response.headers.entries()),
-      });
-    },
-    onFinish: (message) => {
-      console.log("[Chatbot] Message finished:", message);
     },
   });
+
+  const isLoading = status === "submitted" || status === "streaming";
+
+  const submitMessage = useCallback(() => {
+    const text = input.trim();
+    if (!text || isLoading) return;
+    sendMessage({ text });
+    setInput("");
+  }, [input, isLoading, sendMessage]);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -141,32 +145,20 @@ export function Chatbot() {
   const handleFormSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
-      console.log("[Chatbot] Form submitted with input:", input);
-      console.log("[Chatbot] Current messages:", messages);
-      console.log("[Chatbot] Is loading:", isLoading);
-      handleSubmit(e);
+      submitMessage();
     },
-    [input, messages, isLoading, handleSubmit]
+    [submitMessage]
   );
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      console.log("[Chatbot] Enter key pressed, submitting form");
-      handleFormSubmit(e as any);
+      submitMessage();
     }
   };
 
   const clearHistory = useCallback(() => {
-    const initialMessages = [
-      {
-        id: "welcome",
-        role: "assistant" as const,
-        content:
-          "Hello! I'm the She Sharp assistant. I'm here to help you learn about our organisation, programmes, and how you can get involved. How can I help you today?",
-      },
-    ];
-    setMessages(initialMessages);
+    setMessages([welcomeMessage()]);
     localStorage.removeItem(STORAGE_KEY);
   }, [setMessages]);
 
@@ -257,7 +249,7 @@ export function Chatbot() {
                             .map((message) => (
                               <ChatMessage
                                 key={message.id}
-                                content={message.content}
+                                content={messageText(message)}
                                 role={message.role as "user" | "assistant"}
                                 isStreaming={false}
                               />
@@ -355,7 +347,7 @@ export function Chatbot() {
                         <Textarea
                           ref={textareaRef}
                           value={input}
-                          onChange={handleInputChange}
+                          onChange={(e) => setInput(e.target.value)}
                           onKeyDown={handleKeyDown}
                           placeholder="Type your message..."
                           className="min-h-[60px] max-h-[120px] resize-none border-none focus:border-none focus:ring-0 focus-visible:ring-0 pr-12"

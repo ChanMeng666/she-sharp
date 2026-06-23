@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 // import { MembershipBenefits, MembershipHero, MembershipTiers } from "@/components/membership";
 //
 // export const metadata: Metadata = {
-//   title: "Membership | She Sharp",
+//   title: "Membership",
 //   description:
 //     "Join She Sharp and unlock mentorship, exclusive events, premium resources, and a supportive community of women in tech.",
 // };

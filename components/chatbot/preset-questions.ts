@@ -6,7 +6,7 @@ export const presetQuestions: PresetQuestion[] = [
     id: '1',
     question: 'What is She Sharp?',
     answer:
-      "She Sharp is a non-profit organisation dedicated to bridging the gender gap in STEM fields. Since 2014, we have been empowering women in technology through mentorship programmes, networking events, and career development resources. With over 2200+ members and 50+ sponsors, we are committed to creating an inclusive tech community.\n\n**Learn more:** [About Us](/about) | [Our Team](/about#team)",
+      "She Sharp is a non-profit organisation dedicated to bridging the gender gap in STEM fields. Since 2014, we have been empowering women in technology through mentorship programmes, networking events, and career development resources. With over 3000+ members and 50+ sponsors, we are committed to creating an inclusive tech community.\n\n**Learn more:** [About Us](/about) | [Our Team](/about#team)",
     category: 'about',
   },
   {
@@ -38,14 +38,14 @@ export const presetQuestions: PresetQuestion[] = [
     id: '2',
     question: 'How can I join the mentorship programme?',
     answer:
-      "To join as a mentee:\n1. Complete the application form\n2. Pay the $100 NZD annual membership fee\n3. Receive your invitation code via email\n4. Use the code to register and create your account\n\nOnce registered, you'll be matched with a mentor based on your goals and preferences.\n\n**Get started:** [Join as Mentee](/mentorship/mentee) | [View Our Mentors](/mentorship#mentors-list)",
+      "**Please note:** new mentorship applications are currently paused. The best way to be notified when they re-open is to subscribe to our newsletter (see the footer) or follow She Sharp on social media.\n\nHow the programme works when applications are open:\n1. Complete the application form\n2. Pay the $100 NZD annual membership fee\n3. Receive your invitation code via email\n4. Use the code to register and create your account\n\nOnce registered, you'll be matched with a mentor based on your goals and preferences.\n\n**Learn more:** [Mentorship Overview](/mentorship) | [View Our Mentors](/mentorship#mentors-list)",
     category: 'mentorship',
   },
   {
     id: '8',
     question: 'How can I get involved as a mentor?',
     answer:
-      "To become a mentor:\n1. Complete the application form\n2. Our team reviews your application (5-7 business days)\n3. If approved, receive your invitation code via email\n4. Register and create your mentor account\n\nYou'll be matched with mentees based on your expertise and their goals.\n\n**Apply now:** [Become a Mentor](/mentorship/mentor) | [Mentorship Overview](/mentorship)",
+      "**Please note:** new mentor applications are currently paused. To hear when they re-open, subscribe to our newsletter (see the footer) or follow She Sharp on social media.\n\nHow it works when applications are open (mentoring is free):\n1. Complete the application form\n2. Our team reviews your application (5-7 business days)\n3. If approved, receive your invitation code via email\n4. Register and create your mentor account\n\nYou'll be matched with mentees based on your expertise and their goals.\n\n**Learn more:** [Mentorship Overview](/mentorship)",
     category: 'mentorship',
   },
 
