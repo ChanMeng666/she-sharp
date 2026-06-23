@@ -132,7 +132,7 @@ Located in `/app/` root directory (8 pages):
 - **Media Hub**: Podcasts, newsletters, photo galleries, press coverage
 - **Support Options**: Donation and corporate sponsorship pages
 - **Contact System**: Contact forms with DB storage and Slack notifications
-- **AI Chatbot**: OpenAI GPT-4o-mini powered assistant
+- **AI Chatbot**: Knowledge-grounded AI agent (Vercel AI SDK 6 `ToolLoopAgent`) that answers about events/mentorship/team/sponsors/donate/volunteer from live data with in-site links. See `docs/development/CHATBOT_AI_AGENT.md`
 
 ### Technology Stack
 - **Framework**: Next.js 15.4.0 with App Router
@@ -141,7 +141,7 @@ Located in `/app/` root directory (8 pages):
 - **Authentication**: NextAuth 5.0 (OAuth) + Custom JWT using bcrypt
 - **UI**: shadcn/ui components (63 components) with Tailwind CSS v4
 - **Styling**: Tailwind CSS with PostCSS and custom brand colors
-- **AI**: OpenAI GPT-4o-mini (chatbot) + OpenAI GPT-4 (mentor matching)
+- **AI**: Chatbot = Vercel AI SDK 6 agent on OpenAI GPT-4o-mini with tool calling (direct OpenAI, NOT the AI Gateway — see chatbot doc); mentor matching = OpenAI GPT-4
 - **Email**: Resend for transactional emails (auth, mentorship, recruitment)
 - **Notifications**: Slack Incoming Webhooks for form submission alerts (volunteer, contact)
 - **Payments**: Stripe for subscriptions and one-time payments
@@ -223,7 +223,7 @@ Organized by feature:
 - Root level (1) - media-section
 
 ### Feature Components
-- **Chatbot** (`/components/chatbot/`) (7 files) - AI assistant with preset questions, context management
+- **Chatbot** (`/components/chatbot/`) (7 files) - AI agent UI (AI SDK 6 `useChat`); business logic lives in `lib/chatbot/` (agent, tools, knowledge, rate-limit, analytics). See `docs/development/CHATBOT_AI_AGENT.md`
 - **Data Table** (`/components/data-table/`) (7 files) - TanStack Table with drag-and-drop columns
 - **Events** (`/components/events/`) (9 files) - Event cards, registration, calendar integration
 - **Gallery** (`/components/gallery/`) (3 files) - Photo gallery with lightbox
@@ -296,7 +296,7 @@ Organized by feature:
 ### Other Endpoints
 - `/api/resources/` (3) - Resource management and downloads
 - `/api/notifications/` (2) - Notification handling and preferences
-- `/api/chat/` - AI chatbot (OpenAI GPT-4o-mini)
+- `/api/chat/` - AI chatbot agent (AI SDK 6 ToolLoopAgent, tool calling over live data; per-IP rate limit + question analytics)
 - `/api/invitation-codes/validate` - Code validation
 - `/api/matching/suggestions` - AI match suggestions
 - `/api/dashboard/overview` - Dashboard data
@@ -330,6 +330,46 @@ These files contain static content that can be updated without database changes:
 5. **Type Safety**: Leverage TypeScript and Drizzle's type inference
 6. **Caching**: Match results and mentor profiles cached for performance
 
+## SEO & GEO (Generative Engine Optimization)
+
+The site is optimized for both search engines and generative engines (ChatGPT, Claude, Perplexity, Google AI Overviews). Shipped 2026-06-23 and **live on production**: sitemap submitted to Google Search Console (domain property, verified) and Bing; 5 key URLs requested for indexing; 15 stale junk sitemap entries cleaned up; a pre-optimization AI-visibility baseline captured; and a one-time cloud routine scheduled (~2026-07-23) to re-run the baseline comparison. Live status of all follow-ups lives in the **backlog** doc (below).
+
+**Source of truth**: `lib/seo/site.ts` — canonical origin, org facts, social links. Keep in sync with `metadataBase` in `app/layout.tsx` and `footerConfig` in `lib/config/footer.ts`.
+
+**Generated routes** (Next.js metadata routes — independent of the root `force-dynamic`):
+- `app/robots.ts` — allows crawling (minus dashboard/api/auth), explicitly authorizes AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, …), advertises the sitemap.
+- `app/sitemap.ts` — static routes (in `STATIC_ROUTES`, incl. mentor/mentee landing pages) + every event slug via `getAllEvents()` (~121 URLs).
+- `app/manifest.ts` — PWA manifest (brand purple `#9b2e83`).
+- `public/llms.txt` (static AI guide) + `app/llms-full.txt/route.ts` (dynamic full index from events/team/stats/press).
+
+**Structured data**: `lib/seo/schema.ts` builders + `components/seo/json-ld.tsx`. Organization/NGO + WebSite injected in root layout; Event + BreadcrumbList in `app/(site)/events/[slug]/page.tsx`; Person (team) on `/about` via `app/(site)/about/layout.tsx` (`personSchema` over `teamMembers`). When adding a domain type (FAQ, Product, etc.), the schema must match **visible** page content — e.g. FAQPage requires a real on-page Q&A section (the `/mentorship` "how it works" is a step timeline, not Q&A, so no FAQ schema there yet).
+
+**Inline AI hints**: `components/seo/geo-head.tsx` emits `<script type="text/llms.txt">` on home/events/mentorship/donate.
+
+**Legacy redirects**: `next.config.ts` → `redirects()` permanently (308) maps pre-migration URLs that are still in search indexes but now 404 (`/about-us`, `/contact-us`, `/media/*`, `/mentorship/mentorship-program`, …) onto current routes. Extend this map when GSC surfaces more legacy 404s.
+
+**Two metadata gotchas (do not regress):**
+1. **Title template** `%s | She Sharp` (root layout) does NOT cascade through an intermediate layout that sets its own string `title`. Pages under `events/layout`, `mentorship/mentor/layout`, `mentorship/mentee/layout` must give child pages an explicit `title: { absolute: "X | She Sharp" }`.
+2. **No root-level `alternates.canonical`** — it cascades to every page and makes them all canonicalize to the homepage. Set canonicals per page (the home page sets its own `/`).
+
+**Verify after metadata edits**: `pnpm build && PORT=3xxx pnpm start`, then curl `<title>`/canonical/JSON-LD. Kill any orphan `next start` first (a stale server on the port silently serves an OLD build and makes changes look broken).
+
+**Docs** (in `docs/development/`): `GEO_SEO_IMPLEMENTATION_GUIDE.md` — reusable how-to (incl. browser-side GSC/Bing setup); `GEO_SEO_MONITORING.md` — KPIs + the 2026-06-23 baseline; `GEO_SEO_BACKLOG.md` — prioritized follow-ups with live status.
+
+## AI Chatbot Assistant
+
+The visitor chatbot (bottom-right) is a knowledge-grounded **AI SDK 6 `ToolLoopAgent`** over **live data** — newly added events appear automatically with zero maintenance. Shipped to production 2026-06-23.
+
+**Full docs**: `docs/development/CHATBOT_AI_AGENT.md` (architecture, model decision, deployment gotchas). Highlights:
+
+- **Logic in `lib/chatbot/`**: `knowledge.ts` (per-request compact context: org + founder, stats, mentorship policy w/ live paused status, next 5 events, get-involved links), `tools.ts` (`findEvents` token-scored search incl. sponsors/city, `getEventDetails`, `getMentors`, `getTeamMembers` — all wrap `lib/data/*`), `agent.ts` (`createSheSharpAgent()` + `getChatModel()`), `redis.ts`/`rate-limit.ts`/`analytics.ts`.
+- **Route** `app/api/chat/route.ts`: `maxDuration=60`, per-IP rate limit, `createAgentUIStreamResponse`, `after()` analytics.
+- **Front-end** `components/chatbot/chatbot.tsx`: AI SDK 6 `useChat` (`@ai-sdk/react`, `DefaultChatTransport`, `sendMessage`/`status`/`message.parts`).
+- **Model = direct OpenAI `gpt-4o-mini`** via `OPENAI_API_KEY` (NOT the Vercel AI Gateway). Gateway free tier is rate-limited and BYOK needs purchased AI Gateway credits (Pro's $20/mo does NOT count), so it's not worth it here. Dormant `CHATBOT_USE_GATEWAY=1` flag can switch to the Gateway later without code changes.
+- **Rate limit + analytics**: Upstash Redis (`@upstash/ratelimit` 15/60s per IP; questions logged to `chatbot:questions`/`chatbot:recent`). Degrades gracefully if Redis env is absent.
+
+**Deploy/build gotchas (also in the doc):** project has **no Vercel Git connection** — deploys are prebuilt via GitHub Actions on push to `main`, so new env vars need a fresh commit (dashboard "Redeploy" won't pick them up). Local pnpm is 11.x but **Vercel uses pnpm 10.x frozen** — after dep changes, regenerate the lockfile with `npx pnpm@10 install --lockfile-only` (pnpm 11 drops the `overrides:` section and breaks deploys). Build locally with `CI=true npx next build`. AI SDK 6 needs **zod ≥ 3.25**.
+
 ## Environment Configuration
 
 Required environment variables (see `.env.example`):
@@ -344,6 +384,10 @@ AUTH_GITHUB_ID / AUTH_GITHUB_SECRET    # GitHub OAuth
 
 # Services
 OPENAI_API_KEY=...                     # OpenAI chatbot (GPT-4o-mini) + GPT-4 matching
+
+# Chatbot rate limiting + analytics (optional; degrades gracefully if unset)
+UPSTASH_REDIS_URL / UPSTASH_REDIS_TOKEN   # or KV_REST_API_URL / KV_REST_API_TOKEN (Vercel Upstash integration)
+# CHATBOT_USE_GATEWAY=1                 # optional: route chat via Vercel AI Gateway (needs purchased AI Gateway credits)
 RESEND_API_KEY=...                     # Email service (auth, mentorship, recruitment)
 
 # Slack Notifications

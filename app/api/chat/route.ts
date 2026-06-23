@@ -1,76 +1,68 @@
-import { openai } from '@ai-sdk/openai';
-import { convertToCoreMessages, streamText } from 'ai';
+import { after } from "next/server";
+import { createAgentUIStreamResponse, type UIMessage } from "ai";
+import { createSheSharpAgent } from "@/lib/chatbot/agent";
+import { checkChatRateLimit } from "@/lib/chatbot/rate-limit";
+import { logChatQuestion } from "@/lib/chatbot/analytics";
+
+// Fluid Compute: streaming spends most of its wall-clock waiting on the model
+// (billed as I/O, not active CPU), so a generous duration is cheap and lets
+// multi-step tool loops finish comfortably.
+export const maxDuration = 60;
+
+/** Best-effort client identifier for rate limiting. */
+function getClientId(req: Request): string {
+  const fwd = req.headers.get("x-forwarded-for");
+  if (fwd) return fwd.split(",")[0].trim();
+  return req.headers.get("x-real-ip") || "anonymous";
+}
+
+/** Extract the latest user question text from UI messages. */
+function lastUserText(messages: UIMessage[]): string {
+  const lastUser = [...messages].reverse().find((m) => m.role === "user");
+  if (!lastUser) return "";
+  return lastUser.parts
+    .map((p) => (p.type === "text" ? p.text : ""))
+    .join(" ")
+    .trim();
+}
 
 export async function POST(req: Request) {
-  console.log('[Chat API] Request received');
-
   try {
-    const { messages } = await req.json();
+    const { messages }: { messages: UIMessage[] } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {
-      console.error('[Chat API] Invalid messages format:', messages);
-      return new Response('Invalid request: messages array is required', {
+      return new Response("Invalid request: messages array is required", {
         status: 400,
       });
     }
 
-    console.log('[Chat API] Processing messages:', messages.length);
+    // Rate limit per client to prevent abuse / runaway cost.
+    const { success } = await checkChatRateLimit(getClientId(req));
+    if (!success) {
+      return new Response(
+        JSON.stringify({
+          error: "Too many requests. Please slow down and try again shortly.",
+        }),
+        { status: 429, headers: { "Content-Type": "application/json" } }
+      );
+    }
 
-    // Clean up messages - remove parts field and system message
-    const cleanedMessages = messages
-      .filter((msg: any) => msg.id !== 'system')
-      .map((msg: any) => ({
-        role: msg.role,
-        content: msg.content
-      }));
+    // Log the visitor's question after the response streams (non-blocking).
+    const question = lastUserText(messages);
+    if (question) {
+      after(() => logChatQuestion(question));
+    }
 
-    console.log('[Chat API] Cleaned messages:', cleanedMessages.length);
-
-    // Create the model - using GPT-4o-mini for cost-effective chat
-    const model = openai('gpt-4o-mini');
-    
-    console.log('[Chat API] Creating stream with model');
-    
-    const result = await streamText({
-      model,
-      system: `You are a helpful assistant for She Sharp, a non-profit organisation dedicated to bridging the gender gap in STEM fields. 
-
-Key information about She Sharp:
-- Founded in 2014, empowering women in technology
-- 3000+ members, 50+ sponsors, 94+ events since inception
-- Core programmes: Mentorship Programme, THRIVE leadership programme, networking events, workshops
-- Mission: Connection, Inspiration, and Empowerment for women in STEM
-- Services: Career development, job board, community forums, technical workshops
-
-When answering questions:
-1. Be friendly, professional, and encouraging
-2. Provide accurate information about She Sharp's programmes and services
-3. Encourage visitors to get involved through membership, mentorship, events, or volunteering
-4. Keep responses concise but informative`,
-      messages: convertToCoreMessages(cleanedMessages),
-      temperature: 0.7,
-      maxTokens: 500,
-      onFinish: ({ text, usage }) => {
-        console.log('[Chat API] Generation finished');
-        console.log('[Chat API] Generated text:', text);
-        console.log('[Chat API] Token usage:', usage);
-      },
-    });
-
-    console.log('[Chat API] Returning stream response');
-    
-    return result.toDataStreamResponse();
+    // Fresh agent per request so its instructions embed the latest live data.
+    const agent = createSheSharpAgent();
+    return createAgentUIStreamResponse({ agent, uiMessages: messages });
   } catch (error) {
-    console.error('[Chat API] Error occurred:', error);
-    console.error('[Chat API] Error stack:', error instanceof Error ? error.stack : 'No stack');
-    
-    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-    
+    console.error("[Chat API] Error occurred:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
     return new Response(JSON.stringify({ error: errorMessage }), {
       status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { "Content-Type": "application/json" },
     });
   }
 }

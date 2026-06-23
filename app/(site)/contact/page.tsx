@@ -8,9 +8,10 @@ import { socialIcons } from "@/components/ui/social-icons";
 import { Mail } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Contact Us | She Sharp",
+    title: "Contact Us",
     description:
         "Get in touch with She Sharp. We'd love to hear from you about events, partnerships, media features, and more.",
+    alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

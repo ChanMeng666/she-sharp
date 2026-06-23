@@ -7,18 +7,29 @@ import { SWRConfig } from 'swr';
 import { CookieBanner } from '@/components/cookie-banner';
 import { Toaster } from '@/components/ui/sonner';
 import { Providers } from './providers';
+import { JsonLd } from '@/components/seo/json-ld';
+import { organizationSchema, websiteSchema } from '@/lib/seo/schema';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.shesharp.org.nz'),
-  title: 'She Sharp - Connecting Women in Technology',
+  title: {
+    default: 'She Sharp - Connecting Women in Technology',
+    template: '%s | She Sharp',
+  },
   description: 'She Sharp is on a mission to bridge the gender gap in STEM, one woman at a time. Through events, networking, and career development opportunities.',
   keywords: ['STEM', 'women', 'technology', 'mentorship', 'New Zealand', 'She Sharp'],
+  // No root-level canonical: it would cascade to every page lacking its own and
+  // make them all canonicalize to the homepage. The home page sets its own "/"
+  // canonical; other pages self-canonicalize to their URL when none is set.
   icons: {
-    icon: '/logos/she-sharp-logo-purple-dark-130x130.svg',
-    shortcut: '/logos/she-sharp-logo-purple-dark-130x130.svg',
-    apple: '/logos/she-sharp-logo-purple-dark-130x130.svg',
+    icon: [
+      { url: '/logos/she-sharp-logo-purple-dark-130x130.svg', type: 'image/svg+xml' },
+      { url: '/logos/she-sharp-logo-purple-dark-130x130.png', sizes: '130x130', type: 'image/png' },
+    ],
+    shortcut: '/logos/she-sharp-logo-purple-dark-130x130.png',
+    apple: '/logos/she-sharp-logo-purple-dark-500x500.png',
   },
   openGraph: {
     title: 'She Sharp - Connecting Women in Technology',
@@ -81,6 +92,7 @@ export default function RootLayout({
       className={`bg-background text-foreground ${montserrat.variable} ${carattere.variable}`}
     >
       <body className="min-h-[100dvh]">
+        <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Providers>
           <SWRConfig
             value={{

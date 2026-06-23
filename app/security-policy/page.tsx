@@ -2,7 +2,7 @@ import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
 
 export const metadata = {
-  title: "Security Policy | She Sharp",
+  title: "Security Policy",
   description: "Learn about She Sharp's security practices and how to report security vulnerabilities.",
 };
 

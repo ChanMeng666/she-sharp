@@ -7,7 +7,7 @@ import { eq } from 'drizzle-orm';
 import { VerifyInvitationForm } from './verify-form';
 
 export const metadata = {
-  title: 'Verify Invitation - She Sharp',
+  title: 'Verify Invitation',
   description: 'Enter your invitation code to complete registration',
 };
 

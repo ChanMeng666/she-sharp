@@ -8,11 +8,13 @@ import { MentorshipBenefits } from "@/components/mentorship/mentorship-benefits-
 import { MentorshipCTASection } from "@/components/mentorship/mentorship-cta-section";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
 import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
+import { GeoHead, GEO_INSTRUCTIONS } from "@/components/seo/geo-head";
 
 export const metadata: Metadata = {
-  title: "Mentorship Programme | She Sharp",
+  title: "Mentorship Programme",
   description:
     "Join She Sharp's mentorship programme to connect with experienced professionals in STEM. Get guidance, support, and grow your career in technology.",
+  alternates: { canonical: "/mentorship" },
 };
 
 export default function MentorshipPage() {
@@ -20,6 +22,7 @@ export default function MentorshipPage() {
 
   return (
     <>
+      <GeoHead instructions={GEO_INSTRUCTIONS.mentorship} />
       <MentorshipHeroSection
         topLeftTitle={
           <>

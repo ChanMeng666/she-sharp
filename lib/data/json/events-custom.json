@@ -256,7 +256,7 @@
             "alt": "Participants collaborating during the hands-on workshop session"
           }
         ],
-        "galleryUrl": "https://photos.google.com/share/AF1QipOup8wH89iVZfvdz2LV5GllVOeggjc4UbCsYZHpT8vH3Myk-uxmQZ9PcwmdkFq-dA?pli=1&mc_cid=e9835f97b7&mc_eid=13a77bf0bf&key=NzZQZ0VTX3hrVnp0bjlIMnpaTVMyaG9OMmV1R3hn",
+        "galleryUrl": "https://photos.app.goo.gl/TRKaMF86o1dXk3bP8",
         "registrationUrl": "https://events.humanitix.com/ai-electronics-workshop",
         "images": [],
         "category": "workshop",
@@ -1354,6 +1354,14 @@
             ]
           },
           {
+            "type": "agenda",
+            "title": "Live Q&A Sessions",
+            "content": [
+              "Session 1 — Wednesday 1 July 2026, 12:00–1:00pm NZST, online live stream, hosted by Christina Tombs. Mentors and venue hosts answer your questions about the rules of engagement, ideas, technology and how to take part.",
+              "Save the date and join via the AUT City Campus Community Hub — more lunchtime sessions follow through July."
+            ]
+          },
+          {
             "type": "info",
             "title": "Registration",
             "content": [
@@ -1410,8 +1418,8 @@
           {
             "title": "Live Q&A & Community Hub",
             "paragraphs": [
-              "From late June, the festival hosts online lunchtime Q&A sessions covering the rules of engagement, ideas, problems to solve, datasets and technology — everything you need to prepare.",
-              "Join the AUT City Campus Community Hub to be the first to know when session dates are announced, or subscribe to the AI Forum mailing list for updates."
+              "The festival hosts online lunchtime Q&A sessions covering the rules of engagement, ideas, problems to solve, datasets and technology — everything you need to prepare. The first session is on Wednesday 1 July 2026, 12:00–1:00pm NZST, hosted by Christina Tombs.",
+              "Join the AUT City Campus Community Hub for the live stream link and future session dates, or subscribe to the AI Forum mailing list for updates."
             ],
             "links": [
               {

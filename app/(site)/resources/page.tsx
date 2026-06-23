@@ -4,9 +4,10 @@ import { Section } from "@/components/layout/section";
 import { ResourcesBentoShowcase, ResourcesPageClient } from "@/components/resources";
 
 export const metadata: Metadata = {
-  title: "Resources | She Sharp",
+  title: "Resources",
   description:
     "Explore She Sharp's podcasts, photo gallery, press coverage, and impact reports.",
+  alternates: { canonical: "/resources" },
 };
 
 export default function ResourcesPage() {

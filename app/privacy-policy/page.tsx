@@ -2,7 +2,7 @@ import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
 
 export const metadata = {
-  title: "Privacy Policy | She Sharp",
+  title: "Privacy Policy",
   description: "She Sharp's privacy policy - how we collect, use, and protect your personal information.",
 };
 

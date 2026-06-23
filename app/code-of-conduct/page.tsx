@@ -2,7 +2,7 @@ import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
 
 export const metadata = {
-  title: "Code of Conduct | She Sharp",
+  title: "Code of Conduct",
   description: "Our community guidelines and expectations for creating a welcoming, inclusive environment for all members.",
 };
 
