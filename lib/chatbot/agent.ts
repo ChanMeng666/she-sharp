@@ -24,9 +24,11 @@ export function getChatModel(): LanguageModel {
   // authenticates automatically via OIDC — no API key required; locally an
   // AI_GATEWAY_API_KEY also routes through the Gateway. Otherwise fall back to a
   // direct OpenAI provider for local development with only OPENAI_API_KEY.
-  // Explicit opt-in to the AI Gateway via a key (needs paid credits or BYOK —
-  // the Gateway free tier is rate-limited per model and unsuitable for prod).
-  if (process.env.AI_GATEWAY_API_KEY) {
+  // Opt in to the AI Gateway (observability/fallback/caching). Requires either
+  // an AI_GATEWAY_API_KEY, or CHATBOT_USE_GATEWAY=1 to route via OIDC on Vercel.
+  // Only enable once the Gateway has BYOK (your own OpenAI key) or paid credits —
+  // its free tier is rate-limited per model and unsuitable for production.
+  if (process.env.AI_GATEWAY_API_KEY || process.env.CHATBOT_USE_GATEWAY === "1") {
     return "openai/gpt-4o-mini";
   }
   // Default: direct OpenAI with the project's own key — no Gateway free-tier
