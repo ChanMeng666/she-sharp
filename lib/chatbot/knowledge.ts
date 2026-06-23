@@ -45,13 +45,18 @@ function renderUpcomingEvents(limit: number): string {
 /** Build the full knowledge context string for the system prompt. */
 export function buildKnowledgeContext(): string {
   const mentorshipOpen = isMentorshipOpen();
-  const teamCount = teamMembers.filter((m) => m.name).length;
+  const namedTeam = teamMembers.filter((m) => m.name);
+  const teamCount = namedTeam.length;
+  // Surface the founder/chair directly — it's the most common org question.
+  const founder = namedTeam.find((m) =>
+    m.roles?.some((r) => /founder/i.test(r))
+  );
 
   return `# She Sharp — Knowledge Base (live data)
 
 ## Organisation
 ${SITE_NAME}: ${SITE_DESCRIPTION}
-Founded in 2014, based in Auckland, serving women in STEM across New Zealand. Registered NZ charity (Charities Register ${CHARITY_REGISTRATION}). Canonical site: ${SITE_URL}. Contact: hello@shesharp.org.nz.
+Founded in 2014${founder ? ` by ${founder.name} (Founder & Chair)` : ""}, based in Auckland, serving women in STEM across New Zealand. Registered NZ charity (Charities Register ${CHARITY_REGISTRATION}). Canonical site: ${SITE_URL}. Contact: hello@shesharp.org.nz. For other team members, use the getTeamMembers tool.
 
 ## Key statistics
 - ${globalStats.members.current}+ active members
