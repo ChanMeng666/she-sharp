@@ -30,6 +30,12 @@ export const NEWSLETTER_MANUAL: NewsletterIssue[] = [
   //   year: 2026,
   //   url: "https://mailchi.mp/shesharp/...",
   // },
+  {
+    id: "2026-06",
+    month: 6,
+    year: 2026,
+    url: "https://mailchi.mp/d19ba8c843ff/xe8t2dvmn3-5867920",
+  },
 ];
 
 /**
