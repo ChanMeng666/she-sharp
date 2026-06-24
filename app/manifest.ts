@@ -22,6 +22,12 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/png",
       },
       {
+        src: "/logos/she-sharp-logo-purple-dark-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
         src: "/logos/she-sharp-logo-purple-dark-500x500.png",
         sizes: "500x500",
         type: "image/png",

@@ -26,6 +26,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/logos/she-sharp-logo-purple-dark-130x130.svg', type: 'image/svg+xml' },
+      { url: '/logos/she-sharp-logo-purple-dark-192x192.png', sizes: '192x192', type: 'image/png' },
       { url: '/logos/she-sharp-logo-purple-dark-130x130.png', sizes: '130x130', type: 'image/png' },
     ],
     shortcut: '/logos/she-sharp-logo-purple-dark-130x130.png',
