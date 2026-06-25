@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { AMBASSADOR_GOOGLE_FORM_URL } from '@/lib/data/join-team';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -629,6 +630,25 @@ export default function VolunteerApplyPage() {
         return null;
     }
   };
+
+  // --- TEMPORARY ambassador (founder request 2026-06-25): in-site Ambassador form is
+  // disabled; ambassador visitors are redirected to the external Google Form. The
+  // ambassador form code above is intentionally preserved but unreachable. To restore
+  // the in-site Ambassador form, delete this whole block. ---
+  useEffect(() => {
+    if (isAmbassador) {
+      window.location.replace(AMBASSADOR_GOOGLE_FORM_URL);
+    }
+  }, [isAmbassador]);
+
+  if (isAmbassador) {
+    return (
+      <div className="flex min-h-[40vh] items-center justify-center text-muted-foreground">
+        Redirecting to the She Sharp Ambassador application form…
+      </div>
+    );
+  }
+  // --- end TEMPORARY ambassador block ---
 
   return (
     <MultiStepFormWrapper

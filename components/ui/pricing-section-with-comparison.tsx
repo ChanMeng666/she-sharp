@@ -5,10 +5,14 @@ import { cn } from "@/lib/utils";
 import { Check, Clock, ArrowRight, Star } from "lucide-react";
 import Link from "next/link";
 import type { VolunteerPath } from "@/components/join-team/types";
+import { AMBASSADOR_GOOGLE_FORM_URL } from "@/lib/data/join-team";
 
 function getPathHref(id: string): string {
   if (id === "volunteer") return "/join-our-team/apply?type=volunteer";
-  if (id === "ambassador") return "/join-our-team/apply?type=ambassador";
+  // --- TEMPORARY ambassador (founder request 2026-06-25): route to external Google Form. ---
+  // To restore the in-site form, uncomment the next line and delete the Google-Form return below it.
+  // if (id === "ambassador") return "/join-our-team/apply?type=ambassador";
+  if (id === "ambassador") return AMBASSADOR_GOOGLE_FORM_URL;
   if (id === "ex-ambassador") return "/join-our-team/apply/ex-ambassador";
   return "/join-our-team";
 }
@@ -157,7 +161,12 @@ export function PricingComparison({
                     variant={isAmbassador ? "brand" : "outline"}
                     className="w-full"
                   >
-                    <Link href={getPathHref(path.id)}>
+                    <Link
+                      href={getPathHref(path.id)}
+                      {...(isAmbassador
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                    >
                       {getButtonLabel(path.id)}
                     </Link>
                   </Button>

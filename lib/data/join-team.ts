@@ -1,5 +1,14 @@
 import type { TabMedia, VolunteerPath } from "@/components/join-team/types";
 
+// TEMPORARY (founder request, 2026-06-25): Ambassador applications are routed to an
+// external Google Form instead of the in-site form at /join-our-team/apply?type=ambassador.
+// To restore the in-site Ambassador form, see the two "TEMPORARY ambassador" blocks in:
+//   - components/ui/pricing-section-with-comparison.tsx
+//   - app/(site)/join-our-team/apply/page.tsx
+// then this constant can be removed.
+export const AMBASSADOR_GOOGLE_FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdTEFjOs6lLHZDGpSvoMfkckloPBMbvFA45iNhVvh1sAsUZlA/viewform?usp=header";
+
 export const volunteerPaths: VolunteerPath[] = [
   {
     id: "volunteer",
