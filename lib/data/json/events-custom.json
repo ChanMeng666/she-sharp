@@ -1192,7 +1192,32 @@
         "speakers": {
           "keynote_speakers": {
             "heading": "Meet Our Speakers",
-            "speakers": []
+            "speakers": [
+              {
+                "name": "Jean Fulop",
+                "title": "Senior Product Manager",
+                "company": "MYOB",
+                "bio": "Jean Fulop is a Senior Product Manager who's spent her career at the crossroads of technology and people and has the scars and wins to show for it. \n\nShe's the kind of PM who gets stuck in — into the messy customer problems, the awkward questions nobody's asking, and the gap between what teams build and what people need. Right now, she's deep in the world of AI for the ANZ mid market, and she'll be the first to tell you it's a lot more interesting than the headlines suggest.",
+                "image": "/img/events/she-sharp-and-myob-working-smarter-jean-fulop.png",
+                "linkedin": "https://www.linkedin.com/in/jean-fulop-46873b30/"
+              },
+              {
+                "name": "Marion Nicholas",
+                "title": "Domain Expert, CA",
+                "company": "MYOB",
+                "bio": "Marion Nicholas (CA) is a Domain Expert at MYOB, working in a development team delivering accounting workflows and practice software across AU and NZ. Bringing a curious, \"why\"-driven mindset, she helps translate complex challenges into practical, customer-led solutions.",
+                "image": "/img/events/she-sharp-and-myob-working-smarter-marion-nicholas.png",
+                "linkedin": "https://nz.linkedin.com/in/marion-nicholas"
+              },
+              {
+                "name": "Katy Seel",
+                "title": "GM People for SME & Practice",
+                "company": "MYOB",
+                "bio": "Katy Seel is GM People for SME & Practice at MYOB, partnering with leaders to shape HR strategy and build high-performing, engaged teams. She brings more than 25 years of HR experience and expertise across talent, team effectiveness and career development, with a strong interest in how AI can help create better employee experiences and prepare organisations for the future of work.",
+                "image": "/img/events/she-sharp-and-myob-working-smarter-katy-seel.jpg",
+                "linkedin": "https://www.linkedin.com/in/katy-seel-52043a/"
+              }
+            ]
           }
         },
         "organizers": [],
