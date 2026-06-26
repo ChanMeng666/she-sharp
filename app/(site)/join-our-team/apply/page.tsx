@@ -2,7 +2,10 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { AMBASSADOR_GOOGLE_FORM_URL } from '@/lib/data/join-team';
+import {
+  AMBASSADOR_GOOGLE_FORM_URL,
+  VOLUNTEER_GOOGLE_FORM_URL,
+} from '@/lib/data/join-team';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -631,24 +634,26 @@ export default function VolunteerApplyPage() {
     }
   };
 
-  // --- TEMPORARY ambassador (founder request 2026-06-25): in-site Ambassador form is
-  // disabled; ambassador visitors are redirected to the external Google Form. The
-  // ambassador form code above is intentionally preserved but unreachable. To restore
-  // the in-site Ambassador form, delete this whole block. ---
+  // --- TEMPORARY join-our-team (founder request 2026-06-25): both in-site Ambassador and
+  // Event Volunteer forms are disabled; visitors are redirected to the external Google
+  // Forms. The form code above is intentionally preserved but unreachable. To restore an
+  // in-site form, delete this whole block. ---
+  const redirectUrl: string = isAmbassador
+    ? AMBASSADOR_GOOGLE_FORM_URL
+    : VOLUNTEER_GOOGLE_FORM_URL;
   useEffect(() => {
-    if (isAmbassador) {
-      window.location.replace(AMBASSADOR_GOOGLE_FORM_URL);
-    }
-  }, [isAmbassador]);
+    window.location.replace(redirectUrl);
+  }, [redirectUrl]);
 
-  if (isAmbassador) {
+  // Both volunteer and ambassador are redirected, so the in-site form below is unreachable.
+  if (redirectUrl) {
     return (
       <div className="flex min-h-[40vh] items-center justify-center text-muted-foreground">
-        Redirecting to the She Sharp Ambassador application form…
+        Redirecting to the She Sharp application form…
       </div>
     );
   }
-  // --- end TEMPORARY ambassador block ---
+  // --- end TEMPORARY join-our-team block ---
 
   return (
     <MultiStepFormWrapper
