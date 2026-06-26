@@ -5,15 +5,22 @@ import { cn } from "@/lib/utils";
 import { Check, Clock, ArrowRight, Star } from "lucide-react";
 import Link from "next/link";
 import type { VolunteerPath } from "@/components/join-team/types";
-import { AMBASSADOR_GOOGLE_FORM_URL } from "@/lib/data/join-team";
+import {
+  AMBASSADOR_GOOGLE_FORM_URL,
+  VOLUNTEER_GOOGLE_FORM_URL,
+  EX_AMBASSADOR_GOOGLE_FORM_URL,
+} from "@/lib/data/join-team";
 
 function getPathHref(id: string): string {
-  if (id === "volunteer") return "/join-our-team/apply?type=volunteer";
-  // --- TEMPORARY ambassador (founder request 2026-06-25): route to external Google Form. ---
-  // To restore the in-site form, uncomment the next line and delete the Google-Form return below it.
+  // --- TEMPORARY join-our-team (founder request 2026-06-25): all three cards route to
+  // external Google Forms. To restore an in-site form, uncomment its original return and
+  // delete the Google-Form return below it. ---
+  // if (id === "volunteer") return "/join-our-team/apply?type=volunteer";
+  if (id === "volunteer") return VOLUNTEER_GOOGLE_FORM_URL;
   // if (id === "ambassador") return "/join-our-team/apply?type=ambassador";
   if (id === "ambassador") return AMBASSADOR_GOOGLE_FORM_URL;
-  if (id === "ex-ambassador") return "/join-our-team/apply/ex-ambassador";
+  // if (id === "ex-ambassador") return "/join-our-team/apply/ex-ambassador";
+  if (id === "ex-ambassador") return EX_AMBASSADOR_GOOGLE_FORM_URL;
   return "/join-our-team";
 }
 
@@ -66,6 +73,8 @@ export function PricingComparison({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
           {paths.map((path) => {
             const isAmbassador = path.id === "ambassador";
+            const href = getPathHref(path.id);
+            const isExternal = href.startsWith("http");
             const responsibilities = path.responsibilities.slice(0, 4);
             const benefits = path.benefits.slice(0, 3);
 
@@ -162,8 +171,8 @@ export function PricingComparison({
                     className="w-full"
                   >
                     <Link
-                      href={getPathHref(path.id)}
-                      {...(isAmbassador
+                      href={href}
+                      {...(isExternal
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
                     >

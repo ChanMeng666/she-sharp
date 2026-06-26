@@ -1,13 +1,21 @@
 import type { TabMedia, VolunteerPath } from "@/components/join-team/types";
 
-// TEMPORARY (founder request, 2026-06-25): Ambassador applications are routed to an
-// external Google Form instead of the in-site form at /join-our-team/apply?type=ambassador.
-// To restore the in-site Ambassador form, see the two "TEMPORARY ambassador" blocks in:
-//   - components/ui/pricing-section-with-comparison.tsx
-//   - app/(site)/join-our-team/apply/page.tsx
-// then this constant can be removed.
+// TEMPORARY (founder request, 2026-06-25): All three "join our team" applications
+// (Ambassador, Event Volunteer, Ex-Ambassador) are routed to external Google Forms
+// instead of the in-site forms under /join-our-team/apply*. The in-site forms, API,
+// Slack service and DB schema are kept intact but made unreachable from the public site.
+// To restore an in-site form, revert the "TEMPORARY ambassador" / "TEMPORARY join-our-team"
+// blocks in:
+//   - components/ui/pricing-section-with-comparison.tsx   (card buttons)
+//   - app/(site)/join-our-team/apply/page.tsx             (volunteer + ambassador guard)
+//   - app/(site)/join-our-team/apply/ex-ambassador/page.tsx (ex-ambassador guard)
+// then these constants can be removed.
 export const AMBASSADOR_GOOGLE_FORM_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSdTEFjOs6lLHZDGpSvoMfkckloPBMbvFA45iNhVvh1sAsUZlA/viewform?usp=header";
+export const VOLUNTEER_GOOGLE_FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSfQCjMOvfh7OVmBZg3T7eS70xhKkB_iSnlIpjv3xJ1i-EUTyg/viewform";
+export const EX_AMBASSADOR_GOOGLE_FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLScTnj1TZrEQnPR-n9hsuXpEkjSD_CFiiJkiot_cHNubvZa5qw/viewform?usp=header";
 
 export const volunteerPaths: VolunteerPath[] = [
   {

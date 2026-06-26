@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { EX_AMBASSADOR_GOOGLE_FORM_URL } from '@/lib/data/join-team';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -423,6 +424,24 @@ export default function ExAmbassadorFormPage() {
         return null;
     }
   };
+
+  // --- TEMPORARY join-our-team (founder request 2026-06-25): the in-site Ex-Ambassador
+  // feedback form is disabled; visitors are redirected to the external Google Form. The
+  // form code above is intentionally preserved but unreachable. To restore the in-site
+  // form, delete this whole block. ---
+  const redirectUrl: string = EX_AMBASSADOR_GOOGLE_FORM_URL;
+  useEffect(() => {
+    window.location.replace(redirectUrl);
+  }, [redirectUrl]);
+
+  if (redirectUrl) {
+    return (
+      <div className="flex min-h-[40vh] items-center justify-center text-muted-foreground">
+        Redirecting to the She Sharp Ex-Ambassador feedback form…
+      </div>
+    );
+  }
+  // --- end TEMPORARY join-our-team block ---
 
   return (
     <MultiStepFormWrapper
