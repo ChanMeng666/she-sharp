@@ -1273,7 +1273,7 @@
         "alt": "Aotearoa AI Hackathon Festival 2026 event cover"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/aotearoa-ai-hackathon-festival-2026",
-      "shortDescription": "A two-day, in-person hackathon at AUT City Campus where teams build AI-enabled solutions to real-world challenges aligned to the UN Sustainable Development Goals. Venue winners advance to national judging and the Aotearoa AI Summit 2026.",
+      "shortDescription": "A two-day hackathon at AUT City Campus building AI solutions for UN SDG challenges. Free pre-event training, venue prizes, and a path to pitch at the Aotearoa AI Summit 2026.",
       "attendees": null,
       "checkedIn": 0,
       "detailPageData": {
@@ -1292,8 +1292,8 @@
         "fullDescription": [
           "The Aotearoa AI Hackathon Festival is a nationwide, multi-venue hackathon held across Aotearoa New Zealand. She Sharp and the AI Forum are bringing the festival to AUT's City Campus for a two-day, in-person event on 7–8 August 2026.",
           "Working in teams, participants create AI-enabled solutions to real-world challenges aligned to five UN Sustainable Development Goals. Day one focuses on team formation, problem definition, and building; day two on refining solutions and pitching to a local judging panel.",
-          "Each venue selects a winning team whose pitch advances to national judging, and four national finalists will be invited to pitch at the Aotearoa AI Summit 2026. No matter your experience level — around a third of participants are new to hackathons — mentors from AUT and industry will support teams throughout.",
-          "The festival is about building practical AI capability, encouraging responsible and ethical AI use, fostering collaboration across regions and sectors, and showcasing innovative, impact-driven ideas."
+          "Each venue selects a winning team whose pitch advances to national judging, and four national finalists will be invited to pitch live at the Aotearoa AI Summit on 18 September 2026 in Auckland, where the Summit audience votes for the overall winner. No matter your experience level — around a third of participants are new to hackathons — mentors from AUT and industry will support teams throughout.",
+          "Free online pre-event training runs throughout July to help you build stronger ideas, prototypes and pitches. The festival is about building practical AI capability, encouraging responsible and ethical AI use, fostering collaboration across regions and sectors, and showcasing innovative, impact-driven ideas."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -1330,7 +1330,7 @@
             "content": [
               "Day 1 (Friday 7 August) — Welcome, health & safety briefing, introduction to the hackathon themes, team formation, and the build begins, with ongoing mentor and technical support.",
               "Day 2 (Saturday 8 August) — Continued building, pitch practice, final submissions, live 5-minute pitches to the local judging panel, and announcement of the venue winner.",
-              "Venue winners advance to national judging; four national finalists pitch at the Aotearoa AI Summit 2026."
+              "Venue winners advance to national judging; four national finalists pitch at the Aotearoa AI Summit on 18 September 2026 in Auckland."
             ]
           },
           {
@@ -1354,17 +1354,53 @@
             ]
           },
           {
+            "type": "prizes",
+            "title": "Prizes & Awards",
+            "content": [
+              "Every venue winning team: $250",
+              "Top four national finalists invited to pitch at the Aotearoa AI Summit 2026",
+              "National — TAIAO Prize (Summit audience vote): $1,000",
+              "National — Technological Brilliance (national judging panel): $1,000",
+              "Prizes supported by AWS and provided via AI Forum New Zealand",
+              "Individual venues may offer additional prizes and categories"
+            ]
+          },
+          {
+            "type": "agenda",
+            "title": "Free Training — Seen Ventures Hack Fit Series",
+            "content": [
+              "Free for all participants — 60-minute online sessions throughout July, 4:00–5:00pm NZST, designed to help you build stronger ideas, prototypes and pitches with practical tools across business, design and technology.",
+              "Become Hack Fit",
+              "Tell the Story with AI",
+              "Design Thinking with AI",
+              "Agentic Workflows",
+              "Making Sense of Data",
+              "Creative Tech Booster",
+              "Creating Multi-Modal AI Experiences",
+              "Register via the AUT City Campus Community Hub : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus"
+            ]
+          },
+          {
+            "type": "info",
+            "title": "Featured Problem: Food Waste",
+            "content": [
+              "One of this year's featured problems is supported by Woolworths New Zealand alongside Kai Commitment, focused on reducing food waste across the supply chain — from farm to fork.",
+              "Explore how AI can help identify waste, fill data gaps, support optimisation and better collaboration across the food system.",
+              "Food Waste problem statement video : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus"
+            ]
+          },
+          {
             "type": "bullets",
             "title": "2026 Venues",
             "content": [
-              "Auckland — AUT City Campus, hosted by AUT + She Sharp, 7–8 August (this event)",
-              "Auckland — AUT, hosted by AUT + Tū Ātea, 7–8 August",
-              "Auckland — Mission Ready, 5–6 August",
-              "Auckland — Unitec, with Seen Ventures, 6–8 August",
+              "Auckland — Mission Ready, 5–6 August (Onehunga)",
+              "Auckland — Unitec + Seen Ventures, 6–8 August (Mt Albert)",
+              "Auckland — AUT + She Sharp, 7–8 August, CBD (this event)",
+              "Auckland — AUT + Tū Ātea, 7–8 August (Manukau)",
+              "Auckland — academyEX, 8–9 August",
               "Waikato — Te Ipu o Te Mahara | Artificial Intelligence Institute, 6–7 August",
               "Wellington — Amazon Web Services (AWS), 6–7 August",
-              "Christchurch — EPIC Innovation + Canterbury Tech, 6–7 August",
-              "More venues to be announced."
+              "Christchurch — EPIC Innovation + Canterbury Tech, 6–7 August"
             ]
           },
           {
@@ -1374,6 +1410,7 @@
               "Build practical, hands-on AI capability on real-world problems",
               "Collaborate in diverse teams (3–7 people) with mentor and technical support",
               "Learn responsible and ethical AI practices",
+              "Access free pre-event training to strengthen your idea and pitch",
               "Pitch your solution and compete to represent your venue at national judging",
               "Open to all experience levels — beginners are welcome"
             ]
@@ -1382,8 +1419,9 @@
             "type": "agenda",
             "title": "Live Q&A Sessions",
             "content": [
-              "Session 1 — Wednesday 1 July 2026, 12:00–1:00pm NZST, online live stream, hosted by Christina Tombs. Mentors and venue hosts answer your questions about the rules of engagement, ideas, technology and how to take part.",
-              "Save the date and join via the AUT City Campus Community Hub — more lunchtime sessions follow through July."
+              "The first live Q&A session was held on Wednesday 1 July 2026, 12:00–1:00pm NZST — mentors and venue hosts covered rules of engagement, ideas, technology and how to take part.",
+              "Q&A Session 1 (1 July 2026) : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/q-a-session-1",
+              "Future Q&A dates, session recordings and the Ask a Question tab are all published in the AUT City Campus Community Hub — join for updates through July and August."
             ]
           },
           {
@@ -1393,7 +1431,17 @@
               "Register online at aihackathon.nz.",
               "Concession and complimentary places are available for AUT students, mentors and supporting staff — registration details are shared directly via the AUT City Campus Community Hub.",
               "Enter as a team or as an individual — just let us know which when you register, and we will help solo registrants find a team on the day.",
-              "Join the AUT City Campus Community Hub for the latest updates and live Q&A session dates."
+              "Join the AUT City Campus Community Hub for the latest updates, training registration and Q&A session links."
+            ]
+          },
+          {
+            "type": "bullets",
+            "title": "Supporters & Venue Hosts",
+            "content": [
+              "Mission Ready, Unitec, Seen Ventures, academyEX, AUT, Tū Ātea, She Sharp",
+              "Te Ipu o Te Mahara | Artificial Intelligence Institute, Amazon Web Services (AWS)",
+              "EPIC Innovation, Canterbury Tech, Tech New Zealand",
+              "Woolworths New Zealand and Kai Commitment (Food Waste featured problem partners)"
             ]
           },
           {
@@ -1401,6 +1449,8 @@
             "title": "Helpful Links",
             "content": [
               "AUT City Campus Community Hub : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus",
+              "Q&A Session 1 recording : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/q-a-session-1",
+              "Pitch deck template : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus",
               "Aotearoa AI Summit : https://aotearoaai.nz",
               "Aotearoa AI Awards : https://aotearoaai.nz/aotearoa-ai-awards-2025/",
               "Join the AI Forum mailing list : https://aiforum.org.nz/subscribe/"
@@ -1431,7 +1481,7 @@
             "title": "Part of a Nationwide Festival",
             "paragraphs": [
               "The AUT City Campus event is one of several venues running across the country during the festival window in early August 2026.",
-              "Venues span Auckland, Waikato, Wellington and Christchurch — see the 2026 Venues list above for the host and dates at each location, with more to be announced."
+              "Venues span Auckland, Waikato, Wellington and Christchurch — see the 2026 Venues list above for the host and dates at each location."
             ],
             "links": [
               {
@@ -1441,15 +1491,45 @@
             ]
           },
           {
+            "title": "Featured Problem — Food Waste",
+            "paragraphs": [
+              "One of this year's featured problems is supported by Woolworths New Zealand alongside Kai Commitment, focused on reducing food waste across the supply chain — from farm to fork.",
+              "Explore how AI can help identify waste, fill data gaps, support optimisation and better collaboration across the food system. Watch the problem statement video and related resources in the Community Hub."
+            ],
+            "links": [
+              {
+                "label": "Food Waste resources",
+                "url": "https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus"
+              }
+            ]
+          },
+          {
+            "title": "Prepare Your Pitch",
+            "paragraphs": [
+              "On day two, each team delivers a live 5-minute pitch to the local judging panel. Venue winners advance to national judging, and four finalists pitch at the Aotearoa AI Summit on 18 September 2026 in Auckland.",
+              "Download the official pitch deck template from the Community Hub to structure your solution, impact and next steps."
+            ],
+            "links": [
+              {
+                "label": "Pitch deck template",
+                "url": "https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus"
+              }
+            ]
+          },
+          {
             "title": "Live Q&A & Community Hub",
             "paragraphs": [
-              "The festival hosts online lunchtime Q&A sessions covering the rules of engagement, ideas, problems to solve, datasets and technology — everything you need to prepare. The first session is on Wednesday 1 July 2026, 12:00–1:00pm NZST, hosted by Christina Tombs.",
-              "Join the AUT City Campus Community Hub for the live stream link and future session dates, or subscribe to the AI Forum mailing list for updates."
+              "The AUT City Campus Community Hub is your central hub for everything leading up to the hackathon — Q&A session recordings, free training registration, the pitch deck template, and the Ask a Question tab for direct support from mentors and venue hosts.",
+              "The first live Q&A session was held on 1 July 2026. Future session dates and resources are published in the Hub as they are announced."
             ],
             "links": [
               {
                 "label": "Join the Community Hub",
                 "url": "https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus"
+              },
+              {
+                "label": "Q&A Session 1",
+                "url": "https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/q-a-session-1"
               },
               {
                 "label": "Subscribe for updates",
