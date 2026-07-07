@@ -10,6 +10,7 @@ import { getAllNewsletters } from "@/lib/data/newsletters-manual";
 
 export const metadata: Metadata = {
   title: "Newsletters",
+  alternates: { canonical: "/resources/newsletters" },
   description:
     "Read past issues of the She Sharp newsletter or subscribe to receive updates on events, mentorship, and community news.",
 };

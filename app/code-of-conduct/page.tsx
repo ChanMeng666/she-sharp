@@ -3,6 +3,7 @@ import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Code of Conduct",
+  alternates: { canonical: "/code-of-conduct" },
   description: "Our community guidelines and expectations for creating a welcoming, inclusive environment for all members.",
 };
 

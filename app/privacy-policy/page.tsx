@@ -3,6 +3,7 @@ import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Privacy Policy",
+  alternates: { canonical: "/privacy-policy" },
   description: "She Sharp's privacy policy - how we collect, use, and protect your personal information.",
 };
 

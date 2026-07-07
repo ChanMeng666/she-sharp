@@ -129,6 +129,38 @@ function buildEventLocation(event: EventV3) {
   return loc.format === "hybrid" ? [place, virtual] : place;
 }
 
+/** Map NZ timezone abbreviations to their UTC offset (NZDT = UTC+13, NZST = +12). */
+function nzOffset(tz?: string): string {
+  return tz === "NZST" ? "+12:00" : "+13:00";
+}
+
+/** Parse a "7:30pm" / "6pm" style clock time to 24h "HH:MM"; null if unparseable. */
+function parseClockTime(time?: string): string | null {
+  const m = time
+    ?.trim()
+    .toLowerCase()
+    .match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)$/);
+  if (!m) return null;
+  let hour = parseInt(m[1], 10);
+  const min = m[2] ? parseInt(m[2], 10) : 0;
+  if (m[3] === "pm" && hour !== 12) hour += 12;
+  if (m[3] === "am" && hour === 12) hour = 0;
+  if (hour > 23 || min > 59) return null;
+  return `${String(hour).padStart(2, "0")}:${String(min).padStart(2, "0")}`;
+}
+
+/**
+ * Compose an ISO datetime with NZ offset from a YYYY-MM-DD date and an optional
+ * clock time. Falls back to the date-only string when the time is missing.
+ */
+function composeNzDateTime(
+  dateOnly: string,
+  time: string | null,
+  tz?: string,
+): string {
+  return time ? `${dateOnly}T${time}:00${nzOffset(tz)}` : dateOnly;
+}
+
 /**
  * Event node for an event detail page. Pulls dates, location, speakers, and
  * registration from the V3 event record; references the Organization as organizer.
@@ -136,9 +168,23 @@ function buildEventLocation(event: EventV3) {
 export function eventSchema(event: EventV3) {
   const data = event.detailPageData;
   const date = parseDateString(event.date);
-  const startDate = Number.isNaN(date.getTime())
+  const dateOnly = Number.isNaN(date.getTime())
     ? undefined
     : date.toISOString().split("T")[0];
+
+  // Compose start/end datetimes from the day plus extracted clock times. Events
+  // are single-day, so endDate shares the day; both fall back to date-only when
+  // no time is available, which still satisfies the schema.
+  const startDate = dateOnly
+    ? composeNzDateTime(dateOnly, parseClockTime(data.startTime), data.timezone)
+    : undefined;
+  const endDate = dateOnly
+    ? composeNzDateTime(dateOnly, parseClockTime(data.endTime), data.timezone)
+    : undefined;
+  // Free RSVP events: the offer is valid from the start of the event day.
+  const validFrom = dateOnly
+    ? `${dateOnly}T00:00:00${nzOffset(data.timezone)}`
+    : undefined;
 
   const speakers = getAllSpeakersFromEvent(event)
     .filter((s) => s.name)
@@ -163,6 +209,7 @@ export function eventSchema(event: EventV3) {
     name: event.title,
     description,
     startDate,
+    endDate,
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: attendanceMode(data.location.format),
     location: buildEventLocation(event),
@@ -174,12 +221,28 @@ export function eventSchema(event: EventV3) {
       url: SITE_URL,
       "@id": ORGANIZATION_ID,
     },
-    performer: speakers.length > 0 ? speakers : undefined,
+    // Named speakers when available; otherwise fall back to She Sharp as the
+    // hosting performer so the recommended `performer` field is always present.
+    performer:
+      speakers.length > 0
+        ? speakers
+        : [
+            {
+              "@type": "Organization",
+              name: SITE_NAME,
+              url: SITE_URL,
+              "@id": ORGANIZATION_ID,
+            },
+          ],
     offers: registrationUrl
       ? {
           "@type": "Offer",
           url: registrationUrl,
+          // She Sharp events are free to attend (RSVP only).
+          price: "0",
+          priceCurrency: "NZD",
           availability: "https://schema.org/InStock",
+          validFrom,
         }
       : undefined,
   };

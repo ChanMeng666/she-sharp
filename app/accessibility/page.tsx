@@ -3,6 +3,7 @@ import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Accessibility Statement",
+  alternates: { canonical: "/accessibility" },
   description: "She Sharp's commitment to digital accessibility and making our website usable for everyone.",
 };
 
