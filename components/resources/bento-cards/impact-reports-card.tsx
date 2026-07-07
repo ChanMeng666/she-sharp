@@ -1,8 +1,6 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText } from "lucide-react";
 import type { ImpactReport } from "@/types/impact-report";
 
 interface ImpactReportsCardProps {
@@ -10,42 +8,33 @@ interface ImpactReportsCardProps {
 }
 
 /**
- * Impact reports card for the journey slot.
- * Shows available annual reports with clickable year buttons linking to Google Drive.
+ * Impact reports card for the resources hub — image-top hairline card.
+ * Year buttons link out to the report PDFs on Google Drive.
  */
 export function ImpactReportsCard({ reports }: ImpactReportsCardProps) {
   return (
-    <Card className="relative h-full w-full overflow-hidden transition-all duration-300 hover:shadow-lg rounded-[var(--radius-card-sm)] md:rounded-[var(--radius-card-md)] lg:rounded-[var(--radius-card-lg)] group">
-      {/* Background Image */}
-      <img
-        src="/img/impact.jpg"
-        alt="Impact background"
-        className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-      />
-
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/5" />
-
-      <div className="relative z-10 p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col h-full">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-4 md:mb-6">
-          <div className="p-2.5 bg-white/20 backdrop-blur-sm rounded-xl">
-            <FileText className="h-5 w-5 text-white" />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-lg font-semibold text-white">Impact Reports</h3>
-            <p className="text-xs text-white/80">Annual achievements</p>
-          </div>
-        </div>
-
-        {/* Year Buttons */}
-        <div className="flex flex-wrap gap-3 mt-auto">
+    <article className="flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-background">
+      <div className="relative aspect-[16/10] overflow-hidden">
+        <img
+          src="/img/impact.jpg"
+          alt="She Sharp community celebrating their impact"
+          className="h-full w-full object-cover"
+        />
+      </div>
+      <div className="flex flex-1 flex-col p-6 md:p-8">
+        <span className="text-label text-brand">Impact Reports</span>
+        <h3 className="mt-3 text-xl font-semibold text-foreground md:text-2xl">
+          Annual achievements
+        </h3>
+        <p className="mt-2 text-ink-600">
+          Read the numbers behind our year — events, reach, and community growth.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
           {reports.map((report, index) => (
             <Button
               key={report.year}
               variant={index === 0 ? "brand" : "outline"}
               size="lg"
-              className={index !== 0 ? "bg-white/10 border-white/30 text-white hover:bg-white/20 hover:text-white" : ""}
               asChild
             >
               <a
@@ -60,6 +49,6 @@ export function ImpactReportsCard({ reports }: ImpactReportsCardProps) {
           ))}
         </div>
       </div>
-    </Card>
+    </article>
   );
 }

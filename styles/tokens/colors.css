@@ -13,38 +13,38 @@
      语义化颜色（shadcn/ui 标准）
      ======================================== */
 
-  /* 背景与前景 */
+  /* 背景与前景 — Editorial: white canvas, navy ink */
   --background: 0 0% 100%;           /* #ffffff 白色背景 */
-  --foreground: 215 28% 17%;         /* #1F2937 深灰文字 */
+  --foreground: 241 39% 19%;         /* #1f1e44 Navy Dark 文字 */
 
   /* 卡片 */
   --card: 0 0% 100%;                 /* #ffffff */
-  --card-foreground: 215 28% 17%;    /* #1F2937 */
+  --card-foreground: 241 39% 19%;    /* #1f1e44 */
 
   /* 弹出层 */
   --popover: 0 0% 100%;              /* #ffffff */
-  --popover-foreground: 215 28% 17%; /* #1F2937 */
+  --popover-foreground: 241 39% 19%; /* #1f1e44 */
 
-  /* 主色（深灰） */
-  --primary: 215 28% 17%;            /* #1F2937 */
+  /* 主色（Navy） */
+  --primary: 241 39% 19%;            /* #1f1e44 Navy Dark */
   --primary-foreground: 0 0% 100%;   /* #ffffff */
 
-  /* 次色（浅灰背景） */
-  --secondary: 0 0% 96%;             /* #f5f5f5 */
-  --secondary-foreground: 215 28% 17%; /* #1F2937 */
+  /* 次色（浅蓝紫背景） */
+  --secondary: 248 33% 97%;          /* #f4f4fa Periwinkle Light */
+  --secondary-foreground: 241 39% 19%; /* #1f1e44 */
 
-  /* 中性色 */
-  --muted: 0 0% 96%;                 /* #f5f5f5 */
-  --muted-foreground: 291 7% 20%;    /* #352f36 */
+  /* 中性色 — page canvas */
+  --muted: 248 33% 97%;              /* #f4f4fa Periwinkle Light */
+  --muted-foreground: 243 19% 42%;   /* #5a5880 ink-600 */
 
   /* 强调色 */
-  --accent: 0 0% 96%;                /* #f5f5f5 */
-  --accent-foreground: 215 28% 17%;  /* #1F2937 */
+  --accent: 248 33% 97%;             /* #f4f4fa */
+  --accent-foreground: 241 39% 19%;  /* #1f1e44 */
 
-  /* 品牌色（She Sharp 紫色） */
+  /* 品牌色（She Sharp 紫色）— strict punctuation only */
   --brand: 312 54% 40%;              /* #9b2e83 品牌紫 */
   --brand-foreground: 0 0% 100%;     /* #ffffff 白色文字 */
-  --brand-hover: 312 54% 31%;        /* #7a2468 深紫hover */
+  --brand-hover: 312 54% 53%;        /* #c846ab Purple Mid — hover is lighter */
 
   /* 浅色背景色（用于区块交替） */
   --surface-purple: 312 50% 93%;     /* #f7e5f3 浅紫背景 */
@@ -88,10 +88,10 @@
   --destructive: 354 70% 51%;        /* #d72f40 错误红 */
   --destructive-foreground: 0 0% 100%; /* #ffffff 白色文字 */
 
-  /* UI 元素 */
-  --border: 0 0% 90%;                /* #e5e5e5 */
-  --input: 0 0% 90%;                 /* #e5e5e5 */
-  --ring: 215 28% 17%;               /* #1F2937 */
+  /* UI 元素 — hairline borders, purple focus ring */
+  --border: 245 31% 93%;             /* #e7e6f2 hairline */
+  --input: 245 31% 93%;              /* #e7e6f2 hairline */
+  --ring: 312 54% 40%;               /* #9b2e83 品牌紫 focus ring */
 
   /* 图表颜色（品牌色系） */
   --chart-1: 312 54% 40%;            /* Purple Dark #9b2e83 */
@@ -136,7 +136,25 @@
   /* ========================================
      圆角
      ======================================== */
-  --radius: 0.5rem;
+  --radius: 16px;
+
+  /* ========================================
+     Ink scale (Editorial neutral ramp, navy-tinted)
+     Use via Tailwind utilities: text-ink-700, border-ink-200, bg-ink-100 …
+     ======================================== */
+  --ink-900: #1f1e44;
+  --ink-700: #4a4970;
+  --ink-600: #5a5880;
+  --ink-500: #8281a0;
+  --ink-300: #c5c4d9;
+  --ink-200: #e7e6f2;
+  --ink-100: #f4f4fa;
+
+  /* ========================================
+     Motion easing tokens
+     ======================================== */
+  --ease-out-expo: cubic-bezier(.16, 1, .3, 1);
+  --ease-snap: cubic-bezier(.83, 0, .17, 1);
 
   /* ========================================
      品牌颜色（Tailwind CSS 兼容）

@@ -117,7 +117,7 @@ export function EventSidebarPanel({
 
   const mapUrl = getMapUrl();
 
-  const cardClass = "rounded-2xl bg-card border border-border/60 shadow-sm p-5 sm:p-6 md:p-8";
+  const cardClass = "rounded-[16px] bg-background border border-border p-5 sm:p-6 md:p-8";
 
   const IconBox = ({ children }: { children: React.ReactNode }) => (
     <div className="flex items-center justify-center w-8 h-8 rounded-lg  shrink-0">
@@ -267,7 +267,7 @@ export function EventSidebarPanel({
 
           {/* Refund policy */}
           {isFuture && event.detailPageData.refundPolicy && (
-            <div className="pt-4 border-t border-border/60">
+            <div className="pt-4 border-t border-border">
               <p className="text-xs text-muted-foreground leading-relaxed">
                 <span className="font-medium text-foreground">Refund policy: </span>
                 {event.detailPageData.refundPolicy}

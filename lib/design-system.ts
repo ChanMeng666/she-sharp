@@ -2,19 +2,19 @@
 export const layoutSystem = {
   // Container widths for different content types
   containers: {
-    narrow: "max-w-3xl",       // 768px - for text-heavy content
-    content: "max-w-5xl",      // 1024px - standard content width
-    wide: "max-w-6xl",         // 1152px - wide content display
-    full: "max-w-8xl",         // 1440px - full width layout
+    narrow: "max-w-3xl",         // 768px - for text-heavy content
+    content: "max-w-[75rem]",    // 1200px - standard editorial content width
+    wide: "max-w-6xl",           // 1152px - wide content display
+    full: "max-w-8xl",           // 1440px - full width layout
   },
 
   // Consistent spacing system
   spacing: {
     section: {
-      base: "py-16",
-      md: "py-16",
-      lg: "py-16",
-      combined: "py-16",
+      base: "py-24",
+      md: "py-24",
+      lg: "py-28",
+      combined: "py-24 lg:py-28",
     },
     component: {
       base: "py-8",
@@ -103,9 +103,9 @@ export const layoutSystem = {
 // Design system presets
 export const designSystem = {
   radius: {
-    sm: "card-sm",      // 30px
-    md: "card-md",      // 40px
-    lg: "card-lg",      // 50px
+    sm: "rounded-[12px]",   // chips / small surfaces
+    md: "rounded-[16px]",   // buttons / inputs
+    lg: "rounded-[32px]",   // cards
     full: "rounded-full",
   },
   cards: {

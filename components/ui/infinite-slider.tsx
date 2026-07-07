@@ -5,7 +5,7 @@ import {
   useAnimationFrame,
   useMotionValue,
   useTransform,
-} from "framer-motion";
+} from "motion/react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import useMeasure from "react-use-measure";
 
@@ -22,7 +22,7 @@ interface InfiniteSliderProps {
 export function InfiniteSlider({
   children,
   gap = 16,
-  duration = 25,
+  duration = 40,
   durationOnHover,
   direction = "horizontal",
   reverse = false,

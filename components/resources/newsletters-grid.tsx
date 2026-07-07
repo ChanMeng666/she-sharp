@@ -76,7 +76,7 @@ export function NewslettersGrid({ issues }: NewslettersGridProps) {
               aria-label={`Read the ${monthName} ${issue.year} newsletter`}
               className="group block"
             >
-              <div className="card-responsive-sm shadow-md transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-xl">
+              <div className="overflow-hidden rounded-[32px] border border-border transition-colors duration-300 group-hover:border-foreground/30">
                 <NewsletterCover
                   month={issue.month}
                   year={issue.year}

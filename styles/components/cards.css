@@ -1,4 +1,5 @@
 @layer utilities {
+  /* Editorial: all card radii converge to 32px; elevation = hairline, no shadow */
   .card-sm {
     border-radius: var(--radius-card-sm);
     overflow: hidden;
@@ -14,43 +15,28 @@
     overflow: hidden;
   }
 
+  /* Responsive card radii kept as class names but converged to 32px */
   .card-responsive-sm {
-    border-radius: 20px;
+    border-radius: var(--radius-card-sm);
     overflow: hidden;
-  }
-  @media (min-width: 640px) {
-    .card-responsive-sm { border-radius: var(--radius-card-sm); /* 30px */ }
   }
 
   .card-responsive-md {
-    border-radius: 24px;
+    border-radius: var(--radius-card-md);
     overflow: hidden;
-  }
-  @media (min-width: 640px) {
-    .card-responsive-md { border-radius: var(--radius-card-sm); /* 30px */ }
-  }
-  @media (min-width: 768px) {
-    .card-responsive-md { border-radius: var(--radius-card-md); /* 40px */ }
   }
 
   .card-responsive-lg {
-    border-radius: var(--radius-card-sm); /* 30px */
+    border-radius: var(--radius-card-lg);
     overflow: hidden;
   }
-  @media (min-width: 768px) {
-    .card-responsive-lg { border-radius: var(--radius-card-md); /* 40px */ }
-  }
-  @media (min-width: 1024px) {
-    .card-responsive-lg { border-radius: var(--radius-card-lg); /* 50px */ }
-  }
 
+  /* Glass card neutralized to solid white + hairline (class name kept) */
   .card-glass {
-    @apply border border-border/30 bg-white/50 backdrop-blur-md backdrop-saturate-150
-           shadow-lg shadow-black/5 transition-all duration-300;
+    @apply border border-border bg-white transition-colors duration-300;
   }
 
   .card-interactive {
-    @apply hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/10
-           hover:border-brand/50 hover:bg-background/60;
+    @apply hover:border-foreground/30;
   }
 }

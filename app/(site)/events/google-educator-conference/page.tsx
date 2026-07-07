@@ -57,7 +57,7 @@ export default function GoogleEducatorConferenceHub() {
       <Section spacing="section" className="pt-28 pb-12 md:pt-32 md:pb-16">
         <Container size="full">
           {/* Title */}
-          <h1 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase">
+          <h1 className="text-center text-display-sm text-foreground">
             Google Educator Conference
           </h1>
 
@@ -65,7 +65,7 @@ export default function GoogleEducatorConferenceHub() {
           <div className="mt-10 md:mt-14 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 max-w-5xl mx-auto">
             {EDITIONS.map((ed) => (
               <Link key={ed.year} href={ed.href} className="group block">
-                <div className="card-responsive-sm overflow-hidden bg-muted shadow-md transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-xl">
+                <div className="overflow-hidden rounded-[32px] border border-border bg-muted transition-transform duration-300 group-hover:-translate-y-1">
                   <div className="aspect-[4/3] w-full overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -94,8 +94,8 @@ export default function GoogleEducatorConferenceHub() {
       {/* Message to the Community */}
       <Section spacing="section" className="pb-12 md:pb-16">
         <Container size="content">
-          <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight uppercase mb-10 md:mb-14">
-            Message to the Community
+          <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-foreground mb-10 md:mb-14">
+            Message to the community
           </h2>
 
           <div className="divide-y divide-border">

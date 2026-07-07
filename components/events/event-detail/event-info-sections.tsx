@@ -23,7 +23,7 @@ export function EventInfoSections({ event }: EventInfoSectionsProps) {
       <Container size="content">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           {sections.map((section, i) => (
-            <div key={i} className="card-responsive-sm bg-background p-6 md:p-8 shadow-sm">
+            <div key={i} className="rounded-[16px] border border-border bg-background p-6 md:p-8">
               <h3 className="text-xl font-semibold text-foreground">
                 {section.title}
               </h3>
@@ -43,7 +43,7 @@ export function EventInfoSections({ event }: EventInfoSectionsProps) {
                       key={k}
                       src={image.url}
                       alt={image.alt}
-                      className="h-32 w-auto rounded-lg object-cover"
+                      className="h-32 w-auto rounded-[12px] object-cover"
                     />
                   ))}
                 </div>

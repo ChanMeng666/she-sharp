@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Montserrat, Carattere } from 'next/font/google';
+import { heading, sans, brandScript } from '@/lib/fonts';
 import { getUser } from '@/lib/db/queries';
 import { serializeData } from '@/lib/utils';
 import { SWRConfig } from 'swr';
@@ -60,19 +60,6 @@ export const viewport: Viewport = {
   maximumScale: 1
 };
 
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
-  style: ['normal', 'italic'],
-  variable: '--font-sans'
-});
-
-const carattere = Carattere({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-brand-script'
-});
-
 /**
  * Helper to serialize async data for SWR fallback.
  * Wraps the promise to serialize Date objects to ISO strings.
@@ -90,7 +77,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-background text-foreground ${montserrat.variable} ${carattere.variable}`}
+      className={`bg-background text-foreground ${heading.variable} ${sans.variable} ${brandScript.variable}`}
     >
       <body className="min-h-[100dvh]">
         <JsonLd data={[organizationSchema(), websiteSchema()]} />

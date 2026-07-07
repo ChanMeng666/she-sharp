@@ -1,57 +1,18 @@
 "use client";
 
-import { ReactNode } from "react";
-import { useAnimateOnScroll } from "@/hooks/use-animate-on-scroll";
-import { cn } from "@/lib/utils";
+/**
+ * Back-compat shim.
+ *
+ * AnimateOnScroll is now a thin wrapper over <Reveal> (components/ui/reveal.tsx)
+ * so the ~30 existing call sites keep working unchanged while adopting the new
+ * flash-free entrance behavior. Prefer importing `Reveal` directly in new code.
+ */
+import { Reveal, type RevealProps } from "@/components/ui/reveal";
 
-interface AnimateOnScrollProps {
-  children: ReactNode;
-  variant?: "fade-up" | "fade-down" | "fade-left" | "fade-right" | "scale" | "fade";
-  className?: string;
-  threshold?: number;
-  rootMargin?: string;
-  once?: boolean;
-  delay?: number;
+export type AnimateOnScrollProps = RevealProps;
+
+export function AnimateOnScroll(props: RevealProps) {
+  return <Reveal {...props} />;
 }
 
-const variantClasses = {
-  "fade-up": "animate-on-scroll-fade-up",
-  "fade-down": "animate-on-scroll-fade-down",
-  "fade-left": "animate-on-scroll-fade-left",
-  "fade-right": "animate-on-scroll-fade-right",
-  scale: "animate-on-scroll-scale",
-  fade: "animate-on-scroll-fade",
-};
-
-export function AnimateOnScroll({
-  children,
-  variant = "fade-up",
-  className,
-  threshold = 0.1,
-  rootMargin = "0px 0px -100px 0px",
-  once = true,
-  delay = 0,
-}: AnimateOnScrollProps) {
-  const { ref, isVisible } = useAnimateOnScroll({
-    threshold,
-    rootMargin,
-    once,
-  });
-
-  return (
-    <div
-      ref={ref as React.RefObject<HTMLDivElement>}
-      className={cn(
-        variantClasses[variant],
-        isVisible && "is-visible",
-        className
-      )}
-      style={{
-        transitionDelay: `${delay}ms`,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
+export { Reveal };

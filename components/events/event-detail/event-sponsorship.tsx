@@ -2,8 +2,9 @@
 
 import { EventV3 } from "@/types/event";
 import { Button } from "@/components/ui/button";
+import { CurtainReveal } from "@/components/ui/reveal";
+import { curatedImages, toSrcSet } from "@/public/img/curated";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, Heart, Users, Sparkles } from "lucide-react";
 
 interface EventSponsorshipProps {
@@ -17,33 +18,24 @@ const HIGHLIGHTS = [
   { icon: Sparkles, text: "50+ corporate sponsors" },
 ];
 
-export function EventSponsorship({ event, className }: EventSponsorshipProps) {
-  return (
-    <section id="event-sponsorship" className="relative overflow-hidden">
-      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <div
-          className="relative py-16 md:py-24"
-          style={{
-            background:
-              "linear-gradient(135deg, hsl(var(--brand)) 0%, hsl(var(--purple-mid)) 50%, hsl(var(--periwinkle)) 100%)",
-          }}
-        >
-          {/* Decorative blurred shapes */}
-          <div className="absolute top-0 left-0 w-72 h-72 bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/8 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
-          <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-white/5 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
+const SPONSOR_PHOTO = curatedImages["connection-smiles"];
 
+export function EventSponsorship({ event }: EventSponsorshipProps) {
+  return (
+    <section id="event-sponsorship" className="relative">
+      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+        <div className="bg-foreground text-background py-16 md:py-24">
           <div className="relative max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
             <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-              {/* Left: Text content */}
+              {/* Left: text content */}
               <div className="flex-1 text-center lg:text-left">
-                <p className="text-sm font-semibold uppercase tracking-widest text-white/70 mb-4">
-                  Corporate Partnerships
+                <p className="text-label text-mint mb-4">
+                  Corporate partnerships
                 </p>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
-                  Partner with Purpose
+                <h2 className="text-display-sm text-white mb-6">
+                  Partner with purpose<span className="text-mint">.</span>
                 </h2>
-                <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
+                <p className="text-lg md:text-xl text-white/75 leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
                   Join leading organisations in empowering women in STEM.
                   Connect with our team to learn how your sponsorship can create
                   meaningful, lasting impact.
@@ -53,10 +45,10 @@ export function EventSponsorship({ event, className }: EventSponsorshipProps) {
                   {HIGHLIGHTS.map(({ icon: Icon, text }) => (
                     <div
                       key={text}
-                      className="flex items-center gap-2 text-white/90"
+                      className="flex items-center gap-2 text-white/85"
                     >
-                      <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center shrink-0">
-                        <Icon className="w-4 h-4" />
+                      <div className="w-8 h-8 rounded-full border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
+                        <Icon className="w-4 h-4 text-mint" />
                       </div>
                       <span className="text-sm font-medium">{text}</span>
                     </div>
@@ -64,14 +56,9 @@ export function EventSponsorship({ event, className }: EventSponsorshipProps) {
                 </div>
 
                 <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="brand"
-                    className="bg-white text-brand hover:bg-white/90 font-semibold group shadow-lg"
-                  >
+                  <Button asChild size="lg" variant="brand" className="group">
                     <Link href="/sponsors/corporate-sponsorship">
-                      Become a Sponsor
+                      Become a sponsor
                       <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </Button>
@@ -80,43 +67,33 @@ export function EventSponsorship({ event, className }: EventSponsorshipProps) {
                       asChild
                       size="lg"
                       variant="outline"
-                      className="border-white/60 bg-transparent text-white hover:bg-white/10 font-semibold"
+                      className="border-white/40 bg-transparent text-white hover:border-white hover:bg-white/10"
                     >
                       <Link
                         href={event.detailPageData.sponsorshipPackageUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Check out our sponsorship package
+                        View sponsorship package
                       </Link>
                     </Button>
                   )}
                 </div>
               </div>
 
-              {/* Right: Decorative visual */}
-              <div className="hidden lg:flex items-center justify-center shrink-0">
-                <div className="relative w-72 h-72 xl:w-80 xl:h-80">
-                  {/* Animated rings */}
-                  <div className="absolute inset-0 rounded-full border-2 border-white/15 animate-pulse" />
-                  <div
-                    className="absolute inset-5 rounded-full border-2 border-white/20"
-                    style={{ animationDelay: "0.5s" }}
+              {/* Right: real community photo in a hairline frame */}
+              <div className="hidden lg:block shrink-0 w-[360px] xl:w-[420px]">
+                <CurtainReveal className="overflow-hidden rounded-[32px] border border-white/15">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={SPONSOR_PHOTO.src}
+                    srcSet={toSrcSet(SPONSOR_PHOTO)}
+                    sizes="420px"
+                    alt={SPONSOR_PHOTO.alt}
+                    className="w-full h-full object-cover aspect-4/3"
+                    loading="lazy"
                   />
-                  <div className="absolute inset-10 rounded-full border-2 border-white/25" />
-                  <div className="absolute inset-15 rounded-full bg-white/10 backdrop-blur-sm" />
-
-                  {/* Center */}
-                  <div className="absolute inset-20 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center shadow-2xl">
-                    <Image
-                      src="/logos/she-sharp-logo-white.png"
-                      alt="She Sharp"
-                      width={80}
-                      height={80}
-                      className="w-14 h-14 xl:w-16 xl:h-16 object-contain"
-                    />
-                  </div>
-                </div>
+                </CurtainReveal>
               </div>
             </div>
           </div>

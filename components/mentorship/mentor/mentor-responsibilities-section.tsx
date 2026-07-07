@@ -2,28 +2,34 @@
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { AccordionFeatureSection } from "@/components/ui/accordion-feature-section";
-import type { FeatureItem } from "@/components/ui/accordion-feature-section";
+import {
+  ResponsibilitiesAccordion,
+  type ResponsibilityItem,
+} from "@/components/mentorship/responsibilities-accordion";
+import { curatedImages } from "@/public/img/curated";
 
-const mentorFeatures: FeatureItem[] = [
+const mentorFeatures: ResponsibilityItem[] = [
   {
     id: 1,
     title: "Commitment",
-    image: "/img/scraped/site/mentorship/66e7d6d1507e385502912e7f_IMG_9898_a19afc43.jpg",
+    image: curatedImages["mentoring-huddle"].src,
+    alt: curatedImages["mentoring-huddle"].alt,
     description:
       "Stay dedicated to mentoring by initiating regular contact with your mentee, committing 2-4 hours per month to the relationship. Follow through on the plans and actions you've mutually agreed upon, ensuring consistency and reliability throughout the mentorship journey.",
   },
   {
     id: 2,
     title: "Guidance",
-    image: "/img/scraped/site/mentorship/66e7d7462e0faf4e732c4cf1_IMG_9889_416482b4.jpg",
+    image: curatedImages["workshop-collaboration"].src,
+    alt: curatedImages["workshop-collaboration"].alt,
     description:
       "Help your mentee figure out and set meaningful goals, encouraging them to nurture their independent thinking skills. Foster their growth by providing direction and support, and celebrate their achievements along the way.",
   },
   {
     id: 3,
     title: "Communication",
-    image: "/img/scraped/site/mentorship/mentor-communication.jpg",
+    image: curatedImages["connection-smiles"].src,
+    alt: curatedImages["connection-smiles"].alt,
     description:
       "Listen to what your mentee needs rather than just pushing your own thoughts. Create a safe space for open dialogue and don't hesitate to give constructive feedback that helps them grow both personally and professionally.",
   },
@@ -31,21 +37,22 @@ const mentorFeatures: FeatureItem[] = [
 
 export function MentorResponsibilitiesSection() {
   return (
-    <Section className="py-16 bg-white">
+    <Section bgColor="accent" className="py-24 lg:py-28">
       <Container size="full">
-        <div className="max-w-8xl mx-auto">
-          <div className="mb-8 sm:mb-10 md:mb-12">
-            <h2 className="text-display-sm text-foreground mb-4">
-              What it means to be a <span className="text-brand">mentor</span>
-            </h2>
-            <p className="text-base text-muted-foreground leading-relaxed max-w-3xl">
-              As a mentor, you play a crucial role in shaping the future of women in STEM.
-              Here&apos;s what we expect from our mentors:
-            </p>
-          </div>
-
-          <AccordionFeatureSection features={mentorFeatures} />
+        <div className="mb-12 md:mb-16 max-w-2xl">
+          <span className="text-label text-brand mb-4 block">
+            Your responsibilities
+          </span>
+          <h2 className="text-display-sm text-foreground mb-4">
+            What it means to be a <span className="text-brand">mentor</span>
+          </h2>
+          <p className="text-base md:text-lg text-ink-600 leading-relaxed">
+            As a mentor, you play a crucial role in shaping the future of women
+            in STEM. Here&apos;s what we expect from our mentors.
+          </p>
         </div>
+
+        <ResponsibilitiesAccordion items={mentorFeatures} />
       </Container>
     </Section>
   );

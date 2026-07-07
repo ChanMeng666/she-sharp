@@ -404,32 +404,32 @@ export default function MentorApplyPage() {
       >
         <div className="absolute inset-0 glass-overlay"></div>
         <div className="container mx-auto px-4 max-w-lg relative z-10">
-          <Card className="glass-card rounded-[50px]">
+          <Card className="glass-card rounded-[32px]">
             <CardContent className="pt-8 text-center">
-              <div className="w-20 h-20 bg-[#effefb] border-2 border-[#b1f6e9] rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-20 h-20 bg-mint-light border-2 border-mint rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle2 className="h-12 w-12 text-brand" />
               </div>
-              <h1 className="text-3xl font-bold text-[#1f1e44] mb-3">
+              <h1 className="text-3xl font-bold text-foreground mb-3">
                 Application Submitted!
               </h1>
-              <p className="text-[#1f1e44]/70 mb-6">
+              <p className="text-ink-600 mb-6">
                 Thank you for applying to become a mentor with She Sharp. Our
                 team will review your application and get back to you within 5-7
                 business days.
               </p>
-              <div className="bg-[#eaf2ff] border border-[#8982ff]/20 rounded-lg p-4 mb-6 text-left">
-                <h3 className="font-semibold text-[#1f1e44] mb-2">
+              <div className="bg-muted border border-periwinkle/20 rounded-lg p-4 mb-6 text-left">
+                <h3 className="font-semibold text-foreground mb-2">
                   What happens next?
                 </h3>
-                <ol className="text-base text-[#1f1e44]/70 space-y-2">
+                <ol className="text-base text-ink-600 space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
+                    <span className="w-5 h-5 bg-periwinkle text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
                       1
                     </span>
                     <span>Our team reviews your application</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
+                    <span className="w-5 h-5 bg-periwinkle text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
                       2
                     </span>
                     <span>
@@ -438,13 +438,13 @@ export default function MentorApplyPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
+                    <span className="w-5 h-5 bg-periwinkle text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
                       3
                     </span>
                     <span>Use the code to create your mentor account</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="w-5 h-5 bg-[#8982ff] text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
+                    <span className="w-5 h-5 bg-periwinkle text-white rounded-full flex items-center justify-center text-base shrink-0 mt-0.5">
                       4
                     </span>
                     <span>Complete your profile and start mentoring!</span>
@@ -469,7 +469,7 @@ export default function MentorApplyPage() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Photo Upload Section */}
-            <div className="bg-[#eaf2ff] rounded-lg p-5">
+            <div className="bg-muted rounded-lg p-5">
               <PhotoUpload
                 value={formData.photoUrl}
                 onChange={(url) => updateField("photoUrl", url || "")}
@@ -587,7 +587,7 @@ export default function MentorApplyPage() {
                   <p className="text-base font-medium text-brand">
                     Location Matching
                   </p>
-                  <p className="text-base text-[#1f1e44] leading-relaxed">
+                  <p className="text-base text-foreground leading-relaxed">
                     Auckland is She Sharp&apos;s primary activity city. Your
                     location helps us match you with local mentees for in-person
                     meetings.
@@ -597,7 +597,7 @@ export default function MentorApplyPage() {
             </div>
 
             {/* Location Settings Group */}
-            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-5">
+            <div className="bg-muted rounded-lg p-5 space-y-5">
               <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
                 <div className="space-y-2">
                   <div className="flex items-center gap-1.5">
@@ -759,7 +759,7 @@ export default function MentorApplyPage() {
                     <p className="text-base font-medium text-brand">
                       Your Mentor Bio
                     </p>
-                    <p className="text-base text-[#1f1e44] leading-relaxed">
+                    <p className="text-base text-foreground leading-relaxed">
                       This bio will be publicly displayed on our mentors page.
                       Share your journey, expertise, and what motivates you to
                       mentor.
@@ -839,7 +839,7 @@ export default function MentorApplyPage() {
                   <p className="text-base font-medium text-brand">
                     Expert Skills Requirement
                   </p>
-                  <p className="text-base text-[#1f1e44] leading-relaxed">
+                  <p className="text-base text-foreground leading-relaxed">
                     We require at least 2 expert soft skills and 2 expert
                     industry skills to ensure you can provide valuable guidance
                     to your mentees.
@@ -849,7 +849,7 @@ export default function MentorApplyPage() {
             </div>
 
             {/* Basic Skills Section (Optional) */}
-            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-6">
+            <div className="bg-muted rounded-lg p-5 space-y-6">
               <h3 className="font-medium text-foreground">
                 Skills You Can Teach (Optional)
               </h3>
@@ -870,7 +870,7 @@ export default function MentorApplyPage() {
                           : "outline"
                       }
                       size="sm"
-                      className={`justify-start text-base h-9 min-h-[44px] ${formData.softSkillsBasic.includes(skill) ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      className={`justify-start text-base h-9 min-h-[44px] ${formData.softSkillsBasic.includes(skill) ? "bg-periwinkle border-periwinkle hover:bg-periwinkle/90" : ""}`}
                       onClick={() => toggleArrayItem("softSkillsBasic", skill)}
                     >
                       {skill}
@@ -895,7 +895,7 @@ export default function MentorApplyPage() {
                           : "outline"
                       }
                       size="sm"
-                      className={`justify-start text-base h-9 min-h-[44px] ${formData.industrySkillsBasic.includes(skill) ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      className={`justify-start text-base h-9 min-h-[44px] ${formData.industrySkillsBasic.includes(skill) ? "bg-periwinkle border-periwinkle hover:bg-periwinkle/90" : ""}`}
                       onClick={() =>
                         toggleArrayItem("industrySkillsBasic", skill)
                       }
@@ -910,7 +910,7 @@ export default function MentorApplyPage() {
             <div className="h-px bg-border" />
 
             {/* Expert Skills Section (Required) */}
-            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-6">
+            <div className="bg-muted rounded-lg p-5 space-y-6">
               <h3 className="font-medium text-foreground">
                 Your Expert Skills (Required)
               </h3>
@@ -931,7 +931,7 @@ export default function MentorApplyPage() {
                           : "outline"
                       }
                       size="sm"
-                      className={`justify-start text-base h-9 min-h-[44px] ${formData.softSkillsExpert.includes(skill) ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      className={`justify-start text-base h-9 min-h-[44px] ${formData.softSkillsExpert.includes(skill) ? "bg-periwinkle border-periwinkle hover:bg-periwinkle/90" : ""}`}
                       onClick={() => toggleArrayItem("softSkillsExpert", skill)}
                     >
                       {skill}
@@ -961,7 +961,7 @@ export default function MentorApplyPage() {
                           : "outline"
                       }
                       size="sm"
-                      className={`justify-start text-base h-9 min-h-[44px] ${formData.industrySkillsExpert.includes(skill) ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      className={`justify-start text-base h-9 min-h-[44px] ${formData.industrySkillsExpert.includes(skill) ? "bg-periwinkle border-periwinkle hover:bg-periwinkle/90" : ""}`}
                       onClick={() =>
                         toggleArrayItem("industrySkillsExpert", skill)
                       }
@@ -1062,7 +1062,7 @@ export default function MentorApplyPage() {
             <div className="h-px bg-border" />
 
             {/* Preferences Section */}
-            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-5">
+            <div className="bg-muted rounded-lg p-5 space-y-5">
               <div className="space-y-3">
                 <div className="flex items-center gap-1.5">
                   <Label>What type(s) of mentee would you prefer? *</Label>
@@ -1149,7 +1149,7 @@ export default function MentorApplyPage() {
                   <p className="text-base font-medium text-brand">
                     Time Commitment
                   </p>
-                  <p className="text-base text-[#1f1e44] leading-relaxed">
+                  <p className="text-base text-foreground leading-relaxed">
                     Mentoring typically requires 2-4 hours per month per mentee,
                     including meetings, messages, and occasional events.
                   </p>
@@ -1158,7 +1158,7 @@ export default function MentorApplyPage() {
             </div>
 
             {/* Personality & Availability Section */}
-            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-5">
+            <div className="bg-muted rounded-lg p-5 space-y-5">
               <div className="space-y-3">
                 <div className="flex items-center gap-1.5">
                   <Label>Your Personality Type (MBTI) *</Label>
@@ -1173,7 +1173,7 @@ export default function MentorApplyPage() {
                         formData.mbtiType === type ? "default" : "outline"
                       }
                       size="sm"
-                      className={`h-9 min-h-[44px] ${formData.mbtiType === type ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      className={`h-9 min-h-[44px] ${formData.mbtiType === type ? "bg-periwinkle border-periwinkle hover:bg-periwinkle/90" : ""}`}
                       onClick={() => updateField("mbtiType", type)}
                     >
                       {type}
@@ -1236,7 +1236,7 @@ export default function MentorApplyPage() {
             <div className="h-px bg-border" />
 
             {/* Review Summary */}
-            <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
+            <div className="bg-muted/60 rounded-lg p-5 space-y-4">
               <h3 className="font-semibold text-foreground pb-2 border-b border-border">
                 Application Summary
               </h3>

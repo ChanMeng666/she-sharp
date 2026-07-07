@@ -100,8 +100,9 @@ export function GalleryAlbumsGrid() {
       <Container size="full">
         {/* Header */}
         <div className="mb-8 sm:mb-10 md:mb-14">
-          <h1 className="text-display-sm">Photo Gallery</h1>
-          <p className="mt-3 text-base md:text-lg text-muted-foreground max-w-2xl">
+          <p className="text-label mb-4 text-brand">Photo Gallery</p>
+          <h1 className="text-display-sm text-foreground">Event photos &amp; highlights</h1>
+          <p className="mt-4 max-w-2xl text-base text-ink-600 md:text-lg">
             Explore highlights from She Sharp events, workshops, and community
             moments.
           </p>
@@ -118,7 +119,7 @@ export function GalleryAlbumsGrid() {
                 placeholder="Search albums by title..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 pr-9 border-0 border-b border-gray-400 rounded-none focus-visible:ring-0 focus-visible:border-gray-900"
+                className="pl-9 pr-9 border-0 border-b border-border rounded-none focus-visible:ring-0 focus-visible:border-foreground"
               />
               {searchQuery && (
                 <button

@@ -5,112 +5,72 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
-import { getSponsorsByTier } from "@/lib/data/sponsors";
+import { Reveal } from "@/components/ui/reveal";
+import { getSponsorsByTier, type TieredSponsor } from "@/lib/data/sponsors";
 
-const goldSponsors = getSponsorsByTier("gold");
-const silverSponsors = getSponsorsByTier("silver");
-const bronzeSponsors = getSponsorsByTier("bronze");
+const TIERS: { label: string; sponsors: TieredSponsor[] }[] = [
+  { label: "Gold", sponsors: getSponsorsByTier("gold") },
+  { label: "Silver", sponsors: getSponsorsByTier("silver") },
+  { label: "Bronze", sponsors: getSponsorsByTier("bronze") },
+];
 
-// Benefits removed for brevity on homepage
+function SponsorLogo({ sponsor }: { sponsor: TieredSponsor }) {
+  return (
+    <a
+      href={sponsor.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Visit ${sponsor.name} website`}
+      title={sponsor.description}
+      className="block"
+    >
+      <div className="relative flex h-16 w-48 items-center justify-center">
+        <Image
+          src={sponsor.logo}
+          alt={sponsor.name}
+          fill
+          className="object-contain grayscale transition duration-300 hover:grayscale-0"
+        />
+      </div>
+    </a>
+  );
+}
 
 export function SponsorsSection() {
   return (
-    <Section className="overflow-hidden bg-white/20 py-16 xl:py-24 2xl:py-32">
+    <Section bgColor="white">
       <Container size="full">
-        <AnimateOnScroll variant="fade-up" className="text-center mb-12 md:mb-16 lg:mb-20">
+        <Reveal className="mb-14 text-center md:mb-20">
           <h2 className="text-display-sm text-foreground">
-            Thanks to Our Sponsors
+            Thanks to our sponsors
           </h2>
-        </AnimateOnScroll>
+        </Reveal>
 
-        {/* Gold Sponsors */}
-        {goldSponsors.length > 0 && (
-          <div className="mb-12 sm:mb-16">
-            <AnimateOnScroll variant="fade-up" className="text-center mb-8 md:mb-12">
-              <h3 className="text-xl text-brand font-bold">GOLD</h3>
-            </AnimateOnScroll>
-            <div className="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto">
-              {goldSponsors.map((sponsor, index) => (
-                <AnimateOnScroll key={sponsor.name} variant="fade-up" delay={index * 100}>
-                  <a
-                    href={sponsor.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Visit ${sponsor.name} website`}
-                    title={sponsor.description}
-                    className="block"
-                  >
-                    <div className="relative h-20 w-56 flex items-center justify-center">
-                      <Image src={sponsor.logo} alt={sponsor.name} fill className="object-contain" />
+        <div className="space-y-12 md:space-y-16">
+          {TIERS.map(
+            ({ label, sponsors }) =>
+              sponsors.length > 0 && (
+                <Reveal key={label} variant="fade-up">
+                  <div className="border-t border-border pt-8">
+                    <p className="text-label mb-8 text-center text-ink-500">
+                      {label}
+                    </p>
+                    <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-8">
+                      {sponsors.map((sponsor) => (
+                        <SponsorLogo key={sponsor.name} sponsor={sponsor} />
+                      ))}
                     </div>
-                  </a>
-                </AnimateOnScroll>
-              ))}
-            </div>
-          </div>
-        )}
+                  </div>
+                </Reveal>
+              )
+          )}
+        </div>
 
-        {/* Silver Sponsors */}
-        {silverSponsors.length > 0 && (
-          <div className="mb-12 sm:mb-16">
-            <AnimateOnScroll variant="fade-up" className="text-center mb-8 md:mb-12">
-              <h3 className="text-xl text-brand font-bold">SILVER</h3>
-            </AnimateOnScroll>
-            <div className="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto">
-              {silverSponsors.map((sponsor, index) => (
-                <AnimateOnScroll key={sponsor.name} variant="fade-up" delay={index * 100}>
-                  <a
-                    href={sponsor.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Visit ${sponsor.name} website`}
-                    title={sponsor.description}
-                    className="block"
-                  >
-                    <div className="relative h-20 w-56 flex items-center justify-center">
-                      <Image src={sponsor.logo} alt={sponsor.name} fill className="object-contain" />
-                    </div>
-                  </a>
-                </AnimateOnScroll>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Bronze Sponsors */}
-        {bronzeSponsors.length > 0 && (
-          <div className="mb-12 sm:mb-16">
-            <AnimateOnScroll variant="fade-up" className="text-center mb-8 md:mb-12">
-              <h3 className="text-xl text-brand font-bold">BRONZE</h3>
-            </AnimateOnScroll>
-            <div className="flex flex-wrap justify-center gap-10 max-w-5xl mx-auto">
-              {bronzeSponsors.map((sponsor, index) => (
-                <AnimateOnScroll key={sponsor.name} variant="fade-up" delay={index * 100}>
-                  <a
-                    href={sponsor.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Visit ${sponsor.name} website`}
-                    title={sponsor.description}
-                    className="block"
-                  >
-                    <div className="relative h-20 w-56 flex items-center justify-center">
-                      <Image src={sponsor.logo} alt={sponsor.name} fill className="object-contain" />
-                    </div>
-                  </a>
-                </AnimateOnScroll>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* CTA */}
-        <AnimateOnScroll variant="fade-up" className="text-center">
-          <Button asChild size="lg" variant="default" className="mb-12" >
+        <Reveal className="mt-16 text-center">
+          <Button asChild size="lg" variant="outline">
             <Link href="/sponsors/corporate-sponsorship">Become a sponsor</Link>
           </Button>
-        </AnimateOnScroll>
+        </Reveal>
       </Container>
     </Section>
   );

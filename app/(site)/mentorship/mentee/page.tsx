@@ -13,22 +13,25 @@ export default function MenteeApplicationPage() {
   return (
     <>
       <MentorshipHeroSection
-        topLeftTitle={
+        eyebrow="Become a Mentee"
+        title={
           <>
-            BECOME A
+            Become
             <br />
-            MENTEE
+            a mentee
           </>
         }
-        topLeftBgColor="bg-brand"
-        topRightImage="/img/mentees.jpg"
-        topRightImageAlt="She Sharp mentorship programme"
-        bottomLeftVideo="/video/Mentee-Video.mp4"
-        bottomRightTitle="Learn and be inspired by our empowering mentors in STEM"
-        bottomRightDescription="Gain valuable advice, inspiration, and empowerment from our amazing mentors in STEM to support your personal and professional development journey."
+        titlePanelDark
+        image="/img/mentees.jpg"
+        imageAlt="She Sharp mentorship programme"
+        video="/video/Mentee-Video.mp4"
+        detailEyebrow="Your growth"
+        detailTitle="Learn and be inspired by our empowering mentors in STEM"
+        detailDescription="Gain valuable advice, inspiration, and empowerment from our amazing mentors in STEM to support your personal and professional development journey."
       />
       <BenefitsSection
-        title="Benefits of Becoming a Mentee"
+        title="Benefits of becoming a mentee"
+        eyebrow="Why join"
         benefits={[
           {
             icon: Trophy,
@@ -59,7 +62,6 @@ export default function MenteeApplicationPage() {
         <StickyApplyBar
           href="/mentorship/mentee/apply"
           label="Apply to Become a Mentee"
-          accentColor="bg-purple-dark"
           hideAtId="become-mentee-cta"
         />
       )}

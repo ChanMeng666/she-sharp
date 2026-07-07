@@ -2,70 +2,58 @@
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { Reveal } from "@/components/ui/reveal";
 import { LucideIcon } from "lucide-react";
 
 interface Benefit {
   icon: LucideIcon;
   title: string;
   description: string;
-  iconColor?: string;
-  iconBgColor?: string;
 }
 
 interface BenefitsSectionProps {
   title: string;
+  eyebrow?: string;
   benefits: Benefit[];
 }
 
 export function BenefitsSection({
   title,
+  eyebrow = "Why join",
   benefits,
 }: BenefitsSectionProps) {
   return (
-    <Section className="py-16 bg-muted">
+    <Section bgColor="white" className="py-24 lg:py-28">
       <Container size="full">
-        <div className="max-w-8xl mx-auto ">
-          {/* Header */}
-          <div className="text-left mb-8 sm:mb-10 md:mb-12">
-            <h2 className="text-display-sm text-foreground mb-4">
-              {title}
-            </h2>
-          </div>
+        <div className="max-w-2xl mb-12 md:mb-16">
+          <span className="text-label text-brand mb-4 block">{eyebrow}</span>
+          <h2 className="text-display-sm text-foreground">{title}</h2>
+        </div>
 
-          {/* Benefits Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10 py-4 md:py-6">
-            {benefits.map((benefit, index) => {
-              const Icon = benefit.icon;
-
-              return (
-                <div
-                  key={index}
-                  className="flex flex-col items-start text-left"
-                >
-                  {/* Icon */}
-                  <div className="w-16 h-16 card-sm flex items-center justify-center mb-6 border-2 border-white bg-white">
-                    <Icon
-                      className="w-8 h-8 text-brand"
-                      strokeWidth={1.5}
-                    />
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
-                    {benefit.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-base text-muted-foreground leading-relaxed">
-                    {benefit.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+          {benefits.map((benefit, index) => {
+            const Icon = benefit.icon;
+            return (
+              <Reveal
+                key={index}
+                delay={index * 80}
+                className="flex flex-col items-start rounded-[16px] border border-border bg-white p-6 sm:p-8 h-full"
+              >
+                <Icon
+                  className="w-8 h-8 text-foreground mb-6"
+                  strokeWidth={1.5}
+                />
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
+                  {benefit.title}
+                </h3>
+                <p className="text-base text-ink-600 leading-relaxed">
+                  {benefit.description}
+                </p>
+              </Reveal>
+            );
+          })}
         </div>
       </Container>
     </Section>
   );
 }
-

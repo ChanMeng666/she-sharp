@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
-import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
+import { Reveal, CurtainReveal } from "@/components/ui/reveal";
 import { EventV3 } from "@/types/event";
 import {
   getUpcomingEvents,
@@ -25,12 +25,24 @@ function truncateTitle(title: string): string {
   return `${title.slice(0, TITLE_MAX_LENGTH)}...`;
 }
 
+function StatusBadge({ upcoming }: { upcoming: boolean }) {
+  return upcoming ? (
+    <span className="inline-flex items-center gap-2 rounded-[12px] bg-brand px-3 py-1.5 text-xs font-semibold text-white">
+      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+      Upcoming
+    </span>
+  ) : (
+    <span className="inline-flex items-center rounded-[12px] bg-foreground/80 px-3 py-1.5 text-xs font-semibold text-white">
+      Past event
+    </span>
+  );
+}
+
 function FeaturedEventCard({ event }: { event: EventV3 }) {
   const dateLabel = formatEventDate(event);
   const isUpcoming = isFutureDate(event.date);
   const location = event.detailPageData.location;
-  const isOnline = location.format === "online";
-  const formatLabel = isOnline ? "Virtual" : "In Person";
+  const formatLabel = location.format === "online" ? "Virtual" : "In person";
 
   const description =
     event.shortDescription ||
@@ -39,51 +51,39 @@ function FeaturedEventCard({ event }: { event: EventV3 }) {
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="group block card-lg border border-muted-foreground/10 bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 overflow-hidden"
+      className="group block h-full overflow-hidden rounded-[32px] border border-border bg-white transition-colors duration-300 hover:border-foreground/30"
     >
-      <div className="relative aspect-3/4 sm:aspect-4/5 md:aspect-square lg:h-[620px] xl:h-[720px] lg:aspect-auto overflow-hidden">
+      <CurtainReveal className="relative aspect-4/5 md:aspect-square lg:aspect-4/5 overflow-hidden">
         <Image
           src={event.coverImage.url}
           alt={event.coverImage.alt || event.title}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
-          sizes="(max-width: 1024px) 100vw, 50vw"
+          sizes="(max-width: 1024px) 100vw, 55vw"
           priority
         />
-        {/* Upcoming / Past badge overlaid on image */}
-        <div className="absolute top-4 left-4 z-10">
-          {isUpcoming ? (
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand text-white text-xs font-semibold shadow-md">
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              Upcoming
-            </span>
-          ) : (
-            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-black/50 text-white text-xs font-semibold backdrop-blur-sm">
-              Past Event
-            </span>
-          )}
+        <div className="absolute left-4 top-4 z-10">
+          <StatusBadge upcoming={isUpcoming} />
         </div>
-      </div>
+      </CurtainReveal>
 
-      <div className="p-5 md:p-6 lg:p-8 flex flex-col gap-2.5">
+      <div className="flex flex-col gap-3 p-6 md:p-8 lg:p-10">
         <div className="flex items-center gap-3">
-          <span className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider">
-            {dateLabel}
-          </span>
-          <span className="text-xs sm:text-sm text-muted-foreground">{formatLabel}</span>
+          <span className="text-label text-ink-500">{dateLabel}</span>
+          <span className="text-sm text-ink-500">{formatLabel}</span>
         </div>
 
-        <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-foreground leading-snug group-hover:text-brand transition-colors duration-200">
+        <h3 className="text-2xl font-bold leading-snug text-foreground transition-colors duration-200 group-hover:text-brand md:text-3xl">
           {event.title}
         </h3>
 
-        <p className="text-sm md:text-base text-muted-foreground leading-relaxed line-clamp-2">
+        <p className="line-clamp-2 text-base leading-relaxed text-ink-600">
           {description}
         </p>
 
-        <span className="inline-flex items-center gap-1.5 text-brand font-semibold text-sm md:text-lg group-hover:underline transition-all mt-1">
-          {isUpcoming ? "Register" : "View Event"}
-          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+        <span className="mt-1 inline-flex items-center gap-1.5 text-base font-semibold text-brand">
+          {isUpcoming ? "Register" : "View event"}
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </span>
       </div>
     </Link>
@@ -92,8 +92,7 @@ function FeaturedEventCard({ event }: { event: EventV3 }) {
 
 function SimpleEventCard({ event }: { event: EventV3 }) {
   const isUpcoming = isFutureDate(event.date);
-  const eventDate = parseDateString(event.date);
-  const formattedDate = eventDate.toLocaleDateString("en-US", {
+  const formattedDate = parseDateString(event.date).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -103,9 +102,9 @@ function SimpleEventCard({ event }: { event: EventV3 }) {
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="group flex flex-col h-full card-sm border border-muted-foreground/10 bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 overflow-hidden"
+      className="group flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-white transition-colors duration-300 hover:border-foreground/30"
     >
-      <div className="relative aspect-4/5 lg:aspect-auto lg:flex-1 lg:min-h-0 overflow-hidden">
+      <CurtainReveal className="relative aspect-4/3 overflow-hidden">
         <Image
           src={displayImage}
           alt={event.title}
@@ -114,27 +113,14 @@ function SimpleEventCard({ event }: { event: EventV3 }) {
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           unoptimized={displayImage.startsWith("/img/")}
         />
-      </div>
+      </CurtainReveal>
 
-      <div className="p-3 sm:p-4 flex flex-col gap-1.5 sm:gap-2">
-        {isUpcoming ? (
-          <span className="inline-flex items-center gap-1.5 self-start px-2 py-0.5 rounded-full bg-brand text-white text-[10px] sm:text-xs font-semibold">
-            <span className="w-1 h-1 rounded-full bg-white animate-pulse" />
-            Upcoming
-          </span>
-        ) : (
-          <span className="inline-flex items-center self-start px-2 py-0.5 rounded-full bg-muted text-muted-foreground text-[10px] sm:text-xs font-semibold">
-            Past Event
-          </span>
-        )}
-
-        <h3 className="text-xs sm:text-sm md:text-base font-bold text-foreground leading-snug group-hover:text-brand transition-colors duration-200 line-clamp-2">
+      <div className="flex flex-col gap-2 p-4 md:p-5">
+        <StatusBadge upcoming={isUpcoming} />
+        <h3 className="line-clamp-2 text-sm font-bold leading-snug text-foreground transition-colors duration-200 group-hover:text-brand md:text-base">
           {truncateTitle(event.title)}
         </h3>
-
-        <span className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">
-          {formattedDate}
-        </span>
+        <span className="text-label text-ink-500">{formattedDate}</span>
       </div>
     </Link>
   );
@@ -159,46 +145,57 @@ export function EventsShowcaseSection() {
 
   if (!featuredEvent && sideEvents.length === 0) return null;
 
-  return (
-  <Section spacing="section"  id="upcoming-event" className="bg-white py-16 xl:py-24 2xl:py-32">
-      <Container size="full">
-        <AnimateOnScroll variant="fade-up" className="mb-12 md:mb-16 lg:mb-20">
-          <h2 className="text-display-sm text-foreground">Recent events</h2>
-        </AnimateOnScroll>
+  // Vertical offsets stagger the side cards into an editorial rhythm on desktop.
+  const sideOffsets = ["lg:mt-0", "lg:mt-10", "lg:mt-0", "lg:mt-10"];
 
-        <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 items-stretch">
-          {/* Left: Featured event */}
+  return (
+    <Section bgColor="white" id="upcoming-event">
+      <Container size="full">
+        <Reveal className="mb-12 flex items-end justify-between gap-6 md:mb-16">
+          <div>
+            <span className="text-label mb-3 block text-brand">(01)</span>
+            <h2 className="text-display-sm text-foreground">Upcoming events</h2>
+          </div>
+          <span className="text-outline hidden text-display-sm text-foreground md:block">
+            gather
+          </span>
+        </Reveal>
+
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
+          {/* Featured event — the wide editorial anchor. */}
           {featuredEvent && (
-            <AnimateOnScroll variant="fade-right" className="w-full lg:w-1/2">
-              <FeaturedEventCard event={featuredEvent} />
-            </AnimateOnScroll>
+            <div className="lg:col-span-7 xl:col-span-6">
+              <Reveal variant="fade-right">
+                <FeaturedEventCard event={featuredEvent} />
+              </Reveal>
+            </div>
           )}
 
-          {/* Right: 2x2 grid */}
+          {/* Four smaller image-top cards on staggered offsets. */}
           {sideEvents.length > 0 && (
-            <div className="w-full lg:w-1/2 grid grid-cols-2 lg:grid-rows-2 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-5 lg:content-start xl:col-span-6">
               {sideEvents.map((event, index) => (
-                <AnimateOnScroll
+                <Reveal
                   key={event.slug}
                   variant="fade-up"
                   delay={index * 80}
-                  className="h-full"
+                  className={sideOffsets[index]}
                 >
                   <SimpleEventCard event={event} />
-                </AnimateOnScroll>
+                </Reveal>
               ))}
             </div>
           )}
         </div>
 
-        <AnimateOnScroll variant="fade-up" className="mt-10 text-center">
+        <Reveal className="mt-14 text-center">
           <Button asChild size="lg" variant="outline">
             <Link href="/events">
-              View All Events
-              <ArrowRight className="ml-2 w-4 h-4" />
+              View all events
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
-        </AnimateOnScroll>
+        </Reveal>
       </Container>
     </Section>
   );
