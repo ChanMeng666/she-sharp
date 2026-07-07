@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { ImageProps } from "next/image";
 import { ArrowLeft, ArrowRight, Quote, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -148,7 +148,7 @@ const Carousel = ({
                 },
               }}
               key={`card-${index}`}
-              className="shrink-0 rounded-[50px]"
+              className="shrink-0 rounded-[32px]"
             >
               {React.cloneElement(item, {
                 onCardClose: () => handleCardClose(index),
@@ -157,7 +157,7 @@ const Carousel = ({
           ))}
           {autoPlay &&
             items.map((item, index) => (
-              <div key={`card-clone-${index}`} className="shrink-0 rounded-[50px]">
+              <div key={`card-clone-${index}`} className="shrink-0 rounded-[32px]">
                 {React.cloneElement(item, {
                   onCardClose: () => handleCardClose(index),
                 })}
@@ -259,7 +259,7 @@ const TestimonialCard = ({
             exit={{ opacity: 0 }}
             ref={containerRef}
             layoutId={layout ? `card-${testimonial.name}` : undefined}
-            className="max-w-5xl mx-auto bg-linear-to-b from-background to-muted h-full z-[60] p-4 md:p-10 rounded-[50px] relative md:mt-10"
+            className="max-w-5xl mx-auto bg-background h-full z-[60] p-4 md:p-10 rounded-[32px] relative md:mt-10"
           >
             <button
               className="sticky top-4 h-8 w-8 right-0 ml-auto rounded-full flex items-center justify-center bg-foreground border-2 border-foreground hover:bg-foreground/80 transition-colors duration-200"
@@ -280,7 +280,7 @@ const TestimonialCard = ({
               {testimonial.name}
             </motion.p>
             <div className="py-8 text-foreground px-0 md:px-20 text-xl md:text-2xl font-light leading-relaxed tracking-wide">
-              <Quote className="h-6 w-6 text-muted-foreground mb-4" />
+              <Quote className="h-6 w-6 text-brand mb-4" />
               {testimonial.description}
             </div>
           </motion.div>
@@ -307,7 +307,7 @@ const TestimonialCard = ({
         <div
           className={`${
             index % 2 === 0 ? "rotate-0" : "-rotate-0"
-          } rounded-[50px] bg-linear-to-b from-background to-muted h-[500px] md:h-[550px] w-80 md:w-96 overflow-hidden flex flex-col items-center justify-center relative z-10 shadow-md border border-border`}
+          } rounded-[32px] bg-white h-[500px] md:h-[550px] w-80 md:w-96 overflow-hidden flex flex-col items-center justify-center relative z-10 border border-border`}
         >
           <div
             className="absolute opacity-20"
@@ -329,7 +329,7 @@ const TestimonialCard = ({
           />
           <motion.p
             layoutId={layout ? `title-${testimonial.name}` : undefined}
-            className="text-muted-foreground text-xl md:text-2xl font-normal text-center [text-wrap:balance] mt-4 px-4"
+            className="text-ink-700 text-xl md:text-2xl font-normal text-center [text-wrap:balance] mt-4 px-4"
           >
             {testimonial.description.length > 100
               ? `${testimonial.description.slice(0, 100)}...`

@@ -1,5 +1,7 @@
 :root {
-  --radius-card-sm: 30px;
-  --radius-card-md: 40px;
-  --radius-card-lg: 50px;
+  /* Editorial: buttons/inputs 16px; all card radii converge to 32px */
+  --radius: 16px;
+  --radius-card-sm: 32px;
+  --radius-card-md: 32px;
+  --radius-card-lg: 32px;
 }

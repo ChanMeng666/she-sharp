@@ -41,8 +41,8 @@
 
 @theme {
   /* Fonts */
-  --font-sans: var(--font-sans), "Montserrat", system-ui, sans-serif;
-  --font-heading: var(--font-sans), "Montserrat", sans-serif;
+  --font-sans: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: var(--font-heading), var(--font-sans), sans-serif;
   --font-brand-script: var(--font-brand-script), "Carattere", cursive;
 
   /* Radius */
@@ -181,6 +181,15 @@
   --color-error: var(--color-error);
   --color-ghost-white: var(--color-ghost-white);
   --color-light-pink: var(--color-light-pink);
+
+  /* Ink scale (Editorial neutral ramp) */
+  --color-ink-900: var(--ink-900);
+  --color-ink-700: var(--ink-700);
+  --color-ink-600: var(--ink-600);
+  --color-ink-500: var(--ink-500);
+  --color-ink-300: var(--ink-300);
+  --color-ink-200: var(--ink-200);
+  --color-ink-100: var(--ink-100);
 }
 
 @layer base {
@@ -447,29 +456,50 @@
     font-family: var(--font-brand-script);
   }
 
-  /* Display text for hero sections */
+  /* Display text for hero sections — oversized editorial */
   .text-display-lg {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 8vw, 5rem);
-    font-weight: 700;
-    line-height: 1;
+    font-size: clamp(3.5rem, 8.5vw, 9rem);
+    font-weight: 800;
+    line-height: 1.05;
     letter-spacing: -0.02em;
   }
 
   .text-display-md {
     font-family: var(--font-heading);
-    font-size: clamp(2.25rem, 5vw, 3.75rem);
-    font-weight: 700;
-    line-height: 1.1;
+    font-size: clamp(2.75rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.08;
     letter-spacing: -0.02em;
   }
 
   .text-display-sm {
     font-family: var(--font-heading);
-    font-size: clamp(1.875rem, 4vw, 2.5rem);
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
     font-weight: 700;
-    line-height: 1.15;
+    line-height: 1.12;
     letter-spacing: -0.01em;
+  }
+
+  /* Outline display row — transparent fill + hairline stroke.
+     Used for the stacked outline rows in editorial hero/footer type. */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px currentColor;
+  }
+
+  @supports not (-webkit-text-stroke: 1px black) {
+    .text-outline {
+      color: inherit;
+    }
+  }
+
+  /* Script eyebrow (Carattere) — a rare brand-purple flourish */
+  .eyebrow-script {
+    font-family: var(--font-brand-script);
+    font-size: 1.5rem;
+    line-height: 1;
+    color: hsl(var(--brand));
   }
 
   /* Quote/testimonial text */
@@ -487,12 +517,12 @@
     letter-spacing: -0.02em;
   }
 
-  /* Uppercase label */
+  /* Uppercase eyebrow / label — the ONLY place uppercase survives */
   .text-label {
     font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 500;
+    font-size: 0.8125rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.18em;
   }
 }

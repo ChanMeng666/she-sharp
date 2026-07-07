@@ -1,43 +1,35 @@
 @layer utilities {
-  /* Matt Glass Effect */
+  /* Editorial: glass effects neutralized to solid white + hairline.
+     Class names preserved so pages keep compiling before their Phase 2 rebuild. */
+
   .matt-glass-effect {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    border: 1px solid hsl(var(--border));
   }
 
   .matt-glass-effect-hover {
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease;
   }
 
   .matt-glass-effect-hover:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.4),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
+    border-color: hsl(var(--foreground) / 0.3);
   }
 
-  /* Shared glassmorphism utilities */
+  /* Shared glassmorphism utilities — now solid */
   .glass-panel {
     border-radius: var(--radius-card-lg);
-    @apply backdrop-blur-md bg-white/10 border border-white/20 shadow-xl;
+    @apply bg-white border border-border;
   }
 
   .glass-overlay {
-    @apply bg-background/80 backdrop-blur-sm;
+    @apply bg-background/90;
   }
 
   .glass-card {
-    @apply border-0 shadow-2xl shadow-foreground/10 bg-background/95 backdrop-blur-xl;
+    @apply bg-white border border-border;
   }
 
   .glass-pill {
-    @apply bg-white/50 backdrop-blur-sm rounded-full;
+    @apply bg-white border border-border rounded-full;
   }
 }
