@@ -50,11 +50,19 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="relative bg-navy-dark text-white -mt-12 pt-10 overflow-hidden rounded-t-[50px]">
-      {/* 向上过渡渐变 */}
-      <div className="absolute top-0 left-0 right-0 h-12 bg-linear-to-t from-navy-dark to-transparent" />
+    <footer className="relative bg-navy-dark text-white overflow-hidden">
+      {/* Spectrum hairline — the ONLY gradient allowed site-wide */}
+      <div className="h-[2px] w-full bg-[linear-gradient(90deg,#9b2e83,#8982ff,#b1f6e9)]" />
 
-      <div className="px-6 sm:px-8 lg:px-12 xl:px-16 max-w-8xl mx-auto">
+      {/* Giant editorial closing line */}
+      <div className="px-6 sm:px-8 lg:px-12 xl:px-16 max-w-8xl mx-auto pt-16 lg:pt-24">
+        <p className="text-display-md font-heading text-white max-w-4xl">
+          Let&apos;s shape the future{" "}
+          <span className="text-outline">together.</span>
+        </p>
+      </div>
+
+      <div className="px-6 sm:px-8 lg:px-12 xl:px-16 max-w-8xl mx-auto pt-10">
         <div className="flex flex-col lg:flex-row lg:justify-between gap-8 lg:gap-12 xl:gap-16">
           {/* Left side - Newsletter & Social */}
           <div className="flex-1 max-w-md lg:max-w-lg">
@@ -123,7 +131,7 @@ export function SiteFooter() {
                     key={section.title}
                     className="w-[180px] lg:w-[200px] xl:w-[220px]"
                   >
-                    <h4 className="font-semibold mb-4 text-mint-dark text-sm lg:text-lg">
+                    <h4 className="text-label text-mint-dark mb-4">
                       {section.title}
                     </h4>
                     <ul className="space-y-2 lg:space-y-4">
@@ -142,7 +150,7 @@ export function SiteFooter() {
                               onClick={(e) =>
                                 !isExternal && handleSmoothScroll(e, link.href)
                               }
-                              className="relative inline-block text-xs lg:text-base text-white/80 hover:text-purple-mid transition-colors after:content-[''] after:absolute after:w-0 after:h-px after:bottom-[-2px] after:left-0 after:bg-current after:transition-all after:duration-200 hover:after:w-full"
+                              className="relative inline-block text-sm lg:text-base text-white/70 hover:text-white transition-colors after:content-[''] after:absolute after:w-0 after:h-px after:bottom-[-2px] after:left-0 after:bg-current after:transition-all after:duration-200 hover:after:w-full"
                             >
                               {link.name}
                               {isExternal && (
@@ -167,7 +175,7 @@ export function SiteFooter() {
                     className="border-b border-white/10 last:border-0"
                   >
                     <CollapsibleTrigger className="flex w-full items-center justify-between py-3 md:py-4 text-left">
-                      <h4 className="font-semibold text-mint-dark text-sm md:text-base">
+                      <h4 className="text-label text-mint-dark">
                         {section.title}
                       </h4>
                       <ChevronDown
@@ -196,7 +204,7 @@ export function SiteFooter() {
                                     !isExternal &&
                                     handleSmoothScroll(e, link.href)
                                   }
-                                  className="text-xs md:text-sm text-white/80 hover:text-purple-mid transition-colors block py-1"
+                                  className="text-sm text-white/70 hover:text-white transition-colors block py-1"
                                 >
                                   {link.name}
                                   {isExternal && (

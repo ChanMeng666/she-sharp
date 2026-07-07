@@ -95,14 +95,12 @@ export function SiteHeader() {
   return (
     <header className={cn(
       "fixed top-0 left-0 right-0 z-50",
-      "mt-2 mx-auto w-[calc(100%-2rem)] max-w-8xl",
-      "rounded-full border border-white/40",
-      "glass-pill",
-      "transition-all duration-300 ease-out",
-      scrolled ? "shadow-lg bg-white/60" : "shadow-md",
-      visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+      "border-b border-border backdrop-blur-sm",
+      "transition-transform duration-300 ease-out",
+      scrolled ? "bg-white/95" : "bg-white/80",
+      visible ? "translate-y-0" : "-translate-y-full"
     )}>
-      <div className="flex h-16 items-center px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
+      <div className="mx-auto flex h-16 max-w-8xl items-center px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
         {/* Logo */}
         <Link
           href="/"
@@ -137,7 +135,7 @@ export function SiteHeader() {
                       <DropdownMenuTrigger asChild>
                         <button
                           type="button"
-                          className="group inline-flex items-center gap-1 bg-transparent text-foreground hover:bg-[#f7e5f3]/80 data-[state=open]:bg-[#f7e5f3]/90 transition-all duration-150 rounded-full px-3 py-2 text-sm font-medium outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                          className="group inline-flex items-center gap-1 bg-transparent text-foreground hover:bg-muted data-[state=open]:bg-muted transition-colors duration-150 rounded-full px-3 py-2 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
                         >
                           {item.title}
                           <ChevronDown
@@ -149,13 +147,13 @@ export function SiteHeader() {
                       <DropdownMenuContent
                         align="start"
                         sideOffset={8}
-                        className="w-[480px] space-y-1 rounded-[28px] border border-white/50 bg-white/95 p-3 shadow-lg backdrop-blur"
+                        className="w-[480px] space-y-1 rounded-[24px] border border-border bg-white p-3 shadow-[var(--shadow-md)]"
                       >
                         {item.children.map((child) => (
                           <DropdownMenuItem
                             key={child.title}
                             asChild
-                            className="group flex items-start gap-3 rounded-[24px] p-3 transition-all duration-150 hover:bg-brand-light focus:bg-[#f7e5f3]/80 data-[highlighted]:bg-[#f7e5f3]/80 cursor-pointer"
+                            className="group flex items-start gap-3 rounded-[16px] p-3 transition-colors duration-150 hover:bg-muted focus:bg-muted data-[highlighted]:bg-muted cursor-pointer"
                           >
                             <Link
                               href={child.href}
@@ -185,7 +183,7 @@ export function SiteHeader() {
                     <Link
                       href={item.href}
                       onClick={(e) => handleSmoothScroll(e, item.href)}
-                      className="inline-flex items-center rounded-full bg-transparent px-3 py-2 text-sm font-medium text-foreground hover:bg-[#f7e5f3]/80 transition-all duration-150"
+                      className="inline-flex items-center rounded-full bg-transparent px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors duration-150"
                     >
                       {item.title}
                     </Link>
@@ -202,7 +200,7 @@ export function SiteHeader() {
                 <li key={item.title} className="relative">
                   <Link
                     href={item.href || "#"}
-                    className="group inline-flex h-9 w-max items-center justify-center rounded-full bg-transparent px-4 py-2 text-sm font-medium hover:bg-[#f7e5f3]/80 transition-all duration-150"
+                    className="group inline-flex h-9 w-max items-center justify-center rounded-full bg-transparent px-4 py-2 text-sm font-medium hover:bg-muted transition-colors duration-150"
                   >
                     {item.title}
                     {item.children && (
@@ -223,7 +221,7 @@ export function SiteHeader() {
               variant={button.variant}
               size="lg"
               asChild
-              className="transition-all duration-150"
+              className="rounded-full transition-colors duration-150"
             >
               <Link href={button.href}>{button.title}</Link>
             </Button>
@@ -242,7 +240,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 aria-label="Toggle menu"
-                className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#f7e5f3]/80 text-brand transition-all duration-200 hover:bg-[#f7e5f3] hover:scale-105 active:scale-95"
+                className="relative flex h-10 w-10 items-center justify-center rounded-full bg-muted text-foreground transition-colors duration-200 hover:bg-ink-200"
               >
                 <span
                   className={cn(
@@ -265,33 +263,19 @@ export function SiteHeader() {
 
             <SheetContent
               side="right"
-              className="w-full sm:w-[420px] p-0 flex flex-col border-none shadow-2xl overflow-hidden"
+              className="w-full sm:w-[420px] p-0 flex flex-col border-l border-border bg-white overflow-hidden"
             >
-              {/* Thin rainbow accent strip */}
-              <div className="h-[3px] w-full flex-shrink-0 bg-gradient-to-r from-brand via-[#8982ff] to-[#b1f6e9]" />
-
-              {/* Header — dark gradient with decorative elements */}
-              <div className="relative flex-shrink-0 overflow-hidden bg-gradient-to-br from-[#1f1e44] via-[#2a2462] to-brand px-6 pt-6 pb-8">
-                {/* Ambient blobs */}
-                <div className="pointer-events-none absolute -top-12 -right-12 h-48 w-48 rounded-full bg-[#8982ff]/25 blur-3xl" />
-                <div className="pointer-events-none absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-[#b1f6e9]/15 blur-3xl" />
-
-                {/* Dot-grid watermark */}
-                <div className="pointer-events-none absolute right-5 bottom-5 grid grid-cols-5 gap-[5px] opacity-[0.18]">
-                  {Array.from({ length: 25 }).map((_, i) => (
-                    <div key={i} className="h-[3px] w-[3px] rounded-full bg-white" />
-                  ))}
-                </div>
-
+              {/* Header — clean white with hairline divider */}
+              <div className="relative flex-shrink-0 border-b border-border bg-white px-6 pt-6 pb-6">
                 {/* Close button */}
-                <SheetClose className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white transition-all duration-200 hover:bg-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50">
+                <SheetClose className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-muted text-foreground transition-colors duration-200 hover:bg-ink-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                   <X className="h-4 w-4" />
                   <span className="sr-only">Close menu</span>
                 </SheetClose>
 
-                {/* She Sharp logo (white) */}
+                {/* She Sharp logo (brand purple) */}
                 <span
-                  className="relative z-10 mb-3 block h-8 w-28 bg-white"
+                  className="relative z-10 mb-3 block h-8 w-28 bg-purple-dark"
                   style={{
                     maskImage: "url(/logos/she-sharp-logo.svg)",
                     maskSize: "contain",
@@ -305,7 +289,7 @@ export function SiteHeader() {
                 />
 
                 {/* Accessible title (visually styled as tagline) */}
-                <SheetTitle className="relative z-10 text-sm font-normal tracking-wide text-white/70">
+                <SheetTitle className="relative z-10 text-sm font-normal tracking-wide text-muted-foreground">
                   Bridging the gender gap in STEM
                 </SheetTitle>
               </div>
@@ -324,50 +308,50 @@ export function SiteHeader() {
                           open={openMobileMenus.includes(item.title)}
                           onOpenChange={() => toggleMobileMenu(item.title)}
                         >
-                          <CollapsibleTrigger className="group flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left transition-all duration-200 hover:bg-[#f7e5f3]/60 data-[state=open]:bg-[#f7e5f3]/70">
+                          <CollapsibleTrigger className="group flex w-full items-center gap-3 rounded-[16px] px-3 py-3 text-left transition-colors duration-200 hover:bg-muted data-[state=open]:bg-muted">
                             {item.icon && (
-                              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand/10 to-brand/20 transition-all duration-200 group-hover:from-brand/20 group-hover:to-brand/30 group-data-[state=open]:from-brand/20 group-data-[state=open]:to-brand/30">
+                              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[12px] bg-muted transition-colors duration-200 group-hover:bg-ink-200">
                                 <item.icon className="h-4 w-4 text-brand" />
                               </div>
                             )}
-                            <span className="flex-1 text-[15px] font-semibold text-[#1f1e44]">
+                            <span className="flex-1 text-[15px] font-semibold text-foreground">
                               {item.title}
                             </span>
                             <div
                               className={cn(
-                                "flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-brand/10 transition-all duration-200",
+                                "flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-muted transition-transform duration-200",
                                 openMobileMenus.includes(item.title)
-                                  ? "rotate-180 bg-brand/20"
+                                  ? "rotate-180"
                                   : ""
                               )}
                             >
-                              <ChevronDown className="h-3 w-3 text-brand" />
+                              <ChevronDown className="h-3 w-3 text-foreground" />
                             </div>
                           </CollapsibleTrigger>
 
                           <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-                            <div className="mb-1 ml-4 mt-1 space-y-0.5 border-l-2 border-brand/15 pl-4">
+                            <div className="mb-1 ml-4 mt-1 space-y-0.5 border-l border-border pl-4">
                               {item.children.map((child) => (
                                 <Link
                                   key={child.title}
                                   href={child.href}
-                                  className="group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-150 hover:bg-[#f7e5f3]/60"
+                                  className="group flex items-center gap-3 rounded-[12px] px-3 py-2.5 transition-colors duration-150 hover:bg-muted"
                                   onClick={(e) => {
                                     handleSmoothScroll(e, child.href);
                                     setIsOpen(false);
                                   }}
                                 >
                                   {child.icon && (
-                                    <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg border border-[#f7e5f3] bg-white shadow-sm">
+                                    <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-[10px] border border-border bg-white">
                                       <child.icon className="h-3.5 w-3.5 text-brand" />
                                     </div>
                                   )}
                                   <div className="min-w-0 flex-1">
-                                    <p className="text-sm font-medium leading-tight text-[#1f1e44]">
+                                    <p className="text-sm font-medium leading-tight text-foreground">
                                       {child.title}
                                     </p>
                                     {child.description && (
-                                      <p className="mt-0.5 truncate text-xs text-[#1f1e44]/50">
+                                      <p className="mt-0.5 truncate text-xs text-muted-foreground">
                                         {child.description}
                                       </p>
                                     )}
@@ -380,25 +364,18 @@ export function SiteHeader() {
                       ) : (
                         <Link
                           href={item.href}
-                          className="group flex items-center gap-3 rounded-2xl px-3 py-3 transition-all duration-200 hover:bg-[#f7e5f3]/60"
+                          className="group flex items-center gap-3 rounded-[16px] px-3 py-3 transition-colors duration-200 hover:bg-muted"
                           onClick={(e) => {
                             handleSmoothScroll(e, item.href);
                             setIsOpen(false);
                           }}
                         >
                           {item.icon && (
-                            <div
-                              className={cn(
-                                "flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl transition-all duration-200",
-                                item.title === "Donate"
-                                  ? "bg-gradient-to-br from-[#f7e5f3] to-[#ecc5e2] group-hover:from-[#e8b8d8] group-hover:to-[#dfa0ca]"
-                                  : "bg-gradient-to-br from-brand/10 to-brand/20 group-hover:from-brand/20 group-hover:to-brand/30"
-                              )}
-                            >
+                            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[12px] bg-muted transition-colors duration-200 group-hover:bg-ink-200">
                               <item.icon className="h-4 w-4 text-brand" />
                             </div>
                           )}
-                          <span className="flex-1 text-[15px] font-semibold text-[#1f1e44]">
+                          <span className="flex-1 text-[15px] font-semibold text-foreground">
                             {item.title}
                           </span>
                         </Link>
@@ -409,14 +386,14 @@ export function SiteHeader() {
               </div>
 
               {/* Bottom — CTA + User nav */}
-              <div className="flex-shrink-0 space-y-3 border-t border-[#f7e5f3] bg-gradient-to-t from-[#fdf9fc] to-white px-4 pb-6 pt-4">
+              <div className="flex-shrink-0 space-y-3 border-t border-border bg-white px-4 pb-6 pt-4">
                 {navigationConfig.buttons.map((button) => (
                   <Button
                     key={button.title}
                     variant={button.variant}
                     size="lg"
                     asChild
-                    className="h-12 w-full rounded-2xl text-base font-semibold shadow-md shadow-brand/20 transition-all duration-150"
+                    className="h-12 w-full rounded-[16px] text-base font-semibold transition-colors duration-150"
                     onClick={() => setIsOpen(false)}
                   >
                     <Link href={button.href}>{button.title}</Link>
@@ -433,7 +410,7 @@ export function SiteHeader() {
           <button
             type="button"
             aria-label="Toggle menu"
-            className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#f7e5f3]/80 text-brand lg:hidden"
+            className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-muted text-foreground lg:hidden"
           >
             <Menu className="h-5 w-5" />
           </button>

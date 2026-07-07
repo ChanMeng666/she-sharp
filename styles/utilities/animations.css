@@ -37,96 +37,83 @@
     transform: scale(1);
   }
 
-  /* Scroll-triggered animations */
-  .animate-on-scroll {
+  /* ============================================================
+     Scroll-triggered animations — SAFETY NET.
+     The <Reveal> component (components/ui/reveal.tsx) now drives entrance
+     motion inline and renders VISIBLE by default (no SSR opacity-0 flash).
+     These classes therefore default to VISIBLE; the hidden state is opt-in
+     ONLY inside a `.reveal-armed` ancestor. `.is-visible` reveals as before.
+     ============================================================ */
+  .reveal-armed .animate-on-scroll,
+  .reveal-armed .animate-on-scroll-fade-up,
+  .reveal-armed .animate-on-scroll-fade-down,
+  .reveal-armed .animate-on-scroll-fade-left,
+  .reveal-armed .animate-on-scroll-fade-right,
+  .reveal-armed .animate-on-scroll-scale,
+  .reveal-armed .animate-on-scroll-fade {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
   }
 
-  .animate-on-scroll.is-visible {
+  .reveal-armed .animate-on-scroll,
+  .reveal-armed .animate-on-scroll-fade-up {
+    transform: translateY(12px);
+  }
+
+  .reveal-armed .animate-on-scroll-fade-down {
+    transform: translateY(-12px);
+  }
+
+  .reveal-armed .animate-on-scroll-fade-left {
+    transform: translateX(-12px);
+  }
+
+  .reveal-armed .animate-on-scroll-fade-right {
+    transform: translateX(12px);
+  }
+
+  .reveal-armed .animate-on-scroll-scale {
+    transform: scale(0.98);
+  }
+
+  .reveal-armed .animate-on-scroll.is-visible,
+  .reveal-armed .animate-on-scroll-fade-up.is-visible,
+  .reveal-armed .animate-on-scroll-fade-down.is-visible,
+  .reveal-armed .animate-on-scroll-fade-left.is-visible,
+  .reveal-armed .animate-on-scroll-fade-right.is-visible,
+  .reveal-armed .animate-on-scroll-scale.is-visible,
+  .reveal-armed .animate-on-scroll-fade.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 
-  .animate-on-scroll-fade-up {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .animate-on-scroll-fade-up.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .animate-on-scroll-fade-down {
-    opacity: 0;
-    transform: translateY(-30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .animate-on-scroll-fade-down.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .animate-on-scroll-fade-left {
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .animate-on-scroll-fade-left.is-visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .animate-on-scroll-fade-right {
-    opacity: 0;
-    transform: translateX(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .animate-on-scroll-fade-right.is-visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .animate-on-scroll-scale {
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .animate-on-scroll-scale.is-visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .animate-on-scroll-fade {
-    opacity: 0;
-    transition: opacity 0.6s ease-out;
-  }
-
-  .animate-on-scroll-fade.is-visible {
-    opacity: 1;
-  }
-
-  /* Marquee */
+  /* Marquee — slowed for editorial calm */
   @keyframes marquee {
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
   }
 
   .animate-marquee {
-    animation: marquee 28s linear infinite;
+    animation: marquee 45s linear infinite;
     display: flex;
     width: max-content;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .animate-marquee { animation: none; }
+  /* Curtain reveal — image mask wipe (used by CurtainReveal) */
+  @keyframes curtainReveal {
+    from { clip-path: inset(0 0 100% 0); }
+    to   { clip-path: inset(0 0 0 0); }
+  }
+
+  /* Drip — subtle scroll-hint indicator */
+  @keyframes drip {
+    0%   { transform: translateY(0); opacity: 0; }
+    30%  { opacity: 1; }
+    100% { transform: translateY(10px); opacity: 0; }
+  }
+
+  .animate-drip {
+    animation: drip 1.8s var(--ease-out-expo) infinite;
   }
 
   /* Hero fade-up entrance */
@@ -136,19 +123,24 @@
   }
 
   .animate-hero-fade-up {
-    animation: heroFadeUp 0.7s ease-out both;
+    animation: heroFadeUp 0.7s var(--ease-out-expo) both;
   }
 
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
+    .animate-marquee,
+    .animate-drip,
+    .animate-hero-fade-up {
+      animation: none;
+    }
 
-    .animate-on-scroll,
-    .animate-on-scroll-fade-up,
-    .animate-on-scroll-fade-down,
-    .animate-on-scroll-fade-left,
-    .animate-on-scroll-fade-right,
-    .animate-on-scroll-scale,
-    .animate-on-scroll-fade {
+    .reveal-armed .animate-on-scroll,
+    .reveal-armed .animate-on-scroll-fade-up,
+    .reveal-armed .animate-on-scroll-fade-down,
+    .reveal-armed .animate-on-scroll-fade-left,
+    .reveal-armed .animate-on-scroll-fade-right,
+    .reveal-armed .animate-on-scroll-scale,
+    .reveal-armed .animate-on-scroll-fade {
       opacity: 1;
       transform: none;
       transition: none;

@@ -63,7 +63,7 @@ export const InflectedCard: React.FC<InflectedCardProps> = ({
   parentBackgroundColor,
   onClick,
   onHover,
-  cardRounding = 20,
+  cardRounding = 32,
   fontSizes = {},
   margins = {},
   buttonIcon,

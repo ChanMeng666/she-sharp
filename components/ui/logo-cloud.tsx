@@ -16,7 +16,7 @@ interface LogoCloudProps {
 
 export function LogoCloud({
   logos,
-  duration = 80,
+  duration = 90,
   durationOnHover = 160,
   gap = 56,
 }: LogoCloudProps) {
@@ -41,7 +41,7 @@ export function LogoCloud({
             className="flex items-center justify-center shrink-0 w-[100px] md:w-[120px] h-[40px] md:h-[48px]"
           >
             <img
-              className="max-w-full max-h-full w-auto h-auto object-contain"
+              className="max-w-full max-h-full w-auto h-auto object-contain grayscale transition duration-300 hover:grayscale-0"
               src={logo.src}
               alt={logo.alt}
             />
