@@ -132,6 +132,11 @@ export function CurtainReveal({
   className,
   threshold = 0.2,
 }: CurtainRevealProps) {
+  // The observed wrapper must stay UNCLIPPED: Chrome factors the target's own
+  // clip-path into IntersectionObserver's intersection rect, so a fully
+  // clipped target never reports as intersecting and the curtain never lifts.
+  // The clip therefore lives on an inner element while the outer ref is
+  // observed.
   const ref = React.useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = React.useState(false);
   const [shown, setShown] = React.useState(false);
@@ -144,6 +149,14 @@ export function CurtainReveal({
       "(prefers-reduced-motion: reduce)"
     ).matches;
     if (reduceMotion) {
+      setShown(true);
+      return;
+    }
+
+    // Above-the-fold curtains never hide content — same contract as Reveal.
+    const rect = el.getBoundingClientRect();
+    const belowFold = rect.top > window.innerHeight * 0.9;
+    if (!belowFold) {
       setShown(true);
       return;
     }
@@ -162,11 +175,18 @@ export function CurtainReveal({
       { threshold }
     );
     observer.observe(el);
-    return () => observer.disconnect();
+
+    // Safety net: if the observer never fires (browser quirk, unexpected
+    // layout), force the content visible rather than leaving it clipped.
+    const fallback = window.setTimeout(() => setShown(true), 4000);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(fallback);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const style: React.CSSProperties | undefined = enabled
+  const innerStyle: React.CSSProperties | undefined = enabled
     ? {
         clipPath: shown ? "inset(0 0 0 0)" : "inset(0 0 100% 0)",
         transition: `clip-path 1.1s var(--ease-snap) ${delay}ms`,
@@ -175,8 +195,10 @@ export function CurtainReveal({
     : undefined;
 
   return (
-    <div ref={ref} className={cn(className)} style={style}>
-      {children}
+    <div ref={ref} className={cn(className)}>
+      <div className="h-full w-full" style={innerStyle}>
+        {children}
+      </div>
     </div>
   );
 }

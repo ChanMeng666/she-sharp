@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -29,8 +29,15 @@ import { cn } from "@/lib/utils";
 import { navigationConfig } from "@/lib/config/navigation";
 import { UserNav } from "./user-nav";
 
+/** Path (no hash) prefix-match: "/events" owns "/events" and "/events/x". */
+function pathMatches(pathname: string, href: string): boolean {
+  const target = href.split("#")[0];
+  if (!target || target === "/") return pathname === "/";
+  return pathname === target || pathname.startsWith(`${target}/`);
+}
+
 export function SiteHeader() {
-  const router = useRouter();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [openMobileMenus, setOpenMobileMenus] = useState<string[]>([]);
   const [scrolled, setScrolled] = useState(false);
@@ -92,6 +99,16 @@ export function SiteHeader() {
     );
   };
 
+  // The current section: prefer the item whose own href owns the pathname;
+  // otherwise fall back to a child match (e.g. /sponsors/* → Get Involved).
+  const ownerItem = navigationConfig.items.find(
+    (item) => item.href && pathMatches(pathname, item.href)
+  );
+  const isItemActive = (item: (typeof navigationConfig.items)[number]) =>
+    ownerItem
+      ? item === ownerItem
+      : !!item.children?.some((child) => pathMatches(pathname, child.href));
+
   return (
     <header className={cn(
       "fixed top-0 left-0 right-0 z-50",
@@ -135,7 +152,13 @@ export function SiteHeader() {
                       <DropdownMenuTrigger asChild>
                         <button
                           type="button"
-                          className="group inline-flex items-center gap-1 bg-transparent text-foreground hover:bg-muted data-[state=open]:bg-muted transition-colors duration-150 rounded-full px-3 py-2 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                          className={cn(
+                            "group inline-flex items-center gap-1 bg-transparent transition-colors duration-150 rounded-full px-3 py-2 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
+                            isItemActive(item)
+                              ? "text-brand bg-surface-purple/70 hover:bg-surface-purple data-[state=open]:bg-surface-purple"
+                              : "text-foreground hover:bg-muted data-[state=open]:bg-muted"
+                          )}
+                          aria-current={isItemActive(item) ? "true" : undefined}
                         >
                           {item.title}
                           <ChevronDown
@@ -183,7 +206,13 @@ export function SiteHeader() {
                     <Link
                       href={item.href}
                       onClick={(e) => handleSmoothScroll(e, item.href)}
-                      className="inline-flex items-center rounded-full bg-transparent px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors duration-150"
+                      className={cn(
+                        "inline-flex items-center rounded-full bg-transparent px-3 py-2 text-sm font-medium transition-colors duration-150",
+                        isItemActive(item)
+                          ? "text-brand bg-surface-purple/70 hover:bg-surface-purple"
+                          : "text-foreground hover:bg-muted"
+                      )}
+                      aria-current={isItemActive(item) ? "page" : undefined}
                     >
                       {item.title}
                     </Link>
@@ -200,7 +229,12 @@ export function SiteHeader() {
                 <li key={item.title} className="relative">
                   <Link
                     href={item.href || "#"}
-                    className="group inline-flex h-9 w-max items-center justify-center rounded-full bg-transparent px-4 py-2 text-sm font-medium hover:bg-muted transition-colors duration-150"
+                    className={cn(
+                      "group inline-flex h-9 w-max items-center justify-center rounded-full bg-transparent px-4 py-2 text-sm font-medium transition-colors duration-150",
+                      isItemActive(item)
+                        ? "text-brand bg-surface-purple/70 hover:bg-surface-purple"
+                        : "hover:bg-muted"
+                    )}
                   >
                     {item.title}
                     {item.children && (
@@ -308,7 +342,12 @@ export function SiteHeader() {
                           open={openMobileMenus.includes(item.title)}
                           onOpenChange={() => toggleMobileMenu(item.title)}
                         >
-                          <CollapsibleTrigger className="group flex w-full items-center gap-3 rounded-[16px] px-3 py-3 text-left transition-colors duration-200 hover:bg-muted data-[state=open]:bg-muted">
+                          <CollapsibleTrigger
+                            className={cn(
+                              "group flex w-full items-center gap-3 rounded-[16px] px-3 py-3 text-left transition-colors duration-200 hover:bg-muted data-[state=open]:bg-muted",
+                              isItemActive(item) && "bg-surface-purple/60"
+                            )}
+                          >
                             {item.icon && (
                               <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[12px] bg-muted transition-colors duration-200 group-hover:bg-ink-200">
                                 <item.icon className="h-4 w-4 text-brand" />
@@ -364,7 +403,11 @@ export function SiteHeader() {
                       ) : (
                         <Link
                           href={item.href}
-                          className="group flex items-center gap-3 rounded-[16px] px-3 py-3 transition-colors duration-200 hover:bg-muted"
+                          className={cn(
+                            "group flex items-center gap-3 rounded-[16px] px-3 py-3 transition-colors duration-200 hover:bg-muted",
+                            isItemActive(item) && "bg-surface-purple/60"
+                          )}
+                          aria-current={isItemActive(item) ? "page" : undefined}
                           onClick={(e) => {
                             handleSmoothScroll(e, item.href);
                             setIsOpen(false);
