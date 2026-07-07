@@ -134,6 +134,18 @@ function nzOffset(tz?: string): string {
   return tz === "NZST" ? "+12:00" : "+13:00";
 }
 
+/**
+ * Format a Date to "YYYY-MM-DD" using its local calendar fields. parseDateString
+ * builds the Date at local midnight, so reading local fields (not toISOString,
+ * which reads UTC) keeps the calendar day stable regardless of server timezone.
+ */
+function toDateOnly(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 /** Parse a "7:30pm" / "6pm" style clock time to 24h "HH:MM"; null if unparseable. */
 function parseClockTime(time?: string): string | null {
   const m = time
@@ -170,7 +182,7 @@ export function eventSchema(event: EventV3) {
   const date = parseDateString(event.date);
   const dateOnly = Number.isNaN(date.getTime())
     ? undefined
-    : date.toISOString().split("T")[0];
+    : toDateOnly(date);
 
   // Compose start/end datetimes from the day plus extracted clock times. Events
   // are single-day, so endDate shares the day; both fall back to date-only when
