@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllEvents, parseDateString, isFutureDate } from "@/lib/data/events";
 import { SITE_URL } from "@/lib/seo/site";
+import { isMentorshipOpen } from "@/lib/config/mentorship";
 
 type ChangeFrequency = MetadataRoute.Sitemap[number]["changeFrequency"];
 
@@ -60,7 +61,18 @@ const STATIC_ROUTES: Array<{
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => ({
+  // The mentor/mentee "apply" pages 301-redirect to their parent while the
+  // mentorship window is closed, so only advertise them when it's open to avoid
+  // submitting redirecting URLs to search engines.
+  const routes = isMentorshipOpen()
+    ? STATIC_ROUTES
+    : STATIC_ROUTES.filter(
+        (route) =>
+          route.path !== "/mentorship/mentor/apply" &&
+          route.path !== "/mentorship/mentee/apply",
+      );
+
+  const staticEntries: MetadataRoute.Sitemap = routes.map((route) => ({
     url: `${SITE_URL}${route.path}`,
     lastModified: now,
     changeFrequency: route.changeFrequency,

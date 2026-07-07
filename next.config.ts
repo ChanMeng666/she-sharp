@@ -32,6 +32,30 @@ const nextConfig: NextConfig = {
       { source: '/about-us/:path*', destination: '/about', permanent: true },
       { source: '/contact-us', destination: '/contact', permanent: true },
       { source: '/mentorship/mentorship-program', destination: '/mentorship', permanent: true },
+      // Legacy route renames surfaced by GSC 404 / not-indexed reports (2026-07-07).
+      { source: '/mentorship/meet-our-mentors', destination: '/mentorship', permanent: true },
+      { source: '/mentorship/become-a-mentor', destination: '/mentorship/mentor', permanent: true },
+      { source: '/get-involved', destination: '/join-our-team', permanent: true },
+      { source: '/user-account', destination: '/dashboard/account', permanent: true },
+      { source: '/access-denied', destination: '/', permanent: true },
+      { source: '/introducing-elina-ashimbayeva', destination: '/about', permanent: true },
+      // Legacy event / conference URLs → current event slugs.
+      { source: '/events-gec', destination: '/events/google-educator-conference', permanent: true },
+      { source: '/conference/2024/google-educator2024', destination: '/events/google-educator-conference-2024', permanent: true },
+      {
+        source: '/events/she-sharp-academyex-international-womens-day-2026',
+        destination: '/events/she-sharp-and-academyex-international-womens-day-2026',
+        permanent: true,
+      },
+      {
+        source: '/events/international-womens-day-2026',
+        destination: '/events/she-sharp-and-academyex-international-womens-day-2026',
+        permanent: true,
+      },
+      { source: '/events/shesharp-ai-envirohack-2022-info', destination: '/events', permanent: true },
+      // Old WordPress newsletter PDFs → newsletters hub.
+      { source: '/wp-content/uploads/2021/05/June-2021-Newsletter.pdf', destination: '/resources/newsletters', permanent: true },
+      { source: '/wp-content/uploads/2021/08/August-2021-Newsletter.pdf', destination: '/resources/newsletters', permanent: true },
       { source: '/media/news-and-press', destination: '/resources/in-the-press', permanent: true },
       { source: '/media/podcasts', destination: '/resources/podcasts', permanent: true },
       { source: '/media/newsletters', destination: '/resources/newsletters', permanent: true },

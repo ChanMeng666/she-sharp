@@ -3,6 +3,7 @@ import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Cookie Policy",
+  alternates: { canonical: "/cookie-policy" },
   description: "Learn about how She Sharp uses cookies and similar technologies on our website.",
 };
 

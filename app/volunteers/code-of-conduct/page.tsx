@@ -3,6 +3,7 @@ import "@/styles/components/legal-page.css";
 
 export const metadata = {
   title: "Ambassador Code of Conduct",
+  alternates: { canonical: "/volunteers/code-of-conduct" },
   description: "Code of Conduct for She Sharp volunteers and ambassadors outlining expected standards and responsibilities.",
 };
 

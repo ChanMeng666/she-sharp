@@ -10,6 +10,7 @@ import {
 
 export const metadata: Metadata = {
   title: "Podcasts",
+  alternates: { canonical: "/resources/podcasts" },
   description:
     "Listen to She Sharp Talks \u2013 conversations with women leading innovation in technology.",
 };

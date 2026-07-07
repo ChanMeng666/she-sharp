@@ -8,6 +8,7 @@
 import {
   EventV3,
   EventSpeakerV3,
+  EventSpeakersV3,
   EventSpeakerGroup,
   EventSpecialSection,
   EventSponsorsV3,
@@ -483,23 +484,25 @@ export function getEventStartTime(event: EventV3): string | null {
  * Get all speakers from an event (flattened)
  */
 export function getAllSpeakersFromEvent(event: EventV3): EventSpeakerV3[] {
-  const speakers: EventSpeakerV3[] = [];
   const speakersData = event.detailPageData.speakers;
 
-  if (speakersData.keynote_speakers?.speakers) {
-    speakers.push(...speakersData.keynote_speakers.speakers);
-  }
-  if (speakersData.panel_speakers?.speakers) {
-    speakers.push(...speakersData.panel_speakers.speakers);
-  }
-  if (speakersData.guest_speakers?.speakers) {
-    speakers.push(...speakersData.guest_speakers.speakers);
-  }
-  if (speakersData.panel_facilitators?.speakers) {
-    speakers.push(...speakersData.panel_facilitators.speakers);
-  }
+  // Flatten every speaker group the EventSpeakersV3 type defines so the schema
+  // `performer` field and the chatbot cover all people shown on the page. Keep
+  // this list in sync with hasAnySpeakers() below.
+  const groups: (keyof EventSpeakersV3)[] = [
+    "keynote_speakers",
+    "panel_speakers",
+    "guest_speakers",
+    "demo_facilitators",
+    "panel_facilitators",
+    "hosts",
+    "mentors",
+    "panelists",
+    "workshop_facilitators",
+    "readiness_workshop_facilitators",
+  ];
 
-  return speakers;
+  return groups.flatMap((group) => speakersData[group]?.speakers ?? []);
 }
 
 /**
@@ -511,6 +514,7 @@ export function hasAnySpeakers(event: EventV3): boolean {
     (speakers.keynote_speakers?.speakers?.length ?? 0) > 0 ||
     (speakers.panel_speakers?.speakers?.length ?? 0) > 0 ||
     (speakers.guest_speakers?.speakers?.length ?? 0) > 0 ||
+    (speakers.demo_facilitators?.speakers?.length ?? 0) > 0 ||
     (speakers.panel_facilitators?.speakers?.length ?? 0) > 0 ||
     (speakers.hosts?.speakers?.length ?? 0) > 0 ||
     (speakers.mentors?.speakers?.length ?? 0) > 0 ||
