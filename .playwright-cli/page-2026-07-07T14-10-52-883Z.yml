@@ -1,0 +1,587 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "She Sharp Home" [ref=e5] [cursor=pointer]:
+          - /url: /
+        - navigation [ref=e7]:
+          - list [ref=e8]:
+            - listitem [ref=e9]:
+              - button "About" [ref=e10]:
+                - text: About
+                - img [ref=e11]
+            - listitem [ref=e13]:
+              - button "Events" [ref=e14]:
+                - text: Events
+                - img [ref=e15]
+            - listitem [ref=e17]:
+              - button "Mentorship" [ref=e18]:
+                - text: Mentorship
+                - img [ref=e19]
+            - listitem [ref=e21]:
+              - button "Get Involved" [ref=e22]:
+                - text: Get Involved
+                - img [ref=e23]
+            - listitem [ref=e25]:
+              - button "Resources" [ref=e26]:
+                - text: Resources
+                - img [ref=e27]
+            - listitem [ref=e29]:
+              - link "Contact" [ref=e30] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e31]:
+          - link "Donate" [ref=e32] [cursor=pointer]:
+            - /url: /donate
+          - link "Sign In" [ref=e34] [cursor=pointer]:
+            - /url: /sign-in
+            - button "Sign In" [ref=e35]
+    - main [ref=e36]:
+      - generic [ref=e37]:
+        - generic [ref=e38]:
+          - img "A large gathering of the She Sharp community posed together in rows for a group photo at the Inspire Her event, many wearing pink lanyards." [ref=e40]
+          - img "A large group in colourful traditional dress gathered for a group photo, with decorative parasols arranged in front, celebrating cultural diversity at a She Sharp event." [ref=e42]
+          - img "A speaker addressing the audience with a microphone at the She Sharp Inspire Her event, wearing a pink lanyard." [ref=e44]
+          - img "Young attendees seated in red theatre seats, listening attentively during the She Sharp Inspire Her event." [ref=e46]
+          - img "A wide shot of the She Sharp community celebrating an anniversary milestone with arms raised." [ref=e48]
+          - generic:
+            - paragraph: She Sharp
+            - heading "Bridging the gender gap in STEM" [level=1]
+          - button "Previous slide" [ref=e49]:
+            - img [ref=e50]
+          - button "Next slide" [ref=e52]:
+            - img [ref=e53]
+          - generic [ref=e55]:
+            - generic [ref=e56]:
+              - button "Go to slide 1" [ref=e57]
+              - button "Go to slide 2" [ref=e59]
+              - button "Go to slide 3" [ref=e60]
+              - button "Go to slide 4" [ref=e61]
+              - button "Go to slide 5" [ref=e62]
+            - generic [ref=e63]: 01 / 05
+        - generic [ref=e67]:
+          - figure "Dr. Mahsa McCauley She Sharp — Founder and Director" [ref=e68]:
+            - generic [ref=e69]: “
+            - blockquote [ref=e70]:
+              - paragraph [ref=e71]: As the Founder of She Sharp, I am proud to lead an organisation dedicated to empowering women in tech. Despite women making up over half of the population, they represent only 20% of roles in STEM fields.
+              - paragraph [ref=e72]: At She Sharp, we connect women with female role models, host workshops, and dispel misconceptions about the industry. We create an inclusive environment that empowers women to pursue their passions in tech — a platform to network, develop skills, and break down the barriers to a more diverse industry.
+              - paragraph [ref=e73]: Join us in changing the face of tech.
+            - generic [ref=e74]:
+              - paragraph [ref=e75]: Dr. Mahsa McCauley
+              - paragraph [ref=e76]: She Sharp — Founder and Director
+          - img "Dr. Mahsa McCauley, Founder and Director of She Sharp" [ref=e79]
+        - generic [ref=e82]:
+          - generic [ref=e83]:
+            - paragraph [ref=e84]: Our journey
+            - heading "Watch how it began" [level=2] [ref=e85]
+            - paragraph [ref=e86]: A short film on how She Sharp is bridging the gender gap in STEM.
+          - iframe [ref=e88]:
+            - generic [active] [ref=f3e1]:
+              - generic "YouTube 视频播放器" [ref=f3e3]
+              - generic [ref=f3e5]:
+                - generic:
+                  - generic:
+                    - button "播放视频" [ref=f3e10] [cursor=pointer]
+                    - button "隐藏播放器控件" [ref=f3e12] [cursor=pointer]
+                    - generic [ref=f3e14]:
+                      - generic [ref=f3e19]:
+                        - generic [ref=f3e20]:
+                          - link "SheSharp - Our Journey, Our Purpose!" [ref=f3e21] [cursor=pointer]:
+                            - /url: https://www.youtube.com/watch?v=s9oxO8nH8po
+                          - link "She Sharp" [ref=f3e22] [cursor=pointer]:
+                            - /url: /channel/UCfNDV1btAhwWwEXSyxNd5_Q
+                            - generic [ref=f3e23]: She Sharp
+                        - generic [ref=f3e24]:
+                          - button [ref=f3e25] [cursor=pointer]
+                          - generic [ref=f3e27]:
+                            - generic: She Sharp
+                            - generic: 23位订阅者
+                      - generic [ref=f3e28]:
+                        - button "复制链接" [ref=f3e31] [cursor=pointer]:
+                          - generic [ref=f3e35]:
+                            - img
+                        - link "在 YouTube 上观看" [ref=f3e42] [cursor=pointer]:
+                          - /url: https://www.youtube.com/watch?v=s9oxO8nH8po
+                          - generic [ref=f3e45]:
+                            - text: 前往平台观看：
+                            - img [ref=f3e47]:
+                              - generic [ref=f3e49]:
+                                - img
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - paragraph [ref=e93]: A decade of impact
+            - heading "A deep dive into our journey" [level=2] [ref=e94]
+            - paragraph [ref=e95]: From a small launch event in 2014 to a thriving community of 3000+ members across New Zealand.
+          - generic [ref=e97]:
+            - generic [ref=e98]:
+              - heading "2014" [level=3] [ref=e102]
+              - generic [ref=e104]:
+                - img "She Sharp community members mingling and networking together in a room at an early She Sharp launch gathering." [ref=e108]
+                - paragraph [ref=e109]: She# Launch Event
+                - paragraph [ref=e110]: She Sharp was founded with a mission to bridge the gender gap in STEM fields. Our inaugural launch event with Orion Health marked the beginning of a movement to create a supportive community for women in technology across New Zealand.
+                - list [ref=e111]:
+                  - listitem [ref=e112]: Partnership with Orion Health
+                  - listitem [ref=e114]: Auckland launch
+            - generic [ref=e116]:
+              - heading "2015" [level=3] [ref=e120]
+              - generic [ref=e122]:
+                - img "Attendees gathered beside a She Sharp 'connecting women in technology' banner at the Wellington launch with Xero." [ref=e126]
+                - paragraph [ref=e127]: Wellington Launch with Xero
+                - paragraph [ref=e128]: Expanded our reach beyond Auckland with the Wellington launch, partnering with Xero to bring She Sharp's mission to the capital city. This expansion marked our commitment to supporting women in tech nationwide.
+                - list [ref=e129]:
+                  - listitem [ref=e130]: Partnership with Xero
+                  - listitem [ref=e132]: First regional expansion
+            - generic [ref=e134]:
+              - heading "2016" [level=3] [ref=e138]
+              - generic [ref=e140]:
+                - img "She Sharp attendees chatting together in front of a large Google logo wall at an evening event." [ref=e144]
+                - paragraph [ref=e145]: First 100-Attendee Event with Google
+                - paragraph [ref=e146]: A major milestone as we hosted our first event reaching 100 attendees, in partnership with Google. This growth demonstrated the strong demand for community and support among women in New Zealand's tech sector.
+                - list [ref=e147]:
+                  - listitem [ref=e148]: Partnership with Google
+                  - listitem [ref=e150]: 100 attendees milestone
+            - generic [ref=e152]:
+              - heading "2017" [level=3] [ref=e156]
+              - generic [ref=e158]:
+                - img "A group of She Sharp attendees standing together outdoors under trees during the Auckland Tech Grand Tour." [ref=e162]
+                - paragraph [ref=e163]: Auckland Tech Grand Tour
+                - paragraph [ref=e164]: An ambitious 6.5-hour tour showcasing some of New Zealand's biggest tech companies. Participants got exclusive behind-the-scenes access to leading organisations, gaining insights into diverse career paths and company cultures in the tech industry.
+                - list [ref=e165]:
+                  - listitem [ref=e166]: 6.5 hours of exclusive access
+                  - listitem [ref=e168]: Multiple top tech companies
+                  - listitem [ref=e170]: Behind-the-scenes experience
+            - generic [ref=e172]:
+              - heading "2020" [level=3] [ref=e176]
+              - generic [ref=e178]:
+                - img "Two She Sharp attendees in conversation, wearing event name badges, at a workshop session." [ref=e182]
+                - paragraph [ref=e183]: Going Virtual During COVID-19
+                - paragraph [ref=e184]: Adapted to the global pandemic by pivoting to virtual events, dramatically expanding our reach and accessibility. Despite the challenges, we hosted 12 events throughout the year—10 of which were online—keeping our community connected and engaged.
+                - list [ref=e185]:
+                  - listitem [ref=e186]: 12 events during COVID year
+                  - listitem [ref=e188]: 10 online events
+                  - listitem [ref=e190]: Community stayed connected
+            - generic [ref=e192]:
+              - heading "2022" [level=3] [ref=e196]
+              - generic [ref=e198]:
+                - img "Attendees gathered in an event space beside a bright screen reading 'Female Led Hackathon' at the She Sharp hackathon." [ref=e202]
+                - paragraph [ref=e203]: First Female-Led Hackathon
+                - paragraph [ref=e204]: Made history by hosting New Zealand's first female-led hackathon, creating a space where women could lead, innovate, and showcase their technical skills. This groundbreaking event set a new standard for inclusive tech events in the country.
+                - list [ref=e205]:
+                  - listitem [ref=e206]: First female-led hackathon in NZ
+                  - listitem [ref=e208]: Women-led innovation
+                  - listitem [ref=e210]: Technical skills showcase
+            - generic [ref=e212]:
+              - heading "2023" [level=3] [ref=e216]
+              - generic [ref=e218]:
+                - img "Two She Sharp participants collaborating over a tablet at a table during a 2023 event." [ref=e222]
+                - paragraph [ref=e223]: Expanding Horizons
+                - paragraph [ref=e224]: A transformative year with multiple landmark initiatives. Partnered with Google for an Educator Conference, launched "Inspire Her" to empower Māori and Pasifika school students, and expanded to Hamilton with HCLTech—bringing She Sharp's mission to more communities than ever.
+                - list [ref=e225]:
+                  - listitem [ref=e226]: Google Educator Conference
+                  - listitem [ref=e228]: "Inspire Her: Māori & Pasifika students"
+                  - listitem [ref=e230]: Hamilton launch with HCLTech
+            - generic [ref=e232]:
+              - heading "2024" [level=3] [ref=e236]
+              - generic [ref=e238]:
+                - img "She Sharp members posing together at a pink floral photo wall during the 10-Year Anniversary celebration." [ref=e242]
+                - paragraph [ref=e243]: A Decade of Impact
+                - paragraph [ref=e244]: Celebrating 10 years of bridging the gender gap in STEM. Hosted another successful hackathon with Fisher & Paykel Healthcare and launched our flagship mentoring programme—connecting aspiring women in tech with experienced industry professionals.
+                - list [ref=e245]:
+                  - listitem [ref=e246]: Hackathon with F&P Healthcare
+                  - listitem [ref=e248]: Mentoring programme launched
+                  - listitem [ref=e250]: 10 years of impact
+            - generic [ref=e252]:
+              - heading "2025" [level=3] [ref=e256]
+              - generic [ref=e258]:
+                - img "She Sharp members networking together in a bright room at the academyEX International Women's Day event." [ref=e262]
+                - paragraph [ref=e263]: Building Momentum
+                - paragraph [ref=e264]: An incredible year of growth with 6 major events reaching over 500 registered attendees from 135 unique companies. From celebrating International Women's Day at AcademyEX to hosting AI Hackathon Festival with AI Forum NZ—each event strengthened our community and advanced our mission.
+                - list [ref=e265]:
+                  - listitem [ref=e266]: "March: AcademyEX — International Women's Day"
+                  - listitem [ref=e268]: "April: #IAmRemarkable Workshop"
+                  - listitem [ref=e270]: "May: MYOB — Tech That Matches Your Vibe"
+                  - listitem [ref=e272]: "July: HPE — THRIVE: Your Career, Your Story"
+                  - listitem [ref=e274]: "August: AI Forum — AI Hackathon Festival"
+                  - listitem [ref=e276]: "September: Fonterra — Business & Tech Transformation"
+        - generic [ref=e280]:
+          - generic [ref=e281]:
+            - paragraph [ref=e282]: The archive
+            - heading "Ten years, one community" [level=2] [ref=e283]
+            - paragraph [ref=e284]: Every photo across this site is from our own events — a decade of women in tech showing up for each other.
+          - generic [ref=e286]:
+            - generic [ref=e287]:
+              - img "Three She Sharp volunteers in branded T-shirts standing arm in arm and smiling together at a Google event." [ref=e289]
+              - img "Two participants working together at a laptop during a She Sharp design-thinking workshop, with a countdown timer on the screen behind them." [ref=e291]
+              - img "A panel of women seated in armchairs during a She Sharp fireside discussion." [ref=e293]
+              - img "A group of smiling women wearing event lanyards at a She Sharp gathering." [ref=e295]
+              - img "A presenter leading the Own Your Energy workshop at the front of the room before a seated She Sharp audience." [ref=e297]
+              - img "Participants leaning in together to build a spaghetti-and-tape tower during a hands-on She Sharp workshop challenge." [ref=e299]
+            - generic [ref=e300]:
+              - img "Four young women laughing together while seated during a She Sharp event." [ref=e302]
+              - img "A panel of three speakers seated on stage during a She Sharp Her Waka session, with a presentation screen behind them." [ref=e304]
+              - img "A diverse team smiling around a hands-on build challenge during a She Sharp workshop." [ref=e306]
+              - img "A group gathered on the floor in front of a stage decorated with rainbow balloons and bunting at the She Sharp Imagine Zone event." [ref=e308]
+              - img "Four smiling women posed closely together at the She Sharp AI for the Environment hackathon." [ref=e310]
+              - img "Close-up of a hand sketching ideas on paper during a She Sharp session." [ref=e312]
+            - generic [ref=e313]:
+              - img "A presenter welcoming a seated audience at the start of a She Sharp event." [ref=e315]
+              - img "A small group looking at a tablet together during a She Sharp mentoring moment." [ref=e317]
+              - img "A group of She Sharp members gathered together, seated and standing, in a warmly lit lounge at an Amazon Web Services event." [ref=e319]
+              - img "Three She Sharp attendees laughing together around a laptop during a robotic process automation session." [ref=e321]
+              - img "A She Sharp group holding awards together at a recognition event." [ref=e323]
+              - img "A panellist speaking into a microphone during a She Sharp panel session." [ref=e325]
+          - link "Browse the photo gallery" [ref=e327] [cursor=pointer]:
+            - /url: /resources/photo-gallery
+        - region "Meet our people" [ref=e329]:
+          - generic [ref=e330]:
+            - generic [ref=e331]:
+              - paragraph [ref=e332]: The team
+              - heading "Meet our people" [level=2] [ref=e333]
+              - paragraph [ref=e334]: The leaders, innovators, and advocates driving change in the tech industry.
+            - list [ref=e335]:
+              - listitem [ref=e336]:
+                - article [ref=e337] [cursor=pointer]:
+                  - generic [ref=e338]:
+                    - img "Mahsa McCauley, Trustee | Ambassador | Founder and Chair" [ref=e341]
+                    - generic [ref=e342]:
+                      - generic [ref=e343]:
+                        - heading "Mahsa McCauley" [level=3] [ref=e344]
+                        - link "Mahsa McCauley's LinkedIn profile" [ref=e345]:
+                          - /url: https://nz.linkedin.com/in/mahsamohaghegh/
+                          - img [ref=e346]
+                      - paragraph [ref=e348]: Trustee | Ambassador | Founder and Chair
+                      - paragraph [ref=e349]: Dr. Mahsa McCauley is the founder and the director of She Sharp, an Associate Professor in the School of Computer, Engineering and Mathematical Sciences at Auckland University of Technology and Chair of the AI Forum New Zealand. An internationally recognised leader in AI and machine learning, Dr. McCauley also serves on the boards of NZTech, EdTechNZ and the AI Research Association, where she contributes to shaping the future of AI policy and research in New Zealand. Internationally, she has engaged as a Fulbright Scholar at North Carolina A&T State University, applying AI to agriculture and cybersecurity challenges. Her leadership and impact have earned numerous recognitions, including the YWCA Equal Pay Champion Award, Massey University Distinguished Alumni Award, and the Unsung Hero Award at the Women in Security Awards.
+                      - button "Learn more" [ref=e350]:
+                        - text: Learn more
+                        - img [ref=e351]
+              - listitem [ref=e355]:
+                - article [ref=e356] [cursor=pointer]:
+                  - generic [ref=e357]:
+                    - img "Mike McCauley, Trustee | Ambassador | Assets Manager" [ref=e360]
+                    - generic [ref=e361]:
+                      - generic [ref=e362]:
+                        - heading "Mike McCauley" [level=3] [ref=e363]
+                        - link "Mike McCauley's LinkedIn profile" [ref=e364]:
+                          - /url: https://nz.linkedin.com/in/mccauleymichae/
+                          - img [ref=e365]
+                      - paragraph [ref=e367]: Trustee | Ambassador | Assets Manager
+                      - paragraph [ref=e368]: Mike is a Digital Delivery Manager on the ICT Leadership team at Metlifecare, where he oversees the strategy and delivery of ICT solutions for new builds and property redevelopments. A dedicated advocate for women in tech, Mike has been a member of She Sharp since its inception in 2014. He oversees the charity's finances and physical assets, and is often seen taking photos at She Sharp events. Outside of his professional life, Mike enjoys time with his family, playing guitar, and has a passion for cooking and all things coffee.
+                      - button "Learn more" [ref=e369]:
+                        - text: Learn more
+                        - img [ref=e370]
+              - listitem [ref=e374]:
+                - article [ref=e375] [cursor=pointer]:
+                  - generic [ref=e376]:
+                    - img "Raquel Anne Maderazo, Ambassador | Event Manager" [ref=e379]
+                    - generic [ref=e380]:
+                      - generic [ref=e381]:
+                        - heading "Raquel Anne Maderazo" [level=3] [ref=e382]
+                        - link "Raquel Anne Maderazo's LinkedIn profile" [ref=e383]:
+                          - /url: https://www.linkedin.com/in/raquel-anne-maderazo/
+                          - img [ref=e384]
+                      - paragraph [ref=e386]: Ambassador | Event Manager
+                      - paragraph [ref=e387]: Raquel is a certified Project Management Professional (PMP®) with a master’s degree in IT Project Management from AUT and over 12 years of experience in the IT industry. She has led network infrastructure, software development, and ERP projects across diverse industries in Europe, UK, US, and Philippines. Known for her adaptability, she strives for project excellence and fosters a collaborative, inclusive work environment. As an event manager at She Sharp, Raquel leverages her project management expertise to plan and organise She Sharp-led conferences & events. Inspired by She Sharp’s mission, she’s passionate about creating a diverse environment where women can grow, learn, and overcome challenges in STEM.
+                      - button "Learn more" [ref=e388]:
+                        - text: Learn more
+                        - img [ref=e389]
+              - listitem [ref=e393]:
+                - article [ref=e394] [cursor=pointer]:
+                  - generic [ref=e395]:
+                    - img "Meeta Patel, Ambassador | Industry" [ref=e398]
+                    - generic [ref=e399]:
+                      - generic [ref=e400]:
+                        - heading "Meeta Patel" [level=3] [ref=e401]
+                        - link "Meeta Patel's LinkedIn profile" [ref=e402]:
+                          - /url: https://www.linkedin.com/in/meeta-patel-53105928/
+                          - img [ref=e403]
+                      - paragraph [ref=e405]: Ambassador | Industry
+                      - paragraph [ref=e406]: Dr. Meeta Patel is an experienced scientist with over 20 years of research expertise. As a Senior Scientist and Sustainability Lead at NanoLayr, she developed and implemented the company's sustainability strategy, including eco-friendly packaging. Her PhD in science and background in biopolymers have been invaluable. Dr. Patel has built strong relationships with councils, universities, research institutes, community groups, and organisations, showcasing her collaboration skills. She is active in volunteering, organising community sports, and promoting STEM education. As an industry lead ambassador for SHE Sharp, she leverages her experience in professional and volunteer roles to foster collaboration.
+                      - button "Learn more" [ref=e407]:
+                        - text: Learn more
+                        - img [ref=e408]
+              - listitem [ref=e412]:
+                - article [ref=e413] [cursor=pointer]:
+                  - generic [ref=e414]:
+                    - img "Prasanth Pavithran, Ambassador | Industry" [ref=e417]
+                    - generic [ref=e418]:
+                      - generic [ref=e419]:
+                        - heading "Prasanth Pavithran" [level=3] [ref=e420]
+                        - link "Prasanth Pavithran's LinkedIn profile" [ref=e421]:
+                          - /url: https://www.linkedin.com/in/prasanth-pavithran-mba-a54ab912/
+                          - img [ref=e422]
+                      - paragraph [ref=e424]: Ambassador | Industry
+                      - paragraph [ref=e425]: Prasanth is an experienced Information Technology and Management professional with over 23 years of global expertise. Originally from Lutyens' Delhi, India, he has called New Zealand home for the past 17 years where he lives with his wife, two children, and their dog. Currently, he serves as a Senior Business Analyst in the Office of the Chief Technology Officer (OCTO) at Auckland University of Technology (AUT). His career includes past roles as a Capability Manager and management positions for large organisations. Beyond his professional endeavours, he contributes to the New Zealand community through coaching and mentoring young professionals for over a decade. His community involvement extends to Community Patrols NZ. He joined SheSharp to try and have a wider impact and make a difference for future generations. In his personal time, Prasanth enjoys playing badminton and exploring creative writing. As a son, husband, father, and brother, he is committed to sharing his experience while honouring both his heritage and the place he now calls home.
+                      - button "Learn more" [ref=e426]:
+                        - text: Learn more
+                        - img [ref=e427]
+              - listitem [ref=e431]:
+                - article [ref=e432] [cursor=pointer]:
+                  - generic [ref=e433]:
+                    - img "Sara Ghafoor, Ambassador | Marketing Lead" [ref=e436]
+                    - generic [ref=e437]:
+                      - generic [ref=e438]:
+                        - heading "Sara Ghafoor" [level=3] [ref=e439]
+                        - link "Sara Ghafoor's LinkedIn profile" [ref=e440]:
+                          - /url: https://www.linkedin.com/in/sara-ghafoor/
+                          - img [ref=e441]
+                      - paragraph [ref=e443]: Ambassador | Marketing Lead
+                      - paragraph [ref=e444]: Kia ora! I’m Sara Ghafoor, an Electrical Engineer turned AI enthusiast passionate about inclusive tech. At Entelar Group, I support telecom site operations and major rollouts across NZ. I also help lead SheSharp’s events, mentorships, and community initiatives, collaborating with Google, Microsoft, Fonterra, and more. With a background in machine learning, medical imaging, and generative AI, I’m driven by tech that creates real-world impact—whether I’m mentoring at hackathons, managing projects, or running national events.
+                      - button "Learn more" [ref=e445]:
+                        - text: Learn more
+                        - img [ref=e446]
+              - listitem [ref=e450]:
+                - article [ref=e451] [cursor=pointer]:
+                  - generic [ref=e452]:
+                    - img "Chan Meng, Ambassador | Website Team Lead" [ref=e455]
+                    - generic [ref=e456]:
+                      - generic [ref=e457]:
+                        - heading "Chan Meng" [level=3] [ref=e458]
+                        - link "Chan Meng's LinkedIn profile" [ref=e459]:
+                          - /url: https://www.linkedin.com/in/chanmeng666/
+                          - img [ref=e460]
+                      - paragraph [ref=e462]: Ambassador | Website Team Lead
+                      - paragraph [ref=e463]: Chan Meng is an AI Agent Architect and full-stack engineer based in Auckland, building at the intersection of AI, cultural technology, and women's health. As She Sharp's Senior Full Stack Engineer and Website Team Lead, she was recruited directly by founder Dr Mahsa Mohaghegh to lead the platform rebuild that now serves 2,200+ members. She holds a Master of Applied Computing with Distinction from Lincoln University, is a UN Women CSW 69 speaker, and received the Outstanding Mentor Award at the 2025 AI Hackathon Festival (AI Forum NZ × She Sharp × AUT). An earliest-ecosystem MCP server author, she architects production AI agents with Next.js, TypeScript, Python, and Kubernetes — and has mentored 800+ women into tech along the way.
+                      - button "Learn more" [ref=e464]:
+                        - text: Learn more
+                        - img [ref=e465]
+              - listitem [ref=e469]:
+                - article [ref=e470] [cursor=pointer]:
+                  - generic [ref=e471]:
+                    - img "Marriane Bentigan, Ambassador | Marketing" [ref=e474]
+                    - generic [ref=e475]:
+                      - generic [ref=e476]:
+                        - heading "Marriane Bentigan" [level=3] [ref=e477]
+                        - link "Marriane Bentigan's LinkedIn profile" [ref=e478]:
+                          - /url: https://www.linkedin.com/in/marriane-bentigan-204203220/
+                          - img [ref=e479]
+                      - paragraph [ref=e481]: Ambassador | Marketing
+                      - paragraph [ref=e482]: Marriane is a Marketing Specialist at PB Tech who loves bringing creativity and strategy together to make ideas come alive. With years of experience leading marketing programmes across Asia-Pacific, she's now happily growing her career in New Zealand. Passionate about giving back, she supports women in tech and uplifts communities where people feel welcome and inspired. Outside of work, Marriane is the full-time mediator between her two strong-willed boys and wife, a creative video professional—so her days are often filled with sibling banter, production talk, and the occasional strategic Costco run. Her energy is contagious, and she's always ready to cheer others on and be the hype bud you didn't know you needed.
+                      - button "Learn more" [ref=e483]:
+                        - text: Learn more
+                        - img [ref=e484]
+              - listitem [ref=e488]:
+                - article [ref=e489] [cursor=pointer]:
+                  - generic [ref=e490]:
+                    - img "Gurleen Kaur, Ambassador | Secretary" [ref=e493]
+                    - generic [ref=e494]:
+                      - generic [ref=e495]:
+                        - heading "Gurleen Kaur" [level=3] [ref=e496]
+                        - link "Gurleen Kaur's LinkedIn profile" [ref=e497]:
+                          - /url: https://www.linkedin.com/in/leen-kaur/
+                          - img [ref=e498]
+                      - paragraph [ref=e500]: Ambassador | Secretary
+                      - paragraph [ref=e501]: Gurleen is a graduating student at Auckland University of Technology, pursuing a Bachelor of Computer and Information Sciences with a major in Software Development and a minor in Data Science. Passionate about empowering women in tech, she volunteers with She Sharp's marketing team, contributing through video editing, content creation, and leveraging her skills in tools like CapCut and Canva. With hands-on experience in projects like AI games, web development, and managing YouTube channels with over 10 million views, Gurleen is dedicated to bridging the gender gap in STEM while honing her expertise in programming and data analysis.
+                      - button "Learn more" [ref=e502]:
+                        - text: Learn more
+                        - img [ref=e503]
+              - listitem [ref=e507]:
+                - article [ref=e508] [cursor=pointer]:
+                  - generic [ref=e509]:
+                    - img "Yesha Kaniyawala, Ambassador | Website Maintenance" [ref=e512]
+                    - generic [ref=e513]:
+                      - generic [ref=e514]:
+                        - heading "Yesha Kaniyawala" [level=3] [ref=e515]
+                        - link "Yesha Kaniyawala's LinkedIn profile" [ref=e516]:
+                          - /url: https://www.linkedin.com/in/yeshakaniyawalasoftwareengineer/
+                          - img [ref=e517]
+                      - paragraph [ref=e519]: Ambassador | Website Maintenance
+                      - paragraph [ref=e520]: Yesha is an AI/Software Engineer at Possibl.ai who brings passion and real-world experience to She Sharp. Based in Auckland, she loves building AI-enhanced solutions and has worked across diverse tech stacks from web development to machine learning. As a She Sharp Ambassador, Yesha is excited to support other women in tech through mentorship and website development, using her own experiences navigating the industry to help create a more inclusive and supportive STEM community.
+                      - button "Learn more" [ref=e521]:
+                        - text: Learn more
+                        - img [ref=e522]
+              - listitem [ref=e526]:
+                - article [ref=e527] [cursor=pointer]:
+                  - generic [ref=e528]:
+                    - img "Len Estioko, Ambassador | Marketing Lead" [ref=e531]
+                    - generic [ref=e532]:
+                      - generic [ref=e533]:
+                        - heading "Len Estioko" [level=3] [ref=e534]
+                        - link "Len Estioko's LinkedIn profile" [ref=e535]:
+                          - /url: https://www.linkedin.com/in/lenestioko/
+                          - img [ref=e536]
+                      - paragraph [ref=e538]: Ambassador | Marketing Lead
+                      - paragraph [ref=e539]: Len is a seasoned advertising professional with over a decade of experience leading complex, integrated media campaigns across retail media, digital, Out-of-Home, and traditional channels. Holding a Master's in Management (Marketing), Len is committed to a growth mindset, constantly seeking innovative solutions and embracing new challenges. She finds great honor in supporting the next generation of passionate women in tech through her role as a She Sharp Ambassador. Outside of her career, Len manages a full-time role as a mom to a very active preschooler, whose boundless curiosity ensures her days are filled with hundreds of questions a day! Drawing on her strengths as a Relator and Developer, she’s always ready to connect deeply and champion the potential she sees in others, making her the purposeful advocate you need in your corner.
+                      - button "Learn more" [ref=e540]:
+                        - text: Learn more
+                        - img [ref=e541]
+              - listitem [ref=e545]:
+                - article [ref=e546] [cursor=pointer]:
+                  - generic [ref=e547]:
+                    - img "Lesley Gao, Ambassador | Website Maintenance" [ref=e550]
+                    - generic [ref=e551]:
+                      - generic [ref=e552]:
+                        - heading "Lesley Gao" [level=3] [ref=e553]
+                        - link "Lesley Gao's LinkedIn profile" [ref=e554]:
+                          - /url: https://www.linkedin.com/in/lesley-gao/
+                          - img [ref=e555]
+                      - paragraph [ref=e557]: Ambassador | Website Maintenance
+                      - paragraph [ref=e558]: Lesley Gao is a Product Designer with a background in journalism, web development, and UX/UI design. She has worked across SaaS products, onboarding experiences, and support platforms, including the design and development of the She Sharp website. She enjoy simplifying complex workflows and turning them into intuitive digital experiences. Lesley is also passionate about supporting communities and initiatives that empower and connect women in tech across Aotearoa. Outside of work, she enjoys hiking Auckland’s trails, photography, solving jigsaw puzzles, and building Lego.
+                      - button "Learn more" [ref=e559]:
+                        - text: Learn more
+                        - img [ref=e560]
+              - listitem [ref=e564]:
+                - article [ref=e565] [cursor=pointer]:
+                  - generic [ref=e566]:
+                    - img "Nikita Kumari, Ambassador | Event Manager" [ref=e569]
+                    - generic [ref=e570]:
+                      - generic [ref=e571]:
+                        - heading "Nikita Kumari" [level=3] [ref=e572]
+                        - link "Nikita Kumari's LinkedIn profile" [ref=e573]:
+                          - /url: https://www.linkedin.com/in/iamnikitakumari/
+                          - img [ref=e574]
+                      - paragraph [ref=e576]: Ambassador | Event Manager
+                      - paragraph [ref=e577]: Nikita Kumari is a Project Leader passionate about creating meaningful digital experiences. Over the past 5+ years, she has worked across B2B SaaS and AI-driven products and projects, leading cross-functional teams and blending strategy, design, and technology to deliver solutions that genuinely help people. She enjoys simplifying complexity, empowering teams, and turning ideas into impactful, well-executed products. Originally from India and now based in New Zealand, Nikita thrives in diverse, collaborative environments where learning never stops. She's passionate about supporting women in tech and believes in sharing knowledge to lift others as she grows. Outside of work, she enjoys exploring cafés, mentoring, and connecting with like-minded communities.
+                      - button "Learn more" [ref=e578]:
+                        - text: Learn more
+                        - img [ref=e579]
+              - listitem [ref=e583]:
+                - article [ref=e584] [cursor=pointer]:
+                  - generic [ref=e585]:
+                    - img "Tharaneetharan Thavarasan, Ambassador | Events Coordinator" [ref=e588]
+                    - generic [ref=e589]:
+                      - generic [ref=e590]:
+                        - heading "Tharaneetharan Thavarasan" [level=3] [ref=e591]
+                        - link "Tharaneetharan Thavarasan's LinkedIn profile" [ref=e592]:
+                          - /url: https://www.linkedin.com/in/tharaneetharan-thavarasan-52754940
+                          - img [ref=e593]
+                      - paragraph [ref=e595]: Ambassador | Events Coordinator
+                      - paragraph [ref=e596]: Tharaneetharan is a motivated and adaptable IT professional with a strong background in ERP systems, Business Analysis, and Data Analytics. He recently completed a Master of Information Technology, specializing in Data Science and Artificial Intelligence from AIS, New Zealand. He is passionate about learning emerging technologies and exploring how Data Analytics and Artificial Intelligence can be applied to solve real-world business challenges and create meaningful value for organizations. . As an ERP professional, he has worked as a Functional Consultant across SAP FICO, Microsoft Dynamics AX, and Microsoft Dynamics 365 Finance & Operations. As a She Sharp Ambassador, Tharaneetharan is excited to support women in technology through event coordination, community engagement, and event support activities. He also contributes to monthly newsletter preparation. Outside of work, he enjoys travelling, photography, reading books, listening to music, and playing sports.
+                      - button "Learn more" [ref=e597]:
+                        - text: Learn more
+                        - img [ref=e598]
+              - listitem [ref=e602]:
+                - article [ref=e603] [cursor=pointer]:
+                  - generic [ref=e604]:
+                    - img "Nirmala Chinnappan, Ambassador | Event Manager" [ref=e607]
+                    - generic [ref=e608]:
+                      - generic [ref=e609]:
+                        - heading "Nirmala Chinnappan" [level=3] [ref=e610]
+                        - link "Nirmala Chinnappan's LinkedIn profile" [ref=e611]:
+                          - /url: https://www.linkedin.com/in/nirmalachinnappan/
+                          - img [ref=e612]
+                      - paragraph [ref=e614]: Ambassador | Event Manager
+                      - paragraph [ref=e615]: Nirmala is an Event and Project Management professional with over 18 years of experience delivering meaningful experiences that connect people, celebrate culture, and drive lasting impact. Her career spans event coordination, project management and IT systems administration; bridging strategy, technology, and community to produce solutions that are both innovative and people-centered. She holds a Master of IT Project Management from Auckland University of Technology, underpinning her practice with academic rigour and strategic depth. As Event Manager at She Sharp, Nirmala helps in the planning and execution of She Sharp's signature conferences and events, creating professional platforms where women in STEM can grow, connect, and thrive. Deeply aligned with She Sharp's mission, she is committed to fostering inclusive environments that champion diversity, dismantle barriers, and empower the next generation of women in technology.
+                      - button "Learn more" [ref=e616]:
+                        - text: Learn more
+                        - img [ref=e617]
+              - listitem [ref=e621]:
+                - article [ref=e622] [cursor=pointer]:
+                  - generic [ref=e623]:
+                    - img "Moksha Shah, Ambassador | Event Manager" [ref=e626]
+                    - generic [ref=e627]:
+                      - generic [ref=e628]:
+                        - heading "Moksha Shah" [level=3] [ref=e629]
+                        - link "Moksha Shah's LinkedIn profile" [ref=e630]:
+                          - /url: https://www.linkedin.com/in/mokshashah/
+                          - img [ref=e631]
+                      - paragraph [ref=e633]: Ambassador | Event Manager
+                      - paragraph [ref=e634]: I am an IT Project Coordinator and Event Manager who thrives on turning complex plans into seamless, successful community experiences. Leveraging a background in stakeholder engagement and project governance, I bring structure and collaborative energy to organizing impactful initiatives for SheSharp.
+                      - button "Learn more" [ref=e635]:
+                        - text: Learn more
+                        - img [ref=e636]
+    - contentinfo [ref=e640]:
+      - paragraph [ref=e643]: Let's shape the future together.
+      - generic [ref=e645]:
+        - generic [ref=e648]:
+          - generic [ref=e649]:
+            - heading "Stay Connected" [level=3] [ref=e650]
+            - paragraph [ref=e651]: Get the latest updates on events, mentorship opportunities, and inspiring stories.
+            - link "Subscribe to Newsletter" [ref=e652] [cursor=pointer]:
+              - /url: https://shesharp.us3.list-manage.com/subscribe?u=1bcf1c40837f51b409973326f&id=31bd05e8eb
+              - img
+              - text: Subscribe to Newsletter
+              - img
+          - generic [ref=e654]:
+            - link "Follow us on Spotify" [ref=e655] [cursor=pointer]:
+              - /url: https://open.spotify.com/show/3CQf214DtzML2jqvVIxCqT?si=0a5a6166658e4d4&nd=1&dlsi=a92939a2789f44e0
+              - img [ref=e656]
+            - link "Follow us on Instagram" [ref=e658] [cursor=pointer]:
+              - /url: https://www.instagram.com/shesharpnz/
+              - img [ref=e659]
+            - link "Follow us on Facebook" [ref=e661] [cursor=pointer]:
+              - /url: https://www.facebook.com/shesharpnz/
+              - img [ref=e662]
+            - link "Follow us on LinkedIn" [ref=e664] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/shesharpnz/posts/?feedView=all
+              - img [ref=e665]
+            - link "Follow us on X" [ref=e667] [cursor=pointer]:
+              - /url: https://x.com/shesharpnz
+              - img [ref=e668]
+            - link "Follow us on YouTube" [ref=e670] [cursor=pointer]:
+              - /url: https://www.youtube.com/channel/UCfNDV1btAhwWwEXSyxNd5_Q
+              - img [ref=e671]
+            - link "Follow us on Mailchimp" [ref=e673] [cursor=pointer]:
+              - /url: https://us3.campaign-archive.com/home/?u=1bcf1c40837f51b409973326f&id=31bd05e8eb
+              - img [ref=e674]
+        - generic [ref=e684]:
+          - generic [ref=e685]:
+            - heading "Programmes" [level=4] [ref=e686]
+            - list [ref=e687]:
+              - listitem [ref=e688]:
+                - link "HER WAKA" [ref=e689] [cursor=pointer]:
+                  - /url: https://herwaka.shesharp.org.nz/
+                  - text: HER WAKA
+                  - img [ref=e690]
+          - generic [ref=e694]:
+            - heading "Mentorship" [level=4] [ref=e695]
+            - list [ref=e696]:
+              - listitem [ref=e697]:
+                - link "About the Programme" [ref=e698] [cursor=pointer]:
+                  - /url: /mentorship
+              - listitem [ref=e699]:
+                - link "Become a Mentee" [ref=e700] [cursor=pointer]:
+                  - /url: /mentorship/mentee
+              - listitem [ref=e701]:
+                - link "Become a Mentor" [ref=e702] [cursor=pointer]:
+                  - /url: /mentorship/mentor
+          - generic [ref=e703]:
+            - heading "Events" [level=4] [ref=e704]
+            - list [ref=e705]:
+              - listitem [ref=e706]:
+                - link "All Events" [ref=e707] [cursor=pointer]:
+                  - /url: /events
+          - generic [ref=e708]:
+            - heading "Get Involved" [level=4] [ref=e709]
+            - list [ref=e710]:
+              - listitem [ref=e711]:
+                - link "Volunteer with Us" [ref=e712] [cursor=pointer]:
+                  - /url: /join-our-team
+              - listitem [ref=e713]:
+                - link "Corporate Partnership" [ref=e714] [cursor=pointer]:
+                  - /url: /sponsors/corporate-sponsorship
+              - listitem [ref=e715]:
+                - link "Donate" [ref=e716] [cursor=pointer]:
+                  - /url: /donate
+      - generic [ref=e717]:
+        - generic [ref=e718]:
+          - generic [ref=e719]:
+            - link "She Sharp" [ref=e720] [cursor=pointer]:
+              - /url: /
+              - img "She Sharp" [ref=e722]
+            - generic [ref=e723]: "|"
+            - 'link "Registered NZ Charity #CC57025" [ref=e724] [cursor=pointer]':
+              - /url: https://register.charities.govt.nz/Charity/CC57025
+              - text: "Registered NZ Charity #CC57025"
+              - img [ref=e725]
+          - generic [ref=e729]:
+            - generic [ref=e730]:
+              - link "Privacy Policy" [ref=e731] [cursor=pointer]:
+                - /url: /privacy-policy
+              - generic [ref=e732]: •
+            - generic [ref=e733]:
+              - link "Cookie Policy" [ref=e734] [cursor=pointer]:
+                - /url: /cookie-policy
+              - generic [ref=e735]: •
+            - link "Terms of Service" [ref=e737] [cursor=pointer]:
+              - /url: /terms-of-service
+          - generic [ref=e738]: © 2026 She Sharp. All rights reserved.
+        - generic [ref=e739]:
+          - generic [ref=e740]: Built by
+          - link "Chan Meng" [ref=e741] [cursor=pointer]:
+            - /url: https://github.com/ChanMeng666
+          - generic [ref=e742]: "&"
+          - link "Lesley Gao" [ref=e743] [cursor=pointer]:
+            - /url: https://github.com/lesley-gao
+    - button [ref=e745]:
+      - img
+  - region "Notifications alt+T"
+  - alert [ref=e746]

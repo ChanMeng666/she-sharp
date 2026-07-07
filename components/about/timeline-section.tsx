@@ -1,9 +1,12 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Timeline } from "@/components/ui/timeline";
+import { CurtainReveal } from "@/components/ui/reveal";
+import { archivePhotos } from "@/public/img/curated/archive";
 
 interface TimelineEntryData {
   title: string;
@@ -12,12 +15,40 @@ interface TimelineEntryData {
   highlights: string[];
 }
 
+// Small real-photo vignette for a milestone year — curtain-revealed, hairline
+// framed, and tilted a touch alternately for an editorial, hand-set feel.
+const YearVignette = ({ year, index }: { year: string; index: number }) => {
+  const photo = archivePhotos[year as keyof typeof archivePhotos];
+  if (!photo) return null;
+  const rotate = index % 2 === 0 ? "-1.5deg" : "1.5deg";
+  return (
+    <CurtainReveal className="mb-6 w-fit">
+      <div
+        className="overflow-hidden rounded-xl border border-border"
+        style={{ transform: `rotate(${rotate})` }}
+      >
+        <Image
+          src={photo.src}
+          width={photo.width}
+          height={photo.height}
+          alt={photo.alt}
+          sizes="200px"
+          className="h-28 w-auto object-cover"
+        />
+      </div>
+    </CurtainReveal>
+  );
+};
+
 const TimelineEntryContent = ({
+  title,
   eventTitle,
   description,
   highlights,
-}: Omit<TimelineEntryData, "title">) => (
+  index,
+}: TimelineEntryData & { index: number }) => (
   <div>
+    <YearVignette year={title} index={index} />
     <p className="mb-4 text-lg font-semibold text-foreground md:text-xl">
       {eventTitle}
     </p>
@@ -136,13 +167,15 @@ const timelineData: TimelineEntryData[] = [
 const transformTimelineData = (
   data: TimelineEntryData[]
 ): Array<{ title: string; content: React.ReactNode }> =>
-  data.map((entry) => ({
+  data.map((entry, index) => ({
     title: entry.title,
     content: (
       <TimelineEntryContent
+        title={entry.title}
         eventTitle={entry.eventTitle}
         description={entry.description}
         highlights={entry.highlights}
+        index={index}
       />
     ),
   }));

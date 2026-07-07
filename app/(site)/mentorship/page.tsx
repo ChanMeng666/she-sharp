@@ -9,6 +9,8 @@ import { MentorshipCTASection } from "@/components/mentorship/mentorship-cta-sec
 import { isMentorshipOpen } from "@/lib/config/mentorship";
 import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 import { GeoHead, GEO_INSTRUCTIONS } from "@/components/seo/geo-head";
+import { ParallaxImage } from "@/components/ui/parallax";
+import { curatedImages } from "@/public/img/curated";
 
 export const metadata: Metadata = {
   title: "Mentorship Programme",
@@ -64,6 +66,15 @@ export default function MentorshipPage() {
 
       <MentorshipBenefits />
       <HowItWorksSection />
+
+      {/* Decorative parallax breather between the process and the mentors. */}
+      <section aria-hidden>
+        <ParallaxImage
+          image={{ ...curatedImages["divider-educator-conference"], alt: "" }}
+          heightClass="h-[40vh] md:h-[50vh]"
+        />
+      </section>
+
       <MentorsListSection />
       <TestimonialsSection />
       <MentorshipCTASection />

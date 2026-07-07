@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/home/hero-section";
 import { EventsShowcaseSection } from "@/components/home/events-showcase-section";
 import { ScrollingSponsorsSection } from "@/components/home/scrolling-sponsors-section";
 import { CoreImpactSection } from "@/components/home/core-impact-section";
+import { ArchiveFilmstripSection } from "@/components/home/archive-filmstrip-section";
 import { PhotoDividerSection } from "@/components/home/photo-divider-section";
 import { ProgramsSection } from "@/components/home/programs-section";
 import { VideoShowcaseSection } from "@/components/home/video-showcase-section";
@@ -27,6 +28,7 @@ export default function HomePage() {
       <EventsShowcaseSection />
       <ScrollingSponsorsSection />
       <CoreImpactSection />
+      <ArchiveFilmstripSection />
       <PhotoDividerSection />
       <ProgramsSection />
       <VideoShowcaseSection />
