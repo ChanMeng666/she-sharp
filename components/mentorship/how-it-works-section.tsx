@@ -6,28 +6,25 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import TimeLine_01, { TimeLine_01Entry } from "@/components/ui/release-time-line";
+import { Reveal } from "@/components/ui/reveal";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
 import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
-import {
-  Calendar,
-  Handshake,
-  Target,
-  ClipboardCheck,
-  Users,
-  HeartHandshake,
-  Award,
-  Mail,
-} from "lucide-react";
+import { Mail } from "lucide-react";
 
 const TAB_VALUES = {
   mentee: "mentee",
   mentor: "mentor",
 } as const;
 
-const MENTEE_STEPS: TimeLine_01Entry[] = [
+interface Step {
+  title: string;
+  subtitle: string;
+  description: string;
+  items: string[];
+}
+
+const MENTEE_STEPS: Step[] = [
   {
-    icon: Calendar,
     title: "Apply",
     subtitle: "5 minutes",
     description:
@@ -40,8 +37,7 @@ const MENTEE_STEPS: TimeLine_01Entry[] = [
     ],
   },
   {
-    icon: Handshake,
-    title: "Get Paired",
+    title: "Get paired",
     subtitle: "~1 week",
     description:
       "We match you based on goals and industry. Our team carefully reviews your profile to find the perfect mentor who aligns with your career aspirations.",
@@ -53,8 +49,7 @@ const MENTEE_STEPS: TimeLine_01Entry[] = [
     ],
   },
   {
-    icon: Target,
-    title: "Meet & Grow",
+    title: "Meet & grow",
     subtitle: "3 months",
     description:
       "Regular catchups focused on outcomes. Connect with your mentor for at least 3 meetings, either virtually or in-person, with ongoing progress support.",
@@ -67,9 +62,8 @@ const MENTEE_STEPS: TimeLine_01Entry[] = [
   },
 ];
 
-const MENTOR_STEPS: TimeLine_01Entry[] = [
+const MENTOR_STEPS: Step[] = [
   {
-    icon: ClipboardCheck,
     title: "Apply",
     subtitle: "10 minutes",
     description:
@@ -82,7 +76,6 @@ const MENTOR_STEPS: TimeLine_01Entry[] = [
     ],
   },
   {
-    icon: Users,
     title: "Onboarding",
     subtitle: "1 week",
     description:
@@ -95,8 +88,7 @@ const MENTOR_STEPS: TimeLine_01Entry[] = [
     ],
   },
   {
-    icon: HeartHandshake,
-    title: "Guide & Support",
+    title: "Guide & support",
     subtitle: "3 months",
     description:
       "Regular check-ins with your mentee. Provide skill development support and continuous guidance throughout their journey.",
@@ -108,8 +100,7 @@ const MENTOR_STEPS: TimeLine_01Entry[] = [
     ],
   },
   {
-    icon: Award,
-    title: "Celebrate Impact",
+    title: "Celebrate impact",
     subtitle: "Ongoing",
     description:
       "Recognise achievements and help shape the next generation of women leaders in STEM. Continue making a lasting difference.",
@@ -122,99 +113,127 @@ const MENTOR_STEPS: TimeLine_01Entry[] = [
   },
 ];
 
-export function HowItWorksSection() {
-  const [activeRole, setActiveRole] = useState<(typeof TAB_VALUES)[keyof typeof TAB_VALUES]>(
-    TAB_VALUES.mentee,
+function StepGrid({ steps }: { steps: Step[] }) {
+  const cols =
+    steps.length >= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3";
+  return (
+    <div className={`grid grid-cols-1 sm:grid-cols-2 ${cols} gap-x-8 gap-y-10 text-left`}>
+      {steps.map((step, index) => (
+        <Reveal
+          key={step.title}
+          delay={index * 80}
+          className="flex flex-col border-t border-border pt-6"
+        >
+          <span className="text-label text-brand">
+            Step {String(index + 1).padStart(2, "0")}
+          </span>
+          <h3 className="text-xl md:text-2xl font-bold text-foreground mt-3">
+            {step.title}
+          </h3>
+          <p className="text-sm font-medium text-brand mt-1">{step.subtitle}</p>
+          <p className="text-base text-ink-600 leading-relaxed mt-3">
+            {step.description}
+          </p>
+          <ul className="mt-4 space-y-1.5">
+            {step.items.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-sm text-ink-600"
+              >
+                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      ))}
+    </div>
   );
+}
+
+export function HowItWorksSection() {
+  const [activeRole, setActiveRole] = useState<
+    (typeof TAB_VALUES)[keyof typeof TAB_VALUES]
+  >(TAB_VALUES.mentee);
   const applicationsOpen = isMentorshipOpen();
   const isMentee = activeRole === TAB_VALUES.mentee;
   const ctaHref = isMentee ? "/mentorship/mentee" : "/mentorship/mentor";
   const ctaLabel = isMentee ? "Apply as Mentee" : "Apply as Mentor";
 
   return (
-    <Section id="how-it-works" className="py-16 bg-navy-light">
+    <Section id="how-it-works" bgColor="accent" className="py-24 lg:py-28">
       <Container size="full">
-        <div className="text-center mb-8">
+        <div className="max-w-2xl mb-12">
+          <span className="text-label text-brand mb-4 block">The journey</span>
           <h2 className="text-display-sm text-foreground mb-4">
-            How the Programme Works
+            How the programme works
           </h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
-            Your path to meaningful mentorship connections
+          <p className="text-base md:text-lg text-ink-600">
+            Your path to meaningful mentorship connections.
           </p>
+        </div>
 
-          <Tabs
-            value={activeRole}
-            onValueChange={(value) => {
-              if (value === TAB_VALUES.mentee || value === TAB_VALUES.mentor) {
-                setActiveRole(value);
-              }
-            }}
-            className="w-full"
-          >
-            <div className="flex justify-center">
-              <TabsList className="h-14 p-1.5 glass-pill">
-                <TabsTrigger
-                  value={TAB_VALUES.mentee}
-                  className="px-8 py-2.5 text-base rounded-full data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
+        <Tabs
+          value={activeRole}
+          onValueChange={(value) => {
+            if (value === TAB_VALUES.mentee || value === TAB_VALUES.mentor) {
+              setActiveRole(value);
+            }
+          }}
+          className="w-full"
+        >
+          <TabsList className="h-auto rounded-[12px] border border-border bg-white p-1 mb-12">
+            <TabsTrigger
+              value={TAB_VALUES.mentee}
+              className="rounded-[8px] px-6 py-2 text-sm data-[state=active]:bg-brand data-[state=active]:text-brand-foreground"
+            >
+              For mentees
+            </TabsTrigger>
+            <TabsTrigger
+              value={TAB_VALUES.mentor}
+              className="rounded-[8px] px-6 py-2 text-sm data-[state=active]:bg-foreground data-[state=active]:text-background"
+            >
+              For mentors
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value={TAB_VALUES.mentee}>
+            <StepGrid steps={MENTEE_STEPS} />
+          </TabsContent>
+
+          <TabsContent value={TAB_VALUES.mentor}>
+            <StepGrid steps={MENTOR_STEPS} />
+          </TabsContent>
+        </Tabs>
+
+        <div className="mt-16 flex flex-col items-start gap-4">
+          {applicationsOpen ? (
+            <Button
+              variant={isMentee ? "brand" : "default"}
+              size="lg"
+              asChild
+            >
+              <Link href={ctaHref}>{ctaLabel}</Link>
+            </Button>
+          ) : (
+            <>
+              <p className="text-base text-ink-600 max-w-3xl">
+                Applications for this year&apos;s Mentorship Programme are now
+                closed. Subscribe to our newsletter to be the first to hear when
+                applications reopen for the next cohort.
+              </p>
+              <Button variant="brand" size="lg" asChild>
+                <a
+                  href={MAILCHIMP_CONFIG.subscribeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  Become a Mentee
-                </TabsTrigger>
-                <TabsTrigger
-                  value={TAB_VALUES.mentor}
-                  className="px-8 py-2.5 text-base rounded-full data-[state=active]:bg-navy data-[state=active]:text-navy-foreground"
-                >
-                  Become a Mentor
-                </TabsTrigger>
-              </TabsList>
-            </div>
-
-            <TabsContent value={TAB_VALUES.mentee}>
-              <TimeLine_01
-                entries={MENTEE_STEPS}
-                className="py-4"
-                colorTheme="brand"
-              />
-            </TabsContent>
-
-            <TabsContent value={TAB_VALUES.mentor}>
-              <TimeLine_01
-                entries={MENTOR_STEPS}
-                className="py-4"
-                colorTheme="navy"
-              />
-            </TabsContent>
-          </Tabs>
-
-          <div className="mt-16 flex flex-col items-center gap-4">
-            {applicationsOpen ? (
-              <Button
-                variant={isMentee ? "brand" : "secondary"}
-                size="lg"
-                className="h-14 px-10 text-lg transition-all duration-150"
-                asChild
-              >
-                <Link href={ctaHref}>{ctaLabel}</Link>
+                  <Mail className="h-5 w-5" />
+                  Subscribe for Updates
+                </a>
               </Button>
-            ) : (
-              <>
-                <p className="text-base text-muted-foreground max-w-3xl">
-                  Applications for this year&apos;s Mentorship Programme are now closed. Subscribe
-                  to our newsletter to be the first to hear when applications reopen for the next
-                  cohort.
-                </p>
-                <Button variant="brand" size="lg" asChild>
-                  <a
-                    href={MAILCHIMP_CONFIG.subscribeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Mail className="h-5 w-5" />
-                    Subscribe for Updates
-                  </a>
-                </Button>
-              </>
-            )}
-          </div>
+            </>
+          )}
         </div>
       </Container>
     </Section>

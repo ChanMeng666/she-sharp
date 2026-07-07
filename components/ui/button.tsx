@@ -5,76 +5,60 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /**
- * Button Variants - 按钮样式设计系统
+ * Button Variants — She Sharp Editorial
  *
- * 设计原则：
- * - 统一：所有变体使用 border-2 粗边框 + rounded-full 全圆角
- * - 高对比：确保文字在任何背景上清晰可读
- * - 交互动效：悬停时放大 1.02 倍，点击时缩小至 0.98 倍 
+ * Principles:
+ * - 16px radius by default (nav CTA can go pill via size="pill").
+ * - Quiet elevation: color-only transitions, no scale/shadow.
+ * - Purple is reserved for the single key CTA (`brand`).
  *
- * 变体说明：
- * - default: 黑底白字黑边 → 悬停白底黑字黑边（主要操作）
- * - outline: 透明底黑字黑边 → 悬停黑底白字黑边（次要操作）
- * - brand: 紫底白字紫边 → 悬停深紫底白字深紫边（关键CTA）
- * - secondary: 深蓝底白字深蓝边 → 悬停略浅深蓝（次要CTA）
- * - destructive: 红底白字红边 → 悬停深红底白字深红边（危险操作）
- * - ghost: 白底黑字灰边 → 悬停浅灰底黑字灰边（工具栏/导航）
+ * Variants:
+ * - default: navy fill, white text (primary action)
+ * - brand: purple fill → lighter purple on hover (THE CTA)
+ * - outline: hairline border → darkens to navy on hover (secondary)
+ * - secondary: soft purple tint, navy text (quiet secondary)
+ * - destructive: red fill (dangerous action)
+ * - ghost: transparent, navy text, muted hover (toolbar/nav)
  */
 const buttonVariants = cva(
-  // 基础样式：统一粗边框 + 全圆角 + 缩放动效
   [
     "inline-flex items-center justify-center gap-2 whitespace-nowrap",
-    "rounded-full font-medium border-1",
-    "transition-all duration-200",
-    "hover:scale-102 active:scale-98",
+    "rounded-[16px] font-medium",
+    "transition-colors duration-200",
     "disabled:pointer-events-none disabled:opacity-50",
-    "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 shrink-0",
   ].join(" "),
   {
     variants: {
       variant: {
-        // 主按钮：黑底白字黑边 → 悬停白底黑字黑边
-        default: [
-          "bg-foreground text-background border-foreground",
-          "hover:bg-background hover:text-foreground",
-        ].join(" "),
+        // Primary: navy fill
+        default: "bg-foreground text-white hover:bg-foreground/90",
 
-        // 轮廓按钮：透明底黑字黑边 → 悬停黑底白字黑边
-        outline: [
-          "bg-transparent text-foreground border-foreground",
-          "hover:bg-foreground hover:text-background",
-        ].join(" "),
+        // Outline: hairline → navy border on hover
+        outline:
+          "bg-transparent text-foreground border border-ink-300 hover:border-foreground",
 
-        // 品牌按钮：紫底白字紫边 → 悬停深紫底白字深紫边
-        brand: [
-          "bg-brand text-brand-foreground border-brand",
-          "hover:bg-brand-hover hover:border-brand-hover",
-        ].join(" "),
+        // Brand: the single purple CTA (hover is lighter)
+        brand: "bg-brand text-brand-foreground hover:bg-brand-hover",
 
-        // 次要按钮：深蓝底白字深蓝边 → 悬停略浅深蓝
-        secondary: [
-          "bg-navy text-navy-foreground border-navy",
-          "hover:bg-navy/80 hover:border-navy/80",
-        ].join(" "),
+        // Secondary: soft purple tint
+        secondary:
+          "bg-[#f7e5f3] text-foreground hover:bg-[#f2d4ea]",
 
-        // 破坏性按钮：红底白字红边 → 悬停深红底白字深红边
-        destructive: [
-          "bg-destructive text-destructive-foreground border-destructive",
-          "hover:bg-destructive/80 hover:border-destructive/80",
-        ].join(" "),
+        // Destructive
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
 
-        // 幽灵按钮：白底黑字灰边 → 悬停浅灰底黑字灰边
-        ghost: [
-          "bg-background text-foreground border-border",
-          "hover:bg-muted",
-        ].join(" "),
+        // Ghost
+        ghost: "bg-transparent text-foreground hover:bg-muted",
       },
       size: {
         sm: "h-8 px-3 text-sm has-[>svg]:px-2",
         default: "h-10 px-4 text-sm has-[>svg]:px-3",
         lg: "h-12 px-6 text-base has-[>svg]:px-4",
         icon: "size-10 p-0",
+        pill: "h-11 rounded-full px-6 text-sm has-[>svg]:px-5",
       },
     },
     defaultVariants: {

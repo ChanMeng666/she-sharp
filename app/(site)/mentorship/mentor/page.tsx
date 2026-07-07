@@ -13,21 +13,24 @@ export default function BecomeMentorPage() {
   return (
     <>
       <MentorshipHeroSection
-        topLeftTitle={
+        eyebrow="Become a Mentor"
+        title={
           <>
-            BECOME A
+            Become
             <br />
-            MENTOR
+            a mentor
           </>
         }
-        topRightImage="/img/mentors.jpg"
-        topRightImageAlt="She Sharp mentorship programme"
-        bottomLeftVideo="/video/Mentor-Video.mp4"
-        bottomRightTitle="Share your wisdom and inspire more Women in STEM "
-        bottomRightDescription="Use your experience to guide, inspire, and empower women, fostering their personal and career growth journeys to achieve success and fulfilment in STEM fields."
+        image="/img/mentors.jpg"
+        imageAlt="She Sharp mentorship programme"
+        video="/video/Mentor-Video.mp4"
+        detailEyebrow="Your impact"
+        detailTitle="Share your wisdom and inspire more women in STEM"
+        detailDescription="Use your experience to guide, inspire, and empower women, fostering their personal and career growth journeys to achieve success and fulfilment in STEM fields."
       />
       <BenefitsSection
-        title="Benefits of Becoming a Mentor"
+        title="Benefits of becoming a mentor"
+        eyebrow="Why mentor"
         benefits={[
           {
             icon: Trophy,
@@ -58,7 +61,6 @@ export default function BecomeMentorPage() {
         <StickyApplyBar
           href="/mentorship/mentor/apply"
           label="Apply to be a Mentor"
-          accentColor="bg-periwinkle-dark"
           hideAtId="become-mentor-cta"
         />
       )}

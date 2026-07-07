@@ -58,7 +58,7 @@ function PaymentSuccessContent() {
       >
         <div className="absolute inset-0 glass-overlay"></div>
         <div className="container mx-auto px-4 max-w-lg relative z-10">
-          <Card className="glass-card rounded-[50px]">
+          <Card className="glass-card rounded-[32px]">
             <CardContent className="pt-8 text-center">
               <div className="w-20 h-20 bg-green-100 border-2 border-green-300 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle2 className="h-12 w-12 text-green-600" />
@@ -123,7 +123,7 @@ function PaymentSuccessContent() {
       >
         <div className="absolute inset-0 glass-overlay"></div>
         <div className="container mx-auto px-4 max-w-lg relative z-10">
-        <Card className="glass-card rounded-[50px]">
+        <Card className="glass-card rounded-[32px]">
             <CardContent className="pt-6 text-center">
               <AlertCircle className="h-12 w-12 text-orange-500 mx-auto mb-4" />
               <h2 className="text-xl font-semibold text-foreground mb-2">Session Not Found</h2>
@@ -162,7 +162,7 @@ function PaymentSuccessContent() {
     >
       <div className="absolute inset-0 glass-overlay"></div>
       <div className="container mx-auto px-4 max-w-lg relative z-10">
-        <Card className="glass-card rounded-[50px]">
+        <Card className="glass-card rounded-[32px]">
           <CardHeader className="text-center pb-2">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="h-10 w-10 text-green-600" />

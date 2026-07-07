@@ -15,12 +15,14 @@ export default function ResourcesPage() {
     <ResourcesPageClient>
       <Section className="bg-transparent pt-28 pb-16 md:py-24 lg:py-32" noPadding>
         <Container size="full">
-          <div className="mb-8 md:mb-12">
-            <h1 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
-              Resource Library
+          <div className="mb-10 text-center md:mb-14">
+            <p className="text-label mb-4 text-brand">Resources</p>
+            <h1 className="text-display-sm text-foreground">
+              The resource library
             </h1>
-            <p className="text-center text-lg text-muted-foreground mt-2">
-              Discover our podcasts, photo galleries, and annual impact reports.
+            <p className="mx-auto mt-4 max-w-xl text-base text-ink-600 md:text-lg">
+              Podcasts, photo galleries, press coverage, and annual impact
+              reports from across the She Sharp community.
             </p>
           </div>
 

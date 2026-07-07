@@ -1,7 +1,8 @@
+import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Security Policy",
   alternates: { canonical: "/security-policy" },
   description: "Learn about She Sharp's security practices and how to report security vulnerabilities.",

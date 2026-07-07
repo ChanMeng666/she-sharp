@@ -19,10 +19,8 @@ export function EventSchedule({ event }: EventScheduleProps) {
     <Section spacing="section" className="bg-white">
       <Container size="full">
         <div className="mb-8 md:mb-10">
-          <p className="text-lg font-bold tracking-[0.2em] uppercase text-brand">
-            Schedule
-          </p>
-          <h2 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight">
+          <p className="text-label text-ink-500">Schedule</p>
+          <h2 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight text-foreground">
             Agenda
           </h2>
           {schedule.day && (
@@ -33,7 +31,7 @@ export function EventSchedule({ event }: EventScheduleProps) {
         </div>
 
         {schedule.bannerImage && (
-          <div className="mb-8 overflow-hidden rounded-2xl">
+          <div className="mb-8 overflow-hidden rounded-[32px] border border-border">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={schedule.bannerImage}

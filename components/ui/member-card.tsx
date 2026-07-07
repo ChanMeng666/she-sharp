@@ -72,7 +72,7 @@ export function MemberCard({
         >
           <div className="flex flex-col h-full p-6 sm:p-8">
             <div className="relative mb-6">
-              <div className="w-32 h-32 mx-auto rounded-full overflow-hidden ring-4 ring-white shadow-lg">
+              <div className="w-32 h-32 mx-auto rounded-full overflow-hidden ring-2 ring-border">
                 {hasImage ? (
                   <img
                     src={member.image}

@@ -40,7 +40,7 @@ export function EventCard({
       <Card
         className={cn(
           "group h-full overflow-hidden transition-all duration-300 py-0",
-          "hover:shadow-xl hover:-translate-y-1",
+          "hover:border-foreground/30",
           "border border-border card-sm",
           isPast && "opacity-75"
         )}
@@ -68,7 +68,7 @@ export function EventCard({
             <Badge
               variant="secondary"
               className={cn(
-                "shadow-md ml-auto",
+                "ml-auto",
                 isOnline && "bg-[#8982ff] text-white",
                 isHybrid && "bg-foreground text-background",
                 !isOnline && !isHybrid && "bg-white/90 text-foreground"

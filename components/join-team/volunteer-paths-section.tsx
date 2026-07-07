@@ -77,7 +77,7 @@ export function VolunteerPathsSection({
                   <Card
                     key={path.id}
                     className={cn(
-                      "relative overflow-hidden rounded-3xl p-8 transition-all duration-300 hover:shadow-lg bg-card border flex flex-col",
+                      "relative overflow-hidden card-lg p-8 transition-colors duration-300 hover:border-foreground/30 bg-background border border-border flex flex-col",
                       index === 0 ? "border-brand/20" : "border-periwinkle-dark/20"
                     )}
                   >

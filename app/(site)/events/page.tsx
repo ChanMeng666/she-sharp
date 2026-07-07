@@ -7,6 +7,7 @@ import { Section } from "@/components/layout/section";
 import { EventInflectedCard } from "@/components/events/event-inflected-card";
 import { EventList } from "@/components/events/event-list";
 import { FeaturedEventHero } from "@/components/events/featured-event-hero";
+import { Reveal } from "@/components/ui/reveal";
 import {
   getAllEvents,
   getFeaturedEvent,
@@ -278,11 +279,10 @@ export default function EventsPage() {
         <Container size="full">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
-                All Events
-              </h2>
-              <p className="text-muted-foreground text-lg mt-4">
-                Discover our workshops, networking events, conferences and more
+              <p className="text-label text-ink-500 mb-3">The archive</p>
+              <h2 className="text-display-sm text-foreground">All events</h2>
+              <p className="text-ink-600 text-lg mt-4">
+                Discover our workshops, networking events, conferences and more.
               </p>
             </div>
           </div>
@@ -299,7 +299,7 @@ export default function EventsPage() {
                   placeholder="Search events by title or description..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 pr-9 border-0 border-b border-gray-400 rounded-none focus-visible:ring-0 focus-visible:border-gray-900"
+                  className="pl-9 pr-9 border-0 border-b border-ink-300 rounded-none focus-visible:ring-0 focus-visible:border-foreground"
                 />
                 {searchQuery && (
                   <button
@@ -487,11 +487,10 @@ export default function EventsPage() {
             events={displayedEvents}
             columns={3}
             emptyMessage="No events found. Try adjusting your search or filters."
-            renderCard={(event) => (
-              <EventInflectedCard
-                key={event.slug}
-                event={event}
-              />
+            renderCard={(event, index) => (
+              <Reveal key={event.slug} delay={(index % 3) * 80} className="h-full">
+                <EventInflectedCard event={event} />
+              </Reveal>
             )}
           />
 

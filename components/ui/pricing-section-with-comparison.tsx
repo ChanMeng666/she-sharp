@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Check, Clock, ArrowRight, Star } from "lucide-react";
+import { Check, Clock } from "lucide-react";
 import Link from "next/link";
 import type { VolunteerPath } from "@/components/join-team/types";
 import {
@@ -28,24 +28,11 @@ function getButtonLabel(id: string): string {
   return id === "ex-ambassador" ? "Share Feedback" : "Apply Now";
 }
 
-function getAccentBorder(id: string): string {
-  if (id === "ambassador") return "border-t-brand";
-  if (id === "ex-ambassador") return "border-t-periwinkle-dark";
-  return "border-t-periwinkle-dark";
-}
-
-function getCheckColor(id: string): string {
-  if (id === "ambassador") return "text-brand";
-  return "text-periwinkle-dark";
-}
-
-function getCommitmentPill(id: string): string {
-  if (id === "ambassador") return "text-brand";
-  return "text-periwinkle-dark";
-}
-
-function getCardBg(_id: string): string {
-  return "bg-white";
+// Thin top-accent hairline per path — brand punctuates the recommended card.
+function getAccentBar(id: string): string {
+  if (id === "ambassador") return "bg-brand";
+  if (id === "ex-ambassador") return "bg-periwinkle";
+  return "bg-mint";
 }
 
 export function PricingComparison({
@@ -60,8 +47,9 @@ export function PricingComparison({
       <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
+          <p className="text-label text-ink-500 mb-4">Get involved</p>
           <h2 className="text-display-sm text-foreground mb-4">
-            Compare Volunteer Paths
+            Compare volunteer paths
           </h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
             Whether you have a few hours or want to make a bigger commitment,
@@ -82,25 +70,24 @@ export function PricingComparison({
               <div
                 key={path.id}
                 className={cn(
-                  "relative card-lg border border-t-4 p-6 lg:p-8 flex flex-col gap-5 transition-all duration-300 hover:-translate-y-1.5",
-                  getAccentBorder(path.id),
-                  getCardBg(path.id),
-                  isAmbassador
-                    ? "border-brand/20 shadow-brand/10"
-                    : "border-border"
+                  "relative card-lg border border-border bg-background p-6 lg:p-8 flex flex-col gap-5 transition-colors duration-300 hover:border-foreground/30"
                 )}
               >
+                {/* Thin top-accent hairline */}
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "absolute inset-x-0 top-0 h-0.5",
+                    getAccentBar(path.id)
+                  )}
+                />
+
                 {/* Title + commitment */}
                 <div>
                   <h3 className="text-2xl font-bold text-foreground mb-3">
                     {path.title}
                   </h3>
-                  <div
-                    className={cn(
-                      "inline-flex items-center gap-1.5 py-1.5 text-sm font-medium mb-4",
-                      getCommitmentPill(path.id)
-                    )}
-                  >
+                  <div className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-muted px-2.5 py-1 text-xs font-medium text-ink-700 mb-4">
                     <Clock className="w-3.5 h-3.5 shrink-0" />
                     {path.commitment}
                   </div>
@@ -122,12 +109,7 @@ export function PricingComparison({
                         key={item}
                         className="flex items-start gap-2.5 text-base text-foreground"
                       >
-                        <Check
-                          className={cn(
-                            "w-4 h-4 mt-0.5 shrink-0",
-                            getCheckColor(path.id)
-                          )}
-                        />
+                        <Check className="w-4 h-4 mt-0.5 shrink-0 text-foreground" />
                         {item}
                       </li>
                     ))}
@@ -145,12 +127,7 @@ export function PricingComparison({
                         key={item}
                         className="flex items-start gap-2.5 text-base text-foreground"
                       >
-                        <Check
-                          className={cn(
-                            "w-4 h-4 mt-0.5 shrink-0",
-                            getCheckColor(path.id)
-                          )}
-                        />
+                        <Check className="w-4 h-4 mt-0.5 shrink-0 text-foreground" />
                         {item}
                       </li>
                     ))}

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
-import { AnimateOnScroll } from "@/components/ui/animate-on-scroll";
+import { Reveal } from "@/components/ui/reveal";
 
 type Testimonial = {
   name: string;
@@ -56,18 +56,45 @@ const VISIBLE_COUNT_DESKTOP = 3;
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
-    <article className="flex flex-col h-full card-md card-glass card-interactive">
-      <div className="p-6 flex flex-col h-full">
-        <Quote className="w-8 h-8 text-brand/30 rotate-180 mb-4 shrink-0" />
-        <p className="text-base text-foreground leading-relaxed flex-1">
-          {testimonial.content}
-        </p>
-        <div className="border-t border-border/30 pt-4 mt-6">
-          <p className="font-semibold text-foreground">{testimonial.name}</p>
-          <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-        </div>
+    <article className="flex h-full flex-col rounded-[32px] border border-border bg-white p-6 md:p-8">
+      <span
+        aria-hidden
+        className="mb-4 block font-brand-script text-5xl leading-none text-brand"
+      >
+        &ldquo;
+      </span>
+      <p className="flex-1 text-base leading-relaxed text-foreground">
+        {testimonial.content}
+      </p>
+      <div className="mt-6 border-t border-border pt-4">
+        <p className="font-semibold text-foreground">{testimonial.name}</p>
+        <p className="text-sm text-ink-600">{testimonial.role}</p>
       </div>
     </article>
+  );
+}
+
+function PagerButton({
+  direction,
+  onClick,
+  disabled,
+}: {
+  direction: "prev" | "next";
+  onClick: () => void;
+  disabled: boolean;
+}) {
+  const Icon = direction === "prev" ? ChevronLeft : ChevronRight;
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={direction === "prev" ? "Previous" : "Next"}
+      className="h-10 w-10 rounded-full"
+    >
+      <Icon className="h-5 w-5" />
+    </Button>
   );
 }
 
@@ -76,79 +103,60 @@ export function HomeTestimonialsSection() {
   const [mobileIndex, setMobileIndex] = useState(0);
 
   const totalPages = Math.ceil(TESTIMONIALS.length / VISIBLE_COUNT_DESKTOP);
-
   const visibleTestimonials = TESTIMONIALS.slice(
     pageIndex * VISIBLE_COUNT_DESKTOP,
     pageIndex * VISIBLE_COUNT_DESKTOP + VISIBLE_COUNT_DESKTOP
   );
 
-  const isDesktopAtStart = pageIndex <= 0;
-  const isDesktopAtEnd = pageIndex >= totalPages - 1;
-  const isMobileAtStart = mobileIndex <= 0;
-  const isMobileAtEnd = mobileIndex >= TESTIMONIALS.length - 1;
-
   return (
-    <Section className="bg-white py-16 xl:py-24 2xl:py-32">
+    <Section bgColor="white">
       <Container size="full">
-        <AnimateOnScroll variant="fade-up">
-          <div className="flex items-center justify-between mb-12 md:mb-16">
-            <h2 className="text-display-sm text-foreground">
-              What People Say About She Sharp
-            </h2>
-            <div className="hidden md:flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="icon"
+        <Reveal>
+          <div className="mb-12 flex items-end justify-between gap-6 md:mb-16">
+            <div>
+              <span className="text-label mb-3 block text-brand">(05)</span>
+              <h2 className="text-display-sm text-foreground">
+                Community voices
+              </h2>
+            </div>
+            <div className="hidden items-center gap-2 md:flex">
+              <PagerButton
+                direction="prev"
                 onClick={() => setPageIndex((p) => p - 1)}
-                disabled={isDesktopAtStart}
-                className="h-10 w-10 rounded-full border border-brand hover:border-brand hover:bg-brand/20 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                <ChevronLeft className="h-5 w-5 text-brand" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
+                disabled={pageIndex <= 0}
+              />
+              <PagerButton
+                direction="next"
                 onClick={() => setPageIndex((p) => p + 1)}
-                disabled={isDesktopAtEnd}
-                className="h-10 w-10 rounded-full border border-brand hover:border-brand hover:bg-brand/20 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                <ChevronRight className="h-5 w-5 text-brand" />
-              </Button>
+                disabled={pageIndex >= totalPages - 1}
+              />
             </div>
           </div>
-        </AnimateOnScroll>
+        </Reveal>
 
         {/* Desktop: 3-card pages */}
-        <div className="hidden md:grid md:grid-cols-3 gap-6">
+        <div className="hidden gap-6 md:grid md:grid-cols-3">
           {visibleTestimonials.map((testimonial, i) => (
-            <AnimateOnScroll key={`${pageIndex}-${i}`} variant="fade-up" delay={i * 100}>
+            <Reveal key={`${pageIndex}-${i}`} variant="fade-up" delay={i * 100}>
               <TestimonialCard testimonial={testimonial} />
-            </AnimateOnScroll>
+            </Reveal>
           ))}
         </div>
 
         {/* Mobile: single card with arrows */}
         <div className="md:hidden">
           <TestimonialCard testimonial={TESTIMONIALS[mobileIndex]} />
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <Button
-              variant="outline"
-              size="icon"
+          <div className="mt-6 flex items-center justify-center gap-4">
+            <PagerButton
+              direction="prev"
               onClick={() => setMobileIndex((p) => p - 1)}
-              disabled={isMobileAtStart}
-              className="h-10 w-10 rounded-full border border-brand hover:border-brand hover:bg-brand/20 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              <ChevronLeft className="h-5 w-5 text-brand" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
+              disabled={mobileIndex <= 0}
+            />
+            <PagerButton
+              direction="next"
               onClick={() => setMobileIndex((p) => p + 1)}
-              disabled={isMobileAtEnd}
-              className="h-10 w-10 rounded-full border border-brand hover:border-brand hover:bg-brand/20 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              <ChevronRight className="h-5 w-5 text-brand" />
-            </Button>
+              disabled={mobileIndex >= TESTIMONIALS.length - 1}
+            />
           </div>
         </div>
       </Container>

@@ -42,7 +42,7 @@ function SponsorLogoGrid({
               <img
                 src={sponsor.logo}
                 alt={sponsor.name}
-                className={`${logoSizeClass} w-auto max-w-[220px] object-contain transition-opacity duration-300`}
+                className={`${logoSizeClass} w-auto max-w-[220px] object-contain grayscale opacity-80 transition duration-300 hover:grayscale-0 hover:opacity-100`}
               />
             </div>
           </TooltipTrigger>
@@ -88,7 +88,7 @@ function SponsorRow({ sponsor, id, logoSizeClass = "h-28 md:h-36 lg:h-44" }: Spo
         <img
           src={sponsor.logo}
           alt={sponsor.name}
-          className={`${logoSizeClass} w-auto object-contain opacity-90`}
+          className={`${logoSizeClass} w-auto object-contain grayscale opacity-80 transition duration-300 hover:grayscale-0 hover:opacity-100`}
         />
       </div>
     </div>
@@ -132,10 +132,10 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <p className="text-lg font-bold tracking-[0.2em] uppercase text-muted-foreground">
-            Event Sponsors
-          </p>
-          <h2 className="mt-2 text-display-sm">Powered by our partners</h2>
+          <p className="text-label text-ink-500">Event sponsors</p>
+          <h2 className="mt-2 text-display-sm text-foreground">
+            Powered by our partners
+          </h2>
         </div>
 
         {/* Main Sponsors grouped by tier (conferences) */}
@@ -143,7 +143,7 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
           <div className="space-y-12">
             {tierGroups.map((tier) => (
               <div key={tier}>
-                <p className="text-center text-sm font-bold tracking-[0.2em] uppercase text-brand mb-6">
+                <p className="text-label text-ink-500 text-center mb-6">
                   {tier}
                 </p>
                 {(() => {
@@ -198,8 +198,8 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
         {hasOtherSponsors && (
           <div className={hasMainSponsors ? "mt-8" : ""}>
             {hasMainSponsors && (
-              <p className="text-center text-sm text-muted-foreground mb-6 uppercase tracking-wider">
-                Additional Sponsors
+              <p className="text-label text-ink-500 text-center mb-6">
+                Additional sponsors
               </p>
             )}
             {sponsors.other.every(isLogoOnly) ? (
@@ -224,7 +224,7 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
 
         {/* Sponsors banner image (legacy conference pages) */}
         {event.detailPageData.sponsorsImage && (
-          <div className="mt-12 w-full overflow-hidden rounded-2xl">
+          <div className="mt-12 w-full overflow-hidden rounded-[32px] border border-border">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={event.detailPageData.sponsorsImage.url}
@@ -235,7 +235,7 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
         )}
 
         {/* Closing thank-you to sponsors (mirrors the legacy conference pages) */}
-        <p className="mt-12 text-center text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground">
+        <p className="mt-12 text-label text-ink-500 text-center">
           Thanks for the support
         </p>
       </div>

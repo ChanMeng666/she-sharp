@@ -99,10 +99,10 @@ export function PricingTable({
             type="button"
             onClick={() => handlePlanSelect(plan.level)}
             className={cn(
-              "flex-1 p-4 rounded-xl text-left transition-all",
-              "border-2 border-border hover:border-foreground/50",
+              "flex-1 p-4 rounded-[32px] text-left transition-colors bg-white",
+              "border border-border hover:border-foreground/50",
               selectedPlan === plan.level &&
-                "ring-2 ring-foreground border-foreground",
+                "border-foreground",
             )}
           >
             <div className="flex items-center justify-between mb-2">
@@ -121,9 +121,9 @@ export function PricingTable({
                   trailingZeroDisplay: "stripIfInteger",
                 }}
                 value={isYearly ? plan.price.yearly : plan.price.monthly}
-                className="text-2xl font-bold text-foreground"
+                className="text-2xl font-bold text-brand"
               />
-              <span className="text-sm font-normal text-muted-foreground">
+              <span className="text-sm font-normal text-ink-600">
                 /{isYearly ? "year" : "month"}
               </span>
             </div>
@@ -131,7 +131,7 @@ export function PricingTable({
         ))}
       </div>
 
-      <div className="border-2 border-border rounded-xl overflow-hidden">
+      <div className="border border-border rounded-[32px] overflow-hidden bg-white">
         <div className="overflow-x-auto">
           <div className="min-w-[640px] divide-y divide-border">
             <div className="flex items-center p-4 bg-muted">
@@ -185,7 +185,7 @@ export function PricingTable({
       <div className="mt-8 text-center">
         <Button
           className={cn(
-            "w-full sm:w-auto px-8 py-2 rounded-xl",
+            "w-full sm:w-auto px-8 py-2 rounded-[16px]",
             buttonClassName,
           )}
           asChild

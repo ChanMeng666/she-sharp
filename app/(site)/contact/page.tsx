@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
+import { Reveal } from "@/components/ui/reveal";
 import { ContactForm } from "@/components/contact";
 import { footerConfig } from "@/lib/config/footer";
 import { socialIcons } from "@/components/ui/social-icons";
@@ -14,29 +15,40 @@ export const metadata: Metadata = {
     alternates: { canonical: "/contact" },
 };
 
+const CONTACT_EMAIL = "hello@shesharp.org.nz";
+
 export default function ContactPage() {
     return (
-        <Section className="bg-[#f7e5f3]">
+        <Section bgColor="accent">
             <Container size="full">
-                <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-8 sm:gap-10 md:gap-12 lg:gap-20 lg:items-start pt-8 sm:pt-12 md:pt-16 lg:pt-20 pb-8 sm:pb-12 md:pb-16">
-                    {/* Left side - Headline & Social Links */}
-                    <div className="flex flex-col justify-center">
-                        <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-black text-navy-dark leading-tight tracking-tight">
-                            Let&apos;s Connect,
-                            <br />
-                            Say Hello to Get the Ball Rolling
+                <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-10 sm:gap-12 lg:gap-20 lg:items-start pt-8 sm:pt-12 md:pt-16 lg:pt-20 pb-8 sm:pb-12 md:pb-16">
+                    {/* Left side — eyebrow, headline & contact channels */}
+                    <Reveal className="flex flex-col justify-center">
+                        <p className="text-label text-ink-500 mb-5">Contact</p>
+                        <h1 className="text-display-sm text-foreground">
+                            Say hello and let&apos;s get the ball rolling
                         </h1>
 
-                        <p className="mt-8 text-lg text-paragraph sm:max-w-lg md:max-w-xl">
+                        <p className="mt-6 text-lg text-ink-700 leading-relaxed sm:max-w-lg">
                             From questions about our events and how we make an impact to
-                            featuring us in the media, we&apos;d love to hear from you!
+                            featuring us in the media, we&apos;d love to hear from you.
                         </p>
+
+                        {/* Email channel */}
+                        <div className="mt-10">
+                            <p className="text-label text-ink-500 mb-3">Email</p>
+                            <Link
+                                href={`mailto:${CONTACT_EMAIL}`}
+                                className="inline-flex items-center gap-2.5 text-lg font-medium text-brand hover:text-brand-hover transition-colors"
+                            >
+                                <Mail className="h-5 w-5 shrink-0" aria-hidden="true" />
+                                {CONTACT_EMAIL}
+                            </Link>
+                        </div>
 
                         {/* Social Media Links */}
                         <div className="mt-10">
-                            <p className="text-md font-semibold text-navy-dark/60 uppercase tracking-wide mb-4">
-                                Follow Us
-                            </p>
+                            <p className="text-label text-ink-500 mb-4">Follow us</p>
                             <div className="flex flex-wrap gap-2 sm:gap-3">
                                 {footerConfig.socialLinks.map((social) => {
                                     const Icon =
@@ -47,7 +59,7 @@ export default function ContactPage() {
                                             href={social.href}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="p-2.5 sm:p-3 border border-navy-dark/20 rounded-full bg-white/50 hover:bg-brand hover:border-brand hover:text-white text-navy-dark transition-all duration-200"
+                                            className="p-2.5 sm:p-3 border border-border rounded-full bg-background text-foreground hover:bg-brand hover:border-brand hover:text-brand-foreground transition-colors duration-200"
                                             aria-label={`Follow us on ${social.name}`}
                                         >
                                             <Icon className="h-5 w-5" />
@@ -56,15 +68,14 @@ export default function ContactPage() {
                                 })}
                             </div>
                         </div>
-                    </div>
+                    </Reveal>
 
                     {/* Right side - Contact Form */}
-                    <div>
+                    <Reveal delay={80}>
                         <ContactForm />
-                    </div>
+                    </Reveal>
                 </div>
             </Container>
         </Section>
     );
 }
-

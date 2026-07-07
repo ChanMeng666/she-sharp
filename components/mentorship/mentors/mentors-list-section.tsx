@@ -16,26 +16,29 @@ export function MentorsListSection() {
   }));
 
   return (
-    <Section id="mentors-list" className="py-16 bg-background">
+    <Section id="mentors-list" bgColor="white" className="py-24 lg:py-28">
       <Container size="full">
         <div className="space-y-12">
-          <div className="text-center">
+          <div className="max-w-2xl">
+            <span className="text-label text-brand mb-4 block">Our mentors</span>
             <h2 className="text-display-sm text-foreground mb-4">
-              Explore Our Mentors
+              Explore our mentors
             </h2>
-            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-              Connect with experienced professionals across various industries who are passionate about guiding the next generation of women in STEM.
+            <p className="text-base md:text-lg text-ink-600">
+              Connect with experienced professionals across various industries
+              who are passionate about guiding the next generation of women in
+              STEM.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 py-4 md:py-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
             {memberCards.map((member, index) => (
               <MemberCard
                 key={member.id ?? `mentor-${index}`}
                 member={member}
                 index={index}
                 background="bg-white"
-                accentColor="bg-info/10"
+                accentColor="bg-brand/10"
               />
             ))}
           </div>

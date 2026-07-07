@@ -1,63 +1,61 @@
-import {
-  Card,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Reveal } from "@/components/ui/reveal";
 
 const BENEFITS = [
   {
-    value: "85%",
-    description: "Feel more empowered after joining a mentorship program",
+    number: "85",
+    suffix: "%",
+    description: "Feel more empowered after joining a mentorship programme",
   },
   {
-    value: "90%",
+    number: "90",
+    suffix: "%",
     description: "Experienced improvement of their interpersonal skills",
   },
   {
-    value: "6x more",
-    description: "Mentors are likely to be promoted",
+    number: "6",
+    suffix: "x",
+    description: "Mentors are more likely to be promoted",
   },
   {
-    value: "5x more",
-    description: "Mentees with mentors are likely to be promoted",
+    number: "5",
+    suffix: "x",
+    description: "Mentees with mentors are more likely to be promoted",
   },
-] as const
-
-const CARD_CLASSES =
-  "@container/card flex flex-col card-sm overflow-hidden border border-border/30 bg-white/50 backdrop-saturate-150 shadow-sm shadow-black/5 hover:border-brand/50 hover:bg-background/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/10 focus-within:-translate-y-0.5 focus-within:shadow-xl focus-within:shadow-brand/10 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand/20"
+] as const;
 
 export function MentorshipBenefits() {
   return (
-    <section className="bg-white py-16 border-y border-border/70">
-      <div className="max-w-8xl mx-auto px-4 lg:px-6">
-        <div className="mb-8 md:mb-10 lg:mb-12">
-          <h2 className="text-display-sm text-foreground max-w-xl mb-4">
-            What You Get Out of A Mentorship Program
+    <section className="bg-white py-24 lg:py-28 border-b border-border">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 md:mb-16 max-w-3xl">
+          <span className="text-label text-brand mb-4 block">By the numbers</span>
+          <h2 className="text-display-sm text-foreground mb-4">
+            What you get out of a mentorship programme
           </h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-3xl">
-            Research shows participating in a mentorship program provides valuable benefits for both
-            mentees and mentors.
+          <p className="text-base md:text-lg text-ink-600">
+            Research shows participating in a mentorship programme provides
+            valuable benefits for both mentees and mentors.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 px-1 md:px-0 py-4 md:py-6 min-h-[260px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-border">
           {BENEFITS.map((benefit, index) => (
-            <Card key={index} className={CARD_CLASSES}>
-              <CardHeader>
-                <CardTitle className="text-3xl md:text-4xl font-bold text-brand tabular-nums @[250px]/card:text-5xl">
-                  {benefit.value}
-                </CardTitle>
-              </CardHeader>
-              <CardFooter className="flex-col items-start gap-2 text-base mt-auto">
-                <div className="text-muted-foreground leading-relaxed">
-                  {benefit.description}
-                </div>
-              </CardFooter>
-            </Card>
+            <Reveal
+              key={index}
+              delay={index * 80}
+              className="flex flex-col gap-3 py-8 border-b border-border lg:border-b-0 lg:border-l lg:first:border-l-0 lg:px-8 lg:first:pl-0"
+            >
+              <div className="font-heading text-6xl md:text-7xl font-extrabold leading-none tracking-tight text-foreground tabular-nums">
+                {benefit.number}
+                <span className="text-brand">{benefit.suffix}</span>
+              </div>
+              <p className="text-base text-ink-600 leading-relaxed max-w-[16rem]">
+                {benefit.description}
+              </p>
+            </Reveal>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Check, Star, X } from "lucide-react";
 import Link from "next/link";
 import { useState, useRef } from "react";
@@ -130,10 +130,10 @@ export function Pricing({
               opacity: { duration: 0.5 },
             }}
             className={cn(
-              "rounded-[var(--radius-card-sm)] p-4 sm:p-6 md:p-8 bg-white text-center lg:flex lg:flex-col lg:justify-center relative",
+              "rounded-[var(--radius-card-sm)] p-4 sm:p-6 md:p-8 text-center lg:flex lg:flex-col lg:justify-center relative border",
               plan.isPopular
-                ? "border-2 border-brand shadow-lg"
-                : "border border-border",
+                ? "bg-foreground text-white border-foreground"
+                : "bg-white border-border",
               "flex flex-col",
               !plan.isPopular && "mt-5",
               index === 0 || index === 2
@@ -152,11 +152,17 @@ export function Pricing({
               </div>
             )}
             <div className="flex-1 flex flex-col">
-              <p className="text-base font-semibold text-muted-foreground uppercase tracking-wider">
+              <p className={cn(
+                "text-base font-semibold uppercase tracking-wider",
+                plan.isPopular ? "text-white/60" : "text-ink-600"
+              )}>
                 {plan.name}
               </p>
               <div className="mt-6 flex items-baseline justify-center gap-x-2">
-                <span className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground">
+                <span className={cn(
+                  "text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight",
+                  plan.isPopular ? "text-white" : "text-brand"
+                )}>
                   <NumberFlow
                     value={
                       isYearly ? plan.price : plan.monthlyPrice
@@ -175,13 +181,19 @@ export function Pricing({
                   />
                 </span>
                 {(isYearly ? plan.price : plan.monthlyPrice) > 0 && (
-                  <span className="text-sm font-semibold leading-6 tracking-wide text-muted-foreground">
+                  <span className={cn(
+                    "text-sm font-semibold leading-6 tracking-wide",
+                    plan.isPopular ? "text-white/60" : "text-ink-600"
+                  )}>
                     / {isYearly ? "year" : "month"}
                   </span>
                 )}
               </div>
 
-              <p className="text-xs leading-5 text-muted-foreground mt-1">
+              <p className={cn(
+                "text-xs leading-5 mt-1",
+                plan.isPopular ? "text-white/60" : "text-ink-600"
+              )}>
                 {plan.price === 0
                   ? "Free forever"
                   : isYearly
@@ -193,16 +205,22 @@ export function Pricing({
                 {plan.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2.5">
                     {feature.included ? (
-                      <Check className="h-4 w-4 text-brand mt-1 flex-shrink-0" />
+                      <Check className={cn(
+                        "h-4 w-4 mt-1 flex-shrink-0",
+                        plan.isPopular ? "text-[#b1f6e9]" : "text-brand"
+                      )} />
                     ) : (
-                      <X className="h-4 w-4 text-muted-foreground/40 mt-1 flex-shrink-0" />
+                      <X className={cn(
+                        "h-4 w-4 mt-1 flex-shrink-0",
+                        plan.isPopular ? "text-white/30" : "text-ink-300"
+                      )} />
                     )}
                     <span
                       className={cn(
                         "text-sm sm:text-base",
                         feature.included
-                          ? "text-foreground"
-                          : "text-muted-foreground/60"
+                          ? plan.isPopular ? "text-white" : "text-foreground"
+                          : plan.isPopular ? "text-white/50" : "text-ink-500"
                       )}
                     >
                       {feature.name}
@@ -211,7 +229,10 @@ export function Pricing({
                 ))}
               </ul>
 
-              <hr className="w-full my-5 border-border" />
+              <hr className={cn(
+                "w-full my-5",
+                plan.isPopular ? "border-white/20" : "border-border"
+              )} />
 
               <Link
                 href={plan.href}
@@ -221,13 +242,15 @@ export function Pricing({
                     size: "lg",
                   }),
                   "w-full gap-2 text-base font-semibold tracking-tight",
-                  "transform-gpu transition-all duration-300 ease-out",
-                  "hover:ring-2 hover:ring-brand/30 hover:ring-offset-1"
+                  "transform-gpu transition-colors duration-300 ease-out"
                 )}
               >
                 {plan.buttonText}
               </Link>
-              <p className="mt-5 text-xs leading-5 text-muted-foreground">
+              <p className={cn(
+                "mt-5 text-xs leading-5",
+                plan.isPopular ? "text-white/60" : "text-ink-600"
+              )}>
                 {plan.description}
               </p>
             </div>

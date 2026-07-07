@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { EventV3 } from "@/types/event";
 import { cn } from "@/lib/utils";
 import { EventCountdown } from "./event-countdown";
@@ -24,22 +25,35 @@ export function EventHeader({ event, className }: EventHeaderProps) {
     : location.city || null;
 
   return (
-    <div className={cn("relative overflow-hidden bg-[#1f1e44]", className)}>
-      {/* Ambient glows */}
-      <div className="absolute -top-32 -right-32 w-[520px] h-[520px] rounded-full bg-[#9b2e83]/25 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-0 left-1/3 w-[420px] h-[320px] rounded-full bg-[#8982ff]/15 blur-[110px] pointer-events-none" />
+    <div
+      className={cn(
+        "relative isolate flex min-h-[62vh] items-end overflow-hidden bg-foreground",
+        className
+      )}
+    >
+      {/* Full-bleed real event photo */}
+      <Image
+        src={event.coverImage.url}
+        alt={event.coverImage.alt || event.title}
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-center"
+      />
+      {/* Navy scrim — heavier at the base for legibility, light ambient veil above */}
+      <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/45 to-foreground/30" />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-36 md:pb-14 lg:pt-40 lg:pb-16">
-        {/* Category badge */}
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-36 md:pb-16 lg:pb-20">
+        {/* Category chip */}
         {category && (
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white/65 border border-white/10 mb-6 capitalize tracking-wide">
+          <span className="inline-flex items-center rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-medium capitalize tracking-wide text-white/90 mb-6">
             {category}
           </span>
         )}
 
         {/* Title */}
         <h1
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold text-white leading-tight max-w-3xl mb-4"
+          className="text-display-md text-white max-w-3xl mb-4"
           style={{ textWrap: "balance" } as React.CSSProperties}
         >
           {event.title}
@@ -47,32 +61,32 @@ export function EventHeader({ event, className }: EventHeaderProps) {
 
         {/* Subtitle */}
         {event.detailPageData.subtitle && (
-          <p className="text-lg text-white/60 leading-relaxed max-w-2xl mb-8">
+          <p className="text-lg text-white/75 leading-relaxed max-w-2xl mb-8">
             {event.detailPageData.subtitle}
           </p>
         )}
 
         {/* Meta row */}
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/55 text-sm mb-10">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/80 text-sm mb-10">
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 shrink-0 text-white/35" />
+            <Calendar className="w-4 h-4 shrink-0 text-mint" />
             <span>{formatEventDate(event, "full")}</span>
           </div>
           {locationLabel && (
             <div className="flex items-center gap-2">
               {isOnline ? (
-                <Video className="w-4 h-4 shrink-0 text-white/35" />
+                <Video className="w-4 h-4 shrink-0 text-mint" />
               ) : (
-                <MapPin className="w-4 h-4 shrink-0 text-white/35" />
+                <MapPin className="w-4 h-4 shrink-0 text-mint" />
               )}
               <span>{locationLabel}</span>
             </div>
           )}
         </div>
 
-        {/* Countdown — component unchanged */}
+        {/* Countdown — quiet unit row */}
         {isFutureEvent && (
-          <div className="w-full max-w-[90vw] sm:max-w-[600px]">
+          <div className="w-full max-w-[90vw] sm:max-w-[520px]">
             <EventCountdown event={event} />
           </div>
         )}

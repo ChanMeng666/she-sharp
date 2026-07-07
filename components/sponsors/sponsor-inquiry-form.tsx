@@ -49,16 +49,16 @@ export function SponsorInquiryForm() {
   return (
     <section
       id="sponsor-inquiry"
-      className="relative py-14 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#1f1e44]"
+      className="relative bg-foreground px-4 py-14 sm:px-6 sm:py-16 md:py-20 lg:px-8 lg:py-24"
     >
       <div className="mx-auto max-w-6xl">
-        <div className="rounded-[var(--radius-card-md)] bg-[#1f1e44] border border-white/10 shadow-2xl p-6 sm:p-8 md:p-10 lg:p-14 grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 items-start gap-8 rounded-[32px] border border-white/10 p-6 sm:p-8 md:p-10 lg:grid-cols-5 lg:gap-12 lg:p-14">
           {/* Headline column */}
           <div className="lg:col-span-2">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight uppercase leading-tight text-[#2dd4bf]">
+            <h2 className="text-display-sm leading-tight text-mint">
               Hey sponsors, join us on our mission to bridge the gender gap
             </h2>
-            <p className="mt-4 sm:mt-5 text-sm sm:text-base text-white/75 leading-relaxed">
+            <p className="mt-4 text-sm leading-relaxed text-white/75 sm:mt-5 sm:text-base">
               Get in touch to learn more about becoming a She Sharp sponsor. Our
               partnerships team will reach out shortly.
             </p>
@@ -71,7 +71,7 @@ export function SponsorInquiryForm() {
           >
             <div className="space-y-2">
               <Label htmlFor="inquiry-name" className="text-white">
-                Full Name <span className="text-[#2dd4bf]">*</span>
+                Full Name <span className="text-mint">*</span>
               </Label>
               <Input
                 id="inquiry-name"
@@ -79,7 +79,7 @@ export function SponsorInquiryForm() {
                 onChange={(e) => setFullName(e.target.value)}
                 required
                 maxLength={100}
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus-visible:ring-[#2dd4bf]"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus-visible:ring-mint"
                 placeholder="Enter your name"
                 autoComplete="name"
               />
@@ -87,7 +87,7 @@ export function SponsorInquiryForm() {
 
             <div className="space-y-2">
               <Label htmlFor="inquiry-email" className="text-white">
-                Email Address <span className="text-[#2dd4bf]">*</span>
+                Email Address <span className="text-mint">*</span>
               </Label>
               <Input
                 id="inquiry-email"
@@ -96,7 +96,7 @@ export function SponsorInquiryForm() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 maxLength={100}
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus-visible:ring-[#2dd4bf]"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus-visible:ring-mint"
                 placeholder="Enter your email address"
                 autoComplete="email"
               />
@@ -104,7 +104,7 @@ export function SponsorInquiryForm() {
 
             <div className="space-y-2">
               <Label htmlFor="inquiry-org" className="text-white">
-                Organisation <span className="text-[#2dd4bf]">*</span>
+                Organisation <span className="text-mint">*</span>
               </Label>
               <Input
                 id="inquiry-org"
@@ -112,7 +112,7 @@ export function SponsorInquiryForm() {
                 onChange={(e) => setOrganisation(e.target.value)}
                 required
                 maxLength={200}
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus-visible:ring-[#2dd4bf]"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus-visible:ring-mint"
                 placeholder="Enter your organisation"
                 autoComplete="organization"
               />
@@ -129,7 +129,7 @@ export function SponsorInquiryForm() {
                 required
                 maxLength={5000}
                 rows={5}
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus-visible:ring-[#2dd4bf]"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus-visible:ring-mint"
                 placeholder="Enter your message"
               />
             </div>
@@ -155,8 +155,9 @@ export function SponsorInquiryForm() {
               <Button
                 type="submit"
                 size="lg"
+                variant="brand"
                 disabled={status === "submitting"}
-                className="w-full sm:w-auto bg-[#2dd4bf] text-[#1f1e44] hover:bg-[#26bfab] font-semibold"
+                className="w-full font-semibold sm:w-auto"
               >
                 {status === "submitting" ? (
                   <>

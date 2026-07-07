@@ -8,7 +8,7 @@ import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageSquare, X, Send, Trash2, EllipsisVertical, ArrowLeft } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "./chat-message";
 import { TypingIndicator } from "./typing-indicator";
