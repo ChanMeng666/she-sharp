@@ -97,3 +97,4 @@ scripts/__pycache__/
 # LinkedIn recommendation generator output (local-only)
 .recommendations/
 /scripts/slack-recommendations
+.playwright-cli/
