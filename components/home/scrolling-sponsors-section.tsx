@@ -1,6 +1,5 @@
 "use client";
 
-import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
 import { LogoCloud } from "@/components/ui/logo-cloud";
 import { scrollingSponsorLogos } from "@/lib/data/sponsors";
@@ -12,14 +11,14 @@ export function ScrollingSponsorsSection() {
   }));
 
   return (
-    <Section className="bg-white overflow-hidden pt-4">
+    <section className="overflow-hidden border-y border-border bg-white py-12 md:py-16">
       <Container size="full">
-        <h2 className="text-lg md:text-xl text-gray-400 text-center mb-10 md:mb-14">
+        <h2 className="text-label mb-10 text-center text-ink-500">
           Sponsors who have supported our events
         </h2>
       </Container>
 
       <LogoCloud logos={logos} />
-    </Section>
+    </section>
   );
 }

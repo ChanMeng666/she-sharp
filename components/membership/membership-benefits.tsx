@@ -6,11 +6,12 @@ import { membershipBenefits } from "@/lib/data/membership";
 
 export function MembershipBenefits() {
   return (
-    <Section className="py-16 md:py-24 lg:py-32 bg-white" noPadding>
+    <Section className="py-16 md:py-24 lg:py-32 bg-background" noPadding>
       <Container size="wide">
         <div className="text-center mb-12 md:mb-16">
+          <p className="text-label text-ink-500 mb-4">Why join</p>
           <h2 className="text-display-sm text-foreground mb-4">
-            Why Join She Sharp?
+            Why join She Sharp?
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Unlock your potential with resources, mentorship, and a supportive
@@ -22,10 +23,10 @@ export function MembershipBenefits() {
           {membershipBenefits.map((benefit, index) => (
             <div
               key={index}
-              className="group p-4 sm:p-5 md:p-6 card-sm bg-[#f7e5f3]/30 "
+              className="group p-6 sm:p-7 md:p-8 card-sm border border-border bg-background transition-colors duration-300 hover:border-foreground/30"
             >
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ">
-                <benefit.icon className="w-7 h-7 text-brand" />
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 bg-muted">
+                <benefit.icon className="w-6 h-6 text-brand" />
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-3">
                 {benefit.title}

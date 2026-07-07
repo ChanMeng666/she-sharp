@@ -1,7 +1,8 @@
+import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Accessibility Statement",
   alternates: { canonical: "/accessibility" },
   description: "She Sharp's commitment to digital accessibility and making our website usable for everyone.",

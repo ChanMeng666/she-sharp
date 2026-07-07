@@ -478,7 +478,7 @@ function MenteeApplyForm() {
         return (
           <div className="space-y-6 md:space-y-8">
             {/* Photo Upload Section */}
-            <div className="bg-[#eaf2ff] rounded-lg p-5">
+            <div className="bg-muted rounded-lg p-5">
               <PhotoUpload
                 value={formData.photoUrl}
                 onChange={(url) => updateField("photoUrl", url || "")}
@@ -616,7 +616,7 @@ function MenteeApplyForm() {
                     You&apos;re applying as a {programmeInfo.name} participant
                   </p>
                   {programmeInfo.partnerOrganisation && (
-                    <p className="text-xs text-[#1f1e44] mt-1">
+                    <p className="text-xs text-foreground mt-1">
                       Partner: {programmeInfo.partnerOrganisation}
                     </p>
                   )}
@@ -694,7 +694,7 @@ function MenteeApplyForm() {
                   <p className="text-sm font-medium text-brand">
                     Location Matching
                   </p>
-                  <p className="text-sm text-[#1f1e44] leading-relaxed">
+                  <p className="text-sm text-foreground leading-relaxed">
                     Auckland is She Sharp&apos;s primary activity city.
                     Selecting Auckland increases opportunities for in-person
                     events and meetings.
@@ -704,7 +704,7 @@ function MenteeApplyForm() {
             </div>
 
             {/* Location Settings Group */}
-            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-5">
+            <div className="bg-muted rounded-lg p-5 space-y-5">
               <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
                 <div className="space-y-2">
                   <div className="flex items-center gap-1.5">
@@ -853,7 +853,7 @@ function MenteeApplyForm() {
             <div className="h-px bg-border" />
 
             {/* Preferred Industries Group */}
-            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-3">
+            <div className="bg-muted rounded-lg p-5 space-y-3">
               <div className="flex items-center gap-1.5">
                 <Label>Industries for Mentorship (Optional)</Label>
                 <HintIcon hint="Industries you'd like to transition into or learn more about." />
@@ -920,7 +920,7 @@ function MenteeApplyForm() {
                   <p className="text-sm font-medium text-brand">
                     Skills Matching
                   </p>
-                  <p className="text-sm text-[#1f1e44] leading-relaxed">
+                  <p className="text-sm text-foreground leading-relaxed">
                     Your basic skills will be matched with mentors who have
                     expertise in those areas. Be honest about your current level
                     for the best match.
@@ -930,7 +930,7 @@ function MenteeApplyForm() {
             </div>
 
             {/* Basic Skills Section */}
-            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-6">
+            <div className="bg-muted rounded-lg p-5 space-y-6">
               <h3 className="font-medium text-foreground">
                 Skills You Want to Learn
               </h3>
@@ -951,7 +951,7 @@ function MenteeApplyForm() {
                           : "outline"
                       }
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsBasic.includes(skill) ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsBasic.includes(skill) ? "bg-periwinkle border-periwinkle hover:bg-periwinkle/90" : ""}`}
                       onClick={() => toggleArrayItem("softSkillsBasic", skill)}
                     >
                       {skill}
@@ -968,7 +968,7 @@ function MenteeApplyForm() {
                         .map((skill) => (
                           <span
                             key={skill}
-                            className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
+                            className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-periwinkle border-periwinkle text-white"
                           >
                             {skill}
                             <button
@@ -1041,7 +1041,7 @@ function MenteeApplyForm() {
                           : "outline"
                       }
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsBasic.includes(skill) ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsBasic.includes(skill) ? "bg-periwinkle border-periwinkle hover:bg-periwinkle/90" : ""}`}
                       onClick={() =>
                         toggleArrayItem("industrySkillsBasic", skill)
                       }
@@ -1060,7 +1060,7 @@ function MenteeApplyForm() {
                         .map((skill) => (
                           <span
                             key={skill}
-                            className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
+                            className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-periwinkle border-periwinkle text-white"
                           >
                             {skill}
                             <button
@@ -1123,7 +1123,7 @@ function MenteeApplyForm() {
             <div className="h-px bg-border" />
 
             {/* Expert Skills Section */}
-            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-6">
+            <div className="bg-muted rounded-lg p-5 space-y-6">
               <h3 className="font-medium text-foreground">
                 Skills You Already Have (Optional)
               </h3>
@@ -1144,7 +1144,7 @@ function MenteeApplyForm() {
                           : "outline"
                       }
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsExpert.includes(skill) ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.softSkillsExpert.includes(skill) ? "bg-periwinkle border-periwinkle hover:bg-periwinkle/90" : ""}`}
                       onClick={() => toggleArrayItem("softSkillsExpert", skill)}
                     >
                       {skill}
@@ -1161,7 +1161,7 @@ function MenteeApplyForm() {
                         .map((skill) => (
                           <span
                             key={skill}
-                            className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
+                            className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-periwinkle border-periwinkle text-white"
                           >
                             {skill}
                             <button
@@ -1229,7 +1229,7 @@ function MenteeApplyForm() {
                           : "outline"
                       }
                       size="sm"
-                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsExpert.includes(skill) ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      className={`justify-start text-xs h-9 min-h-[44px] ${formData.industrySkillsExpert.includes(skill) ? "bg-periwinkle border-periwinkle hover:bg-periwinkle/90" : ""}`}
                       onClick={() =>
                         toggleArrayItem("industrySkillsExpert", skill)
                       }
@@ -1248,7 +1248,7 @@ function MenteeApplyForm() {
                         .map((skill) => (
                           <span
                             key={skill}
-                            className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-[#8982ff] border-[#8982ff] text-white"
+                            className="inline-flex items-center gap-2 rounded-full font-medium border-2 text-xs h-9 min-h-[44px] px-3 bg-periwinkle border-periwinkle text-white"
                           >
                             {skill}
                             <button
@@ -1408,7 +1408,7 @@ function MenteeApplyForm() {
                   <p className="text-sm font-medium text-brand">
                     Don&apos;t Know Your MBTI Type?
                   </p>
-                  <p className="text-sm text-[#1f1e44] leading-relaxed">
+                  <p className="text-sm text-foreground leading-relaxed">
                     Your personality type helps us match you with a compatible
                     mentor. If you don&apos;t know your MBTI type, take the free
                     test (about 10 minutes) to discover it.
@@ -1427,7 +1427,7 @@ function MenteeApplyForm() {
             </div>
 
             {/* Personality & Preferences Section */}
-            <div className="bg-[#eaf2ff] rounded-lg p-5 space-y-5">
+            <div className="bg-muted rounded-lg p-5 space-y-5">
               <div className="space-y-3">
                 <div className="flex items-center gap-1.5">
                   <Label>Your Personality Type (MBTI) *</Label>
@@ -1442,7 +1442,7 @@ function MenteeApplyForm() {
                         formData.mbtiType === type ? "default" : "outline"
                       }
                       size="sm"
-                      className={`h-9 min-h-[44px] ${formData.mbtiType === type ? "bg-[#8982ff] border-[#8982ff] hover:bg-[#7a74e6]" : ""}`}
+                      className={`h-9 min-h-[44px] ${formData.mbtiType === type ? "bg-periwinkle border-periwinkle hover:bg-periwinkle/90" : ""}`}
                       onClick={() => updateField("mbtiType", type)}
                     >
                       {type}
@@ -1485,7 +1485,7 @@ function MenteeApplyForm() {
         return (
           <div className="space-y-5">
             {/* Photo & Personal Info */}
-            <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
+            <div className="bg-muted/60 rounded-lg p-5 space-y-4">
               <h3 className="font-semibold text-foreground flex items-center gap-2 pb-2 border-b border-border">
                 <User className="h-4 w-4" /> Personal Information
               </h3>
@@ -1516,7 +1516,7 @@ function MenteeApplyForm() {
             </div>
 
             {/* Location & Background */}
-            <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
+            <div className="bg-muted/60 rounded-lg p-5 space-y-4">
               <h3 className="font-semibold text-foreground flex items-center gap-2 pb-2 border-b border-border">
                 <MapPin className="h-4 w-4" /> Location & Background
               </h3>
@@ -1555,7 +1555,7 @@ function MenteeApplyForm() {
             </div>
 
             {/* Skills */}
-            <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
+            <div className="bg-muted/60 rounded-lg p-5 space-y-4">
               <h3 className="font-semibold text-foreground flex items-center gap-2 pb-2 border-b border-border">
                 <Target className="h-4 w-4" /> Skills
               </h3>
@@ -1586,7 +1586,7 @@ function MenteeApplyForm() {
                       {formData.industrySkillsBasic.map((s) => (
                         <span
                           key={s}
-                          className="bg-[#f4f4fa] text-[#8982ff] px-2.5 py-1 rounded text-xs"
+                          className="bg-muted text-periwinkle px-2.5 py-1 rounded text-xs"
                         >
                           {s}
                         </span>
@@ -1598,7 +1598,7 @@ function MenteeApplyForm() {
             </div>
 
             {/* Goals */}
-            <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
+            <div className="bg-muted/60 rounded-lg p-5 space-y-4">
               <h3 className="font-semibold text-foreground pb-2 border-b border-border">
                 Goals & Personality
               </h3>
@@ -1650,7 +1650,7 @@ function MenteeApplyForm() {
             )}
 
             {!formData.programmeSlug && (
-              <div className="bg-[#eaf2ff]/50 rounded-lg p-5 space-y-4">
+              <div className="bg-muted/60 rounded-lg p-5 space-y-4">
                 <h3 className="font-semibold text-foreground flex items-center gap-2 pb-2 border-b border-border">
                   Programme
                 </h3>
@@ -1664,7 +1664,7 @@ function MenteeApplyForm() {
                 <h3 className="font-semibold text-brand mb-2">
                   Next Step: Payment
                 </h3>
-                <p className="text-sm text-[#1f1e44] leading-relaxed">
+                <p className="text-sm text-foreground leading-relaxed">
                   After submitting, you&apos;ll be redirected to complete your
                   membership payment of{" "}
                   <span className="font-semibold">$100 NZD/year</span>. Upon

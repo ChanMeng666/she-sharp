@@ -17,15 +17,12 @@ export function EventDescription({ event, className }: EventDescriptionProps) {
 
   return (
     <div className={cn("py-6 md:py-8 space-y-5", className)}>
-      <div className="flex items-center gap-3">
-        <div className="w-1 h-8 rounded-full bg-brand shrink-0" />
-        <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground ">
-          About This Event
-        </h2>
-      </div>
+      <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">
+        About this event
+      </h2>
       <div className="space-y-4 max-w-prose">
         {fullDescription.map((paragraph, index) => (
-          <p key={index} className="text-muted-foreground leading-relaxed text-pretty">
+          <p key={index} className="text-ink-700 leading-relaxed text-pretty">
             {paragraph}
           </p>
         ))}

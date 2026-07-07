@@ -18,23 +18,24 @@ const TimelineEntryContent = ({
   highlights,
 }: Omit<TimelineEntryData, "title">) => (
   <div>
-    <p className="text-foreground text-base md:text-xl font-bold mb-4">
+    <p className="mb-4 text-lg font-semibold text-foreground md:text-xl">
       {eventTitle}
     </p>
-    <p className="text-muted-foreground text-sm md:text-base mb-8">
+    <p className="mb-8 text-sm text-ink-600 md:text-base">
       {description}
     </p>
     {highlights.length > 0 && (
-      <div className="mb-8 space-y-2">
+      <ul className="mb-8 space-y-2">
         {highlights.map((highlight, index) => (
-          <div
+          <li
             key={index}
-            className="flex gap-2 items-center text-muted-foreground text-sm md:text-base"
+            className="flex items-start gap-3 text-sm text-ink-700 md:text-base"
           >
-            ✦ {highlight}
-          </div>
+            <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand" />
+            {highlight}
+          </li>
         ))}
-      </div>
+      </ul>
     )}
   </div>
 );
@@ -150,13 +151,14 @@ export function TimelineSection() {
   return (
     <Section noPadding className="bg-white">
       <Container size="full">
-        <div className="pt-16 md:pt-24 px-4">
-          <h2 className="text-display-sm text-primary text-left">
-            A Deep Dive into Our Journey
+        <div className="px-4 pt-16 md:pt-24">
+          <p className="text-label mb-4 text-brand">A decade of impact</p>
+          <h2 className="text-display-sm text-left text-foreground">
+            A deep dive into our journey
           </h2>
-          <p className="mt-4 sm:mt-6 md:mt-8 text-sm md:text-md lg:text-lg text-muted-foreground max-w-2xl text-left leading-relaxed ">
-            From a small launch event in 2014 to a thriving community of 2200+
-            members across New Zealand
+          <p className="mt-4 max-w-2xl text-left text-sm leading-relaxed text-ink-600 sm:mt-6 md:text-base lg:text-lg">
+            From a small launch event in 2014 to a thriving community of 3000+
+            members across New Zealand.
           </p>
         </div>
         <Timeline data={transformTimelineData(timelineData)} />

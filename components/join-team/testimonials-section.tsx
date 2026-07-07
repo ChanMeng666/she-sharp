@@ -66,7 +66,7 @@ export function JoinTeamTestimonialsSection() {
                     {/* Header with title and navigation */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
                         <h2 className="text-display-sm text-foreground">
-                            What People Say About She Sharp
+                            What people say about She Sharp
                         </h2>
                         <div className="flex items-center gap-2 shrink-0">
                             <Button
@@ -101,23 +101,19 @@ export function JoinTeamTestimonialsSection() {
                         {visibleTestimonials.map((testimonial, index) => (
                             <Card
                                 key={`${currentIndex + index}-${testimonial.name}`}
-                                className="card-sm p-4 sm:p-5 md:p-6 bg-white shadow-sm hover:shadow-md transition-all duration-300 flex flex-col"
+                                className="card-sm p-4 sm:p-5 md:p-6 bg-background border border-border shadow-none hover:border-foreground/30 transition-colors duration-300 flex flex-col"
                             >
+                                <MessageSquareQuote className="w-8 h-8 text-brand shrink-0 mb-4" />
                                 <p className="text-base text-foreground mb-6 leading-relaxed flex-1">
                                     {testimonial.content}
                                 </p>
-                                <div className="border-t pt-4 mt-auto">
-                                    <div className="flex items-start gap-3">
-                                        <MessageSquareQuote className="w-8 h-8 text-muted-foreground shrink-0 mt-1" />
-                                        <div>
-                                            <p className="font-semibold text-foreground mb-1">
-                                                {testimonial.name}
-                                            </p>
-                                            <p className="text-sm text-muted-foreground">
-                                                {testimonial.role}
-                                            </p>
-                                        </div>
-                                    </div>
+                                <div className="border-t border-border pt-4 mt-auto">
+                                    <p className="font-semibold text-foreground mb-1">
+                                        {testimonial.name}
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">
+                                        {testimonial.role}
+                                    </p>
                                 </div>
                             </Card>
                         ))}

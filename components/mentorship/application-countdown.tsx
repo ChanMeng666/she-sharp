@@ -12,19 +12,27 @@ interface ApplicationCountdownProps {
 
 const VARIANT_STYLES: Record<
   CountdownVariant,
-  { cardMinWidth: string; valueClass: string; unitClass: string; labelClass: string }
+  {
+    cardClass: string;
+    cardMinWidth: string;
+    valueClass: string;
+    unitClass: string;
+    labelClass: string;
+  }
 > = {
   onBrand: {
+    cardClass: "bg-white/10 border-white/20",
     cardMinWidth: "min-w-[80px] sm:min-w-[100px]",
     valueClass: "text-3xl font-bold text-white",
     unitClass: "text-sm text-white/80 capitalize",
-    labelClass: "text-lg opacity-80 text-left font-semibold",
+    labelClass: "text-label text-white/80 text-left",
   },
   onLight: {
+    cardClass: "bg-white border-border",
     cardMinWidth: "min-w-[70px] sm:min-w-[100px]",
-    valueClass: "text-3xl font-bold",
-    unitClass: "text-sm text-muted-foreground/80 capitalize",
-    labelClass: "text-lg text-muted-foreground/80 text-left font-semibold",
+    valueClass: "text-3xl font-bold text-foreground",
+    unitClass: "text-sm text-ink-600 capitalize",
+    labelClass: "text-label text-brand text-left",
   },
 };
 
@@ -60,7 +68,7 @@ export function ApplicationCountdown({ variant = "onBrand" }: ApplicationCountdo
         {Object.entries(timeLeft).map(([unit, value]) => (
           <Card
             key={unit}
-            className={`bg-white/10 backdrop-blur-sm border-white/20 flex-1 ${styles.cardMinWidth} card-sm`}
+            className={`${styles.cardClass} flex-1 ${styles.cardMinWidth} card-sm`}
           >
             <CardContent className="p-3 sm:p-4 text-center">
               <div className={styles.valueClass}>{value}</div>

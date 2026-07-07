@@ -27,7 +27,7 @@ export function EventFeaturedPhoto({
     <div className="bg-muted py-10 sm:py-12 md:py-16 px-0 sm:px-6 lg:px-8">
       <figure
         className={cn(
-          "mx-auto overflow-hidden max-w-5xl rounded-none sm:rounded-2xl",
+          "mx-auto overflow-hidden max-w-5xl rounded-none sm:rounded-[32px] sm:border sm:border-border",
           className
         )}
       >

@@ -28,10 +28,8 @@ export function EventSessions({ event }: EventSessionsProps) {
     <Section spacing="section" className="bg-muted">
       <Container size="full">
         <div className="mb-8 md:mb-12">
-          <p className="text-lg font-bold tracking-[0.2em] uppercase text-brand">
-            Sessions
-          </p>
-          <h2 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight">
+          <p className="text-label text-ink-500">Sessions</p>
+          <h2 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight text-foreground">
             What to expect on the day
           </h2>
         </div>
@@ -102,19 +100,19 @@ function SessionCard({ session }: { session: EventSession }) {
     !!session.description;
 
   return (
-    <details className="card-responsive-sm bg-background p-6 md:p-8 shadow-sm group [&_summary::-webkit-details-marker]:hidden">
+    <details className="rounded-[16px] border border-border bg-background p-6 md:p-8 group [&_summary::-webkit-details-marker]:hidden">
       <summary className="flex items-start justify-between gap-3 cursor-pointer list-none">
         <h3 className="text-base md:text-lg font-semibold text-foreground">
           {session.title}
         </h3>
         {hasBody && (
-          <ChevronDown className="mt-0.5 h-5 w-5 shrink-0 text-brand transition-transform duration-200 group-open:rotate-180" />
+          <ChevronDown className="mt-0.5 h-5 w-5 shrink-0 text-ink-500 transition-transform duration-200 group-open:rotate-180" />
         )}
       </summary>
       <div className="mt-4">
         <SessionBody session={session} />
         {session.facilitators && session.facilitators.length > 0 && (
-          <p className="mt-4 text-sm font-medium text-brand">
+          <p className="mt-4 text-sm font-medium text-ink-600">
             {session.facilitators.join(", ")}
           </p>
         )}

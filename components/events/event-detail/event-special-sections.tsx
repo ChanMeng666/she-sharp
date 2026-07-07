@@ -248,12 +248,9 @@ export function EventSpecialSections({
 
         return (
           <div key={index} className="py-6 md:py-8 space-y-5">
-            <div className="flex items-center gap-3">
-              <div className="w-1 h-8 rounded-full bg-brand shrink-0" />
-              <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground">
-                {normalizeTitle(section.title)}
-              </h3>
-            </div>
+            <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground">
+              {normalizeTitle(section.title)}
+            </h3>
             <div className={isYouTube || isCollaboration ? "w-full" : "max-w-prose"}>
               {isYouTube ? (
                 <YouTubeEmbeds items={section.content} />

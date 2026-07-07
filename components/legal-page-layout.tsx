@@ -31,11 +31,12 @@ export function LegalPageLayout({
 
           {/* Title Section */}
           <div className={cn("py-10", getContainer("narrow"))}>
-            <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: "#1f1e44" }}>
+            <p className="text-label text-ink-500 mb-4">Policies</p>
+            <h1 className="text-display-sm text-foreground mb-3">
               {title}
             </h1>
-            <p className="text-brand">
-              Last Updated: {lastUpdated.toLocaleDateString('en-NZ', {
+            <p className="text-sm text-ink-500">
+              Last updated: {lastUpdated.toLocaleDateString('en-NZ', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'

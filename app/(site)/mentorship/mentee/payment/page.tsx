@@ -145,7 +145,7 @@ function PaymentContent() {
       >
       <div className="absolute inset-0 glass-overlay"></div>
         <div className="container mx-auto px-4 max-w-lg relative z-10">
-          <Card className="glass-card rounded-[50px]">
+          <Card className="glass-card rounded-[32px]">
             <CardContent className="pt-6 text-center">
               <AlertCircle className="h-12 w-12 text-orange-500 mx-auto mb-4" />
               <h2 className="text-xl font-semibold text-foreground mb-2">Application Not Found</h2>
@@ -191,7 +191,7 @@ function PaymentContent() {
         <div className="max-w-lg mx-auto">
           {/* Application Summary */}
           {formData && (
-            <Card className="glass-card rounded-[50px] mb-6">
+            <Card className="glass-card rounded-[32px] mb-6">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg">Application Summary</CardTitle>
               </CardHeader>
@@ -215,7 +215,7 @@ function PaymentContent() {
           )}
 
           {/* Payment Card */}
-          <Card className="glass-card rounded-[50px]">
+          <Card className="glass-card rounded-[32px]">
             <CardHeader className="text-center pb-2">
               <div className="bg-foreground text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3 mx-auto">
                 ANNUAL MEMBERSHIP

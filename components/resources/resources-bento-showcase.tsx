@@ -1,6 +1,6 @@
 "use client";
 
-import { BentoGrid2x2 } from "@/components/ui/bento-grid";
+import { Reveal } from "@/components/ui/reveal";
 import {
   PodcastPreviewCard,
   ImpactReportsCard,
@@ -12,30 +12,32 @@ import { impactReports } from "@/lib/data/impact-reports";
 import { SPOTIFY_SHOW } from "@/lib/data/spotify-podcasts";
 
 /**
- * Main bento grid showcase for the resources page.
- * Uses a 2x2 grid for the four main sections plus a full-width
- * Newsletters banner below.
+ * Resources hub showcase — a 2×2 grid of hairline image-top cards plus a
+ * full-width Newsletters band below.
  */
 export function ResourcesBentoShowcase() {
   return (
-    <div className="max-w-6xl mx-auto flex flex-col gap-4 sm:gap-5 md:gap-6">
-      <BentoGrid2x2
-        // Photo Gallery (links to /resources/photo-gallery)
-        topLeft={<PhotoGalleryPreviewCard />}
-        // Podcast (links to /resources/podcasts)
-        topRight={<PodcastPreviewCard show={SPOTIFY_SHOW} />}
-        // Impact Reports
-        bottomLeft={
-          <div id="impact-reports" className="scroll-mt-28 h-full w-full">
+    <div className="mx-auto flex max-w-6xl flex-col gap-6 md:gap-8">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+        <Reveal variant="fade-up">
+          <PhotoGalleryPreviewCard />
+        </Reveal>
+        <Reveal variant="fade-up" delay={60}>
+          <PodcastPreviewCard show={SPOTIFY_SHOW} />
+        </Reveal>
+        <Reveal variant="fade-up" delay={120}>
+          <div id="impact-reports" className="h-full scroll-mt-28">
             <ImpactReportsCard reports={impactReports} />
           </div>
-        }
-        // In the Press (links to /resources/in-the-press)
-        bottomRight={<PressHighlightCard />}
-      />
+        </Reveal>
+        <Reveal variant="fade-up" delay={180}>
+          <PressHighlightCard />
+        </Reveal>
+      </div>
 
-      {/* Newsletters (links to /resources/newsletters) */}
-      <NewsletterPreviewCard />
+      <Reveal variant="fade-up">
+        <NewsletterPreviewCard />
+      </Reveal>
     </div>
   );
 }

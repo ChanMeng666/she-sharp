@@ -107,16 +107,16 @@ export function ContactForm() {
 
   if (isSuccess) {
     return (
-      <div className="bg-white card-sm p-6 sm:p-8 md:p-10 shadow-lg text-center">
+      <div className="bg-background border border-border card-sm p-6 sm:p-8 md:p-10 text-center">
         <div className="flex justify-center mb-4">
-          <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center">
-            <CheckCircle2 className="h-8 w-8 text-green-600" />
+          <div className="h-16 w-16 rounded-full bg-mint flex items-center justify-center">
+            <CheckCircle2 className="h-8 w-8 text-foreground" />
           </div>
         </div>
-        <h3 className="text-2xl font-bold text-navy-dark mb-2">
-          Message Sent!
+        <h3 className="text-2xl font-bold text-foreground mb-2">
+          Message sent
         </h3>
-        <p className="text-navy-dark/70 mb-6">
+        <p className="text-ink-700 mb-6">
           Thank you for reaching out. We&apos;ll get back to you as soon as
           possible.
         </p>
@@ -125,7 +125,7 @@ export function ContactForm() {
           variant="outline"
           className="rounded-full"
         >
-          Send Another Message
+          Send another message
         </Button>
       </div>
     );
@@ -134,12 +134,12 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-0"
+      className="bg-background border border-border card-sm p-6 sm:p-8 md:p-10"
     >
       <div className="space-y-5 sm:space-y-6">
         {/* Full Name */}
         <div className="space-y-2">
-          <Label htmlFor="fullName" className="text-navy-dark font-medium">
+          <Label htmlFor="fullName" className="text-foreground font-medium">
             Full Name <span className="text-brand">*</span>
           </Label>
           <Input
@@ -149,18 +149,18 @@ export function ContactForm() {
             value={formData.fullName}
             onChange={handleChange}
             placeholder="Enter your name"
-            className={`h-12 rounded-2xl bg-white border-gray-200 focus:border-brand ${
-              errors.fullName ? "border-red-500" : ""
+            className={`h-12 rounded-2xl bg-background border-border focus:border-brand ${
+              errors.fullName ? "border-destructive" : ""
             }`}
           />
           {errors.fullName && (
-            <p className="text-sm text-red-500">{errors.fullName}</p>
+            <p className="text-sm text-destructive">{errors.fullName}</p>
           )}
         </div>
 
         {/* Email Address */}
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-navy-dark font-medium">
+          <Label htmlFor="email" className="text-foreground font-medium">
             Email Address <span className="text-brand">*</span>
           </Label>
           <Input
@@ -170,18 +170,18 @@ export function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email address"
-            className={`h-12 rounded-2xl bg-white border-gray-200 focus:border-brand ${
-              errors.email ? "border-red-500" : ""
+            className={`h-12 rounded-2xl bg-background border-border focus:border-brand ${
+              errors.email ? "border-destructive" : ""
             }`}
           />
           {errors.email && (
-            <p className="text-sm text-red-500">{errors.email}</p>
+            <p className="text-sm text-destructive">{errors.email}</p>
           )}
         </div>
 
         {/* Organisation */}
         <div className="space-y-2">
-          <Label htmlFor="organisation" className="text-navy-dark font-medium">
+          <Label htmlFor="organisation" className="text-foreground font-medium">
             Organisation
           </Label>
           <Input
@@ -191,13 +191,13 @@ export function ContactForm() {
             value={formData.organisation}
             onChange={handleChange}
             placeholder="Enter your organisation"
-            className="h-12 rounded-2xl bg-white border-gray-200 focus:border-brand"
+            className="h-12 rounded-2xl bg-background border-border focus:border-brand"
           />
         </div>
 
         {/* Message */}
         <div className="space-y-2">
-          <Label htmlFor="message" className="text-navy-dark font-medium">
+          <Label htmlFor="message" className="text-foreground font-medium">
             Your message
           </Label>
           <Textarea
@@ -207,19 +207,19 @@ export function ContactForm() {
             onChange={handleChange}
             placeholder="Enter your message"
             rows={5}
-            className={`rounded-2xl bg-white border-gray-200 focus:border-brand resize-y ${
-              errors.message ? "border-red-500" : ""
+            className={`rounded-2xl bg-background border-border focus:border-brand resize-y ${
+              errors.message ? "border-destructive" : ""
             }`}
           />
           {errors.message && (
-            <p className="text-sm text-red-500">{errors.message}</p>
+            <p className="text-sm text-destructive">{errors.message}</p>
           )}
         </div>
 
         {/* Error Message */}
         {submitError && (
-          <div className="p-4 bg-red-50 border border-red-200 rounded-2xl">
-            <p className="text-sm text-red-700">{submitError}</p>
+          <div className="p-4 bg-destructive/10 border border-destructive/30 rounded-2xl">
+            <p className="text-sm text-destructive">{submitError}</p>
           </div>
         )}
 
@@ -227,9 +227,10 @@ export function ContactForm() {
         <div className="flex justify-start sm:justify-center pt-2 sm:pt-4">
           <Button
             type="submit"
+            variant="brand"
             disabled={isSubmitting}
             size="lg"
-            className="rounded-full px-12 bg-brand hover:bg-brand/90"
+            className="rounded-full px-12"
           >
             {isSubmitting ? (
               <>
