@@ -11,8 +11,13 @@ interface AlbumCardProps {
 
 /**
  * Album card — image-top hairline card linking out to a Google Photos album.
+ *
+ * When the album carries extra thumbnails it renders a 2×2 mosaic (cover left,
+ * two thumbs stacked right); otherwise it falls back to a single cover image.
  */
 export function AlbumCard({ album, compact = false }: AlbumCardProps) {
+  const hasMosaic = album.thumbnails.length >= 2;
+
   return (
     <a
       href={album.googlePhotosUrl}
@@ -23,11 +28,33 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
     >
       <article className="flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-background transition-colors duration-300 group-hover:border-foreground/30">
         <CurtainReveal className="relative aspect-[4/3] overflow-hidden">
-          <img
-            src={album.coverImage}
-            alt={album.title}
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-          />
+          {hasMosaic ? (
+            <div className="grid h-full w-full grid-cols-3 grid-rows-2 gap-1 bg-background">
+              <div className="relative col-span-2 row-span-2 overflow-hidden bg-muted">
+                <img
+                  src={album.coverImage}
+                  alt={album.title}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+              </div>
+              {album.thumbnails.slice(0, 2).map((thumb, i) => (
+                <div key={i} className="relative overflow-hidden bg-muted">
+                  <img
+                    src={thumb}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <img
+              src={album.coverImage}
+              alt={album.title}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+            />
+          )}
         </CurtainReveal>
         <div className="flex flex-1 flex-col p-5 md:p-6">
           {!compact && (

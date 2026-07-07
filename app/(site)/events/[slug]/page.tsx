@@ -26,6 +26,7 @@ import {
   EventFeaturedPhoto,
 } from "@/components/events/event-detail";
 import { EventCard } from "@/components/events/event-card";
+import { eventArchivePhotos } from "@/lib/data/event-archive-photos";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -86,6 +87,11 @@ export default async function EventPage({ params }: EventPageProps) {
   }
 
   const relatedEvents = getUpcomingEvents(3).filter((e) => e.slug !== slug);
+
+  // Past events that ship no on-page photos fall back to the harvested archive set.
+  const archivePhotos = eventArchivePhotos[event.slug];
+  const useArchivePhotos =
+    !hasPhotos(event) && !!archivePhotos && archivePhotos.length > 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -170,9 +176,12 @@ export default async function EventPage({ params }: EventPageProps) {
       </div>
 
       {/* Photos Section */}
-      {hasPhotos(event) && (
+      {(hasPhotos(event) || useArchivePhotos) && (
         <div className="bg-background">
-          <EventPhotos event={event} />
+          <EventPhotos
+            event={event}
+            archivePhotos={useArchivePhotos ? archivePhotos : undefined}
+          />
         </div>
       )}
 
