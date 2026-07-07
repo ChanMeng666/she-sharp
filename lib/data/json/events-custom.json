@@ -1334,6 +1334,65 @@
             ]
           },
           {
+            "type": "agenda",
+            "title": "Day 1 Schedule — Friday 7 August",
+            "content": [
+              "5:00–5:30pm — Registration, guest arrival & networking + dinner",
+              "5:30–5:40pm — Event opening: karakia, welcome to AUT, health & safety briefing",
+              "5:40–5:50pm — She Sharp introduction",
+              "5:50–6:10pm — Keynote address + Q&A",
+              "6:10–6:50pm — Team forming",
+              "6:50–7:05pm — Overview of day two",
+              "7:05–7:15pm — Problems to solve, requirements & judging criteria",
+              "7:15–7:25pm — Mentor introductions",
+              "7:25–7:30pm — Group photo",
+              "7:30–8:00pm — Team strategy planning",
+              "8:00pm — Close of day one"
+            ]
+          },
+          {
+            "type": "agenda",
+            "title": "Day 2 Schedule — Saturday 8 August",
+            "content": [
+              "7:30–8:00am — Arrival, coffee & tea",
+              "8:00–8:10am — Day two opening + team workspaces",
+              "8:10am–12:15pm — Team build with mentor support (pitch prep from 10:00am)",
+              "12:15–1:00pm — Lunch",
+              "1:00–1:15pm — Prepare for pitch practice",
+              "1:15–2:00pm — Pitch practice with mentors",
+              "2:00–3:00pm — Final pitch updates",
+              "3:00–3:15pm — Afternoon tea",
+              "3:15–3:30pm — Tech check",
+              "3:30–6:30pm — Final presentations to the judging panel",
+              "6:30–7:00pm — Judges' deliberation + networking + dinner",
+              "7:00–7:30pm — Awards announcement",
+              "7:30pm — Closing & group photo"
+            ]
+          },
+          {
+            "type": "judging",
+            "title": "How Teams Are Judged",
+            "content": [
+              "Each team delivers a live 5-minute pitch to a three-person panel of academic and industry judges.",
+              "Judges score four equally-weighted criteria (1–5 each):",
+              "Inspiration — a clearly defined problem, a solution that solves it, and real impact for New Zealand and the world.",
+              "Technology — the solution must use AI; demonstrate feasibility, engineering quality, and how the technology solves the problem (a working prototype is highly recommended).",
+              "Design & Innovation — originality, user experience, and inventive use of technology.",
+              "Presentation — a clear, creative pitch that addresses the problem and answers judges' questions within the time limit.",
+              "An optional pitch deck template is available in the Community Hub as a guide."
+            ]
+          },
+          {
+            "type": "bullets",
+            "title": "Meet the Judges",
+            "content": [
+              "Nicholas Fourie — Vice President, Information & Communication Technology, Fisher & Paykel Healthcare",
+              "Dr. Mahsa Mohaghegh — Head of the Department of Computer and Information Sciences, AUT",
+              "Ming Cheuk — ElementX",
+              "Abby Dowd — AUT"
+            ]
+          },
+          {
             "type": "bullets",
             "title": "The Challenge — Five Real-World Themes",
             "content": [
