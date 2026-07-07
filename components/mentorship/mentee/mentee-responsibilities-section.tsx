@@ -12,8 +12,8 @@ const menteeFeatures: ResponsibilityItem[] = [
   {
     id: 1,
     title: "Communication",
-    image: curatedImages["connection-smiles"].src,
-    alt: curatedImages["connection-smiles"].alt,
+    image: curatedImages["connection-ai-hackathon"].src,
+    alt: curatedImages["connection-ai-hackathon"].alt,
     description:
       "Actively engage in the mentorship by communicating regularly with your mentor. Clearly share your goals, challenges, and needs, and provide regular updates on your progress so your mentor can best support you.",
   },
@@ -28,16 +28,16 @@ const menteeFeatures: ResponsibilityItem[] = [
   {
     id: 3,
     title: "Learning & Growth",
-    image: curatedImages["workshop-hands-on"].src,
-    alt: curatedImages["workshop-hands-on"].alt,
+    image: curatedImages["workshop-girls-night-build"].src,
+    alt: curatedImages["workshop-girls-night-build"].alt,
     description:
       "Listen carefully to advice given by your mentor and accept constructive criticism with an open mind. Embrace opportunities to think critically and expand your knowledge in new directions.",
   },
   {
     id: 4,
     title: "Development",
-    image: curatedImages["workshop-team-build"].src,
-    alt: curatedImages["workshop-team-build"].alt,
+    image: curatedImages["workshop-rpa-laughter"].src,
+    alt: curatedImages["workshop-rpa-laughter"].alt,
     description:
       "Strive for continuous growth and improvement by taking initiative in your learning journey. Apply learned concepts to real-world situations and actively seek new challenges to accelerate your development.",
   },

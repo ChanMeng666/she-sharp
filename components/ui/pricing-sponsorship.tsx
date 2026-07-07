@@ -54,9 +54,9 @@ const EVENT_STATS = [
 // Curated event photography for the asymmetric sponsorship grid.
 const EVENT_GALLERY = [
   curatedImages["panel-fireside-chat"],
-  curatedImages["workshop-collaboration"],
+  curatedImages["fireside-centrality"],
   curatedImages["speaker-stage-spotlight"],
-  curatedImages["workshop-team-build"],
+  curatedImages["workshop-fp-hackathon"],
   curatedImages["panel-discussion"],
 ] as const
 

@@ -7,28 +7,29 @@ import { curatedImages, toSrcSet } from "@/public/img/curated";
 const SLIDE_DURATION = 4200; // ms per slide — slowed for editorial calm
 const FADE_MS = 900; // crossfade duration
 
-// Five strongest curated crowd/speaker frames carry the About hero.
+// Five curated crowd/speaker frames carry the About hero — each image is
+// exclusive to this page so no hero repeats elsewhere on the site.
 const slides = [
   {
-    img: curatedImages["hero-conference-crowd"],
+    img: curatedImages["hero-inspire-her-crowd"],
     eyebrow: "She Sharp",
     title: "Bridging the gender gap in STEM",
     pos: "center center",
   },
   {
-    img: curatedImages["hero-community-cheer"],
+    img: curatedImages["hero-diwali-community"],
     eyebrow: "Connect",
     title: "Building professional networks for women in tech",
-    pos: "center 35%",
-  },
-  {
-    img: curatedImages["hero-thrive-speaker"],
-    eyebrow: "Inspire",
-    title: "Showcasing diverse careers in STEM",
     pos: "center center",
   },
   {
-    img: curatedImages["hero-celebration-handsup"],
+    img: curatedImages["speaker-inspire-her"],
+    eyebrow: "Inspire",
+    title: "Showcasing diverse careers in STEM",
+    pos: "center 30%",
+  },
+  {
+    img: curatedImages["audience-inspire-her-theatre"],
     eyebrow: "Empower",
     title: "Supporting career development and growth",
     pos: "center center",
