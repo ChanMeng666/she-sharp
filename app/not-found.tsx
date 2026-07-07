@@ -1,83 +1,45 @@
-'use client';
-
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { Home, Search, ArrowLeft, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { StandalonePageLayout } from '@/components/standalone-page-layout';
 
 export default function NotFound() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const handleRefresh = () => {
-    if (typeof window !== 'undefined') {
-      window.location.reload();
-    }
-  };
-
   return (
     <StandalonePageLayout>
-      <div className="relative min-h-[calc(100vh-12rem)] py-24 px-4 bg-[#f4f4fa]">
-        {/* Background decoration */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 -right-32 w-64 h-64 bg-[#f7e5f3] rounded-full blur-3xl opacity-60"></div>
-          <div className="absolute bottom-1/4 -left-32 w-64 h-64 bg-[#eaf2ff] rounded-full blur-3xl opacity-60"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#effefb] rounded-full blur-3xl opacity-40"></div>
-        </div>
+      <div className="min-h-[calc(100vh-12rem)] bg-muted px-4 py-24">
+        <div className="mx-auto flex min-h-full max-w-2xl flex-col items-center justify-center text-center">
+          <p className="text-label text-ink-500 mb-6">Page not found</p>
 
-        <div className="flex items-center justify-center min-h-full">
-          <div className="w-full max-w-lg relative z-10">
-            <div className="p-12 text-center space-y-8">
-              {/* 404 Number Display */}
-              <div className="relative">
-                <div className="text-8xl font-black text-brand leading-none">
-                  404
-                </div>
-                <div className="absolute inset-0 text-8xl font-black text-[#f7e5f3] scale-110 leading-none -z-10">
-                  404
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="space-y-4">
-                <h1 className="text-3xl font-bold text-[#1f1e44]">
-                  Oops! Page not found
-                </h1>
-                <p className="text-foreground text-lg leading-relaxed max-w-md mx-auto">
-                  The page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL.
-                </p>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="space-y-4 pt-4">
-                <Button
-                  asChild
-                  variant="brand"
-                  size="lg"
-                  className="w-full"
-                >
-                  <Link href="/">
-                    <Home className="mr-2 h-5 w-5" />
-                    Back to Home
-                  </Link>
-                </Button>
-              </div>
-
-              {/* Help Text */}
-              <div>
-                <p className="text-sm text-[#1f1e44]/60">
-                  Need help?{' '}
-                  <Link href="/contact" className="text-brand hover:text-[#c846ab] underline transition-colors">
-                    Contact our support team
-                  </Link>
-                </p>
-              </div>
-            </div>
+          {/* Outline display 404 */}
+          <div className="text-display-lg text-outline text-foreground leading-none">
+            404
           </div>
+
+          <h1 className="text-display-sm text-foreground mt-8">
+            We couldn&apos;t find that page
+          </h1>
+          <p className="mt-4 max-w-md text-lg leading-relaxed text-ink-700">
+            The page you&apos;re looking for may have been moved, deleted, or the
+            URL was mistyped.
+          </p>
+
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+              <Link href="/">Back to home</Link>
+            </Button>
+            <Button asChild variant="brand" size="lg" className="rounded-full px-8">
+              <Link href="/events">Browse events</Link>
+            </Button>
+          </div>
+
+          <p className="mt-8 text-sm text-ink-500">
+            Need help?{' '}
+            <Link
+              href="/contact"
+              className="text-brand underline underline-offset-2 hover:text-brand-hover"
+            >
+              Contact our team
+            </Link>
+          </p>
         </div>
       </div>
     </StandalonePageLayout>

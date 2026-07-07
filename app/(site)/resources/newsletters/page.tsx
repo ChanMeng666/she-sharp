@@ -22,11 +22,10 @@ export default function NewslettersPage() {
     <Section spacing="section" className="pt-28 pb-16 md:py-24 lg:py-32">
       <Container size="full">
         {/* Header */}
-        <div className="mb-8 sm:mb-10 md:mb-12 max-w-3xl">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
-            Newsletters
-          </h1>
-          <p className="mt-3 text-base md:text-lg text-muted-foreground">
+        <div className="mb-8 max-w-3xl sm:mb-10 md:mb-12">
+          <p className="text-label mb-4 text-brand">Newsletters</p>
+          <h1 className="text-display-sm text-foreground">The newsletter archive</h1>
+          <p className="mt-4 text-base text-ink-600 md:text-lg">
             Stay in the loop on She Sharp events, mentorship milestones, and
             community wins. Browse past issues below or subscribe to receive the
             next one.

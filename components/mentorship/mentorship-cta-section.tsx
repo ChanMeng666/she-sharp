@@ -10,27 +10,39 @@ export function MentorshipCTASection() {
   const applicationsOpen = isMentorshipOpen();
 
   return (
-    <Section className="bg-white py-16">
+    <Section bgColor="dark" className="py-16 md:py-20">
       <Container size="full">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-display-sm text-foreground mb-4">
-              {applicationsOpen ? "Join Our Programme" : "Stay Connected"}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+          <div className="max-w-2xl">
+            <h2 className="text-display-sm text-background mb-3">
+              {applicationsOpen ? (
+                <>
+                  Join our <span className="text-mint">programme</span>
+                </>
+              ) : (
+                <>
+                  Stay <span className="text-mint">connected</span>
+                </>
+              )}
             </h2>
-            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-background/70">
               {applicationsOpen
-                ? "Join our mentorship programme and be part of a community that empowers women in STEM."
-                : "Applications for this year's programme have closed, but we'd love to keep you updated. Subscribe to our newsletter to receive the latest mentorship updates, application announcements, events, and community news."}
+                ? "Be part of a community that empowers women in STEM."
+                : "Applications for this year's programme have closed. Subscribe to our newsletter for the latest mentorship updates, application announcements, and community news."}
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center py-4 md:py-6">
+          <div className="flex flex-col sm:flex-row gap-4 shrink-0">
             {applicationsOpen ? (
               <>
                 <Button variant="brand" size="lg" asChild>
                   <Link href="/mentorship/mentee">Become a Mentee</Link>
                 </Button>
-                <Button variant="secondary" size="lg" asChild>
+                <Button
+                  size="lg"
+                  className="bg-transparent border border-white/30 text-background hover:bg-white/10"
+                  asChild
+                >
                   <Link href="/mentorship/mentor">Become a Mentor</Link>
                 </Button>
               </>

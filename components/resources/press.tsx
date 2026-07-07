@@ -1,9 +1,8 @@
- "use client";
+"use client";
 
-import { Card } from "@/components/ui/card";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { ExternalLink } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { newsPressItems } from "@/lib/data/news-press";
 
 export function PressGrid() {
@@ -11,62 +10,49 @@ export function PressGrid() {
     <Section spacing="section" className="py-24 lg:py-36">
       <Container size="full">
         <div className="mb-10 md:mb-14">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
-            In the Press
+          <p className="text-label mb-4 text-brand">In the Press</p>
+          <h1 className="text-display-sm text-foreground">
+            News &amp; press coverage
           </h1>
-          <p className="mt-3 text-base md:text-lg text-muted-foreground max-w-2xl">
+          <p className="mt-4 max-w-2xl text-base text-ink-600 md:text-lg">
             News and press coverage featuring She Sharp&apos;s community, awards,
             and impact.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 auto-rows-[minmax(220px,auto)] md:auto-rows-[minmax(200px,auto)]">
-          {newsPressItems.map((item, index) => {
-            // Make specific cards span 2 rows for visual interest
-            const isTall = index === 1 || index === 4;
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
+          {newsPressItems.map((item) => {
+            const dateLabel = new Date(item.isoDate).toLocaleDateString("en-NZ", {
+              month: "long",
+              year: "numeric",
+            });
 
-            const content = (
-              <Card className={`relative h-full w-full overflow-hidden border-0 shadow-lg card-sm bg-black ${item.externalLink ? "transition-all duration-300 hover:shadow-xl hover:-translate-y-1" : ""} ${isTall ? "min-h-[280px] md:min-h-0" : "aspect-[3/2] sm:aspect-[4/3]"}`}>
-                {/* Background image */}
-                <img
-                  src={item.coverImage}
-                  alt={item.title}
-                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-
-                {/* External link badge or plain "Press mention" tag */}
-                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 inline-flex items-center gap-1 rounded-full bg-white/85 px-3 py-1 text-xs font-medium text-gray-900">
-                  {item.externalLink ? (
-                    <>
-                      <ExternalLink className="h-3.5 w-3.5" />
-                      <span>Read article</span>
-                    </>
-                  ) : (
-                    <span>Press mention</span>
-                  )}
+            const body = (
+              <article className="flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-background transition-colors duration-300 group-hover:border-foreground/30">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={item.coverImage}
+                    alt={item.title}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
                 </div>
-
-                {/* Content */}
-                <div className="absolute inset-x-4 bottom-4 sm:inset-x-5 sm:bottom-5 md:inset-x-6 md:bottom-6 z-10">
-                  <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/70">
-                    {new Date(item.isoDate).toLocaleDateString("en-NZ", {
-                      month: "long",
-                      year: "numeric",
-                    })}
-                  </p>
-                  <h2 className={`mt-2 font-semibold text-white leading-snug ${isTall ? "text-lg sm:text-xl md:text-2xl line-clamp-3 sm:line-clamp-4" : "text-base sm:text-lg md:text-xl line-clamp-2 sm:line-clamp-3"}`}>
+                <div className="flex flex-1 flex-col p-6">
+                  <p className="text-label text-ink-500">{dateLabel}</p>
+                  <h2 className="mt-3 text-lg font-semibold leading-snug text-foreground">
                     {item.title}
                   </h2>
+                  {item.externalLink && (
+                    <span className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-brand">
+                      Read article
+                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </span>
+                  )}
                 </div>
-              </Card>
+              </article>
             );
 
-            const wrapperClass = isTall
-              ? "group block h-full md:row-span-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-foreground card-sm"
-              : "group block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-foreground card-sm";
+            const wrapperClass =
+              "group block h-full rounded-[32px] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
             return item.externalLink ? (
               <a
@@ -77,11 +63,11 @@ export function PressGrid() {
                 className={wrapperClass}
                 aria-label={item.title}
               >
-                {content}
+                {body}
               </a>
             ) : (
               <div key={item.id} className={wrapperClass}>
-                {content}
+                {body}
               </div>
             );
           })}

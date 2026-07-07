@@ -21,7 +21,7 @@ const pricingPlans = membershipTiers.map((tier) => ({
 
 export function MembershipTiers() {
   return (
-    <Section className="py-16 md:py-24 lg:py-32 bg-[#eaf2ff]" noPadding>
+    <Section className="py-16 md:py-24 lg:py-32 bg-muted" noPadding>
       <Container size="wide">
         <Pricing
           plans={pricingPlans}

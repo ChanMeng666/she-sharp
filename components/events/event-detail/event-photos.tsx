@@ -3,7 +3,21 @@
 import { EventV3 } from "@/types/event";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { CurtainReveal } from "@/components/ui/reveal";
 import { hasPhotos } from "@/lib/data/events";
+
+// Repeating span pattern that gives the gallery an asymmetric editorial rhythm
+// without needing per-photo dimensions.
+function spanForIndex(index: number): string {
+  switch (index % 6) {
+    case 0:
+      return "col-span-2 row-span-2";
+    case 5:
+      return "col-span-2";
+    default:
+      return "";
+  }
+}
 
 interface EventPhotosProps {
   event: EventV3;
@@ -27,20 +41,27 @@ export function EventPhotos({ event, className }: EventPhotosProps) {
 
   return (
     <section id="event-photos" className={cn("space-y-8 py-12 sm:py-16 md:py-20 lg:py-24", className)}>
-      <h2 className="text-display-sm uppercase text-center mb-6 sm:mb-8 md:mb-12">
-        A taste of the Event
+      <h2 className="text-display-sm text-foreground text-center mb-6 sm:mb-8 md:mb-12">
+        A taste of the event
       </h2>
       {photos.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[46vw] sm:auto-rows-[200px] md:auto-rows-[220px] gap-3 md:gap-4">
           {photos.map((photo, index) => (
-            <div key={index} className="aspect-square overflow-hidden bg-muted">
+            <CurtainReveal
+              key={index}
+              delay={(index % 4) * 80}
+              className={cn(
+                "h-full overflow-hidden rounded-[16px] border border-border bg-muted",
+                spanForIndex(index)
+              )}
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={photo.url}
                 alt={photo.alt || `${event.title} photo ${index + 2}`}
                 className="w-full h-full object-cover"
               />
-            </div>
+            </CurtainReveal>
           ))}
         </div>
       )}

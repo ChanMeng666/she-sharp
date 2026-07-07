@@ -2,10 +2,7 @@
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import {
   ChevronLeft,
   ChevronRight,
@@ -35,137 +32,122 @@ export function TestimonialsSection() {
   const current = testimonials[currentIndex];
 
   return (
-    <Section className="py-16 bg-background">
+    <Section bgColor="white" className="py-24 lg:py-28">
       <Container size="full">
-        <div className="text-center mb-12">
+        <div className="max-w-2xl mb-12">
+          <span className="text-label text-brand mb-4 block">
+            Community stories
+          </span>
           <h2 className="text-display-sm text-foreground mb-4">
-            Hear From Our Community
+            Hear from our community
           </h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Real stories from mentees and mentors who've transformed their
-            careers through our programme
+          <p className="text-base md:text-lg text-ink-600">
+            Real stories from mentees and mentors who&apos;ve transformed their
+            careers through our programme.
           </p>
         </div>
 
-        <div className="mx-auto max-w-5xl py-4 md:py-6">
-          <div className="flex flex-col md:flex-row md:items-center gap-4">
-            {/* Left Arrow */}
+        <div className="mx-auto max-w-5xl">
+          <div className="flex flex-col md:flex-row md:items-stretch gap-4">
             <Button
               onClick={prevTestimonial}
               variant="outline"
               size="icon"
-              className="hidden md:flex h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 rounded-full border border-brand hover:border-brand hover:bg-brand/20 hover:text-brand-foreground bg-background shadow-sm shrink-0 transition-all duration-300"
+              className="hidden md:flex rounded-full shrink-0 self-center"
+              aria-label="Previous story"
             >
-              <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-brand" />
+              <ChevronLeft className="h-5 w-5" />
             </Button>
 
-            <Card className="relative overflow-hidden hover:shadow-xl transition-all duration-300 card-lg p-4 sm:p-6 md:p-10 flex-1 ">
-              <CardHeader className="pb-0">
-                <div className="flex flex-col md:flex-row gap-6 items-start">
-                  {/* Mentee Info */}
-                  <div className="flex items-center w-full md:flex-1">
-                    <div className="w-full">
-                      <p className="text-lg text-brand font-black mb-2 flex items-center gap-2">
-                        <GraduationCap className="w-5 h-5" />
-                        Mentee
-                      </p>
-                      <h3 className="font-heading font-bold text-2xl text-foreground mb-2">
-                        {current.mentee.name}
-                      </h3>
-                      <p className="text-base text-muted-foreground">
-                        {current.mentee.role}
-                      </p>
-                      <p className="text-base text-muted-foreground">
-                        {current.mentee.company}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Journey Badge */}
-                  <Badge
-                    variant="outline"
-                    className="border-border text-base p-2 w-full md:w-auto"
-                  >
-                    <Calendar className="w-5 h-5 mr-1" />
-                    {current.mentee.journey}
-                  </Badge>
-
-                  {/* Mentor Info */}
-                  <div className="flex items-center w-full md:flex-1 md:justify-end">
-                    <div className="w-full text-left md:text-right">
-                      <p className="text-lg text-brand font-black mb-2 flex items-center gap-2 justify-start md:justify-end">
-                        <Award className="w-5 h-5" />
-                        Mentor
-                      </p>
-                      <h3 className="font-heading font-bold text-2xl text-foreground mb-2">
-                        {current.mentor.name}
-                      </h3>
-                      <p className="text-base text-muted-foreground">
-                        {current.mentor.role}
-                      </p>
-                      <p className="text-base text-muted-foreground">
-                        {current.mentor.company}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </CardHeader>
-
-              <CardContent className="px-6 py-4">
-                <blockquote className="text-quote text-foreground mb-6 flex items-start gap-2 md:gap-8">
-                  <Quote className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 text-brand/30 mt-1 shrink-0 rotate-180" />
-                  <span className="flex-1">{current.fullStory}</span>
-                  <Quote className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 text-brand/30 mt-1 shrink-0" />
-                </blockquote>
-                {current.author && (
-                  <p className="text-right text-base font-semibold text-brand mr-12">
-                    — {current.author}
+            <article className="flex-1 rounded-[32px] border border-border bg-white p-6 sm:p-8 md:p-10">
+              <div className="flex flex-col md:flex-row gap-6 items-start">
+                <div className="w-full md:flex-1">
+                  <p className="text-label text-brand mb-2 flex items-center gap-2">
+                    <GraduationCap className="w-4 h-4" />
+                    Mentee
                   </p>
-                )}
-              </CardContent>
-            </Card>
+                  <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground mb-1">
+                    {current.mentee.name}
+                  </h3>
+                  <p className="text-base text-ink-600">{current.mentee.role}</p>
+                  <p className="text-base text-ink-600">
+                    {current.mentee.company}
+                  </p>
+                </div>
 
-            {/* Right Arrow */}
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-sm text-ink-600 w-full md:w-auto">
+                  <Calendar className="w-4 h-4 text-brand" />
+                  {current.mentee.journey}
+                </span>
+
+                <div className="w-full md:flex-1 md:text-right">
+                  <p className="text-label text-brand mb-2 flex items-center gap-2 justify-start md:justify-end">
+                    <Award className="w-4 h-4" />
+                    Mentor
+                  </p>
+                  <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground mb-1">
+                    {current.mentor.name}
+                  </h3>
+                  <p className="text-base text-ink-600">{current.mentor.role}</p>
+                  <p className="text-base text-ink-600">
+                    {current.mentor.company}
+                  </p>
+                </div>
+              </div>
+
+              <blockquote className="text-quote text-foreground mt-8 flex items-start gap-3 md:gap-6">
+                <Quote className="w-8 h-8 md:w-10 md:h-10 text-brand shrink-0 rotate-180" />
+                <span className="flex-1">{current.fullStory}</span>
+                <Quote className="w-8 h-8 md:w-10 md:h-10 text-brand shrink-0 self-end" />
+              </blockquote>
+              {current.author && (
+                <p className="text-right text-base font-semibold text-brand mt-4 mr-12">
+                  — {current.author}
+                </p>
+              )}
+            </article>
+
             <Button
               onClick={nextTestimonial}
               variant="outline"
               size="icon"
-              className="hidden md:flex h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 rounded-full border border-brand hover:border-brand hover:bg-brand/20 hover:text-brand-foreground bg-background shadow-sm shrink-0 transition-all duration-300"
+              className="hidden md:flex rounded-full shrink-0 self-center"
+              aria-label="Next story"
             >
-              <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-brand" />
+              <ChevronRight className="h-5 w-5" />
             </Button>
           </div>
 
-          {/* Mobile Navigation Buttons */}
           <div className="flex md:hidden justify-center items-center gap-6 mt-4">
             <Button
               onClick={prevTestimonial}
               variant="outline"
               size="icon"
-              className="h-10 w-10 rounded-full border border-brand hover:border-brand hover:bg-brand/20 hover:text-brand-foreground bg-background shadow-sm transition-all duration-300"
+              className="rounded-full"
+              aria-label="Previous story"
             >
-              <ChevronLeft className="h-5 w-5 text-brand" />
+              <ChevronLeft className="h-5 w-5" />
             </Button>
             <Button
               onClick={nextTestimonial}
               variant="outline"
               size="icon"
-              className="h-10 w-10 rounded-full border border-brand hover:border-brand hover:bg-brand/20 hover:text-brand-foreground bg-background shadow-sm transition-all duration-300"
+              className="rounded-full"
+              aria-label="Next story"
             >
-              <ChevronRight className="h-5 w-5 text-brand" />
+              <ChevronRight className="h-5 w-5" />
             </Button>
           </div>
 
-          {/* Navigation Indicators */}
           <div className="flex justify-center items-center gap-2 mt-8">
             {testimonials.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`h-2 transition-all duration-300 rounded-full ${index === currentIndex
-                  ? "w-8 bg-brand"
-                  : "w-4 bg-border"
-                  }`}
+                aria-label={`Go to story ${index + 1}`}
+                className={`h-1.5 transition-all duration-300 rounded-full ${
+                  index === currentIndex ? "w-8 bg-brand" : "w-4 bg-ink-300"
+                }`}
               />
             ))}
           </div>

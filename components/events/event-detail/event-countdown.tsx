@@ -63,63 +63,30 @@ export function EventCountdown({ event, className }: EventCountdownProps) {
     event.detailPageData.dateTime,
   ]);
 
+  const units: { value: number; label: string }[] = [
+    { value: timeLeft.days, label: "Days" },
+    { value: timeLeft.hours, label: "Hours" },
+    { value: timeLeft.minutes, label: "Min" },
+    { value: timeLeft.seconds, label: "Sec" },
+  ];
+
   return (
     <div className={className}>
-      <div className="w-full">
-        <div className="relative rounded-[var(--radius-card-sm)] md:rounded-[var(--radius-card-md)] overflow-hidden shadow-2xl backdrop-blur-sm">
-          {/* Card with three color sections */}
-          <div className="flex">
-            {/* Left section - Purple/Blue */}
-            <div className="bg-brand/60 px-4 sm:px-5 md:px-6 py-4 sm:py-5 md:py-6 flex items-center">
-              <div>
-                <p className="text-white text-xs md:text-sm font-medium uppercase mb-1 md:mb-2">
-                  SEE YOU IN
-                </p>
-                <div className="h-0.5 w-8 sm:w-12 md:w-24 bg-white"></div>
-              </div>
+      <p className="text-label text-mint mb-3">See you in</p>
+      <div className="flex items-stretch gap-2 sm:gap-3">
+        {units.map((unit) => (
+          <div
+            key={unit.label}
+            className="flex-1 rounded-[12px] border border-white/20 bg-white/10 px-2 py-3 text-center"
+          >
+            <div className="text-2xl md:text-3xl font-bold tabular-nums text-white">
+              {String(unit.value).padStart(2, "0")}
             </div>
-
-            {/* Middle section - Dark Grey */}
-            <div className="bg-foreground/90 px-4 sm:px-5 md:px-6 py-4 sm:py-5 md:py-6 flex-1 flex items-center justify-around gap-2 md:gap-4">
-              <div className="text-center">
-                <div className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-0.5 md:mb-1">
-                  {String(timeLeft.days).padStart(2, "0")}
-                </div>
-                <div className="text-[10px] md:text-xs text-white/80 uppercase tracking-wider">
-                  DAYS
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-0.5 md:mb-1">
-                  {String(timeLeft.hours).padStart(2, "0")}
-                </div>
-                <div className="text-[10px] md:text-xs text-white/80 uppercase tracking-wider">
-                  HOURS
-                </div>
-              </div>
-            </div>
-
-            {/* Right section - White */}
-            <div className="bg-white/95 px-4 sm:px-5 md:px-6 py-4 sm:py-5 md:py-6 flex-1 flex items-center justify-around gap-2 md:gap-4">
-              <div className="text-center">
-                <div className="text-xl md:text-3xl lg:text-4xl font-bold text-foreground mb-0.5 md:mb-1">
-                  {String(timeLeft.minutes).padStart(2, "0")}
-                </div>
-                <div className="text-[10px] md:text-xs text-foreground/70 uppercase tracking-wider">
-                  MINUTES
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-xl md:text-3xl lg:text-4xl font-bold text-foreground mb-0.5 md:mb-1">
-                  {String(timeLeft.seconds).padStart(2, "0")}
-                </div>
-                <div className="text-[10px] md:text-xs text-foreground/70 uppercase tracking-wider">
-                  SECONDS
-                </div>
-              </div>
+            <div className="mt-1 text-[10px] md:text-xs uppercase tracking-wider text-white/70">
+              {unit.label}
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

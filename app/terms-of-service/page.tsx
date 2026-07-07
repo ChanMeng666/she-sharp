@@ -1,7 +1,8 @@
+import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Terms of Service",
   alternates: { canonical: "/terms-of-service" },
   description: "Terms of service for using She Sharp's website and participating in our programmes.",

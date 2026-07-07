@@ -484,22 +484,22 @@
   /* Outline display row — transparent fill + hairline stroke.
      Used for the stacked outline rows in editorial hero/footer type. */
   .text-outline {
-    color: transparent;
+    -webkit-text-fill-color: transparent;
     -webkit-text-stroke: 1.5px currentColor;
   }
 
   @supports not (-webkit-text-stroke: 1px black) {
     .text-outline {
-      color: inherit;
+      -webkit-text-fill-color: currentColor;
     }
   }
 
-  /* Script eyebrow (Carattere) — a rare brand-purple flourish */
+  /* Script eyebrow (Carattere) — a rare brand-purple flourish.
+     Color lives in @layer base (end of file) so text-* utilities can override it. */
   .eyebrow-script {
     font-family: var(--font-brand-script);
     font-size: 1.5rem;
     line-height: 1;
-    color: hsl(var(--brand));
   }
 
   /* Quote/testimonial text */
@@ -524,5 +524,12 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.18em;
+  }
+}
+
+@layer base {
+  /* Default eyebrow color — overridable by text-* utilities */
+  .eyebrow-script {
+    color: hsl(var(--brand));
   }
 }

@@ -24,42 +24,42 @@ export default function MentorshipPage() {
     <>
       <GeoHead instructions={GEO_INSTRUCTIONS.mentorship} />
       <MentorshipHeroSection
-        topLeftTitle={
+        eyebrow="Mentorship Programme"
+        title={
           <>
-            MENTORSHIP
+            Mentorship
             <br />
-            PROGRAMME
+            programme
           </>
         }
-        topLeftBgColor="bg-white"
-        topLeftTextColor="text-foreground"
-        topRightImage="/img/gallery/home-page-ai-hackathon-2025-mentorship.jpg"
-        topRightImageAlt="Women in technology mentorship programme group photo"
-        bottomLeftVideo="/video/Mentorship.mp4"
-        bottomRightTitle="Empowering Women in STEM"
-        bottomRightTitleHighlight="through Mentoring"
-        bottomRightDescription="Our mentorship programme facilitates supportive relationships between our mentors and mentees. Through sharing knowledge, advice, and encouragement, we help mentees navigate careers, overcome challenges, and achieve interpersonal goals."
+        image="/img/gallery/home-page-ai-hackathon-2025-mentorship.jpg"
+        imageAlt="Women in technology mentorship programme group photo"
+        video="/video/Mentorship.mp4"
+        detailEyebrow="Why it matters"
+        detailTitle="Empowering women in STEM"
+        detailTitleHighlight="through mentoring."
+        detailDescription="Our mentorship programme facilitates supportive relationships between our mentors and mentees. Through sharing knowledge, advice, and encouragement, we help mentees navigate careers, overcome challenges, and achieve interpersonal goals."
       />
 
       {!applicationsOpen && (
-      <div className="bg-brand/10 border-y border-brand/20">
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <a
-            href={MAILCHIMP_CONFIG.subscribeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col sm:flex-row items-center justify-center gap-x-2 gap-y-1 text-center text-sm md:text-base text-brand font-medium hover:text-brand-hover transition-colors"
-          >
-            <span className="inline-flex items-center gap-2">
-              <Megaphone className="h-4 w-4 shrink-0" />
-              Applications closed
-            </span>
-            <span className="text-foreground/80">
-              — subscribe for updates about future cohorts.
-            </span>
-          </a>
+        <div className="bg-muted border-y border-border">
+          <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <a
+              href={MAILCHIMP_CONFIG.subscribeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col sm:flex-row items-center justify-center gap-x-2 gap-y-1 text-center text-sm md:text-base font-medium text-brand hover:text-brand-hover transition-colors"
+            >
+              <span className="inline-flex items-center gap-2">
+                <Megaphone className="h-4 w-4 shrink-0" />
+                Applications closed
+              </span>
+              <span className="text-ink-600">
+                — subscribe for updates about future cohorts.
+              </span>
+            </a>
+          </div>
         </div>
-      </div>
       )}
 
       <MentorshipBenefits />

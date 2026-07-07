@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { MemberCard, MemberCardData } from "@/components/ui/member-card";
 import { teamMembers } from "@/lib/data/team";
 
@@ -9,16 +8,17 @@ export function TeamSection() {
       aria-labelledby="team-heading"
     >
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 lg:mb-16">
+        <div className="mb-12 text-center lg:mb-16">
+          <p className="text-label mb-4 text-brand">The team</p>
           <h2
             id="team-heading"
-            className="text-display-sm text-foreground mb-4 sm:mb-6"
+            className="text-display-sm mb-4 text-foreground sm:mb-6"
           >
-            Meet Our People
+            Meet our people
           </h2>
-          <p className="text-md lg:text-lg max-w-2xl mx-auto text-muted-foreground leading-relaxed">
-            The passionate team of leaders, innovators, and advocates driving
-            change in the tech industry
+          <p className="mx-auto max-w-2xl text-base leading-relaxed text-ink-600 lg:text-lg">
+            The leaders, innovators, and advocates driving change in the tech
+            industry.
           </p>
         </div>
 

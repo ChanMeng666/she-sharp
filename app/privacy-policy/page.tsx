@@ -1,7 +1,8 @@
+import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Privacy Policy",
   alternates: { canonical: "/privacy-policy" },
   description: "She Sharp's privacy policy - how we collect, use, and protect your personal information.",

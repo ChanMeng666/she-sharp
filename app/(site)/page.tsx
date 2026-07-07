@@ -1,7 +1,15 @@
 import { Metadata } from "next";
-import "@/styles/animations/hero.css";
 import { HeroSection } from "@/components/home/hero-section";
+import { EventsShowcaseSection } from "@/components/home/events-showcase-section";
+import { ScrollingSponsorsSection } from "@/components/home/scrolling-sponsors-section";
+import { CoreImpactSection } from "@/components/home/core-impact-section";
+import { PhotoDividerSection } from "@/components/home/photo-divider-section";
+import { ProgramsSection } from "@/components/home/programs-section";
+import { VideoShowcaseSection } from "@/components/home/video-showcase-section";
+import { HomeTestimonialsSection } from "@/components/home/testimonials-section";
+import { SponsorsSection } from "@/components/home/sponsors-section";
 import { CTASection } from "@/components/home/CTA-section";
+import { GeoHead, GEO_INSTRUCTIONS } from "@/components/seo/geo-head";
 
 export const metadata: Metadata = {
   title: { absolute: "She Sharp | Empowering Women in STEM" },
@@ -9,33 +17,18 @@ export const metadata: Metadata = {
     "She Sharp is a nonprofit organisation dedicated to empowering women in STEM through mentorship, events, workshops, and community support across New Zealand.",
   alternates: { canonical: "/" },
 };
-import { CoreImpactSection } from "@/components/home/core-impact-section";
-import { CoreValuesSection } from "@/components/home/core-values-section";
-import { ProgramsSection } from "@/components/home/programs-section";
-import { SponsorsSection } from "@/components/home/sponsors-section";
-import { ScrollingSponsorsSection } from "@/components/home/scrolling-sponsors-section";
-import { EventsShowcaseSection } from "@/components/home/events-showcase-section";
-import { HomeTestimonialsSection } from "@/components/home/testimonials-section";
-import { VideoShowcaseSection } from "@/components/home/video-showcase-section";
-import { HerWakaSection } from "@/components/home/her-waka-section";
-import { GeoHead, GEO_INSTRUCTIONS } from "@/components/seo/geo-head";
 
 export default function HomePage() {
   return (
     <div className="relative isolate">
       <GeoHead instructions={GEO_INSTRUCTIONS.home} />
-      <div
-        className="fixed inset-0 z-[-1] bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url(/img/bg-img.jpg)" }}
-      />
 
       <HeroSection />
       <EventsShowcaseSection />
       <ScrollingSponsorsSection />
       <CoreImpactSection />
-      <CoreValuesSection />
+      <PhotoDividerSection />
       <ProgramsSection />
-      <HerWakaSection />
       <VideoShowcaseSection />
       <HomeTestimonialsSection />
       <SponsorsSection />
