@@ -18,7 +18,7 @@ const HIGHLIGHTS = [
   { icon: Sparkles, text: "50+ corporate sponsors" },
 ];
 
-const SPONSOR_PHOTO = curatedImages["connection-smiles"];
+const SPONSOR_PHOTO = curatedImages["connection-google-aut"];
 
 export function EventSponsorship({ event }: EventSponsorshipProps) {
   return (

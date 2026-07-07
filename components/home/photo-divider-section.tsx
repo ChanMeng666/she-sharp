@@ -14,7 +14,7 @@ export function PhotoDividerSection() {
     offset: ["start end", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
-  const img = curatedImages["divider-crowd-wide"];
+  const img = curatedImages["divider-venue-glasshouse"];
 
   return (
     <section

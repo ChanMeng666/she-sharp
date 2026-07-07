@@ -20,8 +20,8 @@ const mentorFeatures: ResponsibilityItem[] = [
   {
     id: 2,
     title: "Guidance",
-    image: curatedImages["workshop-collaboration"].src,
-    alt: curatedImages["workshop-collaboration"].alt,
+    image: curatedImages["workshop-design-thinking"].src,
+    alt: curatedImages["workshop-design-thinking"].alt,
     description:
       "Help your mentee figure out and set meaningful goals, encouraging them to nurture their independent thinking skills. Foster their growth by providing direction and support, and celebrate their achievements along the way.",
   },
