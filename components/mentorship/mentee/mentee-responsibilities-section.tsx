@@ -45,7 +45,7 @@ const menteeFeatures: ResponsibilityItem[] = [
 
 export function MenteeResponsibilitiesSection() {
   return (
-    <Section bgColor="accent" className="py-24 lg:py-28">
+    <Section bgColor="accent" className="py-16 sm:py-20 lg:py-28">
       <Container size="full">
         <div className="mb-12 md:mb-16 max-w-2xl">
           <span className="text-label text-brand mb-4 block">

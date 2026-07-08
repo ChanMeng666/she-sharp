@@ -173,7 +173,7 @@ export function SponsorshipPricing() {
                     <p className="text-label mb-5 text-muted-foreground">
                       Organisations supporting our mission
                     </p>
-                    <div className="grid grid-cols-3 items-center gap-x-8 gap-y-6">
+                    <div className="grid grid-cols-3 items-center gap-x-4 gap-y-6 sm:gap-x-8">
                       {tieredSponsors.map((sponsor) => (
                         <Image
                           key={sponsor.name}
@@ -265,7 +265,7 @@ export function SponsorshipPricing() {
             </p>
           </Reveal>
           <Reveal variant="fade-up" delay={100}>
-            <div className="grid grid-cols-3 items-center gap-x-8 gap-y-8 sm:grid-cols-4 md:grid-cols-6">
+            <div className="grid grid-cols-3 items-center gap-x-4 gap-y-8 sm:grid-cols-4 sm:gap-x-8 md:grid-cols-6">
               {scrollingSponsorLogos.map((sponsor) => (
                 <div key={sponsor.name} className="flex items-center justify-center">
                   <Image

@@ -33,7 +33,7 @@ export function HeroSection() {
   const poster = curatedImages["hero-community-cheer"].src;
 
   return (
-    <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden">
+    <section className="relative isolate flex min-h-[80vh] sm:min-h-[88vh] lg:min-h-[92vh] items-center overflow-hidden">
       {/* Full-bleed muted event footage with a curated poster frame. */}
       <video
         autoPlay
@@ -49,7 +49,7 @@ export function HeroSection() {
       {/* Flat navy scrim keeps the white type legible over the footage. */}
       <div className="absolute inset-0 -z-10 bg-foreground/40" />
 
-      <Container size="full" className="relative w-full py-24">
+      <Container size="full" className="relative w-full py-16 sm:py-20 lg:py-24">
         <div className="max-w-4xl">
           <motion.p
             initial={reduceMotion ? false : { opacity: 0, y: 12 }}

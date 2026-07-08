@@ -23,7 +23,7 @@ export function BenefitsSection({
   benefits,
 }: BenefitsSectionProps) {
   return (
-    <Section bgColor="white" className="py-24 lg:py-28">
+    <Section bgColor="white" className="py-16 sm:py-20 lg:py-28">
       <Container size="full">
         <div className="max-w-2xl mb-12 md:mb-16">
           <span className="text-label text-brand mb-4 block">{eyebrow}</span>

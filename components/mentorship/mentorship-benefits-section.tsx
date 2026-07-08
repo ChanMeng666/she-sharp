@@ -25,7 +25,7 @@ const BENEFITS = [
 
 export function MentorshipBenefits() {
   return (
-    <section className="bg-white py-24 lg:py-28 border-b border-border">
+    <section className="bg-white py-16 sm:py-20 lg:py-28 border-b border-border">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12 md:mb-16 max-w-3xl">
           <span className="text-label text-brand mb-4 block">By the numbers</span>

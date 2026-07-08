@@ -143,7 +143,7 @@ export default function SmoothScrollHero() {
         <div className="pointer-events-none absolute inset-0 z-[3] bg-gradient-to-t from-foreground/70 via-foreground/15 to-transparent" />
 
         {/* Slide text — key forces remount on slide change, restarting the entrance. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] px-8 pb-24 sm:px-12 md:px-16 lg:px-20">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] px-5 pb-20 sm:px-12 sm:pb-24 md:px-16 lg:px-20">
           <p
             key={`label-${current}`}
             className="text-label mb-3 text-background/70"
@@ -179,7 +179,7 @@ export default function SmoothScrollHero() {
         </button>
 
         {/* Bottom bar: hairline progress + slide counter. */}
-        <div className="absolute inset-x-0 bottom-6 z-10 flex items-center justify-between px-8 sm:bottom-7 sm:px-12 md:px-16 lg:px-20">
+        <div className="absolute inset-x-0 bottom-6 z-10 flex items-center justify-between px-5 sm:bottom-7 sm:px-12 md:px-16 lg:px-20">
           <div className="flex items-center gap-2">
             {slides.map((_, i) => (
               <button

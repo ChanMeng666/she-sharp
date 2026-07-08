@@ -32,7 +32,7 @@ export function TestimonialsSection() {
   const current = testimonials[currentIndex];
 
   return (
-    <Section bgColor="white" className="py-24 lg:py-28">
+    <Section bgColor="white" className="py-16 sm:py-20 lg:py-28">
       <Container size="full">
         <div className="max-w-2xl mb-12">
           <span className="text-label text-brand mb-4 block">

@@ -68,6 +68,16 @@
   @apply w-full my-6 border-collapse;
 }
 
+/* On phones, let wide tables scroll horizontally instead of overflowing the page. */
+@media (max-width: 640px) {
+  .legal-content table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 .legal-content th {
   @apply px-4 py-3 text-left text-sm font-semibold;
   color: #1f1e44;
