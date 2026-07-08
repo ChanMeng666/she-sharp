@@ -96,7 +96,7 @@ export function NavDebugPanel() {
       for (const m of mutations) {
         if (m.type !== "attributes" || m.attributeName !== "data-state") continue;
         const el = m.target as HTMLElement;
-        if (el.getAttribute("data-slot") !== "navigation-menu-trigger") continue;
+        if (el.getAttribute("data-slot") !== "dropdown-menu-trigger") continue;
         const name = (el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 24);
         log("menu", `${name || "?"} -> ${el.getAttribute("data-state")}`);
       }

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -44,10 +44,31 @@ export function SiteHeader() {
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+  // Which desktop dropdown is open (controlled) — enables hover-to-open on top
+  // of the click-reliable Radix DropdownMenu without touching the click/nav path.
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Prevent hydration mismatch by only rendering interactive elements after mount
   useEffect(() => {
     setIsMounted(true);
+  }, []);
+
+  // Hover-intent helpers: open immediately, close after a short grace period so
+  // the pointer can cross the trigger→panel gap without the menu snapping shut.
+  const openMenuNow = (title: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpenMenu(title);
+  };
+  const closeMenuSoon = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setOpenMenu(null), 120);
+  };
+  // Clear any pending close timer on unmount.
+  useEffect(() => {
+    return () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
   }, []);
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -148,10 +169,21 @@ export function SiteHeader() {
               {navigationConfig.items.map((item) => (
                 <li key={item.title}>
                   {item.children ? (
-                    <DropdownMenu>
+                    <DropdownMenu
+                      open={openMenu === item.title}
+                      onOpenChange={(o) =>
+                        setOpenMenu(o ? item.title : null)
+                      }
+                    >
                       <DropdownMenuTrigger asChild>
                         <button
                           type="button"
+                          onPointerEnter={(e) => {
+                            if (e.pointerType === "mouse") openMenuNow(item.title);
+                          }}
+                          onPointerLeave={(e) => {
+                            if (e.pointerType === "mouse") closeMenuSoon();
+                          }}
                           className={cn(
                             "group inline-flex items-center gap-1 bg-transparent transition-colors duration-150 rounded-full px-3 py-2 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
                             isItemActive(item)
@@ -170,6 +202,9 @@ export function SiteHeader() {
                       <DropdownMenuContent
                         align="start"
                         sideOffset={8}
+                        onPointerEnter={() => openMenuNow(item.title)}
+                        onPointerLeave={closeMenuSoon}
+                        onCloseAutoFocus={(e) => e.preventDefault()}
                         className="w-[480px] space-y-1 rounded-[24px] border border-border bg-white p-3 shadow-[var(--shadow-md)]"
                       >
                         {item.children.map((child) => (
