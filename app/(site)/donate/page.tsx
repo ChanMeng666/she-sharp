@@ -141,7 +141,7 @@ export default function DonatePage() {
           <div className="grid grid-cols-1 divide-y divide-white/10 md:grid-cols-3 md:divide-x md:divide-y-0">
             {stats.map((s) => (
               <div key={s.label} className="px-8 py-10 text-center md:py-4">
-                <p className="font-heading text-6xl font-extrabold tracking-tight text-white md:text-7xl">
+                <p className="font-heading text-5xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl">
                   {s.value}
                 </p>
                 <p className="mt-3 font-semibold text-white">{s.label}</p>

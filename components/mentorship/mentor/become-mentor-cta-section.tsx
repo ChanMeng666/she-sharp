@@ -11,7 +11,7 @@ export function BecomeMentorCTASection() {
   const applicationsOpen = isMentorshipOpen();
 
   return (
-    <Section id="become-mentor-cta" bgColor="white" className="py-24 lg:py-28">
+    <Section id="become-mentor-cta" bgColor="white" className="py-16 sm:py-20 lg:py-28">
       <Container size="full">
         <div className="rounded-[32px] bg-[#eaf2ff] p-8 md:p-12 lg:p-16">
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">

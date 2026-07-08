@@ -42,7 +42,7 @@ export function EventInflectedCard({
       href={eventHref}
       aria-label={event.title}
       className={cn(
-        "relative flex flex-col h-full min-h-[360px] sm:min-h-[400px] md:min-h-[480px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 rounded-[32px]",
+        "relative flex flex-col h-full min-h-[300px] sm:min-h-[400px] md:min-h-[480px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 rounded-[32px]",
         className
       )}
     >
@@ -56,8 +56,8 @@ export function EventInflectedCard({
           parentBackgroundColor="var(--color-background)"
           cardRounding={32}
           fontSizes={{
-            title: "1.25rem",
-            description: "1rem",
+            title: "clamp(1.05rem, 4vw, 1.25rem)",
+            description: "clamp(0.875rem, 3vw, 1rem)",
             tags: "0.75rem",
           }}
           margins={{

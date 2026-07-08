@@ -27,7 +27,7 @@ export function DonateHero() {
   const hero = curatedImages["hero-celebration-handsup"];
 
   return (
-    <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden">
+    <section className="relative isolate flex min-h-[80vh] sm:min-h-[88vh] lg:min-h-[92vh] items-center overflow-hidden">
       {/* Full-bleed celebration photography behind the appeal. */}
       <Image
         src={hero.src}
@@ -42,7 +42,7 @@ export function DonateHero() {
       <div className="absolute inset-0 -z-10 bg-foreground/40" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-foreground/70 via-foreground/25 to-transparent" />
 
-      <Container size="full" className="relative w-full py-28">
+      <Container size="full" className="relative w-full py-16 sm:py-20 lg:py-28">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Appeal copy */}
           <div className="max-w-xl">

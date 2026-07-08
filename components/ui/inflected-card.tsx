@@ -430,7 +430,11 @@ export const InflectedCard: React.FC<InflectedCardProps> = ({
         .inflected-content ul li:hover {
           opacity: 0.8;
         }
-        @media (max-width: 640px) {
+        @media (max-width: 400px) {
+          .inflected-cardInner { height: 15rem; }
+          .inflected-icon { width: 4rem; height: 4rem; }
+        }
+        @media (min-width: 401px) and (max-width: 640px) {
           .inflected-cardInner { height: 18rem; }
           .inflected-icon { width: 4.5rem; height: 4.5rem; }
         }

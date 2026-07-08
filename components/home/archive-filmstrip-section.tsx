@@ -60,11 +60,11 @@ const ROW_B: CuratedImageKey[] = [
 
 // Cycling widths give the strip an editorial, irregular rhythm.
 const WIDTHS = [
-  "w-56 md:w-72",
-  "w-64 md:w-80",
-  "w-52 md:w-64",
-  "w-60 md:w-[22rem]",
-  "w-64 md:w-72",
+  "w-40 sm:w-56 md:w-72",
+  "w-44 sm:w-64 md:w-80",
+  "w-36 sm:w-52 md:w-64",
+  "w-40 sm:w-60 md:w-[22rem]",
+  "w-44 sm:w-64 md:w-72",
 ];
 
 function Tile({ imgKey, index }: { imgKey: CuratedImageKey; index: number }) {

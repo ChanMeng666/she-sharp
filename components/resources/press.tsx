@@ -7,7 +7,7 @@ import { newsPressItems } from "@/lib/data/news-press";
 
 export function PressGrid() {
   return (
-    <Section spacing="section" className="py-24 lg:py-36">
+    <Section spacing="section" className="py-16 sm:py-20 lg:py-36">
       <Container size="full">
         <div className="mb-10 md:mb-14">
           <p className="text-label mb-4 text-brand">In the Press</p>

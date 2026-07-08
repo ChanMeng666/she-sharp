@@ -16,7 +16,7 @@ export function MentorsListSection() {
   }));
 
   return (
-    <Section id="mentors-list" bgColor="white" className="py-24 lg:py-28">
+    <Section id="mentors-list" bgColor="white" className="py-16 sm:py-20 lg:py-28">
       <Container size="full">
         <div className="space-y-12">
           <div className="max-w-2xl">
