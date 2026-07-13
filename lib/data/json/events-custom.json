@@ -1292,13 +1292,46 @@
         "fullDescription": [
           "The Aotearoa AI Hackathon Festival is a nationwide, multi-venue hackathon held across Aotearoa New Zealand. She Sharp, Auckland University of Technology (AUT) with the AI Forum are bringing the festival to AUT's City Campus for a two-day, in-person event on 7–8 August 2026.",
           "Working in teams, participants create AI-enabled solutions to real-world challenges aligned to five UN Sustainable Development Goals. Day one focuses on team formation, problem definition, and building; day two on refining solutions and pitching to a local judging panel.",
-          "Each venue selects a winning team whose pitch advances to national judging, and four national finalists will be invited to pitch live at the Aotearoa AI Summit on 18 September 2026 in Auckland, where the Summit audience votes for the overall winner. No matter your experience level — around a third of participants are new to hackathons — mentors from AUT and industry will support teams throughout.",
+          "Each venue selects a winning team whose pitch advances to national judging, and four national finalists will be invited to pitch live at the Aotearoa AI Summit on 18 September 2026 in Auckland, where the Summit audience votes for the overall winner. No matter your experience level — around a third of participants are new to hackathons — mentors from AUT, She Sharp and Fisher & Paykel Healthcare will support teams throughout.",
           "Free online pre-event training runs throughout July to help you build stronger ideas, prototypes and pitches. The festival is about building practical AI capability, encouraging responsible and ethical AI use, fostering collaboration across regions and sectors, and showcasing innovative, impact-driven ideas."
         ],
         "speakers": {
-          "keynote_speakers": {
-            "heading": "Meet Our Speakers",
-            "speakers": []
+          "panelists": {
+            "heading": "Meet the Judges",
+            "speakers": [
+              {
+                "name": "Nicholas Fourie",
+                "title": "Vice President — Information & Communication Technology",
+                "company": "Fisher & Paykel Healthcare",
+                "bio": "Nicholas Fourie was appointed Vice President – Information & Communication Technology in February 2017. Nicholas has been with Fisher & Paykel Healthcare since 2007, and in that time has held various systems engineering and management roles.\n\nAdditionally, Nicholas also served as a member on the Computer and Mathematical Sciences Industry Advisory Board for Auckland University of Technology (AUT). Prior to joining Fisher & Paykel Healthcare, he worked for the South African division of BHP Billiton. Nicholas holds a Diploma in Computer Engineering from Damelin School of Information Technology in South Africa.\n\nNicholas regularly features in the CIO50 New Zealand Top Award Winners. In 2023 he was the winner of this prestigious award and was ranked number one.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-nicholas-fourie.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Dr. Mahsa Mohaghegh (McCauley)",
+                "title": "Head of Department, Computer and Information Sciences · Chair, AI Forum NZ",
+                "company": "AUT",
+                "bio": "Dr. Mahsa McCauley is a globally recognised leader in artificial intelligence. She serves as Associate Professor and Head of Computer and Information Sciences at Auckland University of Technology (AUT). She is also the Communication and Information Commissioner for the New Zealand National Commission for UNESCO, and chairs AI Forum NZ, helping shape national and international AI policy.\n\nDr. McCauley is a Fulbright Scholar and has been a finalist for New Zealander of the Year. She has authored over 80 publications and supervised over 70 research projects in areas such as AI, machine learning, cybersecurity, and natural language processing. In addition, she founded She Sharp, a nonprofit organisation empowering thousands of women in technology.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-mahsa-mohaghegh.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Abby Dowd",
+                "title": "Senior Director — AI Strategy and Transformation",
+                "company": "AUT",
+                "bio": "Abby is a technologist who has been building software since the late 1990s, through engineering roles at Symantec and WhereScape, where he was VP Engineering, and technical leadership at Auckland University of Technology as Deputy CTO and Acting CIO.\n\nHe now leads AI strategy and transformation at AUT and heads its AI Acceleration Centre, setting the AI Futures strategy and acting as a catalyst for AI across the university. He stays close to the technology and keeps up with where AI is heading, which keeps his strategy grounded in what actually works.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-abby-dowd.jpg",
+                "linkedin": ""
+              },
+              {
+                "name": "Ming Cheuk",
+                "title": "ElementX",
+                "company": "",
+                "bio": "",
+                "image": "",
+                "linkedin": ""
+              }
+            ]
           }
         },
         "organizers": [],
@@ -1340,7 +1373,7 @@
               "5:00–5:30pm — Registration, guest arrival & networking + dinner",
               "5:30–5:40pm — Event opening: karakia, welcome to AUT, health & safety briefing",
               "5:40–5:50pm — She Sharp introduction",
-              "5:50–6:10pm — Keynote address + Q&A",
+              "5:50–6:10pm — Keynote: Alejandro + Q&A",
               "6:10–6:50pm — Team forming",
               "6:50–7:05pm — Overview of day two",
               "7:05–7:15pm — Problems to solve, requirements & judging criteria",
@@ -1380,16 +1413,6 @@
               "Design & Innovation — originality, user experience, and inventive use of technology.",
               "Presentation — a clear, creative pitch that addresses the problem and answers judges' questions within the time limit.",
               "An optional pitch deck template is available in the Community Hub as a guide."
-            ]
-          },
-          {
-            "type": "bullets",
-            "title": "Meet the Judges",
-            "content": [
-              "Nicholas Fourie — Vice President, Information & Communication Technology, Fisher & Paykel Healthcare",
-              "Dr. Mahsa Mohaghegh — Head of the Department of Computer and Information Sciences, AUT",
-              "Ming Cheuk — ElementX",
-              "Abby Dowd — AUT"
             ]
           },
           {
@@ -1488,6 +1511,8 @@
             "title": "Registration",
             "content": [
               "Register online at aihackathon.nz.",
+              "Open to students and professionals — all experience levels are welcome.",
+              "In-person capacity at AUT City Campus is limited to 100 participants.",
               "Concession and complimentary places are available for AUT students, mentors and supporting staff — registration details are shared directly via the AUT City Campus Community Hub.",
               "Enter as a team or as an individual — just let us know which when you register, and we will help solo registrants find a team on the day.",
               "Join the AUT City Campus Community Hub for the latest updates, training registration and Q&A session links."
