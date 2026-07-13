@@ -24,6 +24,7 @@ import {
   EventSponsors,
   EventSpecialSections,
   EventFeaturedPhoto,
+  EventPosters,
 } from "@/components/events/event-detail";
 import { EventCard } from "@/components/events/event-card";
 import { eventArchivePhotos } from "@/lib/data/event-archive-photos";
@@ -152,6 +153,9 @@ export default async function EventPage({ params }: EventPageProps) {
           </div>
         </Container>
       </Section>
+
+      {/* Promotional posters */}
+      <EventPosters event={event} />
 
       {/* Sessions Section (conference agenda) */}
       <EventSessions event={event} />
