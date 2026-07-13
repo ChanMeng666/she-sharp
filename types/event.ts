@@ -261,6 +261,7 @@ export interface EventDetailPageData {
   sponsors: EventSponsorsV3;
   specialSections: EventSpecialSection[];
   photos: EventPhotoV3[];
+  posters?: EventPhotoV3[]; // promotional posters shown whole (portrait artwork)
   galleryUrl: string;
   registrationUrl: string;
   images: EventPhotoV3[];

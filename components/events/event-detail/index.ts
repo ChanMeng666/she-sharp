@@ -9,6 +9,7 @@ export { EventSidebarPanel } from './event-sidebar-panel';
 export { EventCountdown } from './event-countdown';
 export { EventPhotos } from './event-photos';
 export { EventFeaturedPhoto } from './event-featured-photo';
+export { EventPosters } from './event-posters';
 export { EventSponsorship } from './event-sponsorship';
 export { EventDonationCta } from './event-donation-cta';
 export { EventSponsors } from './event-sponsors';
