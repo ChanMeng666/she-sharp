@@ -1472,6 +1472,22 @@
             ]
           },
           {
+            "type": "info",
+            "title": "Featured Problem — F&P Healthcare: Facilities Helpdesk Agent",
+            "content": [
+              "Fisher & Paykel Healthcare, a sponsor of the festival, has put forward a process optimisation challenge: design an AI agent for its Facilities Helpdesk — the single point of contact for maintenance and facilities service requests across the organisation.",
+              "Today the experience places unnecessary effort on both the people raising requests and the Facilities team. Intake, prioritisation, escalation guidance and status communication all rely on manual steps, separate process knowledge and email follow-up. The result is inconsistent processes that sit outside the tools staff use day to day, incomplete request data, no real-time visibility for the requestor, and sub-optimal escalation responses.",
+              "The opportunity is to create a more employee-friendly front door for Facilities requests: guiding staff through structured intake in plain language — in their own words — applying the existing priority process consistently, surfacing escalation guidance at the right moment, and keeping requestors informed throughout.",
+              "How it matches the UN Sustainable Development Goals: being inclusive means every employee can engage in their own language and has equal visibility of progress (SDGs 8, 9 and 10); removing wasted effort, resources and rework makes the process more sustainable (SDG 12); and F&P Healthcare's solutions support good health and well-being (SDG 3).",
+              "F&P frames this as \"Care by Design\" — good people doing good work with intent. When reviewing and judging pitches, F&P is looking for teams whose design is genuinely underpinned by that Culture of Care, and which centre people and process ahead of technology. Watch the video below to see how F&P works."
+            ]
+          },
+          {
+            "type": "youtube",
+            "title": "Care by Design — Fisher & Paykel Healthcare",
+            "content": ["https://youtu.be/n9UPiqziB9c"]
+          },
+          {
             "type": "bullets",
             "title": "2026 Venues",
             "content": [
@@ -1525,7 +1541,8 @@
               "Mission Ready, Unitec, Seen Ventures, academyEX, AUT, Tū Ātea, She Sharp",
               "Te Ipu o Te Mahara | Artificial Intelligence Institute, Amazon Web Services (AWS)",
               "EPIC Innovation, Canterbury Tech, Tech New Zealand",
-              "Woolworths New Zealand and Kai Commitment (Food Waste featured problem partners)"
+              "Woolworths New Zealand and Kai Commitment (Food Waste featured problem partners)",
+              "Fisher & Paykel Healthcare (Facilities Helpdesk Agent featured problem)"
             ]
           },
           {
@@ -1584,6 +1601,23 @@
               {
                 "label": "Food Waste resources",
                 "url": "https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus"
+              }
+            ]
+          },
+          {
+            "title": "Featured Problem — F&P Healthcare",
+            "paragraphs": [
+              "Festival sponsor Fisher & Paykel Healthcare has put forward a process optimisation challenge: an AI agent that gives staff a friendlier front door to the Facilities Helpdesk, guiding requests in plain language, applying the existing priority process consistently, and keeping people informed as their request progresses.",
+              "F&P calls this Care by Design — good people doing good work with intent — and is looking for teams whose solutions are underpinned by that Culture of Care. The full challenge brief and Q&A recordings are published in the Community Hub."
+            ],
+            "links": [
+              {
+                "label": "F&P challenge resources",
+                "url": "https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus"
+              },
+              {
+                "label": "Care by Design video",
+                "url": "https://youtu.be/n9UPiqziB9c"
               }
             ]
           },
