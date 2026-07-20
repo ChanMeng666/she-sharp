@@ -745,8 +745,7 @@
       "name": "website-team",
       "type": "general",
       "mapping": {
-        "kind": "skip",
-        "reason": "Internal website/ops coordination (billing, tickets). Not a site event channel."
+        "kind": "none"
       },
       "watermarkTs": "1782508061.325029",
       "threads": {
@@ -1732,7 +1731,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-07-20T10:04:27.710Z",
+      "lastSyncedAt": "2026-07-20T10:21:40.571Z",
       "lastSyncedCommit": "",
       "digest": "Internal website/ops coordination (billing, tickets). Not a site event channel. Flagged by general-signal auto-scan 2026-07-20; reviewed and confirmed no event. Un-skip only if a real event planning thread starts here.",
       "digestAt": "2026-07-20T10:04:27.709Z"
@@ -1867,8 +1866,7 @@
       "name": "general",
       "type": "general",
       "mapping": {
-        "kind": "skip",
-        "reason": "Internal team chatter (giveaways, announcements). Not a site event channel."
+        "kind": "none"
       },
       "watermarkTs": "1784277670.369269",
       "threads": {
@@ -4790,7 +4788,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-07-20T10:06:07.279Z",
+      "lastSyncedAt": "2026-07-20T10:21:31.180Z",
       "lastSyncedCommit": "",
       "digest": "Internal team chatter (giveaways, announcements). Not a site event channel. Flagged by general-signal auto-scan 2026-07-20; reviewed and confirmed no event. Un-skip only if a real event planning thread starts here.",
       "digestAt": "2026-07-20T10:06:07.278Z"
