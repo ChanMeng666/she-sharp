@@ -1236,9 +1236,11 @@
             "title": "Event Format",
             "content": [
               "5:00pm – 5:30pm — Registration, networking, food and refreshments",
-              "5:30pm – 6:10pm — Speaker session: AI in practice at MYOB and developing an AI mindset",
-              "6:10pm – 7:00pm — Interactive AI activity with mentor support",
-              "7:00pm – 7:30pm — Discussion, Q&A, and networking"
+              "5:30pm – 5:45pm — Welcome and kick off",
+              "5:45pm – 6:25pm — Speaker session: AI in practice at MYOB and developing an AI mindset",
+              "6:25pm – 6:40pm — Introduction to the group activity, break and group photo",
+              "6:40pm – 7:30pm — Interactive AI problem-solving activity with mentor support",
+              "From 7:30pm — Closing remarks and networking"
             ]
           },
           {
@@ -1249,7 +1251,7 @@
               "An understanding of the opportunities and challenges of adopting AI",
               "Real-world examples of AI use cases across teams and workflows",
               "How AI is changing the software development landscape",
-              "Hands-on experience in a collaborative AI problem-solving exercise"
+              "Hands-on experience in a collaborative AI problem-solving exercise, working in teams of up to six with problem statements pitched at beginner, intermediate and advanced levels, supported by mentors from across MYOB's teams"
             ]
           }
         ],
@@ -1292,7 +1294,7 @@
         "fullDescription": [
           "The Aotearoa AI Hackathon Festival is a nationwide, multi-venue hackathon held across Aotearoa New Zealand. She Sharp, Auckland University of Technology (AUT) with the AI Forum are bringing the festival to AUT's City Campus for a two-day, in-person event on 7–8 August 2026.",
           "Working in teams, participants create AI-enabled solutions to real-world challenges aligned to five UN Sustainable Development Goals. Day one focuses on team formation, problem definition, and building; day two on refining solutions and pitching to a local judging panel.",
-          "Each venue selects a winning team whose pitch advances to national judging, and four national finalists will be invited to pitch live at the Aotearoa AI Summit on 18 September 2026 in Auckland, where the Summit audience votes for the overall winner. No matter your experience level — around a third of participants are new to hackathons — mentors from AUT, She Sharp and Fisher & Paykel Healthcare will support teams throughout.",
+          "Each venue selects a winning team whose pitch advances to national judging, and four national finalists will be invited to pitch live at the Aotearoa AI Summit on 18 September 2026 in Auckland, where the Summit audience votes for the overall winner. No matter your experience level — around a third of participants are new to hackathons — mentors from AUT, She Sharp, Fisher & Paykel Healthcare and Red Hat will support teams throughout.",
           "Free online pre-event training runs throughout July to help you build stronger ideas, prototypes and pitches. The festival is about building practical AI capability, encouraging responsible and ethical AI use, fostering collaboration across regions and sectors, and showcasing innovative, impact-driven ideas."
         ],
         "speakers": {
@@ -1406,7 +1408,7 @@
             "type": "judging",
             "title": "How Teams Are Judged",
             "content": [
-              "Each team delivers a live 5-minute pitch to a three-person panel of academic and industry judges.",
+              "Each team delivers a live 5-minute pitch to a panel of academic and industry judges.",
               "Judges score four equally-weighted criteria (1–5 each):",
               "Inspiration — a clearly defined problem, a solution that solves it, and real impact for New Zealand and the world.",
               "Technology — the solution must use AI; demonstrate feasibility, engineering quality, and how the technology solves the problem (a working prototype is highly recommended).",
@@ -1488,6 +1490,19 @@
             "content": ["https://youtu.be/n9UPiqziB9c"]
           },
           {
+            "type": "info",
+            "title": "Meet the Event AI Assistant",
+            "content": [
+              "She Sharp has built an AI voice assistant for this year's hackathon, so you can ask about the schedule, venue, challenges, judging criteria and logistics in your own words and get an answer straight away.",
+              "Try it online : https://hackathon.shesharp.org.nz/"
+            ]
+          },
+          {
+            "type": "youtube",
+            "title": "AI Assistant Demo",
+            "content": ["https://youtu.be/OO8uqNiQXcY"]
+          },
+          {
             "type": "bullets",
             "title": "2026 Venues",
             "content": [
@@ -1518,6 +1533,7 @@
             "title": "Live Q&A Sessions",
             "content": [
               "The first live Q&A session was held on Wednesday 1 July 2026, 12:00–1:00pm NZST — mentors and venue hosts covered rules of engagement, ideas, technology and how to take part.",
+              "A second live Q&A session followed on Wednesday 15 July 2026, with Fisher & Paykel Healthcare walking through their challenge brief and past winners sharing their hackathon journey.",
               "Q&A Session 1 (1 July 2026) : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/q-a-session-1",
               "Future Q&A dates, session recordings and the Ask a Question tab are all published in the AUT City Campus Community Hub — join for updates through July and August."
             ]
@@ -1551,6 +1567,9 @@
             "content": [
               "AUT City Campus Community Hub : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus",
               "Q&A Session 1 recording : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/q-a-session-1",
+              "Q&A Session 2 recording : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/ai-hackathon-q-a-session-2",
+              "Participant Discord server : https://discord.gg/hV3bts4bm",
+              "Event AI assistant : https://hackathon.shesharp.org.nz/",
               "Pitch deck template : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus",
               "Aotearoa AI Summit : https://aotearoaai.nz",
               "Aotearoa AI Awards : https://aotearoaai.nz/aotearoa-ai-awards-2025/",
@@ -1638,7 +1657,7 @@
             "title": "Live Q&A & Community Hub",
             "paragraphs": [
               "The AUT City Campus Community Hub is your central hub for everything leading up to the hackathon — Q&A session recordings, free training registration, the pitch deck template, and the Ask a Question tab for direct support from mentors and venue hosts.",
-              "The first live Q&A session was held on 1 July 2026. Future session dates and resources are published in the Hub as they are announced."
+              "Live Q&A sessions were held on 1 July and 15 July 2026, and both recordings are available in the Hub. Further session dates and resources are published there as they are announced."
             ],
             "links": [
               {
