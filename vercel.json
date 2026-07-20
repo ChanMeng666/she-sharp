@@ -8,6 +8,10 @@
     {
       "path": "/api/cron/weekly-funding-crawl",
       "schedule": "0 21 * * 0"
+    },
+    {
+      "path": "/api/cron/newsletter-draft",
+      "schedule": "0 20 * * 1"
     }
   ]
 }
