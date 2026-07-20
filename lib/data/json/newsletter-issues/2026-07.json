@@ -1,0 +1,74 @@
+{
+  "id": "2026-07",
+  "meta": {
+    "status": "draft",
+    "generatedAt": "2026-07-20T00:00:00.000Z",
+    "broadcastId": null,
+    "scheduledAt": null
+  },
+  "editorial": {
+    "subjectLine": "Working smarter with AI + a hackathon awaits",
+    "previewText": "Inside: AI lessons from MYOB, community wins, and your invitation to the Aotearoa AI Hackathon this August.",
+    "founderNote": {
+      "heading": "A note from our founder",
+      "bodyMd": "July reminded me why this community matters. At MYOB, we watched women in tech roll up their sleeves and use AI not as a buzzword, but as a practical tool to solve real problems and deliver more value in their teams.\n\nNext month we go bigger. The [Aotearoa AI Hackathon Festival](https://aihackathon.nz/) brings us together for two days at AUT to build AI solutions for the UN Sustainable Development Goals — with free pre-event training so no one is left behind. Whether you write your first line of code or your ten-thousandth there, there is a place for you.\n\nThank you for being part of this. Keep working smart, and keep lifting each other up.",
+      "signature": "Dr. Mahsa McCauley, Founder & Chair, She Sharp"
+    },
+    "spotlight": null,
+    "photoOfTheMonth": null,
+    "recapIntro": "Here is what our community got up to in July — one evening, plenty of AI, and a lot of smart problem-solving.",
+    "eventBlurbs": {},
+    "primaryCta": {
+      "label": "Join the AI Hackathon",
+      "href": "https://aihackathon.nz/"
+    },
+    "opportunities": [
+      {
+        "title": "Volunteer at the Aotearoa AI Hackathon",
+        "body": "We are looking for facilitators, mentors, and helpers to make August's two-day festival at AUT a success. Lend your skills and grow your network.",
+        "href": "https://www.shesharp.org.nz/join-our-team"
+      },
+      {
+        "title": "Bring your team along",
+        "body": "Partner with She Sharp to champion women in STEM. Explore our corporate sponsorship options and put your organisation behind real impact.",
+        "href": "https://www.shesharp.org.nz/sponsors/corporate-sponsorship"
+      }
+    ],
+    "sponsorThanks": "A heartfelt thank you to MYOB for hosting July's Working Smarter evening, and to AUT for partnering with us on next month's Aotearoa AI Hackathon Festival. Your support makes this community possible."
+  },
+  "auto": {
+    "recapEvents": [
+      {
+        "slug": "she-sharp-and-myob-working-smarter",
+        "title": "Working Smarter: AI, MYOB, and the New Delivery Landscape",
+        "dateLabel": "Thursday, July 30",
+        "startIso": "2026-07-30T17:00:00+12:00",
+        "timeLabel": "5:00pm - 7:30pm NZST",
+        "locationLabel": "MYOB, Auckland",
+        "coverImageUrl": "https://www.shesharp.org.nz/img/events/she-sharp-and-myob-working-smarter-cover.png",
+        "url": "https://www.shesharp.org.nz/events/she-sharp-and-myob-working-smarter",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-and-myob-working-smarter",
+        "shortDescription": "An interactive evening exploring how MYOB teams use AI to work smarter, solve problems faster, and deliver more value — with practical use cases and a hands-on AI problem-solving activity."
+      }
+    ],
+    "upcomingEvents": [
+      {
+        "slug": "aotearoa-ai-hackathon-festival-2026",
+        "title": "Aotearoa AI Hackathon Festival 2026 — AUT City Campus",
+        "dateLabel": "Friday, August 7",
+        "startIso": "2026-08-07T17:00:00+12:00",
+        "timeLabel": "Fri 7 Aug, 5:00pm – Sat 8 Aug 2026 (NZST)",
+        "locationLabel": "AUT City Campus, Auckland",
+        "coverImageUrl": "https://www.shesharp.org.nz/img/events/aotearoa-ai-hackathon-festival-2026-cover.png",
+        "url": "https://www.shesharp.org.nz/events/aotearoa-ai-hackathon-festival-2026",
+        "registrationUrl": "https://aihackathon.nz/",
+        "shortDescription": "A two-day hackathon at AUT City Campus building AI solutions for UN SDG challenges. Free pre-event training, venue prizes, and a path to pitch at the Aotearoa AI Summit 2026."
+      }
+    ],
+    "stats": {
+      "members": "3000+",
+      "sponsors": "50+",
+      "events": "94+"
+    }
+  }
+}
