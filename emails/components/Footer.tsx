@@ -1,7 +1,7 @@
 /**
- * Newsletter footer: gradient bar, navy band with the circular purple logo,
- * labeled social links, charity registration, a "view in browser" link, a
- * warm reply prompt, and the unsubscribe line.
+ * Newsletter footer: gradient bar, navy band with the circular purple logo, a
+ * short mint rule flourish, labeled social links, charity registration, a
+ * "view in browser" link, a warm reply prompt, and the unsubscribe line.
  *
  * Social labels come from `footerConfig.socialLinks` (Mailchimp excluded); the
  * unsubscribe href/title are passed in so the caller controls broadcast vs
@@ -12,15 +12,16 @@ import * as React from "react";
 import { Section, Img, Text, Link } from "@react-email/components";
 import { footerConfig } from "@/lib/config/footer";
 import { SITE_URL, CHARITY_REGISTRATION } from "@/lib/seo/site";
-import {
-  COLORS,
-  LOGO_PURPLE_URL,
-  FOOTER_MOTIF_URL,
-  RADIUS,
-  SPACE,
-  FONT_STACK,
-} from "../brand";
+import { COLORS, LOGO_PURPLE_URL, RADIUS, SPACE, FONT_STACK } from "../brand";
 import { GradientBar } from "./GradientBar";
+
+/**
+ * `bgcolor` is a valid <td> attribute (and the Outlook-safe way to fill a cell)
+ * but React dropped it from its typed attributes — surface it here.
+ */
+function bgcolorAttr(color: string): React.TdHTMLAttributes<HTMLTableCellElement> {
+  return { bgcolor: color } as unknown as React.TdHTMLAttributes<HTMLTableCellElement>;
+}
 
 /** Labeled socials to surface in the footer, in display order. */
 const FOOTER_SOCIALS = ["Instagram", "Facebook", "LinkedIn", "X", "YouTube"]
@@ -92,21 +93,34 @@ export function Footer({
           Empowering women in STEM
         </Text>
 
-        {/* Decorative constellation motif (light strokes for the navy band). */}
-        <Img
-          src={FOOTER_MOTIF_URL}
-          alt=""
-          width="120"
-          height="120"
-          style={{
-            display: "block",
-            margin: `0 auto ${SPACE.lg}px`,
-            width: "120px",
-            height: "120px",
-            border: 0,
-            outline: "none",
-          }}
-        />
+        {/* Coded flourish: a short mint rule centered via an align="center"
+            table. Fallback: bgcolor keeps the fill in Outlook; if even that is
+            stripped, the purely decorative rule simply vanishes with no loss. */}
+        <table
+          role="presentation"
+          align="center"
+          cellPadding={0}
+          cellSpacing={0}
+          style={{ margin: `0 auto ${SPACE.lg}px` }}
+        >
+          <tbody>
+            <tr>
+              <td
+                {...bgcolorAttr(COLORS.mint)}
+                style={{
+                  width: "40px",
+                  height: "3px",
+                  lineHeight: "3px",
+                  fontSize: "1px",
+                  backgroundColor: COLORS.mint,
+                  borderRadius: "2px",
+                }}
+              >
+                &nbsp;
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
         {/* Social links */}
         <Text style={{ margin: `0 0 ${SPACE.lg}px`, textAlign: "center" }}>

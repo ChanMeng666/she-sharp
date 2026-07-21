@@ -28,7 +28,7 @@ import type { NewsletterIssueData } from "@/lib/newsletter/schema";
 import { SITE_URL } from "@/lib/seo/site";
 import { COLORS, styles, SPACE, RADIUS, FONT_STACK, CONTAINER_WIDTH } from "./brand";
 import { Header } from "./components/Header";
-import { Hero } from "./components/Hero";
+import { Cover } from "./components/Cover";
 import { FounderNote } from "./components/FounderNote";
 import { Spotlight } from "./components/Spotlight";
 import { PhotoStrip } from "./components/PhotoStrip";
@@ -94,9 +94,12 @@ export function NewsletterEmail({
       <Preview>{editorial.previewText}</Preview>
       <Body style={styles.body}>
         <Container style={styles.container} width={CONTAINER_WIDTH}>
-          <Header monthLabel={monthLabel(issue.id)} />
+          <Header
+            monthLabel={monthLabel(issue.id)}
+            flushBottom={Boolean(editorial.heroImageUrl)}
+          />
 
-          <Hero src={editorial.heroImageUrl} />
+          <Cover src={editorial.heroImageUrl} />
 
           <FounderNote note={editorial.founderNote} greeting={greeting} />
 
@@ -106,6 +109,7 @@ export function NewsletterEmail({
 
           <PhotoStrip
             photos={auto.photoStrip}
+            recapEvents={auto.recapEvents}
             albumUrl={auto.photoAlbumUrl}
           />
 

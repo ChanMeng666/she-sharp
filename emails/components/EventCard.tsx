@@ -81,7 +81,7 @@ export function RecapEventCard({
         {event.coverImageUrl ? (
           <Column
             style={{
-              width: "96px",
+              width: "112px",
               verticalAlign: "top",
               paddingRight: `${SPACE.lg}px`,
             }}
@@ -89,12 +89,12 @@ export function RecapEventCard({
             <Img
               src={event.coverImageUrl}
               alt={event.title}
-              width="80"
-              height="80"
+              width="96"
+              height="96"
               style={{
                 display: "block",
-                width: "80px",
-                height: "80px",
+                width: "96px",
+                height: "96px",
                 borderRadius: `${RADIUS - 4}px`,
                 objectFit: "cover",
                 border: `1px solid ${COLORS.border}`,

@@ -35,7 +35,7 @@
       }
     ],
     "sponsorThanks": "A heartfelt thank you to MYOB for hosting July's Working Smarter evening, and to AUT for partnering with us on next month's Aotearoa AI Hackathon Festival. Your support makes this community possible.",
-    "heroImageUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/assets/v1/hero-community-08EXUzvc3JG5sHeGGs2kpC377yrKri.jpg",
+    "heroImageUrl": null,
     "pulse": {
       "heroStat": {
         "value": "3.3%",

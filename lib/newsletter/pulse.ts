@@ -23,8 +23,10 @@ import Parser from "rss-parser";
 import { z } from "zod";
 
 import {
+  AUCKLAND_FACTS,
   NZ_TECH_FACTS,
   NZ_TECH_NUMERIC_FACTS,
+  NZ_WIDE_FACTS,
   type NzTechFact,
 } from "@/lib/data/nz-tech-facts";
 import { editorialSchema, type IssueEditorial } from "./schema";
@@ -72,8 +74,32 @@ const RSS_MAX_AGE_DAYS = 35;
 /** How many combined RSS items to keep. */
 const RSS_TOP_N = 8;
 
-/** RSS titles matching this get sorted to the front (topical relevance). */
-const RSS_RELEVANCE = /women|diversity|AI|skills|hiring|startup|funding|New Zealand/i;
+/**
+ * Local-first relevance tiers for ranking RSS titles. She Sharp is an in-person
+ * Auckland community, so an Auckland story always outranks a generic NZ one.
+ * Lower rank sorts to the front.
+ */
+/** Tier 0: an Auckland/Tāmaki Makaurau angle (places, campuses, local companies). */
+const RSS_AUCKLAND =
+  /Auckland|Tāmaki Makaurau|Tamaki Makaurau|\bAUT\b|University of Auckland|\bCBD\b|Wynyard Quarter|Grid ?AKL|GridAKL|\bXero\b|\bHalter\b|Seequent|Vend|Timely|Dawn Aerospace/i;
+/** Tier 1: women / diversity / AI / skills — She Sharp's mission topics.
+ * AI is word-bounded so it does not match substrings like "again" or "campaign". */
+const RSS_TOPICAL =
+  /women|diversity|inclusion|\bAI\b|skills|hiring|startup|funding|mentor/i;
+/** Tier 2: anything New Zealand-wide (still preferred over unrelated items). */
+const RSS_NZ = /New Zealand|Aotearoa|\bNZ\b|Kiwi/i;
+
+/**
+ * Ranks an RSS item title by local relevance: 0 = Auckland angle, 1 = women /
+ * diversity / AI / skills topic, 2 = general NZ, 3 = everything else. Exported so
+ * the ordering can be unit-tested without touching the network.
+ */
+export function rssRelevanceRank(title: string): number {
+  if (RSS_AUCKLAND.test(title)) return 0;
+  if (RSS_TOPICAL.test(title)) return 1;
+  if (RSS_NZ.test(title)) return 2;
+  return 3;
+}
 
 /** Cap on extracted article body length fed to the model. */
 const ARTICLE_TEXT_CAP = 6000;
@@ -222,10 +248,11 @@ async function fetchRssItems(): Promise<PulseSourceData["newsItems"]> {
       return Number.isNaN(t) || t >= cutoff;
     });
 
-  // Relevant titles first, then newest first within each group.
+  // Auckland-relevant titles first, then topical, then general NZ; newest first
+  // within each tier.
   all.sort((a, b) => {
-    const relA = RSS_RELEVANCE.test(a.title) ? 0 : 1;
-    const relB = RSS_RELEVANCE.test(b.title) ? 0 : 1;
+    const relA = rssRelevanceRank(a.title);
+    const relB = rssRelevanceRank(b.title);
     if (relA !== relB) return relA - relB;
     const dateA = a.isoDate ? Date.parse(a.isoDate) : 0;
     const dateB = b.isoDate ? Date.parse(b.isoDate) : 0;
@@ -304,6 +331,23 @@ const HERO_STAT_FRAMING: Record<string, { value: string; label: string }> = {
     label: "of new NZ tech roles are filled through immigration",
   },
   "she-sharp-growth": { value: "3000+", label: "She Sharp members since 2014" },
+  // Auckland — She Sharp's in-person home city.
+  "auckland-tech-gdp-54": {
+    value: "54%",
+    label: "of NZ's tech-sector GDP is generated in Auckland",
+  },
+  "auckland-top-companies-60": {
+    value: "60%",
+    label: "of NZ's top 200 tech companies call Auckland home",
+  },
+  "auckland-tin200-exports-59": {
+    value: "59%",
+    label: "of NZ's TIN200 tech exports come from Auckland",
+  },
+  "aut-women-in-tech-30": {
+    value: "30+",
+    label: "AUT Women in Tech events since 2022",
+  },
 };
 
 /** Non-negative modulo, so negative month indexes still rotate sanely. */
@@ -342,14 +386,34 @@ export function evergreenPulse(monthIndex: number): Pulse {
   };
 }
 
-/** Picks the evergreen "did you know" fact, skipping the hero fact's value/source. */
+/**
+ * Picks the evergreen "did you know" fact, skipping the hero fact's source.
+ *
+ * Rotation is biased so roughly every other month feels local: odd month indexes
+ * draw from the Auckland pool, even ones from the NZ-wide pool (deterministic,
+ * with wraparound). Each pool has several distinct sources, so excluding the
+ * hero's URL never empties it — but a cross-pool then whole-pool fallback keeps
+ * this total.
+ */
 function evergreenDidYouKnow(
   monthIndex: number,
   excludeSourceUrl: string | null
 ): NonNullable<Pulse>["didYouKnow"] {
-  const pool = NZ_TECH_FACTS.filter((fact) => fact.sourceUrl !== excludeSourceUrl);
-  const list = pool.length ? pool : NZ_TECH_FACTS;
-  const fact = list[wrap(monthIndex, list.length)];
+  const auckland = monthIndex % 2 !== 0;
+  const primary = auckland ? AUCKLAND_FACTS : NZ_WIDE_FACTS;
+  const secondary = auckland ? NZ_WIDE_FACTS : AUCKLAND_FACTS;
+
+  const usable = (list: readonly NzTechFact[]) =>
+    list.filter((fact) => fact.sourceUrl !== excludeSourceUrl);
+
+  const pool =
+    usable(primary).length > 0
+      ? usable(primary)
+      : usable(secondary).length > 0
+        ? usable(secondary)
+        : NZ_TECH_FACTS;
+
+  const fact = pool[wrap(monthIndex, pool.length)];
   return { text: fact.text, sourceLabel: fact.sourceLabel, sourceUrl: fact.sourceUrl };
 }
 
@@ -387,12 +451,16 @@ const modelPulseSchema = z.object({
 
 type ModelPulse = z.infer<typeof modelPulseSchema>;
 
-const PULSE_SYSTEM_PROMPT = `You are the data editor of She Sharp's monthly newsletter, writing a short "NZ Tech Pulse" section for a New Zealand women-in-tech community. Voice: warm, plain English, New Zealand spelling.
+const PULSE_SYSTEM_PROMPT = `You are the data editor of She Sharp's monthly newsletter, writing a short "NZ Tech Pulse" section for a New Zealand women-in-tech community based in Auckland (Tāmaki Makaurau), where She Sharp runs its in-person events. Voice: warm, plain English, New Zealand spelling.
 
 ABSOLUTE ANTI-HALLUCINATION RULES — these override everything:
 - Every number you write MUST be copied character-for-character from the source text provided. Never compute, round, estimate, combine, or invent a number. If a number is not present verbatim in the source, do not write any number.
 - Only use facts stated in the provided source text. Do not add outside knowledge.
 - For the news bite, you MUST use one of the exact article URLs given; never invent or modify a URL.
+
+LOCAL PREFERENCE (never overrides the rules above):
+- When two candidates are equally relevant, prefer the one with an Auckland / Tāmaki Makaurau connection (a local venue, campus, or company).
+- If the chosen news item has an Auckland angle stated in its own text, mention that connection in the summary. If it does not, do not add one.
 
 Return a SINGLE JSON object and nothing else, matching:
 {
@@ -400,8 +468,8 @@ Return a SINGLE JSON object and nothing else, matching:
   "newsBite": { "title": string, "summary": string, "url": string, "sourceLabel": string } | null
 }
 
-- heroStat: pick ONE VERBATIM number from the SEEK employment report text. Prefer a number about technology, ICT, software, AI, digital skills, or women/gender if one is present; otherwise choose the most striking overall. "value" is that exact number as written (e.g. "5.2%", "12,000"). "label" is a short phrase (≤8 words) naming what it measures. "context" is one sentence of plain-English framing; any number inside it must also be verbatim from the source. If no SEEK text is provided, return heroStat: null.
-- newsBite: choose ONE news item most relevant to women in tech or the NZ tech industry. "title" echoes the item's headline, "summary" is at most two sentences, "url" is that item's exact URL, "sourceLabel" is that item's source. If no news items are provided, return newsBite: null.
+- heroStat: pick ONE VERBATIM number from the SEEK employment report text. Prefer a number about technology, ICT, software, AI, digital skills, or women/gender if one is present; otherwise choose the most striking overall. "value" is that exact number as written (e.g. "5.2%", "12,000"). "label" is a short phrase (≤8 words) naming what it measures. "context" is one sentence of plain-English framing; any number inside it must also be verbatim from the source. You may add an Auckland framing to the context ONLY if the source text itself mentions Auckland — otherwise keep it as written (SEEK is a nationwide report, and that is fine). If no SEEK text is provided, return heroStat: null.
+- newsBite: choose ONE news item most relevant to women in tech or the NZ tech industry, preferring an Auckland-connected story when two are equally relevant. "title" echoes the item's headline, "summary" is at most two sentences, "url" is that item's exact URL, "sourceLabel" is that item's source. If the item's text names an Auckland location, campus, or company, name it in the summary. If no news items are provided, return newsBite: null.
 
 Return only the JSON object.`;
 
