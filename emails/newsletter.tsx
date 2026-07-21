@@ -24,13 +24,12 @@ import {
   Img,
   Button,
 } from "@react-email/components";
-import type { NewsletterIssueData } from "@/lib/newsletter/schema";
+import type { IssueAuto, NewsletterIssueData } from "@/lib/newsletter/schema";
 import { SITE_URL } from "@/lib/seo/site";
 import { COLORS, styles, SPACE, RADIUS, FONT_STACK, CONTAINER_WIDTH } from "./brand";
 import { Header } from "./components/Header";
 import { Cover } from "./components/Cover";
 import { FounderNote } from "./components/FounderNote";
-import { Spotlight } from "./components/Spotlight";
 import { PhotoStrip } from "./components/PhotoStrip";
 import { RecapEventCard, UpcomingEventCard } from "./components/EventCard";
 import { Pulse } from "./components/Pulse";
@@ -61,6 +60,30 @@ function monthLabel(id: string): string {
   return `${name} ${year}`;
 }
 
+/**
+ * Photo no-repeat guard: no image may appear twice across the issue. Strip
+ * photos lose against everything else — any strip src equal to the cover, the
+ * photo-of-the-month, or a recap event's cover thumbnail is dropped, and the
+ * strip is de-duplicated within itself (first occurrence wins).
+ */
+function dedupePhotoStrip(issue: NewsletterIssueData): IssueAuto["photoStrip"] {
+  const { editorial, auto } = issue;
+  const used = new Set<string>();
+  if (editorial.heroImageUrl) used.add(editorial.heroImageUrl);
+  if (editorial.photoOfTheMonth?.src) used.add(editorial.photoOfTheMonth.src);
+  for (const event of auto.recapEvents) {
+    if (event.coverImageUrl) used.add(event.coverImageUrl);
+  }
+
+  const result: IssueAuto["photoStrip"] = [];
+  for (const photo of auto.photoStrip) {
+    if (used.has(photo.src)) continue;
+    used.add(photo.src);
+    result.push(photo);
+  }
+  return result;
+}
+
 export function NewsletterEmail({
   issue,
   mode,
@@ -81,6 +104,8 @@ export function NewsletterEmail({
     mode === "broadcast" ? undefined : "Unsubscribe (preview)";
 
   const browserUrl = `${SITE_URL}/resources/newsletters/${issue.id}`;
+
+  const photoStrip = dedupePhotoStrip(issue);
 
   const hasRecap = auto.recapEvents.length > 0 || editorial.photoOfTheMonth;
   const hasUpcoming = auto.upcomingEvents.length > 0;
@@ -103,12 +128,8 @@ export function NewsletterEmail({
 
           <FounderNote note={editorial.founderNote} greeting={greeting} />
 
-          {editorial.spotlight ? (
-            <Spotlight spotlight={editorial.spotlight} />
-          ) : null}
-
           <PhotoStrip
-            photos={auto.photoStrip}
+            photos={photoStrip}
             recapEvents={auto.recapEvents}
             albumUrl={auto.photoAlbumUrl}
           />

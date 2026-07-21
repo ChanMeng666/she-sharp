@@ -178,12 +178,10 @@ async function slackDraft(opts: {
   const monthLabel = issueMonthLabel(issue.id);
 
   const reminders = [
-    issue.editorial.spotlight === null
-      ? "⚠️ No member spotlight selected — a human should pick one."
-      : null,
+    "📷 Run the photo step (scripts/newsletter/photos.ts) and pick a real cover photo before approving.",
     "✍️ The founder note is AI-drafted — give it a human voice before sending.",
     "▶️ Run */monthly-newsletter* in Claude Code to review, edit & approve.",
-  ].filter((line): line is string => line !== null);
+  ];
 
   const blocks: SlackBlock[] = [
     {

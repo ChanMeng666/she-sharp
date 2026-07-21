@@ -9,9 +9,11 @@
 
 import { newsletterIssueSchema, type NewsletterIssueData } from "./schema";
 
+import issue2026_06 from "@/lib/data/json/newsletter-issues/2026-06.json";
 import issue2026_07 from "@/lib/data/json/newsletter-issues/2026-07.json";
 
 const ISSUES: Record<string, unknown> = {
+  "2026-06": issue2026_06,
   "2026-07": issue2026_07,
 };
 

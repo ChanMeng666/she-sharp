@@ -15,6 +15,10 @@ import { renderNewsletter } from "./render";
 /** A real (non-AI) cover photo URL, unique so it can be asserted present/absent. */
 const COVER_URL = "https://www.shesharp.org.nz/img/newsletter/cover-june.jpg";
 
+/** The founder's signature headshot, unique so the avatar row can be asserted. */
+const FOUNDER_PHOTO_URL =
+  "https://www.shesharp.org.nz/img/newsletter/founder-signature.jpg";
+
 const sample: NewsletterIssueData = newsletterIssueSchema.parse({
   id: "2026-07",
   meta: {
@@ -26,27 +30,13 @@ const sample: NewsletterIssueData = newsletterIssueSchema.parse({
   editorial: {
     subjectLine: "She Sharp — July highlights & what's next",
     previewText:
-      "A spotlight, last month's wins, and the events you won't want to miss.",
+      "Last month's wins, community photos, and the events you won't want to miss.",
     founderNote: {
       heading: "A note from our founder",
       bodyMd:
         "Winter has been buzzing at She Sharp. We welcomed new mentees, ran two sold-out events, and saw our community grow.\n\nRead more on our [events page](https://www.shesharp.org.nz/events) — there's a lot to be proud of.",
       signature: "— Medhavi, Founder",
-    },
-    spotlight: {
-      name: "Aria Chen",
-      role: "Mentee · Software Engineering",
-      photoUrl: "https://www.shesharp.org.nz/img/team/placeholder.png",
-      qa: [
-        {
-          q: "What drew you to She Sharp?",
-          a: "The community — I finally felt like I belonged in tech.",
-        },
-        {
-          q: "Best advice you've received?",
-          a: "Ask the question. Someone else is always wondering the same thing.",
-        },
-      ],
+      photoUrl: FOUNDER_PHOTO_URL,
     },
     photoOfTheMonth: {
       src: "https://www.shesharp.org.nz/img/events/cover.jpg",
@@ -180,6 +170,29 @@ const sampleNoStrip: NewsletterIssueData = newsletterIssueSchema.parse({
   auto: { ...sample.auto, photoStrip: [], photoAlbumUrl: null },
 });
 
+/** A strip src duplicated within the strip and against another strip entry. */
+const DUP_STRIP_URL = "https://www.shesharp.org.nz/img/events/dup.jpg";
+/** A strip src that is unique and must survive the dedupe. */
+const UNIQUE_STRIP_URL = "https://www.shesharp.org.nz/img/events/unique.jpg";
+
+/**
+ * A copy of `sample` whose photo strip collides with the cover (heroImageUrl)
+ * and contains an internal duplicate, to prove the no-repeat guard drops the
+ * cover collision and de-duplicates within the strip.
+ */
+const sampleDupePhotos: NewsletterIssueData = newsletterIssueSchema.parse({
+  ...sample,
+  auto: {
+    ...sample.auto,
+    photoStrip: [
+      { src: COVER_URL, alt: "same as the cover photo" },
+      { src: DUP_STRIP_URL, alt: "first copy of a repeated photo" },
+      { src: DUP_STRIP_URL, alt: "second copy of a repeated photo" },
+      { src: UNIQUE_STRIP_URL, alt: "a one-off photo" },
+    ],
+  },
+});
+
 function assertAllImagesHttps(html: string, label: string): void {
   const srcs = [...html.matchAll(/<img[^>]+src="([^"]*)"/gi)].map((m) => m[1]);
   assert.ok(srcs.length > 0, `${label}: expected at least one <img>`);
@@ -189,6 +202,13 @@ function assertAllImagesHttps(html: string, label: string): void {
       `${label}: image src is not https → ${src}`
     );
   }
+}
+
+/** Counts how many <img> tags carry exactly the given src URL. */
+function countImgSrc(html: string, url: string): number {
+  return [...html.matchAll(/<img[^>]+src="([^"]*)"/gi)].filter(
+    (m) => m[1] === url
+  ).length;
 }
 
 async function main(): Promise<void> {
@@ -292,6 +312,31 @@ async function main(): Promise<void> {
   assert.ok(
     preview.html.includes(COVER_URL),
     "cover photo must render when heroImageUrl is set"
+  );
+
+  // Founder signature avatar: rendered beside the signature when photoUrl is set.
+  assert.ok(
+    preview.html.includes(FOUNDER_PHOTO_URL),
+    "founder signature headshot must render when founderNote.photoUrl is set"
+  );
+
+  // Photo no-repeat guard: a strip src equal to the cover is dropped, and an
+  // internal duplicate collapses to a single render.
+  const dupe = await renderNewsletter(sampleDupePhotos, "preview");
+  assert.strictEqual(
+    countImgSrc(dupe.html, COVER_URL),
+    1,
+    "cover url must appear once (the strip copy colliding with the cover is dropped)"
+  );
+  assert.strictEqual(
+    countImgSrc(dupe.html, DUP_STRIP_URL),
+    1,
+    "a strip src duplicated within the strip must render exactly once"
+  );
+  assert.strictEqual(
+    countImgSrc(dupe.html, UNIQUE_STRIP_URL),
+    1,
+    "a unique strip src must survive the dedupe"
   );
 
   // Photo strip and cover are omitted entirely when absent.

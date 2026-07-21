@@ -81,7 +81,6 @@ Return a SINGLE JSON object and nothing else. It must match this exact shape and
     heading: a short warm title, e.g. "A note from the team".
     bodyMd: 2-3 short warm paragraphs (markdown — paragraphs and links only) that reference this month's ACTUAL highlights from the data below. Include one concrete in-the-room sensory detail drawn from a real event in the data (its title, host venue, or neighbourhood) — the buzz of a full room, a talk that sparked questions — but only using details actually present in the data. Never begin bodyMd with a greeting or salutation ("Hi ...", "Kia ora ...") — the email template already injects a personalized greeting directly above it.
     signature: exactly "The She Sharp Team".
-- spotlight: always null (a human picks the person later).
 - photoOfTheMonth: always null (a human picks it later).
 - recapIntro: 1-2 sentences introducing last month's recap.
 - eventBlurbs: an object keyed by each recap event's slug, each value one lively single sentence about that event. Name the venue or location when the event's locationLabel is present in the data (it grounds the recap in a real Auckland room); never invent one when it is absent. Exactly one entry per recap event and no others. If there are no recap events, return an empty object.
@@ -153,8 +152,8 @@ function extractJson(content: string): unknown {
 
 /**
  * Applies the non-negotiable post-processing rules on top of a schema-valid
- * model draft: spotlight/photo are always human-picked (forced null), and the
- * three opportunity hrefs are pinned to the canonical evergreen URLs in order.
+ * model draft: the photo of the month is always human-picked (forced null), and
+ * the three opportunity hrefs are pinned to the canonical evergreen URLs in order.
  */
 function finalizeEditorial(draft: IssueEditorial): IssueEditorial {
   const opportunities =
@@ -164,7 +163,6 @@ function finalizeEditorial(draft: IssueEditorial): IssueEditorial {
 
   return {
     ...draft,
-    spotlight: null,
     photoOfTheMonth: null,
     opportunities,
   };
@@ -291,8 +289,8 @@ export function emptyEditorialStub(
       bodyMd:
         "Kia ora,\n\nThank you for being part of the She Sharp community. Here is a quick round-up of what we have been up to and what is coming next.\n\nWe would love to see you at an upcoming event, and there are always ways to get more involved — as a mentor, a volunteer, or a supporter.",
       signature: "The She Sharp Team",
+      photoUrl: null,
     },
-    spotlight: null,
     photoOfTheMonth: null,
     recapIntro: "Here is a look back at what our community got up to recently.",
     eventBlurbs,
