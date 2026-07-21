@@ -1,0 +1,190 @@
+/**
+ * "NZ Tech Pulse" — the monthly data feature.
+ *
+ * A light-periwinkle band whose star is a single large statistic (the
+ * `heroStat`), followed by an optional news bite (compact white card) and an
+ * optional "Did you know?" line. Every figure carries a source link. The
+ * `divider-wave` ornament sits above the band as a transition from the
+ * editorial sections into the data section. Rendered only when `pulse` is set.
+ */
+
+import * as React from "react";
+import { Section, Img, Text, Link } from "@react-email/components";
+import type { IssueEditorial } from "@/lib/newsletter/schema";
+import {
+  COLORS,
+  SPACE,
+  RADIUS,
+  FONT_STACK,
+  DIVIDER_WAVE_URL,
+} from "../brand";
+
+type PulseData = NonNullable<IssueEditorial["pulse"]>;
+
+const kicker: React.CSSProperties = {
+  margin: `0 0 ${SPACE.md}px`,
+  fontFamily: FONT_STACK,
+  fontSize: "12px",
+  lineHeight: "16px",
+  fontWeight: 700,
+  letterSpacing: "2px",
+  textTransform: "uppercase",
+  color: COLORS.periwinkle,
+  textAlign: "center",
+};
+
+/** The headline numeral — the section's focal point. */
+const stat: React.CSSProperties = {
+  margin: 0,
+  fontFamily: FONT_STACK,
+  fontSize: "52px",
+  lineHeight: "58px",
+  fontWeight: 800,
+  letterSpacing: "-1px",
+  color: COLORS.purpleDark,
+  textAlign: "center",
+};
+
+const statLabel: React.CSSProperties = {
+  margin: `${SPACE.sm}px 0 0`,
+  fontFamily: FONT_STACK,
+  fontSize: "16px",
+  lineHeight: "23px",
+  fontWeight: 700,
+  color: COLORS.ink,
+  textAlign: "center",
+};
+
+const statContext: React.CSSProperties = {
+  margin: `${SPACE.md}px auto 0`,
+  maxWidth: "420px",
+  fontFamily: FONT_STACK,
+  fontSize: "15px",
+  lineHeight: "23px",
+  color: COLORS.text,
+  textAlign: "center",
+};
+
+/** Small muted, underlined source attribution. */
+const sourceLink: React.CSSProperties = {
+  fontFamily: FONT_STACK,
+  fontSize: "12px",
+  fontWeight: 600,
+  color: COLORS.textMuted,
+  textDecoration: "underline",
+};
+
+export function Pulse({ pulse }: { pulse: PulseData }): React.JSX.Element {
+  const { heroStat, newsBite, didYouKnow } = pulse;
+
+  return (
+    <Section style={{ marginBottom: `${SPACE.lg}px` }}>
+      {/* Decorative transition ribbon into the data section. */}
+      <Section style={{ textAlign: "center", marginBottom: `${SPACE.xs}px` }}>
+        <Img
+          src={DIVIDER_WAVE_URL}
+          alt=""
+          width="220"
+          height="29"
+          style={{ display: "inline-block", border: 0 }}
+        />
+      </Section>
+
+      <Section
+        style={{
+          backgroundColor: COLORS.periwinkleLight,
+          borderRadius: `${RADIUS}px`,
+          border: "1px solid rgba(137,130,255,0.22)",
+          padding: `${SPACE.xxl}px`,
+        }}
+      >
+        <Text style={kicker}>NZ Tech Pulse</Text>
+
+        <Text style={stat}>{heroStat.value}</Text>
+        <Text style={statLabel}>{heroStat.label}</Text>
+        <Text style={statContext}>{heroStat.context}</Text>
+        <Text style={{ margin: `${SPACE.sm}px 0 0`, textAlign: "center" }}>
+          <Link href={heroStat.sourceUrl} style={sourceLink}>
+            Source: {heroStat.sourceLabel}
+          </Link>
+        </Text>
+
+        {newsBite ? (
+          <Section
+            style={{
+              marginTop: `${SPACE.xl}px`,
+              backgroundColor: COLORS.white,
+              border: `1px solid ${COLORS.border}`,
+              borderRadius: `${RADIUS - 4}px`,
+              padding: `${SPACE.lg}px ${SPACE.xl}px`,
+            }}
+          >
+            <Text
+              style={{
+                margin: `0 0 ${SPACE.xs}px`,
+                fontFamily: FONT_STACK,
+                fontSize: "15px",
+                lineHeight: "21px",
+                fontWeight: 700,
+                color: COLORS.ink,
+              }}
+            >
+              {newsBite.title}
+            </Text>
+            <Text
+              style={{
+                margin: `0 0 ${SPACE.sm}px`,
+                fontFamily: FONT_STACK,
+                fontSize: "14px",
+                lineHeight: "21px",
+                color: COLORS.text,
+              }}
+            >
+              {newsBite.summary}
+            </Text>
+            <Link href={newsBite.url} style={sourceLink}>
+              {newsBite.sourceLabel} →
+            </Link>
+          </Section>
+        ) : null}
+
+        {didYouKnow ? (
+          <Section
+            style={{
+              marginTop: `${SPACE.xl}px`,
+              paddingTop: `${SPACE.xl}px`,
+              borderTop: "1px solid rgba(137,130,255,0.22)",
+            }}
+          >
+            <Text
+              style={{
+                margin: 0,
+                fontFamily: FONT_STACK,
+                fontSize: "14px",
+                lineHeight: "22px",
+                fontStyle: "italic",
+                color: COLORS.text,
+                textAlign: "center",
+              }}
+            >
+              <span
+                style={{
+                  fontWeight: 700,
+                  fontStyle: "normal",
+                  letterSpacing: "0.5px",
+                  color: COLORS.purpleDark,
+                }}
+              >
+                Did you know?{" "}
+              </span>
+              {didYouKnow.text}{" "}
+              <Link href={didYouKnow.sourceUrl} style={sourceLink}>
+                ({didYouKnow.sourceLabel})
+              </Link>
+            </Text>
+          </Section>
+        ) : null}
+      </Section>
+    </Section>
+  );
+}

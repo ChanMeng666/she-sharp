@@ -55,6 +55,17 @@ async function main(): Promise<void> {
     assert.strictEqual(stub.spotlight, null);
     assert.strictEqual(stub.photoOfTheMonth, null);
   });
+  await check("pulse is populated from the evergreen pool (no live calls)", () => {
+    // Every month index yields a schema-valid, evergreen (newsBite === null) pulse.
+    for (let monthIndex = 0; monthIndex < 12; monthIndex++) {
+      const stub = emptyEditorialStub(auto, monthIndex);
+      assert.ok(stub.pulse, `pulse should be present for month ${monthIndex}`);
+      assert.strictEqual(stub.pulse.newsBite, null, "evergreen pulse has no news bite");
+      assert.ok(stub.pulse.heroStat.value.length > 0, "hero stat has a value");
+      // Schema-validates as part of the whole editorial block.
+      editorialSchema.parse(stub);
+    }
+  });
   await check("one event blurb per recap event, keyed by slug", () => {
     const stub = emptyEditorialStub(auto);
     assert.strictEqual(

@@ -68,6 +68,23 @@ export const LOGO_WHITE_URL =
 export const LOGO_PURPLE_URL =
   "https://6r3qs9uxjugyi2m1.public.blob.vercel-storage.com/she-sharp/she-sharp-logo-purple-dark-500x500.png";
 
+/**
+ * AI-generated brand ornaments (Vercel Blob, see `emails/assets-manifest.json`).
+ * Absolute URLs — email clients require them. `HERO_DEFAULT_URL` is used when an
+ * issue does not override `editorial.heroImageUrl`.
+ */
+export const HERO_DEFAULT_URL =
+  "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/assets/v1/hero-community-08EXUzvc3JG5sHeGGs2kpC377yrKri.jpg";
+export const DIVIDER_WAVE_URL =
+  "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/assets/v1/divider-wave-01dQNrT1wVkiw1KYQlVsZjljAJ8n5Q.png";
+export const FOOTER_MOTIF_URL =
+  "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/assets/v1/footer-motif-YGkFQAHmpDXG3ongGYkjU2LviKGQWW.png";
+export const SPOTLIGHT_FRAME_URL =
+  "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/assets/v1/spotlight-frame-NTZFXUT0Bb0D9I1mXPJylZ9jWTQmGt.png";
+
+/** Inner content width of a padded card (CONTAINER_WIDTH − 2 × card padding). */
+export const CARD_INNER_WIDTH = CONTAINER_WIDTH - SPACE.xxl * 2;
+
 /* ------------------------------------------------------------------ */
 /* Shared style objects                                               */
 /* ------------------------------------------------------------------ */
@@ -105,18 +122,20 @@ export const styles = {
   h1: {
     margin: `0 0 ${SPACE.md}px`,
     fontFamily: FONT_STACK,
-    fontSize: "24px",
-    lineHeight: "30px",
-    fontWeight: 700,
+    fontSize: "26px",
+    lineHeight: "32px",
+    fontWeight: 800,
+    letterSpacing: "-0.3px",
     color: COLORS.ink,
   } as CSSProperties,
 
   h2: {
-    margin: `0 0 ${SPACE.md}px`,
+    margin: `0 0 ${SPACE.lg}px`,
     fontFamily: FONT_STACK,
-    fontSize: "19px",
-    lineHeight: "25px",
-    fontWeight: 700,
+    fontSize: "22px",
+    lineHeight: "28px",
+    fontWeight: 800,
+    letterSpacing: "-0.2px",
     color: COLORS.purpleDark,
   } as CSSProperties,
 

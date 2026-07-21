@@ -79,6 +79,9 @@ WARP.md
 # Email preview files
 tmp/emails/
 
+# Newsletter photo pipeline scratch (harvested + transcoded event photos)
+tmp/newsletter-photos/
+
 # Local-only scripts (not for deployment)
 scripts/collect-event-from-slack.py
 scripts/requirements-slack.txt
@@ -101,3 +104,4 @@ scripts/__pycache__/
 .recommendations/
 /scripts/slack-recommendations
 .playwright-cli/
+.env*

@@ -1,6 +1,8 @@
 /**
- * Newsletter header: solid purple band with the white She Sharp logo and an
- * issue label in mint, capped by the signature gradient bar.
+ * Newsletter masthead: a solid purple band carrying a small mint kicker, the
+ * white She Sharp wordmark, and the issue's month set large — a magazine-cover
+ * nameplate. Capped by the signature gradient bar. The cover art (Hero) sits
+ * separately below it on the page background.
  */
 
 import * as React from "react";
@@ -9,9 +11,10 @@ import { COLORS, LOGO_WHITE_URL, RADIUS, SPACE, FONT_STACK } from "../brand";
 import { GradientBar } from "./GradientBar";
 
 export function Header({
-  issueLabel,
+  monthLabel,
 }: {
-  issueLabel: string;
+  /** e.g. "July 2026". */
+  monthLabel: string;
 }): React.JSX.Element {
   return (
     <Section style={{ marginBottom: `${SPACE.lg}px` }}>
@@ -23,6 +26,20 @@ export function Header({
           textAlign: "center",
         }}
       >
+        <Text
+          style={{
+            margin: `0 0 ${SPACE.lg}px`,
+            fontFamily: FONT_STACK,
+            fontSize: "11px",
+            lineHeight: "14px",
+            fontWeight: 700,
+            letterSpacing: "3px",
+            color: COLORS.mint,
+            textTransform: "uppercase",
+          }}
+        >
+          The Monthly
+        </Text>
         <Img
           src={LOGO_WHITE_URL}
           alt="She Sharp"
@@ -38,17 +55,17 @@ export function Header({
         />
         <Text
           style={{
-            margin: `${SPACE.md}px 0 0`,
+            margin: `${SPACE.lg}px 0 0`,
             fontFamily: FONT_STACK,
-            fontSize: "13px",
-            lineHeight: "18px",
-            fontWeight: 700,
-            letterSpacing: "1px",
-            color: COLORS.mint,
+            fontSize: "15px",
+            lineHeight: "20px",
+            fontWeight: 600,
+            letterSpacing: "1.5px",
+            color: COLORS.white,
             textTransform: "uppercase",
           }}
         >
-          {issueLabel}
+          {monthLabel}
         </Text>
       </Section>
       <GradientBar />

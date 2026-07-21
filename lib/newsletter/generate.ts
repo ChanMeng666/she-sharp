@@ -15,6 +15,7 @@
 
 import OpenAI from "openai";
 
+import { buildPulse, evergreenPulse, fetchPulseSources } from "./pulse";
 import { editorialSchema, type IssueAuto, type IssueEditorial } from "./schema";
 
 /** Canonical evergreen get-involved links (absolute — email needs absolute URLs). */
@@ -168,6 +169,33 @@ function finalizeEditorial(draft: IssueEditorial): IssueEditorial {
 }
 
 /**
+ * Attaches the "NZ Tech Pulse" section to a finished editorial draft. Fetches
+ * live sources and asks the model to phrase them (see `pulse.ts`); on any
+ * failure — including a missing API key — it falls back to the deterministic
+ * evergreen pulse so the section is present and valid but never invented.
+ */
+async function withPulse(
+  editorial: IssueEditorial,
+  opts: { year: number; month: number }
+): Promise<IssueEditorial> {
+  const monthIndex = opts.month - 1;
+
+  if (!process.env.OPENAI_API_KEY) {
+    return { ...editorial, pulse: evergreenPulse(monthIndex) };
+  }
+
+  try {
+    const sources = await fetchPulseSources();
+    const monthLabel = `${monthName(opts.year, opts.month)} ${opts.year}`;
+    const pulse = await buildPulse(sources, { monthLabel });
+    return { ...editorial, pulse };
+  } catch (error) {
+    console.error("[generate] pulse assembly failed, using evergreen:", error);
+    return { ...editorial, pulse: evergreenPulse(monthIndex) };
+  }
+}
+
+/**
  * Generates the AI editorial draft for an issue month from its auto snapshot.
  *
  * Uses `gpt-4o-mini` (respecting an `OPENAI_MODEL` override) at temperature
@@ -181,7 +209,7 @@ export async function generateEditorial(opts: {
   auto: IssueAuto;
 }): Promise<IssueEditorial> {
   if (!process.env.OPENAI_API_KEY) {
-    return emptyEditorialStub(opts.auto);
+    return emptyEditorialStub(opts.auto, opts.month - 1);
   }
 
   const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
@@ -206,7 +234,7 @@ export async function generateEditorial(opts: {
     const content = response.choices[0]?.message?.content ?? "";
     const parsed = editorialSchema.safeParse(extractJson(content));
     if (parsed.success) {
-      return finalizeEditorial(parsed.data);
+      return withPulse(finalizeEditorial(parsed.data), opts);
     }
 
     lastError = parsed.error.issues
@@ -230,9 +258,13 @@ export async function generateEditorial(opts: {
  * Deterministic, no-AI editorial fallback used when `OPENAI_API_KEY` is unset.
  * Copy is generic but valid; the primary CTA points at the first upcoming event
  * (its registration link if present, else its page), or the mentor sign-up when
- * there are no upcoming events.
+ * there are no upcoming events. The pulse section is filled from the evergreen
+ * fact pool (rotated by `monthIndex`, defaulting to the current month).
  */
-export function emptyEditorialStub(auto: IssueAuto): IssueEditorial {
+export function emptyEditorialStub(
+  auto: IssueAuto,
+  monthIndex: number = new Date().getMonth()
+): IssueEditorial {
   const firstUpcoming = auto.upcomingEvents[0] ?? null;
 
   const primaryCta = firstUpcoming
@@ -266,5 +298,7 @@ export function emptyEditorialStub(auto: IssueAuto): IssueEditorial {
     opportunities: EVERGREEN_OPPORTUNITIES,
     sponsorThanks:
       "A heartfelt thank you to the sponsors, host venues, and volunteers who make our events possible. This community would not exist without you.",
+    heroImageUrl: null,
+    pulse: evergreenPulse(monthIndex),
   };
 }
