@@ -77,10 +77,9 @@ lib/db/checkpoints/
 WARP.md
 
 # Email preview files
-tmp/emails/
+tmp/
 
 # Newsletter photo pipeline scratch (harvested + transcoded event photos)
-tmp/newsletter-photos/
 
 # Local-only scripts (not for deployment)
 scripts/collect-event-from-slack.py
