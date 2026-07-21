@@ -86,6 +86,46 @@ export const editorialSchema = z.object({
     .default([]),
   /** Short sponsor thank-you paragraph; null omits the section. */
   sponsorThanks: z.string().nullable(),
+  /**
+   * AI-generated hero banner (absolute Blob URL) shown under the header.
+   * Null falls back to the template's static default art.
+   */
+  heroImageUrl: z.string().url().nullable().default(null),
+  /**
+   * "NZ Tech Pulse" — monthly NZ tech-industry data section. Numbers must
+   * come verbatim from fetched sources (never model-invented); every item
+   * carries its source attribution. Null omits the section.
+   */
+  pulse: z
+    .object({
+      heroStat: z.object({
+        /** The number itself, verbatim from the source, e.g. "5.2%". */
+        value: z.string().min(1),
+        /** What the number measures, e.g. "NZ gender pay gap". */
+        label: z.string().min(1),
+        /** One context sentence around the number. */
+        context: z.string().min(1),
+        sourceLabel: z.string().min(1),
+        sourceUrl: z.string().url(),
+      }),
+      newsBite: z
+        .object({
+          title: z.string().min(1),
+          summary: z.string().min(1),
+          sourceLabel: z.string().min(1),
+          url: z.string().url(),
+        })
+        .nullable(),
+      didYouKnow: z
+        .object({
+          text: z.string().min(1),
+          sourceLabel: z.string().min(1),
+          sourceUrl: z.string().url(),
+        })
+        .nullable(),
+    })
+    .nullable()
+    .default(null),
 });
 
 /** An event as snapshotted for the email (all URLs absolute). */
@@ -106,6 +146,14 @@ export const autoEventSchema = z.object({
   shortDescription: z.string().nullable(),
 });
 
+/** One photo in the monthly highlights strip (email-safe JPEG on Vercel Blob). */
+export const stripPhotoSchema = z.object({
+  /** Absolute URL of an email-optimized JPEG (never WebP — Outlook breaks). */
+  src: z.string().url(),
+  alt: z.string().min(1),
+  eventSlug: z.string().optional(),
+});
+
 /** Machine-owned snapshot, refreshed on every (re)generation. */
 export const autoSchema = z.object({
   recapEvents: z.array(autoEventSchema),
@@ -115,6 +163,14 @@ export const autoSchema = z.object({
     sponsors: z.string(),
     events: z.string(),
   }),
+  /**
+   * Photo highlights of the month. Populated by the local photo pipeline
+   * (`scripts/newsletter/photos.ts`) during the review loop — the serverless
+   * cron leaves it empty (it cannot run ffmpeg/harvesting).
+   */
+  photoStrip: z.array(stripPhotoSchema).max(6).default([]),
+  /** "View all photos" link — the month's Google Photos album, if any. */
+  photoAlbumUrl: z.string().url().nullable().default(null),
 });
 
 export const newsletterIssueSchema = z.object({

@@ -15,6 +15,7 @@ import { SITE_URL, CHARITY_REGISTRATION } from "@/lib/seo/site";
 import {
   COLORS,
   LOGO_PURPLE_URL,
+  FOOTER_MOTIF_URL,
   RADIUS,
   SPACE,
   FONT_STACK,
@@ -80,7 +81,7 @@ export function Footer({
         />
         <Text
           style={{
-            margin: `0 0 ${SPACE.md}px`,
+            margin: `0 0 ${SPACE.lg}px`,
             fontFamily: FONT_STACK,
             fontSize: "13px",
             lineHeight: "18px",
@@ -90,6 +91,22 @@ export function Footer({
         >
           Empowering women in STEM
         </Text>
+
+        {/* Decorative constellation motif (light strokes for the navy band). */}
+        <Img
+          src={FOOTER_MOTIF_URL}
+          alt=""
+          width="120"
+          height="120"
+          style={{
+            display: "block",
+            margin: `0 auto ${SPACE.lg}px`,
+            width: "120px",
+            height: "120px",
+            border: 0,
+            outline: "none",
+          }}
+        />
 
         {/* Social links */}
         <Text style={{ margin: `0 0 ${SPACE.lg}px`, textAlign: "center" }}>

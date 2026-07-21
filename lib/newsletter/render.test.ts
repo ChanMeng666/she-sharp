@@ -65,6 +65,33 @@ const sample: NewsletterIssueData = newsletterIssueSchema.parse({
     ],
     sponsorThanks:
       "Huge thanks to our sponsors whose support makes every event possible.",
+    heroImageUrl:
+      "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/assets/v1/hero-community-08EXUzvc3JG5sHeGGs2kpC377yrKri.jpg",
+    pulse: {
+      heroStat: {
+        value: "3.3%",
+        label: "of NZ job ads now reference AI skills",
+        context:
+          "Job ads that reference AI skills increased 3.9% month-on-month and now make up 3.3% of total job ads.",
+        sourceLabel: "SEEK NZ Employment Report",
+        sourceUrl:
+          "https://www.seek.co.nz/about/news/article/seeknz-employment-report-may26",
+      },
+      newsBite: {
+        title:
+          "Beyond automation: Why AI is forcing us to rethink how work gets done",
+        summary:
+          "Businesses that treat AI as a mere efficiency tool risk missing bigger gains from redesigning how work actually happens.",
+        sourceLabel: "IT Brief NZ",
+        url: "https://itbrief.co.nz/story/beyond-automation-why-ai-is-forcing-us-to-rethink-how-work-gets-done",
+      },
+      didYouKnow: {
+        text: "NZ's tech 'skills shortage' is really a skills mismatch — the greatest unmet demand is for senior, experienced people.",
+        sourceLabel: "NZTech Digital Skills Aotearoa",
+        sourceUrl:
+          "https://technewzealand.org.nz/reports/digital-skills-for-tomorrow-today-report/",
+      },
+    },
   },
   auto: {
     recapEvents: [
@@ -120,7 +147,30 @@ const sample: NewsletterIssueData = newsletterIssueSchema.parse({
       },
     ],
     stats: { members: "3000+", sponsors: "50+", events: "94+" },
+    photoStrip: [
+      {
+        src: "https://www.shesharp.org.nz/img/events/one.jpg",
+        alt: "Members networking at the June event",
+        eventSlug: "june-networking",
+      },
+      {
+        src: "https://www.shesharp.org.nz/img/events/two.jpg",
+        alt: "Speakers on stage during the panel",
+        eventSlug: "june-networking",
+      },
+      {
+        src: "https://www.shesharp.org.nz/img/events/three.jpg",
+        alt: "Attendees collaborating in the workshop",
+      },
+    ],
+    photoAlbumUrl: "https://photos.google.com/share/example-album",
   },
+});
+
+/** A copy of `sample` with the photo strip cleared, to prove it is omitted. */
+const sampleNoStrip: NewsletterIssueData = newsletterIssueSchema.parse({
+  ...sample,
+  auto: { ...sample.auto, photoStrip: [], photoAlbumUrl: null },
 });
 
 function assertAllImagesHttps(html: string, label: string): void {
@@ -177,6 +227,53 @@ async function main(): Promise<void> {
       `broadcast html must contain gradient color ${hex}`
     );
   }
+
+  // NZ Tech Pulse: the headline stat and its source link are rendered.
+  assert.ok(
+    preview.html.includes("3.3%"),
+    "pulse hero stat value must appear in the html"
+  );
+  assert.ok(
+    preview.html.includes(
+      "https://www.seek.co.nz/about/news/article/seeknz-employment-report-may26"
+    ),
+    "pulse hero stat source URL must appear in the html"
+  );
+  assert.ok(
+    preview.html.includes("NZ Tech Pulse"),
+    "pulse section kicker must appear in the html"
+  );
+
+  // Photo strip: each photo <img> and the album link are present.
+  for (const src of [
+    "https://www.shesharp.org.nz/img/events/one.jpg",
+    "https://www.shesharp.org.nz/img/events/two.jpg",
+    "https://www.shesharp.org.nz/img/events/three.jpg",
+  ]) {
+    assert.ok(
+      preview.html.includes(src),
+      `photo strip image must appear in the html → ${src}`
+    );
+  }
+  assert.ok(
+    preview.html.includes("https://photos.google.com/share/example-album"),
+    "photo album link must appear in the html"
+  );
+  assert.ok(
+    preview.html.includes("Snapshots"),
+    "photo strip section kicker must appear when photos are present"
+  );
+
+  // Photo strip is omitted entirely when there are no photos.
+  const noStrip = await renderNewsletter(sampleNoStrip, "preview");
+  assert.ok(
+    !noStrip.html.includes("Snapshots"),
+    "photo strip section must NOT render when photoStrip is empty"
+  );
+  assert.ok(
+    !noStrip.html.includes("https://photos.google.com/share/example-album"),
+    "photo album link must NOT render when photoStrip is empty"
+  );
 
   console.log("PASS render.test.ts");
   console.log(

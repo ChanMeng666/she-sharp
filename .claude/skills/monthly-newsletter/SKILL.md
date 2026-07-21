@@ -121,6 +121,44 @@ see Guardrails), `opportunities`, `sponsorThanks` (or `null` to omit).
 
 Do not touch the `auto` block by hand — it is the machine snapshot.
 
+### Step 3b — Refresh the event photo strip
+
+The email carries a strip of real event photos from the month
+(`auto.photoStrip`) plus a "view all photos" album link (`auto.photoAlbumUrl`).
+The serverless cron can't build these (no ffmpeg / no album harvesting), so
+refresh them locally with the photo pipeline:
+
+```powershell
+# Preview the selection + conversion plan without uploading or writing:
+npx tsx scripts/newsletter/photos.ts lib/data/json/newsletter-issues/2026-08.json --max 4 --dry-run
+
+# Looks good → run for real (uploads JPEGs to Vercel Blob, writes photoStrip back):
+npx tsx scripts/newsletter/photos.ts lib/data/json/newsletter-issues/2026-08.json --max 4
+```
+
+For each recap event it gathers candidates in priority order — on-page
+`detailPageData.photos` → `eventArchivePhotos` archive renditions → (only if
+neither exists and the event has a `galleryUrl`) a harvest of the public Google
+Photos album — then selects a landscape-leaning spread across events, transcodes
+each to an **email-safe JPEG** (≤1200px, metadata stripped, <200KB via the
+ffmpeg CLI), uploads to Blob under `newsletter/<issueId>/photos/…`, and writes
+`auto.photoStrip` + `auto.photoAlbumUrl` back into the issue JSON.
+
+- **`photoStrip` is machine-refreshed but human-prunable.** Re-running rebuilds
+  it wholesale; to curate, hand-edit the `auto.photoStrip` array in the issue
+  JSON afterward (drop weak shots, reorder, fix `alt` text). It caps at 6.
+- **Email photos MUST stay JPEG.** Outlook renders WebP as broken images, so
+  never point `src` at a `.webp` (the pipeline transcodes webp archive photos to
+  JPEG for exactly this reason). Requires `BLOB_READ_WRITE_TOKEN` (read from the
+  environment or `.env.local`).
+- If the month's recap events have no photos and no album, the strip comes out
+  empty — that's fine; the template simply omits the section.
+
+`BLOB_READ_WRITE_TOKEN` is the only new env this step needs; `--dry-run` needs
+none. This step edits the machine-owned `auto` block on purpose (it is the one
+exception to "don't hand-edit `auto`", and only via this pipeline or a manual
+prune of `photoStrip`).
+
 ### Step 4 — Preview loop
 
 Render both modes locally and eyeball them:

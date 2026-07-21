@@ -34,7 +34,28 @@
         "href": "https://www.shesharp.org.nz/sponsors/corporate-sponsorship"
       }
     ],
-    "sponsorThanks": "A heartfelt thank you to MYOB for hosting July's Working Smarter evening, and to AUT for partnering with us on next month's Aotearoa AI Hackathon Festival. Your support makes this community possible."
+    "sponsorThanks": "A heartfelt thank you to MYOB for hosting July's Working Smarter evening, and to AUT for partnering with us on next month's Aotearoa AI Hackathon Festival. Your support makes this community possible.",
+    "heroImageUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/assets/v1/hero-community-08EXUzvc3JG5sHeGGs2kpC377yrKri.jpg",
+    "pulse": {
+      "heroStat": {
+        "value": "3.3%",
+        "label": "of NZ job ads now reference AI skills",
+        "context": "Job ads that reference AI skills increased 3.9% month-on-month and now make up 3.3% of total job ads.",
+        "sourceLabel": "SEEK NZ Employment Report",
+        "sourceUrl": "https://www.seek.co.nz/about/news/article/seeknz-employment-report-may26"
+      },
+      "newsBite": {
+        "title": "Beyond automation: Why AI is forcing us to rethink how work gets done",
+        "summary": "Businesses that treat AI as a mere efficiency tool risk missing bigger gains from redesigning how work actually happens, argues One NZ's chief executive.",
+        "sourceLabel": "IT Brief NZ",
+        "url": "https://itbrief.co.nz/story/beyond-automation-why-ai-is-forcing-us-to-rethink-how-work-gets-done"
+      },
+      "didYouKnow": {
+        "text": "NZ's tech 'skills shortage' is really a skills mismatch — the greatest unmet demand is for senior, experienced people. Mentorship matters.",
+        "sourceLabel": "NZTech Digital Skills Aotearoa",
+        "sourceUrl": "https://technewzealand.org.nz/reports/digital-skills-for-tomorrow-today-report/"
+      }
+    }
   },
   "auto": {
     "recapEvents": [

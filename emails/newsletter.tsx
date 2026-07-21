@@ -28,9 +28,12 @@ import type { NewsletterIssueData } from "@/lib/newsletter/schema";
 import { SITE_URL } from "@/lib/seo/site";
 import { COLORS, styles, SPACE, RADIUS, FONT_STACK, CONTAINER_WIDTH } from "./brand";
 import { Header } from "./components/Header";
+import { Hero } from "./components/Hero";
 import { FounderNote } from "./components/FounderNote";
 import { Spotlight } from "./components/Spotlight";
+import { PhotoStrip } from "./components/PhotoStrip";
 import { RecapEventCard, UpcomingEventCard } from "./components/EventCard";
+import { Pulse } from "./components/Pulse";
 import { StatStrip } from "./components/StatStrip";
 import { Opportunities } from "./components/Opportunities";
 import { SponsorThanks } from "./components/SponsorThanks";
@@ -51,11 +54,11 @@ const MONTHS = [
   "December",
 ];
 
-/** "2026-07" → "July 2026 · Monthly Newsletter". */
-function issueLabel(id: string): string {
+/** "2026-07" → "July 2026". */
+function monthLabel(id: string): string {
   const [year, month] = id.split("-");
   const name = MONTHS[Number(month) - 1] ?? month;
-  return `${name} ${year} · Monthly Newsletter`;
+  return `${name} ${year}`;
 }
 
 export function NewsletterEmail({
@@ -91,13 +94,20 @@ export function NewsletterEmail({
       <Preview>{editorial.previewText}</Preview>
       <Body style={styles.body}>
         <Container style={styles.container} width={CONTAINER_WIDTH}>
-          <Header issueLabel={issueLabel(issue.id)} />
+          <Header monthLabel={monthLabel(issue.id)} />
+
+          <Hero src={editorial.heroImageUrl} />
 
           <FounderNote note={editorial.founderNote} greeting={greeting} />
 
           {editorial.spotlight ? (
             <Spotlight spotlight={editorial.spotlight} />
           ) : null}
+
+          <PhotoStrip
+            photos={auto.photoStrip}
+            albumUrl={auto.photoAlbumUrl}
+          />
 
           {hasRecap ? (
             <Section style={styles.card}>
@@ -173,6 +183,8 @@ export function NewsletterEmail({
               </Section>
             </Section>
           ) : null}
+
+          {editorial.pulse ? <Pulse pulse={editorial.pulse} /> : null}
 
           <StatStrip stats={auto.stats} />
 

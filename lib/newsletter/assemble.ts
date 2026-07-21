@@ -160,5 +160,9 @@ export function assembleAutoData(year: number, month: number): IssueAuto {
       sponsors: `${globalStats.sponsors.current}+`,
       events: `${globalStats.events.total}+`,
     },
+    // Populated by the local photo pipeline (scripts/newsletter/photos.ts);
+    // the serverless cron cannot run ffmpeg/harvesting, so it starts empty.
+    photoStrip: [],
+    photoAlbumUrl: null,
   };
 }
