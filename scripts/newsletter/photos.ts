@@ -289,7 +289,7 @@ function transcode(candidate: Candidate, outPath: string): { sizeBytes: number; 
 async function main(): Promise<void> {
   const argv = process.argv.slice(2);
   const positional: string[] = [];
-  let max = 4;
+  let max = 6;
   let dryRun = false;
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === "--dry-run") dryRun = true;
@@ -391,9 +391,16 @@ async function main(): Promise<void> {
   }
 
   // Write the strip back into the issue JSON (mutate raw to preserve field order).
+  // Alt text is venue-grounded: "<event title> — <location>" (falls back to a
+  // generic label when the recap event has no location).
+  const locationBySlug = new Map(
+    issue.auto.recapEvents.map((e) => [e.slug, e.locationLabel])
+  );
   const photoStrip = prepared.map((p, i) => ({
     src: uploaded[i].url,
-    alt: `${p.candidate.eventTitle} — She Sharp event photo`,
+    alt: `${p.candidate.eventTitle} — ${
+      locationBySlug.get(p.candidate.eventSlug) || "She Sharp event"
+    }`,
     eventSlug: p.candidate.eventSlug,
   }));
 

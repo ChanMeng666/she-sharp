@@ -4,12 +4,16 @@
  *   npx tsx lib/newsletter/render.test.ts
  *
  * Builds a representative issue and asserts merge-tag behaviour per mode,
- * size budget, absolute image URLs, and presence of the signature gradient.
+ * size budget, absolute image URLs, presence of the signature gradient, the
+ * real-photo cover, and venue-grounded snapshot captions.
  */
 
 import assert from "node:assert";
 import { newsletterIssueSchema, type NewsletterIssueData } from "./schema";
 import { renderNewsletter } from "./render";
+
+/** A real (non-AI) cover photo URL, unique so it can be asserted present/absent. */
+const COVER_URL = "https://www.shesharp.org.nz/img/newsletter/cover-june.jpg";
 
 const sample: NewsletterIssueData = newsletterIssueSchema.parse({
   id: "2026-07",
@@ -65,8 +69,7 @@ const sample: NewsletterIssueData = newsletterIssueSchema.parse({
     ],
     sponsorThanks:
       "Huge thanks to our sponsors whose support makes every event possible.",
-    heroImageUrl:
-      "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/assets/v1/hero-community-08EXUzvc3JG5sHeGGs2kpC377yrKri.jpg",
+    heroImageUrl: COVER_URL,
     pulse: {
       heroStat: {
         value: "3.3%",
@@ -167,9 +170,13 @@ const sample: NewsletterIssueData = newsletterIssueSchema.parse({
   },
 });
 
-/** A copy of `sample` with the photo strip cleared, to prove it is omitted. */
+/**
+ * A copy of `sample` with the photo strip cleared and no cover photo, to prove
+ * both the snapshots section and the cover are omitted when absent.
+ */
 const sampleNoStrip: NewsletterIssueData = newsletterIssueSchema.parse({
   ...sample,
+  editorial: { ...sample.editorial, heroImageUrl: null },
   auto: { ...sample.auto, photoStrip: [], photoAlbumUrl: null },
 });
 
@@ -264,7 +271,30 @@ async function main(): Promise<void> {
     "photo strip section kicker must appear when photos are present"
   );
 
-  // Photo strip is omitted entirely when there are no photos.
+  // Snapshot captions are venue-grounded: "<short event title> · <location>",
+  // resolved from the photo's matching recap event.
+  assert.ok(
+    preview.html.includes("June Networking Night · AUT City Campus, Auckland"),
+    "venue-grounded caption must appear for a strip photo with a matching recap event"
+  );
+
+  // No legacy AI-art asset paths survive anywhere in the output. The needle is
+  // assembled from parts so this guard does not itself contain the literal.
+  const legacyAssetPath = ["assets", "v1"].join("/");
+  for (const html of [broadcast.html, preview.html]) {
+    assert.ok(
+      !html.includes(legacyAssetPath),
+      "no legacy AI-art asset URL may appear in the rendered html"
+    );
+  }
+
+  // Cover photo: present when heroImageUrl is set.
+  assert.ok(
+    preview.html.includes(COVER_URL),
+    "cover photo must render when heroImageUrl is set"
+  );
+
+  // Photo strip and cover are omitted entirely when absent.
   const noStrip = await renderNewsletter(sampleNoStrip, "preview");
   assert.ok(
     !noStrip.html.includes("Snapshots"),
@@ -273,6 +303,10 @@ async function main(): Promise<void> {
   assert.ok(
     !noStrip.html.includes("https://photos.google.com/share/example-album"),
     "photo album link must NOT render when photoStrip is empty"
+  );
+  assert.ok(
+    !noStrip.html.includes(COVER_URL),
+    "cover photo must NOT render when heroImageUrl is null"
   );
 
   console.log("PASS render.test.ts");

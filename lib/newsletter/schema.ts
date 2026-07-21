@@ -87,8 +87,8 @@ export const editorialSchema = z.object({
   /** Short sponsor thank-you paragraph; null omits the section. */
   sponsorThanks: z.string().nullable(),
   /**
-   * AI-generated hero banner (absolute Blob URL) shown under the header.
-   * Null falls back to the template's static default art.
+   * Optional REAL photo (absolute URL, email-safe JPEG) used as the cover under
+   * the masthead — e.g. the best shot from last month. Null = no cover photo.
    */
   heroImageUrl: z.string().url().nullable().default(null),
   /**

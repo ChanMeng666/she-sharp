@@ -11,8 +11,14 @@ import {
   buildPulse,
   evergreenPulse,
   extractNumberTokens,
+  rssRelevanceRank,
   type PulseSourceData,
 } from "./pulse";
+import {
+  AUCKLAND_FACTS,
+  NZ_WIDE_FACTS,
+  NZ_TECH_FACTS,
+} from "../data/nz-tech-facts";
 import { editorialSchema } from "./schema";
 
 /** The pulse slice of the editorial schema, reused to validate assembled output. */
@@ -104,6 +110,79 @@ async function main(): Promise<void> {
     const pulse = await buildPulse(emptySources, { monthLabel: "Smarch 2026" });
     pulseSchema.parse(pulse);
     assert.deepStrictEqual(pulse, evergreenPulse(0));
+  });
+
+  // 4. Auckland facts are well-formed and reachable as hero stats.
+  console.log("4. Auckland facts:");
+  await check("every Auckland fact has an id, text, label and valid URL", () => {
+    assert.ok(AUCKLAND_FACTS.length >= 4, "expected at least 4 Auckland facts");
+    for (const fact of AUCKLAND_FACTS) {
+      assert.ok(fact.id, "fact has an id");
+      assert.ok(fact.text.length > 0, "fact has text");
+      assert.ok(fact.sourceLabel.length > 0, "fact has a source label");
+      // Throws on an invalid URL.
+      new URL(fact.sourceUrl);
+      // Every Auckland fact is part of the flat union.
+      assert.ok(
+        NZ_TECH_FACTS.some((f) => f.id === fact.id),
+        `${fact.id} should be in NZ_TECH_FACTS`
+      );
+    }
+  });
+  await check("an Auckland numeric fact surfaces as a hero stat, value in context", () => {
+    const aucklandTexts = new Set(AUCKLAND_FACTS.map((f) => f.text));
+    let sawAuckland = false;
+    for (let monthIndex = 0; monthIndex < 24; monthIndex++) {
+      const pulse = evergreenPulse(monthIndex)!;
+      // The verbatim invariant must hold for the Auckland facts too.
+      assert.ok(
+        pulse.heroStat.context.includes(pulse.heroStat.value),
+        `value "${pulse.heroStat.value}" must appear in its context`
+      );
+      if (aucklandTexts.has(pulse.heroStat.context)) sawAuckland = true;
+    }
+    assert.ok(sawAuckland, "an Auckland fact should be a hero stat within 24 months");
+  });
+
+  // 5. didYouKnow rotation biases toward Auckland on odd months, NZ on even.
+  console.log("5. didYouKnow rotation bias:");
+  await check("rotation covers both pools deterministically across 24 months", () => {
+    const aucklandUrls = new Set(AUCKLAND_FACTS.map((f) => f.sourceUrl));
+    const nzWideUrls = new Set(NZ_WIDE_FACTS.map((f) => f.sourceUrl));
+    let aucklandPicks = 0;
+    let nzWidePicks = 0;
+
+    for (let monthIndex = 0; monthIndex < 24; monthIndex++) {
+      const dyk = evergreenPulse(monthIndex)!.didYouKnow!;
+      if (monthIndex % 2 !== 0) {
+        assert.ok(
+          aucklandUrls.has(dyk.sourceUrl),
+          `odd month ${monthIndex} should draw an Auckland fact (got ${dyk.sourceUrl})`
+        );
+        aucklandPicks++;
+      } else {
+        assert.ok(
+          nzWideUrls.has(dyk.sourceUrl),
+          `even month ${monthIndex} should draw an NZ-wide fact (got ${dyk.sourceUrl})`
+        );
+        nzWidePicks++;
+      }
+    }
+    assert.ok(aucklandPicks > 0 && nzWidePicks > 0, "both pools are exercised");
+  });
+
+  // 6. RSS relevance ranks Auckland titles ahead of generic NZ ones.
+  console.log("6. rssRelevanceRank:");
+  await check("an Auckland title outranks a generic NZ title", () => {
+    const auckland = rssRelevanceRank("AUT opens new tech hub in Auckland CBD");
+    const generalNz = rssRelevanceRank("New Zealand broadband rollout continues");
+    assert.ok(auckland < generalNz, "Auckland item should sort ahead of general NZ");
+  });
+  await check("tiers order Auckland < topical < general NZ < unrelated", () => {
+    assert.strictEqual(rssRelevanceRank("Xero expands its Auckland office"), 0);
+    assert.strictEqual(rssRelevanceRank("Women in AI leadership summit"), 1);
+    assert.strictEqual(rssRelevanceRank("Aotearoa exports software abroad"), 2);
+    assert.strictEqual(rssRelevanceRank("Global chip prices rise again"), 3);
   });
 
   console.log(`\nAll ${passed} checks passed.`);

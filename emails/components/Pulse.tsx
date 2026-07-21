@@ -3,21 +3,16 @@
  *
  * A light-periwinkle band whose star is a single large statistic (the
  * `heroStat`), followed by an optional news bite (compact white card) and an
- * optional "Did you know?" line. Every figure carries a source link. The
- * `divider-wave` ornament sits above the band as a transition from the
+ * optional "Did you know?" line. Every figure carries a source link. A thin
+ * signature gradient rule sits above the band as a coded transition from the
  * editorial sections into the data section. Rendered only when `pulse` is set.
  */
 
 import * as React from "react";
-import { Section, Img, Text, Link } from "@react-email/components";
+import { Section, Text, Link } from "@react-email/components";
 import type { IssueEditorial } from "@/lib/newsletter/schema";
-import {
-  COLORS,
-  SPACE,
-  RADIUS,
-  FONT_STACK,
-  DIVIDER_WAVE_URL,
-} from "../brand";
+import { COLORS, SPACE, RADIUS, FONT_STACK } from "../brand";
+import { GradientBar } from "./GradientBar";
 
 type PulseData = NonNullable<IssueEditorial["pulse"]>;
 
@@ -79,15 +74,10 @@ export function Pulse({ pulse }: { pulse: PulseData }): React.JSX.Element {
 
   return (
     <Section style={{ marginBottom: `${SPACE.lg}px` }}>
-      {/* Decorative transition ribbon into the data section. */}
-      <Section style={{ textAlign: "center", marginBottom: `${SPACE.xs}px` }}>
-        <Img
-          src={DIVIDER_WAVE_URL}
-          alt=""
-          width="220"
-          height="29"
-          style={{ display: "inline-block", border: 0 }}
-        />
+      {/* Coded transition into the data section — the signature gradient as a
+          thin rule (degrades to a purple→periwinkle→mint tri-band in Outlook). */}
+      <Section style={{ marginBottom: `${SPACE.xl}px` }}>
+        <GradientBar height={3} />
       </Section>
 
       <Section
