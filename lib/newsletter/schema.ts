@@ -26,14 +26,9 @@ export const issueMetaSchema = z.object({
   scheduledAt: z.string().nullable().default(null),
 });
 
-const qaSchema = z.object({
-  q: z.string().min(1),
-  a: z.string().min(1),
-});
-
 /**
  * Human-owned copy. Nullable sections are omitted from the rendered email
- * when null (e.g. no spotlight person picked yet).
+ * when null (e.g. no photo of the month picked yet).
  */
 export const editorialSchema = z.object({
   /** Email subject, ≤50 chars per open-rate research. */
@@ -45,17 +40,9 @@ export const editorialSchema = z.object({
     /** Short markdown (paragraphs + links only). */
     bodyMd: z.string().min(1),
     signature: z.string().min(1),
+    /** Optional headshot shown beside the signature (absolute email-safe JPEG). */
+    photoUrl: z.string().url().nullable().default(null),
   }),
-  /** Member/mentor spotlight — human picks the person; AI leaves a stub. */
-  spotlight: z
-    .object({
-      name: z.string().min(1),
-      role: z.string().min(1),
-      /** Absolute URL (email clients need absolute image URLs). */
-      photoUrl: z.string().url(),
-      qa: z.array(qaSchema).min(1).max(4),
-    })
-    .nullable(),
   photoOfTheMonth: z
     .object({
       /** Absolute URL. */

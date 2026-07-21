@@ -1,0 +1,172 @@
+{
+  "id": "2026-06",
+  "meta": {
+    "status": "draft",
+    "generatedAt": "2026-07-21T00:00:00.000Z",
+    "broadcastId": null,
+    "scheduledAt": null
+  },
+  "editorial": {
+    "subjectLine": "June wins: branding, growth & young makers",
+    "previewText": "Andrea Halal on treating your career like a GTM plan, plus tamariki wiring their first circuits in West Auckland.",
+    "founderNote": {
+      "heading": "A note from our founder",
+      "bodyMd": "June was a month of range. At academyEX in Grafton, our fourth HER WAKA cohort gathered for Andrea Halal's session on personal branding — she challenged everyone to treat their career like a Go-To-Market plan, and to use LinkedIn as a tool for real relationships rather than a highlight reel.\n\nTwo Saturdays later we were in a very different room: the hall at Fruitvale Primary School, where rangatahi aged 12 to 18 built circuits, dimmed LEDs, and met Artificial Intelligence for the first time. Our Youth Tech Series with [Peyvand Academy](https://www.shesharp.org.nz/events/peyvand-academy-13-june-2026) and the Ministry of Education is about planting that first spark early — and there is nothing quite like watching a young person light up an LED they wired themselves.\n\nFrom new graduates rebuilding their networks to kids discovering they can make electricity behave, the throughline is the same: everyone deserves a way in. Thank you for holding that door open with us.",
+      "signature": "Dr. Mahsa McCauley, Founder & Chair, She Sharp",
+      "photoUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/people/mahsa-mccauley.jpg"
+    },
+    "photoOfTheMonth": {
+      "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/peyvand-academy-20-june-2026-potm-DdNYLBYXqqIKbFwW4b1PbF7AIxHwRa.jpg",
+      "caption": "Hands on at Fruitvale Primary School: a She Sharp facilitator and a table full of young makers bring their electronics kits to life during our June Youth Tech Series.",
+      "eventSlug": "peyvand-academy-20-june-2026"
+    },
+    "recapIntro": "Three very different rooms, one shared mission — here is what June looked like across our community.",
+    "eventBlurbs": {
+      "her-waka-june-2026": "At academyEX in Grafton, our fourth HER WAKA cohort worked with Andrea Halal on personal branding and career growth, with RCSA on hand to decode the current New Zealand job market.",
+      "peyvand-academy-13-june-2026": "At Fruitvale Primary School, rangatahi aged 12–18 explored AI concepts and basic electronics hands-on, alongside Peyvand Academy and the Ministry of Education.",
+      "peyvand-academy-20-june-2026": "Back at Fruitvale Primary School, the series went deeper into electronics — resistors, LEDs, series and parallel circuits — with Little Engineers joining Peyvand Academy and the Ministry of Education."
+    },
+    "primaryCta": {
+      "label": "Register for Working Smarter",
+      "href": "https://events.humanitix.com/she-sharp-and-myob-working-smarter"
+    },
+    "opportunities": [
+      {
+        "title": "Become a mentor",
+        "body": "A few hours a month can change the shape of someone's career. Share what you have learned with a woman finding her feet in tech.",
+        "href": "https://www.shesharp.org.nz/mentorship/mentor"
+      },
+      {
+        "title": "Volunteer with us",
+        "body": "From youth workshops to hackathons, our events run on volunteers. Bring your skills and grow your own network while you are at it.",
+        "href": "https://www.shesharp.org.nz/join-our-team"
+      },
+      {
+        "title": "Support the mahi",
+        "body": "Every workshop, every LED, every new connection is powered by community generosity. Chip in to keep STEM open to everyone.",
+        "href": "https://www.shesharp.org.nz/donate"
+      }
+    ],
+    "sponsorThanks": "Our June events simply would not happen without our hosts and partners: academyEX for opening their Grafton space for HER WAKA, the Ministry of Social Development for backing the programme, and Peyvand Academy, the Ministry of Education, and Little Engineers for making the Youth Tech Series possible. Thank you.",
+    "heroImageUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/her-waka-june-2026-hero-yN4FucA3D2koOQLdnpqklzVWCRvP8n.jpg",
+    "pulse": {
+      "heroStat": {
+        "value": "3.3%",
+        "label": "of NZ job ads now reference AI skills",
+        "context": "Job ads that reference AI skills increased 3.9% month-on-month and now make up 3.3% of total job ads.",
+        "sourceLabel": "SEEK NZ Employment Report",
+        "sourceUrl": "https://www.seek.co.nz/about/news/article/seeknz-employment-report-may26"
+      },
+      "newsBite": null,
+      "didYouKnow": {
+        "text": "Auckland generates 54% of New Zealand's tech-sector GDP and employs around 68,000 tech workers — the beating heart of the country's tech economy.",
+        "sourceLabel": "Tātaki Auckland Unlimited",
+        "sourceUrl": "https://aucklandeconomicdevelopment.com/invest/key-industries/technology"
+      }
+    }
+  },
+  "auto": {
+    "recapEvents": [
+      {
+        "slug": "her-waka-june-2026",
+        "title": "Her Waka (June 2026) — Personal Branding & Growth Tips",
+        "dateLabel": "Tuesday, June 2",
+        "startIso": "2026-06-02T12:00:00+12:00",
+        "timeLabel": "12:00pm - 2:00pm NZST",
+        "locationLabel": "academyEX, Auckland",
+        "coverImageUrl": "https://www.shesharp.org.nz/img/events/her-waka-june-2026-cover.png",
+        "url": "https://www.shesharp.org.nz/events/her-waka-june-2026",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-ministry-of-social-development-academyex-her-waka-june-2026",
+        "shortDescription": "The fourth HER WAKA cohort focuses on personal branding and career growth strategy with Andrea Halal — learn to treat your career like a Go-To-Market plan and use LinkedIn to build visibility, credibility, and genuine professional networks."
+      },
+      {
+        "slug": "peyvand-academy-13-june-2026",
+        "title": "Youth Tech Series — AI & Electronics Workshop",
+        "dateLabel": "Saturday, June 13",
+        "startIso": "2026-06-13T14:30:00+12:00",
+        "timeLabel": "2:30pm - 4:30pm NZST",
+        "locationLabel": "Fruitvale Primary School, Auckland",
+        "coverImageUrl": "https://www.shesharp.org.nz/img/events/peyvand-academy-13-june-2026-cover.png",
+        "url": "https://www.shesharp.org.nz/events/peyvand-academy-13-june-2026",
+        "registrationUrl": "https://events.humanitix.com/ai-electronics-workshop",
+        "shortDescription": "An interactive workshop for young participants aged 12–18, exploring Artificial Intelligence concepts and basic electronics through hands-on learning — delivered by SheSharp in collaboration with Peyvand Academy and the Ministry of Education."
+      },
+      {
+        "slug": "peyvand-academy-20-june-2026",
+        "title": "Youth Tech Series — Electronics Workshop",
+        "dateLabel": "Saturday, June 20",
+        "startIso": "2026-06-20T14:30:00+12:00",
+        "timeLabel": "2:30pm - 4:30pm NZST",
+        "locationLabel": "Fruitvale Primary School, Auckland",
+        "coverImageUrl": "https://www.shesharp.org.nz/img/events/peyvand-academy-20-june-2026-cover.png",
+        "url": "https://www.shesharp.org.nz/events/peyvand-academy-20-june-2026",
+        "registrationUrl": "https://events.humanitix.com/youth-tech-series-electronics-workshop",
+        "shortDescription": "A hands-on electronics workshop for young participants aged 12–18, building foundational skills in electronics through practical learning — delivered by SheSharp in collaboration with Peyvand Academy, the Ministry of Education, and Little Engineers."
+      }
+    ],
+    "upcomingEvents": [
+      {
+        "slug": "she-sharp-and-myob-working-smarter",
+        "title": "Working Smarter: AI, MYOB, and the New Delivery Landscape",
+        "dateLabel": "Thursday, July 30",
+        "startIso": "2026-07-30T17:00:00+12:00",
+        "timeLabel": "5:00pm - 7:30pm NZST",
+        "locationLabel": "MYOB, Auckland",
+        "coverImageUrl": "https://www.shesharp.org.nz/img/events/she-sharp-and-myob-working-smarter-cover.png",
+        "url": "https://www.shesharp.org.nz/events/she-sharp-and-myob-working-smarter",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-and-myob-working-smarter",
+        "shortDescription": "An interactive evening exploring how MYOB teams use AI to work smarter, solve problems faster, and deliver more value — with practical use cases and a hands-on AI problem-solving activity."
+      },
+      {
+        "slug": "aotearoa-ai-hackathon-festival-2026",
+        "title": "Aotearoa AI Hackathon Festival 2026 — AUT City Campus",
+        "dateLabel": "Friday, August 7",
+        "startIso": "2026-08-07T17:00:00+12:00",
+        "timeLabel": "Fri 7 Aug, 5:00pm – Sat 8 Aug 2026 (NZST)",
+        "locationLabel": "AUT City Campus, Auckland",
+        "coverImageUrl": "https://www.shesharp.org.nz/img/events/aotearoa-ai-hackathon-festival-2026-cover.png",
+        "url": "https://www.shesharp.org.nz/events/aotearoa-ai-hackathon-festival-2026",
+        "registrationUrl": "https://aihackathon.nz/",
+        "shortDescription": "A two-day hackathon at AUT City Campus building AI solutions for UN SDG challenges. Free pre-event training, venue prizes, and a path to pitch at the Aotearoa AI Summit 2026."
+      }
+    ],
+    "stats": {
+      "members": "3000+",
+      "sponsors": "50+",
+      "events": "94+"
+    },
+    "photoStrip": [
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/her-waka-june-2026-1-XKJsbKKj4JqMYWsJN3AoX0ZAU7e3oi.jpg",
+        "alt": "Her Waka (June 2026) — Personal Branding & Growth Tips — academyEX, Auckland",
+        "eventSlug": "her-waka-june-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/peyvand-academy-13-june-2026-1-rj1zNSNj6SFGXj6fFKGhPKc7NvJvp5.jpg",
+        "alt": "Youth Tech Series — AI & Electronics Workshop — Fruitvale Primary School, Auckland",
+        "eventSlug": "peyvand-academy-13-june-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/peyvand-academy-20-june-2026-3-s88Y8WBrLfujhsZyZ3E1HIvirZi3JW.jpg",
+        "alt": "Youth Tech Series — Electronics Workshop — Fruitvale Primary School, Auckland",
+        "eventSlug": "peyvand-academy-20-june-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/her-waka-june-2026-2-txHSeKzyeeM9Jnhj4j7D4E91NOVZ5K.jpg",
+        "alt": "Her Waka (June 2026) — Personal Branding & Growth Tips — academyEX, Auckland",
+        "eventSlug": "her-waka-june-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/peyvand-academy-13-june-2026-2-H11g8LoEXID4BSx1CaWE1mLHQjNhxY.jpg",
+        "alt": "Youth Tech Series — AI & Electronics Workshop — Fruitvale Primary School, Auckland",
+        "eventSlug": "peyvand-academy-13-june-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/peyvand-academy-20-june-2026-2-UgH5y6qNIqrmocqsCxZz3FKKPe9ISP.jpg",
+        "alt": "Youth Tech Series — Electronics Workshop — Fruitvale Primary School, Auckland",
+        "eventSlug": "peyvand-academy-20-june-2026"
+      }
+    ],
+    "photoAlbumUrl": "https://photos.app.goo.gl/rQoTv6R9xzU3enTdA"
+  }
+}

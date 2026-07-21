@@ -50,10 +50,22 @@ async function main(): Promise<void> {
       "CTA href must be the first upcoming event's registration/page URL"
     );
   });
-  await check("spotlight and photoOfTheMonth are null", () => {
+  await check("photoOfTheMonth is null", () => {
     const stub = emptyEditorialStub(auto);
-    assert.strictEqual(stub.spotlight, null);
     assert.strictEqual(stub.photoOfTheMonth, null);
+  });
+  await check("a stray legacy spotlight key still parses and is dropped", () => {
+    // Old fixtures/Redis drafts carry `spotlight` — editorialSchema is not
+    // .strict(), so it must parse and silently strip the removed field.
+    const withStray = {
+      ...emptyEditorialStub(auto),
+      spotlight: { name: "Legacy Person", role: "Mentee" },
+    };
+    const parsed = editorialSchema.parse(withStray);
+    assert.ok(
+      !("spotlight" in parsed),
+      "stray spotlight key must be stripped, not retained"
+    );
   });
   await check("pulse is populated from the evergreen pool (no live calls)", () => {
     // Every month index yields a schema-valid, evergreen (newsBite === null) pulse.
