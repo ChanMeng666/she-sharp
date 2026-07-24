@@ -228,7 +228,10 @@
     font-family: var(--font-sans);
     @apply text-foreground;
     min-height: 100vh;
-    overflow-x: hidden;
+    /* `clip` suppresses horizontal overflow (from full-bleed sections) without
+       creating a scroll container, so descendant `position: sticky` still works
+       (e.g. the event detail "Time & location" sidebar). `hidden` would break it. */
+    overflow-x: clip;
   }
 
   h1,

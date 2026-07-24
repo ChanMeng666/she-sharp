@@ -146,8 +146,10 @@ export default async function EventPage({ params }: EventPageProps) {
               )}
             </div>
 
-            {/* Sidebar - Right Column */}
-            <div className="lg:col-span-5 xl:col-span-4">
+            {/* Sidebar - Right Column — sticky on desktop so "Time & location"
+                floats alongside long left-column content instead of leaving the
+                right side blank on scroll. */}
+            <div className="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24 lg:self-start">
               <EventSidebarPanel event={event} />
             </div>
           </div>
