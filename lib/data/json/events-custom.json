@@ -1491,6 +1491,31 @@
           },
           {
             "type": "info",
+            "title": "Featured Problem — F&P Healthcare: Restoration Intelligence",
+            "content": [
+              "Fisher & Paykel Healthcare, a sponsor of the festival, has put forward a second challenge — this one from its sustainability team: Restoration Intelligence, turning drone data into environmental insights. As part of developing F&P's new Karaka campus, the team is restoring the Oiroa Stream and surrounding wetlands, where employees, families and community members have planted more than 3,000 native plants across 22 species since 2023 to improve biodiversity, water quality, habitat connectivity and climate resilience.",
+              "Ecological restoration projects increasingly use drones to collect imagery and video, but measuring restoration outcomes still relies on specialist ecological and Geographic Information System (GIS) expertise. As a result, monitoring is often manual, expensive, infrequent and hard to scale, requiring extensive fieldwork in difficult terrain.",
+              "The challenge is to build an AI-powered restoration monitoring solution that automates the analysis of periodic drone imagery — annual surveys collected over the 20+ year lifetime of a landscape restoration project — along with drone video, to quantify ecological outcomes and generate actionable insights. Where available, it should integrate additional data such as biodiversity records, GIS layers and historical monitoring datasets, reducing reliance on manual assessment, specialist expertise and fragmented tools.",
+              "Teams are encouraged to address as many of the restoration monitoring metrics below as they choose — they do not need to tackle them all, since solutions may be limited by the availability of open-source data and tools. In the absence of drone images, large-scale restoration projects such as Matuku Link (Te Henga), Waikereru Ecosanctuary (Gisborne) and Hinewai Reserve (Akaroa) may offer suitable proxy and historical satellite imagery for training and testing.",
+              "How it matches the UN Sustainable Development Goals: the project supports SDG 15 – Life on Land through improved monitoring of biodiversity and restoration outcomes, and SDG 12 – Responsible Consumption and Production through more efficient, better-informed stewardship of natural resources. It aligns with F&P Healthcare's values of Innovation and Life and its intention to create a positive, lasting impact on society and the environment."
+            ]
+          },
+          {
+            "type": "bullets",
+            "title": "What to Measure — Restoration Metrics",
+            "content": [
+              "Tree survival (%) — planting success and areas of plant mortality",
+              "Native species richness — biodiversity and diversity of the native plant community",
+              "Keystone species tracking (e.g. Kahikatea, Kauri, Pukatea) — establishment and survival of priority species",
+              "Natural regeneration density — self-seeded recovery and ecosystem self-sustainability",
+              "Native canopy cover (%) — vegetation establishment and habitat development",
+              "Exotic plant cover (%) and weed cover (%) — non-native competition and invasive pressure",
+              "Riparian shade cover (%) — stream shading that supports water quality and temperature",
+              "Time-series imagery and change detection — visual storytelling of restoration progress over time"
+            ]
+          },
+          {
+            "type": "info",
             "title": "Meet the Event AI Assistant",
             "content": [
               "She Sharp has built an AI voice assistant for this year's hackathon, so you can ask about the schedule, venue, challenges, judging criteria and logistics in your own words and get an answer straight away.",
@@ -1558,7 +1583,7 @@
               "Te Ipu o Te Mahara | Artificial Intelligence Institute, Amazon Web Services (AWS)",
               "EPIC Innovation, Canterbury Tech, Tech New Zealand",
               "Woolworths New Zealand and Kai Commitment (Food Waste featured problem partners)",
-              "Fisher & Paykel Healthcare (Facilities Helpdesk Agent featured problem)"
+              "Fisher & Paykel Healthcare (Facilities Helpdesk Agent and Restoration Intelligence featured problems)"
             ]
           },
           {
@@ -1637,6 +1662,19 @@
               {
                 "label": "Care by Design video",
                 "url": "https://youtu.be/n9UPiqziB9c"
+              }
+            ]
+          },
+          {
+            "title": "Featured Problem — F&P Restoration Intelligence",
+            "paragraphs": [
+              "Fisher & Paykel Healthcare's sustainability team has added a second challenge: Restoration Intelligence — turning drone data into environmental insights. At F&P's new Karaka campus, volunteers have planted 3,000+ native plants to restore the Oiroa Stream and wetlands, and the team wants a better way to measure how that restoration is progressing.",
+              "The challenge is to build an AI solution that analyses periodic drone imagery and video to automatically track ecological outcomes — tree survival, species richness, canopy cover, weed spread, riparian shade and more — reducing reliance on manual, specialist monitoring. It aligns with SDG 15 (Life on Land) and SDG 12 (Responsible Consumption and Production)."
+            ],
+            "links": [
+              {
+                "label": "F&P challenge resources",
+                "url": "https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus"
               }
             ]
           },
