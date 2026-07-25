@@ -1516,6 +1516,32 @@
           },
           {
             "type": "info",
+            "title": "Featured Problem — My Life My Voice: Accessible UI Generation",
+            "content": [
+              "My Life My Voice has submitted a featured problem on accessible user interface (UI) generation for developers. Millions of people with disabilities encounter barriers every day because the apps and digital tools they rely on were not built accessibly. The Web Content Accessibility Guidelines (WCAG) exist precisely to address this — yet compliance rates remain persistently low.",
+              "The bottleneck is not developer intent; it is workflow. Accessibility checking is manual, happens late in the build process, and sits outside the tools developers actually use. When it does exist, it audits what is already broken rather than preventing the problem at the point of creation.",
+              "The opportunity is to create an AI-powered tool that embeds accessibility support directly into the development workflow — enabling developers to check UI components against WCAG criteria in real time, and to generate accessible layout options at the point of design rather than after the fact. Unlike existing checkers (such as Microsoft's accessibility tools), the focus here is on generative support: producing accessible options, not just flagging inaccessible ones.",
+              "Why AI, why now: current AI coding tools optimise for speed and functionality, and none meaningfully optimise for accessibility. An AI layer that understands accessibility standards could shift accessibility from an audit task to a design default — making inclusive UI the path of least resistance for any developer, regardless of their prior knowledge of disability or accessibility standards.",
+              "How it matches the UN Sustainable Development Goals: SDG 4 – Quality Education, SDG 8 – Decent Work and Economic Growth, and SDG 10 – Reduced Inequalities. Designing user interfaces that cater to people of all abilities increases opportunities for education and economic contribution, and reduces barriers to access and therefore inequalities."
+            ]
+          },
+          {
+            "type": "bullets",
+            "title": "Who Benefits — Accessible UI Generation",
+            "content": [
+              "Disabled people who currently encounter inaccessible digital products daily",
+              "Developers who want to build inclusively but lack embedded, standards-based support to do so",
+              "Businesses and app developers losing disabled customers — and their revenue — because their products cannot be accessed",
+              "Organisations navigating increasing legal and regulatory pressure around digital accessibility"
+            ]
+          },
+          {
+            "type": "youtube",
+            "title": "Accessible UI Generation — My Life My Voice",
+            "content": ["https://youtu.be/THqS1kZbdjo"]
+          },
+          {
+            "type": "info",
             "title": "Meet the Event AI Assistant",
             "content": [
               "She Sharp has built an AI voice assistant for this year's hackathon, so you can ask about the schedule, venue, challenges, judging criteria and logistics in your own words and get an answer straight away.",
@@ -1583,7 +1609,8 @@
               "Te Ipu o Te Mahara | Artificial Intelligence Institute, Amazon Web Services (AWS)",
               "EPIC Innovation, Canterbury Tech, Tech New Zealand",
               "Woolworths New Zealand and Kai Commitment (Food Waste featured problem partners)",
-              "Fisher & Paykel Healthcare (Facilities Helpdesk Agent and Restoration Intelligence featured problems)"
+              "Fisher & Paykel Healthcare (Facilities Helpdesk Agent and Restoration Intelligence featured problems)",
+              "My Life My Voice (Accessible UI Generation featured problem)"
             ]
           },
           {
@@ -1675,6 +1702,19 @@
               {
                 "label": "F&P challenge resources",
                 "url": "https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus"
+              }
+            ]
+          },
+          {
+            "title": "Featured Problem — Accessible UI Generation",
+            "paragraphs": [
+              "My Life My Voice has submitted a featured problem on accessible UI generation for developers. WCAG standards exist, but compliance stays low because accessibility checking is manual, happens late, and sits outside the tools developers actually use — auditing what is already broken instead of preventing it at the point of creation.",
+              "The challenge is to build an AI-powered tool that checks UI components against WCAG criteria in real time and generates accessible layout options at design time — producing accessible options, not just flagging inaccessible ones. It aligns with SDG 4 (Quality Education), SDG 8 (Decent Work and Economic Growth) and SDG 10 (Reduced Inequalities)."
+            ],
+            "links": [
+              {
+                "label": "Problem statement video",
+                "url": "https://youtu.be/THqS1kZbdjo"
               }
             ]
           },
