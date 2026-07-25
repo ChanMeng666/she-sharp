@@ -1,0 +1,42 @@
+💜 She Sharp isn’t just a community for women in STEM.
+We’re becoming an AI-driven non-profit.
+
+Events. Mentorship. Networking. Still the heart.
+What’s new: AI now helps run our website, pairing people, Slack ops, and how the team publishes content.
+
+Here’s what that looks like in practice 👇
+
+💬 1/ Website chatbot (live answers)
+Visitors can ask about upcoming events, mentorship, the team, or how to join — right on shesharp.org.nz.
+→ Replies come from live site data (not a frozen FAQ)
+→ When we add a new event, the chatbot can talk about it automatically
+
+🤝 2/ AI for matching people
+Two tools with humans still in charge:
+→ Mentor–mentee matching: AI scores fit on skills, goals, personality, industry, and logistics; admins review before a match goes live
+→ Volunteer / ambassador screening: AI scores applications and posts a summary to Slack for the team to decide
+
+⚙️ 3/ Slack apps in the AI workflow
+We don’t copy-paste event updates by hand anymore.
+→ Event Bot: write in plain English in Slack → AI drafts a structured website update for review
+→ Alerts in Slack: AI screening results and “newsletter draft ready” notifications
+→ Weekly funding digest: crawls NZ grant listings, AI scores mission-fit, posts hits to a channel
+
+🧠 4/ Custom project agent skills
+Reusable playbooks our team (and coding agents) run inside the She Sharp repo:
+→ Sync a Slack event-planning channel → website event page (copy, images, speaker bios)
+→ Monthly newsletter loop: AI writes a draft → human edits → schedule send
+
+And a public highlight we’re proud of 🎙️
+
+For the Aotearoa AI Hackathon Festival 2026 (co-hosted by She Sharp), we built a Voice AI Agent — talk to a glowing orb, see live captions, get event answers by voice or text.
+
+Try it → https://hackathon.shesharp.org.nz
+Festival → https://aihackathon.nz
+Our home → https://www.shesharp.org.nz
+
+Non-profits can run AI in the stack — not just on stage. ✨
+
+What AI workflow would help YOUR community ship faster? Drop a thought below 👇
+
+#WomenInTech #WomenInAI #TechForGood #NZTech #AucklandTech #AIAgents #AIEngineering #SlackApps #Mentorship #STEM #SheSharp
