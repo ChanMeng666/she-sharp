@@ -27,3 +27,30 @@ jobs:
 
       - name: Verify image path integrity
         run: npx tsx scripts/verify-image-paths.ts
+
+  typecheck-scripts:
+    # `scripts/` is excluded from the root tsconfig and `.claude/**` is missed by
+    # its `**/*.ts` glob (dot-directories don't match), so neither tree was
+    # type-checked by anything before this job. Both hold tooling teammates run
+    # by hand — a break there is invisible until someone hits it mid-task.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type-check scripts and skill tooling
+        run: pnpm typecheck:scripts
