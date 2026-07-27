@@ -88,6 +88,13 @@ scripts/requirements-slack.txt
 # Newsletter pilot contact list (contains real emails — local-only)
 scripts/newsletter/pilot-contacts.local.csv
 
+# Any recipient list dropped into the repo (Humanitix exports, sign-up sheets).
+# Real email addresses — never commit these.
+**/*.local.csv
+
+# ...but the hashed suppression list carries no PII and MUST stay tracked.
+!lib/data/json/email-suppression-hashes.json
+
 # Generated audit reports (local tooling output, not tracked)
 scripts/audit-report.json
 
