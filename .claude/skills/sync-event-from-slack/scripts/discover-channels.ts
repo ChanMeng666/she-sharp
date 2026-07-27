@@ -37,7 +37,7 @@ import {
   type ChannelType,
   type Mapping,
   type PublishedEvent,
-} from "./state-lib.ts";
+} from "./state-lib";
 
 const token = process.env.SLACK_BOT_TOKEN;
 if (!token) {

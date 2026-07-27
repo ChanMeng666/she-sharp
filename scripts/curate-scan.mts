@@ -10,7 +10,7 @@
  *
  * Run: npx tsx scripts/curate-scan.mts
  */
-import { promises as fs } from "node:fs";
+import { promises as fs, type Dirent } from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 
@@ -43,7 +43,10 @@ const SCAN_FILES = [
 /** Recursively collect files with an allowed image extension. */
 async function walk(dir: string): Promise<string[]> {
   const out: string[] = [];
-  let entries: Awaited<ReturnType<typeof fs.readdir>>;
+  // Must be Dirent[], not `Awaited<ReturnType<typeof fs.readdir>>` — that
+  // resolves to the default overload (string[] / Dirent<Buffer>[]), while this
+  // call passes `withFileTypes: true`.
+  let entries: Dirent<string>[];
   try {
     entries = await fs.readdir(dir, { withFileTypes: true });
   } catch {
