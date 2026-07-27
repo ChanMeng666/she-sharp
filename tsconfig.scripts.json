@@ -1,0 +1,29 @@
+{
+  // Type-checks the code the root tsconfig deliberately leaves out: everything
+  // under `scripts/` (excluded there so Next.js never tries to bundle it) and
+  // the skill scripts under `.claude/`, which the root `**/*.ts` glob silently
+  // skips because it does not match dot-directories.
+  //
+  // Without this file those two trees were never type-checked by anything, so
+  // `tsc --noEmit` could pass while a script a teammate depends on was broken.
+  //
+  // Run: pnpm typecheck:scripts   (CI: .github/workflows/verify.yml)
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    // Separate build info so this never fights the app's incremental cache.
+    "incremental": false,
+    // These run under Node via tsx, not in the browser.
+    "types": ["node"]
+  },
+  "include": [
+    "scripts/**/*.ts",
+    "scripts/**/*.mts",
+    ".claude/skills/**/scripts/**/*.ts"
+  ],
+  // Nothing is quarantined: the four pre-existing failures found when this
+  // config was introduced (2026-07-28) were all fixed rather than excluded.
+  // Keep it that way — an exclusion here is a hole in the only gate these
+  // trees have.
+  "exclude": ["node_modules"]
+}
