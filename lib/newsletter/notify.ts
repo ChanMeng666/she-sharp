@@ -13,11 +13,8 @@
  */
 
 import { sendEmail } from "@/lib/email/service";
+import { withDraftBanner } from "@/lib/email/compose";
 import type { NewsletterIssueData } from "./schema";
-
-/** Light purple banner background, on-brand and email-client safe. */
-const BANNER_BG = "#f7e5f3";
-const BANNER_BORDER = "#9b2e83";
 
 type SlackBlock = Record<string, unknown>;
 
@@ -64,9 +61,12 @@ function formatScheduledNz(d: Date): string {
 }
 
 /**
- * Prepends the review banner to the rendered preview HTML. The banner is a
- * self-contained inline-styled table so it survives email clients; it is
- * inserted just after the opening <body> tag when present, else prepended.
+ * Prepends the review banner (and, when Redis staging failed, the raw draft
+ * JSON) to the rendered preview HTML.
+ *
+ * The banner itself comes from the shared `withDraftBanner` helper. The JSON
+ * fallback is inserted first so that, once the banner is injected at the same
+ * spot, the reader sees banner → fallback → email, as before.
  */
 function withReviewBanner(
   previewHtml: string,
@@ -74,16 +74,10 @@ function withReviewBanner(
   issueId: string,
   draftJsonFallback?: string
 ): string {
-  const banner = `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${BANNER_BG};border-left:4px solid ${BANNER_BORDER};font-family:Arial,Helvetica,sans-serif;">
-  <tr><td style="padding:16px 24px;color:#4a1a40;font-size:14px;line-height:1.5;">
-    <strong style="font-size:15px;">DRAFT for review — not sent to subscribers.</strong><br>
-    Reply-by: ${replyBy}.<br>
-    To review &amp; approve: run <strong>/monthly-newsletter</strong> in Claude Code.
-  </td></tr>
-</table>`;
-
-  const fallback = draftJsonFallback
-    ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#fff8e1;border-left:4px solid #f0ad4e;font-family:Arial,Helvetica,sans-serif;">
+  const withFallback = draftJsonFallback
+    ? insertAfterBody(
+        previewHtml,
+        `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#fff8e1;border-left:4px solid #f0ad4e;font-family:Arial,Helvetica,sans-serif;">
   <tr><td style="padding:16px 24px;color:#5c4400;font-size:13px;line-height:1.5;">
     <strong>Redis draft staging was unavailable</strong> — the raw issue JSON is included below so nothing is lost. Copy it into <code>lib/data/json/newsletter-issues/${issueId}.json</code> if needed.
     <pre style="white-space:pre-wrap;word-break:break-word;background:#ffffff;border:1px solid #eee;padding:12px;border-radius:4px;font-size:12px;">${escapeHtml(
@@ -91,15 +85,24 @@ function withReviewBanner(
     )}</pre>
   </td></tr>
 </table>`
-    : "";
+      )
+    : previewHtml;
 
-  const prefix = banner + fallback;
-  const bodyMatch = previewHtml.match(/<body[^>]*>/i);
-  if (bodyMatch) {
-    const insertAt = bodyMatch.index! + bodyMatch[0].length;
-    return previewHtml.slice(0, insertAt) + prefix + previewHtml.slice(insertAt);
+  return withDraftBanner(withFallback, [
+    `<strong style="font-size:15px;">DRAFT for review — not sent to subscribers.</strong>`,
+    `Reply-by: ${replyBy}.`,
+    `To review &amp; approve: run <strong>/monthly-newsletter</strong> in Claude Code.`,
+  ]);
+}
+
+/** Inserts a fragment just after the opening <body> tag, else prepends it. */
+function insertAfterBody(html: string, fragment: string): string {
+  const bodyMatch = html.match(/<body[^>]*>/i);
+  if (bodyMatch && bodyMatch.index !== undefined) {
+    const insertAt = bodyMatch.index + bodyMatch[0].length;
+    return html.slice(0, insertAt) + fragment + html.slice(insertAt);
   }
-  return prefix + previewHtml;
+  return fragment + html;
 }
 
 /** Minimal HTML-escaping for embedding raw JSON in a <pre> block. */

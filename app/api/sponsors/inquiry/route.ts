@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
       email,
       organisation,
       message: prefixedMessage,
+      source: 'sponsor-inquiry',
     });
 
     if (!result.success) {

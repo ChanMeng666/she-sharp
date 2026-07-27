@@ -13,6 +13,8 @@ interface ContactFormData {
   email: string;
   organisation?: string;
   message: string;
+  /** Which public form produced this submission. Defaults to the general contact form. */
+  source?: 'contact' | 'sponsor-inquiry';
 }
 
 interface SubmitResult {
@@ -55,6 +57,8 @@ export async function submitContactForm(data: ContactFormData): Promise<SubmitRe
         email: data.email,
         organisation: data.organisation,
         message: data.message,
+        submissionId: submission.id,
+        source: data.source ?? 'contact',
       });
     } catch (err) {
       console.error('Slack contact notification error:', err);

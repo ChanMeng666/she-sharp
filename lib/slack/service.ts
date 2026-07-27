@@ -75,6 +75,10 @@ interface ContactNotificationData {
   email: string;
   organisation?: string | null;
   message: string;
+  /** Primary key of the `contact_form_submissions` row this notification is about. */
+  submissionId?: number;
+  /** Which public form produced the submission. Defaults to the general contact form. */
+  source?: 'contact' | 'sponsor-inquiry';
 }
 
 interface DonationNotificationData {
@@ -326,8 +330,25 @@ export async function sendContactSlackNotification(data: ContactNotificationData
       type: 'section',
       text: { type: 'mrkdwn', text: `*Message:*\n${data.message}` },
     },
-    { type: 'divider' },
   ];
+
+  // Machine-readable footer so reply tooling can join this message back to the
+  // exact database row instead of guessing from email + timestamp.
+  if (data.submissionId !== undefined) {
+    const sourceLabel =
+      data.source === 'sponsor-inquiry' ? 'sponsor enquiry' : 'contact form';
+    blocks.push({
+      type: 'context',
+      elements: [
+        {
+          type: 'mrkdwn',
+          text: `Submission #${data.submissionId} · ${sourceLabel}`,
+        },
+      ],
+    });
+  }
+
+  blocks.push({ type: 'divider' });
 
   await sendContactSlackMessage(blocks);
 }

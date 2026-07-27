@@ -67,19 +67,31 @@ function toCalendarStamp(date: Date): string {
 
 /**
  * Build a Google Calendar "add event" template URL from an event's ISO start.
+ *
  * Returns null when the start instant is missing/unparsable (caller omits the
- * link). Defaults the event to a 2-hour block since we only snapshot a start.
+ * link). Without `endIso` the event is written as a 2-hour block, which is all
+ * the newsletter's "upcoming events" snapshot can know.
+ *
+ * Pass `endIso` whenever the real end is known — a multi-day event written as a
+ * 2-hour block puts the wrong finish time in every recipient's calendar, and an
+ * attendee who trusts it leaves halfway through.
  */
 export function googleCalendarUrl(input: {
   title: string;
   startIso: string | null;
+  endIso?: string | null;
   locationLabel: string | null;
   url: string;
 }): string | null {
   if (!input.startIso) return null;
   const start = new Date(input.startIso);
   if (Number.isNaN(start.getTime())) return null;
-  const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
+
+  const explicitEnd = input.endIso ? new Date(input.endIso) : null;
+  const end =
+    explicitEnd && !Number.isNaN(explicitEnd.getTime()) && explicitEnd > start
+      ? explicitEnd
+      : new Date(start.getTime() + 2 * 60 * 60 * 1000);
   const params = new URLSearchParams({
     action: "TEMPLATE",
     text: input.title,
