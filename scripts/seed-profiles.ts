@@ -116,7 +116,7 @@ async function seedProfiles() {
           preferredMenteeTypes: ['Career Changer', 'Junior Developer', 'Student'],
           preferredIndustries: ['Technology', 'Software Development'],
           city: 'Auckland',
-          preferredMeetingFormat: 'both',
+          preferredMeetingFormat: 'hybrid', // enum is online|in_person|hybrid; 'both' predates the rename
         });
         console.log(`  ✓ Created mentor form submission for ${firstUser.email}`);
       }
@@ -184,7 +184,7 @@ async function seedProfiles() {
             whyMentor: 'Looking for guidance from experienced professionals',
             preferredIndustries: ['Technology', 'Software Development'],
             city: 'Auckland',
-            preferredMeetingFormat: 'both',
+            preferredMeetingFormat: 'hybrid', // enum is online|in_person|hybrid; 'both' predates the rename
           });
           console.log(`  ✓ Created mentee form submission for ${user.email}`);
         }

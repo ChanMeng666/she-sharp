@@ -37,7 +37,7 @@ import {
   type ChannelState,
   type Mapping,
   type ThreadState,
-} from "./state-lib.ts";
+} from "./state-lib";
 import { readFileSync } from "node:fs";
 
 function arg(name: string): string | undefined {

@@ -6,31 +6,12 @@
  */
 
 import { db } from '../lib/db/drizzle';
-import {
-  users,
-  userRoles,
-  userMemberships,
-  activityLogs,
-  mentorProfiles,
-  menteeProfiles,
-  mentorshipRelationships,
-  meetings,
-  events,
-  eventRegistrations,
-  resources,
-  resourceAccessLogs,
-  notifications,
-  notificationPreferences,
-  invitationCodes,
-  invitationCodeUsages,
-  membershipPurchases,
-  mentorFormSubmissions,
-  menteeFormSubmissions,
-  passwordResets,
-  passwordHistory,
-  emailVerifications,
-  failedLoginAttempts,
-} from '../lib/db/schema';
+// Only the three tables the admin-creation step inserts into are imported.
+// Clearing is done with raw `DELETE FROM "<name>"` against the string list
+// below, so importing every table object was dead weight — and two of them
+// (`notificationPreferences`, `failedLoginAttempts`) had already been dropped
+// from the schema, which is what broke this file's type-check.
+import { users, userRoles, userMemberships } from '../lib/db/schema';
 import { hashPassword } from '../lib/auth/session';
 import { sql } from 'drizzle-orm';
 
@@ -45,13 +26,11 @@ async function resetDatabase() {
     'event_registrations',
     'meetings',
     'mentorship_relationships',
-    'notification_preferences',
     'notifications',
     'invitation_code_usages',
     'password_history',
     'password_resets',
     'email_verifications',
-    'failed_login_attempts',
     // Then parent tables
     'mentor_form_submissions',
     'mentee_form_submissions',

@@ -37,7 +37,7 @@ import "dotenv/config";
 import { WebClient } from "@slack/web-api";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { CACHE_DIR, loadManifest, type ThreadState } from "./state-lib.ts";
+import { CACHE_DIR, loadManifest, type ThreadState } from "./state-lib";
 
 const token = process.env.SLACK_BOT_TOKEN;
 if (!token) {
