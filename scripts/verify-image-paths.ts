@@ -76,13 +76,87 @@ function collectFromEventsJson(refs: Reference[]): void {
   }
 }
 
+/**
+ * Blanks out comment text so a path written as documentation is not treated as
+ * a live reference.
+ *
+ * A JSDoc line like `Absolutizes a site-relative path (e.g. "/img/events/x.png")`
+ * is an example, not a usage — but it looks identical to one line-at-a-time, and
+ * failing the gate on it teaches people to work around the gate.
+ *
+ * Returns the line with comment spans replaced by spaces (column numbers stay
+ * correct) and the block-comment state carried to the next line.
+ */
+function stripComments(line: string, inBlock: boolean): { code: string; inBlock: boolean } {
+  let out = "";
+  let block = inBlock;
+  let quote: string | null = null;
+
+  for (let i = 0; i < line.length; i += 1) {
+    const two = line.slice(i, i + 2);
+
+    if (block) {
+      if (two === "*/") {
+        block = false;
+        out += "  ";
+        i += 1;
+      } else {
+        out += " ";
+      }
+      continue;
+    }
+
+    const ch = line[i];
+
+    // Inside a string literal, comment markers are just characters.
+    if (quote) {
+      out += ch;
+      if (ch === "\\") {
+        out += line[i + 1] ?? "";
+        i += 1;
+      } else if (ch === quote) {
+        quote = null;
+      }
+      continue;
+    }
+
+    if (ch === '"' || ch === "'" || ch === "`") {
+      quote = ch;
+      out += ch;
+      continue;
+    }
+    if (two === "//") return { code: out, inBlock: false };
+    if (two === "/*") {
+      block = true;
+      out += "  ";
+      i += 1;
+      continue;
+    }
+    out += ch;
+  }
+
+  return { code: out, inBlock: block };
+}
+
+/** File types where `//` and `/* *​/` mean "comment" rather than data. */
+const COMMENT_AWARE_EXTS = new Set([".ts", ".tsx", ".mts", ".js", ".jsx", ".mjs", ".css"]);
+
 function collectFromTextFile(filePath: string, refs: Reference[]): void {
   const abs = join(REPO_ROOT, filePath);
   if (!existsSync(abs)) return;
   const text = readFileSync(abs, "utf8");
   const lines = text.split("\n");
   const patterns = [PUBLIC_PATH_PATTERN];
-  lines.forEach((line, i) => {
+  const commentAware = COMMENT_AWARE_EXTS.has(extname(filePath).toLowerCase());
+  let inBlock = false;
+
+  lines.forEach((rawLine, i) => {
+    let line = rawLine;
+    if (commentAware) {
+      const stripped = stripComments(rawLine, inBlock);
+      line = stripped.code;
+      inBlock = stripped.inBlock;
+    }
     for (const pattern of patterns) {
       pattern.lastIndex = 0;
       for (const m of line.matchAll(pattern)) {
