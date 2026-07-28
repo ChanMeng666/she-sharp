@@ -8262,6 +8262,26 @@
       "digest": "She Sharp x MYOB 'Working Smarter: AI, MYOB, and the New Delivery Landscape' (30 July 2026, 5:00-7:30pm, MYOB 8/50 Albert St). Page complete: title/subtitle/speakers (Jean Fulop, Marion Nicholas, Katy Seel - bios synced by Lesley Jun 2026)/venue all verified against the July 2026 Run Sheet workbook. 2026-07-20: agenda rebuilt from the Run Sheet 'Agenda' tab (6 rows: 5:00 registration, 5:30 welcome, 5:45 speakers, 6:25 activity intro+photo, 6:40 group activity, from 7:30 closing+networking); activity bullet now notes teams of up to 6 with beginner/intermediate/advanced problem statements. NOTE: Run Sheet detail schedule runs networking to 8:00pm but displayed time stays 5:00-7:30pm to match Humanitix (user decision). REDACTION LANDMINES: pinned message carries 12 Humanitix ?accesscode= sponsor/team/guest/UniClubs links, plus Slido link, survey Google Form and the run-sheet Google Sheet - never publish. Run Sheet also contains attendee PII. Open: registrations at 49 as of 20 Jul, team pushing UniClubs; slide deck + survey design still pending.",
       "digestAt": "2026-07-20T10:03:16.741Z"
     },
+    "C0BL0BRV6NL": {
+      "name": "event-lesmills-03-september-2026",
+      "type": "event",
+      "mapping": {
+        "kind": "event",
+        "events": [
+          {
+            "slug": "event-lesmills-03-september-2026",
+            "eventId": 97
+          }
+        ]
+      },
+      "watermarkTs": "1785236171.099639",
+      "threads": {},
+      "fingerprint": "sha256:82eaf72b5a34e3d707e54a67205916326189ffd3760f04ff80393c2ab9ba1790",
+      "lastSyncedAt": "2026-07-28T11:07:59.013Z",
+      "lastSyncedCommit": "",
+      "digest": "Les Mills x She Sharp panel \"No Pain, All Gain – Getting Fit for AI\" on Thu 3 Sep 2026, 5–8pm NZST, Auckland (venue TBD). Theme: Diversity and AI for Impact. Stub published in events-custom.json (id 97) with agenda from meeting minutes; speakers {}, empty registrationUrl, empty venue address, brand-logo placeholder cover. Redact: MYOB Humanitix accesscode for Les Mills (never publish); internal Runsheet sheet bookmark. Open: Les Mills speaker bios/photos, venue address, promo blurb, final poster pick (Canva options only), Les Mills Humanitix registration link.",
+      "digestAt": "2026-07-28T11:07:59.012Z"
+    },
     "C0L3U3Z7H": {
       "name": "goodies",
       "type": "general",

@@ -1791,6 +1791,81 @@
         "status": "upcoming",
         "isFeatured": false
       }
+    },
+    {
+      "id": 97,
+      "slug": "event-lesmills-03-september-2026",
+      "title": "No Pain, All Gain – Getting Fit for AI",
+      "date": "September 3, 2026",
+      "coverImage": {
+        "url": "/logos/she-sharp-logo.svg",
+        "alt": "No Pain, All Gain – Getting Fit for AI event cover (placeholder)"
+      },
+      "detailPageUrl": "https://shesharp.org.nz/events/event-lesmills-03-september-2026",
+      "shortDescription": "A Les Mills x She Sharp panel on diversity and AI for impact — cross-functional perspectives, table discussions, and networking.",
+      "attendees": null,
+      "checkedIn": 0,
+      "detailPageData": {
+        "url": "https://shesharp.org.nz/events/event-lesmills-03-september-2026",
+        "title": "No Pain, All Gain – Getting Fit for AI",
+        "subtitle": "Diversity and AI for Impact",
+        "date": "September 3, 2026",
+        "time": "5:00pm - 8:00pm NZST",
+        "location": {
+          "format": "in_person",
+          "venueName": "",
+          "address": "",
+          "city": "Auckland",
+          "country": "New Zealand"
+        },
+        "fullDescription": [
+          "Join She Sharp and Les Mills for an evening on diversity and AI for impact. A panel of cross-functional voices will share how AI is shaping different roles across the organisation, followed by interactive table discussions and networking.",
+          "Discussion themes include legal and privacy implications of AI, commercial impact, communication and change management, technical perspectives, AI use cases across the business, and AI from a fitness-company viewpoint."
+        ],
+        "speakers": {},
+        "organizers": [],
+        "sponsors": {
+          "main": [
+            {
+              "name": "Les Mills",
+              "logo": "/img/sponsors/lesmills_logo.svg"
+            }
+          ],
+          "other": []
+        },
+        "specialSections": [
+          {
+            "type": "agenda",
+            "title": "Event Format",
+            "content": [
+              "5:00pm – 5:30pm — Registration and food",
+              "5:30pm – 6:15pm — Kickoff and panel discussion",
+              "6:15pm – 6:30pm — Roundtable discussions based on panel topics",
+              "6:30pm – 6:45pm — Table discussion readouts",
+              "6:45pm – 7:30pm — Networking and event close"
+            ]
+          },
+          {
+            "type": "why-attend",
+            "title": "What You'll Explore",
+            "content": [
+              "How AI is impacting different roles across an organisation — not just deep technical topics",
+              "Legal and privacy implications of AI",
+              "Commercial impact of AI",
+              "Communication and change management",
+              "Technical perspectives and real use cases",
+              "AI from a fitness company perspective"
+            ]
+          }
+        ],
+        "photos": [],
+        "galleryUrl": "",
+        "registrationUrl": "",
+        "images": [],
+        "category": "panel",
+        "status": "upcoming",
+        "isFeatured": false
+      }
     }
   ]
 }
