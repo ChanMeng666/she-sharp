@@ -3,9 +3,9 @@
  *
  * `RecapEventCard` is compact (thumbnail left, title/date/blurb right, a
  * "Read more" link). `UpcomingEventCard` is a fuller card (cover on top,
- * title, a date/time/location meta line, plus "Add to calendar" and
- * "Register" text links). The single primary CTA button is rendered once by
- * the upcoming section, not per card.
+ * title, a date/time/location meta line, plus "Add to calendar" and either a
+ * "Register" or an "Event details" text link). The single primary CTA button
+ * is rendered once by the upcoming section, not per card.
  */
 
 import * as React from "react";
@@ -20,7 +20,7 @@ import {
 } from "@react-email/components";
 import type { AutoEvent } from "@/lib/newsletter/schema";
 import { COLORS, styles, SPACE, RADIUS, FONT_STACK } from "../brand";
-import { googleCalendarUrl } from "../utils";
+import { eventMetaLine, googleCalendarUrl } from "../utils";
 
 /** Short, decorative date accent (recap cards). */
 const metaText: React.CSSProperties = {
@@ -141,18 +141,7 @@ export function UpcomingEventCard({
   event: AutoEvent;
   isLast: boolean;
 }): React.JSX.Element {
-  // Multi-day events embed full dates in timeLabel (e.g. "Fri 7 Aug, 5:00pm –
-  // Sat 8 Aug"); showing dateLabel too would repeat the date on one line.
-  const timeLabelHasDate =
-    event.timeLabel !== null &&
-    /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)/.test(event.timeLabel);
-  const meta = [
-    timeLabelHasDate ? null : event.dateLabel,
-    event.timeLabel,
-    event.locationLabel,
-  ]
-    .filter((v): v is string => Boolean(v))
-    .join("  ·  ");
+  const meta = eventMetaLine(event);
   const calUrl = googleCalendarUrl(event);
 
   return (
@@ -189,14 +178,18 @@ export function UpcomingEventCard({
             Add to calendar
           </Link>
         ) : null}
-        {calUrl && event.registrationUrl ? (
-          <span style={{ color: COLORS.gray }}>{"  ·  "}</span>
-        ) : null}
+        {calUrl ? <span style={{ color: COLORS.gray }}>{"  ·  "}</span> : null}
+        {/* Without registration the card would otherwise dead-end, so fall
+            back to the event page rather than rendering no link at all. */}
         {event.registrationUrl ? (
           <Link href={event.registrationUrl} style={textLink}>
             Register
           </Link>
-        ) : null}
+        ) : (
+          <Link href={event.url} style={textLink}>
+            Event details →
+          </Link>
+        )}
       </Text>
     </Section>
   );

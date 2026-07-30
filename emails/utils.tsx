@@ -60,6 +60,31 @@ export function renderMarkdown(
     ));
 }
 
+/**
+ * Build the single-line "date · time · location" meta string for an event.
+ *
+ * Multi-day events embed full dates in `timeLabel` (e.g. "Fri 7 Aug, 5:00pm –
+ * Sat 8 Aug"); in that case `dateLabel` is suppressed so the date is not
+ * repeated on the same line. Shared by the upcoming event card and the
+ * headline block so both read identically.
+ */
+export function eventMetaLine(event: {
+  dateLabel: string;
+  timeLabel: string | null;
+  locationLabel: string | null;
+}): string {
+  const timeLabelHasDate =
+    event.timeLabel !== null &&
+    /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)/.test(event.timeLabel);
+  return [
+    timeLabelHasDate ? null : event.dateLabel,
+    event.timeLabel,
+    event.locationLabel,
+  ]
+    .filter((v): v is string => Boolean(v))
+    .join("  ·  ");
+}
+
 /** Compact `YYYYMMDDTHHMMSSZ` UTC stamp for Google Calendar. */
 function toCalendarStamp(date: Date): string {
   return date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");

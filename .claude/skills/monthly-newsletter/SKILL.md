@@ -123,8 +123,42 @@ dedupe guard — curate so it never has to fire):
 
 All photo URLs must be **absolute Blob JPEGs** — never WebP, never Google-hotlinked,
 never site-relative. If the month's recap events have no photos and no album, all
-photo slots come out empty — that is a VALID issue (July 2026 style); the template
-auto-hides each empty section. Never pad with filler.
+photo slots come out empty — that is a VALID issue; the template auto-hides each
+empty section. Never pad with filler.
+
+### Step 3b — Placeholder photos (only when real ones are still coming)
+
+Narrow, documented exception to "never pad with filler". Use it **only** when a
+recap event has genuinely happened (or is being treated as having happened) but
+its photos have not arrived yet — e.g. the album link is still pending. It exists
+so the issue can be laid out and reviewed now, and the real photos dropped in
+later without touching the JSON.
+
+```powershell
+npx tsx scripts/newsletter/photos.ts lib/data/json/newsletter-issues/2026-07.json --placeholders --dry-run
+npx tsx scripts/newsletter/photos.ts lib/data/json/newsletter-issues/2026-07.json --placeholders
+```
+
+This generates six branded gradient JPEGs (She Sharp purple ramp, the event name
+and a visible "photo coming soon" line) and uploads them to **fixed, guessable,
+overwritable** paths:
+
+```
+newsletter/<issueId>/photos/{hero,photo-of-the-month,strip-1..4}.jpg
+```
+
+Unlike the real-photo path, these upload with `addRandomSuffix: false`,
+`allowOverwrite: true` and `cacheControlMaxAge: 300` (Blob's default is one YEAR).
+That is the whole point: **swapping in real photos = re-uploading to the same six
+paths. The issue JSON never changes.**
+
+Rules:
+- Placeholder strip entries carry **no `eventSlug`**. `PhotoStrip.captionFor()`
+  overrides `alt` when the slug resolves, which would caption a synthetic image
+  with a real venue name.
+- Never ship placeholders to the real broadcast if real photos exist. Swap first.
+- Once real photos land, prefer re-running the normal Step 3 path (add the
+  event's `galleryUrl` and let `photos.ts` harvest) over hand-uploading.
 
 ## Step 4 — Edit the `editorial` block (give it real voice)
 
@@ -155,6 +189,17 @@ issue (`2026-06.json`). **Required:**
 volunteer / donate — keep the three canonical hrefs), `sponsorThanks` (name ONLY
 partners/venues present in the event data, or `null` to omit).
 
+- **`headline`** — promote ONE upcoming event to a marquee block under the founder
+  note. Use it when a month has a single obvious must-attend event; leave it `null`
+  when the month is evenly weighted. `eventSlug` must match an entry in
+  `auto.upcomingEvents` — every hard fact is read from there, so only the framing
+  copy (`eyebrow`, `dateBadge`, `blurb`, CTA) lives in `editorial`. The promoted
+  event is removed from "What's next" and its CTA replaces the one at the bottom.
+- **`pulse.newsBites`** — up to 3 source-attributed NZ items, replacing the single
+  `newsBite`. Same 宁缺毋滥 rule: one strong local item beats three vendor press
+  releases. Every number must appear verbatim in the linked source, and every
+  source must be NZ-relevant to a reader here.
+
 Never re-add a spotlight / featured-mentee section — it was removed. Only feature
 a person when you can verify a real photo + source (there is no schema slot for it
 today, so in practice: don't).
@@ -175,8 +220,8 @@ Writes `tmp/emails/newsletter-2026-08.<mode>.html`. Check:
 
 ## Step 6 — Test send
 
-**Send ONLY to `chanmeng6666@gmail.com`** — the single approved test mailbox.
-Never send a test to any other address.
+**Default: send ONLY to `chanmeng6666@gmail.com`** — the single approved test
+mailbox. This is always the first send, and by default the only one.
 
 ```powershell
 $env:RESEND_API_KEY="re_…"
@@ -186,6 +231,26 @@ npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.
 This uses the transactional `sendEmail` helper with a `[TEST]` subject prefix — it
 does NOT touch Resend broadcasts/segments/topics. Inspect in Gmail (web + mobile)
 and Outlook: layout, images, links, preheader.
+
+### Step 6b — Reviewer round (only on explicit approval)
+
+Sometimes the founder wants a wider human review before the broadcast. That is
+allowed under all of these conditions:
+
+- Step 6 has already been sent **and the founder has explicitly approved widening**.
+  Never expand the recipient list on your own initiative.
+- The list is a named reviewer list supplied by the founder — never a segment,
+  never the mailing list, never anyone who merely attended an event.
+- **Maximum 25 addresses** (the script hard-caps this).
+- **One email per address.** The script loops rather than passing an array to
+  `to:`, so reviewers never see each other's addresses.
+
+```powershell
+npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.json "a@x.com,b@y.com" --dry-run
+npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.json "a@x.com,b@y.com"
+```
+
+Always `--dry-run` first and read the parsed list back before the real send.
 
 Iterate Steps 3–6 until it matches the June bar — **email UI quality is the
 pilot's acceptance bar.**
@@ -257,8 +322,11 @@ it stays unlisted.
    pipeline guarantees it; you just sanity-check the source links). Venues only
    from event data; sponsor thanks names only partners present in the data; drop
    `pulse.newsBite` when nothing genuinely relevant/local surfaced.
-6. **Sections auto-hide when empty** (cover / strip / POM / newsBite / sponsors).
-   An issue with no photos is VALID (July 2026 style) — never pad with filler.
+6. **Sections auto-hide when empty** (cover / strip / POM / headline / news /
+   sponsors). An issue with no photos is VALID — never pad with filler. The ONE
+   exception is the documented placeholder path (Step 3b), for an event whose real
+   photos are still coming; placeholders must be visibly labelled as such and must
+   be swapped before the real broadcast.
 7. **Voice.** Warm in-person Auckland community voice, NZ spelling, real venue
    names, one concrete in-the-room detail in the founder note. Subject ≤50
    (≤1 emoji); preview ≤120 (complements, not repeats); ONE primary CTA. The AI
@@ -269,7 +337,9 @@ Also non-negotiable:
   `editorial` block — only before a human has edited, or on explicit "start over".
 - **All image URLs absolute** (`https://…`). Email clients don't resolve
   site-relative paths.
-- **Test sends go ONLY to `chanmeng6666@gmail.com`.** Never any other address.
+- **The first test send always goes to `chanmeng6666@gmail.com` alone.** Widening
+  to a named reviewer list (Step 6b, max 25) requires explicit founder approval
+  each time — never widen on your own initiative, and never to a segment.
 - **Approve reads the deployed bundle, not Redis** — always commit + deploy
   (Step 7) before approving (Step 8).
 - **Keep it unlisted during the pilot** — no archive entry, `noindex` stays.
@@ -280,13 +350,15 @@ Also non-negotiable:
 |---|---|---|---|
 | Cover | `editorial.heroImageUrl` | a strong landscape shot exists | best photo, promoted out of the strip (Blob JPEG) |
 | Founder note | `editorial.founderNote` | always | hand-written; fixed signature + photoUrl |
+| Headline event | `editorial.headline` | ONE upcoming event deserves top billing | human curation; facts read from the matching `auto.upcomingEvents` entry |
 | Photo strip | `auto.photoStrip` | ≥1 real event photo | `photos.ts` upload, then human-pruned |
 | Photo of the month | `editorial.photoOfTheMonth` | a second good shot exists | second-best photo (different event) + venue caption |
 | Last-month recap | recap cards | recap events exist OR POM set | `auto.recapEvents` + `editorial.eventBlurbs` |
-| Upcoming + CTA | `auto.upcomingEvents`, `editorial.primaryCta` | upcoming events exist | event data; CTA = next event's registration link |
+| Upcoming + CTA | `auto.upcomingEvents`, `editorial.primaryCta` | upcoming events exist | event data; CTA = next event's registration link. The promoted headline event is filtered out of this list, and the button is suppressed here when a headline block is present (that block carries the issue's one CTA) |
 | NZ Tech Pulse | `editorial.pulse` | pipeline produced verified data | `lib/newsletter/pulse.ts` (SEEK + RSS, verbatim-guarded) |
 | — hero stat | `pulse.heroStat` | present in draft | SEEK report (verbatim) or evergreen fallback |
-| — news bite | `pulse.newsBite` | a genuinely relevant/local item | NZ tech RSS; else `null` (drop it) |
+| — news list | `pulse.newsBites` | 1-3 genuinely relevant/local items | NZ tech RSS + hand-verified sources; wins over `newsBite` when set |
+| — news bite | `pulse.newsBite` | legacy single-item fallback | NZ tech RSS; else `null` (drop it) |
 | — did you know | `pulse.didYouKnow` | present in draft | evergreen NZ/Auckland fact pool |
 | Stats strip | `auto.stats` | always | site stats |
 | Get involved | `editorial.opportunities` | always | mentor / volunteer / donate (canonical hrefs) |

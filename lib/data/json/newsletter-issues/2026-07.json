@@ -7,51 +7,90 @@
     "scheduledAt": null
   },
   "editorial": {
-    "subjectLine": "Working smarter with AI + a hackathon awaits",
-    "previewText": "Inside: AI lessons from MYOB, community wins, and your invitation to the Aotearoa AI Hackathon this August.",
+    "subjectLine": "AI at MYOB, and a hackathon you can enter solo",
+    "previewText": "You don't need a team or an AI background for 7–8 August — solo registrants get matched on the day.",
     "founderNote": {
       "heading": "A note from our founder",
-      "bodyMd": "July reminded me why this community matters. At MYOB, we watched women in tech roll up their sleeves and use AI not as a buzzword, but as a practical tool to solve real problems and deliver more value in their teams.\n\nNext month we go bigger. The [Aotearoa AI Hackathon Festival](https://aihackathon.nz/) brings us together for two days at AUT to build AI solutions for the UN Sustainable Development Goals — with free pre-event training so no one is left behind. Whether you write your first line of code or your ten-thousandth there, there is a place for you.\n\nThank you for being part of this. Keep working smart, and keep lifting each other up.",
+      "bodyMd": "This week we ran Working Smarter with MYOB at their Albert Street office. Three of their team spoke — Jean Fulop on product, Marion Nicholas on practice, Katy Seel on the people side. After that everyone split into small groups to work a real problem, with MYOB mentors circulating.\n\nShe Sharp is a partner in the [Aotearoa AI Hackathon Festival](https://aihackathon.nz/) this year. It runs 7–8 August at AUT City Campus, two days building AI projects for the UN Sustainable Development Goals. I'll be one of the judges, so if you enter, I'll see your pitch.\n\nWe don't know yet who's coming. That's the only part of this that isn't sorted, and it's the part I care about.",
       "signature": "Dr. Mahsa McCauley, Founder & Chair, She Sharp",
       "photoUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/people/mahsa-mccauley.jpg"
     },
-    "photoOfTheMonth": null,
-    "recapIntro": "Here is what our community got up to in July — one evening, plenty of AI, and a lot of smart problem-solving.",
-    "eventBlurbs": {},
+    "headline": {
+      "eventSlug": "aotearoa-ai-hackathon-festival-2026",
+      "eyebrow": "Next up · 7–8 August",
+      "dateBadge": {
+        "day": "7–8",
+        "month": "AUG"
+      },
+      "blurb": "Friday evening through Saturday at AUT City Campus. Teams of three to seven take on a UN Sustainable Development Goal, with mentors and technical support in the room. Beginners are welcome. Winning teams go on to pitch at the Aotearoa AI Summit.",
+      "ctaLabel": "Sign up for 7–8 August",
+      "ctaHref": "https://aihackathon.nz/"
+    },
+    "photoOfTheMonth": {
+      "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/photo-of-the-month.jpg",
+      "caption": "Placeholder — real photos from MYOB · Working Smarter are coming soon."
+    },
+    "recapIntro": "Just the one event in July.",
+    "eventBlurbs": {
+      "she-sharp-and-myob-working-smarter": "The second half was the point: teams of up to six, problem statements pitched at beginner, intermediate and advanced levels, and MYOB people moving between the tables to unstick them."
+    },
     "primaryCta": {
-      "label": "Join the AI Hackathon",
+      "label": "Sign up for 7–8 August",
       "href": "https://aihackathon.nz/"
     },
     "opportunities": [
       {
-        "title": "Volunteer at the Aotearoa AI Hackathon",
-        "body": "We are looking for facilitators, mentors, and helpers to make August's two-day festival at AUT a success. Lend your skills and grow your network.",
+        "title": "Read up on mentoring",
+        "body": "Applications for this cohort closed in June and we don't have a date for the next round yet. What mentees ask for is someone one step ahead of them, not twenty years ahead. The role description is there now if you've been thinking about it.",
+        "href": "https://www.shesharp.org.nz/mentorship/mentor"
+      },
+      {
+        "title": "Volunteer with us",
+        "body": "Every event needs facilitators, floor helpers, and people who notice the newcomer standing on their own and go over. August's hackathon is the next big one.",
         "href": "https://www.shesharp.org.nz/join-our-team"
       },
       {
-        "title": "Bring your team along",
-        "body": "Partner with She Sharp to champion women in STEM. Explore our corporate sponsorship options and put your organisation behind real impact.",
-        "href": "https://www.shesharp.org.nz/sponsors/corporate-sponsorship"
+        "title": "Support the mahi",
+        "body": "Our events are free, or close to it. Donations are why. If She Sharp has been useful to you at some point, this is the way to pass it on.",
+        "href": "https://www.shesharp.org.nz/donate"
       }
     ],
-    "sponsorThanks": "A heartfelt thank you to MYOB for hosting July's Working Smarter evening, and to AUT for partnering with us on next month's Aotearoa AI Hackathon Festival. Your support makes this community possible.",
-    "heroImageUrl": null,
+    "sponsorThanks": "Thanks to MYOB for hosting us on Albert Street, and for giving us three of their leaders and a group of their mentors for the night. Thanks also to AUT and the AI Forum New Zealand, who are behind the 7–8 August hackathon we're part of.",
+    "heroImageUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/hero.jpg",
     "pulse": {
       "heroStat": {
-        "value": "3.3%",
-        "label": "of NZ job ads now reference AI skills",
-        "context": "Job ads that reference AI skills increased 3.9% month-on-month and now make up 3.3% of total job ads.",
-        "sourceLabel": "SEEK NZ Employment Report",
-        "sourceUrl": "https://www.seek.co.nz/about/news/article/seeknz-employment-report-may26"
+        "value": "107.3%",
+        "label": "more NZ job ads mention AI skills than a year ago",
+        "context": "More than doubled in twelve months. If you've been wondering whether this is worth giving up a weekend for, that's your answer.",
+        "sourceLabel": "SEEK NZ Employment Report — June",
+        "sourceUrl": "https://nz.seek.com/about/news/article/seek-nz-employment-report-june26"
       },
-      "newsBite": {
-        "title": "Beyond automation: Why AI is forcing us to rethink how work gets done",
-        "summary": "Businesses that treat AI as a mere efficiency tool risk missing bigger gains from redesigning how work actually happens, argues One NZ's chief executive.",
-        "sourceLabel": "IT Brief NZ",
-        "url": "https://itbrief.co.nz/story/beyond-automation-why-ai-is-forcing-us-to-rethink-how-work-gets-done"
-      },
+      "newsBite": null,
+      "newsBites": [
+        {
+          "title": "If you shelved a job search, take it back off the shelf",
+          "summary": "Tech job ads are up 9.9% on a year ago and Auckland is up 5.0%, while ads nationally rose just 0.2% in June. Tech is growing faster than the market around it.",
+          "sourceLabel": "SEEK NZ Employment Report",
+          "url": "https://nz.seek.com/about/news/article/seek-nz-employment-report-june26",
+          "dateLabel": "Jun"
+        },
+        {
+          "title": "The environmental bill for AI is becoming a public question",
+          "summary": "Telco One NZ surveyed 1,001 people: 45% are worried about the environmental impact of businesses using AI, rising to 63% among 18 to 24 year olds. Electricity use topped the list at 66%.",
+          "sourceLabel": "IT Brief NZ",
+          "url": "https://itbrief.co.nz/story/new-zealanders-worry-about-ai-s-environmental-impact",
+          "dateLabel": "29 Jul"
+        },
+        {
+          "title": "Parents aren't sure their kids can spot a fake",
+          "summary": "Norton surveyed 1,000 New Zealand adults with children under 18. 44% weren't confident their child could tell AI-generated content from the real thing, and 37% doubted their child knew AI can be wrong. That gap is what schools outreach exists to close.",
+          "sourceLabel": "SecurityBrief NZ",
+          "url": "https://securitybrief.co.nz/story/new-zealand-parents-worry-kids-can-t-spot-ai-fakes",
+          "dateLabel": "29 Jul"
+        }
+      ],
       "didYouKnow": {
-        "text": "NZ's tech 'skills shortage' is really a skills mismatch — the greatest unmet demand is for senior, experienced people. Mentorship matters.",
+        "text": "NZ's tech 'skills shortage' is mostly a mismatch. The deepest unmet demand is for senior, experienced people — and the mentors we most need are the ones who assume they aren't senior enough.",
         "sourceLabel": "NZTech Digital Skills Aotearoa",
         "sourceUrl": "https://technewzealand.org.nz/reports/digital-skills-for-tomorrow-today-report/"
       }
@@ -84,12 +123,47 @@
         "url": "https://www.shesharp.org.nz/events/aotearoa-ai-hackathon-festival-2026",
         "registrationUrl": "https://aihackathon.nz/",
         "shortDescription": "A two-day hackathon at AUT City Campus building AI solutions for UN SDG challenges. Free pre-event training, venue prizes, and a path to pitch at the Aotearoa AI Summit 2026."
+      },
+      {
+        "slug": "event-lesmills-03-september-2026",
+        "title": "No Pain, All Gain – Getting Fit for AI",
+        "dateLabel": "Thursday, September 3",
+        "startIso": "2026-09-03T17:00:00+12:00",
+        "timeLabel": "5:00pm - 8:00pm NZST",
+        "locationLabel": "Auckland",
+        "coverImageUrl": null,
+        "url": "https://www.shesharp.org.nz/events/event-lesmills-03-september-2026",
+        "registrationUrl": null,
+        "shortDescription": "A Les Mills x She Sharp panel on diversity and AI for impact — cross-functional perspectives, table discussions, and networking. Venue and registration details coming soon."
       }
     ],
     "stats": {
       "members": "3000+",
       "sponsors": "50+",
       "events": "94+"
-    }
+    },
+    "photoStrip": [
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/strip-1.jpg",
+        "alt": "MYOB · Working Smarter — photo coming soon (1 of 5)"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/strip-2.jpg",
+        "alt": "MYOB · Working Smarter — photo coming soon (2 of 5)"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/strip-3.jpg",
+        "alt": "MYOB · Working Smarter — photo coming soon (3 of 5)"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/strip-4.jpg",
+        "alt": "MYOB · Working Smarter — photo coming soon (4 of 5)"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/strip-5.jpg",
+        "alt": "MYOB · Working Smarter — photo coming soon (5 of 5)"
+      }
+    ],
+    "photoAlbumUrl": null
   }
 }
