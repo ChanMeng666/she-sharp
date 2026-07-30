@@ -4,6 +4,9 @@
  * Archive photos for past events that ship no on-page photo set of their own.
  * Keyed by event slug. Consumed by the event detail page (photo gallery) and
  * the resources photo-gallery mosaics.
+ *
+ * Regenerate a single event with:
+ *   npx tsx scripts/build-event-archive.mts --slug <slug>
  */
 
 export interface EventArchivePhoto {
