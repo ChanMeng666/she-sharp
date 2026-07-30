@@ -91,4 +91,18 @@ export const eventArchivePhotos: Record<string, EventArchivePhoto[]> = {
     { src: "/img/events/archive/she-sharp-and-myob-working-smarter/4.webp", width: 1280, height: 854, alt: "Working Smarter: AI, MYOB, and the New Delivery Landscape — She Sharp event photo 4" },
     { src: "/img/events/archive/she-sharp-and-myob-working-smarter/5.webp", width: 1280, height: 854, alt: "Working Smarter: AI, MYOB, and the New Delivery Landscape — She Sharp event photo 5" },
   ],
+  "she-storytellers-series-2-0": [
+    { src: "/img/events/archive/she-storytellers-series-2-0/1.webp", width: 1000, height: 650, alt: "SHE# Storytellers Series 2.0 — She Sharp event photo 1" },
+    { src: "/img/events/archive/she-storytellers-series-2-0/2.webp", width: 1000, height: 650, alt: "SHE# Storytellers Series 2.0 — She Sharp event photo 2" },
+    { src: "/img/events/archive/she-storytellers-series-2-0/3.webp", width: 1000, height: 650, alt: "SHE# Storytellers Series 2.0 — She Sharp event photo 3" },
+  ],
+  "superhero-daughter-day": [
+    { src: "/img/events/archive/superhero-daughter-day/1.webp", width: 1000, height: 650, alt: "SUPERHERO DAUGHTER DAY — She Sharp event photo 1" },
+    { src: "/img/events/archive/superhero-daughter-day/2.webp", width: 1000, height: 650, alt: "SUPERHERO DAUGHTER DAY — She Sharp event photo 2" },
+  ],
+  "online-quiz-night-celebrating-ada-lovelace-day": [
+    { src: "/img/events/archive/online-quiz-night-celebrating-ada-lovelace-day/1.webp", width: 1000, height: 650, alt: "Online Quiz Night celebrating Ada Lovelace Day — She Sharp event photo 1" },
+    { src: "/img/events/archive/online-quiz-night-celebrating-ada-lovelace-day/2.webp", width: 1000, height: 650, alt: "Online Quiz Night celebrating Ada Lovelace Day — She Sharp event photo 2" },
+    { src: "/img/events/archive/online-quiz-night-celebrating-ada-lovelace-day/3.webp", width: 1000, height: 650, alt: "Online Quiz Night celebrating Ada Lovelace Day — She Sharp event photo 3" },
+  ],
 };
