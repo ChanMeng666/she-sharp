@@ -11,7 +11,7 @@
     "previewText": "You don't need a team or an AI background for 7–8 August — solo registrants get matched on the day.",
     "founderNote": {
       "heading": "A note from our founder",
-      "bodyMd": "This week we ran Working Smarter with MYOB at their Albert Street office. Three of their team spoke — Jean Fulop on product, Marion Nicholas on practice, Katy Seel on the people side. After that everyone split into small groups to work a real problem, with MYOB mentors circulating.\n\nShe Sharp is a partner in the [Aotearoa AI Hackathon Festival](https://aihackathon.nz/) this year. It runs 7–8 August at AUT City Campus, two days building AI projects for the UN Sustainable Development Goals. I'll be one of the judges, so if you enter, I'll see your pitch.\n\nWe don't know yet who's coming. That's the only part of this that isn't sorted, and it's the part I care about.",
+      "bodyMd": "This week we ran Working Smarter with MYOB at their Albert Street office. We opened with a karakia, then three of their team spoke — Jean Fulop on product, Marion Nicholas on practice, Katy Seel on the people side. After that everyone split into small groups to work a real problem, with MYOB mentors circulating.\n\nShe Sharp is a partner in the [Aotearoa AI Hackathon Festival](https://aihackathon.nz/) this year. It runs 7–8 August at AUT City Campus, two days building AI projects for the UN Sustainable Development Goals. I'll be one of the judges, so if you enter, I'll see your pitch.\n\nWe don't know yet who's coming. That's the only part of this that isn't sorted, and it's the part I care about.",
       "signature": "Dr. Mahsa McCauley, Founder & Chair, She Sharp",
       "photoUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/people/mahsa-mccauley.jpg"
     },
@@ -27,8 +27,9 @@
       "ctaHref": "https://aihackathon.nz/"
     },
     "photoOfTheMonth": {
-      "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/photo-of-the-month.jpg",
-      "caption": "Placeholder — real photos from MYOB · Working Smarter are coming soon."
+      "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-4-1CXkl2XC5GtXu9m9eWu4KJzwMo82kl.jpg",
+      "caption": "Working Smarter under way at MYOB's Albert Street office, with three of their team on what AI has changed for them.",
+      "eventSlug": "she-sharp-and-myob-working-smarter"
     },
     "recapIntro": "Just the one event in July.",
     "eventBlurbs": {
@@ -56,7 +57,7 @@
       }
     ],
     "sponsorThanks": "Thanks to MYOB for hosting us on Albert Street, and for giving us three of their leaders and a group of their mentors for the night. Thanks also to AUT and the AI Forum New Zealand, who are behind the 7–8 August hackathon we're part of.",
-    "heroImageUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/hero.jpg",
+    "heroImageUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-1-EwIwezp1R1eHWQ9N1DxtUKA2by3s1L.jpg",
     "pulse": {
       "heroStat": {
         "value": "107.3%",
@@ -144,26 +145,31 @@
     },
     "photoStrip": [
       {
-        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/strip-1.jpg",
-        "alt": "MYOB · Working Smarter — photo coming soon (1 of 5)"
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-3-OBb3Y3dCY2e8WtzU0NMuQpAEa2rPsM.jpg",
+        "alt": "Two attendees at the kai table before the session starts",
+        "eventSlug": "she-sharp-and-myob-working-smarter"
       },
       {
-        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/strip-2.jpg",
-        "alt": "MYOB · Working Smarter — photo coming soon (2 of 5)"
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-2-TliX6g0x8Arkt7BvR2R4XeYXWU81Lf.jpg",
+        "alt": "Kai laid out for arrivals at MYOB's Albert Street office",
+        "eventSlug": "she-sharp-and-myob-working-smarter"
       },
       {
-        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/strip-3.jpg",
-        "alt": "MYOB · Working Smarter — photo coming soon (3 of 5)"
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-5-uBdropqnBkUdpoUvUTG4KTCmhvOhib.jpg",
+        "alt": "The evening opens with a karakia",
+        "eventSlug": "she-sharp-and-myob-working-smarter"
       },
       {
-        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/strip-4.jpg",
-        "alt": "MYOB · Working Smarter — photo coming soon (4 of 5)"
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-6-acb7LyNcFKN32g2WCv7QvG8rQ2AoIt.jpg",
+        "alt": "Housekeeping before the talks begin, to a full room",
+        "eventSlug": "she-sharp-and-myob-working-smarter"
       },
       {
-        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/strip-5.jpg",
-        "alt": "MYOB · Working Smarter — photo coming soon (5 of 5)"
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-7-U3a5OA6VrzDeGPopkcTj69Xesbzwhs.jpg",
+        "alt": "Introducing She Sharp and the gender gap in STEM",
+        "eventSlug": "she-sharp-and-myob-working-smarter"
       }
     ],
-    "photoAlbumUrl": null
+    "photoAlbumUrl": "https://photos.app.goo.gl/PMnZm5onwY58vEsf9"
   }
 }
