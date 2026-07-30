@@ -19,8 +19,12 @@ import { GRADIENT_CSS, GRADIENT_STOPS } from "../brand";
 /**
  * `bgcolor` is a valid <td> attribute and the most Outlook-safe way to fill a
  * cell, but React dropped it from its typed attributes — surface it here.
+ *
+ * Exported: any component filling a table cell with a solid colour should
+ * spread this alongside a CSS `backgroundColor`, since Outlook's Word engine
+ * honours the attribute far more reliably than the style declaration.
  */
-function bgcolorAttr(color: string): React.TdHTMLAttributes<HTMLTableCellElement> {
+export function bgcolorAttr(color: string): React.TdHTMLAttributes<HTMLTableCellElement> {
   return { bgcolor: color } as unknown as React.TdHTMLAttributes<HTMLTableCellElement>;
 }
 

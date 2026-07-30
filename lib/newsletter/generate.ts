@@ -291,6 +291,8 @@ export function emptyEditorialStub(
       signature: "The She Sharp Team",
       photoUrl: null,
     },
+    // Promoting an event to the headline block is a human curation call.
+    headline: null,
     photoOfTheMonth: null,
     recapIntro: "Here is a look back at what our community got up to recently.",
     eventBlurbs,

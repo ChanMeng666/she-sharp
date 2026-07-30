@@ -30,6 +30,7 @@ import { COLORS, styles, SPACE, RADIUS, FONT_STACK, CONTAINER_WIDTH } from "./br
 import { Header } from "./components/Header";
 import { Cover } from "./components/Cover";
 import { FounderNote } from "./components/FounderNote";
+import { HeadlineEvent } from "./components/HeadlineEvent";
 import { PhotoStrip } from "./components/PhotoStrip";
 import { RecapEventCard, UpcomingEventCard } from "./components/EventCard";
 import { Pulse } from "./components/Pulse";
@@ -107,8 +108,36 @@ export function NewsletterEmail({
 
   const photoStrip = dedupePhotoStrip(issue);
 
+  // The promoted event is rendered by the headline plate and dropped from the
+  // "What's next" list so it never appears twice. A slug that matches nothing
+  // degrades silently to no headline block rather than an empty plate.
+  const headlineEvent = editorial.headline
+    ? (auto.upcomingEvents.find(
+        (event) => event.slug === editorial.headline?.eventSlug
+      ) ?? null)
+    : null;
+  const restUpcoming = headlineEvent
+    ? auto.upcomingEvents.filter((event) => event.slug !== headlineEvent.slug)
+    : auto.upcomingEvents;
+
   const hasRecap = auto.recapEvents.length > 0 || editorial.photoOfTheMonth;
-  const hasUpcoming = auto.upcomingEvents.length > 0;
+  const hasUpcoming = restUpcoming.length > 0;
+
+  /**
+   * A headline issue reads narrative-first: the recap card explains the month,
+   * then the photo grid shows it. Issues without a headline plate keep the
+   * original strip-then-recap order, so an already-sent issue re-renders in the
+   * web archive exactly as its subscribers received it.
+   */
+  const narrativeFirst = Boolean(editorial.headline && headlineEvent);
+
+  const photoStripBlock = (
+    <PhotoStrip
+      photos={photoStrip}
+      recapEvents={auto.recapEvents}
+      albumUrl={auto.photoAlbumUrl}
+    />
+  );
 
   return (
     <Html lang="en">
@@ -128,11 +157,11 @@ export function NewsletterEmail({
 
           <FounderNote note={editorial.founderNote} greeting={greeting} />
 
-          <PhotoStrip
-            photos={photoStrip}
-            recapEvents={auto.recapEvents}
-            albumUrl={auto.photoAlbumUrl}
-          />
+          {editorial.headline && headlineEvent ? (
+            <HeadlineEvent headline={editorial.headline} event={headlineEvent} />
+          ) : null}
+
+          {narrativeFirst ? null : photoStripBlock}
 
           {hasRecap ? (
             <Section style={styles.card}>
@@ -188,24 +217,29 @@ export function NewsletterEmail({
             </Section>
           ) : null}
 
+          {narrativeFirst ? photoStripBlock : null}
+
           {hasUpcoming ? (
             <Section style={styles.card}>
               <Text style={styles.eyebrow}>What's next</Text>
               <Heading as="h2" style={{ ...styles.h2, color: COLORS.ink }}>
                 Upcoming events
               </Heading>
-              {auto.upcomingEvents.map((event, idx) => (
+              {restUpcoming.map((event, idx) => (
                 <UpcomingEventCard
                   key={event.slug}
                   event={event}
-                  isLast={idx === auto.upcomingEvents.length - 1}
+                  isLast={idx === restUpcoming.length - 1}
                 />
               ))}
-              <Section style={{ textAlign: "center", marginTop: `${SPACE.xl}px` }}>
-                <Button href={editorial.primaryCta.href} style={styles.button}>
-                  {editorial.primaryCta.label}
-                </Button>
-              </Section>
+              {/* The headline plate already carries the issue's one CTA. */}
+              {headlineEvent ? null : (
+                <Section style={{ textAlign: "center", marginTop: `${SPACE.xl}px` }}>
+                  <Button href={editorial.primaryCta.href} style={styles.button}>
+                    {editorial.primaryCta.label}
+                  </Button>
+                </Section>
+              )}
             </Section>
           ) : null}
 

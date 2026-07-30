@@ -22,6 +22,14 @@ export const COLORS = {
   periwinkle: "#8982ff",
   periwinkleLight: "#f4f4fa",
   navyDark: "#1f1e44",
+  /** One step up from navyDark — hairlines and separators on a navy plate. */
+  navyMid: "#2c2a5e",
+  /**
+   * Muted copy colour for text sitting on `navyDark`. SOLID hex on purpose:
+   * some Outlook builds drop `rgba()` colour declarations and fall back to
+   * inherited black, which is unreadable on a dark plate.
+   */
+  inkOnNavy: "#d7d6ef",
   mint: "#b1f6e9",
   mintLight: "#effefb",
   pageBg: "#f9f5f8",
@@ -76,6 +84,28 @@ export const CARD_INNER_WIDTH = CONTAINER_WIDTH - SPACE.xxl * 2;
 /* ------------------------------------------------------------------ */
 /* Shared style objects                                               */
 /* ------------------------------------------------------------------ */
+
+/**
+ * Shared CTA button geometry.
+ *
+ * The default (purple/white) colours live here rather than in the variants
+ * because React serialises inline styles in key-insertion order: overriding
+ * `backgroundColor`/`color` via spread keeps their original position, whereas
+ * appending them to a colourless base would reorder the emitted `style`
+ * attribute and change previously-rendered issues byte-for-byte.
+ */
+const buttonBase: CSSProperties = {
+  backgroundColor: COLORS.purpleDark,
+  borderRadius: `${RADIUS}px`,
+  color: COLORS.white,
+  fontFamily: FONT_STACK,
+  fontSize: "16px",
+  fontWeight: 700,
+  textDecoration: "none",
+  textAlign: "center",
+  padding: "14px 32px",
+  display: "inline-block",
+};
 
 export const styles = {
   /** Outer page background — every text sits on a solid color (dark-mode safe). */
@@ -162,17 +192,13 @@ export const styles = {
   } as CSSProperties,
 
   /** The single large primary CTA of the email. */
-  button: {
-    backgroundColor: COLORS.purpleDark,
-    borderRadius: `${RADIUS}px`,
-    color: COLORS.white,
-    fontFamily: FONT_STACK,
-    fontSize: "16px",
-    fontWeight: 700,
-    textDecoration: "none",
-    textAlign: "center",
-    padding: "14px 32px",
-    display: "inline-block",
+  button: buttonBase,
+
+  /** Same button on a dark plate — mint fill so it still reads as the CTA. */
+  buttonOnDark: {
+    ...buttonBase,
+    backgroundColor: COLORS.mint,
+    color: COLORS.navyDark,
   } as CSSProperties,
 
   hr: {

@@ -26,6 +26,17 @@ export const issueMetaSchema = z.object({
   scheduledAt: z.string().nullable().default(null),
 });
 
+/** One NZ Tech Pulse news item (source-attributed; never model-invented). */
+export const pulseNewsItemSchema = z.object({
+  title: z.string().min(1),
+  /** At most two sentences — up to three of these stack in the rendered list. */
+  summary: z.string().min(1),
+  sourceLabel: z.string().min(1),
+  url: z.string().url(),
+  /** Optional short dateline shown before the source, e.g. "28 Jul". */
+  dateLabel: z.string().min(1).max(24).optional(),
+});
+
 /**
  * Human-owned copy. Nullable sections are omitted from the rendered email
  * when null (e.g. no photo of the month picked yet).
@@ -43,6 +54,40 @@ export const editorialSchema = z.object({
     /** Optional headshot shown beside the signature (absolute email-safe JPEG). */
     photoUrl: z.string().url().nullable().default(null),
   }),
+  /**
+   * Optional "headline event" — ONE marquee upcoming event promoted to the top
+   * of the issue, directly under the founder note.
+   *
+   * `eventSlug` must match an entry in `auto.upcomingEvents`; every hard fact
+   * (title, date, time, location, links) is read from that snapshot so the
+   * block can never drift from the event data — only the framing copy lives
+   * here. The promoted event is dropped from the "What's next" list so it is
+   * never shown twice. Null omits the block entirely.
+   */
+  headline: z
+    .object({
+      /** Slug of the promoted event; must exist in `auto.upcomingEvents`. */
+      eventSlug: z.string().min(1),
+      /** Small all-caps label above the title, e.g. "Next up · 7-8 August". */
+      eyebrow: z.string().min(1).max(40),
+      /**
+       * Large two-part date treatment on the left rail, e.g. day "7-8",
+       * month "AUG". Free text rather than derived, so multi-day events and
+       * ranges read naturally.
+       */
+      dateBadge: z.object({
+        day: z.string().min(1).max(8),
+        month: z.string().min(1).max(4),
+      }),
+      /** 1-2 sentence pitch, used here instead of the event's shortDescription. */
+      blurb: z.string().min(1),
+      /** Button label; null falls back to "Register". */
+      ctaLabel: z.string().min(1).max(40).nullable().default(null),
+      /** Button target; null falls back to the event's registrationUrl, then its page. */
+      ctaHref: z.string().url().nullable().default(null),
+    })
+    .nullable()
+    .default(null),
   photoOfTheMonth: z
     .object({
       /** Absolute URL. */
@@ -95,14 +140,21 @@ export const editorialSchema = z.object({
         sourceLabel: z.string().min(1),
         sourceUrl: z.string().url(),
       }),
-      newsBite: z
-        .object({
-          title: z.string().min(1),
-          summary: z.string().min(1),
-          sourceLabel: z.string().min(1),
-          url: z.string().url(),
-        })
-        .nullable(),
+      /**
+       * Legacy single news bite. KEPT: issues generated before the list
+       * existed (e.g. 2026-06) carry this key explicitly set to null, and
+       * `pulse.ts` still produces it. Rendered only when `newsBites` is
+       * absent or empty.
+       */
+      newsBite: pulseNewsItemSchema.nullable(),
+      /**
+       * Multi-item news list (max 3) — the successor to `newsBite`. Optional
+       * rather than `.default([])` on purpose: a default would make the key
+       * required in the inferred OUTPUT type, breaking the `Pulse` object
+       * literals in `pulse.ts` and the `deepStrictEqual` comparisons in
+       * `pulse.test.ts`.
+       */
+      newsBites: z.array(pulseNewsItemSchema).max(3).optional(),
       didYouKnow: z
         .object({
           text: z.string().min(1),

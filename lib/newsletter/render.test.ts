@@ -193,6 +193,51 @@ const sampleDupePhotos: NewsletterIssueData = newsletterIssueSchema.parse({
   },
 });
 
+/** Eyebrow copy unique to the headline block, so it can be asserted absent. */
+const HEADLINE_EYEBROW = "Next up this month";
+
+/** Bite URLs unique per item, so all three can be asserted present. */
+const BITE_URLS = [
+  "https://itbrief.co.nz/story/bite-one",
+  "https://itbrief.co.nz/story/bite-two",
+  "https://itbrief.co.nz/story/bite-three",
+];
+
+/**
+ * A copy of `sample` promoting one upcoming event to the headline block and
+ * carrying a three-item news list, to prove the marquee plate renders, the
+ * promoted event leaves the "What's next" list, and the bites stack.
+ */
+const sampleHeadline: NewsletterIssueData = newsletterIssueSchema.parse({
+  ...sample,
+  editorial: {
+    ...sample.editorial,
+    headline: {
+      eventSlug: "july-panel",
+      eyebrow: HEADLINE_EYEBROW,
+      dateBadge: { day: "7-8", month: "AUG" },
+      blurb: "Four AI leaders, one evening, and the questions you actually want answered.",
+      ctaLabel: "Save my seat",
+      ctaHref: null,
+    },
+    pulse: {
+      ...sample.editorial.pulse,
+      newsBites: BITE_URLS.map((url, i) => ({
+        title: `Bite ${i + 1} headline`,
+        summary: `Bite ${i + 1} summary sentence.`,
+        sourceLabel: "IT Brief NZ",
+        url,
+        dateLabel: `${i + 1} Jul`,
+      })),
+    },
+  },
+});
+
+/** Counts non-overlapping occurrences of a literal string. */
+function countOccurrences(html: string, needle: string): number {
+  return html.split(needle).length - 1;
+}
+
 function assertAllImagesHttps(html: string, label: string): void {
   const srcs = [...html.matchAll(/<img[^>]+src="([^"]*)"/gi)].map((m) => m[1]);
   assert.ok(srcs.length > 0, `${label}: expected at least one <img>`);
@@ -352,6 +397,66 @@ async function main(): Promise<void> {
   assert.ok(
     !noStrip.html.includes(COVER_URL),
     "cover photo must NOT render when heroImageUrl is null"
+  );
+
+  // Headline block: eyebrow, date badge and the editorial CTA label render on
+  // the navy plate, and all three news bites stack under the list label.
+  const headline = await renderNewsletter(sampleHeadline, "preview");
+  assert.ok(
+    headline.html.includes(HEADLINE_EYEBROW),
+    "headline eyebrow must appear when editorial.headline is set"
+  );
+  assert.ok(
+    headline.html.includes("7-8"),
+    "headline date badge day must appear in the html"
+  );
+  assert.ok(
+    headline.html.includes("Save my seat"),
+    "headline CTA label must appear in the html"
+  );
+  for (const url of BITE_URLS) {
+    assert.ok(
+      headline.html.includes(url),
+      `news bite url must appear in the html → ${url}`
+    );
+  }
+  assert.ok(
+    headline.html.includes("What we&#x27;re reading") ||
+      headline.html.includes("What we're reading"),
+    "multi-item news list label must appear when newsBites has more than one item"
+  );
+
+  // The promoted event is dropped from the "What's next" list, so its title is
+  // rendered exactly once (by the headline plate).
+  assert.strictEqual(
+    countOccurrences(headline.html, "Women in AI Panel"),
+    1,
+    "the promoted event's title must appear exactly once (dropped from upcoming)"
+  );
+
+  // Navy plate and mint accent colors are present.
+  for (const hex of ["#1f1e44", "#b1f6e9"]) {
+    assert.ok(
+      headline.html.toLowerCase().includes(hex),
+      `headline html must contain ${hex}`
+    );
+  }
+
+  // No SVG anywhere — Outlook does not render it.
+  assert.ok(
+    !headline.html.includes(".svg"),
+    "no SVG asset may appear in the rendered html"
+  );
+
+  // Without a headline the block auto-hides and the "What's next" card keeps
+  // its own primary CTA button.
+  assert.ok(
+    !preview.html.includes(HEADLINE_EYEBROW),
+    "headline eyebrow must NOT appear when editorial.headline is null"
+  );
+  assert.ok(
+    preview.html.includes("See all upcoming events"),
+    "primary CTA label must render when there is no headline block"
   );
 
   console.log("PASS render.test.ts");

@@ -69,8 +69,25 @@ const sourceLink: React.CSSProperties = {
   textDecoration: "underline",
 };
 
+/** Small centred label introducing the news list. */
+const newsLabel: React.CSSProperties = {
+  margin: `${SPACE.xl}px 0 ${SPACE.md}px`,
+  fontFamily: FONT_STACK,
+  fontSize: "11px",
+  lineHeight: "15px",
+  fontWeight: 700,
+  letterSpacing: "2px",
+  textTransform: "uppercase",
+  color: COLORS.purpleDark,
+  textAlign: "center",
+};
+
 export function Pulse({ pulse }: { pulse: PulseData }): React.JSX.Element {
-  const { heroStat, newsBite, didYouKnow } = pulse;
+  const { heroStat, newsBite, newsBites, didYouKnow } = pulse;
+
+  // `newsBites` supersedes the legacy single `newsBite`; issues predating the
+  // list (e.g. 2026-06) carry only the latter, and many carry neither.
+  const items = newsBites?.length ? newsBites : newsBite ? [newsBite] : [];
 
   return (
     <Section style={{ marginBottom: `${SPACE.lg}px` }}>
@@ -99,43 +116,54 @@ export function Pulse({ pulse }: { pulse: PulseData }): React.JSX.Element {
           </Link>
         </Text>
 
-        {newsBite ? (
-          <Section
-            style={{
-              marginTop: `${SPACE.xl}px`,
-              backgroundColor: COLORS.white,
-              border: `1px solid ${COLORS.border}`,
-              borderRadius: `${RADIUS - 4}px`,
-              padding: `${SPACE.lg}px ${SPACE.xl}px`,
-            }}
-          >
-            <Text
-              style={{
-                margin: `0 0 ${SPACE.xs}px`,
-                fontFamily: FONT_STACK,
-                fontSize: "15px",
-                lineHeight: "21px",
-                fontWeight: 700,
-                color: COLORS.ink,
-              }}
-            >
-              {newsBite.title}
+        {items.length > 0 ? (
+          <>
+            <Text style={newsLabel}>
+              {items.length > 1 ? "What we're reading" : "In the news"}
             </Text>
-            <Text
-              style={{
-                margin: `0 0 ${SPACE.sm}px`,
-                fontFamily: FONT_STACK,
-                fontSize: "14px",
-                lineHeight: "21px",
-                color: COLORS.text,
-              }}
-            >
-              {newsBite.summary}
-            </Text>
-            <Link href={newsBite.url} style={sourceLink}>
-              {newsBite.sourceLabel} →
-            </Link>
-          </Section>
+            {items.map((item, idx) => (
+              <Section
+                key={item.url}
+                style={{
+                  // Tight gap so several items read as one list, not as
+                  // separate sections.
+                  marginTop: idx === 0 ? 0 : `${SPACE.md}px`,
+                  backgroundColor: COLORS.white,
+                  border: `1px solid ${COLORS.border}`,
+                  borderRadius: `${RADIUS - 4}px`,
+                  padding: `${SPACE.lg}px ${SPACE.xl}px`,
+                }}
+              >
+                <Text
+                  style={{
+                    margin: `0 0 ${SPACE.xs}px`,
+                    fontFamily: FONT_STACK,
+                    fontSize: "15px",
+                    lineHeight: "21px",
+                    fontWeight: 700,
+                    color: COLORS.ink,
+                  }}
+                >
+                  {item.title}
+                </Text>
+                <Text
+                  style={{
+                    margin: `0 0 ${SPACE.sm}px`,
+                    fontFamily: FONT_STACK,
+                    fontSize: "14px",
+                    lineHeight: "21px",
+                    color: COLORS.text,
+                  }}
+                >
+                  {item.summary}
+                </Text>
+                <Link href={item.url} style={sourceLink}>
+                  {item.dateLabel ? `${item.dateLabel} · ` : ""}
+                  {item.sourceLabel} →
+                </Link>
+              </Section>
+            ))}
+          </>
         ) : null}
 
         {didYouKnow ? (
