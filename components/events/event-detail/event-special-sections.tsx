@@ -130,6 +130,52 @@ function YouTubeEmbeds({ items }: { items: string[] }) {
   );
 }
 
+/**
+ * Self-hosted video files (as opposed to the YouTube embeds above).
+ *
+ * Each item is pipe-delimited: "/video/path.mp4|Accessible label|/poster.jpg",
+ * matching the delimiter convention used by CollaborationLogos. The poster is
+ * optional but strongly preferred — without it the player sits on a black
+ * rectangle until the user presses play.
+ *
+ * Deliberately NOT autoplaying: these are content videos rather than the
+ * decorative loops elsewhere on the site, so playback stays under the reader's
+ * control and nothing downloads beyond metadata until they ask for it.
+ */
+function VideoEmbeds({ items }: { items: string[] }) {
+  const videos = items
+    .map((raw) => {
+      const [src, label, poster] = raw.split("|").map((s) => s.trim());
+      return { src, label: label || "Event video", poster: poster || undefined };
+    })
+    .filter((v) => Boolean(v.src));
+
+  if (videos.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="space-y-4">
+      {videos.map((video) => (
+        <figure key={video.src} className="space-y-3">
+          <div className="relative aspect-video w-full overflow-hidden rounded-[var(--radius-card-sm)] border border-border bg-black">
+            <video
+              src={video.src}
+              poster={video.poster}
+              controls
+              preload="metadata"
+              playsInline
+              aria-label={video.label}
+              className="absolute inset-0 h-full w-full"
+            />
+          </div>
+          <figcaption className="text-sm text-ink-600">{video.label}</figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
 function CollaborationLogos({ items }: { items: string[] }) {
   // Each item is either a bare logo path, or a pipe-delimited
   // "Alt text|/logo/path.svg|https://optional-link". Pipe is a safe delimiter
@@ -231,6 +277,7 @@ export function EventSpecialSections({
       {sections.map((section, index) => {
         const sectionType = section.type.toLowerCase();
         const isYouTube = sectionType === "youtube";
+        const isVideo = sectionType === "video";
         const isCollaboration =
           sectionType === "collaboration" ||
           sectionType === "in-collaboration" ||
@@ -251,9 +298,15 @@ export function EventSpecialSections({
             <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground">
               {normalizeTitle(section.title)}
             </h3>
-            <div className={isYouTube || isCollaboration ? "w-full" : "max-w-prose"}>
+            <div
+              className={
+                isYouTube || isVideo || isCollaboration ? "w-full" : "max-w-prose"
+              }
+            >
               {isYouTube ? (
                 <YouTubeEmbeds items={section.content} />
+              ) : isVideo ? (
+                <VideoEmbeds items={section.content} />
               ) : isCollaboration ? (
                 <CollaborationLogos items={section.content} />
               ) : isRelatedLinks ? (

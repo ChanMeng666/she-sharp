@@ -3213,7 +3213,26 @@
           ],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "video",
+            "title": "Problems to Solve 2024",
+            "content": [
+              "/video/events/ai-hackathon-2024-problems-to-solve.mp4|The five environmental challenges set for the 2024 AI Hackathon|/img/events/ai-hackathon-2024-problems-to-solve-poster.jpg"
+            ]
+          },
+          {
+            "type": "bullets",
+            "title": "The 2024 Challenge Themes",
+            "content": [
+              "Protecting our Freshwater and Marine Resources — how we fish, the taking of water from waterways, and what we discharge into waterways",
+              "Reducing Pollution from our Activities",
+              "Preserving and Bolstering Biodiversity — protection of native plants, animals and ecosystems on land, freshwater and marine environments",
+              "Climate Change Mitigation",
+              "Impacts of Changing Land Use"
+            ]
+          }
+        ],
         "photos": [
         ],
         "galleryUrl": "",

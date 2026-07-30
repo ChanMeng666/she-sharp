@@ -1,258 +1,275 @@
 /**
- * build-event-archive.mts — one-time generator for event archive photos.
+ * build-event-archive.mts — incremental generator for event archive photos.
  *
- * Maps harvested Google Photos albums (a scratchpad inventory) to She Sharp
- * event slugs, selects up to 5 photos per event that does NOT already ship its
- * own on-page photos, transcodes them to WebP under
- * public/img/events/archive/<slug>/, and emits lib/data/event-archive-photos.ts.
+ * Harvests a past event's public Google Photos album (its `galleryUrl`),
+ * transcodes a small set to WebP under public/img/events/archive/<slug>/, and
+ * merges the entries into lib/data/event-archive-photos.ts. The detail page
+ * injects these only for events that ship no on-page photos of their own, and
+ * the resources gallery reuses the first two as album thumbnails.
  *
- * The detail page injects these only when an event has no own photo set, and
- * the gallery page reuses them for album mosaics, so events that already carry
- * local photos are skipped here (they never consume the archive set).
+ * INCREMENTAL AND ADDITIVE. It only ever touches the slugs it is asked to
+ * build, and merges into the existing data module rather than regenerating it.
+ * (The previous version read a one-off scratchpad inventory and rmSync'd the
+ * whole archive tree on every run, which meant it could only ever be run once —
+ * afterwards it would delete every existing set and rebuild nothing.)
  *
  * Run:
- *   HARVEST_DIR="D:/.../scratchpad/gphotos" npx tsx scripts/build-event-archive.mts
+ *   # fill every gap: past events with an album but no photos anywhere
+ *   npx tsx scripts/build-event-archive.mts --gaps --dry-run
+ *   npx tsx scripts/build-event-archive.mts --gaps
+ *
+ *   # one or more specific events (re-harvests even if already present)
+ *   npx tsx scripts/build-event-archive.mts --slug her-waka-june-2026
+ *   npx tsx scripts/build-event-archive.mts --slug a,b --max 4
+ *
+ *   # what would change, without writing anything
+ *   npx tsx scripts/build-event-archive.mts --gaps --dry-run
  */
 import sharp from "sharp";
+import type { OutputInfo } from "sharp";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { harvestAlbum } from "./newsletter/harvest-gphotos";
+import { getAllEvents, parseDateString } from "../lib/data/events";
+import { eventArchivePhotos } from "../lib/data/event-archive-photos";
+import type { EventArchivePhoto } from "../lib/data/event-archive-photos";
 
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const HARVEST_DIR =
-  process.env.HARVEST_DIR ??
-  "D:/Temp/claude/D--github-repository-she-sharp/849ecf8e-f8d5-42df-a44f-112fd41ba309/scratchpad/gphotos";
-const IMG_DIR = path.join(HARVEST_DIR, "img");
-const INVENTORY_PATH = path.join(HARVEST_DIR, "inventory.json");
-
 const OUT_IMG_ROOT = path.join(ROOT, "public/img/events/archive");
 const OUT_DATA_PATH = path.join(ROOT, "lib/data/event-archive-photos.ts");
+const WORK_ROOT = path.join(ROOT, "tmp/event-archive-harvest");
 
-const MAX_PER_EVENT = 5; // hard cap on photos kept per event
-const MIN_PER_EVENT = 2; // events with fewer available sources are skipped
-const TARGET_WIDTH = 1280; // max rendition width (no enlargement)
-const FETCH_THROTTLE_MS = 300;
-const SIZE_BUDGET_MB = 30;
-const QUALITY_LADDER = [70, 68, 66, 64]; // step down if over budget
+const DEFAULT_MAX = 5; // photos kept per event
+const MIN_PER_EVENT = 2; // fewer usable sources than this and we skip the event
+const TARGET_WIDTH = 1280; // max rendition width; never upscales
+const QUALITY_LADDER = [70, 68, 66, 64];
+const PER_IMAGE_BUDGET_BYTES = 220 * 1024;
+const HARVEST_OVERFETCH = 4; // grab extras so duplicates can be dropped
+
+/**
+ * Perceptual-hash distance below which two images are treated as the same shot.
+ * Albums routinely expose several renditions of one photo; they arrive with
+ * different bytes, so a checksum will not catch them.
+ */
+const DHASH_DUPLICATE_MAX_DISTANCE = 6;
 
 // ---------------------------------------------------------------------------
-// Types (loosely typed views over the raw event JSON)
+// CLI
 // ---------------------------------------------------------------------------
-interface InventoryCandidate {
-  baseUrl: string;
-  w: number;
-  h: number;
-  ratio: number;
+interface Options {
+  slugs: string[];
+  gaps: boolean;
+  dryRun: boolean;
+  max: number;
 }
-interface InventoryAlbum {
-  url: string;
-  eventTitle: string;
-  slug: string;
-  photoCount: number;
-  candidates: InventoryCandidate[];
+
+function parseArgs(argv: string[]): Options {
+  const opts: Options = { slugs: [], gaps: false, dryRun: false, max: DEFAULT_MAX };
+  for (let i = 0; i < argv.length; i++) {
+    const arg = argv[i];
+    if (arg === "--dry-run") opts.dryRun = true;
+    else if (arg === "--gaps") opts.gaps = true;
+    else if (arg === "--slug") {
+      const value = argv[++i];
+      if (!value) fail("--slug needs a value (comma-separated for several).");
+      opts.slugs.push(...value.split(",").map((s) => s.trim()).filter(Boolean));
+    } else if (arg === "--max") {
+      const value = Number(argv[++i]);
+      if (!Number.isFinite(value) || value < MIN_PER_EVENT) {
+        fail(`--max must be a number >= ${MIN_PER_EVENT}.`);
+      }
+      opts.max = value;
+    } else fail(`Unknown argument "${arg}".`);
+  }
+  if (!opts.gaps && opts.slugs.length === 0) {
+    fail("Nothing to do: pass --gaps to fill every gap, or --slug <slug>.");
+  }
+  return opts;
 }
-interface RawEvent {
+
+function fail(message: string): never {
+  console.error(`Error: ${message}\n`);
+  console.error(
+    "Usage:\n" +
+      "  npx tsx scripts/build-event-archive.mts --gaps [--dry-run] [--max 5]\n" +
+      "  npx tsx scripts/build-event-archive.mts --slug <slug>[,<slug>] [--dry-run] [--max 5]"
+  );
+  process.exit(1);
+}
+
+// ---------------------------------------------------------------------------
+// Target selection
+// ---------------------------------------------------------------------------
+interface Target {
   slug: string;
   title: string;
-  detailPageData: {
-    title?: string;
-    photos?: { url: string; alt: string }[];
-  };
-}
-interface ArchivePhoto {
-  src: string;
-  width: number;
-  height: number;
-  alt: string;
+  album: string;
 }
 
-// A source image to transcode: either a local harvested file or a fetched buffer.
-type PhotoSource = { kind: "file"; file: string } | { kind: "buffer"; data: Buffer };
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-const normalize = (s: string | undefined): string =>
-  (s ?? "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-
-const escapeRegExp = (s: string): string =>
-  s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
-const readJson = <T,>(p: string): T => JSON.parse(fs.readFileSync(p, "utf8")) as T;
-
-/** Resolve an inventory album to an event via slug → title → detail title → fuzzy. */
-function resolveEvent(
-  album: InventoryAlbum,
-  bySlug: Map<string, RawEvent>,
-  byTitle: Map<string, RawEvent>,
-  byDetailTitle: Map<string, RawEvent>,
-  all: RawEvent[]
-): RawEvent | undefined {
-  const na = normalize(album.eventTitle);
-  return (
-    bySlug.get(album.slug) ||
-    byTitle.get(na) ||
-    byDetailTitle.get(na) ||
-    all.find(
-      (e) => normalize(e.title).includes(na) || na.includes(normalize(e.title))
-    )
-  );
+/** Events with an album, no on-page photos of their own, and no archive set yet. */
+function findGaps(): Target[] {
+  const now = Date.now();
+  const targets: Target[] = [];
+  for (const event of getAllEvents()) {
+    const date = parseDateString(event.date);
+    if (!date || date.getTime() >= now) continue; // upcoming events have no photos yet
+    if ((event.detailPageData.photos?.length ?? 0) > 0) continue; // ships its own
+    if ((eventArchivePhotos[event.slug]?.length ?? 0) > 0) continue; // already built
+    const album = (event.detailPageData.galleryUrl ?? "").trim();
+    if (!album) continue; // nothing to harvest from
+    targets.push({ slug: event.slug, title: event.title, album });
+  }
+  return targets;
 }
 
-/** Downloaded files for an album, sorted by their numeric suffix. */
-function downloadedFiles(albumSlug: string): string[] {
-  const re = new RegExp(`^${escapeRegExp(albumSlug)}-(\\d+)\\.jpg$`);
-  return fs
-    .readdirSync(IMG_DIR)
-    .map((f) => ({ f, m: f.match(re) }))
-    .filter((x) => x.m)
-    .sort((a, b) => Number(a.m![1]) - Number(b.m![1]))
-    .map((x) => path.join(IMG_DIR, x.f));
-}
-
-// ---------------------------------------------------------------------------
-// Main
-// ---------------------------------------------------------------------------
-async function main() {
-  const inventory = readJson<InventoryAlbum[]>(INVENTORY_PATH);
-  const v3 = readJson<{ events: RawEvent[] }>(
-    path.join(ROOT, "lib/data/json/shesharp_events_v3.json")
-  ).events;
-  const custom = readJson<{ events: RawEvent[] }>(
-    path.join(ROOT, "lib/data/json/events-custom.json")
-  ).events;
-
-  // Union, custom last so a shared slug prefers the current event.
-  const all = [...v3, ...custom];
-  const bySlug = new Map<string, RawEvent>();
-  const byTitle = new Map<string, RawEvent>();
-  const byDetailTitle = new Map<string, RawEvent>();
-  for (const e of all) {
-    bySlug.set(e.slug, e);
-    byTitle.set(normalize(e.title), e);
-    byDetailTitle.set(normalize(e.detailPageData.title), e);
-  }
-
-  const hasOwnPhotos = (e: RawEvent) =>
-    (e.detailPageData.photos?.length ?? 0) > 0;
-
-  // Gather the source plan per target event before any transcoding, so we can
-  // apply an adaptive quality if the total exceeds the size budget.
-  interface Plan {
-    event: RawEvent;
-    album: InventoryAlbum;
-    sources: PhotoSource[];
-  }
-  const plans: Plan[] = [];
-  const unmatched: string[] = [];
-  const skippedOwnPhotos = new Set<string>();
-  const skippedNoSource: string[] = [];
-
-  for (const album of inventory) {
-    const event = resolveEvent(album, bySlug, byTitle, byDetailTitle, all);
-    if (!event) {
-      unmatched.push(`${album.eventTitle} [${album.slug}]`);
-      continue;
-    }
-    if (hasOwnPhotos(event)) {
-      skippedOwnPhotos.add(event.slug);
-      continue;
-    }
-
-    // Prefer already-downloaded files; fetch more only when under 4 on disk.
-    const files = downloadedFiles(album.slug);
-    const sources: PhotoSource[] = files
-      .slice(0, MAX_PER_EVENT)
-      .map((file) => ({ kind: "file", file }));
-
-    if (sources.length < 4 && album.candidates.length > 0) {
-      const need = Math.min(MAX_PER_EVENT, 4) - sources.length;
-      const picks = album.candidates.slice(0, need);
-      for (const cand of picks) {
-        try {
-          const res = await fetch(`${cand.baseUrl}=w${TARGET_WIDTH}`);
-          if (res.ok) {
-            const buf = Buffer.from(await res.arrayBuffer());
-            sources.push({ kind: "buffer", data: buf });
-          }
-        } catch {
-          // Ignore individual fetch failures; we keep whatever succeeded.
-        }
-        await sleep(FETCH_THROTTLE_MS);
-      }
-    }
-
-    if (sources.length < MIN_PER_EVENT) {
-      skippedNoSource.push(`${event.slug} (${sources.length} source)`);
-      continue;
-    }
-    plans.push({ event, album, sources: sources.slice(0, MAX_PER_EVENT) });
-  }
-
-  // Transcode with an adaptive quality that respects the size budget.
-  let quality = QUALITY_LADDER[0];
-  let result: Record<string, ArchivePhoto[]> = {};
-  let totalBytes = 0;
-  let fileCount = 0;
-
-  for (const q of QUALITY_LADDER) {
-    quality = q;
-    fs.rmSync(OUT_IMG_ROOT, { recursive: true, force: true });
-    result = {};
-    totalBytes = 0;
-    fileCount = 0;
-
-    for (const { event, sources } of plans) {
-      const outDir = path.join(OUT_IMG_ROOT, event.slug);
-      fs.mkdirSync(outDir, { recursive: true });
-      const photos: ArchivePhoto[] = [];
-
-      for (let i = 0; i < sources.length; i++) {
-        const src = sources[i];
-        const input = src.kind === "file" ? src.file : src.data;
-        const { data, info } = await sharp(input)
-          .resize({ width: TARGET_WIDTH, withoutEnlargement: true })
-          .webp({ quality })
-          .toBuffer({ resolveWithObject: true });
-
-        const n = i + 1;
-        fs.writeFileSync(path.join(outDir, `${n}.webp`), data);
-        photos.push({
-          src: `/img/events/archive/${event.slug}/${n}.webp`,
-          width: info.width,
-          height: info.height,
-          alt: `${event.title} — She Sharp event photo ${n}`,
-        });
-        totalBytes += data.length;
-        fileCount++;
-      }
-      result[event.slug] = photos;
-    }
-
-    if (totalBytes / (1024 * 1024) <= SIZE_BUDGET_MB) break;
-  }
-
-  writeDataModule(result);
-  printReport({
-    inventoryCount: inventory.length,
-    matched: inventory.length - unmatched.length,
-    unmatched,
-    generated: Object.keys(result),
-    skippedOwnPhotos: skippedOwnPhotos.size,
-    skippedNoSource,
-    fileCount,
-    totalMB: totalBytes / (1024 * 1024),
-    quality,
+function resolveSlugs(slugs: string[]): Target[] {
+  const all = getAllEvents();
+  return slugs.map((slug) => {
+    const event = all.find((e) => e.slug === slug);
+    if (!event) fail(`No event with slug "${slug}".`);
+    const album = (event.detailPageData.galleryUrl ?? "").trim();
+    if (!album) fail(`Event "${slug}" has no galleryUrl to harvest from.`);
+    return { slug, title: event.title, album };
   });
 }
 
-/** Emit the typed, auto-generated data module keyed by event slug. */
-function writeDataModule(data: Record<string, ArchivePhoto[]>) {
+// ---------------------------------------------------------------------------
+// Duplicate detection
+// ---------------------------------------------------------------------------
+/**
+ * 64-bit difference hash: compare each pixel with its right-hand neighbour on a
+ * 9x8 greyscale reduction. Robust to the re-encoding and rescaling that make
+ * album renditions of one photo differ byte-for-byte.
+ */
+async function dHash(file: string): Promise<bigint> {
+  const raw = await sharp(file)
+    .greyscale()
+    .resize(9, 8, { fit: "fill" })
+    .raw()
+    .toBuffer();
+  let hash = 0n;
+  for (let y = 0; y < 8; y++) {
+    for (let x = 0; x < 8; x++) {
+      const left = raw[y * 9 + x];
+      const right = raw[y * 9 + x + 1];
+      hash = (hash << 1n) | (left > right ? 1n : 0n);
+    }
+  }
+  return hash;
+}
+
+function hammingDistance(a: bigint, b: bigint): number {
+  let diff = a ^ b;
+  let count = 0;
+  while (diff) {
+    count += Number(diff & 1n);
+    diff >>= 1n;
+  }
+  return count;
+}
+
+/** Keeps the first of each visually distinct shot, preserving album order. */
+async function dropVisualDuplicates(files: string[]): Promise<string[]> {
+  const kept: { file: string; hash: bigint }[] = [];
+  for (const file of files) {
+    let hash: bigint;
+    try {
+      hash = await dHash(file);
+    } catch {
+      continue; // unreadable source; skip rather than abort the event
+    }
+    const clash = kept.find(
+      (k) => hammingDistance(k.hash, hash) <= DHASH_DUPLICATE_MAX_DISTANCE
+    );
+    if (clash) {
+      console.log(
+        `    duplicate of ${path.basename(clash.file)} — dropping ${path.basename(file)}`
+      );
+      continue;
+    }
+    kept.push({ file, hash });
+  }
+  return kept.map((k) => k.file);
+}
+
+// ---------------------------------------------------------------------------
+// Build
+// ---------------------------------------------------------------------------
+async function buildEvent(
+  target: Target,
+  max: number,
+  dryRun: boolean
+): Promise<EventArchivePhoto[] | null> {
+  const { slug, title, album } = target;
+  console.log(`\n--- ${slug}`);
+
+  const workDir = path.join(WORK_ROOT, slug);
+  let harvested: string[];
+  try {
+    harvested = await harvestAlbum(album, workDir, max + HARVEST_OVERFETCH);
+  } catch (err) {
+    console.log(`    HARVEST FAILED: ${(err as Error).message}`);
+    return null;
+  }
+  if (harvested.length === 0) {
+    console.log("    no photos returned by the album");
+    return null;
+  }
+
+  const unique = await dropVisualDuplicates(harvested);
+  const selected = unique.slice(0, max);
+  console.log(
+    `    ${harvested.length} harvested, ${unique.length} distinct, keeping ${selected.length}`
+  );
+  if (selected.length < MIN_PER_EVENT) {
+    console.log(`    SKIPPED — fewer than ${MIN_PER_EVENT} distinct photos`);
+    return null;
+  }
+
+  const photos: EventArchivePhoto[] = [];
+  const outDir = path.join(OUT_IMG_ROOT, slug);
+  if (!dryRun) {
+    // Only this slug's directory is cleared, so other events are never touched.
+    fs.rmSync(outDir, { recursive: true, force: true });
+    fs.mkdirSync(outDir, { recursive: true });
+  }
+
+  for (let i = 0; i < selected.length; i++) {
+    const n = i + 1;
+    let data: Buffer | undefined;
+    let info: OutputInfo | undefined;
+    for (const quality of QUALITY_LADDER) {
+      const out = await sharp(selected[i])
+        .resize({ width: TARGET_WIDTH, withoutEnlargement: true })
+        .webp({ quality })
+        .toBuffer({ resolveWithObject: true });
+      data = out.data;
+      info = out.info;
+      if (out.data.length <= PER_IMAGE_BUDGET_BYTES) break;
+    }
+    if (!data || !info) continue;
+
+    if (!dryRun) fs.writeFileSync(path.join(outDir, `${n}.webp`), data);
+    photos.push({
+      src: `/img/events/archive/${slug}/${n}.webp`,
+      width: info.width,
+      height: info.height,
+      alt: `${title} — She Sharp event photo ${n}`,
+    });
+    console.log(
+      `    ${n}.webp  ${info.width}x${info.height}  ${(data.length / 1024).toFixed(0)}KB`
+    );
+  }
+
+  return photos.length >= MIN_PER_EVENT ? photos : null;
+}
+
+/** Rewrites the data module from the merged set, preserving its exact shape. */
+function writeDataModule(data: Record<string, EventArchivePhoto[]>): void {
   const entries = Object.entries(data)
     .map(([slug, photos]) => {
       const items = photos
@@ -271,6 +288,9 @@ function writeDataModule(data: Record<string, ArchivePhoto[]>) {
  * Archive photos for past events that ship no on-page photo set of their own.
  * Keyed by event slug. Consumed by the event detail page (photo gallery) and
  * the resources photo-gallery mosaics.
+ *
+ * Regenerate a single event with:
+ *   npx tsx scripts/build-event-archive.mts --slug <slug>
  */
 
 export interface EventArchivePhoto {
@@ -287,30 +307,46 @@ ${entries}
   fs.writeFileSync(OUT_DATA_PATH, module, "utf8");
 }
 
-function printReport(r: {
-  inventoryCount: number;
-  matched: number;
-  unmatched: string[];
-  generated: string[];
-  skippedOwnPhotos: number;
-  skippedNoSource: string[];
-  fileCount: number;
-  totalMB: number;
-  quality: number;
-}) {
-  console.log("\n=== Event archive build report ===");
-  console.log(`Inventory albums:      ${r.inventoryCount}`);
-  console.log(`Matched to events:     ${r.matched}`);
-  console.log(`Unmatched albums:      ${r.unmatched.length}`);
-  r.unmatched.forEach((u) => console.log(`  - ${u}`));
-  console.log(`Skipped (own photos):  ${r.skippedOwnPhotos}`);
-  console.log(`Skipped (no source):   ${r.skippedNoSource.length}`);
-  r.skippedNoSource.forEach((s) => console.log(`  - ${s}`));
-  console.log(`Events with archive:   ${r.generated.length}`);
-  r.generated.forEach((s) => console.log(`  - ${s}`));
-  console.log(`WebP files written:    ${r.fileCount}`);
-  console.log(`Total size:            ${r.totalMB.toFixed(1)} MB @ q${r.quality}`);
-  console.log("==================================\n");
+async function main(): Promise<void> {
+  const opts = parseArgs(process.argv.slice(2));
+  const targets = opts.gaps ? findGaps() : resolveSlugs(opts.slugs);
+
+  if (targets.length === 0) {
+    console.log("No events to build — every past event with an album already has photos.");
+    return;
+  }
+
+  console.log(
+    `${opts.dryRun ? "[dry-run] " : ""}Building ${targets.length} event(s), max ${opts.max} photos each.`
+  );
+
+  // Merge into what already exists; untouched events are carried through as-is.
+  const merged: Record<string, EventArchivePhoto[]> = { ...eventArchivePhotos };
+  const built: string[] = [];
+  const failed: string[] = [];
+
+  for (const target of targets) {
+    const photos = await buildEvent(target, opts.max, opts.dryRun);
+    if (photos) {
+      merged[target.slug] = photos;
+      built.push(target.slug);
+    } else {
+      failed.push(target.slug);
+    }
+  }
+
+  if (!opts.dryRun && built.length > 0) writeDataModule(merged);
+
+  console.log(`\n=== ${opts.dryRun ? "Dry run" : "Build"} report ===`);
+  console.log(`Built:   ${built.length}`);
+  built.forEach((s) => console.log(`  + ${s}  (${merged[s].length} photos)`));
+  if (failed.length > 0) {
+    console.log(`Failed:  ${failed.length}`);
+    failed.forEach((s) => console.log(`  - ${s}`));
+  }
+  console.log(`Total events in registry: ${Object.keys(merged).length}`);
+  if (opts.dryRun) console.log("\nNothing was written.");
+  console.log("==============================\n");
 }
 
 main().catch((err) => {
