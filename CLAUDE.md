@@ -155,7 +155,7 @@ Located in `/app/` root directory (8 pages):
 
 1. **Authentication Flow** (`/lib/auth/`):
    - Session management via encrypted JWTs stored in httpOnly cookies
-   - **The middleware file is `proxy.ts` at the repo root, not `middleware.ts`** (Next.js 15 naming). It exports `proxy()` and only gates `/dashboard` and `/verify-invitation`; every other route, including all of `/api`, passes straight through. It also serves a 503 maintenance page when `MAINTENANCE_MODE=true`
+   - **The middleware file is `proxy.ts` at the repo root, not `middleware.ts`** (Next.js 15 naming). It exports `proxy()`, whose matcher covers the whole site (minus `_next/static`, `_next/image`, `logos`, `favicon.ico`). It does three things, in order: serves a 503 maintenance page when `MAINTENANCE_MODE=true`; **308-strips legacy Webflow pagination query params** (`stripLegacyPaginationParams`, GET only, skips `/api/` — see the SEO section); then auth-gates `/dashboard` and `/verify-invitation`. Apart from the param strip, every other route — including all of `/api` — passes straight through
    - Sign up/sign in handled in `/app/api/auth/` routes
    - Account locking after 5 failed attempts (15 min lockout)
    - Password strength validation and history tracking
@@ -346,7 +346,7 @@ The site is optimized for both search engines and generative engines (ChatGPT, C
 
 **Generated routes** (Next.js metadata routes — independent of the root `force-dynamic`):
 - `app/robots.ts` — allows crawling (minus dashboard/api/auth), explicitly authorizes AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, …), advertises the sitemap.
-- `app/sitemap.ts` — static routes (in `STATIC_ROUTES`, incl. mentor/mentee landing pages) + every event slug via `getAllEvents()` (~121 URLs).
+- `app/sitemap.ts` — static routes (in `STATIC_ROUTES`, incl. the mentor/mentee landing pages) + every event slug via `getAllEvents()` (**120 URLs** as of 2026-07-31). The two `/mentorship/*/apply` routes are deliberately **not** in `STATIC_ROUTES`: they are `noindex`, and a noindex URL in the sitemap is the contradiction GSC reports as "Submitted URL marked 'noindex'". Do not re-add them when the registration window reopens.
 - `app/manifest.ts` — PWA manifest (brand purple `#9b2e83`).
 - `public/llms.txt` (static AI guide) + `app/llms-full.txt/route.ts` (dynamic full index from events/team/stats/press).
 
@@ -354,13 +354,18 @@ The site is optimized for both search engines and generative engines (ChatGPT, C
 
 **Inline AI hints**: `components/seo/geo-head.tsx` emits `<script type="text/llms.txt">` on home/events/mentorship/donate.
 
-**Legacy redirects**: `next.config.ts` → `redirects()` permanently (308) maps pre-migration URLs that are still in search indexes but now 404 (`/about-us`, `/contact-us`, `/media/*`, `/mentorship/mentorship-program`, …) onto current routes. Extend this map when GSC surfaces more legacy 404s.
+**Legacy redirects**: `next.config.ts` → `redirects()` permanently (308) maps pre-migration URLs that are still in search indexes but now 404 (`/about-us`, `/contact-us`, `/media/*`, `/mentorship/mentorship-program`, …) onto current routes. Extend this map when GSC surfaces more legacy 404s. More specific rules must come **before** the `/media/:path*` catch-all — `/media/photo-gallery` silently landed on `/resources` instead of `/resources/photo-gallery` until it got its own line.
 
-**Two metadata gotchas (do not regress):**
+**Legacy query-param duplicates** (fixed 2026-07-31): the pre-migration Webflow site used `?<8-hex>_page=N` pagination params, still in Google's URL list. Next.js ignores unknown params and serves an identical **200**, so each variant was a duplicate page — GSC filed four of them under "Duplicate without user-selected canonical". `proxy.ts` now 308-strips any query key matching `/^[0-9a-f]{6,}_page$/i`. **Middleware, not `next.config` `redirects()` + `has`**, because `has` needs an *exact* query key while the hash prefix varies per Webflow list. Full write-up: item 3b in `GEO_SEO_BACKLOG.md`.
+
+**Three metadata gotchas (do not regress):**
 1. **Title template** `%s | She Sharp` (root layout) does NOT cascade through an intermediate layout that sets its own string `title`. Pages under `events/layout`, `mentorship/mentor/layout`, `mentorship/mentee/layout` must give child pages an explicit `title: { absolute: "X | She Sharp" }`.
 2. **No root-level `alternates.canonical`** — it cascades to every page and makes them all canonicalize to the homepage. Set canonicals per page (the home page sets its own `/`).
+3. **`robots: { index: false }` under a segment whose parent declares a canonical needs a self-canonical too.** `alternates.canonical` cascades, so the noindexed child ships `noindex` *plus* a canonical pointing at its parent — a contradictory pair Google can resolve by applying the noindex to the **parent**. Both `/mentorship/{mentee,mentor}/apply` layouts hit this; they now set `robots` **and** their own canonical. Render-test it (see below) — the two apply pages `redirect()` away outside the registration window, so the bad metadata was invisible until `MENTORSHIP_CONFIG.registrationDeadline` was temporarily moved forward. **Marking a route `noindex` also means removing it from `app/sitemap.ts`** — the two changes travel together.
 
-**Verify after metadata edits**: `pnpm build && PORT=3xxx pnpm start`, then curl `<title>`/canonical/JSON-LD. Kill any orphan `next start` first (a stale server on the port silently serves an OLD build and makes changes look broken).
+**Verify after metadata edits**: `pnpm build && PORT=3xxx pnpm start`, then curl `<title>`/canonical/JSON-LD. Kill any orphan `next start` first (a stale server on the port silently serves an OLD build and makes changes look broken). For pages behind a date/feature gate, temporarily move the gate so the page actually renders — a redirecting page emits no metadata, so its `<head>` bugs stay invisible. Revert the gate before committing.
+
+**Search Console access**: the property is the **Domain** property `sc-domain:shesharp.org.nz`, reachable **only** from the `website@shesharp.org.nz` Google account, which lives in a *different Chrome instance* from the maintainer's usual profile. Guessing `authuser=1/2` URLs does not find it. With `claude-in-chrome`, use `switch_browser` (broadcasts a Connect prompt to every Chrome so the user picks) rather than `select_browser` — two separately-listed deviceIds both resolved to the same wrong profile.
 
 **Docs** (in `docs/development/`): `GEO_SEO_IMPLEMENTATION_GUIDE.md` — reusable how-to (incl. browser-side GSC/Bing setup); `GEO_SEO_MONITORING.md` — KPIs + the 2026-06-23 baseline; `GEO_SEO_BACKLOG.md` — prioritized follow-ups with live status.
 
