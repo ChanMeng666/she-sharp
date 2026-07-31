@@ -32,10 +32,10 @@ pnpm start            # Start production server
 ```
 she-sharp/
 ├── app/                    # Next.js App Router (pages and API routes)
-│   ├── (site)/             # Public pages (home, about, events, etc.) - 15 pages
+│   ├── (site)/             # Public pages (home, about, events, etc.) - 26 page.tsx files
 │   ├── (login)/            # Authentication pages (sign-in, sign-up, etc.) - 6 pages
 │   ├── (dashboard)/        # Protected dashboard pages - 11 pages
-│   └── api/                # API routes (71 endpoints)
+│   └── api/                # API routes - 101 route.ts files
 ├── components/             # React components (137 files)
 │   ├── ui/                 # shadcn/ui + custom components (63 files)
 │   ├── layout/             # Layout components (5 files)
@@ -56,7 +56,7 @@ she-sharp/
 │   ├── config/             # Navigation and configuration (4 files)
 │   ├── stripe/             # Payment integration (2 files)
 │   ├── cloudinary/         # Image storage service (1 file)
-│   ├── email/              # Email service (1 file)
+│   ├── email/              # Email: service, senders, gates, optouts, tokens, webhook-verify
 │   ├── forms/              # Form management (2 files)
 │   ├── slack/              # Slack webhook notifications (1 file)
 │   ├── points/             # Gamification system (1 file)
@@ -73,7 +73,10 @@ she-sharp/
 
 ## Page Routes Structure
 
-### Public Pages (`/(site)/`) - 15 pages
+### Public Pages (`/(site)/`)
+
+> 26 `page.tsx` files as of 2026-07-31. The table below is indicative and has drifted; re-count before quoting it.
+
 | Route | Description |
 |-------|-------------|
 | `/` | Home page with hero, impact, values, programs |
@@ -142,7 +145,7 @@ Located in `/app/` root directory (8 pages):
 - **UI**: shadcn/ui components (63 components) with Tailwind CSS v4
 - **Styling**: Tailwind CSS with PostCSS and custom brand colors
 - **AI**: Chatbot = Vercel AI SDK 6 agent on OpenAI GPT-4o-mini with tool calling (direct OpenAI, NOT the AI Gateway — see chatbot doc); mentor matching = OpenAI GPT-4
-- **Email**: Resend for transactional emails (auth, mentorship, recruitment)
+- **Email**: Resend for transactional + notification mail and the newsletter *pilot*; **Mailchimp still sends the live monthly newsletter** (see the Monthly Newsletter section). Domain auth for both lives in `docs/deployment/EMAIL_AUTHENTICATION.md`
 - **Notifications**: Slack Incoming Webhooks for form submission alerts (volunteer, contact)
 - **Payments**: Stripe for subscriptions and one-time payments
 - **Charts**: Recharts for analytics dashboards
@@ -152,7 +155,7 @@ Located in `/app/` root directory (8 pages):
 
 1. **Authentication Flow** (`/lib/auth/`):
    - Session management via encrypted JWTs stored in httpOnly cookies
-   - Middleware in `middleware.ts` protects routes and manages sessions
+   - **The middleware file is `proxy.ts` at the repo root, not `middleware.ts`** (Next.js 15 naming). It exports `proxy()` and only gates `/dashboard` and `/verify-invitation`; every other route, including all of `/api`, passes straight through. It also serves a 503 maintenance page when `MAINTENANCE_MODE=true`
    - Sign up/sign in handled in `/app/api/auth/` routes
    - Account locking after 5 failed attempts (15 min lockout)
    - Password strength validation and history tracking
@@ -246,7 +249,9 @@ Organized by feature:
 - `spotify.ts` - Spotify embed types
 - `impact-report.ts` - Impact report types
 
-## API Routes Summary (71 endpoints)
+## API Routes Summary
+
+> **101 `route.ts` files as of 2026-07-31** (`find app/api -name route.ts | wc -l`). The per-category breakdown below is **indicative, not exhaustive** — it was written when there were ~71 and has drifted. Trust the filesystem over these numbers; re-count before quoting them.
 
 ### Authentication (`/api/auth/`) - 11 endpoints
 - NextAuth handler (`[...nextauth]`), CSRF protection
@@ -305,6 +310,9 @@ Organized by feature:
 - `/api/upload/photo` - Photo uploads
 - `/api/cron/process-queue` - Background job processing
 - `/api/team` - Team data
+- `/api/email/unsubscribe` - RFC 8058 one-click unsubscribe. **POST is unauthenticated and returns a bare 200** (providers post from their own infra and treat 3xx as failure); **GET must never mutate** — link scanners prefetch it
+- `/api/webhooks/resend` - Bounce/complaint capture, Svix-signed. Writes `email_optouts`; complaints also post to Slack
+- `/api/newsletter/subscribe` - Resend audience opt-in. **Exists but no UI calls it** — the site's 16 sign-up links still point at Mailchimp
 
 ## Static Data Files (`/lib/data/`) - 12 files
 
@@ -372,6 +380,12 @@ The visitor chatbot (bottom-right) is a knowledge-grounded **AI SDK 6 `ToolLoopA
 
 ## Monthly Newsletter
 
+> **Reality check (2026-07-31): the newsletter that subscribers actually receive is still sent from Mailchimp**, from `She Sharp <newsletter@shesharp.org.nz>` (Mailchimp DKIM lives at `k2`/`k3._domainkey` → `dkim*.mcsv.net`). Everything below is the **Resend replacement**, which the founder wants to switch to *in order to improve deliverability*. It has been built and piloted but has not yet taken over a real send.
+>
+> **Mailchimp also still owns the subscribe funnel.** `MAILCHIMP_CONFIG` in `lib/data/newsletters.ts` (`subscribeUrl` + `archiveUrl`) is referenced in **16 places** across the site — footer, newsletters page, mentorship CTAs — so every new subscriber the website acquires goes into Mailchimp. Meanwhile `POST /api/newsletter/subscribe` writes to the Resend audience but **no component calls it**. Migrating the sending without the funnel leaves two lists drifting apart from day one.
+>
+> Before migrating, read the Mailchimp → Resend section of `docs/deployment/EMAIL_AUTHENTICATION.md` — list hygiene is the thing most likely to break it (Mailchimp's years of bounce/unsubscribe suppression are **not** in the subscriber CSV export), and the ESP switch must not happen in the same month as a DMARC policy change.
+
 A monthly email newsletter built on **React Email** + **Resend broadcasts**, with an AI-drafted editorial pass. Each issue is a JSON file at `lib/data/json/newsletter-issues/<YYYY-MM>.json` split into two blocks (`lib/newsletter/schema.ts`): a machine-owned **`auto`** snapshot (events + stats, refreshed freely) and a human-owned **`editorial`** block (founder note, spotlight, photo of the month, subject/preview, CTA) that regeneration must never overwrite.
 
 **Run the monthly loop with the `/monthly-newsletter` skill** (`.claude/skills/monthly-newsletter/SKILL.md`): fetch the staged draft → register the issue in `lib/newsletter/issues-registry.ts` (one import + one map line per month) → edit `editorial` → preview (`scripts/newsletter/preview.ts`) → test-send (`scripts/newsletter/send-test.ts`) → commit + deploy → approve (`scripts/newsletter/approve.ts`).
@@ -401,7 +415,22 @@ Four guided skills let non-technical teammates send email without writing code. 
 
 ## Email Authentication & Sending Streams
 
-Full DNS runbook: **`docs/deployment/EMAIL_AUTHENTICATION.md`** (current records, the `p=none → quarantine → reject` rollout with its evidence gates, the SPF lookup budget, and the two traps). Read it before touching any From address or DNS record.
+Full DNS runbook: **`docs/deployment/EMAIL_AUTHENTICATION.md`** (current records, the `p=none → quarantine → reject` rollout with its evidence gates, the SPF lookup budget, the Mailchimp → Resend migration, the two traps, and the **Outstanding work** table). Read it before touching any From address or DNS record.
+
+**Live status as of 2026-07-31** — DNS is on **Cloudflare** (`art`/`ashley.ns.cloudflare.com`), not the registrar the SPF `include:_spf.1stdomains.co.nz` might suggest (that include is a leftover from the old web host):
+
+| | State |
+|---|---|
+| `_dmarc` | `p=none` **with `rua`** → Cloudflare DMARC Management (free, collects on `dmarc-reports.cloudflare.net`, does **not** touch MX) |
+| Root SPF | `v=spf1 include:_spf.google.com include:_spf.1stdomains.co.nz ~all` — budget **4/10** (`_spf.google.com` is flat now, 1 lookup not 4) |
+| Resend | DKIM `resend._domainkey` (1024-bit, rotation to 2048 still pending), Return-Path `send.shesharp.org.nz` — passes DMARC on **both** mechanisms |
+| Mailchimp | DKIM `k2`/`k3._domainkey` — passes on DKIM only (Return-Path `rsgsv.net` does not align). **Leave these records in place** until the Resend migration is proven; they are the rollback path |
+| Google Workspace | **No aligned DKIM** — Gmail signs with Google's default `d=*.gappssmtp.com`, which does not align and counts for nothing. Passes SPF only |
+| Bounce/complaint webhook | Registered and verified end-to-end |
+
+**The one blocker:** enabling Google DKIM needs **Google Workspace super-admin**, and `website@shesharp.org.nz` (the maintainer's account) **cannot open `admin.google.com`**. Without it, **do not go past `p=quarantine`** — at `p=reject` a forwarded message from `hello@` is destroyed rather than filed in Junk, with no bounce and no way to find out. Stopping permanently at quarantine is a defensible end state; the doc has the exact request to send an admin.
+
+Note what does **not** need a mailbox login: sending *as* `hello@`/`newsletter@` (Resend signs at the domain level), Reply-To to team inboxes (the point is that replies reach the team, not the maintainer), and DMARC report collection (Cloudflare receives on its own domain).
 
 **Sender identities live in `lib/email/senders.ts` — the single source of truth.** Never hard-code a From or Reply-To anywhere else. Four streams, and the stream decides everything downstream:
 
@@ -548,6 +577,12 @@ BASE_URL=http://localhost:3000         # Application URL
 - **Test frequently**: Ensure steady progress by testing after each implementation
 - **Test location**: Place tests in project folder alongside related code
 - **Minimal test approach**: Focus on essential validation without over-engineering
+- **No test runner is configured.** Tests are plain `node:assert`-style scripts run directly with `npx tsx <file>`; each prints `ok - …` lines and exits non-zero on failure. Existing suites:
+  ```bash
+  npx tsx lib/email/hardening.test.ts     # unsubscribe tokens, sender identities, gates, Svix signatures
+  for f in lib/newsletter/*.test.ts; do npx tsx "$f"; done
+  ```
+- **CI** (`.github/workflows/verify.yml`, on PRs to `main`) runs `typecheck-scripts` and `verify-image-paths` only — it does **not** run these test files. Run them locally before pushing.
 
 ### URL Construction Rules
 - **Always use `getBaseUrl()`**: All user-facing URL construction (emails, redirects, Stripe callbacks) must use `getBaseUrl()` from `lib/email/service.ts`. Never inline `process.env.BASE_URL || 'http://localhost:3000'`.
@@ -555,10 +590,12 @@ BASE_URL=http://localhost:3000         # Application URL
 - **Lesson learned**: Duplicated inline `BASE_URL` fallback logic caused 25 mentor invitation emails to contain `localhost:3000` URLs (2026-03-19 incident).
 
 ### Vercel Environment Variable Rules
-- **Always use `printf`, never `echo`**: When setting Vercel env vars via CLI, always use `printf 'value' | vercel env add VAR production` — never `echo`. `echo` appends a trailing newline (`\n`) that becomes part of the stored value, corrupting it silently.
-- **Strip quotes when copying from `.env` files**: Values in `.env` files are often wrapped in double quotes (e.g., `KEY="value"`). When extracting for upload, strip them: `tr -d '"'`.
-- **Verify after bulk upload**: After setting multiple env vars, run `vercel env pull` and check for trailing `\n` with: `grep -P '\\\\n"' .env.pulled`
-- **Lesson learned**: Using `echo` to pipe values into `vercel env add` caused 10 env vars to be stored with trailing `\n` in the personal Vercel project (2026-03-24 migration incident). The corrupted values were then propagated when copying to the She Sharp Vercel project.
+- **Use `--value`, never stdin**: `vercel env add VAR production --value $v --no-sensitive --force --yes` (PowerShell). Piping — `printf 'x' |`, `< file`, even `cmd /c "... < file"` — can silently store an **empty string**, and `echo` additionally appends a trailing `\n` that becomes part of the value.
+- **An empty `vercel env pull` does NOT prove an empty value**: CLI ≥54 defaults new vars to type **Sensitive**, and `pull` returns sensitive vars as `""` — indistinguishable from the corruption above. `--no-sensitive` makes the value readable and therefore verifiable, which matches every pre-existing secret here (`RESEND_API_KEY`, `AUTH_SECRET`, `CRON_SECRET` all read back fine). Anyone with project access can deploy code that prints a secret anyway, so verifiability is worth more than blocked readback.
+- **Always verify**: `vercel env pull <tmp> --environment production --yes`, then compare byte-for-byte and check for a literal `\n`. Do this per-variable, not just after bulk uploads.
+- **Strip quotes when copying from `.env` files**: values are often wrapped in double quotes (`KEY="value"`); strip them before upload.
+- **A new variable needs a new commit**: this project has **no Vercel Git connection** — GitHub Actions prebuilds on push to `main`. The dashboard's "Redeploy" button reuses the previous build's environment and will **not** pick up a newly added variable.
+- **Lessons learned**: `echo` piping stored 10 vars with a trailing `\n` (2026-03-24 migration incident), which then propagated when copied to the She Sharp project. On 2026-07-31, stdin redirection appeared to store empty values *and* the "verification" that seemed to confirm it was itself wrong — the pull was empty because the var was sensitive-typed, not because the value was. Two traps that produce the same symptom; `--value --no-sensitive` avoids both.
 
 ### Code Development Practices
 - **Focused implementation**: Address only the requested task without extra features

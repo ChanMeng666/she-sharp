@@ -1,7 +1,20 @@
 # Email Authentication (SPF, DKIM, DMARC)
 
 **Last verified:** 2026-07-31 (live DNS queried against `1.1.1.1`)
-**Applied so far:** Stage 1 (DMARC Management + `rua`) and Stage 2a (Google in root SPF), both 2026-07-31.
+
+> **Picking this up cold? Read these three first:**
+> 1. [Outstanding work](#outstanding-work) — everything not done, with what
+>    blocks each item. The actionable list.
+> 2. [Two traps](#two-traps) — the changes that break sending immediately.
+> 3. [Migrating the newsletter from Mailchimp to Resend](#migrating-the-newsletter-from-mailchimp-to-resend)
+>    — the live newsletter is **still on Mailchimp**; this is the reason the rest
+>    of this work exists.
+>
+> **Applied 2026-07-31:** Stage 1 (DMARC Management + `rua`), Stage 2a (Google
+> in root SPF), the sending-stream code, both Vercel env vars, and the Resend
+> bounce/complaint webhook. **Blocked:** Google DKIM (Stage 2b) — needs Workspace
+> super-admin, which the maintainer does not have. Do **not** go past
+> `p=quarantine` until that lands.
 
 The DNS records that decide whether She Sharp email reaches inboxes are all
 hosted in Cloudflare, but their values come from three different services and
@@ -504,6 +517,32 @@ Before importing anything:
    another route — the local register protects the scripts, the Resend flag
    protects broadcasts.
 
+### The subscribe funnel is Mailchimp too — not just the sending
+
+Easy to miss, and it breaks the migration quietly if you do. `MAILCHIMP_CONFIG`
+in `lib/data/newsletters.ts` holds a Mailchimp `subscribeUrl` and `archiveUrl`,
+and it is referenced in **16 places** across the site — the footer sign-up, the
+newsletters page, the mentorship pages, several CTA sections.
+
+So today: **every new subscriber the website acquires goes into Mailchimp.**
+
+Meanwhile `POST /api/newsletter/subscribe` (honeypot + rate-limited, writes to
+the Resend audience) exists but **no component calls it** — it is reachable only
+by URL. Grep confirms the only references are in generated `.next` type files.
+
+That means switching the *sending* to Resend without switching the *funnel*
+leaves you with two lists that drift apart from day one: new sign-ups keep
+landing in Mailchimp and never receive the Resend broadcast. Do both, in this
+order:
+
+1. Wire the existing `/api/newsletter/subscribe` route to a real form.
+2. Repoint the 16 `MAILCHIMP_CONFIG.subscribeUrl` links at it.
+3. Decide what `archiveUrl` becomes — the on-site
+   `/(site)/resources/newsletters/[issue]` pages are the natural replacement,
+   but they are `noindex` during the pilot and issues are not yet added to
+   `lib/data/newsletters-manual.ts` (the public archive).
+4. Only then retire the Mailchimp records.
+
 ### Keep the Mailchimp DNS records
 
 Leave `k2._domainkey` and `k3._domainkey` in Cloudflare until the Resend
@@ -596,6 +635,37 @@ the split trigger above depends on.
 
 ---
 
+## Outstanding work
+
+Everything not yet done, with what is actually blocking it. Nothing here is
+forgotten or deliberately skipped unless it says so.
+
+| # | Task | Blocked on | Do it when |
+|---|---|---|---|
+| 1 | **Read the first DMARC reports** — Cloudflare → Email → DMARC Management. Confirm every source is recognised (expect only Google, Amazon SES, forwarders). | ~24h after 2026-07-31 | Now, then weekly |
+| 2 | **Stage 3a — `np=reject`** | 2 weeks of clean reports | ~2026-08-14 |
+| 3 | **Resend DKIM 1024 → 2048** | a quiet window **after** a broadcast | Before quarantine, never after `p=reject` |
+| 4 | **Stage 3b — `p=quarantine`** | reports show every source identified, no third-party sender hiding in the failures | ~2026-08-30 |
+| 5 | **Stage 2b — Google DKIM** | ⚠️ **Workspace super-admin.** `website@` cannot open `admin.google.com`. Request text is in Stage 2. | Whenever an admin is available |
+| 6 | **Stage 4 — `p=reject`** + root SPF `-all` | **hard-gated on #5** | Not before #5 |
+| 7 | **Decide the legacy SPF include** — drop `include:_spf.1stdomains.co.nz` if reports show nothing sends from those IPs (budget 4/10 → 1/10) | the reports from #1 | With #4 |
+| 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. Export `Subscribed` / `Unsubscribed` / `Cleaned` separately; only the first gets imported. | must NOT share a month with #2/#4 | A month with no DMARC change |
+| 8b | **Migrate the subscribe funnel** — wire `/api/newsletter/subscribe` (exists, **nothing calls it**) to a form and repoint the 16 `MAILCHIMP_CONFIG.subscribeUrl` links. Without this, new sign-ups keep going to Mailchimp and never get the Resend send. | — | With #8, not after |
+| 8c | **Decide `MAILCHIMP_CONFIG.archiveUrl`'s replacement** — the on-site `/resources/newsletters/[issue]` pages, once they come off `noindex` and get added to `lib/data/newsletters-manual.ts` | end of the pilot | With #8 |
+| 9 | **Retire the Mailchimp DNS records** (`k2`/`k3._domainkey`) | 2–3 clean Resend sends **and** #8b | After #8 proves out |
+| 10 | **Confirm someone reads `newsletter@`** — it accepts mail (tested, no bounce), but whether a human opens it is unknown. It is both the From and the Reply-To on every newsletter. | someone with Workspace visibility | Before #8 |
+| 11 | **`EMAIL_UNSUBSCRIBE_MAILTO`** — deliberately left **empty**. Only set it once someone confirms the target inbox is real and monitored; an unverified one bounces, which is worse than offering none. | a verified inbox | Optional |
+| 12 | **TLS-RPT** (`_smtp._tls`) | needs a real inbox to receive reports (super-admin to create) | Optional, low value |
+| 13 | **MTA-STS** | a second Vercel domain + route | Optional — the only item here whose misconfiguration breaks *inbound* mail |
+| 14 | **BIMI** | a VMC (~USD 1,000–1,500/yr + trademark) | **Deliberately skipped** — not a defensible non-profit spend |
+| 15 | **Split marketing onto `news.`** | the pre-committed trigger (complaints >0.10%, a send >1,000 recipients, or hard bounces >2%) | Only if the trigger fires |
+
+**Sequencing rule that governs several of these:** never change the ESP and the
+DMARC policy in the same month. If deliverability dips you must be able to say
+which one caused it, and the fix for each is different.
+
+---
+
 ## Cadence
 
 - **Weeks 1–4:** open Cloudflare → Email → DMARC Management weekly (~5 minutes)
@@ -621,6 +691,39 @@ dig +short TXT resend._domainkey.shesharp.org.nz @1.1.1.1
 
 On Windows PowerShell, `Resolve-DnsName -Name <name> -Type TXT -Server 1.1.1.1`.
 
-End-to-end: Gmail → open the message → ⋮ → **Show original** → confirm SPF,
-DKIM and DMARC all say PASS. Check both a Google Workspace send and a Resend
-send; they authenticate by different mechanisms and can fail independently.
+**After any DNS change, re-check MX.** The one way to break inbound mail here is
+to enable Cloudflare **Email Routing** (which replaces MX) while reaching for
+DMARC Management (which does not):
+
+```
+dig +short MX shesharp.org.nz @1.1.1.1     # five aspmx.l.google.com entries
+```
+
+**Authentication, end to end:** Gmail → open the message → ⋮ → **Show original**
+→ confirm SPF, DKIM and DMARC all say PASS. Check a Google Workspace send *and*
+a Resend send; they authenticate by different mechanisms and fail independently.
+
+**Code:**
+
+```bash
+npx tsx lib/email/hardening.test.ts   # tokens, sender identities, gates, Svix
+npx tsc --noEmit
+CI=true npx next build
+```
+
+**The live webhook, without waiting for a real bounce.** Copy the signing secret
+from the Resend dashboard, then sign a synthetic event and POST it at
+production. This exercises the deployed secret, the signature check, the handler
+and the database write in one go — send the correctly-signed request (expect
+`200 {"received":true}`) *and* the same body with a forged signature (expect
+`400`), then delete the row it created from `email_optouts`. Written out in the
+session that built this; the shape is:
+
+```
+signed payload = "{svix-id}.{svix-timestamp}.{raw body}"
+signature      = base64(HMAC-SHA256(signed payload, base64decode(secret without "whsec_")))
+headers        = svix-id, svix-timestamp, svix-signature: "v1,<signature>"
+```
+
+Always clean up the test row — `email_optouts` should return to 0 rows if you
+have no real opt-outs yet.
