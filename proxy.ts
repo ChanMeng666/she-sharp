@@ -71,6 +71,38 @@ const MAINTENANCE_HTML = `<!DOCTYPE html>
 </body>
 </html>`;
 
+/**
+ * Pagination query params left over from the pre-migration Webflow site, e.g.
+ * `?10f821ec_page=9`. Next.js ignores unknown params and serves an identical
+ * 200, so every variant is a duplicate URL — Google reported four of them as
+ * "Duplicate without user-selected canonical" (GSC drilldown 2026-07-31).
+ * The hash prefix differs per collection list, so match by shape, not by key.
+ */
+const LEGACY_PAGINATION_PARAM = /^[0-9a-f]{6,}_page$/i;
+
+/**
+ * Strips legacy Webflow pagination params with a 308. The pages already carry a
+ * correct self-referencing canonical, but a canonical is only a hint — a
+ * permanent redirect is a directive, so Google reclassifies these as "Page with
+ * redirect" and drops them instead of holding them as duplicates. Returns null
+ * when there is nothing to strip, which also prevents a redirect loop.
+ */
+function stripLegacyPaginationParams(request: NextRequest) {
+  if (request.method !== 'GET') return null;
+  if (request.nextUrl.pathname.startsWith('/api/')) return null;
+
+  const legacyKeys = [...request.nextUrl.searchParams.keys()].filter((key) =>
+    LEGACY_PAGINATION_PARAM.test(key)
+  );
+  if (legacyKeys.length === 0) return null;
+
+  const url = request.nextUrl.clone();
+  for (const key of legacyKeys) {
+    url.searchParams.delete(key);
+  }
+  return NextResponse.redirect(url, 308);
+}
+
 export async function proxy(request: NextRequest) {
   // Maintenance mode: return 503 page when enabled via environment variable
   if (process.env.MAINTENANCE_MODE === 'true') {
@@ -82,6 +114,10 @@ export async function proxy(request: NextRequest) {
       },
     });
   }
+
+  const paginationRedirect = stripLegacyPaginationParams(request);
+  if (paginationRedirect) return paginationRedirect;
+
   const { pathname } = request.nextUrl;
   const sessionCookie = request.cookies.get('session');
   const nextAuthSessionToken = request.cookies.get('authjs.session-token') ||

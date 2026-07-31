@@ -60,6 +60,10 @@ const nextConfig: NextConfig = {
       { source: '/media/podcasts', destination: '/resources/podcasts', permanent: true },
       { source: '/media/newsletters', destination: '/resources/newsletters', permanent: true },
       { source: '/media/gallery', destination: '/resources/photo-gallery', permanent: true },
+      // Surfaced by the GSC duplicate-canonical drilldown (2026-07-31): without
+      // this it fell through to the /media/:path* catch-all and landed on the
+      // wrong page (/resources instead of the gallery).
+      { source: '/media/photo-gallery', destination: '/resources/photo-gallery', permanent: true },
       // Catch-all for any remaining legacy /media/* path → resources hub.
       { source: '/media', destination: '/resources', permanent: true },
       { source: '/media/:path*', destination: '/resources', permanent: true },
