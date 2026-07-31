@@ -1,0 +1,620 @@
+# Email Authentication (SPF, DKIM, DMARC)
+
+**Last verified:** 2026-07-31 (live DNS queried against `1.1.1.1`)
+**Applied so far:** Stage 1 (DMARC Management + `rua`) and Stage 2a (Google in root SPF), both 2026-07-31.
+
+The DNS records that decide whether She Sharp email reaches inboxes are all
+hosted in Cloudflare, but their values come from three different services and
+were recorded nowhere. This file is that record, plus the staged plan for moving
+the domain from monitoring to enforcement.
+
+Written in response to Resend's [The New DMARC is
+Here](https://resend.com/blog/the-new-dmarc-is-here) (2026-07-17), which
+announced DMARCbis — RFC 9989/9990/9991. What changed: `pct`, `rf` and `ri` are
+removed; `t=` (testing), `np=` (non-existent subdomain policy) and `psd=` are
+added; and policy discovery moves from the Public Suffix List to a DNS Tree
+Walk. Existing records stay valid.
+
+---
+
+## Who owns what
+
+**DNS is on Cloudflare** (`art.ns.cloudflare.com`, `ashley.ns.cloudflare.com`).
+Every record below is edited in the Cloudflare dashboard — but three of them
+have their *value* generated somewhere else, because only the service that signs
+the mail can produce its own key.
+
+| Record | Value comes from | Edited in |
+|---|---|---|
+| `_dmarc`, root SPF, TLS-RPT | you | **Cloudflare** |
+| `google._domainkey` | **Google Admin** (generates the key pair) | Cloudflare |
+| `resend._domainkey`, `send.` SPF + MX | **Resend** (generates the key pair) | Cloudflare |
+| DKIM rotation, webhook signing secret | **Resend dashboard** | — |
+| `RESEND_WEBHOOK_SECRET`, `EMAIL_UNSUBSCRIBE_SECRET` | you | **Vercel** |
+
+The `include:_spf.1stdomains.co.nz` inside the root SPF is a **leftover from the
+old web host** (1stDomains → isx.net.nz → voyager.co.nz), not a sign of where DNS
+lives. See "Legacy SPF include" below — it is probably removable.
+
+> **Vercel env vars — do not use stdin.** Use the `--value` flag:
+> ```powershell
+> vercel env add NAME production --value $v --no-sensitive --force --yes
+> ```
+> Piping (`printf … |`, `< file`) can silently store an empty string, and since
+> CLI ≥54 defaults new vars to type **Sensitive**, `vercel env pull` returns
+> sensitive vars as `""` — an empty read is then indistinguishable from an empty
+> value, so you cannot tell whether it worked. `--no-sensitive` makes the value
+> readable and therefore verifiable, which matches every other secret in this
+> project (`RESEND_API_KEY`, `AUTH_SECRET`, `CRON_SECRET` are all readable).
+> Always pull and compare afterwards.
+>
+> This project has no Vercel Git connection, so a **new commit** is required for
+> new env vars to take effect; the dashboard "Redeploy" button will not pick
+> them up.
+
+### Mailbox access — what you actually need
+
+The maintainer signs in as **`website@shesharp.org.nz`** and cannot open the
+other `@shesharp.org.nz` mailboxes. Almost none of this needs them, because
+three different things get confused here:
+
+| | Needs a mailbox login? |
+|---|---|
+| **Sending as** `hello@` via Resend | **No.** Resend signs with the domain's DKIM key. The address never has to be opened to send from it. |
+| **Reply-To** `hello@` / `mentoring@` | **No.** The point is that replies reach *the team*, not the maintainer. Both are real Google Workspace inboxes that people read. |
+| **Enabling Google DKIM** | **No mailbox — but yes, Google Workspace super-admin** on `admin.google.com`. See below. |
+| **Collecting DMARC reports** | **No.** Cloudflare receives them on its own domain. |
+
+**The one real dependency is super-admin, and as of 2026-07-31 we do not have
+it** — `website@shesharp.org.nz` cannot open `admin.google.com`. Consequences:
+
+| Stage | Console | Status |
+|---|---|---|
+| 1 — DMARC Management + `rua` | Cloudflare | **Done 2026-07-31** |
+| 2a — add Google to root SPF | Cloudflare | **Done 2026-07-31** |
+| 2b — **Google DKIM** | Google Admin | **Blocked — needs a super admin** |
+| 3 — `np=reject`, then quarantine | Cloudflare | Pending ~2 weeks of reports |
+| 4 — `p=reject` | Cloudflare | Gated on 2b |
+| Resend DKIM rotation, webhook | Resend + Cloudflare | Pending |
+| Code + env vars | Vercel | Pending |
+
+So **everything except 2b (and therefore 4) can be done without Google**, and
+that is most of the value. See "If nobody will grant super admin" in Stage 2 for
+the fallback — stopping permanently at `p=quarantine` — and for the text to send
+whoever administers the Workspace.
+
+Everything outside Google is owned by `website@` already (see
+`MIGRATION_TO_SHESHARP_ORG.md`).
+
+> **Do not put an address in `EMAIL_UNSUBSCRIBE_MAILTO` you cannot verify.**
+> The one-click HTTPS URL alone satisfies RFC 8058 and the Gmail/Yahoo rules.
+> Some clients prefer a `mailto:`, so pointing one at an unmonitored or
+> non-existent alias means opt-out requests bounce — worse than not offering
+> one. Leave it empty unless someone confirms the inbox is real and watched.
+
+---
+
+## Current state (as measured)
+
+**Stage 1 and Stage 2a were applied on 2026-07-31.** The live records now read:
+
+```
+shesharp.org.nz            TXT    v=spf1 include:_spf.google.com \
+                                        include:_spf.1stdomains.co.nz ~all
+_dmarc.shesharp.org.nz     TXT    v=DMARC1; p=none; \
+                                  rua=mailto:0061f6fe…@dmarc-reports.cloudflare.net;
+resend._domainkey…         TXT    p=MIGfMA0…            (1024-bit RSA)
+send.shesharp.org.nz       TXT    v=spf1 include:amazonses.com ~all
+send.shesharp.org.nz       MX     feedback-smtp.us-east-1.amazonses.com
+k2._domainkey…             CNAME  dkim2.mcsv.net        (Mailchimp)
+k3._domainkey…             CNAME  dkim3.mcsv.net        (Mailchimp)
+shesharp.org.nz            MX     aspmx.l.google.com …  (Google Workspace)
+google._domainkey…                DOES NOT EXIST
+_bimi / _mta-sts / _smtp._tls     DO NOT EXIST
+```
+
+### Three senders, two of them authenticated
+
+| Sender | Used for | From | DMARC today |
+|---|---|---|---|
+| **Resend** | transactional + the newsletter pilot | `noreply@` | **Passes** — aligned DKIM *and* aligned SPF (Return-Path `send.shesharp.org.nz`) |
+| **Mailchimp** | the live monthly newsletter | `newsletter@` | **Passes** — aligned DKIM (`k2`/`k3`). SPF does not align (Return-Path is `rsgsv.net`), so DKIM is carrying it alone |
+| **Google Workspace** | humans (`hello@`, `mentoring@`, …) | various | **Fails both** ← the gap |
+
+Progress against the two original problems:
+
+1. ~~**No `rua`**~~ — **fixed 2026-07-31.** Cloudflare DMARC Management is
+   collecting. First reports land within ~24h; the dashboard is at
+   Email → DMARC Management.
+2. **Google Workspace DKIM is still missing** — *partly* addressed. Stage 2a
+   added `include:_spf.google.com`, so human mail now passes SPF with aligned
+   identity and therefore passes DMARC on direct delivery. What is still absent
+   is aligned **DKIM**: Gmail signs with Google's default `d=*.gappssmtp.com`
+   key, which does not align and counts for nothing. Forwarded mail therefore
+   still has no passing mechanism. Needs a Workspace super admin — see Stage 2b.
+
+Note what is **not** a problem: both bulk senders already authenticate cleanly,
+so tightening DMARC does not endanger the newsletter on either platform.
+
+---
+
+## Two traps
+
+> **Never set `aspf=s`.** Resend's Return-Path is `send.shesharp.org.nz`, which
+> aligns with `shesharp.org.nz` only under *relaxed* alignment. Strict SPF
+> alignment breaks every Resend send immediately.
+
+> **Never add `include:amazonses.com` to the root SPF.** It is unnecessary (SPF
+> is evaluated against the Return-Path, which already passes on the `send.`
+> subdomain), it authorises the entire shared SES estate — every AWS customer —
+> to send with a `shesharp.org.nz` Return-Path, and it burns a DNS lookup.
+
+---
+
+## SPF lookup budget: 4 of 10
+
+SPF permits **10 DNS lookups**. Exceeding it is a `permerror`, which is a hard
+SPF failure. Measured 2026-07-31, after adding Google:
+
+| Include | Lookups |
+|---|---|
+| `_spf.google.com` — now a **flat** record, no nested includes | 1 |
+| `_spf.1stdomains.co.nz` → self + `_spf.mail.isx.net.nz` + `_spf.smtp.voyager.co.nz` | 3 |
+| **Total** | **4** |
+
+**Six lookups of headroom.** Note this cost only 1, not the 4 that older guides
+assume: Google used to chain `_netblocks`, `_netblocks2` and `_netblocks3`, and
+has since flattened `_spf.google.com` to bare `ip4:`/`ip6:` ranges. Re-measure
+rather than trusting the arithmetic — includes change under you:
+
+```
+dig +short TXT _spf.google.com @1.1.1.1
+```
+
+Recount before adding any `include:`. Cloudflare's DMARC Management also carries
+an SPF lookup-count check.
+
+### Legacy SPF include — probably removable
+
+`include:_spf.1stdomains.co.nz` authorises the **old web host's** mail servers
+(chain: `_spf.1stdomains.co.nz` → `_spf.mail.isx.net.nz` →
+`_spf.smtp.voyager.co.nz` + three `/27` blocks). Since the migration, nothing in
+this codebase sends through them — all mail goes via Resend or Google Workspace.
+
+**Do not remove it on that reasoning alone.** After two weeks of Stage 1 reports,
+check whether anything is still sending from those IPs (a contact form on an old
+site, a legacy cron, a mailbox nobody remembers). If nothing is, drop the
+include:
+
+```
+v=spf1 include:_spf.google.com ~all
+```
+
+That takes the budget from 4/10 to **1/10** and removes three networks' worth of
+authorised senders. This is exactly the kind of question the aggregate reports
+exist to answer — which is why it waits for them.
+
+---
+
+## Rollout
+
+Each step is gated on evidence from the previous one. Do not skip ahead.
+
+### Stage 1 — Visibility (day 0, zero risk)
+
+**Use Cloudflare DMARC Management.** It is free on every plan for domains using
+Cloudflare DNS, it lives in the same console as the records themselves, and it
+parses the XML into a dashboard of sending sources with their SPF/DKIM results.
+No third-party account, no mailbox to maintain, nothing to self-host.
+
+Cloudflare dashboard → the domain → **Email → DMARC Management → Enable**. It
+scans for an existing `_dmarc` record and appends its own `rua` to it.
+
+> **It does not touch your MX.** Reports are delivered to a Cloudflare address on
+> Cloudflare's own domain (`…@dmarc-reports.cloudflare.net`), so Google
+> Workspace keeps receiving all mail for `shesharp.org.nz`. Do **not** confuse
+> this with enabling Cloudflare **Email Routing** on the apex, which *does*
+> replace MX records and would break inbound mail.
+>
+> Confirm it immediately after enabling:
+> ```
+> dig +short MX shesharp.org.nz @1.1.1.1
+> ```
+> The five `aspmx.l.google.com` entries must still be there and nothing
+> `cloudflare` should appear. If they changed, revert before doing anything else.
+
+The resulting record should read (Cloudflare fills in its own address):
+
+```
+v=DMARC1; p=none; rua=mailto:<cloudflare-token>@dmarc-reports.cloudflare.net; ri=86400
+```
+
+No `pct=` (removed in RFC 9989). No `adkim`/`aspf` — relaxed is the default and
+the default is what works here.
+
+**Not `ruf=`.** RFC 9991 makes failure reports opt-in, and they carry recipient
+addresses and message headers. Leave it unset permanently.
+
+*Optional second copy — needs Workspace admin, so skip it by default.* If you
+want the raw XML archived somewhere you control, a super admin can create a
+Google Group `dmarc@shesharp.org.nz` ("Who can post: Anyone on the web", no
+moderation — a Group costs no licence); then append
+`,mailto:dmarc@shesharp.org.nz` to the `rua`. **Not required.** Cloudflare's
+dashboard is the working tool, and this step is the only part of Stage 1 that
+touches Google at all — leaving it out keeps Stage 1 entirely inside Cloudflare.
+
+*Verify:* `dig +short TXT _dmarc.shesharp.org.nz @1.1.1.1` shows the `rua`, then
+wait 72 hours and check the Cloudflare dashboard for sources.
+
+*Deep dives:* drop a specific report's raw XML into
+[checkdmarc.email](https://checkdmarc.email) (Resend's free open-source parser)
+when something in the dashboard needs unpacking.
+
+### Stage 2 — Close the enforcement blocker (days 1–3)
+
+Google Workspace mail is the only unauthenticated sender on the domain. Two
+independent fixes; **2a you can do alone, 2b needs a Workspace super admin.**
+
+#### Stage 2a — SPF (Cloudflare only, no admin needed)
+
+**Cloudflare** → DNS → replace the root TXT:
+
+```
+v=spf1 include:_spf.google.com include:_spf.1stdomains.co.nz ~all
+```
+
+This alone takes Google-sent mail from failing *both* checks to passing SPF with
+aligned identity — which is enough for DMARC to pass on direct delivery. It is
+a strict improvement over today and costs nothing.
+
+`~all` stays for now. Under DMARC there is no difference between `~all` and
+`-all`, and `-all` materially increases breakage on forwarded mail (mailing
+lists, `.forward` rules) — real risk for a community organisation.
+
+#### Stage 2b — DKIM (needs Google Workspace super admin)
+
+**Google Admin** → Apps → Google Workspace → Gmail → Authenticate email →
+`shesharp.org.nz` → Generate new record (**2048-bit**, prefix `google`) →
+publish the TXT at `google._domainkey.shesharp.org.nz` in Cloudflare → back in
+the Google console, click **Start authentication**.
+
+**Why Google and not Cloudflare:** DKIM signing happens inside Google's mail
+servers, so only Google can generate the private half of the key. You copy the
+public half out of the Google console into Cloudflare. Cloudflare hosts the
+record; Google owns the key. There is no way to do this from the DNS side.
+
+**"Doesn't Gmail already sign my mail?"** It does — with Google's *default* key,
+`d=<something>.gappssmtp.com`. That domain is not `shesharp.org.nz`, so the
+signature **does not align** and contributes nothing to DMARC. Only a custom
+key generated for the domain counts. This is the single most common reason a
+Workspace domain cannot reach enforcement.
+
+**Why SPF alone is not enough:** SPF is evaluated against the connecting IP, so
+it fails the moment a message is forwarded — an alumni address, a `.forward`
+rule, a mailing list. DKIM travels with the message and survives all three.
+Without 2b, that forwarded fraction of human mail has no passing mechanism.
+
+> A 2048-bit value is ~400 characters and a single DNS TXT *string* caps at 255
+> bytes. Cloudflare handles the split itself, so paste the whole value into one
+> field and do not chop it up by hand. Confirm with
+> `dig +short TXT google._domainkey.shesharp.org.nz @1.1.1.1` — a truncated key
+> looks like a valid record while every signature silently fails.
+
+*Verify both:* send from `hello@shesharp.org.nz` in Gmail to a personal Gmail →
+**Show original** → all three of `SPF: PASS`, `DKIM: 'PASS' with domain
+shesharp.org.nz`, `DMARC: 'PASS'`. Repeat via a Resend path (trigger a password
+reset). Both must pass before Stage 4.
+
+#### If nobody will grant super admin
+
+Then **stop at `p=quarantine` and stay there.** That is a defensible permanent
+position, not a failure:
+
+- Do Stage 1, Stage 2a and Stage 3 — all Cloudflare, all yours. That is the bulk
+  of the value: you gain visibility, you close the non-existent-subdomain hole
+  with `np=reject`, and spoofed mail starts going to Junk instead of the inbox.
+- **Do not go to `p=reject`.** At quarantine, a forwarded message from `hello@`
+  lands in someone's spam folder. At reject it is destroyed. Without aligned
+  DKIM you have no second mechanism to catch it, and you will not find out.
+- Read the Stage 1 reports before even the quarantine step: they show exactly
+  how much of your mail is arriving via forwarders. If that number is
+  effectively zero, quarantine is comfortable; if it is not, that is your
+  evidence for the admin request below.
+
+**The ask is small — send this to whoever administers the Workspace:**
+
+> Could you enable DKIM signing for shesharp.org.nz in the Google Admin console?
+> It's Apps → Google Workspace → Gmail → Authenticate email → Generate new
+> record (2048-bit), then send me the TXT value to publish in Cloudflare, and
+> click "Start authentication" once I confirm it's live.
+>
+> Right now our mail is signed with Google's default gappssmtp.com key, which
+> doesn't count for DMARC, so we can't protect the domain from being spoofed in
+> phishing emails to our donors and mentees. Takes about five minutes and
+> changes nothing about how mail is sent or received.
+
+Alternatively they can grant `website@shesharp.org.nz` the **Super Admin** role
+(Admin console → Directory → Users → website@ → Admin roles and privileges),
+which also unblocks the DKIM key rotation this document schedules annually.
+
+### Stage 3 — Enforce, in two steps
+
+**Day ~14 — `np=reject`** (free protection, no risk):
+
+```
+v=DMARC1; p=none; np=reject; rua=mailto:<cloudflare-token>@dmarc-reports.cloudflare.net; ri=86400
+```
+
+`np` (new in DMARCbis) applies only to subdomains that do not exist in DNS at
+all. `send.` exists and is unaffected. No legitimate mail can come from a
+non-existent subdomain, which closes the `billing.shesharp.org.nz` /
+`secure.shesharp.org.nz` spoofing trick.
+
+*Gate:* two weeks of reports show no sending from an unrecognised subdomain.
+
+**Day ~30 — quarantine:**
+
+```
+v=DMARC1; p=quarantine; sp=quarantine; np=reject; rua=mailto:<cloudflare-token>@dmarc-reports.cloudflare.net; ri=86400
+```
+
+*Gate — all three, across 2+ weeks of reports:*
+1. Every source is identified. Expect exactly three: Google, Amazon SES
+   (Resend), and forwarders. Anything else must be explained first.
+2. Google Workspace mail passes DMARC. **Aligned DKIM pass is the goal**; if
+   only SPF passes (Stage 2b was not done), quarantine is still reasonable —
+   but read the forwarder rows first and accept that whatever share of mail
+   arrives via forwarders will land in Junk.
+3. No third-party sender is hiding in the failures. Look specifically for
+   Humanitix, Stripe, Slack, or a mail-merge tool sending as `@shesharp.org.nz`.
+
+`sp` defaults to `p`, so `sp=quarantine` is redundant — set it anyway, so a
+future edit to `p=` cannot change subdomain policy as a side effect.
+
+Also at this point: **rotate the Resend DKIM key from 1024 to 2048-bit** (see
+below). Do it before `p=reject`, never after.
+
+### Stage 4 — Reject (day ~60–90)
+
+```
+v=DMARC1; p=reject; sp=reject; np=reject; rua=mailto:<cloudflare-token>@dmarc-reports.cloudflare.net; ri=86400
+```
+
+Then flip the root SPF to `-all`.
+
+*Gate — hard prerequisite plus evidence:*
+0. **Stage 2b is done.** Google Workspace mail must show an aligned DKIM pass.
+   Do not reach this stage on SPF alone: at reject, a forwarded message from
+   `hello@` is destroyed rather than filed in Junk, and nothing tells you it
+   happened. If DKIM is still unavailable, stay at quarantine indefinitely —
+   see "If nobody will grant super admin" in Stage 2.
+1. 30 days at quarantine, zero legitimate mail quarantined, zero "did you send
+   this / it went to spam" reports from mentors, mentees or donors.
+
+Optionally bridge with `t=y` for two weeks — DMARCbis's replacement for the
+removed `pct=` ramp. Receiver support is uneven, so treat it as a declaration of
+intent, not as protection. The evidence gate above is what actually protects
+you.
+
+---
+
+## Resend DKIM rotation (1024 → 2048)
+
+1024-bit RSA is below current NIST guidance and some receivers down-weight it.
+The rotation carries real transient risk: the selector stays `resend._domainkey`,
+so there is an unavoidable window where the published key and the signing key
+disagree and **every Resend message fails DKIM**.
+
+1. Pick a quiet window — **after** a monthly broadcast, never before one.
+2. In Cloudflare, set the `resend._domainkey` record's TTL to 300 (it is likely
+   on "Auto") so the change propagates in minutes rather than hours.
+3. Rotate / re-add the domain at 2048-bit in the Resend dashboard.
+4. Publish the new TXT **immediately**.
+5. Wait for Resend to show Verified, send a test, confirm `DKIM: PASS`.
+
+Do this at `p=none` or `p=quarantine`, where a botched rotation degrades. At
+`p=reject` it drops mail on the floor.
+
+---
+
+## Optional extras
+
+**TLS-RPT** — free, five minutes, protects *inbound* mail:
+
+```
+_smtp._tls.shesharp.org.nz  TXT  "v=TLSRPTv1; rua=mailto:tlsrpt@shesharp.org.nz"
+```
+
+Unlike DMARC reports, Cloudflare does not collect these — the `rua` must be a
+real inbox, which means a super admin has to create the address. **Skip it**
+unless someone is going to read the reports; it protects inbound mail only and
+Google's MX already negotiates TLS.
+
+**MTA-STS** — last, or not at all. Needs a policy file hosted at
+`https://mta-sts.shesharp.org.nz/.well-known/mta-sts.txt` (a second Vercel
+domain plus a route), and it is the one item here where a mistake breaks
+*inbound* mail. Google's MX already negotiates TLS. If you do it, start at
+`mode=testing` and stay there a month.
+
+**BIMI — skip.** The Gmail checkmark needs a Verified Mark Certificate, roughly
+USD 1,000–1,500/year plus a registered trademark. Not a defensible spend for a
+volunteer non-profit. The free half (a `_bimi` record with no `a=` tag and an
+SVG Tiny P/S logo) is ignored by Gmail and protects nothing.
+
+---
+
+## Migrating the newsletter from Mailchimp to Resend
+
+The reason this work exists. The goal is that the newsletter keeps landing in
+the inbox — not Promotions, not Spam — through a change of sending platform.
+
+### Do these two things in separate months
+
+**Do not tighten DMARC and switch ESP in the same window.** If deliverability
+dips you will not know which change caused it, and the fix for each is
+different. Suggested order:
+
+1. **Month 1 — DMARC only.** Stage 1 (visibility) and Stage 2a. Nothing about
+   the newsletter changes; Mailchimp keeps sending. You end the month with
+   reports that tell you what your baseline actually is.
+2. **Month 2 — ESP only.** Migrate the newsletter to Resend at `p=none`, where
+   a mistake degrades rather than destroys. Compare open/bounce/complaint rates
+   against the Mailchimp baseline you now have.
+3. **Month 3+ — resume tightening.** Stage 3, once the Resend send is boring.
+
+### The From address does not change
+
+`She Sharp <newsletter@shesharp.org.nz>`, From and Reply-To — identical to what
+Mailchimp sends today. Gmail and Outlook weight reputation partly per sending
+identity, and that address carries years of opens, replies and "not spam"
+signals. The infrastructure underneath is already changing; changing the visible
+sender at the same time would start a cold bulk identity on precisely the send
+where that hurts most. Encoded in `lib/email/senders.ts` (`marketing` stream).
+
+### The one thing most likely to go wrong: list hygiene
+
+Mailchimp has spent years quietly accumulating a suppression list — every hard
+bounce, every unsubscribe, every complaint. **That history does not live in the
+CSV export of your subscribers.** Export the audience, import it into Resend,
+and you will mail a few hundred addresses Mailchimp had already stopped mailing.
+Bounces and complaints spike on your first Resend send, against a domain
+reputation that has no Resend history to absorb it. This is how ESP migrations
+fail, and it fails on send one.
+
+Before importing anything:
+
+1. In Mailchimp, export **three** segments, not one: `Subscribed`,
+   `Unsubscribed`, and `Cleaned` (Mailchimp's word for hard-bounced).
+2. Import **only** `Subscribed` into Resend, through
+   `/update-mailing-list` — its consent gate is the point.
+3. Feed the other two into the suppression register so nothing can re-add them:
+   ```powershell
+   npx tsx scripts/email/normalize-recipients.ts <unsubscribed.csv> --key mc-unsub
+   # then, per address, or scripted over the normalized output:
+   npx tsx scripts/email/suppression.ts add <email> --reason "mailchimp-unsubscribed"
+   npx tsx scripts/email/suppression.ts add <email> --reason "mailchimp-cleaned"
+   ```
+4. Also set those contacts `unsubscribed` in Resend if they are ever imported by
+   another route — the local register protects the scripts, the Resend flag
+   protects broadcasts.
+
+### Keep the Mailchimp DNS records
+
+Leave `k2._domainkey` and `k3._domainkey` in Cloudflare until the Resend
+newsletter has shipped cleanly two or three times. They are CNAMEs, they cost
+nothing, they authenticate no one but Mailchimp, and while they are there a
+rollback is "send from Mailchimp again" rather than "wait for DNS". Remove them
+only when you are certain, and note the removal in this file.
+
+### Ramp, don't switch
+
+The first Resend broadcast should not be the whole list. Send to a few hundred
+of the most engaged (recent openers) first, confirm inbox placement in Gmail,
+Outlook and at least one corporate domain, then widen. Resend's shared IPs are
+warm, and your *domain* reputation carries across — but the sending pattern is
+new, and a sudden first-time spike from a new platform is exactly the shape
+filters are built to notice.
+
+### What actually improves by moving
+
+Worth knowing so you can tell whether the migration worked:
+
+- **SPF starts aligning.** Mailchimp's Return-Path is `rsgsv.net`, which does
+  not align, so DMARC rests on DKIM alone. Resend's Return-Path is
+  `send.shesharp.org.nz` — after the move, both mechanisms align. Strictly more
+  robust.
+- **Bounces and complaints become visible in-repo.** The Resend webhook writes
+  them to `email_optouts` automatically; with Mailchimp that history was locked
+  in a dashboard nobody reads.
+- **One less unauthenticated surface** once Mailchimp is retired.
+
+### Watch these on the first three sends
+
+Resend dashboard, after each broadcast: complaint rate **< 0.1%**, hard bounce
+rate **< 2%**, and delivery rate against the Mailchimp baseline. If any is out
+of bounds, stop and clean the list before the next issue — that is the
+pre-committed trigger in the next section.
+
+---
+
+## Sending-domain architecture: one domain, with a pre-committed trigger
+
+Transactional and marketing mail both send from `shesharp.org.nz`. This is
+deliberate.
+
+Splitting marketing onto `news.shesharp.org.nz` was considered and rejected: a
+cold subdomain starts at "unknown sender", which is mildly negative rather than
+neutral, and a few hundred recipients a month would never warm it out of that
+state. The domain's strongest positive signal is real humans holding two-way
+conversations from Google Workspace, and that cannot be moved. The marketing
+path is also unusually clean already — `lib/email/audience.ts` throws on
+marketing to Tier ≥1, `lib/email/gates.ts` blocks any marketing send without an
+unsubscribe, and Resend broadcasts attach `List-Unsubscribe` themselves. Volume
+is two orders of magnitude below the Gmail/Microsoft 5,000-per-day bulk-sender
+threshold.
+
+**Split marketing onto `news.shesharp.org.nz` if any one of these fires:**
+
+- a broadcast's complaint rate exceeds **0.10%**, or
+- a single send exceeds **~1,000 recipients**, or
+- a broadcast's hard-bounce rate exceeds **2%**.
+
+**Transactional mail stays on the root domain permanently, under every
+scenario.** It is the mail that must never fail, so it belongs on the
+best-authenticated identity available.
+
+---
+
+## What the code does
+
+| Concern | Where |
+|---|---|
+| Sender identities, per stream | `lib/email/senders.ts` |
+| Stream routing, `List-Unsubscribe`, tags, opt-out check | `lib/email/service.ts` |
+| Signed one-click unsubscribe tokens | `lib/email/unsubscribe-token.ts` |
+| RFC 8058 endpoint (POST) + confirmation page | `app/api/email/unsubscribe/route.ts`, `app/(site)/email/unsubscribe/` |
+| Bounce / complaint capture | `app/api/webhooks/resend/route.ts`, `lib/email/webhook-verify.ts` |
+| Opt-out storage | `lib/db/schema.ts` → `email_optouts`, `lib/email/optouts.ts` |
+| Pre-send gates (From identity, Reply-To domain, tag charset) | `lib/email/gates.ts` |
+| Offline register + reconciliation | `scripts/email/suppression.ts` (`sync`) |
+| Checks | `npx tsx lib/email/hardening.test.ts` |
+
+**Streams.** `transactional` (recipient-triggered, never suppressed) ·
+`notification` (recurring, unrequested — carries one-click unsubscribe and
+honours opt-outs) · `marketing` (broadcasts from `hello@`) · `internal` (to She
+Sharp's own mailboxes).
+
+Every send is tagged `stream:<name>`, so Resend's analytics separate the
+reputation streams even though they share a domain. That is the instrumentation
+the split trigger above depends on.
+
+---
+
+## Cadence
+
+- **Weeks 1–4:** open Cloudflare → Email → DMARC Management weekly (~5 minutes)
+  and confirm every sending source is one you recognise.
+- **Ongoing:** folded into `/monthly-newsletter`, which already runs monthly
+  with a human in the loop — check last month's digest for unrecognised sources,
+  and the last broadcast's complaint (<0.1%) and bounce (<2%) rates.
+- **Monthly:** `npx tsx scripts/email/suppression.ts sync` to fold runtime
+  bounces and complaints into the committed register.
+- **Annually:** rotate DKIM keys, recount the SPF lookup budget, confirm the
+  `rua` addresses still work.
+
+---
+
+## Verification commands
+
+```bash
+dig +short TXT _dmarc.shesharp.org.nz @1.1.1.1
+dig +short TXT shesharp.org.nz @1.1.1.1
+dig +short TXT google._domainkey.shesharp.org.nz @1.1.1.1
+dig +short TXT resend._domainkey.shesharp.org.nz @1.1.1.1
+```
+
+On Windows PowerShell, `Resolve-DnsName -Name <name> -Type TXT -Server 1.1.1.1`.
+
+End-to-end: Gmail → open the message → ⋮ → **Show original** → confirm SPF,
+DKIM and DMARC all say PASS. Check both a Google Workspace send and a Resend
+send; they authenticate by different mechanisms and can fail independently.

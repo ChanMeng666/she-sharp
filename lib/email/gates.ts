@@ -15,6 +15,13 @@
  */
 
 import type { MessageSpec } from "./message";
+import {
+  SENDING_DOMAIN,
+  extractAddress,
+  isApprovedSender,
+  isOnSendingDomain,
+  listApprovedSenders,
+} from "./senders";
 
 export type GateLevel = "fail" | "warn";
 
@@ -338,6 +345,98 @@ function gatePreheader(spec: MessageSpec): GateResult[] {
   return results;
 }
 
+/**
+ * from-identity — a From this organisation is not authorised to send as.
+ *
+ * The highest-value gate once the domain reaches DMARC `p=reject`: a typo such
+ * as `hello@shesharp.co.nz` fails alignment and is discarded by the receiver
+ * with no bounce and no error, so the send looks successful and simply never
+ * arrives. Catching it here turns a silent loss into a blocked send.
+ */
+function gateFromIdentity(spec: MessageSpec): GateResult[] {
+  if (isApprovedSender(spec.from)) return [];
+  const address = extractAddress(spec.from);
+  const onDomain = isOnSendingDomain(spec.from);
+  return [
+    {
+      id: "from-identity",
+      level: "fail",
+      message: onDomain
+        ? `From address "${address}" is not an approved sender. Approved: ` +
+          `${listApprovedSenders().join(", ")} (see lib/email/senders.ts).`
+        : `From address "${address}" is not on ${SENDING_DOMAIN}. Resend signs ` +
+          `with d=${SENDING_DOMAIN}, so any other domain loses DMARC alignment ` +
+          `and is dropped without a bounce.`,
+    },
+  ];
+}
+
+/**
+ * reply-to-domain — replies must land in a She Sharp mailbox.
+ *
+ * A volunteer's personal address as the Reply-To on organisational mail both
+ * reads as a phishing pattern to filters and quietly routes members' personal
+ * information to an account the organisation does not control.
+ */
+function gateReplyToDomain(spec: MessageSpec): GateResult[] {
+  if (!spec.replyTo || isOnSendingDomain(spec.replyTo)) return [];
+  return [
+    {
+      id: "reply-to-domain",
+      level: "fail",
+      message:
+        `Reply-To "${spec.replyTo}" is not on ${SENDING_DOMAIN}. Route replies ` +
+        `to a team mailbox (hello@, mentoring@, website@) instead.`,
+    },
+  ];
+}
+
+/** Characters Resend accepts in a tag name or value. */
+const TAG_PATTERN = /^[A-Za-z0-9_-]{1,256}$/;
+
+/**
+ * tag-charset — Resend rejects tags outside `[A-Za-z0-9_-]`.
+ *
+ * The API returns an opaque error for this, and only after the send has already
+ * been committed to. Checking locally costs nothing.
+ */
+function gateTagCharset(spec: MessageSpec): GateResult[] {
+  const offenders = (spec.tags ?? [])
+    .flatMap((tag) => [tag.name, tag.value])
+    .filter((value) => !TAG_PATTERN.test(value));
+  if (offenders.length === 0) return [];
+  return [
+    {
+      id: "tag-charset",
+      level: "fail",
+      message:
+        `Invalid tag name/value: ${listOffenders(unique(offenders))}. Resend ` +
+        `allows ASCII letters, digits, "_" and "-" only (max 256 chars).`,
+    },
+  ];
+}
+
+/**
+ * no-reply-path — mail nobody can answer.
+ *
+ * Gmail weights two-way conversation heavily, so an unrepliable From with no
+ * Reply-To is a small standing cost to reputation. Advisory: some internal mail
+ * legitimately wants no reply path.
+ */
+function gateNoReplyPath(spec: MessageSpec): GateResult[] {
+  const address = extractAddress(spec.from);
+  if (!address.startsWith("noreply@") || spec.replyTo) return [];
+  return [
+    {
+      id: "no-reply-path",
+      level: "warn",
+      message:
+        `From is ${address} with no Reply-To, so replies bounce. Set replyTo ` +
+        `to a monitored mailbox.`,
+    },
+  ];
+}
+
 /** single-cta — competing buttons split clicks; one ask per email. */
 function gateSingleCta(spec: MessageSpec): GateResult[] {
   const buttons = spec.blocks.filter((b) => b.type === "button").length;
@@ -482,6 +581,10 @@ export function runEmailGates(
     ...gateUnsubscribe(html, spec, mode),
     ...gateMergeTags(html),
     ...gateSecrets(`${html}\n${text}`),
+    ...gateFromIdentity(spec),
+    ...gateReplyToDomain(spec),
+    ...gateTagCharset(spec),
+    ...gateNoReplyPath(spec),
     ...gateSubject(spec),
     ...gatePreheader(spec),
     ...gateSingleCta(spec),

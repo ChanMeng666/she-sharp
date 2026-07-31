@@ -73,6 +73,14 @@ Resend at all. The real risk is choosing an alias nobody on the team opens.
 Always confirm the pair with the user before the first send of a session; after
 that, reuse it silently for the rest of the batch.
 
+**These pairs must match `lib/email/senders.ts`, the code's source of truth for
+sending identities.** Two gates enforce it and will block a render that drifts:
+`from-identity` rejects any From that is not an approved sender on
+`shesharp.org.nz` (a typo like `hello@shesharp.co.nz` is discarded silently by
+receivers once the domain reaches DMARC `p=reject`), and `reply-to-domain`
+rejects a Reply-To outside the domain — never route replies to a volunteer's
+personal address. See `docs/deployment/EMAIL_AUTHENTICATION.md`.
+
 ## Template 1 — general enquiry
 
 The default. Someone asked a real question and deserves a real answer.

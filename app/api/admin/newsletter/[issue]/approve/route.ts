@@ -7,12 +7,25 @@ import { renderNewsletter } from "@/lib/newsletter/render";
 import { createBroadcast, sendBroadcast } from "@/lib/newsletter/resend-api";
 import { lastThursdaySendAt } from "@/lib/newsletter/schedule";
 import { issueIdSchema } from "@/lib/newsletter/schema";
+import { getSenderIdentity } from "@/lib/email/senders";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
-const DEFAULT_FROM = "She Sharp <noreply@shesharp.org.nz>";
-const REPLY_TO = "mentoring@shesharp.org.nz";
+/**
+ * The newsletter is marketing, so it takes the marketing identity —
+ * `She Sharp <newsletter@shesharp.org.nz>`, From and Reply-To both, which is
+ * byte-for-byte what subscribers already receive from Mailchimp. Preserving the
+ * visible sender across the Mailchimp → Resend migration is the whole point:
+ * see the note in `lib/email/senders.ts`.
+ *
+ * This previously read `process.env.EMAIL_FROM || DEFAULT_FROM`, and because
+ * every environment sets `EMAIL_FROM` to `noreply@`, the monthly broadcast went
+ * out from a no-reply address whose own footer says "Got news to share? Just
+ * hit reply". `getSenderIdentity` deliberately lets `EMAIL_FROM` override the
+ * transactional identity only, which is what closes that hole.
+ */
+const MARKETING_SENDER = getSenderIdentity("marketing");
 /** Immediate-send delay: gives a cancel window in the Resend dashboard. */
 const IMMEDIATE_SEND_DELAY_MS = 5 * 60 * 1000;
 
@@ -156,8 +169,8 @@ export async function POST(
     const { id: broadcastId } = await createBroadcast({
       segmentId,
       topicId,
-      from: process.env.EMAIL_FROM || DEFAULT_FROM,
-      replyTo: REPLY_TO,
+      from: MARKETING_SENDER.from,
+      replyTo: MARKETING_SENDER.replyTo,
       subject: issue.editorial.subjectLine,
       html,
       text,

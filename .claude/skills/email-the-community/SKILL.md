@@ -65,7 +65,7 @@ runs with `--dry-run`, and `state/broadcasts.json` is untouched.
 | What does the button say, and where does it go? | **Ask.** One CTA, one live `https://www.shesharp.org.nz/…` URL — never guess a link |
 | When does it go out? | The next weekday, 10am NZ, at least an hour away |
 | Which mailbox for the test send? | **Ask, every time. Never hard-code an address** |
-| From / Reply-To | `She Sharp <hello@shesharp.org.nz>`, Reply-To to the team mailbox that owns the topic |
+| From / Reply-To | **`She Sharp <newsletter@shesharp.org.nz>`** — the `marketing` identity in `lib/email/senders.ts`. Anything going to the mailing list uses this, because it is the address subscribers have received the newsletter from for years and its reputation is what carries the Mailchimp → Resend move. Reply-To defaults to the same; if a topic owns a different mailbox use that, but it must be `@shesharp.org.nz` or the `reply-to-domain` gate blocks the render. Do **not** use `hello@` for list mail — that address is for 1:1 conversation |
 
 If the user hands you the substance ("say the round starts in September and
 closes on the 30th"), that substance IS the content. Put it in She Sharp's

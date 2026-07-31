@@ -383,7 +383,7 @@ A monthly email newsletter built on **React Email** + **Resend broadcasts**, wit
 
 ## Outbound Email Skills
 
-Four guided skills let non-technical teammates send email without writing code. All four share one pipeline — **repo scripts render, the Resend CLI sends** — so `lib/email/service.ts` (13 transactional emails, module-level Resend singleton) stays untouched while `--reply-to`, `--cc`, `--tags`, `--scheduled-at`, batch and broadcasts all come from the CLI.
+Four guided skills let non-technical teammates send email without writing code. All four share one pipeline — **repo scripts render, the Resend CLI sends** — so `lib/email/service.ts` (the single `resend.emails.send()` behind 25 template call sites across 6 files, module-level Resend singleton) stays untouched while `--reply-to`, `--cc`, `--tags`, `--scheduled-at`, batch and broadcasts all come from the CLI.
 
 | Skill | Use it for | Audience |
 |---|---|---|
@@ -392,12 +392,35 @@ Four guided skills let non-technical teammates send email without writing code. 
 | `/send-event-emails` | Four stage emails to one event's Humanitix registrants, chunked and resumable | Tier 2 — fulfilment only |
 | `/email-the-community` | One-off announcement broadcast to a Resend segment | Tier 0 only |
 
-- **Shared layer**: `lib/email/message.ts` (`MessageSpec` — 9 content blocks, no HTML for the author), `compose.tsx` (dual engine: `layout` reuses `lib/email/layout.ts` for transactional, `react` renders `emails/announcement.tsx` for broadcasts; also exports `withDraftBanner`), `gates.ts` (100KB / absolute-URL / JPEG-only / unsubscribe / merge-tag / secret-scan, plus an advisory `Redactions to confirm` list), `audience.ts` (`assertSendAllowed` — marketing to Tier ≥1 throws).
+- **Shared layer**: `lib/email/message.ts` (`MessageSpec` — 9 content blocks, no HTML for the author), `compose.tsx` (dual engine: `layout` reuses `lib/email/layout.ts` for transactional, `react` renders `emails/announcement.tsx` for broadcasts; also exports `withDraftBanner`), `gates.ts` (100KB / absolute-URL / JPEG-only / unsubscribe / merge-tag / secret-scan / **from-identity / reply-to-domain / tag-charset / no-reply-path**, plus an advisory `Redactions to confirm` list), `audience.ts` (`assertSendAllowed` — marketing to Tier ≥1 throws).
 - **Shared CLI**: `scripts/email/` — `render-message.ts` (spec → `tmp/emails/*.html` + gates + a paste-able `resend` command), `normalize-recipients.ts` (any-shape CSV: detects headers, reads the guess back in plain English, never asks anyone to edit a CSV), `build-batch.ts` (per-person render, 100/chunk, idempotency keys), `audience-report.ts`, `mark-contact-replied.ts`, `suppression.ts`.
 - **Consent is the load-bearing rule**: the database has **no** marketing opt-in column, so Resend segments/topics are the only subscription record. Registering, donating, applying or writing in is **not** subscribing — see `.claude/skills/update-mailing-list/references/consent-rules.md`, which the other three skills defer to.
 - **Two-stage confirmation everywhere**: render + gate locally → `resend … --dry-run` prints the full request JSON without calling the API → only then the real send. `resend emails batch` has **no** `--dry-run`; its equivalent preflight is the local render plus `--batch-validation strict`.
 - **Zero migrations**: `form_status` has no `replied` value, so contact replies are recorded with the existing `reviewed_at` / `status` / `review_notes` columns.
 - **Onboarding a non-technical teammate**: `docs/development/AI_SKILLS_GUIDE.md` walks them from installing Cursor → cloning the repo → typing `/` → prompts for all six project skills. Cursor reads `.claude/skills/` as a compatibility path, so no per-tool porting is needed; frontmatter `name` must keep matching its folder name or Cursor drops the skill.
+
+## Email Authentication & Sending Streams
+
+Full DNS runbook: **`docs/deployment/EMAIL_AUTHENTICATION.md`** (current records, the `p=none → quarantine → reject` rollout with its evidence gates, the SPF lookup budget, and the two traps). Read it before touching any From address or DNS record.
+
+**Sender identities live in `lib/email/senders.ts` — the single source of truth.** Never hard-code a From or Reply-To anywhere else. Four streams, and the stream decides everything downstream:
+
+| Stream | Meaning | From | `List-Unsubscribe` | Honours opt-outs |
+|---|---|---|---|---|
+| `transactional` | Recipient-triggered, expected in minutes | `noreply@` (overridable by `EMAIL_FROM`) | No | **Never** |
+| `notification` | Recurring, unrequested (reminders, announcements) | `noreply@` | Yes (RFC 8058) | Yes |
+| `marketing` | Newsletter + one-off broadcasts | **`newsletter@`** | Resend attaches it | via Resend topics |
+| `internal` | To She Sharp's own mailboxes | `noreply@` | No | No |
+
+- `sendEmail()` (`lib/email/service.ts`) takes `stream`, defaulting to `transactional`. It resolves From/Reply-To, attaches one-click unsubscribe headers for `notification` only, tags every send `stream:<name>` for per-stream Resend analytics, and checks `email_optouts` **only** for `notification` — a suppressed address must still receive a password reset.
+- `EMAIL_FROM` overrides the **transactional** From only. Letting it reach marketing is what previously sent the monthly newsletter from `noreply@` while its own footer said "just hit reply".
+- **`newsletter@` is a continuity decision, not a preference.** The live newsletter still goes out via **Mailchimp** from `She Sharp <newsletter@shesharp.org.nz>` (DKIM `k2`/`k3._domainkey` → `dkim*.mcsv.net`). The founder wants to replace Mailchimp with Resend *to improve deliverability*, so the visible sender must not change across that move — see the Mailchimp → Resend section in the doc, especially the list-hygiene warning (Mailchimp's years of bounce/unsubscribe suppression are **not** in the subscriber CSV export) and the rule to do the ESP migration and the DMARC tightening in **separate months**.
+- `hello@` remains an approved sender but is for **1:1** mail only (contact replies, event fulfilment). List mail uses `newsletter@`.
+- **One-click unsubscribe**: `lib/email/unsubscribe-token.ts` (stateless HMAC over the email *hash*, never the address) → `app/api/email/unsubscribe/route.ts`. POST is unauthenticated and must return a bare 200 (providers treat 3xx as failure); **GET must never mutate** — link scanners prefetch it.
+- **Bounces/complaints**: `app/api/webhooks/resend/route.ts` verifies Svix signatures by hand (`lib/email/webhook-verify.ts`, no `svix` dependency) and writes `email_optouts`; complaints also post to Slack. Needs `RESEND_WEBHOOK_SECRET`.
+- **Two suppression stores, one join key**: `email_optouts` (runtime) and `lib/data/json/email-suppression-hashes.json` (committed, read by the offline scripts) both key on `hashEmail()` from `lib/email/hash.ts`. Reconcile monthly with `npx tsx scripts/email/suppression.ts sync`.
+- **Checks**: `npx tsx lib/email/hardening.test.ts`.
+- **One domain on purpose**: transactional and marketing share `shesharp.org.nz`. The pre-committed trigger to split marketing onto `news.` is complaint rate >0.10%, a single send >1,000 recipients, or hard bounces >2% — see the doc.
 
 ## Environment Configuration
 
@@ -418,6 +441,8 @@ OPENAI_API_KEY=...                     # OpenAI chatbot (GPT-4o-mini) + GPT-4 ma
 UPSTASH_REDIS_URL / UPSTASH_REDIS_TOKEN   # or KV_REST_API_URL / KV_REST_API_TOKEN (Vercel Upstash integration)
 # CHATBOT_USE_GATEWAY=1                 # optional: route chat via Vercel AI Gateway (needs purchased AI Gateway credits)
 RESEND_API_KEY=...                     # Email service (auth, mentorship, recruitment)
+EMAIL_UNSUBSCRIBE_SECRET=...           # Signs one-click List-Unsubscribe tokens (RFC 8058)
+RESEND_WEBHOOK_SECRET=whsec_...        # Verifies bounce/complaint webhooks (Svix)
 
 # Slack Notifications
 SLACK_VOLUNTEER_WEBHOOK_URL=...        # Volunteer/ambassador application alerts

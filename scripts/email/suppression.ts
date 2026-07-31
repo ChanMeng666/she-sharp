@@ -19,6 +19,7 @@
  *   npx tsx scripts/email/suppression.ts add <email> [--reason "bounced"]
  *   npx tsx scripts/email/suppression.ts remove <email>
  *   npx tsx scripts/email/suppression.ts check <email>
+ *   npx tsx scripts/email/suppression.ts sync [--dry-run]
  *
  * Output:
  *   list   — one line per entry: `<hash[0:12]>…  <reason>  <YYYY-MM-DD>`, then a total.
@@ -26,16 +27,23 @@
  *   remove — confirms, or exits 1 if the address was not on the list.
  *   check  — prints SUPPRESSED / not suppressed; exit 0 if suppressed, 1 if not,
  *            so it can be used in a shell conditional.
+ *   sync   — folds the runtime `email_optouts` table (one-click unsubscribes,
+ *            bounces and spam complaints captured by the Resend webhook) into
+ *            this file. Both sides key on the same `hashEmail()`, so it is a
+ *            plain set union — no matching logic and no PII crossing over.
+ *            Needs POSTGRES_URL. Run it monthly.
  *
  * Importable API (used by normalize-recipients.ts):
  *   hashEmail(email)          → lowercase sha256 hex of the normalized address
  *   loadSuppressionHashes()   → Set<string> of every suppressed hash
  */
 
-import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { hashEmail } from "../../lib/email/hash";
+
+export { hashEmail };
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 /** Repo root — this file lives at <root>/scripts/email/suppression.ts. */
@@ -69,19 +77,6 @@ const EMPTY_FILE: SuppressionFile = {
   updatedAt: new Date(0).toISOString(),
   entries: [],
 };
-
-/**
- * Hashes an email address for suppression lookup.
- *
- * Normalization (trim + lowercase) must match everywhere, or the same address
- * hashes two different ways and the suppression silently stops working.
- *
- * @param email A raw address, as typed or as exported from a ticketing tool.
- * @returns Lowercase sha256 hex digest of the normalized address.
- */
-export function hashEmail(email: string): string {
-  return createHash("sha256").update(email.trim().toLowerCase()).digest("hex");
-}
 
 /**
  * Reads the suppression file from disk.
@@ -172,6 +167,7 @@ function usage(): void {
   console.error('  npx tsx scripts/email/suppression.ts add <email> [--reason "bounced"]');
   console.error("  npx tsx scripts/email/suppression.ts remove <email>");
   console.error("  npx tsx scripts/email/suppression.ts check <email>");
+  console.error("  npx tsx scripts/email/suppression.ts sync [--dry-run]");
 }
 
 /** Validates and returns the address argument for add/remove/check. */
@@ -250,7 +246,74 @@ function commandCheck(email: string): void {
   process.exit(1);
 }
 
-function main(): void {
+/**
+ * Merges runtime opt-outs into the committed register.
+ *
+ * The two stores answer the same question for different callers: the table
+ * serves live sends, this file serves the offline import scripts. Keeping them
+ * in step is what stops `normalize-recipients.ts` from re-adding someone who
+ * unsubscribed or bounced since the last CSV.
+ *
+ * The imports are dynamic so that `list`/`add`/`remove`/`check` keep working
+ * with no POSTGRES_URL set — `lib/db/drizzle.ts` throws at module load without
+ * it. The connection is closed explicitly at the end: the module-level pool is
+ * built for a long-lived server, and left open it keeps this CLI process alive
+ * forever after the output has been printed.
+ *
+ * @param dryRun When true, report what would be added and write nothing.
+ */
+async function commandSync(dryRun: boolean): Promise<void> {
+  const { listOptouts } = await import("../../lib/email/optouts");
+  const { client } = await import("../../lib/db/drizzle");
+
+  try {
+    await syncFromDatabase(listOptouts, dryRun);
+  } finally {
+    await client.end();
+  }
+}
+
+/** The body of `sync`, split out so the connection close can be guaranteed. */
+async function syncFromDatabase(
+  listOptouts: () => Promise<
+    { emailHash: string; stream: string; reason: string; createdAt: Date }[]
+  >,
+  dryRun: boolean
+): Promise<void> {
+  const file = readSuppressionFile();
+  const known = new Set(file.entries.map((entry) => entry.hash.toLowerCase()));
+
+  const rows = await listOptouts();
+  const missing = rows.filter((row) => !known.has(row.emailHash.toLowerCase()));
+
+  console.log(`${rows.length} opt-out(s) in the database, ${file.entries.length} in the file.`);
+
+  if (missing.length === 0) {
+    console.log("Already in sync — nothing to add.");
+    return;
+  }
+
+  for (const row of missing) {
+    console.log(`  + ${row.emailHash.slice(0, 12)}…  ${row.reason}  ${row.createdAt.toISOString().slice(0, 10)}`);
+  }
+
+  if (dryRun) {
+    console.log(`\n--dry-run: would add ${missing.length} entr(ies). Nothing written.`);
+    return;
+  }
+
+  for (const row of missing) {
+    file.entries.push({
+      hash: row.emailHash.toLowerCase(),
+      reason: row.reason,
+      at: row.createdAt.toISOString(),
+    });
+  }
+  writeSuppressionFile(file);
+  console.log(`\nAdded ${missing.length} entr(ies). ${file.entries.length} total in ${SUPPRESSION_PATH}`);
+}
+
+async function main(): Promise<void> {
   const argv = process.argv.slice(2);
   const command = argv[0];
 
@@ -267,6 +330,9 @@ function main(): void {
     case "check":
       commandCheck(requireEmailArg("check", argv[1]));
       return;
+    case "sync":
+      await commandSync(argv.includes("--dry-run"));
+      return;
     default:
       console.error(command ? `Unknown command: ${command}` : "Error: no command given.");
       usage();
@@ -276,10 +342,8 @@ function main(): void {
 
 const invokedPath = process.argv[1] ? resolve(process.argv[1]) : "";
 if (invokedPath === fileURLToPath(import.meta.url)) {
-  try {
-    main();
-  } catch (err) {
+  main().catch((err) => {
     console.error(err instanceof Error ? err.message : String(err));
     process.exit(1);
-  }
+  });
 }
