@@ -128,6 +128,18 @@ link exists anywhere in the repo.
   ⚠️ If a future layout sets `robots: noindex` under a segment whose parent
   declares a canonical, set a self-canonical at the same time.
 
+- `app/sitemap.ts` — **removed both apply routes from `STATIC_ROUTES`** (and the
+  now-dead `isMentorshipOpen()` filter + import). Caught while reconciling the
+  docs: the routes were listed and merely *filtered out while the registration
+  window was closed*, so the moment `MENTORSHIP_CONFIG.registrationDeadline` was
+  moved forward they would have returned to the sitemap — now carrying
+  `noindex`. Sitemap says "index me", page says "don't": GSC reports that as
+  **"Submitted URL marked 'noindex'"**, trading one indexing error for another.
+  Verified 120 `<loc>` entries, zero matching `apply`.
+
+  ⚠️ **`noindex` and sitemap membership are one decision, not two.** Making a
+  route noindex means deleting it from `STATIC_ROUTES` in the same change.
+
 **Rejected**: `Disallow: /*_page=` in robots.txt — blocking the crawl would stop
 Google seeing the redirect, and already-indexed URLs can linger indefinitely.
 (GSC's URL Parameters tool was retired in 2022, so it is not an option either.)

@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllEvents, parseDateString, isFutureDate } from "@/lib/data/events";
 import { SITE_URL } from "@/lib/seo/site";
-import { isMentorshipOpen } from "@/lib/config/mentorship";
 
 type ChangeFrequency = MetadataRoute.Sitemap[number]["changeFrequency"];
 
@@ -25,8 +24,11 @@ const STATIC_ROUTES: Array<{
   { path: "/mentorship", priority: 0.8, changeFrequency: "monthly" },
   { path: "/mentorship/mentor", priority: 0.7, changeFrequency: "monthly" },
   { path: "/mentorship/mentee", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/mentorship/mentor/apply", priority: 0.6, changeFrequency: "monthly" },
-  { path: "/mentorship/mentee/apply", priority: 0.6, changeFrequency: "monthly" },
+  // NOTE: /mentorship/{mentor,mentee}/apply are deliberately absent. They are
+  // gated form pages that redirect to their parent outside the registration
+  // window, and their layouts set `robots: { index: false }`. Listing a noindex
+  // URL in the sitemap is a contradiction GSC reports as "Submitted URL marked
+  // 'noindex'" — so they must not come back here even when the window reopens.
   { path: "/resources", priority: 0.7, changeFrequency: "weekly" },
   { path: "/resources/in-the-press", priority: 0.6, changeFrequency: "monthly" },
   { path: "/resources/podcasts", priority: 0.6, changeFrequency: "monthly" },
@@ -61,18 +63,7 @@ const STATIC_ROUTES: Array<{
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  // The mentor/mentee "apply" pages 301-redirect to their parent while the
-  // mentorship window is closed, so only advertise them when it's open to avoid
-  // submitting redirecting URLs to search engines.
-  const routes = isMentorshipOpen()
-    ? STATIC_ROUTES
-    : STATIC_ROUTES.filter(
-        (route) =>
-          route.path !== "/mentorship/mentor/apply" &&
-          route.path !== "/mentorship/mentee/apply",
-      );
-
-  const staticEntries: MetadataRoute.Sitemap = routes.map((route) => ({
+  const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => ({
     url: `${SITE_URL}${route.path}`,
     lastModified: now,
     changeFrequency: route.changeFrequency,

@@ -198,6 +198,51 @@ target and that live routes are unaffected. Also check for a **competing old
 domain** (e.g. a `.co.nz` vs `.org.nz`) — ideally 301 it to the canonical host
 (registrar/DNS task).
 
+**Order matters**: put specific rules *before* catch-alls. `/media/photo-gallery`
+sat inside the `/media/:path*` catch-all and quietly landed on `/resources`
+instead of `/resources/photo-gallery` for weeks — a redirect that "works" (308,
+no error) but sends the wrong signal.
+
+### 1e. Legacy **query-param** duplicates (the subtler half of a migration)
+
+Old CMSs put state in query params — Webflow's collection pagination is
+`?<8-hex>_page=N`, WordPress has `?replytocom=`, shops have `?sort=`/`?ref=`.
+Those URLs stay in Google's crawl list for **years**. A modern framework ignores
+unknown params and serves an identical **200**, so every variant becomes a
+duplicate page. Symptom in GSC: **"Duplicate without user-selected canonical"**.
+
+**A self-referencing canonical is not enough.** Canonical is a *hint*; Google is
+free to disregard it, and re-classification lags the crawl by weeks. On this
+project a validation run with correct canonicals in place **failed** (started
+2026-07-07, failed 2026-07-25). A **308 is a directive** — the URL flips to
+"Page with redirect" and gets dropped. Strip the params in middleware:
+
+```ts
+// proxy.ts / middleware.ts — match by SHAPE, not by exact key
+const LEGACY_PAGINATION_PARAM = /^[0-9a-f]{6,}_page$/i;
+
+function stripLegacyPaginationParams(request: NextRequest) {
+  if (request.method !== "GET") return null;
+  if (request.nextUrl.pathname.startsWith("/api/")) return null;
+  const legacyKeys = [...request.nextUrl.searchParams.keys()]
+    .filter((key) => LEGACY_PAGINATION_PARAM.test(key));
+  if (legacyKeys.length === 0) return null;      // ← no-op guard prevents a loop
+  const url = request.nextUrl.clone();
+  for (const key of legacyKeys) url.searchParams.delete(key);
+  return NextResponse.redirect(url, 308);
+}
+```
+
+- **Middleware, not `next.config` `redirects()` + `has`** — `has` requires an
+  *exact* query key, and the hash prefix differs per collection list.
+- **Only redirect when a key was actually removed**, or you get an infinite loop.
+- **Confirm the param is genuinely dead first**: `grep -rn "_page=" --include="*.ts*"`
+  over the repo, and check every `searchParams.get(...)` call site. Stripping a
+  param the app still reads breaks real pages.
+- **Do NOT `Disallow: /*_page=` in robots.txt.** Blocking the crawl stops Google
+  seeing the redirect, and already-indexed URLs can linger indefinitely. (GSC's
+  URL Parameters tool was retired in 2022, so that lever is gone too.)
+
 ---
 
 ## Step 2 — Structured data (JSON-LD)
@@ -282,7 +327,7 @@ start small, expand if it helps.
 
 ---
 
-## ⚠️ The two metadata gotchas (these cost the most time)
+## ⚠️ The three metadata gotchas (these cost the most time)
 
 ### Gotcha #1 — Title template does NOT cascade through a titled intermediate layout
 
@@ -315,6 +360,28 @@ duplicates and drop them from the index. Instead:
   correct. You do **not** need to add one to every page.
 - Beware layout-level canonicals too: a canonical on `events/layout` ("/events")
   leaks to a sibling hub page under it unless that page sets its own.
+
+### Gotcha #3 — `noindex` under a canonical-declaring parent needs a self-canonical
+
+Because `alternates.canonical` cascades (gotcha #2's mechanism), a child segment
+that sets only `robots: { index: false }` ships **both** signals:
+
+```html
+<meta name="robots" content="noindex, follow"/>
+<link rel="canonical" href="https://example.com/parent"/>   <!-- inherited! -->
+```
+
+That pair contradicts itself — "don't index me" **and** "I'm a copy of that one".
+Google may resolve it by propagating the noindex to the **canonical target**,
+which is usually a page you very much want indexed. Always set the child's own
+`alternates.canonical` alongside `robots`.
+
+**This class of bug hides behind gates.** Both affected pages here
+(`/mentorship/{mentee,mentor}/apply`) `redirect()` away outside the registration
+window, so they emit no `<head>` at all most of the year. It only surfaced by
+temporarily moving `MENTORSHIP_CONFIG.registrationDeadline` forward and running a
+dev server. When you touch metadata on a gated route, **open the gate and
+render it** — then revert the gate before committing.
 
 ---
 
@@ -361,6 +428,17 @@ This step is done in a browser (it requires the owner's Google account and
 DNS/site access). Claude can drive the UI, but **the human must complete all
 login, OAuth-consent, and DNS-save actions** — those are theirs to approve.
 
+> **Which browser / which account.** The property is often owned by an
+> organisation account (here `website@shesharp.org.nz`), not the maintainer's
+> everyday Google login — you land on *"Oops, you don't have access to this
+> property"*. Do **not** burn turns guessing `?authuser=1/2/…`; if the account
+> isn't signed into the profile being automated, no index finds it. With
+> `claude-in-chrome`, `select_browser` by deviceId can also mislead — two
+> separately-listed devices here both resolved to the same wrong profile. Use
+> **`switch_browser`**, which broadcasts a Connect prompt to every Chrome with
+> the extension so the human picks the right one; it then reports back under the
+> account's own name.
+
 ### 5a. Google Search Console — add & verify the property
 
 1. Go to <https://search.google.com/search-console>.
@@ -406,6 +484,39 @@ In GSC → **Sitemaps** → enter `sitemap.xml` → **Submit**. Expect status
 
 **Why Bing matters for GEO**: Bing's index powers ChatGPT Search and Microsoft
 Copilot web results, so Bing coverage directly affects AI citations.
+
+### 5d. Clearing a Page-indexing issue (the validation loop)
+
+GSC → **Pages** → click an issue → **Validation details**. The loop:
+
+1. **Export the drilldown first** (`EXPORT`) — the CSVs (`Table.csv` = affected
+   URLs + last-crawled, `Chart.csv` = daily counts, `Metadata.csv` = which issue
+   and which sitemap scope) are the only way to see all the URLs and when each
+   was last crawled. Last-crawled dates matter: a URL crawled *before* your fix
+   shipped proves nothing about whether the fix works.
+2. **Ship the fix, then verify on production with `curl`** — not just locally.
+3. **URL Inspection → `TEST LIVE URL`** on a representative URL. The live test
+   follows redirects and reports on the destination, so a working redirect shows
+   as *"URL is available to Google / Page can be indexed"*, **not** "Page with
+   redirect". Expand **Page availability** and read the **Indexing** rows: for a
+   duplicate-canonical issue, `User-declared canonical` going from empty to a
+   real URL *is* the fix landing — that field being empty is literally what the
+   issue name means.
+4. **Start the validation.** If no validation has run, the issue page shows
+   **VALIDATE FIX**. If one already ran and failed, that button is *replaced* by
+   a "Validation failed" banner with **SEE DETAILS** — the restart lives inside,
+   as **START NEW VALIDATION**. Success looks like `PENDING n / FAILED 0`.
+5. **Then leave it alone for 1–4 weeks.** The count does not drop immediately and
+   may wobble. Re-running or re-editing mid-window just restarts the clock.
+
+> **Read the existing validation state before you diagnose.** Finding that a
+> prior validation had already been started and *failed* was the single most
+> informative fact in this project's duplicate-canonical fix: it proved the
+> canonical-only signal had genuinely been rejected, which is what justified
+> escalating to a 308 rather than assuming GSC was merely lagging.
+
+If a second validation fails *with* correct redirects in place, the next lever is
+**exact-URL Removals** (temporary, ~6 months) — not more redirect churn.
 
 ---
 
