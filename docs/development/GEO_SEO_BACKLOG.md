@@ -132,9 +132,28 @@ link exists anywhere in the repo.
 Google seeing the redirect, and already-indexed URLs can linger indefinitely.
 (GSC's URL Parameters tool was retired in 2022, so it is not an option either.)
 
-**Follow-up**: after deploy, URL-Inspect the 4 URLs (expect "Page with redirect")
-then hit **VALIDATE FIX** on the issue. Google's validation takes 1–4 weeks and
-the count will not drop immediately — do not re-touch this during that window.
+**Deployed + validated 2026-07-31** (commit `ee1f909`, Actions deploy green):
+- Production verified: `?…_page=` 308s to the clean path; `/media/photo-gallery?…`
+  resolves in 2 hops to a 200 on `/resources/photo-gallery`; apex still 308s to
+  `www`; canonicals intact; `?amount`, `?type`, `?t`, `?session_id` still 200.
+- GSC URL Inspection → **Test live URL** on `/resources?10f821ec_page=9`:
+  `Page fetch: Successful`, and **`User-declared canonical:
+  https://www.shesharp.org.nz/resources`**. That field being populated is the
+  fix — its absence is literally what the bucket name means.
+- **Note: a first validation had already been run on 2026-07-07 and FAILED on
+  2026-07-25** — i.e. the canonical-only signal was not enough on its own, which
+  is the direct evidence for preferring the 308. Started a fresh validation on
+  **2026-07-31** via *Validation details → START NEW VALIDATION*; all 4 URLs are
+  now `PENDING 4 / FAILED 0`.
+
+**Do not re-touch during the validation window.** Google takes 1–4 weeks; the
+count will not drop immediately and may wobble. Re-check the drilldown in ~2
+weeks. If it fails a second time despite the 308s, the next lever is exact-URL
+Removals — not more redirect changes.
+
+**GSC access**: this property is only reachable from the `website@shesharp.org.nz`
+Google account. The maintainer's usual Chrome profile (`chanmeng6666@gmail.com`)
+gets "Oops, you don't have access to this property".
 
 ---
 
