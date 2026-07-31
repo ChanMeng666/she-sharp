@@ -75,8 +75,9 @@ it** — `website@shesharp.org.nz` cannot open `admin.google.com`. Consequences:
 | 2b — **Google DKIM** | Google Admin | **Blocked — needs a super admin** |
 | 3 — `np=reject`, then quarantine | Cloudflare | Pending ~2 weeks of reports |
 | 4 — `p=reject` | Cloudflare | Gated on 2b |
-| Resend DKIM rotation, webhook | Resend + Cloudflare | Pending |
-| Code + env vars | Vercel | Pending |
+| Bounce/complaint webhook | Resend + Vercel | **Done 2026-07-31** |
+| Code + env vars | Vercel | **Done 2026-07-31** |
+| Resend DKIM 1024 → 2048 rotation | Resend + Cloudflare | Pending — schedule before quarantine |
 
 So **everything except 2b (and therefore 4) can be done without Google**, and
 that is most of the value. See "If nobody will grant super admin" in Stage 2 for
@@ -96,7 +97,12 @@ Everything outside Google is owned by `website@` already (see
 
 ## Current state (as measured)
 
-**Stage 1 and Stage 2a were applied on 2026-07-31.** The live records now read:
+**Applied 2026-07-31:** Stage 1, Stage 2a, the code, both Vercel env vars, and
+the Resend bounce/complaint webhook (endpoint
+`https://www.shesharp.org.nz/api/webhooks/resend`, listening for
+`email.bounced`, `email.complained`, `email.failed`, `email.delivery_delayed`).
+
+The live records now read:
 
 ```
 shesharp.org.nz            TXT    v=spf1 include:_spf.google.com \
