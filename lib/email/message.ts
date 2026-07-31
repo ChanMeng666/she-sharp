@@ -15,6 +15,8 @@
 
 import { z } from "zod";
 
+import type { EmailStream } from "./senders";
+
 /**
  * One unit of email body content.
  *
@@ -40,6 +42,16 @@ export interface MessageSpec {
   engine: "layout" | "react";
   /** Sending intent — drives the unsubscribe gate and the audience rules. */
   category: "transactional" | "marketing";
+  /**
+   * Reputation and consent stream, when it is narrower than `category`.
+   *
+   * `category` stays a two-value enum on purpose: widening it would ripple
+   * through `assertSendAllowed`, `compose.tsx` and every skill document that
+   * describes the two categories. This optional field carries the finer
+   * distinction — chiefly `"notification"`, which is transactional for audience
+   * purposes but must still offer a one-click opt-out. Defaults to `category`.
+   */
+  stream?: EmailStream;
   /** RFC-ish From header: `Name <local@domain>` or a bare address. */
   from: string;
   replyTo?: string;
@@ -104,6 +116,9 @@ export const messageSpecSchema: z.ZodType<MessageSpec> = z.object({
     .regex(keyPattern, "must be kebab-case (lowercase letters, digits, hyphens)"),
   engine: z.enum(["layout", "react"]),
   category: z.enum(["transactional", "marketing"]),
+  stream: z
+    .enum(["transactional", "notification", "marketing", "internal"])
+    .optional(),
   from: z
     .string()
     .regex(fromPattern, 'must look like "Name <local@domain>" or "local@domain"'),

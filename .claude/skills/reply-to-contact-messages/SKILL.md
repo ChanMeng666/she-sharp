@@ -51,7 +51,7 @@ ahead" it sends no email (`resend … --dry-run`), writes nothing to the databas
 | Which rows to answer? | Every replyable row not already answered in Slack |
 | What should the reply say? | **Ask.** Never assume — see Step 3 |
 | Who is signing? | "The She Sharp team" — never a named individual |
-| Which mailbox? | `She Sharp <hello@shesharp.org.nz>`, Reply-To per the table in `references/reply-voice-and-templates.md` |
+| Which mailbox? | `She Sharp <hello@shesharp.org.nz>`, Reply-To per the table in `references/reply-voice-and-templates.md` (which must match `lib/email/senders.ts` — the `from-identity` and `reply-to-domain` gates enforce it) |
 | The vendor pitches — bin them? | **Ask.** Never decide this for the user |
 | One reply, or the whole queue? | One at a time, newest first, a plan block per reply |
 

@@ -279,6 +279,23 @@ request do **both**: `resend contacts update <email> --unsubscribed` (or
 `contacts delete <email> --yes` if they want their data gone), *and* add the
 suppression entry so no future import re-adds them.
 
+**Bounces and complaints no longer need adding by hand.** The Resend webhook
+(`app/api/webhooks/resend/route.ts`) writes them straight into the `email_optouts`
+table as they happen, and `sendEmail()` honours that table on every
+notification-class send. One-click unsubscribes from the `List-Unsubscribe`
+header land there too. Fold them into the committed register — the one the
+import scripts read — with:
+
+```powershell
+npx tsx scripts/email/suppression.ts sync --dry-run   # see what would be added
+npx tsx scripts/email/suppression.ts sync             # merge them in
+```
+
+Both stores key on the same `hashEmail()`, so this is a plain set union with no
+addresses crossing over. Run it monthly, and always **before** an import — an
+un-synced register will happily re-add someone who bounced last week. Needs
+`POSTGRES_URL`; the other subcommands do not.
+
 ## Step 9 — Record state and report
 
 ```powershell

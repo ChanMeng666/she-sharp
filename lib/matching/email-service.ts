@@ -256,6 +256,7 @@ Check Your Status: ${dashboardUrl}
     subject: `Queue Update: Position #${queuePosition} - She Sharp`,
     html,
     text,
+    stream: 'notification',
   });
 }
 
@@ -475,5 +476,6 @@ Review Matches: ${adminUrl}
     subject: `[Admin] Batch Matching Complete - ${summary.matchesGenerated} matches generated`,
     html,
     text,
+    stream: 'internal',
   });
 }

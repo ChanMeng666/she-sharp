@@ -137,7 +137,7 @@ async function main(): Promise<void> {
 
     let ok = false;
     try {
-      ok = await sendEmail({ to: recipient, subject, html, text });
+      ok = await sendEmail({ to: recipient, subject, html, text, stream: "internal" });
     } catch (err) {
       console.error(`${label} error for ${recipient}:`, err);
       ok = false;

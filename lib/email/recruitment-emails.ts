@@ -390,5 +390,6 @@ Questions? Contact mentoring@shesharp.org.nz
     subject: 'NDA - Action Required - She Sharp',
     html,
     text,
+    stream: 'notification',
   });
 }
