@@ -272,6 +272,37 @@ to `main`, not a Vercel Git connection). Spot-check the web version:
 
 ## Step 8 — Approve and schedule
 
+### Step 8a — Deliverability check (before approving)
+
+The newsletter is the only recurring bulk send on this domain, so this monthly
+loop is where the domain's health gets looked at. Three things, ~5 minutes:
+
+1. **DMARC report.** Cloudflare dashboard → `shesharp.org.nz` → Email → DMARC
+   Management. Every sending source should be one you recognise — normally just
+   Google Workspace, Amazon SES (Resend), and forwarders. **An unrecognised
+   source is either a spoofer or a legitimate tool nobody authenticated; say so
+   and stop before approving.**
+2. **Last broadcast's numbers**, in the Resend dashboard. Complaint rate must be
+   **under 0.1%**, hard bounces **under 2%**. Above either, do not send this
+   month's issue until the list is cleaned.
+3. **Sync the suppression register** so this send skips anyone who bounced,
+   complained or unsubscribed since last month:
+   ```powershell
+   npx tsx scripts/email/suppression.ts sync
+   ```
+
+If any of the three is out of bounds — or a single send would exceed ~1,000
+recipients — that is the pre-agreed trigger to move marketing onto a separate
+`news.shesharp.org.nz` sending subdomain. Raise it with the user; do not decide
+alone. Background: `docs/deployment/EMAIL_AUTHENTICATION.md`.
+
+The newsletter sends from **`She Sharp <newsletter@shesharp.org.nz>`** (the
+`marketing` identity in `lib/email/senders.ts`), From and Reply-To both — byte
+for byte what Mailchimp has been sending for years. **Do not change it.**
+Preserving the visible sender is what carries the address's reputation across
+the Mailchimp → Resend migration. If you see `noreply@` or `hello@` anywhere in
+the approve path, that is a regression.
+
 ```powershell
 $env:BASE_URL="https://www.shesharp.org.nz"; $env:CRON_SECRET="…"
 npx tsx scripts/newsletter/approve.ts 2026-08

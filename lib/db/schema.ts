@@ -1378,6 +1378,35 @@ export const fundingOpportunities = pgTable('funding_opportunities', {
 }));
 
 // ============================================================================
+// EMAIL OPT-OUTS (one-click unsubscribe, bounces, spam complaints)
+// ============================================================================
+
+/**
+ * The runtime do-not-contact register.
+ *
+ * Keyed on `sha256(lowercased, trimmed email)` rather than the address itself,
+ * mirroring the committed, PII-free register in
+ * `lib/data/json/email-suppression-hashes.json`. Because both sides use the
+ * same `hashEmail()` from `lib/email/hash.ts`, reconciling them is a set union
+ * with no PII crossing the boundary (`suppression.ts sync`).
+ *
+ * Deliberately NOT keyed on `user_id`: half the notification-class mail goes to
+ * applicants who have no `users` row, so a foreign key would silently drop
+ * exactly the people most likely to unsubscribe.
+ *
+ * `stream` is `'notification'` (opted out of recurring mail only) or `'all'`
+ * (bounced or complained — stop everything except transactional).
+ */
+export const emailOptouts = pgTable('email_optouts', {
+  emailHash: varchar('email_hash', { length: 64 }).primaryKey(),
+  stream: varchar('stream', { length: 32 }).notNull(),
+  reason: varchar('reason', { length: 64 }).notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+}, (table) => ({
+  createdAtIdx: index('idx_email_optouts_created_at').on(table.createdAt),
+}));
+
+// ============================================================================
 // TYPE EXPORTS FOR NEW TABLES
 // ============================================================================
 
@@ -1409,3 +1438,5 @@ export type FundingOpportunity = typeof fundingOpportunities.$inferSelect;
 export type NewFundingOpportunity = typeof fundingOpportunities.$inferInsert;
 export type Donation = typeof donations.$inferSelect;
 export type NewDonation = typeof donations.$inferInsert;
+export type EmailOptout = typeof emailOptouts.$inferSelect;
+export type NewEmailOptout = typeof emailOptouts.$inferInsert;

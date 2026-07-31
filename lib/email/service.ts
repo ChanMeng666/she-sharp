@@ -1,5 +1,8 @@
 import { Resend } from 'resend';
 import { brandedEmailLayout, brandButton, infoBox, linkBox, codeBox, warningBox, successBadge, detailsCard, BRAND } from './layout';
+import { getSenderIdentity, type EmailStream } from './senders';
+import { buildUnsubscribeToken } from './unsubscribe-token';
+import { isSuppressed } from './optouts';
 
 /**
  * Get the base URL for email links
@@ -16,6 +19,55 @@ interface EmailOptions {
   subject: string;
   html: string;
   text?: string;
+  /**
+   * Which reputation and consent stream this message belongs to. Decides the
+   * From/Reply-To pair, the `stream` tag Resend groups analytics by, whether a
+   * one-click `List-Unsubscribe` header is attached, and whether the opt-out
+   * list is honoured. Defaults to `'transactional'` — the safe default, since
+   * transactional mail is never withheld.
+   */
+  stream?: EmailStream;
+  /** Overrides the stream's default Reply-To. */
+  replyTo?: string;
+  /** Extra headers, merged over the stream's own (unsubscribe) headers. */
+  headers?: Record<string, string>;
+  /** Extra Resend tags. ASCII letters, digits, `_` and `-` only. */
+  tags?: { name: string; value: string }[];
+  /** Stable key so a retry is not counted as a second delivery. */
+  idempotencyKey?: string;
+}
+
+/**
+ * Builds the RFC 8058 one-click unsubscribe headers for a message.
+ *
+ * Only notification-class mail gets them. Adding `List-Unsubscribe` to a
+ * password reset invites the recipient to opt out of the one message they
+ * genuinely need, and Gmail/Yahoo only require the header for the recurring,
+ * unrequested kind. Returns an empty object for every other stream.
+ *
+ * The HTTPS URL alone satisfies RFC 8058 and both the Gmail and Yahoo bulk
+ * sender rules. A `mailto:` alternative is offered ONLY when
+ * `EMAIL_UNSUBSCRIBE_MAILTO` names an address someone has confirmed is a real,
+ * monitored inbox — some clients prefer the mailto, so an unverified address
+ * here means opt-out requests bounce, which is worse than not offering one.
+ *
+ * @param stream The stream the message belongs to.
+ * @param to The recipient address, which the signed token is scoped to.
+ * @returns Headers to merge into the Resend payload.
+ */
+function buildStreamHeaders(stream: EmailStream, to: string): Record<string, string> {
+  if (stream !== 'notification') return {};
+
+  const token = buildUnsubscribeToken(to);
+  if (!token) return {};
+
+  const url = `${getBaseUrl()}/api/email/unsubscribe?t=${token}`;
+  const mailto = process.env.EMAIL_UNSUBSCRIBE_MAILTO?.trim();
+
+  return {
+    'List-Unsubscribe': mailto ? `<${url}>, <mailto:${mailto}>` : `<${url}>`,
+    'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+  };
 }
 
 // Initialize Resend client if API key is provided
@@ -26,6 +78,16 @@ const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KE
  */
 export async function sendEmail(options: EmailOptions): Promise<boolean> {
   const { to, subject, html, text } = options;
+  const stream = options.stream ?? 'transactional';
+  const identity = getSenderIdentity(stream);
+
+  // Honour opt-outs before doing any work. Scoped to notification-class mail
+  // inside isSuppressed(): someone who unsubscribed from reminders must still
+  // be able to receive a password reset.
+  if (await isSuppressed(to, stream)) {
+    console.log(`[email] Skipped ${stream} email to a suppressed address.`);
+    return true;
+  }
 
   // Development mode - log email to console and save to file
   if (process.env.NODE_ENV === 'development' && !resend) {
@@ -34,7 +96,9 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     console.log('=====================================');
     console.log('To:', to);
     console.log('Subject:', subject);
-    console.log('From: She Sharp <noreply@shesharp.org.nz>');
+    console.log('From:', identity.from);
+    console.log('Reply-To:', options.replyTo ?? identity.replyTo);
+    console.log('Stream:', stream);
     console.log('Time:', new Date().toISOString());
     console.log('-------------------------------------');
 
@@ -82,15 +146,22 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     try {
       console.log('Attempting to send email via Resend...');
       console.log('To:', to);
-      console.log('From:', process.env.EMAIL_FROM || 'She Sharp <noreply@shesharp.org.nz>');
+      console.log('From:', identity.from);
+      console.log('Stream:', stream);
 
-      const { data, error } = await resend.emails.send({
-        from: process.env.EMAIL_FROM || 'She Sharp <noreply@shesharp.org.nz>',
-        to,
-        subject,
-        html,
-        text,
-      });
+      const { data, error } = await resend.emails.send(
+        {
+          from: identity.from,
+          to,
+          replyTo: options.replyTo ?? identity.replyTo,
+          subject,
+          html,
+          text,
+          headers: { ...buildStreamHeaders(stream, to), ...options.headers },
+          tags: [{ name: 'stream', value: stream }, ...(options.tags ?? [])],
+        },
+        options.idempotencyKey ? { idempotencyKey: options.idempotencyKey } : undefined
+      );
 
       if (error) {
         console.error('Resend error:', error);
@@ -446,6 +517,7 @@ If you have any questions, feel free to reach out. We look forward to welcoming 
     subject: 'Friendly Reminder: Complete Your She Sharp Mentor Registration',
     html,
     text,
+    stream: 'notification',
   });
 }
 
@@ -509,6 +581,7 @@ If you have any questions or no longer wish to participate, please reply to this
     subject: 'Friendly Reminder: Complete Your She Sharp Mentee Registration',
     html,
     text,
+    stream: 'notification',
   });
 }
 
@@ -566,6 +639,7 @@ All your account data and mentor profile remain unchanged.
     subject: 'She Sharp Has a New Home — Update Your Bookmark',
     html,
     text,
+    stream: 'notification',
   });
 }
 
@@ -706,5 +780,6 @@ This is an automated notification. The full record is available in your Stripe D
     subject: `New Donation: $${details.amount} ${details.currency} from ${details.donorName || details.donorEmail}`,
     html,
     text,
+    stream: 'internal',
   });
 }

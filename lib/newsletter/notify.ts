@@ -152,7 +152,7 @@ async function emailDraft(opts: {
   const text = `DRAFT for review — not sent to subscribers.\nIssue: ${monthLabel}\nSubject: ${opts.issue.editorial.subjectLine}\nReply-by: ${sendDay} 10am NZT.\nTo review & approve: run /monthly-newsletter in Claude Code.`;
 
   try {
-    return await sendEmail({ to: adminEmail, subject, html, text });
+    return await sendEmail({ to: adminEmail, subject, html, text, stream: "internal" });
   } catch (error) {
     console.error("[Newsletter] Failed to send draft review email:", error);
     return false;
