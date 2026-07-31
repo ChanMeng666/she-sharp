@@ -73,6 +73,69 @@ Otherwise the canonical-side signals on `.org.nz` will consolidate it over time.
   are the durable fix. Revisit only if old URLs still rank prominently in ~2–3
   weeks, using exact-URL (not prefix) removals.
 
+### ☑ 3b. "Duplicate without user-selected canonical" — FIXED 2026-07-31
+**Symptom**: GSC (Domain property, "All known pages") held 4 URLs in this bucket
+from 2026-06-30 through 2026-07-24 (6 until 07-11):
+
+| URL | Last crawled |
+| --- | --- |
+| `www…/resources/newsletters?195c0d39_page=3` | 2026-07-13 |
+| `www…/resources?10f821ec_page=9` | 2026-07-04 |
+| `shesharp.org.nz/events/making-linkedin-work-for-you-with-stuart-little` (apex) | 2026-05-26 |
+| `www…/media/photo-gallery?10f821ec_page=9` | 2026-04-21 |
+
+**Root cause**: `<hash>_page=N` are **pagination params from the pre-migration
+Webflow site**, still in Google's historical URL list. Next.js ignores unknown
+query params and serves an identical **200**, so every variant is a duplicate.
+The self-referencing canonicals were already present and correct (verified live
+with a Googlebot UA), but **a canonical is a hint, not a directive**, and GSC's
+index classification lags the crawl — two of the four were last crawled *before*
+the 2026-06-23 canonical work shipped. Separately, `/media/photo-gallery` had no
+exact mapping, so it fell into the `/media/:path*` catch-all and landed on
+`/resources` (wrong target) while carrying the junk param forward, minting yet
+another duplicate.
+
+**Not a problem** (verified, no change needed): the apex → `www` 308 already
+works; `sitemap.xml` is clean (120 URLs, no params, no `/media`); no `_page=`
+link exists anywhere in the repo.
+
+**Fixed**:
+- `proxy.ts` — `stripLegacyPaginationParams()` 308-redirects any GET whose query
+  contains a key matching `/^[0-9a-f]{6,}_page$/i`, dropping those keys. Chosen
+  over `next.config.ts` `redirects()` + `has`, because `has` requires an **exact**
+  query key and the hash prefix varies per Webflow collection list. Skips `/api/`
+  and only redirects when something was actually stripped (no loop).
+- `next.config.ts` — added `/media/photo-gallery` → `/resources/photo-gallery`
+  ahead of the catch-all.
+- Both `/mentorship/{mentee,mentor}/apply` layouts — set
+  `robots: { index: false, follow: true }` **and a self-canonical**. They
+  previously inherited the parent layout's `alternates.canonical`, i.e. declared
+  themselves duplicates of `/mentorship/{mentee,mentor}`. They are gated form
+  pages that `redirect()` away outside the registration window, so noindex is the
+  honest signal. **Closes item 9 below.**
+
+  **The self-canonical is load-bearing, not cosmetic.** Render-testing these
+  (temporarily moving `registrationDeadline` forward so the pages stop
+  redirecting) showed `noindex` shipping *alongside* the inherited
+  `canonical → /mentorship/mentee`. noindex + a cross-canonical is a
+  contradictory pair — it tells Google "don't index me" and "I'm a copy of that
+  one" at once, and Google may resolve it by pushing the noindex onto the
+  **target**, which is a page we need indexed. Adding
+  `alternates.canonical: "/mentorship/{mentee,mentor}/apply"` scopes the noindex
+  to the apply page alone. Verified: apply pages now emit
+  `noindex, follow` + a self-canonical, parents emit no robots meta.
+
+  ⚠️ If a future layout sets `robots: noindex` under a segment whose parent
+  declares a canonical, set a self-canonical at the same time.
+
+**Rejected**: `Disallow: /*_page=` in robots.txt — blocking the crawl would stop
+Google seeing the redirect, and already-indexed URLs can linger indefinitely.
+(GSC's URL Parameters tool was retired in 2022, so it is not an option either.)
+
+**Follow-up**: after deploy, URL-Inspect the 4 URLs (expect "Page with redirect")
+then hit **VALIDATE FIX** on the issue. Google's validation takes 1–4 weeks and
+the count will not drop immediately — do not re-touch this during that window.
+
 ---
 
 ## P1 — Strengthen topical authority & structured data
@@ -121,13 +184,18 @@ fallback can move to a client/segment boundary so public marketing pages can be
 static or PPR-cached. **Higher risk** — touches auth/session rendering; scope and
 test carefully (this was explicitly out of scope for the initial SEO work).
 
-### ☐ 9. Self-canonicals on remaining indexable pages (optional)
-**Why**: Currently legal/resources-subpages emit no canonical (Google
-self-canonicalizes by URL — correct, but explicit is tidier and guards against
-future param/duplication).
+### ☑ 9. Self-canonicals on remaining indexable pages — DONE (verified 2026-07-31)
+**Why (original)**: Legal/resources sub-pages were thought to emit no canonical
+(Google self-canonicalizes by URL — correct, but explicit is tidier and guards
+against future param duplication).
 
-**Where**: Add `alternates.canonical` to resources sub-pages and legal pages.
-Low value (no current duplication risk); do only if touching those files anyway.
+**Status**: Audited during item 3b. Every indexable page already carries an
+explicit `alternates.canonical` — all 5 resources sub-pages, all 8 legal pages,
+`/about`, `/events`, `/events/[slug]`, `/mentorship*`, `/donate`, `/contact`,
+`/join-our-team`, `/sponsors/corporate-sponsorship`, and `/`. Confirmed live with
+`curl … | grep '<link rel="canonical"'`. The only pages that inherited a
+**foreign** canonical were the two mentorship `/apply` layouts, now `noindex`
+(see item 3b). Nothing left to do.
 
 ### ☐ 10. Image alt text & internal-link audit
 **Why**: Alt text and descriptive internal anchors aid both accessibility and
