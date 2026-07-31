@@ -537,13 +537,15 @@ See `GEO_SEO_MONITORING.md` for the KPI list and recurring checks. In short:
 
 - [ ] `lib/seo/site.ts` single source of truth; matches `metadataBase`.
 - [ ] `app/robots.ts` — AI crawlers authorized, sitemap advertised, private paths disallowed.
-- [ ] `app/sitemap.ts` — static table + dynamic content; no 404/disabled URLs.
+- [ ] `app/sitemap.ts` — static table + dynamic content; no 404/disabled URLs; **no `noindex` URLs** (sitemap membership and `robots` are one decision).
 - [ ] `public/llms.txt` + `app/llms-full.txt/route.ts`.
 - [ ] `components/seo/json-ld.tsx` + `lib/seo/schema.ts`; Org+WebSite site-wide; domain type on detail pages; BreadcrumbList; Person on team/about (only people shown on the page).
-- [ ] Root `title` template; child suffixes removed; **no root canonical**; home self-canonical.
+- [ ] Root `title` template; child suffixes removed; **no root canonical**; home self-canonical; any `noindex` segment sets its **own** canonical.
 - [ ] `app/manifest.ts` + PNG favicons.
 - [ ] (Optional) `components/seo/geo-head.tsx` on key pages.
-- [ ] (If migrated) `next.config.ts` `redirects()` for legacy 404 URLs; consider a competing old domain.
+- [ ] (If migrated) `next.config.ts` `redirects()` for legacy 404 URLs, specific rules before catch-alls; consider a competing old domain.
+- [ ] (If migrated) Middleware 308-strips the old CMS's **query params** (`?<hex>_page=`, `?replytocom=`, …) — canonicals alone do not clear these.
+- [ ] Gated/seasonal routes render-tested with the gate temporarily opened.
 - [ ] Local verify: build + curl (robots/sitemap/llms/manifest/JSON-LD/titles/canonicals); watch for stale-server.
 - [ ] Production verify + Rich Results Test.
 - [ ] GSC: domain property verified, sitemap submitted (Success).
