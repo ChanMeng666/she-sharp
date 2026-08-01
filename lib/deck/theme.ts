@@ -15,11 +15,16 @@ export const DEFAULT_LIGHT_CANVAS = "#ffffff";
 /**
  * How QR blocks render.
  *
- * `"image"` uses the committed file at `QrBlock.image`.
- * `"generate"` renders `QrBlock.url` client-side with `qrcode.react` — still
- * fully offline, since generation happens in the browser.
+ * `"generate"` draws `QrBlock.url` client-side with `qrcode.react`. This is the
+ * default because a generated code cannot drift out of sync with the link it
+ * encodes, and nobody has to remember to re-export an image when a form URL
+ * changes. It is still venue-safe: generation happens in the browser, so a code
+ * on screen never depends on the network.
+ *
+ * `"image"` falls back to the committed file at `QrBlock.image` — for a code
+ * someone else produced that must be used verbatim.
  */
-export const DECK_QR_MODE: "image" | "generate" = "image";
+export const DECK_QR_MODE: "image" | "generate" = "generate";
 
 /** Brand default: purple on light, purple-mid on dark, mint spark. */
 export const sheSharpTheme: DeckTheme = {

@@ -50,13 +50,21 @@ export interface PersonItem {
 /**
  * A scannable code plus its human-readable destination.
  *
- * `image` is what ships today (a committed file). `url` is present from day one
- * so the block can switch to a generated branded QR by flipping `DECK_QR_MODE`
- * in `lib/deck/theme.ts` — no deck data changes.
+ * The code is drawn from `url` in the browser, so it can never drift out of
+ * sync with the link and needs no asset pipeline. `image` is an escape hatch
+ * for a pre-made code someone else produced (a ticketing platform's branded
+ * one, say) and is only used when `DECK_QR_MODE` is `"image"`.
  */
 export interface QrBlock {
-  image: string;
+  /**
+   * Destination. An **empty string** means "not known yet" — some links, like a
+   * per-event feedback form, only exist a few days before the event. The slide
+   * then renders a visible "link not set" panel rather than a dead code, and
+   * the linter flags it, so it cannot quietly reach a projector.
+   */
   url: string;
+  /** Optional pre-made code; only used in `"image"` QR mode. */
+  image?: string;
   /** What the code does, e.g. `"Feedback form"`. */
   label: string;
   /** Short human-typable fallback, e.g. `"shesharp.org.nz/events"`. */

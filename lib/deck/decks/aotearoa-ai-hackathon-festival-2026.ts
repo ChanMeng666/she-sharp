@@ -113,46 +113,40 @@ const CLOSING_KARAKIA: KarakiaText = {
 
 // --- Shared assets ---------------------------------------------------------
 
-/**
- * Every QR points at a real destination today and renders the placeholder card
- * until the printed codes are generated. Flipping `DECK_QR_MODE` in
- * `lib/deck/theme.ts` to `"generate"` makes all four live with no data change.
- */
-const QR_PLACEHOLDER = "/img/decks/qr-placeholder.svg";
+/* Codes are drawn from these URLs in the browser, so a link change here is the
+   only edit a code ever needs. */
 
 const WEBSITE_QR: QrBlock = {
-  image: QR_PLACEHOLDER,
   url: "https://www.shesharp.org.nz",
   label: "She Sharp website",
   caption: "shesharp.org.nz",
 };
 
 const EVENTS_QR: QrBlock = {
-  image: QR_PLACEHOLDER,
   url: "https://www.shesharp.org.nz/events",
   label: "Upcoming events",
   caption: "shesharp.org.nz/events",
 };
 
+/**
+ * The post-event survey is a fresh Google Form for every event, so there is no
+ * standing URL to fall back on — and a code pointing at the previous event's
+ * form is worse than no code, because nobody in the room can tell.
+ *
+ * Left empty until the organiser supplies this event's link: the slide then
+ * shows a "Link not set yet" panel and the linter reports it. Paste the form
+ * URL here and nowhere else.
+ */
 const FEEDBACK_QR: QrBlock = {
-  image: QR_PLACEHOLDER,
-  // TODO(feedback-url): the client is supplying the real feedback form link.
-  // Until it lands this points at the event page, which is wrong but harmless —
-  // swap the URL here, nowhere else.
-  url: "https://www.shesharp.org.nz/events/aotearoa-ai-hackathon-festival-2026",
+  url: "",
   label: "Feedback form",
-  caption: "shesharp.org.nz/events",
+  caption: "Ask the host for the link",
 };
 
-const AMBASSADOR_QR: QrBlock = {
-  image: QR_PLACEHOLDER,
-  url: "https://www.shesharp.org.nz/join-our-team",
-  label: "Become an ambassador",
-  caption: "shesharp.org.nz/join-our-team",
-};
+/* The ambassador code is not defined here: the intake form is the same for
+   every event, so `buildClosingSlides()` supplies it. */
 
 const LINKEDIN_QR: QrBlock = {
-  image: QR_PLACEHOLDER,
   url: "https://www.linkedin.com/company/shesharpnz/",
   label: "She Sharp on LinkedIn",
   caption: "linkedin.com/company/shesharpnz",
@@ -605,7 +599,6 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       ],
       upcoming: UPCOMING_SNAPSHOT,
       feedbackQr: FEEDBACK_QR,
-      ambassadorQr: AMBASSADOR_QR,
       karakia: CLOSING_KARAKIA,
     }),
   ],

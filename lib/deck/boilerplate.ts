@@ -312,6 +312,17 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
   ];
 }
 
+/**
+ * The standing ambassador intake form.
+ *
+ * One form across all events, so it lives here rather than being retyped into
+ * every deck. The post-event feedback survey is the opposite — a fresh Google
+ * Form each time — which is why `feedbackFormUrl` is a per-deck input with no
+ * default worth having.
+ */
+export const AMBASSADOR_FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdTEFjOs6lLHZDGpSvoMfkckloPBMbvFA45iNhVvh1sAsUZlA/viewform";
+
 export interface ClosingOptions {
   thanksLogos: { label?: string; logos: DeckLogo[] }[];
   /** People thanked by name — mentors, judges, volunteers. */
@@ -322,8 +333,17 @@ export interface ClosingOptions {
    * host on the day.
    */
   upcoming: UpcomingSlide["events"];
+  /**
+   * This event's post-event survey.
+   *
+   * Every event gets a new Google Form, so there is deliberately no fallback:
+   * a code pointing at the previous event's form collects the wrong data and
+   * nobody in the room can tell. Leave it empty until the organiser supplies
+   * the link and the slide will say so on screen.
+   */
   feedbackQr: QrBlock;
-  ambassadorQr: QrBlock;
+  /** Defaults to the standing ambassador form. */
+  ambassadorQr?: QrBlock;
   /** Required: a She Sharp event closes with a karakia. */
   karakia: KarakiaText;
   sectionLabel?: string;
@@ -332,6 +352,11 @@ export interface ClosingOptions {
 /** Builds the six slides that close a She Sharp event, in running order. */
 export function buildClosingSlides(options: ClosingOptions): Slide[] {
   const section = options.sectionLabel ?? "Closing";
+  const ambassadorQr: QrBlock = options.ambassadorQr ?? {
+    url: AMBASSADOR_FORM_URL,
+    label: "Ambassador application",
+    caption: "Or visit shesharp.org.nz/join-our-team",
+  };
 
   return [
     {
@@ -373,7 +398,7 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
       title: "Become a SheSharp Ambassador",
       lead: "Help shape the future of women in tech",
       points: ["Scan to get started"],
-      qr: options.ambassadorQr,
+      qr: ambassadorQr,
       note: "Mention that ambassadors run these events; the people in this room are who we recruit from.",
     },
     {

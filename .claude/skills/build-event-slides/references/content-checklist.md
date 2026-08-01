@@ -149,15 +149,32 @@ ended up using them, both when you offer and again in the Step 7 preview.
 the slides — bios, full rules, terms, the schedule in detail — still reaches the
 people who want it.
 
-The ambassador/get-involved code defaults to
-`https://www.shesharp.org.nz/join-our-team`. The contact slide near the front
-carries up to three codes; more than three and none of them is big enough to
-scan from the back.
+You do not need a QR image from anybody. Codes are drawn from the URL in the
+browser, so all you are collecting here is links.
 
-**No feedback form:** drop the feedback slide. A QR code pointing nowhere is
-worse than no QR code — it wastes the one moment the room is looking and
-scanning. Offer to keep the slide if they will have a form by the day, and mark
-it `optional: true` so the host can skip it.
+**The ambassador code is already handled** — it is the same standing Google Form
+for every event and `buildClosingSlides()` supplies it. Do not ask for it.
+
+**The feedback form is the one you must ask for.** Every event gets a new Google
+Form, so there is no default and inventing one is not an option: a code pointing
+at the previous event's form looks perfectly correct from the front of the room
+and collects the wrong data.
+
+**They don't have the link yet** — which is normal a week out. Leave `url: ""`.
+The slide renders a dashed "Link not set yet" panel and the linter reports it,
+so it cannot quietly reach a projector. Tell the author plainly: *"the feedback
+slide will say 'link not set' until you send me the form URL — send it any time
+before the day and I'll redeploy."* Do not drop the slide; a missing slide is
+easier to forget than a visible gap.
+
+**Then check the form is public.** Open the form URL in a signed-out browser. If
+it redirects to a Google sign-in page, the form is collecting verified email
+addresses or is restricted to a Workspace domain, and attendees will hit a login
+wall the moment they scan. Say so — it is a setting in the form, and only they
+can change it.
+
+The contact slide near the front carries up to three codes; more than three and
+none of them is big enough to scan from the back.
 
 ## Round 8 — The closing, and what's next
 
