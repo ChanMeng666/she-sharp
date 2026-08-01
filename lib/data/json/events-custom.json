@@ -499,11 +499,13 @@
         },
         "organizers": [],
         "sponsors": {
-          "main": [{
-            "name": "Techwomen NZ | AWS",
-            "logo": "/img/scraped/sponsors/64f48d1839f5ae1e373687e7_Group 2.png",
-            "description":"The TechWomen community is a group of passionate New Zealand tech, digital and ICT focused individuals from a diverse range of organisations that work together, to support the growth of women in tech roles.\n\nAmazon Web Services (AWS) is the world's most comprehensive and broadly adopted cloud, offering over 200 fully featured services from data centers globally.‍"
-          }],
+          "main": [
+            {
+              "name": "Techwomen NZ | AWS",
+              "logo": "/img/scraped/sponsors/64f48d1839f5ae1e373687e7_Group 2.png",
+              "description": "The TechWomen community is a group of passionate New Zealand tech, digital and ICT focused individuals from a diverse range of organisations that work together, to support the growth of women in tech roles.\n\nAmazon Web Services (AWS) is the world's most comprehensive and broadly adopted cloud, offering over 200 fully featured services from data centers globally.‍"
+            }
+          ],
           "other": []
         },
         "specialSections": [],
@@ -511,8 +513,8 @@
           {
             "url": "/img/scraped/photos/650cca0fb1bbe26b910365e6_20230920091437_IMG_7995.jpg",
             "alt": "SHE# Storytellers Series featured photo"
-           },
-           {
+          },
+          {
             "url": "/img/scraped/photos/650cca44c35a51b2c7856ac3_20230920090621_IMG_7945.jpg",
             "alt": ""
           },
@@ -791,7 +793,6 @@
           "Our March HER WAKA session focuses on Artificial Intelligence and the evolving tech job market in 2026. Participants can look forward to a dynamic AI Panel Discussion featuring industry professionals, a short hands-on workshop exploring practical AI tools and how they are shaping workplaces, and a special guest speaker from RCSA sharing insights into the 2026 tech hiring landscape and what employers are looking for.",
           "This session will help participants understand how AI is influencing job opportunities, recruitment trends, and the skills that matter most right now.",
           "HER WAKA is more than an event — it is a practical, supportive step toward sustainable employment and long-term workforce participation.",
-
           "🌟 March 2026 Theme: AI & The Future of Work — our March HER WAKA session focuses on Artificial Intelligence and the evolving tech job market in 2026.",
           "Join us and take your next step forward with confidence. ✨"
         ],
@@ -930,13 +931,13 @@
           "The second cohort of the HER WAKA series continues with a session focused on building confidence, celebrating achievements, and exploring practical AI tools.",
           "We will begin with #IAmRemarkable, a global movement that encourages everyone, especially those from underrepresented groups, to celebrate their achievements and challenge the stigma around self-promotion. In this engaging 50-minute workshop, She Sharp Founder and Director Dr Mahsa McCauley (Mohaghegh) will guide participants through practical exercises to help recognise achievements, own your story, and confidently share your impact.",
           "In the second half of the session, participants will take part in a 30-minute recruiter networking activity, where 2–3 tables will be set up to allow small groups to connect directly with recruiters. Each participant will have a few minutes at each table to introduce themselves, ask questions, and practise real-world conversations in a supportive environment.",
-         "🌟 HER WAKA",
-         "Navigating pathways into sustainable employment",
-         "Ready to take your next step into meaningful work?",
-         "HER WAKA is a dynamic, employment-focused programme delivered by SheSharp in Auckland for Ministry of Social Development clients who are ready to strengthen their pathway into work. Running monthly from March to June 2026, each session is a cohesive, repeatable event designed to build job readiness, confidence, and practical understanding of the New Zealand labour market.",
+          "🌟 HER WAKA",
+          "Navigating pathways into sustainable employment",
+          "Ready to take your next step into meaningful work?",
+          "HER WAKA is a dynamic, employment-focused programme delivered by SheSharp in Auckland for Ministry of Social Development clients who are ready to strengthen their pathway into work. Running monthly from March to June 2026, each session is a cohesive, repeatable event designed to build job readiness, confidence, and practical understanding of the New Zealand labour market.",
           "Each two-hour programme brings together up to 25 participants in a supportive, high-impact environment that blends inspiration, practical skills, and direct employer insight. Through real conversations and structured learning, participants gain clarity on how to position themselves confidently and competitively in today's job market.",
           "HER WAKA is more than an event. It is a practical, supportive step toward sustainable employment and long-term workforce participation.",
-          "Join us and take your next step forward with confidence. ✨"     
+          "Join us and take your next step forward with confidence. ✨"
         ],
         "speakers": {
           "keynote_speakers": {
@@ -1015,8 +1016,10 @@
           {
             "type": "youtube",
             "title": "WHAT IS #IAmRemarkable ?",
-            "content": ["https://www.youtube.com/watch?v=HFLKIDMEFg8"]
-            }
+            "content": [
+              "https://www.youtube.com/watch?v=HFLKIDMEFg8"
+            ]
+          }
         ],
         "photos": [],
         "galleryUrl": "https://photos.app.goo.gl/Vp9jWLFzwjS1kQAj9",
@@ -1066,7 +1069,6 @@
           "keynote_speakers": {
             "heading": "Meet Our Speakers",
             "speakers": [
-              
               {
                 "name": "Paula Gair",
                 "title": "Consultant, Educator & Advisor",
@@ -1095,7 +1097,7 @@
           },
           "panel_speakers": {
             "heading": "RCSA Recruiters",
-            "speakers": [        
+            "speakers": [
               {
                 "name": "Sian (See-Ann) Clements",
                 "title": "Client Relationship & Delivery Partner at Younity",
@@ -1111,7 +1113,7 @@
                 "bio": "With two decades of recruitment experience, I’ve done it all, agency, in-house, hybrid.\n\nI’m a connector at heart; of people, ideas, and opportunities. I use my network intentionally, challenge what doesn’t make sense, and care about doing recruitment well. Being in these shoes, I've learnt empathy, adaptability, and how to truly understand people as individuals.\n\nAs a specialist in Permanent IT recruitment at Potentia, I look beyond transactions and instead partner with businesses and talent to make smart, impactful, human decisions.\n\nThe right hire doesn’t just fill a role, it changes a business. And the right move doesn’t just increase salary…it changes a life.",
                 "image": "/img/scraped/speakers/69f7ef145de29c4a79285c9d_Jen Martin.png",
                 "linkedin": ""
-              }  
+              }
             ]
           }
         },
@@ -1294,7 +1296,7 @@
         "fullDescription": [
           "The Aotearoa AI Hackathon Festival is a nationwide, multi-venue hackathon held across Aotearoa New Zealand. She Sharp, Auckland University of Technology (AUT) with the AI Forum are bringing the festival to AUT's City Campus for a two-day, in-person event on 7–8 August 2026.",
           "Working in teams, participants create AI-enabled solutions to real-world challenges aligned to five UN Sustainable Development Goals. Day one focuses on team formation, problem definition, and building; day two on refining solutions and pitching to a local judging panel.",
-          "Each venue selects a winning team whose pitch advances to national judging, and four national finalists will be invited to pitch live at the Aotearoa AI Summit on 8–9 September 2026 in Auckland, where the Summit audience votes for the overall winner. No matter your experience level — around a third of participants are new to hackathons — mentors from AUT, She Sharp, Fisher & Paykel Healthcare and Red Hat will support teams throughout.",
+          "Each venue selects a winning team whose pitch advances to national judging, and four national finalists will be invited to pitch live at the Aotearoa AI Summit on 8–9 September 2026 in Wellington, where the Summit audience votes for the overall winner. No matter your experience level — around a third of participants are new to hackathons — mentors from AUT, She Sharp, Fisher & Paykel Healthcare, Southern Cross Health Society and other New Zealand tech organisations will support teams throughout.",
           "Free online pre-event training runs throughout July to help you build stronger ideas, prototypes and pitches. The festival is about building practical AI capability, encouraging responsible and ethical AI use, fostering collaboration across regions and sectors, and showcasing innovative, impact-driven ideas."
         ],
         "speakers": {
@@ -1334,6 +1336,115 @@
                 "linkedin": ""
               }
             ]
+          },
+          "mentors": {
+            "heading": "Meet the Mentors",
+            "speakers": [
+              {
+                "name": "Prasanth Pavithran",
+                "title": "Senior Business Analyst, Office of the CTO",
+                "company": "AUT",
+                "bio": "Prasanth Pavithran is a Senior Business Analyst in the Office of the CTO at AUT, working across IT strategy and artificial intelligence, and previously managed business analysis at healthAlliance. Their expertise is in business architecture — connecting business goals to systems that can actually deliver them. A returning She Sharp mentor, they help teams translate a problem into a solution that holds together.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-prasanth-pavithran.jpg",
+                "linkedin": "https://www.linkedin.com/in/prasanth-pavithran-mba-a54ab912/"
+              },
+              {
+                "name": "Ji Ruan",
+                "title": "Senior Lecturer",
+                "company": "AUT",
+                "bio": "Ji Ruan is a Senior Lecturer at AUT, where they have taught and researched artificial intelligence since 2013 and previously managed the Master of Computer and Information Sciences programme. Alongside that they run JiCare, combining fundamental research in AI safety with applied work on AI for healthcare, education and elderly care. Their expertise spans AI product and strategy, data and machine learning, and AI ethics and governance.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-ji-ruan.jpg",
+                "linkedin": "https://www.linkedin.com/in/jiruan/"
+              },
+              {
+                "name": "Christine Yip",
+                "title": "Principal Advisor",
+                "company": "Te Awa Advisory & Recruitment",
+                "bio": "Christine Yip is Principal Advisor at Te Awa Advisory & Recruitment and runs C WHY International, advising organisations across technology, engineering, manufacturing and infrastructure on strategy, governance and organisational capability. She has more than 20 years of experience across New Zealand, Australia and Asia, was named a Top 50 CIO NZ in 2020, and brings direct hackathon experience including mentoring a winning team exploring how AI could improve freshwater quality and public health. Drawing on expertise in AI ethics and governance, business analysis, entrepreneurship and pitching, and project management, she helps teams move from an interesting idea to a credible, achievable solution that connects responsible AI, commercial thinking and measurable impact.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-christine-yip.jpg",
+                "linkedin": "https://www.linkedin.com/in/christinewky/"
+              },
+              {
+                "name": "Alan Dent",
+                "title": "Director, Data, Technology Risk & Policy",
+                "company": "AUT",
+                "bio": "Alan Dent is establishing AUT's Data, Risk and Compliance portfolio, covering data governance and strategy, information management and security, and enterprise data architecture, and leads guidance on safe AI use across the university community. They bring more than 30 years of experience in the higher education sector across Australia and New Zealand, and sit on the CAUDIT Higher Education Reference Models Working Group, whose business and data architecture models are the de facto standard at over 1,000 institutions worldwide. Their expertise spans AI ethics and governance, business analysis and requirements, and cybersecurity and privacy.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-alan-dent.jpg",
+                "linkedin": "https://www.linkedin.com/in/alandent/"
+              },
+              {
+                "name": "Harpreet Singh",
+                "title": "Software Engineer",
+                "company": "Fisher & Paykel Healthcare",
+                "bio": "Harpreet Singh designs and builds secure, scalable enterprise applications at Fisher & Paykel Healthcare using .NET, C#, React, TypeScript, SQL and Azure, within the documentation-heavy, compliance-driven processes a regulated healthcare environment demands. Their work extends into solution architecture and technical decision-making, and they drive practical AI adoption by building custom AI agents and project-specific workflows that encode business requirements, coding standards and architectural patterns. With expertise in software engineering and architecture, UX/UI design and cloud infrastructure, they bring technical depth and a focus on turning ambitious ideas into working products.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-harpreet-singh.jpg",
+                "linkedin": "https://www.linkedin.com/in/harpreet-singh-65439b229/"
+              },
+              {
+                "name": "Chan Meng",
+                "title": "Founding Engineer",
+                "company": "ArchCanvas",
+                "bio": "Chan Meng is a founding engineer working at the intersection of AI, cultural technology and women's health. They architect AI agents that survive production and build the platforms around them, with expertise spanning AI product and strategy, data and machine learning, software engineering and architecture, and cloud infrastructure. At the hackathon they bring hands-on experience building and shipping AI-powered developer tooling.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-chan-meng.jpg",
+                "linkedin": "https://www.linkedin.com/in/chanmeng666/"
+              },
+              {
+                "name": "Yesha Kaniyawala",
+                "title": "AI Software Engineer",
+                "company": "Possibl.ai",
+                "bio": "Yesha Kaniyawala is an AI and software engineer who enjoys turning big ideas into real, working solutions. She has experience across AI, cloud and full-stack development, building everything from LLM-powered applications and intelligent agents to scalable cloud-native solutions, with expertise spanning AI product and strategy, data and machine learning, software engineering and architecture, AI ethics and governance, and cloud infrastructure. As a mentor she enjoys diving into challenges alongside teams, asking the right questions and helping participants navigate the journey from an initial idea to a working prototype.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-yesha-kaniyawala.jpg",
+                "linkedin": "https://www.linkedin.com/in/yeshakaniyawalasoftwareengineer/"
+              },
+              {
+                "name": "Mark Modricker",
+                "title": "Senior ICT Manager, Development & Web Services",
+                "company": "Fisher & Paykel Healthcare",
+                "bio": "Mark Modricker leads bespoke software, app and automation teams to solve business problems end to end, with a current focus on human-AI augmentation and governed AI adoption across the enterprise. They bring 20 years of IT experience spanning data analytics and insights, consulting, business analysis and project management. With expertise in UX/UI design, business analysis and requirements, and entrepreneurship and pitching, they favour a hands-on approach that shows what is possible and challenges the status quo.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-mark-modricker.jpg",
+                "linkedin": "https://www.linkedin.com/in/markmodricker/"
+              },
+              {
+                "name": "Jacob Mathew",
+                "title": "Principal Lead, Platform Engineering",
+                "company": "Southern Cross Health Society",
+                "bio": "Jacob Mathew is a senior cloud and infrastructure leader with more than two decades of experience shaping enterprise technology functions in Auckland. At Southern Cross Health Society he owns the strategy for cloud and container platform infrastructure, and has led a FinOps programme delivering measurable cost savings across the organisation's cloud estate. His background spans data and machine learning, software engineering and architecture, and cloud infrastructure, built over nearly fifteen years at AIA International before joining Southern Cross. He combines strategic thinking on platform architecture, cost and risk with hands-on technical depth.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-jacob-mathew.jpg",
+                "linkedin": "https://www.linkedin.com/in/jacobnz/"
+              },
+              {
+                "name": "Fazeena Jamaldeen",
+                "title": "Senior Validation Engineer",
+                "company": "Fisher & Paykel Healthcare",
+                "bio": "Fazeena Jamaldeen works in computer system validation, quality assurance, business analysis and digital transformation at Fisher & Paykel Healthcare. They collaborate with technical teams, business stakeholders and vendors to deliver compliant, effective technology solutions in a regulated environment, and have been exploring AI-assisted validation approaches and AI agent development. With expertise in business analysis and requirements, and entrepreneurship and pitching, they enjoy helping students and aspiring innovators develop their ideas and turn concepts into practical solutions.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-fazeena-jamaldeen.jpg",
+                "linkedin": "https://www.linkedin.com/in/fathima-fazeena-jamaldeen-14425127"
+              },
+              {
+                "name": "Annabel Valdez-Chiong",
+                "title": "Business Solutions Manager",
+                "company": "Fisher & Paykel Healthcare",
+                "bio": "Annabel Valdez-Chiong has more than 20 years of experience across manufacturing, quality and engineering, spanning both process and software. They have led operations engineering and quality transformation initiatives using Lean, Six Sigma and Value Stream Mapping, and work as a SAP Certified Consultant bridging operations and IT to translate business needs into compliant, well-adopted technology solutions. Their study in medical device engineering at the University of Auckland gives them a confident footing at the intersection of engineering, quality and regulatory affairs. With expertise in software engineering and architecture, and business analysis and requirements, they bring a structured, data-driven and people-focused approach to hackathon teams.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-annabel-valdez-chiong.jpg",
+                "linkedin": "https://www.linkedin.com/in/annabel-valdez-chiong-b8592472"
+              },
+              {
+                "name": "Chase Bloch",
+                "title": "Data Science & Analytics Lead",
+                "company": "Fisher & Paykel Healthcare",
+                "bio": "Chase Bloch leads Data Science & Analytics at Fisher & Paykel Healthcare, where his team spans data engineering, analytics and enterprise AI adoption. As part of F&P's cross-functional AI governance group, he has driven the training and adoption strategy for enterprise AI tooling, finding new ways to apply generative AI at scale to longstanding operational problems. He holds a PhD from Penn State University in Political Science and Social Data Analytics, where his research combined NLP, forecasting and machine learning in the study of international conflict. His expertise spans AI product and strategy, data and machine learning, and AI ethics and governance, with a practical appreciation for what it takes to get from a problem worth solving to something that works in the real world.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-chase-bloch.jpg",
+                "linkedin": "https://www.linkedin.com/in/chase-bloch-790412137/"
+              },
+              {
+                "name": "Colin Coutts",
+                "title": "Head of ICT Operations",
+                "company": "Fisher & Paykel Healthcare",
+                "bio": "Colin Coutts oversees service management, technical support and infrastructure at Fisher & Paykel Healthcare across sites in New Zealand and globally, building resilient, ITIL-aligned operations that scale with the business. They came to it from a systems engineering and business analysis background, including 15 years at Fisher & Paykel Appliances that took them from IT business analyst in Auckland to global IT operations manager, by way of running operations in the UK and Ireland. With expertise in business analysis and requirements, they are driven by people using technology well — their team has onboarded more than 20 graduates in the past five years.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-colin-coutts.jpg",
+                "linkedin": "https://www.linkedin.com/in/colin-coutts-61b1741b/"
+              }
+            ]
           }
         },
         "organizers": [],
@@ -1365,7 +1476,7 @@
             "content": [
               "Day 1 (Friday 7 August) — Welcome, health & safety briefing, introduction to the hackathon themes, team formation, and the build begins, with ongoing mentor and technical support.",
               "Day 2 (Saturday 8 August) — Continued building, pitch practice, final submissions, live 5-minute pitches to the local judging panel, and announcement of the venue winner.",
-              "Venue winners advance to national judging; four national finalists pitch at the Aotearoa AI Summit on 8–9 September 2026 in Auckland."
+              "Venue winners advance to national judging; four national finalists pitch at the Aotearoa AI Summit on 8–9 September 2026 in Wellington."
             ]
           },
           {
@@ -1405,16 +1516,72 @@
             ]
           },
           {
+            "type": "bullets",
+            "title": "Forming Your Team",
+            "content": [
+              "Register as an individual and join a team on the first morning, or register with a team you have already formed — either works.",
+              "We recommend teams of three to six members. A hackathon is a safe space for people from different skill sets and backgrounds to gather around a problem, and a good mix — technical, design, domain and commercial — consistently produces stronger solutions.",
+              "Mentors are there from the start to help people find each other and to check that teams are the right size and balanced.",
+              "On day two, pitch practice starts around midday. Most teams split at this point — some keep building towards the solution, others start building the pitch.",
+              "The team comes back together for the 30 minutes between the end of the hack and the start of pitching."
+            ]
+          },
+          {
+            "type": "bullets",
+            "title": "How Mentors Help You",
+            "content": [
+              "Technical Experts — answer complex technical questions, sense-check your design and suggest alternatives, with deep expertise in AI and data. They will not build it for you, but they will show you where it is going wrong.",
+              "Subject Matter Experts — know the problem domain and can tell you whether your solution would genuinely work for the people it is meant to help.",
+              "Business Experts — check in often on team dynamics, problem framing and the story you are telling, and help you shape a pitch that lands in five minutes.",
+              "Mentors are available across both days. Ask early and ask often — that is what they are here for."
+            ]
+          },
+          {
             "type": "judging",
             "title": "How Teams Are Judged",
             "content": [
-              "Each team delivers a live 5-minute pitch to a panel of academic and industry judges.",
+              "Each venue has a panel of three to four judges: a host representative, a sponsor or business representative, and a member of the AI Forum Executive Council.",
+              "Each team delivers a live 5-minute pitch to the panel.",
               "Judges score four equally-weighted criteria (1–5 each):",
               "Inspiration — a clearly defined problem, a solution that solves it, and real impact for New Zealand and the world.",
               "Technology — the solution must use AI; demonstrate feasibility, engineering quality, and how the technology solves the problem (a working prototype is highly recommended).",
               "Design & Innovation — originality, user experience, and inventive use of technology.",
               "Presentation — a clear, creative pitch that addresses the problem and answers judges' questions within the time limit.",
+              "Every venue in the festival scores against the same scorecard. The TAIAO scorecard weights all four categories equally; the Technical Brilliance scorecard is weighted towards Technology.",
+              "Every pitch is recorded. Each venue announces its own winner on the day, and that winning pitch goes forward to the national judging panel.",
+              "All judging panel decisions are final.",
               "An optional pitch deck template is available in the Community Hub as a guide."
+            ]
+          },
+          {
+            "type": "bullets",
+            "title": "What the Judges Look For",
+            "content": [
+              "Judges have very little time to absorb an idea that may be completely unfamiliar to them. Judges from the last five years of the festival advise focusing on three things:",
+              "Does it solve an important UN Sustainable Development Goal problem?",
+              "Is the solution feasible and achievable?",
+              "Will it make an impact?",
+              "And for the Technical Brilliance prize, a fourth: does it demonstrate strong technical thinking?"
+            ]
+          },
+          {
+            "type": "info",
+            "title": "National Judging Panel",
+            "content": [
+              "The national panel watches every venue's winning pitch video, scores it against the same scorecards used at each venue, and selects the four finalists who pitch on stage at the Aotearoa AI Summit. The same panel awards the AI Technical Brilliance Prize, which can go to any venue winner — not only a finalist.",
+              "David Knox (Topologic) chairs the panel and Albert Bifet (University of Waikato) is deputy chair. They are joined by Prof Yun Sing Koh and Prof Karin Bryan (University of Auckland), Nicholas Fourie (Fisher & Paykel Healthcare), Dr Mahsa McCauley (AUT, Chair of AI Forum New Zealand), Dr Karaitiana Taiuru (AI, data and emerging technology ethics, governance and research; Chair of Kāhui Māori), Shivonne Llondt (AWS) and Nicola Voice (Sustainability Lead, Woolworths New Zealand).",
+              "Dr Mahsa McCauley and Nicholas Fourie sit on both the AUT City Campus venue panel and the national panel."
+            ]
+          },
+          {
+            "type": "agenda",
+            "title": "Your 5-Minute Pitch, Section by Section",
+            "content": [
+              "Connect — 30 seconds. Who are you and what is your passion? Think of it as speed dating: you get one first impression.",
+              "Problem to Solve — 1 minute. What problem are you solving, and why should anyone care? Who or what does it impact? Humanise it with a short story, and back it with data — this is an AI hack, after all.",
+              "Your Big Idea — 2 minutes. How does your innovation solve the problem, and how does it meet the brief? Show us your prototype — high-fidelity or click-through slideware is fine.",
+              "Future Impact — 1.5 minutes. What will your innovation change? What do you need to make it work? And what could it mean for the future?",
+              "Describe the problem you actually ended up solving — it is not always the one you set out to solve."
             ]
           },
           {
@@ -1434,7 +1601,7 @@
             "content": [
               "The Aotearoa AI Hackathon Festival runs as a series of 48-hour hackathons hosted at venues across Aotearoa New Zealand between 3 and 10 August 2026.",
               "Every venue records its team pitches and selects a local winner. A national judging panel then reviews the winning pitches and selects the finalists.",
-              "Four national finalists are invited to pitch live at the Aotearoa AI Summit on 8–9 September 2026 in Auckland, where the Summit audience votes for the winning solution and the award-winning team is announced."
+              "Four national finalists are invited to pitch live at the Aotearoa AI Summit on 8–9 September 2026 in Wellington, where the Summit audience votes for the winning solution and the award-winning team is announced."
             ]
           },
           {
@@ -1487,7 +1654,9 @@
           {
             "type": "youtube",
             "title": "Care by Design — Fisher & Paykel Healthcare",
-            "content": ["https://youtu.be/n9UPiqziB9c"]
+            "content": [
+              "https://youtu.be/n9UPiqziB9c"
+            ]
           },
           {
             "type": "info",
@@ -1538,7 +1707,9 @@
           {
             "type": "youtube",
             "title": "Accessible UI Generation — My Life My Voice",
-            "content": ["https://youtu.be/THqS1kZbdjo"]
+            "content": [
+              "https://youtu.be/THqS1kZbdjo"
+            ]
           },
           {
             "type": "info",
@@ -1551,7 +1722,9 @@
           {
             "type": "youtube",
             "title": "AI Assistant Demo",
-            "content": ["https://youtu.be/OO8uqNiQXcY"]
+            "content": [
+              "https://youtu.be/OO8uqNiQXcY"
+            ]
           },
           {
             "type": "bullets",
@@ -1564,7 +1737,8 @@
               "Auckland — academyEX, 8–9 August",
               "Waikato — Te Ipu o Te Mahara | Artificial Intelligence Institute, 6–7 August",
               "Wellington — Amazon Web Services (AWS), 6–7 August",
-              "Christchurch — EPIC Innovation + Canterbury Tech, 6–7 August"
+              "Christchurch — EPIC Innovation + Canterbury Tech, 6–7 August",
+              "Dunedin — Business South + University of Otago, 8–9 August"
             ]
           },
           {
@@ -1572,7 +1746,7 @@
             "title": "Why Attend",
             "content": [
               "Build practical, hands-on AI capability on real-world problems",
-              "Collaborate in diverse teams (3–7 people) with mentor and technical support",
+              "Collaborate in diverse teams (3–6 people) with mentor and technical support",
               "Learn responsible and ethical AI practices",
               "Access free pre-event training to strengthen your idea and pitch",
               "Pitch your solution and compete to represent your venue at national judging",
@@ -1653,7 +1827,7 @@
             "title": "Part of a Nationwide Festival",
             "paragraphs": [
               "The AUT City Campus event is one of several venues running across the country during the festival window in early August 2026.",
-              "Venues span Auckland, Waikato, Wellington and Christchurch — see the 2026 Venues list above for the host and dates at each location."
+              "Venues span Auckland, Waikato, Wellington, Christchurch and Dunedin — see the 2026 Venues list above for the host and dates at each location."
             ],
             "links": [
               {
@@ -1721,8 +1895,8 @@
           {
             "title": "Prepare Your Pitch",
             "paragraphs": [
-              "On day two, each team delivers a live 5-minute pitch to the local judging panel. Venue winners advance to national judging, and four finalists pitch at the Aotearoa AI Summit on 8–9 September 2026 in Auckland.",
-              "Download the official pitch deck template from the Community Hub to structure your solution, impact and next steps."
+              "On day two, each team delivers a live 5-minute pitch to the local judging panel. Venue winners advance to national judging, and four finalists pitch at the Aotearoa AI Summit on 8–9 September 2026 at Tākina in Wellington.",
+              "Download the official pitch deck template from the Community Hub to structure your solution, impact and next steps — and see “Your 5-Minute Pitch, Section by Section” above for how the five minutes are meant to break down."
             ],
             "links": [
               {
@@ -1770,6 +1944,20 @@
                 "url": "https://www.google.com/maps/search/?api=1&query=AUT+City+Campus+55+Wellesley+Street+East+Auckland"
               }
             ]
+          },
+          {
+            "title": "Rules of Engagement",
+            "paragraphs": [
+              "This is an inclusive festival, welcoming people of all genders, ethnicities and backgrounds. Be welcoming to each other and treat everyone with respect, and come open to learning new things and making new friends.",
+              "Be fair: you can plan with your team beforehand, but keep to the spirit of the event by collaborating and developing your ideas at the event itself. Our hosts are welcoming you into their space, so please follow their guidance and rules. Participants who choose not to abide by these rules may be asked to leave."
+            ]
+          },
+          {
+            "title": "Intellectual Property",
+            "paragraphs": [
+              "Neither the AI Forum nor any supporter of this festival has any interest in the intellectual property created at the event. For practical purposes, any IP created belongs to the team that created it — your team may want to agree how that works going forward after the event.",
+              "Participants must comply with the terms and conditions of any intellectual property rights that already exist over anything they use during the hackathon. Any infringement of those rights is at the participant's own risk."
+            ]
           }
         ],
         "photos": [
@@ -1781,7 +1969,7 @@
         "posters": [
           {
             "url": "/img/events/aotearoa-ai-hackathon-festival-2026-poster.webp",
-            "alt": "Aotearoa AI Hackathon Festival 2026 poster — AUT City Campus, 7–8 August 2026. Turn ideas into something real; delivered with She Sharp. AUT students free, public $10 with code AUT60."
+            "alt": "Aotearoa AI Hackathon Festival 2026 poster — AUT City Campus, 7–8 August 2026. Turn ideas into something real; delivered with She Sharp."
           }
         ],
         "galleryUrl": "",
