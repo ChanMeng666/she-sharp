@@ -369,6 +369,31 @@ The site is optimized for both search engines and generative engines (ChatGPT, C
 
 **Docs** (in `docs/development/`): `GEO_SEO_IMPLEMENTATION_GUIDE.md` — reusable how-to (incl. browser-side GSC/Bing setup); `GEO_SEO_MONITORING.md` — KPIs + the 2026-06-23 baseline; `GEO_SEO_BACKLOG.md` — prioritized follow-ups with live status.
 
+## Event Presentation Decks
+
+Slide decks for in-person events, projected from `/present/<event-slug>`. Shipped 2026-08-01. First deck: `/present/aotearoa-ai-hackathon-festival-2026` (36 slides).
+
+**A deck is data.** `lib/deck/types.ts` is a discriminated union of 18 slide types; `components/deck/slide-renderer.tsx` maps each to one layout in `components/deck/slides/` behind a `never` guard, so a new slide type without a layout is a compile error. `lib/deck/boilerplate.ts` generates the fixed organisational sequence (title → karakia → H&S → we-are-She-Sharp → team → impact → sponsors → contact QRs → … → thanks → upcoming → feedback QR → ambassador QR → closing karakia) **from live site data** (`lib/data/team.ts`, `stats.ts`, `sponsors.ts`, `lib/config/footer.ts`), so a new event deck is one file in `lib/deck/decks/` plus one line in `lib/deck/registry.ts`.
+
+**Non-technical organisers use the `/build-event-slides` skill** (`.claude/skills/build-event-slides/`), which interviews them, derives the accent pair from their event poster, collects assets, lints and ships. They never touch TypeScript.
+
+**The stage is fluid, not fixed 16:9.** Design height is a constant 1080; width flows with the display, clamped to 4:3–21:9, so every venue screen fills edge to edge with no letterboxing (portrait falls back to a centred 4:3). Three layout rules follow, and all three fail *silently* — see `styles/components/deck.css`:
+1. **Never `vw`/`vh`/`dvh` inside `.deck-stage`** — they resolve against the real viewport, not the scaled stage, so they do not scale. This bans the site's `.text-display-*` utilities in here. Use `cqi` or fixed design px, and the `.deck-*` type classes rather than Tailwind `text-*`.
+2. The stage is centred with `translate(-50%, -50%) scale()`, **not** flex/grid alignment — grid parks an oversized item at the start edge.
+3. Grid tracks must be `minmax(0, 1fr)` before a percentage `max-block-size` on a child means anything (this is why sponsor SVGs burst out of `.deck-logo-chip`).
+Layouts prefer `repeat(auto-fit, minmax(Npx, 1fr))` over breakpoints. `useFitContent()` in `slide-frame.tsx` is a last-resort guard that scales an overflowing slide down rather than letting a line slide off a projector.
+
+**Copy discipline is enforced, not advised.** `lib/deck/lint.ts` caps title words, bullet count and length, run-sheet labels, people per slide (by density) and accent contrast; `lib/deck/deck.test.ts` fails on any of it. The event JSON has 21 prose sections — long-form (bios, IP terms, rules) stays on the event page and is reached by a QR slide.
+
+**Accents are a pair.** Brand purple `#9b2e83` is only 2.92:1 on the near-black canvas, so dark slides use `#c846ab` (4.61:1). Per-event customisation = `theme.accent` plus that event's photos, nothing else.
+
+- **Checks**: `npx tsx lib/deck/deck.test.ts`, `npx tsx scripts/deck/lint-deck.ts [slug]` (a report an organiser can act on), `npx tsx scripts/verify-image-paths.ts`.
+- **Scaffold**: `npx tsx scripts/deck/new-deck.ts <event-slug>`.
+- **Host controls**: arrows/Space next, `O` overview + jump, `F` fullscreen, `B` blackout, `?` help. **Space starts/pauses the countdown on `break` slides instead of advancing.** `?print=1` renders all slides at 960×540 for a Ctrl+P PDF backup, and is the only place `slide.note` appears.
+- **Offline**: every slide stays mounted and all images preload with a visible progress chip; after first load the deck makes zero network calls. Reloading is the only thing that needs the venue wifi.
+- **SEO**: `/present/*` is `noindex`, must stay **out of `app/sitemap.ts`**, and must **not** be added to `robots.ts` `DISALLOWED_PATHS` (a Disallow stops crawlers reading the noindex).
+- **Root-layout side effects**: the cookie banner carries `data-cookie-banner` so `deck.css` can hide it under `html[data-present]`; `scrollbar-gutter: stable` is overridden there too. `force-dynamic` cannot be overridden per-segment (the root layout awaits `cookies()`), so don't try.
+
 ## AI Chatbot Assistant
 
 The visitor chatbot (bottom-right) is a knowledge-grounded **AI SDK 6 `ToolLoopAgent`** over **live data** — newly added events appear automatically with zero maintenance. Shipped to production 2026-06-23.
