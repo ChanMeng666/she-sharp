@@ -2,19 +2,22 @@ import { DeckImage } from "@/components/deck/deck-image";
 import type { BulletsSlide } from "@/lib/deck/types";
 import { cn } from "@/lib/utils";
 
+import { ArchiveBand, BAND_PAD, Kicker, seedFrom } from "./archive";
+
 /**
- * The marker that sits on the leading edge of a bullet.
+ * The marker on the leading edge of a bullet.
  *
  * Three flavours because the three jobs are different: a checklist is a set of
- * things the audience must do, a numbered list is an order they must follow,
- * and a plain list is neither.
+ * things the audience must do, a numbered list is an order they must follow, and
+ * a plain list is neither. All three are drawn in the same 1px-and-accent
+ * vocabulary the rest of the deck uses — no discs, no icons with fills.
  */
 function BulletMarker({ variant, index }: { variant: string; index: number }) {
   if (variant === "checklist") {
     return (
       <svg
-        width={40}
-        height={40}
+        width={38}
+        height={38}
         viewBox="0 0 24 24"
         fill="none"
         stroke="var(--slide-accent)"
@@ -22,7 +25,7 @@ function BulletMarker({ variant, index }: { variant: string; index: number }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         aria-hidden="true"
-        style={{ flexShrink: 0, marginBlockStart: 4 }}
+        style={{ flex: "0 0 38px", marginBlockStart: 2 }}
       >
         <path d="M20 6 9 17l-5-5" />
       </svg>
@@ -33,16 +36,16 @@ function BulletMarker({ variant, index }: { variant: string; index: number }) {
     return (
       <span
         aria-hidden="true"
-        className="deck-subtitle deck-accent deck-tabular"
-        style={{ flexShrink: 0, minInlineSize: 56, lineHeight: 1.1 }}
+        className="deck-label deck-accent deck-tabular"
+        style={{ flex: "0 0 48px", marginBlockStart: 8 }}
       >
-        {index + 1}
+        {String(index + 1).padStart(2, "0")}
       </span>
     );
   }
 
-  /* A 1px accent rule, not a bar: this is a print system, and the same hairline
-     doing compositional work is `.deck-rule-accent` everywhere else too. */
+  /* A 1px accent rule, not a bar or a disc. The same hairline does the
+     compositional work everywhere else in the deck. */
   return (
     <span
       aria-hidden="true"
@@ -55,62 +58,86 @@ function BulletMarker({ variant, index }: { variant: string; index: number }) {
 /**
  * The workhorse content slide: a claim and up to five short supports.
  *
- * Used for house rules, "what happens next", and the handful of things a host
- * says out loud and then wants left on screen while people act on them. The
- * linter caps it at five bullets of ten words because anything longer is a
- * document, and a document belongs behind the QR slide instead.
+ * COMPOSITION. On paper the wall survives as a single full-bleed band across the
+ * foot — the same photographs, the same grade, one row deep — which is what
+ * keeps an information slide in the same deck as the title. The safe area
+ * reserves its height, so no line of type ever lands on a face.
+ *
+ * The bullets are hairline rows rather than a bulleted list: at 38px on a
+ * projector the ruled row is what makes five supports scan as five, and it is
+ * the same rhythm as the run sheet two slides later.
  */
 export function BulletsSlideLayout({ slide }: { slide: BulletsSlide }) {
   const variant = slide.variant ?? "plain";
-  const twoColumns = slide.columns === 2;
+  const seed = seedFrom(slide.id);
+
+  /* Two columns halve the row count, so they are only worth it when there are
+     enough rows to halve and no photograph competing for the width. `auto-fit`
+     rather than a breakpoint: a 4:3 projector cannot hold two 560px columns and
+     collapses to one on its own. */
+  const twoColumns = slide.columns === 2 && slide.items.length >= 4 && !slide.image;
 
   return (
-    <div className="deck-safe">
-      <div
-        className="deck-content flex flex-1 flex-col"
-        style={{ gap: "var(--deck-gap-lg)" }}
-      >
-        <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-          {slide.eyebrow && <p className="deck-kicker">{slide.eyebrow}</p>}
-          <h2 className="deck-title">{slide.title}</h2>
-          {slide.lead && <p className="deck-lead">{slide.lead}</p>}
-        </div>
+    <>
+      <ArchiveBand seed={seed} />
 
-        <div className="flex items-stretch" style={{ gap: "var(--deck-gap-xl)" }}>
-          <ul
-            className={cn(
-              "grid flex-1",
-              twoColumns
-                ? "grid-cols-2 @max-[1560px]/deck:grid-cols-1"
-                : "grid-cols-1",
+      <div className="deck-safe" style={{ paddingBlockEnd: BAND_PAD }}>
+        <div
+          className="deck-content flex flex-1 flex-col"
+          style={{ gap: "var(--deck-gap-lg)" }}
+        >
+          <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
+            <Kicker text={slide.eyebrow} />
+            <h2 className="deck-title">{slide.title}</h2>
+            {slide.lead && (
+              <p className="deck-lead">{slide.lead}</p>
             )}
-            style={{ columnGap: "var(--deck-gap-xl)", rowGap: "var(--deck-gap-md)" }}
-          >
-            {slide.items.map((item, index) => (
-              <li
-                key={item}
-                className="flex items-start"
-                style={{ gap: "var(--deck-gap-sm)" }}
-              >
-                <BulletMarker variant={variant} index={index} />
-                <span className="deck-bullet">{item}</span>
-              </li>
-            ))}
-          </ul>
+          </div>
 
-          {slide.image && (
-            /* A single supporting photograph, so it keeps its colour. Hidden on
-               narrow stages so the text keeps its measure rather than being
-               squeezed into a column nobody can read from row ten. */
-            <div
-              className="deck-frame deck-full-colour @max-[1600px]/deck:hidden"
-              style={{ flex: "0 0 38%" }}
+          <div className="flex items-start" style={{ gap: "var(--deck-gap-xl)" }}>
+            <ul
+              className={cn("grid flex-1")}
+              style={{
+                gridTemplateColumns: twoColumns
+                  ? "repeat(auto-fit, minmax(560px, 1fr))"
+                  : "minmax(0, 1fr)",
+                columnGap: "var(--deck-gap-xl)",
+                borderBlockStart: "1px solid var(--slide-hairline)",
+              }}
             >
-              <DeckImage image={slide.image} />
-            </div>
-          )}
+              {slide.items.map((item, index) => (
+                <li
+                  key={item}
+                  className={cn(
+                    "flex items-start",
+                  )}
+                  style={{
+                    gap: "var(--deck-gap-sm)",
+                    paddingBlock: "var(--deck-gap-sm)",
+                    borderBlockEnd: "1px solid var(--slide-hairline)",
+                  }}
+                >
+                  <BulletMarker variant={variant} index={index} />
+                  <span className="deck-bullet">{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            {slide.image && (
+              /* One supporting photograph, so it keeps its colour — the duotone
+                 is for photographs used as mass. Dropped on narrow stages so the
+                 text keeps its measure rather than being squeezed into a column
+                 nobody can read from row ten. */
+              <div
+                className="deck-frame deck-full-colour deck-slot deck-slot-3x2 @max-[1600px]/deck:hidden"
+                style={{ flex: "0 0 34%" }}
+              >
+                <DeckImage image={slide.image} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

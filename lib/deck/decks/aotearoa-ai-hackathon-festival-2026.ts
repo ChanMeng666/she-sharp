@@ -161,34 +161,44 @@ const PARTNER_LOGOS: DeckLogo[] = detail.sponsors.main.map((sponsor) => ({
 }));
 
 /**
- * The festival's own koru artwork, behind the chapter card that hands over from
- * She Sharp to the event.
+ * Plate behind the opening karakia: a real photograph, not a generated one.
  *
- * It used to sit behind the opening karakia. It is the wrong image for that:
- * it is this festival's branding, and the karakia is not about this festival.
- * It is exactly the right image for the moment the event's own identity takes
- * the screen for the first time.
+ * This is an unfurling silver-fern koru — a genuine macro photograph with no
+ * branding, no text and no date in it, and a clean out-of-focus left half where
+ * the te reo sits. It happens to live in this event's asset folder because the
+ * event page used it, but it is not artwork for the festival.
+ *
+ * The deck holds generated plates that suit this slot better on paper: they are
+ * darker where the type goes, and one of them is a greenstone sea, which is
+ * what the karakia's second line describes. They lost anyway. A karakia is a
+ * practice rather than a design slot, and when the organisation's own
+ * photograph will do the job, the organisation's own photograph does the job.
+ * The generated plates exist for the events that have nothing.
  */
 const koru = detail.photos[0];
 if (!koru) {
   throw new Error(
-    `"${EVENT_SLUG}" has no photos[0]; the opening chapter card expects the festival koru artwork.`,
+    `"${EVENT_SLUG}" has no photos[0]; the opening karakia expects the koru photograph.`,
   );
 }
-const KORU_IMAGE: DeckImage = { src: koru.url, alt: koru.alt };
+const OPENING_KARAKIA_PLATE: DeckImage = {
+  src: koru.url,
+  alt: koru.alt,
+  // Subject is hard right; hold the frame there so the left stays open for text.
+  focus: "70% 40%",
+};
 
 /**
- * Plate behind the opening karakia.
+ * The chapter card that hands over from She Sharp to the event.
  *
- * Chosen for the words themselves, not for decoration: the karakia's second
- * line is "Kia whakapapa pounamu te moana" — may the sea be like greenstone —
- * and this is a dark sea at first light in greenstone green. The room hears the
- * line and is already looking at it.
+ * Takes the archive wall rather than a photograph. It is the moment the deck
+ * stops being about the organisation and starts being about the day, and the
+ * wall is what carries the organisation — twelve years of rooms, handing over.
  */
-const OPENING_KARAKIA_PLATE: DeckImage = {
-  src: deckPlates["whenua-pounamu-sea"].src,
-  srcSet: plateSrcSet(deckPlates["whenua-pounamu-sea"]),
-  alt: deckPlates["whenua-pounamu-sea"].alt,
+const CHAPTER_PLATE: DeckImage = {
+  src: deckPlates["light-prism-edge"].src,
+  srcSet: plateSrcSet(deckPlates["light-prism-edge"]),
+  alt: deckPlates["light-prism-edge"].alt,
 };
 
 /**
@@ -380,7 +390,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       // than a generic one. Adding lines here drops org defaults from the top.
       safetyExtras: [],
       heroImage: OPENING_KARAKIA_PLATE,
-      chapterPlate: KORU_IMAGE,
+      chapterPlate: CHAPTER_PLATE,
       contactQrs: [WEBSITE_QR, EVENTS_QR, LINKEDIN_QR],
     }),
 
@@ -595,7 +605,10 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       type: "prizes",
       section: "Day One — Friday 7 August",
       tone: "dark",
-      eyebrow: "Won in this room tomorrow",
+      // Not "Won in this room tomorrow" — the first prize's own label already
+      // says that, and a kicker that repeats something else on the slide is the
+      // slot wasted.
+      eyebrow: "Three of these exist",
       title: "Prizes & Awards",
       prizes: [
         {
@@ -617,9 +630,13 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
           scope: "national",
         },
       ],
-      footnote:
-        "The top four national finalists are invited to pitch live at the Aotearoa AI Summit, 8–9 September 2026 in Wellington. Prizes are supported by AWS and provided via AI Forum New Zealand. Individual venues may offer additional prizes and categories.",
-      note: "Say the venue prize first and loudest — it is the one this room can win tomorrow.",
+      // Was three sentences and forty words, which pushed the slide past the
+      // stage on a 4:3 projector and made it scale itself down to 79% — where
+      // the labels fall under the 28px a room can read. Cut rather than shrunk:
+      // the Summit dates, the AWS attribution and the per-venue caveat are all
+      // on the event page, and the host says them anyway.
+      footnote: "Top four nationally pitch at the Aotearoa AI Summit in September.",
+      note: "Say the venue prize first and loudest — it is the one this room can win tomorrow. The Summit is 8–9 September in Wellington; prizes come from AWS via AI Forum NZ.",
     },
     {
       id: "nationwide-festival",

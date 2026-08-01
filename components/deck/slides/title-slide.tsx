@@ -1,9 +1,8 @@
-import { Fragment } from "react";
+import { Fragment, type CSSProperties } from "react";
 
 import { DeckImage } from "@/components/deck/deck-image";
 import { WALL_TILE_COUNT } from "@/lib/deck/wall";
 import type { TitleSlide } from "@/lib/deck/types";
-import { cn } from "@/lib/utils";
 
 import {
   ArchiveWall,
@@ -50,13 +49,13 @@ export function TitleSlideLayout({ slide }: { slide: TitleSlide }) {
         {/* A sheer cut rather than an opaque one: the room is leaving, and the
             last thing on the screen should be the archive still running. */}
         <div
-          className="deck-incision deck-incision-sheer deck-reveal deck-edge-block-start deck-edge-block-end"
+          className="deck-incision deck-incision-sheer deck-edge-block-start deck-edge-block-end"
           style={{
             insetInline: 0,
             insetBlockStart: 254,
             blockSize: 498,
             "--incision-pad": "0px",
-          } as React.CSSProperties}
+          } as CSSProperties}
           aria-hidden="true"
         />
 
@@ -66,12 +65,12 @@ export function TitleSlideLayout({ slide }: { slide: TitleSlide }) {
             style={{ gap: "var(--deck-gap-md)" }}
           >
             <Kicker text={slide.eyebrow} />
-            <h1 className="deck-display deck-rise deck-d2">
+            <h1 className="deck-display">
               {lead && <span>{lead} </span>}
               <span className="deck-accent">{tail}</span>
             </h1>
             {slide.subtitle && (
-              <p className="deck-lead mx-auto deck-rise deck-d3">{slide.subtitle}</p>
+              <p className="deck-lead mx-auto">{slide.subtitle}</p>
             )}
           </div>
         </div>
@@ -87,14 +86,14 @@ export function TitleSlideLayout({ slide }: { slide: TitleSlide }) {
           the stage-overflow guard in `SlideFrame` can still measure and rescue
           it. An animated transform on the safe area would fight that guard. */}
       <div
-        className="deck-incision deck-reveal deck-edge-inline-end"
+        className="deck-incision deck-edge-inline-end"
         style={{
           insetBlockStart: "var(--deck-rail-h)",
           insetBlockEnd: 0,
           insetInlineStart: 0,
           inlineSize: PANEL_SPLIT,
           "--incision-pad": "0px",
-        } as React.CSSProperties}
+        } as CSSProperties}
         aria-hidden="true"
       />
 
@@ -105,18 +104,18 @@ export function TitleSlideLayout({ slide }: { slide: TitleSlide }) {
         >
           <Kicker text={slide.eyebrow} />
 
-          <h1 className="deck-display deck-rise deck-d2">
+          <h1 className="deck-display">
             {lead && <span>{lead} </span>}
             <span className="deck-accent">{tail}</span>
           </h1>
 
           {slide.subtitle && (
-            <p className="deck-lead deck-rise deck-d3">{slide.subtitle}</p>
+            <p className="deck-lead">{slide.subtitle}</p>
           )}
 
           {meta.length > 0 && (
             <div
-              className="flex flex-col deck-rise deck-d4"
+              className="flex flex-col"
               style={{ gap: "var(--deck-gap-sm)" }}
             >
               <hr className="deck-rule deck-rule-accent" />
@@ -144,24 +143,30 @@ export function TitleSlideLayout({ slide }: { slide: TitleSlide }) {
               beats the optical centring `.deck-content.flex-col` applies. */}
           <div className="mt-auto flex flex-col" style={{ gap: "var(--deck-gap-sm)" }}>
             {logos.length > 0 && (
-              <div
-                className="flex flex-wrap items-center deck-rise deck-d5"
-                style={{ gap: "var(--deck-gap-sm)" }}
-              >
+              /* Label on its own line, marks on one row beneath. Side by side
+                 they compete for a content column that is only ~600px wide on
+                 a 4:3 projector, and the label wins — which collapsed the marks
+                 into a vertical stack and cost the slide about 250px of height
+                 it does not have. A row that shrinks is cheaper than a row that
+                 wraps. */
+              <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
                 <span className="deck-label deck-faint">In partnership with</span>
                 <div
-                  className={cn("grid flex-1 items-center")}
-                  style={{
-                    gridTemplateColumns:
-                      "repeat(auto-fit, minmax(140px, max-content))",
-                    gap: "var(--deck-gap-sm)",
-                  }}
+                  className="flex items-center"
+                  style={{ gap: "var(--deck-gap-sm)", minInlineSize: 0 }}
                 >
                   {logos.slice(0, 5).map((logo) => (
                     <div
                       key={logo.name}
                       className="deck-logo-chip"
-                      style={{ inlineSize: 178, blockSize: 84 }}
+                      style={{
+                        // Shrink together rather than wrap; the chip's own
+                        // `object-fit: contain` keeps every mark whole.
+                        flex: "1 1 0",
+                        maxInlineSize: 178,
+                        minInlineSize: 0,
+                        blockSize: 84,
+                      }}
                     >
                       <DeckImage
                         image={{ src: logo.logo, alt: logo.name }}
@@ -177,7 +182,7 @@ export function TitleSlideLayout({ slide }: { slide: TitleSlide }) {
             {/* The wall is evidence, so it is credited like evidence. The count
                 is read from the pool rather than typed, because a number on a
                 projector that no longer matches the deck is worse than none. */}
-            <p className="deck-label deck-faint deck-rise deck-d6">
+            <p className="deck-label deck-faint">
               {WALL_TILE_COUNT} photographs from the She Sharp archive · 2014–2026
             </p>
           </div>

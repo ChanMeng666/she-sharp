@@ -121,10 +121,70 @@ export function SlideFrame({
       aria-label={slideAriaLabel(slide, index, total)}
       inert={!active || undefined}
       aria-hidden={!active || undefined}
+      data-rail={railVariant(slide)}
     >
+      <SlideRail slide={slide} index={index} total={total} />
       <SlideBoundary slide={slide}>{children}</SlideBoundary>
     </section>
   );
+}
+
+/**
+ * The running header: brand mark leading, position and chapter trailing.
+ *
+ * Rendered here rather than by the layouts for a plain reason — a layout is
+ * given only its slide, and the rail has to say "12 / 38", which nothing but the
+ * frame knows. It is on every slide without exception. That constancy is the
+ * point: like a page number, it is what makes thirty-eight slides read as one
+ * object rather than thirty-eight posters.
+ *
+ * It is deliberately excluded from every entry animation. Furniture should
+ * already be there when the slide arrives; a header that flies in is a header
+ * the room notices, and nobody should ever notice this.
+ */
+function SlideRail({
+  slide,
+  index,
+  total,
+}: {
+  slide: Slide;
+  index: number;
+  total: number;
+}) {
+  const position = String(index + 1).padStart(2, "0");
+  const chapter = slide.section?.trim();
+
+  return (
+    <div className="deck-rail" aria-hidden="true">
+      <span className="deck-rail-brand">
+        SHE <i className="deck-rail-sharp">♯</i> SHARP
+      </span>
+      <span className="deck-rail-meta">
+        {position} / {total}
+        {/* Only when there is a chapter — a dangling separator looks like a bug. */}
+        {chapter ? ` · ${chapter.toUpperCase()}` : ""}
+      </span>
+    </div>
+  );
+}
+
+/**
+ * How the rail sits on this slide.
+ *
+ * An opaque bar squares off the top of a full-colour photograph, so slides whose
+ * ground is a photographic plate get a sheer rail instead. Everything else keeps
+ * the solid one, which is what lets the chapter label stay legible over a busy
+ * archive wall.
+ */
+function railVariant(slide: Slide): "sheer" | undefined {
+  if (slide.type === "karakia" || slide.type === "photo") return "sheer";
+  // A section or break slide is only photographic when it has been given a
+  // plate; without one its ground is the archive wall or flat colour, and there
+  // the solid bar is what keeps the chapter label legible.
+  if ((slide.type === "section" || slide.type === "break") && slide.background) {
+    return "sheer";
+  }
+  return undefined;
 }
 
 /**

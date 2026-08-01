@@ -74,6 +74,28 @@ export interface BuildWallOptions {
 }
 
 /**
+ * A stable numeric seed from a slide's `id`.
+ *
+ * Layout components receive `{ slide }` and no position, so they cannot seed a
+ * wall with an index. Seeding from `slide.id` is better anyway: the id is
+ * stable, so reordering the deck does not reshuffle every wall behind it, and
+ * two walls in one deck still differ because their ids do.
+ *
+ * FNV-1a, chosen because it is four lines and deterministic — not because hash
+ * quality matters here. Any stable string-to-int would do; what matters is
+ * that the server and the client compute the same one, for the hydration
+ * reason above.
+ */
+export function wallSeed(id: string): number {
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < id.length; i += 1) {
+    hash ^= id.charCodeAt(i);
+    hash = Math.imul(hash, 0x01000193);
+  }
+  return Math.abs(hash);
+}
+
+/**
  * Builds the rows for one wall.
  *
  * Each row takes its own spread through the pool via `pickWallTiles`, offset

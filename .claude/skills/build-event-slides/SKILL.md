@@ -440,6 +440,10 @@ Give the person presenting three things:
 Tell them the one thing worth remembering: **open it ten minutes early, wait for
 the loading chip to disappear, and then don't reload.**
 
+If the venue laptop is old, tell them one more: **`L` stops all the movement**
+and the deck still looks right standing still. It does not make the deck load
+faster — only the PDF does that — but it fixes a slide show that stutters.
+
 ---
 
 ## Guardrails (USER-APPROVED — hard rules)

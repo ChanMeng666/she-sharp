@@ -321,7 +321,6 @@ export const MOTION_RECIPES: Record<SlideType, MotionRecipe> = {
         from: rise(12),
         duration: DECK_DUR.slow2,
         easing: DECK_EASE.exp,
-        delay: 240,
         stagger: 550,
         chain: true,
       },
@@ -725,8 +724,11 @@ export const MOTION_RECIPES: Record<SlideType, MotionRecipe> = {
       },
       {
         select: SEL.rule,
-        from: { transform: "scaleX(0)" },
-        to: { transform: "none" },
+        // The origin travels in the keyframes rather than being written to the
+        // element: a rule has to draw from its start edge, and nothing here is
+        // allowed to leave an inline style behind.
+        from: { transform: "scaleX(0)", transformOrigin: "left center" },
+        to: { transform: "none", transformOrigin: "left center" },
         duration: DECK_DUR.slow2,
         easing: DECK_EASE.exp,
         delay: 240,
@@ -810,8 +812,8 @@ export const MOTION_RECIPES: Record<SlideType, MotionRecipe> = {
       },
       {
         select: SEL.rule,
-        from: { transform: "scaleX(0)" },
-        to: { transform: "none" },
+        from: { transform: "scaleX(0)", transformOrigin: "left center" },
+        to: { transform: "none", transformOrigin: "left center" },
         duration: DECK_DUR.slow2,
         easing: DECK_EASE.exp,
         delay: 200,
@@ -1003,6 +1005,24 @@ export const MOTION_RECIPES: Record<SlideType, MotionRecipe> = {
 /* -------------------------------------------------------------------------
    Runtime
    ------------------------------------------------------------------------- */
+
+/**
+ * Marks a stage as having a live JavaScript entrance runtime.
+ *
+ * `deck.css` carries its own entrance classes — `.deck-rise`, `.deck-reveal`,
+ * `.deck-draw`, `.deck-d1…12` — which the layouts use and which are the correct
+ * behaviour when this module never runs. They cannot both drive the same
+ * element: a CSS entrance with a 1.46s delay and `fill: both` holds opacity 0
+ * through its delay, so it would blank an element the instant a shorter Web
+ * Animations entrance finished, and the room would see a flash.
+ *
+ * So the runtime claims the stage and `deck.css` stands its own entrances down
+ * against this attribute. Progressive enhancement in the right direction: the
+ * attribute only ever appears if JavaScript ran, so with no JavaScript, a
+ * thrown error, or the print sheet, the CSS entrances are still there.
+ */
+export const ENTRANCES_ATTR = "entrances";
+export const ENTRANCES_JS = "js";
 
 export interface MotionHandle {
   /**

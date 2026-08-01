@@ -1,73 +1,92 @@
-import { DeckImage } from "@/components/deck/deck-image";
+import type { CSSProperties } from "react";
+
 import type { SectionSlide } from "@/lib/deck/types";
+import { buildMosaic } from "@/lib/deck/wall";
+
+import {
+  ArchiveWall,
+  INCISION_5_ROWS,
+  INCISION_5_ROWS_PAD,
+  Kicker,
+  knockoutStyle,
+  seedFrom,
+} from "./archive";
 
 /**
- * A chapter card between blocks of an event.
+ * A chapter card between blocks of an event — the wall at its most confident.
  *
- * Deliberately almost empty. Its job is to give the room a beat — people look
- * up, the host changes footing, and nobody is asked to read anything while the
- * previous speaker walks off stage. The chapter number carries the whole slide,
- * set in `.deck-mega`, which is the one voice in the deck reserved for it.
+ * Its job is to give the room a beat: people look up, the host changes footing,
+ * and nobody is asked to read anything while the previous speaker walks off.
+ * So the archive runs full bleed and the only cut into it is a translucent one,
+ * stopping on a tile edge five rows down so the bottom row of the wall keeps
+ * full strength. The panel is a window, not a lid.
  *
- * A background here is a single subject photograph rather than archive texture,
- * so it takes the plate register — full colour, no duotone — under a scrim.
+ * THE NUMERAL IS THE SLIDE. Two characters at `--dt-mega` is the one place the
+ * photo knockout works without reservation — the counters are enormous, the
+ * letterform survives whatever fragment lands inside it, and the chapter number
+ * ends up literally made of the people the chapter is about. The title beside it
+ * is solid ink for exactly the opposite reason: it is words.
  */
 export function SectionSlideLayout({ slide }: { slide: SectionSlide }) {
-  /* A background brings a dark scrim with it, so the copy stops following the
-     tone tokens and uses the dark-canvas pair — the light tone's kicker and
-     accent are the brand purple, 2.92:1 against that scrim. */
-  const overPhoto = Boolean(slide.background);
-  const ink = overPhoto ? "var(--deck-canvas-light)" : undefined;
-  const accent = overPhoto ? "var(--deck-accent-dark)" : undefined;
+  const seed = seedFrom(slide.id);
+
+  /* The divider's own background is a single archive frame. Rather than lay it
+     under a scrim as one more photograph nobody looks at, it becomes the fill of
+     the numeral — the same asset doing a job only this deck can give it. */
+  const knockoutSrc = slide.background?.src ?? buildMosaic(1, seed)[0];
 
   return (
     <>
-      {slide.background && (
-        <>
-          <div className="deck-plate deck-full-colour">
-            <DeckImage image={slide.background} />
-          </div>
-          <div className="deck-scrim" aria-hidden="true" />
-        </>
-      )}
+      <ArchiveWall seed={seed} />
 
-      <div className="deck-safe">
+      <div
+        className="deck-incision deck-incision-sheer deck-edge-block-end"
+        style={
+          {
+            insetInline: 0,
+            insetBlockStart: "var(--deck-rail-h)",
+            blockSize: INCISION_5_ROWS,
+            "--incision-pad": "0px",
+          } as CSSProperties
+        }
+        aria-hidden="true"
+      />
+
+      {/* The bottom padding is what keeps the composition off that last full
+          strength row — without it the optical centring drops the subtitle onto
+          a band of faces. */}
+      <div className="deck-safe" style={{ paddingBlockEnd: INCISION_5_ROWS_PAD }}>
         <div
           className="deck-content flex flex-1 flex-col"
-          style={{ gap: "var(--deck-gap-md)", color: ink }}
+          style={{ gap: "var(--deck-gap-lg)" }}
         >
-          {slide.index && (
-            <p
-              className="deck-mega deck-outline"
-              style={{ color: accent ?? "var(--slide-accent)" }}
+          <Kicker text={slide.eyebrow} />
+
+          <div
+            className="flex flex-wrap items-end"
+            style={{ gap: "var(--deck-gap-xl)" }}
+          >
+            {slide.index && (
+              <p
+                className="deck-mega deck-knockout"
+                style={knockoutStyle(knockoutSrc, seed)}
+              >
+                {slide.index}
+              </p>
+            )}
+
+            <div
+              className="flex min-w-0 flex-1 flex-col"
+              style={{ gap: "var(--deck-gap-sm)" }}
             >
-              {slide.index}
-            </p>
-          )}
-
-          {slide.eyebrow && (
-            <p className="deck-kicker" style={{ color: accent }}>
-              {slide.eyebrow}
-            </p>
-          )}
-
-          <h2 className="deck-display">{slide.title}</h2>
-
-          {slide.subtitle && (
-            <p
-              className="deck-lead"
-              style={
-                overPhoto
-                  ? {
-                      color:
-                        "color-mix(in srgb, var(--deck-canvas-light) 82%, transparent)",
-                    }
-                  : undefined
-              }
-            >
-              {slide.subtitle}
-            </p>
-          )}
+              <h2 className="deck-display">{slide.title}</h2>
+              {slide.subtitle && (
+                <p className="deck-subtitle deck-accent">
+                  {slide.subtitle}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>

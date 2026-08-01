@@ -34,6 +34,7 @@ F5, and do not close the tab.
 | **F** | Fullscreen on and off |
 | **O** | Overview — every slide as a grid |
 | **B** | Blank the screen to black, and back again |
+| **L** | Stop all movement, for a slow laptop — see below |
 | **?** | Show the key list on screen |
 | **Esc** | Leave the overview, or leave fullscreen |
 
@@ -92,17 +93,20 @@ That shrinks everything slightly so it fits inside the screen's overscan. Try
 `?aspect=16:9`. Without it the deck fills whatever shape the screen is, which is
 right in a room and wrong on a recording.
 
-**The laptop is struggling and the slides feel sluggish** — turn on **Reduce
-Motion** in the laptop's own display settings, then reload the deck once, before
-the room fills up. The deck watches that setting and switches every drifting and
-fading effect off, leaving each slide as a still image. Nothing goes missing:
-the animations resolve *into* the finished slide, so a still one is the slide as
-designed rather than a half-built version of it.
+**The laptop is struggling and the slides feel jerky** — press **`L`**. Every
+moving thing stops: the drifting photo wall, the slow zoom on backgrounds, the
+transitions between slides. Nothing is lost by doing it — the deck is designed
+to look finished when it is still, so a stopped slide is the slide as intended
+rather than a half-finished version of it.
 
-Two honest limits. It is an **operating-system setting, not a deck setting** —
-there is no key and no web address that does it. And it only removes movement;
-the photographs are the same size either way, so a laptop that is struggling to
-load the deck at all will still struggle. For that, use the PDF.
+Press `L` again to bring the movement back, and **the deck remembers which you
+chose on that computer.** If the laptop's own settings ask for reduced motion,
+the deck starts stopped without being asked — and `L` will turn the movement
+back on if you want it.
+
+One honest limit: `L` stops **motion**, not **loading**. The photographs are the
+same size either way. It will make a stuttering deck feel smooth, and it will
+not make a slow deck open any faster — for that, use the PDF.
 
 **The laptop will not talk to the projector at all** — use the PDF. You were
 sent one with this page. Open it and present from there. It has every slide,

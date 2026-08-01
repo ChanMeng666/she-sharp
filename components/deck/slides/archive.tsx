@@ -189,7 +189,7 @@ export function knockoutStyle(src: string | undefined, seed: number): CSSPropert
  */
 export function Kicker({ text }: { text?: string }) {
   if (!text) return null;
-  return <p className="deck-kicker deck-rise deck-d1">{text}</p>;
+  return <p className="deck-kicker">{text}</p>;
 }
 
 /** A hairline-separated column of content, the deck's default list rhythm. */

@@ -11,6 +11,7 @@ import {
 } from "react";
 
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { ENTRANCES_ATTR, ENTRANCES_JS } from "@/lib/deck/motion";
 import type { Deck } from "@/lib/deck/types";
 import { collectDeckImages, slideAriaLabel, toneOf } from "@/lib/deck/utils";
 
@@ -335,6 +336,17 @@ export function DeckViewport({
         return;
       }
 
+      // Above the dialog guard on purpose: the help overlay is where the switch
+      // is documented and where its current state is shown, so a host who has
+      // just opened it to find the key must be able to press the key.
+      if (key === "l" || key === "L") {
+        // Venue laptops are often old, and a stuttering deck reads worse from
+        // the room than a static one. One key, mid-talk, no menu.
+        event.preventDefault();
+        toggleLowPower();
+        return;
+      }
+
       // A dialog owns the screen; everything below moves the deck underneath it.
       if (overviewOpen || helpOpen) return;
 
@@ -558,6 +570,20 @@ export function DeckViewport({
     };
   }, []);
 
+  // Claim entrances for the JavaScript runtime, so `deck.css` stands its own
+  // `.deck-rise` / `.deck-reveal` / `.deck-draw` entrances down. Written from a
+  // layout effect rather than as a JSX attribute on purpose: it must only ever
+  // be true when JavaScript actually ran. Server-rendered markup, the print
+  // sheet and a page whose bundle failed all keep the CSS entrances.
+  useLayoutEffect(() => {
+    const stage = viewportRef.current?.querySelector<HTMLElement>(".deck-stage");
+    if (!stage) return;
+    stage.dataset[ENTRANCES_ATTR] = ENTRANCES_JS;
+    return () => {
+      delete stage.dataset[ENTRANCES_ATTR];
+    };
+  }, []);
+
   useEffect(() => {
     viewportRef.current?.focus();
   }, []);
@@ -583,7 +609,7 @@ export function DeckViewport({
           deck={deck}
           stageWidth={stageWidth}
           scale={scale}
-          motion={!reducedMotion}
+          motion={motionOn}
         >
           {deck.slides.map((item, itemIndex) => (
             <SlideFrame
@@ -592,6 +618,7 @@ export function DeckViewport({
               index={itemIndex}
               total={total}
               active={itemIndex === index}
+              motion={motionOn}
             >
               <SlideRenderer slide={item} />
             </SlideFrame>
@@ -636,7 +663,12 @@ export function DeckViewport({
           }}
         />
 
-        <DeckHelp open={helpOpen} onOpenChange={setHelpOpen} />
+        <DeckHelp
+          open={helpOpen}
+          onOpenChange={setHelpOpen}
+          lowPower={lowPower}
+          lowPowerForced={lowPowerChoice === null && reducedMotion}
+        />
       </div>
     </DeckControlsContext.Provider>
   );

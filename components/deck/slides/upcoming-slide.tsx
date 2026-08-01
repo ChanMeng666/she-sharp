@@ -3,6 +3,8 @@ import { DeckQr } from "@/components/deck/deck-qr";
 import type { UpcomingSlide } from "@/lib/deck/types";
 import { cn } from "@/lib/utils";
 
+import { ArchiveBand, BAND_PAD, Kicker, seedFrom } from "./archive";
+
 /**
  * Column count per event count, as complete class strings for Tailwind's scanner.
  *
@@ -21,70 +23,108 @@ const COLUMNS: Record<number, string> = {
  * Runs at the end of an event, while the room is still warm and before anyone
  * has left. The dates are snapshotted at authoring time rather than fetched:
  * `getUpcomingEvents()` is relative to today, and a deck that quietly changes
- * what it advertises between rehearsal and the night is worse than a stale one.
+ * what it advertises between the rehearsal and the night is worse than a stale
+ * one.
+ *
+ * THE ONE-EVENT CASE IS THE COMMON CASE and it used to look like a mistake — a
+ * single card stranded in the middle of a 21:9 stage. A lone event now runs as a
+ * wide horizontal entry with its photograph on the leading edge, which is a
+ * composition rather than a card that failed to find siblings. Two or three
+ * events fall back to columns.
+ *
+ * Event photographs keep their colour: each one is a single frame being looked
+ * at, not archive mass. The band at the foot supplies the wall instead.
  */
 export function UpcomingSlideLayout({ slide }: { slide: UpcomingSlide }) {
-  const columns = COLUMNS[slide.events.length] ?? "grid-cols-3";
+  const count = slide.events.length;
+  const single = count === 1 && !slide.qr;
+  const columns = COLUMNS[count] ?? "grid-cols-3";
+  const seed = seedFrom(slide.id);
+
+  /* Three columns of card plus a hairline footer is already the full page at
+     4:3; one wide entry is not. */
+  const showBand = count <= 1;
 
   return (
-    <div className="deck-safe">
+    <>
+      {showBand && <ArchiveBand seed={seed} />}
+
       <div
-        className="deck-content flex flex-1 flex-col"
-        style={{ gap: "var(--deck-gap-lg)" }}
+        className="deck-safe"
+        style={showBand ? { paddingBlockEnd: BAND_PAD } : undefined}
       >
-        <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-          {slide.eyebrow && <p className="deck-kicker">{slide.eyebrow}</p>}
-          <h2 className="deck-title">{slide.title}</h2>
-          {slide.lead && <p className="deck-lead">{slide.lead}</p>}
-        </div>
-
         <div
-          className="flex items-center"
-          style={{ gap: "var(--deck-gap-xl)" }}
+          className="deck-content flex flex-1 flex-col"
+          style={{ gap: "var(--deck-gap-lg)" }}
         >
-          <ul
-            className={cn("grid flex-1 items-start", columns)}
-            style={{ gap: "var(--deck-gap-md)" }}
-          >
-            {slide.events.map((event) => (
-              <li
-                key={event.title}
-                className="flex flex-col overflow-hidden"
-                style={{
-                  background: "var(--slide-surface)",
-                  border: "1px solid var(--slide-hairline)",
-                  borderRadius: "var(--deck-radius)",
-                }}
-              >
-                {event.image && (
-                  /* A standard aspect slot rather than the image's native
-                     ratio, so three cards line up whatever the source art. */
-                  <div className="deck-slot deck-slot-16x9">
-                    <DeckImage image={event.image} />
-                  </div>
-                )}
+          <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
+            <Kicker text={slide.eyebrow} />
+            <h2 className="deck-title">{slide.title}</h2>
+            {slide.lead && (
+              <p className="deck-lead">{slide.lead}</p>
+            )}
+          </div>
 
-                <div
-                  className="flex flex-col"
-                  style={{ gap: "var(--deck-gap-xs)", padding: "var(--deck-gap-md)" }}
+          <div className="flex items-start" style={{ gap: "var(--deck-gap-xl)" }}>
+            <ul
+              className={cn("grid flex-1 items-start", columns)}
+              style={{ gap: "var(--deck-gap-lg)" }}
+            >
+              {slide.events.map((event, index) => (
+                <li
+                  key={event.title}
+                  className={single ? "flex items-start" : "flex flex-col"}
+                  style={{
+                    gap: "var(--deck-gap-lg)",
+                    borderBlockStart: "1px solid var(--slide-rule)",
+                    paddingBlockStart: "var(--deck-gap-sm)",
+                  }}
                 >
-                  <p className="deck-label" style={{ color: "var(--slide-accent)" }}>
-                    {event.time ? `${event.date} · ${event.time}` : event.date}
-                  </p>
+                  {event.image && (
+                    /* A standard aspect slot rather than the image's native
+                       ratio, so several entries line up whatever the source
+                       art. Full colour: this is a photograph of one event. */
+                    <div
+                      className={cn(
+                        "deck-frame deck-full-colour deck-slot",
+                        single ? "deck-slot-3x2" : "deck-slot-16x9",
+                      )}
+                      style={single ? { flex: "0 0 42%" } : undefined}
+                    >
+                      <DeckImage image={event.image} />
+                    </div>
+                  )}
 
-                  <p className="deck-subtitle">{event.title}</p>
+                  <div
+                    className="flex min-w-0 flex-1 flex-col"
+                    style={{ gap: "var(--deck-gap-xs)" }}
+                  >
+                    <p className="deck-label deck-accent">
+                      {event.time ? `${event.date} · ${event.time}` : event.date}
+                    </p>
 
-                  {event.venue && <p className="deck-body deck-muted">{event.venue}</p>}
+                    <p className={single ? "deck-display" : "deck-subtitle"}>
+                      {event.title}
+                    </p>
 
-                  {event.blurb && <p className="deck-body">{event.blurb}</p>}
-                </div>
-              </li>
-            ))}
-          </ul>
+                    {event.venue && (
+                      <p className="deck-body deck-muted">{event.venue}</p>
+                    )}
 
-          {slide.qr && <DeckQr qr={slide.qr} size={300} />}
+                    {event.blurb && <p className="deck-body">{event.blurb}</p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            {slide.qr && (
+              <div>
+                <DeckQr qr={slide.qr} size={280} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
