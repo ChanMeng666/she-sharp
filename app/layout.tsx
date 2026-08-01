@@ -65,8 +65,15 @@ export const viewport: Viewport = {
  * Wraps the promise to serialize Date objects to ISO strings.
  */
 async function getSerializedUser() {
-  const user = await getUser();
-  return serializeData(user);
+  try {
+    const user = await getUser();
+    return serializeData(user);
+  } catch {
+    // This promise is created eagerly in the root layout, so a session or
+    // database failure here would surface as an unhandled rejection on every
+    // route. A logged-out visitor is the correct fallback.
+    return null;
+  }
 }
 
 export default function RootLayout({

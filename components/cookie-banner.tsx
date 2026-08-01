@@ -74,7 +74,12 @@ export function CookieBanner() {
   return (
     <>
       {/* Cookie Banner */}
+      {/* `data-cookie-banner` lets the presentation deck hide this on a
+          projector. Sonner and this banner both stack above page content, so
+          `styles/components/deck.css` hides them by attribute rather than
+          trying to out-rank an inline z-index. */}
       <div
+        data-cookie-banner
         className={cn(
           "fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6 bg-background border-t border-border shadow-2xl transform transition-transform duration-500",
           isVisible ? "translate-y-0" : "translate-y-full"

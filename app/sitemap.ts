@@ -29,6 +29,10 @@ const STATIC_ROUTES: Array<{
   // window, and their layouts set `robots: { index: false }`. Listing a noindex
   // URL in the sitemap is a contradiction GSC reports as "Submitted URL marked
   // 'noindex'" — so they must not come back here even when the window reopens.
+  //
+  // /present/* is absent for the same reason: event presentation decks are
+  // internal host tooling, are served `robots: { index: false }` by
+  // `app/present/layout.tsx`, and must never be listed here.
   { path: "/resources", priority: 0.7, changeFrequency: "weekly" },
   { path: "/resources/in-the-press", priority: 0.6, changeFrequency: "monthly" },
   { path: "/resources/podcasts", priority: 0.6, changeFrequency: "monthly" },
