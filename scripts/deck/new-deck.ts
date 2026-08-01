@@ -128,37 +128,37 @@ const CLOSING_KARAKIA: KarakiaText = {
   english: ["TODO: English translation, line one"],
 };
 
-/** Placeholder card until the printed QR codes are generated. */
-const QR_PLACEHOLDER = "/img/decks/qr-placeholder.svg";
+/* Codes are drawn from these URLs in the browser — change a link here and the
+   code changes with it. */
 
 const WEBSITE_QR: QrBlock = {
-  image: QR_PLACEHOLDER,
   url: "https://www.shesharp.org.nz",
   label: "She Sharp website",
   caption: "shesharp.org.nz",
 };
 
 const EVENTS_QR: QrBlock = {
-  image: QR_PLACEHOLDER,
   url: "https://www.shesharp.org.nz/events",
   label: "Upcoming events",
   caption: "shesharp.org.nz/events",
 };
 
+/**
+ * TODO: paste this event's Google Form link.
+ *
+ * Every event gets a new feedback form, so there is no default — a code
+ * pointing at the previous event's form collects the wrong data and nobody in
+ * the room can tell. While this is empty the slide says "Link not set yet" and
+ * the linter reports it.
+ */
 const FEEDBACK_QR: QrBlock = {
-  image: QR_PLACEHOLDER,
-  // TODO: the real feedback form link.
-  url: "https://www.shesharp.org.nz/events/" + EVENT_SLUG,
+  url: "",
   label: "Feedback form",
-  caption: "shesharp.org.nz/events",
+  caption: "Ask the host for the link",
 };
 
-const AMBASSADOR_QR: QrBlock = {
-  image: QR_PLACEHOLDER,
-  url: "https://www.shesharp.org.nz/join-our-team",
-  label: "Become an ambassador",
-  caption: "shesharp.org.nz/join-our-team",
-};
+/* The ambassador code is not defined here: the intake form is the same for
+   every event, so \`buildClosingSlides()\` supplies it. */
 
 /** Pre-filled from the event's \`sponsors.main\`. */
 const PARTNER_LOGOS: DeckLogo[] = [
@@ -221,7 +221,6 @@ export const ${exportName(slug)}: Deck = {
       // projector content under the host.
       upcoming: [],
       feedbackQr: FEEDBACK_QR,
-      ambassadorQr: AMBASSADOR_QR,
       karakia: CLOSING_KARAKIA,
     }),
   ],

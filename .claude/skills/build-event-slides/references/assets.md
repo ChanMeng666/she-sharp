@@ -88,29 +88,43 @@ background will not scan reliably from across a room.
 
 ## QR codes
 
-There are two modes, and the deck data is identical in both. Every code carries
-**an image path and the URL it points to**, from day one.
+**Nobody makes QR images for a deck.** You write the URL and the code is drawn
+in the browser, in She Sharp purple, every time the slide renders. A link and
+its code therefore cannot drift apart, and there is no image to re-export when
+a form URL changes. Generation is client-side, so a code on screen never needs
+the venue's network.
 
-**Today the deck ships in image mode** (`DECK_QR_MODE` in `lib/deck/theme.ts` is
-`"image"`). It renders the committed PNG at `public/img/decks/<slug>/qr-*.png`,
-which is what the team currently produces in Canva.
+```ts
+{ url: "https://example.com/form", label: "Feedback form", caption: "Ask the host for the link" }
+```
 
-**The other mode generates the code in the browser** from the URL, in She Sharp
-purple. Flipping `DECK_QR_MODE` to `"generate"` switches every deck at once, and
-**no deck data changes** — that is why the URL is recorded even when a committed
-image is being used. Generation happens client-side, so it introduces no network
-dependency at a venue.
+`QrBlock.image` still exists as an escape hatch for a code somebody else
+produced that must be used verbatim — a ticketing platform's branded one, say.
+It is only used when `DECK_QR_MODE` in `lib/deck/theme.ts` is set to `"image"`,
+which is not the default.
 
 Practical consequences:
 
-- **Always record the real URL**, even when you have a committed image. It is
-  what makes the switch free, and it is what the caption is written from.
 - **Always give a caption** — a short, human-typable version of the destination
   (`shesharp.org.nz/events`). Half the room photographs the slide instead of
   scanning it, and the back row is too far away for the code to resolve at all.
-- **Never point a code at a URL that does not exist yet.** A dead code wastes
-  the one moment the room is looking up and scanning. Drop the slide, or mark it
-  optional and add the code when the form is live.
+- **A URL you do not have yet is an empty string, never a guess.** Leave
+  `url: ""` and the slide renders a dashed "Link not set yet" panel, and the
+  linter reports it. That is the honest state. Pointing the code at last event's
+  form instead is the failure this is designed to prevent: it looks perfectly
+  fine from the front of the room while collecting the wrong data.
+- **The ambassador code is not yours to write.** It is the same standing form
+  for every event, supplied by `buildClosingSlides()` from `AMBASSADOR_FORM_URL`
+  in `lib/deck/boilerplate.ts`. Change it there, once, if it ever moves.
+- **The feedback code is a fresh Google Form for every event.** There is no
+  default and there should never be one. It is a required question in the
+  interview — see Round 7 of `content-checklist.md`.
+- **Check the form is open to the public before the event.** If opening the
+  form URL in a signed-out browser lands on a Google sign-in page, the form is
+  set to collect verified email addresses or is restricted to a Workspace
+  domain, and attendees who are not signed in — or signed in with the wrong
+  account — will hit a wall at the exact moment they scan. That is a setting in
+  the form, not something the deck can fix.
 
 ## The curated fallback
 

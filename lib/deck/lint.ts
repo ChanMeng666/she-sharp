@@ -10,7 +10,7 @@
  * Long-form material belongs on the event page, reachable by the QR slides.
  */
 
-import type { Deck, Slide } from "./types";
+import type { Deck, QrBlock, Slide } from "./types";
 import { checkAccentContrast } from "./theme";
 
 export const COPY_LIMITS = {
@@ -153,6 +153,32 @@ function checkLead(
       message: `Lead must be one sentence: "${lead}"`,
     });
   }
+}
+
+/**
+ * Flags a QR block whose destination has not been supplied yet.
+ *
+ * A warning rather than an error on purpose: a deck is normally built days
+ * before the per-event feedback form exists, and blocking the build would push
+ * authors towards pasting last event's link to make it go away — which is the
+ * failure this is trying to prevent. The slide shows "Link not set yet" on
+ * screen, so it also cannot slip past a rehearsal.
+ */
+function checkQr(
+  qr: QrBlock,
+  what: string,
+  slideId: string,
+  slideIndex: number,
+  issues: LintIssue[],
+): void {
+  if (qr.url.trim()) return;
+  issues.push({
+    slideId,
+    slideIndex,
+    rule: "qr-url-missing",
+    severity: "warning",
+    message: `${what} has no link yet — the slide will show "Link not set yet". Add the URL before the event.`,
+  });
 }
 
 function checkCount(
@@ -450,6 +476,7 @@ export function lintSlide(slide: Slide, index: number): LintIssue[] {
         index,
         issues,
       );
+      checkQr(slide.qr, `"${slide.title}"`, id, index, issues);
       break;
 
     case "contact":
@@ -464,6 +491,7 @@ export function lintSlide(slide: Slide, index: number): LintIssue[] {
         index,
         issues,
       );
+      slide.qrs.forEach((qr) => checkQr(qr, `The "${qr.label}" code`, id, index, issues));
       break;
 
     case "upcoming":

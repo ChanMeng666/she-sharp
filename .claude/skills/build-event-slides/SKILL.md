@@ -58,8 +58,8 @@ following `references/content-checklist.md`.
 | Who is on stage | From the event data's `speakers[]`, confirmed out loud |
 | Which sponsors to thank | From the event data's `sponsors`, confirmed out loud |
 | Photos | Their own; `public/img/curated/` as a named fallback |
-| Feedback QR destination | **Ask.** No form → drop the slide, don't fake one |
-| Ambassador QR destination | `https://www.shesharp.org.nz/join-our-team` |
+| Feedback form link | **Ask.** New Google Form every event, no default. Not known yet → `url: ""`, never a guess |
+| Ambassador form link | Already handled — the standing form in `AMBASSADOR_FORM_URL` |
 | Break length | 15 minutes |
 
 ## Prerequisites
@@ -357,7 +357,7 @@ content; the frame comes free from `lib/deck/boilerplate.ts`.
 | 10 | Group photo & break | `photo` + `break` | Authored (break length) |
 | 11 | Thank you | `thanks` | Event data + named people |
 | 12 | Upcoming events | `upcoming` | Authored, snapshotted |
-| 13 | Feedback QR | `qr-cta` | Authored destination |
+| 13 | Feedback QR | `qr-cta` | This event's form link — always ask |
 | 14 | Ambassador QR | `qr-cta` | Fixed destination |
 | 15 | Closing karakia | `karakia` (`whakamutunga`) | Fixed |
 
