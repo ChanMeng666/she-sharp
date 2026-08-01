@@ -28,11 +28,11 @@ export function ContactSlideLayout({ slide }: { slide: ContactSlide }) {
   return (
     <div className="deck-safe">
       <div
-        className="deck-content flex min-h-0 flex-1 flex-col"
+        className="deck-content flex flex-1 flex-col"
         style={{ gap: "var(--deck-gap-lg)" }}
       >
         <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-          {slide.eyebrow && <p className="deck-eyebrow">{slide.eyebrow}</p>}
+          {slide.eyebrow && <p className="deck-kicker">{slide.eyebrow}</p>}
           <h2 className="deck-title">{slide.title}</h2>
           {slide.lead && <p className="deck-lead">{slide.lead}</p>}
         </div>
@@ -66,14 +66,16 @@ export function ContactSlideLayout({ slide }: { slide: ContactSlide }) {
         {/* auto-fit keeps two codes wide-set and three codes evenly spread,
             without either arrangement needing its own breakpoint. */}
         <ul
-          className="grid min-h-0 flex-1 content-center justify-items-center"
+          className="grid justify-items-center"
           style={{
             gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
             gap: "var(--deck-gap-lg)",
           }}
         >
+          {/* Keyed on the label, not the URL: an unset link is an empty string
+              by design, and two of them would collide on the same React key. */}
           {slide.qrs.map((qr) => (
-            <li key={qr.url}>
+            <li key={qr.label}>
               <DeckQr qr={qr} size={300} />
             </li>
           ))}

@@ -41,16 +41,13 @@ function BulletMarker({ variant, index }: { variant: string; index: number }) {
     );
   }
 
+  /* A 1px accent rule, not a bar: this is a print system, and the same hairline
+     doing compositional work is `.deck-rule-accent` everywhere else too. */
   return (
     <span
       aria-hidden="true"
-      style={{
-        flexShrink: 0,
-        inlineSize: 44,
-        blockSize: 4,
-        marginBlockStart: 22,
-        background: "var(--slide-accent)",
-      }}
+      className="deck-rule deck-rule-accent"
+      style={{ flex: "0 0 44px", marginBlockStart: "var(--deck-gap-sm)" }}
     />
   );
 }
@@ -70,19 +67,16 @@ export function BulletsSlideLayout({ slide }: { slide: BulletsSlide }) {
   return (
     <div className="deck-safe">
       <div
-        className="deck-content flex min-h-0 flex-1 flex-col"
+        className="deck-content flex flex-1 flex-col"
         style={{ gap: "var(--deck-gap-lg)" }}
       >
         <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-          {slide.eyebrow && <p className="deck-eyebrow">{slide.eyebrow}</p>}
+          {slide.eyebrow && <p className="deck-kicker">{slide.eyebrow}</p>}
           <h2 className="deck-title">{slide.title}</h2>
           {slide.lead && <p className="deck-lead">{slide.lead}</p>}
         </div>
 
-        <div
-          className="flex min-h-0 flex-1 items-start"
-          style={{ gap: "var(--deck-gap-xl)" }}
-        >
+        <div className="flex items-stretch" style={{ gap: "var(--deck-gap-xl)" }}>
           <ul
             className={cn(
               "grid flex-1",
@@ -105,15 +99,12 @@ export function BulletsSlideLayout({ slide }: { slide: BulletsSlide }) {
           </ul>
 
           {slide.image && (
-            /* Hidden on narrow stages so the text keeps its measure rather than
-               being squeezed into a column nobody can read from row ten. */
+            /* A single supporting photograph, so it keeps its colour. Hidden on
+               narrow stages so the text keeps its measure rather than being
+               squeezed into a column nobody can read from row ten. */
             <div
-              className="self-stretch overflow-hidden @max-[1600px]/deck:hidden"
-              style={{
-                flex: "0 0 38%",
-                borderRadius: "var(--deck-radius)",
-                minBlockSize: 420,
-              }}
+              className="deck-frame deck-full-colour @max-[1600px]/deck:hidden"
+              style={{ flex: "0 0 38%" }}
             >
               <DeckImage image={slide.image} />
             </div>

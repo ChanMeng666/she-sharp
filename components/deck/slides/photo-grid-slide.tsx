@@ -50,31 +50,32 @@ export function PhotoGridSlideLayout({ slide }: { slide: PhotoGridSlide }) {
   return (
     <div className="deck-safe">
       <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-        {slide.eyebrow && <p className="deck-eyebrow">{slide.eyebrow}</p>}
+        {slide.eyebrow && <p className="deck-kicker">{slide.eyebrow}</p>}
         <h2 className="deck-title">{slide.title}</h2>
         {slide.lead && <p className="deck-lead">{slide.lead}</p>}
       </div>
 
+      {/* Archive photography used en masse, so the duotone ramp is mandatory —
+          it is what makes twelve years of fluorescent-lit meeting rooms read as
+          one deck. `.deck-duotone .deck-slot` already supplies the shadow colour
+          as each cell's immediate backdrop, so no `.deck-duotone-cell` here.
+
+          The cells are `.deck-slot` without a ratio modifier on purpose: in the
+          3-5 image compositions below both grid axes are definite, so a slot
+          ratio would be ignored anyway, and the mosaic's own proportions are the
+          composition. The ratio does take effect on the defensive fallback path,
+          where it gives uniform tiles instead of a ragged row. */}
       <div
-        className="grid min-h-0 flex-1"
+        className="deck-duotone grid min-h-0 flex-1"
         style={{
           marginBlockStart: "var(--deck-gap-md)",
-          gap: "var(--deck-gap-sm)",
-          gridTemplateColumns:
-            template ?? "repeat(auto-fit, minmax(360px, 1fr))",
-          gridTemplateRows: placement ? "1fr 1fr" : "auto",
+          gap: "var(--deck-wall-gap)",
+          gridTemplateColumns: template ?? "repeat(auto-fit, minmax(360px, 1fr))",
+          gridTemplateRows: placement ? "minmax(0, 1fr) minmax(0, 1fr)" : "auto",
         }}
       >
         {slide.images.map((image, index) => (
-          <div
-            key={image.src}
-            className="overflow-hidden"
-            style={{
-              ...(placement?.[index] ?? {}),
-              borderRadius: "var(--deck-radius)",
-              background: "var(--slide-surface)",
-            }}
-          >
+          <div key={image.src} className="deck-slot" style={placement?.[index]}>
             <DeckImage image={image} />
           </div>
         ))}

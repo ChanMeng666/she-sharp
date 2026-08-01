@@ -32,17 +32,17 @@ export function ThemesSlideLayout({ slide }: { slide: ThemesSlide }) {
   return (
     <div className="deck-safe">
       <div
-        className="deck-content flex min-h-0 flex-1 flex-col"
+        className="deck-content flex flex-1 flex-col"
         style={{ gap: "var(--deck-gap-lg)" }}
       >
         <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-          {slide.eyebrow && <p className="deck-eyebrow">{slide.eyebrow}</p>}
+          {slide.eyebrow && <p className="deck-kicker">{slide.eyebrow}</p>}
           <h2 className="deck-title">{slide.title}</h2>
           {slide.lead && <p className="deck-lead">{slide.lead}</p>}
         </div>
 
         <ul
-          className={cn("grid min-h-0 flex-1 content-center", columns)}
+          className={cn("grid", columns)}
           style={{ gap: "var(--deck-gap-md)" }}
         >
           {slide.themes.map((theme, index) => (

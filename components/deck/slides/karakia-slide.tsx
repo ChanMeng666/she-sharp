@@ -27,7 +27,9 @@ export function KarakiaSlideLayout({ slide }: { slide: KarakiaSlide }) {
            the reading voice on both a white and a near-black canvas, and the
            photograph stays atmosphere rather than becoming the subject. */
         <>
-          <DeckImage image={slide.background} className="deck-bleed" />
+          <div className="deck-plate deck-full-colour">
+            <DeckImage image={slide.background} />
+          </div>
           <div
             className="deck-bleed"
             aria-hidden="true"
@@ -38,11 +40,11 @@ export function KarakiaSlideLayout({ slide }: { slide: KarakiaSlide }) {
 
       <div className="deck-safe">
         <div
-          className="deck-content flex min-h-0 flex-1 flex-col justify-center"
+          className="deck-content flex flex-1 flex-col"
           style={{ gap: "var(--deck-gap-lg)" }}
         >
           <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-            <p className="deck-eyebrow">{kicker}</p>
+            <p className="deck-kicker">{kicker}</p>
             <h2 className="deck-title">{slide.title}</h2>
           </div>
 

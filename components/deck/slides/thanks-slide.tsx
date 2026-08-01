@@ -25,17 +25,17 @@ export function ThanksSlideLayout({ slide }: { slide: ThanksSlide }) {
   return (
     <div className="deck-safe">
       <div
-        className="deck-content flex min-h-0 flex-1 flex-col"
+        className="deck-content flex flex-1 flex-col"
         style={{ gap: "var(--deck-gap-lg)" }}
       >
         <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-          {slide.eyebrow && <p className="deck-eyebrow">{slide.eyebrow}</p>}
+          {slide.eyebrow && <p className="deck-kicker">{slide.eyebrow}</p>}
           <h2 className="deck-display">{slide.title}</h2>
           {slide.lead && <p className="deck-lead">{slide.lead}</p>}
         </div>
 
         <div
-          className="flex min-h-0 flex-1 flex-col justify-center"
+          className="flex flex-col"
           style={{ gap: "var(--deck-gap-md)" }}
         >
           {slide.groups.map((group, index) => (

@@ -10,8 +10,12 @@ import type { PhotoSlide } from "@/lib/deck/types";
  * the whole stage rather than a safe-area box: a 21:9 wall gets more picture,
  * not black bars.
  *
- * Text over a photograph always uses the light ink and never the tone ink — the
- * overlays below are dark on both tones, and navy on a dark scrim is invisible.
+ * This is a single subject photograph, never archive texture, so it takes the
+ * plate register: full colour, no duotone, no tiles.
+ *
+ * Text over it always uses the light ink and the mint kicker rather than the
+ * tone tokens — the overlays are dark on both tones, and navy on a dark scrim is
+ * invisible.
  */
 export function PhotoSlideLayout({ slide }: { slide: PhotoSlide }) {
   const overlay = slide.overlay ?? "gradient";
@@ -19,7 +23,9 @@ export function PhotoSlideLayout({ slide }: { slide: PhotoSlide }) {
 
   return (
     <>
-      <DeckImage image={slide.image} className="deck-bleed" priority />
+      <div className="deck-plate deck-full-colour">
+        <DeckImage image={slide.image} priority />
+      </div>
 
       {overlay === "scrim" && <div className="deck-scrim" aria-hidden="true" />}
       {overlay === "gradient" && <div className="deck-gradient" aria-hidden="true" />}
@@ -31,10 +37,10 @@ export function PhotoSlideLayout({ slide }: { slide: PhotoSlide }) {
             style={{ gap: "var(--deck-gap-sm)", color: "var(--deck-canvas-light)" }}
           >
             {slide.eyebrow && (
-              /* The dark-canvas accent, not the tone accent: a photo slide
-                 defaults to the light tone, whose accent is the brand purple —
-                 2.92:1 against the scrim and unreadable. */
-              <p className="deck-eyebrow" style={{ color: "var(--deck-accent-dark)" }}>
+              /* Mint, which is what the kicker is set in on dark grounds. A
+                 photo slide defaults to the light tone, whose `--slide-kicker`
+                 is brand purple — 2.92:1 against the scrim and unreadable. */
+              <p className="deck-kicker" style={{ color: "var(--deck-mint)" }}>
                 {slide.eyebrow}
               </p>
             )}

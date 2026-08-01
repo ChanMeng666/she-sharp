@@ -29,17 +29,17 @@ export function UpcomingSlideLayout({ slide }: { slide: UpcomingSlide }) {
   return (
     <div className="deck-safe">
       <div
-        className="deck-content flex min-h-0 flex-1 flex-col"
+        className="deck-content flex flex-1 flex-col"
         style={{ gap: "var(--deck-gap-lg)" }}
       >
         <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-          {slide.eyebrow && <p className="deck-eyebrow">{slide.eyebrow}</p>}
+          {slide.eyebrow && <p className="deck-kicker">{slide.eyebrow}</p>}
           <h2 className="deck-title">{slide.title}</h2>
           {slide.lead && <p className="deck-lead">{slide.lead}</p>}
         </div>
 
         <div
-          className="flex min-h-0 flex-1 items-center"
+          className="flex items-center"
           style={{ gap: "var(--deck-gap-xl)" }}
         >
           <ul
@@ -52,12 +52,14 @@ export function UpcomingSlideLayout({ slide }: { slide: UpcomingSlide }) {
                 className="flex flex-col overflow-hidden"
                 style={{
                   background: "var(--slide-surface)",
-                  border: "2px solid var(--slide-hairline)",
+                  border: "1px solid var(--slide-hairline)",
                   borderRadius: "var(--deck-radius)",
                 }}
               >
                 {event.image && (
-                  <div style={{ aspectRatio: "16 / 9", overflow: "hidden" }}>
+                  /* A standard aspect slot rather than the image's native
+                     ratio, so three cards line up whatever the source art. */
+                  <div className="deck-slot deck-slot-16x9">
                     <DeckImage image={event.image} />
                   </div>
                 )}

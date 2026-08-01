@@ -37,6 +37,14 @@ const TAP_SLOP = 10;
 /** Fraction of the viewport width that pages backwards when clicked. */
 const BACK_ZONE = 0.25;
 
+/**
+ * Where the low-power choice is remembered.
+ *
+ * Per browser rather than per deck on purpose: the thing being remembered is a
+ * fact about the machine plugged into the projector, not about the event.
+ */
+const LOW_POWER_KEY = "deck:low-power";
+
 export interface DeckViewportProps {
   deck: Deck;
   /** Forced stage aspect from `?aspect=`, or `null` to measure the display. */
@@ -86,6 +94,47 @@ export function DeckViewport({
     fit,
     zoom,
   });
+
+  // ------------------------------------------------------------- low power
+
+  // `null` means "nobody has decided", in which case the OS setting decides.
+  // A host who presses L once has decided, and their choice then outranks the
+  // OS on that machine — including the choice to turn motion back ON.
+  const [lowPowerChoice, setLowPowerChoice] = useState<boolean | null>(null);
+  const lowPower = lowPowerChoice ?? reducedMotion;
+  const motionOn = !lowPower;
+
+  // Read after mount, never during render: the server has no localStorage, and
+  // a value read during render would hydrate into a mismatch.
+  useEffect(() => {
+    try {
+      const stored = window.localStorage.getItem(LOW_POWER_KEY);
+      if (stored === "1" || stored === "0") setLowPowerChoice(stored === "1");
+    } catch {
+      // Private mode, or storage disabled by policy. The OS setting still works.
+    }
+  }, []);
+
+  const toggleLowPower = useCallback(() => {
+    setLowPowerChoice((previous) => {
+      const next = !(previous ?? reducedMotion);
+      try {
+        window.localStorage.setItem(LOW_POWER_KEY, next ? "1" : "0");
+      } catch {
+        // Not being able to remember it is survivable; not being able to set it
+        // in the first place would not be.
+      }
+      return next;
+    });
+  }, [reducedMotion]);
+
+  // The body flag is what stops the CSS side: the ambient wall drift, the plate
+  // swell and the slide cross-fade are all `!important`-cancelled off it, so a
+  // laptop that cannot keep up has nothing left running between clicks.
+  useEffect(() => {
+    document.body.classList.toggle("deck-low-power", lowPower);
+    return () => document.body.classList.remove("deck-low-power");
+  }, [lowPower]);
 
   const slide = deck.slides[index];
   const breakSlide = slide?.type === "break" ? slide : null;
@@ -353,6 +402,7 @@ export function DeckViewport({
     helpOpen,
     overviewOpen,
     toggleFullscreen,
+    toggleLowPower,
     toggleTimer,
     total,
   ]);

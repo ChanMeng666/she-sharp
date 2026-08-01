@@ -5,6 +5,13 @@ is no upload step, no image host, and no network call at the venue — which is
 the point. Once the deck has loaded, the wifi can die and nothing changes on
 screen.
 
+**One rule governs every choice below.** A photograph is either a **subject** —
+one picture the room is meant to look at, which keeps its own colours — or it is
+**mass**, many pictures read as one surface, which takes the purple duotone.
+Decide which before you go looking, because it changes what you need: a subject
+has to be sharp and big, and a tile in a wall does not.
+`references/slide-types.md` explains why the deck is built this way.
+
 ---
 
 ## Where things go
@@ -15,6 +22,8 @@ screen.
 | Speaker headshots, event posters | `public/img/events/` — usually already there |
 | Sponsor and partner logos | `public/img/sponsors/` — usually already there |
 | Past-event photography (the fallback) | `public/img/curated/` |
+| The wider archive | `public/img/scraped/photos/` |
+| Generated backgrounds for karakia and chapter breaks | `public/img/plates/` |
 | QR codes | `public/img/decks/<event-slug>/qr-<what-it-does>.png` |
 
 **Check `public/img/events/` and `public/img/sponsors/` before asking the author
@@ -57,6 +66,71 @@ they have and do not ask them to convert or resize anything.
 The stage is 1080 tall and stretches to 2520 wide on a 21:9 screen, so a
 1024px-wide photo used full-bleed will look soft. It will still render — nothing
 breaks — but it will be visibly worse than everything around it.
+
+## How photographs get cropped
+
+A photograph filling a slide almost never has the slide's exact shape, so
+something gets cut off. The deck **always cuts from the bottom** — the top of
+the frame is kept.
+
+That is not a stylistic preference. The archive is overwhelmingly group shots,
+and the browser's default behaviour takes an equal bite out of the top and the
+bottom, which on those photographs removes the top of people's heads. Cropping
+from the bottom loses some floor and some chair backs instead.
+
+Two things follow:
+
+- **Headroom in a photo is not wasted space.** A shot where the group sits low
+  in the frame crops beautifully; one cropped tight to the top of the heads
+  already has nothing to give.
+- **When the interesting part is low in the frame** — a table of prototypes, a
+  whiteboard at waist height — say so and the crop can be moved for that one
+  image. It is a per-photo override, not something you have to accept.
+
+## What the archive actually contains
+
+Someone counted. A survey of **835 images** in the repository turned up two
+facts that will change what you can promise the author.
+
+### Almost none of them are big enough to fill a screen
+
+Only two groups clear 1920 pixels wide: the **47 curated images** (the
+`*-1920.webp` files) and **about sixty** of the files in
+`public/img/scraped/photos/`. **Everything else is capped between 1200 and
+1368 pixels**, and — this is the part that surprises people — that includes most
+of the 2023–2026 photography. The newer the photo, the more likely it came off
+a social post at whatever size the platform served.
+
+So:
+
+| | Verdict |
+|---|---|
+| A 1200px photo as a full-bleed hero | **No.** It is being stretched past its own size on a projector and everyone can see it |
+| The same photo as one tile in a wall | **Fine.** It is a fraction of the screen, and the duotone hides the upscaling anyway |
+| The same photo as a supporting image beside bullets | Fine |
+| The same photo as a headshot | Fine |
+
+The practical habit: when you want a slide-filling photograph, look in the
+curated set first, and if the shot you want is not there, use it in a grid
+instead of alone rather than blowing it up.
+
+### There is no photograph of a mentor and a mentee together
+
+Not one, anywhere in the survey — no picture of the one-to-one meeting that is
+the organisation's flagship programme. Every mentorship photo in the archive is
+a room full of people at a launch or a panel.
+
+That is not a problem you can solve inside a deck, and you should not try:
+captioning a group shot as "mentorship" is the exact kind of quiet inaccuracy
+this skill exists to prevent. **Say it to the author instead**, once, at the
+point it bites:
+
+> There's no photo anywhere of a mentor and mentee actually meeting — the whole
+> archive is group shots. I've used the mentorship launch photo here instead and
+> labelled it as that. If someone can get two people at a table at the next
+> event, it would fill a real gap.
+
+It is a thirty-second ask that fixes a twelve-year hole.
 
 **Photos are not automatically optimised.** There is no `next/image` in the
 deck: it serves the exact file you commit, on purpose, because a serverless
@@ -126,13 +200,47 @@ Practical consequences:
   account — will hit a wall at the exact moment they scan. That is a setting in
   the form, not something the deck can fix.
 
+## The archive wall
+
+When photographs are being used as mass, they do not come from a list you write.
+`lib/deck/wall-tiles.ts` holds a pool of **130 photographs spanning 2014 to
+2026**, and a wall is filled from it.
+
+The pool was assembled mechanically, not curated: landscape orientation, at
+least 900 pixels wide and 40KB on disk, de-duplicated across the three photo
+folders, posters and screenshots thrown out. That is the entire selection
+criteria, and it is deliberately unsentimental — the wall is not a highlights
+reel, it is evidence. Every path in it is checked by
+`scripts/verify-image-paths.ts` in CI, so a wall cannot ship with a hole in it.
+
+Tiles are taken by **stepping through** the pool rather than slicing off the
+front, because the pool is ordered by resolution and the front of it is mostly
+one very good 2023 shoot. Stepping is what keeps a wall mixed across eras and
+venues, which is the only thing the wall is actually saying.
+
+**What this means when you talk to the author:**
+
+- **Nobody picks the tiles.** If they ask "can we make sure the Wellington one
+  is in there", the honest answer is that a wall is not a selection — but a
+  photograph they care about can absolutely be a `photo` slide of its own, at
+  full size and in full colour, which is a better home for it anyway.
+- **The individual pictures are not the point and it is fine to say so.** *"Up
+  close half of these are unremarkable — that's rather the point. It's twelve
+  years of rooms that filled up."*
+- **Do not describe a wall as being from this event.** It never is. It is the
+  whole archive, and that is what makes it worth showing.
+
 ## The curated fallback
 
-`public/img/curated/` holds 48 real photographs from past She Sharp events —
+`public/img/curated/` holds 47 real photographs from past She Sharp events —
 crowds, panels, workshops, celebrations — each in three widths (768, 1280, 1920)
 with **alt text already written**. `public/img/curated/index.ts` lists them all
 with a role (`hero`, `divider`, `card`, `support`) and their dimensions, and
 exports `toSrcSet()` for the responsive attribute.
+
+These 47 are also the only past-event photographs large enough to fill a
+projector, which makes the curated set the first place to look for any slide
+that needs one photograph rather than many.
 
 Use them when the author has no photo of their own for a slide that needs one:
 a section divider, a background behind a karakia, a photo grid showing what a
@@ -161,6 +269,85 @@ who will notice on the day.
 
 **Not a licence to skip asking.** Offer the fallback after the author has said
 they have nothing, not instead of asking.
+
+## The generated plates
+
+`public/img/plates/` holds six backgrounds that are **not** photographs of
+anything real. They exist because the archive could not supply them: of 835
+images there is exactly one contemplative natural frame and no landscape,
+coastline, sky or dawn at all. Every single She Sharp photograph is indoors
+under artificial light. A karakia needs somewhere quiet to sit, and there was
+nowhere.
+
+| Plate | What it shows | Sits behind |
+|---|---|---|
+| `whenua-pounamu-sea` | A calm dark sea at first light, the water greenstone green | The opening karakia — its second line is *"kia whakapapa pounamu te moana"* |
+| `whenua-koru-unfurl` | A single silver fern frond unfurling, backlit | Karakia, ceremony, an opening |
+| `whenua-harakeke-dusk` | Harakeke blades against a deep dusk sky | Karakia, a closing |
+| `light-aurora-sweep` | Magenta and pale green light across a near-black field | Chapter breaks |
+| `light-prism-edge` | One thin blade of refracted light on a steep diagonal | Chapter breaks |
+| `light-deep-field` | A faint bloom of purple low in a violet-black field | Chapter breaks |
+
+Each is 1920 and 1280 wide, and each records **where the frame is empty** — the
+three whenua plates leave their left side clear, the three light plates are
+mostly clear. Put the type in the clear part.
+
+### What may be generated, and what may not
+
+The scope is narrow on purpose, and it is a rule rather than a preference.
+
+**Generate whenua only** — land, water, plants, light. That is what the karakia
+itself speaks about, and it is the whole permitted subject.
+
+**Never people.** **Never taonga**: no carving, no woven pattern, no moko, no
+motif belonging to any iwi. Generating those is appropriation dressed up as art
+direction, and the fact that a machine made it is not a defence.
+
+**And never anything that could pass for a real She Sharp photograph.** That is
+the worst outcome available here, worse than a bad-looking slide. The archive's
+entire value is that it is true; a generated room full of generated women at a
+generated event poisons every real photograph next to it, because from then on
+nobody can tell which is which. If a generated image would make a viewer ask
+"was I at that?", it should not exist.
+
+## Asking for a plate that does not exist
+
+Image generation is available (gpt-image-2, via the `OPENAI_API_KEY` already in
+the project). The author does not need to know any of that — they say what they
+need and you produce it.
+
+> **Author:** "Is there something calmer for the closing? The dusk one feels
+> like the start of something, not the end."
+
+They get back a still, photographic-looking natural frame with somewhere for the
+type to go, in the same family as the six above, saved into
+`public/img/plates/`. What they will not get, whatever they ask for, is people,
+taonga, or anything resembling an event photo — say so plainly if the request
+drifts there, and offer the whenua version instead.
+
+**The prompt shape that works** is three parts in this order:
+
+1. **The subject**, described as a photographer would frame it — the light, the
+   time of day, the weather, what is in focus.
+2. **Explicit clear space for type**, named: *"the left third of the frame is
+   empty water"*, *"the top half is open sky"*. Without this you get a beautiful
+   image with the subject dead centre and nowhere to put a word.
+3. **The house rules, verbatim:**
+
+   ```
+   Photographic, not illustration. No people, no faces, no text, no logos.
+   Cinematic, restrained. Fine natural film grain, deep blacks, no oversaturation.
+   ```
+
+That third block is doing more work than it looks. "No text" is what stops a
+generator inventing signage in a language it does not speak; "no oversaturation"
+and "deep blacks" are what let the result sit beside the real photographs
+without looking like a screensaver.
+
+Then **write it into the manifest** at `public/img/plates/index.ts` with a role,
+its clear space and real alt text, so the next person can find it without
+opening the file. And tell the author, in the Step 7 preview, which slides are
+carrying a generated background — the same rule as a borrowed curated photo.
 
 ## The CI gate
 

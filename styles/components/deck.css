@@ -1,9 +1,25 @@
 /* ============================================================================
-   She Sharp presentation deck.
+   She Sharp presentation deck — "THE WALL".
 
    Imported only by `app/present/layout.tsx`, so it costs nothing on the rest of
    the site. Plain CSS on purpose — this file is not preceded by
    `@import "tailwindcss"`, so `@apply` is unavailable here.
+
+   THE IDEA
+   --------
+   She Sharp has run in-person events since 2014 and the archive is ~400
+   photographs that are overwhelmingly the same shot: sixty to a hundred and
+   fifty women in an office meeting room, everyone facing camera, fluorescent
+   light, roller banners. Individually they are weak — no negative space, faces
+   small, white balance spanning four stops. Collectively, page after page,
+   twelve years, they are the whole story: people keep showing up.
+
+   So the archive is used as MASS, TEXTURE AND EVIDENCE — tile walls, mosaics,
+   bands, and words cut out of the wall — never as a single hero image. Any
+   photograph used en masse is graded into one purple duotone (see DUOTONE
+   below), because untreated the set does not read as one deck. A single
+   photograph used as the SUBJECT stays in full colour (`.deck-full-colour`),
+   because that is where the human warmth lives.
 
    THE STAGE
    ---------
@@ -29,6 +45,18 @@
    Slide layouts must not set font sizes. They use the `.deck-*` type classes
    below, whose sizes come from `--dt-*` tokens that the container queries
    re-declare per stage width. One place to retune, everything moves together.
+   Nothing below 28px exists at the 1080 design height: below that it is
+   unreadable from the back of a room.
+
+   SURFACE RULES
+   -------------
+   No `box-shadow`. No heavy borders. 1px pale rules and 2-4px radii at most —
+   the depth in this system comes from photographic mass and from opaque panels
+   cut into it, not from elevation effects.
+
+   Photographs crop from the BOTTOM ONLY: a definite height plus
+   `overflow: hidden` plus `object-fit: cover` plus `object-position: 50% 0%`.
+   Never crop the top or the sides of a photograph of people.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -73,30 +101,54 @@
   overflow: hidden;
   color-scheme: only light;
 
-  /* Deck-level palette; overridden inline from the deck theme. */
+  /* Deck-level palette; the first five are overridden inline by
+     `themeToCssVars()` in lib/deck/theme.ts. */
   --deck-accent-light: #9b2e83;
   --deck-accent-dark: #c846ab;
   --deck-spark: #5ee7f5;
   --deck-canvas-dark: #0b0a14;
   --deck-canvas-light: #ffffff;
 
-  /* Overscan safe area. HDMI to a TV or an LED wall commonly eats 3-5% of the
-     edge, so text is inset by default rather than as an option. */
-  --deck-pad-x: max(72px, 4cqi);
-  --deck-pad-y: 56px;
-  --deck-content-max: 1600px;
+  /* The light register is PAPER, not white — #f4f4fa, the same ground the
+     prototype used. It deliberately does not read `--deck-canvas-light`,
+     because `themeToCssVars()` always emits that as `#ffffff` inline and would
+     bleach the register back to a plain white deck. Override `--deck-paper`
+     itself if an event genuinely wants pure white. */
+  --deck-paper: #f4f4fa;
+  --deck-navy: #1f1e44;
+  /* Mint is the cool counterpoint to the warm purple and is what the kicker is
+     set in on dark grounds. It is a constant of the language rather than a
+     per-event colour; `--deck-spark` stays available for per-event accents. */
+  --deck-mint: #b1f6e9;
+  --deck-peri: #8982ff;
 
-  /* Type scale, design px at 1080 height. Nothing smaller than 28px exists:
-     below that it is unreadable from the back of a room. */
-  --dt-display: 128px;
-  --dt-stat: 132px;
-  --dt-title: 64px;
-  --dt-subtitle: 40px;
-  --dt-bullet: 40px;
-  --dt-lead: 36px;
+  /* The shadow end of the duotone ramp. Brand purple, and deliberately NOT
+     `--deck-accent-*`: a per-event accent may be any hue, and the archive
+     grade is what makes twelve years of photography read as one deck, so it
+     stays constant across events. The highlight end is per tone. */
+  --deck-duo-shadow: #9b2e83;
+
+  /* Overscan safe area. HDMI to a TV or an LED wall commonly eats 3-5% of the
+     edge, so text is inset by default rather than as an option. 7.3cqi is the
+     prototype's 140px margin at a 1920 stage. */
+  --deck-pad-x: max(96px, 7.3cqi);
+  --deck-pad-y: 72px;
+  --deck-content-max: 1640px;
+
+  /* Type scale, design px at 1080 height. */
+  --dt-mega: 420px;
+  --dt-display: 152px;
+  --dt-stat: 224px;
+  --dt-stat-minor: 100px;
+  --dt-title: 76px;
+  --dt-subtitle: 44px;
+  --dt-bullet: 38px;
+  --dt-lead: 34px;
   --dt-body: 32px;
   --dt-label: 28px;
-  --dt-script: 44px;
+  --dt-kicker: 30px;
+  --dt-rail: 28px;
+  --dt-script: 84px;
 
   --deck-gap-xs: 12px;
   --deck-gap-sm: 20px;
@@ -104,21 +156,44 @@
   --deck-gap-lg: 52px;
   --deck-gap-xl: 76px;
 
-  --deck-radius: 32px;
-  --deck-radius-sm: 16px;
+  /* 2-4px only. A 32px radius reads as a card system; this is a print system. */
+  --deck-radius: 4px;
+  --deck-radius-sm: 2px;
+
+  /* Running header. */
+  --deck-rail-h: 88px;
+
+  /* Wall geometry. Six rows of 162px on a 166px pitch fill 992px exactly
+     (6 x 162 + 5 x 4), and 992 is 1080 minus the rail — so the bottom edge
+     never slices a tile and a horizontal incision can always land on a tile
+     edge (254, 420, 586, 752, 918 from the top of the stage). */
+  --deck-tile-h: 162px;
+  --deck-tile-w: 259px;
+  --deck-wall-gap: 4px;
+  --deck-band-h: 162px;
 }
+
+/* Responsive type, retuned per stage width.
+   The overrides land on `.deck-slide`, NOT on `.deck-stage`. `.deck-stage` is
+   itself the named container, and an element can never match a query against
+   its own container — writing `@container deck { .deck-stage { … } }` compiles,
+   never applies, and silently leaves a 4:3 projector running the 21:9 type
+   scale. `.deck-slide` is a child of the stage, so it does match, and custom
+   properties declared on it cascade to every `.deck-*` class inside. */
 
 /* Narrow stages (4:3 and 5:4 projectors). Less width, so less type. */
 @container deck (max-width: 1560px) {
-  .deck-stage {
-    --dt-display: 104px;
-    --dt-stat: 108px;
-    --dt-title: 56px;
-    --dt-subtitle: 36px;
-    --dt-bullet: 36px;
-    --dt-lead: 32px;
+  .deck-slide {
+    --dt-mega: 320px;
+    --dt-display: 116px;
+    --dt-stat: 176px;
+    --dt-stat-minor: 84px;
+    --dt-title: 62px;
+    --dt-subtitle: 38px;
+    --dt-bullet: 34px;
+    --dt-lead: 31px;
     --dt-body: 30px;
-    --dt-script: 38px;
+    --dt-script: 66px;
     --deck-gap-lg: 40px;
     --deck-gap-xl: 56px;
   }
@@ -126,16 +201,22 @@
 
 /* Ultrawide stages. More room, so the display voice gets louder. */
 @container deck (min-width: 2200px) {
-  .deck-stage {
-    --dt-display: 148px;
-    --dt-stat: 152px;
-    --dt-title: 72px;
-    --deck-content-max: 1900px;
+  .deck-slide {
+    --dt-mega: 500px;
+    --dt-display: 180px;
+    --dt-stat: 264px;
+    --dt-title: 84px;
+    --deck-content-max: 1980px;
   }
 }
 
 /* --------------------------------------------------------------------------
    Tones
+
+   `data-tone` on the slide selects a register. The two registers are the same
+   language transposed, not two different designs: same margins, same 1px rule
+   vocabulary, same kicker, same duotone. On dark the wall is the ground; on
+   paper it survives as a full-bleed band.
    -------------------------------------------------------------------------- */
 
 .deck-slide {
@@ -155,24 +236,43 @@
   border-color: var(--slide-hairline);
 }
 
-.deck-slide[data-tone="light"] {
-  --slide-bg: var(--deck-canvas-light);
-  --slide-ink: #1f1e44;
-  --slide-ink-soft: #5a5880;
-  --slide-hairline: #e7e6f2;
-  --slide-surface: #f4f4fa;
-  --slide-accent: var(--deck-accent-light);
-  --slide-on-accent: #ffffff;
-}
-
 .deck-slide[data-tone="dark"] {
   --slide-bg: var(--deck-canvas-dark);
-  --slide-ink: #ffffff;
-  --slide-ink-soft: rgb(255 255 255 / 0.74);
-  --slide-hairline: rgb(255 255 255 / 0.18);
-  --slide-surface: rgb(255 255 255 / 0.06);
+  --slide-ink: var(--deck-paper);
+  --slide-ink-soft: rgb(244 244 250 / 0.72);
+  --slide-ink-faint: rgb(244 244 250 / 0.45);
+  /* Structural hairline: neutral, recessive, for dividing content. */
+  --slide-hairline: rgb(244 244 250 / 0.16);
+  /* Incision rule: magenta, assertive, for the edge where a panel cuts the
+     wall. The two are different jobs and must not be collapsed into one. */
+  --slide-rule: rgb(200 70 171 / 0.55);
+  --slide-surface: rgb(244 244 250 / 0.06);
   --slide-accent: var(--deck-accent-dark);
-  --slide-on-accent: #0b0a14;
+  --slide-on-accent: var(--deck-canvas-dark);
+  --slide-kicker: var(--deck-mint);
+  --slide-rail-bg: rgb(11 10 20 / 0.95);
+  --slide-panel-bg: rgb(11 10 20 / 0.9);
+  /* Duotone ramp for this register — see DUOTONE below. */
+  --deck-duo-highlight: #fbf2ec;
+}
+
+.deck-slide[data-tone="light"] {
+  --slide-bg: var(--deck-paper);
+  --slide-ink: var(--deck-navy);
+  --slide-ink-soft: rgb(31 30 68 / 0.7);
+  --slide-ink-faint: rgb(31 30 68 / 0.45);
+  --slide-hairline: rgb(31 30 68 / 0.18);
+  --slide-rule: rgb(155 46 131 / 0.55);
+  --slide-surface: rgb(31 30 68 / 0.04);
+  --slide-accent: var(--deck-accent-light);
+  --slide-on-accent: #ffffff;
+  --slide-kicker: var(--deck-accent-light);
+  --slide-rail-bg: var(--deck-paper);
+  --slide-panel-bg: rgb(244 244 250 / 0.94);
+  /* Pulled off warm-white toward paper: on this register the wall is a graphic
+     element sitting under the page, not the ground, and a warm highlight makes
+     the band shout over the copy above it. */
+  --deck-duo-highlight: #efe7f2;
 }
 
 /* Slide visibility. All slides stay mounted so advancing never waits on
@@ -196,10 +296,12 @@
    Structure
    -------------------------------------------------------------------------- */
 
-/* The inset frame every slide's content lives in. */
+/* The inset frame every slide's content lives in. A sibling of `.deck-rail`
+   in the slide's flex column, so a slide that carries a rail needs no manual
+   top padding — the rail takes its 88px and the safe area gets the rest. */
 .deck-safe {
   position: relative;
-  z-index: 2;
+  z-index: 6;
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
@@ -233,7 +335,18 @@
   flex: 0 1 auto;
 }
 
-/* Full-bleed layer: photos, gradients, the light burst. Fills the whole stage
+/* The opt-out. The rule above is (0,3,0) and beats Tailwind's `flex-1` at
+   (0,1,0), so a layout that genuinely wants one child to absorb the free space
+   — a photo panel that should fill whatever the copy leaves — cannot get it
+   back with a utility class. `.deck-fill` is (0,4,0) and wins. Reach for it
+   only when the slide is meant to fill edge to edge; the centred stack is the
+   right default and a deck full of stretched blocks loses its rhythm. */
+.deck-safe > .deck-content.flex-col > .deck-fill {
+  flex: 1 1 auto;
+  min-block-size: 0;
+}
+
+/* Full-bleed layer: the wall, plates, gradients. Fills the whole stage
    including the safe-area inset, so wide screens get more picture. */
 .deck-bleed {
   position: absolute;
@@ -251,40 +364,109 @@
   background: rgb(11 10 20 / 0.58);
 }
 
+/* A directional wash. On the karakia slide it is what empties the left of a
+   full-colour plate enough to take type, without touching the right half.
+
+   IT IS NOT ALWAYS NEEDED, and applying it by habit is worse than omitting it.
+   Measured mean luminance of the LEFT 55% — the region that actually carries
+   type — across every plate committed today:
+
+     /img/events/…-koru.jpg        L 132   <- needs the full default wash
+     whenua-pounamu-sea             L 48
+     whenua-harakeke-dusk           L 42
+     whenua-koru-unfurl             L 35
+     light-aurora-sweep             L 25
+     light-deep-field               L 14
+     light-prism-edge               L  7
+
+   The photograph is bright exactly where the words go. The generated plates
+   are dark enough to hold white type unaided, and washing an already-black
+   area only produces a grey smear over nothing. So: **use the default on a
+   photographic plate, omit the element entirely on a dark plate**, and reach
+   for `.deck-gradient-soft` only for something in between. */
 .deck-gradient {
   position: absolute;
   inset: 0;
   z-index: 1;
+  pointer-events: none;
+  --deck-wash-near: 0.62;
+  --deck-wash-mid: 0.38;
   background: linear-gradient(
-    100deg,
-    rgb(11 10 20 / 0.92) 0%,
-    rgb(11 10 20 / 0.72) 42%,
-    rgb(11 10 20 / 0.15) 100%
+    96deg,
+    rgb(9 16 18 / var(--deck-wash-near)) 0%,
+    rgb(9 16 18 / var(--deck-wash-mid)) 40%,
+    rgb(9 16 18 / 0) 68%
   );
 }
 
-/* The poster's light burst, as pure CSS. No asset to fail, no bytes to load. */
-.deck-burst {
+.deck-gradient-soft {
+  --deck-wash-near: 0.26;
+  --deck-wash-mid: 0.14;
+}
+
+/* An INCISION: an opaque panel cut into the wall that carries type. This is the
+   deck's primary compositional move — the wall is never scrimmed uniformly and
+   then written on, it is cut. Layouts position it and set its own size; the
+   `--incision-*` custom properties exist so a layout does not have to restate
+   the background and rule. */
+.deck-incision {
   position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      58% 44% at 76% 58%,
-      rgb(255 255 255 / 0.26) 0%,
-      transparent 58%
-    ),
-    radial-gradient(
-      118% 90% at 76% 58%,
-      color-mix(in srgb, var(--deck-spark) 34%, transparent) 0%,
-      transparent 46%
-    ),
-    radial-gradient(
-      140% 120% at 16% 20%,
-      color-mix(in srgb, var(--deck-accent-dark) 30%, transparent) 0%,
-      transparent 62%
-    );
+  z-index: 4;
+  background: var(--incision-bg, var(--slide-panel-bg));
+  padding: var(--incision-pad, 92px var(--deck-pad-x));
+}
+
+/* A translucent incision — the wall still reads through it. Used for a full
+   width band on a section divider, where the wall must stay the loudest thing. */
+.deck-incision-sheer {
+  --incision-bg: rgb(11 10 20 / 0.66);
+}
+
+/* The 1px magenta edge where a panel meets the wall. Add to whichever edge the
+   composition needs, on an incision, a band, a mosaic or the rail. */
+.deck-edge-inline-end,
+.deck-edge-block-end,
+.deck-edge-block-start {
+  position: relative;
+}
+
+/* An incision is already absolutely positioned and the rule above would
+   silently demote it back into flow — which drops the panel out of its
+   composition and pushes the rest of the slide down. Same-element specificity
+   is what wins it back; do not collapse these two rules. */
+.deck-incision.deck-edge-inline-end,
+.deck-incision.deck-edge-block-end,
+.deck-incision.deck-edge-block-start,
+.deck-band.deck-edge-block-end,
+.deck-band.deck-edge-block-start {
+  position: absolute;
+}
+
+.deck-edge-inline-end::after,
+.deck-edge-block-end::after,
+.deck-edge-block-start::after {
+  content: "";
+  position: absolute;
+  z-index: 6;
+  background: var(--slide-rule);
+}
+
+.deck-edge-inline-end::after {
+  inset-block: 0;
+  inset-inline-end: 0;
+  inline-size: 1px;
+}
+
+.deck-edge-block-end::after {
+  inset-inline: 0;
+  inset-block-end: 0;
+  block-size: 1px;
+}
+
+.deck-edge-block-start::after {
+  inset-inline: 0;
+  inset-block-start: 0;
+  block-size: 1px;
 }
 
 .deck-card {
@@ -294,32 +476,158 @@
   padding: var(--deck-gap-md);
 }
 
+/* Structural divider — recessive. */
 .deck-rule {
-  block-size: 2px;
+  block-size: 1px;
   inline-size: 100%;
   background: var(--slide-hairline);
   border: 0;
+}
+
+.deck-rule-v {
+  inline-size: 1px;
+  block-size: 100%;
+  background: var(--slide-hairline);
+  border: 0;
+}
+
+/* Accent divider — the same 1px, in the incision magenta. Use where the rule is
+   doing compositional work rather than separating two lists. */
+.deck-rule-accent {
+  background: var(--slide-rule);
+}
+
+/* --------------------------------------------------------------------------
+   Chrome bar (the running header)
+
+   Every slide carries it: brand mark left, position and section right. It is a
+   flex item of `.deck-slide`, not an overlay, so `.deck-safe` automatically
+   starts below it. On a full-colour plate use `.deck-rail-sheer` so the
+   photograph is not squared off by an opaque bar.
+   -------------------------------------------------------------------------- */
+
+.deck-rail {
+  position: relative;
+  z-index: 8;
+  flex: 0 0 var(--deck-rail-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--deck-gap-md);
+  padding-inline: var(--deck-pad-x);
+  background: var(--slide-rail-bg);
+}
+
+.deck-rail::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  block-size: 1px;
+  background: var(--slide-rule);
+}
+
+/* Sheer over a full-colour plate, so the photograph is not squared off by an
+   opaque bar. Two ways in, because the rail is rendered by `SlideFrame` (which
+   knows the slide) rather than by the layout (which knows the composition):
+   `data-rail="sheer"` on the slide element is the frame's route, and the
+   modifier class is the route for anything that builds a rail by hand. */
+.deck-rail-sheer,
+.deck-slide[data-rail="sheer"] .deck-rail {
+  --slide-rail-bg: rgb(11 10 20 / 0.58);
+}
+
+/* A slide that carries no running header at all. `SlideFrame` should still
+   render nothing rather than rely on this — it exists so that hiding the rail
+   never costs a layout its 88px of top padding by accident. */
+.deck-slide[data-rail="none"] .deck-rail {
+  display: none;
+}
+
+.deck-rail-brand {
+  font-family: var(--font-heading);
+  font-size: var(--dt-rail);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  line-height: 1;
+  color: var(--slide-ink);
+  white-space: nowrap;
+}
+
+/* The sharp sign inside the wordmark. */
+.deck-rail-sharp {
+  font-style: normal;
+  color: var(--slide-accent);
+}
+
+.deck-rail-meta {
+  font-size: var(--dt-rail);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  color: var(--slide-ink-faint);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 /* --------------------------------------------------------------------------
    Type
    -------------------------------------------------------------------------- */
 
+/* THE KICKER. A short line unique to THIS page, above the title, wide-tracked
+   caps with a short leading rule. It is not the section label: the section
+   label lives in the rail and names the chapter, unchanged across many pages
+   ("The Programme"), while the kicker names this page only ("The first of two
+   build days"). They must share no significant word on any slide — if they do,
+   one of them is redundant and the kicker is the one to rewrite. */
+.deck-kicker {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: var(--dt-kicker);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--slide-kicker);
+}
+
+/* The leading rule is a pseudo-element so a layout writes `<p class=
+   "deck-kicker">…</p>` and nothing else. `flex: 0 0` stops it collapsing when
+   the line wraps on a narrow stage. */
+.deck-kicker::before {
+  content: "";
+  flex: 0 0 64px;
+  block-size: 1px;
+  background: currentColor;
+}
+
 .deck-display {
   font-family: var(--font-heading);
   font-size: var(--dt-display);
   font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: -0.02em;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
   text-wrap: balance;
+}
+
+/* Section-divider scale. Only ever a numeral or a word of three or four
+   letters — see the photo-knockout constraint below, which this size exists
+   to serve. */
+.deck-mega {
+  font-family: var(--font-heading);
+  font-size: var(--dt-mega);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.06em;
 }
 
 .deck-title {
   font-family: var(--font-heading);
   font-size: var(--dt-title);
-  font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.015em;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
   text-wrap: balance;
 }
 
@@ -327,7 +635,8 @@
   font-family: var(--font-heading);
   font-size: var(--dt-subtitle);
   font-weight: 600;
-  line-height: 1.24;
+  line-height: 1.16;
+  letter-spacing: -0.015em;
 }
 
 .deck-lead {
@@ -341,7 +650,7 @@
 
 .deck-body {
   font-size: var(--dt-body);
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .deck-bullet {
@@ -350,16 +659,18 @@
   font-weight: 500;
 }
 
-/* The only uppercase in the system, matching the site's `.text-label`. */
+/* Wide-tracked caps. Used for the label under a figure and for photo captions.
+   Distinct from `.deck-kicker`, which carries a rule and sits above a title. */
 .deck-label {
   font-size: var(--dt-label);
   font-weight: 600;
   line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: var(--slide-ink-soft);
+  color: var(--slide-ink);
 }
 
+/* The brand script. One per slide at most; it is a voice, not a style. */
 .deck-eyebrow {
   font-family: var(--font-brand-script);
   font-size: var(--dt-script);
@@ -367,12 +678,24 @@
   color: var(--slide-accent);
 }
 
+/* Hero figure. One per slide leads at `--dt-stat`; subordinate figures use
+   `.deck-stat-minor`. Four equal numbers say nothing. */
 .deck-stat {
   font-family: var(--font-heading);
   font-size: var(--dt-stat);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.03em;
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.deck-stat-minor {
+  font-family: var(--font-heading);
+  font-size: var(--dt-stat-minor);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--slide-accent);
   font-variant-numeric: tabular-nums;
 }
 
@@ -390,11 +713,15 @@
   color: var(--slide-ink-soft);
 }
 
+.deck-faint {
+  color: var(--slide-ink-faint);
+}
+
 .deck-tabular {
   font-variant-numeric: tabular-nums;
 }
 
-/* Outline display type, as used on the site's editorial pages. */
+/* Outline display type. */
 .deck-outline {
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 2px currentColor;
@@ -405,6 +732,320 @@
     -webkit-text-fill-color: currentColor;
     opacity: 0.34;
   }
+}
+
+/* --------------------------------------------------------------------------
+   PHOTO-KNOCKOUT TYPE — the word is a window into the wall
+
+   THE CONSTRAINT, and it is not negotiable: this works at display scale on
+   SHORT WORDS AND NUMERALS ONLY. A two-character numeral at `--dt-mega` is
+   unmistakable; a nine-letter word at the same size is unreadable mush,
+   because every counter and stem fills with a different fragment of a
+   different photograph and the eye loses the letterform. The prototype proved
+   both halves of this: its giant `01` works and its `Aotearoa` does not.
+   Rule of thumb: at most five characters, at `--dt-stat` or larger, in a
+   weight of 800. Anything longer is set in solid ink.
+
+   HOW IT IS BUILT. One element, four background layers, so a layout writes
+   `<span class="deck-knockout">01</span>` and nothing else:
+
+     1  colour pass    blended `color` — forces every glyph onto the palette
+                       regardless of what the photograph underneath is doing
+     2  shadow lift    blended `screen` — range-compresses the photograph so no
+                       shot's black shadows can drop a glyph back into the ground
+     3  the archive    the photograph itself, tiled
+     4  base gradient  pure CSS, always paints — if the archive image 404s or
+                       the renderer has no blend support, the figure is still
+                       legible instead of being `color: transparent` over
+                       nothing
+
+   Set `--deck-knockout-src` to a `url(...)` on the element or any ancestor.
+   -------------------------------------------------------------------------- */
+
+.deck-knockout {
+  display: inline-block;
+  /* Last-resort fill: `background-color` is clipped to the text too, so even
+     with every image layer gone the glyph has a colour. */
+  background-color: var(--slide-accent);
+  background-image:
+    linear-gradient(96deg, var(--deck-mint) 0%, var(--deck-accent-dark) 44%, var(--deck-peri) 100%),
+    linear-gradient(rgb(255 255 255 / 0.34) 0 100%),
+    var(--deck-knockout-src, none),
+    linear-gradient(96deg, #dcc9ee 0%, var(--deck-accent-dark) 46%, #a79cff 100%);
+  background-blend-mode: color, screen, normal, normal;
+  background-size: cover, cover, var(--deck-knockout-size, 3840px 1080px), cover;
+  background-position: center, center, var(--deck-knockout-pos, 0 0), center;
+  background-repeat: no-repeat, no-repeat, repeat, no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* On paper the same device inverts: the glyph is ink cut out of the wall
+   rather than a luminous window into it. */
+.deck-knockout-ink {
+  background-image:
+    linear-gradient(150deg, var(--deck-accent-light) 0%, #7c2a7e 44%, var(--deck-navy) 100%),
+    linear-gradient(rgb(0 0 0 / 0.3) 0 100%),
+    var(--deck-knockout-src, none),
+    linear-gradient(160deg, var(--deck-accent-light), var(--deck-navy));
+  background-blend-mode: color, multiply, normal, normal;
+}
+
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .deck-knockout {
+    background-image: none;
+    color: var(--slide-accent);
+    -webkit-text-fill-color: var(--slide-accent);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   DUOTONE
+
+   Mandatory on any archive photograph used EN MASSE — wall, mosaic, band, tile
+   field. Optional-out on a single photograph used as the subject.
+
+   THE RAMP. Every photograph is mapped to the same two-point ramp:
+   brand purple #9b2e83 in the shadows, warm near-white in the highlights.
+   Three steps, no file processing:
+
+     1  `grayscale(1)` on the image. This is what actually buys consistency.
+        The archive spans warm tungsten, green fluorescent and cool daylight —
+        a four-stop white-balance range — and desaturating removes ALL of that
+        variance at once. What survives is exposure, which steps 2 and 3 trim.
+     2  `mix-blend-mode: screen` over the container's shadow colour lifts the
+        blacks onto the purple: luminance 0 becomes #9b2e83, 1 stays white.
+     3  `::after` in the highlight colour, blended `multiply`, tints the top of
+        the ramp: 1 becomes the warm near-white, 0 is unchanged (multiplying a
+        near-white by anything is nearly the identity).
+
+   Net mapping: 0 -> purple, 1 -> warm near-white, monotonic in between. That
+   is the two-point duotone, and because it is driven by luminance alone it
+   lands in the same place whatever the original light source was.
+
+   `isolation: isolate` is load-bearing: without it the `screen` on the images
+   blends with the SLIDE behind the container rather than with the container's
+   own shadow colour, and the whole slide goes purple.
+
+   SO IS THE CELL BACKGROUND. `mix-blend-mode` only ever blends an element with
+   the backdrop inside its NEAREST stacking context, and a drifting wall row
+   creates one (an animated `transform` always does). Left to the container's
+   own background, the screen pass in a wall is therefore a no-op and the
+   result is a grey wall with purple grout. The shadow colour is repeated onto
+   every cell that directly wraps a photograph so it is always the immediate
+   backdrop. Bespoke wrappers add `.deck-duotone-cell`.
+
+   OPT-OUT: `.deck-full-colour` on a single subject photograph or its wrapper.
+   -------------------------------------------------------------------------- */
+
+.deck-duotone {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--deck-duo-shadow, #9b2e83);
+  /* Exposure trim, applied before the ramp. 1.24 was picked against real
+     tiles from all three eras: below it the field goes flat and pink, above it
+     the brighter shots blow out to bare paper. */
+  --deck-duo-contrast: 1.24;
+  --deck-duo-brightness: 1;
+}
+
+.deck-duotone .deck-slot,
+.deck-duotone .deck-frame,
+.deck-duotone .deck-plate,
+.deck-duotone .deck-wall-row > *,
+.deck-duotone .deck-duotone-cell {
+  background-color: var(--deck-duo-shadow, #9b2e83);
+}
+
+.deck-duotone img,
+.deck-duotone video {
+  mix-blend-mode: screen;
+  filter: grayscale(1) contrast(var(--deck-duo-contrast))
+    brightness(var(--deck-duo-brightness));
+}
+
+.deck-duotone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: var(--deck-duo-highlight, #fbf2ec);
+  mix-blend-mode: multiply;
+}
+
+/* GROUND. The wall carrying a whole dark slide. A vignette evens out twelve
+   years of mixed exposure and drops the corners away so type cut into the
+   field has somewhere to sit. */
+.deck-duotone-ground::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background:
+    radial-gradient(
+      132% 104% at 50% 40%,
+      rgb(11 10 20 / 0) 34%,
+      rgb(11 10 20 / 0.44) 78%,
+      rgb(11 10 20 / 0.74) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(11 10 20 / 0.34) 0%,
+      rgb(11 10 20 / 0.18) 44%,
+      rgb(11 10 20 / 0.5) 100%
+    );
+}
+
+/* BAND ON PAPER. Flatter, no vignette — here the wall is a graphic element
+   under the page rather than the ground, and a vignette in a 162px strip reads
+   as a smudge rather than as depth. */
+.deck-duotone-flat {
+  --deck-duo-brightness: 0.98;
+}
+
+.deck-duotone-flat::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background: linear-gradient(
+    180deg,
+    rgb(31 30 68 / 0.22) 0%,
+    rgb(31 30 68 / 0.4) 100%
+  );
+}
+
+/* THE OPT-OUT. A photograph being LOOKED AT is not connective tissue and keeps
+   its colour: this is where the human warmth of the archive lives. The
+   descendant selectors are what beat `.deck-duotone img` on specificity, and
+   the z-index lifts the photograph clear of the ramp and vignette layers. */
+.deck-full-colour,
+.deck-duotone .deck-full-colour {
+  position: relative;
+  z-index: 5;
+  isolation: isolate;
+}
+
+.deck-full-colour img,
+.deck-duotone .deck-full-colour img,
+.deck-duotone img.deck-full-colour {
+  mix-blend-mode: normal;
+  filter: none;
+}
+
+/* --------------------------------------------------------------------------
+   TILE-WALL PRIMITIVES
+
+   Everything here is built on standard aspect slots rather than on the native
+   ratio of each photograph, because the archive's native ratios are a mess
+   (3:2, 4:3, 16:9, phone portrait) and a wall of mixed ratios reads as an
+   accident. The slot is definite, the photograph fills it, and the crop comes
+   off the bottom.
+   -------------------------------------------------------------------------- */
+
+/* A standard aspect slot. Default 16:10 — the wall tile. */
+.deck-slot {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--slot-ratio, 16 / 10);
+  min-inline-size: 0;
+  min-block-size: 0;
+}
+
+.deck-slot-16x10 { --slot-ratio: 16 / 10; }
+.deck-slot-3x2   { --slot-ratio: 3 / 2; }
+.deck-slot-4x3   { --slot-ratio: 4 / 3; }
+.deck-slot-1x1   { --slot-ratio: 1 / 1; }
+.deck-slot-16x9  { --slot-ratio: 16 / 9; }
+
+/* Photographs crop from the bottom only. `DeckImage` also sets
+   `object-position` inline (defaulting to `50% 0%`), so this is the floor for
+   any plain `<img>` a layout drops in directly. */
+.deck-slot > img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
+}
+
+/* THE WALL. A dense field of drifting tile rows, full-bleed behind a slide.
+   Pair with `.deck-duotone .deck-duotone-ground`. */
+.deck-wall {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Rows start below the rail by default so the six-row grid lands exactly on
+   the bottom edge (see the wall geometry note at the top). A slide with no
+   rail adds `.deck-wall-flush`. */
+.deck-wall-rows {
+  position: absolute;
+  inset-block-start: var(--deck-rail-h);
+  inset-inline-start: 0;
+  inline-size: 100%;
+}
+
+.deck-wall-flush .deck-wall-rows {
+  inset-block-start: 0;
+}
+
+/* One row. `width: max-content` lets the row be wider than the stage, which is
+   the whole point — it drifts. Rows must be emitted TWICE by the layout (the
+   same tile list back to back) so a -50% translate loops seamlessly. */
+.deck-wall-row {
+  display: flex;
+  gap: var(--deck-wall-gap);
+  block-size: var(--deck-tile-h);
+  margin-block-end: var(--deck-wall-gap);
+  inline-size: max-content;
+  will-change: transform;
+}
+
+.deck-wall-row > * {
+  flex: 0 0 var(--deck-tile-w);
+  block-size: var(--deck-tile-h);
+  overflow: hidden;
+}
+
+.deck-wall-row img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
+}
+
+/* A BAND. One row of the wall, full-bleed, as a horizontal rule made of
+   evidence. Used at the top or foot of a paper slide to keep it in the family.
+   Position it with the layout's own inset; the height is fixed here so it
+   always matches the wall's tile pitch. */
+.deck-band {
+  position: absolute;
+  inset-inline: 0;
+  z-index: 2;
+  block-size: var(--deck-band-h);
+  overflow: hidden;
+}
+
+/* A MOSAIC. A bounded panel of slots — the wall as a block inside a
+   composition rather than as the ground. `minmax(0, 1fr)` tracks are
+   load-bearing: with `auto` tracks the column sizes to the image's intrinsic
+   width and the aspect-ratio on the slot then constrains nothing. */
+.deck-mosaic {
+  display: grid;
+  grid-template-columns: repeat(var(--mosaic-cols, 4), minmax(0, 1fr));
+  gap: var(--deck-wall-gap);
+  overflow: hidden;
 }
 
 /* --------------------------------------------------------------------------
@@ -422,6 +1063,31 @@
   object-fit: contain;
 }
 
+/* A single full-colour photograph as the subject: a fixed frame, cropped from
+   the bottom, a 2px radius and no shadow. */
+.deck-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--deck-radius-sm);
+}
+
+/* A full-bleed full-colour plate — the karakia register. No duotone, no tiles,
+   no rules; nothing to read but the words. `object-position: top` still holds. */
+.deck-plate {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.deck-plate img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
+}
+
 /* Shown by `deck-image.tsx` when a file 404s. A designed colour block reads as
    intentional from ten metres away; a broken-image glyph does not. */
 .deck-img-fallback {
@@ -432,8 +1098,8 @@
   padding: var(--deck-gap-sm);
   background: linear-gradient(
     135deg,
-    var(--slide-accent) 0%,
-    color-mix(in srgb, var(--deck-spark) 45%, var(--slide-accent)) 100%
+    var(--deck-accent-light) 0%,
+    var(--deck-peri) 100%
   );
   color: #fff;
   font-size: var(--dt-label);
@@ -446,8 +1112,8 @@
 }
 
 /* Sponsor marks are a mixed bag of dark and light SVGs. On dark slides they sit
-   on a white chip rather than being filtered, which mangles multi-colour logos. */
-/* The `minmax(0, 1fr)` tracks are load-bearing. With an `auto` row the track
+   on a white chip rather than being filtered, which mangles multi-colour logos.
+   The `minmax(0, 1fr)` tracks are load-bearing. With an `auto` row the track
    sizes to the mark's intrinsic box — several sponsor SVGs are 130px+ tall
    against a 96px chip — and a percentage height on the child then resolves
    against that same content-sized track, so it constrains nothing. An explicit
@@ -472,6 +1138,49 @@
   object-fit: contain;
 }
 
+/* A monochrome mark knocked out to white, for a logo row on a dark ground
+   where a chip would be too much furniture. */
+.deck-logo-invert {
+  filter: brightness(0) invert(1);
+  opacity: 0.88;
+}
+
+/* --------------------------------------------------------------------------
+   Run sheet
+
+   The single most repeated information pattern in the deck: a time column and
+   an item column, separated by hairlines. Fixed row height so a six-item and
+   a nine-item sheet share a rhythm.
+   -------------------------------------------------------------------------- */
+
+.deck-sheet {
+  inline-size: 100%;
+  border-block-start: 1px solid var(--slide-hairline);
+}
+
+.deck-sheet-row {
+  display: flex;
+  align-items: center;
+  gap: var(--deck-gap-md);
+  min-block-size: 78px;
+  padding-block: var(--deck-gap-xs);
+  border-block-end: 1px solid var(--slide-hairline);
+}
+
+.deck-sheet-time {
+  flex: 0 0 250px;
+  font-size: var(--dt-body);
+  font-weight: 600;
+  color: var(--slide-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.deck-sheet-item {
+  font-size: var(--dt-body);
+  font-weight: 400;
+  color: var(--slide-ink);
+}
+
 /* --------------------------------------------------------------------------
    Viewer chrome
    -------------------------------------------------------------------------- */
@@ -490,7 +1199,7 @@
   position: absolute;
   inset-inline: 0;
   inset-block-end: 0;
-  block-size: 5px;
+  block-size: 4px;
   background: var(--slide-hairline);
 }
 
@@ -506,6 +1215,107 @@
   letter-spacing: 0.08em;
   color: var(--slide-ink-soft);
 }
+
+/* --------------------------------------------------------------------------
+   Motion
+
+   Everything resolves INTO the designed composition: a still frame taken any
+   time after the entrance is the finished slide, so a photograph of the screen
+   mid-talk is never of a half-built page.
+
+   Entrances are keyed to `[data-active="true"]` rather than to page load,
+   because every slide stays mounted for the whole session — an unkeyed
+   animation would play all 36 slides at once during the first three seconds
+   and be long finished by the time anyone reached slide 20. With no animation
+   applied, the element simply sits in its final state, which is also the
+   correct print behaviour.
+   -------------------------------------------------------------------------- */
+
+@keyframes deck-wall-drift-l {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes deck-wall-drift-r {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes deck-swell {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.035); }
+}
+
+@keyframes deck-rise {
+  from { opacity: 0; transform: translate3d(0, 30px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes deck-draw-x {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes deck-draw-y {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes deck-reveal {
+  from { opacity: 0; transform: scaleY(1.012); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Ambient loops. Gated on `data-motion` so the viewer can stop them outright;
+   the wall is a designed still composition without them. `--wall-seconds`
+   differs per row so the field never reads as one sliding sheet. */
+.deck-stage[data-motion="on"] .deck-wall-row {
+  animation: deck-wall-drift-l var(--wall-seconds, 190s) linear infinite;
+}
+
+.deck-stage[data-motion="on"] .deck-wall-row-reverse {
+  animation-name: deck-wall-drift-r;
+}
+
+.deck-stage[data-motion="on"] .deck-plate img {
+  transform-origin: 60% 60%;
+  animation: deck-swell 60s ease-in-out infinite;
+}
+
+/* Entrances. */
+.deck-stage[data-motion="on"] .deck-slide[data-active="true"] .deck-rise {
+  animation: deck-rise 0.95s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.deck-stage[data-motion="on"] .deck-slide[data-active="true"] .deck-reveal {
+  animation: deck-reveal 1.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.deck-stage[data-motion="on"] .deck-slide[data-active="true"] .deck-draw {
+  transform-origin: left;
+  animation: deck-draw-x 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+.deck-stage[data-motion="on"] .deck-slide[data-active="true"] .deck-draw-v {
+  transform-origin: top;
+  animation: deck-draw-y 1.7s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+/* Stagger. 180ms apart, so twelve steps complete at 2.72s and the whole
+   entrance is over inside 3.6s — short enough that a presenter who clicks
+   straight through is never waiting on the deck. */
+.deck-d1 { animation-delay: 0.75s; }
+.deck-d2 { animation-delay: 0.92s; }
+.deck-d3 { animation-delay: 1.1s; }
+.deck-d4 { animation-delay: 1.28s; }
+.deck-d5 { animation-delay: 1.46s; }
+.deck-d6 { animation-delay: 1.64s; }
+.deck-d7 { animation-delay: 1.82s; }
+.deck-d8 { animation-delay: 2s; }
+.deck-d9 { animation-delay: 2.18s; }
+.deck-d10 { animation-delay: 2.36s; }
+.deck-d11 { animation-delay: 2.54s; }
+.deck-d12 { animation-delay: 2.72s; }
 
 /* --------------------------------------------------------------------------
    Print / PDF backup
@@ -580,6 +1390,14 @@
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+
+  /* Blend modes and `background-clip: text` survive print in Chromium only
+     when colour adjustment is forced, which the rule above does. */
+  .deck-duotone,
+  .deck-knockout {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -621,5 +1439,11 @@ html[data-present] body {
   .deck-progress-fill,
   .deck-chrome {
     transition: none !important;
+  }
+
+  .deck-stage *,
+  .deck-stage *::before,
+  .deck-stage *::after {
+    animation: none !important;
   }
 }

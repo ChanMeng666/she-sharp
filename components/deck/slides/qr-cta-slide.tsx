@@ -16,11 +16,11 @@ export function QrCtaSlideLayout({ slide }: { slide: QrCtaSlide }) {
   return (
     <div className="deck-safe">
       <div
-        className="deck-content grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-center"
+        className="deck-content grid flex-1 grid-cols-[minmax(0,1fr)_auto] items-center"
         style={{ gap: "var(--deck-gap-xl)" }}
       >
         <div className="flex flex-col" style={{ gap: "var(--deck-gap-md)" }}>
-          {slide.eyebrow && <p className="deck-eyebrow">{slide.eyebrow}</p>}
+          {slide.eyebrow && <p className="deck-kicker">{slide.eyebrow}</p>}
 
           <h2 className="deck-title">{slide.title}</h2>
 

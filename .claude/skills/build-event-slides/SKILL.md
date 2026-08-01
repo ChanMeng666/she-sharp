@@ -9,7 +9,7 @@ The person you are working with runs She Sharp events. They do not write code an
 they must never be asked to. They know the room, the run sheet, the speakers and
 the sponsors. Your job is to get that out of their head and onto a projector.
 
-Three facts shape everything below.
+Four facts shape everything below.
 
 - **The event already exists in the repo.** Title, date, time, venue, speakers,
   sponsors and poster live in `lib/data/json/events-custom.json`. Read from
@@ -17,9 +17,16 @@ Three facts shape everything below.
 - **A deck is plain data.** One file under `lib/deck/decks/`, registered in
   `lib/deck/registry.ts`, rendered at `/present/<slug>`. Nobody hand-writes HTML
   or CSS, and the author never sees either.
-- **The copy limits are enforced, not suggested.** `lib/deck/lint.ts` fails a
-  deck whose title runs to nine words. When it fails, **the copy changes** — you
-  rewrite it shorter and read the new version back for approval.
+- **The deck is built out of She Sharp's own photographs.** Not a white canvas
+  with a purple accent — twelve years of real rooms, used as mass. One
+  photograph shown as a subject keeps its colours; photographs used many at a
+  time go purple. `references/slide-types.md` explains why, and it is worth
+  understanding rather than just obeying.
+- **The limits are enforced, not suggested.** `lib/deck/lint.ts` fails a deck
+  whose title runs to nine words, and it also fails a deck that is *shaped*
+  badly — too many similar slides in a row, too few dark ones, a kicker that
+  just repeats the title. When it fails, **the deck changes** — you fix it and
+  read the change back for approval.
 
 Commands are PowerShell-first. Nothing is committed or deployed until the author
 has seen the deck on screen and said yes.
@@ -118,7 +125,7 @@ hosts and who speaks; the run sheet; breaks and the group photo; which partners
 to thank; the visual assets; the two QR destinations; what the closing should
 say; which future events to preview.
 
-Two habits that make this work:
+Three habits that make this work:
 
 - **Take the answer in their words and shorten it yourself.** They say "so the
   idea is that people who've never touched an AI tool before can come along and
@@ -127,6 +134,10 @@ Two habits that make this work:
 - **"I don't know" is a real answer.** The checklist says what to do with each
   one — a sensible default, a slide dropped, or a question parked for later.
   Never fill a gap by inventing a fact.
+- **Keep the asides, not just the answers.** *"Oh, dinner's out when people walk
+  in"* is not a digression from the run-sheet question, it is a finished kicker
+  for the run-sheet slide. Every slide needs one and you will not get them by
+  asking directly.
 
 ## Step 3 — Set the colours
 
@@ -159,6 +170,16 @@ it again in Step 6, so a bad pair cannot reach a projector.
 No poster, or the author would rather stay on brand: use `sheSharpTheme` from
 `lib/deck/theme.ts` and say so.
 
+**The accent is not the same thing as the duotone.** The accent is this event's
+colour, taken from its poster, and it is what tints headings, rules and the
+timer ring. The purple laid over photographs used en masse is **always She Sharp
+purple**, whatever the poster says. Expect to explain that once:
+
+> The teal from your poster runs through the headings and the timer. The photo
+> walls stay purple — that's the organisation's colour rather than this event's,
+> and it's what makes twelve years of photos taken in twelve different lighting
+> conditions read as one thing.
+
 ## Step 4 — Collect the assets
 
 Read `references/assets.md` for the full detail. In summary:
@@ -170,8 +191,31 @@ Read `references/assets.md` for the full detail. In summary:
 - Sponsor and speaker artwork usually already exists under `public/img/sponsors/`
   and `public/img/events/`. Check before asking for a re-send.
 
-**When a photo is missing**, offer `public/img/curated/` — 48 real past-event
-photographs with alt text already written. Say what you are doing:
+**Decide what each photograph is for before you go looking.** A picture the room
+is meant to look at has to be sharp and big. A picture that is one tile among
+many does not, because it is a fraction of the screen and the purple duotone
+covers a multitude of sins. Most of the archive can only ever be the second kind
+— see below.
+
+**Two things about the archive that will catch you out:**
+
+1. **Almost nothing is big enough to fill a screen.** Only the 47 curated images
+   and about sixty files in `public/img/scraped/photos/` clear 1920px; everything
+   else stops between 1200 and 1368, *including* most of the 2023–2026
+   photography. Want a full-bleed hero? Look in `public/img/curated/` first.
+2. **There is no photograph of a mentor and a mentee together** anywhere in the
+   835 images — the flagship programme has no picture of itself. Do not caption
+   a group shot as if it were one. Say it to the author instead and suggest
+   someone take one at the next event.
+
+**For a karakia or a chapter break**, `public/img/plates/` has six generated
+backgrounds — three whenua plates (a greenstone sea, an unfurling frond,
+harakeke at dusk) and three abstract light plates. They exist because the
+archive is entirely indoors under fluorescent light and a karakia had nowhere
+quiet to sit. If the one you need is not there, you can generate it — Step 4a.
+
+**When an event photo is missing**, offer `public/img/curated/` — 47 real
+past-event photographs with alt text already written. Say what you are doing:
 
 > You haven't got a photo of the venue yet, so I've used a shot from last year's
 > conference on the section divider. It's a real She Sharp photo, just not from
@@ -179,6 +223,34 @@ photographs with alt text already written. Say what you are doing:
 
 **Then list every borrowed photo in the Step 7 preview, slide by slide.** Never
 quietly substitute, and never say "the venue photo" about a curated stand-in.
+
+## Step 4a — Generate a plate, if one is missing
+
+Only when a karakia, a ceremony or a chapter break needs a background that the
+six existing plates do not give. This is a small step, not a creative licence.
+
+The author asks in plain language — *"is there something calmer for the
+closing?"* — and you produce it with gpt-image-2 (the project's existing
+`OPENAI_API_KEY`), save it into `public/img/plates/`, and record it in that
+folder's manifest with real alt text.
+
+**What may be generated is whenua and nothing else**: land, water, plants,
+light — what the karakia itself speaks about.
+
+**Never people. Never taonga** — no carving, no woven pattern, no moko, no motif
+belonging to any iwi. **And never anything that could be mistaken for a real She
+Sharp event photograph.** That last one is the worst outcome available: the
+archive's whole value is that it is true, and one convincing fake means nobody
+can trust any of it again. If a request drifts that way, say so and offer the
+whenua version instead.
+
+`references/assets.md` has the prompt structure that works — subject, then the
+clear space where the type will go, then the house rules verbatim. Use it; a
+plate without deliberate empty space is a nice picture with nowhere to put a
+word.
+
+**Tell the author which slides carry a generated background**, in the Step 7
+preview, exactly as you would for a borrowed curated photo.
 
 ## Step 5 — Generate the deck
 
@@ -210,7 +282,52 @@ you want to say onto the layout that says it. Every slide needs:
 - a `note` — one or two sentences the host can read before speaking. It prints
   in the PDF and never appears on screen. A slide nobody can introduce is a
   slide nobody should present;
+- a **kicker** — the short line above the title, five or six words (below);
 - `optional: true` on anything that can be skipped when the event runs late.
+
+### Give every slide a kicker
+
+Two labels sit above a title and they are not the same thing. The **section**
+names the chapter and repeats across it — "Day One". The **kicker** names *this*
+page and is different every single time.
+
+They must never be restatements of each other, or of the title. The checker
+rejects that outright, because it is the clearest sign nobody actually wrote the
+slide.
+
+A good kicker tells the room **what to do**, or **what is true right now**:
+
+```
+PLEASE STAND IF YOU ARE ABLE       on the karakia
+THE FIRST OF TWO BUILD DAYS        on the Day One divider
+DOORS AT FIVE, DINNER ON ARRIVAL   on the run sheet
+```
+
+None of them describes its slide. Each says the thing the host would otherwise
+have to remember to say out loud. You write these yourself, from the practical
+asides the author dropped during the interview — *"tell people dinner's there
+when they walk in"* is a kicker, already written. `references/copy-rules.md` has
+the weak-versus-strong table.
+
+The deck that shipped before this rule used the kicker slot **zero times across
+thirty-six slides**. Every slide was correct and every slide was more anonymous
+than it needed to be.
+
+**The organisational slides arrive with kickers already on them**, written
+generically enough to be true at any She Sharp event — "Please find a seat",
+"Stand if you are able". Leave those alone where they fit, and replace them
+where this event can say something better. The event-specific slides in the
+middle of the deck have nothing, and every one of them is yours to write.
+
+### Watch the shape, not just the slides
+
+As you add the event-specific slides, keep an eye on the sequence: **no more
+than four information slides in a row, no more than two full-frame ones, no more
+than four of the same tone, at least a quarter of the deck dark, and at least
+eight different layouts.** The checker will tell you in Step 6 if you drift, but
+it is much cheaper to feel it now — a divider dropped in while you write costs
+nothing, and one retro-fitted afterwards means re-reading three slides to work
+out where the day actually turns.
 
 ## Step 6 — Check it
 
@@ -223,7 +340,9 @@ npx tsx lib/deck/deck.test.ts
 ```
 
 - **`lint-deck.ts`** enforces the copy limits, unique slide ids, the host note,
-  the bullet rhythm and the accent contrast.
+  the kicker rules, the accent contrast, and the **shape of the deck** — runs of
+  similar slides, the share of dark slides, and how many different layouts you
+  used.
 - **`verify-image-paths.ts`** is the CI gate. Every `/img/...` path written in
   `lib/`, `app/` or `components/` must resolve to a real file under `public/`.
   A typo here fails the pull request, so catch it now.
@@ -236,6 +355,22 @@ it, then read the change back:
 > "Judging criteria and how the weighting works across the two days" was too
 > long for a title, so I've made it "How judging works" and moved the weighting
 > into the rows underneath. Does that still say what you meant?
+
+**When it fails on the shape of the deck, add a beat — never reorder the day.**
+A message like *"8 information slides in a row (max 4), ending at slide 20"* is
+not asking you to shuffle anything; the order is the order of the event, and
+moving a slide moves a moment. Put a section divider, a photograph or the break
+roughly halfway along the run, or turn one of the slides in the run into a
+different layout. Then explain it as a decision, not a repair:
+
+> The middle of the deck was eight information slides back to back, which is
+> about four more than a room can take. I've put a chapter divider in before the
+> judges — the day genuinely changes gear there — and made the challenge list a
+> card grid instead of a third set of bullets. Nothing was cut.
+
+Some of the newer checks print without a plain-English explanation attached, so
+**translate before you speak**: never read a rule name like `rhythm-tone-run`
+out to the author, and never paste the raw output.
 
 `references/copy-rules.md` has the limits in plain words and worked before/after
 examples.
@@ -321,19 +456,30 @@ the loading chip to disappear, and then don't reload.**
    curated or borrowed photo is named, slide by slide, in the Step 7 preview.
    *Why:* the author is the only person who knows the photo is from a different
    event, and the audience is the only one who will notice on the day.
-4. **The copy linter is not advice.** If it fails, the copy changes — you
-   rewrite it and read the change back for approval. *Why:* the limits are what
-   survives being read from three metres away by someone who is also listening
-   to a person talk.
-5. **Nothing goes on a slide that the room does not need in order to act on it
+4. **The checker is not advice.** If it fails, the deck changes — you rewrite
+   the copy or add the missing beat, and read the change back for approval.
+   *Why:* the copy limits are what survives being read from three metres away by
+   someone who is also listening to a person talk, and the rhythm limits are
+   what stops a deck that is correct slide by slide from being unwatchable end
+   to end.
+5. **Never generate a person, a taonga, or anything that could pass for a real
+   She Sharp photograph.** Generated imagery is whenua only — land, water,
+   plants, light. No carving, no woven pattern, no moko, no iwi motif. *Why:*
+   imitating taonga is appropriation whoever holds the pen, and a convincing
+   fake event photo destroys the credibility of the twelve years of real ones
+   sitting next to it. The archive is real and must stay real.
+6. **Nothing goes on a slide that the room does not need in order to act on it
    right now.** Speaker bios, terms and conditions, long rules and full
    schedules live on the event page and are reached by a QR code. *Why:* every
    sentence the audience is reading is a sentence they are not hearing.
-6. **Every slide carries a host note.** *Why:* the deck is clicked through by a
-   volunteer who may see it for the first time that morning.
-7. **Verify locally before merging.** There are no preview deploys. *Why:* the
+7. **Every slide carries a host note, and every slide carries a kicker.** The
+   note is for the person clicking; the kicker is for the room. *Why:* the deck
+   is clicked through by a volunteer who may see it for the first time that
+   morning, and a slide whose only labels repeat each other reads as though
+   nobody wrote it.
+8. **Verify locally before merging.** There are no preview deploys. *Why:* the
    next place the deck renders after your laptop is production.
-8. **Repo conventions apply.** English for all on-screen strings and code
+9. **Repo conventions apply.** English for all on-screen strings and code
    comments; Conventional Commits; no new files under `docs/`. *Why:* this deck
    ships in the same repository as the public website.
 
@@ -380,6 +526,28 @@ the author for approval, and move on. Do not raise the limit.
 **`3 bullet slides in a row`** — the deck has gone flat. Turn the middle one
 into `themes`, `stats` or a `photo`, or put a `section` divider in front of it.
 The rule exists because three bullet slides is where a room stops listening.
+
+**`8 information slides in a row (max 4)`** — the same disease, one level up.
+Add a divider, a photograph or the break halfway along the run. Do not reorder
+the day to make it go away.
+
+**`3 full-frame slides in a row (max 2)`** — a karakia, then a photograph, then
+a chapter divider is three consecutive requests for the room's silence, and the
+third one gets impatience instead. Move one, or put the slide it was introducing
+in between.
+
+**`Only 20% of slides are dark (need 25%)`** — the deck is all working and no
+breathing. Dividers, photographs and breaks are dark by default, so the fix for
+this and the fix for a long information run are usually the same fix.
+
+**`Only 6 distinct layouts across 30 slides (need 8)`** — you reached for the
+same layout repeatedly, which nearly always means content got bent to fit it.
+Look for the list that is really four criteria, or the list that is really three
+themes.
+
+**`Eyebrow "Day One" restates the section "Day One"`** — the kicker is doing the
+section's job. Replace it with something the slide does not already say:
+*"THE FIRST OF TWO BUILD DAYS"*. Same for a kicker that restates the title.
 
 **`Accent #7b2ff7 on the dark canvas #0b0a14 is 3.10:1 (need 4.5:1)`** — the
 accent was hand-written instead of passed through `accentFromBrandColour()`.

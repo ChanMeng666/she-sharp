@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 
+import { playSlideMotion, type MotionHandle } from "@/lib/deck/motion";
 import type { Slide } from "@/lib/deck/types";
 import { slideAriaLabel, slideLabel, toneOf } from "@/lib/deck/utils";
 
@@ -74,6 +75,15 @@ export interface SlideFrameProps {
   total: number;
   /** Whether this is the slide currently on screen. */
   active: boolean;
+  /**
+   * Whether entrance motion may play. `false` is low-power / reduced-motion /
+   * print, and means the slide simply appears already composed.
+   *
+   * Defaults to `false` so that a caller which does not think about motion —
+   * the print sheet, which renders all thirty-eight slides `active` at once —
+   * cannot accidentally start thirty-eight recipes on one page.
+   */
+  motion?: boolean;
   children: ReactNode;
 }
 
@@ -93,10 +103,12 @@ export function SlideFrame({
   index,
   total,
   active,
+  motion = false,
   children,
 }: SlideFrameProps) {
   const ref = useRef<HTMLElement | null>(null);
   useFitContent(ref, slide.id);
+  useSlideMotion(ref, slide.type, active, motion);
 
   return (
     <section
@@ -113,6 +125,45 @@ export function SlideFrame({
       <SlideBoundary slide={slide}>{children}</SlideBoundary>
     </section>
   );
+}
+
+/**
+ * Plays this slide type's motion recipe whenever the slide comes on screen.
+ *
+ * Keyed to `active` rather than to mount, because every slide is mounted for
+ * the whole session: an unkeyed entrance would play all thirty-eight at once in
+ * the first three seconds and be long finished by the time anyone reached slide
+ * twenty. Re-entering a slide replays it, which is what a presenter stepping
+ * back to re-make a point expects.
+ *
+ * The recipe is stopped on the way out and whenever motion is switched off, and
+ * "stopped" always means "revealed": see the guarantee in `lib/deck/motion.ts`.
+ * The effect deliberately has no other dependencies — a recipe restarting
+ * because an unrelated prop changed would look like a glitch from the room.
+ */
+function useSlideMotion(
+  ref: React.RefObject<HTMLElement | null>,
+  type: Slide["type"],
+  active: boolean,
+  motion: boolean,
+) {
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || !active || !motion) return;
+
+    let handle: MotionHandle | null = null;
+    // One frame of headroom so the recipe measures a laid-out slide: the frame
+    // it becomes active in is also the frame the cross-fade starts, and an SVG
+    // ring has no length until it has been laid out at least once.
+    const raf = requestAnimationFrame(() => {
+      handle = playSlideMotion(element, type);
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      handle?.stop();
+    };
+  }, [ref, type, active, motion]);
 }
 
 /**

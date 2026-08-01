@@ -6,44 +6,47 @@ import type { SectionSlide } from "@/lib/deck/types";
  *
  * Deliberately almost empty. Its job is to give the room a beat — people look
  * up, the host changes footing, and nobody is asked to read anything while the
- * previous speaker walks off stage. The giant outlined index is the only thing
- * carrying position in the running order.
+ * previous speaker walks off stage. The chapter number carries the whole slide,
+ * set in `.deck-mega`, which is the one voice in the deck reserved for it.
+ *
+ * A background here is a single subject photograph rather than archive texture,
+ * so it takes the plate register — full colour, no duotone — under a scrim.
  */
 export function SectionSlideLayout({ slide }: { slide: SectionSlide }) {
-  /* A background photograph brings a dark scrim with it, so the text stops
-     following the tone tokens and uses the dark-canvas pair instead — the light
-     tone's brand purple is 2.92:1 against that scrim. */
+  /* A background brings a dark scrim with it, so the copy stops following the
+     tone tokens and uses the dark-canvas pair — the light tone's kicker and
+     accent are the brand purple, 2.92:1 against that scrim. */
   const overPhoto = Boolean(slide.background);
   const ink = overPhoto ? "var(--deck-canvas-light)" : undefined;
-  const accent = overPhoto ? "var(--deck-accent-dark)" : "var(--slide-accent)";
+  const accent = overPhoto ? "var(--deck-accent-dark)" : undefined;
 
   return (
     <>
-      {slide.background ? (
+      {slide.background && (
         <>
-          <DeckImage image={slide.background} className="deck-bleed" />
+          <div className="deck-plate deck-full-colour">
+            <DeckImage image={slide.background} />
+          </div>
           <div className="deck-scrim" aria-hidden="true" />
         </>
-      ) : (
-        <div className="deck-burst" aria-hidden="true" />
       )}
 
       <div className="deck-safe">
         <div
-          className="deck-content flex min-h-0 flex-1 flex-col justify-center"
+          className="deck-content flex flex-1 flex-col"
           style={{ gap: "var(--deck-gap-md)", color: ink }}
         >
           {slide.index && (
             <p
-              className="deck-stat deck-outline"
-              style={{ color: accent, fontSize: "calc(var(--dt-stat) * 1.7)" }}
+              className="deck-mega deck-outline"
+              style={{ color: accent ?? "var(--slide-accent)" }}
             >
               {slide.index}
             </p>
           )}
 
           {slide.eyebrow && (
-            <p className="deck-eyebrow" style={{ color: accent }}>
+            <p className="deck-kicker" style={{ color: accent }}>
               {slide.eyebrow}
             </p>
           )}

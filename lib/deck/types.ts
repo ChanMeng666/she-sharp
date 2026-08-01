@@ -171,6 +171,15 @@ export interface StatsSlide extends SlideBase {
   /** 3–4 figures. Each `value` is display-ready, e.g. `"3000+"`. */
   stats: { value: string; label: string; detail?: string }[];
   image?: DeckImage;
+  /**
+   * A handwritten aside, set in the brand script beside the hero figure.
+   *
+   * The one place in the deck where the organisation speaks in its own voice
+   * rather than reporting — "people keep showing up" next to 3000+ says what
+   * the number means in a way the number cannot. Used once, or not at all;
+   * a second one on another slide would make both of them decoration.
+   */
+  annotation?: string;
 }
 
 export interface LogosSlide extends SlideBase {

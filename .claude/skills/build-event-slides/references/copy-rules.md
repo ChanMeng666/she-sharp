@@ -34,9 +34,9 @@ version back to the author for a yes. They never see the error.
 | QR codes on the contact slide | **3** |
 | Facts under a title-slide headline | **3** |
 | Upcoming events | **3**, blurb 18 words each |
-| Words in an eyebrow (the small kicker) | **5** |
+| Words in the kicker | **5** — see below, this one is a nudge |
 
-Two more that are not counted but are checked:
+Three more that are not counted but are checked:
 
 - **A bullet never ends with a full stop.** Bullets are fragments, not
   sentences. A full stop on one bullet and not the next is the most common way a
@@ -44,6 +44,136 @@ Two more that are not counted but are checked:
 - **A bullet never starts with a dash or a dot.** The layout draws the marker.
   Typing your own creates a sub-bullet, and a sub-bullet is a paragraph wearing a
   disguise.
+- **The kicker never restates the title or the section label.** See the next
+  section — this one has its own rule because it is the difference between a
+  deck that sounds like a person and a deck that sounds like a machine.
+
+---
+
+## The kicker
+
+Every slide carries a short line above the title. It is not decoration and it is
+not a subtitle. It is the one place on a slide where you get to say something
+the layout cannot.
+
+Two labels sit at the top of a slide and they do different jobs:
+
+| | What it does | How often it changes |
+|---|---|---|
+| **Section label** | Names the chapter — "Day One", "The challenge" | Stays put across many slides |
+| **Kicker** | Names *this* page — what to do, or what is true right now | Different every single time |
+
+**They must never be restatements of each other, and the kicker must never
+restate the title.** The checker rejects both, because it is the most reliable
+tell that nobody actually wrote the slide. A kicker reading "DAY ONE" on a slide
+titled "Day one" inside a section called "Day One" is three labels saying one
+thing and the room reads none of them.
+
+### What a good one sounds like
+
+These are from the approved prototype:
+
+```
+PLEASE STAND IF YOU ARE ABLE       on the opening karakia
+THE FIRST OF TWO BUILD DAYS        on the Day One divider
+DOORS AT FIVE, DINNER ON ARRIVAL   on the run sheet
+```
+
+Read those again and notice what they have in common. Not one of them describes
+the slide. Each one either **tells the room what to do**, or **tells the room
+what is true right now** — a thing the person at the front would otherwise have
+to say out loud, or would forget to say at all.
+
+That is the test. Write the kicker by asking: *standing in this room, at this
+moment, what does someone need to know that the title does not say?*
+
+**On length:** five words is the target and the checker will point at anything
+longer — but it points, it does not block. All three examples above run to six,
+because in each case the sixth word is carrying real weight ("if you are
+**able**" is the whole courtesy of that line). Six is fine when the extra word
+earns its place. Nine is a sentence, and a sentence in the kicker slot is a
+second title.
+
+| Slide | Weak kicker (restates) | Strong kicker (adds) |
+|---|---|---|
+| Health & safety | `HEALTH AND SAFETY` | `THE EXITS ARE BEHIND YOU` |
+| Meet the judges | `OUR JUDGES` | `THEY SEE YOUR DEMO AT THREE` |
+| Break | `BREAK TIME` | `COFFEE IS IN THE ATRIUM` |
+| Prizes | `THE PRIZES` | `EVERY TEAM PITCHES, EVERY TEAM SCORES` |
+| Sponsors | `OUR SPONSORS` | `THEY PAID FOR THE KAI` |
+
+**The deck shipped before this rule used the kicker slot zero times across
+thirty-six slides.** Every one of those slides was correct and every one of them
+was a little more anonymous than it needed to be. Six words is a low price.
+
+### Where the words come from
+
+You write these, from what the author told you in the interview — not by asking
+them for thirty-six of them. Listen for the practical asides: *"oh, tell people
+the toilets are through the double doors"*, *"dinner's there when they arrive"*,
+*"they should stand for the karakia if they can"*. Those asides **are** the
+kickers. Write them down as you hear them.
+
+---
+
+## The rhythm limits — the deck, not the slide
+
+Everything above judges one slide. These judge the sequence, and a deck can pass
+every rule above and fail every rule below.
+
+| Thing | Limit |
+|---|---|
+| Full-frame slides in a row | **2** |
+| Information slides in a row | **4** |
+| Slides of the same tone (all light, all dark) in a row | **4** |
+| Share of dark slides, in a deck of 12 or more | **at least 25%** |
+| Different layouts used, in a deck of 10 or more | **at least 8** |
+| Bullet slides in a row | **2** |
+
+**Full-frame** slides are the ones that fill the screen and carry almost no
+information: the title, a chapter divider, a karakia, a break, a single
+photograph, the prizes. They are the breathing. **Information** slides are
+everything else.
+
+### Why a correct deck can still be exhausting
+
+Nobody reviews a deck as a deck. They open it, look at slide four, fix a word,
+look at slide five, fix a word. Every slide gets checked and the *shape* of the
+thing never does — which is how the first version of the hackathon deck went out
+with **eight consecutive light information slides** in the middle of it. Not one
+of them was wrong. Sitting through them was like being read a list of lists.
+
+An audience is not reading your deck, they are enduring it. What they actually
+register is change: light to dark, dense to empty, words to a face. Take the
+change away and the room stops looking up, and once a room has stopped looking
+up it does not start again for the good slide you were saving.
+
+### When the checker flags a run
+
+It will say something like *"8 information slides in a row (max 4), ending at
+slide 20"*. Do not shuffle the slides — the order is the order of the day and
+moving a slide moves a moment. **Put something in the gap instead**, roughly
+halfway along the run:
+
+- a **section divider**, if the run crosses a genuine change of subject — this
+  is the right answer about half the time, and it costs the deck nothing because
+  the divider was the missing beat all along;
+- a **photograph** of the thing being discussed, at full size, with the point in
+  four words over it;
+- the **break** you were going to announce verbally anyway;
+- or **turn one of the slides in the run into something else** — a list of five
+  things is very often three themes, four criteria or a stats slide wearing a
+  list's clothes.
+
+And if the fix is that two adjacent slides say almost the same thing, the real
+answer is to delete one. A run of eight is sometimes a run of six with two
+slides nobody needed.
+
+The other two you will see are **"not enough of the slides are dark"** and
+**"not enough different layouts"**. The first means the deck has no quiet
+moments — add a divider, a photograph or a break, all of which are dark by
+default. The second means you kept reaching for the same layout, which almost
+always means the content got bent to fit it rather than the other way around.
 
 ---
 
