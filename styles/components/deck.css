@@ -1,0 +1,625 @@
+/* ============================================================================
+   She Sharp presentation deck.
+
+   Imported only by `app/present/layout.tsx`, so it costs nothing on the rest of
+   the site. Plain CSS on purpose — this file is not preceded by
+   `@import "tailwindcss"`, so `@apply` is unavailable here.
+
+   THE STAGE
+   ---------
+   Design height is a constant 1080. Design *width* flows with the display:
+
+     stage aspect = clamp(viewport aspect, 4/3, 21/9)
+     stage width  = 1080 x stage aspect        // 1440 (4:3) ... 2520 (21:9)
+     scale        = min(vw / stage width, vh / 1080)
+
+   Inside that band the deck fills the screen edge to edge with no letterboxing,
+   which is the point: venue screens are 16:9, 16:10, 4:3 and 21:9 and black
+   bars on three of the four look like a mistake.
+
+   UNITS
+   -----
+   Use `cqi` and fixed px inside the stage. NEVER `vw`/`vh`/`dvh`: those resolve
+   against the real viewport, not the scaled stage, so they do not scale with
+   the deck. This bans the site's `.text-display-*` utilities in here — they are
+   `clamp(..., 9vw, ...)`.
+
+   TYPE
+   ----
+   Slide layouts must not set font sizes. They use the `.deck-*` type classes
+   below, whose sizes come from `--dt-*` tokens that the container queries
+   re-declare per stage width. One place to retune, everything moves together.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Viewport and stage
+   -------------------------------------------------------------------------- */
+
+.deck-viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.deck-viewport:focus {
+  outline: none;
+}
+
+.deck-viewport[data-idle="true"] {
+  cursor: none;
+}
+
+.deck-stage {
+  /* Centred by translate rather than by flex/grid alignment: the stage is
+     routinely LARGER than the viewport before scaling, and browsers park an
+     overflowing grid item at the start edge instead of centring it. Scaling
+     about its own centre then leaves it visibly offset. `translate(-50%, -50%)`
+     resolves against the element's own untransformed box, so it centres
+     correctly at every scale. */
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  /* Both custom properties set inline by `useStageScale()`. */
+  inline-size: var(--deck-stage-w, 1920px);
+  block-size: 1080px;
+  transform: translate(-50%, -50%) scale(var(--deck-scale, 1));
+  transform-origin: center;
+  container-type: inline-size;
+  container-name: deck;
+  overflow: hidden;
+  color-scheme: only light;
+
+  /* Deck-level palette; overridden inline from the deck theme. */
+  --deck-accent-light: #9b2e83;
+  --deck-accent-dark: #c846ab;
+  --deck-spark: #5ee7f5;
+  --deck-canvas-dark: #0b0a14;
+  --deck-canvas-light: #ffffff;
+
+  /* Overscan safe area. HDMI to a TV or an LED wall commonly eats 3-5% of the
+     edge, so text is inset by default rather than as an option. */
+  --deck-pad-x: max(72px, 4cqi);
+  --deck-pad-y: 56px;
+  --deck-content-max: 1600px;
+
+  /* Type scale, design px at 1080 height. Nothing smaller than 28px exists:
+     below that it is unreadable from the back of a room. */
+  --dt-display: 128px;
+  --dt-stat: 132px;
+  --dt-title: 64px;
+  --dt-subtitle: 40px;
+  --dt-bullet: 40px;
+  --dt-lead: 36px;
+  --dt-body: 32px;
+  --dt-label: 28px;
+  --dt-script: 44px;
+
+  --deck-gap-xs: 12px;
+  --deck-gap-sm: 20px;
+  --deck-gap-md: 32px;
+  --deck-gap-lg: 52px;
+  --deck-gap-xl: 76px;
+
+  --deck-radius: 32px;
+  --deck-radius-sm: 16px;
+}
+
+/* Narrow stages (4:3 and 5:4 projectors). Less width, so less type. */
+@container deck (max-width: 1560px) {
+  .deck-stage {
+    --dt-display: 104px;
+    --dt-stat: 108px;
+    --dt-title: 56px;
+    --dt-subtitle: 36px;
+    --dt-bullet: 36px;
+    --dt-lead: 32px;
+    --dt-body: 30px;
+    --dt-script: 38px;
+    --deck-gap-lg: 40px;
+    --deck-gap-xl: 56px;
+  }
+}
+
+/* Ultrawide stages. More room, so the display voice gets louder. */
+@container deck (min-width: 2200px) {
+  .deck-stage {
+    --dt-display: 148px;
+    --dt-stat: 152px;
+    --dt-title: 72px;
+    --deck-content-max: 1900px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tones
+   -------------------------------------------------------------------------- */
+
+.deck-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--slide-bg);
+  color: var(--slide-ink);
+  /* `@layer base` in globals.css gives every element the site hairline colour,
+     which is near-white and wrong on a dark slide. Reset it per tone. */
+  border-color: var(--slide-hairline);
+}
+
+.deck-slide * {
+  border-color: var(--slide-hairline);
+}
+
+.deck-slide[data-tone="light"] {
+  --slide-bg: var(--deck-canvas-light);
+  --slide-ink: #1f1e44;
+  --slide-ink-soft: #5a5880;
+  --slide-hairline: #e7e6f2;
+  --slide-surface: #f4f4fa;
+  --slide-accent: var(--deck-accent-light);
+  --slide-on-accent: #ffffff;
+}
+
+.deck-slide[data-tone="dark"] {
+  --slide-bg: var(--deck-canvas-dark);
+  --slide-ink: #ffffff;
+  --slide-ink-soft: rgb(255 255 255 / 0.74);
+  --slide-hairline: rgb(255 255 255 / 0.18);
+  --slide-surface: rgb(255 255 255 / 0.06);
+  --slide-accent: var(--deck-accent-dark);
+  --slide-on-accent: #0b0a14;
+}
+
+/* Slide visibility. All slides stay mounted so advancing never waits on
+   layout, decode or network. */
+.deck-slide[data-active="false"] {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.deck-slide[data-active="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.deck-stage[data-motion="on"] .deck-slide {
+  transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Structure
+   -------------------------------------------------------------------------- */
+
+/* The inset frame every slide's content lives in. */
+.deck-safe {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-block-size: 0;
+  padding: var(--deck-pad-y) var(--deck-pad-x);
+  /* Set by `useFitContent()` in slide-frame.tsx only when a slide's content
+     still exceeds the stage after the layout has done its own adapting. */
+  transform: scale(var(--slide-fit, 1));
+  transform-origin: top center;
+}
+
+/* Centred reading column. Keeps ultrawide stages from stretching a sentence
+   into a single unreadable line. */
+.deck-content {
+  inline-size: 100%;
+  max-inline-size: var(--deck-content-max);
+  margin-inline: auto;
+}
+
+/* Optically centre a column of content rather than pinning it to the top. A
+   five-bullet slide leaves roughly half the stage empty below the last line,
+   and on a projector that reads as an unfinished slide, not as whitespace.
+   Resetting the children to content height is what gives `justify-content`
+   free space to distribute — Tailwind's `flex-1` would otherwise absorb all of
+   it. Anything that genuinely overflows is still caught by `useFitContent()`. */
+.deck-safe > .deck-content.flex-col {
+  justify-content: center;
+}
+
+.deck-safe > .deck-content.flex-col > * {
+  flex: 0 1 auto;
+}
+
+/* Full-bleed layer: photos, gradients, the light burst. Fills the whole stage
+   including the safe-area inset, so wide screens get more picture. */
+.deck-bleed {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.deck-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgb(11 10 20 / 0.58);
+}
+
+.deck-gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    100deg,
+    rgb(11 10 20 / 0.92) 0%,
+    rgb(11 10 20 / 0.72) 42%,
+    rgb(11 10 20 / 0.15) 100%
+  );
+}
+
+/* The poster's light burst, as pure CSS. No asset to fail, no bytes to load. */
+.deck-burst {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      58% 44% at 76% 58%,
+      rgb(255 255 255 / 0.26) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      118% 90% at 76% 58%,
+      color-mix(in srgb, var(--deck-spark) 34%, transparent) 0%,
+      transparent 46%
+    ),
+    radial-gradient(
+      140% 120% at 16% 20%,
+      color-mix(in srgb, var(--deck-accent-dark) 30%, transparent) 0%,
+      transparent 62%
+    );
+}
+
+.deck-card {
+  background: var(--slide-surface);
+  border: 1px solid var(--slide-hairline);
+  border-radius: var(--deck-radius);
+  padding: var(--deck-gap-md);
+}
+
+.deck-rule {
+  block-size: 2px;
+  inline-size: 100%;
+  background: var(--slide-hairline);
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Type
+   -------------------------------------------------------------------------- */
+
+.deck-display {
+  font-family: var(--font-heading);
+  font-size: var(--dt-display);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.deck-title {
+  font-family: var(--font-heading);
+  font-size: var(--dt-title);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.deck-subtitle {
+  font-family: var(--font-heading);
+  font-size: var(--dt-subtitle);
+  font-weight: 600;
+  line-height: 1.24;
+}
+
+.deck-lead {
+  font-size: var(--dt-lead);
+  font-weight: 400;
+  line-height: 1.44;
+  color: var(--slide-ink-soft);
+  max-inline-size: 34ch;
+  text-wrap: pretty;
+}
+
+.deck-body {
+  font-size: var(--dt-body);
+  line-height: 1.5;
+}
+
+.deck-bullet {
+  font-size: var(--dt-bullet);
+  line-height: 1.34;
+  font-weight: 500;
+}
+
+/* The only uppercase in the system, matching the site's `.text-label`. */
+.deck-label {
+  font-size: var(--dt-label);
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--slide-ink-soft);
+}
+
+.deck-eyebrow {
+  font-family: var(--font-brand-script);
+  font-size: var(--dt-script);
+  line-height: 1;
+  color: var(--slide-accent);
+}
+
+.deck-stat {
+  font-family: var(--font-heading);
+  font-size: var(--dt-stat);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.deck-quote {
+  font-size: var(--dt-subtitle);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.deck-accent {
+  color: var(--slide-accent);
+}
+
+.deck-muted {
+  color: var(--slide-ink-soft);
+}
+
+.deck-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Outline display type, as used on the site's editorial pages. */
+.deck-outline {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px currentColor;
+}
+
+@supports not ((-webkit-text-stroke: 2px currentColor)) {
+  .deck-outline {
+    -webkit-text-fill-color: currentColor;
+    opacity: 0.34;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Media
+   -------------------------------------------------------------------------- */
+
+.deck-img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.deck-img-contain {
+  object-fit: contain;
+}
+
+/* Shown by `deck-image.tsx` when a file 404s. A designed colour block reads as
+   intentional from ten metres away; a broken-image glyph does not. */
+.deck-img-fallback {
+  display: flex;
+  align-items: flex-end;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: var(--deck-gap-sm);
+  background: linear-gradient(
+    135deg,
+    var(--slide-accent) 0%,
+    color-mix(in srgb, var(--deck-spark) 45%, var(--slide-accent)) 100%
+  );
+  color: #fff;
+  font-size: var(--dt-label);
+}
+
+.deck-avatar {
+  border-radius: 999px;
+  object-fit: cover;
+  background: var(--slide-surface);
+}
+
+/* Sponsor marks are a mixed bag of dark and light SVGs. On dark slides they sit
+   on a white chip rather than being filtered, which mangles multi-colour logos. */
+/* The `minmax(0, 1fr)` tracks are load-bearing. With an `auto` row the track
+   sizes to the mark's intrinsic box — several sponsor SVGs are 130px+ tall
+   against a 96px chip — and a percentage height on the child then resolves
+   against that same content-sized track, so it constrains nothing. An explicit
+   `1fr` track is definite (the chip's own height is), which lets the image fill
+   it and letterbox inside via `object-fit: contain`. */
+.deck-logo-chip {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  padding: 18px 26px;
+  border-radius: var(--deck-radius-sm);
+  background: #fff;
+  overflow: hidden;
+}
+
+.deck-logo-chip img {
+  inline-size: 100%;
+  block-size: 100%;
+  min-inline-size: 0;
+  min-block-size: 0;
+  object-fit: contain;
+}
+
+/* --------------------------------------------------------------------------
+   Viewer chrome
+   -------------------------------------------------------------------------- */
+
+.deck-chrome {
+  position: absolute;
+  z-index: 40;
+  transition: opacity 220ms ease;
+}
+
+.deck-viewport[data-idle="true"] .deck-chrome[data-autohide="true"] {
+  opacity: 0;
+}
+
+.deck-progress-track {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  block-size: 5px;
+  background: var(--slide-hairline);
+}
+
+.deck-progress-fill {
+  block-size: 100%;
+  background: var(--slide-accent);
+  transition: inline-size 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.deck-counter {
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  color: var(--slide-ink-soft);
+}
+
+/* --------------------------------------------------------------------------
+   Print / PDF backup
+   -------------------------------------------------------------------------- */
+
+.deck-print {
+  background: #f4f4fa;
+  padding: 24px;
+}
+
+.deck-page {
+  position: relative;
+  inline-size: 960px;
+  block-size: 540px;
+  margin: 0 auto 24px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+}
+
+/* 960 / 1920 is exactly 0.5, so print needs no measurement. The screen viewer's
+   translate-centring is undone here — a printed page anchors to its top left. */
+.deck-page .deck-stage {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  transform: scale(0.5);
+  transform-origin: top left;
+  inline-size: 1920px;
+}
+
+.deck-page .deck-slide {
+  opacity: 1;
+  visibility: visible;
+}
+
+.deck-page-note {
+  max-inline-size: 960px;
+  margin: 0 auto 32px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #4a4970;
+}
+
+@page {
+  size: 10in 5.625in;
+  margin: 0;
+}
+
+@media print {
+  .deck-print {
+    padding: 0;
+    background: #fff;
+  }
+
+  .deck-print-toolbar {
+    display: none !important;
+  }
+
+  .deck-page {
+    margin: 0;
+    box-shadow: none;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .deck-page-note {
+    display: none;
+  }
+
+  .deck-slide {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Root-layout neutralisers
+
+   `app/layout.tsx` renders the cookie banner and the toaster on every route.
+   Sonner sets `z-index: 999999` inline, so hiding beats stacking. The flag is
+   set by `DeckViewport` on <html> and removed on unmount.
+   -------------------------------------------------------------------------- */
+
+html[data-present] [data-cookie-banner],
+html[data-present] [data-sonner-toaster],
+/* Print mode never mounts the viewport, so it never sets `data-present` — but a
+   cookie banner across the bottom of every exported PDF page is worse there. */
+body:has(.deck-print) [data-cookie-banner],
+body:has(.deck-print) [data-sonner-toaster] {
+  display: none !important;
+}
+
+html[data-present] {
+  overflow: hidden;
+  /* globals.css sets `scrollbar-gutter: stable`, which leaves a pale strip down
+     the right edge of an otherwise black deck. */
+  scrollbar-gutter: auto;
+  background: #000;
+}
+
+html[data-present] body {
+  overflow: hidden;
+  background: #000;
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .deck-slide,
+  .deck-progress-fill,
+  .deck-chrome {
+    transition: none !important;
+  }
+}
