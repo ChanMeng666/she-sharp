@@ -10,6 +10,14 @@ This guide covers how to generate QR codes for She Sharp deployment pages, suppo
 | `app/api/qr/route.ts` | Server-side QR image generation API |
 | `components/ui/qr-code.tsx` | Reusable React component for web display |
 
+> **There is a second QR path in this repo.** Presentation decks (`/present/*`)
+> do not use any of the above — they render their own codes in
+> `components/deck/deck-qr.tsx`, sized and error-corrected for a projector
+> rather than for a screen or a printed poster. See
+> [Codes on a presentation slide](#codes-on-a-presentation-slide) at the end of
+> this guide before touching either one, because the two make different choices
+> for good reasons.
+
 ## Dependencies
 
 - **`qrcode.react`** — Client-side SVG rendering (web display)
@@ -196,3 +204,52 @@ Use `buildTargetUrl(baseUrl, target)` to construct the full URL from a target co
 |------|--------|------|--------|
 | `public/qr-her-waka-apply.svg` | SVG | 480x600 | HER WAKA mentee application |
 | `public/qr-her-waka-apply.png` | PNG | 2048x2560 | HER WAKA mentee application (print) |
+
+---
+
+## Codes on a presentation slide
+
+Presentation decks (`/present/*`) render their own codes in
+`components/deck/deck-qr.tsx` and use **none** of the machinery above. The
+differences are deliberate, and each one is a decision somebody will otherwise
+try to "fix" back:
+
+| | Web / print (this guide) | Deck slide |
+|---|---|---|
+| Source | `lib/data/qr-codes.ts` targets, or an explicit URL | `QrBlock.url` in the deck data |
+| Rendering | `QRCodeDisplay`, or `/api/qr` for print assets | `qrcode.react` inline, `DECK_QR_MODE = "generate"` |
+| Error correction | **H** (30%) | **M** |
+| Committed image | Yes, for print | No — `QrBlock.image` is an escape hatch only |
+
+**Why error correction M rather than H.** The reason to pick H is a logo punched
+through the middle or a printed code that will get scuffed. Neither applies to a
+projected code. What does apply is *distance*: at the same physical area, M
+spends it on fewer, larger modules, which is what a phone at the back of a room
+needs. A long Google Forms URL at level H produces a code dense enough to fail
+from six metres.
+
+**Why nothing is committed.** A generated code cannot drift out of sync with the
+link it encodes, and nobody has to remember to re-export a PNG when a form URL
+changes. Generation is client-side, so a code on a slide never depends on the
+venue's network.
+
+**A URL you do not have yet is an empty string, never a guess.** The slide then
+renders a dashed "Link not set yet" panel and `lib/deck/lint.ts` reports it.
+Pointing a code at last event's form instead is the failure this prevents: it
+looks perfectly correct from the front of the room while collecting the wrong
+data.
+
+### Test every destination signed out
+
+**A Google Form with a file-upload question always requires sign-in**, because
+the upload has to land in somebody's Drive. Google states this in the form's own
+settings and provides no way to turn it off. Three other causes of a sign-in
+wall *are* fixable — "Collect email addresses" set to *Verified* (use *Responder
+input*), "Limit to 1 response", and an organisation restriction.
+
+This is why `AMBASSADOR_FORM_URL` in `lib/deck/boilerplate.ts` points at
+`shesharp.org.nz/join-our-team` rather than at the intake form.
+
+Open every QR destination in an incognito window before an event. The person
+building the deck is always signed in and is therefore the one person who cannot
+see this class of problem — it surfaces for the first time in front of a room.
