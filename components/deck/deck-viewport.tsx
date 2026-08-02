@@ -46,6 +46,15 @@ const BACK_ZONE = 0.25;
  */
 const LOW_POWER_KEY = "deck:low-power";
 
+/**
+ * Whether this browser has already been shown the controls.
+ *
+ * Per browser, like the low-power choice, and for the same reason: a venue
+ * laptop is opened fresh, so the host who most needs the card is exactly the
+ * one who gets it. Someone rehearsing on their own machine sees it once.
+ */
+const COACH_KEY = "deck:coach-seen";
+
 export interface DeckViewportProps {
   deck: Deck;
   /** Forced stage aspect from `?aspect=`, or `null` to measure the display. */
@@ -86,6 +95,7 @@ export function DeckViewport({
   const [index, setIndex] = useState(0);
   const [overviewOpen, setOverviewOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
+  const [coachOpen, setCoachOpen] = useState(false);
   const [blackout, setBlackout] = useState(false);
   const [idle, setIdle] = useState(false);
 
@@ -267,6 +277,43 @@ export function DeckViewport({
       window.history.replaceState(null, "", hash);
     }
   }, [index]);
+
+  // ------------------------------------------------------------------ coach
+
+  /* Shown once per browser, on mount, before anyone has pressed anything. A
+     help panel behind a `?` nobody knows about is not discoverable, and an
+     undiscoverable control may as well not exist — the overview grid and the
+     static-mode switch were both invisible to every host who ever used this. */
+  useEffect(() => {
+    let seen = true;
+    try {
+      seen = window.localStorage.getItem(COACH_KEY) === "seen";
+    } catch {
+      seen = false;
+    }
+    if (!seen) setCoachOpen(true);
+  }, []);
+
+  /* Any real interaction dismisses it. The host who already knows the deck
+     presses the right arrow and the card is gone before the room notices it —
+     which matters, because the deck may already be on the projector. */
+  useEffect(() => {
+    if (!coachOpen) return;
+    const dismiss = () => {
+      setCoachOpen(false);
+      try {
+        window.localStorage.setItem(COACH_KEY, "seen");
+      } catch {
+        // Ignored; see the dismiss handler on the card itself.
+      }
+    };
+    document.addEventListener("keydown", dismiss, { once: true });
+    document.addEventListener("pointerdown", dismiss, { once: true });
+    return () => {
+      document.removeEventListener("keydown", dismiss);
+      document.removeEventListener("pointerdown", dismiss);
+    };
+  }, [coachOpen]);
 
   // ------------------------------------------------------------------- idle
 
@@ -634,7 +681,7 @@ export function DeckViewport({
         {preloading && (
           <div
             className="deck-chrome rounded-full border border-white/20 bg-black/70 px-4 py-2 font-medium tabular-nums text-white/80"
-            style={{ insetInlineStart: 24, insetBlockEnd: 24, fontSize: 13 }}
+            style={{ insetInlineStart: 26, insetBlockEnd: 70, fontSize: 13 }}
             role="status"
             // Findable, but never announced: sixty-five interruptions while
             // someone is trying to open an event is worse than silence.
@@ -642,6 +689,36 @@ export function DeckViewport({
           >
             Loading assets {loaded} / {images.length}
           </div>
+        )}
+
+        {/* The keys are useless if nothing says they exist. This rides the same
+            idle fade as the rest of the chrome, so the host — who is touching
+            the machine — sees it, and the room, which is looking at a still
+            projection three seconds later, does not. */}
+        <button
+          type="button"
+          className="deck-chrome deck-keyhint"
+          data-autohide="true"
+          data-no-advance
+          onClick={() => setHelpOpen(true)}
+          aria-label="Show keyboard shortcuts"
+        >
+          <span aria-hidden="true">?</span> keys
+        </button>
+
+        {coachOpen && (
+          <DeckCoach
+            total={total}
+            onDismiss={() => {
+              setCoachOpen(false);
+              try {
+                window.localStorage.setItem(COACH_KEY, "seen");
+              } catch {
+                // Private browsing. Showing it again next time is the right
+                // failure: this is a teaching card, not a preference.
+              }
+            }}
+          />
         )}
 
         {blackout && (
@@ -671,5 +748,61 @@ export function DeckViewport({
         />
       </div>
     </DeckControlsContext.Provider>
+  );
+}
+
+/**
+ * The card a host sees the first time this browser opens a deck.
+ *
+ * It exists because every control here was invisible. The keys were real, the
+ * help panel was real, and the only way to find any of it was to already know
+ * to press `?` — so in practice no host ever used the overview grid or the
+ * static-mode switch, and a feature nobody can find is a feature that is not
+ * there.
+ *
+ * Four keys, not nine. This is the set a host actually needs in a room: start,
+ * move, jump when running late, and kill the motion when the laptop struggles.
+ * The rest stay in the `?` panel, which the corner hint now points at.
+ *
+ * Dismissed by literally any key or click, because it may already be on the
+ * projector when the host opens it.
+ */
+function DeckCoach({
+  total,
+  onDismiss,
+}: {
+  total: number;
+  onDismiss: () => void;
+}) {
+  const keys: { key: string; what: string }[] = [
+    { key: "→", what: "Next slide. Space works too" },
+    { key: "F", what: "Fullscreen — do this before you start" },
+    { key: "O", what: `All ${total} slides, click one to jump` },
+    { key: "L", what: "Static mode, if the laptop struggles" },
+  ];
+
+  return (
+    <div
+      className="deck-coach"
+      role="dialog"
+      aria-label="Deck controls"
+      data-no-advance
+      onClick={onDismiss}
+    >
+      <div className="deck-coach-card">
+        <p className="deck-coach-lede">Before you start</p>
+        <ul className="deck-coach-keys">
+          {keys.map(({ key, what }) => (
+            <li key={key}>
+              <kbd>{key}</kbd>
+              <span>{what}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="deck-coach-foot">
+          <kbd>?</kbd> for everything else · press any key to begin
+        </p>
+      </div>
+    </div>
   );
 }
