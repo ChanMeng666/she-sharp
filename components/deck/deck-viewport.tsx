@@ -11,6 +11,7 @@ import {
 } from "react";
 
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { ENTRANCES_ATTR, ENTRANCES_JS } from "@/lib/deck/motion";
 import type { Deck } from "@/lib/deck/types";
 import { collectDeckImages, slideAriaLabel, toneOf } from "@/lib/deck/utils";
 
@@ -36,6 +37,14 @@ const TAP_SLOP = 10;
 
 /** Fraction of the viewport width that pages backwards when clicked. */
 const BACK_ZONE = 0.25;
+
+/**
+ * Where the low-power choice is remembered.
+ *
+ * Per browser rather than per deck on purpose: the thing being remembered is a
+ * fact about the machine plugged into the projector, not about the event.
+ */
+const LOW_POWER_KEY = "deck:low-power";
 
 export interface DeckViewportProps {
   deck: Deck;
@@ -86,6 +95,47 @@ export function DeckViewport({
     fit,
     zoom,
   });
+
+  // ------------------------------------------------------------- low power
+
+  // `null` means "nobody has decided", in which case the OS setting decides.
+  // A host who presses L once has decided, and their choice then outranks the
+  // OS on that machine — including the choice to turn motion back ON.
+  const [lowPowerChoice, setLowPowerChoice] = useState<boolean | null>(null);
+  const lowPower = lowPowerChoice ?? reducedMotion;
+  const motionOn = !lowPower;
+
+  // Read after mount, never during render: the server has no localStorage, and
+  // a value read during render would hydrate into a mismatch.
+  useEffect(() => {
+    try {
+      const stored = window.localStorage.getItem(LOW_POWER_KEY);
+      if (stored === "1" || stored === "0") setLowPowerChoice(stored === "1");
+    } catch {
+      // Private mode, or storage disabled by policy. The OS setting still works.
+    }
+  }, []);
+
+  const toggleLowPower = useCallback(() => {
+    setLowPowerChoice((previous) => {
+      const next = !(previous ?? reducedMotion);
+      try {
+        window.localStorage.setItem(LOW_POWER_KEY, next ? "1" : "0");
+      } catch {
+        // Not being able to remember it is survivable; not being able to set it
+        // in the first place would not be.
+      }
+      return next;
+    });
+  }, [reducedMotion]);
+
+  // The body flag is what stops the CSS side: the ambient wall drift, the plate
+  // swell and the slide cross-fade are all `!important`-cancelled off it, so a
+  // laptop that cannot keep up has nothing left running between clicks.
+  useEffect(() => {
+    document.body.classList.toggle("deck-low-power", lowPower);
+    return () => document.body.classList.remove("deck-low-power");
+  }, [lowPower]);
 
   const slide = deck.slides[index];
   const breakSlide = slide?.type === "break" ? slide : null;
@@ -286,6 +336,17 @@ export function DeckViewport({
         return;
       }
 
+      // Above the dialog guard on purpose: the help overlay is where the switch
+      // is documented and where its current state is shown, so a host who has
+      // just opened it to find the key must be able to press the key.
+      if (key === "l" || key === "L") {
+        // Venue laptops are often old, and a stuttering deck reads worse from
+        // the room than a static one. One key, mid-talk, no menu.
+        event.preventDefault();
+        toggleLowPower();
+        return;
+      }
+
       // A dialog owns the screen; everything below moves the deck underneath it.
       if (overviewOpen || helpOpen) return;
 
@@ -353,6 +414,7 @@ export function DeckViewport({
     helpOpen,
     overviewOpen,
     toggleFullscreen,
+    toggleLowPower,
     toggleTimer,
     total,
   ]);
@@ -508,6 +570,20 @@ export function DeckViewport({
     };
   }, []);
 
+  // Claim entrances for the JavaScript runtime, so `deck.css` stands its own
+  // `.deck-rise` / `.deck-reveal` / `.deck-draw` entrances down. Written from a
+  // layout effect rather than as a JSX attribute on purpose: it must only ever
+  // be true when JavaScript actually ran. Server-rendered markup, the print
+  // sheet and a page whose bundle failed all keep the CSS entrances.
+  useLayoutEffect(() => {
+    const stage = viewportRef.current?.querySelector<HTMLElement>(".deck-stage");
+    if (!stage) return;
+    stage.dataset[ENTRANCES_ATTR] = ENTRANCES_JS;
+    return () => {
+      delete stage.dataset[ENTRANCES_ATTR];
+    };
+  }, []);
+
   useEffect(() => {
     viewportRef.current?.focus();
   }, []);
@@ -533,7 +609,7 @@ export function DeckViewport({
           deck={deck}
           stageWidth={stageWidth}
           scale={scale}
-          motion={!reducedMotion}
+          motion={motionOn}
         >
           {deck.slides.map((item, itemIndex) => (
             <SlideFrame
@@ -542,6 +618,7 @@ export function DeckViewport({
               index={itemIndex}
               total={total}
               active={itemIndex === index}
+              motion={motionOn}
             >
               <SlideRenderer slide={item} />
             </SlideFrame>
@@ -586,7 +663,12 @@ export function DeckViewport({
           }}
         />
 
-        <DeckHelp open={helpOpen} onOpenChange={setHelpOpen} />
+        <DeckHelp
+          open={helpOpen}
+          onOpenChange={setHelpOpen}
+          lowPower={lowPower}
+          lowPowerForced={lowPowerChoice === null && reducedMotion}
+        />
       </div>
     </DeckControlsContext.Provider>
   );

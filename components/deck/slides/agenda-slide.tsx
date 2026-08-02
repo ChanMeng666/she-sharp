@@ -1,45 +1,53 @@
+import type { CSSProperties } from "react";
+
 import type { AgendaSlide, TimedItem } from "@/lib/deck/types";
 import { cn } from "@/lib/utils";
 
-/** One run-sheet row: clock time on the leading edge, six words beside it. */
+import { ArchiveBand, BAND_PAD, Kicker, seedFrom } from "./archive";
+
+/**
+ * One run-sheet row.
+ *
+ * All sizing comes from `.deck-sheet-*`; the only things decided here are the
+ * width of the time column and whether this is the "you are here" moment. That
+ * one fills with the accent rather than merely colouring its type — a colour
+ * change does not survive a washed-out projector at the back of a hall, and a
+ * filled row does.
+ */
 function AgendaRow({
   item,
-  dense,
-  isLast,
   timeWidth,
+  minHeight,
 }: {
   item: TimedItem;
-  dense: boolean;
-  isLast: boolean;
   timeWidth: number;
+  minHeight: number;
 }) {
-  const padding = dense ? 12 : 20;
+  const onAccent = item.emphasis ? { color: "var(--slide-on-accent)" } : undefined;
 
   return (
     <li
-      className="grid items-baseline"
+      className="deck-sheet-row"
       style={{
-        gridTemplateColumns: `${timeWidth}px minmax(0, 1fr)`,
-        columnGap: "var(--deck-gap-sm)",
-        paddingBlock: padding,
-        paddingInline: 20,
-        marginInline: -20,
-        borderBlockEnd: isLast ? "none" : "2px solid var(--slide-hairline)",
-        borderRadius: item.emphasis ? "var(--deck-radius-sm)" : undefined,
-        background: item.emphasis ? "var(--slide-accent)" : undefined,
-        color: item.emphasis ? "var(--slide-on-accent)" : undefined,
+        minBlockSize: minHeight,
+        ...(item.emphasis
+          ? {
+              background: "var(--slide-accent)",
+              paddingInline: "var(--deck-gap-sm)",
+              marginInline: "calc(var(--deck-gap-sm) * -1)",
+            }
+          : {}),
       }}
     >
       <span
-        className={cn(dense ? "deck-body" : "deck-bullet", "deck-tabular")}
-        style={{
-          color: item.emphasis ? "var(--slide-on-accent)" : "var(--slide-accent)",
-          fontWeight: 700,
-        }}
+        className="deck-sheet-time"
+        style={{ flexBasis: timeWidth, ...onAccent }}
       >
         {item.time}
       </span>
-      <span className={dense ? "deck-body" : "deck-bullet"}>{item.label}</span>
+      <span className="deck-sheet-item" style={onAccent}>
+        {item.label}
+      </span>
     </li>
   );
 }
@@ -47,58 +55,82 @@ function AgendaRow({
 /**
  * The run sheet — the slide the room photographs.
  *
- * Left on screen during registration and again after every break, so the times
- * are the loudest thing on it and the labels are deliberately terse. The row
- * marked `emphasis` is the "you are here" moment a host points at; it gets a
- * solid accent chip rather than a colour change, because a colour change does
- * not survive a washed-out projector.
+ * It is left up during registration and again after every break, so it is built
+ * for legibility before elegance: times loud and in the accent, labels terse,
+ * one hairline between every pair of rows and nothing else on the page. The
+ * archive band across the foot is the only decoration, and the safe area
+ * reserves its height so the last row never lands on it.
+ *
+ * THE THIRTEEN-ROW CASE. A `.deck-sheet-row` is at least 78px, the rail takes
+ * 88px and the title block spends about 230 more, which leaves room for seven
+ * rows in one column. A longer day therefore splits into two columns whatever
+ * the author asked for, and in that mode the row minimum and the time column
+ * both tighten — a 4:3 stage gives each column roughly 600px, and a 250px time
+ * column would push every six-word label onto a second line and put the sheet
+ * back over the bottom edge it was split to avoid.
  */
 export function AgendaSlideLayout({ slide }: { slide: AgendaSlide }) {
-  /* Fourteen rows in one column overflows 1080 at any type size the back of the
-     room can read, so a long day splits whatever the author asked for. */
-  const twoColumns = slide.columns === 2 || slide.items.length > 10;
-  /* Two columns halve the space a label has, so its six words start wrapping to
-     a second line and every row costs 60% more height. The dense threshold is
-     therefore lower when split, not higher. */
-  const dense = slide.items.length > (twoColumns ? 8 : 7);
-  const timeWidth = twoColumns ? 240 : 300;
+  const twoColumns = slide.columns === 2 || slide.items.length > 7;
+  const seed = seedFrom(slide.id);
 
   const half = Math.ceil(slide.items.length / 2);
   const columns = twoColumns
     ? [slide.items.slice(0, half), slide.items.slice(half)]
     : [slide.items];
 
-  return (
-    <div className="deck-safe">
-      <div
-        className="deck-content flex min-h-0 flex-1 flex-col"
-        style={{ gap: "var(--deck-gap-md)" }}
-      >
-        <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-          {slide.eyebrow && <p className="deck-eyebrow">{slide.eyebrow}</p>}
-          <h2 className="deck-title">{slide.title}</h2>
-          {slide.lead && <p className="deck-lead">{slide.lead}</p>}
-        </div>
+  const rows = Math.max(...columns.map((column) => column.length));
 
+  /* The band costs 162px of a 848px safe area. A one-column sheet always has it
+     to spare; a seven-row split column at 4:3 does not, and the run sheet is the
+     one slide where the content wins that argument outright. */
+  const showBand = !twoColumns && rows <= 6;
+
+  return (
+    <>
+      {showBand && <ArchiveBand seed={seed} />}
+
+      <div
+        className="deck-safe"
+        style={showBand ? { paddingBlockEnd: BAND_PAD } : undefined}
+      >
         <div
-          className={cn("grid min-h-0 flex-1", twoColumns ? "grid-cols-2" : "grid-cols-1")}
-          style={{ columnGap: "var(--deck-gap-xl)" }}
+          className="deck-content flex flex-1 flex-col"
+          style={{ gap: "var(--deck-gap-md)" }}
         >
-          {columns.map((items, columnIndex) => (
-            <ul key={columnIndex} className="flex flex-col">
-              {items.map((item, index) => (
-                <AgendaRow
-                  key={`${item.time}-${item.label}`}
-                  item={item}
-                  dense={dense}
-                  isLast={index === items.length - 1}
-                  timeWidth={timeWidth}
-                />
-              ))}
-            </ul>
-          ))}
+          <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
+            <Kicker text={slide.eyebrow} />
+            <h2 className="deck-title">{slide.title}</h2>
+            {slide.lead && (
+              <p className="deck-lead">{slide.lead}</p>
+            )}
+          </div>
+
+          <div
+            className={cn("grid")}
+            style={
+              {
+                gridTemplateColumns: twoColumns
+                  ? "repeat(2, minmax(0, 1fr))"
+                  : "minmax(0, 1fr)",
+                columnGap: "var(--deck-gap-xl)",
+              } as CSSProperties
+            }
+          >
+            {columns.map((items, columnIndex) => (
+              <ul key={columnIndex} className="deck-sheet">
+                {items.map((item) => (
+                  <AgendaRow
+                    key={`${item.time}-${item.label}`}
+                    item={item}
+                    timeWidth={twoColumns ? 208 : 250}
+                    minHeight={twoColumns ? 68 : 78}
+                  />
+                ))}
+              </ul>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

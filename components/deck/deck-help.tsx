@@ -6,6 +6,10 @@ import { X } from "lucide-react";
 export interface DeckHelpProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** Whether motion is currently off. Shown live, so `L` can be tried from here. */
+  lowPower?: boolean;
+  /** `true` when it is off because the OS asks for it, not because L was pressed. */
+  lowPowerForced?: boolean;
 }
 
 /** Every binding the viewport listens for, in the order a host learns them. */
@@ -17,6 +21,7 @@ const BINDINGS: { keys: string; action: string }[] = [
   { keys: "F", action: "Full screen on and off" },
   { keys: "O", action: "Overview — jump to any slide" },
   { keys: "B", action: "Blackout the screen; any key brings it back" },
+  { keys: "L", action: "Low power — stop all animation on a slow laptop" },
   { keys: "?", action: "This list" },
   { keys: "Escape", action: "Close overview, then help, then blackout" },
   { keys: "Click / tap", action: "Next slide; the left quarter goes back" },
@@ -30,7 +35,12 @@ const BINDINGS: { keys: string; action: string }[] = [
  * the shortcuts have to be reachable from inside the deck, in one keystroke,
  * without leaving the slide that is on the projector.
  */
-export function DeckHelp({ open, onOpenChange }: DeckHelpProps) {
+export function DeckHelp({
+  open,
+  onOpenChange,
+  lowPower = false,
+  lowPowerForced = false,
+}: DeckHelpProps) {
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal>
@@ -78,7 +88,33 @@ export function DeckHelp({ open, onOpenChange }: DeckHelpProps) {
             </tbody>
           </table>
 
-          <p className="mt-5 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[12px] leading-relaxed text-white/70">
+          {/* State, not just a binding. A host who has pressed L wants to see
+              that it took, and a host on a machine that asked for reduced
+              motion needs to know why the deck is already still. */}
+          <p
+            className="mt-5 flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[12px] leading-relaxed text-white/70"
+            aria-live="polite"
+          >
+            <span>
+              Motion is{" "}
+              <strong className="font-semibold text-white/90">
+                {lowPower ? "off" : "on"}
+              </strong>
+              {lowPowerForced
+                ? " — this machine asks for reduced motion. L turns it back on."
+                : " — press L to switch. Remembered on this computer."}
+            </span>
+            <span
+              aria-hidden="true"
+              className={
+                lowPower
+                  ? "h-2 w-2 shrink-0 rounded-full bg-white/30"
+                  : "h-2 w-2 shrink-0 rounded-full bg-emerald-400"
+              }
+            />
+          </p>
+
+          <p className="mt-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[12px] leading-relaxed text-white/70">
             On a <strong className="font-semibold text-white/90">break</strong>{" "}
             slide, Space starts and pauses the countdown and does{" "}
             <strong className="font-semibold text-white/90">not</strong> advance

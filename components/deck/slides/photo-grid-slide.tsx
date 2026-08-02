@@ -1,6 +1,8 @@
 import { DeckImage } from "@/components/deck/deck-image";
 import type { PhotoGridSlide } from "@/lib/deck/types";
 
+import { Kicker } from "./archive";
+
 /**
  * Column templates per image count. Fractional units on purpose: the mosaic
  * keeps its proportions from a 1440px projector to a 2520px LED wall, and the
@@ -36,11 +38,17 @@ const PLACEMENT: Record<number, { gridColumn: string; gridRow: string }[]> = {
 
 /**
  * The "what this actually looks like" slide — three to five photographs from a
- * previous event, arranged as an editorial mosaic rather than a uniform grid.
+ * previous event, arranged as an editorial mosaic rather than a contact sheet.
  *
- * Runs while the host describes the day, or on a loop before doors open. One
- * dominant image anchors the composition so the eye has somewhere to land;
- * beyond five pictures it stops reading as a composition and the linter says so.
+ * This is the archive used as MASS, so the duotone is mandatory and applies to
+ * every cell including the dominant one. That is the difference between this
+ * slide and `photo`: there a single frame is the subject and keeps its colour,
+ * here five frames are one texture, and five untreated shots spanning four stops
+ * of white balance would read as five different decks stapled together.
+ *
+ * The mosaic is bled into the safe area's full remaining height and the grid
+ * gap is the wall's own 4px grout, so the block reads as a piece of the wall
+ * lifted into the page rather than as a gallery of pictures.
  */
 export function PhotoGridSlideLayout({ slide }: { slide: PhotoGridSlide }) {
   const count = slide.images.length;
@@ -50,31 +58,30 @@ export function PhotoGridSlideLayout({ slide }: { slide: PhotoGridSlide }) {
   return (
     <div className="deck-safe">
       <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-        {slide.eyebrow && <p className="deck-eyebrow">{slide.eyebrow}</p>}
+        <Kicker text={slide.eyebrow} />
         <h2 className="deck-title">{slide.title}</h2>
         {slide.lead && <p className="deck-lead">{slide.lead}</p>}
       </div>
 
+      {/* `.deck-duotone .deck-slot` already supplies the shadow colour as each
+          cell's immediate backdrop, so no `.deck-duotone-cell` is needed here.
+
+          The cells carry no ratio modifier on purpose: in the 3–5 image
+          compositions above both grid axes are definite, so a slot ratio would
+          be ignored anyway, and the mosaic's own proportions are the
+          composition. The ratio does take effect on the defensive fallback path,
+          where it gives uniform tiles instead of a ragged row. */}
       <div
-        className="grid min-h-0 flex-1"
+        className="deck-duotone grid min-h-0 flex-1"
         style={{
           marginBlockStart: "var(--deck-gap-md)",
-          gap: "var(--deck-gap-sm)",
-          gridTemplateColumns:
-            template ?? "repeat(auto-fit, minmax(360px, 1fr))",
-          gridTemplateRows: placement ? "1fr 1fr" : "auto",
+          gap: "var(--deck-wall-gap)",
+          gridTemplateColumns: template ?? "repeat(auto-fit, minmax(360px, 1fr))",
+          gridTemplateRows: placement ? "minmax(0, 1fr) minmax(0, 1fr)" : "auto",
         }}
       >
         {slide.images.map((image, index) => (
-          <div
-            key={image.src}
-            className="overflow-hidden"
-            style={{
-              ...(placement?.[index] ?? {}),
-              borderRadius: "var(--deck-radius)",
-              background: "var(--slide-surface)",
-            }}
-          >
+          <div key={image.src} className="deck-slot" style={placement?.[index]}>
             <DeckImage image={image} />
           </div>
         ))}
