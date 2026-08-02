@@ -1367,6 +1367,145 @@
 }
 
 /* --------------------------------------------------------------------------
+   Host affordances
+
+   The keyboard map was real and completely invisible: the only route to it was
+   already knowing to press `?`. In practice no host ever opened the overview
+   grid or the static-mode switch, because nothing on screen said they existed —
+   and a control nobody can find is a control that is not there.
+
+   Both of these are for the person at the laptop, never for the room. The hint
+   rides the same idle fade as the rest of the chrome, so it is visible while
+   someone is touching the machine and gone three seconds later, which is the
+   state the projector spends the whole event in.
+   -------------------------------------------------------------------------- */
+
+.deck-keyhint {
+  position: absolute;
+  /* Bottom LEFT. The slide counter owns the bottom right inside the stage, and
+     the two collided there — the hint sat on top of "12 / 38". */
+  inset-block-end: 22px;
+  inset-inline-start: 26px;
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border: 1px solid rgb(255 255 255 / 0.22);
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.55);
+  color: rgb(255 255 255 / 0.82);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.deck-keyhint span {
+  display: grid;
+  place-items: center;
+  inline-size: 18px;
+  block-size: 18px;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 0.16);
+  font-weight: 700;
+}
+
+.deck-keyhint:hover {
+  background: rgb(0 0 0 / 0.78);
+  color: #fff;
+}
+
+/* The teaching card. Shown once per browser, dismissed by anything at all —
+   it may already be on the projector when the host opens the deck. */
+.deck-coach {
+  position: absolute;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background: rgb(4 3 10 / 0.82);
+  backdrop-filter: blur(6px);
+}
+
+.deck-coach-card {
+  inline-size: min(560px, 100%);
+  padding: 34px 38px 30px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 10px;
+  background: #0b0a14;
+  color: #fff;
+}
+
+.deck-coach-lede {
+  margin: 0 0 22px;
+  color: var(--deck-mint, #b1f6e9);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.deck-coach-keys {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+}
+
+.deck-coach-keys li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 16px;
+  line-height: 1.35;
+  color: rgb(255 255 255 / 0.86);
+}
+
+.deck-coach kbd {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  min-inline-size: 34px;
+  block-size: 34px;
+  padding-inline: 9px;
+  border: 1px solid rgb(255 255 255 / 0.26);
+  border-radius: 6px;
+  background: rgb(255 255 255 / 0.08);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.deck-coach-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding-block-start: 20px;
+  border-block-start: 1px solid rgb(255 255 255 / 0.12);
+  font-size: 13px;
+  color: rgb(255 255 255 / 0.55);
+}
+
+.deck-coach-foot kbd {
+  min-inline-size: 26px;
+  block-size: 26px;
+  font-size: 13px;
+}
+
+/* Neither belongs in an exported PDF. */
+@media print {
+  .deck-keyhint,
+  .deck-coach {
+    display: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
    Print / PDF backup
    -------------------------------------------------------------------------- */
 
