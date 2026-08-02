@@ -9,8 +9,40 @@ pwsh report/build.ps1 -Png         # ... plus 150ppi page previews to look at
 pwsh report/build.ps1 -Final       # the shipping PDF (blocked while data is unverified)
 ```
 
-**Read `report/PITFALLS.md` before editing anything here.** Every rule in it is a
-layout bug the compiler does not catch — a clean compile proves nothing.
+**Read `report/PITFALLS.md` before editing anything here.** Its first half is
+layout bugs the compiler does not catch; its second half is the failures the
+layout rules cannot catch at all — invented sources, claims in headings, prose
+that outlived the chart it described. A clean compile proves nothing about
+either.
+
+---
+
+## Status
+
+**30 content pages.** Draft builds add a placeholder register that vanishes in a
+final build. Shipped 2026-08-01 (PR #93).
+
+**`-Final` is currently blocked by design** — 64 metrics are still unverified.
+That is the honest state of this half-year's measurement, and the gate exists so
+it cannot be published as if it were not.
+
+### What is needed to unblock a final build
+
+Editing **`data/report-data.typ` alone** should be enough. If any other file
+needs touching, the data layer has leaked and that is the bug.
+
+| Needed | Where it goes | Why it is missing |
+|---|---|---|
+| Attendance for 5 of 9 events | `D.events.<slug>.*` | Never exported from the booking platform. The 5 May cohort's export is *broken*, not empty — it shows 5 registrations for a session with a full speaker line-up and a photo gallery. |
+| Returning attendees, organisations | `D.events.<slug>.*` | The 2025 report sourced these from the company name entered at ticket checkout, so the field exists; it has not been exported for this period. |
+| H1 income, expenditure, cost per participant | `D.finance.*` | Held in accounting records outside this repository. `programme-funding`, `surplus` and `cost-per-participant` are already defined and unused — wiring them is a page, not a schema change. |
+| Employment outcomes | — | **Not tracked by any system She Sharp operates.** The report says so rather than estimating. Needs a measurement decision before it needs a number. |
+| Participant demographics | — | Not collected. The largest gap for an MSD-funded employment programme. |
+
+Two things the report cannot fix for itself: a **safeguarding statement** for the
+youth workshops with 12–18-year-olds, and a `period?: string` field on
+`types/impact-report.ts` so a half-year edition can be listed on `/resources`
+(that type is keyed by `year` alone).
 
 ---
 

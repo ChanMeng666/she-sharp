@@ -85,6 +85,35 @@ carries its ratio in a comment next to it.**
 Do not lower `spacing` to save vertical space without lowering `leading`
 proportionally. **The ratio is the contract, not the numbers.**
 
+**Rule 3 is worthless without rule 3b. Read on.**
+
+## 3b. `spacing:` does NOTHING unless the list is `tight: false`
+
+A Typst list written **without blank lines between its items** is a *tight* list,
+and a tight list spaces its items with `par.leading`. It **ignores `spacing:`
+entirely**. Since almost all prose is written without blank lines between
+bullets, this is the default state, not an edge case.
+
+Every one of the four calibrated pairings above shipped **inert**. Measured on
+the rendered methodology page: bullet-to-bullet pitch **16px**, within-bullet
+wrapped-line pitch **16px** — a ratio of **1.00×** where the comment beside the
+code claimed 1.87×. Seven disclosure caveats rendered as one undifferentiated
+grey slab.
+
+```typst
+set list(tight: false, spacing: 11pt, indent: 0pt, body-indent: 7pt, …)
+//        ^^^^^^^^^^^ load-bearing. Without it the next argument is discarded.
+```
+
+**Why this one is especially dangerous:** it is invisible to every check that
+does not measure pixels. The ratio comments were all present and all correct, so
+a source grep for "does every `set list` carry its ratio?" reports the contract
+as *passing* while nothing is enforcing it. This project's own compliance check
+reported green on it for several builds.
+
+**Verify list spacing by measuring the render, never by reading the source.**
+Rasterise the page and compare between-item pitch against within-item pitch.
+
 ## 4. Quote / callout / stat cards must be `breakable: false`
 
 A breakable card can split across a page and orphan its attribution line, or its
@@ -240,3 +269,63 @@ slashes, digits) out.
    - every placeholder still carries its amber marker.
 4. For a `-Final` build: the provenance gate passed, so no amber marker and no
    draft ribbon appear anywhere.
+5. **Measure, do not eyeball, anything with a number attached to it** — list
+   ratios (rule 3b), contrast, bar lengths, card baselines. Two chart bars
+   suspected of being mis-scaled by eye during review were both fine; the list
+   spacing that read as fine was 1.00×.
+
+---
+
+# The other half: things the layout rules cannot catch
+
+Three adversarial reviews of the rendered pages found more defects **outside**
+this document than inside it. A page can obey every rule above and still be
+wrong. Check these too.
+
+## The provenance system has a blind spot, and it is everything that is not a number
+
+`lib/metrics.typ` walks `report/data/` and marks unverified *metrics*. It cannot
+inspect a diagram, a photo caption, a chart title, a chapter heading, or a
+sentence of prose. **That is where an unsupportable claim will actually hide.**
+Real examples caught here:
+
+- A process diagram showing a six-month cycle, a three-month check-in and a
+  close-out survey — none of which had run, on the page facing two empty database
+  tables. Its source note claimed the stage names matched the database schema;
+  not one of them appeared in `relationship_status`.
+- A chapter kicker asserting "…for the first time", backed only by a placeholder
+  that was never printed. **No heading carries an amber marker, so a claim made
+  in one reads as established fact.**
+- Prose stating what participants "name when asked what worked", in a report
+  whose own methodology page says no survey ran.
+- An organisation table headed "Registered attendees by organisation" summing to
+  58 against a stated 103 registrations.
+
+## Rules that came out of this build
+
+1. **An empty field means "look further", not "there is nothing".** Two speakers
+   were printed with employers the record did not contain, because a blank
+   `company` was read as "no employer" — the bio named one two clauses in. One of
+   them was attributed to a partner organisation that receives this report.
+2. **Never apply house style to a quotation.** A banned-word list governs *our*
+   prose. A named living person's words are reproduced verbatim, with cuts marked
+   by an ellipsis, or not used.
+3. **Deleting a fabricated chart does not delete the sentence that summarised it.**
+   Grep the prose for claims that depended on the thing you removed.
+4. **A placeholder that can never become real is not a placeholder.** If no
+   process exists that would ever produce the number, remove the component rather
+   than marking it. Marking implies "awaiting data".
+5. **Two irreconcilable numbers on one page cost more than a missing one.** A
+   reader who adds a column and finds it short stops trusting the whole document.
+6. **State the comparison your reader already has.** Withholding the prior-year
+   figure does not stop the comparison being made; it only stops you framing it.
+
+## Sanity checks worth automating
+
+- Every rendered image resolves to a **unique** source file. Duplicates crept in
+  twice: a chapter plate reusing the hero photo on the very next page, and one
+  portrait appearing on two pages three apart.
+- Every `photo()` key used at page size uses a **plate**-role asset. A 620px
+  thumbnail rendition was once stretched across a full A4 page.
+- The contents page's folios match the rendered pages. Merging or splitting a
+  section silently invalidates them.
