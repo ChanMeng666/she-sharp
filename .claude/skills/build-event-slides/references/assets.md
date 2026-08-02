@@ -193,12 +193,35 @@ Practical consequences:
 - **The feedback code is a fresh Google Form for every event.** There is no
   default and there should never be one. It is a required question in the
   interview — see Round 7 of `content-checklist.md`.
-- **Check the form is open to the public before the event.** If opening the
-  form URL in a signed-out browser lands on a Google sign-in page, the form is
-  set to collect verified email addresses or is restricted to a Workspace
-  domain, and attendees who are not signed in — or signed in with the wrong
-  account — will hit a wall at the exact moment they scan. That is a setting in
-  the form, not something the deck can fix.
+- **Open every QR destination in a signed-out browser before the event.** Not a
+  normal window — an incognito one, or another browser you are not logged into.
+  This is the single check most worth doing, because the person who builds the
+  deck is always signed in and therefore is the one person who cannot see the
+  problem.
+
+  If it lands on a Google sign-in page, attendees who are not signed in — or who
+  are signed in with the wrong account — hit a wall at the exact moment they are
+  holding up a phone in a room full of people. Three causes, and only two of
+  them are fixable:
+
+  | What you see in Settings | Fix |
+  |---|---|
+  | **Collect email addresses** = "Verified" | Change to **"Responder input"** — it asks for the email as an ordinary question instead of forcing a login. Do not use "Do not collect" on a form whose whole purpose is to reach people. |
+  | **Limit to 1 response** is on | Turn it off. It identifies people by Google account, so it requires one. |
+  | **Restrict to users in \<organisation\>** is on | Turn it off, or in Drive set General access to "Anyone with the link". |
+  | **"because this form has File Upload questions, respondents will be required to sign in"** | **Not fixable.** See below. |
+
+- **A Google Form with a file-upload question always requires sign-in.** The note
+  appears under "Collect email addresses" in Settings, and there is no toggle for
+  it — the upload has to land in somebody's Drive, so Google insists on knowing
+  who is uploading. The She Sharp ambassador form has one, which is why
+  `AMBASSADOR_FORM_URL` points at `shesharp.org.nz/join-our-team` and not at the
+  form.
+
+  Point the code at a public page that links onward to the form. It costs one
+  extra click and it is the better flow anyway: nobody attaches a CV standing in
+  a hall. What should happen in that moment is *"I am interested and I know
+  where to go"*, which a public page does and a login wall does not.
 
 ## The archive wall
 
