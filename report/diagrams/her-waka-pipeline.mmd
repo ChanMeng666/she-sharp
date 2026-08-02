@@ -1,0 +1,53 @@
+---
+config:
+  theme: base
+  themeVariables:
+    fontFamily: "Instrument Sans, Segoe UI, Arial, sans-serif"
+    fontSize: "15px"
+    background: "#ffffff"
+    primaryColor: "#f7e5f3"
+    primaryTextColor: "#1f1e44"
+    primaryBorderColor: "#9b2e83"
+    secondaryColor: "#f4f4fa"
+    secondaryBorderColor: "#8982ff"
+    tertiaryColor: "#effefb"
+    tertiaryBorderColor: "#b1f6e9"
+    mainBkg: "#f7e5f3"
+    nodeBorder: "#9b2e83"
+    nodeTextColor: "#1f1e44"
+    lineColor: "#8982ff"
+    textColor: "#1f1e44"
+    titleColor: "#9b2e83"
+    edgeLabelBackground: "#ffffff"
+    clusterBkg: "#f4f4fa"
+    clusterBorder: "#c4c1ff"
+  flowchart:
+    curve: basis
+    nodeSpacing: 46
+    rankSpacing: 58
+    padding: 22
+    useMaxWidth: false
+    htmlLabels: false
+  htmlLabels: false
+---
+%% Wrapped into two rows of three on purpose. A single LR chain of six nodes
+%% renders at about 13:1; placed at A4 text width that prints the node labels at
+%% 6pt. Two rows bring it to roughly 3:1, which prints the same labels at ~11pt.
+flowchart TB
+  subgraph ROW1 [" "]
+    direction LR
+    I["Referral and<br/>MSD intake"] --> S["Cohort<br/>session"] --> W["Skills<br/>workshop"]
+  end
+  subgraph ROW2 [" "]
+    direction LR
+    P["Industry<br/>panel"] --> F["Network<br/>follow-up"] --> E["Employment<br/>pathway"]
+  end
+  W --> P
+
+  classDef intake fill:#f4f4fa,stroke:#8982ff,stroke-width:2px,color:#1f1e44;
+  classDef cohort fill:#f7e5f3,stroke:#9b2e83,stroke-width:2px,color:#1f1e44;
+  classDef outcome fill:#effefb,stroke:#57c9b3,stroke-width:2.5px,color:#1f1e44;
+
+  class I intake;
+  class S,W,P,F cohort;
+  class E outcome;

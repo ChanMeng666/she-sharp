@@ -1,0 +1,726 @@
+{
+  "mmd:her-waka-pipeline": {
+    "mtimeMs": 1785554043178.808,
+    "size": 1614,
+    "cssMtime": 1785554043178.808,
+    "hash": "0582b2ea7b3efe91",
+    "cssHash": "c18e90db650ea680"
+  },
+  "mmd:mentor-matching": {
+    "mtimeMs": 1785554043178.808,
+    "size": 1644,
+    "cssMtime": 1785554043178.808,
+    "hash": "88e3d927d74cea53",
+    "cssHash": "c18e90db650ea680"
+  },
+  "cover-plate": {
+    "src": "public/img/curated/divider-crowd-wide-1920.webp",
+    "role": "plate",
+    "sourceMtimeMs": 1783419481614,
+    "sourceSize": 318202,
+    "sourceHash": "0483a78984127d31",
+    "options": "[4,\"plate\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/cover-plate.jpg",
+    "outBytes": 292595
+  },
+  "chapter-her-waka": {
+    "src": "public/img/curated/speaker-her-waka-1920.webp",
+    "role": "plate",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 193632,
+    "sourceHash": "a556c359e86d9d73",
+    "options": "[4,\"plate\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/chapter-her-waka.jpg",
+    "outBytes": 161127
+  },
+  "chapter-youth": {
+    "src": "public/img/events/peyvand-academy-20-june-2026-photo-4.webp",
+    "role": "plate",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 169716,
+    "sourceHash": "049583d807a48719",
+    "options": "[4,\"plate\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/chapter-youth.jpg",
+    "outBytes": 214224
+  },
+  "chapter-thanks": {
+    "src": "public/img/curated/hero-conference-crowd-1920.webp",
+    "role": "plate",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 255794,
+    "sourceHash": "b28074555337834d",
+    "options": "[4,\"plate\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/chapter-thanks.jpg",
+    "outBytes": 223177
+  },
+  "she-sharp-and-academyex-international-womens-day-2026-hero": {
+    "src": "public/img/events/archive/she-sharp-and-academyex-international-womens-day-2026/1.webp",
+    "role": "hero",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 74452,
+    "sourceHash": "be9053aa09b01220",
+    "options": "[4,\"hero\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/she-sharp-and-academyex-international-womens-day-2026-hero.jpg",
+    "outBytes": 119930
+  },
+  "she-sharp-and-academyex-international-womens-day-2026-2": {
+    "src": "public/img/events/archive/she-sharp-and-academyex-international-womens-day-2026/2.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 44286,
+    "sourceHash": "dcdd4013d8779636",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/she-sharp-and-academyex-international-womens-day-2026-2.jpg",
+    "outBytes": 42054
+  },
+  "she-sharp-and-academyex-international-womens-day-2026-3": {
+    "src": "public/img/events/archive/she-sharp-and-academyex-international-womens-day-2026/3.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 76924,
+    "sourceHash": "7803b9954c212e53",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/she-sharp-and-academyex-international-womens-day-2026-3.jpg",
+    "outBytes": 60281
+  },
+  "her-waka-hero": {
+    "src": "public/img/events/archive/her-waka/1.webp",
+    "role": "hero",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 92042,
+    "sourceHash": "35fb872eb383cab0",
+    "options": "[4,\"hero\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/her-waka-hero.jpg",
+    "outBytes": 144228
+  },
+  "her-waka-2": {
+    "src": "public/img/events/archive/her-waka/2.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 103386,
+    "sourceHash": "4ae940b487b76a53",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/her-waka-2.jpg",
+    "outBytes": 66628
+  },
+  "her-waka-3": {
+    "src": "public/img/events/archive/her-waka/3.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 89224,
+    "sourceHash": "49c88508d2b53dee",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/her-waka-3.jpg",
+    "outBytes": 63199
+  },
+  "her-waka-april-2026-hero": {
+    "src": "public/img/events/archive/her-waka-april-2026/1.webp",
+    "role": "hero",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 42118,
+    "sourceHash": "28127043cf2a2356",
+    "options": "[4,\"hero\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/her-waka-april-2026-hero.jpg",
+    "outBytes": 80580
+  },
+  "her-waka-april-2026-2": {
+    "src": "public/img/events/archive/her-waka-april-2026/2.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 110966,
+    "sourceHash": "7a6e4d44be611212",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/her-waka-april-2026-2.jpg",
+    "outBytes": 70604
+  },
+  "her-waka-april-2026-3": {
+    "src": "public/img/events/archive/her-waka-april-2026/3.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 97576,
+    "sourceHash": "aa6bdcf125e663b1",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/her-waka-april-2026-3.jpg",
+    "outBytes": 63392
+  },
+  "she-sharp-candice-murray-own-your-energy-hero": {
+    "src": "public/img/events/archive/she-sharp-candice-murray-own-your-energy/1.webp",
+    "role": "hero",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 79580,
+    "sourceHash": "5fecccf00794b681",
+    "options": "[4,\"hero\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/she-sharp-candice-murray-own-your-energy-hero.jpg",
+    "outBytes": 127551
+  },
+  "she-sharp-candice-murray-own-your-energy-2": {
+    "src": "public/img/events/archive/she-sharp-candice-murray-own-your-energy/2.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 75772,
+    "sourceHash": "40153bb0a65234ef",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/she-sharp-candice-murray-own-your-energy-2.jpg",
+    "outBytes": 60039
+  },
+  "she-sharp-candice-murray-own-your-energy-3": {
+    "src": "public/img/events/archive/she-sharp-candice-murray-own-your-energy/3.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 93346,
+    "sourceHash": "581e0b67a8a13601",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/she-sharp-candice-murray-own-your-energy-3.jpg",
+    "outBytes": 70753
+  },
+  "her-waka-may-2026-hero": {
+    "src": "public/img/events/archive/her-waka-may-2026/1.webp",
+    "role": "hero",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 79914,
+    "sourceHash": "34cb039432a3e91e",
+    "options": "[4,\"hero\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/her-waka-may-2026-hero.jpg",
+    "outBytes": 128138
+  },
+  "her-waka-may-2026-2": {
+    "src": "public/img/events/archive/her-waka-may-2026/2.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 70368,
+    "sourceHash": "e097cc3e52d0da8d",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/her-waka-may-2026-2.jpg",
+    "outBytes": 52878
+  },
+  "her-waka-may-2026-3": {
+    "src": "public/img/events/archive/her-waka-may-2026/3.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 99992,
+    "sourceHash": "2ef3d1e6df2afc43",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/her-waka-may-2026-3.jpg",
+    "outBytes": 63327
+  },
+  "making-linkedin-work-for-you-with-stuart-little-hero": {
+    "src": "public/img/events/archive/making-linkedin-work-for-you-with-stuart-little/1.webp",
+    "role": "hero",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 38272,
+    "sourceHash": "f8c7856da455367f",
+    "options": "[4,\"hero\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/making-linkedin-work-for-you-with-stuart-little-hero.jpg",
+    "outBytes": 78052
+  },
+  "making-linkedin-work-for-you-with-stuart-little-2": {
+    "src": "public/img/events/archive/making-linkedin-work-for-you-with-stuart-little/2.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 25896,
+    "sourceHash": "b5d7cbd9bc194f82",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/making-linkedin-work-for-you-with-stuart-little-2.jpg",
+    "outBytes": 30666
+  },
+  "making-linkedin-work-for-you-with-stuart-little-3": {
+    "src": "public/img/events/archive/making-linkedin-work-for-you-with-stuart-little/3.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 104870,
+    "sourceHash": "09491bf3536353bb",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/making-linkedin-work-for-you-with-stuart-little-3.jpg",
+    "outBytes": 67309
+  },
+  "her-waka-june-2026-hero": {
+    "src": "public/img/events/archive/her-waka-june-2026/1.webp",
+    "role": "hero",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 72812,
+    "sourceHash": "67aac3a31f85a096",
+    "options": "[4,\"hero\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/her-waka-june-2026-hero.jpg",
+    "outBytes": 117552
+  },
+  "her-waka-june-2026-2": {
+    "src": "public/img/events/archive/her-waka-june-2026/2.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 53018,
+    "sourceHash": "c64f6c37ad4cae0a",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/her-waka-june-2026-2.jpg",
+    "outBytes": 46152
+  },
+  "her-waka-june-2026-3": {
+    "src": "public/img/events/archive/her-waka-june-2026/3.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 93866,
+    "sourceHash": "1cfbe8ef4da3a254",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/her-waka-june-2026-3.jpg",
+    "outBytes": 60619
+  },
+  "peyvand-academy-13-june-2026-hero": {
+    "src": "public/img/events/peyvand-academy-13-june-2026-photo-1.webp",
+    "role": "hero",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 256436,
+    "sourceHash": "31c01d910348c769",
+    "options": "[4,\"hero\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-13-june-2026-hero.jpg",
+    "outBytes": 173028
+  },
+  "peyvand-academy-13-june-2026-2": {
+    "src": "public/img/events/peyvand-academy-13-june-2026-photo-2.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 65000,
+    "sourceHash": "fc887388cc22a6c5",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-13-june-2026-2.jpg",
+    "outBytes": 50312
+  },
+  "peyvand-academy-13-june-2026-3": {
+    "src": "public/img/events/peyvand-academy-13-june-2026-photo-3.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 95708,
+    "sourceHash": "b9a5e4d73e0abffa",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-13-june-2026-3.jpg",
+    "outBytes": 61447
+  },
+  "peyvand-academy-13-june-2026-4": {
+    "src": "public/img/events/peyvand-academy-13-june-2026-photo-4.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 75964,
+    "sourceHash": "49b722c165b51061",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-13-june-2026-4.jpg",
+    "outBytes": 56637
+  },
+  "peyvand-academy-13-june-2026-5": {
+    "src": "public/img/events/peyvand-academy-13-june-2026-photo-5.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 98048,
+    "sourceHash": "344ba1e65dd56667",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-13-june-2026-5.jpg",
+    "outBytes": 114228
+  },
+  "peyvand-academy-13-june-2026-6": {
+    "src": "public/img/events/peyvand-academy-13-june-2026-photo-6.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 72086,
+    "sourceHash": "29271fc2ced58d6e",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-13-june-2026-6.jpg",
+    "outBytes": 93860
+  },
+  "peyvand-academy-13-june-2026-7": {
+    "src": "public/img/events/peyvand-academy-13-june-2026-photo-7.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 74934,
+    "sourceHash": "433ef686adc46143",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-13-june-2026-7.jpg",
+    "outBytes": 93458
+  },
+  "peyvand-academy-20-june-2026-hero": {
+    "src": "public/img/events/peyvand-academy-20-june-2026-photo-1.webp",
+    "role": "hero",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 146858,
+    "sourceHash": "2902e1eb8062285c",
+    "options": "[4,\"hero\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-20-june-2026-hero.jpg",
+    "outBytes": 142501
+  },
+  "peyvand-academy-20-june-2026-2": {
+    "src": "public/img/events/peyvand-academy-20-june-2026-photo-2.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 211838,
+    "sourceHash": "654596933c193760",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-20-june-2026-2.jpg",
+    "outBytes": 78164
+  },
+  "peyvand-academy-20-june-2026-3": {
+    "src": "public/img/events/peyvand-academy-20-june-2026-photo-3.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 170580,
+    "sourceHash": "e0d46620237efc08",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-20-june-2026-3.jpg",
+    "outBytes": 73936
+  },
+  "peyvand-academy-20-june-2026-4": {
+    "src": "public/img/events/peyvand-academy-20-june-2026-photo-4.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 169716,
+    "sourceHash": "049583d807a48719",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-20-june-2026-4.jpg",
+    "outBytes": 72774
+  },
+  "peyvand-academy-20-june-2026-5": {
+    "src": "public/img/events/peyvand-academy-20-june-2026-photo-5.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 132406,
+    "sourceHash": "9cb4e3de5ef76d87",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-20-june-2026-5.jpg",
+    "outBytes": 58463
+  },
+  "peyvand-academy-20-june-2026-6": {
+    "src": "public/img/events/peyvand-academy-20-june-2026-photo-6.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 221910,
+    "sourceHash": "9760479c0b952606",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-20-june-2026-6.jpg",
+    "outBytes": 82795
+  },
+  "peyvand-academy-20-june-2026-7": {
+    "src": "public/img/events/peyvand-academy-20-june-2026-photo-7.webp",
+    "role": "card",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 204312,
+    "sourceHash": "6381f5cc11351288",
+    "options": "[4,\"card\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/peyvand-academy-20-june-2026-7.jpg",
+    "outBytes": 77550
+  },
+  "team-mahsa": {
+    "src": "public/img/team/Mahsa.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 387236,
+    "sourceHash": "7df5a5f25c41c2cd",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-mahsa.jpg",
+    "outBytes": 31614
+  },
+  "team-mahsa-large": {
+    "src": "public/img/team/Mahsa.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 387236,
+    "sourceHash": "7df5a5f25c41c2cd",
+    "options": "[4,\"portrait\",900,900,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-mahsa-large.jpg",
+    "outBytes": 81752
+  },
+  "team-mike": {
+    "src": "public/img/team/Mike.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 327706,
+    "sourceHash": "ddd7b99b77b2f01d",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-mike.jpg",
+    "outBytes": 27843
+  },
+  "team-raquel": {
+    "src": "public/img/team/Raquel.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 684324,
+    "sourceHash": "d8f29a142530a789",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-raquel.jpg",
+    "outBytes": 44474
+  },
+  "team-meeta": {
+    "src": "public/img/team/Meeta.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 555552,
+    "sourceHash": "88aab1f6e04d120c",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-meeta.jpg",
+    "outBytes": 39911
+  },
+  "team-prasanth": {
+    "src": "public/img/team/Prasanth-Pavithran.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 561944,
+    "sourceHash": "d6bdaf81adbbf380",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-prasanth.jpg",
+    "outBytes": 25199
+  },
+  "team-sara": {
+    "src": "public/img/Sara.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 47579,
+    "sourceHash": "d65e4688c10a4117",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-sara.jpg",
+    "outBytes": 19551
+  },
+  "team-chan": {
+    "src": "public/img/team/Chan.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 336147,
+    "sourceHash": "5daaeabdcf4fa5bc",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-chan.jpg",
+    "outBytes": 29712
+  },
+  "team-marriane": {
+    "src": "public/img/team/Marriane.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 322138,
+    "sourceHash": "153804a486514fa6",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-marriane.jpg",
+    "outBytes": 30192
+  },
+  "team-gurleen": {
+    "src": "public/img/team/Gurleen.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 487081,
+    "sourceHash": "6f2496078ff1906d",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-gurleen.jpg",
+    "outBytes": 31978
+  },
+  "team-yesha": {
+    "src": "public/img/team/Yesha.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 347483,
+    "sourceHash": "a2b299e375e5bddc",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-yesha.jpg",
+    "outBytes": 31130
+  },
+  "team-len": {
+    "src": "public/img/team/Len.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 823581,
+    "sourceHash": "7fc333e6716256bf",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-len.jpg",
+    "outBytes": 31091
+  },
+  "team-lesley": {
+    "src": "public/img/team/Lesley.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 1035434,
+    "sourceHash": "ab9e568989ebf2fa",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-lesley.jpg",
+    "outBytes": 32709
+  },
+  "team-nikita": {
+    "src": "public/img/team/Nikita.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 739154,
+    "sourceHash": "76f7575392d683ef",
+    "options": "[4,\"portrait\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/team-nikita.jpg",
+    "outBytes": 23206
+  },
+  "team-tharanee": {
+    "src": "public/img/team/Tharanee.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 692576,
+    "sourceHash": "c997ddfae3207dd6",
+    "options": "[4,\"portrait\",null,null,null,null,0.84,0.045,null,null]",
+    "out": "report/assets/photos/team-tharanee.jpg",
+    "outBytes": 20410
+  },
+  "team-tharaneetharan": {
+    "src": "public/img/team/Tharanee.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 692576,
+    "sourceHash": "c997ddfae3207dd6",
+    "options": "[4,\"portrait\",null,null,null,null,0.84,0.045,null,null]",
+    "out": "report/assets/photos/team-tharaneetharan.jpg",
+    "outBytes": 20410
+  },
+  "team-nirmala": {
+    "src": "public/img/team/Nirmala.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 435003,
+    "sourceHash": "d15b8a1c2fcb9832",
+    "options": "[4,\"portrait\",null,null,null,null,0.78,0.03,0.02,null]",
+    "out": "report/assets/photos/team-nirmala.jpg",
+    "outBytes": 16101
+  },
+  "team-moksha": {
+    "src": "public/img/team/Moksha.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 612319,
+    "sourceHash": "83faca3dfb805d48",
+    "options": "[4,\"portrait\",null,null,null,null,0.8,0.05,null,null]",
+    "out": "report/assets/photos/team-moksha.jpg",
+    "outBytes": 18258
+  },
+  "mosaic-her-waka": {
+    "src": "public/img/events/archive/her-waka/4.webp",
+    "role": "mosaic",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 106664,
+    "sourceHash": "935e690a7fb11202",
+    "options": "[4,\"mosaic\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/mosaic-her-waka.jpg",
+    "outBytes": 45634
+  },
+  "mosaic-her-waka-april": {
+    "src": "public/img/events/archive/her-waka-april-2026/4.webp",
+    "role": "mosaic",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 93106,
+    "sourceHash": "e904648e3cb4a31b",
+    "options": "[4,\"mosaic\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/mosaic-her-waka-april.jpg",
+    "outBytes": 42378
+  },
+  "mosaic-own-your-energy": {
+    "src": "public/img/events/archive/she-sharp-candice-murray-own-your-energy/4.webp",
+    "role": "mosaic",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 66064,
+    "sourceHash": "295b3c2a4e895509",
+    "options": "[4,\"mosaic\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/mosaic-own-your-energy.jpg",
+    "outBytes": 33275
+  },
+  "mosaic-linkedin": {
+    "src": "public/img/events/archive/making-linkedin-work-for-you-with-stuart-little/4.webp",
+    "role": "mosaic",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 45424,
+    "sourceHash": "ab5ea00ef32f94fb",
+    "options": "[4,\"mosaic\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/mosaic-linkedin.jpg",
+    "outBytes": 29647
+  },
+  "mosaic-her-waka-june": {
+    "src": "public/img/events/archive/her-waka-june-2026/4.webp",
+    "role": "mosaic",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 61484,
+    "sourceHash": "3a47cf73d7866615",
+    "options": "[4,\"mosaic\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/mosaic-her-waka-june.jpg",
+    "outBytes": 33330
+  },
+  "logo-wahine-kakano": {
+    "src": "public/img/sponsors/wahine-kakano.svg",
+    "role": "svg-raster",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 499773,
+    "sourceHash": "98dd6bd0d1fa7482",
+    "options": "[4,\"svg-raster\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/logos/logo-wahine-kakano.png",
+    "outBytes": 68035
+  },
+  "logo-msd": {
+    "src": "public/img/sponsors/msd.svg",
+    "role": "svg-raster",
+    "sourceMtimeMs": 1785554043178.808,
+    "sourceSize": 126409,
+    "sourceHash": "886cfb2b59b988f0",
+    "options": "[4,\"svg-raster\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/logos/logo-msd.png",
+    "outBytes": 47212
+  },
+  "logo-moe": {
+    "src": "public/img/sponsors/MOE.png",
+    "role": "raster-logo",
+    "sourceMtimeMs": 1779421345823.4885,
+    "sourceSize": 10216,
+    "sourceHash": "71a4aa3f67f2647e",
+    "options": "[4,\"raster-logo\",null,null,false,null,null,null,null,null]",
+    "out": "report/assets/logos/logo-moe.png",
+    "outBytes": 3122
+  },
+  "logo-peyvand-academy": {
+    "src": "public/img/sponsors/peyvand-academy.jpg",
+    "role": "raster-logo",
+    "sourceMtimeMs": 1779421345825.9414,
+    "sourceSize": 29375,
+    "sourceHash": "0795895a26f37028",
+    "options": "[4,\"raster-logo\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/logos/logo-peyvand-academy.png",
+    "outBytes": 17139
+  },
+  "logo-little-engineers": {
+    "src": "public/img/sponsors/little-engineers.jpg",
+    "role": "raster-logo",
+    "sourceMtimeMs": 1779421345825.9414,
+    "sourceSize": 24683,
+    "sourceHash": "c3b7120c4c4fbac6",
+    "options": "[4,\"raster-logo\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/logos/logo-little-engineers.png",
+    "outBytes": 28062
+  },
+  "mentor-matching": {
+    "src": "report/diagrams/.raw/mentor-matching.png",
+    "role": "diagram",
+    "sourceMtimeMs": 1785630687957.226,
+    "sourceSize": 156998,
+    "sourceHash": "16c6423de056dc09",
+    "options": "[4,\"diagram\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/diagrams/mentor-matching.png",
+    "outBytes": 48280
+  },
+  "her-waka-pipeline": {
+    "src": "report/diagrams/.raw/her-waka-pipeline.png",
+    "role": "diagram",
+    "sourceMtimeMs": 1785630686649.0913,
+    "sourceSize": 87357,
+    "sourceHash": "fb57bcf0c5704cca",
+    "options": "[4,\"diagram\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/diagrams/her-waka-pipeline.png",
+    "outBytes": 20190
+  },
+  "chapter-community": {
+    "src": "public/img/curated/hero-celebration-handsup-1920.webp",
+    "role": "plate",
+    "sourceMtimeMs": 1783419479932,
+    "sourceSize": 231976,
+    "sourceHash": "08845f0ad1a0b154",
+    "options": "[4,\"plate\",null,null,null,null,null,null,null,null]",
+    "out": "report/assets/photos/chapter-community.jpg",
+    "outBytes": 192224
+  },
+  "founder-portrait": {
+    "src": "public/img/MahsaMcCauley.png",
+    "role": "portrait",
+    "sourceMtimeMs": 1775821641248.9597,
+    "sourceSize": 623891,
+    "sourceHash": "7445afe3eae12774",
+    "options": "[4,\"portrait\",900,900,null,null,null,null,null,null]",
+    "out": "report/assets/photos/founder-portrait.jpg",
+    "outBytes": 98820
+  }
+}
