@@ -1,0 +1,68 @@
+/*
+ * Chromium (headless, via mermaid-cli) has no access to installed system fonts
+ * on this machine, so Instrument Sans has to be handed to it as a file. The
+ * path is relative to this stylesheet: report/diagrams/ -> report/fonts/.
+ */
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("../fonts/InstrumentSans-VF.ttf") format("truetype-variations");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: block;
+}
+
+svg,
+.node text,
+.nodeLabel,
+.edgeLabel,
+.cluster-label,
+.label,
+text {
+  font-family: "Instrument Sans", "Segoe UI", Arial, sans-serif !important;
+}
+
+.nodeLabel,
+.node .label {
+  font-weight: 500;
+}
+
+.cluster-label .nodeLabel,
+.cluster-label text {
+  font-weight: 700;
+  fill: #9b2e83 !important;
+  color: #9b2e83 !important;
+}
+
+/* Print weight: hairlines vanish at 300 dpi, so hold the strokes up. */
+.node rect,
+.node circle,
+.node ellipse,
+.node polygon,
+.node path {
+  stroke-width: 2px;
+}
+
+.flowchart-link,
+.edgePath .path {
+  stroke-width: 2.2px;
+}
+
+.edgeLabel rect,
+.edgeLabel .labelBkg {
+  fill: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+.edgeLabel,
+.edgeLabel span,
+.edgeLabel p {
+  background-color: #ffffff !important;
+  color: #1f1e44 !important;
+  font-size: 13px;
+}
+
+.cluster rect {
+  stroke-width: 1.5px;
+  rx: 12px;
+  ry: 12px;
+}
