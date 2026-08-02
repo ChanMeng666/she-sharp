@@ -7,13 +7,21 @@ shortened form you intend to put on the slide, then move to the next round.
 Do not paste a round verbatim. The wording below is a guide to what you need,
 not a form to be filled in. Ask it the way you would ask a colleague.
 
-Two standing rules:
+Three standing rules:
 
 - **You shorten, not them.** They speak in paragraphs; that is correct and
   useful. Turning a paragraph into seven words is your job, and reading it back
   is how they stay in control of it.
 - **"I don't know" is a real answer.** Every round below says what to do with
   one. None of the answers is "make something up".
+- **Write down the throwaway lines.** Every slide needs a kicker — a short line
+  above the title telling the room what to do or what is true right now — and
+  you are never going to get those by asking for them. They arrive as asides:
+  *"oh, the toilets are through the double doors"*, *"dinner's out when people
+  walk in"*, *"they should stand for the karakia if they're able"*. Those
+  sentences **are** the kickers, already written, and they will be gone from
+  your notes in ten minutes if you only record the answer to the question you
+  asked. See `references/copy-rules.md`.
 
 ---
 
@@ -126,16 +134,28 @@ check it once before the deck ships. Do not add a logo you cannot source.
 >
 > "Do the speakers have headshots?"
 
-**Why it matters.** A deck carried by real photography of real She Sharp events
-looks like She Sharp. A deck of white slides with bullets looks like a template.
+**Why it matters.** The deck is built out of She Sharp's own photography — that
+is the entire design. A deck of white slides with bullets looks like a template;
+twelve years of real rooms looks like nobody else.
 
 Tell them exactly what to send: **the biggest version they have**, any of JPEG,
 WebP, PNG or SVG, and no need to resize or rename anything. See
 `references/assets.md`.
 
+**Ask for size explicitly when you want a slide-filling photo.** Most of the
+archive tops out around 1200px, which is fine as one tile among many and visibly
+soft blown up across a projector. "The original off the camera, not the one from
+Instagram" is the sentence that gets you the right file.
+
 **Don't know / haven't got any:** offer `public/img/curated/` — real photographs
 from past She Sharp events, with alt text already written. Name which slides
 ended up using them, both when you offer and again in the Step 7 preview.
+
+**And mention the gap once.** There is no photograph anywhere in the archive of
+a mentor and a mentee meeting one to one — the flagship programme has no picture
+of itself. If mentorship comes up in this deck at all, say so and ask them to
+have someone take one at the next event. It costs them nothing and it is a hole
+that has been open for years.
 
 ## Round 7 — The two QR codes
 
@@ -255,3 +275,18 @@ what they told you and read back any you are unsure of:
 
 The linter rejects a slide without one, because a slide nobody can introduce is
 a slide nobody should present.
+
+## And every slide needs a kicker
+
+The short line above the title, five or six words. The fixed organisational
+slides need one just as much as the event-specific ones do — arguably more,
+since they are the slides a regular attendee has already seen four times.
+
+> **Health & safety:** `THE EXITS ARE BEHIND YOU`
+> **Our impact:** `SINCE 2014, MOSTLY THIS ROOM`
+> **Opening karakia:** `PLEASE STAND IF YOU ARE ABLE`
+
+It must not repeat the title or the chapter label — the checker rejects that,
+and it is the fastest way to make a deck read as machine-written. Write it from
+the asides you collected; that is what the third standing rule at the top of
+this page is for.

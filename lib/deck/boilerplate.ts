@@ -163,6 +163,14 @@ export interface OpeningOptions {
   safetyExtras?: string[];
   /** Quiet plate behind the opening karakia; the layout scrims it to atmosphere. */
   heroImage?: DeckImage;
+  /**
+   * Plate behind the chapter card that hands over to the event itself.
+   *
+   * Distinct from `heroImage` because the two carry opposite jobs: the karakia
+   * plate is somewhere for a room to rest its eyes, and this one is the first
+   * time the event's own identity appears on the projector.
+   */
+  chapterPlate?: DeckImage;
   /** Two or three codes on the "Stay Connected" slide. */
   contactQrs?: QrBlock[];
   sectionLabel?: string;
@@ -173,6 +181,12 @@ export interface OpeningOptions {
  *
  * Slide nine is a chapter card carrying the event title: everything before it
  * is She Sharp, everything after it is this event.
+ *
+ * Every slide carries an `eyebrow`. It is written as an instruction to the room
+ * or a fact that is true at the moment the slide is up — "PLEASE FIND A SEAT",
+ * "SOME OF THEM ARE HERE" — never a restatement of the title beneath it. These
+ * are deliberately generic enough to be true at any She Sharp event, because
+ * they ship with the boilerplate; per-event kickers belong in the deck file.
  */
 export function buildOpeningSlides(options: OpeningOptions): Slide[] {
   const section = options.sectionLabel ?? "Welcome";
@@ -190,6 +204,7 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       type: "title",
       section,
       tone: "dark",
+      eyebrow: "Please find a seat",
       variant: "open",
       title: options.eventTitle,
       meta: options.eventMeta,
@@ -201,6 +216,7 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       type: "karakia",
       section,
       tone: "dark",
+      eyebrow: "Stand if you are able",
       variant: "timatanga",
       title: "Karakia Tīmatanga",
       teReo: options.karakia.teReo,
@@ -213,6 +229,7 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       type: "bullets",
       section,
       tone: "light",
+      eyebrow: "Thirty seconds, then we begin",
       variant: "checklist",
       title: "Health & Safety",
       items: safety,
@@ -223,6 +240,9 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       type: "photo",
       section,
       tone: "dark",
+      // A year, not a count of years: "twelve years" reads better and rots the
+      // moment this boilerplate is reused in another January.
+      eyebrow: "Running since 2014",
       overlay: "gradient",
       title: "We are She Sharp",
       lead: missionLead(),
@@ -234,6 +254,7 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       type: "people",
       section,
       tone: "light",
+      eyebrow: "Interrupt any of us today",
       title: "The She Sharp Team",
       lead: "Find any of us today — we are here to help",
       people: teamAsPeople(),
@@ -246,12 +267,16 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       type: "stats",
       section,
       tone: "light",
+      eyebrow: "Every number here is people",
       title: "Our Impact",
       stats: homeImpactData.slice(0, COPY_LIMITS.statCount).map((item) => ({
         value: item.value,
         label: item.title,
       })),
       image: impactPhoto(),
+      // The only handwritten line in the deck. It says what the figures mean,
+      // which the figures cannot.
+      annotation: "people keep showing up",
       note: "Read the four numbers and stop. The detail is on the website, not on the slide.",
     },
     {
@@ -259,6 +284,7 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       type: "logos",
       section,
       tone: "light",
+      eyebrow: "Some of them are here",
       title: "Our Sponsors & Partners",
       lead: "None of this happens without the organisations behind it",
       groups: [
@@ -286,6 +312,7 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       type: "contact",
       section,
       tone: "light",
+      eyebrow: "Scan now, read later",
       title: "Stay Connected",
       lead: "Everything we run is announced on these channels first",
       socials: footerConfig.socialLinks
@@ -304,9 +331,11 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       type: "section",
       section,
       tone: "dark",
+      eyebrow: "From here it is yours",
       index: "01",
       title: options.eventTitle,
       subtitle: options.eventMeta?.join(" · "),
+      background: options.chapterPlate,
       note: "Hand over to whoever is running the event itself. The She Sharp introduction is finished.",
     },
   ];
@@ -346,10 +375,23 @@ export interface ClosingOptions {
   ambassadorQr?: QrBlock;
   /** Required: a She Sharp event closes with a karakia. */
   karakia: KarakiaText;
+  /**
+   * Quiet plate behind the closing karakia.
+   *
+   * Should not be the plate used behind the opening one. The two karakia
+   * bookend the day and land three hours apart at minimum; repeating the image
+   * makes the second read as a rerun of the first rather than as its answer.
+   */
+  karakiaImage?: DeckImage;
   sectionLabel?: string;
 }
 
-/** Builds the six slides that close a She Sharp event, in running order. */
+/**
+ * Builds the six slides that close a She Sharp event, in running order.
+ *
+ * Eyebrows follow the same rule as the opening: an instruction or a fact that
+ * is true while the slide is up, never a paraphrase of the title.
+ */
 export function buildClosingSlides(options: ClosingOptions): Slide[] {
   const section = options.sectionLabel ?? "Closing";
   const ambassadorQr: QrBlock = options.ambassadorQr ?? {
@@ -364,6 +406,7 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
       type: "thanks",
       section,
       tone: "light",
+      eyebrow: "Clap for each group",
       title: "Thank You",
       lead: "To everyone who gave their time, their venue and their expertise",
       groups: options.thanksLogos,
@@ -375,6 +418,7 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
       type: "upcoming",
       section,
       tone: "light",
+      eyebrow: "Put this in your calendar",
       title: "What's Coming Up",
       lead: "The next thing you can come to",
       events: options.upcoming,
@@ -385,6 +429,7 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
       type: "qr-cta",
       section,
       tone: "dark",
+      eyebrow: "One minute of silence, please",
       title: "Complete Our Feedback Form",
       lead: "Scan to share your feedback and go in the draw to win",
       qr: options.feedbackQr,
@@ -395,6 +440,7 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
       type: "qr-cta",
       section,
       tone: "light",
+      eyebrow: "Run by people like you",
       title: "Become a SheSharp Ambassador",
       lead: "Help shape the future of women in tech",
       points: ["Scan to get started"],
@@ -406,10 +452,12 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
       type: "karakia",
       section,
       tone: "dark",
+      eyebrow: "Stand one last time",
       variant: "whakamutunga",
       title: "Karakia Whakamutunga",
       teReo: options.karakia.teReo,
       english: options.karakia.english,
+      background: options.karakiaImage,
       note: "Invite the room to stand. Read the te reo, then the English translation.",
     },
     {
@@ -417,6 +465,7 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
       type: "title",
       section,
       tone: "dark",
+      eyebrow: "Travel safely, see you soon",
       variant: "end",
       title: "Ngā mihi nui",
       subtitle: "Thank you for being here",

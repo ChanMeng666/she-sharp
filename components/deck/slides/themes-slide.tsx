@@ -1,14 +1,16 @@
 import type { ThemesSlide } from "@/lib/deck/types";
 import { cn } from "@/lib/utils";
 
+import { Kicker } from "./archive";
+
 /**
  * Column count per card count, as complete class strings so Tailwind's scanner
  * can see them.
  *
- * Count-driven rather than `auto-fit` because a leftover card on its own row is
- * the one thing that makes a themes slide look unfinished. Three columns hold on
- * a 4:3 projector — the cards get narrower, not fewer — because folding six
- * cards to two columns would push the third row off the bottom of the stage.
+ * Count-driven rather than `auto-fit` because a leftover card alone on a second
+ * row is the one thing that makes a themes slide look unfinished. Three columns
+ * hold on a 4:3 projector — the columns get narrower, not fewer — because
+ * folding six themes to two columns pushes a third row off the bottom.
  */
 const COLUMNS: Record<number, string> = {
   1: "grid-cols-1",
@@ -20,11 +22,17 @@ const COLUMNS: Record<number, string> = {
 };
 
 /**
- * The hackathon challenge themes — the slide teams argue in front of.
+ * The challenge themes — the slide teams argue in front of.
  *
- * Shown at the briefing and then again at the start of build time, so each card
- * has to survive being read across a table rather than from a stage. One line of
- * detail per theme: the full brief lives on the event page behind the QR slide.
+ * Shown at the briefing and again at the start of build time, so each column has
+ * to survive being read across a table rather than only from a stage. One line
+ * of detail per theme; the full brief lives on the event page behind the QR.
+ *
+ * NO CARDS. An earlier pass boxed each theme in a bordered panel, which is the
+ * house style of every other deck ever projected and belongs to a system with
+ * elevation and radii. This one is a print system: a 1px accent rule opens each
+ * column, a wide-tracked numeral counts them, and the space between them does
+ * the rest of the work.
  */
 export function ThemesSlideLayout({ slide }: { slide: ThemesSlide }) {
   const columns = COLUMNS[slide.themes.length] ?? "grid-cols-3";
@@ -32,41 +40,37 @@ export function ThemesSlideLayout({ slide }: { slide: ThemesSlide }) {
   return (
     <div className="deck-safe">
       <div
-        className="deck-content flex min-h-0 flex-1 flex-col"
+        className="deck-content flex flex-1 flex-col"
         style={{ gap: "var(--deck-gap-lg)" }}
       >
         <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-          {slide.eyebrow && <p className="deck-eyebrow">{slide.eyebrow}</p>}
+          <Kicker text={slide.eyebrow} />
           <h2 className="deck-title">{slide.title}</h2>
           {slide.lead && <p className="deck-lead">{slide.lead}</p>}
         </div>
 
         <ul
-          className={cn("grid min-h-0 flex-1 content-center", columns)}
-          style={{ gap: "var(--deck-gap-md)" }}
+          className={cn("grid", columns)}
+          style={{ columnGap: "var(--deck-gap-lg)", rowGap: "var(--deck-gap-lg)" }}
         >
           {slide.themes.map((theme, index) => (
             <li
               key={theme.title}
-              className="deck-card flex flex-col"
-              style={{ gap: "var(--deck-gap-sm)" }}
+              className={cn(
+                "flex flex-col",
+              )}
+              style={{
+                gap: "var(--deck-gap-sm)",
+                borderBlockStart: "1px solid var(--slide-rule)",
+                paddingBlockStart: "var(--deck-gap-sm)",
+              }}
             >
               {theme.tag ? (
-                <span
-                  className="deck-label self-start"
-                  style={{
-                    color: "var(--slide-on-accent)",
-                    background: "var(--slide-accent)",
-                    borderRadius: "var(--deck-radius-sm)",
-                    padding: "8px 16px",
-                  }}
-                >
-                  {theme.tag}
-                </span>
+                <span className="deck-label deck-accent self-start">{theme.tag}</span>
               ) : (
                 <span
                   aria-hidden="true"
-                  className="deck-title deck-accent deck-tabular"
+                  className="deck-label deck-accent deck-tabular"
                 >
                   {String(index + 1).padStart(2, "0")}
                 </span>
@@ -74,7 +78,9 @@ export function ThemesSlideLayout({ slide }: { slide: ThemesSlide }) {
 
               <p className="deck-subtitle">{theme.title}</p>
 
-              {theme.detail && <p className="deck-body deck-muted">{theme.detail}</p>}
+              {theme.detail && (
+                <p className="deck-body deck-muted">{theme.detail}</p>
+              )}
             </li>
           ))}
         </ul>

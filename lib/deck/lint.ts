@@ -10,8 +10,9 @@
  * Long-form material belongs on the event page, reachable by the QR slides.
  */
 
-import type { Deck, QrBlock, Slide } from "./types";
+import type { Deck, QrBlock, Slide, SlideType } from "./types";
 import { checkAccentContrast } from "./theme";
+import { toneOf } from "./utils";
 
 export const COPY_LIMITS = {
   /** Words in a slide title. */
@@ -56,7 +57,39 @@ export const COPY_LIMITS = {
   upcomingMax: 3,
   /** Consecutive bullet slides before the deck needs a change of rhythm. */
   consecutiveBullets: 2,
+  /**
+   * Rhythm limits.
+   *
+   * A deck can pass every copy rule slide by slide and still be exhausting to
+   * sit through, because the failure is in the sequence rather than in any one
+   * page. Ours had eight consecutive light information slides in the middle of
+   * it — each one correct, the run of them a flat line. These are the numbers
+   * that fix that.
+   */
+  consecutiveHero: 2,
+  consecutiveContent: 4,
+  consecutiveTone: 4,
+  /** Minimum share of dark slides in a deck of `rhythmFloorSlides` or more. */
+  darkShare: 0.25,
+  rhythmFloorSlides: 12,
+  /** Distinct slide types a deck of 10+ slides must use. */
+  distinctLayouts: 8,
 } as const;
+
+/**
+ * Slide types that carry a full-frame, low-information moment.
+ *
+ * These are the beats that let a room breathe. Everything else is information,
+ * and information does not rest an audience however well it is set.
+ */
+const HERO_TYPES = new Set<SlideType>([
+  "title",
+  "section",
+  "karakia",
+  "break",
+  "photo",
+  "prizes",
+]);
 
 export interface LintIssue {
   slideId: string;
@@ -73,6 +106,39 @@ function words(text: string): number {
 
 function sentences(text: string): number {
   return text.trim().split(/[.!?]+\s+/).filter(Boolean).length;
+}
+
+/** Significant words, lowercased — articles and prepositions carry no meaning here. */
+const STOP_WORDS = new Set([
+  "a", "an", "the", "of", "and", "or", "to", "for", "in", "on", "at", "with",
+  "our", "your", "is", "are", "we", "us", "this", "that", "it",
+]);
+
+function significantWords(text: string): string[] {
+  return text
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .split(/\s+/)
+    .filter((word) => word && !STOP_WORDS.has(word));
+}
+
+/**
+ * Whether one label is essentially a restatement of another.
+ *
+ * True when either is a subset of the other's significant words, or when they
+ * overlap by more than half. Catches "Day One" / "Day one begins" as well as
+ * outright duplication.
+ */
+function echoes(a: string, b: string | undefined): boolean {
+  if (!b) return false;
+  const left = significantWords(a);
+  const right = significantWords(b);
+  if (left.length === 0 || right.length === 0) return false;
+
+  const rightSet = new Set(right);
+  const shared = left.filter((word) => rightSet.has(word)).length;
+  const smaller = Math.min(left.length, right.length);
+  return shared === smaller || shared / smaller > 0.5;
 }
 
 /** Bullets are fragments, not sentences: no terminal period, no nesting. */
@@ -232,6 +298,31 @@ export function lintSlide(slide: Slide, index: number): LintIssue[] {
       severity: "warning",
       message: `Eyebrow is ${words(slide.eyebrow)} words (max 5): "${slide.eyebrow}"`,
     });
+  }
+  /* The section label names the chapter and stays put across many slides; the
+     eyebrow names *this* slide and is different every time. When one is a
+     restatement of the other the deck reads as machine-written — it is the
+     single most reliable tell. */
+  if (slide.eyebrow) {
+    const title = "title" in slide ? slide.title : undefined;
+    if (echoes(slide.eyebrow, slide.section)) {
+      issues.push({
+        slideId: id,
+        slideIndex: index,
+        rule: "eyebrow-echoes-section",
+        severity: "error",
+        message: `Eyebrow "${slide.eyebrow}" restates the section "${slide.section}". The section names the chapter; the eyebrow names this slide. They must not be translations of each other.`,
+      });
+    }
+    if (echoes(slide.eyebrow, title)) {
+      issues.push({
+        slideId: id,
+        slideIndex: index,
+        rule: "eyebrow-echoes-title",
+        severity: "error",
+        message: `Eyebrow "${slide.eyebrow}" restates the title "${title}". Say something the title does not.`,
+      });
+    }
   }
 
   switch (slide.type) {
@@ -570,6 +661,8 @@ export function lintDeck(deck: Deck): LintIssue[] {
     }
   });
 
+  issues.push(...lintRhythm(deck));
+
   checkAccentContrast(deck.theme).forEach((check) => {
     if (!check.passes) {
       issues.push({
@@ -581,6 +674,96 @@ export function lintDeck(deck: Deck): LintIssue[] {
       });
     }
   });
+
+  return issues;
+}
+
+/** Reports the longest run of a repeated key, as `{ length, endsAt }`. */
+function longestRun<T>(
+  slides: Slide[],
+  key: (slide: Slide) => T,
+): { value: T; length: number; endsAt: number } | null {
+  let best: { value: T; length: number; endsAt: number } | null = null;
+  let current: T | undefined;
+  let length = 0;
+
+  slides.forEach((slide, index) => {
+    const value = key(slide);
+    length = value === current ? length + 1 : 1;
+    current = value;
+    if (!best || length > best.length) best = { value, length, endsAt: index };
+  });
+
+  return best;
+}
+
+/**
+ * Checks the shape of the deck as a sequence rather than as a set of slides.
+ *
+ * Every rule here can be satisfied slide by slide and violated by the deck. A
+ * long run of one register is the most common way a technically correct deck
+ * becomes unwatchable, and it is invisible to anyone reviewing one slide at a
+ * time — which is how decks are always reviewed.
+ */
+export function lintRhythm(deck: Deck): LintIssue[] {
+  const issues: LintIssue[] = [];
+  const { slides } = deck;
+  if (slides.length === 0) return issues;
+
+  const at = (index: number, rule: string, message: string, severity: LintIssue["severity"] = "error") =>
+    issues.push({ slideId: slides[index].id, slideIndex: index, rule, severity, message });
+
+  const heroRun = longestRun(slides, (slide) => HERO_TYPES.has(slide.type));
+  if (heroRun && heroRun.value === true && heroRun.length > COPY_LIMITS.consecutiveHero) {
+    at(
+      heroRun.endsAt,
+      "rhythm-hero-run",
+      `${heroRun.length} full-frame slides in a row (max ${COPY_LIMITS.consecutiveHero}), ending at slide ${heroRun.endsAt + 1}. Back-to-back statement slides stop landing.`,
+    );
+  }
+  if (heroRun && heroRun.value === false && heroRun.length > COPY_LIMITS.consecutiveContent) {
+    at(
+      heroRun.endsAt,
+      "rhythm-content-run",
+      `${heroRun.length} information slides in a row (max ${COPY_LIMITS.consecutiveContent}), ending at slide ${heroRun.endsAt + 1}. Break the run with a section divider, a photograph or a break.`,
+    );
+  }
+
+  const toneRun = longestRun(slides, (slide) => toneOf(slide));
+  if (toneRun && toneRun.length > COPY_LIMITS.consecutiveTone) {
+    at(
+      toneRun.endsAt,
+      "rhythm-tone-run",
+      `${toneRun.length} ${toneRun.value} slides in a row (max ${COPY_LIMITS.consecutiveTone}), ending at slide ${toneRun.endsAt + 1}. A deck with no light/dark alternation reads flat however good each slide is.`,
+    );
+  }
+
+  if (slides.length >= COPY_LIMITS.rhythmFloorSlides) {
+    const dark = slides.filter((slide) => toneOf(slide) === "dark").length;
+    const share = dark / slides.length;
+    if (share < COPY_LIMITS.darkShare) {
+      issues.push({
+        slideId: "(deck)",
+        slideIndex: -1,
+        rule: "rhythm-dark-share",
+        severity: "error",
+        message: `Only ${Math.round(share * 100)}% of slides are dark (need ${Math.round(COPY_LIMITS.darkShare * 100)}%). The dark slides are what the light ones are measured against.`,
+      });
+    }
+  }
+
+  if (slides.length >= 10) {
+    const distinct = new Set(slides.map((slide) => slide.type)).size;
+    if (distinct < COPY_LIMITS.distinctLayouts) {
+      issues.push({
+        slideId: "(deck)",
+        slideIndex: -1,
+        rule: "rhythm-layout-variety",
+        severity: "error",
+        message: `Only ${distinct} distinct layouts across ${slides.length} slides (need ${COPY_LIMITS.distinctLayouts}). Reaching for the same layout twice usually means the content was bent to fit it.`,
+      });
+    }
+  }
 
   return issues;
 }

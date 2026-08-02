@@ -54,7 +54,11 @@ export function DeckImage({
       sizes={image.srcSet ? (sizes ?? "100vw") : undefined}
       alt={image.alt}
       className={cn("deck-img", fit === "contain" && "deck-img-contain", className)}
-      style={image.focus ? { objectPosition: image.focus } : undefined}
+      // Crop from the bottom, never the top. The archive is overwhelmingly group
+      // photographs, and the browser default of `50% 50%` takes an equal bite out
+      // of both edges — which on those frames removes the top of people's heads.
+      // `DeckImage.focus` remains the per-image override.
+      style={{ objectPosition: image.focus ?? "50% 0%" }}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
       draggable={false}

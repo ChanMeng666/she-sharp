@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 
+import { playSlideMotion, type MotionHandle } from "@/lib/deck/motion";
 import type { Slide } from "@/lib/deck/types";
 import { slideAriaLabel, slideLabel, toneOf } from "@/lib/deck/utils";
 
@@ -74,6 +75,15 @@ export interface SlideFrameProps {
   total: number;
   /** Whether this is the slide currently on screen. */
   active: boolean;
+  /**
+   * Whether entrance motion may play. `false` is low-power / reduced-motion /
+   * print, and means the slide simply appears already composed.
+   *
+   * Defaults to `false` so that a caller which does not think about motion —
+   * the print sheet, which renders all thirty-eight slides `active` at once —
+   * cannot accidentally start thirty-eight recipes on one page.
+   */
+  motion?: boolean;
   children: ReactNode;
 }
 
@@ -93,10 +103,12 @@ export function SlideFrame({
   index,
   total,
   active,
+  motion = false,
   children,
 }: SlideFrameProps) {
   const ref = useRef<HTMLElement | null>(null);
   useFitContent(ref, slide.id);
+  useSlideMotion(ref, slide.type, active, motion);
 
   return (
     <section
@@ -109,10 +121,109 @@ export function SlideFrame({
       aria-label={slideAriaLabel(slide, index, total)}
       inert={!active || undefined}
       aria-hidden={!active || undefined}
+      data-rail={railVariant(slide)}
     >
+      <SlideRail slide={slide} index={index} total={total} />
       <SlideBoundary slide={slide}>{children}</SlideBoundary>
     </section>
   );
+}
+
+/**
+ * The running header: brand mark leading, position and chapter trailing.
+ *
+ * Rendered here rather than by the layouts for a plain reason — a layout is
+ * given only its slide, and the rail has to say "12 / 38", which nothing but the
+ * frame knows. It is on every slide without exception. That constancy is the
+ * point: like a page number, it is what makes thirty-eight slides read as one
+ * object rather than thirty-eight posters.
+ *
+ * It is deliberately excluded from every entry animation. Furniture should
+ * already be there when the slide arrives; a header that flies in is a header
+ * the room notices, and nobody should ever notice this.
+ */
+function SlideRail({
+  slide,
+  index,
+  total,
+}: {
+  slide: Slide;
+  index: number;
+  total: number;
+}) {
+  const position = String(index + 1).padStart(2, "0");
+  const chapter = slide.section?.trim();
+
+  return (
+    <div className="deck-rail" aria-hidden="true">
+      <span className="deck-rail-brand">
+        SHE <i className="deck-rail-sharp">♯</i> SHARP
+      </span>
+      <span className="deck-rail-meta">
+        {position} / {total}
+        {/* Only when there is a chapter — a dangling separator looks like a bug. */}
+        {chapter ? ` · ${chapter.toUpperCase()}` : ""}
+      </span>
+    </div>
+  );
+}
+
+/**
+ * How the rail sits on this slide.
+ *
+ * An opaque bar squares off the top of a full-colour photograph, so slides whose
+ * ground is a photographic plate get a sheer rail instead. Everything else keeps
+ * the solid one, which is what lets the chapter label stay legible over a busy
+ * archive wall.
+ */
+function railVariant(slide: Slide): "sheer" | undefined {
+  if (slide.type === "karakia" || slide.type === "photo") return "sheer";
+  // A section or break slide is only photographic when it has been given a
+  // plate; without one its ground is the archive wall or flat colour, and there
+  // the solid bar is what keeps the chapter label legible.
+  if ((slide.type === "section" || slide.type === "break") && slide.background) {
+    return "sheer";
+  }
+  return undefined;
+}
+
+/**
+ * Plays this slide type's motion recipe whenever the slide comes on screen.
+ *
+ * Keyed to `active` rather than to mount, because every slide is mounted for
+ * the whole session: an unkeyed entrance would play all thirty-eight at once in
+ * the first three seconds and be long finished by the time anyone reached slide
+ * twenty. Re-entering a slide replays it, which is what a presenter stepping
+ * back to re-make a point expects.
+ *
+ * The recipe is stopped on the way out and whenever motion is switched off, and
+ * "stopped" always means "revealed": see the guarantee in `lib/deck/motion.ts`.
+ * The effect deliberately has no other dependencies — a recipe restarting
+ * because an unrelated prop changed would look like a glitch from the room.
+ */
+function useSlideMotion(
+  ref: React.RefObject<HTMLElement | null>,
+  type: Slide["type"],
+  active: boolean,
+  motion: boolean,
+) {
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || !active || !motion) return;
+
+    let handle: MotionHandle | null = null;
+    // One frame of headroom so the recipe measures a laid-out slide: the frame
+    // it becomes active in is also the frame the cross-fade starts, and an SVG
+    // ring has no length until it has been laid out at least once.
+    const raf = requestAnimationFrame(() => {
+      handle = playSlideMotion(element, type);
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      handle?.stop();
+    };
+  }, [ref, type, active, motion]);
 }
 
 /**

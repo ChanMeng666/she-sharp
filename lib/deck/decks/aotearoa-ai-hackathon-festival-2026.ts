@@ -3,7 +3,7 @@
  *
  * Two days, one host, one projector. The nine opening and six closing slides
  * come from `buildOpeningSlides()` / `buildClosingSlides()` so the team, stats
- * and sponsor walls stay live; the twenty in between are this event.
+ * and sponsor walls stay live; the twenty-three in between are this event.
  *
  * Facts come from `lib/data/json/events-custom.json` via `getEventBySlug()`,
  * read through `specialSection()` so that renumbering the JSON fails loudly
@@ -21,6 +21,8 @@
 
 import { getEventBySlug } from "@/lib/data/events";
 import type { TimedItem } from "@/lib/deck/types";
+import { curatedImages, toSrcSet } from "@/public/img/curated";
+import { deckPlates, plateSrcSet } from "@/public/img/plates";
 
 import {
   buildClosingSlides,
@@ -29,6 +31,7 @@ import {
 } from "../boilerplate";
 import type { Deck, DeckImage, DeckLogo, QrBlock } from "../types";
 import { parseTimedLines } from "../utils";
+import { pickWallTiles } from "../wall-tiles";
 
 const EVENT_SLUG = "aotearoa-ai-hackathon-festival-2026";
 
@@ -157,14 +160,100 @@ const PARTNER_LOGOS: DeckLogo[] = detail.sponsors.main.map((sponsor) => ({
   logo: sponsor.logo,
 }));
 
-/** The festival's own koru artwork, used as a quiet plate behind the karakia. */
+/**
+ * Plate behind the opening karakia: a real photograph, not a generated one.
+ *
+ * This is an unfurling silver-fern koru — a genuine macro photograph with no
+ * branding, no text and no date in it, and a clean out-of-focus left half where
+ * the te reo sits. It happens to live in this event's asset folder because the
+ * event page used it, but it is not artwork for the festival.
+ *
+ * The deck holds generated plates that suit this slot better on paper: they are
+ * darker where the type goes, and one of them is a greenstone sea, which is
+ * what the karakia's second line describes. They lost anyway. A karakia is a
+ * practice rather than a design slot, and when the organisation's own
+ * photograph will do the job, the organisation's own photograph does the job.
+ * The generated plates exist for the events that have nothing.
+ */
 const koru = detail.photos[0];
 if (!koru) {
   throw new Error(
-    `"${EVENT_SLUG}" has no photos[0]; the karakia slide expects the festival koru artwork.`,
+    `"${EVENT_SLUG}" has no photos[0]; the opening karakia expects the koru photograph.`,
   );
 }
-const KORU_IMAGE: DeckImage = { src: koru.url, alt: koru.alt };
+const OPENING_KARAKIA_PLATE: DeckImage = {
+  src: koru.url,
+  alt: koru.alt,
+  // Subject is hard right; hold the frame there so the left stays open for text.
+  focus: "70% 40%",
+};
+
+/**
+ * The chapter card that hands over from She Sharp to the event.
+ *
+ * Takes the archive wall rather than a photograph. It is the moment the deck
+ * stops being about the organisation and starts being about the day, and the
+ * wall is what carries the organisation — twelve years of rooms, handing over.
+ */
+const CHAPTER_PLATE: DeckImage = {
+  src: deckPlates["light-prism-edge"].src,
+  srcSet: plateSrcSet(deckPlates["light-prism-edge"]),
+  alt: deckPlates["light-prism-edge"].alt,
+};
+
+/**
+ * Plate behind the closing karakia — harakeke at dusk, deliberately not the sea.
+ *
+ * The two karakia are eighteen hours apart in this deck. Repeating the opening
+ * image would read as the deck looping rather than closing, and harakeke at the
+ * end of the day answers the sea at the start of it.
+ */
+const CLOSING_KARAKIA_PLATE: DeckImage = {
+  src: deckPlates["whenua-harakeke-dusk"].src,
+  srcSet: plateSrcSet(deckPlates["whenua-harakeke-dusk"]),
+  alt: deckPlates["whenua-harakeke-dusk"].alt,
+};
+
+/** An abstract light plate, for the three countdown slides. */
+function lightPlate(key: "light-aurora-sweep" | "light-prism-edge" | "light-deep-field"): DeckImage {
+  return {
+    src: deckPlates[key].src,
+    srcSet: plateSrcSet(deckPlates[key]),
+    alt: deckPlates[key].alt,
+  };
+}
+
+/**
+ * One frame from the archive wall, for a chapter divider.
+ *
+ * `SectionSlide.background` takes a single `DeckImage`, so a divider carries one
+ * photograph rather than the tiled wall the archive is written to be read as —
+ * see the note at the top of `wall-tiles.ts`. `pickWallTiles` still steps
+ * through the pool, so four dividers land in four different years and venues
+ * instead of four frames from the same 2023 shoot.
+ */
+function archivePlate(offset: number): DeckImage {
+  const [src] = pickWallTiles(1, offset);
+  return {
+    src,
+    alt: "A room of She Sharp attendees, from twelve years of the archive.",
+    focus: "50% 40%",
+  };
+}
+
+/**
+ * The photographic beat between team forming and the mentors.
+ *
+ * Not filler. Forty minutes of a Friday night are about to be spent making
+ * people talk to strangers, and this is the only slide in the deck that shows
+ * what that looks like when it has worked.
+ */
+const TEAM_FORMING_PHOTO: DeckImage = {
+  src: curatedImages["workshop-fp-hackathon"].src,
+  srcSet: toSrcSet(curatedImages["workshop-fp-hackathon"]),
+  alt: curatedImages["workshop-fp-hackathon"].alt,
+  focus: "50% 45%",
+};
 
 // --- People ----------------------------------------------------------------
 
@@ -300,17 +389,19 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       // Left empty rather than guessed: a wrong safety instruction is worse
       // than a generic one. Adding lines here drops org defaults from the top.
       safetyExtras: [],
-      heroImage: KORU_IMAGE,
+      heroImage: OPENING_KARAKIA_PLATE,
+      chapterPlate: CHAPTER_PLATE,
       contactQrs: [WEBSITE_QR, EVENTS_QR, LINKEDIN_QR],
     }),
 
-    // --- 10–22 — Day one ---------------------------------------------------
+    // --- 10–25 — Day one ---------------------------------------------------
     {
       id: "day-one-run-sheet",
       type: "agenda",
       section: "Day One — Friday 7 August",
+      eyebrow: "Doors at five, dinner first",
       title: "Tonight",
-      lead: "Doors at five, and day one closes at eight",
+      lead: "Three hours, and you will leave with a team",
       items: DAY_ONE,
       columns: 2,
       note: "Read only the next three rows. People photograph the slide for the rest.",
@@ -319,6 +410,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "two-day-format",
       type: "bullets",
       section: "Day One — Friday 7 August",
+      eyebrow: "Tonight and all tomorrow",
       title: "How the Two Days Run",
       items: [
         "Friday night: welcome, themes, team forming, build begins",
@@ -332,16 +424,19 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "section-the-challenge",
       type: "section",
       section: "Day One — Friday 7 August",
+      eyebrow: "Choose before you build",
       index: "02",
       tone: "dark",
       title: "The Challenge",
       subtitle: "Five real-world themes drawn from the UN Sustainable Development Goals",
+      background: archivePlate(7),
       note: "Pause here. The next slide is the one teams choose from.",
     },
     {
       id: "challenge-themes",
       type: "themes",
       section: "Day One — Friday 7 August",
+      eyebrow: "Straight from the UN goals",
       title: "Five Real-World Challenges",
       lead: "Pick the one your team actually cares about",
       themes: [
@@ -372,6 +467,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "forming-your-team",
       type: "bullets",
       section: "Day One — Friday 7 August",
+      eyebrow: "Nobody builds alone here",
       title: "Forming Your Team",
       lead: "Register alone or arrive with a team — both work",
       items: [
@@ -382,6 +478,25 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       ],
       note: "Send people to the floor after this slide; mentors circulate to balance the teams.",
     },
+    /* A photograph, not a decoration.
+
+       Team forming is the loudest forty minutes of the weekend and the one
+       thing in this deck that cannot be explained in bullets. It also does the
+       structural work of breaking what was an eight-slide run of light
+       information slides — the rhythm rule in `lint.ts` exists because of
+       exactly this stretch of exactly this deck. */
+    {
+      id: "team-forming-floor",
+      type: "photo",
+      section: "Day One — Friday 7 August",
+      tone: "dark",
+      eyebrow: "The next forty minutes",
+      title: "Talk to someone you didn't arrive with",
+      lead: "Team forming is the loudest forty minutes of the weekend",
+      image: TEAM_FORMING_PHOTO,
+      overlay: "gradient",
+      note: "Say this and then stop talking. Push people out of their seats — the mentors will circulate and balance the teams.",
+    },
     /* Thirteen mentors across two slides rather than one.
        At `md` density a single slide of thirteen has to shrink itself to about
        74% on a 4:3 projector to fit, which puts the names below the 28px the
@@ -390,6 +505,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "meet-the-mentors-1",
       type: "people",
       section: "Day One — Friday 7 August",
+      eyebrow: "First of two groups",
       title: "Meet the Mentors",
       lead: "Ask early and ask often — this is what they are here for",
       people: mentorTiles.slice(0, mentorSplit),
@@ -401,6 +517,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "meet-the-mentors-2",
       type: "people",
       section: "Day One — Friday 7 August",
+      eyebrow: "And the rest of them",
       title: "Meet the Mentors",
       people: mentorTiles.slice(mentorSplit),
       density: "md",
@@ -412,6 +529,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       type: "bullets",
       section: "Day One — Friday 7 August",
       optional: true,
+      eyebrow: "They will not build it",
       title: "How Mentors Help",
       items: [
         "Technical experts sense-check your design and suggest alternatives",
@@ -420,10 +538,30 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       ],
       note: "Skip this if the mentors have introduced themselves well. Say they will not build it for you.",
     },
+    /* The deck changes subject here.
+
+       Everything above is about getting a team together and getting building.
+       Everything below is about being scored — the criteria, the five minutes,
+       and the four people who apply them. That is a chapter, and it had no
+       card, which is how the judging material ended up stacked on the back of
+       the mentor material with no breath between. */
+    {
+      id: "section-the-pitch",
+      type: "section",
+      section: "Day One — Friday 7 August",
+      eyebrow: "Tomorrow comes down to this",
+      index: "03",
+      tone: "dark",
+      title: "The Pitch",
+      subtitle: "How you are scored, and the five minutes you get to do it in",
+      background: archivePlate(43),
+      note: "Say that everything from here happens tomorrow afternoon, and that teams should be building towards it from tonight.",
+    },
     {
       id: "judging-criteria",
       type: "criteria",
       section: "Day One — Friday 7 August",
+      eyebrow: "Four numbers, one to five",
       title: "How Teams Are Judged",
       lead: "Four equally weighted criteria, scored one to five each",
       criteria: JUDGING_CRITERIA,
@@ -434,6 +572,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "five-minute-pitch",
       type: "agenda",
       section: "Day One — Friday 7 August",
+      eyebrow: "The clock does not stop",
       title: "Your Five-Minute Pitch",
       lead: "Five minutes, four sections, one first impression",
       items: [
@@ -448,6 +587,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "meet-the-judges",
       type: "people",
       section: "Day One — Friday 7 August",
+      eyebrow: "They see your idea once",
       title: "Meet the Judges",
       lead: "The panel you pitch to tomorrow afternoon",
       people: judges.map((judge) => ({
@@ -465,6 +605,10 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       type: "prizes",
       section: "Day One — Friday 7 August",
       tone: "dark",
+      // Not "Won in this room tomorrow" — the first prize's own label already
+      // says that, and a kicker that repeats something else on the slide is the
+      // slot wasted.
+      eyebrow: "Three of these exist",
       title: "Prizes & Awards",
       prizes: [
         {
@@ -486,15 +630,21 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
           scope: "national",
         },
       ],
-      footnote:
-        "The top four national finalists are invited to pitch live at the Aotearoa AI Summit, 8–9 September 2026 in Wellington. Prizes are supported by AWS and provided via AI Forum New Zealand. Individual venues may offer additional prizes and categories.",
-      note: "Say the venue prize first and loudest — it is the one this room can win tomorrow.",
+      // Was three sentences and forty words, which pushed the slide past the
+      // stage on a 4:3 projector and made it scale itself down to 79% — where
+      // the labels fall under the 28px a room can read. Cut rather than shrunk:
+      // the Summit dates, the AWS attribution and the per-venue caveat are all
+      // on the event page, and the host says them anyway.
+      footnote: "Top four nationally pitch at the Aotearoa AI Summit in September.",
+      note: "Say the venue prize first and loudest — it is the one this room can win tomorrow. The Summit is 8–9 September in Wellington; prizes come from AWS via AI Forum NZ.",
     },
     {
       id: "nationwide-festival",
       type: "bullets",
       section: "Day One — Friday 7 August",
       optional: true,
+      // Nine venues in the 2026 list, so eight rooms other than this one.
+      eyebrow: "Eight other rooms, doing this",
       title: "A Nationwide Festival",
       lead: "Nine venues hacking across Aotearoa between 3 and 10 August",
       items: [
@@ -509,28 +659,33 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "day-one-close",
       type: "break",
       section: "Day One — Friday 7 August",
+      eyebrow: "Everyone to the front, please",
       title: "Group Photo & Break",
-      lead: "Bring everyone to the front, then back to your tables",
+      lead: "Fifteen minutes, then team strategy until we close at eight",
       minutes: 15,
       resumeLabel: "Team strategy planning",
+      background: lightPlate("light-aurora-sweep"),
       note: "Start the timer after the photo. Day one closes at 8:00pm.",
     },
 
-    // --- 23–29 — Day two ---------------------------------------------------
+    // --- 26–32 — Day two ---------------------------------------------------
     {
       id: "section-day-two",
       type: "section",
       section: "Day Two — Saturday 8 August",
-      index: "03",
+      eyebrow: "Build, pitch, then a winner",
+      index: "04",
       tone: "dark",
       title: "Day Two",
       subtitle: "Saturday 8 August — build, pitch, and the venue winner",
+      background: archivePlate(79),
       note: "Open day two here. Welcome anyone who has joined this morning.",
     },
     {
       id: "day-two-run-sheet",
       type: "agenda",
       section: "Day Two — Saturday 8 August",
+      eyebrow: "Coffee from half seven",
       title: "Today",
       lead: "Presentations start at 3:30pm and awards at 7:00pm",
       items: DAY_TWO,
@@ -541,6 +696,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "build-with-mentors",
       type: "bullets",
       section: "Day Two — Saturday 8 August",
+      eyebrow: "Most teams split at midday",
       title: "Build With Your Mentors",
       items: [
         "Pitch prep starts 10:00am",
@@ -553,16 +709,19 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "lunch",
       type: "break",
       section: "Day Two — Saturday 8 August",
+      eyebrow: "Mentors eat with the teams",
       title: "Lunch",
       lead: "Eat away from your laptop — the afternoon is long",
       minutes: 45,
       resumeLabel: "Prepare for pitch practice",
+      background: lightPlate("light-deep-field"),
       note: "Start the timer as the first person reaches the food. Mentors eat with the teams.",
     },
     {
       id: "judging-criteria-recap",
       type: "criteria",
       section: "Day Two — Saturday 8 August",
+      eyebrow: "Name your weakest one aloud",
       title: "Remember How You're Scored",
       lead: "The same four criteria the panel will use this afternoon",
       criteria: JUDGING_CRITERIA,
@@ -573,24 +732,28 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "afternoon-tea",
       type: "break",
       section: "Day Two — Saturday 8 August",
+      eyebrow: "Laptops to the stage now",
       title: "Afternoon Tea",
       lead: "Tech check begins as soon as we are back",
       minutes: 15,
       resumeLabel: "Tech check",
+      background: lightPlate("light-prism-edge"),
       note: "Use this break to test every team's laptop on the projector.",
     },
     {
       id: "section-final-presentations",
       type: "section",
       section: "Day Two — Saturday 8 August",
-      index: "04",
+      eyebrow: "The room goes quiet now",
+      index: "05",
       tone: "dark",
       title: "Final Presentations",
       subtitle: "Five minutes each, and every pitch is recorded",
+      background: archivePlate(115),
       note: "Call the first team up. Hold the room to time — the recording is what goes to national judging.",
     },
 
-    // 30–35 — She Sharp closing, generated from live site data.
+    // 33–38 — She Sharp closing, generated from live site data.
     ...buildClosingSlides({
       thanksLogos: [{ label: "Hosts, partners and sponsors", logos: PARTNER_LOGOS }],
       thanksNames: [
@@ -600,6 +763,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       upcoming: UPCOMING_SNAPSHOT,
       feedbackQr: FEEDBACK_QR,
       karakia: CLOSING_KARAKIA,
+      karakiaImage: CLOSING_KARAKIA_PLATE,
     }),
   ],
 };
