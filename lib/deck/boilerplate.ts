@@ -342,15 +342,27 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
 }
 
 /**
- * The standing ambassador intake form.
+ * Where the ambassador code sends people.
  *
- * One form across all events, so it lives here rather than being retyped into
- * every deck. The post-event feedback survey is the opposite — a fresh Google
- * Form each time — which is why `feedbackFormUrl` is a per-deck input with no
- * default worth having.
+ * The She Sharp recruitment page, NOT the Google Form behind it — and the
+ * reason is not a preference.
+ *
+ * The intake form has a file-upload question, and Google requires a signed-in
+ * account for any form that has one, because the upload has to land in
+ * somebody's Drive. There is no setting that turns this off. So the form's own
+ * URL puts a Google sign-in page in front of every person who scans the code,
+ * at the exact moment they are holding up a phone in a room full of people.
+ * The organisers cannot see this happening: they are always signed in.
+ *
+ * Sending people to the page instead costs one extra click and is the better
+ * flow anyway. Nobody attaches a CV standing in a hall. What should happen in
+ * that moment is "I am interested and I know where to go", which a public page
+ * does and a login wall does not.
+ *
+ * If the file-upload question is ever removed from the form, this can point
+ * straight at it again.
  */
-export const AMBASSADOR_FORM_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSdTEFjOs6lLHZDGpSvoMfkckloPBMbvFA45iNhVvh1sAsUZlA/viewform";
+export const AMBASSADOR_FORM_URL = "https://www.shesharp.org.nz/join-our-team";
 
 export interface ClosingOptions {
   thanksLogos: { label?: string; logos: DeckLogo[] }[];
@@ -396,8 +408,11 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
   const section = options.sectionLabel ?? "Closing";
   const ambassadorQr: QrBlock = options.ambassadorQr ?? {
     url: AMBASSADOR_FORM_URL,
-    label: "Ambassador application",
-    caption: "Or visit shesharp.org.nz/join-our-team",
+    label: "Become an ambassador",
+    // The caption is what the back of the room reads instead of scanning, so it
+    // has to be the destination itself — it used to say "or visit
+    // shesharp.org.nz/join-our-team" while the code went somewhere else.
+    caption: "shesharp.org.nz/join-our-team",
   };
 
   return [
