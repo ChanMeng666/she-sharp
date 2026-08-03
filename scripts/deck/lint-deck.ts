@@ -71,6 +71,10 @@ const RULE_FIXES: Record<string, string> = {
     "Give one of the two slides a different id — ids are the deep-link anchors, so they must be unique.",
   "host-note":
     "Add a `note`: one line telling the host what to say. It prints in the PDF and never appears on screen.",
+  "feedback-qr-event-mismatch":
+    "Fix the event slug at the top of the deck file — the feedback code is built from it, so it is the deck that is pointed at the wrong event, not the code.",
+  "feedback-qr-external":
+    "Delete the custom link so the code falls back to this event's own feedback form. Keep it only if a partner is genuinely running the survey.",
   "eyebrow-length": "Shorten the kicker to 5 words or fewer.",
   "title-length": `Shorten the title to ${COPY_LIMITS.titleWords} words or fewer.`,
   "lead-length": `Shorten the supporting line to ${COPY_LIMITS.leadWords} words or fewer, or move the detail into the host note.`,
