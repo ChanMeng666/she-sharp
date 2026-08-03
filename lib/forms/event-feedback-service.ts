@@ -31,11 +31,25 @@ export interface SubmitResult {
 
 /**
  * How long after a first submission a repeat from the same address is treated as
- * a correction rather than a second opinion. One evening plus the next morning:
- * people submit on the walk to the car, then re-open the tab at home to add the
- * thing they actually wanted to say.
+ * a correction rather than a second opinion.
+ *
+ * Two hours, narrowed from 24 on 2026-08-03 when name and email became
+ * required. While email was optional this window only caught the minority who
+ * volunteered an address; now it catches everyone, and a 24-hour overwrite
+ * silently destroys two kinds of real data:
+ *
+ *  - **Multi-day events.** A festival's Day One and Day Two feedback arrive
+ *    inside the same 24 hours from the same person, and the second overwrites
+ *    the first. The Aotearoa AI Hackathon Festival is exactly this shape.
+ *  - **Shared addresses.** Couples and some small teams submit from one inbox;
+ *    the second person silently replaces the first.
+ *
+ * Two hours still covers what this is actually for — a double-tapped submit, or
+ * someone reopening the tab a few minutes later to fix a typo or add the thing
+ * they meant to say. Anything later is a second opinion and is kept as its own
+ * row.
  */
-const DEDUP_WINDOW_MS = 24 * 60 * 60 * 1000;
+const DEDUP_WINDOW_MS = 2 * 60 * 60 * 1000;
 
 /**
  * Submits post-event feedback: resolves the event, inserts or updates the row,

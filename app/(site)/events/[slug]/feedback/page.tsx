@@ -27,6 +27,24 @@ export async function generateStaticParams() {
 }
 
 /**
+ * Drops a trailing venue clause from an event title, for the heading only.
+ *
+ * Titles in `events-custom.json` routinely append the venue after an em-dash —
+ * "Aotearoa AI Hackathon Festival 2026 — AUT City Campus" — which is useful on
+ * a listing and noise inside a question. At 390px the full title runs to four
+ * lines before the first field, which is the wrong thing to put between an
+ * attendee and the form.
+ *
+ * The full title is still what gets stored on the row and shown in Slack, where
+ * the venue disambiguates rather than distracts. Only the `<h1>` is trimmed,
+ * and only when what remains is long enough to still name the event.
+ */
+function headingTitle(title: string): string {
+  const [head] = title.split(/\s+—\s+/);
+  return head && head.trim().length >= 12 ? head.trim() : title;
+}
+
+/**
  * Maps the `?s=` provenance marker onto the API's `source` enum.
  *
  * `/f/<code>` appends `?s=qr`; on-site links use `?s=event`; newsletter and
@@ -129,7 +147,7 @@ export default async function EventFeedbackPage({
         <div className="py-6 sm:py-10">
           <p className="text-label text-ink-500 mb-4">Event feedback</p>
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
-            How was {event.title}?
+            How was {headingTitle(event.title)}?
           </h1>
           {/* Says what it costs, honestly. This line used to read "no sign-in,
               no email needed" — name and email became required on 2026-08-03,
