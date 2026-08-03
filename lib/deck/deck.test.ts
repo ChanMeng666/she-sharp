@@ -17,6 +17,13 @@ import assert from "node:assert";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 
+import {
+  allFeedbackCodes,
+  eventSlugForFeedbackCode,
+  feedbackCodeForSlug,
+  FEEDBACK_CODE_PATTERN,
+} from "@/lib/data/feedback-codes";
+
 import { getAllDecks } from "./registry";
 import { hasErrors, lintDeck } from "./lint";
 import { checkAccentContrast, contrastRatio, DEFAULT_DARK_CANVAS, DEFAULT_LIGHT_CANVAS } from "./theme";
@@ -133,6 +140,51 @@ for (const deck of decks) {
     unnoted.length === 0,
   );
 }
+
+// --- 8. Feedback short codes ------------------------------------------------
+//
+// The feedback QR on every closing slide is derived, not authored, so nothing
+// in a deck file can be reviewed to catch a bad code. These three assertions
+// are the whole safety net.
+
+console.log("\nfeedback codes");
+
+const codes = allFeedbackCodes();
+check(`every event has a feedback code (${codes.length} events)`, codes.length > 0);
+
+// A collision means two events share one URL and their feedback lands in one
+// pile. The fix is an entry in `FEEDBACK_CODE_OVERRIDES` for the NEWER event:
+// moving an old code re-points every already-exported deck PDF and every code
+// somebody has already scanned, and there is no way to reach those people.
+const bySlugForCode = new Map<string, string[]>();
+for (const { slug, code } of codes) {
+  bySlugForCode.set(code, [...(bySlugForCode.get(code) ?? []), slug]);
+}
+const collisions = [...bySlugForCode.entries()]
+  .filter(([, slugs]) => slugs.length > 1)
+  .map(([code, slugs]) => `${code}: ${slugs.join(" + ")}`);
+check(
+  `feedback codes are unique${collisions.length ? ` (collides: ${collisions.join("; ")})` : ""}`,
+  collisions.length === 0,
+);
+
+// The deck encodes the code; the redirect resolves it. If the round trip breaks
+// the QR scans to a 404, which is invisible until someone in a room tries it.
+const badRoundTrips = codes
+  .filter(({ slug }) => eventSlugForFeedbackCode(feedbackCodeForSlug(slug)) !== slug)
+  .map(({ slug, code }) => `${slug} -> ${code} -> ${eventSlugForFeedbackCode(code) ?? "(nothing)"}`);
+check(
+  `every code resolves back to its own event${badRoundTrips.length ? ` (bad: ${badRoundTrips.join("; ")})` : ""}`,
+  badRoundTrips.length === 0,
+);
+
+const malformed = codes
+  .filter(({ code }) => !FEEDBACK_CODE_PATTERN.test(code))
+  .map(({ slug, code }) => `${slug}: "${code}"`);
+check(
+  `every code matches the route's pattern${malformed.length ? ` (bad: ${malformed.join("; ")})` : ""}`,
+  malformed.length === 0,
+);
 
 // --- 6. parseTimedLine ------------------------------------------------------
 

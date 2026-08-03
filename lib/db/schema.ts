@@ -63,6 +63,22 @@ export const recruitmentStageEnum = pgEnum('recruitment_stage', [
 
 export const communicationMethodEnum = pgEnum('communication_method', ['email', 'phone']);
 
+// How a person reached the post-event feedback form. Kept as an enum rather than
+// free text because the deck QR is the only channel we cannot A/B any other way:
+// if `deck_qr` is flat for an event, the code was too small or the slide too brief.
+export const eventFeedbackSourceEnum = pgEnum('event_feedback_source', [
+  'deck_qr', 'event_page', 'direct_link', 'email'
+]);
+
+// Three-way on purpose, where a nullable boolean would have been the obvious
+// choice. Folding 'maybe' into NULL makes it indistinguishable from an
+// unanswered question, and "% who would come again" is exactly the figure a
+// funder report quotes — you cannot compute it if a third of the answers are
+// ambiguous. NULL here means only what it says: they skipped the question.
+export const eventAttendAgainEnum = pgEnum('event_attend_again', [
+  'yes', 'maybe', 'no'
+]);
+
 // Core user table (simplified - no role field)
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
@@ -770,6 +786,7 @@ export enum ActivityType {
   AI_SCREEN_VOLUNTEER = 'AI_SCREEN_VOLUNTEER',
   SUBMIT_EX_AMBASSADOR_FORM = 'SUBMIT_EX_AMBASSADOR_FORM',
   SUBMIT_CONTACT_FORM = 'SUBMIT_CONTACT_FORM',
+  SUBMIT_EVENT_FEEDBACK = 'SUBMIT_EVENT_FEEDBACK',
   // Programme activity types
   CREATE_PROGRAMME = 'CREATE_PROGRAMME',
   UPDATE_PROGRAMME = 'UPDATE_PROGRAMME',
@@ -1109,6 +1126,56 @@ export const contactFormSubmissions = pgTable('contact_form_submissions', {
   statusIdx: index('contact_form_status_idx').on(table.status),
 }));
 
+// Post-event attendee feedback, collected from a public form with no login.
+//
+// Three shape decisions that look like omissions and are not:
+//
+//  1. `eventSlug` is a plain varchar, NOT a foreign key to `events`. The public
+//     site's source of truth for events is `lib/data/json/events-custom.json`;
+//     the Postgres `events` table is a separate, unrelated store that most live
+//     events never appear in. A FK here would reject feedback for the very
+//     events people actually attend.
+//  2. This cannot live in `event_registrations` — that table's `userId` is NOT
+//     NULL, and this form deliberately has no sign-in step. Nobody fills in a
+//     feedback form that asks them to make an account first.
+//  3. No unique constraint on (eventSlug, email). Two people sharing one
+//     household or work address is real, and losing the second person's answers
+//     is a worse outcome than a duplicate row. De-duplication is a soft,
+//     time-boxed rule in `lib/forms/event-feedback-service.ts` instead.
+export const eventFeedbackSubmissions = pgTable('event_feedback_submissions', {
+  id: serial('id').primaryKey(),
+  eventSlug: varchar('event_slug', { length: 200 }).notNull(),
+  // Snapshot of the event title as it read when this person rated it; the JSON
+  // title can be edited later and the row should not silently follow it.
+  eventTitle: varchar('event_title', { length: 300 }),
+  overallRating: integer('overall_rating').notNull(),
+  recommendScore: integer('recommend_score'),
+  wouldAttendAgain: eventAttendAgainEnum('would_attend_again'),
+  whatWorked: text('what_worked'),
+  whatToImprove: text('what_to_improve'),
+  // Ticking these expresses interest to She Sharp. It is explicitly NOT consent
+  // to marketing email — the four-way consent gate in
+  // `.claude/skills/update-mailing-list/references/consent-rules.md` governs the
+  // mailing list, and nothing in this public path may write to Resend. Someone
+  // acts on these by hand, through that skill.
+  interestedInMentorship: boolean('interested_in_mentorship').notNull().default(false),
+  interestedInVolunteering: boolean('interested_in_volunteering').notNull().default(false),
+  interestedInNewsletter: boolean('interested_in_newsletter').notNull().default(false),
+  name: varchar('name', { length: 100 }),
+  email: varchar('email', { length: 255 }),
+  source: eventFeedbackSourceEnum('source').notNull().default('direct_link'),
+  status: formStatusEnum('status').notNull().default('submitted'),
+  submittedAt: timestamp('submitted_at').notNull().defaultNow(),
+  reviewedAt: timestamp('reviewed_at'),
+  reviewedBy: integer('reviewed_by').references(() => users.id),
+  reviewNotes: text('review_notes'),
+}, (table) => ({
+  eventSlugIdx: index('event_feedback_event_slug_idx').on(table.eventSlug),
+  submittedAtIdx: index('event_feedback_submitted_at_idx').on(table.submittedAt),
+  emailIdx: index('event_feedback_email_idx').on(table.email),
+  statusIdx: index('event_feedback_status_idx').on(table.status),
+}));
+
 // Mentee waiting queue for AI matching
 export const menteeWaitingQueue = pgTable('mentee_waiting_queue', {
   id: serial('id').primaryKey(),
@@ -1424,6 +1491,8 @@ export type VolunteerFormSubmission = typeof volunteerFormSubmissions.$inferSele
 export type NewVolunteerFormSubmission = typeof volunteerFormSubmissions.$inferInsert;
 export type ContactFormSubmission = typeof contactFormSubmissions.$inferSelect;
 export type NewContactFormSubmission = typeof contactFormSubmissions.$inferInsert;
+export type EventFeedbackSubmission = typeof eventFeedbackSubmissions.$inferSelect;
+export type NewEventFeedbackSubmission = typeof eventFeedbackSubmissions.$inferInsert;
 export type AiMatchResult = typeof aiMatchResults.$inferSelect;
 export type NewAiMatchResult = typeof aiMatchResults.$inferInsert;
 export type AiMatchingRun = typeof aiMatchingRuns.$inferSelect;

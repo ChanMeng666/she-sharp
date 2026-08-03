@@ -33,6 +33,13 @@ const STATIC_ROUTES: Array<{
   // /present/* is absent for the same reason: event presentation decks are
   // internal host tooling, are served `robots: { index: false }` by
   // `app/present/layout.tsx`, and must never be listed here.
+  //
+  // /events/*/feedback and its /f/<code> alias are absent too. The feedback
+  // form is one content-free page replicated across every event slug — the
+  // thin-duplicate pattern GSC files under "Duplicate, Google chose a different
+  // canonical" — and indexing it would invite feedback from people who never
+  // attended. Note the event loop below only ever emits /events/<slug>, so
+  // there is nothing to remove; this note exists to stop it being added.
   { path: "/resources", priority: 0.7, changeFrequency: "weekly" },
   { path: "/resources/in-the-press", priority: 0.6, changeFrequency: "monthly" },
   { path: "/resources/podcasts", priority: 0.6, changeFrequency: "monthly" },
