@@ -131,23 +131,9 @@ const EVENTS_QR: QrBlock = {
   caption: "shesharp.org.nz/events",
 };
 
-/**
- * The post-event survey is a fresh Google Form for every event, so there is no
- * standing URL to fall back on — and a code pointing at the previous event's
- * form is worse than no code, because nobody in the room can tell.
- *
- * Left empty until the organiser supplies this event's link: the slide then
- * shows a "Link not set yet" panel and the linter reports it. Paste the form
- * URL here and nowhere else.
- */
-const FEEDBACK_QR: QrBlock = {
-  url: "",
-  label: "Feedback form",
-  caption: "Ask the host for the link",
-};
-
-/* The ambassador code is not defined here: the intake form is the same for
-   every event, so `buildClosingSlides()` supplies it. */
+/* Neither the ambassador nor the feedback code is defined here. The ambassador
+   intake form is the same for every event, and the feedback code is derived
+   from `EVENT_SLUG`, so `buildClosingSlides()` supplies both. */
 
 const LINKEDIN_QR: QrBlock = {
   url: "https://www.linkedin.com/company/shesharpnz/",
@@ -761,7 +747,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
         ...mentors.map((mentor) => mentor.name),
       ],
       upcoming: UPCOMING_SNAPSHOT,
-      feedbackQr: FEEDBACK_QR,
+      eventSlug: EVENT_SLUG,
       karakia: CLOSING_KARAKIA,
       karakiaImage: CLOSING_KARAKIA_PLATE,
     }),

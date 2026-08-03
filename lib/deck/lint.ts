@@ -10,6 +10,8 @@
  * Long-form material belongs on the event page, reachable by the QR slides.
  */
 
+import { eventSlugForFeedbackCode } from "@/lib/data/feedback-codes";
+
 import type { Deck, QrBlock, Slide, SlideType } from "./types";
 import { checkAccentContrast } from "./theme";
 import { toneOf } from "./utils";
@@ -225,10 +227,15 @@ function checkLead(
  * Flags a QR block whose destination has not been supplied yet.
  *
  * A warning rather than an error on purpose: a deck is normally built days
- * before the per-event feedback form exists, and blocking the build would push
+ * before every one of its links exists, and blocking the build would push
  * authors towards pasting last event's link to make it go away — which is the
  * failure this is trying to prevent. The slide shows "Link not set yet" on
  * screen, so it also cannot slip past a rehearsal.
+ *
+ * This no longer fires on the feedback slide of a normal deck: that code is
+ * derived from the event slug and defaults (`feedbackQrFor()` in
+ * `boilerplate.ts`). It still guards the contact-slide codes and any QR an
+ * author supplied by hand, including a deliberately empty feedback override.
  */
 function checkQr(
   qr: QrBlock,
@@ -662,6 +669,7 @@ export function lintDeck(deck: Deck): LintIssue[] {
   });
 
   issues.push(...lintRhythm(deck));
+  issues.push(...lintFeedbackQr(deck));
 
   checkAccentContrast(deck.theme).forEach((check) => {
     if (!check.passes) {
@@ -763,6 +771,96 @@ export function lintRhythm(deck: Deck): LintIssue[] {
         message: `Only ${distinct} distinct layouts across ${slides.length} slides (need ${COPY_LIMITS.distinctLayouts}). Reaching for the same layout twice usually means the content was bent to fit it.`,
       });
     }
+  }
+
+  return issues;
+}
+
+/**
+ * Resolves a feedback URL back to the event slug it collects for.
+ *
+ * Both shapes count, because both work in a browser: the short `/f/<code>`
+ * alias the QR encodes, and the canonical `/events/<slug>/feedback` page a
+ * person might paste in by hand. `undefined` means the URL is not a She Sharp
+ * feedback destination at all.
+ */
+function feedbackTarget(url: string): string | undefined {
+  let path: string;
+  try {
+    path = new URL(url, "https://www.shesharp.org.nz").pathname;
+  } catch {
+    // Not a URL at all; nothing to resolve, and `feedback-qr-external` says so.
+    return undefined;
+  }
+
+  const segments = path.split("/").filter(Boolean);
+
+  if (segments.length === 2 && segments[0] === "f") {
+    return eventSlugForFeedbackCode(segments[1]);
+  }
+  if (
+    segments.length === 3 &&
+    segments[0] === "events" &&
+    segments[2] === "feedback"
+  ) {
+    return eventSlugForFeedbackCode(segments[1]);
+  }
+  return undefined;
+}
+
+/**
+ * Checks that the feedback code collects for *this* event.
+ *
+ * Deck-level rather than per-slide because it needs the deck's own slug, which
+ * `lintSlide` never sees.
+ *
+ * The mismatch is an **error** while the missing-link rule stays a warning, and
+ * the difference is that this check was previously impossible. A Google Form
+ * URL says nothing about which event it belongs to — precisely why `feedbackQr`
+ * had no default and no verification. Now that the destination is derived from
+ * the slug, "does this code point at this event" is a question a machine can
+ * answer, and it is exactly the question nobody in the room can: a QR aimed at
+ * last month's event looks perfectly correct from the front of the room while
+ * collecting the wrong data, and the results only surface days later.
+ */
+export function lintFeedbackQr(deck: Deck): LintIssue[] {
+  const issues: LintIssue[] = [];
+
+  const index = deck.slides.findIndex(
+    (slide) => slide.id === "feedback" && slide.type === "qr-cta",
+  );
+  if (index === -1) return issues;
+
+  const slide = deck.slides[index];
+  if (slide.type !== "qr-cta") return issues;
+
+  const url = slide.qr.url.trim();
+  // An empty URL is `qr-url-missing`'s business; reporting it twice would only
+  // make the report longer.
+  if (!url) return issues;
+
+  const expected = deck.eventSlug ?? deck.slug;
+  const target = feedbackTarget(url);
+
+  if (!target) {
+    issues.push({
+      slideId: slide.id,
+      slideIndex: index,
+      rule: "feedback-qr-external",
+      severity: "warning",
+      message: `The feedback code points at "${url}", which is not a She Sharp feedback form. Legitimate if a partner is running the survey — otherwise this is a leftover link.`,
+    });
+    return issues;
+  }
+
+  if (target !== expected) {
+    issues.push({
+      slideId: slide.id,
+      slideIndex: index,
+      rule: "feedback-qr-event-mismatch",
+      severity: "error",
+      message: `The feedback code collects for "${target}" but this deck is for "${expected}". Everyone who scans it files feedback against the wrong event.`,
+    });
   }
 
   return issues;

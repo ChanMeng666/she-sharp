@@ -59,6 +59,8 @@ const RULE_TITLES: Record<string, string> = {
   "break-duration": "Break length looks wrong",
   "accent-contrast": "Accent colour is too faint to read",
   "missing-image": "Image file does not exist",
+  "feedback-qr-event-mismatch": "Feedback code belongs to a different event",
+  "feedback-qr-external": "Feedback code goes somewhere we do not run",
 };
 
 /** What to actually do about each rule. One instruction, no theory. */
