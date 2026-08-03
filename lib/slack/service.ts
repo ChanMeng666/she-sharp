@@ -70,6 +70,14 @@ const STAGE_LABELS: Record<string, string> = {
   active: 'Active',
 };
 
+// Read as a sentence fragment in the context line: "… · scanned from the deck · …".
+const FEEDBACK_SOURCE_LABELS: Record<string, string> = {
+  deck_qr: 'scanned from the deck',
+  event_page: 'from the event page',
+  direct_link: 'direct link',
+  email: 'from an email',
+};
+
 interface ContactNotificationData {
   fullName: string;
   email: string;
@@ -79,6 +87,24 @@ interface ContactNotificationData {
   submissionId?: number;
   /** Which public form produced the submission. Defaults to the general contact form. */
   source?: 'contact' | 'sponsor-inquiry';
+}
+
+interface EventFeedbackNotificationData {
+  /** Primary key of the `event_feedback_submissions` row this notification is about. */
+  submissionId: number;
+  eventSlug: string;
+  eventTitle: string;
+  overallRating: number;
+  recommendScore?: number | null;
+  wouldAttendAgain?: 'yes' | 'maybe' | 'no' | null;
+  whatWorked?: string | null;
+  whatToImprove?: string | null;
+  interests: ('mentorship' | 'volunteering' | 'newsletter')[];
+  name?: string | null;
+  email?: string | null;
+  source: 'deck_qr' | 'event_page' | 'direct_link' | 'email';
+  /** True when this replaced an answer the same person gave earlier today. */
+  isUpdate?: boolean;
 }
 
 interface DonationNotificationData {
@@ -102,6 +128,16 @@ function getContactWebhookUrl(): string | null {
 function getDonationWebhookUrl(): string | null {
   return (
     process.env.SLACK_DONATION_WEBHOOK_URL?.trim() ||
+    process.env.SLACK_CONTACT_WEBHOOK_URL?.trim() ||
+    null
+  );
+}
+
+// Event feedback posts to its own channel if configured, otherwise reuse the
+// contact channel — feedback arriving in the wrong channel beats it not arriving.
+function getEventFeedbackWebhookUrl(): string | null {
+  return (
+    process.env.SLACK_EVENT_FEEDBACK_WEBHOOK_URL?.trim() ||
     process.env.SLACK_CONTACT_WEBHOOK_URL?.trim() ||
     null
   );
@@ -409,4 +445,168 @@ export async function sendDonationSlackNotification(data: DonationNotificationDa
   ];
 
   await sendDonationSlackMessage(blocks);
+}
+
+async function sendEventFeedbackSlackMessage(blocks: Record<string, unknown>[]): Promise<void> {
+  const webhookUrl = getEventFeedbackWebhookUrl();
+  if (!webhookUrl) {
+    console.warn('No event-feedback/contact Slack webhook configured, skipping notification');
+    return;
+  }
+
+  try {
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ blocks }),
+    });
+
+    if (!response.ok) {
+      console.error('Slack event feedback webhook failed:', response.status, await response.text());
+    }
+  } catch (error) {
+    console.error('Failed to send Slack event feedback notification:', error);
+  }
+}
+
+/** Filled/empty stars out of five, e.g. 4 -> `★★★★☆`. */
+function stars(n: number): string {
+  const filled = Math.max(0, Math.min(5, Math.round(n)));
+  return '★'.repeat(filled) + '☆'.repeat(5 - filled);
+}
+
+/**
+ * Slack rejects the ENTIRE message when any single `section` text exceeds 3000
+ * characters, and `sendEventFeedbackSlackMessage` swallows that error by design
+ * — so one long answer would leave the database row saved and the notification
+ * silently gone, which reads in Slack as "nobody submitted anything". The two
+ * free-text answers therefore live in separate blocks and each is clamped well
+ * under the limit.
+ */
+const SECTION_TEXT_LIMIT = 2800;
+
+function clampSectionText(value: string): string {
+  return value.length <= SECTION_TEXT_LIMIT
+    ? value
+    : `${value.slice(0, SECTION_TEXT_LIMIT - 1)}…`;
+}
+
+/** Slack caps `plain_text` in a header at 150 characters and 400s over it. */
+function clampHeaderText(value: string): string {
+  return value.length <= 150 ? value : `${value.slice(0, 149)}…`;
+}
+
+/**
+ * Sends a Slack notification for a new post-event feedback submission.
+ */
+export async function sendEventFeedbackSlackNotification(
+  data: EventFeedbackNotificationData
+): Promise<void> {
+  // The score goes in the HEADER, not a field, so a week of feedback is
+  // scannable straight off the Slack message list — the team can see the shape
+  // of an event's reception without opening a single card.
+  const headline = `${stars(data.overallRating)} ${data.overallRating}/5 — ${data.eventTitle}`;
+  const headerText = clampHeaderText(data.isUpdate ? `Updated · ${headline}` : headline);
+
+  const attendAgainLabels: Record<string, string> = {
+    yes: 'Yes',
+    maybe: 'Maybe',
+    no: 'No',
+  };
+
+  const fields = [
+    { type: 'mrkdwn', text: `*Rating:*\n${stars(data.overallRating)} ${data.overallRating}/5` },
+    {
+      type: 'mrkdwn',
+      text: `*Recommend:*\n${
+        data.recommendScore === undefined || data.recommendScore === null
+          ? '—'
+          : `${data.recommendScore}/10`
+      }`,
+    },
+    {
+      type: 'mrkdwn',
+      text: `*Coming again:*\n${
+        data.wouldAttendAgain ? attendAgainLabels[data.wouldAttendAgain] : '—'
+      }`,
+    },
+    {
+      type: 'mrkdwn',
+      text: `*Interested in:*\n${data.interests.length > 0 ? data.interests.join(', ') : '—'}`,
+    },
+  ];
+
+  const blocks: Record<string, unknown>[] = [
+    {
+      type: 'header',
+      text: { type: 'plain_text', text: headerText, emoji: true },
+    },
+    {
+      type: 'section',
+      fields,
+    },
+  ];
+
+  if (data.whatWorked) {
+    blocks.push({
+      type: 'section',
+      text: { type: 'mrkdwn', text: `*What worked:*\n${clampSectionText(data.whatWorked)}` },
+    });
+  }
+
+  if (data.whatToImprove) {
+    blocks.push({
+      type: 'section',
+      text: { type: 'mrkdwn', text: `*What to improve:*\n${clampSectionText(data.whatToImprove)}` },
+    });
+  }
+
+  // A pre-filled mailto turns "someone should thank her" into one tap, which is
+  // the difference between feedback that gets answered and feedback that gets read.
+  if (data.email) {
+    const subject = encodeURIComponent(`Thanks for your feedback on ${data.eventTitle}`);
+    const label = data.name || data.email;
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*Follow up:* <mailto:${data.email}|${label}> · <mailto:${data.email}?subject=${subject}|Reply>`,
+      },
+    });
+  } else {
+    blocks.push({
+      type: 'section',
+      text: { type: 'mrkdwn', text: '*Follow up:* Anonymous — no email given' },
+    });
+  }
+
+  const sourceLabel = FEEDBACK_SOURCE_LABELS[data.source] || data.source;
+  // The time zone is pinned rather than left to the server locale: Vercel runs
+  // in UTC, so an unpinned timestamp reports a Thursday evening event as Friday
+  // morning and makes a run of feedback impossible to line up with the night.
+  const timestamp = new Date().toLocaleString('en-NZ', {
+    timeZone: 'Pacific/Auckland',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+
+  blocks.push({
+    type: 'context',
+    elements: [
+      {
+        type: 'mrkdwn',
+        // `Feedback #<id>` mirrors the `Submission #<id>` convention above so
+        // tooling can join a Slack message back to the exact database row
+        // instead of guessing from email + timestamp.
+        text: `Feedback #${data.submissionId} · ${data.eventSlug} · ${sourceLabel} · ${timestamp}`,
+      },
+    ],
+  });
+
+  blocks.push({ type: 'divider' });
+
+  await sendEventFeedbackSlackMessage(blocks);
 }
