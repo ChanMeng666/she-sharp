@@ -342,7 +342,28 @@ export function SiteHeader() {
                  the menu arrived. The element is still there and still closes
                  the sheet on an outside tap; it is just invisible. */
               overlayClassName="bg-transparent"
-              className="w-full sm:w-[420px] p-0 flex flex-col border-l border-border bg-white overflow-hidden"
+              /*
+               * Below `sm` this panel is `w-full`, so when it lands it covers
+               * the entire screen. Sliding a full-screen surface in from the
+               * right tells the viewer nothing they cannot already see, and it
+               * gives them a moving edge between two white surfaces to
+               * misread — reported variously as stutter, as arriving in two
+               * halves, and as a second panel covering the first. With no dim
+               * behind it there is no depth cue to resolve the ambiguity
+               * either.
+               *
+               * So on phones it simply fades in: no direction, no edge, nothing
+               * to parse. From `sm` up it is a 420px drawer over a visible
+               * page, where the slide does carry meaning, and it is kept.
+               */
+              /*
+               * The translate override has to carry the `data-[state]` variant
+               * too. `slide-in-from-right` is applied as
+               * `data-[state=open]:slide-in-from-right`, so its selector has an
+               * attribute in it; a bare `max-sm:[--tw-enter-translate-x:0%]`
+               * loses on specificity no matter where it sits in the sheet.
+               */
+              className="w-full sm:w-[420px] p-0 flex flex-col border-l border-border bg-white overflow-hidden max-sm:data-[state=open]:[--tw-enter-translate-x:0%] max-sm:data-[state=closed]:[--tw-exit-translate-x:0%] max-sm:data-[state=open]:fade-in-0 max-sm:data-[state=closed]:fade-out-0"
             >
               {/* Header — clean white with hairline divider */}
               <div className="relative flex-shrink-0 border-b border-border bg-white px-6 pt-6 pb-6">
