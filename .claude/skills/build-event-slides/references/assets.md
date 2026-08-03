@@ -169,7 +169,7 @@ a form URL changes. Generation is client-side, so a code on screen never needs
 the venue's network.
 
 ```ts
-{ url: "https://example.com/form", label: "Feedback form", caption: "Ask the host for the link" }
+{ url: "https://www.shesharp.org.nz/f/aahf26", label: "Feedback form", caption: "shesharp.org.nz/f/aahf26" }
 ```
 
 `QrBlock.image` still exists as an escape hatch for a code somebody else
@@ -190,9 +190,19 @@ Practical consequences:
 - **The ambassador code is not yours to write.** It is the same standing form
   for every event, supplied by `buildClosingSlides()` from `AMBASSADOR_FORM_URL`
   in `lib/deck/boilerplate.ts`. Change it there, once, if it ever moves.
-- **The feedback code is a fresh Google Form for every event.** There is no
-  default and there should never be one. It is a required question in the
-  interview — see Round 7 of `content-checklist.md`.
+- **The feedback code is not yours to write either.** It is She Sharp's own
+  form, and `feedbackQrFor()` in `lib/deck/boilerplate.ts` derives it from the
+  event slug — you supply `eventSlug` to `buildClosingSlides()` and nothing
+  else. The linter re-checks it against the deck's own slug and **fails on a
+  mismatch**, so the old failure mode (a code quietly pointing at the previous
+  event's form) is now impossible to ship.
+
+  It encodes the short `/f/<code>` alias rather than the full
+  `/events/<slug>/feedback` path, and that is a deliberate legibility choice
+  rather than tidiness: at error-correction level `M`, 36 bytes fits a 29×29
+  code while the long path needs 37×37. Same area on the projector, modules 28%
+  larger — the difference between the back row scanning it and not. It is also
+  short enough to read aloud and to type.
 - **Open every QR destination in a signed-out browser before the event.** Not a
   normal window — an incognito one, or another browser you are not logged into.
   This is the single check most worth doing, because the person who builds the

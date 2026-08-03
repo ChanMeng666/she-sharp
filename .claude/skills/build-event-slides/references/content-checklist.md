@@ -157,13 +157,13 @@ of itself. If mentorship comes up in this deck at all, say so and ask them to
 have someone take one at the next event. It costs them nothing and it is a hole
 that has been open for years.
 
-## Round 7 — The two QR codes
+## Round 7 — QR codes on the day
 
-> "At the end there are two codes: one for feedback, one for people who want to
-> get more involved. What's the feedback form link?"
+> "Anything people need to scan on the day — the Slack invite, the event page, a
+> submission form?"
 >
-> "Anything else people need to scan on the day — the Slack invite, the event
-> page, a submission form?"
+> "Is there a prize draw for people who fill in the feedback form? If so I'll
+> say so on the slide."
 
 **Why it matters.** The QR codes are how everything you deliberately left off
 the slides — bios, full rules, terms, the schedule in detail — still reaches the
@@ -172,26 +172,21 @@ people who want it.
 You do not need a QR image from anybody. Codes are drawn from the URL in the
 browser, so all you are collecting here is links.
 
-**The ambassador code is already handled** — it is the same standing Google Form
-for every event and `buildClosingSlides()` supplies it. Do not ask for it.
+**Both closing codes are already handled. Do not ask for either.** The feedback
+code is She Sharp's own form on shesharp.org.nz, derived from the event slug —
+`buildClosingSlides()` builds it from `eventSlug` and the linter checks it
+points at *this* event. The ambassador code is the standing recruitment page.
 
-**The feedback form is the one you must ask for.** Every event gets a new Google
-Form, so there is no default and inventing one is not an option: a code pointing
-at the previous event's form looks perfectly correct from the front of the room
-and collects the wrong data.
+This used to be the round where you chased a Google Form link, and it is worth
+knowing why that is gone: every event got a fresh form, so there was no safe
+default, the URL was long enough to make the projected code hard to scan from
+the back of the room, and the answers landed in one person's Drive instead of in
+the database. The native form fixes all three. It also has no sign-in wall,
+which is the one thing about a Google Form you could not check without opening
+it in a signed-out browser.
 
-**They don't have the link yet** — which is normal a week out. Leave `url: ""`.
-The slide renders a dashed "Link not set yet" panel and the linter reports it,
-so it cannot quietly reach a projector. Tell the author plainly: *"the feedback
-slide will say 'link not set' until you send me the form URL — send it any time
-before the day and I'll redeploy."* Do not drop the slide; a missing slide is
-easier to forget than a visible gap.
-
-**Then check the form is public.** Open the form URL in a signed-out browser. If
-it redirects to a Google sign-in page, the form is collecting verified email
-addresses or is restricted to a Workspace domain, and attendees will hit a login
-wall the moment they scan. Say so — it is a setting in the form, and only they
-can change it.
+The prize draw is the only thing here still worth asking about, because it
+changes what the slide says.
 
 The contact slide near the front carries up to three codes; more than three and
 none of them is big enough to scan from the back.
@@ -234,7 +229,7 @@ The organisational frame comes free. This is what you still have to collect.
 | Group photo & break | `photo` + `break` | Break length, whether there is a photo, when (Round 4) |
 | Thank you | `thanks` | Partners and named people (Round 5) |
 | Upcoming events | `upcoming` | Up to three, with dates (Round 8) |
-| Feedback QR | `qr-cta` | The form URL, or a decision to drop the slide (Round 7) |
+| Feedback QR | `qr-cta` | Nothing — derived from the event slug. Only the prize draw, if there is one (Round 7) |
 | Ambassador QR | `qr-cta` | Nothing — `/join-our-team` |
 | Closing karakia | `karakia` | Nothing — fixed |
 
