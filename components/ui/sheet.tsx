@@ -53,9 +53,18 @@ function SheetContent({
   children,
   side = "right",
   showClose = true,
+  overlayClassName,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left"
+  /**
+   * Extra classes for the backdrop — pass `bg-transparent` to drop the dim.
+   *
+   * The overlay element stays either way: it is what closes the sheet on an
+   * outside tap and what locks the page behind it from scrolling. Only its
+   * appearance is up for negotiation.
+   */
+  overlayClassName?: string
   /**
    * Render the built-in close button.
    *
@@ -68,7 +77,7 @@ function SheetContent({
 }) {
   return (
     <SheetPortal>
-      <SheetOverlay />
+      <SheetOverlay className={overlayClassName} />
       <SheetPrimitive.Content
         data-slot="sheet-content"
         className={cn(
