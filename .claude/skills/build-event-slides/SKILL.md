@@ -65,7 +65,7 @@ following `references/content-checklist.md`.
 | Who is on stage | From the event data's `speakers[]`, confirmed out loud |
 | Which sponsors to thank | From the event data's `sponsors`, confirmed out loud |
 | Photos | Their own; `public/img/curated/` as a named fallback |
-| Feedback form link | **Ask.** New Google Form every event, no default. Not known yet → `url: ""`, never a guess |
+| Feedback form link | Already handled — She Sharp's own form at `/f/<code>`, derived from the event slug |
 | Ambassador form link | Already handled — the standing form in `AMBASSADOR_FORM_URL` |
 | Break length | 15 minutes |
 
@@ -346,7 +346,15 @@ npx tsx lib/deck/deck.test.ts
 - **`verify-image-paths.ts`** is the CI gate. Every `/img/...` path written in
   `lib/`, `app/` or `components/` must resolve to a real file under `public/`.
   A typo here fails the pull request, so catch it now.
-- **`deck.test.ts`** lints every registered deck and re-checks the theme.
+- **`deck.test.ts`** lints every registered deck, re-checks the theme, and
+  asserts every event's feedback code is unique and resolves back to its own
+  event.
+
+One of the linter's failures is not a copy problem and must not be reworded
+away: **`feedback-qr-event-mismatch` is an error, not a warning.** The feedback
+link is derived from the deck's event slug, so a mismatch means the deck itself
+is pointed at the wrong event. Fix `EVENT_SLUG` in the deck file — see *Common
+failure modes* below.
 
 **When the linter fails on copy, rewrite the copy — do not hand the author an
 error message.** They did not write a lint rule and should never see one. Fix
@@ -436,6 +444,10 @@ Give the person presenting three things:
 3. **`references/run-sheet.md`** — one printable page: the keys, the countdown,
    and the two things that go wrong. Send it to whoever is clicking, even when
    that is someone who has presented before.
+4. **The feedback link in plain text** — `shesharp.org.nz/f/<code>`, which you
+   can read off the deck's feedback slide. Paste it into the venue chat and the
+   thank-you email. Everyone who was looking at their phone when the code was on
+   screen, or who left early, can still fill it in.
 
 Tell them the one thing worth remembering: **open it ten minutes early, wait for
 the loading chip to disappear, and then don't reload.**
@@ -507,7 +519,7 @@ content; the frame comes free from `lib/deck/boilerplate.ts`.
 | 10 | Group photo & break | `photo` + `break` | Authored (break length) |
 | 11 | Thank you | `thanks` | Event data + named people |
 | 12 | Upcoming events | `upcoming` | Authored, snapshotted |
-| 13 | Feedback QR | `qr-cta` | This event's form link — always ask |
+| 13 | Feedback QR | `qr-cta` | Nothing — derived from the event slug |
 | 14 | Ambassador QR | `qr-cta` | Fixed destination |
 | 15 | Closing karakia | `karakia` (`whakamutunga`) | Fixed |
 
@@ -543,6 +555,13 @@ in between.
 **`Only 20% of slides are dark (need 25%)`** — the deck is all working and no
 breathing. Dividers, photographs and breaks are dark by default, so the fix for
 this and the fix for a long information run are usually the same fix.
+
+**`The feedback code points at "<other-slug>" but this deck is "<slug>"`** — the
+feedback link is derived from the event slug, so this can only mean the deck was
+built against the wrong event. Fix `EVENT_SLUG` in the deck file; the code then
+fixes itself. **Never silence this rule** — a code pointing at last month's
+event looks perfectly correct from the front of the room and collects the wrong
+data, which is the exact failure the rule exists to catch.
 
 **`Only 6 distinct layouts across 30 slides (need 8)`** — you reached for the
 same layout repeatedly, which nearly always means content got bent to fit it.
