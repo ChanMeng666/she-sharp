@@ -75,6 +75,12 @@ the closing karakia, the thank-you, or the feedback code.
 
 ## If something goes wrong
 
+**Nobody can open the feedback form** — read the short link under the code out
+loud instead (`shesharp.org.nz/f/...`), and paste it into the venue chat. It is
+short enough to type. If nobody can reach *any* page on shesharp.org.nz, the
+site is in maintenance mode; tell whoever set it, and send the link afterwards
+by email.
+
 **A slide shows a coloured gradient with words on it** — an image did not load.
 Keep going. It is a designed fallback, it is meant to look intentional, and the
 room will not notice.

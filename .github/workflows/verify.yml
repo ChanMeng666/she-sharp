@@ -54,3 +54,32 @@ jobs:
 
       - name: Type-check scripts and skill tooling
         run: pnpm typecheck:scripts
+
+  deck-checks:
+    # A deck fails in front of a room, at the worst possible moment. Two of the
+    # things `deck.test.ts` asserts cannot be caught any other way: the feedback
+    # QR is derived rather than authored, so no code review can see that a code
+    # points at the wrong event or that two events collide onto one code. A
+    # linter nothing runs is a linter nobody obeys. Needs no database and no
+    # network — it is all pure data.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check every registered slide deck
+        run: npx tsx lib/deck/deck.test.ts

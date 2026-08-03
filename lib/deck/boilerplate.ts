@@ -17,6 +17,7 @@
  */
 
 import { footerConfig } from "@/lib/config/footer";
+import { feedbackUrlForSlug } from "@/lib/data/feedback-codes";
 import { scrollingSponsorLogos, tieredSponsors } from "@/lib/data/sponsors";
 import { homeImpactData } from "@/lib/data/stats";
 import { teamMembers } from "@/lib/data/team";
@@ -364,7 +365,51 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
  */
 export const AMBASSADOR_FORM_URL = "https://www.shesharp.org.nz/join-our-team";
 
+/**
+ * The feedback code for one event.
+ *
+ * This used to be impossible. Every event got a fresh Google Form, whose URL
+ * says nothing about which event it belongs to, so a default would have meant
+ * guessing — and a code pointing at last month's form looks perfectly correct
+ * from the front of the room while collecting the wrong data. Hence the old
+ * rule: no default, show "Link not set yet", make the organiser paste a link.
+ *
+ * The form is ours now and its URL is derived from the event slug, so the
+ * failure mode has moved rather than gone away: to point the code at the wrong
+ * event you would have to have built the wrong deck entirely. `lintDeck()`
+ * re-checks the derivation against the deck's own slug, so even that is caught.
+ *
+ * It encodes the short `/f/<code>` alias, not `/events/<slug>/feedback`. At
+ * error-correction level `M` — which `components/deck/deck-qr.tsx` picks
+ * deliberately, for distance — 36 bytes fits QR version 3 at 29x29 modules
+ * while the 79-byte long path needs version 5 at 37x37. Same area on the
+ * projector, modules 28% larger, which is the difference between scanning from
+ * six metres and not. The short form is also short enough to read aloud, which
+ * matters because half the room photographs the slide instead of scanning it.
+ *
+ * Throws on a slug that is not a known event — a deck for an event the site has
+ * never heard of is a mistake worth failing on.
+ */
+export function feedbackQrFor(eventSlug: string): QrBlock {
+  const url = feedbackUrlForSlug(eventSlug);
+  return {
+    url,
+    label: "Feedback form",
+    // The caption is what the back of the room reads instead of scanning, so it
+    // is the destination itself, minus the `https://www.` nobody says out loud.
+    caption: url.replace(/^https:\/\/www\./, ""),
+  };
+}
+
 export interface ClosingOptions {
+  /**
+   * The event this deck belongs to, as it appears in `lib/data/events.ts`.
+   *
+   * Required, and this is where the old safety property now lives: you cannot
+   * obtain a feedback QR without declaring which event it is for. `feedbackQr`
+   * used to carry that weight by having no default at all.
+   */
+  eventSlug: string;
   thanksLogos: { label?: string; logos: DeckLogo[] }[];
   /** People thanked by name — mentors, judges, volunteers. */
   thanksNames?: string[];
@@ -375,14 +420,15 @@ export interface ClosingOptions {
    */
   upcoming: UpcomingSlide["events"];
   /**
-   * This event's post-event survey.
+   * Overrides the derived feedback code — an escape hatch, not the normal path.
    *
-   * Every event gets a new Google Form, so there is deliberately no fallback:
-   * a code pointing at the previous event's form collects the wrong data and
-   * nobody in the room can tell. Leave it empty until the organiser supplies
-   * the link and the slide will say so on screen.
+   * The only real case is a survey somebody else runs: a partner's own form, a
+   * university's evaluation. Otherwise leave it out and `eventSlug` supplies
+   * the right code. An empty `url` still renders the visible "Link not set yet"
+   * panel and is still reported by the linter, and anything pointing away from
+   * a She Sharp feedback URL is reported too — see `feedback-qr-external`.
    */
-  feedbackQr: QrBlock;
+  feedbackQr?: QrBlock;
   /** Defaults to the standing ambassador form. */
   ambassadorQr?: QrBlock;
   /** Required: a She Sharp event closes with a karakia. */
@@ -414,6 +460,7 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
     // shesharp.org.nz/join-our-team" while the code went somewhere else.
     caption: "shesharp.org.nz/join-our-team",
   };
+  const feedbackQr: QrBlock = options.feedbackQr ?? feedbackQrFor(options.eventSlug);
 
   return [
     {
@@ -444,11 +491,11 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
       type: "qr-cta",
       section,
       tone: "dark",
-      eyebrow: "One minute of silence, please",
+      eyebrow: "Takes under a minute",
       title: "Complete Our Feedback Form",
       lead: "Scan to share your feedback and go in the draw to win",
-      qr: options.feedbackQr,
-      note: "Leave this up for a full minute and wait in silence while people scan it.",
+      qr: feedbackQr,
+      note: "Leave this up for a full minute and wait in silence while people scan it. The form is ours now — answers land in Slack before people leave the room.",
     },
     {
       id: "ambassador",
