@@ -143,22 +143,9 @@ const EVENTS_QR: QrBlock = {
   caption: "shesharp.org.nz/events",
 };
 
-/**
- * TODO: paste this event's Google Form link.
- *
- * Every event gets a new feedback form, so there is no default — a code
- * pointing at the previous event's form collects the wrong data and nobody in
- * the room can tell. While this is empty the slide says "Link not set yet" and
- * the linter reports it.
- */
-const FEEDBACK_QR: QrBlock = {
-  url: "",
-  label: "Feedback form",
-  caption: "Ask the host for the link",
-};
-
-/* The ambassador code is not defined here: the intake form is the same for
-   every event, so \`buildClosingSlides()\` supplies it. */
+/* Neither the ambassador nor the feedback code is defined here. The ambassador
+   intake form is the same for every event, and the feedback code is derived
+   from \`EVENT_SLUG\`, so \`buildClosingSlides()\` supplies both. */
 
 /** Pre-filled from the event's \`sponsors.main\`. */
 const PARTNER_LOGOS: DeckLogo[] = [
@@ -220,7 +207,8 @@ export const ${exportName(slug)}: Deck = {
       // it at render time, it is relative to today and would change the
       // projector content under the host.
       upcoming: [],
-      feedbackQr: FEEDBACK_QR,
+      // The feedback code is derived from the slug — nothing to paste.
+      eventSlug: EVENT_SLUG,
       karakia: CLOSING_KARAKIA,
     }),
   ],
