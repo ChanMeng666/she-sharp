@@ -154,6 +154,7 @@ export function EventFeedbackForm({
   const ratingGroupRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
 
   /** Null until the attendee moves the slider — see the range input below. */
   const hasRecommendScore = answers.recommendScore !== null;
@@ -176,6 +177,37 @@ export function EventFeedbackForm({
 
     setIsHydrated(true);
   }, [eventSlug]);
+
+  /*
+   * Bring the confirmation into view, and put focus on it.
+   *
+   * Without this the phone appears to jump to the footer on submit. Nothing
+   * scrolls: the submit button sits near the bottom of a tall form, the success
+   * panel that replaces it is a fraction of that height, and the page simply
+   * gets shorter underneath a scroll position that stays where it was — which
+   * lands on whatever is now at that offset, the footer. The attendee has to
+   * scroll back up to discover it worked, and some will assume it did not and
+   * submit again.
+   *
+   * Focus moves too, not just the scroll: it announces the result to a screen
+   * reader, and it puts the keyboard back somewhere sensible now that every
+   * control the user was tabbing through has been removed from the document.
+   */
+  useEffect(() => {
+    if (!isSuccess) return;
+    const panel = successRef.current;
+    if (!panel) return;
+
+    const reduceMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    panel.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "center",
+    });
+    panel.focus({ preventScroll: true });
+  }, [isSuccess]);
 
   // Mirror answers into `sessionStorage` so a tab backgrounded mid-form — to
   // check a calendar, to answer a message — comes back with them intact.
@@ -309,7 +341,13 @@ export function EventFeedbackForm({
 
   if (isSuccess) {
     return (
-      <div className={`${cardClass} text-center`}>
+      <div
+        ref={successRef}
+        tabIndex={-1}
+        role="status"
+        aria-live="polite"
+        className={`${cardClass} text-center focus:outline-none`}
+      >
         <div className="flex justify-center mb-4">
           <div className="h-16 w-16 rounded-full bg-mint flex items-center justify-center">
             <CheckCircle2 className="h-8 w-8 text-foreground" />
