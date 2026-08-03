@@ -3,6 +3,8 @@
  * Sends formatted messages to a designated Slack channel.
  */
 
+import type { FeedbackSummary } from '@/lib/forms/event-feedback-summary';
+
 interface VolunteerNotificationData {
   type: 'ambassador' | 'volunteer';
   firstName: string;
@@ -491,10 +493,8 @@ function stars(n: number): string {
  */
 const SECTION_TEXT_LIMIT = 2800;
 
-function clampSectionText(value: string): string {
-  return value.length <= SECTION_TEXT_LIMIT
-    ? value
-    : `${value.slice(0, SECTION_TEXT_LIMIT - 1)}…`;
+function clampSectionText(value: string, limit = SECTION_TEXT_LIMIT): string {
+  return value.length <= limit ? value : `${value.slice(0, limit - 1)}…`;
 }
 
 /** Slack caps `plain_text` in a header at 150 characters and 400s over it. */
@@ -630,6 +630,182 @@ export async function sendEventFeedbackSlackNotification(
     ],
   });
 
+  blocks.push({ type: 'divider' });
+
+  await sendEventFeedbackSlackMessage(blocks);
+}
+
+/**
+ * Posts the aggregate for one event a few days after it ran.
+ *
+ * Separate from the per-response card on purpose: those answer "who should we
+ * reply to", this answers "how did it go", and the second question is the one
+ * that otherwise never gets asked because answering it meant scrolling a
+ * channel or writing SQL.
+ */
+export async function sendEventFeedbackDigest(
+  summary: FeedbackSummary,
+): Promise<void> {
+  const {
+    eventTitle,
+    responses,
+    attendees,
+    responseRate,
+    averageRating,
+    ratingCounts,
+    nps,
+    promoters,
+    passives,
+    detractors,
+    npsResponses,
+    attendAgain,
+    interests,
+    whatWorked,
+    whatToImprove,
+  } = summary;
+
+  if (responses === 0) {
+    // Silence would be indistinguishable from the digest failing, and "nobody
+    // filled it in" is itself a result worth seeing — it usually means the QR
+    // never went up, not that the event went badly.
+    await sendEventFeedbackSlackMessage([
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: clampHeaderText(`No feedback yet — ${eventTitle}`),
+          emoji: true,
+        },
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text:
+            'Nothing has come in for this event. If the QR slide went up, worth checking the link on a phone; ' +
+            'the form stays open, so late responses will still land here.',
+        },
+      },
+      { type: 'divider' },
+    ]);
+    return;
+  }
+
+  const rateText =
+    responseRate !== null && attendees
+      ? `${responses} of ${attendees} attendees (${Math.round(responseRate * 100)}%)`
+      : `${responses}`;
+
+  const blocks: Record<string, unknown>[] = [
+    {
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        text: clampHeaderText(`Feedback summary — ${eventTitle}`),
+        emoji: true,
+      },
+    },
+    {
+      type: 'section',
+      fields: [
+        { type: 'mrkdwn', text: `*Responses:*\n${rateText}` },
+        {
+          type: 'mrkdwn',
+          text: `*Average rating:*\n${
+            averageRating !== null
+              ? `${stars(Math.round(averageRating))} ${averageRating.toFixed(1)}/5`
+              : '—'
+          }`,
+        },
+        {
+          type: 'mrkdwn',
+          // NPS is quoted with its own denominator because it is computed only
+          // over the people who moved the slider, which is fewer than the
+          // people who answered.
+          text: `*NPS:*\n${
+            nps !== null ? `${nps > 0 ? '+' : ''}${nps} (from ${npsResponses})` : '—'
+          }`,
+        },
+        {
+          type: 'mrkdwn',
+          text: `*Would come again:*\n${attendAgain.yes} yes · ${attendAgain.maybe} maybe · ${attendAgain.no} no`,
+        },
+      ],
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text:
+          `*Ratings:* ` +
+          [5, 4, 3, 2, 1]
+            .map((n) => `${n}★ ${ratingCounts[n - 1]}`)
+            .join(' · '),
+      },
+    },
+  ];
+
+  if (nps !== null) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*Recommend split:* ${promoters} promoters (9–10) · ${passives} passives (7–8) · ${detractors} detractors (0–6)`,
+      },
+    });
+  }
+
+  // The interest counts are the actionable part of this digest. Nothing
+  // subscribes anybody automatically — the live newsletter goes out through
+  // Mailchimp and a ticked box is not consent under the mailing-list rules —
+  // so this line is the prompt for a human to do it properly, and without it
+  // the checkboxes on the form quietly promise something nobody delivers.
+  const interestTotal =
+    interests.mentorship + interests.volunteering + interests.newsletter;
+  if (interestTotal > 0) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text:
+          `*Asked to hear more:* ${interests.mentorship} mentorship · ` +
+          `${interests.volunteering} volunteering · ${interests.newsletter} newsletter\n` +
+          `_Nobody is subscribed automatically. Run_ \`npx tsx scripts/events/feedback-interests.ts ${summary.eventSlug}\` _for the list._`,
+      },
+    });
+  }
+
+  const quoteList = (items: string[], label: string) => {
+    if (items.length === 0) return;
+    // Three per block keeps each one well under Slack's 3,000-character
+    // section limit, which the sender would otherwise swallow whole.
+    const shown = items.slice(0, 12);
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text:
+          `*${label}* (${items.length})\n` +
+          shown.map((t) => `> ${clampSectionText(t, 260)}`).join('\n') +
+          (items.length > shown.length
+            ? `\n_…and ${items.length - shown.length} more._`
+            : ''),
+      },
+    });
+  };
+
+  quoteList(whatWorked, 'What worked');
+  quoteList(whatToImprove, 'What to do differently');
+
+  blocks.push({
+    type: 'context',
+    elements: [
+      {
+        type: 'mrkdwn',
+        text: `Digest · ${summary.eventSlug} · ${summary.eventDate}`,
+      },
+    ],
+  });
   blocks.push({ type: 'divider' });
 
   await sendEventFeedbackSlackMessage(blocks);

@@ -379,10 +379,13 @@ export function EventFeedbackForm({
           </p>
         )}
 
-        {/* Q1 — the only required question. */}
+        {/* Q1 — required, along with name and email at the foot of the form. */}
         <div className="space-y-3">
           <p id="rating-label" className="text-foreground font-medium">
-            How was today? <span className="text-brand">*</span>
+            {/* Not "How was today?" — the form is deliberately open long after
+                the event, and someone filling it in three days later is a good
+                outcome we should not make read as a mistake. */}
+            Overall, how was it? <span className="text-brand">*</span>
           </p>
           <div
             ref={ratingGroupRef}
@@ -491,6 +494,30 @@ export function EventFeedbackForm({
             placeholder="Anything at all — we read every one"
             className={textareaClass}
           />
+          {/* Placed here rather than in a footer, deliberately. This is the
+              field where someone who had a bad experience starts typing, and
+              this box is the wrong place for a safeguarding disclosure: it goes
+              to a public team channel, it is attached to their name, and nobody
+              is on duty for it. Naming the private route at the moment the
+              thought occurs is the whole point — a line under the submit button
+              is read by people who have already decided what to write. */}
+          <p className="text-sm text-ink-500">
+            If something happened that you would rather tell us privately, email{" "}
+            <a
+              href="mailto:conduct@shesharp.org.nz"
+              className="underline hover:text-brand"
+            >
+              conduct@shesharp.org.nz
+            </a>{" "}
+            or read our{" "}
+            <Link
+              href="/code-of-conduct"
+              className="underline hover:text-brand"
+            >
+              code of conduct
+            </Link>
+            . You do not have to put it in this form.
+          </p>
         </div>
 
         {/* Q5 — sits here, after the free text, not near the top. It is the
