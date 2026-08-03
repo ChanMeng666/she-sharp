@@ -332,6 +332,10 @@ export function SiteHeader() {
 
             <SheetContent
               side="right"
+              /* This sheet draws its own round close button below. Without
+                 this, SheetContent's built-in one lands on the same
+                 `top-4 right-4` and the two crosses overlap. */
+              showClose={false}
               className="w-full sm:w-[420px] p-0 flex flex-col border-l border-border bg-white overflow-hidden"
             >
               {/* Header — clean white with hairline divider */}
@@ -370,7 +374,11 @@ export function SiteHeader() {
                     <div
                       key={item.title}
                       className="mobile-nav-item"
-                      style={{ animationDelay: `${index * 55}ms` }}
+                      /* 18ms, not 55. There are seven top-level items, so 55ms
+                         each meant the last one only appeared ~380ms after the
+                         first started — on top of the sheet's own slide. The
+                         stagger is meant to be felt, not waited for. */
+                      style={{ animationDelay: `${index * 18}ms` }}
                     >
                       {item.children ? (
                         <Collapsible
@@ -508,7 +516,18 @@ export function SiteHeader() {
         }
 
         .mobile-nav-item {
-          animation: mobileNavSlideIn 0.22s ease-out both;
+          animation: mobileNavSlideIn 0.16s ease-out both;
+        }
+
+        /* The "both" fill mode holds these at opacity 0 through their delay,
+           so with motion suppressed the menu would otherwise open empty.
+           (No backticks in here — this block is a template literal.) */
+        @media (prefers-reduced-motion: reduce) {
+          .mobile-nav-item {
+            animation: none;
+            opacity: 1;
+            transform: none;
+          }
         }
       `}</style>
     </header>

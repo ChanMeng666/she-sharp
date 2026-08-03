@@ -48,9 +48,19 @@ function SheetContent({
   className,
   children,
   side = "right",
+  showClose = true,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left"
+  /**
+   * Render the built-in close button.
+   *
+   * Set `false` when the sheet supplies its own, which the site header does —
+   * both land on `top-4 right-4` and the styled one sits on top of the plain
+   * one, showing as two overlapping crosses. Kept opt-out rather than removed
+   * so every other sheet keeps a close button by default.
+   */
+  showClose?: boolean
 }) {
   return (
     <SheetPortal>
@@ -58,7 +68,11 @@ function SheetContent({
       <SheetPrimitive.Content
         data-slot="sheet-content"
         className={cn(
-          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+          // 200ms open, not the shadcn default of 500. Half a second is long
+          // enough on a phone to read as the tap not having registered, and the
+          // site header stacks a staggered reveal on top of it — together they
+          // made the menu feel like it hung for about a second.
+          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg transition ease-in-out data-[state=closed]:duration-200 data-[state=open]:duration-200 motion-reduce:transition-none motion-reduce:data-[state=open]:duration-0 motion-reduce:data-[state=closed]:duration-0",
           side === "right" &&
             "data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm",
           side === "left" &&
@@ -72,10 +86,12 @@ function SheetContent({
         {...props}
       >
         {children}
-        <SheetPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none">
-          <XIcon className="size-4" />
-          <span className="sr-only">Close</span>
-        </SheetPrimitive.Close>
+        {showClose && (
+          <SheetPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none">
+            <XIcon className="size-4" />
+            <span className="sr-only">Close</span>
+          </SheetPrimitive.Close>
+        )}
       </SheetPrimitive.Content>
     </SheetPortal>
   )
