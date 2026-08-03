@@ -36,7 +36,11 @@ function SheetOverlay({
     <SheetPrimitive.Overlay
       data-slot="sheet-overlay"
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
+        // Duration and easing pinned to match the panel. Left to its own
+        // devices the overlay runs 150ms on `ease` while the panel runs 200ms,
+        // so the screen is over half black before the panel has visibly moved
+        // — which reads as the tap having opened "just the dimmer".
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 duration-200 ease-out motion-reduce:duration-0 fixed inset-0 z-50 bg-black/50",
         className
       )}
       {...props}
@@ -68,11 +72,22 @@ function SheetContent({
       <SheetPrimitive.Content
         data-slot="sheet-content"
         className={cn(
-          // 200ms open, not the shadcn default of 500. Half a second is long
-          // enough on a phone to read as the tap not having registered, and the
-          // site header stacks a staggered reveal on top of it — together they
-          // made the menu feel like it hung for about a second.
-          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg transition ease-in-out data-[state=closed]:duration-200 data-[state=open]:duration-200 motion-reduce:transition-none motion-reduce:data-[state=open]:duration-0 motion-reduce:data-[state=closed]:duration-0",
+          // 200ms, not the shadcn default of 500 — half a second on a phone
+          // reads as the tap not having registered.
+          //
+          // `ease-out`, not shadcn's `ease-in-out`. This is the one that
+          // actually decides how the menu feels: `ease-in-out` is
+          // cubic-bezier(0.4, 0, 0.2, 1), which spends its first third barely
+          // moving, so the panel is still almost entirely off-screen while the
+          // overlay has already darkened. `ease-out` leaves at full speed and
+          // settles, which reads as instant. Note it applies to the keyframe
+          // animation, not a transition — Radix drives enter/exit with
+          // `animate-in`/`animate-out`.
+          //
+          // The bare `transition` utility that shadcn ships here is gone: it
+          // transitioned about twenty properties for no reason, since nothing
+          // about this panel is transition-driven.
+          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg ease-out data-[state=closed]:duration-200 data-[state=open]:duration-200 motion-reduce:data-[state=open]:duration-0 motion-reduce:data-[state=closed]:duration-0",
           side === "right" &&
             "data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm",
           side === "left" &&
