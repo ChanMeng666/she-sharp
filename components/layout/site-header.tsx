@@ -336,6 +336,12 @@ export function SiteHeader() {
                  this, SheetContent's built-in one lands on the same
                  `top-4 right-4` and the two crosses overlap. */
               showClose={false}
+              /* No dim behind this one. The panel is `w-full` on a phone, so
+                 the backdrop is only ever visible during the slide — where all
+                 it did was flash a grey wash across the screen a beat before
+                 the menu arrived. The element is still there and still closes
+                 the sheet on an outside tap; it is just invisible. */
+              overlayClassName="bg-transparent"
               className="w-full sm:w-[420px] p-0 flex flex-col border-l border-border bg-white overflow-hidden"
             >
               {/* Header — clean white with hairline divider */}
@@ -373,12 +379,15 @@ export function SiteHeader() {
                   {navigationConfig.items.map((item, index) => (
                     <div
                       key={item.title}
-                      className="mobile-nav-item"
-                      /* 18ms, not 55. There are seven top-level items, so 55ms
-                         each meant the last one only appeared ~380ms after the
-                         first started — on top of the sheet's own slide. The
-                         stagger is meant to be felt, not waited for. */
-                      style={{ animationDelay: `${index * 18}ms` }}
+                      /* No entrance animation on the items.
+                         The panel already slides in right-to-left; animating
+                         each row right-to-left again, on a stagger, is a second
+                         motion along the same axis at a different speed. Frame
+                         timings during the open are a clean 60fps with nothing
+                         dropped, so what read as "stutter" was never dropped
+                         frames — it was the panel appearing to arrive, then its
+                         contents arriving again after it. The slide is the
+                         entrance; the contents should simply be in it. */
                     >
                       {item.children ? (
                         <Collapsible
@@ -510,25 +519,6 @@ export function SiteHeader() {
           to   { transform: scaleX(1); }
         }
 
-        @keyframes mobileNavSlideIn {
-          from { opacity: 0; transform: translateX(14px); }
-          to   { opacity: 1; transform: translateX(0); }
-        }
-
-        .mobile-nav-item {
-          animation: mobileNavSlideIn 0.16s ease-out both;
-        }
-
-        /* The "both" fill mode holds these at opacity 0 through their delay,
-           so with motion suppressed the menu would otherwise open empty.
-           (No backticks in here — this block is a template literal.) */
-        @media (prefers-reduced-motion: reduce) {
-          .mobile-nav-item {
-            animation: none;
-            opacity: 1;
-            transform: none;
-          }
-        }
       `}</style>
     </header>
   );
