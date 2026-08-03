@@ -489,9 +489,15 @@ export function EventFeedbackForm({
           <div
             role="radiogroup"
             aria-labelledby="nps-label"
-            /* Six columns wrapping to two rows, never a horizontal scroller —
-               a row that scrolls sideways hides the high scores at 320px. */
-            className="grid grid-cols-6 gap-2"
+            /* Never a horizontal scroller — a row that scrolls sideways hides
+               the high scores at 320px.
+
+               Four columns on the narrowest phones, not six. At 320px the card
+               leaves ~240px of track, so six columns give cells about 33px
+               wide: legal under WCAG 2.2 AA (24x24) but a poor thumb target,
+               and this is the question people already abandon most. Four
+               columns give ~54px and cost one extra row. */
+            className="grid grid-cols-4 sm:grid-cols-6 gap-2"
           >
             {NPS_SCALE.map((value) => {
               const selected = answers.recommendScore === value;
