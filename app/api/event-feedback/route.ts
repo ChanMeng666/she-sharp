@@ -21,8 +21,19 @@ const feedbackSchema = z.object({
   whatWorked: z.string().max(2000).optional(),
   whatToImprove: z.string().max(2000).optional(),
   interests: z.array(z.enum(["mentorship", "volunteering", "newsletter"])).max(3).default([]),
-  name: z.string().max(100).optional(),
-  email: z.string().email().max(255).optional().or(z.literal("")),
+  // Required as of 2026-08-03, and enforced here rather than only in the form:
+  // client-side validation is a courtesy, not a control.
+  //
+  // `required_error` is set explicitly because `.min(1, …)` only fires when the
+  // key is present but empty — an absent key falls through to zod's default
+  // "Required", and two absent keys produce the uselessly ambiguous
+  // "Required, Required".
+  name: z.string({ required_error: "Name is required" }).min(1, "Name is required").max(100),
+  email: z
+    .string({ required_error: "Email is required" })
+    .min(1, "Email is required")
+    .email("Invalid email address")
+    .max(255),
   source: z.enum(["deck_qr", "event_page", "direct_link", "email"]).default("direct_link"),
   /** Honeypot: legitimate clients leave this empty. */
   website: z.string().optional(),

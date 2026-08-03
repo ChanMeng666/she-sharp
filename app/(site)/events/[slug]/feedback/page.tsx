@@ -131,8 +131,13 @@ export default async function EventFeedbackPage({
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
             How was {event.title}?
           </h1>
+          {/* Says what it costs, honestly. This line used to read "no sign-in,
+              no email needed" — name and email became required on 2026-08-03,
+              and a promise the form then breaks two screens later is worse
+              than no promise at all. There is still no sign-in, which is the
+              part that actually stops people in a hall. */}
           <p className="mt-4 mb-8 text-lg text-ink-700 leading-relaxed">
-            Under a minute. No sign-in, no email needed.
+            Under a minute, and no sign-in.
           </p>
 
           <EventFeedbackForm

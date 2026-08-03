@@ -11,6 +11,7 @@
 /* Components */
 @import "./components/cards.css";
 @import "./components/dashboard.css";
+@import "./components/feedback-form.css";
 /* legal-page.css is imported directly by pages that need it */
 
 /* Animations */

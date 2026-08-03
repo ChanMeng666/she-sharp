@@ -59,7 +59,6 @@ const EMPTY_ANSWERS: Answers = {
 const DEVICE_ID_KEY = "she-sharp-device-id";
 
 const RATING_SCALE = [1, 2, 3, 4, 5];
-const NPS_SCALE = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const ATTEND_AGAIN_OPTIONS: { value: "yes" | "maybe" | "no"; label: string }[] =
   [
@@ -142,6 +141,7 @@ export function EventFeedbackForm({
   const [answers, setAnswers] = useState<Answers>(EMPTY_ANSWERS);
   const [errors, setErrors] = useState<{
     overallRating?: string;
+    name?: string;
     email?: string;
   }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -152,7 +152,11 @@ export function EventFeedbackForm({
   const [isHydrated, setIsHydrated] = useState(false);
 
   const ratingGroupRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
+
+  /** Null until the attendee moves the slider — see the range input below. */
+  const hasRecommendScore = answers.recommendScore !== null;
 
   // Storage is read after mount, never during render — reading it during
   // render would desync the server HTML from the client's first paint.
@@ -194,8 +198,15 @@ export function EventFeedbackForm({
   };
 
   /**
-   * Only the rating is required. Everything else is optional by design — a
-   * one-tap answer that arrives beats a complete one that never gets sent.
+   * Rating, name and email are required; the rest is optional.
+   *
+   * Name and email were optional until 2026-08-03 and were made required so
+   * the team can follow up and run the prize draw. It is worth writing down
+   * what that costs, because the cost is invisible in the data: everyone who
+   * would have answered anonymously now either identifies themselves or
+   * abandons, so the response rate drops and the people most likely to drop
+   * are the ones with something critical to say. If the volume of feedback
+   * falls off after this change, this is the first thing to look at.
    */
   const validate = (): boolean => {
     const next: typeof errors = {};
@@ -204,12 +215,14 @@ export function EventFeedbackForm({
       next.overallRating = "Please pick a rating";
     }
 
-    // Email is validated only when the attendee actually typed one; the same
-    // expression `contact-form.tsx` uses.
-    if (
-      answers.email.trim() &&
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email)
-    ) {
+    if (!answers.name.trim()) {
+      next.name = "Please enter your name";
+    }
+
+    // Same expression `contact-form.tsx` uses.
+    if (!answers.email.trim()) {
+      next.email = "Please enter your email address";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email)) {
       next.email = "Please enter a valid email address";
     }
 
@@ -217,6 +230,8 @@ export function EventFeedbackForm({
 
     if (next.overallRating) {
       ratingGroupRef.current?.querySelector("button")?.focus();
+    } else if (next.name) {
+      nameRef.current?.focus();
     } else if (next.email) {
       emailRef.current?.focus();
     }
@@ -478,53 +493,75 @@ export function EventFeedbackForm({
           />
         </div>
 
-        {/* Q5 — NPS sits here, after the free text, not near the top. It is the
+        {/* Q5 — sits here, after the free text, not near the top. It is the
             most-abandoned question on a phone, and Q1 and Q2 already carry most
             of the signal, so anyone who drops out at this point has still given
-            us the answers that matter. */}
-        <div className="space-y-3">
-          <p id="nps-label" className="text-foreground font-medium">
-            Recommend us to a friend?
-          </p>
-          <div
-            role="radiogroup"
-            aria-labelledby="nps-label"
-            /* Never a horizontal scroller — a row that scrolls sideways hides
-               the high scores at 320px.
+            us the answers that matter.
 
-               Four columns on the narrowest phones, not six. At 320px the card
-               leaves ~240px of track, so six columns give cells about 33px
-               wide: legal under WCAG 2.2 AA (24x24) but a poor thumb target,
-               and this is the question people already abandon most. Four
-               columns give ~54px and cost one extra row. */
-            className="grid grid-cols-4 sm:grid-cols-6 gap-2"
+            A slider, not eleven buttons. Attendees found a bare 0–10 grid
+            confusing: eleven equal boxes give no clue which end is good, and
+            "0" reads as "no answer" rather than as the worst score. One track
+            with the ends named, and the chosen number shown large as you drag,
+            makes the direction obvious without reading anything.
+
+            The question is asked in full — "How likely are you to recommend…"
+            — rather than the terse "Recommend us to a friend?". This is the
+            standard NPS wording and the extra words are what make 0 and 10
+            mean something. */}
+        <div className="space-y-3">
+          <label
+            htmlFor="recommend"
+            className="block text-foreground font-medium"
           >
-            {NPS_SCALE.map((value) => {
-              const selected = answers.recommendScore === value;
-              return (
-                <button
-                  key={value}
-                  type="button"
-                  role="radio"
-                  aria-checked={selected}
-                  aria-label={`${value} out of 10`}
-                  onClick={() =>
-                    update("recommendScore", selected ? null : value)
-                  }
-                  className={`h-12 rounded-xl border font-medium transition-colors ${
-                    selected
-                      ? "bg-brand text-white border-brand"
-                      : "bg-background border-border text-foreground hover:border-brand"
-                  }`}
-                >
-                  {value}
-                </button>
-              );
-            })}
+            How likely are you to recommend She Sharp to a friend?
+          </label>
+
+          <div className="flex items-baseline gap-3">
+            <span
+              className={`text-3xl font-bold tabular-nums ${
+                hasRecommendScore ? "text-brand" : "text-ink-500"
+              }`}
+              aria-hidden="true"
+            >
+              {hasRecommendScore ? answers.recommendScore : "–"}
+            </span>
+            <span className="text-sm text-ink-500">
+              {hasRecommendScore ? "out of 10" : "Drag to answer"}
+            </span>
           </div>
+
+          {/* A native range input rather than a custom widget: it is keyboard
+              operable, exposes a real value to assistive tech, and needs no
+              dependency. `slider.tsx` does not exist in components/ui despite
+              what CLAUDE.md lists.
+
+              A range input always HAS a value, which is the trap here — an
+              untouched slider parked at 5 would be indistinguishable from a
+              deliberate 5. So `recommendScore` stays null until the attendee
+              actually moves it, the thumb is styled flat and grey until then,
+              and the readout above shows "–". */}
+          <input
+            id="recommend"
+            name="recommend"
+            type="range"
+            min={0}
+            max={10}
+            step={1}
+            value={answers.recommendScore ?? 5}
+            onChange={(e) => update("recommendScore", Number(e.target.value))}
+            aria-valuetext={
+              hasRecommendScore
+                ? `${answers.recommendScore} out of 10`
+                : "Not answered yet"
+            }
+            className={`feedback-range w-full ${
+              hasRecommendScore ? "" : "feedback-range--unset"
+            }`}
+          />
+
           <div className="flex justify-between text-sm text-ink-500">
-            <span>Not likely</span>
-            <span>Very likely</span>
+            <span>0 — Not at all likely</span>
+            <span>10 — Extremely likely</span>
           </div>
         </div>
 
@@ -568,27 +605,40 @@ export function EventFeedbackForm({
           </div>
         </div>
 
-        {/* Q7 */}
+        {/* Q7 — required since 2026-08-03. Because these are now mandatory the
+            page has to say what they are for; an unexplained required email on
+            a feedback form reads as a data grab and is the point people close
+            the tab. */}
         <div className="space-y-5">
           <div className="space-y-2">
             <Label htmlFor="name" className="text-foreground font-medium">
-              Name
+              Name <span className="text-brand">*</span>
             </Label>
             <Input
+              ref={nameRef}
               id="name"
               name="name"
               type="text"
               autoComplete="name"
               value={answers.name}
-              onChange={(e) => update("name", e.target.value)}
-              placeholder="Optional"
-              className={fieldClass}
+              onChange={(e) => {
+                update("name", e.target.value);
+                if (errors.name) {
+                  setErrors((prev) => ({ ...prev, name: undefined }));
+                }
+              }}
+              className={`${fieldClass} ${
+                errors.name ? "border-destructive" : ""
+              }`}
             />
+            {errors.name && (
+              <p className="text-sm text-destructive">{errors.name}</p>
+            )}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="email" className="text-foreground font-medium">
-              Email
+              Email <span className="text-brand">*</span>
             </Label>
             <Input
               ref={emailRef}
@@ -604,21 +654,22 @@ export function EventFeedbackForm({
                   setErrors((prev) => ({ ...prev, email: undefined }));
                 }
               }}
-              placeholder="Optional"
               className={`${fieldClass} ${
                 errors.email ? "border-destructive" : ""
               }`}
             />
             <p className="text-sm text-ink-500">
-              Only if you&apos;d like a reply, or a shot at the prize draw.
+              So we can follow up on what you&apos;ve told us, and enter you in
+              the prize draw. We won&apos;t add you to any mailing list unless
+              you tick it above.{" "}
+              <Link
+                href="/privacy-policy"
+                className="underline hover:text-brand"
+              >
+                Privacy policy
+              </Link>
+              .
             </p>
-            {/* A hint, never a blocker — the feedback is worth more than the
-                follow-up, so nothing here stops a submit. */}
-            {answers.interests.length > 0 && !answers.email.trim() && (
-              <p className="text-sm text-ink-500">
-                We&apos;ll need an email address to send you those.
-              </p>
-            )}
             {errors.email && (
               <p className="text-sm text-destructive">{errors.email}</p>
             )}
