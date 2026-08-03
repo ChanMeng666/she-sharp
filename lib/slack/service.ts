@@ -78,6 +78,12 @@ const FEEDBACK_SOURCE_LABELS: Record<string, string> = {
   email: 'from an email',
 };
 
+const INTEREST_LABELS: Record<string, string> = {
+  mentorship: 'Mentorship',
+  volunteering: 'Volunteering',
+  newsletter: 'Newsletter',
+};
+
 interface ContactNotificationData {
   fullName: string;
   email: string;
@@ -532,7 +538,13 @@ export async function sendEventFeedbackSlackNotification(
     },
     {
       type: 'mrkdwn',
-      text: `*Interested in:*\n${data.interests.length > 0 ? data.interests.join(', ') : '—'}`,
+      // Spelled out rather than echoing the raw enum keys — this card is read
+      // by people deciding who to follow up with, not by a machine.
+      text: `*Interested in:*\n${
+        data.interests.length > 0
+          ? data.interests.map((i) => INTEREST_LABELS[i] ?? i).join(', ')
+          : '—'
+      }`,
     },
   ];
 
@@ -561,22 +573,34 @@ export async function sendEventFeedbackSlackNotification(
     });
   }
 
-  // A pre-filled mailto turns "someone should thank her" into one tap, which is
-  // the difference between feedback that gets answered and feedback that gets read.
-  if (data.email) {
-    const subject = encodeURIComponent(`Thanks for your feedback on ${data.eventTitle}`);
-    const label = data.name || data.email;
+  // Name and address are printed in full, on their own lines.
+  //
+  // This block used to render the name as a mailto link with the address
+  // hidden inside it, plus a separate pre-filled "Reply" link. Both are gone.
+  // The team follows up by composing a mail themselves, so what they actually
+  // need is the address legible on screen — readable at a glance, selectable,
+  // and searchable in Slack. An address you have to hover or tap to discover
+  // is an address nobody reads out to a colleague.
+  //
+  // Slack still auto-links a bare address, so tapping it opens a mail client
+  // for anyone who wants that; the difference is that the text is the address.
+  //
+  // The anonymous branch is kept even though name and email are required on the
+  // form as of 2026-08-03: rows submitted before that exist, and a notification
+  // that silently omits the sender would be worse than one that says so.
+  if (data.email || data.name) {
+    const lines = [
+      `*Name:*\n${data.name || '—'}`,
+      `*Email:*\n${data.email || '—'}`,
+    ];
     blocks.push({
       type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: `*Follow up:* <mailto:${data.email}|${label}> · <mailto:${data.email}?subject=${subject}|Reply>`,
-      },
+      fields: lines.map((text) => ({ type: 'mrkdwn', text })),
     });
   } else {
     blocks.push({
       type: 'section',
-      text: { type: 'mrkdwn', text: '*Follow up:* Anonymous — no email given' },
+      text: { type: 'mrkdwn', text: '*From:* Anonymous — no name or email given' },
     });
   }
 
