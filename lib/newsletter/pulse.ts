@@ -29,6 +29,7 @@ import {
   NZ_WIDE_FACTS,
   type NzTechFact,
 } from "@/lib/data/nz-tech-facts";
+import { globalStats } from "@/lib/data/stats";
 import { editorialSchema, type IssueEditorial } from "./schema";
 
 /** The rendered pulse shape (nullable), reused for validating assembled output. */
@@ -330,7 +331,12 @@ const HERO_STAT_FRAMING: Record<string, { value: string; label: string }> = {
     value: "55%",
     label: "of new NZ tech roles are filled through immigration",
   },
-  "she-sharp-growth": { value: "3000+", label: "She Sharp members since 2014" },
+  // Kept in lockstep with the fact's own text via globalStats, so `value`
+  // stays a verbatim substring of it.
+  "she-sharp-growth": {
+    value: `${globalStats.members.current}+`,
+    label: "She Sharp members since 2014",
+  },
   // Auckland — She Sharp's in-person home city.
   "auckland-tech-gdp-54": {
     value: "54%",

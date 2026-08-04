@@ -397,7 +397,7 @@
   (
     id: "team-register",
     label: "Team register",
-    detail: "lib/data/team.ts — 16 active trustees and ambassadors.",
+    detail: "lib/data/team.ts — 15 active trustees and ambassadors.",
   ),
   (
     id: "sponsor-register",

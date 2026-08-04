@@ -659,9 +659,9 @@ BASE_URL=http://localhost:3000         # Application URL
 - Navy, Mint: Supporting colors
 
 **Key Statistics**:
-- 3000+ Members
+- 3500+ Members
 - 50+ Sponsors
-- 94+ Events Since 2014
+- 95+ Events Since 2014 (derived — `getEventsHeldCount()` in `lib/data/events.ts` feeds `globalStats.events.total`)
 
 **Core Commitments**:
 1. **Connection**: Building professional networks

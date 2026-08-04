@@ -13,8 +13,8 @@ interface EventSponsorshipProps {
 }
 
 const HIGHLIGHTS = [
-  { icon: Users, text: "3,000+ community members reached" },
-  { icon: Heart, text: "94+ events since 2014" },
+  { icon: Users, text: "3,500+ community members reached" },
+  { icon: Heart, text: "95+ events since 2014" },
   { icon: Sparkles, text: "50+ corporate sponsors" },
 ];
 

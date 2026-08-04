@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "event": "aotearoa-ai-hackathon-festival-2026",
+  "facts": [
+    {
+      "key": "event-dates",
+      "value": "7-8 August 2026",
+      "note": "The AUT City Campus venue runs Friday 7 and Saturday 8 August 2026. Written with an en dash here and a plain hyphen in the QA repo, which is why the checker folds every dash variant to a hyphen before matching. Do not confuse with the festival window (see festival-window) — the nationwide festival is wider than this venue's two days."
+    },
+    {
+      "key": "friday-start",
+      "value": "5:00-5:30pm",
+      "note": "Registration opens and the Friday programme starts at 5:00pm NZST. Pinned as the whole 5:00-5:30pm registration slot, not the bare '5:00pm': that shorter string also occurs in the Hack Fit training times and the pizza-dinner line, so it would have passed even if the programme start moved. Load-bearing because it is the one time attendees plan their travel around."
+    },
+    {
+      "key": "venue-campus",
+      "value": "AUT City Campus",
+      "note": "The venue name as it appears in the AI Forum's national venue list. There are four Auckland venues in the festival, two of them AUT-hosted (City Campus and Manukau), so the qualifier is what disambiguates this event."
+    },
+    {
+      "key": "venue-street",
+      "value": "55 Wellesley Street East",
+      "note": "Street address of AUT City Campus. This is what an attendee types into a maps app, so a drift here sends people to the wrong entrance."
+    },
+    {
+      "key": "venue-building",
+      "value": "Sir Paul Reeves Building",
+      "note": "The building on campus, known locally as the WG Building — which is why the room codes all start WG. From the mentor briefing (3 Aug 2026). Nothing on the street signage says 'Sir Paul Reeves' prominently, so both repos must carry the WG alias alongside it."
+    },
+    {
+      "key": "room-registration",
+      "value": "WG306",
+      "note": "Registration and all catering, both days. From the mentor briefing (3 Aug 2026). Room numbers are the single most expensive fact to get wrong on the day, and they were the first thing to drift between the two repos."
+    },
+    {
+      "key": "room-main",
+      "value": "WG308",
+      "note": "Friday kickoff, and Saturday pitches and awards. From the mentor briefing (3 Aug 2026). Deliberately NOT accompanied here by WG808 (the mentor room) or the team workspace rooms: WG808 is deck-only and the workspaces are allocated on the day, so neither is a fact both repos are expected to carry."
+    },
+    {
+      "key": "capacity",
+      "value": "limited to 100",
+      "note": "In-person capacity for this venue is 100. Matched as the phrase rather than the bare number because '100' alone would match any four-figure count elsewhere in the record and pass for the wrong reason. The two repos complete the sentence differently ('100 participants' vs '100 places'), so the shared substring stops at the number."
+    },
+    {
+      "key": "team-size",
+      "value": "3-6",
+      "note": "Teams are 3 to 6 people. Load-bearing for the QA assistant, which gets asked this constantly by solo registrants. En dash on the She Sharp side, hyphen on the QA side — see event-dates."
+    },
+    {
+      "key": "venue-prize",
+      "value": "$250",
+      "note": "Each venue's winning team receives NZ$250. Value omits the 'NZ' prefix because only one repo writes it that way; '$250' is a substring of both."
+    },
+    {
+      "key": "national-prize-amount",
+      "value": "$1,000",
+      "note": "Both national prizes are NZ$1,000 each. The comma matters — the checker does not normalise digit grouping, and '1,000' unqualified would also match the phrase 'over 1,000 institutions' in a mentor bio, so the dollar sign is doing real work here."
+    },
+    {
+      "key": "national-prize-taiao",
+      "value": "TAIAO",
+      "note": "The TAIAO Prize, NZ$1,000, decided by the Summit audience vote. Paired with national-prize-brilliance: there are exactly two national prizes and conflating them was one of the original contradictions between the repos."
+    },
+    {
+      "key": "national-prize-brilliance",
+      "value": "Technical Brilliance",
+      "note": "The Technical Brilliance Award, NZ$1,000, decided by the national judging panel. The two repos previously used BOTH names — 'Technological Brilliance' on the prize line and 'Technical Brilliance' on the scorecard and national-panel lines, sometimes within one page. Standardised on 'Technical' because that is what the AUT mentor briefing v1.0 (3 Aug 2026, the most recent official document) calls both the scorecard and the prize, and it was already the majority usage. Neither aihackathon.nz nor aotearoaai.nz names the prize at all, so there is no stronger source; if the AI Forum publishes one that says otherwise, change this value in both repos together."
+    },
+    {
+      "key": "summit-dates",
+      "value": "8-9 September 2026",
+      "note": "The Aotearoa AI Summit, where the four national finalists pitch. The repos previously disagreed on this date outright, which is the contradiction that prompted this whole file. WATCH OUT: aihackathon.nz still says the finalists pitch '18 September in Auckland'. That page is stale. The Summit's own programme schedules the 'Aotearoa AI Hackathon Festival Segment' at 16:00 on day one — 8 September 2026 at Tākina, Wellington — and 18 November at AUT Auckland is the separate Aotearoa AI Awards ceremony, which is most likely where the stray '18' and 'Auckland' came from. Do not 'correct' this fact back to match the hackathon site without checking the Summit programme first."
+    },
+    {
+      "key": "summit-city",
+      "value": ["Aotearoa AI Summit", "Wellington"],
+      "within": 120,
+      "note": "The Summit is in Wellington, not Auckland. One repo previously said Auckland — an easy error to make because every other fact in this list is an Auckland fact. Must be a proximity match: the bare word 'Wellington' also appears in the nationwide venue list (Wellington - AWS, 6-7 Aug), so pinning it alone passed even when the Summit city was wrong. Verified by substituting 'Auckland' and watching the old check stay green."
+    },
+    {
+      "key": "summit-venue",
+      "value": "Tākina",
+      "note": "Tākina Wellington Convention and Exhibition Centre. Kept with its macron because both repos spell it that way; NFKC composition means a combining-macron spelling would still match, but an unmacronised 'Takina' would NOT. If either repo ever drops the macron, fix the spelling rather than weakening this fact."
+    },
+    {
+      "key": "national-panel-chair",
+      "value": "David Knox",
+      "note": "Chairs the national judging panel (Topologic). Named people are checked by exact name only — titles and organisations differ in voice between the two repos and are not worth pinning."
+    },
+    {
+      "key": "national-panel-deputy",
+      "value": ["Albert Bifet", "deputy chair"],
+      "within": 80,
+      "note": "Deputy chair of the national judging panel (University of Waikato). Proximity-matched on purpose, and this is the fact that also protects national-panel-chair: both names appear in the same sentence, so pinning either name on its own would pass even if the two roles were swapped — which is precisely the drift that happened (one repo had Bifet as chair). Tying Bifet to 'deputy chair' makes a swap fail here."
+    },
+    {
+      "key": "festival-window",
+      "value": "3 and 10 August 2026",
+      "note": "The nationwide festival runs across venues between 3 and 10 August 2026. Matched as the inner phrase so either repo may write 'between …' or 'from …' around it. Settled against the organiser's own site: aihackathon.nz states '3-10 August 2026' and lists exactly the nine venues both repos carry. The AUT mentor briefing's cover page says 'ten venues, 3-9 August' — that is the briefing being wrong, not the repos, and it is why this fact exists."
+    },
+    {
+      "key": "pitch-length",
+      "value": "5-minute",
+      "note": "Each team delivers a live 5-minute pitch. The number drives the deck, the run sheet and the QA assistant's most-asked question, and every downstream timing (roughly 7 minutes per team including changeover) is derived from it."
+    },
+    {
+      "key": "judging-scale",
+      "value": "1-5",
+      "note": "Four equally weighted criteria, each scored 1-5, so 20 per judge and 60 across a three-person panel. Pinned because a wrong scale makes every derived total wrong, and the totals are quoted to teams."
+    },
+    {
+      "key": "discord-invite",
+      "value": "discord.gg/Z5heYsa7W",
+      "note": "The GENERAL participant channel invite, from the mentor briefing (3 Aug 2026). Value deliberately omits the https:// prefix so either link style matches. The briefing also lists a mentors-only invite and a contact-mentors invite: those are private and must never appear in either repo, so do not add them here."
+    },
+    {
+      "key": "problem-partner-woolworths",
+      "value": "Woolworths",
+      "note": "Partner behind the Food Waste featured problem, alongside Kai Commitment. One of four featured problems; two of them were missing entirely from one repo before the reconciliation."
+    },
+    {
+      "key": "problem-partner-fphc",
+      "value": "Fisher & Paykel Healthcare",
+      "note": "Partner behind two featured problems (Facilities Helpdesk Agent, and Restoration Intelligence) and a supporting partner of the venue. The ampersand is literal — do not substitute 'and'."
+    },
+    {
+      "key": "problem-partner-mlmv",
+      "value": "My Life My Voice",
+      "note": "Partner behind the Accessible UI Generation featured problem. The fourth featured problem, and the one most recently added, so it is the likeliest to be dropped by a future edit."
+    }
+  ]
+}

@@ -87,7 +87,7 @@
 
   Thank you to the Ministry of Social Development, academyEX, Metlifecare, AUT,
   Peyvand Academy, the Ministry of Education and Little Engineers. And to the
-  sixteen people on this team, not one of whom is paid.
+  fifteen people on this team, not one of whom is paid.
 
   Ngā mihi nui,
 ]
@@ -444,7 +444,7 @@
   Thank you to the recruiters from Potentia, Randstad Digital, Absolute IT,
   Elevate Consulting and Younity, who sat at the tables that participants said
   mattered most. To every speaker who prepared a talk for a free event. And to
-  the sixteen trustees and ambassadors who run She Sharp, none of whom are paid
+  the fifteen trustees and ambassadors who run She Sharp, none of whom are paid
   for it.
 ]
 

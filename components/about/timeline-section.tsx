@@ -190,7 +190,7 @@ export function TimelineSection() {
             A deep dive into our journey
           </h2>
           <p className="mt-4 max-w-2xl text-left text-sm leading-relaxed text-ink-600 sm:mt-6 md:text-base lg:text-lg">
-            From a small launch event in 2014 to a thriving community of 3000+
+            From a small launch event in 2014 to a thriving community of 3500+
             members across New Zealand.
           </p>
         </div>

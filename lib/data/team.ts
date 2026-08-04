@@ -19,15 +19,15 @@ export const teamMembers: TeamMember[] = [
       "Mike is a Digital Delivery Manager on the ICT Leadership team at Metlifecare, where he oversees the strategy and delivery of ICT solutions for new builds and property redevelopments. A dedicated advocate for women in tech, Mike has been a member of She Sharp since its inception in 2014. He oversees the charity's finances and physical assets, and is often seen taking photos at She Sharp events.\n\nOutside of his professional life, Mike enjoys time with his family, playing guitar, and has a passion for cooking and all things coffee.",
     image: "/img/team/Mike.png",
   },
-  {
-    id: 3,
-    name: "Raquel Anne Maderazo",
-    roles: ["Ambassador", "Event Manager"],
-    linkedin: "https://www.linkedin.com/in/raquel-anne-maderazo/",
-    description:
-      "Raquel is a certified Project Management Professional (PMP®) with a master’s degree in IT Project Management from AUT and over 12 years of experience in the IT industry. She has led network infrastructure, software development, and ERP projects across diverse industries in Europe, UK, US, and Philippines. Known for her adaptability, she strives for project excellence and fosters a collaborative, inclusive work environment. As an event manager at She Sharp, Raquel leverages her project management expertise to plan and organise She Sharp-led conferences & events. Inspired by She Sharp’s mission, she’s passionate about creating a diverse environment where women can grow, learn, and overcome challenges in STEM.",
-    image: "/img/team/Raquel.png",
-  },
+  // {
+  //   id: 3,
+  //   name: "Raquel Anne Maderazo",
+  //   roles: ["Ambassador", "Event Manager"],
+  //   linkedin: "https://www.linkedin.com/in/raquel-anne-maderazo/",
+  //   description:
+  //     "Raquel is a certified Project Management Professional (PMP®) with a master’s degree in IT Project Management from AUT and over 12 years of experience in the IT industry. She has led network infrastructure, software development, and ERP projects across diverse industries in Europe, UK, US, and Philippines. Known for her adaptability, she strives for project excellence and fosters a collaborative, inclusive work environment. As an event manager at She Sharp, Raquel leverages her project management expertise to plan and organise She Sharp-led conferences & events. Inspired by She Sharp’s mission, she’s passionate about creating a diverse environment where women can grow, learn, and overcome challenges in STEM.",
+  //   image: "/img/team/Raquel.png",
+  // },
   // {
   //   id: 4,
   //   name: "Isha Sangrolkar",

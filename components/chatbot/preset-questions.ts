@@ -6,7 +6,7 @@ export const presetQuestions: PresetQuestion[] = [
     id: '1',
     question: 'What is She Sharp?',
     answer:
-      "She Sharp is a non-profit organisation dedicated to bridging the gender gap in STEM fields. Since 2014, we have been empowering women in technology through mentorship programmes, networking events, and career development resources. With over 3000+ members and 50+ sponsors, we are committed to creating an inclusive tech community.\n\n**Learn more:** [About Us](/about) | [Our Team](/about#team)",
+      "She Sharp is a non-profit organisation dedicated to bridging the gender gap in STEM fields. Since 2014, we have been empowering women in technology through mentorship programmes, networking events, and career development resources. With over 3500+ members and 50+ sponsors, we are committed to creating an inclusive tech community.\n\n**Learn more:** [About Us](/about) | [Our Team](/about#team)",
     category: 'about',
   },
   {
@@ -63,7 +63,7 @@ export const presetQuestions: PresetQuestion[] = [
     id: '4',
     question: 'How can I become a sponsor?',
     answer:
-      'We welcome corporate sponsors who share our vision of empowering women in STEM. Sponsorship opportunities include:\n- Event sponsorship\n- Programme funding\n- Annual partnerships\n\nYour organisation can support our mission and engage with our talented community of 2200+ members.\n\n**Learn more:** [Corporate Sponsorship](/sponsors/corporate-sponsorship) | [Email Us](mailto:hello@shesharp.org.nz)',
+      'We welcome corporate sponsors who share our vision of empowering women in STEM. Sponsorship opportunities include:\n- Event sponsorship\n- Programme funding\n- Annual partnerships\n\nYour organisation can support our mission and engage with our talented community of 3500+ members.\n\n**Learn more:** [Corporate Sponsorship](/sponsors/corporate-sponsorship) | [Email Us](mailto:hello@shesharp.org.nz)',
     category: 'support',
   },
 ];
