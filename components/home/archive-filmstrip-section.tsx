@@ -110,7 +110,7 @@ export function ArchiveFilmstripSection() {
       <Container>
         <p className="text-label text-brand">From the archive</p>
         <p className="mt-2 max-w-xl text-sm text-ink-600 md:text-base">
-          94+ events since 2014 — every photo here is from our own community.
+          95+ events since 2014 — every photo here is from our own community.
         </p>
       </Container>
 

@@ -6,7 +6,7 @@ import { Section } from "@/components/layout/section";
 import { useInView } from "@/hooks/use-in-view";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { Reveal } from "@/components/ui/reveal";
-import { homeImpactData } from "@/lib/data/stats";
+import { homeImpactData, type ImpactItem } from "@/lib/data/stats";
 
 const parseTargetValue = (
   value: string
@@ -49,7 +49,15 @@ const AnimatedNumber: React.FC<{ target: number; animate: boolean }> = ({
   return <>{formatNumber(current)}</>;
 };
 
-export function CoreImpactSection() {
+/**
+ * Renders the homepage impact band. `items` is supplied by the server so the
+ * date-derived event count is identical on both sides of hydration.
+ */
+export function CoreImpactSection({
+  items = homeImpactData,
+}: {
+  items?: ImpactItem[];
+}) {
   const { ref, inView } = useInView();
   const reduceMotion = usePrefersReducedMotion();
   const animate = inView && !reduceMotion;
@@ -67,7 +75,7 @@ export function CoreImpactSection() {
 
           {/* Editorial stat band: hairline top rule + vertical dividers. */}
           <dl className="grid grid-cols-2 border-t border-white/20 lg:grid-cols-4">
-            {homeImpactData.map((item, i) => {
+            {items.map((item, i) => {
               const { target, suffix } = parseTargetValue(item.value);
               return (
                 <Reveal

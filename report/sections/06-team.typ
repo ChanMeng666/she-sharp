@@ -1,7 +1,9 @@
 // Page 6 — the team.
 //
-// Sixteen people, none of them paid. The founder takes a larger portrait; the
-// other fifteen run 5-up beneath, matching the 2025 report's team page.
+// Fifteen people, none of them paid. The founder takes a larger portrait; the
+// other fourteen run 5-up beneath, matching the 2025 report's team page. The
+// last row is therefore short by one — `grid` leaves the trailing cell empty
+// rather than centring the row, so the gap sits on the right-hand edge.
 //
 // ── The photo-key map, and why it is explicit ────────────────────────────────
 // Converted portraits are keyed `team-<lowercase first name>`. Two members do
@@ -65,7 +67,7 @@
       {
         block(above: 0pt, below: gap-para, width: 100%, {
           text(font: display, size: 17pt, weight: display-weight, stretch: display-stretch,
-            fill: brand, upper("Sixteen people, none of them paid"))
+            fill: brand, upper("Fifteen people, none of them paid"))
         })
         block(above: 0pt, below: 0pt, width: 100%, {
           set par(leading: lead-body, justify: false)
@@ -98,6 +100,6 @@
 
   #source-note[
     Source: the team register in the She Sharp codebase, at 1 August 2026.
-    A seventeenth historical entry is retired and is excluded.
+    Two further historical entries are retired and are excluded.
   ]
 ]

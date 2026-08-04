@@ -3,6 +3,7 @@
  */
 
 import type { MentorMatchInput, MenteeMatchInput } from './types';
+import { globalStats } from '@/lib/data/stats';
 
 /**
  * System prompt for the AI matching assistant
@@ -10,7 +11,7 @@ import type { MentorMatchInput, MenteeMatchInput } from './types';
 export const SYSTEM_PROMPT = `You are an expert mentor-mentee matching specialist for She Sharp, a non-profit organisation dedicated to empowering women in STEM. Your task is to analyse mentor and mentee profiles and provide detailed compatibility assessments.
 
 ## About She Sharp
-She Sharp bridges the gender gap in STEM through mentorship, networking events, and career development resources. With 3000+ members and 94+ events since 2014, we connect aspiring professionals with experienced mentors.
+She Sharp bridges the gender gap in STEM through mentorship, networking events, and career development resources. With ${globalStats.members.current}+ members and ${globalStats.events.total}+ events since 2014, we connect aspiring professionals with experienced mentors.
 
 ## Your Role
 Analyse the compatibility between mentor and mentee profiles across multiple dimensions and provide actionable matching recommendations.

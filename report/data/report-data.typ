@@ -171,8 +171,8 @@
     ),
 
     team-size: v(
-      16,
-      "lib/data/team.ts — 16 active trustees and ambassadors. A 17th entry (Isha Sangrolkar) is commented out and is excluded.",
+      15,
+      "lib/data/team.ts — 15 active trustees and ambassadors. Two further entries (Isha Sangrolkar, Raquel Anne Maderazo) are commented out and are excluded.",
     ),
   ),
 
@@ -462,8 +462,8 @@
       "Live Neon production database, `contact_form_submissions` created H1 2026: 3 in April, 1 in June. A further 7 arrived in July and sit outside this reporting period.",
     ),
     team-size: v(
-      16,
-      "lib/data/team.ts — 16 active trustees and ambassadors (the commented-out 17th entry is excluded).",
+      15,
+      "lib/data/team.ts — 15 active trustees and ambassadors (the two commented-out entries are excluded).",
     ),
     trustees: v(
       2,

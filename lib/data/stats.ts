@@ -1,7 +1,9 @@
 // Global statistics data management — single source of truth for all pages
+import { getEventsHeldCount } from "./events";
+
 export const globalStats = {
   members: {
-    current: 3000,
+    current: 3500,
     label: "Members",
     description: "Active community members",
     growth: "+15% YoY",
@@ -12,7 +14,8 @@ export const globalStats = {
     description: "Corporate partners",
   },
   events: {
-    total: 94,
+    // Derived from the event register, not hand-typed — see getEventsHeldCount().
+    total: getEventsHeldCount(),
     label: "Events",
     description: "Since 2014",
     yearly: 12,
@@ -41,32 +44,47 @@ export type ImpactItem = {
   icon: string;
 };
 
-export const homeImpactData: ImpactItem[] = [
-  {
-    title: "Active Members",
-    value: `${globalStats.members.current}+`,
-    desc: "Women in tech building connections and advancing careers.",
-    icon: "/icons/members.svg",
-  },
-  {
-    title: "Events Since 2014",
-    value: `${globalStats.events.total}+`,
-    desc: "Workshops and conferences empowering women in tech.",
-    icon: "/icons/events.svg",
-  },
-  {
-    title: "Partner Companies",
-    value: `${globalStats.sponsors.current}+`,
-    desc: "Leading tech companies supporting our mission.",
-    icon: "/icons/parnership.svg",
-  },
-  {
-    title: "Career Success Stories",
-    value: `${globalStats.impact.careerTransitions}+`,
-    desc: "Women advancing careers through mentorship and networking.",
-    icon: "/icons/success.svg",
-  },
-];
+/**
+ * Build the homepage impact tiles for a given held-event count.
+ *
+ * The count is a parameter rather than a module-level read so a server
+ * component can compute it once and hand the same value to the client tiles —
+ * server and browser sit in different timezones, and letting each derive the
+ * count independently would flip it by one for a ~12-hour window around any
+ * event date and trip a hydration mismatch.
+ */
+export function buildHomeImpactData(eventsHeld: number): ImpactItem[] {
+  return [
+    {
+      title: "Active Members",
+      value: `${globalStats.members.current}+`,
+      desc: "Women in tech building connections and advancing careers.",
+      icon: "/icons/members.svg",
+    },
+    {
+      title: "Events Since 2014",
+      value: `${eventsHeld}+`,
+      desc: "Workshops and conferences empowering women in tech.",
+      icon: "/icons/events.svg",
+    },
+    {
+      title: "Partner Companies",
+      value: `${globalStats.sponsors.current}+`,
+      desc: "Leading tech companies supporting our mission.",
+      icon: "/icons/parnership.svg",
+    },
+    {
+      title: "Career Success Stories",
+      value: `${globalStats.impact.careerTransitions}+`,
+      desc: "Women advancing careers through mentorship and networking.",
+      icon: "/icons/success.svg",
+    },
+  ];
+}
+
+export const homeImpactData: ImpactItem[] = buildHomeImpactData(
+  globalStats.events.total
+);
 
 // Page-specific stats configurations
 export const pageStats = {

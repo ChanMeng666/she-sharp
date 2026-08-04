@@ -28,6 +28,15 @@ jobs:
       - name: Verify image path integrity
         run: npx tsx scripts/verify-image-paths.ts
 
+      # Shares this job's checkout and install rather than paying for its own —
+      # the check is pure data and takes under a second. It asserts the AI
+      # Hackathon facts this repo publishes still match the shared list that the
+      # separate Q&A assistant repo (event-qa-ai-template) checks itself
+      # against. The two repos had silently disagreed on the Summit date, the
+      # room numbers and the team size before this existed.
+      - name: Verify shared hackathon facts
+        run: npx tsx scripts/check-hackathon-facts.ts
+
   typecheck-scripts:
     # `scripts/` is excluded from the root tsconfig and `.claude/**` is missed by
     # its `**/*.ts` glob (dot-directories don't match), so neither tree was

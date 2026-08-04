@@ -11,6 +11,8 @@ import { HomeTestimonialsSection } from "@/components/home/testimonials-section"
 import { SponsorsSection } from "@/components/home/sponsors-section";
 import { CTASection } from "@/components/home/CTA-section";
 import { GeoHead, GEO_INSTRUCTIONS } from "@/components/seo/geo-head";
+import { getEventsHeldCount } from "@/lib/data/events";
+import { buildHomeImpactData } from "@/lib/data/stats";
 
 export const metadata: Metadata = {
   title: { absolute: "She Sharp | Empowering Women in STEM" },
@@ -27,7 +29,7 @@ export default function HomePage() {
       <HeroSection />
       <EventsShowcaseSection />
       <ScrollingSponsorsSection />
-      <CoreImpactSection />
+      <CoreImpactSection items={buildHomeImpactData(getEventsHeldCount())} />
       <ArchiveFilmstripSection />
       <PhotoDividerSection />
       <ProgramsSection />
