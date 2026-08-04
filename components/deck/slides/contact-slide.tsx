@@ -49,6 +49,11 @@ export function ContactSlideLayout({ slide }: { slide: ContactSlide }) {
           {slide.lead && <p className="deck-lead">{slide.lead}</p>}
         </div>
 
+        {/* Guarded: the rule belongs to the channel list, and a contact slide
+            carrying only codes — an event's own links rather than the
+            organisation's profiles — would otherwise draw a hairline across the
+            stage with nothing under it. */}
+        {slide.socials.length > 0 && (
         <ul
           className="grid"
           style={{
@@ -80,6 +85,7 @@ export function ContactSlideLayout({ slide }: { slide: ContactSlide }) {
             );
           })}
         </ul>
+        )}
 
         {/* auto-fit keeps two codes wide-set and three codes evenly spread,
             without either arrangement needing its own breakpoint. */}

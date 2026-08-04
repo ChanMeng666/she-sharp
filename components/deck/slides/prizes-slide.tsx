@@ -10,9 +10,11 @@ import { ArchiveWall, Kicker, knockoutStyle, seedFrom } from "./archive";
 /**
  * Column count per prize count, as complete class strings for Tailwind's scanner.
  *
- * Four prizes go two-by-two rather than four across: `.deck-stat` is 176–264
- * design px, so a fourth column would either clip "$5,000" or shrink the number
- * to the point where the reveal stops being a reveal.
+ * Four prizes go four across rather than two-by-two. Two-by-two was correct
+ * while the figure was locked to `.deck-stat`; now that the size follows the
+ * column count (see `.deck-prize-figure` in `deck.css`) the constraint has
+ * flipped, because a second row of stacked figure-over-name is 190px more than
+ * the stage has and a narrower figure is not.
  */
 const COLUMNS: Record<number, string> = {
   1: "grid-cols-1",
@@ -22,7 +24,7 @@ const COLUMNS: Record<number, string> = {
   // it — and the rows are laid out side-on at that width anyway, so a single
   // column is both shorter and more even.
   3: "grid-cols-3 @max-[1560px]/deck:grid-cols-1",
-  4: "grid-cols-2",
+  4: "grid-cols-4 @max-[1560px]/deck:grid-cols-2",
 };
 
 /** Human wording for a prize's reach; the raw enum never reaches the screen. */
