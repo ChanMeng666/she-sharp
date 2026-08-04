@@ -70,6 +70,34 @@ export function parseTimedLines(lines: string[]): TimedItem[] {
   });
 }
 
+/**
+ * Returns `slides` with `additions` spliced in directly after the slide `id`.
+ *
+ * The opening and closing sequences arrive from `boilerplate.ts` as finished
+ * arrays, which is the point of them — but an event occasionally needs a slide
+ * *inside* one, and appending after the spread puts it in the wrong chapter.
+ * A venue's own host introduced before the safety briefing has to precede the
+ * briefing; a keynote billed with the welcome has to sit with the welcome.
+ *
+ * Throws on an unknown id rather than returning the array unchanged. The
+ * failure this guards against is a boilerplate slide being renamed and an
+ * event's own content quietly disappearing from the deck, which nobody notices
+ * until it is not on the projector.
+ */
+export function insertAfter(
+  slides: Slide[],
+  id: string,
+  ...additions: Slide[]
+): Slide[] {
+  const index = slides.findIndex((slide) => slide.id === id);
+  if (index === -1) {
+    throw new Error(
+      `Cannot insert after "${id}": no slide with that id. Boilerplate ids are defined in lib/deck/boilerplate.ts.`,
+    );
+  }
+  return [...slides.slice(0, index + 1), ...additions, ...slides.slice(index + 1)];
+}
+
 /** Every image path a deck will request, in slide order, de-duplicated. */
 export function collectDeckImages(deck: Deck): string[] {
   const paths: string[] = [];

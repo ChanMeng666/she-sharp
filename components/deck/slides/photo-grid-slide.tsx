@@ -56,35 +56,72 @@ export function PhotoGridSlideLayout({ slide }: { slide: PhotoGridSlide }) {
   const template = TEMPLATE[count];
 
   return (
-    <div className="deck-safe">
+    /* A grid rather than the inherited flex column, and it is load-bearing.
+       `fr` row tracks only resolve against a definite block size, and a flex
+       item's grown height does not count as one — so inside a flex column the
+       mosaic's own `minmax(0, 1fr)` rows fell back to max-content, each cell
+       claimed its 16:10 default ratio, and the block ran about 270px past the
+       stage while looking perfectly composed. An explicit `minmax(0, 1fr)`
+       track here is definite, which makes the nested one definite too. */
+    <div
+      className="deck-safe"
+      style={{ display: "grid", gridTemplateRows: "auto minmax(0, 1fr)" }}
+    >
       <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
         <Kicker text={slide.eyebrow} />
         <h2 className="deck-title">{slide.title}</h2>
         {slide.lead && <p className="deck-lead">{slide.lead}</p>}
       </div>
 
-      {/* `.deck-duotone .deck-slot` already supplies the shadow colour as each
-          cell's immediate backdrop, so no `.deck-duotone-cell` is needed here.
+      {/* The mosaic is taken out of flow and pinned to this track.
 
-          The cells carry no ratio modifier on purpose: in the 3–5 image
-          compositions above both grid axes are definite, so a slot ratio would
-          be ignored anyway, and the mosaic's own proportions are the
-          composition. The ratio does take effect on the defensive fallback path,
-          where it gives uniform tiles instead of a ragged row. */}
+          An absolutely positioned box with `inset: 0` has a definite block
+          size, and that is the only reliable way to get one here: a grid or
+          flex item's stretched height is not treated as definite when the
+          browser resolves the `fr` rows *inside* it, so the mosaic sized its
+          own rows to max-content, each cell claimed its 16:10 default ratio,
+          and the composition ran ~270px past the bottom of the stage while
+          looking entirely correct. */}
       <div
-        className="deck-duotone grid min-h-0 flex-1"
         style={{
+          position: "relative",
+          minBlockSize: 0,
           marginBlockStart: "var(--deck-gap-md)",
-          gap: "var(--deck-wall-gap)",
-          gridTemplateColumns: template ?? "repeat(auto-fit, minmax(360px, 1fr))",
-          gridTemplateRows: placement ? "minmax(0, 1fr) minmax(0, 1fr)" : "auto",
         }}
       >
-        {slide.images.map((image, index) => (
-          <div key={image.src} className="deck-slot" style={placement?.[index]}>
-            <DeckImage image={image} />
-          </div>
-        ))}
+        {/* `.deck-duotone .deck-slot` already supplies the shadow colour as
+            each cell's immediate backdrop, so no `.deck-duotone-cell` is
+            needed here.
+
+            A placed cell drops `.deck-slot`'s default 16:10 ratio and fills its
+            track instead. The ratio is not "ignored because both axes are
+            definite" — it wins, and it is what made the second row 585px tall
+            in a 313px track. It still applies on the defensive fallback path
+            below, where it gives uniform tiles instead of a ragged row. */}
+        <div
+          className="deck-duotone grid"
+          style={{
+            position: "absolute",
+            inset: 0,
+            gap: "var(--deck-wall-gap)",
+            gridTemplateColumns: template ?? "repeat(auto-fit, minmax(360px, 1fr))",
+            gridTemplateRows: placement ? "minmax(0, 1fr) minmax(0, 1fr)" : "auto",
+          }}
+        >
+          {slide.images.map((image, index) => (
+            <div
+              key={image.src}
+              className="deck-slot"
+              style={
+                placement
+                  ? { ...placement[index], aspectRatio: "auto", blockSize: "100%" }
+                  : undefined
+              }
+            >
+              <DeckImage image={image} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

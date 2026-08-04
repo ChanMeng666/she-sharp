@@ -3,7 +3,10 @@
  *
  * Two days, one host, one projector. The nine opening and six closing slides
  * come from `buildOpeningSlides()` / `buildClosingSlides()` so the team, stats
- * and sponsor walls stay live; the twenty-five in between are this event.
+ * and sponsor walls stay live; the rest are this event. Two slides are spliced
+ * into the opening sequence with `insertAfter()` — AUT's own welcome, which has
+ * to precede the safety briefing it introduces, and the keynote slot, which
+ * belongs with the welcome rather than after the handover.
  *
  * Facts come from `lib/data/json/events-custom.json` via `getEventBySlug()`,
  * read through `specialSection()` so that renumbering the JSON fails loudly
@@ -29,8 +32,8 @@ import {
   buildOpeningSlides,
   type KarakiaText,
 } from "../boilerplate";
-import type { Deck, DeckImage, DeckLogo, QrBlock } from "../types";
-import { parseTimedLines } from "../utils";
+import type { Deck, DeckImage, DeckLogo, QrBlock, Slide } from "../types";
+import { insertAfter, parseTimedLines } from "../utils";
 import { pickWallTiles } from "../wall-tiles";
 
 const EVENT_SLUG = "aotearoa-ai-hackathon-festival-2026";
@@ -141,6 +144,38 @@ const LINKEDIN_QR: QrBlock = {
   caption: "linkedin.com/company/shesharpnz",
 };
 
+/* Two of the featured problems ship with a video from the organisation that
+   submitted them. The deck makes no network calls once it has loaded, so a
+   video is a code people scan and watch on their own phone during the break —
+   not an embed that would need the venue wifi at the exact moment a hundred
+   laptops are on it. */
+
+const HELPDESK_VIDEO_QR: QrBlock = {
+  url: "https://youtu.be/n9UPiqziB9c",
+  label: "Care by Design",
+  caption: "youtu.be/n9UPiqziB9c",
+};
+
+const ACCESSIBLE_UI_VIDEO_QR: QrBlock = {
+  url: "https://youtu.be/THqS1kZbdjo",
+  label: "My Life My Voice",
+  caption: "youtu.be/THqS1kZbdjo",
+};
+
+/**
+ * Organisational safety lines, minus "In an emergency dial 111".
+ *
+ * Dropped for this venue at the organisers' request. Everything else in the
+ * default list is kept in its default order, and `boilerplate.ts` still holds
+ * the full five for every other deck.
+ */
+const SAFETY_LINES = [
+  "Find the nearest fire exits before we start",
+  "Follow staff to the assembly point in an evacuation",
+  "First aid and accessible facilities are available on request",
+  "Keep your bag and devices with you",
+];
+
 const PARTNER_LOGOS: DeckLogo[] = detail.sponsors.main.map((sponsor) => ({
   name: sponsor.name,
   logo: sponsor.logo,
@@ -226,6 +261,36 @@ function archivePlate(offset: number): DeckImage {
     focus: "50% 40%",
   };
 }
+
+/**
+ * The photographic beat that closes the featured-problem chapter.
+ *
+ * Hands, a pen and paper: the four briefs before it are the only stretch of the
+ * deck that asks a room to weigh options rather than follow instructions, and
+ * this is the page the host stops talking on while they do it.
+ */
+const CHOOSING_PHOTO: DeckImage = {
+  src: curatedImages["detail-sketch-hands"].src,
+  srcSet: toSrcSet(curatedImages["detail-sketch-hands"]),
+  alt: curatedImages["detail-sketch-hands"].alt,
+  focus: "50% 45%",
+};
+
+/**
+ * Placeholder plate for the keynote slide, until there is a keynote speaker.
+ *
+ * A She Sharp speaker on a She Sharp stage — the right register for the slot
+ * and honestly captioned as "name announced on the night", rather than a
+ * generated portrait of somebody who does not exist. Swap `image` for the
+ * speaker's own photograph and put their name in `title` once they are booked;
+ * nothing else on the slide has to change.
+ */
+const KEYNOTE_PLACEHOLDER: DeckImage = {
+  src: curatedImages["speaker-stage-spotlight"].src,
+  srcSet: toSrcSet(curatedImages["speaker-stage-spotlight"]),
+  alt: curatedImages["speaker-stage-spotlight"].alt,
+  focus: "50% 35%",
+};
 
 /**
  * The photographic beat between team forming and the mentors.
@@ -352,8 +417,103 @@ const UPCOMING_SNAPSHOT = [
     time: "5:00–7:30pm",
     venue: "Auckland",
     blurb: "A Les Mills x She Sharp panel on diversity and AI for impact",
+    /* The event's own poster, not a photograph: the evening has not happened
+       yet, so the only picture of it that exists is the one made to sell it.
+       The layout fits it whole rather than cropping it to a landscape slot —
+       see `upcoming-slide.tsx`. */
+    image: {
+      src: "/img/events/event-lesmills-03-september-2026-poster.webp",
+      alt: "Poster for No Pain, All Gain – Getting Fit for AI, a Les Mills x She Sharp panel on 3 September 2026.",
+    },
   },
 ];
+
+// --- Opening sequence ------------------------------------------------------
+
+/**
+ * The venue's own host, introduced before she gives the safety briefing.
+ *
+ * AUT is the host as well as the venue, and the briefing is delivered by the
+ * Dean of the faculty the room is standing in rather than by She Sharp. She
+ * gets her own slide because a name read off a run sheet by somebody else is
+ * not an introduction.
+ *
+ * Her fuller history at AUT — Deputy Dean from 2024, Professor before that —
+ * stays off the projector under the same rule as the mentor and judge
+ * biographies: it is the person's to say, and it is on the event page.
+ */
+const AUT_WELCOME: Slide = {
+  id: "aut-welcome",
+  type: "people",
+  section: "Welcome",
+  tone: "light",
+  eyebrow: "Over to Suzanne",
+  title: "Greetings from AUT",
+  lead: "Suzanne welcomes us and runs the health and safety briefing",
+  people: [
+    {
+      name: "Suzanne Wilkinson",
+      // Full title is "Dean of Faculty of Design and Creative Technologies",
+      // which is nine words against a six-word limit and reads as a job
+      // description rather than an introduction at 38px.
+      role: "Dean, Design and Creative Technologies",
+      org: "Auckland University of Technology",
+      image:
+        "/img/events/aotearoa-ai-hackathon-festival-2026-suzanne-wilkinson.jpg",
+    },
+  ],
+  density: "lg",
+  shape: "card",
+  note: "Hand over to Suzanne here. She welcomes the room on behalf of AUT and reads the safety briefing on the next slide.",
+};
+
+/**
+ * The keynote slot, standing empty on purpose.
+ *
+ * TODO(keynote): replace `image` with the speaker's own photograph and put
+ * their name in `title` once they are confirmed. Nothing else needs to change.
+ *
+ * A full-frame photograph rather than a person card, and not only for the look
+ * of it: the four slides before this one are all information, which is the
+ * limit `lintRhythm` allows in a row. A card here would make five and the deck
+ * would stop building.
+ */
+const KEYNOTE_SLIDE: Slide = {
+  id: "keynote-speaker",
+  type: "photo",
+  section: "Welcome",
+  tone: "dark",
+  eyebrow: "Name announced on the night",
+  title: "Keynote Speaker",
+  lead: "One talk before we hand the evening over to you",
+  image: KEYNOTE_PLACEHOLDER,
+  overlay: "gradient",
+  note: "Introduce the keynote speaker by name and give them the room. If the slot is still unfilled, skip this slide rather than reading it out.",
+};
+
+const OPENING_SLIDES: Slide[] = insertAfter(
+  insertAfter(
+    buildOpeningSlides({
+      eventTitle: "Aotearoa AI Hackathon Festival 2026",
+      eventMeta: ["7–8 August 2026", "AUT City Campus", "Hosted with AI Forum NZ"],
+      partnerLogos: PARTNER_LOGOS,
+      karakia: OPENING_KARAKIA,
+      // TODO(venue-safety): AUT's own lines — assembly point, lift rules,
+      // after-hours access — go here once the venue briefing is confirmed.
+      // Left empty rather than guessed: a wrong safety instruction is worse
+      // than a generic one. Adding lines here drops org defaults from the top.
+      safetyExtras: [],
+      safetyLines: SAFETY_LINES,
+      heroImage: OPENING_KARAKIA_PLATE,
+      chapterPlate: CHAPTER_PLATE,
+      contactQrs: [WEBSITE_QR, EVENTS_QR, LINKEDIN_QR],
+    }),
+    "karakia-timatanga",
+    AUT_WELCOME,
+  ),
+  "stay-connected",
+  KEYNOTE_SLIDE,
+);
 
 // --- Deck ------------------------------------------------------------------
 
@@ -372,23 +532,11 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
     },
   },
   slides: [
-    // 1–9 — She Sharp opening, generated from live site data.
-    ...buildOpeningSlides({
-      eventTitle: "Aotearoa AI Hackathon Festival 2026",
-      eventMeta: ["7–8 August 2026", "AUT City Campus", "Hosted with AI Forum NZ"],
-      partnerLogos: PARTNER_LOGOS,
-      karakia: OPENING_KARAKIA,
-      // TODO(venue-safety): AUT's own lines — assembly point, lift rules,
-      // after-hours access — go here once the venue briefing is confirmed.
-      // Left empty rather than guessed: a wrong safety instruction is worse
-      // than a generic one. Adding lines here drops org defaults from the top.
-      safetyExtras: [],
-      heroImage: OPENING_KARAKIA_PLATE,
-      chapterPlate: CHAPTER_PLATE,
-      contactQrs: [WEBSITE_QR, EVENTS_QR, LINKEDIN_QR],
-    }),
+    // 1–11 — She Sharp opening, generated from live site data, plus AUT's own
+    // welcome and the keynote slot.
+    ...OPENING_SLIDES,
 
-    // --- 10–27 — Day one ---------------------------------------------------
+    // --- 12–33 — Day one ---------------------------------------------------
     /* Housekeeping first, and in this order, because it is what the room is
        already asking each other about while the host is still talking.
 
@@ -449,7 +597,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
         "Friday night: welcome, themes, team forming, build begins",
         "Saturday: build, pitch practice, pitches, winner announced",
         "Venue winners go forward to national judging",
-        "Four finalists pitch at the Aotearoa AI Summit",
+        "One winner to pitch at the Aotearoa AI Summit",
       ],
       note: "Set expectations for the whole weekend before anyone commits to a team.",
     },
@@ -497,6 +645,104 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
         },
       ],
       note: "Read the five titles, not the detail lines. Teams will come back to this slide.",
+    },
+    /* The five themes are the categories; these four are the actual briefs.
+       Each one was written by the organisation that has the problem, and each
+       carries its own UN SDG mapping — which stays in the host notes rather
+       than on screen, because an SDG number is a citation and a room does not
+       read citations from three metres away.
+
+       Copy is condensed from `specialSections` 13 through 20 of the event
+       JSON. The full statements, the eight restoration metrics and the
+       beneficiary list are all on the event page, one scan away. */
+    {
+      id: "section-featured-problems",
+      type: "section",
+      section: "Day One — Friday 7 August",
+      eyebrow: "Brought by the sponsors",
+      index: "03",
+      tone: "dark",
+      title: "Featured Problems",
+      subtitle: "Four briefs written by the organisations that actually have them",
+      background: archivePlate(25),
+      note: "Say that these are real problems from real organisations, and that a team is free to bring its own instead.",
+    },
+    {
+      id: "problem-food-waste",
+      type: "bullets",
+      section: "Day One — Friday 7 August",
+      eyebrow: "Woolworths and Kai Commitment",
+      title: "Food Waste, Farm to Fork",
+      lead: "Reducing food waste across a whole national supply chain",
+      items: [
+        "Identify where waste happens along the supply chain",
+        "Fill the data gaps nobody currently measures",
+        "Optimise ordering, storage and distribution with AI",
+        "Improve collaboration between growers, retailers and charities",
+      ],
+      note: "Supported by Woolworths New Zealand alongside Kai Commitment. The problem statement video is on the AUT City Campus Community Hub, linked from the event page.",
+    },
+    {
+      id: "problem-helpdesk",
+      type: "qr-cta",
+      section: "Day One — Friday 7 August",
+      tone: "dark",
+      eyebrow: "Watch before you build",
+      title: "F&P Healthcare: Facilities Helpdesk",
+      lead: "An AI front door for maintenance and facilities requests",
+      points: [
+        "Structured intake in plain language, in their own words",
+        "Consistent priority, escalation and live status for requestors",
+        "Care by Design: people and process ahead of technology",
+      ],
+      qr: HELPDESK_VIDEO_QR,
+      note: "F&P maps this to SDGs 8, 9 and 10 for inclusion, 12 for removing rework, and 3 through the products themselves. They judge on whether the design is genuinely underpinned by their Culture of Care.",
+    },
+    {
+      id: "problem-restoration",
+      type: "bullets",
+      section: "Day One — Friday 7 August",
+      eyebrow: "Drone footage, twenty-year timescale",
+      title: "F&P Healthcare: Restoration Intelligence",
+      lead: "Turning annual drone surveys into measurable ecological outcomes",
+      items: [
+        "Three thousand natives planted at Karaka since 2023",
+        "Monitoring needs ecologists, GIS specialists and fieldwork today",
+        "Automate the analysis of yearly drone imagery",
+        "Measure survival, canopy cover, weeds and regeneration",
+      ],
+      note: "SDG 15 and SDG 12. Restoring the Oiroa Stream at F&P's Karaka campus. Without drone imagery, teams can use Matuku Link, Waikereru or Hinewai as proxy datasets — the eight metrics are listed on the event page.",
+    },
+    {
+      id: "problem-accessible-ui",
+      type: "qr-cta",
+      section: "Day One — Friday 7 August",
+      tone: "dark",
+      eyebrow: "WCAG compliance stays stubbornly low",
+      title: "My Life My Voice: Accessible UI",
+      lead: "Generate accessible layouts while developers build, not audit afterwards",
+      points: [
+        "Millions hit barriers in apps built without accessibility",
+        "Checking happens late, outside the tools developers use",
+        "Generate accessible options, not only flags on broken ones",
+      ],
+      qr: ACCESSIBLE_UI_VIDEO_QR,
+      note: "SDGs 4, 8 and 10. The distinction that matters to them is generative rather than corrective — existing checkers already flag what is broken.",
+    },
+    /* The room has just been handed four briefs and has to pick one. This is
+       the page the host stops talking on, and it is also what keeps the four
+       information slides above it inside the rhythm limit. */
+    {
+      id: "problems-close",
+      type: "photo",
+      section: "Day One — Friday 7 August",
+      tone: "dark",
+      eyebrow: "Forty minutes from now",
+      title: "Pick the one you'd stay for",
+      lead: "The problem you choose shapes the whole weekend",
+      image: CHOOSING_PHOTO,
+      overlay: "gradient",
+      note: "Say that a team can also bring its own problem, as long as it answers one of the five themes. Then move to team forming.",
     },
     {
       id: "forming-your-team",
@@ -586,7 +832,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       type: "section",
       section: "Day One — Friday 7 August",
       eyebrow: "Tomorrow comes down to this",
-      index: "03",
+      index: "04",
       tone: "dark",
       title: "The Pitch",
       subtitle: "How you are scored, and the five minutes you get to do it in",
@@ -671,7 +917,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       // the labels fall under the 28px a room can read. Cut rather than shrunk:
       // the Summit dates, the AWS attribution and the per-venue caveat are all
       // on the event page, and the host says them anyway.
-      footnote: "Top four nationally pitch at the Aotearoa AI Summit in September.",
+      footnote: "The national winner pitches at the Aotearoa AI Summit in September.",
       note: "Say the venue prize first and loudest — it is the one this room can win tomorrow. The Summit is 8–9 September in Wellington; prizes come from AWS via AI Forum NZ.",
     },
     {
@@ -686,8 +932,8 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       items: [
         "Venues from Auckland to Dunedin run the same brief",
         "Every venue records its pitches and picks a winner",
-        "A national panel then selects four finalists",
-        "Finalists pitch at the Aotearoa AI Summit, Wellington",
+        "A national panel then selects one winner",
+        "That winner pitches at the Aotearoa AI Summit, Wellington",
       ],
       note: "Skip if you are running late. Useful for teams wondering who else they are up against.",
     },
@@ -704,13 +950,13 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       note: "Start the timer after the photo. Day one closes at 8:00pm.",
     },
 
-    // --- 28–34 — Day two ---------------------------------------------------
+    // --- 34–44 — Day two --------------------------------------------------
     {
       id: "section-day-two",
       type: "section",
       section: "Day Two — Saturday 8 August",
       eyebrow: "Build, pitch, then a winner",
-      index: "04",
+      index: "05",
       tone: "dark",
       title: "Day Two",
       subtitle: "Saturday 8 August — build, pitch, and the venue winner",
@@ -727,6 +973,49 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       items: DAY_TWO,
       columns: 2,
       note: "Point at the 3:30pm row. Everything before it is negotiable, that one is not.",
+    },
+    /* Two placeholders that only Friday night can fill.
+
+       TODO(day-one): replace the six cards below with the real team names,
+       the challenge each one took and where they are sitting, and swap the
+       four archive tiles for the team photographs taken during the group photo
+       at the end of day one. Save those as
+       `/img/events/aotearoa-ai-hackathon-festival-2026-teams-1.jpg` and so on.
+
+       They stand as archive frames rather than empty boxes on purpose: if
+       nobody gets to the photographs before Saturday morning, the deck still
+       projects something deliberate instead of announcing that it was not
+       finished. */
+    {
+      id: "team-groupings",
+      type: "themes",
+      section: "Day Two — Saturday 8 August",
+      eyebrow: "Find your table first",
+      title: "Today's Teams",
+      lead: "Who formed last night, and what they took on",
+      themes: [
+        { tag: "Team 1", title: "Team name", detail: "Challenge and table number" },
+        { tag: "Team 2", title: "Team name", detail: "Challenge and table number" },
+        { tag: "Team 3", title: "Team name", detail: "Challenge and table number" },
+        { tag: "Team 4", title: "Team name", detail: "Challenge and table number" },
+        { tag: "Team 5", title: "Team name", detail: "Challenge and table number" },
+        { tag: "Team 6", title: "Team name", detail: "Challenge and table number" },
+      ],
+      note: "PLACEHOLDER — fill in the real team names, challenges and tables after Friday night. Read the team names out and let each one wave.",
+    },
+    {
+      id: "team-photos",
+      type: "photo-grid",
+      section: "Day Two — Saturday 8 August",
+      tone: "dark",
+      eyebrow: "Taken at the group photo",
+      title: "The Teams",
+      lead: "Everyone who formed a team on Friday night",
+      images: pickWallTiles(4, 31).map((src) => ({
+        src,
+        alt: "Placeholder frame from the She Sharp archive, standing in for a day-one team photograph.",
+      })),
+      note: "PLACEHOLDER — replace with Friday night's team photographs before Saturday morning. Leave it up while people find their tables.",
     },
     {
       id: "build-with-mentors",
@@ -781,7 +1070,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       type: "section",
       section: "Day Two — Saturday 8 August",
       eyebrow: "The room goes quiet now",
-      index: "05",
+      index: "06",
       tone: "dark",
       title: "Final Presentations",
       subtitle: "Five minutes each, and every pitch is recorded",
@@ -789,7 +1078,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       note: "Call the first team up. Hold the room to time — the recording is what goes to national judging.",
     },
 
-    // 35–40 — She Sharp closing, generated from live site data.
+    // 45–50 — She Sharp closing, generated from live site data.
     ...buildClosingSlides({
       thanksLogos: [{ label: "Hosts, partners and sponsors", logos: PARTNER_LOGOS }],
       thanksNames: [

@@ -34,6 +34,14 @@ const COLUMNS: Record<number, string> = {
  *
  * Event photographs keep their colour: each one is a single frame being looked
  * at, not archive mass. The band at the foot supplies the wall instead.
+ *
+ * THE SINGLE ENTRY'S ARTWORK IS CONTAINED, NOT CROPPED, and it is usually a
+ * poster rather than a photograph — the next event has not happened yet, so the
+ * only image of it that exists is the one made to advertise it. Posters are
+ * portrait, and a portrait poster cropped to a 3:2 slot loses its own headline.
+ * The band gives way to it for the same reason: at 4:3 the band costs 194px of
+ * a safe area that has about 340px left after the title block, which is not a
+ * poster.
  */
 export function UpcomingSlideLayout({ slide }: { slide: UpcomingSlide }) {
   const count = slide.events.length;
@@ -42,8 +50,8 @@ export function UpcomingSlideLayout({ slide }: { slide: UpcomingSlide }) {
   const seed = seedFrom(slide.id);
 
   /* Three columns of card plus a hairline footer is already the full page at
-     4:3; one wide entry is not. */
-  const showBand = count <= 1;
+     4:3; one wide entry is not — unless it is carrying artwork. */
+  const showBand = count <= 1 && !slide.events[0]?.image;
 
   return (
     <>
@@ -80,20 +88,29 @@ export function UpcomingSlideLayout({ slide }: { slide: UpcomingSlide }) {
                     paddingBlockStart: "var(--deck-gap-sm)",
                   }}
                 >
-                  {event.image && (
-                    /* A standard aspect slot rather than the image's native
-                       ratio, so several entries line up whatever the source
-                       art. Full colour: this is a photograph of one event. */
-                    <div
-                      className={cn(
-                        "deck-frame deck-full-colour deck-slot",
-                        single ? "deck-slot-3x2" : "deck-slot-16x9",
-                      )}
-                      style={single ? { flex: "0 0 42%" } : undefined}
-                    >
-                      <DeckImage image={event.image} />
-                    </div>
-                  )}
+                  {event.image &&
+                    (single ? (
+                      /* A fixed box the artwork is fitted inside, rather than a
+                         slot it is cropped to fill. Whatever the poster's
+                         shape, all of it is on the projector. */
+                      <div
+                        className="deck-frame deck-poster deck-full-colour"
+                        style={{
+                          flex: "0 0 38%",
+                          blockSize: 500,
+                          background: "var(--slide-surface)",
+                        }}
+                      >
+                        <DeckImage image={event.image} fit="contain" />
+                      </div>
+                    ) : (
+                      /* Several entries: a standard aspect slot, so the cards
+                         line up whatever the source art. Full colour — this is
+                         a photograph of one event, not archive mass. */
+                      <div className="deck-frame deck-full-colour deck-slot deck-slot-16x9">
+                        <DeckImage image={event.image} />
+                      </div>
+                    ))}
 
                   <div
                     className="flex min-w-0 flex-1 flex-col"
@@ -103,7 +120,19 @@ export function UpcomingSlideLayout({ slide }: { slide: UpcomingSlide }) {
                       {event.time ? `${event.date} · ${event.time}` : event.date}
                     </p>
 
-                    <p className={single ? "deck-display" : "deck-subtitle"}>
+                    {/* `.deck-display` is 152px and only earns that when it is
+                        the whole composition. Beside a poster it is a second
+                        hero competing with the first, and an event title of any
+                        length then wraps to four lines and runs off the stage. */}
+                    <p
+                      className={
+                        single
+                          ? event.image
+                            ? "deck-title"
+                            : "deck-display"
+                          : "deck-subtitle"
+                      }
+                    >
                       {event.title}
                     </p>
 

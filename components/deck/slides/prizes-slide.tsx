@@ -93,8 +93,13 @@ export function PrizesSlideLayout({ slide }: { slide: PrizesSlide }) {
             )}
           </div>
 
+          {/* The column count picks the figure size — see `.deck-prize-figure`
+              in `deck.css`. Three `.deck-stat` amounts side by side overflow
+              their tracks and land on each other, and nothing in the deck
+              detects horizontal overflow. */}
           <ul
             className={cn("grid", columns)}
+            data-prize-columns={slide.prizes.length}
             style={{
               columnGap: "var(--deck-gap-lg)",
               rowGap: "var(--deck-gap-lg)",

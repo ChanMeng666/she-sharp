@@ -1,7 +1,6 @@
 import { Fragment, type CSSProperties } from "react";
 
 import { DeckImage } from "@/components/deck/deck-image";
-import { WALL_TILE_COUNT } from "@/lib/deck/wall";
 import type { TitleSlide } from "@/lib/deck/types";
 
 import {
@@ -140,52 +139,43 @@ export function TitleSlideLayout({ slide }: { slide: TitleSlide }) {
           )}
 
           {/* Pushed to the foot of the panel. `mt-auto` is the one thing that
-              beats the optical centring `.deck-content.flex-col` applies. */}
-          <div className="mt-auto flex flex-col" style={{ gap: "var(--deck-gap-sm)" }}>
-            {logos.length > 0 && (
-              /* Label on its own line, marks on one row beneath. Side by side
-                 they compete for a content column that is only ~600px wide on
-                 a 4:3 projector, and the label wins — which collapsed the marks
-                 into a vertical stack and cost the slide about 250px of height
-                 it does not have. A row that shrinks is cheaper than a row that
-                 wraps. */
-              <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-                <span className="deck-label deck-faint">In partnership with</span>
-                <div
-                  className="flex items-center"
-                  style={{ gap: "var(--deck-gap-sm)", minInlineSize: 0 }}
-                >
-                  {logos.slice(0, 5).map((logo) => (
-                    <div
-                      key={logo.name}
-                      className="deck-logo-chip"
-                      style={{
-                        // Shrink together rather than wrap; the chip's own
-                        // `object-fit: contain` keeps every mark whole.
-                        flex: "1 1 0",
-                        maxInlineSize: 178,
-                        minInlineSize: 0,
-                        blockSize: 84,
-                      }}
-                    >
-                      <DeckImage
-                        image={{ src: logo.logo, alt: logo.name }}
-                        fit="contain"
-                        priority
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+              beats the optical centring `.deck-content.flex-col` applies.
 
-            {/* The wall is evidence, so it is credited like evidence. The count
-                is read from the pool rather than typed, because a number on a
-                projector that no longer matches the deck is worse than none. */}
-            <p className="deck-label deck-faint">
-              {WALL_TILE_COUNT} photographs from the She Sharp archive · 2014–2026
-            </p>
-          </div>
+              Label on its own line, marks on one row beneath. Side by side they
+              compete for a content column that is only ~600px wide on a 4:3
+              projector, and the label wins — which collapsed the marks into a
+              vertical stack and cost the slide about 250px of height it does
+              not have. A row that shrinks is cheaper than a row that wraps. */}
+          {logos.length > 0 && (
+            <div className="mt-auto flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
+              <span className="deck-label deck-faint">In partnership with</span>
+              <div
+                className="flex items-center"
+                style={{ gap: "var(--deck-gap-sm)", minInlineSize: 0 }}
+              >
+                {logos.slice(0, 5).map((logo) => (
+                  <div
+                    key={logo.name}
+                    className="deck-logo-chip"
+                    style={{
+                      // Shrink together rather than wrap; the chip's own
+                      // `object-fit: contain` keeps every mark whole.
+                      flex: "1 1 0",
+                      maxInlineSize: 178,
+                      minInlineSize: 0,
+                      blockSize: 84,
+                    }}
+                  >
+                    <DeckImage
+                      image={{ src: logo.logo, alt: logo.name }}
+                      fit="contain"
+                      priority
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
