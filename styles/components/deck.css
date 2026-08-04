@@ -1402,15 +1402,22 @@
   white-space: nowrap;
 }
 
-[data-prize-columns="3"] .deck-prize-figure,
-[data-prize-columns="4"] .deck-prize-figure {
+[data-prize-columns="3"] .deck-prize-figure {
   --dt-prize: 148px;
 }
 
+/* Four across, so each figure gets about 371px of a 1640px content column. */
+[data-prize-columns="4"] .deck-prize-figure {
+  --dt-prize: 104px;
+}
+
 @container deck (min-width: 2200px) {
-  [data-prize-columns="3"] .deck-prize-figure,
-  [data-prize-columns="4"] .deck-prize-figure {
+  [data-prize-columns="3"] .deck-prize-figure {
     --dt-prize: 176px;
+  }
+
+  [data-prize-columns="4"] .deck-prize-figure {
+    --dt-prize: 132px;
   }
 }
 
@@ -1420,6 +1427,14 @@
 @container deck (max-width: 1560px) {
   .deck-prize-figure {
     --dt-prize: 112px;
+  }
+
+  /* Four prizes fold to two columns here and the figure sits beside its name,
+     so the figure's width is width the name does not get. At 112px "$1,000" is
+     320px of a 595px cell and "National Technical Brilliance" wraps to four
+     lines; at 84px it wraps to two and the slide stops overflowing. */
+  [data-prize-columns="4"] .deck-prize-figure {
+    --dt-prize: 84px;
   }
 }
 

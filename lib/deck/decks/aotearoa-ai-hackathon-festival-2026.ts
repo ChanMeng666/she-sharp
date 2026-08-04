@@ -162,6 +162,31 @@ const ACCESSIBLE_UI_VIDEO_QR: QrBlock = {
   caption: "youtu.be/THqS1kZbdjo",
 };
 
+/* The three destinations a team needs the moment it exists. All three are
+   already on the event page under "Helpful Links"; they get a slide of their
+   own because the run sheet routes the whole weekend through the first of
+   them — team channels, the afternoon agenda, the lunch call and the pitch
+   order are all announced on Discord, and an attendee who never joins it
+   spends two days a step behind. */
+
+const DISCORD_QR: QrBlock = {
+  url: "https://discord.gg/Z5heYsa7W",
+  label: "Event Discord",
+  caption: "discord.gg/Z5heYsa7W",
+};
+
+const ASSISTANT_QR: QrBlock = {
+  url: "https://hackathon.shesharp.org.nz/",
+  label: "Event AI assistant",
+  caption: "hackathon.shesharp.org.nz",
+};
+
+const PITCH_TEMPLATE_QR: QrBlock = {
+  url: "https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus",
+  label: "Pitch deck template",
+  caption: "Community Hub",
+};
+
 /**
  * Organisational safety lines, minus "In an emergency dial 111".
  *
@@ -236,7 +261,9 @@ const CLOSING_KARAKIA_PLATE: DeckImage = {
 };
 
 /** An abstract light plate, for the three countdown slides. */
-function lightPlate(key: "light-aurora-sweep" | "light-prism-edge" | "light-deep-field"): DeckImage {
+function lightPlate(
+  key: "light-aurora-sweep" | "light-prism-edge" | "light-deep-field",
+): DeckImage {
   return {
     src: deckPlates[key].src,
     srcSet: plateSrcSet(deckPlates[key]),
@@ -375,6 +402,21 @@ const JUDGING_CRITERIA = [
   },
 ];
 
+/**
+ * The five-minute pitch, section by section.
+ *
+ * Shown twice: on Friday when teams are deciding what to build towards, and
+ * again on Saturday immediately before pitch practice, when it stops being a
+ * plan and becomes a stopwatch. Shared rather than duplicated so the two
+ * cannot drift.
+ */
+const PITCH_SECTIONS: TimedItem[] = [
+  { time: "30 sec", label: "Connect: who you are" },
+  { time: "1 min", label: "The problem, humanised and evidenced" },
+  { time: "2 min", label: "Your big idea, with prototype", emphasis: true },
+  { time: "1.5 min", label: "Future impact and what you need" },
+];
+
 const JUDGING_FOOTNOTE =
   "Two scorecards: the TAIAO scorecard weights all four categories equally, the Technical Brilliance scorecard leans towards Technology. Judges from the last five festivals advise focusing on three things — is it an important UN Sustainable Development Goal problem, is the solution feasible, and will it make an impact. Every pitch is recorded and all panel decisions are final.";
 
@@ -491,25 +533,69 @@ const KEYNOTE_SLIDE: Slide = {
   note: "Introduce the keynote speaker by name and give them the room. If the slot is still unfilled, skip this slide rather than reading it out.",
 };
 
+/**
+ * The venue's own duty contacts, straight after the safety briefing.
+ *
+ * AUT supplies an event supervisor for the weekend, and a room that needs him
+ * needs to know his face rather than his job title — hence the photograph,
+ * cropped from a two-person award photo because it is the only one that
+ * exists. Replace it if a proper headshot turns up.
+ *
+ * ONE NUMBER ON SCREEN, AND IT IS THE 0800. AUT gave She Sharp the supervisor's
+ * mobile as well, and it is deliberately not here: this repository is public
+ * and the deck is served from a public URL, so a personal number committed once
+ * cannot be withdrawn from either. The security desk is staffed at any hour and
+ * can reach him. His mobile travels on the printed run sheet, which is where a
+ * third party's contact details belong. The same rule kept the mentor lead's
+ * number out of this repository.
+ */
+const WHO_TO_FIND: Slide = {
+  id: "who-to-find",
+  type: "bullets",
+  section: "Welcome",
+  tone: "light",
+  eyebrow: "Save this number now",
+  title: "Who to Find Today",
+  lead: "Vishnu runs the venue this weekend, and AUT security is always on",
+  items: [
+    "Vishnu Omanakuttan — AUT event supervisor, both days",
+    "AUT security, any emergency: 0800 288 7233",
+    "She Sharp volunteers are the ones in lanyards",
+  ],
+  image: {
+    src: "/img/events/aotearoa-ai-hackathon-festival-2026-vishnu-omanakuttan.jpg",
+    alt: "Vishnu Omanakuttan, AUT event supervisor for the hackathon weekend.",
+  },
+  note: "Read the 0800 slowly and say it twice — this is the slide people photograph. Vishnu's mobile is on the printed run sheet, not on screen; give it out only if someone needs it. Point him out if he is in the room.",
+};
+
 const OPENING_SLIDES: Slide[] = insertAfter(
   insertAfter(
-    buildOpeningSlides({
-      eventTitle: "Aotearoa AI Hackathon Festival 2026",
-      eventMeta: ["7–8 August 2026", "AUT City Campus", "Hosted with AI Forum NZ"],
-      partnerLogos: PARTNER_LOGOS,
-      karakia: OPENING_KARAKIA,
-      // TODO(venue-safety): AUT's own lines — assembly point, lift rules,
-      // after-hours access — go here once the venue briefing is confirmed.
-      // Left empty rather than guessed: a wrong safety instruction is worse
-      // than a generic one. Adding lines here drops org defaults from the top.
-      safetyExtras: [],
-      safetyLines: SAFETY_LINES,
-      heroImage: OPENING_KARAKIA_PLATE,
-      chapterPlate: CHAPTER_PLATE,
-      contactQrs: [WEBSITE_QR, EVENTS_QR, LINKEDIN_QR],
-    }),
-    "karakia-timatanga",
-    AUT_WELCOME,
+    insertAfter(
+      buildOpeningSlides({
+        eventTitle: "Aotearoa AI Hackathon Festival 2026",
+        eventMeta: [
+          "7–8 August 2026",
+          "AUT City Campus",
+          "Hosted with AI Forum NZ",
+        ],
+        partnerLogos: PARTNER_LOGOS,
+        karakia: OPENING_KARAKIA,
+        // TODO(venue-safety): AUT's own lines — assembly point, lift rules,
+        // after-hours access — go here once the venue briefing is confirmed.
+        // Left empty rather than guessed: a wrong safety instruction is worse
+        // than a generic one. Adding lines here drops org defaults from the top.
+        safetyExtras: [],
+        safetyLines: SAFETY_LINES,
+        heroImage: OPENING_KARAKIA_PLATE,
+        chapterPlate: CHAPTER_PLATE,
+        contactQrs: [WEBSITE_QR, EVENTS_QR, LINKEDIN_QR],
+      }),
+      "karakia-timatanga",
+      AUT_WELCOME,
+    ),
+    "health-and-safety",
+    WHO_TO_FIND,
   ),
   "stay-connected",
   KEYNOTE_SLIDE,
@@ -536,7 +622,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
     // welcome and the keynote slot.
     ...OPENING_SLIDES,
 
-    // --- 12–33 — Day one ---------------------------------------------------
+    // --- 12–37 — Day one ---------------------------------------------------
     /* Housekeeping first, and in this order, because it is what the room is
        already asking each other about while the host is still talking.
 
@@ -609,7 +695,8 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       index: "02",
       tone: "dark",
       title: "The Challenge",
-      subtitle: "Five real-world themes drawn from the UN Sustainable Development Goals",
+      subtitle:
+        "Five real-world themes drawn from the UN Sustainable Development Goals",
       background: archivePlate(7),
       note: "Pause here. The next slide is the one teams choose from.",
     },
@@ -663,7 +750,8 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       index: "03",
       tone: "dark",
       title: "Featured Problems",
-      subtitle: "Four briefs written by the organisations that actually have them",
+      subtitle:
+        "Four briefs written by the organisations that actually have them",
       background: archivePlate(25),
       note: "Say that these are real problems from real organisations, and that a team is free to bring its own instead.",
     },
@@ -778,6 +866,38 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       overlay: "gradient",
       note: "Say this and then stop talking. Push people out of their seats — the mentors will circulate and balance the teams.",
     },
+    /* Forty minutes is a long time to run on a wristwatch, and this is the one
+       block of the weekend where the room is standing up and moving. The clock
+       goes on the projector so the timekeeper does not have to shout. */
+    {
+      id: "team-forming-clock",
+      type: "break",
+      section: "Day One — Friday 7 August",
+      eyebrow: "Mentors are circulating now",
+      title: "Team Forming",
+      lead: "Forty minutes to find your people and your problem",
+      minutes: 40,
+      resumeLabel: "Overview of tomorrow",
+      note: "Start the timer as people stand up. Aim for teams of five or six — up to ten teams. Nirmala is timekeeping; agree with her before you call time.",
+    },
+    /* The three links a team needs the moment it exists.
+       Placed here rather than in the housekeeping block on purpose: a code
+       scanned before a team exists is a code nobody uses. The run sheet asks
+       each team to post its table number in its own Discord channel as soon as
+       it has a spot, which is thirty seconds after this slide goes up. */
+    {
+      id: "event-links",
+      type: "contact",
+      section: "Day One — Friday 7 August",
+      eyebrow: "Three codes, one weekend",
+      title: "Everything You Need Tonight",
+      lead: "Your team channel, the assistant, and the pitch template",
+      socials: [],
+      qrs: [DISCORD_QR, ASSISTANT_QR, PITCH_TEMPLATE_QR],
+      footnote:
+        "Post your table number in your team's Discord channel so we can find you.",
+      note: "Leave this up while teams settle. Everything after tonight — the afternoon agenda, the lunch call, the pitch order — is announced on Discord first.",
+    },
     /* The mentors across two slides rather than one, however many there are.
        At `md` density a single slide of thirteen has to shrink itself to about
        74% on a 4:3 projector to fit, which puts the names below the 28px the
@@ -857,12 +977,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       eyebrow: "The clock does not stop",
       title: "Your Five-Minute Pitch",
       lead: "Five minutes, four sections, one first impression",
-      items: [
-        { time: "30 sec", label: "Connect: who you are" },
-        { time: "1 min", label: "The problem, humanised and evidenced" },
-        { time: "2 min", label: "Your big idea, with prototype", emphasis: true },
-        { time: "1.5 min", label: "Future impact and what you need" },
-      ],
+      items: PITCH_SECTIONS,
       note: "Tell teams to describe the problem they actually solved, not the one they set out to solve.",
     },
     {
@@ -890,13 +1005,23 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       // Not "Won in this room tomorrow" — the first prize's own label already
       // says that, and a kicker that repeats something else on the slide is the
       // slot wasted.
-      eyebrow: "Three of these exist",
+      eyebrow: "Four of these exist",
       title: "Prizes & Awards",
       prizes: [
         {
           amount: "$250",
           name: "Venue winning team",
           detail: "Announced here tomorrow evening",
+          scope: "venue",
+        },
+        // TODO(runner-up): swap "2nd" for the cash figure if there is one. The
+        // AI Forum's central pool covers the winning team only, and the run
+        // sheet records the runner-up prize as six gifts rather than an amount,
+        // so a dollar sign here would be invented.
+        {
+          amount: "2nd",
+          name: "Venue runner-up",
+          detail: "A prize for every team member",
           scope: "venue",
         },
         {
@@ -917,8 +1042,9 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       // the labels fall under the 28px a room can read. Cut rather than shrunk:
       // the Summit dates, the AWS attribution and the per-venue caveat are all
       // on the event page, and the host says them anyway.
-      footnote: "The national winner pitches at the Aotearoa AI Summit in September.",
-      note: "Say the venue prize first and loudest — it is the one this room can win tomorrow. The Summit is 8–9 September in Wellington; prizes come from AWS via AI Forum NZ.",
+      footnote:
+        "The national winner pitches at the Aotearoa AI Summit in September.",
+      note: "Say the two venue prizes first and loudest — they are the ones this room can win tomorrow, and the runner-up prize means a second team goes home with something. The Summit is 8–9 September in Wellington; the cash comes from AWS via AI Forum NZ.",
     },
     {
       id: "nationwide-festival",
@@ -942,15 +1068,18 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       type: "break",
       section: "Day One — Friday 7 August",
       eyebrow: "Everyone to the front, please",
-      title: "Group Photo & Break",
-      lead: "Fifteen minutes, then team strategy until we close at eight",
-      minutes: 15,
-      resumeLabel: "Team strategy planning",
+      title: "Group Photo, Then Strategy",
+      // The photo is four minutes and needs no clock; the thirty minutes after
+      // it do, and they are what ends the day. One slide, timed on the block
+      // that matters.
+      lead: "Thirty minutes with your team, then we close",
+      minutes: 30,
+      resumeLabel: "Day one closes at 8:00pm",
       background: lightPlate("light-aurora-sweep"),
-      note: "Start the timer after the photo. Day one closes at 8:00pm.",
+      note: "Take the group photo first — Mike is shooting it — then start the timer. Day one closes at 8:00pm sharp.",
     },
 
-    // --- 34–44 — Day two --------------------------------------------------
+    // --- 38–54 — Day two --------------------------------------------------
     {
       id: "section-day-two",
       type: "section",
@@ -976,33 +1105,15 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
     },
     /* Two placeholders that only Friday night can fill.
 
-       TODO(day-one): replace the six cards below with the real team names,
-       the challenge each one took and where they are sitting, and swap the
-       four archive tiles for the team photographs taken during the group photo
-       at the end of day one. Save those as
-       `/img/events/aotearoa-ai-hackathon-festival-2026-teams-1.jpg` and so on.
+       TODO(day-one): replace the four archive tiles with the team photographs
+       taken during the group photo at the end of day one — save them as
+       `/img/events/aotearoa-ai-hackathon-festival-2026-teams-1.jpg` and so on —
+       and fill the roster below with the real team names and tables.
 
        They stand as archive frames rather than empty boxes on purpose: if
        nobody gets to the photographs before Saturday morning, the deck still
        projects something deliberate instead of announcing that it was not
        finished. */
-    {
-      id: "team-groupings",
-      type: "themes",
-      section: "Day Two — Saturday 8 August",
-      eyebrow: "Find your table first",
-      title: "Today's Teams",
-      lead: "Who formed last night, and what they took on",
-      themes: [
-        { tag: "Team 1", title: "Team name", detail: "Challenge and table number" },
-        { tag: "Team 2", title: "Team name", detail: "Challenge and table number" },
-        { tag: "Team 3", title: "Team name", detail: "Challenge and table number" },
-        { tag: "Team 4", title: "Team name", detail: "Challenge and table number" },
-        { tag: "Team 5", title: "Team name", detail: "Challenge and table number" },
-        { tag: "Team 6", title: "Team name", detail: "Challenge and table number" },
-      ],
-      note: "PLACEHOLDER — fill in the real team names, challenges and tables after Friday night. Read the team names out and let each one wave.",
-    },
     {
       id: "team-photos",
       type: "photo-grid",
@@ -1017,6 +1128,32 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       })),
       note: "PLACEHOLDER — replace with Friday night's team photographs before Saturday morning. Leave it up while people find their tables.",
     },
+    /* A run sheet rather than a card grid, because the venue plans for up to
+       ten teams and a `themes` slide caps at six. The number column carries the
+       team number and the row carries the name, which is the shape a room reads
+       fastest when it is looking for its own table. */
+    {
+      id: "team-groupings",
+      type: "agenda",
+      section: "Day Two — Saturday 8 August",
+      eyebrow: "Find your table first",
+      title: "Today's Teams",
+      lead: "Who formed last night, and where they are sitting",
+      items: [
+        { time: "Team 1", label: "Team name — table" },
+        { time: "Team 2", label: "Team name — table" },
+        { time: "Team 3", label: "Team name — table" },
+        { time: "Team 4", label: "Team name — table" },
+        { time: "Team 5", label: "Team name — table" },
+        { time: "Team 6", label: "Team name — table" },
+        { time: "Team 7", label: "Team name — table" },
+        { time: "Team 8", label: "Team name — table" },
+        { time: "Team 9", label: "Team name — table" },
+        { time: "Team 10", label: "Team name — table" },
+      ],
+      columns: 2,
+      note: "PLACEHOLDER — fill in the real team names and tables after Friday night, and delete any rows you do not need. Read the names out and let each team wave.",
+    },
     {
       id: "build-with-mentors",
       type: "bullets",
@@ -1028,7 +1165,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
         "Split the team: keep building, start pitching",
         "Regroup thirty minutes before pitching",
       ],
-      note: "Say that most teams split at midday — half keep building, half build the pitch.",
+      note: "Say that most teams split at midday — half keep building, half build the pitch. The afternoon agenda goes out on Discord by 10:00am.",
     },
     {
       id: "lunch",
@@ -1040,7 +1177,43 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       minutes: 45,
       resumeLabel: "Prepare for pitch practice",
       background: lightPlate("light-deep-field"),
-      note: "Start the timer as the first person reaches the food. Mentors eat with the teams.",
+      note: "Start the timer as the first person reaches the food. Mentors eat with the teams. The lunch call goes out on Discord at 12:15pm.",
+    },
+    /* From here to the pitches the afternoon is a chain of timed blocks, and
+       every one of them is on the run sheet to the minute. Each gets its own
+       clock, and the slide between two clocks is what the room needs at that
+       exact point rather than filler inserted to break the run. */
+    {
+      id: "pitch-prep",
+      type: "break",
+      section: "Day Two — Saturday 8 August",
+      eyebrow: "Slides open, laptops charged",
+      title: "Prepare for Pitch Practice",
+      lead: "Fifteen minutes to get your deck in front of you",
+      minutes: 15,
+      resumeLabel: "Pitch practice with mentors",
+      note: "One mentor is allocated per team for practice, and the mentors come to the teams. Point at whoever is coordinating that.",
+    },
+    {
+      id: "five-minute-pitch-recap",
+      type: "agenda",
+      section: "Day Two — Saturday 8 August",
+      eyebrow: "Time each section now",
+      title: "Five Minutes, Section by Section",
+      lead: "Practise to the clock, not to the slide count",
+      items: PITCH_SECTIONS,
+      note: "Ask every team to run it once against a phone timer before the mentor arrives. Most teams overrun on the problem and lose the demo.",
+    },
+    {
+      id: "pitch-practice",
+      type: "break",
+      section: "Day Two — Saturday 8 August",
+      eyebrow: "One mentor per team",
+      title: "Pitch Practice",
+      lead: "Forty-five minutes with a mentor watching the clock",
+      minutes: 45,
+      resumeLabel: "Final pitch updates",
+      note: "Mentors go to the teams rather than the other way round. Remind them to time the pitch, not just listen to it.",
     },
     {
       id: "judging-criteria-recap",
@@ -1051,19 +1224,79 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       lead: "The same four criteria the panel will use this afternoon",
       criteria: JUDGING_CRITERIA,
       footnote: JUDGING_FOOTNOTE,
-      note: "Show this during pitch practice. Ask each team which criterion they are weakest on.",
+      note: "Show this as teams come out of practice. Ask each one which criterion they are weakest on, and send them to fix that.",
+    },
+    {
+      id: "final-pitch-updates",
+      type: "break",
+      section: "Day Two — Saturday 8 August",
+      eyebrow: "Change one thing, not five",
+      title: "Final Pitch Updates",
+      lead: "An hour to act on what the mentors just told you",
+      minutes: 60,
+      resumeLabel: "Afternoon tea at 3:00pm",
+      note: "Slides come to She Sharp at 3:00pm, so this hour is the last one. Say that out loud at the halfway mark.",
     },
     {
       id: "afternoon-tea",
       type: "break",
       section: "Day Two — Saturday 8 August",
-      eyebrow: "Laptops to the stage now",
+      eyebrow: "Grab and go, please",
       title: "Afternoon Tea",
       lead: "Tech check begins as soon as we are back",
       minutes: 15,
       resumeLabel: "Tech check",
       background: lightPlate("light-prism-edge"),
-      note: "Use this break to test every team's laptop on the projector.",
+      note: "Judges arrive during this break and are briefed separately. Slides should already be with She Sharp.",
+    },
+    {
+      id: "before-you-pitch",
+      type: "bullets",
+      section: "Day Two — Saturday 8 August",
+      eyebrow: "Four things, then quiet",
+      title: "Before You Pitch",
+      lead: "The last few things to get right this afternoon",
+      items: [
+        "Send your slides to She Sharp by 3:00pm",
+        "One person per team for the tech check",
+        "Every pitch is recorded for the national panel",
+        "Presentation order is drawn and posted on Discord",
+        "Five minutes each, and the clock does not stop",
+      ],
+      note: "The recording is the only thing the national panel sees, so a pitch that overruns is a pitch that gets cut. Say that plainly.",
+    },
+    {
+      id: "tech-check",
+      type: "break",
+      section: "Day Two — Saturday 8 August",
+      eyebrow: "One laptop at a time",
+      title: "Tech Check",
+      lead: "Every team on the projector before we start",
+      minutes: 15,
+      resumeLabel: "Final presentations at 3:30pm",
+      note: "One person per team, in presentation order. Check the recording setup at the same time.",
+    },
+    {
+      id: "presentation-order",
+      type: "agenda",
+      section: "Day Two — Saturday 8 August",
+      eyebrow: "Drawn at random today",
+      title: "Presentation Order",
+      lead: "Drawn at random and posted on Discord this afternoon",
+      items: [
+        { time: "1st", label: "Team name" },
+        { time: "2nd", label: "Team name" },
+        { time: "3rd", label: "Team name" },
+        { time: "4th", label: "Team name" },
+        { time: "5th", label: "Team name" },
+        { time: "6th", label: "Team name" },
+        { time: "7th", label: "Team name" },
+        { time: "8th", label: "Team name" },
+        { time: "9th", label: "Team name" },
+        { time: "10th", label: "Team name" },
+      ],
+      columns: 2,
+      note: "PLACEHOLDER — fill in once the order is drawn, and delete any rows you do not need. Leave it up so the next team knows to get ready.",
     },
     {
       id: "section-final-presentations",
@@ -1077,10 +1310,27 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       background: archivePlate(115),
       note: "Call the first team up. Hold the room to time — the recording is what goes to national judging.",
     },
+    /* The pitch clock, and the only slide in the deck meant to be returned to
+       over and over. The countdown re-arms every time the slide becomes
+       current, so jumping away to announce the next team and back is the
+       reset. */
+    {
+      id: "pitch-clock",
+      type: "break",
+      section: "Day Two — Saturday 8 August",
+      eyebrow: "Reset between every team",
+      title: "Pitch Clock",
+      lead: "Five minutes, and the judges ask questions after",
+      minutes: 5,
+      resumeLabel: "Next team, please",
+      note: "Press O, pick this slide again, and the clock re-arms at five minutes. Space starts it as the team begins. Every pitch is recorded, so hold the time.",
+    },
 
-    // 45–50 — She Sharp closing, generated from live site data.
+    // 55–60 — She Sharp closing, generated from live site data.
     ...buildClosingSlides({
-      thanksLogos: [{ label: "Hosts, partners and sponsors", logos: PARTNER_LOGOS }],
+      thanksLogos: [
+        { label: "Hosts, partners and sponsors", logos: PARTNER_LOGOS },
+      ],
       thanksNames: [
         ...judges.map((judge) => judge.name),
         ...mentors.map((mentor) => mentor.name),
