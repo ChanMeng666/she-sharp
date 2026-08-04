@@ -162,6 +162,17 @@ export interface OpeningOptions {
   karakia: KarakiaText;
   /** Venue-specific safety lines, appended to the organisational defaults. */
   safetyExtras?: string[];
+  /**
+   * Replaces `ORG_SAFETY_LINES` outright, for a venue that briefs differently.
+   *
+   * An escape hatch, not the normal path — the defaults exist so that no deck
+   * has to remember the exits. Written as a replacement rather than an
+   * omit-list because matching a line to remove by its exact string is a
+   * silent no-op the moment someone rewords the default, and a safety
+   * instruction that quietly stops appearing is the worst version of this bug.
+   * Still capped at `COPY_LIMITS.bulletCount`, and `safetyExtras` still appends.
+   */
+  safetyLines?: string[];
   /** Quiet plate behind the opening karakia; the layout scrims it to atmosphere. */
   heroImage?: DeckImage;
   /**
@@ -185,7 +196,7 @@ export interface OpeningOptions {
  *
  * Every slide carries an `eyebrow`. It is written as an instruction to the room
  * or a fact that is true at the moment the slide is up — "PLEASE FIND A SEAT",
- * "SOME OF THEM ARE HERE" — never a restatement of the title beneath it. These
+ * "STAND IF YOU ARE ABLE" — never a restatement of the title beneath it. These
  * are deliberately generic enough to be true at any She Sharp event, because
  * they ship with the boilerplate; per-event kickers belong in the deck file.
  */
@@ -195,9 +206,10 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
   // Venue lines are additive, and the limit is five bullets. Keeping the tail
   // drops organisational defaults from the top — "find the exits" goes before
   // "dial 111" does.
-  const safety = [...ORG_SAFETY_LINES, ...(options.safetyExtras ?? [])].slice(
-    -COPY_LIMITS.bulletCount,
-  );
+  const safety = [
+    ...(options.safetyLines ?? ORG_SAFETY_LINES),
+    ...(options.safetyExtras ?? []),
+  ].slice(-COPY_LIMITS.bulletCount);
 
   return [
     {
@@ -285,7 +297,10 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       type: "logos",
       section,
       tone: "light",
-      eyebrow: "Some of them are here",
+      // Not "Some of them are here": whoever builds the deck rarely knows who
+      // has actually turned up, and a kicker that guesses wrong is read out to
+      // a room that can see the empty seats. Thanks are true either way.
+      eyebrow: "With thanks to them all",
       title: "Our Sponsors & Partners",
       lead: "None of this happens without the organisations behind it",
       groups: [

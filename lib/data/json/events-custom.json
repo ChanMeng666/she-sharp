@@ -1576,7 +1576,7 @@
             "type": "info",
             "title": "National Judging Panel",
             "content": [
-              "The national panel watches every venue's winning pitch video, scores it against the same scorecards used at each venue, and selects the four finalists who pitch on stage at the Aotearoa AI Summit. The same panel awards the AI Technical Brilliance Prize, which can go to any venue winner — not only a finalist.",
+              "The national panel watches every venue's winning pitch video, scores it against the same scorecards used at each venue, and selects the one winner who pitches on stage at the Aotearoa AI Summit. The same panel awards the AI Technical Brilliance Prize, which can go to any venue winner — not only the national winner.",
               "David Knox (Topologic) chairs the panel and Albert Bifet (University of Waikato) is deputy chair. They are joined by Prof Yun Sing Koh and Prof Karin Bryan (University of Auckland), Nicholas Fourie (Fisher & Paykel Healthcare), Dr Mahsa McCauley (AUT, Chair of AI Forum New Zealand), Dr Karaitiana Taiuru (AI, data and emerging technology ethics, governance and research; Chair of Kāhui Māori), Shivonne Llondt (AWS) and Nicola Voice (Sustainability Lead, Woolworths New Zealand).",
               "Dr Mahsa McCauley and Nicholas Fourie sit on both the AUT City Campus venue panel and the national panel."
             ]
@@ -1617,7 +1617,7 @@
             "title": "Prizes & Awards",
             "content": [
               "Every venue winning team: $250",
-              "Top four national finalists invited to pitch at the Aotearoa AI Summit 2026",
+              "National winner invited to pitch at the Aotearoa AI Summit 2026",
               "National — TAIAO Prize (Summit audience vote): $1,000",
               "National — Technical Brilliance (national judging panel): $1,000",
               "Prizes supported by AWS and provided via AI Forum New Zealand",
@@ -1903,7 +1903,7 @@
           {
             "title": "Prepare Your Pitch",
             "paragraphs": [
-              "On day two, each team delivers a live 5-minute pitch to the local judging panel. Venue winners advance to national judging, and four finalists pitch at the Aotearoa AI Summit on 8–9 September 2026 at Tākina in Wellington.",
+              "On day two, each team delivers a live 5-minute pitch to the local judging panel. Venue winners advance to national judging, and one winner pitches at the Aotearoa AI Summit on 8–9 September 2026 at Tākina in Wellington.",
               "Download the official pitch deck template from the Community Hub to structure your solution, impact and next steps — and see “Your 5-Minute Pitch, Section by Section” above for how the five minutes are meant to break down."
             ],
             "links": [

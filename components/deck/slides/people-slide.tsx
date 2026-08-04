@@ -7,12 +7,14 @@ import { ArchiveBand, BAND_PAD, Kicker, seedFrom } from "./archive";
 type Density = "sm" | "md" | "lg";
 
 /**
- * Target tile width per density, fed to `minmax()` inside an `auto-fit` grid.
+ * Narrowest tile a person is allowed, used to derive the column count.
  *
- * No breakpoints: the column count follows the stage on its own — roughly 11
- * across at `sm` on a 16:9 stage and 8 on a 4:3 projector, 7 and 5 at `md`, 5
- * and 4 at `lg`. A tile even 20px wider drops a column at 4:3 and adds a whole
- * row, and rows are what overflow 1080.
+ * Not a `minmax()` track minimum any more. `auto-fit` sized the grid off the
+ * live stage, which meant fifteen team members landed eleven-across on a 16:9
+ * projector and four-across underneath — ragged, and with every column at
+ * 129px while the names on them were set at 30px. The count is now derived
+ * once, from the narrowest stage, and the same rectangle is projected
+ * everywhere.
  */
 const TILE_WIDTH: Record<Density, number> = { sm: 130, md: 196, lg: 262 };
 
@@ -20,16 +22,10 @@ const TILE_WIDTH: Record<Density, number> = { sm: 130, md: 196, lg: 262 };
 const TILE_GAP: Record<Density, number> = { sm: 20, md: 32, lg: 32 };
 
 /** Portrait cap per density, before the crowd-size reduction. */
-const PORTRAIT: Record<Density, number> = { sm: 148, md: 164, lg: 248 };
+const PORTRAIT: Record<Density, number> = { sm: 148, md: 156, lg: 248 };
 
-/**
- * Everything under a portrait, in design px at the narrow (4:3) type scale.
- *
- * Estimated rather than measured because the decision it feeds — whether this
- * slide can afford the archive band — has to be made during render, and the
- * numbers only have to be right to about a row.
- */
-const CAPTION_HEIGHT: Record<Density, number> = { sm: 104, md: 120, lg: 194 };
+/** Vertical space between rows of tiles. */
+const ROW_GAP = 32;
 
 /**
  * Content width at the narrowest stage the deck supports: 1440 less two 105px
@@ -40,6 +36,33 @@ const NARROW_CONTENT = 1230;
 
 /** Height the title block spends before the grid starts, at the narrow scale. */
 const HEADER_HEIGHT = 210;
+
+/**
+ * Type metrics for the three caption lines, at the narrow (4:3) scale.
+ *
+ * `char` is the mean advance width as a fraction of the font size — the org
+ * line is the widest of the three despite being the smallest, because
+ * `.deck-label` is uppercase with 0.18em of tracking and therefore about a
+ * fifth wider than it looks.
+ */
+const CAPTION_TYPE = {
+  nameLg: { size: 38, height: 1.16, char: 0.54 },
+  name: { size: 30, height: 1.4, char: 0.54 },
+  role: { size: 30, height: 1.4, char: 0.51 },
+  org: { size: 28, height: 1.2, char: 0.68 },
+} as const;
+
+/** Gap between the caption lines, matching the `<div>` below. */
+const CAPTION_GAP = 6;
+
+/** Lines a string takes in a column of `width`, never fewer than one. */
+function linesFor(
+  text: string,
+  metric: { size: number; char: number },
+  width: number,
+): number {
+  return Math.max(1, Math.ceil((text.length * metric.size * metric.char) / width));
+}
 
 /** Two letters that read from the back of a room when a headshot is missing. */
 function initialsOf(name: string): string {
@@ -62,13 +85,20 @@ function initialsOf(name: string): string {
  * each being looked at. Grading a volunteer's face into brand purple to make a
  * grid match is where a design system stops serving the people in it.
  *
+ * THE GRID IS A RECTANGLE, NOT A WRAP. Rows are balanced — seven people go
+ * four-and-three rather than five-and-two — so the block reads as a considered
+ * arrangement instead of a list that ran out of width. Every column is
+ * `minmax(0, 1fr)` and every caption is clamped to its own column, because a
+ * fixed track minimum is what let a long surname or a tracked organisation name
+ * spill symmetrically into both gutters and land on its neighbours.
+ *
  * WHETHER THE BAND FITS IS COMPUTED, NOT GUESSED. The archive band across the
  * foot costs 162px of an 848px safe area. At `lg` a single row of four leaves
  * that spare; a roster of sixteen at `sm` wraps to two rows on a 4:3 projector
- * and does not. So the column count is derived from the narrowest stage and the
- * band appears only when the grid genuinely clears it — which is the difference
- * between a considered omission and a slide that overflows in the one venue
- * nobody rehearsed in.
+ * and does not. The caption height is estimated from the actual strings rather
+ * than assumed per density — "Head of Computer & Information Sciences" takes
+ * three lines, not one, and assuming one is what put the judges' titles on top
+ * of the archive band.
  */
 export function PeopleSlideLayout({ slide }: { slide: PeopleSlide }) {
   const density: Density = slide.density ?? "md";
@@ -83,13 +113,21 @@ export function PeopleSlideLayout({ slide }: { slide: PeopleSlide }) {
 
   const tile = TILE_WIDTH[density];
   const gap = TILE_GAP[density];
-  const columns = Math.max(
-    1,
-    Math.floor((NARROW_CONTENT + gap) / (tile + gap)),
+
+  /* Fewest rows the narrow stage allows, then spread evenly across them. The
+     second step is what turns 5+2 into 4+3. */
+  const perRow = Math.min(
+    count,
+    Math.max(1, Math.floor((NARROW_CONTENT + gap) / (tile + gap))),
   );
-  const rows = Math.ceil(count / columns);
-  const gridHeight =
-    rows * (portrait + CAPTION_HEIGHT[density]) + (rows - 1) * 40;
+  const rows = Math.max(1, Math.ceil(count / perRow));
+  const columns = Math.max(1, Math.ceil(count / rows));
+
+  const columnWidth = (NARROW_CONTENT - (columns - 1) * gap) / columns;
+  const captionHeight = Math.max(
+    ...slide.people.map((person) => captionHeightFor(person, density, columnWidth)),
+  );
+  const gridHeight = rows * (portrait + captionHeight) + (rows - 1) * ROW_GAP;
   const showBand = HEADER_HEIGHT + gridHeight <= 660;
 
   return (
@@ -115,9 +153,9 @@ export function PeopleSlideLayout({ slide }: { slide: PeopleSlide }) {
           <ul
             className="grid"
             style={{
-              gridTemplateColumns: `repeat(auto-fit, minmax(${tile}px, 1fr))`,
+              gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
               columnGap: gap,
-              rowGap: 40,
+              rowGap: ROW_GAP,
             }}
           >
             {slide.people.map((person) => (
@@ -161,7 +199,7 @@ function PersonTile({
 
   return (
     <li
-      className="flex flex-col items-center text-center"
+      className="flex min-w-0 flex-col items-center text-center"
       style={{ gap: "var(--deck-gap-sm)" }}
     >
       {person.image ? (
@@ -186,7 +224,15 @@ function PersonTile({
         </div>
       )}
 
-      <div className="flex flex-col" style={{ gap: 6 }}>
+      {/* Clamped to the column and told to break inside a word if it has to.
+          Without this a single token wider than the track — a long surname, a
+          tracked organisation name — overflows symmetrically into both gutters
+          and lands on the tiles either side, and nothing in the deck detects
+          horizontal overflow. */}
+      <div
+        className="flex w-full min-w-0 flex-col"
+        style={{ gap: CAPTION_GAP, overflowWrap: "anywhere", hyphens: "auto" }}
+      >
         <p
           className={density === "lg" ? "deck-subtitle" : "deck-body"}
           style={{ fontWeight: 600 }}
@@ -199,9 +245,43 @@ function PersonTile({
         )}
 
         {density !== "sm" && person.org && (
-          <p className="deck-label deck-accent">{person.org}</p>
+          <p className="deck-label deck-person-org deck-accent">{person.org}</p>
         )}
       </div>
     </li>
   );
+}
+
+/**
+ * Height of one tile's caption, in design px at the narrow type scale.
+ *
+ * Estimated rather than measured because the decision it feeds — whether this
+ * slide can afford the archive band — has to be made during render, on the
+ * server. It only has to be right to about a line, but it does have to react to
+ * the strings: the previous version was a per-density constant, which is
+ * correct for a roster of first names and wrong by two lines for a judging
+ * panel whose titles run to forty characters.
+ */
+function captionHeightFor(
+  person: PersonItem,
+  density: Density,
+  columnWidth: number,
+): number {
+  const nameType = density === "lg" ? CAPTION_TYPE.nameLg : CAPTION_TYPE.name;
+  let height = linesFor(person.name, nameType, columnWidth) * nameType.size * nameType.height;
+  let blocks = 1;
+
+  if (density === "lg" && person.role) {
+    const { role } = CAPTION_TYPE;
+    height += linesFor(person.role, role, columnWidth) * role.size * role.height;
+    blocks += 1;
+  }
+
+  if (density !== "sm" && person.org) {
+    const { org } = CAPTION_TYPE;
+    height += linesFor(person.org, org, columnWidth) * org.size * org.height;
+    blocks += 1;
+  }
+
+  return height + (blocks - 1) * CAPTION_GAP;
 }

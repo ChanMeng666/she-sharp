@@ -55,7 +55,10 @@ export function ThemesSlideLayout({ slide }: { slide: ThemesSlide }) {
         >
           {slide.themes.map((theme, index) => (
             <li
-              key={theme.title}
+              /* Position, not title. Cards are static and never reorder, and a
+                 themes slide is allowed to repeat a title — a placeholder grid
+                 of six "Team name" cards is the obvious case. */
+              key={index}
               className={cn(
                 "flex flex-col",
               )}

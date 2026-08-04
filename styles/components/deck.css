@@ -1086,6 +1086,25 @@
   border-radius: var(--deck-radius-sm);
 }
 
+/* A fixed box that an event poster is fitted inside rather than cropped to.
+
+   The image has to be pinned rather than sized at 100%: a percentage block size
+   resolves against an ancestor whose own height the browser does not treat as
+   definite here, so `block-size: 100%` silently fell back to the poster's
+   intrinsic ratio and a 1400x1980 poster rendered 881px tall in a 500px box —
+   cropped exactly where its own headline is. `inset: 0` is definite. */
+.deck-poster {
+  position: relative;
+  overflow: hidden;
+}
+
+.deck-poster > .deck-img {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
 /* A full-bleed full-colour plate — the karakia register. No duotone, no tiles,
    no rules; nothing to read but the words. `object-position: top` still holds. */
 .deck-plate {
@@ -1124,6 +1143,17 @@
   border-radius: 999px;
   object-fit: cover;
   background: var(--slide-surface);
+}
+
+/* The organisation line under a portrait.
+
+   `.deck-label` is uppercase at 0.18em, which makes it roughly a fifth wider
+   than its font size suggests — "AUCKLAND UNIVERSITY OF TECHNOLOGY" is the
+   widest thing on a people slide despite being the smallest type on it. In a
+   tile that is a column of a grid rather than a figure with the page to itself,
+   that tracking buys nothing and costs a line of wrapping. */
+.deck-person-org {
+  letter-spacing: 0.08em;
 }
 
 /* Sponsor marks are a mixed bag of dark and light SVGs. On dark slides they sit
@@ -1354,15 +1384,42 @@
    and the slide then scales itself down far enough to put the scope labels
    under the 28px a room can read. The figure is the one thing on that slide
    with height to give, so it gives it — the labels keep their size.
+
+   The same figure is also wrong on a wide stage once there are three of them
+   side by side, and that failure was invisible for longer because it is
+   horizontal. `--dt-stat` is 224px between 1561px and 2199px — the band an
+   ordinary 16:9 projector sits in — so "$1,000" is about 700px of tabular
+   display type in a `minmax(0, 1fr)` track roughly 512px wide. Grid does not
+   shrink text, so the three amounts simply overlapped each other, and
+   `useFitContent()` never noticed because it only measures height. The column
+   count therefore chooses the size.
    -------------------------------------------------------------------------- */
 
 .deck-prize-figure {
-  font-size: var(--dt-stat);
+  font-size: var(--dt-prize, var(--dt-stat));
+  /* An amount is one word. Breaking "$1,000" across two lines to avoid an
+     overlap would be a different bug, not a fix. */
+  white-space: nowrap;
 }
 
+[data-prize-columns="3"] .deck-prize-figure,
+[data-prize-columns="4"] .deck-prize-figure {
+  --dt-prize: 148px;
+}
+
+@container deck (min-width: 2200px) {
+  [data-prize-columns="3"] .deck-prize-figure,
+  [data-prize-columns="4"] .deck-prize-figure {
+    --dt-prize: 176px;
+  }
+}
+
+/* Narrow stages fold the grid to a single column and lay each figure beside its
+   name, so the constraint there is height, not width — and it applies whatever
+   the prize count is. Last, so it wins over the column rules above. */
 @container deck (max-width: 1560px) {
   .deck-prize-figure {
-    font-size: 112px;
+    --dt-prize: 112px;
   }
 }
 
