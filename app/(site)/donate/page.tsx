@@ -7,6 +7,7 @@ import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
 import { Reveal, CurtainReveal } from "@/components/ui/reveal";
 import { curatedImages } from "@/public/img/curated";
+import { globalStats } from "@/lib/data/stats";
 
 export const metadata: Metadata = {
   title: "Donate",
@@ -53,9 +54,21 @@ const impactCards = [
 ];
 
 const stats = [
-  { value: "3000+", label: "Members empowered", sub: "and growing every year" },
-  { value: "50+", label: "Corporate sponsors", sub: "backing our mission" },
-  { value: "94+", label: "Events since 2014", sub: "across New Zealand" },
+  {
+    value: `${globalStats.members.current}+`,
+    label: "Members empowered",
+    sub: "and growing every year",
+  },
+  {
+    value: `${globalStats.sponsors.current}+`,
+    label: "Corporate sponsors",
+    sub: "backing our mission",
+  },
+  {
+    value: `${globalStats.events.total}+`,
+    label: "Events since 2014",
+    sub: "across New Zealand",
+  },
 ];
 
 export default function DonatePage() {

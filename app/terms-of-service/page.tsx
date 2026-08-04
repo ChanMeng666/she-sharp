@@ -28,7 +28,7 @@ export default function TermsOfServicePage() {
           <p>
             She Sharp is a registered New Zealand charity dedicated to bridging the gender gap in STEM fields.
             We provide networking, mentorship, and career development opportunities for women in technology.
-            Since 2014, we have hosted 94+ events empowering women in tech.
+            Since 2014, we have hosted 95+ events empowering women in tech.
           </p>
         </section>
 

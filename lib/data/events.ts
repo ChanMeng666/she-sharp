@@ -242,6 +242,24 @@ export function getAllEvents(): EventV3[] {
 }
 
 /**
+ * Count the events that have already been held, as of the given date.
+ *
+ * The homepage "Events Since 2014" headline is derived from this rather than
+ * hand-typed, so the number cannot silently fall behind the event register the
+ * way the previous literal had. Records whose date cannot be parsed are skipped
+ * rather than guessed at.
+ */
+export function getEventsHeldCount(asOf: Date = new Date()): number {
+  const cutoff = new Date(asOf);
+  cutoff.setHours(0, 0, 0, 0);
+
+  return normalizedEventsV3.filter((e) => {
+    const eventDate = parseDateString(e.date);
+    return !Number.isNaN(eventDate.getTime()) && eventDate < cutoff;
+  }).length;
+}
+
+/**
  * Get upcoming events sorted by date (nearest first)
  */
 export function getUpcomingEvents(limit?: number): EventV3[] {

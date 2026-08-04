@@ -3,7 +3,7 @@
  *
  * Two days, one host, one projector. The nine opening and six closing slides
  * come from `buildOpeningSlides()` / `buildClosingSlides()` so the team, stats
- * and sponsor walls stay live; the twenty-three in between are this event.
+ * and sponsor walls stay live; the twenty-five in between are this event.
  *
  * Facts come from `lib/data/json/events-custom.json` via `getEventBySlug()`,
  * read through `specialSection()` so that renumbering the JSON fails loudly
@@ -246,11 +246,19 @@ const TEAM_FORMING_PHOTO: DeckImage = {
 const mentors = detail.speakers.mentors?.speakers ?? [];
 const judges = detail.speakers.panelists?.speakers ?? [];
 
-/** Mentor tiles: name and organisation only — the bio is the person talking. */
+/**
+ * Mentor tiles: name and organisation only — the bio is the person talking.
+ *
+ * `image` is coerced to `undefined` rather than passed through, because a mentor
+ * confirmed late often has no photograph and the event JSON records that as an
+ * empty string. `PersonItem.image` is optional and the layout falls back to an
+ * initials tile; an empty `src` would instead fail the image-path check in
+ * `deck.test.ts` and request the page itself as an image at the venue.
+ */
 const mentorTiles = mentors.map((mentor) => ({
   name: mentor.name,
   org: mentor.company,
-  image: mentor.image,
+  image: mentor.image || undefined,
 }));
 
 /** Split point for the two mentor slides, balanced and within the density cap. */
@@ -303,7 +311,7 @@ const JUDGING_CRITERIA = [
 ];
 
 const JUDGING_FOOTNOTE =
-  "Two scorecards: the TAIAO scorecard weights all four categories equally, the Technological Brilliance scorecard leans towards Technology. Judges from the last five festivals advise focusing on three things — is it an important UN Sustainable Development Goal problem, is the solution feasible, and will it make an impact. Every pitch is recorded and all panel decisions are final.";
+  "Two scorecards: the TAIAO scorecard weights all four categories equally, the Technical Brilliance scorecard leans towards Technology. Judges from the last five festivals advise focusing on three things — is it an important UN Sustainable Development Goal problem, is the solution feasible, and will it make an impact. Every pitch is recorded and all panel decisions are final.";
 
 // --- Run sheets ------------------------------------------------------------
 
@@ -341,7 +349,7 @@ const UPCOMING_SNAPSHOT = [
   {
     title: "No Pain, All Gain – Getting Fit for AI",
     date: "Thursday 3 September 2026",
-    time: "5:00–8:00pm",
+    time: "5:00–7:30pm",
     venue: "Auckland",
     blurb: "A Les Mills x She Sharp panel on diversity and AI for impact",
   },
@@ -380,7 +388,46 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       contactQrs: [WEBSITE_QR, EVENTS_QR, LINKEDIN_QR],
     }),
 
-    // --- 10–25 — Day one ---------------------------------------------------
+    // --- 10–27 — Day one ---------------------------------------------------
+    /* Housekeeping first, and in this order, because it is what the room is
+       already asking each other about while the host is still talking.
+
+       `themes` rather than a list: the layout sets `tag` small above `title`
+       large, which is the label-above-value shape a password needs to survive
+       being copied onto a phone from three metres away. There is no wifi slide
+       type and this does not need one.
+
+       These credentials are the venue's guest account for the weekend, supplied
+       in the AUT mentor briefing. They belong on the projector in a room that
+       has already walked past reception — not on the public event page. */
+    {
+      id: "venue-wifi",
+      type: "themes",
+      section: "Day One — Friday 7 August",
+      eyebrow: "Get online first",
+      title: "Venue Wi-Fi",
+      lead: "AUT guest network, and the same login both days",
+      themes: [
+        { tag: "Network", title: "AUTwifi" },
+        { tag: "Username", title: "ai-hack-a-thon@guest" },
+        { tag: "Password", title: "46533572" },
+      ],
+      note: "Leave this up through registration. Read the username aloud one hyphen at a time — it is the field everyone mistypes — and say the password twice.",
+    },
+    {
+      id: "venue-wayfinding",
+      type: "bullets",
+      section: "Day One — Friday 7 August",
+      eyebrow: "Three rooms, all weekend",
+      title: "Where to Find Things",
+      lead: "All three rooms are in the Sir Paul Reeves Building",
+      items: [
+        "WG306 — registration, dinner and every coffee break",
+        "WG308 — tonight's opening, tomorrow's pitches and awards",
+        "WG808 — the mentor room, all weekend",
+      ],
+      note: "Point in the direction of each room as you say it. WG808 is where the mentors are based — teams should know where to find them before tomorrow morning.",
+    },
     {
       id: "day-one-run-sheet",
       type: "agenda",
@@ -422,7 +469,9 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "challenge-themes",
       type: "themes",
       section: "Day One — Friday 7 August",
-      eyebrow: "Straight from the UN goals",
+      // "Straight from the UN SDG goals" is six words and fails the five-word
+      // kicker limit; the article is what goes, not the acronym.
+      eyebrow: "From the UN SDG goals",
       title: "Five Real-World Challenges",
       lead: "Pick the one your team actually cares about",
       themes: [
@@ -483,10 +532,11 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       overlay: "gradient",
       note: "Say this and then stop talking. Push people out of their seats — the mentors will circulate and balance the teams.",
     },
-    /* Thirteen mentors across two slides rather than one.
+    /* The mentors across two slides rather than one, however many there are.
        At `md` density a single slide of thirteen has to shrink itself to about
        74% on a 4:3 projector to fit, which puts the names below the 28px the
-       back of the room can read. `COPY_LIMITS.peopleCount` enforces the split. */
+       back of the room can read. `mentorSplit` halves the roster and
+       `COPY_LIMITS.peopleCount` enforces the eight-per-slide cap. */
     {
       id: "meet-the-mentors-1",
       type: "people",
@@ -611,7 +661,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
         },
         {
           amount: "$1,000",
-          name: "National Technological Brilliance",
+          name: "National Technical Brilliance",
           detail: "National judging panel",
           scope: "national",
         },
@@ -654,7 +704,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       note: "Start the timer after the photo. Day one closes at 8:00pm.",
     },
 
-    // --- 26–32 — Day two ---------------------------------------------------
+    // --- 28–34 — Day two ---------------------------------------------------
     {
       id: "section-day-two",
       type: "section",
@@ -739,7 +789,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       note: "Call the first team up. Hold the room to time — the recording is what goes to national judging.",
     },
 
-    // 33–38 — She Sharp closing, generated from live site data.
+    // 35–40 — She Sharp closing, generated from live site data.
     ...buildClosingSlides({
       thanksLogos: [{ label: "Hosts, partners and sponsors", logos: PARTNER_LOGOS }],
       thanksNames: [

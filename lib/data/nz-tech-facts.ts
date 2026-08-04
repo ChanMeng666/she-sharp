@@ -14,6 +14,8 @@
  * biases the monthly rotation between them. `NZ_TECH_FACTS` is the flat union.
  */
 
+import { globalStats } from "./stats";
+
 /** One verified evergreen fact with its attribution. */
 export interface NzTechFact {
   /** Stable id (used for deterministic rotation and de-duplication). */
@@ -77,7 +79,7 @@ export const NZ_WIDE_FACTS: readonly NzTechFact[] = [
   },
   {
     id: "she-sharp-growth",
-    text: "She Sharp has grown to 3000+ members, 50+ sponsors and 94+ events since 2014.",
+    text: `She Sharp has grown to ${globalStats.members.current}+ members, ${globalStats.sponsors.current}+ sponsors and ${globalStats.events.total}+ events since 2014.`,
     sourceLabel: "She Sharp",
     sourceUrl: "https://www.shesharp.org.nz/about",
   },

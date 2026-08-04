@@ -37,7 +37,7 @@ const slides = [
   {
     img: curatedImages["hero-anniversary-crowd"],
     eyebrow: "Community",
-    title: "3000+ members across New Zealand",
+    title: "3500+ members across New Zealand",
     pos: "center center",
   },
 ] as const;

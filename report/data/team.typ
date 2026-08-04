@@ -1,11 +1,11 @@
 // =============================================================================
-// team.typ — the 16 active trustees and ambassadors
+// team.typ — the 15 active trustees and ambassadors
 // =============================================================================
 //
-// Mirrored from `lib/data/team.ts`, in source order. A 17th entry there
-// (Isha Sangrolkar) is commented out and is deliberately EXCLUDED — do not
-// restore it from the 2025 impact report's team page, which predates her
-// departure.
+// Mirrored from `lib/data/team.ts`, in source order. Two entries there
+// (Isha Sangrolkar, Raquel Anne Maderazo) are commented out and are
+// deliberately EXCLUDED — do not restore them from the 2025 impact report's
+// team page, which predates their departure.
 //
 // Fields:
 //   prefix   honorific, or "" — kept separate so a caption can drop it
@@ -44,15 +44,15 @@
     file: "Mike",
     founder: false,
   ),
-  (
-    prefix: "",
-    first: "Raquel",
-    last: "Maderazo",
-    role: "Event Manager",
-    dir: "/img/team",
-    file: "Raquel",
-    founder: false,
-  ),
+  // (
+  //   prefix: "",
+  //   first: "Raquel",
+  //   last: "Maderazo",
+  //   role: "Event Manager",
+  //   dir: "/img/team",
+  //   file: "Raquel",
+  //   founder: false,
+  // ),
   (
     prefix: "Dr.",
     first: "Meeta",
