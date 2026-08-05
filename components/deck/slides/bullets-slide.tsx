@@ -2,7 +2,7 @@ import { DeckImage } from "@/components/deck/deck-image";
 import type { BulletsSlide } from "@/lib/deck/types";
 import { cn } from "@/lib/utils";
 
-import { ArchiveBand, BAND_PAD, Kicker, seedFrom } from "./archive";
+import { ArchiveBand, BAND_PAD, Kicker, SponsorMark, seedFrom } from "./archive";
 
 /**
  * The marker on the leading edge of a bullet.
@@ -86,12 +86,21 @@ export function BulletsSlideLayout({ slide }: { slide: BulletsSlide }) {
           className="deck-content flex flex-1 flex-col"
           style={{ gap: "var(--deck-gap-lg)" }}
         >
-          <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
-            <Kicker text={slide.eyebrow} />
-            <h2 className="deck-title">{slide.title}</h2>
-            {slide.lead && (
-              <p className="deck-lead">{slide.lead}</p>
-            )}
+          <div
+            className="flex items-start"
+            style={{ gap: "var(--deck-gap-lg)" }}
+          >
+            <div
+              className="flex flex-1 flex-col"
+              style={{ gap: "var(--deck-gap-xs)", minInlineSize: 0 }}
+            >
+              <Kicker text={slide.eyebrow} />
+              <h2 className="deck-title">{slide.title}</h2>
+              {slide.lead && (
+                <p className="deck-lead">{slide.lead}</p>
+              )}
+            </div>
+            {slide.logo && <SponsorMark logo={slide.logo} />}
           </div>
 
           <div className="flex items-start" style={{ gap: "var(--deck-gap-xl)" }}>

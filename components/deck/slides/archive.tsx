@@ -14,6 +14,7 @@
 
 import type { CSSProperties, ReactNode } from "react";
 
+import { DeckImage } from "@/components/deck/deck-image";
 import { buildWallBand, buildWallRows } from "@/lib/deck/wall";
 import { cn } from "@/lib/utils";
 
@@ -190,6 +191,35 @@ export function knockoutStyle(src: string | undefined, seed: number): CSSPropert
 export function Kicker({ text }: { text?: string }) {
   if (!text) return null;
   return <p className="deck-kicker">{text}</p>;
+}
+
+/**
+ * The mark of the organisation whose problem a slide is presenting.
+ *
+ * Added 5 Aug 2026 for the hackathon's featured problems, where the sponsor was
+ * named only in the kicker — a line the room reads once and forgets. A team
+ * choosing which problem to spend a weekend on is partly choosing whose problem
+ * it is, so the mark belongs on the slide that asks them to choose.
+ *
+ * It is NOT the sponsors slide in miniature: exactly one mark, on the trailing
+ * edge of the header, on the white chip every logo in this deck sits on. The
+ * chip is what makes a multi-colour SVG survive both tones without filtering.
+ * Hidden on narrow stages for the same reason the supporting photograph is —
+ * a 4:3 projector needs the whole content column for the type.
+ */
+export function SponsorMark({
+  logo,
+}: {
+  logo: { name: string; logo: string };
+}) {
+  return (
+    <div
+      className="deck-logo-chip @max-[1400px]/deck:hidden"
+      style={{ flex: "0 0 auto", inlineSize: 208, blockSize: 96 }}
+    >
+      <DeckImage image={{ src: logo.logo, alt: logo.name }} fit="contain" />
+    </div>
+  );
 }
 
 /** A hairline-separated column of content, the deck's default list rhythm. */
