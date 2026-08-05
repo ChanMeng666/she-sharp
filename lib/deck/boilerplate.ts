@@ -490,17 +490,31 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
       names: options.thanksNames,
       note: "Read the names of anyone still in the room and pause for applause after each group.",
     },
-    {
-      id: "upcoming-events",
-      type: "upcoming",
-      section,
-      tone: "light",
-      eyebrow: "Put this in your calendar",
-      title: "What's Coming Up",
-      lead: "The next thing you can come to",
-      events: options.upcoming,
-      note: "Say the date twice. People write it down on the second one.",
-    },
+    /*
+     * Only when there is genuinely something to come to.
+     *
+     * With an empty list this still projected "What's Coming Up / The next
+     * thing you can come to" over nothing at all, under a host note telling
+     * whoever was holding the clicker to "say the date twice". An empty
+     * promise on a wall is worse than one slide fewer, and the events QR is
+     * already on the opening "Stay Connected" slide, so nobody loses the way
+     * to find out.
+     */
+    ...(options.upcoming.length > 0
+      ? [
+          {
+            id: "upcoming-events",
+            type: "upcoming" as const,
+            section,
+            tone: "light" as const,
+            eyebrow: "Put this in your calendar",
+            title: "What's Coming Up",
+            lead: "The next thing you can come to",
+            events: options.upcoming,
+            note: "Say the date twice. People write it down on the second one.",
+          },
+        ]
+      : []),
     {
       id: "feedback",
       type: "qr-cta",

@@ -43,6 +43,7 @@ import { rhythmViolations, toRhythmStep } from "./rhythm";
 import { planEveningEvent } from "./templates/evening-event";
 import { checkAccentContrast, contrastRatio, DEFAULT_DARK_CANVAS, DEFAULT_LIGHT_CANVAS } from "./theme";
 import { collectDeckImages, parseTimedLine } from "./utils";
+import { extractThemeBlock } from "@/scripts/deck/new-deck";
 
 /**
  * Ink colours per tone, mirrored from `.deck-slide[data-tone=…]` in
@@ -503,6 +504,69 @@ check(
   `no deck freezes its countdown as a literal (${generatedDecks.length} using the template)`,
   generatedDecks.every(({ source }) => !/^\s*minutes:\s*\d+\s*,/m.test(source)),
 );
+
+/*
+ * Regenerating a deck must not put the house purple back over an accent
+ * somebody chose off a poster. Nothing in the event data holds a colour, so
+ * the scaffold carries the block across instead -- and the loss it guards
+ * against is a quiet one, because a wrong accent still builds, still lints and
+ * still passes contrast.
+ */
+{
+  const before = `export const d: Deck = {
+  /* The pink off the poster, not the navy behind it. */
+  theme: {
+    accent: {
+      onLight: "#b749a9",
+      onDark: "#ca53bb",
+      spark: "#5ee7f5",
+    },
+  },
+  slides: [],
+};
+`;
+  const carried = extractThemeBlock(before);
+  check(
+    "a regenerated deck keeps its accent and the note explaining it",
+    !!carried &&
+      carried.includes("#b749a9") &&
+      carried.includes("#ca53bb") &&
+      carried.includes("not the navy behind it") &&
+      // and stops at the theme -- it must not swallow the rest of the deck
+      !carried.includes("slides"),
+  );
+  check(
+    "a deck with no theme block carries nothing across",
+    extractThemeBlock("export const d = { slides: [] };") === undefined,
+  );
+}
+
+/*
+ * An empty upcoming list must produce no slide at all, rather than "What's
+ * Coming Up / The next thing you can come to" projected over nothing.
+ */
+{
+  const withNothing = buildClosingSlides({
+    thanksLogos: [{ label: "Hosts", logos: [] }],
+    upcoming: [],
+    eventSlug: "event-lesmills-03-september-2026",
+    karakia: DEFAULT_CLOSING_KARAKIA,
+  });
+  const withSomething = buildClosingSlides({
+    thanksLogos: [{ label: "Hosts", logos: [] }],
+    upcoming: [{ title: "A real event", date: "1 October 2026" }],
+    eventSlug: "event-lesmills-03-september-2026",
+    karakia: DEFAULT_CLOSING_KARAKIA,
+  });
+  check(
+    "an empty upcoming list projects no slide",
+    !withNothing.some((slide) => slide.id === "upcoming-events"),
+  );
+  check(
+    "an upcoming list with something in it still does",
+    withSomething.some((slide) => slide.id === "upcoming-events"),
+  );
+}
 
 /* Every deck file under decks/ must be registered, or `/present/<slug>` 404s
    with nothing to show for it. This was a documented failure mode precisely

@@ -256,6 +256,13 @@ list would quietly change between the rehearsal and the event.
 **Don't know:** take the next events from `events-custom.json` by date, read the
 titles and dates back, and let the author cut the ones that don't fit.
 
+**Nothing is confirmed yet** — which happens more often than not, because a deck
+is usually built for the last event on the books. The slide is dropped rather
+than projected empty. Say so plainly: *"there's no next event in the system yet,
+so that slide won't appear — the events QR at the start still points people at
+the website. Tell me if something gets confirmed before the night and I'll put
+it back."* Do not put a "watch this space" placeholder on a wall.
+
 ---
 
 ## What each fixed slide needs from the author
@@ -282,7 +289,7 @@ The organisational frame comes free. This is what you still have to collect.
 | What did you find | `bullets` | The three readout questions, if the defaults are wrong |
 | The closing frame | `photo` | A photograph, if they have a better one than the archive |
 | Thank you | `thanks` | Partners and named people (Round 5) |
-| Upcoming events | `upcoming` | Up to three, with dates (Round 8) |
+| Upcoming events | `upcoming` | Up to three, with dates (Round 8). Dropped if there are none |
 | Feedback QR | `qr-cta` | Nothing — derived from the event slug. Only the prize draw, if there is one (Round 7) |
 | Ambassador QR | `qr-cta` | Nothing — `/join-our-team` |
 | Closing karakia | `karakia` | Nothing — fixed |
