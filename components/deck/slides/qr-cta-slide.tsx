@@ -11,6 +11,7 @@ import {
   INCISION_5_ROWS,
   INCISION_5_ROWS_PAD,
   Kicker,
+  SponsorMark,
   seedFrom,
 } from "./archive";
 
@@ -67,6 +68,16 @@ export function QrCtaSlideLayout({ slide }: { slide: QrCtaSlide }) {
           style={{ gap: "var(--deck-gap-xl)" }}
         >
           <div className="flex flex-col" style={{ gap: "var(--deck-gap-md)" }}>
+            {/* Above the kicker rather than beside the code: the trailing column
+                is a fixed 340px of QR on every stage, and a mark squeezed in
+                under it competes with the one thing this slide exists to get
+                scanned. */}
+            {slide.logo && (
+              <div className="flex">
+                <SponsorMark logo={slide.logo} />
+              </div>
+            )}
+
             <Kicker text={slide.eyebrow} />
 
             <h2 className="deck-title">{slide.title}</h2>

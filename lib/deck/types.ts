@@ -128,6 +128,8 @@ export interface BulletsSlide extends SlideBase {
   variant?: "plain" | "checklist" | "numbered";
   /** Optional supporting plate on the trailing edge. */
   image?: DeckImage;
+  /** Mark of the organisation whose problem or programme this slide presents. */
+  logo?: DeckLogo;
 }
 
 export interface AgendaSlide extends SlideBase {
@@ -154,6 +156,16 @@ export interface PhotoSlide extends SlideBase {
   title?: string;
   lead?: string;
   overlay?: "none" | "scrim" | "gradient";
+  /**
+   * `cover` (the default) bleeds the image off every edge; `contain` fits it
+   * whole inside the safe area.
+   *
+   * Use `contain` only for an image that IS the information — a chart, a poster,
+   * a grid of icons — never for a photograph. The stage flexes from 4:3 to 21:9,
+   * so a covered 5:3 diagram loses a whole column on a narrow projector and a
+   * whole row on a wide one, and it does it silently.
+   */
+  fit?: "cover" | "contain";
 }
 
 export interface PhotoGridSlide extends SlideBase {
@@ -234,6 +246,8 @@ export interface QrCtaSlide extends SlideBase {
   lead?: string;
   points?: string[];
   qr: QrBlock;
+  /** Mark of the organisation whose problem or programme this slide presents. */
+  logo?: DeckLogo;
 }
 
 export interface ContactSlide extends SlideBase {

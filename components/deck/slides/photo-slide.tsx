@@ -25,6 +25,42 @@ export function PhotoSlideLayout({ slide }: { slide: PhotoSlide }) {
   const overlay = slide.overlay ?? "gradient";
   const hasCopy = Boolean(slide.title || slide.lead || slide.eyebrow);
 
+  /*
+   * THE DIAGRAM CASE. An image that carries information rather than feeling is
+   * stacked under its heading inside the safe area, not bled off the edges: the
+   * stage is 4:3 to 21:9, and covering a 5:3 grid of seventeen icons drops a
+   * column on one and a row on the other with nothing on screen to say so. No
+   * overlay either — a scrim over a white diagram is just a grey diagram.
+   */
+  if (slide.fit === "contain") {
+    return (
+      <div className="deck-safe">
+        <div
+          className="deck-content grid flex-1"
+          style={{
+            gap: "var(--deck-gap-md)",
+            /* `minmax(0, …)` on the image row is load-bearing: an `auto` row
+               sizes to the image's intrinsic height and the percentage cap on
+               the child then constrains nothing. */
+            gridTemplateRows: hasCopy ? "auto minmax(0, 1fr)" : "minmax(0, 1fr)",
+          }}
+        >
+          {hasCopy && (
+            <div className="flex flex-col" style={{ gap: "var(--deck-gap-xs)" }}>
+              {slide.eyebrow && <p className="deck-kicker">{slide.eyebrow}</p>}
+              {slide.title && <h2 className="deck-title">{slide.title}</h2>}
+              {slide.lead && <p className="deck-lead">{slide.lead}</p>}
+            </div>
+          )}
+
+          <div className="grid" style={{ placeItems: "center", minBlockSize: 0 }}>
+            <DeckImage image={slide.image} fit="contain" priority />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="deck-plate deck-full-colour">
