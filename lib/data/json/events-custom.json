@@ -1309,7 +1309,7 @@
                 "company": "AI for X & X-Bot Games",
                 "bio": "Rach Monks is the founder of AI for X and X-Bot Games. She brings 20+ years of commercial, marketing, sales and leadership experience to AI adoption, from global brand work with Disney and Campbell's to scaling startups and building businesses pre-AI. Now deeply enmeshed in the AI industry, through her consultancy — AI for X — she helps SMEs move from no, little or scattered AI use to practical, trusted AI systems that improve capability, consistency and ROI without losing taste, judgement or brand character.\n\nX-Bot Games is set to provide AI practitioners a layer of demonstrable proof of their skills. A global AI competition where participants compete and are judged on their solutions to business briefs by top industry professionals, as a way to separate the doers from the sayers.\n\nRegardless of the business, her work is grounded in trust, rigorous documentation, continual learning, commercial realism and human judgement amplified by AI.",
                 "image": "/img/events/aotearoa-ai-hackathon-festival-2026-rach-monks.jpg",
-                "linkedin": ""
+                "linkedin": "https://www.linkedin.com/in/rachelmonks/"
               }
             ]
           },
@@ -1322,7 +1322,7 @@
                 "company": "Fisher & Paykel Healthcare",
                 "bio": "Nicholas Fourie was appointed Vice President – Information & Communication Technology in February 2017. Nicholas has been with Fisher & Paykel Healthcare since 2007, and in that time has held various systems engineering and management roles.\n\nAdditionally, Nicholas also served as a member on the Computer and Mathematical Sciences Industry Advisory Board for Auckland University of Technology (AUT). Prior to joining Fisher & Paykel Healthcare, he worked for the South African division of BHP Billiton. Nicholas holds a Diploma in Computer Engineering from Damelin School of Information Technology in South Africa.\n\nNicholas regularly features in the CIO50 New Zealand Top Award Winners. In 2023 he was the winner of this prestigious award and was ranked number one.",
                 "image": "/img/events/aotearoa-ai-hackathon-festival-2026-nicholas-fourie.jpg",
-                "linkedin": ""
+                "linkedin": "https://www.linkedin.com/in/nicholasfourie/"
               },
               {
                 "name": "Dr. Mahsa Mohaghegh (McCauley)",
@@ -1330,15 +1330,15 @@
                 "company": "AUT",
                 "bio": "Dr. Mahsa McCauley is a globally recognised leader in artificial intelligence. She serves as Associate Professor and Head of Computer and Information Sciences at Auckland University of Technology (AUT). She is also the Communication and Information Commissioner for the New Zealand National Commission for UNESCO, and chairs AI Forum NZ, helping shape national and international AI policy.\n\nDr. McCauley is a Fulbright Scholar and has been a finalist for New Zealander of the Year. She has authored over 80 publications and supervised over 70 research projects in areas such as AI, machine learning, cybersecurity, and natural language processing. In addition, she founded She Sharp, a nonprofit organisation empowering thousands of women in technology.",
                 "image": "/img/events/aotearoa-ai-hackathon-festival-2026-mahsa-mohaghegh.jpg",
-                "linkedin": ""
+                "linkedin": "https://www.linkedin.com/in/mahsamohaghegh/"
               },
               {
                 "name": "Abby Dowd",
-                "title": "Senior Director — AI Strategy and Transformation",
+                "title": "Director — AI Strategy and Transformation",
                 "company": "AUT",
                 "bio": "Abby is a technologist who has been building software since the late 1990s, through engineering roles at Symantec and WhereScape, where he was VP Engineering, and technical leadership at Auckland University of Technology as Deputy CTO and Acting CIO.\n\nHe now leads AI strategy and transformation at AUT and heads its AI Acceleration Centre, setting the AI Futures strategy and acting as a catalyst for AI across the university. He stays close to the technology and keeps up with where AI is heading, which keeps his strategy grounded in what actually works.",
                 "image": "/img/events/aotearoa-ai-hackathon-festival-2026-abby-dowd.jpg",
-                "linkedin": ""
+                "linkedin": "https://www.linkedin.com/in/abby-dowd-20b0791/"
               },
               {
                 "name": "Ming Cheuk",
@@ -1346,7 +1346,7 @@
                 "company": "ElementX",
                 "bio": "Ming Cheuk is the CTO and co-founder of ElementX. Ming bridges technical depth to real-world impact with secure, scalable AI solutions, drawing from his PhD research in the past and work with enterprises today.",
                 "image": "/img/events/aotearoa-ai-hackathon-festival-2026-ming-cheuk.jpg",
-                "linkedin": ""
+                "linkedin": "https://www.linkedin.com/in/mingcheuk/"
               }
             ]
           },
@@ -2032,18 +2032,26 @@
               {
                 "name": "Keryn McKenzie",
                 "title": "Senior Director – Data & AI",
-                "company": "",
+                "company": "Les Mills International",
                 "bio": "Keryn McKenzie has spent much of a career exploring how data and technology can help solve real-world problems. Curious about the opportunities created by AI, Keryn enjoys turning complex ideas into practical outcomes and helping organisations navigate change in an increasingly digital world.",
                 "image": "/img/events/event-lesmills-03-september-2026-keryn-mckenzie.jpg",
-                "linkedin": ""
+                "linkedin": "https://www.linkedin.com/in/keryn-mckenzie-714b9554/"
+              },
+              {
+                "name": "Carolina Lobos",
+                "title": "Head of Finance",
+                "company": "Les Mills International",
+                "bio": "",
+                "image": "",
+                "linkedin": "https://www.linkedin.com/in/carolinalobos19/"
               },
               {
                 "name": "Ben Sullivan",
                 "title": "Legal Counsel",
-                "company": "Les Mills",
+                "company": "Les Mills International",
                 "bio": "Ben is an attorney and intellectual property specialist, providing strategic and commercial legal support with a focus on product innovation, brand and content protection, and anti-piracy. Before joining Les Mills, Ben practised at leading IP law firms in New Zealand and Hong Kong, advising clients on brand strategy, copyright, advertising, consumer law, and IP disputes.",
                 "image": "/img/events/event-lesmills-03-september-2026-ben-sullivan.jpg",
-                "linkedin": ""
+                "linkedin": "https://www.linkedin.com/in/ben-sullivan-76937b4a/"
               },
               {
                 "name": "Gemma Lynskey",
@@ -2051,7 +2059,7 @@
                 "company": "Les Mills International",
                 "bio": "Gemma Lynskey is the Global Comms + Organisational Development Director at Les Mills International. Equal parts communications strategist, culture builder, and AI enthusiast. Gemma's background spans internal communications, organisational development, leadership and change management. She is passionate about helping people and the business navigate change while building a culture people genuinely want to be part of.",
                 "image": "/img/events/event-lesmills-03-september-2026-gemma-lynskey.jpg",
-                "linkedin": ""
+                "linkedin": "https://www.linkedin.com/in/gemma-lynskey-60413028/"
               }
             ]
           }
