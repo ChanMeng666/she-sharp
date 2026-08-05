@@ -32,6 +32,7 @@ import {
   buildOpeningSlides,
   type KarakiaText,
 } from "../boilerplate";
+import { DEFAULT_CLOSING_KARAKIA, DEFAULT_OPENING_KARAKIA } from "../karakia";
 import type { Deck, DeckImage, DeckLogo, QrBlock, Slide } from "../types";
 import { insertAfter, parseTimedLines } from "../utils";
 import { pickWallTiles } from "../wall-tiles";
@@ -76,46 +77,13 @@ function shortenLabels(
 }
 
 // --- Karakia ---------------------------------------------------------------
-// Supplied by the client, verbatim. Macrons are as received; do not "correct"
-// them and do not paraphrase the translation.
+// This event uses She Sharp's standing karakia, which is where they came from
+// in the first place — the client supplied them for this deck and they now
+// live in `../karakia` as the organisational default. An event whose host
+// reads something else replaces these two consts and nothing more.
 
-const OPENING_KARAKIA: KarakiaText = {
-  teReo: [
-    "Kia hora te marino",
-    "Kia whakapapa pounamu te moana",
-    "Hei huarahi mā tātou i te rangi nei",
-    "Aroha atu, aroha mai",
-    "Tātou i ā tātou katoa",
-    "Hui e, taiki e!",
-  ],
-  english: [
-    "May peace be widespread",
-    "May the sea be like greenstone",
-    "A pathway for us all this day",
-    "Let us show respect for each other",
-    "For one another",
-    "Bind us all together",
-  ],
-};
-
-const CLOSING_KARAKIA: KarakiaText = {
-  teReo: [
-    "Kia tau te manaakitanga",
-    "Ki runga ki tena ki tena o tatau",
-    "Kia piki te ora",
-    "Kia piki te maramatanga",
-    "Kia hoki pai atu, kia hoki pai mai",
-    "Haumi e, Hui e, Taiki E",
-  ],
-  // The client supplied the English as one run-on uppercase line; split into
-  // four spoken lines and set in sentence case so it reads at 44px.
-  english: [
-    "Settle the care and protection upon each of us",
-    "May the health and understanding grow",
-    "Return well to others and yourselves",
-    "Join together, gather together, bind as one",
-  ],
-};
+const OPENING_KARAKIA: KarakiaText = DEFAULT_OPENING_KARAKIA;
+const CLOSING_KARAKIA: KarakiaText = DEFAULT_CLOSING_KARAKIA;
 
 // --- Shared assets ---------------------------------------------------------
 

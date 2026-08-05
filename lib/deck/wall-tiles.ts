@@ -20,6 +20,9 @@
  * 47–150 so no single tile blows out or dies under the duotone.
  * Every path is checked by scripts/verify-image-paths.ts in CI.
  */
+
+import type { DeckImage } from "./types";
+
 export const wallTiles: string[] = [
   "/img/wall/about-1.webp",
   "/img/wall/about-3.webp",
@@ -156,4 +159,21 @@ export function pickWallTiles(count: number, offset = 0): string[] {
     out.push(wallTiles[(offset + i * step) % wallTiles.length]);
   }
   return out.slice(0, count);
+}
+
+/**
+ * One archive frame, for a chapter divider or a closing plate.
+ *
+ * These are 520px renditions chosen to work as texture, so a single one carries
+ * a full-frame slide only behind a scrim or a duotone. Where an event has a
+ * photograph of its own, use that instead — this is the fallback for an event
+ * that has not happened yet, which is every event a deck is built for.
+ */
+export function archiveFrame(offset = 0): DeckImage {
+  const [src] = pickWallTiles(1, offset);
+  return {
+    src,
+    alt: "A room of She Sharp attendees, from twelve years of the archive.",
+    focus: "50% 40%",
+  };
 }
