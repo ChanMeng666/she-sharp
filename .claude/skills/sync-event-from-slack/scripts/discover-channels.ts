@@ -52,6 +52,7 @@ import {
   loadPublishedEvents,
   parseEventDateMs,
   SIGNAL_THRESHOLD,
+  threadHasUnread,
   type ChannelType,
   type Mapping,
   type PublishedEvent,
@@ -67,6 +68,24 @@ const skipDms = flags.has("--no-dms");
 // Quiet conversations have their read position recorded by default, which is
 // what keeps the next run a true delta. `--no-record` inspects without writing.
 const skipRecord = flags.has("--no-record");
+
+/**
+ * How many grown threads one channel's peek will open to score for signal.
+ *
+ * Triage only has to prove a channel is worth opening; `fetch-channel.ts` reads
+ * the rest. Uncapped, a busy channel where every thread moved would cost a call
+ * per thread across 220 conversations.
+ */
+const GROWN_THREAD_PEEK_CAP = 8;
+
+/** A thread carrying replies the manifest has no record of anyone reading. */
+interface GrownThread {
+  ts: string;
+  /** Latest reply already recorded as read; undefined when never seen at all. */
+  sinceReplyTs?: string;
+  replyCount: number;
+  latestReplyTs: string;
+}
 
 interface SlackChannel {
   id: string;
@@ -112,9 +131,20 @@ async function listChannels(): Promise<SlackChannel[]> {
 }
 
 /** Messages strictly newer than `oldest` (exclusive). Returns text + file flag. */
+/**
+ * New content since the watermark: top-level messages, plus the unread replies
+ * on any thread that grew.
+ *
+ * The reply pass is not decoration. Signal scoring is what decides whether a
+ * general channel or a DM is worth a human's attention, and it used to see
+ * top-level text only — so a channel whose entire event conversation happened
+ * inside one thread scored zero and stayed hidden. `grown` is already bounded
+ * by the caller's peek, so this costs one extra call per grown thread.
+ */
 async function newMessagesSince(
   channelId: string,
   oldest: string | undefined,
+  grown: GrownThread[] = [],
   cap = 60,
 ): Promise<{ count: number; texts: string[]; hasImage: boolean; latestTs: string }> {
   const texts: string[] = [];
@@ -144,6 +174,24 @@ async function newMessagesSince(
   } catch {
     /* not_in_channel etc. — treated as no readable content */
   }
+
+  // The unread tail of every thread that grew. A reply never moves its parent,
+  // so none of these can have been picked up by the loop above.
+  for (const t of grown) {
+    try {
+      const r = await slack.conversations.replies({ channel: channelId, ts: t.ts, limit: 200 });
+      for (const m of (r.messages ?? []) as any[]) {
+        if (m.ts === t.ts) continue;
+        if (t.sinceReplyTs && Number(m.ts) <= Number(t.sinceReplyTs)) continue;
+        count++;
+        if (m.text) texts.push(m.text);
+        if ((m.files ?? []).some((f: any) => /^image\//.test(f.mimetype ?? ""))) hasImage = true;
+      }
+    } catch {
+      /* thread_not_found — the parent may have been deleted */
+    }
+  }
+
   return { count, texts, hasImage, latestTs };
 }
 
@@ -195,6 +243,10 @@ interface Row {
   signalScore: number;
   signalHits: string[];
   evidence: string;
+  /** New content is thread replies only — no parent moved, so no ts changed. */
+  repliesOnly: boolean;
+  /** Grown threads this run actually read. Only quiet rows record them. */
+  grownThreads: GrownThread[];
   fingerprintStale: boolean;
   staleStatus: string; // non-empty when a mapped event's date has passed but status is still future
   published: { slug: string; score: number; source: string; custom: boolean } | null;
@@ -224,6 +276,10 @@ function decideAction(r: Row): string {
     // mapped to an event
     if (r.fingerprintStale) return "fingerprint-stale (event edited)";
     if (r.staleStatus) return `stale-status (${r.staleStatus})`;
+    // Say WHY when nothing at the top level moved. A reader who checks Slack
+    // by eye will see no new message in the channel and conclude the table is
+    // wrong, unless it tells them the new content is inside a thread.
+    if (r.repliesOnly) return "incremental (thread replies)";
     return r.hasNew ? "incremental" : "no-op";
   }
   // general + dm — scanned for event signal, never auto-created from.
@@ -292,32 +348,78 @@ async function main() {
     let signalHits: string[] = [];
     let evidence = "";
     let latestTs = watermark ?? "0";
+    let repliesOnly = false;
+    let grownThreads: GrownThread[] = [];
 
     // Read history wherever it is actually reachable. On a user token that
     // includes public channels nobody joined — membership is not the gate.
     if (c.readable) {
-      // Cheap 1-message peek first: a quiet channel costs a single API call.
+      /*
+       * ONE PAGE, NOT ONE MESSAGE — BECAUSE A REPLY DOES NOT MOVE ITS PARENT.
+       *
+       * This peeked at `limit: 1` and compared the newest top-level ts against
+       * the watermark. Slack does not bump a parent's `ts` when someone replies
+       * to it, so a channel whose only new activity is thread replies looked
+       * identical to a dead one: reported quiet, hidden behind `--all`, and its
+       * read position advanced on the way past.
+       *
+       * That is how the event owner's thirteen-item review of the hackathon deck
+       * sat unread for a day. It surfaced only because that channel happened to
+       * also have a new top-level message; a channel with replies alone would
+       * never have appeared in the table at all.
+       *
+       * A page of 200 costs the same one call and carries `reply_count` and
+       * `latest_reply` for every parent on it, which is an exact comparison
+       * against what the manifest says was read. Threads older than 200 parents
+       * back are still out of view here — `fetch-channel.ts --state` walks the
+       * whole history and is the backstop for those.
+       */
       let peek = "0";
+      const grown: GrownThread[] = [];
       try {
-        const r = await slack.conversations.history({ channel: c.id, limit: 1 });
-        peek = (r.messages?.[0] as any)?.ts ?? "0";
+        const r = await slack.conversations.history({ channel: c.id, limit: 200 });
+        const page = (r.messages ?? []) as any[];
+        peek = page[0]?.ts ?? "0";
+        const knownThreads = cs?.threads ?? {};
+        for (const m of page) {
+          const known = knownThreads[m.ts];
+          if (threadHasUnread(m, known)) {
+            // Bounded: a channel with a hundred live threads should cost a
+            // handful of calls here, not a hundred. The per-channel fetch reads
+            // the rest — this only has to prove the channel is worth opening.
+            if (grown.length < GROWN_THREAD_PEEK_CAP) {
+              grown.push({
+                ts: m.ts,
+                sinceReplyTs: known?.latestReplyTs,
+                replyCount: m.reply_count,
+                latestReplyTs: m.latest_reply ?? m.ts,
+              });
+            }
+          }
+        }
       } catch {
         /* not_in_channel etc. */
       }
       latestTs = peek;
       const hasWatermark = !!watermark && watermark !== "0";
       const newByTs = !hasWatermark || Number(peek) > Number(watermark);
+      const threadGrew = grown.length > 0;
+      grownThreads = grown;
+      // A grown thread counts as new even when no parent moved. Recorded on the
+      // row so the table can say WHY a channel with no new top-level message is
+      // asking for attention.
+      repliesOnly = threadGrew && !newByTs;
 
-      if (newByTs) {
+      if (newByTs || threadGrew) {
         // Only pull bodies when something is actually new. Mapped events don't
         // need bodies here (the per-channel sync reads the delta); general and
         // unmapped channels do, to count + score for event signals.
         const mappedEvent = mapping?.kind === "event" || mapping?.kind === "skip";
         const needBodies = isSignalScanned(type) || !mappedEvent;
         if (needBodies) {
-          const res = await newMessagesSince(c.id, watermark);
+          const res = await newMessagesSince(c.id, watermark, grown);
           newCount = res.count;
-          hasNew = res.count > 0;
+          hasNew = res.count > 0 || threadGrew;
           if (Number(res.latestTs) > Number(latestTs)) latestTs = res.latestTs;
           if (isSignalScanned(type) && res.texts.length) {
             const sig = detectEventSignal(res.texts);
@@ -373,6 +475,8 @@ async function main() {
       signalScore,
       signalHits,
       evidence,
+      repliesOnly,
+      grownThreads,
       fingerprintStale,
       staleStatus,
       published: published_match,
@@ -409,13 +513,32 @@ async function main() {
       const prev = manifest2.channels[r.id];
       const ts = r.latestTs && r.latestTs !== "0" ? r.latestTs : prev?.watermarkTs ?? "0";
       if (ts === "0") continue;
-      if (prev && prev.watermarkTs === ts) continue;
+      /*
+       * Thread replies this run READ and scored as nothing to act on.
+       *
+       * Same rule as the watermark, and it has to be: without it a grown thread
+       * on a settled channel is re-fetched and re-scored on every run forever,
+       * because nothing else ever records it. Only quiet rows reach here — an
+       * actionable row keeps its threads untouched so the per-channel fetch
+       * still sees them as unread.
+       *
+       * Note the asymmetry with `fetch-channel.ts`, which records only what it
+       * DELIVERED to the model. Triage records what it SCORED. That is a
+       * weaker guarantee, and it is the reason SKILL.md says a quiet DM is not
+       * the same as a DM the model has read.
+       */
+      const threads = { ...(prev?.threads ?? {}) };
+      for (const t of r.grownThreads) {
+        threads[t.ts] = { replyCount: t.replyCount, latestReplyTs: t.latestReplyTs };
+      }
+      const threadsChanged = r.grownThreads.length > 0;
+      if (prev && prev.watermarkTs === ts && !threadsChanged) continue;
       manifest2.channels[r.id] = {
         name: r.name,
         type: r.type,
         mapping: prev?.mapping ?? { kind: "none" },
         watermarkTs: ts,
-        threads: prev?.threads ?? {},
+        threads,
         fingerprint: prev?.fingerprint ?? "",
         lastSyncedAt: nowIso(),
         lastSyncedCommit: prev?.lastSyncedCommit ?? "",

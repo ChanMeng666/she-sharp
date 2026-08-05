@@ -37,6 +37,15 @@ jobs:
       - name: Verify shared hackathon facts
         run: npx tsx scripts/check-hackathon-facts.ts
 
+      # Also shares this checkout — it is pure data and offline. It guards the
+      # rules that decide which Slack messages count as unread. Getting those
+      # wrong does not fail loudly: it silently hands the model a short delta
+      # and, worse, records the messages it skipped as read, so the next run has
+      # nothing left to find. That happened on 4 Aug 2026 and cost an event
+      # owner's entire review of a deck due on a projector three days later.
+      - name: Verify Slack read-position rules
+        run: npx tsx .claude/skills/sync-event-from-slack/scripts/state-lib.test.ts
+
   typecheck-scripts:
     # `scripts/` is excluded from the root tsconfig and `.claude/**` is missed by
     # its `**/*.ts` glob (dot-directories don't match), so neither tree was
