@@ -14,15 +14,12 @@
  *   { "path": "...", "bytes": 109610, "mimetype": "image/jpeg" }
  */
 
-import "dotenv/config";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
+import { TOKEN as token } from "./slack-client";
 
-const token = process.env.SLACK_BOT_TOKEN;
-if (!token) {
-  console.error("SLACK_BOT_TOKEN is not set in .env");
-  process.exit(1);
-}
+// Files shared in a DM or an uninvited private channel are only fetchable with
+// the user token — the same resolution the API calls use applies here.
 const [, , url, target] = process.argv;
 if (!url || !target) {
   console.error("Usage: download-file.ts <url_private> <target_path>");

@@ -10,10 +10,42 @@ up-to-date entry in `lib/data/json/events-custom.json` plus all the
 event's image assets under `public/img/events/` — with no manual
 download-and-rename work from the developer.
 
-It uses the **She Sharp Event Collector** bot (read-only). The Collector
-token is already in `.env` and has the scopes needed: `channels:history`,
-`channels:read`, `channels:join`, `groups:history`, `groups:read`,
-`files:read`, `users:read`, `pins:read`, `bookmarks:read`.
+It uses the **She Sharp Event Collector** app (read-only), which has two
+tokens in `.env`. Which one is present decides what the skill can see, and
+`scripts/slack-client.ts` picks the wider one automatically.
+
+| | `SLACK_BOT_TOKEN` (`xoxb-`) | `SLACK_USER_TOKEN` (`xoxp-`, optional) |
+|---|---|---|
+| Public channels | joined ones (`--join` self-joins) | all you can see |
+| Private channels | **only where the bot was `/invite`d** | **every one you are in** |
+| DMs / group DMs | **never** | **all of yours** |
+| Threads, pins, bookmarks, files | yes | yes |
+
+Bot scopes: `channels:history`, `channels:read`, `channels:join`,
+`groups:history`, `groups:read`, `files:read`, `users:read`, `pins:read`,
+`bookmarks:read`. User scopes (when installed): the same read set plus
+`im:history`, `im:read`, `mpim:history`, `mpim:read`, `search:read`.
+
+**Two blind spots survive even with the user token — do not promise otherwise:**
+
+1. **DMs between two other people.** Requires Slack's Discovery API, which is
+   **Enterprise Grid only**; this workspace is not Grid (`is_enterprise_install:
+   false`). No combination of scopes reaches it.
+2. **Private channels nobody with a token is in.** A human must `/invite
+   @She Sharp Event Collector` — `channels:join` works on public channels only,
+   and `conversations.join` rejects private ones outright.
+
+Threads have never been a blind spot: `fetch-channel.ts` expands every parent
+via `conversations.replies` and tracks per-thread `replyCount`/`latestReplyTs`,
+which is how a late reply on an old thread is caught even though it does not
+move the top-level watermark.
+
+**DMs are in the default scan.** Discovery enumerates `im`/`mpim` alongside
+channels and scores them for event signal like any general channel; they appear
+as type `dm`, named `dm:<person>`. Pass `--no-dms` to skip them for one run.
+Address one with `fetch-channel.ts 'dm:Nikita Kumari'` or `@Nikita Kumari`.
+Treat DM bodies as sensitive: they routinely carry PII, HR and pay matters that
+no event page should ever quote.
 
 The skill keeps a committed **memory** at `state/sync-state.json` so it knows
 what it already read, links each channel to its event(s) (slugs differ from
@@ -73,7 +105,10 @@ out and rotated at its source.
 ## Prerequisites you must verify before doing anything
 
 1. Working directory is the repo root (contains `lib/data/json/events-custom.json`).
-2. `.env` contains `SLACK_BOT_TOKEN`. If not, stop and tell the user.
+2. `.env` contains `SLACK_BOT_TOKEN` (and optionally the wider
+   `SLACK_USER_TOKEN`). If neither, stop and tell the user. Every script
+   prints which identity it read as on stderr — check it before concluding
+   a channel or DM "has nothing", since a bot token silently sees less.
 3. `@slack/web-api` + `dotenv` are in `package.json`. These are pre-existing
    dependencies; absence means the user is in the wrong project.
 4. `mammoth` in `devDependencies` is optional — if absent, `.docx` extraction
