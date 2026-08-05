@@ -3,25 +3,43 @@
  *
  * Usage:
  *   npx tsx scripts/deck/new-deck.ts <event-slug>
+ *   npx tsx scripts/deck/new-deck.ts <event-slug> --template minimal
  *   npx tsx scripts/deck/new-deck.ts <event-slug> --force
  *
- * Writes `lib/deck/decks/<slug>.ts` with the opening and closing sequences
- * already wired up and the title, date, venue and partner logos filled in from
- * `lib/data/json/events-custom.json`. The event-specific middle is left as
- * clearly marked TODO blocks — that part is a judgement call about what the
- * room needs to see, and generating a guess would only be edited back out.
+ * Writes `lib/deck/decks/<slug>.ts` and registers it. The default `evening`
+ * template fills the middle from the event's own data — run sheet, speakers,
+ * hosts, the length of the break — so what comes out is a deck that can be
+ * projected, not a file of TODOs. The organiser's job becomes deleting the
+ * blocks their event does not have and saying what the host should say, which
+ * is work only a person can do.
  *
- * Refuses to overwrite an existing deck unless `--force` is passed: a deck is
- * hand-written content, and losing an afternoon of copy to a re-run is not a
- * recoverable mistake.
+ * Facts are written as **live expressions**, never as copied values:
+ * `items: RUN_SHEET_ROWS`, not a pasted array of times. Correct a speaker's
+ * job title in `events-custom.json` and the website and the projector change
+ * together. That is the whole point — the event data is the single source of
+ * truth and everything else is a view of it.
+ *
+ * Refuses to overwrite an existing deck unless `--force` is passed: a deck
+ * carries hand-written copy, and losing an afternoon of it to a re-run is not
+ * a recoverable mistake.
  */
 
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-import { getEventBySlug } from "@/lib/data/events";
-import { COPY_LIMITS } from "@/lib/deck/lint";
+import {
+  deckMetaFrom,
+  deckSubtitleFrom,
+  deckTitleFrom,
+  loadEventForDeck,
+} from "@/lib/deck/event-source";
+import {
+  type EveningPlan,
+  planEveningEvent,
+} from "@/lib/deck/templates/evening-event";
 import type { EventV3 } from "@/types/event";
+
+import { syncRegistry } from "./sync-registry";
 
 const DECKS_DIR = join(process.cwd(), "lib", "deck", "decks");
 
@@ -39,72 +57,90 @@ function exportName(slug: string): string {
   return `${camel}Deck`;
 }
 
-/** Trims to at most `max` words, dropping any dangling punctuation. */
-function truncateWords(text: string, max: number): string {
-  const parts = text.trim().split(/\s+/).filter(Boolean);
-  if (parts.length <= max) return text.trim();
-  return parts.slice(0, max).join(" ").replace(/[,;:—–-]+$/, "");
-}
-
-/**
- * A title short enough to be a slide headline.
- *
- * Event titles carry the host and the partners ("… — AUT City Campus, hosted
- * with …"); a slide headline carries the event. Cuts at the first dash, then
- * clamps to the title-word limit.
- */
-function slideTitle(event: EventV3): { title: string; wasCut: boolean } {
-  const head = event.title.split(/\s+[—–-]\s+/)[0].split(",")[0].trim();
-  const title = truncateWords(head, COPY_LIMITS.titleWords);
-  return { title, wasCut: title !== event.title.trim() };
-}
-
-/** Up to three facts for under the headline: the date, the venue, the city. */
-function titleMeta(event: EventV3): string[] {
-  const location = event.detailPageData.location;
-  return [
-    event.detailPageData.time || event.date,
-    location?.venueName,
-    location?.city,
-  ]
-    .filter((value): value is string => !!value && value.trim().length > 0)
-    .slice(0, COPY_LIMITS.titleMetaMax);
-}
-
 /** Renders a value as a TypeScript source literal. */
 function literal(value: unknown): string {
   return JSON.stringify(value);
 }
 
-function template(event: EventV3): string {
-  const slug = event.slug;
-  const { title, wasCut } = slideTitle(event);
-  const meta = titleMeta(event);
-  const partners = event.detailPageData.sponsors?.main ?? [];
-  const sectionCount = event.detailPageData.specialSections?.length ?? 0;
+/** Wraps `text` as an indented block comment above a slide fragment. */
+function comment(text: string, indent = "    "): string {
+  const words = text.split(/\s+/);
+  const lines: string[] = [];
+  let line = "";
+  for (const word of words) {
+    if ((line + " " + word).trim().length > 72) {
+      lines.push(line.trim());
+      line = word;
+    } else {
+      line = `${line} ${word}`;
+    }
+  }
+  if (line.trim()) lines.push(line.trim());
 
-  const partnerLines = partners
-    .map(
-      (sponsor) =>
-        `  { name: ${literal(sponsor.name)}, logo: ${literal(sponsor.logo)} },`,
+  return [
+    `${indent}/*`,
+    ...lines.map((entry) => `${indent} * ${entry}`),
+    `${indent} */`,
+  ].join("\n");
+}
+
+function template(event: EventV3, plan: EveningPlan): string {
+  const slug = event.slug;
+  const title = deckTitleFrom(event);
+  const subtitle = deckSubtitleFrom(event);
+  const meta = deckMetaFrom(event);
+  const shortened = title !== event.title.trim();
+
+  const slides = plan.slides
+    .map((planned) =>
+      planned.why
+        ? `${comment(planned.why)}\n${planned.source}`
+        : planned.source,
     )
-    .join("\n");
+    .join(",\n\n");
+
+  /*
+   * The fragments declare what they need; the deck body around them needs the
+   * title, meta and (when there is one) the subtitle regardless.
+   */
+  const imports = [
+    ...new Set([
+      ...plan.sourceImports,
+      "deckMetaFrom",
+      "deckTitleFrom",
+      ...(subtitle ? ["deckSubtitleFrom"] : []),
+    ]),
+  ]
+    .sort()
+    .join(",\n  ");
 
   return `/**
  * Deck: ${event.title}
  *
- * Generated by \`scripts/deck/new-deck.ts\`. Facts come from
- * \`lib/data/json/events-custom.json\` (${sectionCount} specialSections available).
+ * Scaffolded by \`scripts/deck/new-deck.ts\` from the event's own entry in
+ * \`lib/data/json/events-custom.json\`.
  *
- * Next steps, in order:
- *   1. Fill in the karakia below — ask the host, do not guess the text.
- *   2. Replace the TODO block with this event's own slides.
- *   3. Register the deck in \`lib/deck/registry.ts\`.
- *   4. Run \`npx tsx scripts/deck/lint-deck.ts ${slug}\`.
+ * **Every fact on these slides is read from the event data at build time.** The
+ * speakers, the run-sheet times, the partner logos, the title and the venue are
+ * expressions, not copies — so the way to correct any of them is to edit the
+ * event in \`events-custom.json\`, where the public event page reads them from
+ * too. Editing a name into this file instead is how the website and the
+ * projector come to disagree.
  *
- * Long-form material — biographies, rules, terms, full venue lists — belongs on
- * the event page, which the "Stay Connected" QR reaches in one scan. Keep it
- * off the projector.
+ * What belongs in this file, and nowhere else: the accent colour, the chosen
+ * photographs, the kicker on each slide, and the host note that says what to
+ * say. Regenerate when the event gains or loses a whole block — a new speaker
+ * group, a run sheet where there was none. Editing a fact needs no regeneration.
+ *
+ * Next:
+ *   1. Delete the blocks tonight does not have. Everything here is optional
+ *      except the closing photograph — see the comment on it.
+ *   2. Replace every PLACEHOLDER note with what the host will actually say.
+ *   3. Take the accent from the event poster.
+ *   4. \`npx tsx scripts/deck/lint-deck.ts ${slug}\`
+ *
+ * Long-form material — biographies, terms, full venue lists — belongs on the
+ * event page, which the closing QR reaches in one scan. Keep it off the wall.
  */
 
 import {
@@ -112,24 +148,28 @@ import {
   buildOpeningSlides,
   type KarakiaText,
 } from "../boilerplate";
-import type { Deck, DeckLogo, QrBlock } from "../types";
+import {
+  ${imports},
+} from "../event-source";
+import { DEFAULT_CLOSING_KARAKIA, DEFAULT_OPENING_KARAKIA } from "../karakia";
+import type { Deck, DeckImage, QrBlock } from "../types";
+import { archiveFrame } from "../wall-tiles";
 
 const EVENT_SLUG = ${literal(slug)};
 
-// TODO: the karakia the host will read. Both arrays are required, one entry per
-// spoken line, and the English is the translation of the te reo above it.
-const OPENING_KARAKIA: KarakiaText = {
-  teReo: ["TODO: opening karakia, line one"],
-  english: ["TODO: English translation, line one"],
-};
+const event = loadEventForDeck(EVENT_SLUG);
 
-const CLOSING_KARAKIA: KarakiaText = {
-  teReo: ["TODO: closing karakia, line one"],
-  english: ["TODO: English translation, line one"],
-};
+/* She Sharp's standing karakia. Read them back to whoever is opening the
+   evening — a venue with its own mihi replaces these two lines. */
+const OPENING_KARAKIA: KarakiaText = DEFAULT_OPENING_KARAKIA;
+const CLOSING_KARAKIA: KarakiaText = DEFAULT_CLOSING_KARAKIA;
 
-/* Codes are drawn from these URLs in the browser — change a link here and the
-   code changes with it. */
+${plan.preamble.join("\n")}
+
+/* Codes are drawn from these URLs in the browser, so a link change here is the
+   only edit a code ever needs. The feedback and ambassador codes are not here:
+   the ambassador form is the same at every event and the feedback code is
+   derived from EVENT_SLUG, so buildClosingSlides() supplies both. */
 
 const WEBSITE_QR: QrBlock = {
   url: "https://www.shesharp.org.nz",
@@ -143,22 +183,15 @@ const EVENTS_QR: QrBlock = {
   caption: "shesharp.org.nz/events",
 };
 
-/* Neither the ambassador nor the feedback code is defined here. The ambassador
-   intake form is the same for every event, and the feedback code is derived
-   from \`EVENT_SLUG\`, so \`buildClosingSlides()\` supplies both. */
-
-/** Pre-filled from the event's \`sponsors.main\`. */
-const PARTNER_LOGOS: DeckLogo[] = [
-${partnerLines || "  // TODO: this event has no sponsors.main in the event JSON."}
-];
-
 export const ${exportName(slug)}: Deck = {
   slug: EVENT_SLUG,
-  title: ${literal(title)},${wasCut ? `\n  // Shortened from: ${event.title}` : ""}
+  title: deckTitleFrom(event),${shortened ? `\n  // Shortened from: ${event.title}` : ""}${
+    subtitle ? `\n  subtitle: deckSubtitleFrom(event),` : ""
+  }
   eventSlug: EVENT_SLUG,
-  // TODO: take the accent from the event poster. \`onDark\` must be lighter than
-  // \`onLight\` — the brand purple scores 2.92:1 on the dark canvas and is
-  // unreadable there. \`accentFromBrandColour()\` in ../theme fixes luminance.
+  // TODO: take the accent from the event poster. \`onDark\` must be lighter
+  // than \`onLight\` — the brand purple scores 2.92:1 on the dark canvas and
+  // cannot be read there. \`accentFromBrandColour()\` in ../theme fixes it.
   theme: {
     accent: {
       onLight: "#9b2e83",
@@ -168,43 +201,25 @@ export const ${exportName(slug)}: Deck = {
   },
   slides: [
     ...buildOpeningSlides({
-      eventTitle: ${literal(title)},
-      eventMeta: ${literal(meta)},
-      partnerLogos: PARTNER_LOGOS,
+      eventTitle: deckTitleFrom(event),
+      eventMeta: deckMetaFrom(event),
+      partnerLogos: PARTNERS,
       karakia: OPENING_KARAKIA,
-      // TODO: venue-specific safety lines, e.g. where the assembly point is.
+      // TODO: venue-specific safety lines — where the assembly point is, which
+      // stairwell, who the warden is. The organisational defaults are already
+      // there; these are added to them.
       safetyExtras: [],
       contactQrs: [WEBSITE_QR, EVENTS_QR],
     }),
 
-    // ---------------------------------------------------------------------
-    // TODO: this event's own slides go here.
-    //
-    // Available slide types: agenda, bullets, break, contact, criteria, logos,
-    // people, photo, photo-grid, prizes, qr-cta, section, stats, themes.
-    //
-    // Run sheets: parseTimedLines() in ../utils turns the event JSON's
-    // "5:30–5:40pm — Event opening" lines straight into agenda rows.
-    //
-    // Every slide needs a unique kebab-case \`id\`, a \`section\` label, and a
-    // \`note\` telling the host what to say. Copy limits are enforced.
-    // ---------------------------------------------------------------------
-    {
-      id: "todo-first-slide",
-      type: "section",
-      section: "TODO: section name",
-      index: "02",
-      tone: "dark",
-      title: "TODO: first chapter",
-      note: "TODO: what the host says here.",
-    },
+${slides},
 
     ...buildClosingSlides({
-      thanksLogos: [{ label: "Hosts and sponsors", logos: PARTNER_LOGOS }],
-      // TODO: mentors, judges and volunteers to thank by name.
+      thanksLogos: [{ label: "Hosts and partners", logos: PARTNERS }],
+      // TODO: volunteers, facilitators and helpers to thank by name.
       thanksNames: [],
       // TODO: snapshot from getUpcomingEvents() at authoring time — never call
-      // it at render time, it is relative to today and would change the
+      // it at render time. It is relative to today, and would change the
       // projector content under the host.
       upcoming: [],
       // The feedback code is derived from the slug — nothing to paste.
@@ -216,42 +231,79 @@ export const ${exportName(slug)}: Deck = {
 `;
 }
 
+function reportNotes(plan: EveningPlan): void {
+  if (plan.notes.length === 0) return;
+
+  console.log("");
+  console.log("Read these back to the organiser before you show them anything:");
+  console.log("");
+
+  const labels: Record<string, string> = {
+    shortened: "SHORTENED",
+    dropped: "NOT SHOWN",
+    missing: "NOTHING TO SHOW",
+    confirm: "NEEDS AN ANSWER",
+  };
+
+  for (const note of plan.notes) {
+    console.log(`  ${(labels[note.kind] ?? note.kind).padEnd(16)} ${note.message}`);
+  }
+}
+
 function main(): void {
   const args = process.argv.slice(2);
   const force = args.includes("--force");
-  const slug = args.find((arg) => !arg.startsWith("--"));
+  const minimal = args.includes("--template")
+    ? args[args.indexOf("--template") + 1] === "minimal"
+    : false;
+  const slug = args.find(
+    (arg, index) => !arg.startsWith("--") && args[index - 1] !== "--template",
+  );
 
   if (!slug) {
-    console.error("Usage: npx tsx scripts/deck/new-deck.ts <event-slug> [--force]");
+    console.error(
+      "Usage: npx tsx scripts/deck/new-deck.ts <event-slug> [--template evening|minimal] [--force]",
+    );
     process.exit(1);
   }
 
-  const event = getEventBySlug(slug);
-  if (!event) {
-    console.error(`No event with slug "${slug}" in lib/data/json/events-custom.json.`);
-    console.error(
-      "Add the event first — the `sync-event-from-slack` skill puts it there.",
-    );
+  let event: EventV3;
+  try {
+    event = loadEventForDeck(slug);
+  } catch (error) {
+    console.error((error as Error).message);
     process.exit(1);
   }
 
   const target = join(DECKS_DIR, `${slug}.ts`);
   if (existsSync(target) && !force) {
-    console.error(`${target} already exists.`);
-    console.error("Pass --force to overwrite it, but read it first — deck copy is hand-written.");
+    console.error(`lib/deck/decks/${slug}.ts already exists.`);
+    console.error(
+      "Pass --force to overwrite it, but read it first — deck copy is hand-written.",
+    );
     process.exit(1);
   }
 
-  mkdirSync(dirname(target), { recursive: true });
-  writeFileSync(target, template(event), "utf8");
+  const plan = planEveningEvent({
+    event,
+    omit: minimal
+      ? (["host", "explore", "tables", "readouts"] as const)
+      : undefined,
+  });
 
-  console.log(`Wrote lib/deck/decks/${slug}.ts`);
+  mkdirSync(dirname(target), { recursive: true });
+  writeFileSync(target, template(event, plan), "utf8");
+
+  const { slugs } = syncRegistry();
+
+  console.log(
+    `Wrote lib/deck/decks/${slug}.ts — ${plan.slides.length} event slides ` +
+      `between the opening and closing sequences.`,
+  );
+  console.log(`Registered lib/deck/registry.ts (${slugs.length} deck(s)).`);
+  reportNotes(plan);
   console.log("");
-  console.log("Next:");
-  console.log(`  1. Register it — add to lib/deck/registry.ts:`);
-  console.log(`       import { ${exportName(slug)} } from "./decks/${slug}";`);
-  console.log(`       [${exportName(slug)}.slug]: ${exportName(slug)},`);
-  console.log(`  2. Check it — npx tsx scripts/deck/lint-deck.ts ${slug}`);
+  console.log(`Next: npx tsx scripts/deck/lint-deck.ts ${slug}`);
 }
 
 main();

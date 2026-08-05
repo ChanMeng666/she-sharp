@@ -263,36 +263,6 @@ venues, which is the only thing the wall is actually saying.
 - **Do not describe a wall as being from this event.** It never is. It is the
   whole archive, and that is what makes it worth showing.
 
-## The archive wall
-
-When photographs are being used as mass, they do not come from a list you write.
-`lib/deck/wall-tiles.ts` holds a pool of **130 photographs spanning 2014 to
-2026**, and a wall is filled from it.
-
-The pool was assembled mechanically, not curated: landscape orientation, at
-least 900 pixels wide and 40KB on disk, de-duplicated across the three photo
-folders, posters and screenshots thrown out. That is the entire selection
-criteria, and it is deliberately unsentimental — the wall is not a highlights
-reel, it is evidence. Every path in it is checked by
-`scripts/verify-image-paths.ts` in CI, so a wall cannot ship with a hole in it.
-
-Tiles are taken by **stepping through** the pool rather than slicing off the
-front, because the pool is ordered by resolution and the front of it is mostly
-one very good 2023 shoot. Stepping is what keeps a wall mixed across eras and
-venues, which is the only thing the wall is actually saying.
-
-**What this means when you talk to the author:**
-
-- **Nobody picks the tiles.** If they ask "can we make sure the Wellington one
-  is in there", the honest answer is that a wall is not a selection — but a
-  photograph they care about can absolutely be a `photo` slide of its own, at
-  full size and in full colour, which is a better home for it anyway.
-- **The individual pictures are not the point and it is fine to say so.** *"Up
-  close half of these are unremarkable — that's rather the point. It's twelve
-  years of rooms that filled up."*
-- **Do not describe a wall as being from this event.** It never is. It is the
-  whole archive, and that is what makes it worth showing.
-
 ## The curated fallback
 
 `public/img/curated/` holds 47 real photographs from past She Sharp events —

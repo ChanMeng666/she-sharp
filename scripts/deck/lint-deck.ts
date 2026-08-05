@@ -30,6 +30,8 @@ const RULE_TITLES: Record<string, string> = {
   "slide-id": "Slide id is not URL-safe",
   "slide-id-unique": "Two slides share an id",
   "host-note": "No note for the host",
+  "placeholder-copy": "Placeholder text is still on screen",
+  "theme-title-length": "Theme card title is too long",
   "eyebrow-length": "Kicker is too long",
   "title-length": "Title is too long",
   "lead-length": "Supporting line is too long",
@@ -71,6 +73,10 @@ const RULE_FIXES: Record<string, string> = {
     "Give one of the two slides a different id — ids are the deep-link anchors, so they must be unique.",
   "host-note":
     "Add a `note`: one line telling the host what to say. It prints in the PDF and never appears on screen.",
+  "placeholder-copy":
+    "Replace it with the real words. A host note may say PLACEHOLDER — a slide may not, because the room reads it.",
+  "theme-title-length":
+    "Shorten the card's title. The cards sit side by side and are set large, so a long one breaks the grid.",
   "feedback-qr-event-mismatch":
     "Fix the event slug at the top of the deck file — the feedback code is built from it, so it is the deck that is pointed at the wrong event, not the code.",
   "feedback-qr-external":
