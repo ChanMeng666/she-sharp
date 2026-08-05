@@ -11,10 +11,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      # No `version:` here on purpose — `packageManager` in package.json is the
+      # single source, so a local machine and CI cannot drift apart.
       - name: Install pnpm
         uses: pnpm/action-setup@v5
-        with:
-          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -47,10 +47,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      # No `version:` here on purpose — `packageManager` in package.json is the
+      # single source, so a local machine and CI cannot drift apart.
       - name: Install pnpm
         uses: pnpm/action-setup@v5
-        with:
-          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -76,10 +76,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      # No `version:` here on purpose — `packageManager` in package.json is the
+      # single source, so a local machine and CI cannot drift apart.
       - name: Install pnpm
         uses: pnpm/action-setup@v5
-        with:
-          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
