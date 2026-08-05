@@ -164,10 +164,31 @@ const ASSISTANT_QR: QrBlock = {
   caption: "hackathon.shesharp.org.nz",
 };
 
+/*
+ * She Sharp's own copy of the template, not the Community Hub page.
+ *
+ * This pointed at the TNZ Ecosystem Hub until the pre-event QR audit on 5 Aug
+ * 2026 opened every destination in a signed-out browser: Circle.so bounces
+ * anyone who is not already a member to `login.circle.so/sign_in`. A code that
+ * shows a login wall to a room of a hundred people is a dead code, and this is
+ * exactly the class of failure the person building the deck cannot see, because
+ * they are always signed in. Same reason `AMBASSADOR_FORM_URL` avoids its
+ * Google Form.
+ *
+ * The PDF is AI Forum's six-page template — CONNECT, PROBLEM, BIG IDEA, FUTURE
+ * IMPACT, with the per-section timings the pitch slides already teach. It is
+ * committed under `public/docs/` rather than uploaded to Blob storage so it is
+ * versioned with the deck that points at it and needs no token to serve.
+ *
+ * FILENAME IS LOAD-BEARING. This code shares a slide with two others, so each
+ * is drawn small; the descriptive name `ai-hackathon-pitch-deck-template-2026`
+ * pushes the URL to 73 bytes and the symbol to 41×41, while this one fits 37×37
+ * in the same physical square. Lengthen it and the modules get smaller.
+ */
 const PITCH_TEMPLATE_QR: QrBlock = {
-  url: "https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus",
+  url: "https://www.shesharp.org.nz/docs/pitch-deck-template-2026.pdf",
   label: "Pitch deck template",
-  caption: "Community Hub",
+  caption: "shesharp.org.nz/docs",
 };
 
 /**
