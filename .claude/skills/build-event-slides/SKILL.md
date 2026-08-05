@@ -179,10 +179,14 @@ Three habits that make this work:
   for the run-sheet slide. Every slide needs one and you will not get them by
   asking directly.
 
-**The karakia is a read-back too.** The deck defaults to She Sharp's standing
-karakia (`lib/deck/karakia.ts`). Say which ones they are and ask whether the
-person opening the evening will read those or something of their own — a venue
-with its own mihi is common and the deck should carry theirs.
+**Do not ask about the karakia.** She Sharp opens and closes every event with
+the same pair, and the deck already carries them (`lib/deck/karakia.ts`). Asking
+each time implies a decision that has already been made.
+
+The exception is when the organiser raises it themselves — a venue opening with
+its own mihi, or a guest who will read something else. Then take their text
+verbatim, macrons as given, and pass it as `karakia:` to `buildOpeningSlides()`
+or `buildClosingSlides()`.
 
 ## Step 3 — Set the colours
 
