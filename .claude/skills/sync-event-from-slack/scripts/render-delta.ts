@@ -23,7 +23,7 @@
  * SET of messages is never trimmed — completeness of coverage is the point.
  */
 
-import { readFileSync } from "node:fs";
+import { readPayload } from "./state-lib";
 
 const path = process.argv[2];
 if (!path) {
@@ -31,7 +31,7 @@ if (!path) {
   process.exit(2);
 }
 
-const d = JSON.parse(readFileSync(path, "utf8"));
+const d = readPayload(path);
 const users: Record<string, any> = d.users ?? {};
 const TEXT_CLIP = 600;
 
