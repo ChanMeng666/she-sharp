@@ -62,6 +62,42 @@ it. So the manifest also stores, per thread parent, its `replyCount` +
 pass, detects parents whose `replyCount`/`latestReplyTs` grew, and pulls **only
 the new replies** for those threads. New top-level messages get their full thread.
 
+### What this got wrong until 5 August 2026
+
+Three bugs, one root cause — nobody had written down what a read position *means*:
+
+1. **The triage peeked at one message.** `conversations.history limit: 1` returns
+   the newest parent, and a reply never moves a parent. A channel whose only new
+   content was thread replies was reported quiet, hidden behind `--all`, and
+   advanced past. It now reads a page of 200 and compares every parent's
+   `reply_count`/`latest_reply` against the manifest.
+2. **A never-recorded thread was skipped, not caught.** A message posted with no
+   replies is never written to `threads`, so the first reply it ever gets lands
+   on a parent the manifest has never heard of. The delta test required a prior
+   record, so that case — the most common one — was invisible.
+3. **The read receipt described what existed, not what was delivered.**
+   `_meta.threadState` was built from the full history before the emit loop, so
+   `update-state.ts` recorded threads nobody had been shown as read. This is the
+   one that turned a miss into a permanent loss: the next run had nothing to
+   find.
+
+Cost: the event owner's thirteen-item review of a presentation deck, unread for a
+day, three days before it was projected. Found only because a human pasted the
+permalink.
+
+**The two rules, now in `state-lib.ts` with `state-lib.test.ts` asserting them:**
+
+- `threadHasUnread(current, known)` — **an absent `known` means zero replies
+  seen, not "skip"**, and `latestReplyTs` is checked as well as `replyCount` (a
+  thread that gains one reply and loses another holds its count).
+- `mergeThreadState(parents, delivered, prior)` — **a delivered thread advances;
+  an undelivered one keeps what it had.** Never widen this to "current state of
+  everything": it is the difference between a bug that gets caught next run and
+  one that erases its own evidence.
+
+Both the triage and the fetch call the same two functions. They diverged in the
+first place because each had its own copy of the question.
+
 ## Fingerprint — the no-op short-circuit
 
 `fingerprint` is a sha256 over the mapped event(s) salient fields in
@@ -80,6 +116,7 @@ writes the full machine triage to `.cache/triage.json`. Each row's `action`:
 |---|---|
 | `no-op` | nothing new past the watermark — skip |
 | `incremental` | mapped event with new content → sync the delta |
+| `incremental (thread replies)` | same, but **nothing new at the top level** — the new content is inside a thread. Checking the channel by eye will show no new message; open the thread |
 | `create?` | unmapped/`none` channel with new content → maybe a new event (needs a slug) |
 | `create? (general-signal)` | a general channel whose new messages scored ≥ threshold for event content (evidence line shown) |
 | `exists? (≈slug @source)` | a page already exists for this channel in a **non-skill** source → map as `skip`/own it, don't create a duplicate |
@@ -105,10 +142,18 @@ so an unmapped event channel whose page already exists elsewhere is flagged
 missing, let's create it" duplicate — the event wasn't missing, it just wasn't in
 the file the skill writes.
 
-General channels are auto-scanned: only messages past the watermark are read, and
-only channels scoring ≥ the signal threshold surface — chatter never reaches
-Claude. A scanned-but-quiet channel still advances its watermark so it isn't
-re-scanned next run.
+General channels are auto-scanned: only messages past the watermark are read —
+**plus the unread replies on any thread that grew**, capped at
+`GROWN_THREAD_PEEK_CAP` parents per channel — and only channels scoring ≥ the
+signal threshold surface, so chatter never reaches Claude. Scoring used to see
+top-level text only, which meant a channel whose entire event conversation
+happened inside one thread scored zero.
+
+A scanned-but-quiet channel advances its watermark **and records the grown
+threads it scored**, so it isn't re-scanned next run. Note the asymmetry with
+`fetch-channel.ts`, which records only what it *delivered* to the model: triage
+records what it *scored*. That is a weaker guarantee, and it is why a quiet DM is
+not the same thing as a DM the model has read.
 
 ## Token economics
 

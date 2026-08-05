@@ -43,7 +43,13 @@ import {
   slack,
   USING_USER_TOKEN,
 } from "./slack-client";
-import { CACHE_DIR, loadManifest, type ThreadState } from "./state-lib";
+import {
+  CACHE_DIR,
+  loadManifest,
+  mergeThreadState,
+  threadHasUnread,
+  type ThreadState,
+} from "./state-lib";
 
 announceIdentity();
 
@@ -309,46 +315,20 @@ async function main() {
   } while (cursor);
   rawMessages.sort((a, b) => Number(a.ts) - Number(b.ts));
 
-  // Build the full current thread-state map (every parent that has replies),
-  // independent of what we choose to emit — the next run needs the complete map.
-  const threadState: Record<string, ThreadState> = {};
-  for (const rm of rawMessages) {
-    if ((rm.reply_count ?? 0) > 0) {
-      threadState[rm.ts] = {
-        replyCount: rm.reply_count,
-        latestReplyTs: rm.latest_reply ?? rm.ts,
-      };
-    }
-  }
-
   const newWatermarkTs = rawMessages.length ? rawMessages[rawMessages.length - 1].ts : (since ?? "0");
 
   // Decide which parents to emit.
   const messages: NormalizedMessage[] = [];
+  const delivered = new Set<string>();
   for (const rm of rawMessages) {
     const isNewTopLevel = !incremental || Number(rm.ts) > Number(since);
     const prior = priorThreads[rm.ts];
-    /*
-     * An ABSENT prior means zero replies seen, not "do not check".
-     *
-     * This read `prior != null` until 5 Aug 2026, which silently dropped the one
-     * case that matters most: a message posted below the watermark with no
-     * replies (so it was never recorded as a thread) that later grows one. On
-     * 4 Aug a message in the hackathon channel gained six replies carrying the
-     * event owner's entire review of the presentation deck, and the delta
-     * returned nothing — while `threadState` below recorded the thread anyway,
-     * so the next `update-state.ts` marked all six as read. A miss that also
-     * erases the evidence of the miss is the worst shape this bug can take.
-     *
-     * The cost of the fix is that a channel whose stored state predates thread
-     * tracking re-emits its old threads once. That is noisy and recoverable;
-     * the alternative is not.
-     */
-    const threadGrew =
-      incremental &&
-      (rm.reply_count ?? 0) > 0 &&
-      ((rm.reply_count ?? 0) > (prior?.replyCount ?? 0) ||
-        Number(rm.latest_reply ?? 0) > Number(prior?.latestReplyTs ?? 0));
+    // Shared with the triage peek — see `threadHasUnread` for why an absent
+    // prior must mean "zero replies seen" rather than "skip". The cost of that
+    // rule is that a channel whose stored state predates thread tracking
+    // re-emits its old threads once: noisy, recoverable, and far cheaper than
+    // the alternative.
+    const threadGrew = incremental && threadHasUnread(rm, prior);
 
     if (!isNewTopLevel && !threadGrew) continue;
 
@@ -357,8 +337,27 @@ async function main() {
     // New top-level → full thread. Old-but-grown thread → only the new replies.
     const sinceReplyTs = isNewTopLevel ? undefined : prior?.latestReplyTs;
     await fetchThread(channelId, n, rm.reply_count ?? 0, sinceReplyTs);
+    delivered.add(rm.ts);
     messages.push(n);
   }
+
+  /*
+   * THREAD STATE RECORDS WHAT WAS DELIVERED, NOT WHAT EXISTS.
+   *
+   * This map used to be built from the full history before the emit loop, on
+   * the reasoning that "the next run needs the complete map". That reasoning is
+   * inverted: the map is a READ RECEIPT, and `update-state.ts` writes it
+   * straight into the committed manifest. Recording the current reply count for
+   * a thread this run chose not to emit tells every future run that six replies
+   * nobody has seen were read — which is exactly how the 4 August deck review
+   * came within one command of being erased instead of merely missed.
+   *
+   * So: a delivered thread advances, and an undelivered one keeps whatever it
+   * had before (nothing, if it was never seen). Any future bug in the emit
+   * decision above therefore leaves a thread looking unread and gets caught on
+   * the next run, instead of covering its own tracks.
+   */
+  const threadState = mergeThreadState(rawMessages, delivered, priorThreads);
 
   const users: Record<string, { real_name: string; display_name: string }> = {};
   for (const [id, v] of userCache.entries()) users[id] = v;
