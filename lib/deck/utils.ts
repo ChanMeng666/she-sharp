@@ -28,28 +28,65 @@ export function toneOf(slide: Slide): SlideTone {
   return slide.tone ?? slideDefaultTone(slide);
 }
 
-/** Separators used between a clock time and its label in the source data. */
-const TIME_SEPARATOR = /\s+[—–-]\s+/;
+/** One clock reading: `5`, `5:30`, `5pm`, `5:30pm`, `12:15 PM`. */
+const CLOCK = String.raw`\d{1,2}(?::\d{2})?\s*(?:[ap]\.?m\.?)?`;
+
+/** Words that join the two halves of a range: `5:00–5:30`, `5:00pm to 5:30pm`. */
+const RANGE_JOIN = String.raw`\s*(?:[–—-]|to|until|till)\s*`;
+
+/**
+ * Words organisers put around a time that belong to it, not to the label —
+ * "From 7:30pm — Closing remarks", "7:30pm onwards: Networking".
+ *
+ * Both carry their own `?`. Appending one at the point of use would attach it
+ * to the trailing quantifier inside the group (`\s+` becoming `\s+?`) and make
+ * the whole prefix mandatory instead of optional.
+ */
+const TIME_PREFIX = String.raw`(?:(?:from|at)\s+)?`;
+const TIME_SUFFIX = String.raw`(?:\s+onwards?)?`;
+
+/**
+ * A run-sheet line: a leading time (optionally a range), a separator, a label.
+ *
+ * Anchoring the time and consuming it *whole* is the entire point. The previous
+ * implementation split on the first spaced dash, which works only when the
+ * range itself has no spaces (`5:00–5:30pm — Doors`). Three of the five real
+ * She Sharp run sheets are written `5:00pm – 5:30pm — Doors`, where that split
+ * lands inside the range and leaves the end time glued to the front of the
+ * label — projecting "5:30pm — Registration" for a block that opens at 5:00.
+ * It read as correct from the back of the room, which is why it survived.
+ *
+ * A colon counts as a label separator only when whitespace follows it. Without
+ * that guard the engine backtracks into the clock itself: `8:00pm Close of day
+ * one` has no separator at all, but the regex would match the time as `8`, the
+ * separator as the colon inside it, and the label as `00pm Close of day one`.
+ * The colon in a clock is always followed by a digit; the colon in `5:30pm:
+ * Doors open` never is.
+ */
+const TIMED_LINE = new RegExp(
+  `^(${TIME_PREFIX}${CLOCK}(?:${RANGE_JOIN}${CLOCK})?${TIME_SUFFIX})` +
+    String.raw`\s*(?:[—–-]|:(?=\s))\s*` +
+    `(.+)$`,
+  "i",
+);
 
 /**
  * Splits a run-sheet line such as `"5:30–5:40pm — Event opening"` into a
  * `TimedItem`.
  *
  * The event JSON stores schedules as prose lines; this is the one place that
- * knows their shape. Returns `null` when the line has no recognisable time, so
- * callers can fail loudly instead of rendering an empty row.
+ * knows their shape. Returns `null` when the line does not start with a
+ * recognisable time, so callers can fail loudly instead of rendering an empty
+ * row — and so a prose paragraph that merely mentions a time is not mistaken
+ * for a schedule.
  */
 export function parseTimedLine(line: string): TimedItem | null {
-  const trimmed = line.trim();
-  if (!trimmed) return null;
+  const match = TIMED_LINE.exec(line.trim());
+  if (!match) return null;
 
-  const parts = trimmed.split(TIME_SEPARATOR);
-  if (parts.length < 2) return null;
-
-  const time = parts[0].trim();
-  const label = parts.slice(1).join(" — ").trim();
+  const time = match[1].trim().replace(/\s+/g, " ");
+  const label = match[2].trim();
   if (!time || !label) return null;
-  if (!/\d/.test(time)) return null;
 
   return { time, label };
 }
