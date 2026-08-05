@@ -20,9 +20,42 @@
         "kind": "none"
       },
       "watermarkTs": "1785460260.522289",
-      "threads": {},
+      "threads": {
+        "1773653563.646719": {
+          "replyCount": 2,
+          "latestReplyTs": "1773654078.957409"
+        },
+        "1773653692.340759": {
+          "replyCount": 13,
+          "latestReplyTs": "1774060949.269719"
+        },
+        "1773950297.935879": {
+          "replyCount": 1,
+          "latestReplyTs": "1773950378.113009"
+        },
+        "1774310911.938679": {
+          "replyCount": 3,
+          "latestReplyTs": "1774475823.067269"
+        },
+        "1774828957.872349": {
+          "replyCount": 1,
+          "latestReplyTs": "1774832495.553409"
+        },
+        "1776160864.168029": {
+          "replyCount": 2,
+          "latestReplyTs": "1776234873.585479"
+        },
+        "1780206297.337109": {
+          "replyCount": 1,
+          "latestReplyTs": "1780206471.053919"
+        },
+        "1780206308.795179": {
+          "replyCount": 1,
+          "latestReplyTs": "1780206869.254009"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.293Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "C01NEKYP0CR": {
@@ -32,9 +65,42 @@
         "kind": "none"
       },
       "watermarkTs": "1777555705.572599",
-      "threads": {},
+      "threads": {
+        "1692320228.765859": {
+          "replyCount": 1,
+          "latestReplyTs": "1719918439.653219"
+        },
+        "1692320677.113249": {
+          "replyCount": 1,
+          "latestReplyTs": "1719918457.758169"
+        },
+        "1692741618.961919": {
+          "replyCount": 3,
+          "latestReplyTs": "1692741976.128649"
+        },
+        "1692741792.346979": {
+          "replyCount": 6,
+          "latestReplyTs": "1692743589.385619"
+        },
+        "1719919996.726429": {
+          "replyCount": 2,
+          "latestReplyTs": "1719966148.189489"
+        },
+        "1724234158.162909": {
+          "replyCount": 1,
+          "latestReplyTs": "1724670031.705849"
+        },
+        "1752921038.537379": {
+          "replyCount": 3,
+          "latestReplyTs": "1752991037.300769"
+        },
+        "1773646211.459389": {
+          "replyCount": 7,
+          "latestReplyTs": "1774249033.175309"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "C01SU11D0G7": {
@@ -44,9 +110,34 @@
         "kind": "none"
       },
       "watermarkTs": "1777555706.583559",
-      "threads": {},
+      "threads": {
+        "1617582805.005300": {
+          "replyCount": 2,
+          "latestReplyTs": "1617587298.002400"
+        },
+        "1617917000.000100": {
+          "replyCount": 1,
+          "latestReplyTs": "1617922608.000500"
+        },
+        "1617917494.000200": {
+          "replyCount": 1,
+          "latestReplyTs": "1617923532.001200"
+        },
+        "1618131671.012100": {
+          "replyCount": 2,
+          "latestReplyTs": "1618175460.000100"
+        },
+        "1618133641.012900": {
+          "replyCount": 3,
+          "latestReplyTs": "1618134424.014500"
+        },
+        "1619993045.000700": {
+          "replyCount": 9,
+          "latestReplyTs": "1619993801.002900"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "C01UFNYKAGH": {
@@ -56,9 +147,30 @@
         "kind": "none"
       },
       "watermarkTs": "1777555707.556409",
-      "threads": {},
+      "threads": {
+        "1621914353.004600": {
+          "replyCount": 2,
+          "latestReplyTs": "1621916114.005000"
+        },
+        "1630214646.000500": {
+          "replyCount": 1,
+          "latestReplyTs": "1630219389.004800"
+        },
+        "1652795832.449419": {
+          "replyCount": 7,
+          "latestReplyTs": "1652831400.086549"
+        },
+        "1657175540.512279": {
+          "replyCount": 2,
+          "latestReplyTs": "1657180771.286429"
+        },
+        "1662145568.420949": {
+          "replyCount": 1,
+          "latestReplyTs": "1662145579.051569"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "C020K43PBLL": {
@@ -92,9 +204,22 @@
         "kind": "none"
       },
       "watermarkTs": "1777555710.521179",
-      "threads": {},
+      "threads": {
+        "1625026344.004300": {
+          "replyCount": 1,
+          "latestReplyTs": "1625028392.005500"
+        },
+        "1625095650.000600": {
+          "replyCount": 4,
+          "latestReplyTs": "1625100039.002000"
+        },
+        "1625118787.003300": {
+          "replyCount": 1,
+          "latestReplyTs": "1625119049.007000"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "C033KNWMTGD": {
@@ -104,9 +229,42 @@
         "kind": "none"
       },
       "watermarkTs": "1777555711.490919",
-      "threads": {},
+      "threads": {
+        "1699861576.413289": {
+          "replyCount": 4,
+          "latestReplyTs": "1699861806.340669"
+        },
+        "1699861870.508609": {
+          "replyCount": 8,
+          "latestReplyTs": "1699862745.063919"
+        },
+        "1700097633.137839": {
+          "replyCount": 1,
+          "latestReplyTs": "1700114615.828179"
+        },
+        "1700418834.806329": {
+          "replyCount": 4,
+          "latestReplyTs": "1700460880.696359"
+        },
+        "1702974017.089419": {
+          "replyCount": 5,
+          "latestReplyTs": "1702976138.839649"
+        },
+        "1702974317.532669": {
+          "replyCount": 9,
+          "latestReplyTs": "1703019311.748499"
+        },
+        "1705517325.168969": {
+          "replyCount": 2,
+          "latestReplyTs": "1705570221.686649"
+        },
+        "1706771218.463119": {
+          "replyCount": 2,
+          "latestReplyTs": "1706771368.799379"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "C0342CMEV7B": {
@@ -116,9 +274,42 @@
         "kind": "none"
       },
       "watermarkTs": "1777555712.446479",
-      "threads": {},
+      "threads": {
+        "1645174167.208949": {
+          "replyCount": 1,
+          "latestReplyTs": "1645174226.691479"
+        },
+        "1645174179.435459": {
+          "replyCount": 1,
+          "latestReplyTs": "1645174327.232979"
+        },
+        "1645174320.110149": {
+          "replyCount": 1,
+          "latestReplyTs": "1645174410.455729"
+        },
+        "1646009289.992709": {
+          "replyCount": 3,
+          "latestReplyTs": "1646009607.404979"
+        },
+        "1646009350.817559": {
+          "replyCount": 9,
+          "latestReplyTs": "1646011227.027739"
+        },
+        "1666920442.629579": {
+          "replyCount": 1,
+          "latestReplyTs": "1693304121.661279"
+        },
+        "1666934016.079499": {
+          "replyCount": 6,
+          "latestReplyTs": "1667281337.778219"
+        },
+        "1677882403.969829": {
+          "replyCount": 11,
+          "latestReplyTs": "1678488332.868459"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "C03J6C08WQL": {
@@ -128,9 +319,42 @@
         "kind": "none"
       },
       "watermarkTs": "1784629854.545499",
-      "threads": {},
+      "threads": {
+        "1710887856.582079": {
+          "replyCount": 3,
+          "latestReplyTs": "1710889098.340409"
+        },
+        "1716936809.578839": {
+          "replyCount": 5,
+          "latestReplyTs": "1717218573.267269"
+        },
+        "1723020302.046469": {
+          "replyCount": 1,
+          "latestReplyTs": "1723025356.491249"
+        },
+        "1724879960.574819": {
+          "replyCount": 3,
+          "latestReplyTs": "1725255053.322189"
+        },
+        "1724888072.893139": {
+          "replyCount": 6,
+          "latestReplyTs": "1725255301.160859"
+        },
+        "1727860960.364429": {
+          "replyCount": 1,
+          "latestReplyTs": "1727897433.743339"
+        },
+        "1730321579.296249": {
+          "replyCount": 2,
+          "latestReplyTs": "1730356805.974609"
+        },
+        "1730350132.899359": {
+          "replyCount": 1,
+          "latestReplyTs": "1731315541.209179"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.293Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "C03KYCN4Z6C": {
@@ -140,9 +364,42 @@
         "kind": "none"
       },
       "watermarkTs": "1777555714.364369",
-      "threads": {},
+      "threads": {
+        "1656383889.508459": {
+          "replyCount": 2,
+          "latestReplyTs": "1656384485.844599"
+        },
+        "1656384943.195599": {
+          "replyCount": 2,
+          "latestReplyTs": "1656395667.617979"
+        },
+        "1656395886.002279": {
+          "replyCount": 3,
+          "latestReplyTs": "1656398807.102539"
+        },
+        "1656407427.180179": {
+          "replyCount": 1,
+          "latestReplyTs": "1656410720.933849"
+        },
+        "1656469096.492659": {
+          "replyCount": 3,
+          "latestReplyTs": "1656478686.777649"
+        },
+        "1656469681.905349": {
+          "replyCount": 1,
+          "latestReplyTs": "1656476447.415129"
+        },
+        "1656551107.097109": {
+          "replyCount": 1,
+          "latestReplyTs": "1656551464.807089"
+        },
+        "1656735829.504179": {
+          "replyCount": 5,
+          "latestReplyTs": "1656741036.610049"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "C0438BZ7DL6": {
@@ -152,9 +409,42 @@
         "kind": "none"
       },
       "watermarkTs": "1780559027.001549",
-      "threads": {},
+      "threads": {
+        "1726631377.207779": {
+          "replyCount": 3,
+          "latestReplyTs": "1726638189.011429"
+        },
+        "1726708302.398369": {
+          "replyCount": 1,
+          "latestReplyTs": "1726708448.769689"
+        },
+        "1726708361.018119": {
+          "replyCount": 3,
+          "latestReplyTs": "1726709290.134449"
+        },
+        "1726724813.937749": {
+          "replyCount": 5,
+          "latestReplyTs": "1726782294.900509"
+        },
+        "1727778957.579099": {
+          "replyCount": 4,
+          "latestReplyTs": "1727831037.225289"
+        },
+        "1728014633.560879": {
+          "replyCount": 1,
+          "latestReplyTs": "1728014665.446579"
+        },
+        "1728080817.674119": {
+          "replyCount": 2,
+          "latestReplyTs": "1729068053.757829"
+        },
+        "1728282581.772419": {
+          "replyCount": 1,
+          "latestReplyTs": "1728283436.643519"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "C0476MCR9B2": {
@@ -236,9 +526,42 @@
         "kind": "none"
       },
       "watermarkTs": "1777555722.150819",
-      "threads": {},
+      "threads": {
+        "1684646293.235729": {
+          "replyCount": 7,
+          "latestReplyTs": "1684823604.331839"
+        },
+        "1684646959.892679": {
+          "replyCount": 1,
+          "latestReplyTs": "1684816037.411879"
+        },
+        "1684647043.802189": {
+          "replyCount": 3,
+          "latestReplyTs": "1684975183.417229"
+        },
+        "1684813846.317659": {
+          "replyCount": 4,
+          "latestReplyTs": "1684876776.939129"
+        },
+        "1685161217.571079": {
+          "replyCount": 1,
+          "latestReplyTs": "1685161473.571559"
+        },
+        "1685477264.618879": {
+          "replyCount": 7,
+          "latestReplyTs": "1686476086.094899"
+        },
+        "1685477366.364849": {
+          "replyCount": 1,
+          "latestReplyTs": "1685579610.916709"
+        },
+        "1686019791.649759": {
+          "replyCount": 1,
+          "latestReplyTs": "1686020009.999329"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "C05DM7PRWM7": {
@@ -1785,9 +2108,42 @@
         "kind": "none"
       },
       "watermarkTs": "1777555727.098769",
-      "threads": {},
+      "threads": {
+        "1714600486.807549": {
+          "replyCount": 3,
+          "latestReplyTs": "1714601956.599809"
+        },
+        "1714610042.636229": {
+          "replyCount": 3,
+          "latestReplyTs": "1714613375.508629"
+        },
+        "1714654589.519239": {
+          "replyCount": 1,
+          "latestReplyTs": "1726475779.522709"
+        },
+        "1714654771.569069": {
+          "replyCount": 1,
+          "latestReplyTs": "1726475843.240599"
+        },
+        "1715413021.949689": {
+          "replyCount": 2,
+          "latestReplyTs": "1715920635.946439"
+        },
+        "1715426948.723419": {
+          "replyCount": 4,
+          "latestReplyTs": "1726475886.606599"
+        },
+        "1718750344.376879": {
+          "replyCount": 1,
+          "latestReplyTs": "1718752114.930899"
+        },
+        "1740721637.208689": {
+          "replyCount": 2,
+          "latestReplyTs": "1740767937.662709"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "C05S10ENU4U": {
@@ -1845,9 +2201,42 @@
         "kind": "none"
       },
       "watermarkTs": "1777555731.901809",
-      "threads": {},
+      "threads": {
+        "1714085272.591749": {
+          "replyCount": 1,
+          "latestReplyTs": "1714085640.843249"
+        },
+        "1714085295.893809": {
+          "replyCount": 1,
+          "latestReplyTs": "1714085678.486699"
+        },
+        "1714372829.124689": {
+          "replyCount": 4,
+          "latestReplyTs": "1714379998.377529"
+        },
+        "1714554296.145079": {
+          "replyCount": 1,
+          "latestReplyTs": "1714558268.230809"
+        },
+        "1715122636.707299": {
+          "replyCount": 4,
+          "latestReplyTs": "1715132670.930209"
+        },
+        "1715138291.893889": {
+          "replyCount": 4,
+          "latestReplyTs": "1715204376.522809"
+        },
+        "1719128399.625889": {
+          "replyCount": 1,
+          "latestReplyTs": "1719173100.468409"
+        },
+        "1719344471.202549": {
+          "replyCount": 1,
+          "latestReplyTs": "1719349322.604869"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "C06Q986DV": {
@@ -1857,9 +2246,42 @@
         "kind": "none"
       },
       "watermarkTs": "1777555693.918789",
-      "threads": {},
+      "threads": {
+        "1709331272.726949": {
+          "replyCount": 2,
+          "latestReplyTs": "1709595668.220139"
+        },
+        "1712890515.490809": {
+          "replyCount": 5,
+          "latestReplyTs": "1713236578.944159"
+        },
+        "1722391274.521539": {
+          "replyCount": 1,
+          "latestReplyTs": "1722393269.243259"
+        },
+        "1722391713.269419": {
+          "replyCount": 1,
+          "latestReplyTs": "1722393224.242569"
+        },
+        "1722556111.385999": {
+          "replyCount": 1,
+          "latestReplyTs": "1722556388.295449"
+        },
+        "1722576491.487829": {
+          "replyCount": 1,
+          "latestReplyTs": "1722628126.594699"
+        },
+        "1724840663.731549": {
+          "replyCount": 1,
+          "latestReplyTs": "1724884126.073749"
+        },
+        "1734039429.507169": {
+          "replyCount": 5,
+          "latestReplyTs": "1734051259.567699"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.085Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.036Z",
       "lastSyncedCommit": ""
     },
     "C06Q9FJNR": {
@@ -4785,10 +5207,14 @@
         "1784197266.867119": {
           "replyCount": 8,
           "latestReplyTs": "1784277318.554859"
+        },
+        "1785635050.289969": {
+          "replyCount": 3,
+          "latestReplyTs": "1785744824.619329"
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.293Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.039Z",
       "lastSyncedCommit": "",
       "digest": "Internal team chatter (giveaways, announcements). Not a site event channel. Flagged by general-signal auto-scan 2026-07-20; reviewed and confirmed no event. Un-skip only if a real event planning thread starts here.",
       "digestAt": "2026-07-20T10:06:07.278Z"
@@ -6400,9 +6826,22 @@
         "kind": "none"
       },
       "watermarkTs": "1777555732.846049",
-      "threads": {},
+      "threads": {
+        "1716240359.786029": {
+          "replyCount": 1,
+          "latestReplyTs": "1716240380.232609"
+        },
+        "1717900761.785239": {
+          "replyCount": 1,
+          "latestReplyTs": "1717931510.156039"
+        },
+        "1718185105.793369": {
+          "replyCount": 1,
+          "latestReplyTs": "1718228975.863799"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "C075ANENL59": {
@@ -6412,9 +6851,26 @@
         "kind": "none"
       },
       "watermarkTs": "1777555733.806359",
-      "threads": {},
+      "threads": {
+        "1718526465.895779": {
+          "replyCount": 4,
+          "latestReplyTs": "1718700151.973509"
+        },
+        "1718621779.298319": {
+          "replyCount": 1,
+          "latestReplyTs": "1719267733.012479"
+        },
+        "1719399266.570289": {
+          "replyCount": 1,
+          "latestReplyTs": "1719475006.874009"
+        },
+        "1723415510.777889": {
+          "replyCount": 1,
+          "latestReplyTs": "1723417115.077289"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "C076RJ2LHEC": {
@@ -6448,9 +6904,22 @@
         "kind": "none"
       },
       "watermarkTs": "1777555736.909559",
-      "threads": {},
+      "threads": {
+        "1750998633.017609": {
+          "replyCount": 1,
+          "latestReplyTs": "1751084015.697089"
+        },
+        "1754532037.124219": {
+          "replyCount": 2,
+          "latestReplyTs": "1754539767.300459"
+        },
+        "1770329793.436619": {
+          "replyCount": 6,
+          "latestReplyTs": "1770869635.301139"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "C07G4CN070U": {
@@ -6508,9 +6977,30 @@
         "kind": "none"
       },
       "watermarkTs": "1777555741.834869",
-      "threads": {},
+      "threads": {
+        "1727132313.670139": {
+          "replyCount": 1,
+          "latestReplyTs": "1727132387.102089"
+        },
+        "1727132484.124119": {
+          "replyCount": 1,
+          "latestReplyTs": "1727134140.956699"
+        },
+        "1727235011.138799": {
+          "replyCount": 4,
+          "latestReplyTs": "1727252785.977179"
+        },
+        "1727344709.394349": {
+          "replyCount": 1,
+          "latestReplyTs": "1727373134.733989"
+        },
+        "1727347627.794349": {
+          "replyCount": 7,
+          "latestReplyTs": "1727385791.382919"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "C083VSX5W": {
@@ -6832,9 +7322,42 @@
         "kind": "none"
       },
       "watermarkTs": "1785704496.935039",
-      "threads": {},
+      "threads": {
+        "1753397322.171189": {
+          "replyCount": 1,
+          "latestReplyTs": "1753408627.791479"
+        },
+        "1761199337.879709": {
+          "replyCount": 1,
+          "latestReplyTs": "1761203334.778079"
+        },
+        "1761521104.351329": {
+          "replyCount": 10,
+          "latestReplyTs": "1761528589.772169"
+        },
+        "1762739506.241859": {
+          "replyCount": 1,
+          "latestReplyTs": "1762754616.426429"
+        },
+        "1777689867.296609": {
+          "replyCount": 1,
+          "latestReplyTs": "1777699055.118519"
+        },
+        "1777876381.495719": {
+          "replyCount": 3,
+          "latestReplyTs": "1777876577.895319"
+        },
+        "1778412180.723839": {
+          "replyCount": 1,
+          "latestReplyTs": "1778446907.410569"
+        },
+        "1778446849.171989": {
+          "replyCount": 1,
+          "latestReplyTs": "1778459524.216609"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "C096M3GC3BL": {
@@ -6912,9 +7435,14 @@
         "kind": "none"
       },
       "watermarkTs": "1782122962.877649",
-      "threads": {},
+      "threads": {
+        "1771048272.182449": {
+          "replyCount": 1,
+          "latestReplyTs": "1771048613.884049"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "C0ADRAGNTTQ": {
@@ -7175,9 +7703,14 @@
         "kind": "none"
       },
       "watermarkTs": "1782366961.018289",
-      "threads": {},
+      "threads": {
+        "1776069892.162299": {
+          "replyCount": 4,
+          "latestReplyTs": "1776082634.831349"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "C0AERNZ1GKH": {
@@ -7883,9 +8416,18 @@
         "kind": "none"
       },
       "watermarkTs": "1779691339.445969",
-      "threads": {},
+      "threads": {
+        "1773652123.403469": {
+          "replyCount": 5,
+          "latestReplyTs": "1773673909.174589"
+        },
+        "1775715783.465599": {
+          "replyCount": 2,
+          "latestReplyTs": "1775719549.783689"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "C0AQS8K2FQQ": {
@@ -8315,8 +8857,8 @@
           "latestReplyTs": "1785800937.972879"
         },
         "1785826569.040569": {
-          "replyCount": 6,
-          "latestReplyTs": "1785923376.717809"
+          "replyCount": 7,
+          "latestReplyTs": "1785936214.997829"
         },
         "1785836384.026089": {
           "replyCount": 1,
@@ -8332,10 +8874,10 @@
         }
       },
       "fingerprint": "sha256:27e15142fff7d1628aeac47c85473dda47f72049c91438900828c008691364d9",
-      "lastSyncedAt": "2026-08-05T12:58:44.954Z",
+      "lastSyncedAt": "2026-08-05T13:48:24.557Z",
       "lastSyncedCommit": "",
-      "digest": "Aotearoa AI Hackathon Festival 2026, AUT City Campus, FRI 7 - SAT 8 AUG 2026 — RUNS TOMORROW as of this sync (6 Aug). Live at aihackathon.nz. REGISTRATION CLOSED 20 Jul (119 registered vs 100 stated capacity). The sidebar 'Register Now' button is HARDCODED in components/events/event-detail/event-sidebar-panel.tsx for any future event, so clearing registrationUrl only makes it inert, not hidden. KEYNOTE CONFIRMED 5 Aug: Rach Monks, Founder of AI for X and X-Bot Games; she supplied role, bio and photograph by email to events@shesharp.org.nz after Jacob Bell-Kay (AUT) brokered it — that email thread, NOT Slack, is the source. The 4-5 Aug Slack thread from Prasanth is SCREENSHOTS OF THAT SAME EMAIL being re-forwarded because it hit one recipient's spam; no new fact, do not re-open. Agenda row is a single '5:50-6:10pm Keynote speaker session' per Nikita's DM 29 Jul; the deck's Day One run sheet parses that same row from specialSections[1], so the two cannot drift. DECK KEYNOTE SLIDE: her headshot is a 2500x2500 square on saturated yellow, UNUSABLE full-bleed, so the slide uses a composed 16:9 plate (…-rach-monks-plate.jpg). It must stay a photo slide, not a person card, or lintRhythm rejects the run. MAHSA'S SLIDE REVIEW, 5 Aug 09:49 UTC — arrived as six replies on an OLD thread (parent 1785826569.040569) that fetch-channel.ts silently dropped; see the sync-state note. 13 numbered items, ALL AGAINST THE OLD 61-SLIDE NUMBERING. Items 1,2,3,4,13 plus the QR audit are DONE (deck now 60 slides): rail mark is 'SHE #' upright, not 'SHE ♯ SHARP'; title meta is two facts, AI Forum survives only in the partner logo row; Suzanne is 'Professor Suzanne Wilkinson' and NO LONGER credited with the H&S briefing (she does the AUT welcome only — the host reads safety); old slide 5 'Who to Find Today' DELETED with its Vishnu photograph git rm'd, and the 0800 AUT security number moved up into SAFETY_LINES so the deck did not lose its only emergency contact; featured problems reordered F&P Helpdesk → F&P Restoration → Woolworths with FPH_LOGO/WOOLWORTHS_LOGO chips (new optional `logo` on BulletsSlide and QrCtaSlide, rendered by SponsorMark in archive.tsx), and 'My Life My Voice' DELETED along with its video QR const. New SDG slide after challenge-themes uses the UN's 6x3 poster (2000x1200 webp from Wikimedia Commons) with the NEW PhotoSlide `fit: \"contain\"` — cover would drop a column at 4:3 and a row at 21:9, silently. STILL OPEN FROM HER LIST, needs her input: item 11 wants TWO MORE VENUES on the wayfinding slide (currently only WG306/WG308/WG808 in the Sir Paul Reeves Building — she did not name them); item 10 wants the keynote plate's yellow background changed to green to match AI Forum; and she said 'I'll tell you the rest tomorrow', i.e. on the event day itself. QR AUDIT RESULT (all nine destinations, signed-out iPhone UA): eight fine; the slide-27 'Pitch deck template' Circle.so link REDIRECTS TO A LOGIN WALL (login.circle.so/sign_in) for anyone not already in the TNZ Ecosystem Hub — decide before doors. Also: the deck's Discord invite Z5heYsa7W lands in #general (correct); the invite pinned in the Slack channel, hV3bts4bm, lands in #mentors-private and must NOT be broadcast to attendees. Christine Yip REMOVED from mentors 5 Aug (Len Estioko DM 4 Aug); mentors now 13. The deck reads mentors straight from events-custom.json, so a mentor edit changes the projector — always re-run deck.test.ts and lint-deck.ts. Sara Ghafoor agreed 27 Jul but supplied no bio/photo so is NOT listed; Lesley Gao withdrew 27 Jul. Summit date 8-9 Sep Wellington is CORRECT (Mahsa corrected it personally 22 Jul, commit 6103db5a); do not re-flip it. UPCOMING_SNAPSHOT is a hand-taken snapshot pointing at the Les Mills 3 Sep panel, which Nirmala confirmed published 5 Aug. REDACTION LANDMINES - VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE, READ THEM THERE AND NEVER WRITE THEM HERE, NOT EVEN AS A PATTERN PLUS SUFFIX LIST: three internal registration discount codes (AUT students, general AUT attendees, mentors/staff), exactly one of which is public because AUT printed it on their own A3 poster. Also keep out: the circle.so private checkout link, venue wifi username and password, the on-site supervisor's personal mobile (the 0800 IS fine), Drive/Sheets registration lists, the workbook's 100+ attendee and mentor emails, the five late-added participants' emails from Mahsa 2 Aug, and the personal Gmail/Outlook addresses visible in the 5 Aug email screenshots. OPEN: post-event gallery pass after 8 Aug (status → past, add galleryUrl).",
-      "digestAt": "2026-08-05T12:58:44.953Z"
+      "digest": "Aotearoa AI Hackathon Festival 2026, AUT City Campus, FRI 7 - SAT 8 AUG 2026 — RUNS TOMORROW as of this sync (6 Aug). Live at aihackathon.nz. REGISTRATION CLOSED 20 Jul (119 registered vs 100 stated capacity). The sidebar 'Register Now' button is HARDCODED in components/events/event-detail/event-sidebar-panel.tsx for any future event, so clearing registrationUrl only makes it inert, not hidden. KEYNOTE CONFIRMED 5 Aug: Rach Monks, Founder of AI for X and X-Bot Games; she supplied role, bio and photograph by email to events@shesharp.org.nz after Jacob Bell-Kay (AUT) brokered it — that email thread, NOT Slack, is the source. The 4-5 Aug Slack thread from Prasanth is SCREENSHOTS OF THAT SAME EMAIL being re-forwarded because it hit one recipient's spam; no new fact, do not re-open. Agenda row is a single '5:50-6:10pm Keynote speaker session' per Nikita's DM 29 Jul; the deck's Day One run sheet parses that same row from specialSections[1], so the two cannot drift. DECK KEYNOTE SLIDE: her headshot is a 2500x2500 square on saturated yellow, UNUSABLE full-bleed, so the slide uses a composed 16:9 plate (…-rach-monks-plate.jpg). It must stay a photo slide, not a person card, or lintRhythm rejects the run. MAHSA'S SLIDE REVIEW, 5 Aug 09:49 UTC — arrived as six replies on an OLD thread (parent 1785826569.040569) that fetch-channel.ts silently dropped; see the sync-state note. 13 numbered items, ALL AGAINST THE OLD 61-SLIDE NUMBERING. Items 1,2,3,4,13 plus the QR audit are DONE (deck now 60 slides): rail mark is 'SHE #' upright, not 'SHE ♯ SHARP'; title meta is two facts, AI Forum survives only in the partner logo row; Suzanne is 'Professor Suzanne Wilkinson' and NO LONGER credited with the H&S briefing (she does the AUT welcome only — the host reads safety); old slide 5 'Who to Find Today' DELETED with its Vishnu photograph git rm'd, and the 0800 AUT security number moved up into SAFETY_LINES so the deck did not lose its only emergency contact; featured problems reordered F&P Helpdesk → F&P Restoration → Woolworths with FPH_LOGO/WOOLWORTHS_LOGO chips (new optional `logo` on BulletsSlide and QrCtaSlide, rendered by SponsorMark in archive.tsx), and 'My Life My Voice' DELETED along with its video QR const. New SDG slide after challenge-themes uses the UN's 6x3 poster (2000x1200 webp from Wikimedia Commons) with the NEW PhotoSlide `fit: \"contain\"` — cover would drop a column at 4:3 and a row at 21:9, silently. STILL OPEN FROM HER LIST, needs her input: item 11 wants TWO MORE VENUES on the wayfinding slide (currently only WG306/WG308/WG808 in the Sir Paul Reeves Building — she did not name them); item 10 wants the keynote plate's yellow background changed to green to match AI Forum; and she said 'I'll tell you the rest tomorrow', i.e. on the event day itself. QR AUDIT RESULT (all nine destinations, signed-out iPhone UA): eight fine; the slide-27 'Pitch deck template' Circle.so link REDIRECTS TO A LOGIN WALL (login.circle.so/sign_in) for anyone not already in the TNZ Ecosystem Hub — decide before doors. Also: the deck's Discord invite Z5heYsa7W lands in #general (correct); the invite pinned in the Slack channel, hV3bts4bm, lands in #mentors-private and must NOT be broadcast to attendees. Christine Yip REMOVED from mentors 5 Aug (Len Estioko DM 4 Aug); mentors now 13. The deck reads mentors straight from events-custom.json, so a mentor edit changes the projector — always re-run deck.test.ts and lint-deck.ts. Sara Ghafoor agreed 27 Jul but supplied no bio/photo so is NOT listed; Lesley Gao withdrew 27 Jul. Summit date 8-9 Sep Wellington is CORRECT (Mahsa corrected it personally 22 Jul, commit 6103db5a); do not re-flip it. UPCOMING_SNAPSHOT is a hand-taken snapshot pointing at the Les Mills 3 Sep panel, which Nirmala confirmed published 5 Aug. REDACTION LANDMINES - VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE, READ THEM THERE AND NEVER WRITE THEM HERE, NOT EVEN AS A PATTERN PLUS SUFFIX LIST: three internal registration discount codes (AUT students, general AUT attendees, mentors/staff), exactly one of which is public because AUT printed it on their own A3 poster. Also keep out: the circle.so private checkout link, venue wifi username and password, the on-site supervisor's personal mobile (the 0800 IS fine), Drive/Sheets registration lists, the workbook's 100+ attendee and mentor emails, the five late-added participants' emails from Mahsa 2 Aug, and the personal Gmail/Outlook addresses visible in the 5 Aug email screenshots. Item 11 (the two extra work venues) was pushed back to Mahsa in-thread on 5 Aug and is STILL UNANSWERED — nothing may be invented for that slide. Items 1,2,3,4,9,10,12,13 all shipped in PR #100 (merged): rail is SHE # upright, title meta is two facts, Professor Suzanne no longer credited with H&S, Who-to-Find deleted with the 0800 moved into SAFETY_LINES, problems reordered F&P→F&P→Woolworths with sponsor marks and My Life My Voice removed, UN SDG grid added after the themes, pitch-template QR moved off the Circle.so login wall to shesharp.org.nz/docs/pitch-deck-template-2026.pdf, and the keynote plate rebuilt on the deck canvas by scripts/deck/build-keynote-plate.ts (NOT green - green would have taken its cue from AI Forum rather than this deck). Deck is 60 slides. OPEN: post-event gallery pass after 8 Aug (status → past, add galleryUrl).",
+      "digestAt": "2026-08-05T13:48:24.557Z"
     },
     "C0B5ZAXUKRQ": {
       "name": "mpdm-yeshakaniyawala--mahsa--chanmeng6666-1",
@@ -8549,9 +9091,14 @@
         "kind": "none"
       },
       "watermarkTs": "1777555698.818079",
-      "threads": {},
+      "threads": {
+        "1500411589.519788": {
+          "replyCount": 1,
+          "latestReplyTs": "1500419212.458974"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "CAX7EK06Q": {
@@ -8561,9 +9108,26 @@
         "kind": "none"
       },
       "watermarkTs": "1777555699.781849",
-      "threads": {},
+      "threads": {
+        "1615940430.001200": {
+          "replyCount": 2,
+          "latestReplyTs": "1616101060.000700"
+        },
+        "1679908104.655719": {
+          "replyCount": 4,
+          "latestReplyTs": "1679910951.786979"
+        },
+        "1691056909.763979": {
+          "replyCount": 1,
+          "latestReplyTs": "1691655708.569459"
+        },
+        "1700471651.508359": {
+          "replyCount": 2,
+          "latestReplyTs": "1702975983.537599"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
       "lastSyncedCommit": ""
     },
     "CGJPELDC4": {
@@ -9841,9 +10405,22 @@
         "kind": "none"
       },
       "watermarkTs": "1781826159.264339",
-      "threads": {},
+      "threads": {
+        "1779693734.340739": {
+          "replyCount": 3,
+          "latestReplyTs": "1779696239.836609"
+        },
+        "1779693872.782049": {
+          "replyCount": 6,
+          "latestReplyTs": "1779703290.460149"
+        },
+        "1781826159.264339": {
+          "replyCount": 1,
+          "latestReplyTs": "1781921949.568759"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "D094QBSMJNR": {
@@ -9889,9 +10466,14 @@
         "kind": "none"
       },
       "watermarkTs": "1768989765.177879",
-      "threads": {},
+      "threads": {
+        "1752913396.849969": {
+          "replyCount": 11,
+          "latestReplyTs": "1752975800.520999"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "D095L79FJHE": {
@@ -10013,9 +10595,18 @@
         "kind": "none"
       },
       "watermarkTs": "1785749472.664919",
-      "threads": {},
+      "threads": {
+        "1782128177.418369": {
+          "replyCount": 7,
+          "latestReplyTs": "1782129187.173439"
+        },
+        "1782209401.095439": {
+          "replyCount": 1,
+          "latestReplyTs": "1782209665.242699"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": ""
     },
     "D09FZHRC89W": {
@@ -10140,10 +10731,10 @@
         "kind": "skip",
         "reason": "1:1 DM with Nirmala Chinnappan (events). Carries direct event-page edit requests - read the delta in full every run."
       },
-      "watermarkTs": "1785879903.379449",
+      "watermarkTs": "1785920273.268289",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T04:30:43.841Z",
+      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
       "lastSyncedCommit": "",
       "digest": "READ IN FULL. Nirmala asks for page changes here as well as in channel. 2026-08-04: 'Can you publish the Les Mills event live? I have updated the banner in humanitix page' + 'give the above url to Register Now button' -> registrationUrl applied 5 Aug. 13 Jul: the four AI Hackathon judge profiles, sourced from the private Runsheet Google Sheet - already live. 3 Aug she asked where the published mentor list came from. Her outstanding ask is Les Mills SPEAKER profiles, still blocked on that private Sheet.",
       "digestAt": "2026-08-05T04:30:43.840Z"
