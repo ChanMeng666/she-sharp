@@ -54,6 +54,38 @@ export interface ThreadState {
   latestReplyTs: string;
 }
 
+/**
+ * Reads a `fetch-channel.ts` payload, and says something useful when it is not
+ * one.
+ *
+ * The failure this exists for: the Slack SDK's default logger writes to stdout,
+ * and stdout is where the payload goes. It stays quiet until a run hits the
+ * rate limit, at which point retry notices land in the middle of the JSON and
+ * every downstream script dies on `Unexpected token 'I'`. That reads like a
+ * corrupt download; it is a logger pointed at the wrong stream. `slack-client.ts`
+ * now routes SDK logs to stderr, and this turns any recurrence — a stray
+ * `console.log` in a script, a dependency doing the same thing — into a message
+ * that names its own cause instead of a stack trace.
+ */
+export function readPayload(path: string): any {
+  const raw = readFileSync(path, "utf8");
+  try {
+    return JSON.parse(raw);
+  } catch (error) {
+    const head = raw.slice(0, 200).replace(/\s+/g, " ");
+    const polluted = /^\s*\[(INFO|WARN|DEBUG|ERROR)\]/m.test(raw);
+    throw new Error(
+      `${path} is not valid JSON.\n` +
+        (polluted
+          ? "  It contains log lines. Something wrote to STDOUT, which is where the payload goes —\n" +
+            "  check for a console.log in a script, or an SDK logger that is not pointed at stderr.\n"
+          : "  The fetch may have been interrupted; re-run it.\n") +
+        `  starts: ${head}\n` +
+        `  parser: ${(error as Error).message}`,
+    );
+  }
+}
+
 /** The two fields Slack returns on a parent message that has replies. */
 export interface ThreadFacts {
   reply_count?: number;
