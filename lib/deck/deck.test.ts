@@ -14,7 +14,7 @@
  */
 
 import assert from "node:assert";
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 import { customEventsV3 } from "@/lib/data/events-custom";
@@ -30,6 +30,7 @@ import { buildClosingSlides, buildOpeningSlides } from "./boilerplate";
 import {
   deckMetaFrom,
   deckTitleFrom,
+  discussionMinutesFrom,
   findRowByPatterns,
   loadEventForDeck,
   minutesOf,
@@ -478,6 +479,29 @@ const tableRow = findRowByPatterns(lesMillsSheet, [
 check(
   "the table-discussion clock comes from the roundtable row, not the panel",
   tableRow?.time === "6:15pm – 6:30pm" && minutesOf(tableRow.time) === 15,
+);
+check(
+  "the countdown length is derived, not a default",
+  discussionMinutesFrom(loadEventForDeck("event-lesmills-03-september-2026")) === 15,
+);
+
+/*
+ * The countdown must be read from the event data on every build, not frozen
+ * into the deck when it was generated. `content-checklist.md` tells organisers
+ * that correcting the schedule corrects the clock, and a documented promise
+ * that the code does not keep is worse than no promise: nobody re-checks it.
+ */
+const generatedDecks = readdirSync(join(process.cwd(), "lib", "deck", "decks"))
+  .filter((name) => name.endsWith(".ts"))
+  .map((name) => ({
+    name,
+    source: readFileSync(join(process.cwd(), "lib", "deck", "decks", name), "utf8"),
+  }))
+  .filter(({ source }) => source.includes("discussionMinutesFrom"));
+
+check(
+  `no deck freezes its countdown as a literal (${generatedDecks.length} using the template)`,
+  generatedDecks.every(({ source }) => !/^\s*minutes:\s*\d+\s*,/m.test(source)),
 );
 
 /* Every deck file under decks/ must be registered, or `/present/<slug>` 404s
