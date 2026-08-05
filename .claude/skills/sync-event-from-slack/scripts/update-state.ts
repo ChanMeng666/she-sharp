@@ -33,6 +33,7 @@ import {
   fingerprintForMapping,
   loadManifest,
   nowIso,
+  readPayload,
   saveManifest,
   type ChannelState,
   type Mapping,
@@ -64,7 +65,7 @@ function main() {
   let threads: Record<string, ThreadState> = {};
 
   if (fromFile) {
-    const payload = JSON.parse(readFileSync(fromFile, "utf8"));
+    const payload = readPayload(fromFile);
     channelId = channelId ?? payload.channel?.id;
     name = name ?? payload.channel?.name;
     watermarkTs = watermarkTs ?? payload._meta?.newWatermarkTs;

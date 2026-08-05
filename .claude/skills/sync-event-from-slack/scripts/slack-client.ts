@@ -22,7 +22,39 @@
  */
 
 import "dotenv/config";
-import { WebClient } from "@slack/web-api";
+import { WebClient, type Logger } from "@slack/web-api";
+
+/**
+ * EVERY LOG LINE GOES TO STDERR. STDOUT IS THE PAYLOAD.
+ *
+ * `fetch-channel.ts` writes its JSON to stdout and every caller redirects it to
+ * a file. The Slack SDK's default logger writes to stdout, and it is silent
+ * until it is not: it only speaks when a call is retried. So the scripts worked
+ * perfectly until a backlog pass hit the `conversations.replies` rate limit,
+ * and then ten of eleven payloads came back as JSON with
+ * `[INFO] web-api:WebClient:0 API Call failed due to rate limiting` wedged into
+ * them. The failure looked like a network problem and was a plumbing one.
+ *
+ * A logger that writes diagnostics onto the same channel as the data is a bug
+ * waiting for load. Retries are worth seeing — they explain a slow run — so
+ * they are kept, and merely pointed at stderr where they belong.
+ */
+const stderrLogger: Logger = {
+  /*
+   * DEBUG IS DROPPED, NOT REDIRECTED. Supplying a custom logger makes the SDK
+   * emit at debug level, and its debug stream is every request header and every
+   * full response body. On a workspace whose DMs this token can read, that is
+   * private conversation written into a log file — and 220 conversations of it
+   * buries the retry notices that are the only reason to keep logging at all.
+   */
+  debug: () => {},
+  info: (...m) => console.error("[slack:info]", ...m),
+  warn: (...m) => console.error("[slack:warn]", ...m),
+  error: (...m) => console.error("[slack:error]", ...m),
+  setLevel: () => {},
+  getLevel: () => "info" as never,
+  setName: () => {},
+};
 
 const userToken = process.env.SLACK_USER_TOKEN?.trim() || "";
 const botToken = process.env.SLACK_BOT_TOKEN?.trim() || "";
@@ -37,14 +69,16 @@ if (!TOKEN) {
   process.exit(1);
 }
 
-export const slack = new WebClient(TOKEN);
+export const slack = new WebClient(TOKEN, { logger: stderrLogger });
 
 /**
  * The bot client, kept separate even when a user token is driving reads.
  * `conversations.join` on a user token makes the HUMAN join, which posts a
  * visible "has joined the channel" line to the room. Joining is the bot's job.
  */
-export const botSlack = botToken ? new WebClient(botToken) : null;
+export const botSlack = botToken
+  ? new WebClient(botToken, { logger: stderrLogger })
+  : null;
 
 /**
  * A user token reads any PUBLIC channel's history without joining it — verified

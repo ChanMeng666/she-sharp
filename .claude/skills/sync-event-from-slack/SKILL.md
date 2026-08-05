@@ -513,3 +513,19 @@ filename to `.jpg`. Do not re-encode the file.
 - Interact with any Slack app other than the Collector.
 
 Anything outside this boundary is a separate task.
+
+## Stdout is the payload
+
+`fetch-channel.ts` writes JSON to stdout and every caller redirects it to a
+file, so **nothing else may ever write there**. The Slack SDK's default logger
+did: it is silent until a run hits a rate limit, and then retry notices land in
+the middle of the JSON. Ten of eleven payloads in the 5 Aug 2026 backlog pass
+came back unparseable that way, which reads like a corrupt download and is a
+logger pointed at the wrong stream.
+
+`slack-client.ts` now routes SDK logs to stderr, and `readPayload()` in
+`state-lib.ts` — used by `render-delta.ts` and `update-state.ts` — detects log
+lines in a payload and says so instead of dying on `Unexpected token 'I'`.
+
+If you add a script here, print diagnostics with `console.error`, never
+`console.log`, unless the script's whole output *is* the data.

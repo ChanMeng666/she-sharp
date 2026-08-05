@@ -21,6 +21,10 @@
       },
       "watermarkTs": "1785460260.522289",
       "threads": {
+        "1772515159.092139": {
+          "replyCount": 4,
+          "latestReplyTs": "1772568084.035449"
+        },
         "1773653563.646719": {
           "replyCount": 2,
           "latestReplyTs": "1773654078.957409"
@@ -55,7 +59,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
       "lastSyncedCommit": ""
     },
     "C01NEKYP0CR": {
@@ -66,6 +70,30 @@
       },
       "watermarkTs": "1777555705.572599",
       "threads": {
+        "1613853400.002700": {
+          "replyCount": 1,
+          "latestReplyTs": "1613853499.005200"
+        },
+        "1653940803.324789": {
+          "replyCount": 3,
+          "latestReplyTs": "1653953282.044689"
+        },
+        "1653954335.391949": {
+          "replyCount": 1,
+          "latestReplyTs": "1653954359.027399"
+        },
+        "1691649031.434409": {
+          "replyCount": 4,
+          "latestReplyTs": "1691652641.240389"
+        },
+        "1691652597.239969": {
+          "replyCount": 1,
+          "latestReplyTs": "1691653843.391869"
+        },
+        "1692083850.082779": {
+          "replyCount": 3,
+          "latestReplyTs": "1692084464.739229"
+        },
         "1692320228.765859": {
           "replyCount": 1,
           "latestReplyTs": "1719918439.653219"
@@ -100,7 +128,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
       "lastSyncedCommit": ""
     },
     "C01SU11D0G7": {
@@ -177,25 +205,69 @@
       "name": "events-2021-techweek-imaginezone",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2021-05-03 → 2021-05-24). The channel never posted its own page URL, so the page was not confirmed from its content (a published page may well be /events/imagine-zone-techweek or /events/she-techweek-2017). Either way this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555708.556449",
-      "threads": {},
+      "threads": {
+        "1620032414.002000": {
+          "replyCount": 1,
+          "latestReplyTs": "1620035660.003200"
+        },
+        "1620206883.000900": {
+          "replyCount": 24,
+          "latestReplyTs": "1620333850.000200"
+        },
+        "1620268691.006000": {
+          "replyCount": 2,
+          "latestReplyTs": "1620274505.007300"
+        },
+        "1620795044.008200": {
+          "replyCount": 1,
+          "latestReplyTs": "1620805001.010700"
+        },
+        "1621487956.008200": {
+          "replyCount": 2,
+          "latestReplyTs": "1621488818.008600"
+        },
+        "1621851186.023800": {
+          "replyCount": 2,
+          "latestReplyTs": "1621851265.024700"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:03.354Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2021-05-03 → 2021-05-24. No page URL was ever posted in the channel, so none was confirmed from its content (candidates worth checking: /events/imagine-zone-techweek, /events/she-techweek-2017). The 38 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:46:03.353Z"
     },
     "C025NC3QWDQ": {
       "name": "events-2021-girl-guiding",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2021-06-27 → 2021-08-13). The channel never posted its own page URL, so the page was not confirmed from its content. Either way this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555709.517109",
-      "threads": {},
+      "threads": {
+        "1624787222.006100": {
+          "replyCount": 8,
+          "latestReplyTs": "1624789375.015500"
+        },
+        "1626221998.005700": {
+          "replyCount": 2,
+          "latestReplyTs": "1626226994.006400"
+        },
+        "1628816036.002900": {
+          "replyCount": 3,
+          "latestReplyTs": "1628823782.004000"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:01.957Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2021-06-27 → 2021-08-13. No page URL was ever posted in the channel, so none was confirmed from its content. The 16 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:46:01.957Z"
     },
     "C026C5R2QQK": {
       "name": "expo-2021-northwest-schools",
@@ -230,6 +302,10 @@
       },
       "watermarkTs": "1777555711.490919",
       "threads": {
+        "1695595679.694229": {
+          "replyCount": 4,
+          "latestReplyTs": "1695627945.921259"
+        },
         "1699861576.413289": {
           "replyCount": 4,
           "latestReplyTs": "1699861806.340669"
@@ -264,7 +340,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
       "lastSyncedCommit": ""
     },
     "C0342CMEV7B": {
@@ -275,6 +351,14 @@
       },
       "watermarkTs": "1777555712.446479",
       "threads": {
+        "1645174110.443099": {
+          "replyCount": 1,
+          "latestReplyTs": "1645174154.134309"
+        },
+        "1645174127.447729": {
+          "replyCount": 1,
+          "latestReplyTs": "1645174189.989389"
+        },
         "1645174167.208949": {
           "replyCount": 1,
           "latestReplyTs": "1645174226.691479"
@@ -309,7 +393,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
       "lastSyncedCommit": ""
     },
     "C03J6C08WQL": {
@@ -320,6 +404,38 @@
       },
       "watermarkTs": "1784629854.545499",
       "threads": {
+        "1654552860.247709": {
+          "replyCount": 1,
+          "latestReplyTs": "1655855913.226619"
+        },
+        "1659218258.272399": {
+          "replyCount": 7,
+          "latestReplyTs": "1659514937.886499"
+        },
+        "1659352046.710889": {
+          "replyCount": 8,
+          "latestReplyTs": "1661762336.219469"
+        },
+        "1659389188.144349": {
+          "replyCount": 1,
+          "latestReplyTs": "1659389387.196569"
+        },
+        "1680203652.290829": {
+          "replyCount": 1,
+          "latestReplyTs": "1680207122.813659"
+        },
+        "1695190773.667789": {
+          "replyCount": 1,
+          "latestReplyTs": "1695191911.721459"
+        },
+        "1707987739.312329": {
+          "replyCount": 7,
+          "latestReplyTs": "1709158701.512449"
+        },
+        "1710717878.092059": {
+          "replyCount": 1,
+          "latestReplyTs": "1710736087.160219"
+        },
         "1710887856.582079": {
           "replyCount": 3,
           "latestReplyTs": "1710889098.340409"
@@ -354,7 +470,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
       "lastSyncedCommit": ""
     },
     "C03KYCN4Z6C": {
@@ -365,6 +481,38 @@
       },
       "watermarkTs": "1777555714.364369",
       "threads": {
+        "1655774342.002469": {
+          "replyCount": 1,
+          "latestReplyTs": "1655775113.275479"
+        },
+        "1655782860.938309": {
+          "replyCount": 3,
+          "latestReplyTs": "1655788759.437909"
+        },
+        "1655851038.177399": {
+          "replyCount": 1,
+          "latestReplyTs": "1655853707.316899"
+        },
+        "1655953052.552969": {
+          "replyCount": 1,
+          "latestReplyTs": "1655956033.518799"
+        },
+        "1656207955.081729": {
+          "replyCount": 1,
+          "latestReplyTs": "1656229722.924469"
+        },
+        "1656286913.340929": {
+          "replyCount": 4,
+          "latestReplyTs": "1656290129.732459"
+        },
+        "1656286958.136619": {
+          "replyCount": 1,
+          "latestReplyTs": "1656287322.516179"
+        },
+        "1656364769.286059": {
+          "replyCount": 22,
+          "latestReplyTs": "1656379079.743399"
+        },
         "1656383889.508459": {
           "replyCount": 2,
           "latestReplyTs": "1656384485.844599"
@@ -399,7 +547,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
       "lastSyncedCommit": ""
     },
     "C0438BZ7DL6": {
@@ -410,6 +558,38 @@
       },
       "watermarkTs": "1780559027.001549",
       "threads": {
+        "1725078605.080239": {
+          "replyCount": 3,
+          "latestReplyTs": "1725078935.818769"
+        },
+        "1725079479.472499": {
+          "replyCount": 10,
+          "latestReplyTs": "1725447192.741929"
+        },
+        "1725269997.021059": {
+          "replyCount": 2,
+          "latestReplyTs": "1726125218.224399"
+        },
+        "1725871005.473059": {
+          "replyCount": 21,
+          "latestReplyTs": "1726190741.783469"
+        },
+        "1726468678.804339": {
+          "replyCount": 9,
+          "latestReplyTs": "1726481082.426719"
+        },
+        "1726478611.090899": {
+          "replyCount": 5,
+          "latestReplyTs": "1726480072.132639"
+        },
+        "1726518473.119489": {
+          "replyCount": 7,
+          "latestReplyTs": "1726733110.838239"
+        },
+        "1726524106.998069": {
+          "replyCount": 1,
+          "latestReplyTs": "1726553336.613159"
+        },
         "1726631377.207779": {
           "replyCount": 3,
           "latestReplyTs": "1726638189.011429"
@@ -444,7 +624,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
       "lastSyncedCommit": ""
     },
     "C0476MCR9B2": {
@@ -463,13 +643,21 @@
       "name": "event-ambassadors",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Ambassador-programme operations, not an event. Named `event-*` by convention only. Skipped 2023-03-01; 6 unread messages read and scored first."
       },
       "watermarkTs": "1777555717.226889",
-      "threads": {},
+      "threads": {
+        "1677713621.137679": {
+          "replyCount": 5,
+          "latestReplyTs": "1677714747.219769"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:45:47.691Z",
+      "lastSyncedCommit": "",
+      "digest": "Ambassador-programme operations, not an event. Named `event-*` by convention only. Read position recorded 2023-03-01 after the 5 Aug 2026 thread-backlog pass, which surfaced 6 historical replies this pipeline had never read. Reopen only if a genuinely new event is proposed here.",
+      "digestAt": "2026-08-05T14:45:47.691Z"
     },
     "C04PN9L7UG1": {
       "name": "new-ambassadors-2023",
@@ -2081,25 +2269,553 @@
       "name": "events-2023-october-aut-school",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2023-08-23 → 2023-10-25); planning chatter for something that has already happened. The channel references the published page(s) /events/technological-change-workplace-workforce-impacts — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555725.120439",
-      "threads": {},
+      "threads": {
+        "1692765582.586469": {
+          "replyCount": 10,
+          "latestReplyTs": "1693034875.656599"
+        },
+        "1693170418.598109": {
+          "replyCount": 1,
+          "latestReplyTs": "1693181579.751199"
+        },
+        "1693213452.679039": {
+          "replyCount": 1,
+          "latestReplyTs": "1693258928.670079"
+        },
+        "1693468521.063789": {
+          "replyCount": 1,
+          "latestReplyTs": "1693469128.209039"
+        },
+        "1693701912.986419": {
+          "replyCount": 1,
+          "latestReplyTs": "1693702020.536379"
+        },
+        "1693861274.029709": {
+          "replyCount": 2,
+          "latestReplyTs": "1693916718.108449"
+        },
+        "1693894105.908489": {
+          "replyCount": 1,
+          "latestReplyTs": "1693894670.141199"
+        },
+        "1693900539.563959": {
+          "replyCount": 2,
+          "latestReplyTs": "1693916557.799869"
+        },
+        "1693904746.452769": {
+          "replyCount": 5,
+          "latestReplyTs": "1694082510.929579"
+        },
+        "1693917587.750039": {
+          "replyCount": 1,
+          "latestReplyTs": "1693942208.264089"
+        },
+        "1693918502.685719": {
+          "replyCount": 2,
+          "latestReplyTs": "1693991780.907209"
+        },
+        "1694037207.605239": {
+          "replyCount": 1,
+          "latestReplyTs": "1694082977.345389"
+        },
+        "1694063293.129139": {
+          "replyCount": 2,
+          "latestReplyTs": "1694082896.006199"
+        },
+        "1694082836.929799": {
+          "replyCount": 3,
+          "latestReplyTs": "1694082985.432079"
+        },
+        "1694343105.935969": {
+          "replyCount": 8,
+          "latestReplyTs": "1694508787.193049"
+        },
+        "1694484113.807799": {
+          "replyCount": 1,
+          "latestReplyTs": "1694485295.229879"
+        },
+        "1694484127.443419": {
+          "replyCount": 8,
+          "latestReplyTs": "1694517598.313679"
+        },
+        "1694598507.411539": {
+          "replyCount": 1,
+          "latestReplyTs": "1694598885.500949"
+        },
+        "1694598987.908419": {
+          "replyCount": 3,
+          "latestReplyTs": "1694607026.643469"
+        },
+        "1694741030.119279": {
+          "replyCount": 1,
+          "latestReplyTs": "1694757056.278589"
+        },
+        "1694992099.113129": {
+          "replyCount": 2,
+          "latestReplyTs": "1695020079.837889"
+        },
+        "1694995281.989579": {
+          "replyCount": 1,
+          "latestReplyTs": "1694999214.541129"
+        },
+        "1695339049.898369": {
+          "replyCount": 18,
+          "latestReplyTs": "1695343324.640019"
+        },
+        "1695341958.008349": {
+          "replyCount": 4,
+          "latestReplyTs": "1695354041.472009"
+        },
+        "1695632707.731539": {
+          "replyCount": 2,
+          "latestReplyTs": "1695795985.941399"
+        },
+        "1695681750.315499": {
+          "replyCount": 1,
+          "latestReplyTs": "1695687835.011769"
+        },
+        "1695683633.768829": {
+          "replyCount": 1,
+          "latestReplyTs": "1695705858.484699"
+        },
+        "1695712353.861869": {
+          "replyCount": 2,
+          "latestReplyTs": "1695757531.122349"
+        },
+        "1695712416.613359": {
+          "replyCount": 2,
+          "latestReplyTs": "1695800114.443359"
+        },
+        "1695760046.303169": {
+          "replyCount": 1,
+          "latestReplyTs": "1695798883.443519"
+        },
+        "1696211643.645149": {
+          "replyCount": 3,
+          "latestReplyTs": "1696225173.194689"
+        },
+        "1696250413.459309": {
+          "replyCount": 5,
+          "latestReplyTs": "1696318151.599169"
+        },
+        "1696290961.644379": {
+          "replyCount": 3,
+          "latestReplyTs": "1696298131.581179"
+        },
+        "1696291092.089139": {
+          "replyCount": 5,
+          "latestReplyTs": "1696386379.634719"
+        },
+        "1696317887.001529": {
+          "replyCount": 1,
+          "latestReplyTs": "1696326800.516859"
+        },
+        "1696318377.781449": {
+          "replyCount": 5,
+          "latestReplyTs": "1696455279.325499"
+        },
+        "1696449005.571019": {
+          "replyCount": 1,
+          "latestReplyTs": "1696459941.128159"
+        },
+        "1696472361.572029": {
+          "replyCount": 1,
+          "latestReplyTs": "1696565100.987719"
+        },
+        "1696564502.681569": {
+          "replyCount": 3,
+          "latestReplyTs": "1696761739.098499"
+        },
+        "1696564689.661779": {
+          "replyCount": 2,
+          "latestReplyTs": "1696571950.245799"
+        },
+        "1696566306.245659": {
+          "replyCount": 3,
+          "latestReplyTs": "1696570379.918849"
+        },
+        "1696566437.189889": {
+          "replyCount": 2,
+          "latestReplyTs": "1696570476.112889"
+        },
+        "1696570323.824589": {
+          "replyCount": 3,
+          "latestReplyTs": "1696581977.621589"
+        },
+        "1696570555.275169": {
+          "replyCount": 2,
+          "latestReplyTs": "1696570976.883719"
+        },
+        "1696582114.425089": {
+          "replyCount": 2,
+          "latestReplyTs": "1696640306.227929"
+        },
+        "1696583934.305089": {
+          "replyCount": 2,
+          "latestReplyTs": "1696735373.322829"
+        },
+        "1696640553.827829": {
+          "replyCount": 5,
+          "latestReplyTs": "1696761114.513329"
+        },
+        "1696646630.520379": {
+          "replyCount": 2,
+          "latestReplyTs": "1696653414.044769"
+        },
+        "1696745505.448459": {
+          "replyCount": 5,
+          "latestReplyTs": "1696761756.363139"
+        },
+        "1696811274.870699": {
+          "replyCount": 5,
+          "latestReplyTs": "1696821137.613359"
+        },
+        "1696822737.040839": {
+          "replyCount": 3,
+          "latestReplyTs": "1696831951.825359"
+        },
+        "1696823111.124799": {
+          "replyCount": 3,
+          "latestReplyTs": "1696827416.534289"
+        },
+        "1696843256.053089": {
+          "replyCount": 23,
+          "latestReplyTs": "1696931302.057569"
+        },
+        "1696847735.643309": {
+          "replyCount": 1,
+          "latestReplyTs": "1696882846.965409"
+        },
+        "1696885153.953599": {
+          "replyCount": 1,
+          "latestReplyTs": "1696893451.557679"
+        },
+        "1697005862.529609": {
+          "replyCount": 4,
+          "latestReplyTs": "1697057234.600629"
+        },
+        "1698189008.377569": {
+          "replyCount": 2,
+          "latestReplyTs": "1698220034.090879"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:06.167Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2023-08-23 → 2023-10-25. It references the published page(s) /events/technological-change-workplace-workforce-impacts — referenced, not verified as its own. The 243 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:46:06.166Z"
     },
     "C05MVTQ59BJ": {
       "name": "events-2023-google-educator-november",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2023-09-03 → 2023-11-27); planning chatter for something that has already happened. The channel references the published page(s) /events/google-end-of-year-event — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555726.122139",
-      "threads": {},
+      "threads": {
+        "1693702100.728629": {
+          "replyCount": 1,
+          "latestReplyTs": "1693785864.887489"
+        },
+        "1694062438.982029": {
+          "replyCount": 1,
+          "latestReplyTs": "1694119965.513469"
+        },
+        "1694082584.342509": {
+          "replyCount": 1,
+          "latestReplyTs": "1694597284.853499"
+        },
+        "1694388340.029809": {
+          "replyCount": 2,
+          "latestReplyTs": "1694389847.372229"
+        },
+        "1694597905.174479": {
+          "replyCount": 6,
+          "latestReplyTs": "1694598681.703799"
+        },
+        "1694667107.673799": {
+          "replyCount": 4,
+          "latestReplyTs": "1694948507.354469"
+        },
+        "1694757891.708009": {
+          "replyCount": 1,
+          "latestReplyTs": "1694768437.243459"
+        },
+        "1694949515.727319": {
+          "replyCount": 19,
+          "latestReplyTs": "1695082635.246669"
+        },
+        "1695014385.761489": {
+          "replyCount": 1,
+          "latestReplyTs": "1695014445.800049"
+        },
+        "1695014523.672529": {
+          "replyCount": 22,
+          "latestReplyTs": "1695075482.805739"
+        },
+        "1695094873.205509": {
+          "replyCount": 5,
+          "latestReplyTs": "1695101425.718399"
+        },
+        "1696467743.725389": {
+          "replyCount": 3,
+          "latestReplyTs": "1696554753.501389"
+        },
+        "1696741784.078479": {
+          "replyCount": 2,
+          "latestReplyTs": "1696846562.688369"
+        },
+        "1697003501.895309": {
+          "replyCount": 3,
+          "latestReplyTs": "1697155667.816239"
+        },
+        "1697181935.151399": {
+          "replyCount": 1,
+          "latestReplyTs": "1697193114.275069"
+        },
+        "1697340320.060469": {
+          "replyCount": 3,
+          "latestReplyTs": "1697456144.429149"
+        },
+        "1697340442.535889": {
+          "replyCount": 1,
+          "latestReplyTs": "1697352448.600349"
+        },
+        "1697621606.844879": {
+          "replyCount": 2,
+          "latestReplyTs": "1697622114.931909"
+        },
+        "1697695318.121169": {
+          "replyCount": 20,
+          "latestReplyTs": "1697789582.847779"
+        },
+        "1697869986.093449": {
+          "replyCount": 6,
+          "latestReplyTs": "1698009778.001769"
+        },
+        "1698129636.755689": {
+          "replyCount": 1,
+          "latestReplyTs": "1698129921.702549"
+        },
+        "1698129671.879049": {
+          "replyCount": 3,
+          "latestReplyTs": "1698145582.259539"
+        },
+        "1698222296.676809": {
+          "replyCount": 3,
+          "latestReplyTs": "1698222914.395779"
+        },
+        "1698388303.501489": {
+          "replyCount": 17,
+          "latestReplyTs": "1698903287.280119"
+        },
+        "1698628917.963529": {
+          "replyCount": 1,
+          "latestReplyTs": "1698646873.137189"
+        },
+        "1698880009.483429": {
+          "replyCount": 1,
+          "latestReplyTs": "1698880529.515019"
+        },
+        "1698880076.670409": {
+          "replyCount": 2,
+          "latestReplyTs": "1698907651.095259"
+        },
+        "1698887361.262229": {
+          "replyCount": 1,
+          "latestReplyTs": "1698887504.446289"
+        },
+        "1698915981.614809": {
+          "replyCount": 1,
+          "latestReplyTs": "1699090001.832629"
+        },
+        "1698951147.590749": {
+          "replyCount": 1,
+          "latestReplyTs": "1698957444.169269"
+        },
+        "1699090034.956689": {
+          "replyCount": 1,
+          "latestReplyTs": "1699161683.116749"
+        },
+        "1699141035.900249": {
+          "replyCount": 3,
+          "latestReplyTs": "1699153552.076909"
+        },
+        "1699160871.141679": {
+          "replyCount": 5,
+          "latestReplyTs": "1700157724.835359"
+        },
+        "1699160878.098759": {
+          "replyCount": 3,
+          "latestReplyTs": "1699163382.781289"
+        },
+        "1699163516.844799": {
+          "replyCount": 1,
+          "latestReplyTs": "1699163608.749539"
+        },
+        "1699217173.508969": {
+          "replyCount": 2,
+          "latestReplyTs": "1699230948.676969"
+        },
+        "1699225526.385929": {
+          "replyCount": 1,
+          "latestReplyTs": "1699308939.115549"
+        },
+        "1699238662.884719": {
+          "replyCount": 9,
+          "latestReplyTs": "1699253848.978759"
+        },
+        "1699238788.124879": {
+          "replyCount": 1,
+          "latestReplyTs": "1699239719.570229"
+        },
+        "1699255265.493639": {
+          "replyCount": 8,
+          "latestReplyTs": "1699329166.461379"
+        },
+        "1699313088.902189": {
+          "replyCount": 1,
+          "latestReplyTs": "1699323407.328489"
+        },
+        "1699318532.147919": {
+          "replyCount": 1,
+          "latestReplyTs": "1699322657.379569"
+        },
+        "1699413741.131759": {
+          "replyCount": 1,
+          "latestReplyTs": "1699414007.189049"
+        },
+        "1699432795.516109": {
+          "replyCount": 12,
+          "latestReplyTs": "1699434629.173959"
+        },
+        "1699437262.892289": {
+          "replyCount": 1,
+          "latestReplyTs": "1699437349.367949"
+        },
+        "1699440379.028489": {
+          "replyCount": 1,
+          "latestReplyTs": "1699440529.537609"
+        },
+        "1699663061.936749": {
+          "replyCount": 2,
+          "latestReplyTs": "1699782027.308579"
+        },
+        "1699668089.526549": {
+          "replyCount": 1,
+          "latestReplyTs": "1699668247.407579"
+        },
+        "1699822640.482319": {
+          "replyCount": 1,
+          "latestReplyTs": "1699822742.176549"
+        },
+        "1699824075.758509": {
+          "replyCount": 1,
+          "latestReplyTs": "1699825207.716699"
+        },
+        "1699827233.286569": {
+          "replyCount": 3,
+          "latestReplyTs": "1699905611.387509"
+        },
+        "1699910306.804109": {
+          "replyCount": 5,
+          "latestReplyTs": "1699913453.861629"
+        },
+        "1699910546.823549": {
+          "replyCount": 3,
+          "latestReplyTs": "1699924485.457179"
+        },
+        "1699932527.483919": {
+          "replyCount": 3,
+          "latestReplyTs": "1699995891.374589"
+        },
+        "1699932543.157559": {
+          "replyCount": 1,
+          "latestReplyTs": "1699935759.888439"
+        },
+        "1699934526.619549": {
+          "replyCount": 2,
+          "latestReplyTs": "1699937178.704469"
+        },
+        "1699992184.631579": {
+          "replyCount": 2,
+          "latestReplyTs": "1699995205.793359"
+        },
+        "1699997666.393749": {
+          "replyCount": 3,
+          "latestReplyTs": "1700006572.654689"
+        },
+        "1700002109.645949": {
+          "replyCount": 20,
+          "latestReplyTs": "1700013780.850269"
+        },
+        "1700031523.126079": {
+          "replyCount": 1,
+          "latestReplyTs": "1700080046.970919"
+        },
+        "1700031542.231059": {
+          "replyCount": 7,
+          "latestReplyTs": "1700099590.948529"
+        },
+        "1700079957.347119": {
+          "replyCount": 2,
+          "latestReplyTs": "1700080143.510889"
+        },
+        "1700084573.447069": {
+          "replyCount": 1,
+          "latestReplyTs": "1700085826.528439"
+        },
+        "1700084656.591769": {
+          "replyCount": 9,
+          "latestReplyTs": "1700115236.275879"
+        },
+        "1700119939.874989": {
+          "replyCount": 1,
+          "latestReplyTs": "1700122240.735019"
+        },
+        "1700120723.499629": {
+          "replyCount": 2,
+          "latestReplyTs": "1700126422.651969"
+        },
+        "1700122260.123199": {
+          "replyCount": 1,
+          "latestReplyTs": "1700123912.678549"
+        },
+        "1700127330.506009": {
+          "replyCount": 1,
+          "latestReplyTs": "1700127559.470929"
+        },
+        "1700128087.443429": {
+          "replyCount": 2,
+          "latestReplyTs": "1700291700.427789"
+        },
+        "1700297496.800169": {
+          "replyCount": 1,
+          "latestReplyTs": "1700298347.265869"
+        },
+        "1700370851.229739": {
+          "replyCount": 5,
+          "latestReplyTs": "1700374675.441389"
+        },
+        "1700616056.501109": {
+          "replyCount": 4,
+          "latestReplyTs": "1700680439.110159"
+        },
+        "1701023357.001459": {
+          "replyCount": 2,
+          "latestReplyTs": "1701072568.387719"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:04.765Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2023-09-03 → 2023-11-27. It references the published page(s) /events/google-end-of-year-event — referenced, not verified as its own. The 345 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:46:04.764Z"
     },
     "C05PDCPJD1N": {
       "name": "socialmedia",
@@ -2109,6 +2825,38 @@
       },
       "watermarkTs": "1777555727.098769",
       "threads": {
+        "1710874717.388139": {
+          "replyCount": 5,
+          "latestReplyTs": "1712707607.219149"
+        },
+        "1711386061.430469": {
+          "replyCount": 1,
+          "latestReplyTs": "1711386194.046279"
+        },
+        "1712605993.555489": {
+          "replyCount": 1,
+          "latestReplyTs": "1712655763.615399"
+        },
+        "1712608016.404129": {
+          "replyCount": 5,
+          "latestReplyTs": "1713068159.819169"
+        },
+        "1713647206.909679": {
+          "replyCount": 1,
+          "latestReplyTs": "1713663390.469249"
+        },
+        "1713762728.920979": {
+          "replyCount": 2,
+          "latestReplyTs": "1713768220.254659"
+        },
+        "1713841749.641519": {
+          "replyCount": 1,
+          "latestReplyTs": "1713843049.416619"
+        },
+        "1714598983.789869": {
+          "replyCount": 5,
+          "latestReplyTs": "1714601221.129609"
+        },
         "1714600486.807549": {
           "replyCount": 3,
           "latestReplyTs": "1714601956.599809"
@@ -2143,7 +2891,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-05T14:48:13.808Z",
       "lastSyncedCommit": ""
     },
     "C05S10ENU4U": {
@@ -2186,13 +2934,493 @@
       "name": "events-2024-july-fisherandpaykel-aihackathon",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2024-04-23 → 2024-08-15); planning chatter for something that has already happened. The channel references the published page(s) /events/f-p-hackathon, /events/harness-the-power-of-data-and-ai — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555730.933779",
-      "threads": {},
+      "threads": {
+        "1713846760.636499": {
+          "replyCount": 9,
+          "latestReplyTs": "1713928190.846339"
+        },
+        "1716507049.418529": {
+          "replyCount": 1,
+          "latestReplyTs": "1716903596.848809"
+        },
+        "1717619948.729099": {
+          "replyCount": 1,
+          "latestReplyTs": "1717629087.966379"
+        },
+        "1718175446.924059": {
+          "replyCount": 8,
+          "latestReplyTs": "1719203610.199319"
+        },
+        "1718187112.602469": {
+          "replyCount": 1,
+          "latestReplyTs": "1718270395.676489"
+        },
+        "1718591170.287179": {
+          "replyCount": 5,
+          "latestReplyTs": "1718595541.620639"
+        },
+        "1718690264.333849": {
+          "replyCount": 1,
+          "latestReplyTs": "1718911309.600299"
+        },
+        "1718690312.155729": {
+          "replyCount": 2,
+          "latestReplyTs": "1718690865.063529"
+        },
+        "1718691999.515669": {
+          "replyCount": 3,
+          "latestReplyTs": "1720156133.655919"
+        },
+        "1719228582.444589": {
+          "replyCount": 1,
+          "latestReplyTs": "1721022589.028769"
+        },
+        "1719228609.395629": {
+          "replyCount": 1,
+          "latestReplyTs": "1721127577.840289"
+        },
+        "1719302989.274479": {
+          "replyCount": 1,
+          "latestReplyTs": "1719371288.456929"
+        },
+        "1719304399.446689": {
+          "replyCount": 1,
+          "latestReplyTs": "1719304533.395529"
+        },
+        "1719306213.209489": {
+          "replyCount": 1,
+          "latestReplyTs": "1719348718.259799"
+        },
+        "1719448579.483589": {
+          "replyCount": 2,
+          "latestReplyTs": "1719642823.150099"
+        },
+        "1719464345.356129": {
+          "replyCount": 11,
+          "latestReplyTs": "1719628650.814609"
+        },
+        "1719631111.208779": {
+          "replyCount": 14,
+          "latestReplyTs": "1719654421.031059"
+        },
+        "1719794094.673239": {
+          "replyCount": 2,
+          "latestReplyTs": "1719822672.627499"
+        },
+        "1719807737.867679": {
+          "replyCount": 2,
+          "latestReplyTs": "1719810776.319789"
+        },
+        "1719827956.345959": {
+          "replyCount": 14,
+          "latestReplyTs": "1719905719.677019"
+        },
+        "1719880407.515229": {
+          "replyCount": 2,
+          "latestReplyTs": "1719896195.987949"
+        },
+        "1719880425.145229": {
+          "replyCount": 1,
+          "latestReplyTs": "1719884589.103259"
+        },
+        "1719912137.037499": {
+          "replyCount": 2,
+          "latestReplyTs": "1719966127.393149"
+        },
+        "1719915712.313929": {
+          "replyCount": 4,
+          "latestReplyTs": "1720034672.507719"
+        },
+        "1719945307.191349": {
+          "replyCount": 16,
+          "latestReplyTs": "1719984524.769499"
+        },
+        "1720003628.555869": {
+          "replyCount": 2,
+          "latestReplyTs": "1720041122.612159"
+        },
+        "1720035126.942319": {
+          "replyCount": 2,
+          "latestReplyTs": "1720092026.359049"
+        },
+        "1720048594.630499": {
+          "replyCount": 3,
+          "latestReplyTs": "1720050667.472999"
+        },
+        "1720049231.022679": {
+          "replyCount": 1,
+          "latestReplyTs": "1720050399.911749"
+        },
+        "1720057531.436179": {
+          "replyCount": 5,
+          "latestReplyTs": "1720082476.746889"
+        },
+        "1720078813.735269": {
+          "replyCount": 1,
+          "latestReplyTs": "1720082180.461189"
+        },
+        "1720153015.777709": {
+          "replyCount": 2,
+          "latestReplyTs": "1720153895.614419"
+        },
+        "1720153120.411809": {
+          "replyCount": 6,
+          "latestReplyTs": "1720158557.590869"
+        },
+        "1720153207.248459": {
+          "replyCount": 4,
+          "latestReplyTs": "1720153865.343359"
+        },
+        "1720224023.576059": {
+          "replyCount": 1,
+          "latestReplyTs": "1720225900.989209"
+        },
+        "1720224209.988719": {
+          "replyCount": 1,
+          "latestReplyTs": "1720226909.725649"
+        },
+        "1720228387.312189": {
+          "replyCount": 5,
+          "latestReplyTs": "1720259219.707529"
+        },
+        "1720233316.848299": {
+          "replyCount": 2,
+          "latestReplyTs": "1720300947.372749"
+        },
+        "1720233619.904649": {
+          "replyCount": 1,
+          "latestReplyTs": "1720233726.517839"
+        },
+        "1720235040.339039": {
+          "replyCount": 1,
+          "latestReplyTs": "1720395237.919449"
+        },
+        "1720304039.596009": {
+          "replyCount": 4,
+          "latestReplyTs": "1720406474.121159"
+        },
+        "1720311381.484609": {
+          "replyCount": 2,
+          "latestReplyTs": "1720322516.392939"
+        },
+        "1720340675.458649": {
+          "replyCount": 1,
+          "latestReplyTs": "1720393463.504149"
+        },
+        "1720427320.101159": {
+          "replyCount": 2,
+          "latestReplyTs": "1720432168.500409"
+        },
+        "1720484927.930899": {
+          "replyCount": 14,
+          "latestReplyTs": "1720599440.346889"
+        },
+        "1720485449.399429": {
+          "replyCount": 9,
+          "latestReplyTs": "1720494672.028319"
+        },
+        "1720490149.054739": {
+          "replyCount": 3,
+          "latestReplyTs": "1720491641.269609"
+        },
+        "1720495522.811719": {
+          "replyCount": 2,
+          "latestReplyTs": "1720504668.192809"
+        },
+        "1720522475.802599": {
+          "replyCount": 1,
+          "latestReplyTs": "1720567761.716899"
+        },
+        "1720525924.145259": {
+          "replyCount": 2,
+          "latestReplyTs": "1720564109.170369"
+        },
+        "1720565342.185269": {
+          "replyCount": 2,
+          "latestReplyTs": "1720731955.370619"
+        },
+        "1720574293.530089": {
+          "replyCount": 1,
+          "latestReplyTs": "1720575603.782999"
+        },
+        "1720579337.863689": {
+          "replyCount": 2,
+          "latestReplyTs": "1720650344.692039"
+        },
+        "1720586463.325289": {
+          "replyCount": 1,
+          "latestReplyTs": "1720600413.464329"
+        },
+        "1720658730.236129": {
+          "replyCount": 3,
+          "latestReplyTs": "1720731896.035559"
+        },
+        "1720658983.576429": {
+          "replyCount": 12,
+          "latestReplyTs": "1720691642.134789"
+        },
+        "1720659030.918639": {
+          "replyCount": 2,
+          "latestReplyTs": "1720659203.028979"
+        },
+        "1720659096.358949": {
+          "replyCount": 9,
+          "latestReplyTs": "1720775993.217659"
+        },
+        "1720692279.967929": {
+          "replyCount": 2,
+          "latestReplyTs": "1720692457.428859"
+        },
+        "1720692775.882799": {
+          "replyCount": 1,
+          "latestReplyTs": "1720693813.898569"
+        },
+        "1720693920.334119": {
+          "replyCount": 5,
+          "latestReplyTs": "1720695636.654169"
+        },
+        "1720694000.523569": {
+          "replyCount": 6,
+          "latestReplyTs": "1720748000.255059"
+        },
+        "1720734798.653429": {
+          "replyCount": 1,
+          "latestReplyTs": "1721016844.523309"
+        },
+        "1720748237.365729": {
+          "replyCount": 1,
+          "latestReplyTs": "1720751593.898309"
+        },
+        "1720748257.699859": {
+          "replyCount": 1,
+          "latestReplyTs": "1720751669.370509"
+        },
+        "1720929381.690609": {
+          "replyCount": 2,
+          "latestReplyTs": "1720994401.319799"
+        },
+        "1720929493.569279": {
+          "replyCount": 4,
+          "latestReplyTs": "1720949834.864389"
+        },
+        "1720995566.232399": {
+          "replyCount": 1,
+          "latestReplyTs": "1720995923.513539"
+        },
+        "1721003195.974109": {
+          "replyCount": 4,
+          "latestReplyTs": "1721012484.815439"
+        },
+        "1721003339.673799": {
+          "replyCount": 9,
+          "latestReplyTs": "1721013136.626669"
+        },
+        "1721007264.956479": {
+          "replyCount": 5,
+          "latestReplyTs": "1721028177.438869"
+        },
+        "1721022681.674369": {
+          "replyCount": 2,
+          "latestReplyTs": "1721027969.987349"
+        },
+        "1721039356.757569": {
+          "replyCount": 17,
+          "latestReplyTs": "1721510933.742689"
+        },
+        "1721080777.609869": {
+          "replyCount": 1,
+          "latestReplyTs": "1721084489.542159"
+        },
+        "1721082441.346439": {
+          "replyCount": 5,
+          "latestReplyTs": "1721122675.114149"
+        },
+        "1721085118.548169": {
+          "replyCount": 3,
+          "latestReplyTs": "1721691894.357359"
+        },
+        "1721085843.460299": {
+          "replyCount": 1,
+          "latestReplyTs": "1721205052.153389"
+        },
+        "1721105706.524709": {
+          "replyCount": 3,
+          "latestReplyTs": "1721105839.159369"
+        },
+        "1721122929.129729": {
+          "replyCount": 1,
+          "latestReplyTs": "1721160292.372459"
+        },
+        "1721179936.483449": {
+          "replyCount": 1,
+          "latestReplyTs": "1721180133.573339"
+        },
+        "1721180174.044449": {
+          "replyCount": 1,
+          "latestReplyTs": "1721464737.464879"
+        },
+        "1721182991.156029": {
+          "replyCount": 1,
+          "latestReplyTs": "1721249238.108749"
+        },
+        "1721290979.961709": {
+          "replyCount": 2,
+          "latestReplyTs": "1721330475.845419"
+        },
+        "1721291807.232619": {
+          "replyCount": 2,
+          "latestReplyTs": "1721330391.563029"
+        },
+        "1721294146.813719": {
+          "replyCount": 1,
+          "latestReplyTs": "1721354289.414379"
+        },
+        "1721295534.410259": {
+          "replyCount": 2,
+          "latestReplyTs": "1721297273.841819"
+        },
+        "1721335250.317009": {
+          "replyCount": 3,
+          "latestReplyTs": "1721336546.407509"
+        },
+        "1721338967.267859": {
+          "replyCount": 13,
+          "latestReplyTs": "1721360944.879699"
+        },
+        "1721374366.236509": {
+          "replyCount": 3,
+          "latestReplyTs": "1721378732.451959"
+        },
+        "1721433840.644189": {
+          "replyCount": 1,
+          "latestReplyTs": "1721434029.173839"
+        },
+        "1721439331.571799": {
+          "replyCount": 7,
+          "latestReplyTs": "1721544064.409889"
+        },
+        "1721449705.582699": {
+          "replyCount": 6,
+          "latestReplyTs": "1721468151.299119"
+        },
+        "1721457274.493879": {
+          "replyCount": 6,
+          "latestReplyTs": "1721457719.232199"
+        },
+        "1721461973.372459": {
+          "replyCount": 16,
+          "latestReplyTs": "1721701770.244739"
+        },
+        "1721462461.159499": {
+          "replyCount": 3,
+          "latestReplyTs": "1721512500.912649"
+        },
+        "1721511200.809659": {
+          "replyCount": 3,
+          "latestReplyTs": "1721629082.544109"
+        },
+        "1721726434.337049": {
+          "replyCount": 1,
+          "latestReplyTs": "1721816651.063739"
+        },
+        "1721763526.582249": {
+          "replyCount": 2,
+          "latestReplyTs": "1721814078.912629"
+        },
+        "1721773411.422929": {
+          "replyCount": 3,
+          "latestReplyTs": "1721808659.320239"
+        },
+        "1721798642.140469": {
+          "replyCount": 1,
+          "latestReplyTs": "1721819931.270339"
+        },
+        "1721798789.596839": {
+          "replyCount": 5,
+          "latestReplyTs": "1721878924.371169"
+        },
+        "1721804404.548039": {
+          "replyCount": 1,
+          "latestReplyTs": "1721805121.666139"
+        },
+        "1721804758.327219": {
+          "replyCount": 1,
+          "latestReplyTs": "1721816632.731689"
+        },
+        "1721804825.316589": {
+          "replyCount": 2,
+          "latestReplyTs": "1721806127.886829"
+        },
+        "1721882881.876679": {
+          "replyCount": 2,
+          "latestReplyTs": "1721890797.623359"
+        },
+        "1721883002.004399": {
+          "replyCount": 3,
+          "latestReplyTs": "1721883294.011619"
+        },
+        "1721942414.522569": {
+          "replyCount": 1,
+          "latestReplyTs": "1721943288.791739"
+        },
+        "1722110284.182099": {
+          "replyCount": 5,
+          "latestReplyTs": "1722125431.485499"
+        },
+        "1722114064.576279": {
+          "replyCount": 2,
+          "latestReplyTs": "1722116244.581749"
+        },
+        "1722116439.673369": {
+          "replyCount": 1,
+          "latestReplyTs": "1722118444.126789"
+        },
+        "1722116740.563659": {
+          "replyCount": 1,
+          "latestReplyTs": "1723622013.326139"
+        },
+        "1722117157.248109": {
+          "replyCount": 1,
+          "latestReplyTs": "1722117666.352709"
+        },
+        "1722228397.789209": {
+          "replyCount": 3,
+          "latestReplyTs": "1722243381.629589"
+        },
+        "1722392682.273979": {
+          "replyCount": 1,
+          "latestReplyTs": "1722393497.035919"
+        },
+        "1722902758.728579": {
+          "replyCount": 1,
+          "latestReplyTs": "1722923994.075019"
+        },
+        "1722924529.496919": {
+          "replyCount": 1,
+          "latestReplyTs": "1722924914.722539"
+        },
+        "1723018002.368249": {
+          "replyCount": 6,
+          "latestReplyTs": "1723019537.137419"
+        },
+        "1723091350.530919": {
+          "replyCount": 1,
+          "latestReplyTs": "1723098651.763519"
+        },
+        "1723702068.740129": {
+          "replyCount": 2,
+          "latestReplyTs": "1723704959.593279"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:08.986Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2024-04-23 → 2024-08-15. It references the published page(s) /events/f-p-hackathon, /events/harness-the-power-of-data-and-ai — referenced, not verified as its own. The 527 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:46:08.985Z"
     },
     "C06NRB1Q8KF": {
       "name": "gridakl-sharedoffice-for-shesharp",
@@ -2202,6 +3430,18 @@
       },
       "watermarkTs": "1777555731.901809",
       "threads": {
+        "1710201489.815509": {
+          "replyCount": 5,
+          "latestReplyTs": "1710300321.531789"
+        },
+        "1712792947.183029": {
+          "replyCount": 2,
+          "latestReplyTs": "1712827044.837469"
+        },
+        "1712809371.083879": {
+          "replyCount": 1,
+          "latestReplyTs": "1712872007.210739"
+        },
         "1714085272.591749": {
           "replyCount": 1,
           "latestReplyTs": "1714085640.843249"
@@ -2236,7 +3476,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-05T14:48:13.808Z",
       "lastSyncedCommit": ""
     },
     "C06Q986DV": {
@@ -2247,6 +3487,38 @@
       },
       "watermarkTs": "1777555693.918789",
       "threads": {
+        "1616723091.000800": {
+          "replyCount": 5,
+          "latestReplyTs": "1616727672.005800"
+        },
+        "1644555976.042299": {
+          "replyCount": 2,
+          "latestReplyTs": "1644788012.706199"
+        },
+        "1644805326.169269": {
+          "replyCount": 12,
+          "latestReplyTs": "1644895785.980179"
+        },
+        "1646599981.539469": {
+          "replyCount": 3,
+          "latestReplyTs": "1646612524.902009"
+        },
+        "1679952787.060729": {
+          "replyCount": 3,
+          "latestReplyTs": "1679987416.129699"
+        },
+        "1698885275.219439": {
+          "replyCount": 1,
+          "latestReplyTs": "1698885667.831349"
+        },
+        "1698885742.505339": {
+          "replyCount": 1,
+          "latestReplyTs": "1698887181.436249"
+        },
+        "1706771016.223139": {
+          "replyCount": 1,
+          "latestReplyTs": "1706773245.520509"
+        },
         "1709331272.726949": {
           "replyCount": 2,
           "latestReplyTs": "1709595668.220139"
@@ -2281,7 +3553,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.036Z",
+      "lastSyncedAt": "2026-08-05T14:48:13.802Z",
       "lastSyncedCommit": ""
     },
     "C06Q9FJNR": {
@@ -6877,25 +8149,225 @@
       "name": "events-2024-august-fonterra",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2024-06-24 → 2024-09-04); planning chatter for something that has already happened. The channel references the published page(s) /events/harness-the-power-of-data-and-ai — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555734.924089",
-      "threads": {},
+      "threads": {
+        "1719193299.524249": {
+          "replyCount": 1,
+          "latestReplyTs": "1719193352.483539"
+        },
+        "1719193357.568839": {
+          "replyCount": 8,
+          "latestReplyTs": "1719194317.773549"
+        },
+        "1719218391.276119": {
+          "replyCount": 3,
+          "latestReplyTs": "1719293094.809449"
+        },
+        "1719366460.486799": {
+          "replyCount": 5,
+          "latestReplyTs": "1719822841.808489"
+        },
+        "1722295210.504119": {
+          "replyCount": 9,
+          "latestReplyTs": "1722486206.848429"
+        },
+        "1722850131.639529": {
+          "replyCount": 5,
+          "latestReplyTs": "1722935457.863109"
+        },
+        "1722850901.877899": {
+          "replyCount": 1,
+          "latestReplyTs": "1722851758.144259"
+        },
+        "1722850949.142399": {
+          "replyCount": 7,
+          "latestReplyTs": "1723016243.380319"
+        },
+        "1722999547.374799": {
+          "replyCount": 1,
+          "latestReplyTs": "1722999990.057209"
+        },
+        "1723007145.484659": {
+          "replyCount": 1,
+          "latestReplyTs": "1723007455.912359"
+        },
+        "1723190125.689529": {
+          "replyCount": 1,
+          "latestReplyTs": "1723240773.492039"
+        },
+        "1723193232.433409": {
+          "replyCount": 1,
+          "latestReplyTs": "1723238581.451119"
+        },
+        "1723243362.733089": {
+          "replyCount": 2,
+          "latestReplyTs": "1723520409.993719"
+        },
+        "1723440399.677829": {
+          "replyCount": 3,
+          "latestReplyTs": "1723449030.059739"
+        },
+        "1723498653.681269": {
+          "replyCount": 1,
+          "latestReplyTs": "1723498830.142699"
+        },
+        "1723498689.665919": {
+          "replyCount": 1,
+          "latestReplyTs": "1724057949.843119"
+        },
+        "1723620350.446859": {
+          "replyCount": 8,
+          "latestReplyTs": "1723693219.324069"
+        },
+        "1723626411.267509": {
+          "replyCount": 1,
+          "latestReplyTs": "1723627375.127419"
+        },
+        "1723764122.710239": {
+          "replyCount": 2,
+          "latestReplyTs": "1723770693.029309"
+        },
+        "1723797197.974449": {
+          "replyCount": 3,
+          "latestReplyTs": "1724052546.143899"
+        },
+        "1724223587.961679": {
+          "replyCount": 5,
+          "latestReplyTs": "1724229769.857569"
+        },
+        "1724295361.100819": {
+          "replyCount": 7,
+          "latestReplyTs": "1724390207.581759"
+        },
+        "1724306444.795679": {
+          "replyCount": 1,
+          "latestReplyTs": "1724318542.601909"
+        },
+        "1724354918.210059": {
+          "replyCount": 1,
+          "latestReplyTs": "1724479831.553069"
+        },
+        "1724408097.497209": {
+          "replyCount": 3,
+          "latestReplyTs": "1724469964.780879"
+        },
+        "1724569240.408049": {
+          "replyCount": 6,
+          "latestReplyTs": "1724647596.694639"
+        },
+        "1724648971.018949": {
+          "replyCount": 2,
+          "latestReplyTs": "1724649997.726489"
+        },
+        "1724666154.833329": {
+          "replyCount": 1,
+          "latestReplyTs": "1724728974.695129"
+        },
+        "1724718769.928919": {
+          "replyCount": 3,
+          "latestReplyTs": "1724835697.035419"
+        },
+        "1724738121.620449": {
+          "replyCount": 1,
+          "latestReplyTs": "1724741652.861889"
+        },
+        "1724741626.574489": {
+          "replyCount": 1,
+          "latestReplyTs": "1724743870.636719"
+        },
+        "1724744153.310999": {
+          "replyCount": 2,
+          "latestReplyTs": "1724746981.412319"
+        },
+        "1724744182.333019": {
+          "replyCount": 2,
+          "latestReplyTs": "1724751984.553199"
+        },
+        "1724876764.313119": {
+          "replyCount": 3,
+          "latestReplyTs": "1724889395.903179"
+        },
+        "1724889318.195719": {
+          "replyCount": 5,
+          "latestReplyTs": "1725254771.394449"
+        },
+        "1724964266.756649": {
+          "replyCount": 1,
+          "latestReplyTs": "1725010469.934109"
+        },
+        "1725142280.492789": {
+          "replyCount": 1,
+          "latestReplyTs": "1725144997.197059"
+        },
+        "1725257311.947139": {
+          "replyCount": 2,
+          "latestReplyTs": "1725326160.074959"
+        },
+        "1725434270.783579": {
+          "replyCount": 1,
+          "latestReplyTs": "1725435534.440069"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:07.567Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2024-06-24 → 2024-09-04. It references the published page(s) /events/harness-the-power-of-data-and-ai — referenced, not verified as its own. The 151 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:46:07.566Z"
     },
     "C077TLWSVE0": {
       "name": "event-2024-august-aihackthon-academyex",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2024-06-12 → 2025-07-17). The channel never posted its own page URL, so the page was not confirmed from its content (a published page may well be /events/she-sharp-and-academyex-international-womens-day-2026 or /events/she-sharp-academy-ex-international-womens-day). Either way this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555735.865789",
-      "threads": {},
+      "threads": {
+        "1718185330.975879": {
+          "replyCount": 2,
+          "latestReplyTs": "1718219891.339489"
+        },
+        "1718656510.602479": {
+          "replyCount": 4,
+          "latestReplyTs": "1718757222.183419"
+        },
+        "1720482618.218179": {
+          "replyCount": 2,
+          "latestReplyTs": "1720483661.873389"
+        },
+        "1722898809.819909": {
+          "replyCount": 1,
+          "latestReplyTs": "1722924054.343619"
+        },
+        "1723257688.512119": {
+          "replyCount": 16,
+          "latestReplyTs": "1723263049.971959"
+        },
+        "1723277050.251459": {
+          "replyCount": 1,
+          "latestReplyTs": "1723277878.254019"
+        },
+        "1723414809.717889": {
+          "replyCount": 2,
+          "latestReplyTs": "1723455138.371379"
+        },
+        "1723710827.045569": {
+          "replyCount": 3,
+          "latestReplyTs": "1723765240.235859"
+        },
+        "1752569746.495849": {
+          "replyCount": 4,
+          "latestReplyTs": "1752743794.544769"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:45:46.254Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2024-06-12 → 2025-07-17. No page URL was ever posted in the channel, so none was confirmed from its content (candidates worth checking: /events/she-sharp-and-academyex-international-womens-day-2026, /events/she-sharp-academy-ex-international-womens-day). The 44 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:45:46.253Z"
     },
     "C07FKTCU98X": {
       "name": "announcements",
@@ -6926,49 +8398,1117 @@
       "name": "events-2024-november-google",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2024-08-08 → 2024-12-02). The channel never posted its own page URL, so the page was not confirmed from its content (a published page may well be /events/google-educator-conference-2024 or /events/google-educator-conference-2023). Either way this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555737.884229",
-      "threads": {},
+      "threads": {
+        "1723106472.547719": {
+          "replyCount": 3,
+          "latestReplyTs": "1723852749.391429"
+        },
+        "1723106979.193549": {
+          "replyCount": 8,
+          "latestReplyTs": "1723270822.077089"
+        },
+        "1723455044.263249": {
+          "replyCount": 7,
+          "latestReplyTs": "1723455400.905549"
+        },
+        "1723504992.723369": {
+          "replyCount": 6,
+          "latestReplyTs": "1723713594.116839"
+        },
+        "1723784608.212119": {
+          "replyCount": 2,
+          "latestReplyTs": "1723803525.223209"
+        },
+        "1723954216.488689": {
+          "replyCount": 1,
+          "latestReplyTs": "1723957796.474069"
+        },
+        "1724069381.887549": {
+          "replyCount": 8,
+          "latestReplyTs": "1724121817.834099"
+        },
+        "1724650282.791349": {
+          "replyCount": 1,
+          "latestReplyTs": "1724650531.709689"
+        },
+        "1724663980.592339": {
+          "replyCount": 3,
+          "latestReplyTs": "1724972145.200679"
+        },
+        "1724750101.426669": {
+          "replyCount": 3,
+          "latestReplyTs": "1724823814.851399"
+        },
+        "1724750159.747379": {
+          "replyCount": 1,
+          "latestReplyTs": "1724972631.605929"
+        },
+        "1724995342.598839": {
+          "replyCount": 1,
+          "latestReplyTs": "1725006055.283499"
+        },
+        "1725006320.385649": {
+          "replyCount": 6,
+          "latestReplyTs": "1725151704.748959"
+        },
+        "1725269824.275349": {
+          "replyCount": 13,
+          "latestReplyTs": "1725863292.809439"
+        },
+        "1725269844.954899": {
+          "replyCount": 1,
+          "latestReplyTs": "1725269954.511649"
+        },
+        "1725320042.853839": {
+          "replyCount": 3,
+          "latestReplyTs": "1725323118.240869"
+        },
+        "1725320327.842759": {
+          "replyCount": 2,
+          "latestReplyTs": "1725320864.315779"
+        },
+        "1725424973.123939": {
+          "replyCount": 1,
+          "latestReplyTs": "1725438180.682919"
+        },
+        "1725439294.328009": {
+          "replyCount": 4,
+          "latestReplyTs": "1725528925.895649"
+        },
+        "1725442905.096979": {
+          "replyCount": 1,
+          "latestReplyTs": "1725442948.937789"
+        },
+        "1725443068.812829": {
+          "replyCount": 1,
+          "latestReplyTs": "1725443463.632209"
+        },
+        "1725443332.468379": {
+          "replyCount": 8,
+          "latestReplyTs": "1725524758.345969"
+        },
+        "1725531411.338529": {
+          "replyCount": 1,
+          "latestReplyTs": "1725531472.199469"
+        },
+        "1725872528.893029": {
+          "replyCount": 1,
+          "latestReplyTs": "1725873093.070739"
+        },
+        "1726034630.751639": {
+          "replyCount": 2,
+          "latestReplyTs": "1726120748.778409"
+        },
+        "1726189866.200379": {
+          "replyCount": 2,
+          "latestReplyTs": "1726193070.699609"
+        },
+        "1726440299.201989": {
+          "replyCount": 8,
+          "latestReplyTs": "1726532021.948579"
+        },
+        "1726653694.285799": {
+          "replyCount": 1,
+          "latestReplyTs": "1726692113.736999"
+        },
+        "1726696434.209389": {
+          "replyCount": 3,
+          "latestReplyTs": "1726810935.726299"
+        },
+        "1726875869.080109": {
+          "replyCount": 2,
+          "latestReplyTs": "1726879911.388209"
+        },
+        "1726879890.275399": {
+          "replyCount": 5,
+          "latestReplyTs": "1726953199.331049"
+        },
+        "1726884953.691919": {
+          "replyCount": 3,
+          "latestReplyTs": "1726989690.092979"
+        },
+        "1726885112.113739": {
+          "replyCount": 4,
+          "latestReplyTs": "1726887793.703029"
+        },
+        "1726910672.060349": {
+          "replyCount": 1,
+          "latestReplyTs": "1726948299.899029"
+        },
+        "1726962623.400339": {
+          "replyCount": 1,
+          "latestReplyTs": "1727235806.964829"
+        },
+        "1727083423.645359": {
+          "replyCount": 3,
+          "latestReplyTs": "1727227500.111749"
+        },
+        "1727083758.777629": {
+          "replyCount": 6,
+          "latestReplyTs": "1727084488.588799"
+        },
+        "1727150473.849449": {
+          "replyCount": 2,
+          "latestReplyTs": "1727152122.387299"
+        },
+        "1727221956.648589": {
+          "replyCount": 2,
+          "latestReplyTs": "1727341609.671759"
+        },
+        "1727225796.942909": {
+          "replyCount": 15,
+          "latestReplyTs": "1727326791.140569"
+        },
+        "1727226798.723299": {
+          "replyCount": 10,
+          "latestReplyTs": "1727228339.179569"
+        },
+        "1727346979.394999": {
+          "replyCount": 3,
+          "latestReplyTs": "1727388173.959739"
+        },
+        "1727684979.254809": {
+          "replyCount": 3,
+          "latestReplyTs": "1727685906.954819"
+        },
+        "1727687512.979179": {
+          "replyCount": 9,
+          "latestReplyTs": "1727720865.590869"
+        },
+        "1727729383.392059": {
+          "replyCount": 5,
+          "latestReplyTs": "1727937713.683259"
+        },
+        "1727730971.935379": {
+          "replyCount": 5,
+          "latestReplyTs": "1727835447.335169"
+        },
+        "1727761970.521379": {
+          "replyCount": 7,
+          "latestReplyTs": "1727906494.745049"
+        },
+        "1727762217.703079": {
+          "replyCount": 1,
+          "latestReplyTs": "1727762923.074789"
+        },
+        "1727762881.432579": {
+          "replyCount": 1,
+          "latestReplyTs": "1727763119.492209"
+        },
+        "1727902841.771019": {
+          "replyCount": 3,
+          "latestReplyTs": "1727940999.873429"
+        },
+        "1727902990.494819": {
+          "replyCount": 2,
+          "latestReplyTs": "1727903019.583889"
+        },
+        "1727925248.890369": {
+          "replyCount": 3,
+          "latestReplyTs": "1727937903.398029"
+        },
+        "1728002549.259759": {
+          "replyCount": 1,
+          "latestReplyTs": "1728265417.945139"
+        },
+        "1728081257.433109": {
+          "replyCount": 1,
+          "latestReplyTs": "1728081608.736939"
+        },
+        "1729569026.508129": {
+          "replyCount": 3,
+          "latestReplyTs": "1730145891.789329"
+        },
+        "1729569397.919609": {
+          "replyCount": 1,
+          "latestReplyTs": "1729569954.735159"
+        },
+        "1729649539.420659": {
+          "replyCount": 2,
+          "latestReplyTs": "1729708757.537249"
+        },
+        "1729713674.748359": {
+          "replyCount": 1,
+          "latestReplyTs": "1729714425.154669"
+        },
+        "1729745029.301549": {
+          "replyCount": 1,
+          "latestReplyTs": "1730059967.904069"
+        },
+        "1729751223.812559": {
+          "replyCount": 1,
+          "latestReplyTs": "1729751948.902819"
+        },
+        "1729979691.411089": {
+          "replyCount": 7,
+          "latestReplyTs": "1730149380.088469"
+        },
+        "1730105392.347309": {
+          "replyCount": 4,
+          "latestReplyTs": "1730145987.747909"
+        },
+        "1730274559.496389": {
+          "replyCount": 1,
+          "latestReplyTs": "1730274665.751209"
+        },
+        "1730278774.937229": {
+          "replyCount": 1,
+          "latestReplyTs": "1730279306.831349"
+        },
+        "1730427439.922119": {
+          "replyCount": 3,
+          "latestReplyTs": "1730527232.786359"
+        },
+        "1730842567.266709": {
+          "replyCount": 1,
+          "latestReplyTs": "1730875280.028659"
+        },
+        "1730963520.412179": {
+          "replyCount": 3,
+          "latestReplyTs": "1731309227.422729"
+        },
+        "1730965110.031319": {
+          "replyCount": 3,
+          "latestReplyTs": "1730966657.006519"
+        },
+        "1730966528.037749": {
+          "replyCount": 2,
+          "latestReplyTs": "1730997650.211819"
+        },
+        "1730966712.514959": {
+          "replyCount": 1,
+          "latestReplyTs": "1731055615.950169"
+        },
+        "1731060177.855049": {
+          "replyCount": 1,
+          "latestReplyTs": "1731061166.549289"
+        },
+        "1731363730.656329": {
+          "replyCount": 6,
+          "latestReplyTs": "1731384607.073339"
+        },
+        "1731403899.947729": {
+          "replyCount": 1,
+          "latestReplyTs": "1731405092.469669"
+        },
+        "1731403922.379809": {
+          "replyCount": 1,
+          "latestReplyTs": "1731404647.875229"
+        },
+        "1731815222.127709": {
+          "replyCount": 8,
+          "latestReplyTs": "1731905029.116989"
+        },
+        "1731908238.374439": {
+          "replyCount": 1,
+          "latestReplyTs": "1731916539.955939"
+        },
+        "1731917339.862199": {
+          "replyCount": 1,
+          "latestReplyTs": "1732044146.729249"
+        },
+        "1731919244.852749": {
+          "replyCount": 1,
+          "latestReplyTs": "1732002870.661119"
+        },
+        "1731990155.188379": {
+          "replyCount": 4,
+          "latestReplyTs": "1732007180.269799"
+        },
+        "1731990837.299949": {
+          "replyCount": 1,
+          "latestReplyTs": "1731994564.692539"
+        },
+        "1731990915.208809": {
+          "replyCount": 1,
+          "latestReplyTs": "1731995822.456599"
+        },
+        "1732004160.762079": {
+          "replyCount": 1,
+          "latestReplyTs": "1732005206.553089"
+        },
+        "1732006838.229989": {
+          "replyCount": 1,
+          "latestReplyTs": "1732006921.902299"
+        },
+        "1732006936.787449": {
+          "replyCount": 3,
+          "latestReplyTs": "1732088695.508659"
+        },
+        "1732008812.251599": {
+          "replyCount": 5,
+          "latestReplyTs": "1732056500.378709"
+        },
+        "1732009081.154489": {
+          "replyCount": 4,
+          "latestReplyTs": "1732051357.363489"
+        },
+        "1732042704.874639": {
+          "replyCount": 1,
+          "latestReplyTs": "1732046296.464939"
+        },
+        "1732050996.208049": {
+          "replyCount": 9,
+          "latestReplyTs": "1732074680.795639"
+        },
+        "1732051035.772399": {
+          "replyCount": 1,
+          "latestReplyTs": "1732058879.126229"
+        },
+        "1732058626.705899": {
+          "replyCount": 1,
+          "latestReplyTs": "1732058810.462289"
+        },
+        "1732083226.648749": {
+          "replyCount": 2,
+          "latestReplyTs": "1732087313.365949"
+        },
+        "1732084378.942529": {
+          "replyCount": 1,
+          "latestReplyTs": "1732087139.372849"
+        },
+        "1732251855.694899": {
+          "replyCount": 3,
+          "latestReplyTs": "1732521307.337089"
+        },
+        "1732536747.551739": {
+          "replyCount": 1,
+          "latestReplyTs": "1733117026.510349"
+        },
+        "1732617515.154979": {
+          "replyCount": 1,
+          "latestReplyTs": "1732645103.588579"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:10.423Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2024-08-08 → 2024-12-02. No page URL was ever posted in the channel, so none was confirmed from its content (candidates worth checking: /events/google-educator-conference-2024, /events/google-educator-conference-2023). The 390 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:46:10.422Z"
     },
     "C07G55Q0P1A": {
       "name": "events-october-10th-anniversary",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2024-08-12 → 2024-12-12); planning chatter for something that has already happened. The channel references the published page(s) /events/she-sharp-10-year-anniversary, /events/she-evening-with-google — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555738.836449",
-      "threads": {},
+      "threads": {
+        "1723504412.880469": {
+          "replyCount": 1,
+          "latestReplyTs": "1723517917.389709"
+        },
+        "1723504865.730249": {
+          "replyCount": 1,
+          "latestReplyTs": "1723517940.086259"
+        },
+        "1723507650.060339": {
+          "replyCount": 4,
+          "latestReplyTs": "1723597044.419519"
+        },
+        "1723518021.333789": {
+          "replyCount": 2,
+          "latestReplyTs": "1723529987.807599"
+        },
+        "1723593320.736259": {
+          "replyCount": 1,
+          "latestReplyTs": "1723601578.369739"
+        },
+        "1723593387.150639": {
+          "replyCount": 9,
+          "latestReplyTs": "1723688027.645409"
+        },
+        "1723881320.471579": {
+          "replyCount": 1,
+          "latestReplyTs": "1723887762.247249"
+        },
+        "1723889892.015579": {
+          "replyCount": 6,
+          "latestReplyTs": "1724230672.481609"
+        },
+        "1724058797.759839": {
+          "replyCount": 2,
+          "latestReplyTs": "1724062456.966879"
+        },
+        "1724149796.449429": {
+          "replyCount": 1,
+          "latestReplyTs": "1724286550.783659"
+        },
+        "1724228341.041999": {
+          "replyCount": 4,
+          "latestReplyTs": "1724303596.633129"
+        },
+        "1724231757.482909": {
+          "replyCount": 1,
+          "latestReplyTs": "1724235474.847129"
+        },
+        "1724233241.591779": {
+          "replyCount": 1,
+          "latestReplyTs": "1724233987.951689"
+        },
+        "1724295583.897259": {
+          "replyCount": 1,
+          "latestReplyTs": "1724295625.810819"
+        },
+        "1724302950.105769": {
+          "replyCount": 2,
+          "latestReplyTs": "1724303547.179719"
+        },
+        "1724303205.331399": {
+          "replyCount": 2,
+          "latestReplyTs": "1724303568.991979"
+        },
+        "1724308796.284609": {
+          "replyCount": 5,
+          "latestReplyTs": "1724313750.700529"
+        },
+        "1724479232.054059": {
+          "replyCount": 3,
+          "latestReplyTs": "1724573262.587209"
+        },
+        "1724722134.464269": {
+          "replyCount": 7,
+          "latestReplyTs": "1724744783.618929"
+        },
+        "1724728484.065979": {
+          "replyCount": 1,
+          "latestReplyTs": "1724737474.546039"
+        },
+        "1724835388.819699": {
+          "replyCount": 13,
+          "latestReplyTs": "1724838290.293879"
+        },
+        "1725245526.891479": {
+          "replyCount": 4,
+          "latestReplyTs": "1725261710.684389"
+        },
+        "1725435319.041869": {
+          "replyCount": 6,
+          "latestReplyTs": "1725445630.733529"
+        },
+        "1725449232.660049": {
+          "replyCount": 1,
+          "latestReplyTs": "1725450037.070329"
+        },
+        "1725518082.135359": {
+          "replyCount": 5,
+          "latestReplyTs": "1725603013.444249"
+        },
+        "1725520850.197329": {
+          "replyCount": 8,
+          "latestReplyTs": "1725873795.446409"
+        },
+        "1725847645.594939": {
+          "replyCount": 5,
+          "latestReplyTs": "1725863157.231649"
+        },
+        "1725873536.423669": {
+          "replyCount": 1,
+          "latestReplyTs": "1725914029.865979"
+        },
+        "1725874078.486909": {
+          "replyCount": 5,
+          "latestReplyTs": "1725952794.204579"
+        },
+        "1725950618.866539": {
+          "replyCount": 10,
+          "latestReplyTs": "1726125457.475989"
+        },
+        "1725952212.279119": {
+          "replyCount": 8,
+          "latestReplyTs": "1726644563.176629"
+        },
+        "1725958605.048189": {
+          "replyCount": 8,
+          "latestReplyTs": "1726051260.042619"
+        },
+        "1725961838.292849": {
+          "replyCount": 7,
+          "latestReplyTs": "1726271827.075009"
+        },
+        "1725999217.611689": {
+          "replyCount": 1,
+          "latestReplyTs": "1725999454.571309"
+        },
+        "1726001086.639119": {
+          "replyCount": 13,
+          "latestReplyTs": "1726081952.343719"
+        },
+        "1726019250.950219": {
+          "replyCount": 5,
+          "latestReplyTs": "1726101747.530419"
+        },
+        "1726019301.978929": {
+          "replyCount": 6,
+          "latestReplyTs": "1726102332.031209"
+        },
+        "1726019655.639659": {
+          "replyCount": 8,
+          "latestReplyTs": "1726113393.238099"
+        },
+        "1726021627.860539": {
+          "replyCount": 1,
+          "latestReplyTs": "1726022123.226099"
+        },
+        "1726025513.584649": {
+          "replyCount": 15,
+          "latestReplyTs": "1726051018.214119"
+        },
+        "1726046120.345179": {
+          "replyCount": 7,
+          "latestReplyTs": "1726223237.307599"
+        },
+        "1726046306.372319": {
+          "replyCount": 2,
+          "latestReplyTs": "1726097324.563939"
+        },
+        "1726047402.392889": {
+          "replyCount": 2,
+          "latestReplyTs": "1726097284.559739"
+        },
+        "1726050112.554729": {
+          "replyCount": 1,
+          "latestReplyTs": "1726082523.185149"
+        },
+        "1726052485.187759": {
+          "replyCount": 22,
+          "latestReplyTs": "1726135188.283989"
+        },
+        "1726102610.731739": {
+          "replyCount": 11,
+          "latestReplyTs": "1726134530.418569"
+        },
+        "1726102826.840179": {
+          "replyCount": 3,
+          "latestReplyTs": "1726122273.385669"
+        },
+        "1726114247.982269": {
+          "replyCount": 7,
+          "latestReplyTs": "1726123795.971199"
+        },
+        "1726122676.647109": {
+          "replyCount": 1,
+          "latestReplyTs": "1726124117.650979"
+        },
+        "1726125641.556529": {
+          "replyCount": 8,
+          "latestReplyTs": "1726134563.031509"
+        },
+        "1726132182.321109": {
+          "replyCount": 1,
+          "latestReplyTs": "1726134969.567529"
+        },
+        "1726134654.582929": {
+          "replyCount": 3,
+          "latestReplyTs": "1726189986.658209"
+        },
+        "1726187796.118329": {
+          "replyCount": 2,
+          "latestReplyTs": "1726215993.715799"
+        },
+        "1726188233.496839": {
+          "replyCount": 4,
+          "latestReplyTs": "1726189514.851429"
+        },
+        "1726209534.852369": {
+          "replyCount": 2,
+          "latestReplyTs": "1726260148.764559"
+        },
+        "1726215826.989789": {
+          "replyCount": 1,
+          "latestReplyTs": "1726348589.140339"
+        },
+        "1726436716.485689": {
+          "replyCount": 4,
+          "latestReplyTs": "1726450254.355179"
+        },
+        "1726554620.931699": {
+          "replyCount": 3,
+          "latestReplyTs": "1726562841.211339"
+        },
+        "1726634722.994729": {
+          "replyCount": 4,
+          "latestReplyTs": "1726650087.255709"
+        },
+        "1726644978.276549": {
+          "replyCount": 1,
+          "latestReplyTs": "1726645143.479289"
+        },
+        "1726737626.710349": {
+          "replyCount": 1,
+          "latestReplyTs": "1726774923.272959"
+        },
+        "1726740522.441089": {
+          "replyCount": 1,
+          "latestReplyTs": "1726740618.790269"
+        },
+        "1726740854.293349": {
+          "replyCount": 3,
+          "latestReplyTs": "1726742431.442509"
+        },
+        "1726902783.041659": {
+          "replyCount": 1,
+          "latestReplyTs": "1726950107.460449"
+        },
+        "1726903275.311249": {
+          "replyCount": 3,
+          "latestReplyTs": "1726960139.110039"
+        },
+        "1726963290.978599": {
+          "replyCount": 5,
+          "latestReplyTs": "1727171739.356689"
+        },
+        "1726963694.818919": {
+          "replyCount": 18,
+          "latestReplyTs": "1727293170.731699"
+        },
+        "1726973222.080159": {
+          "replyCount": 3,
+          "latestReplyTs": "1727049599.931339"
+        },
+        "1726977806.157279": {
+          "replyCount": 4,
+          "latestReplyTs": "1726992232.181849"
+        },
+        "1726993623.335569": {
+          "replyCount": 8,
+          "latestReplyTs": "1727057948.420819"
+        },
+        "1726998136.449879": {
+          "replyCount": 1,
+          "latestReplyTs": "1726998223.376719"
+        },
+        "1726998782.578529": {
+          "replyCount": 1,
+          "latestReplyTs": "1727050344.776039"
+        },
+        "1727049817.326839": {
+          "replyCount": 2,
+          "latestReplyTs": "1727059483.658529"
+        },
+        "1727062081.057689": {
+          "replyCount": 2,
+          "latestReplyTs": "1727077927.344839"
+        },
+        "1727074475.525209": {
+          "replyCount": 5,
+          "latestReplyTs": "1727162853.646269"
+        },
+        "1727080839.093899": {
+          "replyCount": 8,
+          "latestReplyTs": "1727125867.425749"
+        },
+        "1727081502.020749": {
+          "replyCount": 3,
+          "latestReplyTs": "1727084678.625569"
+        },
+        "1727081739.627039": {
+          "replyCount": 3,
+          "latestReplyTs": "1728337954.500289"
+        },
+        "1727241088.661389": {
+          "replyCount": 2,
+          "latestReplyTs": "1727248142.517519"
+        },
+        "1727255350.245529": {
+          "replyCount": 8,
+          "latestReplyTs": "1727305234.642999"
+        },
+        "1727305421.896159": {
+          "replyCount": 3,
+          "latestReplyTs": "1727309027.060249"
+        },
+        "1727305435.072269": {
+          "replyCount": 12,
+          "latestReplyTs": "1727326117.571129"
+        },
+        "1727340462.684229": {
+          "replyCount": 1,
+          "latestReplyTs": "1727340740.954049"
+        },
+        "1727345664.601499": {
+          "replyCount": 1,
+          "latestReplyTs": "1727347218.090239"
+        },
+        "1727600629.783679": {
+          "replyCount": 1,
+          "latestReplyTs": "1727645095.537419"
+        },
+        "1727838743.122749": {
+          "replyCount": 3,
+          "latestReplyTs": "1727846292.318149"
+        },
+        "1727838793.186909": {
+          "replyCount": 2,
+          "latestReplyTs": "1727843317.096519"
+        },
+        "1727856458.491999": {
+          "replyCount": 7,
+          "latestReplyTs": "1727986383.406909"
+        },
+        "1727860713.041539": {
+          "replyCount": 2,
+          "latestReplyTs": "1727968850.841229"
+        },
+        "1728078365.174089": {
+          "replyCount": 1,
+          "latestReplyTs": "1728080951.944999"
+        },
+        "1728167792.836559": {
+          "replyCount": 7,
+          "latestReplyTs": "1728283840.179719"
+        },
+        "1728268197.896979": {
+          "replyCount": 1,
+          "latestReplyTs": "1728270063.524899"
+        },
+        "1728289471.888489": {
+          "replyCount": 3,
+          "latestReplyTs": "1728290678.105159"
+        },
+        "1728338933.966279": {
+          "replyCount": 1,
+          "latestReplyTs": "1728370532.914819"
+        },
+        "1728340398.699529": {
+          "replyCount": 5,
+          "latestReplyTs": "1728888882.326109"
+        },
+        "1728369532.460209": {
+          "replyCount": 4,
+          "latestReplyTs": "1728449100.683219"
+        },
+        "1728373711.007899": {
+          "replyCount": 7,
+          "latestReplyTs": "1728376756.729569"
+        },
+        "1728684146.654569": {
+          "replyCount": 4,
+          "latestReplyTs": "1728716939.266859"
+        },
+        "1728894909.066239": {
+          "replyCount": 1,
+          "latestReplyTs": "1728894980.025459"
+        },
+        "1728954854.335139": {
+          "replyCount": 5,
+          "latestReplyTs": "1728977020.018579"
+        },
+        "1728960055.577509": {
+          "replyCount": 2,
+          "latestReplyTs": "1729045164.369319"
+        },
+        "1728978815.627359": {
+          "replyCount": 11,
+          "latestReplyTs": "1729061542.552179"
+        },
+        "1729061300.259769": {
+          "replyCount": 1,
+          "latestReplyTs": "1729065985.571289"
+        },
+        "1729070359.677509": {
+          "replyCount": 1,
+          "latestReplyTs": "1729072550.521359"
+        },
+        "1729151804.244699": {
+          "replyCount": 1,
+          "latestReplyTs": "1729152790.928599"
+        },
+        "1729152349.253369": {
+          "replyCount": 3,
+          "latestReplyTs": "1729153796.099579"
+        },
+        "1729158757.469369": {
+          "replyCount": 1,
+          "latestReplyTs": "1729188795.404999"
+        },
+        "1729188840.527419": {
+          "replyCount": 2,
+          "latestReplyTs": "1729191436.933339"
+        },
+        "1729197691.383139": {
+          "replyCount": 2,
+          "latestReplyTs": "1729200532.936649"
+        },
+        "1729386191.888319": {
+          "replyCount": 12,
+          "latestReplyTs": "1730362294.628929"
+        },
+        "1729387824.481169": {
+          "replyCount": 3,
+          "latestReplyTs": "1729627887.154509"
+        },
+        "1729457611.131559": {
+          "replyCount": 4,
+          "latestReplyTs": "1729542301.098359"
+        },
+        "1729480653.137309": {
+          "replyCount": 2,
+          "latestReplyTs": "1729498174.296259"
+        },
+        "1729495487.203389": {
+          "replyCount": 4,
+          "latestReplyTs": "1729713595.784179"
+        },
+        "1729627825.453259": {
+          "replyCount": 3,
+          "latestReplyTs": "1729669317.392049"
+        },
+        "1729656775.939539": {
+          "replyCount": 2,
+          "latestReplyTs": "1729664637.504469"
+        },
+        "1729667472.312549": {
+          "replyCount": 9,
+          "latestReplyTs": "1734039436.813039"
+        },
+        "1729672676.434119": {
+          "replyCount": 2,
+          "latestReplyTs": "1729716058.885049"
+        },
+        "1729716679.971539": {
+          "replyCount": 10,
+          "latestReplyTs": "1730025425.878469"
+        },
+        "1729829287.143609": {
+          "replyCount": 1,
+          "latestReplyTs": "1733215733.888229"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:16.002Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2024-08-12 → 2024-12-12. It references the published page(s) /events/she-sharp-10-year-anniversary, /events/she-evening-with-google — referenced, not verified as its own. The 623 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:46:16.001Z"
     },
     "C07K2J47C48": {
       "name": "events-2024-november-hcl",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2024-09-03 → 2024-11-18); planning chatter for something that has already happened. The channel references the published page(s) /events/technological-change-workplace-workforce-impacts, /events/the-role-of-technology-in-sustainable-development — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555739.776799",
-      "threads": {},
+      "threads": {
+        "1725325365.724239": {
+          "replyCount": 3,
+          "latestReplyTs": "1725328186.419959"
+        },
+        "1726048505.683879": {
+          "replyCount": 3,
+          "latestReplyTs": "1726125264.472469"
+        },
+        "1726050732.130299": {
+          "replyCount": 1,
+          "latestReplyTs": "1726050853.446139"
+        },
+        "1726050769.207599": {
+          "replyCount": 9,
+          "latestReplyTs": "1726461164.372289"
+        },
+        "1726126318.106819": {
+          "replyCount": 1,
+          "latestReplyTs": "1726184607.332789"
+        },
+        "1727060475.964629": {
+          "replyCount": 4,
+          "latestReplyTs": "1727060640.222479"
+        },
+        "1727074432.045519": {
+          "replyCount": 2,
+          "latestReplyTs": "1727078866.585259"
+        },
+        "1727138746.026729": {
+          "replyCount": 11,
+          "latestReplyTs": "1727160639.867759"
+        },
+        "1727252130.400859": {
+          "replyCount": 2,
+          "latestReplyTs": "1727253007.824969"
+        },
+        "1727255697.108079": {
+          "replyCount": 9,
+          "latestReplyTs": "1727340673.001669"
+        },
+        "1728855703.788429": {
+          "replyCount": 2,
+          "latestReplyTs": "1728870953.289969"
+        },
+        "1729471420.496549": {
+          "replyCount": 1,
+          "latestReplyTs": "1729487230.571279"
+        },
+        "1729490993.658219": {
+          "replyCount": 1,
+          "latestReplyTs": "1729498807.659439"
+        },
+        "1729568590.118789": {
+          "replyCount": 5,
+          "latestReplyTs": "1729897125.952559"
+        },
+        "1729730140.333839": {
+          "replyCount": 1,
+          "latestReplyTs": "1729730176.674259"
+        },
+        "1729730148.276969": {
+          "replyCount": 3,
+          "latestReplyTs": "1730188741.179339"
+        },
+        "1729730265.950889": {
+          "replyCount": 4,
+          "latestReplyTs": "1729738114.622899"
+        },
+        "1729799952.199389": {
+          "replyCount": 1,
+          "latestReplyTs": "1729800010.278349"
+        },
+        "1729930729.036709": {
+          "replyCount": 3,
+          "latestReplyTs": "1730187075.111359"
+        },
+        "1729930783.031129": {
+          "replyCount": 1,
+          "latestReplyTs": "1730149914.010219"
+        },
+        "1729935310.451619": {
+          "replyCount": 12,
+          "latestReplyTs": "1730621162.132679"
+        },
+        "1730184902.307769": {
+          "replyCount": 1,
+          "latestReplyTs": "1730358495.939679"
+        },
+        "1730239870.633949": {
+          "replyCount": 4,
+          "latestReplyTs": "1730246267.410849"
+        },
+        "1730277256.956259": {
+          "replyCount": 4,
+          "latestReplyTs": "1730321511.215679"
+        },
+        "1730344819.531659": {
+          "replyCount": 1,
+          "latestReplyTs": "1730351737.972239"
+        },
+        "1730364446.221659": {
+          "replyCount": 2,
+          "latestReplyTs": "1730426513.394739"
+        },
+        "1730421054.442469": {
+          "replyCount": 1,
+          "latestReplyTs": "1730425478.075909"
+        },
+        "1730582653.753219": {
+          "replyCount": 11,
+          "latestReplyTs": "1730750611.635939"
+        },
+        "1730876320.802919": {
+          "replyCount": 4,
+          "latestReplyTs": "1730929692.973809"
+        },
+        "1731322453.892519": {
+          "replyCount": 6,
+          "latestReplyTs": "1731447303.820769"
+        },
+        "1731565597.194509": {
+          "replyCount": 2,
+          "latestReplyTs": "1731565733.242689"
+        },
+        "1731565620.276889": {
+          "replyCount": 1,
+          "latestReplyTs": "1731565797.164699"
+        },
+        "1731565663.726629": {
+          "replyCount": 8,
+          "latestReplyTs": "1731566769.308179"
+        },
+        "1731565814.821059": {
+          "replyCount": 1,
+          "latestReplyTs": "1731565846.317649"
+        },
+        "1731566182.315389": {
+          "replyCount": 7,
+          "latestReplyTs": "1731584234.881499"
+        },
+        "1731568572.608289": {
+          "replyCount": 1,
+          "latestReplyTs": "1731572835.240359"
+        },
+        "1731570754.255479": {
+          "replyCount": 1,
+          "latestReplyTs": "1731574228.106939"
+        },
+        "1731901120.499939": {
+          "replyCount": 1,
+          "latestReplyTs": "1731914599.746719"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:11.797Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2024-09-03 → 2024-11-18. It references the published page(s) /events/technological-change-workplace-workforce-impacts, /events/the-role-of-technology-in-sustainable-development — referenced, not verified as its own. The 173 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:46:11.797Z"
     },
     "C07KH9HM2PP": {
       "name": "events-2024-sep--summeroftech",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2024-09-07 → 2024-09-16). The channel never posted its own page URL, so the page was not confirmed from its content. Either way this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555740.754689",
-      "threads": {},
+      "threads": {
+        "1725695165.107479": {
+          "replyCount": 10,
+          "latestReplyTs": "1725830800.383929"
+        },
+        "1726022752.679179": {
+          "replyCount": 1,
+          "latestReplyTs": "1726022788.070839"
+        },
+        "1726097187.719239": {
+          "replyCount": 1,
+          "latestReplyTs": "1726383306.043109"
+        },
+        "1726388107.904069": {
+          "replyCount": 1,
+          "latestReplyTs": "1726389250.468439"
+        },
+        "1726388146.998879": {
+          "replyCount": 1,
+          "latestReplyTs": "1726389343.497189"
+        },
+        "1726388539.857519": {
+          "replyCount": 1,
+          "latestReplyTs": "1726389304.888269"
+        },
+        "1726389145.283639": {
+          "replyCount": 2,
+          "latestReplyTs": "1726390572.898399"
+        },
+        "1726389471.749109": {
+          "replyCount": 2,
+          "latestReplyTs": "1726390628.886969"
+        },
+        "1726389927.229089": {
+          "replyCount": 1,
+          "latestReplyTs": "1726390630.169229"
+        },
+        "1726522041.041649": {
+          "replyCount": 2,
+          "latestReplyTs": "1726524149.383079"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:13.205Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2024-09-07 → 2024-09-16. No page URL was ever posted in the channel, so none was confirmed from its content. The 32 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:46:13.204Z"
     },
     "C07MX2A9LKA": {
       "name": "catering-10thanniv-and-google",
@@ -7007,49 +9547,597 @@
       "name": "website-admin",
       "type": "general",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "General website-operations channel, not an event. Its unread traffic is Webflow/WordPress admin and template questions. Skipped 2023-10-26; 82 unread messages read and scored first."
       },
       "watermarkTs": "1777555696.901349",
-      "threads": {},
+      "threads": {
+        "1505610822.000106": {
+          "replyCount": 1,
+          "latestReplyTs": "1505612733.000060"
+        },
+        "1505684074.000020": {
+          "replyCount": 6,
+          "latestReplyTs": "1505685643.000110"
+        },
+        "1505694254.000106": {
+          "replyCount": 3,
+          "latestReplyTs": "1505770439.000527"
+        },
+        "1571215514.009300": {
+          "replyCount": 1,
+          "latestReplyTs": "1571697540.001700"
+        },
+        "1592185540.002400": {
+          "replyCount": 2,
+          "latestReplyTs": "1593056230.002000"
+        },
+        "1616187359.043900": {
+          "replyCount": 1,
+          "latestReplyTs": "1616187406.045600"
+        },
+        "1616279493.055500": {
+          "replyCount": 2,
+          "latestReplyTs": "1616280282.057600"
+        },
+        "1616282242.065500": {
+          "replyCount": 2,
+          "latestReplyTs": "1616282435.067100"
+        },
+        "1616389129.012200": {
+          "replyCount": 13,
+          "latestReplyTs": "1616532671.003100"
+        },
+        "1618564634.000300": {
+          "replyCount": 1,
+          "latestReplyTs": "1618569529.000500"
+        },
+        "1645350748.683279": {
+          "replyCount": 5,
+          "latestReplyTs": "1645502646.475799"
+        },
+        "1653886683.618169": {
+          "replyCount": 3,
+          "latestReplyTs": "1653903672.127529"
+        },
+        "1654896344.023089": {
+          "replyCount": 6,
+          "latestReplyTs": "1655265114.452079"
+        },
+        "1655967083.529059": {
+          "replyCount": 1,
+          "latestReplyTs": "1655970263.521889"
+        },
+        "1659324289.426489": {
+          "replyCount": 7,
+          "latestReplyTs": "1659327703.127459"
+        },
+        "1667518666.970379": {
+          "replyCount": 2,
+          "latestReplyTs": "1667862257.315469"
+        },
+        "1667518766.485979": {
+          "replyCount": 2,
+          "latestReplyTs": "1667526870.294059"
+        },
+        "1683091597.787989": {
+          "replyCount": 1,
+          "latestReplyTs": "1683093436.641009"
+        },
+        "1693825639.452299": {
+          "replyCount": 2,
+          "latestReplyTs": "1693826503.341159"
+        },
+        "1698286165.246689": {
+          "replyCount": 1,
+          "latestReplyTs": "1698288538.522659"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:18.776Z",
+      "lastSyncedCommit": "",
+      "digest": "General website-operations channel, not an event. Its unread traffic is Webflow/WordPress admin and template questions. Read position recorded 2023-10-26 after the 5 Aug 2026 thread-backlog pass, which surfaced 82 historical replies this pipeline had never read. Reopen only if a genuinely new event is proposed here.",
+      "digestAt": "2026-08-05T14:46:18.775Z"
     },
     "C08EEQC49RD": {
       "name": "event-iwd-march-2025",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2025-02-25 → 2025-03-20); planning chatter for something that has already happened. The channel references the published page(s) /events/iamremarkable — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555742.937039",
-      "threads": {},
+      "threads": {
+        "1740460059.645649": {
+          "replyCount": 4,
+          "latestReplyTs": "1740540140.902529"
+        },
+        "1740496697.174389": {
+          "replyCount": 1,
+          "latestReplyTs": "1740502193.810329"
+        },
+        "1740516602.573569": {
+          "replyCount": 20,
+          "latestReplyTs": "1740707293.965119"
+        },
+        "1740517970.927209": {
+          "replyCount": 4,
+          "latestReplyTs": "1741200138.192399"
+        },
+        "1740548143.349399": {
+          "replyCount": 1,
+          "latestReplyTs": "1740612763.431809"
+        },
+        "1740549650.659049": {
+          "replyCount": 4,
+          "latestReplyTs": "1740564339.437679"
+        },
+        "1740552571.098459": {
+          "replyCount": 7,
+          "latestReplyTs": "1740683487.609779"
+        },
+        "1740612991.615459": {
+          "replyCount": 1,
+          "latestReplyTs": "1740620744.377509"
+        },
+        "1740629269.209049": {
+          "replyCount": 6,
+          "latestReplyTs": "1740635856.716929"
+        },
+        "1740639798.724089": {
+          "replyCount": 2,
+          "latestReplyTs": "1740702455.505949"
+        },
+        "1740689650.393499": {
+          "replyCount": 7,
+          "latestReplyTs": "1740712244.708089"
+        },
+        "1740689711.382879": {
+          "replyCount": 2,
+          "latestReplyTs": "1740706762.124709"
+        },
+        "1740693349.236059": {
+          "replyCount": 1,
+          "latestReplyTs": "1740706879.350199"
+        },
+        "1740703621.829819": {
+          "replyCount": 1,
+          "latestReplyTs": "1740704795.160219"
+        },
+        "1740711030.790099": {
+          "replyCount": 1,
+          "latestReplyTs": "1740711918.063519"
+        },
+        "1740729149.221729": {
+          "replyCount": 3,
+          "latestReplyTs": "1740765835.719789"
+        },
+        "1740896441.333749": {
+          "replyCount": 2,
+          "latestReplyTs": "1740953888.939719"
+        },
+        "1740977676.811749": {
+          "replyCount": 3,
+          "latestReplyTs": "1741043667.089719"
+        },
+        "1740985509.846079": {
+          "replyCount": 1,
+          "latestReplyTs": "1741032064.794159"
+        },
+        "1741011554.546989": {
+          "replyCount": 1,
+          "latestReplyTs": "1741028220.302599"
+        },
+        "1741034698.039969": {
+          "replyCount": 2,
+          "latestReplyTs": "1741043604.613589"
+        },
+        "1741050018.743189": {
+          "replyCount": 6,
+          "latestReplyTs": "1741132793.665839"
+        },
+        "1741072015.324659": {
+          "replyCount": 3,
+          "latestReplyTs": "1741073516.867159"
+        },
+        "1741076969.808799": {
+          "replyCount": 6,
+          "latestReplyTs": "1741213416.491329"
+        },
+        "1741077982.025769": {
+          "replyCount": 2,
+          "latestReplyTs": "1741080324.836259"
+        },
+        "1741079964.777009": {
+          "replyCount": 4,
+          "latestReplyTs": "1741118035.722009"
+        },
+        "1741155621.660759": {
+          "replyCount": 3,
+          "latestReplyTs": "1741158401.729139"
+        },
+        "1741200499.554359": {
+          "replyCount": 1,
+          "latestReplyTs": "1741204151.267799"
+        },
+        "1741243773.849839": {
+          "replyCount": 5,
+          "latestReplyTs": "1741315635.607639"
+        },
+        "1741331206.202379": {
+          "replyCount": 3,
+          "latestReplyTs": "1741369008.282049"
+        },
+        "1741368902.441469": {
+          "replyCount": 2,
+          "latestReplyTs": "1741473739.646869"
+        },
+        "1741484561.698919": {
+          "replyCount": 1,
+          "latestReplyTs": "1741488158.755779"
+        },
+        "1741492396.579169": {
+          "replyCount": 2,
+          "latestReplyTs": "1741590284.057009"
+        },
+        "1741566385.129159": {
+          "replyCount": 12,
+          "latestReplyTs": "1741722588.517569"
+        },
+        "1741571558.072359": {
+          "replyCount": 1,
+          "latestReplyTs": "1741572334.558499"
+        },
+        "1741580496.801279": {
+          "replyCount": 3,
+          "latestReplyTs": "1741589822.006669"
+        },
+        "1741595144.642239": {
+          "replyCount": 9,
+          "latestReplyTs": "1741763550.140669"
+        },
+        "1741595331.361519": {
+          "replyCount": 5,
+          "latestReplyTs": "1741596019.194909"
+        },
+        "1741655760.022939": {
+          "replyCount": 1,
+          "latestReplyTs": "1741656670.172189"
+        },
+        "1741669783.109459": {
+          "replyCount": 1,
+          "latestReplyTs": "1741684920.633159"
+        },
+        "1741685841.949459": {
+          "replyCount": 3,
+          "latestReplyTs": "1741744454.967949"
+        },
+        "1741717770.605959": {
+          "replyCount": 9,
+          "latestReplyTs": "1741766524.318789"
+        },
+        "1741762070.232329": {
+          "replyCount": 1,
+          "latestReplyTs": "1741762592.319419"
+        },
+        "1741832693.696529": {
+          "replyCount": 1,
+          "latestReplyTs": "1741872805.485229"
+        },
+        "1741843095.520989": {
+          "replyCount": 5,
+          "latestReplyTs": "1741850547.400519"
+        },
+        "1741848667.555839": {
+          "replyCount": 3,
+          "latestReplyTs": "1741910124.816279"
+        },
+        "1741850067.032419": {
+          "replyCount": 6,
+          "latestReplyTs": "1742511226.125789"
+        },
+        "1741851394.551749": {
+          "replyCount": 2,
+          "latestReplyTs": "1741852691.875379"
+        },
+        "1741902122.558759": {
+          "replyCount": 3,
+          "latestReplyTs": "1741913657.313949"
+        },
+        "1741903405.817909": {
+          "replyCount": 6,
+          "latestReplyTs": "1741908972.163689"
+        },
+        "1741907573.120829": {
+          "replyCount": 1,
+          "latestReplyTs": "1741917272.069629"
+        },
+        "1741913806.837439": {
+          "replyCount": 2,
+          "latestReplyTs": "1742188390.998209"
+        },
+        "1741987108.409659": {
+          "replyCount": 2,
+          "latestReplyTs": "1742051073.421619"
+        },
+        "1741995810.087929": {
+          "replyCount": 8,
+          "latestReplyTs": "1742265868.351149"
+        },
+        "1742087517.266369": {
+          "replyCount": 2,
+          "latestReplyTs": "1742157571.882909"
+        },
+        "1742106850.113369": {
+          "replyCount": 1,
+          "latestReplyTs": "1742150113.830169"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:45:54.823Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2025-02-25 → 2025-03-20. It references the published page(s) /events/iamremarkable — referenced, not verified as its own. The 255 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:45:54.823Z"
     },
     "C08GDT7CW23": {
       "name": "event-myob-techwerk-may-2025",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2025-03-31 → 2025-09-08). The channel never posted its own page URL, so the page was not confirmed from its content (a published page may well be /events/she-sharp-and-myob-working-smarter or /events/2023-kickstart-your-career-in-tech-with-myob). Either way this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555743.912699",
-      "threads": {},
+      "threads": {
+        "1743405817.632709": {
+          "replyCount": 4,
+          "latestReplyTs": "1743728498.398489"
+        },
+        "1743656334.145629": {
+          "replyCount": 2,
+          "latestReplyTs": "1744015479.578729"
+        },
+        "1743658464.672219": {
+          "replyCount": 10,
+          "latestReplyTs": "1744015701.473919"
+        },
+        "1744015740.284809": {
+          "replyCount": 1,
+          "latestReplyTs": "1744097661.242289"
+        },
+        "1744057255.898209": {
+          "replyCount": 1,
+          "latestReplyTs": "1744095501.391729"
+        },
+        "1744059495.620709": {
+          "replyCount": 1,
+          "latestReplyTs": "1744066717.304169"
+        },
+        "1744501253.603939": {
+          "replyCount": 4,
+          "latestReplyTs": "1744586192.165229"
+        },
+        "1744501290.638089": {
+          "replyCount": 2,
+          "latestReplyTs": "1744518571.877069"
+        },
+        "1744518807.057099": {
+          "replyCount": 12,
+          "latestReplyTs": "1745863164.737169"
+        },
+        "1744576169.038619": {
+          "replyCount": 10,
+          "latestReplyTs": "1744779742.153929"
+        },
+        "1745543565.030169": {
+          "replyCount": 2,
+          "latestReplyTs": "1745580299.496759"
+        },
+        "1745612971.749549": {
+          "replyCount": 1,
+          "latestReplyTs": "1745621752.896339"
+        },
+        "1745825086.544089": {
+          "replyCount": 4,
+          "latestReplyTs": "1746083852.588129"
+        },
+        "1745825115.814769": {
+          "replyCount": 2,
+          "latestReplyTs": "1745881147.818809"
+        },
+        "1745862895.137819": {
+          "replyCount": 1,
+          "latestReplyTs": "1745877764.198469"
+        },
+        "1745863090.983829": {
+          "replyCount": 3,
+          "latestReplyTs": "1746051302.341849"
+        },
+        "1746434974.185289": {
+          "replyCount": 5,
+          "latestReplyTs": "1746505072.789719"
+        },
+        "1746506134.458069": {
+          "replyCount": 2,
+          "latestReplyTs": "1746656319.568879"
+        },
+        "1746691861.602999": {
+          "replyCount": 2,
+          "latestReplyTs": "1746861213.070849"
+        },
+        "1746696272.731519": {
+          "replyCount": 4,
+          "latestReplyTs": "1746742420.424329"
+        },
+        "1747090090.744459": {
+          "replyCount": 4,
+          "latestReplyTs": "1747104416.531979"
+        },
+        "1747296714.812419": {
+          "replyCount": 3,
+          "latestReplyTs": "1747536827.166029"
+        },
+        "1747411584.765689": {
+          "replyCount": 1,
+          "latestReplyTs": "1747430049.407609"
+        },
+        "1747430176.046239": {
+          "replyCount": 2,
+          "latestReplyTs": "1747436171.544679"
+        },
+        "1747442431.191089": {
+          "replyCount": 5,
+          "latestReplyTs": "1757328669.273299"
+        },
+        "1747638733.868709": {
+          "replyCount": 3,
+          "latestReplyTs": "1747696963.792669"
+        },
+        "1747859057.233239": {
+          "replyCount": 2,
+          "latestReplyTs": "1747910115.803089"
+        },
+        "1747859406.406239": {
+          "replyCount": 3,
+          "latestReplyTs": "1747875098.057569"
+        },
+        "1747862954.519509": {
+          "replyCount": 1,
+          "latestReplyTs": "1747868704.331479"
+        },
+        "1747886731.050439": {
+          "replyCount": 1,
+          "latestReplyTs": "1747888420.843709"
+        },
+        "1747910762.613089": {
+          "replyCount": 4,
+          "latestReplyTs": "1747959730.557679"
+        },
+        "1747946564.110099": {
+          "replyCount": 2,
+          "latestReplyTs": "1748247681.733229"
+        },
+        "1748283065.799289": {
+          "replyCount": 7,
+          "latestReplyTs": "1748456520.862149"
+        },
+        "1748415133.999099": {
+          "replyCount": 4,
+          "latestReplyTs": "1748464011.192009"
+        },
+        "1748456720.248809": {
+          "replyCount": 1,
+          "latestReplyTs": "1748460002.968359"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:45:56.254Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2025-03-31 → 2025-09-08. No page URL was ever posted in the channel, so none was confirmed from its content (candidates worth checking: /events/she-sharp-and-myob-working-smarter, /events/2023-kickstart-your-career-in-tech-with-myob). The 151 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:45:56.253Z"
     },
     "C08GMGCQHQA": {
       "name": "event-iamremarkable-april-2025",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2025-03-10 → 2025-04-30); planning chatter for something that has already happened. The channel references the published page(s) /events/iamremarkable — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555744.926479",
-      "threads": {},
+      "threads": {
+        "1741615061.246099": {
+          "replyCount": 2,
+          "latestReplyTs": "1741676196.439599"
+        },
+        "1742679400.309519": {
+          "replyCount": 3,
+          "latestReplyTs": "1742762530.026389"
+        },
+        "1742774374.417929": {
+          "replyCount": 2,
+          "latestReplyTs": "1742920655.212229"
+        },
+        "1742877498.363729": {
+          "replyCount": 5,
+          "latestReplyTs": "1742892462.193459"
+        },
+        "1742952899.620689": {
+          "replyCount": 1,
+          "latestReplyTs": "1743488568.659729"
+        },
+        "1742953074.967219": {
+          "replyCount": 4,
+          "latestReplyTs": "1743012298.200089"
+        },
+        "1743213420.867399": {
+          "replyCount": 5,
+          "latestReplyTs": "1743403991.708339"
+        },
+        "1743636584.167119": {
+          "replyCount": 11,
+          "latestReplyTs": "1743728531.828539"
+        },
+        "1743637873.509629": {
+          "replyCount": 16,
+          "latestReplyTs": "1744316069.891839"
+        },
+        "1743652399.674509": {
+          "replyCount": 7,
+          "latestReplyTs": "1743857699.091619"
+        },
+        "1744071911.014339": {
+          "replyCount": 2,
+          "latestReplyTs": "1744074199.011159"
+        },
+        "1744348958.572879": {
+          "replyCount": 3,
+          "latestReplyTs": "1744700797.572469"
+        },
+        "1744518433.602349": {
+          "replyCount": 2,
+          "latestReplyTs": "1744570406.645609"
+        },
+        "1744711811.419249": {
+          "replyCount": 1,
+          "latestReplyTs": "1744739861.437049"
+        },
+        "1744759867.044199": {
+          "replyCount": 2,
+          "latestReplyTs": "1744759939.016689"
+        },
+        "1744765425.367519": {
+          "replyCount": 2,
+          "latestReplyTs": "1744772416.032339"
+        },
+        "1744765636.501729": {
+          "replyCount": 2,
+          "latestReplyTs": "1744788667.146929"
+        },
+        "1744853386.871599": {
+          "replyCount": 3,
+          "latestReplyTs": "1745275622.336949"
+        },
+        "1744853467.179799": {
+          "replyCount": 2,
+          "latestReplyTs": "1744853632.519789"
+        },
+        "1745276596.909379": {
+          "replyCount": 28,
+          "latestReplyTs": "1745404470.132599"
+        },
+        "1745406512.121299": {
+          "replyCount": 1,
+          "latestReplyTs": "1745472677.974179"
+        },
+        "1745461826.409279": {
+          "replyCount": 6,
+          "latestReplyTs": "1745995567.604009"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:45:53.398Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2025-03-10 → 2025-04-30. It references the published page(s) /events/iamremarkable — referenced, not verified as its own. The 132 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:45:53.397Z"
     },
     "C08GULKDVBM": {
       "name": "event-myob-may-2025",
@@ -7067,61 +10155,889 @@
       "name": "event-ethnic-conference-june-2025",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2025-05-27 → 2025-07-01); planning chatter for something that has already happened. The channel references the published page(s) /events/ethnic-advantage-conference — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555747.336369",
-      "threads": {},
+      "threads": {
+        "1748381962.021969": {
+          "replyCount": 12,
+          "latestReplyTs": "1749622176.488409"
+        },
+        "1750666807.955949": {
+          "replyCount": 2,
+          "latestReplyTs": "1750754926.072579"
+        },
+        "1750937277.342869": {
+          "replyCount": 4,
+          "latestReplyTs": "1750997415.638249"
+        },
+        "1750979207.639959": {
+          "replyCount": 1,
+          "latestReplyTs": "1750979914.642429"
+        },
+        "1750979471.156919": {
+          "replyCount": 1,
+          "latestReplyTs": "1750979584.238189"
+        },
+        "1750997396.188139": {
+          "replyCount": 1,
+          "latestReplyTs": "1751003028.462219"
+        },
+        "1751011719.470899": {
+          "replyCount": 2,
+          "latestReplyTs": "1751012383.580709"
+        },
+        "1751016054.640479": {
+          "replyCount": 1,
+          "latestReplyTs": "1751018487.204079"
+        },
+        "1751053346.156559": {
+          "replyCount": 3,
+          "latestReplyTs": "1751055306.562189"
+        },
+        "1751155614.772489": {
+          "replyCount": 3,
+          "latestReplyTs": "1751177145.803739"
+        },
+        "1751350745.459689": {
+          "replyCount": 3,
+          "latestReplyTs": "1751363299.810249"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:45:49.095Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2025-05-27 → 2025-07-01. It references the published page(s) /events/ethnic-advantage-conference — referenced, not verified as its own. The 44 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:45:49.094Z"
     },
     "C092BSZGPJB": {
       "name": "event-xero-oct-2025",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2025-06-30 → 2025-10-13); planning chatter for something that has already happened. The channel references the published page(s) /events/code-secure — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555748.359119",
-      "threads": {},
+      "threads": {
+        "1751253940.914039": {
+          "replyCount": 2,
+          "latestReplyTs": "1751257147.301089"
+        },
+        "1752039488.033839": {
+          "replyCount": 7,
+          "latestReplyTs": "1752654778.676519"
+        },
+        "1753948651.458469": {
+          "replyCount": 13,
+          "latestReplyTs": "1755549334.393859"
+        },
+        "1753955325.076119": {
+          "replyCount": 2,
+          "latestReplyTs": "1754428931.423839"
+        },
+        "1753955846.122029": {
+          "replyCount": 3,
+          "latestReplyTs": "1754214208.124469"
+        },
+        "1754391085.874639": {
+          "replyCount": 13,
+          "latestReplyTs": "1754543176.648619"
+        },
+        "1754436140.898179": {
+          "replyCount": 3,
+          "latestReplyTs": "1754441422.555429"
+        },
+        "1754549833.349009": {
+          "replyCount": 2,
+          "latestReplyTs": "1754563135.494169"
+        },
+        "1755507509.946139": {
+          "replyCount": 11,
+          "latestReplyTs": "1755680702.891209"
+        },
+        "1755599696.751719": {
+          "replyCount": 1,
+          "latestReplyTs": "1755632868.175959"
+        },
+        "1755633011.146329": {
+          "replyCount": 3,
+          "latestReplyTs": "1755633111.372059"
+        },
+        "1755647114.180069": {
+          "replyCount": 3,
+          "latestReplyTs": "1755650779.943769"
+        },
+        "1755682219.130629": {
+          "replyCount": 1,
+          "latestReplyTs": "1756199945.719489"
+        },
+        "1755827030.398179": {
+          "replyCount": 7,
+          "latestReplyTs": "1755916937.586909"
+        },
+        "1755910290.719609": {
+          "replyCount": 2,
+          "latestReplyTs": "1755913637.902979"
+        },
+        "1756199713.005649": {
+          "replyCount": 1,
+          "latestReplyTs": "1756236813.795919"
+        },
+        "1756235611.821719": {
+          "replyCount": 1,
+          "latestReplyTs": "1756272203.557999"
+        },
+        "1756509433.214939": {
+          "replyCount": 4,
+          "latestReplyTs": "1756715944.829459"
+        },
+        "1756782760.015129": {
+          "replyCount": 2,
+          "latestReplyTs": "1756803580.740259"
+        },
+        "1756787514.696999": {
+          "replyCount": 10,
+          "latestReplyTs": "1757011873.971969"
+        },
+        "1756889956.330029": {
+          "replyCount": 3,
+          "latestReplyTs": "1756976970.394419"
+        },
+        "1756976153.925879": {
+          "replyCount": 3,
+          "latestReplyTs": "1756976294.373109"
+        },
+        "1756976207.323929": {
+          "replyCount": 3,
+          "latestReplyTs": "1757794854.232529"
+        },
+        "1756976345.626839": {
+          "replyCount": 4,
+          "latestReplyTs": "1756977042.205279"
+        },
+        "1756982886.416219": {
+          "replyCount": 2,
+          "latestReplyTs": "1757031190.325529"
+        },
+        "1756985101.628029": {
+          "replyCount": 18,
+          "latestReplyTs": "1757201149.895539"
+        },
+        "1757120475.820899": {
+          "replyCount": 6,
+          "latestReplyTs": "1757128281.431439"
+        },
+        "1757314281.552849": {
+          "replyCount": 4,
+          "latestReplyTs": "1757403497.170849"
+        },
+        "1757318992.188639": {
+          "replyCount": 14,
+          "latestReplyTs": "1757489297.439419"
+        },
+        "1757324260.369629": {
+          "replyCount": 4,
+          "latestReplyTs": "1757397944.808879"
+        },
+        "1757378387.138979": {
+          "replyCount": 10,
+          "latestReplyTs": "1757533053.655469"
+        },
+        "1757496042.138319": {
+          "replyCount": 13,
+          "latestReplyTs": "1757520218.834389"
+        },
+        "1757562348.304129": {
+          "replyCount": 4,
+          "latestReplyTs": "1757570451.112489"
+        },
+        "1757580088.038199": {
+          "replyCount": 3,
+          "latestReplyTs": "1757620078.222619"
+        },
+        "1757623647.924119": {
+          "replyCount": 8,
+          "latestReplyTs": "1757713716.055039"
+        },
+        "1757712288.655429": {
+          "replyCount": 3,
+          "latestReplyTs": "1757752714.275619"
+        },
+        "1757933325.266009": {
+          "replyCount": 4,
+          "latestReplyTs": "1757962603.710199"
+        },
+        "1757936446.770719": {
+          "replyCount": 4,
+          "latestReplyTs": "1758091994.073859"
+        },
+        "1757962392.228999": {
+          "replyCount": 4,
+          "latestReplyTs": "1758008532.720529"
+        },
+        "1757981538.721749": {
+          "replyCount": 10,
+          "latestReplyTs": "1758239639.360029"
+        },
+        "1758083123.773069": {
+          "replyCount": 3,
+          "latestReplyTs": "1758180350.995909"
+        },
+        "1758086035.787259": {
+          "replyCount": 1,
+          "latestReplyTs": "1758088326.595579"
+        },
+        "1758320664.830209": {
+          "replyCount": 1,
+          "latestReplyTs": "1758325547.571879"
+        },
+        "1758529420.642629": {
+          "replyCount": 3,
+          "latestReplyTs": "1758530760.272369"
+        },
+        "1758529542.682169": {
+          "replyCount": 2,
+          "latestReplyTs": "1758535597.662989"
+        },
+        "1758529571.714839": {
+          "replyCount": 1,
+          "latestReplyTs": "1758529692.058789"
+        },
+        "1758689470.856499": {
+          "replyCount": 8,
+          "latestReplyTs": "1758704722.111939"
+        },
+        "1758694763.765589": {
+          "replyCount": 22,
+          "latestReplyTs": "1759121276.815499"
+        },
+        "1758783663.262129": {
+          "replyCount": 2,
+          "latestReplyTs": "1758911086.197989"
+        },
+        "1758784362.069099": {
+          "replyCount": 3,
+          "latestReplyTs": "1758793606.341119"
+        },
+        "1758789570.690149": {
+          "replyCount": 5,
+          "latestReplyTs": "1759018350.382729"
+        },
+        "1758790905.920449": {
+          "replyCount": 1,
+          "latestReplyTs": "1758854091.665889"
+        },
+        "1758871873.253139": {
+          "replyCount": 11,
+          "latestReplyTs": "1759133579.450429"
+        },
+        "1759132420.504659": {
+          "replyCount": 9,
+          "latestReplyTs": "1759389882.858229"
+        },
+        "1759134545.579319": {
+          "replyCount": 13,
+          "latestReplyTs": "1759217257.423959"
+        },
+        "1759216577.072419": {
+          "replyCount": 2,
+          "latestReplyTs": "1759216672.693179"
+        },
+        "1759218062.444189": {
+          "replyCount": 1,
+          "latestReplyTs": "1759218102.338419"
+        },
+        "1759290752.372519": {
+          "replyCount": 2,
+          "latestReplyTs": "1759294841.759619"
+        },
+        "1759294680.645229": {
+          "replyCount": 2,
+          "latestReplyTs": "1759303277.963639"
+        },
+        "1759303849.999579": {
+          "replyCount": 3,
+          "latestReplyTs": "1759341427.466859"
+        },
+        "1759342127.536959": {
+          "replyCount": 2,
+          "latestReplyTs": "1759342452.485939"
+        },
+        "1759383299.552559": {
+          "replyCount": 1,
+          "latestReplyTs": "1759383843.986509"
+        },
+        "1759387596.242069": {
+          "replyCount": 12,
+          "latestReplyTs": "1759394200.250279"
+        },
+        "1759389325.340139": {
+          "replyCount": 1,
+          "latestReplyTs": "1759389948.794869"
+        },
+        "1759392941.896639": {
+          "replyCount": 5,
+          "latestReplyTs": "1759393987.484289"
+        },
+        "1759395365.686699": {
+          "replyCount": 1,
+          "latestReplyTs": "1759395382.919889"
+        },
+        "1759523611.598789": {
+          "replyCount": 1,
+          "latestReplyTs": "1759526744.162409"
+        },
+        "1759524082.565419": {
+          "replyCount": 1,
+          "latestReplyTs": "1759542469.988139"
+        },
+        "1759539015.953629": {
+          "replyCount": 3,
+          "latestReplyTs": "1759548539.391059"
+        },
+        "1759548805.666349": {
+          "replyCount": 11,
+          "latestReplyTs": "1759801145.817689"
+        },
+        "1759732587.122939": {
+          "replyCount": 2,
+          "latestReplyTs": "1759776730.133889"
+        },
+        "1759732675.824439": {
+          "replyCount": 1,
+          "latestReplyTs": "1759776768.586669"
+        },
+        "1759788443.779449": {
+          "replyCount": 14,
+          "latestReplyTs": "1759831759.738109"
+        },
+        "1759831783.756849": {
+          "replyCount": 6,
+          "latestReplyTs": "1760383123.621539"
+        },
+        "1759857585.687539": {
+          "replyCount": 3,
+          "latestReplyTs": "1759883080.738489"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:00.519Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2025-06-30 → 2025-10-13. It references the published page(s) /events/code-secure — referenced, not verified as its own. The 449 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:46:00.519Z"
     },
     "C092LHWGLG6": {
       "name": "event-hcltech-nov21-2025",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2025-06-26 → 2025-11-26); planning chatter for something that has already happened. The channel references the published page(s) /events/she-sharp-hcltech-ai-empowerment-shaping-an-inclusive-digital-future — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555749.230179",
-      "threads": {},
+      "threads": {
+        "1750973235.547019": {
+          "replyCount": 6,
+          "latestReplyTs": "1750983364.579609"
+        },
+        "1757407939.902999": {
+          "replyCount": 11,
+          "latestReplyTs": "1757578548.236819"
+        },
+        "1757574509.492989": {
+          "replyCount": 3,
+          "latestReplyTs": "1757581559.670179"
+        },
+        "1757574530.281239": {
+          "replyCount": 1,
+          "latestReplyTs": "1757574709.012569"
+        },
+        "1758329620.901159": {
+          "replyCount": 1,
+          "latestReplyTs": "1758525364.174909"
+        },
+        "1758331517.990429": {
+          "replyCount": 1,
+          "latestReplyTs": "1758431279.786079"
+        },
+        "1759210757.664849": {
+          "replyCount": 1,
+          "latestReplyTs": "1759524492.225759"
+        },
+        "1759210879.994999": {
+          "replyCount": 4,
+          "latestReplyTs": "1759776821.047349"
+        },
+        "1759291292.233359": {
+          "replyCount": 6,
+          "latestReplyTs": "1759306441.292059"
+        },
+        "1759546852.925929": {
+          "replyCount": 1,
+          "latestReplyTs": "1759549720.939969"
+        },
+        "1760005047.725299": {
+          "replyCount": 5,
+          "latestReplyTs": "1760122141.457249"
+        },
+        "1760122315.954799": {
+          "replyCount": 2,
+          "latestReplyTs": "1760152144.547099"
+        },
+        "1760132721.836259": {
+          "replyCount": 2,
+          "latestReplyTs": "1760154401.149949"
+        },
+        "1760340602.461449": {
+          "replyCount": 2,
+          "latestReplyTs": "1760341525.169069"
+        },
+        "1760432497.840089": {
+          "replyCount": 5,
+          "latestReplyTs": "1760435116.347199"
+        },
+        "1760571046.400679": {
+          "replyCount": 4,
+          "latestReplyTs": "1760572280.619649"
+        },
+        "1761027736.961579": {
+          "replyCount": 1,
+          "latestReplyTs": "1761027849.452229"
+        },
+        "1761037368.650299": {
+          "replyCount": 8,
+          "latestReplyTs": "1761675270.397189"
+        },
+        "1761118937.986969": {
+          "replyCount": 19,
+          "latestReplyTs": "1761711510.286589"
+        },
+        "1761709943.089579": {
+          "replyCount": 24,
+          "latestReplyTs": "1763203075.700379"
+        },
+        "1761715578.778779": {
+          "replyCount": 13,
+          "latestReplyTs": "1761728517.716759"
+        },
+        "1761720481.709709": {
+          "replyCount": 9,
+          "latestReplyTs": "1761726808.113149"
+        },
+        "1761733320.374089": {
+          "replyCount": 5,
+          "latestReplyTs": "1761776417.633729"
+        },
+        "1762047936.308679": {
+          "replyCount": 15,
+          "latestReplyTs": "1762314638.164229"
+        },
+        "1762161390.372799": {
+          "replyCount": 1,
+          "latestReplyTs": "1762163248.454289"
+        },
+        "1762163228.295379": {
+          "replyCount": 7,
+          "latestReplyTs": "1762239100.986479"
+        },
+        "1762242789.922129": {
+          "replyCount": 12,
+          "latestReplyTs": "1762414219.199359"
+        },
+        "1762330486.145729": {
+          "replyCount": 2,
+          "latestReplyTs": "1762405783.199959"
+        },
+        "1762553068.460389": {
+          "replyCount": 36,
+          "latestReplyTs": "1763683985.370139"
+        },
+        "1762581663.723039": {
+          "replyCount": 3,
+          "latestReplyTs": "1762585239.403779"
+        },
+        "1762671700.095529": {
+          "replyCount": 23,
+          "latestReplyTs": "1763416659.625969"
+        },
+        "1763358979.622509": {
+          "replyCount": 2,
+          "latestReplyTs": "1763367387.845099"
+        },
+        "1763366377.275529": {
+          "replyCount": 1,
+          "latestReplyTs": "1763368410.665599"
+        },
+        "1763437362.861459": {
+          "replyCount": 9,
+          "latestReplyTs": "1763453830.796829"
+        },
+        "1763600028.053619": {
+          "replyCount": 1,
+          "latestReplyTs": "1763622547.318589"
+        },
+        "1763942435.740229": {
+          "replyCount": 11,
+          "latestReplyTs": "1764122008.985799"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:45:51.959Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2025-06-26 → 2025-11-26. It references the published page(s) /events/she-sharp-hcltech-ai-empowerment-shaping-an-inclusive-digital-future — referenced, not verified as its own. The 293 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:45:51.959Z"
     },
     "C092QQP6JQL": {
       "name": "event-fonterra-sept-2025",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2025-06-23 → 2025-09-09). The channel never posted its own page URL, so the page was not confirmed from its content (a published page may well be /events/fonterra-a-legendairy-career). Either way this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555750.232799",
-      "threads": {},
+      "threads": {
+        "1750715220.748809": {
+          "replyCount": 2,
+          "latestReplyTs": "1750739944.154909"
+        },
+        "1753865867.655309": {
+          "replyCount": 4,
+          "latestReplyTs": "1754292370.253669"
+        },
+        "1754591620.420839": {
+          "replyCount": 5,
+          "latestReplyTs": "1754604393.985539"
+        },
+        "1754633821.648469": {
+          "replyCount": 1,
+          "latestReplyTs": "1754634005.694509"
+        },
+        "1754784482.000799": {
+          "replyCount": 11,
+          "latestReplyTs": "1754802064.142199"
+        },
+        "1754896763.265659": {
+          "replyCount": 7,
+          "latestReplyTs": "1754948277.314029"
+        },
+        "1754977819.905029": {
+          "replyCount": 1,
+          "latestReplyTs": "1755077418.401109"
+        },
+        "1755068038.493199": {
+          "replyCount": 23,
+          "latestReplyTs": "1755499473.934389"
+        },
+        "1755168324.486539": {
+          "replyCount": 3,
+          "latestReplyTs": "1755456613.280559"
+        },
+        "1755291511.827349": {
+          "replyCount": 11,
+          "latestReplyTs": "1755498555.475349"
+        },
+        "1755585327.997569": {
+          "replyCount": 3,
+          "latestReplyTs": "1755761251.137319"
+        },
+        "1755727294.172549": {
+          "replyCount": 6,
+          "latestReplyTs": "1755733674.812009"
+        },
+        "1755743304.934249": {
+          "replyCount": 1,
+          "latestReplyTs": "1755846306.152459"
+        },
+        "1755827143.963859": {
+          "replyCount": 3,
+          "latestReplyTs": "1755899129.645789"
+        },
+        "1755841999.421139": {
+          "replyCount": 4,
+          "latestReplyTs": "1755851041.801229"
+        },
+        "1756111513.490579": {
+          "replyCount": 1,
+          "latestReplyTs": "1756111636.730029"
+        },
+        "1756111535.426469": {
+          "replyCount": 1,
+          "latestReplyTs": "1756185187.761209"
+        },
+        "1756111573.744919": {
+          "replyCount": 3,
+          "latestReplyTs": "1756117110.531949"
+        },
+        "1756112458.209409": {
+          "replyCount": 6,
+          "latestReplyTs": "1756185978.988539"
+        },
+        "1756112815.581789": {
+          "replyCount": 1,
+          "latestReplyTs": "1756112873.731279"
+        },
+        "1756114968.772459": {
+          "replyCount": 11,
+          "latestReplyTs": "1756118782.816509"
+        },
+        "1756115769.349489": {
+          "replyCount": 1,
+          "latestReplyTs": "1756117092.333029"
+        },
+        "1756330574.832099": {
+          "replyCount": 12,
+          "latestReplyTs": "1756371493.526309"
+        },
+        "1756366103.881719": {
+          "replyCount": 1,
+          "latestReplyTs": "1756366279.754749"
+        },
+        "1756428743.530559": {
+          "replyCount": 28,
+          "latestReplyTs": "1756686616.978469"
+        },
+        "1756718887.484089": {
+          "replyCount": 6,
+          "latestReplyTs": "1756793038.781969"
+        },
+        "1756718921.622219": {
+          "replyCount": 11,
+          "latestReplyTs": "1756860119.481749"
+        },
+        "1756765945.131789": {
+          "replyCount": 6,
+          "latestReplyTs": "1756798649.277239"
+        },
+        "1756795189.230149": {
+          "replyCount": 1,
+          "latestReplyTs": "1756797468.032719"
+        },
+        "1756799620.543429": {
+          "replyCount": 4,
+          "latestReplyTs": "1756811048.645869"
+        },
+        "1756858830.623299": {
+          "replyCount": 4,
+          "latestReplyTs": "1756860397.672629"
+        },
+        "1756884075.778609": {
+          "replyCount": 1,
+          "latestReplyTs": "1756894984.372389"
+        },
+        "1756889180.052599": {
+          "replyCount": 8,
+          "latestReplyTs": "1756978882.135009"
+        },
+        "1756931439.191559": {
+          "replyCount": 2,
+          "latestReplyTs": "1756952956.232529"
+        },
+        "1756931511.891589": {
+          "replyCount": 1,
+          "latestReplyTs": "1756953018.515689"
+        },
+        "1757107741.596799": {
+          "replyCount": 4,
+          "latestReplyTs": "1757227236.073759"
+        },
+        "1757327129.073299": {
+          "replyCount": 2,
+          "latestReplyTs": "1757400388.193099"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:45:50.519Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2025-06-23 → 2025-09-09. No page URL was ever posted in the channel, so none was confirmed from its content (candidates worth checking: /events/fonterra-a-legendairy-career). The 237 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:45:50.519Z"
     },
     "C092YTH4B6V": {
       "name": "event-techbabes-industry-july-2025",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2025-06-23 → 2025-08-17); planning chatter for something that has already happened. The channel references the published page(s) /events/thrive-your-career-your-story — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555751.195599",
-      "threads": {},
+      "threads": {
+        "1750715111.024359": {
+          "replyCount": 1,
+          "latestReplyTs": "1750726968.173689"
+        },
+        "1750724188.073619": {
+          "replyCount": 1,
+          "latestReplyTs": "1750738181.085039"
+        },
+        "1750825107.266799": {
+          "replyCount": 4,
+          "latestReplyTs": "1750842774.631919"
+        },
+        "1750825411.601349": {
+          "replyCount": 1,
+          "latestReplyTs": "1750829417.346009"
+        },
+        "1750825439.959899": {
+          "replyCount": 2,
+          "latestReplyTs": "1750843176.500939"
+        },
+        "1750847517.840669": {
+          "replyCount": 13,
+          "latestReplyTs": "1750927776.650309"
+        },
+        "1750848162.238479": {
+          "replyCount": 7,
+          "latestReplyTs": "1750965069.131099"
+        },
+        "1750886994.009559": {
+          "replyCount": 2,
+          "latestReplyTs": "1750936339.461899"
+        },
+        "1750911539.363519": {
+          "replyCount": 6,
+          "latestReplyTs": "1750927522.478119"
+        },
+        "1750913540.303889": {
+          "replyCount": 2,
+          "latestReplyTs": "1750914366.774969"
+        },
+        "1750936823.999359": {
+          "replyCount": 2,
+          "latestReplyTs": "1750991672.129149"
+        },
+        "1750983425.671519": {
+          "replyCount": 3,
+          "latestReplyTs": "1750988778.935089"
+        },
+        "1751012258.095459": {
+          "replyCount": 3,
+          "latestReplyTs": "1751048114.362119"
+        },
+        "1751331218.739689": {
+          "replyCount": 1,
+          "latestReplyTs": "1751332023.803399"
+        },
+        "1751361977.265249": {
+          "replyCount": 1,
+          "latestReplyTs": "1751494155.684899"
+        },
+        "1751769864.191859": {
+          "replyCount": 1,
+          "latestReplyTs": "1751771558.833029"
+        },
+        "1751878875.902559": {
+          "replyCount": 2,
+          "latestReplyTs": "1751879275.079559"
+        },
+        "1752306565.034859": {
+          "replyCount": 3,
+          "latestReplyTs": "1752476949.152759"
+        },
+        "1752306632.106659": {
+          "replyCount": 25,
+          "latestReplyTs": "1752784403.617349"
+        },
+        "1752474548.900359": {
+          "replyCount": 5,
+          "latestReplyTs": "1752828005.166119"
+        },
+        "1752611415.065859": {
+          "replyCount": 6,
+          "latestReplyTs": "1752736646.481879"
+        },
+        "1752626334.570939": {
+          "replyCount": 3,
+          "latestReplyTs": "1752652691.794509"
+        },
+        "1752736853.429699": {
+          "replyCount": 3,
+          "latestReplyTs": "1752737245.515999"
+        },
+        "1752999204.662539": {
+          "replyCount": 1,
+          "latestReplyTs": "1753001749.613719"
+        },
+        "1753081877.861409": {
+          "replyCount": 1,
+          "latestReplyTs": "1753082646.497909"
+        },
+        "1753088268.304279": {
+          "replyCount": 2,
+          "latestReplyTs": "1753249453.519749"
+        },
+        "1753088457.409209": {
+          "replyCount": 6,
+          "latestReplyTs": "1753167525.611669"
+        },
+        "1753168245.648859": {
+          "replyCount": 9,
+          "latestReplyTs": "1753218744.419819"
+        },
+        "1753168369.182499": {
+          "replyCount": 2,
+          "latestReplyTs": "1753348681.237539"
+        },
+        "1753177267.931679": {
+          "replyCount": 1,
+          "latestReplyTs": "1753245646.221229"
+        },
+        "1753182951.177929": {
+          "replyCount": 21,
+          "latestReplyTs": "1753383293.277689"
+        },
+        "1753574651.624059": {
+          "replyCount": 14,
+          "latestReplyTs": "1753699255.131329"
+        },
+        "1753577922.990909": {
+          "replyCount": 1,
+          "latestReplyTs": "1753592889.087489"
+        },
+        "1753607860.835279": {
+          "replyCount": 1,
+          "latestReplyTs": "1753657043.199469"
+        },
+        "1753693237.480509": {
+          "replyCount": 2,
+          "latestReplyTs": "1753781716.210559"
+        },
+        "1753694760.232429": {
+          "replyCount": 1,
+          "latestReplyTs": "1753694766.947539"
+        },
+        "1753695888.945489": {
+          "replyCount": 1,
+          "latestReplyTs": "1753695904.278949"
+        },
+        "1753777259.036759": {
+          "replyCount": 1,
+          "latestReplyTs": "1753953180.154309"
+        },
+        "1753826271.773749": {
+          "replyCount": 1,
+          "latestReplyTs": "1753953344.644229"
+        },
+        "1753922194.662209": {
+          "replyCount": 5,
+          "latestReplyTs": "1753955393.152389"
+        },
+        "1753955433.647599": {
+          "replyCount": 8,
+          "latestReplyTs": "1754025125.563829"
+        },
+        "1754332462.801929": {
+          "replyCount": 4,
+          "latestReplyTs": "1754335544.259569"
+        },
+        "1754860616.510259": {
+          "replyCount": 1,
+          "latestReplyTs": "1755425292.742609"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:45:57.687Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2025-06-23 → 2025-08-17. It references the published page(s) /events/thrive-your-career-your-story — referenced, not verified as its own. The 223 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:45:57.686Z"
     },
     "C093EN4FF9N": {
       "name": "event-ai-forum-hackathon-aug-2025",
@@ -7323,6 +11239,14 @@
       },
       "watermarkTs": "1785704496.935039",
       "threads": {
+        "1751929031.755199": {
+          "replyCount": 1,
+          "latestReplyTs": "1752015322.008529"
+        },
+        "1752710460.053659": {
+          "replyCount": 1,
+          "latestReplyTs": "1752742726.190859"
+        },
         "1753397322.171189": {
           "replyCount": 1,
           "latestReplyTs": "1753408627.791479"
@@ -7357,20 +11281,136 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-05T14:48:13.808Z",
       "lastSyncedCommit": ""
     },
     "C096M3GC3BL": {
       "name": "event-vector-nov12-2025",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2025-07-20 → 2025-11-14); planning chatter for something that has already happened. The channel references the published page(s) /events/she-sharp-vector-future-ready-data-ai-digital-innovation-inclusive-careers-at-vector — referenced, NOT verified as this channel's own page, since a URL in a channel may simply have been shared (the March 2025 IWD channel references the April iamremarkable page, and one legacy slug turns up in two channels). The skip does not rest on identifying the page: this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555754.321859",
-      "threads": {},
+      "threads": {
+        "1752996487.285469": {
+          "replyCount": 2,
+          "latestReplyTs": "1752996567.830459"
+        },
+        "1757313586.735329": {
+          "replyCount": 1,
+          "latestReplyTs": "1757927757.632179"
+        },
+        "1757632053.089669": {
+          "replyCount": 1,
+          "latestReplyTs": "1757637310.606959"
+        },
+        "1757826228.216999": {
+          "replyCount": 10,
+          "latestReplyTs": "1757879964.680859"
+        },
+        "1757830242.687899": {
+          "replyCount": 1,
+          "latestReplyTs": "1757834864.727289"
+        },
+        "1757835500.947679": {
+          "replyCount": 11,
+          "latestReplyTs": "1759222016.260879"
+        },
+        "1759222328.562779": {
+          "replyCount": 2,
+          "latestReplyTs": "1759225664.780519"
+        },
+        "1759306471.995989": {
+          "replyCount": 1,
+          "latestReplyTs": "1759306547.947409"
+        },
+        "1759345719.853569": {
+          "replyCount": 2,
+          "latestReplyTs": "1759387447.922239"
+        },
+        "1759544409.735049": {
+          "replyCount": 1,
+          "latestReplyTs": "1759545860.354729"
+        },
+        "1760085282.752319": {
+          "replyCount": 17,
+          "latestReplyTs": "1760329795.234029"
+        },
+        "1760121152.728249": {
+          "replyCount": 1,
+          "latestReplyTs": "1760139637.736989"
+        },
+        "1760335573.882269": {
+          "replyCount": 14,
+          "latestReplyTs": "1760336463.907729"
+        },
+        "1761163249.812249": {
+          "replyCount": 9,
+          "latestReplyTs": "1761201739.367589"
+        },
+        "1761633969.717149": {
+          "replyCount": 2,
+          "latestReplyTs": "1761635257.471819"
+        },
+        "1761802855.487579": {
+          "replyCount": 2,
+          "latestReplyTs": "1761980772.407739"
+        },
+        "1761861047.444689": {
+          "replyCount": 2,
+          "latestReplyTs": "1761867180.584359"
+        },
+        "1762155628.381309": {
+          "replyCount": 3,
+          "latestReplyTs": "1762158918.050179"
+        },
+        "1762218547.241399": {
+          "replyCount": 2,
+          "latestReplyTs": "1762256431.237269"
+        },
+        "1762324713.872589": {
+          "replyCount": 4,
+          "latestReplyTs": "1762419969.775099"
+        },
+        "1762325163.197319": {
+          "replyCount": 9,
+          "latestReplyTs": "1762719437.682869"
+        },
+        "1762328541.249419": {
+          "replyCount": 23,
+          "latestReplyTs": "1762748645.795949"
+        },
+        "1762495083.554649": {
+          "replyCount": 6,
+          "latestReplyTs": "1762637713.548389"
+        },
+        "1762655697.666799": {
+          "replyCount": 3,
+          "latestReplyTs": "1762656335.119729"
+        },
+        "1762760910.773289": {
+          "replyCount": 10,
+          "latestReplyTs": "1762842599.435159"
+        },
+        "1762829306.090419": {
+          "replyCount": 7,
+          "latestReplyTs": "1762843736.918139"
+        },
+        "1762852579.261289": {
+          "replyCount": 2,
+          "latestReplyTs": "1762883826.689059"
+        },
+        "1762943858.725599": {
+          "replyCount": 13,
+          "latestReplyTs": "1763117914.894629"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:45:59.099Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2025-07-20 → 2025-11-14. It references the published page(s) /events/she-sharp-vector-future-ready-data-ai-digital-innovation-inclusive-careers-at-vector — referenced, not verified as its own. The 189 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:45:59.098Z"
     },
     "C098CCM2F2T": {
       "name": "she-sharp-policies",
@@ -10378,25 +14418,365 @@
       "name": "industry",
       "type": "general",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Industry-partnership channel — leads, intros and sponsor conversations, not an event of its own. Its 2026 IWD thread concerns the academyex International Women's Day event, which is already published. Skipped 2026-05-12; 324 unread messages read and scored first."
       },
       "watermarkTs": "1780114226.689319",
-      "threads": {},
+      "threads": {
+        "1628821195.004700": {
+          "replyCount": 2,
+          "latestReplyTs": "1628821553.009400"
+        },
+        "1629109234.004500": {
+          "replyCount": 2,
+          "latestReplyTs": "1629511113.002500"
+        },
+        "1629436013.001600": {
+          "replyCount": 1,
+          "latestReplyTs": "1629436134.001700"
+        },
+        "1655704406.920799": {
+          "replyCount": 1,
+          "latestReplyTs": "1655708667.238729"
+        },
+        "1655706538.245049": {
+          "replyCount": 1,
+          "latestReplyTs": "1655708719.052889"
+        },
+        "1655717827.002709": {
+          "replyCount": 5,
+          "latestReplyTs": "1655780398.199729"
+        },
+        "1655783030.413399": {
+          "replyCount": 2,
+          "latestReplyTs": "1655783751.284839"
+        },
+        "1655967112.993649": {
+          "replyCount": 1,
+          "latestReplyTs": "1655967622.083119"
+        },
+        "1655967262.552159": {
+          "replyCount": 1,
+          "latestReplyTs": "1655967327.638299"
+        },
+        "1656024983.046439": {
+          "replyCount": 4,
+          "latestReplyTs": "1656382943.093559"
+        },
+        "1656286445.108299": {
+          "replyCount": 1,
+          "latestReplyTs": "1656376169.980739"
+        },
+        "1656906686.907829": {
+          "replyCount": 1,
+          "latestReplyTs": "1656935965.141049"
+        },
+        "1656906798.386459": {
+          "replyCount": 8,
+          "latestReplyTs": "1656907042.764939"
+        },
+        "1657150290.916369": {
+          "replyCount": 7,
+          "latestReplyTs": "1658265488.134479"
+        },
+        "1659647206.162979": {
+          "replyCount": 1,
+          "latestReplyTs": "1659654549.704119"
+        },
+        "1666754999.790499": {
+          "replyCount": 4,
+          "latestReplyTs": "1666828704.612869"
+        },
+        "1667102496.782639": {
+          "replyCount": 2,
+          "latestReplyTs": "1667191143.339549"
+        },
+        "1667447393.127219": {
+          "replyCount": 3,
+          "latestReplyTs": "1669014981.334679"
+        },
+        "1667889923.040979": {
+          "replyCount": 2,
+          "latestReplyTs": "1668056305.528299"
+        },
+        "1667890228.693749": {
+          "replyCount": 13,
+          "latestReplyTs": "1677531144.937519"
+        },
+        "1668026069.914979": {
+          "replyCount": 1,
+          "latestReplyTs": "1677531282.997039"
+        },
+        "1668724434.664959": {
+          "replyCount": 6,
+          "latestReplyTs": "1669092822.640589"
+        },
+        "1668991795.630199": {
+          "replyCount": 3,
+          "latestReplyTs": "1669014966.803159"
+        },
+        "1669009266.606529": {
+          "replyCount": 3,
+          "latestReplyTs": "1670533440.357469"
+        },
+        "1669009406.743909": {
+          "replyCount": 1,
+          "latestReplyTs": "1669077517.114889"
+        },
+        "1674787149.159789": {
+          "replyCount": 1,
+          "latestReplyTs": "1675030462.532779"
+        },
+        "1676496462.277399": {
+          "replyCount": 1,
+          "latestReplyTs": "1676612437.419839"
+        },
+        "1676606955.151009": {
+          "replyCount": 2,
+          "latestReplyTs": "1676613032.741359"
+        },
+        "1677447101.467649": {
+          "replyCount": 1,
+          "latestReplyTs": "1677471964.842629"
+        },
+        "1678051625.642789": {
+          "replyCount": 2,
+          "latestReplyTs": "1678052638.546499"
+        },
+        "1679271818.759519": {
+          "replyCount": 1,
+          "latestReplyTs": "1679351121.811529"
+        },
+        "1680574963.544009": {
+          "replyCount": 1,
+          "latestReplyTs": "1680577398.574339"
+        },
+        "1690875412.965599": {
+          "replyCount": 3,
+          "latestReplyTs": "1690884672.159159"
+        },
+        "1691486783.712839": {
+          "replyCount": 4,
+          "latestReplyTs": "1691488728.394469"
+        },
+        "1693980581.582959": {
+          "replyCount": 1,
+          "latestReplyTs": "1693981994.034089"
+        },
+        "1694400779.908289": {
+          "replyCount": 5,
+          "latestReplyTs": "1694409397.740789"
+        },
+        "1706745560.215509": {
+          "replyCount": 2,
+          "latestReplyTs": "1706753629.401059"
+        },
+        "1706860795.808699": {
+          "replyCount": 1,
+          "latestReplyTs": "1706864560.841279"
+        },
+        "1707773481.609119": {
+          "replyCount": 2,
+          "latestReplyTs": "1707773710.608579"
+        },
+        "1714617953.675489": {
+          "replyCount": 3,
+          "latestReplyTs": "1714776968.437689"
+        },
+        "1739322016.010719": {
+          "replyCount": 2,
+          "latestReplyTs": "1739384040.347589"
+        },
+        "1741052045.521869": {
+          "replyCount": 1,
+          "latestReplyTs": "1741052222.473399"
+        },
+        "1741138067.930309": {
+          "replyCount": 3,
+          "latestReplyTs": "1741301889.634469"
+        },
+        "1741570486.255799": {
+          "replyCount": 3,
+          "latestReplyTs": "1741654485.217029"
+        },
+        "1741987067.989989": {
+          "replyCount": 1,
+          "latestReplyTs": "1742338702.146789"
+        },
+        "1742075703.567349": {
+          "replyCount": 1,
+          "latestReplyTs": "1742079471.436279"
+        },
+        "1742182167.661489": {
+          "replyCount": 2,
+          "latestReplyTs": "1742238732.993369"
+        },
+        "1742422873.933079": {
+          "replyCount": 9,
+          "latestReplyTs": "1743044522.582609"
+        },
+        "1743569191.400729": {
+          "replyCount": 6,
+          "latestReplyTs": "1743627673.218079"
+        },
+        "1743656462.465639": {
+          "replyCount": 3,
+          "latestReplyTs": "1743656552.779539"
+        },
+        "1748248076.752709": {
+          "replyCount": 1,
+          "latestReplyTs": "1748302563.322959"
+        },
+        "1748282997.156949": {
+          "replyCount": 2,
+          "latestReplyTs": "1748302749.728999"
+        },
+        "1748399883.089689": {
+          "replyCount": 1,
+          "latestReplyTs": "1748456425.117329"
+        },
+        "1748400332.521789": {
+          "replyCount": 2,
+          "latestReplyTs": "1748417069.889149"
+        },
+        "1748404775.505219": {
+          "replyCount": 1,
+          "latestReplyTs": "1748456392.056489"
+        },
+        "1748518526.864309": {
+          "replyCount": 7,
+          "latestReplyTs": "1748577934.307749"
+        },
+        "1750724182.412259": {
+          "replyCount": 2,
+          "latestReplyTs": "1750747885.432959"
+        },
+        "1751331668.630829": {
+          "replyCount": 1,
+          "latestReplyTs": "1751338488.638259"
+        },
+        "1751876880.413619": {
+          "replyCount": 3,
+          "latestReplyTs": "1752143741.466799"
+        },
+        "1752457178.901439": {
+          "replyCount": 3,
+          "latestReplyTs": "1752551392.683819"
+        },
+        "1752544675.927779": {
+          "replyCount": 1,
+          "latestReplyTs": "1752551335.029569"
+        },
+        "1753398428.757199": {
+          "replyCount": 17,
+          "latestReplyTs": "1753674612.122799"
+        },
+        "1753648922.408329": {
+          "replyCount": 9,
+          "latestReplyTs": "1753928865.633329"
+        },
+        "1754603438.035449": {
+          "replyCount": 6,
+          "latestReplyTs": "1754606664.374049"
+        },
+        "1762029538.870619": {
+          "replyCount": 2,
+          "latestReplyTs": "1762034629.311269"
+        },
+        "1762411136.052909": {
+          "replyCount": 2,
+          "latestReplyTs": "1762558744.382539"
+        },
+        "1762738387.187799": {
+          "replyCount": 1,
+          "latestReplyTs": "1762758747.878179"
+        },
+        "1763275217.369769": {
+          "replyCount": 2,
+          "latestReplyTs": "1763404213.146769"
+        },
+        "1765253177.509279": {
+          "replyCount": 2,
+          "latestReplyTs": "1765264690.660469"
+        },
+        "1765352466.347169": {
+          "replyCount": 9,
+          "latestReplyTs": "1765669707.443579"
+        },
+        "1765866917.335729": {
+          "replyCount": 1,
+          "latestReplyTs": "1770778293.739189"
+        },
+        "1765955828.644689": {
+          "replyCount": 3,
+          "latestReplyTs": "1766040322.673789"
+        },
+        "1768982054.389829": {
+          "replyCount": 5,
+          "latestReplyTs": "1771064089.425249"
+        },
+        "1769597196.605319": {
+          "replyCount": 2,
+          "latestReplyTs": "1770890505.970849"
+        },
+        "1770681451.458889": {
+          "replyCount": 5,
+          "latestReplyTs": "1771225591.822169"
+        },
+        "1770718734.970069": {
+          "replyCount": 4,
+          "latestReplyTs": "1770843443.495219"
+        },
+        "1770754178.727079": {
+          "replyCount": 1,
+          "latestReplyTs": "1770754381.285359"
+        },
+        "1771668274.443629": {
+          "replyCount": 1,
+          "latestReplyTs": "1771738115.232299"
+        },
+        "1771953420.388019": {
+          "replyCount": 10,
+          "latestReplyTs": "1772582951.365129"
+        },
+        "1778533113.051189": {
+          "replyCount": 1,
+          "latestReplyTs": "1778547603.074599"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:17.385Z",
+      "lastSyncedCommit": "",
+      "digest": "Industry-partnership channel — leads, intros and sponsor conversations, not an event of its own. Its 2026 IWD thread concerns the academyex International Women's Day event, which is already published. Read position recorded 2026-05-12 after the 5 Aug 2026 thread-backlog pass, which surfaced 324 historical replies this pipeline had never read. Reopen only if a genuinely new event is proposed here.",
+      "digestAt": "2026-08-05T14:46:17.385Z"
     },
     "CSL6BBLQP": {
       "name": "events-ey-2020",
       "type": "event",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Past event (2020-01-15 → 2020-02-24). The channel never posted its own page URL, so the page was not confirmed from its content. Either way this skill is not adopting legacy events into events-custom.json, so there is nothing here to create or update."
       },
       "watermarkTs": "1777555702.716959",
-      "threads": {},
+      "threads": {
+        "1579060387.012000": {
+          "replyCount": 1,
+          "latestReplyTs": "1579067129.014900"
+        },
+        "1581324539.001600": {
+          "replyCount": 3,
+          "latestReplyTs": "1581362807.000100"
+        },
+        "1582054527.001400": {
+          "replyCount": 2,
+          "latestReplyTs": "1582535920.000400"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T14:46:14.589Z",
+      "lastSyncedCommit": "",
+      "digest": "Past event channel, 2020-01-15 → 2020-02-24. No page URL was ever posted in the channel, so none was confirmed from its content. The 9 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
+      "digestAt": "2026-08-05T14:46:14.588Z"
     },
     "D094KE2PTSB": {
       "name": "dm:yesha",
