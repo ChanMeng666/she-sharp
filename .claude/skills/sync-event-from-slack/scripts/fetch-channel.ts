@@ -328,11 +328,27 @@ async function main() {
   for (const rm of rawMessages) {
     const isNewTopLevel = !incremental || Number(rm.ts) > Number(since);
     const prior = priorThreads[rm.ts];
+    /*
+     * An ABSENT prior means zero replies seen, not "do not check".
+     *
+     * This read `prior != null` until 5 Aug 2026, which silently dropped the one
+     * case that matters most: a message posted below the watermark with no
+     * replies (so it was never recorded as a thread) that later grows one. On
+     * 4 Aug a message in the hackathon channel gained six replies carrying the
+     * event owner's entire review of the presentation deck, and the delta
+     * returned nothing — while `threadState` below recorded the thread anyway,
+     * so the next `update-state.ts` marked all six as read. A miss that also
+     * erases the evidence of the miss is the worst shape this bug can take.
+     *
+     * The cost of the fix is that a channel whose stored state predates thread
+     * tracking re-emits its old threads once. That is noisy and recoverable;
+     * the alternative is not.
+     */
     const threadGrew =
       incremental &&
       (rm.reply_count ?? 0) > 0 &&
-      prior != null &&
-      ((rm.reply_count ?? 0) > prior.replyCount || Number(rm.latest_reply ?? 0) > Number(prior.latestReplyTs));
+      ((rm.reply_count ?? 0) > (prior?.replyCount ?? 0) ||
+        Number(rm.latest_reply ?? 0) > Number(prior?.latestReplyTs ?? 0));
 
     if (!isNewTopLevel && !threadGrew) continue;
 
