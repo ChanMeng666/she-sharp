@@ -1,11 +1,27 @@
-# The interview — what to ask, in what order
+# The interview — what to read back, what to ask
 
-This is the script for Step 2. Work through it **one round at a time**: ask the
-three or four questions in a round, listen, reflect back what you heard in the
-shortened form you intend to put on the slide, then move to the next round.
+This is the script for Step 2. Work through it **one round at a time**: put the
+round to them, listen, reflect back what you heard in the shortened form you
+intend to put on the slide, then move to the next round.
 
 Do not paste a round verbatim. The wording below is a guide to what you need,
 not a form to be filled in. Ask it the way you would ask a colleague.
+
+**Most rounds are a read-back, not a question.** The run sheet, the speakers,
+the hosts and the sponsors are already in `events-custom.json` and already on
+the deck. Reading them back as a short list gets you a yes in one exchange;
+asking for them cold makes an organiser dictate facts they already gave the
+website, which is both tedious and a good way to end up with two versions.
+
+Rounds marked **READ BACK** below are confirmations. Rounds marked **ASK** are
+things that exist nowhere but in their head.
+
+**When a read-back gets corrected, the correction goes into the event data** —
+not into the deck, and not into your notes. See *Correcting a fact* in
+`SKILL.md`. Say what you are doing, because it is more than they asked for:
+
+> Good catch — I'll fix that on the event page too, so the website and the
+> slides say the same thing.
 
 Three standing rules:
 
@@ -25,10 +41,12 @@ Three standing rules:
 
 ---
 
-## Round 1 — What this is, and who it is for
+## Round 1 — What this is, and who it is for — **READ BACK**
 
-> "In one sentence, what is this event? And who's coming — is it people who've
-> never been to a She Sharp event before, or the regulars?"
+> "The event page describes it as *a cross-functional conversation about how AI
+> is changing every role, not just the technical ones* — is that still how you'd
+> put it? And who's coming: people who've never been to a She Sharp event
+> before, or the regulars?"
 
 **Why it matters.** It sets the whole deck's altitude. A room of first-timers
 needs the "we are She Sharp" slide to actually land; a room of regulars will sit
@@ -39,10 +57,14 @@ the event-specific slides needs unpacking.
 `events-custom.json`, shorten it, and read it back for a yes or no. That is
 usually enough — they wrote it, they just don't remember writing it.
 
-## Round 2 — Who is on stage
+## Round 2 — Who is on stage — **READ BACK**
 
-> "Who's opening the event? Who's speaking, and in what order? Is anyone
-> introducing anyone else?"
+The deck already has them, with their photographs, from `speakers[]`. Read the
+list, do not ask for it:
+
+> "The panel slide has Keryn McKenzie, Carolina Lobos, Ben Sullivan and Gemma
+> Lynskey, with their Les Mills titles and headshots. Is that everyone, and is
+> that the order you want them introduced in?"
 >
 > "Which of the She Sharp team will be in the room — should they be on the team
 > slide, or is the standard one fine?"
@@ -50,9 +72,10 @@ usually enough — they wrote it, they just don't remember writing it.
 **Why it matters.** The host needs to know who to look at and when. A speaker
 missing from the deck gets introduced by the wrong name in front of a room.
 
-Check `speakers[]` in the event data first and read it back rather than asking
-cold: *"I've got Priya, Marcus and Dr Chen from the event page — is that
-everyone, and is that the running order?"*
+**If a name, title or photo is wrong**, fix it in `events-custom.json` — that
+corrects the website's speaker section at the same time. **If a whole speaker
+group is missing**, add it to the JSON and regenerate the deck; a new group is a
+new slide, not a new fact.
 
 **Don't know:** use the event data as-is and flag it as unconfirmed in your
 report. Speakers change late; that is normal and it is a cheap thing to fix on
@@ -61,10 +84,15 @@ the Wednesday.
 **Names and roles only, never bios.** A person's job title is six words maximum
 (the linter enforces it). Their story is theirs to tell in the room.
 
-## Round 3 — The run sheet
+## Round 3 — The run sheet — **READ BACK**
 
-> "Walk me through the day. What time does it open, what happens when, and what
-> time does it finish?"
+The event's own schedule is already the run-sheet slide, times and all. Read it
+back as a shape rather than row by row, and ask the one thing it cannot tell
+you:
+
+> "The run sheet slide has your five blocks — doors at five, panel at half five,
+> roundtables at quarter past six, readouts at half six, networking from quarter
+> to seven. Right?"
 >
 > "Which moment is the one people should be looking at the screen for?"
 
@@ -72,46 +100,65 @@ the Wednesday.
 People check it walking in, at the break, and whenever they wonder how long is
 left.
 
-Write each row as a time plus a very short label:
-
-```
-5:30–5:45pm   Doors and kai
-5:45pm        Welcome and karakia
-6:00pm        Panel: getting your first tech role
-6:45pm        Q&A
-7:15pm        Group photo and close
-```
-
-Six words maximum after the clock time. Fourteen rows maximum on one slide; a
-two-day event splits into one slide per day.
+Rows are six words maximum after the clock time, and the generator will tell you
+which ones it had to shorten — read those back specifically. Fourteen rows
+maximum on one slide; a two-day event splits into one slide per day.
 
 Mark the "you are here" moment — usually the thing the room came for — so it can
-be shown in the accent colour.
+be shown in the accent colour. That is `emphasis` on the row, and it is the one
+part of the run sheet that is yours rather than the data's.
 
-**Don't know the exact times:** ask for the shape ("doors at half five, panel at
-six, done by half seven") and write the rows from that. An approximate run sheet
-the room can see beats an exact one in someone's phone.
+**If a time is wrong**, fix it in `events-custom.json`. The countdown clock on
+the discussion slide is computed from those same times, so correcting the
+schedule corrects the clock — do not edit the number of minutes by hand.
 
-## Round 4 — Breaks and the group photo
+**No timed schedule in the event data at all:** the deck has no run-sheet slide
+and the generator will have said so. It is the most-looked-at slide of the
+night, so this is worth fixing at the source: ask for the shape ("doors at half
+five, panel at six, done by half seven"), write it into the event's
+`specialSections` as an agenda, and regenerate. That puts it on the website too,
+where the people coming can read it.
 
-> "Is there a break? How long?"
->
+## Round 4 — Breaks and the group photo — **ASK**
+
 > "Are you doing a group photo? Before the break or at the end?"
 
 **Why it matters.** The break slide runs a countdown clock on the screen, which
 is the single most effective way to get a room back on time. The host presses
 Space to start it and Space again to pause it.
 
-**Don't know:** 15 minutes, before the closing. Say which default you used.
+**Do not ask how long the break is.** The deck takes it from the run sheet — 15
+minutes because the schedule says 6:15 to 6:30, not because 15 is a default.
+Only ask if the run sheet has no readable duration for that block, which the
+generator reports.
 
 **No break at all** (a one-hour panel, a lunchtime talk): drop the slide rather
 than inventing one. Say that you dropped it.
 
-## Round 5 — Who to thank
+## Round 4a — The table discussion — **ASK**
 
-> "Which partners should be thanked on the closing slide? Is it the same list as
-> the sponsors on the event page, or is there someone extra — the venue, someone
-> who brought the food, the volunteers?"
+The one part of the middle the repo cannot supply. If the run sheet has a
+roundtable, breakout or group activity, the deck has a slide of prompts and it
+is a **placeholder**:
+
+> "During the roundtables, what do you actually want people talking about? Two
+> or three questions is plenty — they go on the screen while people talk."
+
+**Why it matters.** It is the slide the room stares at longest, because it is up
+for the entire discussion. The placeholder text is deliberately generic and
+saying it out loud in a room is worse than saying nothing.
+
+**Don't know yet:** keep the placeholder, and tell them in as many words that it
+is a placeholder and needs replacing before the night. Do not let it ship
+silently.
+
+## Round 5 — Who to thank — **READ BACK, then ASK**
+
+The logos come from the event data. The *people* do not exist anywhere and have
+to be asked for.
+
+> "The thank-you slide has the Les Mills logo from the event page. Is there
+> anyone else who should be on it — the venue, someone who brought the food?"
 >
 > "Anyone you want thanked by name — mentors, judges, the person who ran the
 > door?"
@@ -119,8 +166,9 @@ than inventing one. Say that you dropped it.
 **Why it matters.** Missing a sponsor off the thank-you slide is the mistake
 that gets noticed, and it gets noticed by the person who paid for the room.
 
-Start from `sponsors` in the event data and read the list back. Logos usually
-already exist under `public/img/sponsors/`.
+A partner who is missing belongs in the event data's `sponsors`, not typed into
+the deck — the same list feeds the event page's sponsor section, so adding it in
+one place fixes both. Logos usually already exist under `public/img/sponsors/`.
 
 **Don't know:** use the event page's sponsor list unchanged, and ask them to
 check it once before the deck ships. Do not add a logo you cannot source.
@@ -225,8 +273,14 @@ The organisational frame comes free. This is what you still have to collect.
 | Sponsors | `logos` | The confirmed list (Round 5) |
 | Contact & QR codes | `contact` | Nothing, unless a code changed |
 | The event title | `section` | Nothing — from the event data |
-| **Event-specific slides** | various | **Everything. This is the work** |
-| Group photo & break | `photo` + `break` | Break length, whether there is a photo, when (Round 4) |
+| How tonight runs | `agenda` | Nothing — the event's own schedule. Only the "you are here" row (Round 3) |
+| Tonight's hosts | `logos` | Nothing — the event's `sponsors.main` |
+| Meet the … | `people` | Nothing — the event's `speakers`. Confirm the order (Round 2) |
+| What you'll explore | `bullets` | Approval of the shortened lines (Round 1) |
+| At your table | `bullets` | **The prompts. This is the placeholder** (Round 4a) |
+| The countdown | `break` | Nothing — minutes come from the run sheet |
+| What did you find | `bullets` | The three readout questions, if the defaults are wrong |
+| The closing frame | `photo` | A photograph, if they have a better one than the archive |
 | Thank you | `thanks` | Partners and named people (Round 5) |
 | Upcoming events | `upcoming` | Up to three, with dates (Round 8) |
 | Feedback QR | `qr-cta` | Nothing — derived from the event slug. Only the prize draw, if there is one (Round 7) |
@@ -245,17 +299,31 @@ The organisational frame comes free. This is what you still have to collect.
 7   Sponsors
 8   Contact & QR codes
 9   The event title
-    ── event-specific slides ──
-10  Group photo & break
-11  Thank you
-12  Upcoming events
-13  Feedback QR
-14  Ambassador QR
-15  Closing karakia (whakamutunga)
+    ── the evening, generated from the event data ──
+    How tonight runs
+    Tonight's hosts
+    │ Meet the panel / speakers
+    │ What you'll explore
+    │ At your table
+    │ The countdown
+    │ What did you find
+    The closing frame          ← cannot be removed
+10  Thank you
+11  Upcoming events
+12  Feedback QR
+13  Ambassador QR
+14  Closing karakia (whakamutunga)
 ```
 
 Do not reorder it. The frame is the same at every She Sharp event so that a
 volunteer who has hosted once can host any of them.
+
+The middle blocks each disappear on their own when the event has no data for
+them, and chapter dividers go with the block they introduce — so a workshop with
+no panel and no roundtable gets a shorter deck, not a broken one. Delete freely.
+**The closing frame is the exception**: the four closing slides are already the
+longest run of information the deck allows, so the middle has to end on a
+full-frame slide. Swap the photograph if you like; do not remove the slide.
 
 ## Every slide also needs a host note
 
