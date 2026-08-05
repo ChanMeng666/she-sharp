@@ -70,7 +70,7 @@ answering twenty questions. Follow `references/content-checklist.md`.
 | Run sheet, speakers, hosts, sponsors | Already in the event data. **Read back, don't ask.** A correction goes into the JSON |
 | Accent colour | `scripts/deck/accent-from-poster.ts` ranks the poster's colours; you pick and say which in plain words |
 | Break length | Taken from the run sheet's own timings, never a default |
-| Karakia | She Sharp's standing karakia, read back once for confirmation |
+| Karakia | She Sharp's standing pair, already in the deck. **Don't ask** |
 | Table prompts, what to say | **Ask.** These exist nowhere and only they know them |
 | Photos | Their own; the archive as a named fallback |
 | Feedback form link | Already handled — She Sharp's own form at `/f/<code>`, derived from the event slug |
@@ -142,9 +142,10 @@ update, not a build.
   reads it live, so there is usually **nothing to regenerate**. Re-run Steps 6
   and 7 anyway — a longer job title can still overflow a slide.
 - **The shape changed** (a whole new speaker group, a run sheet where there was
-  none): regenerate with `--force`, but **read the existing deck first** and
-  carry over every host note, kicker and photograph the author already
-  approved. `--force` overwrites hand-written copy and there is no undo.
+  none): regenerate with `--force`. The accent colour is carried across
+  automatically and the script says so. **Everything else hand-written is
+  not** — read the existing deck first and carry over every host note, kicker
+  and chosen photograph the author already approved. There is no undo.
 
 ## Step 2 — Read it back, then fill the gaps
 
@@ -606,7 +607,7 @@ content; the frame comes free from `lib/deck/boilerplate.ts`.
 | 9 | The event title | `section` | Event data |
 | — | **The evening** | various | **Generated from the event data — you trim it** |
 | 11 | Thank you | `thanks` | Event data + named people |
-| 12 | Upcoming events | `upcoming` | Authored, snapshotted |
+| 12 | Upcoming events | `upcoming` | Authored, snapshotted. Dropped when empty |
 | 13 | Feedback QR | `qr-cta` | Nothing — derived from the event slug |
 | 14 | Ambassador QR | `qr-cta` | Fixed destination |
 | 15 | Closing karakia | `karakia` (`whakamutunga`) | Fixed |
@@ -614,6 +615,13 @@ content; the frame comes free from `lib/deck/boilerplate.ts`.
 The upcoming-events slide is **snapshotted at authoring time on purpose** — a
 live lookup would quietly change what is on the projector between the rehearsal
 and the event.
+
+It is also **the one closing slide that disappears**. With nothing in the
+snapshot it used to project "What's Coming Up — the next thing you can come to"
+over an empty space, so it is now dropped entirely when there is nothing to
+announce. If the author has no next event confirmed, say that the slide will not
+appear and that the events QR in the opening still covers it. If they name one
+later, add it and the slide comes back.
 
 ### And the evening in between
 
