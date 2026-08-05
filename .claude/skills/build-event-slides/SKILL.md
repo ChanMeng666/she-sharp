@@ -1,6 +1,6 @@
 ---
 name: build-event-slides
-description: Build the presentation deck for one She Sharp in-person event — interviewing the organiser in plain language, then generating, linting, previewing and deploying a slide deck at `/present/<event-slug>`. Use whenever someone wants slides or a presentation for an event — phrases like "make slides for the AUT event", "we need a presentation for Thursday's meetup", "build the deck for our next event", "update the hackathon deck", "presentation for the panel night", "event slides", "给 X 活动做幻灯片", "活动幻灯片", "把这场活动的 PPT 做出来" — or anything about a projector, a run sheet on screen, a title slide, an opening or closing karakia, or a deck for a host to click through. Covers the fixed organisational slide sequence, the accent colour taken from the event poster, where photos live, the enforced copy limits, the multi-screen preview pass, and the merge-to-deploy path. Assumes the event is already in `lib/data/json/events-custom.json` — `sync-event-from-slack` puts it there.
+description: Build the presentation deck for one She Sharp in-person event — generating it from the event's own data, then confirming, trimming, linting, previewing and deploying a slide deck at `/present/<event-slug>`. Use whenever someone wants slides or a presentation for an event — phrases like "make slides for the AUT event", "we need a presentation for Thursday's meetup", "build the deck for our next event", "update the hackathon deck", "presentation for the panel night", "event slides", "给 X 活动做幻灯片", "活动幻灯片", "把这场活动的 PPT 做出来" — or anything about a projector, a run sheet on screen, a title slide, an opening or closing karakia, or a deck for a host to click through. Also covers correcting an event fact so the website and the slides stay in agreement. The run sheet, speakers, hosts and sponsors come from `lib/data/json/events-custom.json` and are read live, so a correction goes into the event data rather than into the deck. Covers the fixed organisational sequence, the evening-event template, the accent colour taken from the poster, where photos live, the enforced copy limits, the multi-screen preview pass, and the merge-to-deploy path. Assumes the event is already in the repo — `sync-event-from-slack` puts it there.
 ---
 
 # Build the slide deck for one event
@@ -11,12 +11,18 @@ the sponsors. Your job is to get that out of their head and onto a projector.
 
 Four facts shape everything below.
 
-- **The event already exists in the repo.** Title, date, time, venue, speakers,
-  sponsors and poster live in `lib/data/json/events-custom.json`. Read from
-  there. Never re-type an event fact from memory or from the chat.
-- **A deck is plain data.** One file under `lib/deck/decks/`, registered in
-  `lib/deck/registry.ts`, rendered at `/present/<slug>`. Nobody hand-writes HTML
-  or CSS, and the author never sees either.
+- **The event data is the single source of truth, and the deck is a view of
+  it.** Title, date, time, venue, speakers, sponsors, run sheet and poster live
+  in `lib/data/json/events-custom.json`. The deck file does not copy them — it
+  *reads* them, on every build, through `lib/deck/event-source.ts`. So the
+  public event page and the projector cannot disagree, and **a correction goes
+  into the event data, never into the deck.** When the organiser says "actually
+  Gemma's title has changed", you edit the JSON; the website and the slide both
+  follow. See *Correcting a fact* below — this is the rule the whole skill turns
+  on.
+- **A deck is plain data.** One file under `lib/deck/decks/`, generated from the
+  event and registered automatically, rendered at `/present/<slug>`. Nobody
+  hand-writes HTML or CSS, and the author never sees either.
 - **The deck is built out of She Sharp's own photographs.** Not a white canvas
   with a purple accent — twelve years of real rooms, used as mass. One
   photograph shown as a subject keeps its colours; photographs used many at a
@@ -54,20 +60,44 @@ Trigger conditions (examples — don't wait for an exact match):
 ## What the author gives you
 
 **One thing: the event.** However vaguely — "the AUT one", "Thursday's meetup",
-a slug. Everything else you ask for, one small group of questions at a time,
-following `references/content-checklist.md`.
+a slug. Almost everything else is already in the repo, so most of the interview
+is you *reading facts back* and them saying yes or correcting you — not them
+answering twenty questions. Follow `references/content-checklist.md`.
 
-| Question it asks | Default when the author shrugs |
+| Where it comes from | What you do |
 |---|---|
 | Which event? | Whatever they said — Step 1 resolves it and reads it back |
-| Accent colour | Pulled from the event poster; brand purple if there is no poster |
-| Run sheet | **Ask.** Never invent a timing |
-| Who is on stage | From the event data's `speakers[]`, confirmed out loud |
-| Which sponsors to thank | From the event data's `sponsors`, confirmed out loud |
-| Photos | Their own; `public/img/curated/` as a named fallback |
+| Run sheet, speakers, hosts, sponsors | Already in the event data. **Read back, don't ask.** A correction goes into the JSON |
+| Accent colour | `scripts/deck/accent-from-poster.ts` ranks the poster's colours; you pick and say which in plain words |
+| Break length | Taken from the run sheet's own timings, never a default |
+| Karakia | She Sharp's standing karakia, read back once for confirmation |
+| Table prompts, what to say | **Ask.** These exist nowhere and only they know them |
+| Photos | Their own; the archive as a named fallback |
 | Feedback form link | Already handled — She Sharp's own form at `/f/<code>`, derived from the event slug |
 | Ambassador form link | Already handled — the standing form in `AMBASSADOR_FORM_URL` |
-| Break length | 15 minutes |
+
+## Correcting a fact
+
+When the organiser corrects any event fact — a speaker's job title, a timing, a
+venue, the subtitle — **the correction goes into
+`lib/data/json/events-custom.json` first**, and the deck picks it up with no
+edit of its own.
+
+Rules, all of them hard:
+
+1. **Only inside `detailPageData`.** Never touch `id`, `slug`, or anything above
+   it. The slug is the feedback code, the deck route and the public URL.
+2. **Read the change back before you make it**, in the organiser's own terms:
+   "I'll change Gemma's title to *Global Comms Director* — that will update the
+   event page on the website as well as the slide. Yes?"
+3. **Commit it on its own**, as `fix(events): …`, separately from the deck
+   commit. A data correction and a deck build are two different reviews.
+4. **Never edit a fact into the deck file to avoid editing the data.** That is
+   exactly how the website and the projector come to disagree, and the
+   disagreement is invisible until someone in the room notices.
+
+If the event is not in the repo at all, this skill does not create it — stop and
+run `sync-event-from-slack`.
 
 ## Prerequisites
 
@@ -105,25 +135,35 @@ them with dates and let the author pick; never take the top row.
 > from there. Let's run `/sync-event-from-slack` first so the slides can't
 > contradict the event page — then I'll build the deck.
 
-**The deck already exists** (a file under `lib/deck/decks/`, an entry in
-`lib/deck/registry.ts`) — this is an update, not a build. Skip Step 5's
-scaffolding, go straight to the slides that changed, and keep everything the
-author already approved. Re-run Steps 6 and 7 in full: a one-word edit can still
-overflow a slide.
+**The deck already exists** (a file under `lib/deck/decks/`) — this is an
+update, not a build.
 
-## Step 2 — Interview the author
+- **A fact changed** (a name, a time, a title): edit the event JSON. The deck
+  reads it live, so there is usually **nothing to regenerate**. Re-run Steps 6
+  and 7 anyway — a longer job title can still overflow a slide.
+- **The shape changed** (a whole new speaker group, a run sheet where there was
+  none): regenerate with `--force`, but **read the existing deck first** and
+  carry over every host note, kicker and photograph the author already
+  approved. `--force` overwrites hand-written copy and there is no undo.
+
+## Step 2 — Read it back, then fill the gaps
 
 Work through `references/content-checklist.md`. It is grouped into short rounds
 on purpose.
 
+**Most of this is confirmation, not interrogation.** The run sheet, the
+speakers, the hosts and the sponsors are already in the event data. Read them
+back as a short list and ask "is this still right?" — one question instead of
+four, and the answer is usually yes. Only when they correct something do you go
+and edit the JSON (see *Correcting a fact*).
+
+What is genuinely not in the repo, and so must be asked: the table-discussion
+prompts, what the host should say on each slide, whether there is a prize draw,
+which upcoming events to preview, and the kickers.
+
 **Ask one round at a time. Never dump twenty questions at once.** A wall of
 questions gets one answer to the first and silence for the rest. Ask three or
 four, listen, reflect back what you heard, then move on.
-
-The rounds cover: what this event is in one sentence and who it is for; who
-hosts and who speaks; the run sheet; breaks and the group photo; which partners
-to thank; the visual assets; the two QR destinations; what the closing should
-say; which future events to preview.
 
 Three habits that make this work:
 
@@ -139,6 +179,11 @@ Three habits that make this work:
   for the run-sheet slide. Every slide needs one and you will not get them by
   asking directly.
 
+**The karakia is a read-back too.** The deck defaults to She Sharp's standing
+karakia (`lib/deck/karakia.ts`). Say which ones they are and ask whether the
+person opening the evening will read those or something of their own — a venue
+with its own mihi is common and the deck should carry theirs.
+
 ## Step 3 — Set the colours
 
 Every deck carries an accent pair: one colour for light slides, one for dark.
@@ -146,20 +191,26 @@ The pair is not decoration. She Sharp's brand purple `#9b2e83` scores 2.92:1
 against the dark canvas — under even the 3:1 large-text floor — so a dark slide
 needs a lighter partner or the text is unreadable from the back of the room.
 
-Read the event's poster or key visual (`coverImage` in the event data) and take
-its dominant colour. Then:
+Read the colours off the poster:
 
-```ts
-import { accentFromBrandColour, checkAccentContrast } from "@/lib/deck/theme";
-
-theme: {
-  accent: accentFromBrandColour("#7b2ff7", "#5ee7f5"),
-}
+```powershell
+npx tsx scripts/deck/accent-from-poster.ts <event-slug>
 ```
 
-`accentFromBrandColour()` keeps the hue and fixes the luminance automatically,
-once per canvas. `checkAccentContrast()` confirms it — and `lint-deck.ts` runs
-it again in Step 6, so a bad pair cannot reach a projector.
+It prints the poster's candidate colours, most likely first, each already run
+through `accentFromBrandColour()` — which keeps the hue and fixes the luminance
+per canvas — with its contrast measured. Paste the `theme` block it prints into
+the deck file.
+
+**Look at the poster before you take its top answer.** The ranking scores area
+as well as vividness, and on a poster with a big flat ground the background can
+still win. The Les Mills poster is a navy field holding a teal photo panel and a
+neon pink headline: navy ranked first at 51% of the poster's colour, and the
+right answer was the pink at 15%, because **a background is the one colour never
+to take**. That is why the script prints a list instead of an answer.
+
+`lint-deck.ts` re-checks the contrast in Step 6, so an unreadable pair cannot
+reach a projector — but it cannot tell you that you picked the wallpaper.
 
 **Then explain the result in plain language, without the numbers:**
 
@@ -255,35 +306,59 @@ preview, exactly as you would for a borrowed curated photo.
 ## Step 5 — Generate the deck
 
 ```powershell
-npx tsx scripts/deck/new-deck.ts aotearoa-ai-hackathon-festival-2026
+npx tsx scripts/deck/new-deck.ts event-lesmills-03-september-2026
 ```
 
-That writes `lib/deck/decks/<slug>.ts` with the fixed organisational slides
-already in place, built by `buildOpeningSlides()` and `buildClosingSlides()` in
-`lib/deck/boilerplate.ts`. Then register it — **one import and one map entry**
-in `lib/deck/registry.ts`:
+That writes `lib/deck/decks/<slug>.ts` **and registers it** — there is no manual
+registry edit any more, and `deck.test.ts` fails if a deck file is ever
+unregistered. What comes out is a deck you could project as it stands: the
+opening and closing sequences from `lib/deck/boilerplate.ts`, and between them a
+middle built from the event's own data by the evening-event template — the run
+sheet, the host's logos, the speakers, what the event says people will get out
+of it, the table-discussion block with a countdown set to the number of minutes
+the run sheet actually allows, the readouts, and a closing photograph.
 
-```ts
-import { autPanelNight2026Deck } from "./decks/aut-panel-night-2026";
+**Your job is now subtraction, not authorship.** Read the deck, delete the
+blocks tonight does not have, and write the parts only a person can:
 
-const decks: Record<string, Deck> = {
-  [aotearoaAiHackathonFestival2026Deck.slug]: aotearoaAiHackathonFestival2026Deck,
-  [autPanelNight2026Deck.slug]: autPanelNight2026Deck,
-};
+- **Replace every PLACEHOLDER note.** The template marks the slides it could not
+  fill — the table prompts, most obviously, because nobody writes those down
+  before the night. `placeholder-copy` fails the build if a TODO reaches a
+  slide, but a *note* may say PLACEHOLDER, so it is on you to catch those.
+- **Write a kicker for each slide** (below). The template ships workable ones;
+  the good ones come from the interview.
+- **Mark what can be dropped** — `optional: true` on anything skippable when the
+  event runs late.
+- **Delete freely.** Everything in the middle is optional except the closing
+  photograph, which carries a comment explaining why it cannot go.
+
+Do **not** paste event facts into the file. Names, roles, times, logos and the
+title are live expressions (`SPEAKERS[0].people`, `RUN_SHEET_ROWS`) and must
+stay that way — that is what keeps the website and the projector in agreement.
+`references/slide-types.md` maps a thing you want to say onto the layout that
+says it, when you do add a slide of your own.
+
+### Read the generator's notes back
+
+`new-deck.ts` prints a block headed *"Read these back to the organiser"*. It is
+not a log — it is the list of decisions taken on their behalf:
+
+```
+SHORTENED   "How AI is impacting different roles across an organisation — not
+            just deep technical topics" → "How AI is impacting different roles
+            across an organisation"
+NOT SHOWN   "What You'll Explore" has more than 5 points; not shown: "AI from a
+            fitness company perspective"
 ```
 
-Without the registry entry `/present/<slug>` returns a 404.
+Every line needs to be said out loud before the deck is shown, in plain words:
+*"Your event page lists six things people will explore — five fit on a slide, so
+I've left off the fitness-company one and trimmed the first. Happy with that, or
+would you rather drop a different one?"*
 
-Now fill in the **event-specific** slides between the event title and the group
-photo — the part only this event has. `references/slide-types.md` maps a thing
-you want to say onto the layout that says it. Every slide needs:
-
-- a lowercase kebab-case `id` (`judging-criteria`, not `Judging Criteria`);
-- a `note` — one or two sentences the host can read before speaking. It prints
-  in the PDF and never appears on screen. A slide nobody can introduce is a
-  slide nobody should present;
-- a **kicker** — the short line above the title, five or six words (below);
-- `optional: true` on anything that can be skipped when the event runs late.
+**Never present a shortened line as if it were theirs.** They wrote the long
+version; you cut it; they get to disagree. And if what they want back is the
+full list, the answer is two slides, not a smaller typeface.
 
 ### Give every slide a kicker
 
@@ -412,6 +487,11 @@ you changed and every curated photo you borrowed. Iterate until they are happy.
 
 ```powershell
 git checkout -b feat/deck-aut-panel-night-2026
+
+# If the organiser corrected an event fact, that goes in on its own first.
+git add lib/data/json/events-custom.json
+git commit -m "fix(events): correct Gemma Lynskey's title for the Les Mills panel"
+
 git add lib/deck/decks/aut-panel-night-2026.ts lib/deck/registry.ts public/img/decks/aut-panel-night-2026
 git commit -m "feat(deck): add slides for AUT panel night 2026"
 git push -u origin feat/deck-aut-panel-night-2026
@@ -419,7 +499,9 @@ gh pr create --fill
 ```
 
 Conventional Commits: `feat(deck):` for a new deck, `fix(deck):` for a
-correction to an existing one.
+correction to an existing one, `fix(events):` for a change to the event data.
+**Keep the data commit separate** — it changes the public event page as well as
+the deck, and those are two different things to review.
 
 Merging to `main` triggers `.github/workflows/deploy.yml`, which prebuilds and
 deploys to production. The deck is then live at:
@@ -464,10 +546,13 @@ faster — only the PDF does that — but it fixes a slide show that stutters.
    not a lint error, not a stack trace. *Why:* this skill is the entire
    interface for a non-technical volunteer — the moment it leaks code, they stop
    being able to run their own event.
-2. **Never invent an event fact.** Dates, times, venue, speaker names, sponsor
-   names, prize amounts and run-sheet timings come from the repo or from the
-   author. *Why:* a slide is projected in front of the room as the
-   organisation's word. A wrong start time is not a typo, it is a promise.
+2. **Never invent an event fact, and never type one into the deck.** Dates,
+   times, venue, speaker names, sponsor names and run-sheet timings come from
+   `events-custom.json`, and a correction goes *back into it*. *Why:* a slide is
+   projected in front of the room as the organisation's word. A wrong start time
+   is not a typo, it is a promise — and a fact typed into the deck to save a
+   step is a fact that will one day contradict the event page nobody thought to
+   re-check.
 3. **Never claim an asset exists when a placeholder is standing in.** Every
    curated or borrowed photo is named, slide by slide, in the Step 7 preview.
    *Why:* the author is the only person who knows the photo is from a different
@@ -515,8 +600,7 @@ content; the frame comes free from `lib/deck/boilerplate.ts`.
 | 7 | Sponsors | `logos` | Event data |
 | 8 | Contact & QR codes | `contact` | Fixed |
 | 9 | The event title | `section` | Event data |
-| — | **Event-specific slides** | various | **All authored — this is the work** |
-| 10 | Group photo & break | `photo` + `break` | Authored (break length) |
+| — | **The evening** | various | **Generated from the event data — you trim it** |
 | 11 | Thank you | `thanks` | Event data + named people |
 | 12 | Upcoming events | `upcoming` | Authored, snapshotted |
 | 13 | Feedback QR | `qr-cta` | Nothing — derived from the event slug |
@@ -527,14 +611,49 @@ The upcoming-events slide is **snapshotted at authoring time on purpose** — a
 live lookup would quietly change what is on the projector between the rehearsal
 and the event.
 
+### And the evening in between
+
+`lib/deck/templates/evening-event.ts` generates the middle from the event data.
+Every block disappears on its own when the event has no data for it, so a
+workshop with no panel and no roundtable simply gets a shorter deck.
+
+| Block | Type | Comes from | Gone when |
+|---|---|---|---|
+| How tonight runs | `agenda` | the timed schedule section | there is no timed schedule |
+| Tonight's hosts | `logos` | `sponsors.main` | there is no partner |
+| *Chapter divider* | `section` | the speaker group's heading | its chapter is empty |
+| Meet the … | `people` | each `speakers.<group>` | there are no speakers |
+| What you'll explore | `bullets` | the why-attend section | there is no such section |
+| *Chapter divider* | `section` | fixed | its chapter is empty |
+| At your table | `bullets` | **you write these** | there is no discussion block |
+| The countdown | `break` | minutes taken from the run sheet row | that row has no readable duration |
+| What did you find | `bullets` | the readout row | there is no readout row |
+| The closing frame | `photo` | the archive, or the event's own photo | **never — see below** |
+
+**Why the closing photograph cannot be deleted.** The closing sequence is four
+information slides in a row (thanks, upcoming, feedback, ambassador) and four is
+the limit. If the middle ends on an information slide the run reaches five and
+the deck fails its shape check. The last slide of the middle has to be
+full-frame. Change the photograph by all means; do not remove the slide.
+
+You will not normally hit the shape rules at all — the template keeps the middle
+running at two information slides between breaths, against a limit of four, and
+every combination of present and absent blocks is asserted in `deck.test.ts`.
+
 ## Common failure modes and how to recover
 
-**`Cannot find module './decks/<slug>'`** — the deck file was generated but the
-registry import points at a different name, or vice versa. The import path and
-the filename must match exactly, without the `.ts`.
+**`/present/<slug>` 404s** — the deck is not registered. `new-deck.ts` does this
+for you; if you created the file by hand, run
+`npx tsx scripts/deck/sync-registry.ts`, which regenerates `registry.ts` from
+whatever is in `lib/deck/decks/`. Never hand-edit that file.
 
-**`/present/<slug>` 404s** — the deck is not in the `decks` map in
-`lib/deck/registry.ts`. Generating the file does not register it.
+**The slide shows a name or a time that the website does not** — someone typed a
+fact into the deck instead of correcting the event data. Find the literal, put
+the value back to its live expression, and fix the JSON. See *Correcting a fact*.
+
+**`"TODO" is still on screen`** — `placeholder-copy` caught a placeholder in a
+title, bullet or kicker. Host notes are exempt and may say PLACEHOLDER; slides
+may not, because the room reads them.
 
 **`Title is 9 words (max 7)`** — rewrite it to seven, read the new one back to
 the author for approval, and move on. Do not raise the limit.
@@ -594,8 +713,12 @@ so in your report; do not hand-build the organisational frame from scratch.
 
 ## What this skill does *not* do
 
-- **Create or edit the event itself** — that is `sync-event-from-slack`. This
-  skill reads `events-custom.json` and never writes to it.
+- **Create an event, or change what it fundamentally is** — that is
+  `sync-event-from-slack`. This skill may correct a *fact* inside
+  `detailPageData` when the organiser corrects it out loud (see *Correcting a
+  fact*), because the alternative is a slide that disagrees with the website.
+  It never adds an event, never changes a `slug` or an `id`, and never invents
+  a fact to fill a gap.
 - **Email anyone** about the event.
 - **Publish the deck as a public page.** `/present/*` is `noindex`, absent from
   the sitemap, and internal tooling for hosts.
