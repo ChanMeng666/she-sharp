@@ -24,7 +24,7 @@
  * a recoverable mistake.
  */
 
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 import {
@@ -62,6 +62,71 @@ function literal(value: unknown): string {
   return JSON.stringify(value);
 }
 
+/** The default accent, used when there is no existing deck to take one from. */
+const DEFAULT_THEME_BLOCK = `  // TODO: take the accent from the event poster —
+  // \`npx tsx scripts/deck/accent-from-poster.ts <slug>\` ranks its colours.
+  // \`onDark\` must be lighter than \`onLight\`: the brand purple scores 2.92:1
+  // on the dark canvas and cannot be read there.
+  theme: {
+    accent: {
+      onLight: "#9b2e83",
+      onDark: "#c846ab",
+      spark: "#5ee7f5",
+    },
+  },`;
+
+/**
+ * Lifts the `theme` block, and any comment explaining it, out of a deck that
+ * already exists.
+ *
+ * Regenerating used to reset the accent to the house purple, silently undoing
+ * the one decision on a deck that someone looked at a poster to make. It is a
+ * quiet loss too: the deck still builds, still lints, still passes contrast —
+ * it is just the wrong colour, and nobody re-checks a colour they already
+ * chose. Everything else in a regenerated deck is rebuilt from the event data
+ * on purpose; the accent is the exception because nothing in the data holds it.
+ *
+ * Counts braces rather than matching a pattern — the block nests, and a regex
+ * that gets the nesting wrong would carry half a theme across.
+ */
+export function extractThemeBlock(source: string): string | undefined {
+  const anchor = source.search(/^[ \t]*theme:\s*\{/m);
+  if (anchor === -1) return undefined;
+
+  /* Walk back over any comment lines sitting directly above it. */
+  let start = anchor;
+  const before = source.slice(0, anchor).split("\n");
+  before.pop();
+  while (before.length > 0) {
+    const line = before[before.length - 1].trim();
+    const isComment =
+      line.startsWith("//") ||
+      line.startsWith("*") ||
+      line.startsWith("/*") ||
+      line.endsWith("*/");
+    if (!isComment) break;
+    before.pop();
+    start = before.join("\n").length + 1;
+  }
+
+  let depth = 0;
+  let seen = false;
+  for (let i = anchor; i < source.length; i += 1) {
+    if (source[i] === "{") {
+      depth += 1;
+      seen = true;
+    } else if (source[i] === "}") {
+      depth -= 1;
+      if (seen && depth === 0) {
+        const end = source[i + 1] === "," ? i + 2 : i + 1;
+        return source.slice(start, end);
+      }
+    }
+  }
+
+  return undefined;
+}
+
 /** Wraps `text` as an indented block comment above a slide fragment. */
 function comment(text: string, indent = "    "): string {
   const words = text.split(/\s+/);
@@ -84,7 +149,11 @@ function comment(text: string, indent = "    "): string {
   ].join("\n");
 }
 
-function template(event: EventV3, plan: EveningPlan): string {
+function template(
+  event: EventV3,
+  plan: EveningPlan,
+  themeBlock: string = DEFAULT_THEME_BLOCK,
+): string {
   const slug = event.slug;
   const title = deckTitleFrom(event);
   const subtitle = deckSubtitleFrom(event);
@@ -189,16 +258,7 @@ export const ${exportName(slug)}: Deck = {
     subtitle ? `\n  subtitle: deckSubtitleFrom(event),` : ""
   }
   eventSlug: EVENT_SLUG,
-  // TODO: take the accent from the event poster. \`onDark\` must be lighter
-  // than \`onLight\` — the brand purple scores 2.92:1 on the dark canvas and
-  // cannot be read there. \`accentFromBrandColour()\` in ../theme fixes it.
-  theme: {
-    accent: {
-      onLight: "#9b2e83",
-      onDark: "#c846ab",
-      spark: "#5ee7f5",
-    },
-  },
+${themeBlock}
   slides: [
     ...buildOpeningSlides({
       eventTitle: deckTitleFrom(event),
@@ -284,6 +344,16 @@ function main(): void {
     process.exit(1);
   }
 
+  /*
+   * The accent survives a regeneration. Everything else is rebuilt from the
+   * event data on purpose, but nothing in the data holds a colour, so an
+   * overwrite would silently put the house purple back over a decision
+   * somebody made by looking at a poster.
+   */
+  const existingTheme = existsSync(target)
+    ? extractThemeBlock(readFileSync(target, "utf8"))
+    : undefined;
+
   const plan = planEveningEvent({
     event,
     omit: minimal
@@ -292,9 +362,13 @@ function main(): void {
   });
 
   mkdirSync(dirname(target), { recursive: true });
-  writeFileSync(target, template(event, plan), "utf8");
+  writeFileSync(target, template(event, plan, existingTheme), "utf8");
 
   const { slugs } = syncRegistry();
+
+  if (existingTheme) {
+    console.log("Kept the accent colour from the deck that was already there.");
+  }
 
   console.log(
     `Wrote lib/deck/decks/${slug}.ts — ${plan.slides.length} event slides ` +
@@ -306,4 +380,6 @@ function main(): void {
   console.log(`Next: npx tsx scripts/deck/lint-deck.ts ${slug}`);
 }
 
-main();
+/* Only when run as a command — `deck.test.ts` imports `extractThemeBlock`, and
+   importing this file must not scaffold a deck as a side effect. */
+if (process.argv[1]?.includes("new-deck")) main();
