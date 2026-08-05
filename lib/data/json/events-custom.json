@@ -1300,6 +1300,19 @@
           "Free online pre-event training runs throughout July to help you build stronger ideas, prototypes and pitches. The festival is about building practical AI capability, encouraging responsible and ethical AI use, fostering collaboration across regions and sectors, and showcasing innovative, impact-driven ideas."
         ],
         "speakers": {
+          "keynote_speakers": {
+            "heading": "Keynote Speaker",
+            "speakers": [
+              {
+                "name": "Rach Monks",
+                "title": "Founder",
+                "company": "AI for X & X-Bot Games",
+                "bio": "Rach Monks is the founder of AI for X and X-Bot Games. She brings 20+ years of commercial, marketing, sales and leadership experience to AI adoption, from global brand work with Disney and Campbell's to scaling startups and building businesses pre-AI. Now deeply enmeshed in the AI industry, through her consultancy — AI for X — she helps SMEs move from no, little or scattered AI use to practical, trusted AI systems that improve capability, consistency and ROI without losing taste, judgement or brand character.\n\nX-Bot Games is set to provide AI practitioners a layer of demonstrable proof of their skills. A global AI competition where participants compete and are judged on their solutions to business briefs by top industry professionals, as a way to separate the doers from the sayers.\n\nRegardless of the business, her work is grounded in trust, rigorous documentation, continual learning, commercial realism and human judgement amplified by AI.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-rach-monks.jpg",
+                "linkedin": "https://www.linkedin.com/in/rachelmonks/"
+              }
+            ]
+          },
           "panelists": {
             "heading": "Meet the Judges",
             "speakers": [
@@ -1309,23 +1322,23 @@
                 "company": "Fisher & Paykel Healthcare",
                 "bio": "Nicholas Fourie was appointed Vice President – Information & Communication Technology in February 2017. Nicholas has been with Fisher & Paykel Healthcare since 2007, and in that time has held various systems engineering and management roles.\n\nAdditionally, Nicholas also served as a member on the Computer and Mathematical Sciences Industry Advisory Board for Auckland University of Technology (AUT). Prior to joining Fisher & Paykel Healthcare, he worked for the South African division of BHP Billiton. Nicholas holds a Diploma in Computer Engineering from Damelin School of Information Technology in South Africa.\n\nNicholas regularly features in the CIO50 New Zealand Top Award Winners. In 2023 he was the winner of this prestigious award and was ranked number one.",
                 "image": "/img/events/aotearoa-ai-hackathon-festival-2026-nicholas-fourie.jpg",
-                "linkedin": ""
+                "linkedin": "https://www.linkedin.com/in/nicholasfourie/"
               },
               {
                 "name": "Dr. Mahsa Mohaghegh (McCauley)",
-                "title": "Head of Department, Computer and Information Sciences · Chair, AI Forum NZ",
+                "title": "Commissioner for NZ-UNESCO · Chair, AI Forum NZ · Head of Computer and Information Sciences",
                 "company": "AUT",
                 "bio": "Dr. Mahsa McCauley is a globally recognised leader in artificial intelligence. She serves as Associate Professor and Head of Computer and Information Sciences at Auckland University of Technology (AUT). She is also the Communication and Information Commissioner for the New Zealand National Commission for UNESCO, and chairs AI Forum NZ, helping shape national and international AI policy.\n\nDr. McCauley is a Fulbright Scholar and has been a finalist for New Zealander of the Year. She has authored over 80 publications and supervised over 70 research projects in areas such as AI, machine learning, cybersecurity, and natural language processing. In addition, she founded She Sharp, a nonprofit organisation empowering thousands of women in technology.",
                 "image": "/img/events/aotearoa-ai-hackathon-festival-2026-mahsa-mohaghegh.jpg",
-                "linkedin": ""
+                "linkedin": "https://www.linkedin.com/in/mahsamohaghegh/"
               },
               {
                 "name": "Abby Dowd",
-                "title": "Senior Director — AI Strategy and Transformation",
+                "title": "Director — AI Strategy and Transformation",
                 "company": "AUT",
                 "bio": "Abby is a technologist who has been building software since the late 1990s, through engineering roles at Symantec and WhereScape, where he was VP Engineering, and technical leadership at Auckland University of Technology as Deputy CTO and Acting CIO.\n\nHe now leads AI strategy and transformation at AUT and heads its AI Acceleration Centre, setting the AI Futures strategy and acting as a catalyst for AI across the university. He stays close to the technology and keeps up with where AI is heading, which keeps his strategy grounded in what actually works.",
                 "image": "/img/events/aotearoa-ai-hackathon-festival-2026-abby-dowd.jpg",
-                "linkedin": ""
+                "linkedin": "https://www.linkedin.com/in/abby-dowd-20b0791/"
               },
               {
                 "name": "Ming Cheuk",
@@ -1333,7 +1346,7 @@
                 "company": "ElementX",
                 "bio": "Ming Cheuk is the CTO and co-founder of ElementX. Ming bridges technical depth to real-world impact with secure, scalable AI solutions, drawing from his PhD research in the past and work with enterprises today.",
                 "image": "/img/events/aotearoa-ai-hackathon-festival-2026-ming-cheuk.jpg",
-                "linkedin": ""
+                "linkedin": "https://www.linkedin.com/in/mingcheuk/"
               }
             ]
           },
@@ -1355,14 +1368,6 @@
                 "bio": "Ji Ruan is a Senior Lecturer at AUT, where they have taught and researched artificial intelligence since 2013 and previously managed the Master of Computer and Information Sciences programme. Alongside that they run JiCare, combining fundamental research in AI safety with applied work on AI for healthcare, education and elderly care. Their expertise spans AI product and strategy, data and machine learning, and AI ethics and governance. They mentor across technical, subject-matter and business questions, at the venue on Friday and across Saturday.",
                 "image": "/img/events/aotearoa-ai-hackathon-festival-2026-ji-ruan.jpg",
                 "linkedin": "https://www.linkedin.com/in/jiruan/"
-              },
-              {
-                "name": "Christine Yip",
-                "title": "Principal Advisor",
-                "company": "Te Awa Advisory & Recruitment",
-                "bio": "Christine Yip is Principal Advisor at Te Awa Advisory & Recruitment and runs C WHY International, advising organisations across technology, engineering, manufacturing and infrastructure on strategy, governance and organisational capability. She has more than 20 years of experience across New Zealand, Australia and Asia, was named a Top 50 CIO NZ in 2020, and brings direct hackathon experience including mentoring a winning team exploring how AI could improve freshwater quality and public health. Drawing on expertise in AI ethics and governance, business analysis, entrepreneurship and pitching, and project management, she helps teams move from an interesting idea to a credible, achievable solution that connects responsible AI, commercial thinking and measurable impact. She mentors on the business side, at the venue on Friday and again on Saturday afternoon.",
-                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-christine-yip.jpg",
-                "linkedin": "https://www.linkedin.com/in/christinewky/"
               },
               {
                 "name": "Alan Dent",
@@ -1494,8 +1499,7 @@
               "5:00–5:30pm — Registration, guest arrival & networking + dinner",
               "5:30–5:40pm — Event opening: karakia, welcome to AUT, health & safety briefing",
               "5:40–5:50pm — She Sharp introduction",
-              "5:50–6:05pm — Keynote speaker",
-              "6:05–6:10pm — Q&A with the keynote",
+              "5:50–6:10pm — Keynote speaker session",
               "6:10–6:50pm — Team forming",
               "6:50–7:05pm — Overview of day two",
               "7:05–7:15pm — Problems to solve, requirements & judging criteria",
@@ -1776,12 +1780,9 @@
             "type": "info",
             "title": "Registration",
             "content": [
-              "Register online at aihackathon.nz.",
-              "Open to students and professionals — all experience levels are welcome.",
-              "In-person capacity at AUT City Campus is limited to 100 participants.",
-              "Concession and complimentary places are available for AUT students, mentors and supporting staff — registration details are shared directly via the AUT City Campus Community Hub.",
-              "Enter as a team or as an individual — just let us know which when you register, and we will help solo registrants find a team on the day.",
-              "Join the AUT City Campus Community Hub for the latest updates, training registration and Q&A session links."
+              "Registration for the AUT City Campus venue closed on 20 July 2026 — in-person capacity at AUT City Campus is limited to 100 participants.",
+              "Registered participants — join the AUT City Campus Community Hub and the participant Discord for the latest updates, Q&A recordings and the pitch deck template.",
+              "Other festival venues and dates are listed at aihackathon.nz."
             ]
           },
           {
@@ -2016,15 +2017,53 @@
         "location": {
           "format": "in_person",
           "venueName": "Les Mills Auckland City",
-          "address": "Level 2, 200 Victoria Street West, Auckland Central",
+          "address": "Level 2, 200 Victoria Street West, Auckland Central, Auckland 1010",
           "city": "Auckland",
           "country": "New Zealand"
         },
         "fullDescription": [
-          "Join She Sharp and Les Mills for a cross-functional conversation about AI — an evening on diversity and AI for impact. A panel of cross-functional voices will share how AI is shaping different roles across the organisation, followed by interactive table discussions and networking.",
-          "Discussion themes include legal and privacy implications of AI, commercial impact, communication and change management, technical perspectives, AI use cases across the business, and AI from a fitness-company viewpoint."
+          "AI is changing the way we work — and it's no longer just a topic for technologists. Join She Sharp and Les Mills for an inspiring conversation about how AI is creating opportunities across every function, from technology and data to communications, legal, finance, and commercial leadership. Through a panel of cross-functional leaders driving AI transformation in their fields, we'll explore the practical realities of adopting AI, the mindset shifts required to embrace change, and the skills that will help people thrive in an AI-enabled future.",
+          "You'll hear perspectives from experts across technology, change management, commercial strategy, and legal, before joining interactive table discussions on how individuals and organisations can drive positive change with AI. Whether you're a developer, marketer, lawyer, analyst, people leader, or simply curious about where AI is heading, this event is designed to challenge the idea that AI belongs to one department. The future of work will be shaped by people from every background — and we believe AI is now everyone's job. Come ready to learn, connect, and be inspired by the many pathways into the next generation of careers."
         ],
-        "speakers": {},
+        "speakers": {
+          "panel_speakers": {
+            "heading": "Meet the Panel",
+            "speakers": [
+              {
+                "name": "Keryn McKenzie",
+                "title": "Senior Director – Data & AI",
+                "company": "Les Mills International",
+                "bio": "Keryn McKenzie has spent much of a career exploring how data and technology can help solve real-world problems. Curious about the opportunities created by AI, Keryn enjoys turning complex ideas into practical outcomes and helping organisations navigate change in an increasingly digital world.",
+                "image": "/img/events/event-lesmills-03-september-2026-keryn-mckenzie.jpg",
+                "linkedin": "https://www.linkedin.com/in/keryn-mckenzie-714b9554/"
+              },
+              {
+                "name": "Carolina Lobos",
+                "title": "Head of Finance",
+                "company": "Les Mills International",
+                "bio": "",
+                "image": "/img/events/event-lesmills-03-september-2026-carolina-lobos.jpg",
+                "linkedin": "https://www.linkedin.com/in/carolinalobos19/"
+              },
+              {
+                "name": "Ben Sullivan",
+                "title": "Legal Counsel",
+                "company": "Les Mills International",
+                "bio": "Ben is an attorney and intellectual property specialist, providing strategic and commercial legal support with a focus on product innovation, brand and content protection, and anti-piracy. Before joining Les Mills, Ben practised at leading IP law firms in New Zealand and Hong Kong, advising clients on brand strategy, copyright, advertising, consumer law, and IP disputes.",
+                "image": "/img/events/event-lesmills-03-september-2026-ben-sullivan.jpg",
+                "linkedin": "https://www.linkedin.com/in/ben-sullivan-76937b4a/"
+              },
+              {
+                "name": "Gemma Lynskey",
+                "title": "Global Comms + Org Development Director",
+                "company": "Les Mills International",
+                "bio": "Gemma Lynskey is the Global Comms + Organisational Development Director at Les Mills International. Equal parts communications strategist, culture builder, and AI enthusiast. Gemma's background spans internal communications, organisational development, leadership and change management. She is passionate about helping people and the business navigate change while building a culture people genuinely want to be part of.",
+                "image": "/img/events/event-lesmills-03-september-2026-gemma-lynskey.jpg",
+                "linkedin": "https://www.linkedin.com/in/gemma-lynskey-60413028/"
+              }
+            ]
+          }
+        },
         "organizers": [],
         "sponsors": {
           "main": [
@@ -2040,7 +2079,7 @@
             "type": "agenda",
             "title": "Event Format",
             "content": [
-              "5:00pm – 5:30pm — Registration and food",
+              "5:00pm – 5:30pm — Registration, networking and food",
               "5:30pm – 6:15pm — Kickoff and panel discussion",
               "6:15pm – 6:30pm — Roundtable discussions based on panel topics",
               "6:30pm – 6:45pm — Table discussion readouts",
@@ -2068,7 +2107,7 @@
           }
         ],
         "galleryUrl": "",
-        "registrationUrl": "",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-and-lesmills",
         "images": [],
         "category": "panel",
         "status": "upcoming",

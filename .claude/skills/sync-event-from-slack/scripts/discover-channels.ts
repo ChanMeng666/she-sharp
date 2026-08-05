@@ -16,21 +16,39 @@
  *   npx tsx .../discover-channels.ts --all      # include no-op rows
  *   npx tsx .../discover-channels.ts --propose   # suggest event matches for unmapped event channels (backfill)
  *   npx tsx .../discover-channels.ts --join      # self-join public event channels the bot isn't in
+ *   npx tsx .../discover-channels.ts --no-dms    # skip DMs and group DMs for this run
+ *   npx tsx .../discover-channels.ts --no-record # inspect without advancing any read position
  *
  * Full machine-readable triage is always written to .cache/triage.json.
+ *
+ * Conversations that are READ and found quiet have their read position advanced
+ * in the committed manifest, so the next run sees a true delta. Actionable rows
+ * are never advanced — moving their watermark would mark unread content as read.
  */
 
-import "dotenv/config";
-import { WebClient } from "@slack/web-api";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import {
+  announceIdentity,
+  botSlack,
+  conversationName,
+  CONVERSATION_TYPES,
+  isDirectConversation,
+  isReadable,
+  loadUserNames,
+  slack,
+  USING_USER_TOKEN,
+} from "./slack-client";
 import {
   CACHE_DIR,
   classifyChannel,
   detectEventSignal,
   findEventBySlug,
   fingerprintForMapping,
+  isSignalScanned,
   loadManifest,
+  nowIso,
+  saveManifest,
   loadPublishedEvents,
   parseEventDateMs,
   SIGNAL_THRESHOLD,
@@ -39,41 +57,53 @@ import {
   type PublishedEvent,
 } from "./state-lib";
 
-const token = process.env.SLACK_BOT_TOKEN;
-if (!token) {
-  console.error("SLACK_BOT_TOKEN is not set in .env");
-  process.exit(1);
-}
-const slack = new WebClient(token);
-
 const flags = new Set(process.argv.slice(2).filter((a) => a.startsWith("--")));
 const showAll = flags.has("--all");
 const doPropose = flags.has("--propose");
 const doJoin = flags.has("--join");
+// DMs and group DMs are in scope by default once a user token is installed.
+// `--no-dms` drops them for a run where only channel activity matters.
+const skipDms = flags.has("--no-dms");
+// Quiet conversations have their read position recorded by default, which is
+// what keeps the next run a true delta. `--no-record` inspects without writing.
+const skipRecord = flags.has("--no-record");
 
 interface SlackChannel {
   id: string;
   name: string;
   is_member: boolean;
   is_archived: boolean;
+  is_direct: boolean;
+  is_private: boolean;
+  /** Can history actually be read? Not the same as membership — see isReadable. */
+  readable: boolean;
 }
 
 async function listChannels(): Promise<SlackChannel[]> {
   const out: SlackChannel[] = [];
+  // Only needed to name 1:1 DMs, which carry a user ID and nothing else.
+  const users =
+    USING_USER_TOKEN && !skipDms ? await loadUserNames() : undefined;
   let cursor: string | undefined;
   do {
     const r = await slack.conversations.list({
-      types: "public_channel,private_channel",
+      types: CONVERSATION_TYPES,
       limit: 1000,
       cursor,
       exclude_archived: false,
     });
     for (const c of r.channels ?? []) {
+      const direct = isDirectConversation(c);
+      if (direct && skipDms) continue;
       out.push({
         id: c.id!,
-        name: c.name ?? "",
-        is_member: !!(c as any).is_member,
+        name: conversationName(c, users),
+        // You are inherently a member of your own DMs; Slack sends no flag.
+        is_member: direct ? true : !!(c as any).is_member,
         is_archived: !!(c as any).is_archived,
+        is_direct: direct,
+        is_private: !!(c as any).is_private,
+        readable: isReadable(c as any),
       });
     }
     cursor = r.response_metadata?.next_cursor || undefined;
@@ -156,6 +186,7 @@ interface Row {
   name: string;
   id: string;
   member: boolean;
+  readable: boolean;
   archived: boolean;
   mapping: Mapping | null;
   hasNew: boolean;
@@ -171,10 +202,15 @@ interface Row {
   action: string;
 }
 
+/** Settled: nothing for a human or the model to do. Also gates watermark advance. */
+function isQuiet(action: string): boolean {
+  return action.startsWith("no-op") || action === "archived" || action === "skip";
+}
+
 function decideAction(r: Row): string {
   if (r.archived) return "archived";
   if (r.type === "event") {
-    if (!r.member) return "join+sync";
+    if (!r.readable) return r.archived ? "archived" : "join+sync";
     if (r.mapping?.kind === "skip") return r.hasNew ? "skip→review (new msgs)" : "skip";
     if (!r.mapping || r.mapping.kind === "none") {
       // Unseen or "scanned, no site event": only resurface on new activity.
@@ -190,26 +226,54 @@ function decideAction(r: Row): string {
     if (r.staleStatus) return `stale-status (${r.staleStatus})`;
     return r.hasNew ? "incremental" : "no-op";
   }
-  // general
-  if (!r.member) return "no-op (not member)";
-  if (r.signalScore >= SIGNAL_THRESHOLD) return "create? (general-signal)";
+  // general + dm — scanned for event signal, never auto-created from.
+  if (!r.readable) return "no-op (not readable)";
+  // A skip here must be stickier than on an event channel. #contact-form-
+  // notifications and every DM receive routine traffic forever, so resurfacing
+  // on "any new message" would put them in the table every single run and train
+  // the reader to ignore it. Only a delta that actually scores as event content
+  // is worth a second look.
+  if (r.mapping?.kind === "skip")
+    return r.signalScore >= SIGNAL_THRESHOLD ? "skip→review (event signal)" : "skip";
+  if (r.signalScore >= SIGNAL_THRESHOLD)
+    return r.type === "dm" ? "create? (dm-signal)" : "create? (general-signal)";
   return r.hasNew ? "no-op (no signal)" : "no-op";
 }
 
 async function main() {
+  announceIdentity();
+  if (!USING_USER_TOKEN && !skipDms) {
+    console.error(
+      "note: DMs and group DMs are not being scanned — that needs SLACK_USER_TOKEN (xoxp-). See SKILL.md.",
+    );
+  }
   const channels = await listChannels();
   const manifest = loadManifest();
   const published = loadPublishedEvents();
   const nowMs = Date.now();
 
   if (doJoin) {
-    for (const c of channels) {
-      if (classifyChannel(c.name) === "event" && !c.is_member && !c.is_archived) {
+    // Always join as the BOT. `conversations.join` on a user token would make
+    // the human join, posting a visible "has joined the channel" line into a
+    // room they never asked to be in — a side effect nobody asked a read-only
+    // triage command for.
+    const joiner = botSlack;
+    if (!joiner) {
+      console.error("--join needs SLACK_BOT_TOKEN (joining as a user would post in the channel)");
+    } else {
+      for (const c of channels) {
+        // Only public channels can be self-joined; DMs need no join and private
+        // channels reject `conversations.join` outright. `readable` is not the
+        // test here — a public channel the user token can already read is still
+        // worth having the bot in, so the skill keeps working without the user token.
+        if (c.is_direct || c.is_private || c.is_archived) continue;
+        if (classifyChannel(c.name) !== "event") continue;
         try {
-          await slack.conversations.join({ channel: c.id });
+          await joiner.conversations.join({ channel: c.id });
           console.error(`joined #${c.name}`);
         } catch (e: any) {
-          console.error(`join failed #${c.name}: ${e?.data?.error ?? e?.message}`);
+          const err = e?.data?.error ?? e?.message;
+          if (err !== "already_in_channel") console.error(`join failed #${c.name}: ${err}`);
         }
       }
     }
@@ -229,8 +293,9 @@ async function main() {
     let evidence = "";
     let latestTs = watermark ?? "0";
 
-    // Only read history for member, non-archived channels (others are unreadable).
-    if (c.is_member && !c.is_archived) {
+    // Read history wherever it is actually reachable. On a user token that
+    // includes public channels nobody joined — membership is not the gate.
+    if (c.readable) {
       // Cheap 1-message peek first: a quiet channel costs a single API call.
       let peek = "0";
       try {
@@ -248,13 +313,13 @@ async function main() {
         // need bodies here (the per-channel sync reads the delta); general and
         // unmapped channels do, to count + score for event signals.
         const mappedEvent = mapping?.kind === "event" || mapping?.kind === "skip";
-        const needBodies = type === "general" || !mappedEvent;
+        const needBodies = isSignalScanned(type) || !mappedEvent;
         if (needBodies) {
           const res = await newMessagesSince(c.id, watermark);
           newCount = res.count;
           hasNew = res.count > 0;
           if (Number(res.latestTs) > Number(latestTs)) latestTs = res.latestTs;
-          if (type === "general" && res.texts.length) {
+          if (isSignalScanned(type) && res.texts.length) {
             const sig = detectEventSignal(res.texts);
             signalScore = sig.score + (res.hasImage ? 1 : 0);
             signalHits = sig.hits;
@@ -299,6 +364,7 @@ async function main() {
       name: c.name,
       id: c.id,
       member: c.is_member,
+      readable: c.readable,
       archived: c.is_archived,
       mapping,
       hasNew,
@@ -322,9 +388,51 @@ async function main() {
   const triagePath = resolve(CACHE_DIR, "triage.json");
   writeFileSync(triagePath, JSON.stringify({ generatedAt: new Date().toISOString(), rows }, null, 2));
 
+  // Advance the read position for everything this run READ and found quiet.
+  //
+  // SKILL.md has always promised that "scanned-but-quiet channels still advance
+  // their watermark, so they aren't re-scanned" — but nothing implemented it,
+  // so every run re-read the same settled channels from the beginning and a
+  // reader could not tell a genuinely new message from one triaged months ago.
+  //
+  // Only quiet rows advance. A row with an action still needs a human or the
+  // model to look at it, and moving its watermark here would mark unread
+  // content as read — the exact failure this is meant to prevent. Archived
+  // conversations advance too: they cannot change, so recording their end is
+  // what stops them being re-listed forever.
+  if (!skipRecord) {
+    const manifest2 = loadManifest();
+    let advanced = 0;
+    for (const r of rows) {
+      if (!isQuiet(r.action)) continue;
+      if (!r.readable && !r.archived) continue;
+      const prev = manifest2.channels[r.id];
+      const ts = r.latestTs && r.latestTs !== "0" ? r.latestTs : prev?.watermarkTs ?? "0";
+      if (ts === "0") continue;
+      if (prev && prev.watermarkTs === ts) continue;
+      manifest2.channels[r.id] = {
+        name: r.name,
+        type: r.type,
+        mapping: prev?.mapping ?? { kind: "none" },
+        watermarkTs: ts,
+        threads: prev?.threads ?? {},
+        fingerprint: prev?.fingerprint ?? "",
+        lastSyncedAt: nowIso(),
+        lastSyncedCommit: prev?.lastSyncedCommit ?? "",
+        ...(prev?.digest ? { digest: prev.digest, digestAt: prev.digestAt ?? "" } : {}),
+      };
+      advanced++;
+    }
+    if (advanced) {
+      saveManifest(manifest2);
+      console.error(
+        `read position advanced for ${advanced} quiet conversation(s) — commit state/sync-state.json`,
+      );
+    }
+  }
+
   // Compact human triage to stdout. Settled states (no-op / archived / skip)
   // are quiet — only genuinely new or unresolved channels need attention.
-  const isQuiet = (a: string) => a.startsWith("no-op") || a === "archived" || a === "skip";
   const quiet = rows.filter((r) => isQuiet(r.action));
   const actionable = rows.filter((r) => !isQuiet(r.action));
   const shown = showAll ? rows : actionable;

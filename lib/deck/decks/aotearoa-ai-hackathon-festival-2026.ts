@@ -303,21 +303,7 @@ const CHOOSING_PHOTO: DeckImage = {
   focus: "50% 45%",
 };
 
-/**
- * Placeholder plate for the keynote slide, until there is a keynote speaker.
- *
- * A She Sharp speaker on a She Sharp stage — the right register for the slot
- * and honestly captioned as "name announced on the night", rather than a
- * generated portrait of somebody who does not exist. Swap `image` for the
- * speaker's own photograph and put their name in `title` once they are booked;
- * nothing else on the slide has to change.
- */
-const KEYNOTE_PLACEHOLDER: DeckImage = {
-  src: curatedImages["speaker-stage-spotlight"].src,
-  srcSet: toSrcSet(curatedImages["speaker-stage-spotlight"]),
-  alt: curatedImages["speaker-stage-spotlight"].alt,
-  focus: "50% 35%",
-};
+
 
 /**
  * The photographic beat between team forming and the mentors.
@@ -510,27 +496,55 @@ const AUT_WELCOME: Slide = {
 };
 
 /**
- * The keynote slot, standing empty on purpose.
+ * The keynote plate, composed rather than cropped.
  *
- * TODO(keynote): replace `image` with the speaker's own photograph and put
- * their name in `title` once they are confirmed. Nothing else needs to change.
+ * Rach sent a 2500×2500 headshot on a saturated yellow field. Dropped straight
+ * into this full-bleed slide it cuts her face at the mouth and the yellow
+ * swamps the white display type — rendered and looked at before committing,
+ * not assumed. So her portrait is set as a disc on her own yellow inside a 16:9
+ * plate, positioned to survive the stage's crop at BOTH ends of its range: the
+ * disc sits inside the 4:3 centre cut and inside the vertical cut that 21:9
+ * takes. Checked at 4:3, 16:9 and 21:9. If the photograph is ever replaced,
+ * re-render those three and look at them; the geometry is the whole point.
+ */
+const KEYNOTE_PLATE: DeckImage = {
+  src: "/img/events/aotearoa-ai-hackathon-festival-2026-rach-monks-plate.jpg",
+  alt: "Rach Monks, founder of AI for X and X-Bot Games, keynote speaker for the hackathon",
+  focus: "50% 50%",
+};
+
+/**
+ * The keynote slot, filled 5 August once Rach Monks confirmed and sent her own
+ * role, bio and photograph.
  *
- * A full-frame photograph rather than a person card, and not only for the look
- * of it: the four slides before this one are all information, which is the
- * limit `lintRhythm` allows in a row. A card here would make five and the deck
- * would stop building.
+ * This was a full-frame `photo` slide while the slot was empty, carrying an
+ * archive shot of a She Sharp speaker on a She Sharp stage under the honest
+ * caption "name announced on the night". Both halves of that had to change
+ * together: the moment the slide names a person, an archive photograph of a
+ * DIFFERENT person reads as her portrait.
+ *
+ * It is a person card rather than a full-frame photograph because her supplied
+ * headshot is a 2500×2500 square on a saturated yellow field. Cropped to the
+ * stage's 16:9 it cuts her face at the mouth and the yellow swamps the white
+ * display type — checked before committing, not assumed. A card crops nothing
+ * and puts the yellow inside a frame where it reads as her brand rather than as
+ * the slide's background.
+ *
+ * `tone: "dark"` is load-bearing for rhythm, not decoration: the four slides
+ * before this one are all information, which is `lintRhythm`'s limit in a row,
+ * and this slide is what breaks the run. Keep it dark and keep it here.
  */
 const KEYNOTE_SLIDE: Slide = {
   id: "keynote-speaker",
   type: "photo",
   section: "Welcome",
   tone: "dark",
-  eyebrow: "Name announced on the night",
-  title: "Keynote Speaker",
-  lead: "One talk before we hand the evening over to you",
-  image: KEYNOTE_PLACEHOLDER,
+  eyebrow: "Fifteen minutes, then it's yours",
+  title: "Rach Monks",
+  lead: "Founder of AI for X and X-Bot Games",
+  image: KEYNOTE_PLATE,
   overlay: "gradient",
-  note: "Introduce the keynote speaker by name and give them the room. If the slot is still unfilled, skip this slide rather than reading it out.",
+  note: "Introduce Rach by name and give her the room. She speaks at 5:50pm for about fifteen minutes; team forming follows straight after.",
 };
 
 /**

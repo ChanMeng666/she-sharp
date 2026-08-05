@@ -33,18 +33,19 @@
  * messages plus any older thread that gained replies (with just its new replies).
  */
 
-import "dotenv/config";
-import { WebClient } from "@slack/web-api";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import {
+  announceIdentity,
+  conversationName,
+  CONVERSATION_TYPES,
+  loadUserNames,
+  slack,
+  USING_USER_TOKEN,
+} from "./slack-client";
 import { CACHE_DIR, loadManifest, type ThreadState } from "./state-lib";
 
-const token = process.env.SLACK_BOT_TOKEN;
-if (!token) {
-  console.error("SLACK_BOT_TOKEN is not set in .env");
-  process.exit(1);
-}
-const slack = new WebClient(token);
+announceIdentity();
 
 // ---- arg parsing ----------------------------------------------------------
 const argv = process.argv.slice(2);
@@ -63,23 +64,50 @@ if (sinceFlag) {
 const useState = flags.has("--state");
 const useCache = flags.has("--use-cache");
 
+/**
+ * Accepts a channel ID, `#channel`, a bare channel name, or — on a user token —
+ * a DM addressed as `dm:name`, `@name` or the person's display name.
+ */
 async function resolveChannel(nameOrId: string): Promise<string> {
   if (/^[CGD][A-Z0-9]+$/i.test(nameOrId)) return nameOrId; // looks like an ID
-  const clean = nameOrId.replace(/^#/, "");
+  const clean = nameOrId.replace(/^[#@]/, "");
+  // `dm:someone` / `@someone` addresses a person, not a channel name.
+  const dmTarget = /^dm:/i.test(nameOrId)
+    ? nameOrId.replace(/^dm:/i, "")
+    : nameOrId.startsWith("@")
+      ? clean
+      : "";
+  const users = USING_USER_TOKEN ? await loadUserNames() : undefined;
+
   let cursor: string | undefined;
   do {
     const r = await slack.conversations.list({
-      types: "public_channel,private_channel",
+      types: CONVERSATION_TYPES,
       limit: 1000,
       cursor,
       exclude_archived: false,
     });
     for (const c of r.channels ?? []) {
-      if (c.name === clean) return c.id!;
+      const anyC = c as any;
+      if (!anyC.is_im && c.name === clean) return c.id!;
+      if (dmTarget && anyC.is_im) {
+        const who = users?.get(anyC.user) ?? "";
+        if (who.toLowerCase() === dmTarget.toLowerCase() || anyC.user === dmTarget)
+          return c.id!;
+      }
+      // Bare name that happens to match a DM partner, e.g. `fetch-channel "Nikita Kumari"`.
+      if (!dmTarget && anyC.is_im && users) {
+        if (conversationName(anyC, users).toLowerCase() === `dm:${clean.toLowerCase()}`)
+          return c.id!;
+      }
     }
     cursor = r.response_metadata?.next_cursor || undefined;
   } while (cursor);
-  throw new Error(`Channel "${clean}" not found (or bot lacks visibility)`);
+
+  const hint = USING_USER_TOKEN
+    ? "not found in any channel or DM you can see"
+    : "not found — a DM or an uninvited private channel needs SLACK_USER_TOKEN (xoxp-)";
+  throw new Error(`Conversation "${nameOrId}" ${hint}`);
 }
 
 /** Expand Slack link markup like <url|label> plus bare http(s) links. */
@@ -233,9 +261,12 @@ async function main() {
   // channel metadata
   const infoRes = await slack.conversations.info({ channel: channelId, include_num_members: true });
   const c: any = infoRes.channel;
+  // A 1:1 DM has no `name` — label it after the other person so the delta
+  // header and the state manifest both read as `dm:<who>` rather than blank.
+  const dmLabel = c?.is_im ? `dm:${await resolveUser(c.user)}` : "";
   const channel = {
     id: channelId,
-    name: c?.name ?? "",
+    name: c?.name ?? dmLabel,
     purpose: c?.purpose?.value ?? "",
     topic: c?.topic?.value ?? "",
     num_members: c?.num_members ?? 0,
