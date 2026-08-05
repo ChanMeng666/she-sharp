@@ -233,6 +233,39 @@ export function minutesOf(time: string): number | undefined {
   return minutes > 0 && minutes <= 12 * 60 ? minutes : undefined;
 }
 
+/**
+ * How the table-discussion block is named in a run sheet, most specific first.
+ *
+ * Order carries the whole meaning. One loose pattern containing `discussion`
+ * finds "Kickoff and panel discussion" at 5:30 before "Roundtable discussions"
+ * at 6:15, which puts the panel's 45 minutes on a clock the room is watching
+ * to know how long it has to talk.
+ */
+export const DISCUSSION_ROW_PATTERNS: readonly RegExp[] = [
+  /roundtable|round table|breakout|break-out/i,
+  /table discussion|group activity|group exercise|interactive/i,
+  /workshop|activity/i,
+];
+
+/** The run sheet's own row for the table discussion, if it has one. */
+export function discussionRowFrom(event: EventV3): TimedItem | undefined {
+  return findRowByPatterns(runSheetFrom(event), DISCUSSION_ROW_PATTERNS);
+}
+
+/**
+ * Minutes the run sheet allows for the table discussion.
+ *
+ * Read at build time rather than frozen into the deck, so moving the block in
+ * `events-custom.json` moves the countdown with it. The alternative — a number
+ * baked in when the deck was generated — is a clock that keeps insisting on
+ * fifteen minutes after the schedule says twenty, and the clock is the thing a
+ * room obeys.
+ */
+export function discussionMinutesFrom(event: EventV3): number | undefined {
+  const row = discussionRowFrom(event);
+  return row ? minutesOf(row.time) : undefined;
+}
+
 /** One named group of people from the event, ready to put on a slide. */
 export interface SpeakerGroup {
   key: string;

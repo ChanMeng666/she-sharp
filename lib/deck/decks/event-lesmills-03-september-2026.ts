@@ -36,6 +36,7 @@ import {
   deckMetaFrom,
   deckSubtitleFrom,
   deckTitleFrom,
+  discussionMinutesFrom,
   loadEventForDeck,
   partnerLogosFrom,
   runSheetFrom,
@@ -68,6 +69,12 @@ const RUN_SHEET_ROWS = RUN_SHEET.items.map((row) => ({
   label: RUN_SHEET_LABELS[row.label] ?? row.label,
 }));
 const SPEAKERS = speakerGroupsFrom(event);
+
+/* The countdown is however long the run sheet gives the discussion —
+   read on every build, not frozen when this file was generated, so
+   moving the block in the event data moves the clock with it. The
+   fallback is only reached if the schedule loses its end time. */
+const TABLE_MINUTES = discussionMinutesFrom(event) ?? 15;
 
 /* The closing frame. One photograph from She Sharp's own archive — the
    event has none of its own yet. Swap in a real one when it does. */
@@ -214,9 +221,10 @@ export const eventLesmills03September2026Deck: Deck = {
     },
 
     /*
-     * 15 minutes is what the run sheet gives this block (6:15pm – 6:30pm) —
-     * not a default. Change the time in the event data and regenerate rather
-     * than editing the number here.
+     * The clock is the run sheet's own allowance for this block — at the time
+     * of writing 15 minutes — and it is read from the event data on every
+     * build. To change it, move the times in `events-custom.json`; do not edit
+     * a number here, and do not regenerate just for this.
      */
     {
       id: "table-discussion",
@@ -225,7 +233,7 @@ export const eventLesmills03September2026Deck: Deck = {
       eyebrow: "Space starts the clock",
       title: "Over to You",
       lead: "Talk it through, then we will hear from every table",
-      minutes: 15,
+      minutes: TABLE_MINUTES,
       resumeLabel: "Back together",
       note: "Press Space to start the countdown and Space again to pause it. The clock on the wall is what gets a room back on time.",
     },

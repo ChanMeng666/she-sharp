@@ -66,6 +66,7 @@ import type { EventV3 } from "@/types/event";
 import {
   type RunSheet,
   type SpeakerGroup,
+  DISCUSSION_ROW_PATTERNS,
   deckTitleFrom,
   densityFor,
   findRow,
@@ -482,13 +483,7 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
   }
 
   // --- E. The tables -------------------------------------------------------
-  /* Most specific first — see `findRowByPatterns`. A bare /discussion/ finds
-     the panel, not the tables, and puts the panel's clock on the wall. */
-  const tableRow = findRowByPatterns(sheet, [
-    /roundtable|round table|breakout|break-out/i,
-    /table discussion|group activity|group exercise|interactive/i,
-    /workshop|activity/i,
-  ]);
+  const tableRow = findRowByPatterns(sheet, DISCUSSION_ROW_PATTERNS);
   const tablesBody: PlannedSlide[] = [];
   if (!omit.has("tables") && tableRow) {
     const minutes = minutesOf(tableRow.time);
@@ -525,6 +520,16 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
     });
 
     if (minutes) {
+      sourceImports.add("discussionMinutesFrom");
+      preamble.push(
+        "",
+        "/* The countdown is however long the run sheet gives the discussion —",
+        "   read on every build, not frozen when this file was generated, so",
+        "   moving the block in the event data moves the clock with it. The",
+        "   fallback is only reached if the schedule loses its end time. */",
+        "const TABLE_MINUTES = discussionMinutesFrom(event) ?? 15;",
+      );
+
       tablesBody.push({
         id: "table-discussion",
         type: "break",
@@ -536,7 +541,7 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
           eyebrow: lit("Space starts the clock"),
           title: lit("Over to You"),
           lead: lit("Talk it through, then we will hear from every table"),
-          minutes: String(minutes),
+          minutes: "TABLE_MINUTES",
           resumeLabel: lit("Back together"),
           note: lit(
             "Press Space to start the countdown and Space again to pause it. " +
@@ -544,9 +549,11 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
           ),
         }),
         why:
-          `${minutes} minutes is what the run sheet gives this block ` +
-          `(${tableRow.time}) — not a default. Change the time in the event ` +
-          "data and regenerate rather than editing the number here.",
+          "The clock is the run sheet's own allowance for this block — at the " +
+          `time of writing ${minutes} minutes — and it is read from the event ` +
+          "data on every build. To change it, move the times in " +
+          "`events-custom.json`; do not edit a number here, and do not " +
+          "regenerate just for this.",
       });
     } else {
       notes.push({
