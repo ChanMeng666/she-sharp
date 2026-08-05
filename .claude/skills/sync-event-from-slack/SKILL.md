@@ -441,11 +441,28 @@ filename to `.jpg`. Do not re-encode the file.
   `--since <ts>` that only filters top-level.
 - **General-channel auto-scan:** discovery reads only messages past each general
   channel's watermark and surfaces a channel only when its event-signal score
-  clears the threshold. Scanned-but-quiet channels still advance their watermark,
-  so they aren't re-scanned. A flagged general channel is a *candidate* — confirm
-  the event and slug with the user before CREATE.
+  clears the threshold. A flagged general channel is a *candidate* — confirm the
+  event and slug with the user before CREATE.
+- **Discovery records what it read.** Every conversation it reads and finds quiet
+  has its read position advanced in the committed manifest, so the next run sees
+  a true delta rather than re-reading settled history. Rows with an action are
+  never advanced — moving their watermark would mark unread content as read,
+  which is the exact failure this prevents. `--no-record` inspects without
+  writing. *(This was documented long before it was implemented; until 2026-08-05
+  nothing wrote the manifest, so 129 of 220 conversations had no read position
+  and every run re-read them from the beginning.)*
+- **Commit `state/sync-state.json` after a discovery run**, not just after a
+  sync — it now carries read positions that a discovery run alone produces.
 - **Skip stickiness:** a `skip` mapping stays skipped until new activity arrives
-  (then it shows `skip→review`). Record *why* you skipped in `--reason`.
+  (then it shows `skip→review`). Record *why* you skipped in `--reason`. On a
+  general channel or a DM the bar is higher — only a delta that scores as event
+  content reopens it, because bot channels and DMs carry routine traffic forever.
+- **"Quiet" is not "read by the model".** A watermark means the *triage* consumed
+  those messages and scored them as not needing attention. For a DM that is a
+  weaker guarantee than for a channel: the signal heuristic works on keywords, and
+  a one-line instruction like "please take out X as a mentor" scores low. When a
+  DM surfaces at all, read its delta in full with `render-delta.ts` — never judge
+  it from the one-line evidence snippet in the triage table.
 - **Fingerprint drift:** if someone edits `events-custom.json` by hand, discovery
   shows the channel `fingerprint-stale`. Re-sync or re-run `update-state.ts` to
   re-baseline.

@@ -16,8 +16,14 @@
  *   npx tsx .../discover-channels.ts --all      # include no-op rows
  *   npx tsx .../discover-channels.ts --propose   # suggest event matches for unmapped event channels (backfill)
  *   npx tsx .../discover-channels.ts --join      # self-join public event channels the bot isn't in
+ *   npx tsx .../discover-channels.ts --no-dms    # skip DMs and group DMs for this run
+ *   npx tsx .../discover-channels.ts --no-record # inspect without advancing any read position
  *
  * Full machine-readable triage is always written to .cache/triage.json.
+ *
+ * Conversations that are READ and found quiet have their read position advanced
+ * in the committed manifest, so the next run sees a true delta. Actionable rows
+ * are never advanced — moving their watermark would mark unread content as read.
  */
 
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -41,6 +47,8 @@ import {
   fingerprintForMapping,
   isSignalScanned,
   loadManifest,
+  nowIso,
+  saveManifest,
   loadPublishedEvents,
   parseEventDateMs,
   SIGNAL_THRESHOLD,
@@ -56,6 +64,9 @@ const doJoin = flags.has("--join");
 // DMs and group DMs are in scope by default once a user token is installed.
 // `--no-dms` drops them for a run where only channel activity matters.
 const skipDms = flags.has("--no-dms");
+// Quiet conversations have their read position recorded by default, which is
+// what keeps the next run a true delta. `--no-record` inspects without writing.
+const skipRecord = flags.has("--no-record");
 
 interface SlackChannel {
   id: string;
@@ -189,6 +200,11 @@ interface Row {
   published: { slug: string; score: number; source: string; custom: boolean } | null;
   digest: string;
   action: string;
+}
+
+/** Settled: nothing for a human or the model to do. Also gates watermark advance. */
+function isQuiet(action: string): boolean {
+  return action.startsWith("no-op") || action === "archived" || action === "skip";
 }
 
 function decideAction(r: Row): string {
@@ -372,9 +388,51 @@ async function main() {
   const triagePath = resolve(CACHE_DIR, "triage.json");
   writeFileSync(triagePath, JSON.stringify({ generatedAt: new Date().toISOString(), rows }, null, 2));
 
+  // Advance the read position for everything this run READ and found quiet.
+  //
+  // SKILL.md has always promised that "scanned-but-quiet channels still advance
+  // their watermark, so they aren't re-scanned" — but nothing implemented it,
+  // so every run re-read the same settled channels from the beginning and a
+  // reader could not tell a genuinely new message from one triaged months ago.
+  //
+  // Only quiet rows advance. A row with an action still needs a human or the
+  // model to look at it, and moving its watermark here would mark unread
+  // content as read — the exact failure this is meant to prevent. Archived
+  // conversations advance too: they cannot change, so recording their end is
+  // what stops them being re-listed forever.
+  if (!skipRecord) {
+    const manifest2 = loadManifest();
+    let advanced = 0;
+    for (const r of rows) {
+      if (!isQuiet(r.action)) continue;
+      if (!r.readable && !r.archived) continue;
+      const prev = manifest2.channels[r.id];
+      const ts = r.latestTs && r.latestTs !== "0" ? r.latestTs : prev?.watermarkTs ?? "0";
+      if (ts === "0") continue;
+      if (prev && prev.watermarkTs === ts) continue;
+      manifest2.channels[r.id] = {
+        name: r.name,
+        type: r.type,
+        mapping: prev?.mapping ?? { kind: "none" },
+        watermarkTs: ts,
+        threads: prev?.threads ?? {},
+        fingerprint: prev?.fingerprint ?? "",
+        lastSyncedAt: nowIso(),
+        lastSyncedCommit: prev?.lastSyncedCommit ?? "",
+        ...(prev?.digest ? { digest: prev.digest, digestAt: prev.digestAt ?? "" } : {}),
+      };
+      advanced++;
+    }
+    if (advanced) {
+      saveManifest(manifest2);
+      console.error(
+        `read position advanced for ${advanced} quiet conversation(s) — commit state/sync-state.json`,
+      );
+    }
+  }
+
   // Compact human triage to stdout. Settled states (no-op / archived / skip)
   // are quiet — only genuinely new or unresolved channels need attention.
-  const isQuiet = (a: string) => a.startsWith("no-op") || a === "archived" || a === "skip";
   const quiet = rows.filter((r) => isQuiet(r.action));
   const actionable = rows.filter((r) => !isQuiet(r.action));
   const shown = showAll ? rows : actionable;

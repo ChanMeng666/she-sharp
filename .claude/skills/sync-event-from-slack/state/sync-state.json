@@ -19,10 +19,10 @@
       "mapping": {
         "kind": "none"
       },
-      "watermarkTs": "1780219214.503249",
+      "watermarkTs": "1785460260.522289",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T07:11:53.293Z",
       "lastSyncedCommit": ""
     },
     "C01NEKYP0CR": {
@@ -127,10 +127,10 @@
       "mapping": {
         "kind": "none"
       },
-      "watermarkTs": "1780866680.849279",
+      "watermarkTs": "1784629854.545499",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T07:11:53.293Z",
       "lastSyncedCommit": ""
     },
     "C03KYCN4Z6C": {
@@ -1868,7 +1868,7 @@
       "mapping": {
         "kind": "none"
       },
-      "watermarkTs": "1784277670.369269",
+      "watermarkTs": "1785706516.291289",
       "threads": {
         "1489540087.625405": {
           "replyCount": 2,
@@ -4788,7 +4788,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-07-20T10:21:31.180Z",
+      "lastSyncedAt": "2026-08-05T07:11:53.293Z",
       "lastSyncedCommit": "",
       "digest": "Internal team chatter (giveaways, announcements). Not a site event channel. Flagged by general-signal auto-scan 2026-07-20; reviewed and confirmed no event. Un-skip only if a real event planning thread starts here.",
       "digestAt": "2026-07-20T10:06:07.278Z"
@@ -4800,7 +4800,7 @@
         "kind": "skip",
         "reason": "Internal team meeting scheduling/notes. Not a site event channel."
       },
-      "watermarkTs": "1784532998.511579",
+      "watermarkTs": "1785742480.702639",
       "threads": {
         "1491795663.632100": {
           "replyCount": 2,
@@ -6388,7 +6388,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-07-20T10:04:47.513Z",
+      "lastSyncedAt": "2026-08-05T07:11:53.293Z",
       "lastSyncedCommit": "",
       "digest": "Internal team meeting scheduling/notes. Not a site event channel. Flagged by general-signal auto-scan 2026-07-20; reviewed and confirmed no event. Un-skip only if a real event planning thread starts here.",
       "digestAt": "2026-07-20T10:04:47.512Z"
@@ -6831,10 +6831,10 @@
       "mapping": {
         "kind": "none"
       },
-      "watermarkTs": "1780866105.771489",
+      "watermarkTs": "1785704496.935039",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
       "lastSyncedCommit": ""
     },
     "C096M3GC3BL": {
@@ -6861,6 +6861,18 @@
       "lastSyncedAt": "2026-06-09T01:06:45.086Z",
       "lastSyncedCommit": ""
     },
+    "C09B0SAQJTG": {
+      "name": "mpdm-chanmeng6666--mahsa--isangrolkar-1",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1755578516.056179",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
     "C09E417SULD": {
       "name": "mpdm-moksha.shah.nz--isangrolkar--chanmeng6666-1",
       "type": "dm",
@@ -6881,16 +6893,28 @@
       "digest": "Summer of Tech employer expo, Tue 16 Sep 2025, The Cloud, Auckland - She Sharp had a BOOTH; the event was not ours to publish and it is long past. Contents are booth logistics: banner pickup from a member's office, travel arrangements, printing, lollies. Full of personal addresses and movements - nothing here belongs in the repo. Re-open only if She Sharp decides to publish booth appearances as events, which it does not today.",
       "digestAt": "2026-08-05T04:31:20.627Z"
     },
+    "C09G67C8CCU": {
+      "name": "mpdm-annamigdalek--chanmeng6666--isangrolkar--yeshakaniyawala--lesleygao.it-1",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1759538918.623659",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
     "C0ACA3MV0R4": {
       "name": "people",
       "type": "general",
       "mapping": {
         "kind": "none"
       },
-      "watermarkTs": "1779859197.046229",
+      "watermarkTs": "1782122962.877649",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
       "lastSyncedCommit": ""
     },
     "C0ADRAGNTTQ": {
@@ -7150,10 +7174,10 @@
       "mapping": {
         "kind": "none"
       },
-      "watermarkTs": "1777555757.351769",
+      "watermarkTs": "1782366961.018289",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
       "lastSyncedCommit": ""
     },
     "C0AERNZ1GKH": {
@@ -7840,6 +7864,30 @@
       "digest": "Bot channel for contact-form submissions (app posts here, plus reply-tracking notes from /reply-to-contact-messages). Scores over the event-signal threshold on EVERY run because its boilerplate contains 'registration' and timestamps - a permanent false positive, not new information. Reviewed 2026-07-20 and again 2026-08-05: no event content, ever.",
       "digestAt": "2026-08-05T04:33:12.461Z"
     },
+    "C0AJWEV1MV5": {
+      "name": "mpdm-maderazo.raquel--chanmeng6666--yeshakaniyawala-1",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1773042266.268899",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
+    "C0AKQDG08JV": {
+      "name": "new-website-team",
+      "type": "general",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1779691339.445969",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
     "C0AQS8K2FQQ": {
       "name": "event-peyvand-academy-13june-and-20june",
       "type": "event",
@@ -8275,11 +8323,23 @@
           "latestReplyTs": "1785896952.137639"
         }
       },
-      "fingerprint": "sha256:735b8b876759ac134a737d6e1e396411007dcebf88b7f92b802dda64ec1a7675",
-      "lastSyncedAt": "2026-08-05T05:00:34.022Z",
+      "fingerprint": "sha256:27e15142fff7d1628aeac47c85473dda47f72049c91438900828c008691364d9",
+      "lastSyncedAt": "2026-08-05T07:12:13.136Z",
       "lastSyncedCommit": "",
       "digest": "Aotearoa AI Hackathon Festival 2026, AUT City Campus, FRI 7 - SAT 8 AUG 2026. Live at aihackathon.nz. REGISTRATION CLOSED 20 Jul (119 registered vs 100 stated capacity); the Registration section says so. The sidebar 'Register Now' button is HARDCODED in components/events/event-detail/event-sidebar-panel.tsx for any future event, so clearing registrationUrl only makes it inert, not hidden - needs a component change if that matters. KEYNOTE CONFIRMED 5 Aug: Rach Monks, Founder of AI for X and X-Bot Games. She supplied her own role, bio and photograph by email to events@shesharp.org.nz on 5 Aug after Jacob Bell-Kay (AUT) brokered the booking; that email thread, NOT Slack, is the source. Added as speakers.keynote_speakers, which the renderer orders ahead of the judges. Agenda row is a single '5:50-6:10pm Keynote speaker session' per Nikita's DM 29 Jul (no name on the agenda line, no separate Q&A row) - the deck's Day One run sheet parses that same row from specialSections[1], so the two cannot drift. DECK KEYNOTE SLIDE: her headshot is a 2500x2500 square on saturated yellow and is UNUSABLE full-bleed - it cuts her face at the mouth and the yellow swamps the white type. The slide therefore uses a composed 16:9 plate (…-rach-monks-plate.jpg) with her portrait as a disc placed to survive the stage crop at both 4:3 and 21:9. It must stay a photo slide, not a person card: the four slides before it are information and a card makes five, which lintRhythm rejects. Christine Yip REMOVED from mentors 5 Aug (Len Estioko DM 4 Aug); mentors now 13, photo git rm'd. The deck reads mentors straight from this JSON, so a mentor edit changes the projector - always re-run deck.test.ts and lint-deck.ts. Sara Ghafoor agreed to mentor 27 Jul but supplied no bio/photo, so is NOT listed; Lesley Gao withdrew 27 Jul and never was. Summit date 8-9 Sep Wellington is CORRECT - Mahsa corrected it personally 22 Jul (commit 6103db5a); an older digest claiming '18 Sept Auckland' was wrong, do not re-flip it. REDACTION LANDMINES - VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE, READ THEM THERE AND NEVER WRITE THEM HERE, NOT EVEN AS A PATTERN PLUS SUFFIX LIST: three internal registration discount codes, one each for AUT students, general AUT attendees and mentors/staff; exactly one of the three is public because it is printed on AUT's own A3 poster. Also keep out: the circle.so private checkout link, venue wifi username and password, the on-site supervisor's personal mobile (the 0800 security number IS fine and is what the deck shows), Drive/Sheets registration lists, the workbook's 100+ attendee and mentor emails, and the five late-added participants' emails from Mahsa 2 Aug. Open: post-event gallery pass after 8 Aug.",
       "digestAt": "2026-08-05T05:00:34.021Z"
+    },
+    "C0B5ZAXUKRQ": {
+      "name": "mpdm-yeshakaniyawala--mahsa--chanmeng6666-1",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1781735505.874969",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
     },
     "C0B7K8BFN30": {
       "name": "event-myob-ai-in-practice-30july-2026",
@@ -8421,8 +8481,8 @@
           "latestReplyTs": "1785721385.023369"
         }
       },
-      "fingerprint": "sha256:27ad3615840d662414dc207edf846e92e9f08fafea890498f99e03ce15e30b64",
-      "lastSyncedAt": "2026-08-05T06:00:43.847Z",
+      "fingerprint": "sha256:db82b85cc71043539a910f87a2a520fbfe8abedd160eec4d54df07d28780ccfd",
+      "lastSyncedAt": "2026-08-05T07:12:14.549Z",
       "lastSyncedCommit": "",
       "digest": "Les Mills x She Sharp panel 'No Pain, All Gain - Getting Fit for AI', Thu 3 Sep 2026 5:00-7:30pm NZST, Level 2, 200 Victoria Street West, Auckland Central 1010. Page carries the public Humanitix registrationUrl, the organiser's own blurb from #marketing 24 Jul, the postcode, the agenda matching the run sheet, and all FOUR panellists. SPEAKER SOURCE was the 'Speakers' tab of 'Lesmills Event 03 September - Run Sheet.xlsx', a LOCAL file the user supplied - NOT reachable from Slack, do not expect to re-derive it from the channel. Panel: Keryn McKenzie (Senior Director - Data & AI), Carolina Lobos (Head of Finance), Ben Sullivan (Legal Counsel), Gemma Lynskey (Global Comms + Org Development Director) - all Les Mills International, all with LinkedIn verified 5 Aug against their own profiles. Employers were CONFIRMED from those profiles, not inferred: Keryn's run-sheet row and bio named none and the field was deliberately left blank until her profile confirmed it; Ben was corrected from 'Les Mills' to 'Les Mills International'. Titles the speakers supplied for this event are kept over their LinkedIn headlines. STILL OWED BY LES MILLS: Carolina Lobos's bio and photograph. Her run-sheet row had a name and nothing else; role and employer came from her own profile, and she is on the page without a bio because a confirmed panellist missing from 'Meet the Panel' is worse than one whose card is thin. Do NOT write a bio for her - the other three are their own words and an invented fourth would read as such. Also open: galleryUrl empty until after the event; the sheet's own 'Website & Humanitix event page' checklist still has every row FALSE, including 'Speakers bio added', which this sync completes. REDACTION LANDMINES - VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE, NEVER WRITE THEM HERE, NOT EVEN AS A PATTERN PLUS SUFFIX LIST: a dozen private Humanitix registration links, one per sponsor organisation plus ambassador and ambassador-guest allocations, each keyed to its own access code. Publish only the plain public registration URL. Keep the internal Runsheet bookmark out too.",
       "digestAt": "2026-08-05T06:00:43.846Z"
@@ -9766,6 +9826,66 @@
       "lastSyncedAt": "2026-06-09T01:06:45.086Z",
       "lastSyncedCommit": ""
     },
+    "D094KE2PTSB": {
+      "name": "dm:yesha",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1781826159.264339",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
+    "D094QBSMJNR": {
+      "name": "dm:Chan Meng",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1785224289.362159",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
+    "D094US4FDJS": {
+      "name": "dm:gowrislokesh12",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1757817757.643049",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
+    "D0954RXMGJD": {
+      "name": "dm:annamigdalek",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1751939954.787369",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
+    "D0956VBRRJM": {
+      "name": "dm:Isha",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1768989765.177879",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
     "D095L79FJHE": {
       "name": "dm:Alyssa",
       "type": "dm",
@@ -9785,6 +9905,42 @@
       "lastSyncedCommit": "",
       "digest": "Development-thread DM: auth/login logic changes, review logs, feature walkthroughs dating to late 2025. Scores on the event-signal heuristic because dev logs quote words like 'registration' and dates - that is a FALSE POSITIVE, not event content. Still read the delta rather than trusting this note if it ever surfaces again.",
       "digestAt": "2026-08-05T04:31:28.644Z"
+    },
+    "D097CEFKPAL": {
+      "name": "dm:Marriane Bentigan",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1784762797.040199",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
+    "D099N1C3421": {
+      "name": "dm:Mike",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1783933655.158579",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
+    "D09A5V1AN2W": {
+      "name": "dm:Raquel Maderazo",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1758421784.028399",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
     },
     "D09BBKA114H": {
       "name": "dm:Mahsa",
@@ -9829,6 +9985,54 @@
       "lastSyncedCommit": "",
       "digest": "Founder DM. Content is platform strategy - Resend vs Mailchimp quota (she declined in Jul 2026: not a priority, Discord is the hackathon comms channel), website visual design sign-off, tooling demos. Note for the newsletter work: her 15 Jul reply is the standing decision on why Mailchimp has not been replaced. No event-page edits have come through here, but she does approve them elsewhere.",
       "digestAt": "2026-08-05T04:31:27.014Z"
+    },
+    "D09C8T1124E": {
+      "name": "dm:Prasanth Pavithran",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1759440818.325219",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
+    "D09FZBST24V": {
+      "name": "dm:Lesley Gao",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1785749472.664919",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
+    "D09FZHRC89W": {
+      "name": "dm:Sara Ghafoor",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1760149265.766199",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
+    "D0AG9BMHR1U": {
+      "name": "dm:Leen",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1772435417.460129",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
     },
     "D0AGK4GF97D": {
       "name": "dm:Len Estioko",
@@ -9881,6 +10085,30 @@
       "lastSyncedCommit": "",
       "digest": "AUT-side contact. 2026 traffic is a request for technical guidance for a student team building at the hackathon, answered with on-site help. No event-page instructions have ever come through here; still scanned each run in case that changes.",
       "digestAt": "2026-08-05T04:31:25.421Z"
+    },
+    "D0B101Z90HM": {
+      "name": "dm:Janhvi",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1778417324.210039",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
+    },
+    "D0B9FJV1HR7": {
+      "name": "dm:USLACK",
+      "type": "dm",
+      "mapping": {
+        "kind": "none"
+      },
+      "watermarkTs": "1783398762.417009",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedCommit": ""
     },
     "D0BAVLBUYQY": {
       "name": "dm:Nikita Kumari",
