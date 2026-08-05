@@ -13,6 +13,11 @@
 import { eventSlugForFeedbackCode } from "@/lib/data/feedback-codes";
 
 import type { Deck, QrBlock, Slide, SlideType } from "./types";
+import {
+  HERO_TYPES as RHYTHM_HERO_TYPES,
+  longestRunPerValue,
+  toRhythmStep,
+} from "./rhythm";
 import { checkAccentContrast } from "./theme";
 import { toneOf } from "./utils";
 
@@ -83,15 +88,11 @@ export const COPY_LIMITS = {
  *
  * These are the beats that let a room breathe. Everything else is information,
  * and information does not rest an audience however well it is set.
+ *
+ * Defined in `rhythm.ts` so the evening-event planner avoids creating the runs
+ * this file reports, rather than restating the same set and drifting from it.
  */
-const HERO_TYPES = new Set<SlideType>([
-  "title",
-  "section",
-  "karakia",
-  "break",
-  "photo",
-  "prizes",
-]);
+const HERO_TYPES = RHYTHM_HERO_TYPES;
 
 export interface LintIssue {
   slideId: string;
@@ -275,6 +276,88 @@ function checkCount(
 }
 
 /** Lints one slide against the copy limits for its type. */
+/**
+ * Every string on a slide the room can read, as `[field, text]` pairs.
+ *
+ * Deliberately not `JSON.stringify(slide)`: `note` must not be included, and
+ * neither must an image `alt` or a QR `url`, none of which are projected.
+ */
+function onScreenStrings(slide: Slide): [string, string][] {
+  const found: [string, string][] = [];
+  const push = (field: string, value?: string) => {
+    if (value && value.trim()) found.push([field, value]);
+  };
+
+  push("eyebrow", slide.eyebrow);
+  push("section", slide.section);
+  if ("title" in slide) push("title", slide.title as string | undefined);
+  if ("subtitle" in slide) push("subtitle", slide.subtitle as string | undefined);
+  if ("lead" in slide) push("lead", slide.lead as string | undefined);
+
+  switch (slide.type) {
+    case "bullets":
+      slide.items.forEach((item, i) => push(`bullet ${i + 1}`, item));
+      break;
+    case "agenda":
+      slide.items.forEach((item) => push(`run sheet "${item.time}"`, item.label));
+      break;
+    case "themes":
+      slide.themes.forEach((theme) => {
+        push("theme title", theme.title);
+        push("theme detail", theme.detail);
+        push("theme tag", theme.tag);
+      });
+      break;
+    case "people":
+      slide.people.forEach((person) => {
+        push("person name", person.name);
+        push("person role", person.role);
+        push("person org", person.org);
+      });
+      break;
+    case "stats":
+      slide.stats.forEach((stat) => {
+        push("stat value", stat.value);
+        push("stat label", stat.label);
+        push("stat detail", stat.detail);
+      });
+      break;
+    case "criteria":
+      slide.criteria.forEach((entry) => {
+        push("criterion", entry.name);
+        push("criterion detail", entry.description);
+      });
+      break;
+    case "prizes":
+      slide.prizes.forEach((prize) => {
+        push("prize", prize.name);
+        push("prize detail", prize.detail);
+      });
+      break;
+    case "upcoming":
+      slide.events.forEach((event) => {
+        push("upcoming title", event.title);
+        push("upcoming blurb", event.blurb);
+      });
+      break;
+    case "qr-cta":
+      slide.points?.forEach((point, i) => push(`point ${i + 1}`, point));
+      push("qr caption", slide.qr.caption);
+      break;
+    case "break":
+      push("resume label", slide.resumeLabel);
+      break;
+    case "karakia":
+      slide.teReo.forEach((line, i) => push(`te reo ${i + 1}`, line));
+      slide.english.forEach((line, i) => push(`english ${i + 1}`, line));
+      break;
+    default:
+      break;
+  }
+
+  return found;
+}
+
 export function lintSlide(slide: Slide, index: number): LintIssue[] {
   const issues: LintIssue[] = [];
   const id = slide.id;
@@ -295,6 +378,27 @@ export function lintSlide(slide: Slide, index: number): LintIssue[] {
       rule: "host-note",
       severity: "error",
       message: "Every slide needs a host note (printed in the PDF, never shown)",
+    });
+  }
+
+  /*
+   * Placeholder text that reaches the projector.
+   *
+   * The scaffold writes real slides now, and a slide it could not fill is
+   * marked rather than left blank — which means the way this fails is a
+   * plausible-looking slide with TODO on it, three metres high. Host notes are
+   * deliberately exempt: "PLACEHOLDER — replace these with the real prompts"
+   * is exactly the right thing for a note to say, and the note is never shown.
+   */
+  for (const [field, value] of onScreenStrings(slide)) {
+    const marker = /\b(TODO|TBC|TBA|XXX|FIXME|LOREM)\b/i.exec(value);
+    if (!marker) continue;
+    issues.push({
+      slideId: id,
+      slideIndex: index,
+      rule: "placeholder-copy",
+      severity: "error",
+      message: `"${marker[0]}" is still on screen in ${field}: "${value}"`,
     });
   }
   if (slide.eyebrow && words(slide.eyebrow) > 5) {
@@ -494,6 +598,21 @@ export function lintSlide(slide: Slide, index: number): LintIssue[] {
         issues,
       );
       slide.themes.forEach((theme) => {
+        /*
+         * A theme card's title was unbounded — only its detail was checked —
+         * so a grid built from an event's own prose could ship fourteen-word
+         * cards and pass. The cards are set large and side by side; a title
+         * that wraps to three lines breaks the grid before it breaks the eye.
+         */
+        if (words(theme.title) > COPY_LIMITS.titleWords) {
+          issues.push({
+            slideId: id,
+            slideIndex: index,
+            rule: "theme-title-length",
+            severity: "error",
+            message: `Theme card title is ${words(theme.title)} words (max ${COPY_LIMITS.titleWords}): "${theme.title}"`,
+          });
+        }
         if (theme.detail && sentences(theme.detail) > 1) {
           issues.push({
             slideId: id,
@@ -686,25 +805,6 @@ export function lintDeck(deck: Deck): LintIssue[] {
   return issues;
 }
 
-/** Reports the longest run of a repeated key, as `{ length, endsAt }`. */
-function longestRun<T>(
-  slides: Slide[],
-  key: (slide: Slide) => T,
-): { value: T; length: number; endsAt: number } | null {
-  let best: { value: T; length: number; endsAt: number } | null = null;
-  let current: T | undefined;
-  let length = 0;
-
-  slides.forEach((slide, index) => {
-    const value = key(slide);
-    length = value === current ? length + 1 : 1;
-    current = value;
-    if (!best || length > best.length) best = { value, length, endsAt: index };
-  });
-
-  return best;
-}
-
 /**
  * Checks the shape of the deck as a sequence rather than as a set of slides.
  *
@@ -721,29 +821,46 @@ export function lintRhythm(deck: Deck): LintIssue[] {
   const at = (index: number, rule: string, message: string, severity: LintIssue["severity"] = "error") =>
     issues.push({ slideId: slides[index].id, slideIndex: index, rule, severity, message });
 
-  const heroRun = longestRun(slides, (slide) => HERO_TYPES.has(slide.type));
-  if (heroRun && heroRun.value === true && heroRun.length > COPY_LIMITS.consecutiveHero) {
+  /*
+   * Per register, not one global best.
+   *
+   * These two rules used to share a single `longestRun()` result and then ask
+   * whether it happened to be a hero run or a content run. Because
+   * `buildClosingSlides()` always ends a deck with four consecutive
+   * information slides, the global winner was always a content run, so a run
+   * of three or four heroes could never win and `rhythm-hero-run` never fired.
+   */
+  const steps = slides.map(toRhythmStep);
+  const byRegister = longestRunPerValue(steps, (step) =>
+    HERO_TYPES.has(step.type) ? "hero" : "content",
+  );
+
+  const heroRun = byRegister.get("hero");
+  if (heroRun && heroRun.length > COPY_LIMITS.consecutiveHero) {
     at(
       heroRun.endsAt,
       "rhythm-hero-run",
       `${heroRun.length} full-frame slides in a row (max ${COPY_LIMITS.consecutiveHero}), ending at slide ${heroRun.endsAt + 1}. Back-to-back statement slides stop landing.`,
     );
   }
-  if (heroRun && heroRun.value === false && heroRun.length > COPY_LIMITS.consecutiveContent) {
+
+  const contentRun = byRegister.get("content");
+  if (contentRun && contentRun.length > COPY_LIMITS.consecutiveContent) {
     at(
-      heroRun.endsAt,
+      contentRun.endsAt,
       "rhythm-content-run",
-      `${heroRun.length} information slides in a row (max ${COPY_LIMITS.consecutiveContent}), ending at slide ${heroRun.endsAt + 1}. Break the run with a section divider, a photograph or a break.`,
+      `${contentRun.length} information slides in a row (max ${COPY_LIMITS.consecutiveContent}), ending at slide ${contentRun.endsAt + 1}. Break the run with a section divider, a photograph or a break.`,
     );
   }
 
-  const toneRun = longestRun(slides, (slide) => toneOf(slide));
-  if (toneRun && toneRun.length > COPY_LIMITS.consecutiveTone) {
-    at(
-      toneRun.endsAt,
-      "rhythm-tone-run",
-      `${toneRun.length} ${toneRun.value} slides in a row (max ${COPY_LIMITS.consecutiveTone}), ending at slide ${toneRun.endsAt + 1}. A deck with no light/dark alternation reads flat however good each slide is.`,
-    );
+  for (const [tone, run] of longestRunPerValue(steps, (step) => step.tone)) {
+    if (run.length > COPY_LIMITS.consecutiveTone) {
+      at(
+        run.endsAt,
+        "rhythm-tone-run",
+        `${run.length} ${tone} slides in a row (max ${COPY_LIMITS.consecutiveTone}), ending at slide ${run.endsAt + 1}. A deck with no light/dark alternation reads flat however good each slide is.`,
+      );
+    }
   }
 
   if (slides.length >= COPY_LIMITS.rhythmFloorSlides) {
