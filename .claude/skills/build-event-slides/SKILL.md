@@ -105,7 +105,7 @@ run `sync-event-from-slack`.
 2. **The event is in `lib/data/json/events-custom.json`.** Not there → stop and
    run `sync-event-from-slack` first. A deck built around an unverified date is
    how the wrong date reaches a projector.
-3. **Node 22 and dependencies installed** (`npx pnpm@10 install`).
+3. **Node 22 and dependencies installed** (`pnpm install` — the repo pins pnpm 10).
 4. **A branch to work on.** `feat/deck-<event-slug>` off `main`.
 
 ---
