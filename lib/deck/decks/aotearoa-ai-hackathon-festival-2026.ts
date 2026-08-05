@@ -124,10 +124,25 @@ const HELPDESK_VIDEO_QR: QrBlock = {
   caption: "youtu.be/n9UPiqziB9c",
 };
 
-const ACCESSIBLE_UI_VIDEO_QR: QrBlock = {
-  url: "https://youtu.be/THqS1kZbdjo",
-  label: "My Life My Voice",
-  caption: "youtu.be/THqS1kZbdjo",
+/*
+ * REMOVED 5 Aug 2026 — the "My Life My Voice: Accessible UI" brief and its
+ * problem-statement video QR, on Mahsa's instruction ("remove the last one").
+ * The two sponsors who are in the room with a team and a stake in the weekend
+ * lead instead, F&P first. Restore the const with the slide if that reverses;
+ * the video is https://youtu.be/THqS1kZbdjo.
+ */
+
+/* The marks of the two organisations whose briefs the room chooses between.
+   Same paths as `lib/data/sponsors.ts`, which is what the sponsors slide draws
+   from — two spellings of one logo on one projector is worse than none. */
+const FPH_LOGO: DeckLogo = {
+  name: "Fisher & Paykel Healthcare",
+  logo: "/img/sponsors/fph.svg",
+};
+
+const WOOLWORTHS_LOGO: DeckLogo = {
+  name: "Woolworths",
+  logo: "/img/sponsors/woolworths.svg",
 };
 
 /* The three destinations a team needs the moment it exists. All three are
@@ -149,10 +164,31 @@ const ASSISTANT_QR: QrBlock = {
   caption: "hackathon.shesharp.org.nz",
 };
 
+/*
+ * She Sharp's own copy of the template, not the Community Hub page.
+ *
+ * This pointed at the TNZ Ecosystem Hub until the pre-event QR audit on 5 Aug
+ * 2026 opened every destination in a signed-out browser: Circle.so bounces
+ * anyone who is not already a member to `login.circle.so/sign_in`. A code that
+ * shows a login wall to a room of a hundred people is a dead code, and this is
+ * exactly the class of failure the person building the deck cannot see, because
+ * they are always signed in. Same reason `AMBASSADOR_FORM_URL` avoids its
+ * Google Form.
+ *
+ * The PDF is AI Forum's six-page template — CONNECT, PROBLEM, BIG IDEA, FUTURE
+ * IMPACT, with the per-section timings the pitch slides already teach. It is
+ * committed under `public/docs/` rather than uploaded to Blob storage so it is
+ * versioned with the deck that points at it and needs no token to serve.
+ *
+ * FILENAME IS LOAD-BEARING. This code shares a slide with two others, so each
+ * is drawn small; the descriptive name `ai-hackathon-pitch-deck-template-2026`
+ * pushes the URL to 73 bytes and the symbol to 41×41, while this one fits 37×37
+ * in the same physical square. Lengthen it and the modules get smaller.
+ */
 const PITCH_TEMPLATE_QR: QrBlock = {
-  url: "https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus",
+  url: "https://www.shesharp.org.nz/docs/pitch-deck-template-2026.pdf",
   label: "Pitch deck template",
-  caption: "Community Hub",
+  caption: "shesharp.org.nz/docs",
 };
 
 /**
@@ -162,10 +198,21 @@ const PITCH_TEMPLATE_QR: QrBlock = {
  * default list is kept in its default order, and `boilerplate.ts` still holds
  * the full five for every other deck.
  */
+/**
+ * The fifth line is here because a whole slide went.
+ *
+ * "Who to Find Today" carried the AUT security number alongside a named venue
+ * supervisor, and Mahsa cut the slide on 5 Aug 2026 — the objection was to
+ * introducing a stranger by name to a room that has no reason to know him, not
+ * to the number. Deleting the slide outright would have taken the only
+ * emergency contact in the deck with it, so it moves onto the safety slide she
+ * kept. Five lines is the linter's limit exactly; nothing else fits here.
+ */
 const SAFETY_LINES = [
   "Find the nearest fire exits before we start",
   "Follow staff to the assembly point in an evacuation",
   "First aid and accessible facilities are available on request",
+  "AUT security, any emergency: 0800 288 7233",
   "Keep your bag and devices with you",
 ];
 
@@ -260,7 +307,7 @@ function archivePlate(offset: number): DeckImage {
 /**
  * The photographic beat that closes the featured-problem chapter.
  *
- * Hands, a pen and paper: the four briefs before it are the only stretch of the
+ * Hands, a pen and paper: the three briefs before it are the only stretch of the
  * deck that asks a room to weigh options rather than follow instructions, and
  * this is the page the host stops talking on while they do it.
  */
@@ -445,10 +492,17 @@ const AUT_WELCOME: Slide = {
   tone: "light",
   eyebrow: "Over to Suzanne",
   title: "Greetings from AUT",
-  lead: "Suzanne welcomes us and runs the health and safety briefing",
+  // She opens on behalf of the university and nothing else. The safety briefing
+  // was attributed to her here until Mahsa corrected it on 5 Aug 2026 — putting
+  // a Dean's name against a duty she has not agreed to perform is the kind of
+  // error the room only discovers when nobody steps forward.
+  lead: "Suzanne opens the weekend on behalf of AUT",
   people: [
     {
-      name: "Suzanne Wilkinson",
+      // "Professor" is carried on the name rather than folded into the role.
+      // It is the title she holds, it is the one Mahsa asked for by name, and
+      // the role line is already at its word limit without it.
+      name: "Professor Suzanne Wilkinson",
       // Full title is "Dean of Faculty of Design and Creative Technologies",
       // which is nine words against a six-word limit and reads as a job
       // description rather than an introduction at 38px.
@@ -460,7 +514,7 @@ const AUT_WELCOME: Slide = {
   ],
   density: "lg",
   shape: "card",
-  note: "Hand over to Suzanne here. She welcomes the room on behalf of AUT and reads the safety briefing on the next slide.",
+  note: "Hand over to Suzanne here for AUT's welcome, then take the room back. She does NOT read the safety briefing on the next slide — that is yours.",
 };
 
 /**
@@ -515,52 +569,35 @@ const KEYNOTE_SLIDE: Slide = {
   note: "Introduce Rach by name and give her the room. She speaks at 5:50pm for about fifteen minutes; team forming follows straight after.",
 };
 
-/**
- * The venue's own duty contacts, straight after the safety briefing.
+/*
+ * REMOVED 5 Aug 2026 — "Who to Find Today".
  *
- * AUT supplies an event supervisor for the weekend, and a room that needs him
- * needs to know his face rather than his job title — hence the photograph,
- * cropped from a two-person award photo because it is the only one that
- * exists. Replace it if a proper headshot turns up.
+ * It introduced AUT's weekend event supervisor by name and photograph, above
+ * the 0800 security number. Mahsa cut it on review with "I don't even know who
+ * is Vishnu", and she is right about the room: a name and a face nobody has met
+ * are not wayfinding, and the slide spent a whole beat of the opening on a
+ * person most attendees will never need to find. Anyone who does need him asks
+ * a volunteer or the security desk.
  *
- * ONE NUMBER ON SCREEN, AND IT IS THE 0800. AUT gave She Sharp the supervisor's
- * mobile as well, and it is deliberately not here: this repository is public
- * and the deck is served from a public URL, so a personal number committed once
- * cannot be withdrawn from either. The security desk is staffed at any hour and
- * can reach him. His mobile travels on the printed run sheet, which is where a
- * third party's contact details belong. The same rule kept the mentor lead's
- * number out of this repository.
+ * What survived the deletion is the 0800, which moved up into SAFETY_LINES —
+ * it was the only emergency contact anywhere on screen. His mobile was never in
+ * this repository and must not be added: the deck is served from a public URL,
+ * and a personal number committed once cannot be withdrawn from either. It
+ * travels on the printed run sheet, which is where a third party's contact
+ * details belong.
+ *
+ * Do not restore this slide without asking Mahsa first.
  */
-const WHO_TO_FIND: Slide = {
-  id: "who-to-find",
-  type: "bullets",
-  section: "Welcome",
-  tone: "light",
-  eyebrow: "Save this number now",
-  title: "Who to Find Today",
-  lead: "Vishnu runs the venue this weekend, and AUT security is always on",
-  items: [
-    "Vishnu Omanakuttan — AUT event supervisor, both days",
-    "AUT security, any emergency: 0800 288 7233",
-    "She Sharp volunteers are the ones in lanyards",
-  ],
-  image: {
-    src: "/img/events/aotearoa-ai-hackathon-festival-2026-vishnu-omanakuttan.jpg",
-    alt: "Vishnu Omanakuttan, AUT event supervisor for the hackathon weekend.",
-  },
-  note: "Read the 0800 slowly and say it twice — this is the slide people photograph. Vishnu's mobile is on the printed run sheet, not on screen; give it out only if someone needs it. Point him out if he is in the room.",
-};
 
 const OPENING_SLIDES: Slide[] = insertAfter(
   insertAfter(
-    insertAfter(
       buildOpeningSlides({
         eventTitle: "Aotearoa AI Hackathon Festival 2026",
-        eventMeta: [
-          "7–8 August 2026",
-          "AUT City Campus",
-          "Hosted with AI Forum NZ",
-        ],
+        /* Two facts, not three. The AI Forum partnership was cut from the title
+           slide on Mahsa's 5 Aug review — the partner logo row directly beneath
+           already says it, and saying it twice on the one slide the room stares
+           at longest reads as padding. The logos stay. */
+        eventMeta: ["7–8 August 2026", "AUT City Campus"],
         partnerLogos: PARTNER_LOGOS,
         karakia: OPENING_KARAKIA,
         // TODO(venue-safety): AUT's own lines — assembly point, lift rules,
@@ -573,11 +610,8 @@ const OPENING_SLIDES: Slide[] = insertAfter(
         chapterPlate: CHAPTER_PLATE,
         contactQrs: [WEBSITE_QR, EVENTS_QR, LINKEDIN_QR],
       }),
-      "karakia-timatanga",
-      AUT_WELCOME,
-    ),
-    "health-and-safety",
-    WHO_TO_FIND,
+    "karakia-timatanga",
+    AUT_WELCOME,
   ),
   "stay-connected",
   KEYNOTE_SLIDE,
@@ -715,7 +749,34 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       ],
       note: "Read the five titles, not the detail lines. Teams will come back to this slide.",
     },
-    /* The five themes are the categories; these four are the actual briefs.
+    /* Where the five themes came from, immediately after them.
+     *
+     * Added 5 Aug 2026 at Mahsa's request. Two slides now cite the SDGs — the
+     * chapter opener and the themes — and until this page the room had no idea
+     * what was being cited. Nobody reads seventeen tiles from three metres and
+     * they are not meant to: it is a single beat that lands the provenance, and
+     * the host names only the ones the five themes map onto.
+     *
+     * The UN's own 6×3 poster rather than the 4:3 Global Goals grid, because
+     * this stage runs to 21:9 and the squarer version wastes a third of it.
+     * `fit: "contain"` is mandatory here — see the note on PhotoSlide.fit.
+     */
+    {
+      id: "sdg-goals",
+      type: "photo",
+      section: "Day One — Friday 7 August",
+      tone: "light",
+      fit: "contain",
+      eyebrow: "Seventeen, and they connect",
+      title: "The UN Sustainable Development Goals",
+      lead: "Every theme tonight comes from one of these",
+      image: {
+        src: "/img/events/aotearoa-ai-hackathon-festival-2026-sdg-goals.webp",
+        alt: "The seventeen United Nations Sustainable Development Goals, each with its number, title and icon, under the Sustainable Development Goals wordmark.",
+      },
+      note: "Point at the four the themes map onto — 2 zero hunger, 4 quality education, 10 reduced inequalities, 15 life on land — then move on. Do not read the list.",
+    },
+    /* The five themes are the categories; these three are the actual briefs.
        Each one was written by the organisation that has the problem, and each
        carries its own UN SDG mapping — which stays in the host notes rather
        than on screen, because an SDG number is a citation and a room does not
@@ -738,21 +799,6 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       note: "Say that these are real problems from real organisations, and that a team is free to bring its own instead.",
     },
     {
-      id: "problem-food-waste",
-      type: "bullets",
-      section: "Day One — Friday 7 August",
-      eyebrow: "Woolworths and Kai Commitment",
-      title: "Food Waste, Farm to Fork",
-      lead: "Reducing food waste across a whole national supply chain",
-      items: [
-        "Identify where waste happens along the supply chain",
-        "Fill the data gaps nobody currently measures",
-        "Optimise ordering, storage and distribution with AI",
-        "Improve collaboration between growers, retailers and charities",
-      ],
-      note: "Supported by Woolworths New Zealand alongside Kai Commitment. The problem statement video is on the AUT City Campus Community Hub, linked from the event page.",
-    },
-    {
       id: "problem-helpdesk",
       type: "qr-cta",
       section: "Day One — Friday 7 August",
@@ -766,6 +812,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
         "Care by Design: people and process ahead of technology",
       ],
       qr: HELPDESK_VIDEO_QR,
+      logo: FPH_LOGO,
       note: "F&P maps this to SDGs 8, 9 and 10 for inclusion, 12 for removing rework, and 3 through the products themselves. They judge on whether the design is genuinely underpinned by their Culture of Care.",
     },
     {
@@ -781,26 +828,27 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
         "Automate the analysis of yearly drone imagery",
         "Measure survival, canopy cover, weeds and regeneration",
       ],
+      logo: FPH_LOGO,
       note: "SDG 15 and SDG 12. Restoring the Oiroa Stream at F&P's Karaka campus. Without drone imagery, teams can use Matuku Link, Waikereru or Hinewai as proxy datasets — the eight metrics are listed on the event page.",
     },
     {
-      id: "problem-accessible-ui",
-      type: "qr-cta",
+      id: "problem-food-waste",
+      type: "bullets",
       section: "Day One — Friday 7 August",
-      tone: "dark",
-      eyebrow: "WCAG compliance stays stubbornly low",
-      title: "My Life My Voice: Accessible UI",
-      lead: "Generate accessible layouts while developers build, not audit afterwards",
-      points: [
-        "Millions hit barriers in apps built without accessibility",
-        "Checking happens late, outside the tools developers use",
-        "Generate accessible options, not only flags on broken ones",
+      eyebrow: "Woolworths and Kai Commitment",
+      title: "Food Waste, Farm to Fork",
+      lead: "Reducing food waste across a whole national supply chain",
+      items: [
+        "Identify where waste happens along the supply chain",
+        "Fill the data gaps nobody currently measures",
+        "Optimise ordering, storage and distribution with AI",
+        "Improve collaboration between growers, retailers and charities",
       ],
-      qr: ACCESSIBLE_UI_VIDEO_QR,
-      note: "SDGs 4, 8 and 10. The distinction that matters to them is generative rather than corrective — existing checkers already flag what is broken.",
+      logo: WOOLWORTHS_LOGO,
+      note: "Supported by Woolworths New Zealand alongside Kai Commitment. The problem statement video is on the AUT City Campus Community Hub, linked from the event page.",
     },
-    /* The room has just been handed four briefs and has to pick one. This is
-       the page the host stops talking on, and it is also what keeps the four
+    /* The room has just been handed three briefs and has to pick one. This is
+       the page the host stops talking on, and it is also what keeps the
        information slides above it inside the rhythm limit. */
     {
       id: "problems-close",

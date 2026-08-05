@@ -156,8 +156,14 @@ function SlideRail({
 
   return (
     <div className="deck-rail" aria-hidden="true">
+      {/* The mark is "She#", not the words spelled out. It carried "SHE ♯ SHARP"
+          until Mahsa read it off the projector on 5 Aug 2026 and asked for both
+          corrections at once: drop the trailing word, and set the sign upright.
+          U+266F MUSIC SHARP SIGN slants its horizontal bars by design — at rail
+          size that reads as a skewed logo rather than a musical accidental, so
+          the plain number sign is the truer mark here. */}
       <span className="deck-rail-brand">
-        SHE <i className="deck-rail-sharp">♯</i> SHARP
+        SHE <i className="deck-rail-sharp">#</i>
       </span>
       <span className="deck-rail-meta">
         {position} / {total}
