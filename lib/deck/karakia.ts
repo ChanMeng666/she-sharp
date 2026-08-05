@@ -1,21 +1,25 @@
 /**
  * The karakia She Sharp opens and closes an event with.
  *
- * These two are general-purpose karakia in common use across Aotearoa — "Kia
- * hora te marino" as a tīmatanga and "Kia tau te manaakitanga" as a
- * whakamutunga. They are not iwi-specific, and they carry no event-specific
- * content, which is why they can stand as the organisational default rather
- * than being asked for again at every event.
+ * **These are the standing pair. She Sharp uses the same tīmatanga and the same
+ * whakamutunga at every event**, confirmed by the team on 2026-08-05, so this
+ * is the organisation's own karakia rather than a placeholder waiting to be
+ * replaced per event.
  *
- * They arrived with the Aotearoa AI Hackathon Festival 2026 deck, supplied by
- * that client, and are reproduced verbatim. **Macrons are as received. Do not
- * "correct" them and do not paraphrase the translation.**
+ * Both are general-purpose karakia in common use across Aotearoa — "Kia hora te
+ * marino" opening, "Kia tau te manaakitanga" closing. Neither is iwi-specific
+ * and neither carries event-specific content, which is what makes a standing
+ * default the right call here.
  *
- * A default is not a decision made for the host. `build-event-slides` reads
- * these back before the deck is built and swaps in whatever the host will
- * actually say — a venue with its own mihi, an iwi-specific karakia, or a
- * different translation. Passing `karakia:` to `buildOpeningSlides()` or
- * `buildClosingSlides()` overrides them completely.
+ * They first arrived with the Aotearoa AI Hackathon Festival 2026 deck and are
+ * reproduced verbatim. **Macrons are as received. Do not "correct" them and do
+ * not paraphrase the translation.**
+ *
+ * A standing default is still not a decision made *for* a host. Passing
+ * `karakia:` to `buildOpeningSlides()` or `buildClosingSlides()` overrides them
+ * completely — for a venue that opens with its own mihi, or a guest who will
+ * read something else. That is the exception, not the routine, so
+ * `build-event-slides` no longer needs to ask about it at every event.
  */
 
 import type { KarakiaText } from "./boilerplate";
