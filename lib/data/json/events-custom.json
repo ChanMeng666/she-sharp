@@ -1357,14 +1357,6 @@
                 "linkedin": "https://www.linkedin.com/in/jiruan/"
               },
               {
-                "name": "Christine Yip",
-                "title": "Principal Advisor",
-                "company": "Te Awa Advisory & Recruitment",
-                "bio": "Christine Yip is Principal Advisor at Te Awa Advisory & Recruitment and runs C WHY International, advising organisations across technology, engineering, manufacturing and infrastructure on strategy, governance and organisational capability. She has more than 20 years of experience across New Zealand, Australia and Asia, was named a Top 50 CIO NZ in 2020, and brings direct hackathon experience including mentoring a winning team exploring how AI could improve freshwater quality and public health. Drawing on expertise in AI ethics and governance, business analysis, entrepreneurship and pitching, and project management, she helps teams move from an interesting idea to a credible, achievable solution that connects responsible AI, commercial thinking and measurable impact. She mentors on the business side, at the venue on Friday and again on Saturday afternoon.",
-                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-christine-yip.jpg",
-                "linkedin": "https://www.linkedin.com/in/christinewky/"
-              },
-              {
                 "name": "Alan Dent",
                 "title": "Director, Data, Technology Risk & Policy",
                 "company": "AUT",
@@ -1494,8 +1486,7 @@
               "5:00–5:30pm — Registration, guest arrival & networking + dinner",
               "5:30–5:40pm — Event opening: karakia, welcome to AUT, health & safety briefing",
               "5:40–5:50pm — She Sharp introduction",
-              "5:50–6:05pm — Keynote speaker",
-              "6:05–6:10pm — Q&A with the keynote",
+              "5:50–6:10pm — Keynote speaker session",
               "6:10–6:50pm — Team forming",
               "6:50–7:05pm — Overview of day two",
               "7:05–7:15pm — Problems to solve, requirements & judging criteria",
@@ -1776,12 +1767,9 @@
             "type": "info",
             "title": "Registration",
             "content": [
-              "Register online at aihackathon.nz.",
-              "Open to students and professionals — all experience levels are welcome.",
-              "In-person capacity at AUT City Campus is limited to 100 participants.",
-              "Concession and complimentary places are available for AUT students, mentors and supporting staff — registration details are shared directly via the AUT City Campus Community Hub.",
-              "Enter as a team or as an individual — just let us know which when you register, and we will help solo registrants find a team on the day.",
-              "Join the AUT City Campus Community Hub for the latest updates, training registration and Q&A session links."
+              "Registration for the AUT City Campus venue closed on 20 July 2026.",
+              "Registered participants — join the AUT City Campus Community Hub and the participant Discord for the latest updates, Q&A recordings and the pitch deck template.",
+              "Other festival venues and dates are listed at aihackathon.nz."
             ]
           },
           {
@@ -2016,13 +2004,13 @@
         "location": {
           "format": "in_person",
           "venueName": "Les Mills Auckland City",
-          "address": "Level 2, 200 Victoria Street West, Auckland Central",
+          "address": "Level 2, 200 Victoria Street West, Auckland Central, Auckland 1010",
           "city": "Auckland",
           "country": "New Zealand"
         },
         "fullDescription": [
-          "Join She Sharp and Les Mills for a cross-functional conversation about AI — an evening on diversity and AI for impact. A panel of cross-functional voices will share how AI is shaping different roles across the organisation, followed by interactive table discussions and networking.",
-          "Discussion themes include legal and privacy implications of AI, commercial impact, communication and change management, technical perspectives, AI use cases across the business, and AI from a fitness-company viewpoint."
+          "AI is changing the way we work — and it's no longer just a topic for technologists. Join She Sharp and Les Mills for an inspiring conversation about how AI is creating opportunities across every function, from technology and data to communications, legal, finance, and commercial leadership. Through a panel of cross-functional leaders driving AI transformation in their fields, we'll explore the practical realities of adopting AI, the mindset shifts required to embrace change, and the skills that will help people thrive in an AI-enabled future.",
+          "You'll hear perspectives from experts across technology, change management, commercial strategy, and legal, before joining interactive table discussions on how individuals and organisations can drive positive change with AI. Whether you're a developer, marketer, lawyer, analyst, people leader, or simply curious about where AI is heading, this event is designed to challenge the idea that AI belongs to one department. The future of work will be shaped by people from every background — and we believe AI is now everyone's job. Come ready to learn, connect, and be inspired by the many pathways into the next generation of careers."
         ],
         "speakers": {},
         "organizers": [],
@@ -2068,7 +2056,7 @@
           }
         ],
         "galleryUrl": "",
-        "registrationUrl": "",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-and-lesmills",
         "images": [],
         "category": "panel",
         "status": "upcoming",

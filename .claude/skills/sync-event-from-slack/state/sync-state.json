@@ -248,7 +248,7 @@
         "kind": "skip",
         "reason": "Bot channel: weekly mentorship stats digest + mentorship ops. No event content."
       },
-      "watermarkTs": "1784491254.413899",
+      "watermarkTs": "1785700908.781969",
       "threads": {
         "1687223057.597599": {
           "replyCount": 23,
@@ -736,10 +736,10 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-07-20T10:05:04.061Z",
+      "lastSyncedAt": "2026-08-05T04:33:14.227Z",
       "lastSyncedCommit": "",
-      "digest": "Bot channel: weekly mentorship stats digest + mentorship ops. No event content. Flagged by general-signal auto-scan 2026-07-20; reviewed and confirmed no event. Un-skip only if a real event planning thread starts here.",
-      "digestAt": "2026-07-20T10:05:04.060Z"
+      "digest": "Bot channel: the Monday mentorship-stats digest (app A0…/mentorship-weekly-stats) plus occasional ops chat. Scores over the event-signal threshold every run because the digest literally counts 'Registered' mentors - a permanent false positive. Reviewed 2026-07-20 and again 2026-08-05: no event content.",
+      "digestAt": "2026-08-05T04:33:14.226Z"
     },
     "C05KPDDFT9D": {
       "name": "website-team",
@@ -6640,7 +6640,7 @@
         "kind": "skip",
         "reason": "already published at /events/ai-hackathon-festival-2025 via shesharp_events_v3.json; not managed by this skill"
       },
-      "watermarkTs": "1781598150.742449",
+      "watermarkTs": "1785445833.300489",
       "threads": {
         "1750847629.942019": {
           "replyCount": 1,
@@ -6820,10 +6820,10 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-21T14:04:44.676Z",
+      "lastSyncedAt": "2026-08-05T04:30:11.373Z",
       "lastSyncedCommit": "",
-      "digest": "AI Forum hackathon Aug 2025 — ALREADY PUBLISHED at /events/ai-hackathon-festival-2025 (lives in shesharp_events_v3.json, a scraped source this skill does not manage). Channel is a retrospective (lessons-learned, runsheet). Skip; do not create a duplicate in events-custom.json.",
-      "digestAt": "2026-06-21T14:04:44.675Z"
+      "digest": "AI Forum hackathon Aug 2025 - ALREADY PUBLISHED at /events/ai-hackathon-festival-2025, which lives in shesharp_events_v3.json (a scraped source this skill does not manage). Channel is a retrospective: lessons-learned doc, run sheet, slide deck. 2026-08-05: the only new activity was two people joining the channel. Do not create a duplicate in events-custom.json.",
+      "digestAt": "2026-08-05T04:30:11.372Z"
     },
     "C0959LH63QQ": {
       "name": "funding-applications",
@@ -6860,6 +6860,26 @@
       "fingerprint": "",
       "lastSyncedAt": "2026-06-09T01:06:45.086Z",
       "lastSyncedCommit": ""
+    },
+    "C09E417SULD": {
+      "name": "mpdm-moksha.shah.nz--isangrolkar--chanmeng6666-1",
+      "type": "dm",
+      "mapping": {
+        "kind": "skip",
+        "reason": "Group DM for Summer of Tech 2025 careers expo (16 Sep 2025) - a third-party expo She Sharp exhibited at, not a She Sharp event. Personal logistics/PII."
+      },
+      "watermarkTs": "1757996474.067209",
+      "threads": {
+        "1757993844.987429": {
+          "replyCount": 6,
+          "latestReplyTs": "1757996791.657889"
+        }
+      },
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T04:31:20.628Z",
+      "lastSyncedCommit": "",
+      "digest": "Summer of Tech employer expo, Tue 16 Sep 2025, The Cloud, Auckland - She Sharp had a BOOTH; the event was not ours to publish and it is long past. Contents are booth logistics: banner pickup from a member's office, travel arrangements, printing, lollies. Full of personal addresses and movements - nothing here belongs in the repo. Re-open only if She Sharp decides to publish booth appearances as events, which it does not today.",
+      "digestAt": "2026-08-05T04:31:20.627Z"
     },
     "C0ACA3MV0R4": {
       "name": "people",
@@ -7791,7 +7811,7 @@
         "kind": "skip",
         "reason": "Bot channel: contact-form submission notifications only. No event content."
       },
-      "watermarkTs": "1784506237.482409",
+      "watermarkTs": "1785496018.461199",
       "threads": {
         "1781175067.372529": {
           "replyCount": 3,
@@ -7808,13 +7828,17 @@
         "1783858106.351919": {
           "replyCount": 2,
           "latestReplyTs": "1783931834.834359"
+        },
+        "1785496018.461199": {
+          "replyCount": 1,
+          "latestReplyTs": "1785566665.723529"
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-07-20T10:04:55.142Z",
+      "lastSyncedAt": "2026-08-05T04:33:12.462Z",
       "lastSyncedCommit": "",
-      "digest": "Bot channel: contact-form submission notifications only. No event content. Flagged by general-signal auto-scan 2026-07-20; reviewed and confirmed no event. Un-skip only if a real event planning thread starts here.",
-      "digestAt": "2026-07-20T10:04:55.142Z"
+      "digest": "Bot channel for contact-form submissions (app posts here, plus reply-tracking notes from /reply-to-contact-messages). Scores over the event-signal threshold on EVERY run because its boilerplate contains 'registration' and timestamps - a permanent false positive, not new information. Reviewed 2026-07-20 and again 2026-08-05: no event content, ever.",
+      "digestAt": "2026-08-05T04:33:12.461Z"
     },
     "C0AQS8K2FQQ": {
       "name": "event-peyvand-academy-13june-and-20june",
@@ -8112,7 +8136,7 @@
           }
         ]
       },
-      "watermarkTs": "1784534590.392749",
+      "watermarkTs": "1785877221.025209",
       "threads": {
         "1778118947.075649": {
           "replyCount": 1,
@@ -8171,19 +8195,91 @@
           "latestReplyTs": "1784276096.432659"
         },
         "1784518359.236129": {
-          "replyCount": 11,
-          "latestReplyTs": "1784535132.358419"
+          "replyCount": 12,
+          "latestReplyTs": "1784865523.585019"
         },
         "1784524995.740059": {
           "replyCount": 7,
           "latestReplyTs": "1784525227.481569"
+        },
+        "1784603387.684699": {
+          "replyCount": 2,
+          "latestReplyTs": "1784627352.413149"
+        },
+        "1784627428.426949": {
+          "replyCount": 3,
+          "latestReplyTs": "1784755566.023029"
+        },
+        "1784689038.535889": {
+          "replyCount": 1,
+          "latestReplyTs": "1784692810.547889"
+        },
+        "1784805074.799869": {
+          "replyCount": 2,
+          "latestReplyTs": "1784807586.973039"
+        },
+        "1785201728.050919": {
+          "replyCount": 7,
+          "latestReplyTs": "1785286187.234179"
+        },
+        "1785223198.257089": {
+          "replyCount": 5,
+          "latestReplyTs": "1785294804.334939"
+        },
+        "1785544939.650629": {
+          "replyCount": 1,
+          "latestReplyTs": "1785562914.334579"
+        },
+        "1785544971.747369": {
+          "replyCount": 1,
+          "latestReplyTs": "1785557023.993889"
+        },
+        "1785546264.443509": {
+          "replyCount": 26,
+          "latestReplyTs": "1785818199.204659"
+        },
+        "1785553726.552569": {
+          "replyCount": 3,
+          "latestReplyTs": "1785568796.636549"
+        },
+        "1785573904.393769": {
+          "replyCount": 1,
+          "latestReplyTs": "1785591527.564369"
+        },
+        "1785591491.260409": {
+          "replyCount": 6,
+          "latestReplyTs": "1785618976.933069"
+        },
+        "1785632925.747899": {
+          "replyCount": 5,
+          "latestReplyTs": "1785818244.444499"
+        },
+        "1785633998.466339": {
+          "replyCount": 1,
+          "latestReplyTs": "1785634489.737049"
+        },
+        "1785644453.140759": {
+          "replyCount": 1,
+          "latestReplyTs": "1785644733.092099"
+        },
+        "1785719558.976629": {
+          "replyCount": 2,
+          "latestReplyTs": "1785800937.972879"
+        },
+        "1785836384.026089": {
+          "replyCount": 1,
+          "latestReplyTs": "1785875129.882309"
+        },
+        "1785877221.025209": {
+          "replyCount": 20,
+          "latestReplyTs": "1785896952.137639"
         }
       },
-      "fingerprint": "sha256:eb84ca9fb39de428f526985eb0a24db02a2db69798eac49176c3bba525e707cf",
-      "lastSyncedAt": "2026-07-20T10:03:41.644Z",
+      "fingerprint": "sha256:fae0dee535c1f02530f743ad05fe25c122815c306b863ab75de869eec858ed96",
+      "lastSyncedAt": "2026-08-05T04:37:41.997Z",
       "lastSyncedCommit": "",
-      "digest": "Aotearoa AI Hackathon Festival 2026 at AUT City Campus. DATE IS FRI 7 - SAT 8 AUG 2026 - confirmed by Slack (25 Jun: 'MYOB 30 July, Hackathon 7-8 Aug'), the Run Sheet header room bookings, and the national festival window (3-10 Aug). CRITICAL: the 'AI Forum Aug 2026 - Run Sheet.xlsx' workbook is a COPY OF LAST YEAR'S FILE - its Meeting Notes are dated 2025, Judging Process says the Summit is '8/9 September in Wellington' (2026 is 18 Sept Auckland), REMINDERS references '15th aug', and the Agenda tab day labels say 'Friday - Aug 15 / Saturday - Aug 16'. Those day labels and the 'Attendance for 15th Aug' sheet are STALE 2025 CARRYOVER - never sync dates from them. The Agenda tab TIME SLOTS are current and already match the page. Live at aihackathon.nz. 2026-07-20 additions: She Sharp-built event AI voice assistant (info section + youtube demo OO8uqNiQXcY, https://hackathon.shesharp.org.nz/), Q&A Session 2 (15 Jul) in both specialSections and infoSections, participant Discord invite in Helpful Links (user-approved), 'three-person panel' softened to 'panel of academic and industry judges' (4 judges confirmed), Red Hat added to the mentor orgs. 4 judges confirmed: Nicholas Fourie, Mahsa Mohaghegh, Abby Dowd, Ming Cheuk. REDACTION LANDMINES: discount/access codes AUTSTUDENT, STUDENT40 and MENTORSTAFF are internal - never publish. AUT60 is DIFFERENT: it is printed on AUT's public A3 marketing poster ('Public: $10 with code AUT60') and appears in the poster alt text - deliberate public marketing, flagged to user 2026-07-20. Also keep out: circle.so/checkout?event_id= private link, Google Drive/Sheets registration lists, Teams meeting link+passcode, and the workbook's 100+ attendee/mentor emails (PII). Open: keynote speaker only known as 'Alejandro' (no surname); registrations 119 vs stated 100 capacity, team deciding cutoff - page capacity line left unchanged per user; post-event gallery pass due after 8 Aug.",
-      "digestAt": "2026-07-20T10:03:41.643Z"
+      "digest": "Aotearoa AI Hackathon Festival 2026, AUT City Campus, FRI 7 - SAT 8 AUG 2026. Live at aihackathon.nz. 2026-08-05 sync: REGISTRATION CLOSED 20 Jul (119 registered vs 100 stated capacity) - Registration section now says so; the sidebar 'Register Now' button is HARDCODED in components/events/event-detail/event-sidebar-panel.tsx for any future event, so clearing registrationUrl only makes it inert, not hidden - needs a code change if that matters. Keynote agenda merged to one row '5:50-6:10pm Keynote speaker session' per Nikita's DM 29 Jul (no name, no separate Q&A); keynote speaker was still unnamed at 4 Aug. Christine Yip REMOVED from mentors 5 Aug (Len Estioko DM 4 Aug: 'she pulled out today') - mentors now 13, her photo git rm'd. NOTE the deck reads mentors straight from this JSON (detail.speakers.mentors.speakers), so a mentor edit changes the projector too - re-run deck.test.ts + lint-deck.ts. Sara Ghafoor agreed to mentor 27 Jul but has no bio/photo, so is NOT listed. Lesley Gao withdrew 27 Jul, was never listed. Summit date 8-9 Sep Wellington is CORRECT - Mahsa personally corrected it 22 Jul (commit 6103db5a); an older digest claiming '18 Sept Auckland' was wrong, do not re-flip it. REDACTION LANDMINES - THE VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE, READ THEM THERE AND NEVER WRITE THEM HERE: three internal registration discount codes, one each for AUT students, general AUT attendees, and mentors/supporting staff. Exactly ONE of the three is public - it is printed on AUT's own A3 marketing poster and already appears in that poster's alt text on the site; the other two are internal and must never be published. Also keep out: the circle.so private checkout link, the venue wifi username and password, the on-site supervisor's personal mobile (the 0800 security number IS fine and is what the deck shows), Google Drive/Sheets registration lists, the workbook's 100+ attendee and mentor emails, and the five late-added participants' emails from Mahsa 2 Aug. Open: post-event gallery pass due after 8 Aug.",
+      "digestAt": "2026-08-05T04:37:41.995Z"
     },
     "C0B7K8BFN30": {
       "name": "event-myob-ai-in-practice-30july-2026",
@@ -8197,7 +8293,7 @@
           }
         ]
       },
-      "watermarkTs": "1784533475.425779",
+      "watermarkTs": "1785545264.974599",
       "threads": {
         "1780375315.572929": {
           "replyCount": 4,
@@ -8252,15 +8348,51 @@
           "latestReplyTs": "1784005660.446939"
         },
         "1784499935.745629": {
-          "replyCount": 4,
-          "latestReplyTs": "1784533611.381259"
+          "replyCount": 8,
+          "latestReplyTs": "1785134805.731879"
+        },
+        "1784533351.206199": {
+          "replyCount": 2,
+          "latestReplyTs": "1785110241.630569"
+        },
+        "1784670436.008739": {
+          "replyCount": 9,
+          "latestReplyTs": "1784751924.671319"
+        },
+        "1785137822.883309": {
+          "replyCount": 6,
+          "latestReplyTs": "1785376097.480169"
+        },
+        "1785138814.885539": {
+          "replyCount": 1,
+          "latestReplyTs": "1785285691.311099"
         }
       },
-      "fingerprint": "sha256:5336efbda5096a336ed25dc06091112e078eb8dd2f49c60c09e1d93c2c65039a",
-      "lastSyncedAt": "2026-07-20T10:03:16.742Z",
+      "fingerprint": "sha256:8e18dacc067755013d50136dc80f9a1fda713f630a7778341c41af55eb74da28",
+      "lastSyncedAt": "2026-08-05T04:29:41.908Z",
       "lastSyncedCommit": "",
-      "digest": "She Sharp x MYOB 'Working Smarter: AI, MYOB, and the New Delivery Landscape' (30 July 2026, 5:00-7:30pm, MYOB 8/50 Albert St). Page complete: title/subtitle/speakers (Jean Fulop, Marion Nicholas, Katy Seel - bios synced by Lesley Jun 2026)/venue all verified against the July 2026 Run Sheet workbook. 2026-07-20: agenda rebuilt from the Run Sheet 'Agenda' tab (6 rows: 5:00 registration, 5:30 welcome, 5:45 speakers, 6:25 activity intro+photo, 6:40 group activity, from 7:30 closing+networking); activity bullet now notes teams of up to 6 with beginner/intermediate/advanced problem statements. NOTE: Run Sheet detail schedule runs networking to 8:00pm but displayed time stays 5:00-7:30pm to match Humanitix (user decision). REDACTION LANDMINES: pinned message carries 12 Humanitix ?accesscode= sponsor/team/guest/UniClubs links, plus Slido link, survey Google Form and the run-sheet Google Sheet - never publish. Run Sheet also contains attendee PII. Open: registrations at 49 as of 20 Jul, team pushing UniClubs; slide deck + survey design still pending.",
-      "digestAt": "2026-07-20T10:03:16.741Z"
+      "digest": "She Sharp x MYOB 'Working Smarter: AI, MYOB, and the New Delivery Landscape', 30 July 2026 - EVENT HAS RUN. Page complete: status 'completed', galleryUrl set, speakers/agenda/venue all verified. 2026-08-05 sync: NO public-facing change - the 27-message delta was all internal execution (slide deck, paper survey design, LinkedIn scheduling, gear drop-off, label printing). Registrations CLOSED 29 Jul at 86 registered (Mike asked for the final CSV). 'attendees' deliberately left null: the sidebar renders it as 'N attended' for past events, and 86 is the REGISTERED count - fill attendees + checkedIn together once real check-in numbers exist, the way from-burnout-to-balance (106/75) does. Displayed time stays 5:00-7:30pm to match Humanitix even though the run sheet ran networking to 8:00pm (user decision). REDACTION LANDMINES: 12 Humanitix ?accesscode= links in the pinned message, Slido link, survey Google Form, the run-sheet Google Sheet (contains attendee PII).",
+      "digestAt": "2026-08-05T04:29:41.907Z"
+    },
+    "C0BD786U0FP": {
+      "name": "mpdm-nirmalac0503--prasanth.pavithran--chanmeng6666--lesleygao.it--nikitakumari0318-1",
+      "type": "dm",
+      "mapping": {
+        "kind": "skip",
+        "reason": "Group DM: hackathon mentor recruitment ops (Nikita, Prasanth, Nirmala, Lesley). Roster/logistics, no page copy."
+      },
+      "watermarkTs": "1785272548.448119",
+      "threads": {
+        "1784019570.057839": {
+          "replyCount": 1,
+          "latestReplyTs": "1784020109.987569"
+        }
+      },
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T04:31:22.214Z",
+      "lastSyncedCommit": "",
+      "digest": "Hackathon 2026 mentor-recruitment working group. Everything here is upstream of the page: F&P mentor confirmations from Nicholas Fourie, chasing mentors to submit bio+photo+availability, Discord setup (a PUBLIC intro invite and a PRIVATE mentors-only invite - only the participant one is on the site), Red Hat swag. Mentor names reach the page only after a bio and photo arrive. Contains the mentor Runsheet Google Sheet link and mentor PII - keep out.",
+      "digestAt": "2026-08-05T04:31:22.213Z"
     },
     "C0BL0BRV6NL": {
       "name": "event-lesmills-03-september-2026",
@@ -8274,13 +8406,61 @@
           }
         ]
       },
-      "watermarkTs": "1785236171.099639",
-      "threads": {},
-      "fingerprint": "sha256:82eaf72b5a34e3d707e54a67205916326189ffd3760f04ff80393c2ab9ba1790",
-      "lastSyncedAt": "2026-07-28T11:07:59.013Z",
+      "watermarkTs": "1785883797.090889",
+      "threads": {
+        "1785233075.925019": {
+          "replyCount": 1,
+          "latestReplyTs": "1785236308.809839"
+        },
+        "1785445018.158149": {
+          "replyCount": 1,
+          "latestReplyTs": "1785465124.636799"
+        },
+        "1785595370.110969": {
+          "replyCount": 3,
+          "latestReplyTs": "1785721385.023369"
+        }
+      },
+      "fingerprint": "sha256:162b6af61e97fea84596f1a9c0d9c94338c50e730219b00303bb9f6d57e35ae8",
+      "lastSyncedAt": "2026-08-05T04:39:34.922Z",
       "lastSyncedCommit": "",
-      "digest": "Les Mills x She Sharp panel \"No Pain, All Gain – Getting Fit for AI\" on Thu 3 Sep 2026, 5–8pm NZST, Auckland (venue TBD). Theme: Diversity and AI for Impact. Stub published in events-custom.json (id 97) with agenda from meeting minutes; speakers {}, empty registrationUrl, empty venue address, brand-logo placeholder cover. Redact: MYOB Humanitix accesscode for Les Mills (never publish); internal Runsheet sheet bookmark. Open: Les Mills speaker bios/photos, venue address, promo blurb, final poster pick (Canva options only), Les Mills Humanitix registration link.",
-      "digestAt": "2026-07-28T11:07:59.012Z"
+      "digest": "Les Mills x She Sharp panel 'No Pain, All Gain - Getting Fit for AI', Thu 3 Sep 2026 5:00-7:30pm NZST, Level 2, 200 Victoria Street West, Auckland Central 1010. 2026-08-05 sync: registrationUrl set to the PUBLIC https://events.humanitix.com/she-sharp-and-lesmills (Nirmala asked twice - channel 4 Aug and DM 4 Aug 'give the above url to Register Now button'); fullDescription replaced with the organiser's own blurb from #marketing 24 Jul (NZ spelling applied to 'organisations', otherwise her wording verbatim) - the previous copy was composed from meeting minutes; address postcode added. Poster/cover already shipped and VERIFIED as the option Les Mills chose (Nirmala 3 Aug 'Les Mills has chosen the second option', file 2.jpg) - pixel-checked against the committed webp, do not re-download. STILL OPEN: speakers is {} and Nirmala asked 4 Aug to 'update the speakers profile in the website' - the source is the private Runsheet Google Sheet linked from the channel, which no Slack token can read; a human must paste bios and photos into Slack or hand them over. Also open: galleryUrl empty until after the event. REDACTION LANDMINES - THE VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE, READ THEM THERE AND NEVER WRITE THEM HERE, NOT EVEN AS A PATTERN PLUS A LIST OF SUFFIXES, WHICH RECONSTRUCTS THEM: the pinned message carries a dozen private Humanitix registration links, one per sponsor organisation plus ambassador and ambassador-guest allocations, each keyed to its own access code. Publish only the plain public registration URL above. Also keep out: the internal Runsheet spreadsheet bookmark.",
+      "digestAt": "2026-08-05T04:39:34.921Z"
+    },
+    "C0BL35V8DFB": {
+      "name": "mpdm-prasanth.pavithran--chanmeng6666--lesleygao.it--nikitakumari0318--nirmalac0503--esaraghafoor-1",
+      "type": "dm",
+      "mapping": {
+        "kind": "skip",
+        "reason": "Group DM: hackathon mentor availability + ticketing. Roster changes only."
+      },
+      "watermarkTs": "1785185514.766339",
+      "threads": {
+        "1785152178.138949": {
+          "replyCount": 1,
+          "latestReplyTs": "1785185040.716919"
+        }
+      },
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T04:31:23.826Z",
+      "lastSyncedCommit": "",
+      "digest": "Split off from the mentor-recruitment group DM on 27 Jul. Records two roster facts the page depends on: Lesley Gao WITHDREW as mentor (27 Jul, family commitment on 8 Aug) - she was never listed, so no action; Sara Ghafoor AGREED to mentor (27 Jul) but has never supplied bio/photo, so she is deliberately NOT listed. Also guest-code ticket purchases for named individuals - internal, never publish.",
+      "digestAt": "2026-08-05T04:31:23.825Z"
+    },
+    "C0BNF213HR6": {
+      "name": "event-feedback-notifications",
+      "type": "event",
+      "mapping": {
+        "kind": "skip",
+        "reason": "Bot channel: event-feedback form notifications (app A0BM5AQ09RV). Not an event-planning channel despite the event- prefix."
+      },
+      "watermarkTs": "1785832702.675919",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T04:30:09.783Z",
+      "lastSyncedCommit": "",
+      "digest": "Slack app 'event-feedback-notifications' posts here; wired 3 Aug 2026. The 11 messages present are SAMPLE data Chan Meng generated to test the pipeline end to end (he says so explicitly in the last message) - the names are computing pioneers, the emails are @example.com. Nothing here is real attendee feedback and nothing here is a site event.",
+      "digestAt": "2026-08-05T04:30:09.783Z"
     },
     "C0L3U3Z7H": {
       "name": "goodies",
@@ -8322,13 +8502,1245 @@
       "name": "marketing",
       "type": "general",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Marketing coordination channel: posters, captions, social scheduling. Carries event COPY but is not itself an event channel."
       },
-      "watermarkTs": "1780556832.233329",
-      "threads": {},
+      "watermarkTs": "1785231123.177119",
+      "threads": {
+        "1581735176.002100": {
+          "replyCount": 2,
+          "latestReplyTs": "1582056042.000700"
+        },
+        "1581898369.002700": {
+          "replyCount": 2,
+          "latestReplyTs": "1581988302.000800"
+        },
+        "1582742766.002700": {
+          "replyCount": 1,
+          "latestReplyTs": "1582769740.000100"
+        },
+        "1583141719.000700": {
+          "replyCount": 1,
+          "latestReplyTs": "1583179444.000300"
+        },
+        "1583223994.001000": {
+          "replyCount": 1,
+          "latestReplyTs": "1583228923.002200"
+        },
+        "1583457127.001700": {
+          "replyCount": 1,
+          "latestReplyTs": "1583464736.000200"
+        },
+        "1583470800.000700": {
+          "replyCount": 1,
+          "latestReplyTs": "1583709827.002000"
+        },
+        "1583490049.003800": {
+          "replyCount": 3,
+          "latestReplyTs": "1583707831.001600"
+        },
+        "1583710081.004200": {
+          "replyCount": 4,
+          "latestReplyTs": "1583710807.006800"
+        },
+        "1583711369.008900": {
+          "replyCount": 1,
+          "latestReplyTs": "1583711474.009100"
+        },
+        "1584042403.001300": {
+          "replyCount": 5,
+          "latestReplyTs": "1584653385.002200"
+        },
+        "1588141115.000500": {
+          "replyCount": 6,
+          "latestReplyTs": "1588143844.002700"
+        },
+        "1616565650.000500": {
+          "replyCount": 1,
+          "latestReplyTs": "1616567800.001700"
+        },
+        "1616987179.004400": {
+          "replyCount": 1,
+          "latestReplyTs": "1616987237.005200"
+        },
+        "1616987512.008500": {
+          "replyCount": 1,
+          "latestReplyTs": "1616988840.009100"
+        },
+        "1617008576.017700": {
+          "replyCount": 1,
+          "latestReplyTs": "1617747289.000200"
+        },
+        "1618288913.002700": {
+          "replyCount": 5,
+          "latestReplyTs": "1618289749.006800"
+        },
+        "1618539343.002500": {
+          "replyCount": 3,
+          "latestReplyTs": "1618616065.000100"
+        },
+        "1628473000.000600": {
+          "replyCount": 5,
+          "latestReplyTs": "1628494222.002000"
+        },
+        "1629433472.000500": {
+          "replyCount": 2,
+          "latestReplyTs": "1629747077.000100"
+        },
+        "1632995494.000600": {
+          "replyCount": 1,
+          "latestReplyTs": "1632995623.000800"
+        },
+        "1647395045.601909": {
+          "replyCount": 2,
+          "latestReplyTs": "1647767365.528859"
+        },
+        "1655255393.754589": {
+          "replyCount": 1,
+          "latestReplyTs": "1655282010.214819"
+        },
+        "1656887205.918239": {
+          "replyCount": 4,
+          "latestReplyTs": "1657021859.334719"
+        },
+        "1656893414.589499": {
+          "replyCount": 5,
+          "latestReplyTs": "1657052229.917879"
+        },
+        "1659394570.962069": {
+          "replyCount": 11,
+          "latestReplyTs": "1659436121.341199"
+        },
+        "1659489957.170549": {
+          "replyCount": 6,
+          "latestReplyTs": "1659908548.226189"
+        },
+        "1660077327.132429": {
+          "replyCount": 1,
+          "latestReplyTs": "1660077571.172719"
+        },
+        "1660259113.475339": {
+          "replyCount": 6,
+          "latestReplyTs": "1660383749.822179"
+        },
+        "1660456727.772069": {
+          "replyCount": 4,
+          "latestReplyTs": "1660518375.063629"
+        },
+        "1663532745.349449": {
+          "replyCount": 2,
+          "latestReplyTs": "1663614363.906569"
+        },
+        "1664227423.165049": {
+          "replyCount": 1,
+          "latestReplyTs": "1664227445.456489"
+        },
+        "1664956015.381849": {
+          "replyCount": 2,
+          "latestReplyTs": "1664956912.983149"
+        },
+        "1664968632.628079": {
+          "replyCount": 12,
+          "latestReplyTs": "1665381106.242229"
+        },
+        "1665373418.602649": {
+          "replyCount": 2,
+          "latestReplyTs": "1665375066.713949"
+        },
+        "1665376062.902789": {
+          "replyCount": 2,
+          "latestReplyTs": "1665379404.500669"
+        },
+        "1666734477.787569": {
+          "replyCount": 2,
+          "latestReplyTs": "1667254142.460089"
+        },
+        "1667517168.816399": {
+          "replyCount": 4,
+          "latestReplyTs": "1668546246.564129"
+        },
+        "1670276094.472179": {
+          "replyCount": 1,
+          "latestReplyTs": "1670288713.535029"
+        },
+        "1675109617.360559": {
+          "replyCount": 1,
+          "latestReplyTs": "1675118132.054079"
+        },
+        "1675894182.977169": {
+          "replyCount": 18,
+          "latestReplyTs": "1676153406.455049"
+        },
+        "1676490990.946709": {
+          "replyCount": 3,
+          "latestReplyTs": "1676711997.916079"
+        },
+        "1676529601.873809": {
+          "replyCount": 16,
+          "latestReplyTs": "1676597956.216399"
+        },
+        "1676609014.584579": {
+          "replyCount": 3,
+          "latestReplyTs": "1676682169.633429"
+        },
+        "1676682477.587309": {
+          "replyCount": 3,
+          "latestReplyTs": "1677024685.757519"
+        },
+        "1676946127.984109": {
+          "replyCount": 1,
+          "latestReplyTs": "1676946312.419419"
+        },
+        "1677131958.300689": {
+          "replyCount": 13,
+          "latestReplyTs": "1677490201.055139"
+        },
+        "1677471423.651099": {
+          "replyCount": 2,
+          "latestReplyTs": "1677623328.742389"
+        },
+        "1677652488.938389": {
+          "replyCount": 1,
+          "latestReplyTs": "1678045740.077589"
+        },
+        "1680503570.158129": {
+          "replyCount": 2,
+          "latestReplyTs": "1680511474.775549"
+        },
+        "1680582067.394219": {
+          "replyCount": 3,
+          "latestReplyTs": "1680652832.974699"
+        },
+        "1681112789.462419": {
+          "replyCount": 1,
+          "latestReplyTs": "1681886346.334629"
+        },
+        "1681113066.708989": {
+          "replyCount": 1,
+          "latestReplyTs": "1681118207.219369"
+        },
+        "1681116033.698429": {
+          "replyCount": 2,
+          "latestReplyTs": "1681367189.468119"
+        },
+        "1681176620.225649": {
+          "replyCount": 1,
+          "latestReplyTs": "1681184712.792509"
+        },
+        "1681333406.953139": {
+          "replyCount": 8,
+          "latestReplyTs": "1681443330.029429"
+        },
+        "1681703966.552069": {
+          "replyCount": 1,
+          "latestReplyTs": "1681707716.934329"
+        },
+        "1681964494.613949": {
+          "replyCount": 1,
+          "latestReplyTs": "1682026519.901409"
+        },
+        "1682412921.221849": {
+          "replyCount": 1,
+          "latestReplyTs": "1682489470.064489"
+        },
+        "1682500172.359449": {
+          "replyCount": 1,
+          "latestReplyTs": "1682540671.290199"
+        },
+        "1682823572.961499": {
+          "replyCount": 8,
+          "latestReplyTs": "1683449756.141789"
+        },
+        "1683368076.537099": {
+          "replyCount": 1,
+          "latestReplyTs": "1683419778.717179"
+        },
+        "1683420272.807079": {
+          "replyCount": 1,
+          "latestReplyTs": "1684394487.593979"
+        },
+        "1683617410.987389": {
+          "replyCount": 2,
+          "latestReplyTs": "1683706773.485659"
+        },
+        "1683706863.996409": {
+          "replyCount": 1,
+          "latestReplyTs": "1683706913.501379"
+        },
+        "1684236662.499499": {
+          "replyCount": 8,
+          "latestReplyTs": "1684362345.842449"
+        },
+        "1684362377.228829": {
+          "replyCount": 1,
+          "latestReplyTs": "1684394830.806219"
+        },
+        "1684363334.959769": {
+          "replyCount": 4,
+          "latestReplyTs": "1684365366.556679"
+        },
+        "1684394433.757789": {
+          "replyCount": 1,
+          "latestReplyTs": "1684394581.411499"
+        },
+        "1698035998.205399": {
+          "replyCount": 3,
+          "latestReplyTs": "1698099389.302959"
+        },
+        "1698788347.707059": {
+          "replyCount": 1,
+          "latestReplyTs": "1699397597.074439"
+        },
+        "1707992313.724729": {
+          "replyCount": 3,
+          "latestReplyTs": "1708051813.576339"
+        },
+        "1719985219.113529": {
+          "replyCount": 1,
+          "latestReplyTs": "1720392323.772799"
+        },
+        "1720043400.121949": {
+          "replyCount": 2,
+          "latestReplyTs": "1720044657.286629"
+        },
+        "1720084138.063279": {
+          "replyCount": 3,
+          "latestReplyTs": "1720086787.321209"
+        },
+        "1720085775.084839": {
+          "replyCount": 6,
+          "latestReplyTs": "1720086135.365289"
+        },
+        "1720088002.752989": {
+          "replyCount": 3,
+          "latestReplyTs": "1720093334.731299"
+        },
+        "1720092311.567769": {
+          "replyCount": 16,
+          "latestReplyTs": "1721034870.545289"
+        },
+        "1720094190.478979": {
+          "replyCount": 1,
+          "latestReplyTs": "1720094430.312339"
+        },
+        "1720427291.231359": {
+          "replyCount": 1,
+          "latestReplyTs": "1721034849.327389"
+        },
+        "1720427700.010049": {
+          "replyCount": 4,
+          "latestReplyTs": "1720432145.107249"
+        },
+        "1720430789.555119": {
+          "replyCount": 1,
+          "latestReplyTs": "1720431933.694689"
+        },
+        "1720435681.943139": {
+          "replyCount": 5,
+          "latestReplyTs": "1726486700.662549"
+        },
+        "1720436998.414759": {
+          "replyCount": 2,
+          "latestReplyTs": "1721084883.796989"
+        },
+        "1720522326.279149": {
+          "replyCount": 2,
+          "latestReplyTs": "1720522935.530819"
+        },
+        "1720662924.217259": {
+          "replyCount": 5,
+          "latestReplyTs": "1720664697.665989"
+        },
+        "1721208061.076219": {
+          "replyCount": 4,
+          "latestReplyTs": "1721470697.082559"
+        },
+        "1721384577.355609": {
+          "replyCount": 3,
+          "latestReplyTs": "1721470755.460989"
+        },
+        "1721465161.237739": {
+          "replyCount": 2,
+          "latestReplyTs": "1721469599.201449"
+        },
+        "1721466575.534969": {
+          "replyCount": 1,
+          "latestReplyTs": "1721468411.976769"
+        },
+        "1721596641.695359": {
+          "replyCount": 1,
+          "latestReplyTs": "1726476216.753109"
+        },
+        "1721636349.324119": {
+          "replyCount": 6,
+          "latestReplyTs": "1721641488.352649"
+        },
+        "1721639500.346369": {
+          "replyCount": 2,
+          "latestReplyTs": "1721886239.658879"
+        },
+        "1721639652.515129": {
+          "replyCount": 1,
+          "latestReplyTs": "1721641424.213999"
+        },
+        "1721639682.114609": {
+          "replyCount": 2,
+          "latestReplyTs": "1721641833.849579"
+        },
+        "1721640612.162119": {
+          "replyCount": 1,
+          "latestReplyTs": "1721688078.828969"
+        },
+        "1721641630.017729": {
+          "replyCount": 1,
+          "latestReplyTs": "1721643959.326129"
+        },
+        "1721642029.946569": {
+          "replyCount": 2,
+          "latestReplyTs": "1721644089.339529"
+        },
+        "1721645878.385439": {
+          "replyCount": 2,
+          "latestReplyTs": "1721684661.045169"
+        },
+        "1721688032.726929": {
+          "replyCount": 7,
+          "latestReplyTs": "1721699390.493439"
+        },
+        "1722030368.337899": {
+          "replyCount": 1,
+          "latestReplyTs": "1722030377.856239"
+        },
+        "1722042617.713939": {
+          "replyCount": 4,
+          "latestReplyTs": "1722058843.118799"
+        },
+        "1722050021.011449": {
+          "replyCount": 1,
+          "latestReplyTs": "1726476265.275199"
+        },
+        "1722052464.073459": {
+          "replyCount": 2,
+          "latestReplyTs": "1722115571.164629"
+        },
+        "1722060733.978499": {
+          "replyCount": 4,
+          "latestReplyTs": "1722222625.965429"
+        },
+        "1722070153.444349": {
+          "replyCount": 2,
+          "latestReplyTs": "1722116093.002539"
+        },
+        "1722116773.198119": {
+          "replyCount": 8,
+          "latestReplyTs": "1722128275.380579"
+        },
+        "1722167831.844589": {
+          "replyCount": 1,
+          "latestReplyTs": "1726476348.382599"
+        },
+        "1722204020.160629": {
+          "replyCount": 1,
+          "latestReplyTs": "1722245555.287569"
+        },
+        "1722222579.563659": {
+          "replyCount": 2,
+          "latestReplyTs": "1722309838.130939"
+        },
+        "1722222720.585259": {
+          "replyCount": 6,
+          "latestReplyTs": "1722384117.727449"
+        },
+        "1722227392.111269": {
+          "replyCount": 2,
+          "latestReplyTs": "1722309822.054499"
+        },
+        "1722242419.845779": {
+          "replyCount": 5,
+          "latestReplyTs": "1722246002.205209"
+        },
+        "1723005819.364549": {
+          "replyCount": 5,
+          "latestReplyTs": "1723020805.599369"
+        },
+        "1723020471.100589": {
+          "replyCount": 1,
+          "latestReplyTs": "1723021956.659809"
+        },
+        "1723255844.378429": {
+          "replyCount": 1,
+          "latestReplyTs": "1723287254.412599"
+        },
+        "1723255991.251189": {
+          "replyCount": 1,
+          "latestReplyTs": "1726476392.453189"
+        },
+        "1723279498.266059": {
+          "replyCount": 2,
+          "latestReplyTs": "1723280466.195839"
+        },
+        "1723283765.875809": {
+          "replyCount": 3,
+          "latestReplyTs": "1723287165.855849"
+        },
+        "1724588590.012669": {
+          "replyCount": 2,
+          "latestReplyTs": "1726480315.268319"
+        },
+        "1724649491.340349": {
+          "replyCount": 1,
+          "latestReplyTs": "1724653810.804049"
+        },
+        "1724656095.304589": {
+          "replyCount": 1,
+          "latestReplyTs": "1724663779.266759"
+        },
+        "1724657407.651709": {
+          "replyCount": 1,
+          "latestReplyTs": "1724667528.715229"
+        },
+        "1724665491.698029": {
+          "replyCount": 1,
+          "latestReplyTs": "1724667838.995509"
+        },
+        "1724721637.609239": {
+          "replyCount": 1,
+          "latestReplyTs": "1724722062.992309"
+        },
+        "1724721665.230149": {
+          "replyCount": 1,
+          "latestReplyTs": "1724738227.117689"
+        },
+        "1724991089.462429": {
+          "replyCount": 1,
+          "latestReplyTs": "1726476478.848129"
+        },
+        "1725867508.355139": {
+          "replyCount": 1,
+          "latestReplyTs": "1726464038.068429"
+        },
+        "1725934720.212889": {
+          "replyCount": 1,
+          "latestReplyTs": "1725934784.588049"
+        },
+        "1727089515.662079": {
+          "replyCount": 1,
+          "latestReplyTs": "1727089569.719229"
+        },
+        "1727331008.373189": {
+          "replyCount": 2,
+          "latestReplyTs": "1727332501.166639"
+        },
+        "1728290856.525959": {
+          "replyCount": 4,
+          "latestReplyTs": "1728291968.017799"
+        },
+        "1729500353.606479": {
+          "replyCount": 1,
+          "latestReplyTs": "1729591335.896749"
+        },
+        "1729591492.709139": {
+          "replyCount": 1,
+          "latestReplyTs": "1729618677.247049"
+        },
+        "1729669863.700159": {
+          "replyCount": 1,
+          "latestReplyTs": "1729675766.449119"
+        },
+        "1729672342.643399": {
+          "replyCount": 1,
+          "latestReplyTs": "1729672582.029029"
+        },
+        "1729672401.085959": {
+          "replyCount": 1,
+          "latestReplyTs": "1729673963.437779"
+        },
+        "1729677048.693009": {
+          "replyCount": 2,
+          "latestReplyTs": "1729736734.165359"
+        },
+        "1730149533.127519": {
+          "replyCount": 4,
+          "latestReplyTs": "1730364330.743129"
+        },
+        "1730272466.910359": {
+          "replyCount": 10,
+          "latestReplyTs": "1730275905.399749"
+        },
+        "1730274452.788709": {
+          "replyCount": 1,
+          "latestReplyTs": "1730274585.234079"
+        },
+        "1730276016.607439": {
+          "replyCount": 4,
+          "latestReplyTs": "1730278062.704699"
+        },
+        "1730407045.700849": {
+          "replyCount": 1,
+          "latestReplyTs": "1731575082.138179"
+        },
+        "1730428984.110939": {
+          "replyCount": 9,
+          "latestReplyTs": "1730788975.214479"
+        },
+        "1730463743.607869": {
+          "replyCount": 1,
+          "latestReplyTs": "1731575307.413659"
+        },
+        "1730621455.519919": {
+          "replyCount": 12,
+          "latestReplyTs": "1730623141.118959"
+        },
+        "1730793365.706619": {
+          "replyCount": 1,
+          "latestReplyTs": "1730793828.989769"
+        },
+        "1730834313.427919": {
+          "replyCount": 2,
+          "latestReplyTs": "1731008803.774929"
+        },
+        "1731920889.011899": {
+          "replyCount": 3,
+          "latestReplyTs": "1731956909.728069"
+        },
+        "1732508316.358479": {
+          "replyCount": 1,
+          "latestReplyTs": "1732520831.129859"
+        },
+        "1733187661.832189": {
+          "replyCount": 1,
+          "latestReplyTs": "1733190435.079349"
+        },
+        "1733197381.622699": {
+          "replyCount": 2,
+          "latestReplyTs": "1733200047.592749"
+        },
+        "1734205166.842909": {
+          "replyCount": 4,
+          "latestReplyTs": "1734305511.603829"
+        },
+        "1734341257.384759": {
+          "replyCount": 4,
+          "latestReplyTs": "1734398682.987689"
+        },
+        "1740280373.789979": {
+          "replyCount": 1,
+          "latestReplyTs": "1740341256.308869"
+        },
+        "1740280461.676209": {
+          "replyCount": 1,
+          "latestReplyTs": "1740290012.173649"
+        },
+        "1740289070.342349": {
+          "replyCount": 5,
+          "latestReplyTs": "1740345991.485539"
+        },
+        "1740470776.536079": {
+          "replyCount": 3,
+          "latestReplyTs": "1740530373.047649"
+        },
+        "1740496872.781929": {
+          "replyCount": 2,
+          "latestReplyTs": "1740524957.208399"
+        },
+        "1740497345.984519": {
+          "replyCount": 1,
+          "latestReplyTs": "1740528581.401469"
+        },
+        "1740869941.008769": {
+          "replyCount": 6,
+          "latestReplyTs": "1740883130.928609"
+        },
+        "1740890191.733919": {
+          "replyCount": 5,
+          "latestReplyTs": "1740896465.591139"
+        },
+        "1741011617.331899": {
+          "replyCount": 1,
+          "latestReplyTs": "1741044334.726849"
+        },
+        "1741163152.342809": {
+          "replyCount": 2,
+          "latestReplyTs": "1741163517.356519"
+        },
+        "1741163899.531139": {
+          "replyCount": 1,
+          "latestReplyTs": "1741163964.127079"
+        },
+        "1741300594.372919": {
+          "replyCount": 3,
+          "latestReplyTs": "1741309244.229689"
+        },
+        "1741300771.901479": {
+          "replyCount": 5,
+          "latestReplyTs": "1741682185.135249"
+        },
+        "1741382529.520379": {
+          "replyCount": 2,
+          "latestReplyTs": "1741407424.946449"
+        },
+        "1741524861.829869": {
+          "replyCount": 1,
+          "latestReplyTs": "1741533060.916339"
+        },
+        "1741760566.129839": {
+          "replyCount": 1,
+          "latestReplyTs": "1741761361.070739"
+        },
+        "1742094174.754009": {
+          "replyCount": 5,
+          "latestReplyTs": "1742456495.875869"
+        },
+        "1746474641.407559": {
+          "replyCount": 2,
+          "latestReplyTs": "1746736153.399389"
+        },
+        "1746653589.288649": {
+          "replyCount": 2,
+          "latestReplyTs": "1746736129.414869"
+        },
+        "1746693808.249839": {
+          "replyCount": 3,
+          "latestReplyTs": "1747120859.127709"
+        },
+        "1747345757.231349": {
+          "replyCount": 2,
+          "latestReplyTs": "1747438884.538389"
+        },
+        "1747381429.504949": {
+          "replyCount": 1,
+          "latestReplyTs": "1747435979.722859"
+        },
+        "1750124832.915259": {
+          "replyCount": 3,
+          "latestReplyTs": "1750409234.600049"
+        },
+        "1750832722.123299": {
+          "replyCount": 1,
+          "latestReplyTs": "1750832819.078949"
+        },
+        "1750849713.391329": {
+          "replyCount": 2,
+          "latestReplyTs": "1750919845.236229"
+        },
+        "1750850938.360439": {
+          "replyCount": 6,
+          "latestReplyTs": "1750927504.745809"
+        },
+        "1750853252.495069": {
+          "replyCount": 3,
+          "latestReplyTs": "1750931105.820169"
+        },
+        "1750936894.804909": {
+          "replyCount": 1,
+          "latestReplyTs": "1750971040.551879"
+        },
+        "1750937206.200329": {
+          "replyCount": 2,
+          "latestReplyTs": "1750980052.205359"
+        },
+        "1751326099.246389": {
+          "replyCount": 2,
+          "latestReplyTs": "1751412835.943269"
+        },
+        "1751326199.674639": {
+          "replyCount": 8,
+          "latestReplyTs": "1751411257.600339"
+        },
+        "1751417588.719819": {
+          "replyCount": 5,
+          "latestReplyTs": "1751419131.433089"
+        },
+        "1751417638.918669": {
+          "replyCount": 3,
+          "latestReplyTs": "1751495436.832469"
+        },
+        "1751449382.029259": {
+          "replyCount": 1,
+          "latestReplyTs": "1751450990.117389"
+        },
+        "1751527772.069819": {
+          "replyCount": 1,
+          "latestReplyTs": "1751535623.180159"
+        },
+        "1751536436.116449": {
+          "replyCount": 11,
+          "latestReplyTs": "1751689375.863559"
+        },
+        "1751589391.061129": {
+          "replyCount": 8,
+          "latestReplyTs": "1751711796.927539"
+        },
+        "1751872787.342939": {
+          "replyCount": 15,
+          "latestReplyTs": "1751879911.937709"
+        },
+        "1751879700.801659": {
+          "replyCount": 4,
+          "latestReplyTs": "1751965758.461149"
+        },
+        "1751882903.411259": {
+          "replyCount": 3,
+          "latestReplyTs": "1753158815.838369"
+        },
+        "1751882963.916069": {
+          "replyCount": 1,
+          "latestReplyTs": "1751965852.711339"
+        },
+        "1752023209.304669": {
+          "replyCount": 7,
+          "latestReplyTs": "1752038953.831809"
+        },
+        "1752023415.437549": {
+          "replyCount": 10,
+          "latestReplyTs": "1752027623.015299"
+        },
+        "1752033690.877629": {
+          "replyCount": 3,
+          "latestReplyTs": "1752043314.820669"
+        },
+        "1752041101.983709": {
+          "replyCount": 2,
+          "latestReplyTs": "1752042064.404619"
+        },
+        "1752120708.822379": {
+          "replyCount": 5,
+          "latestReplyTs": "1752125648.778449"
+        },
+        "1752125185.218929": {
+          "replyCount": 7,
+          "latestReplyTs": "1752269580.449949"
+        },
+        "1752484403.457769": {
+          "replyCount": 5,
+          "latestReplyTs": "1752652857.507509"
+        },
+        "1752489346.383479": {
+          "replyCount": 2,
+          "latestReplyTs": "1752654680.893859"
+        },
+        "1752721930.044129": {
+          "replyCount": 7,
+          "latestReplyTs": "1752804141.077519"
+        },
+        "1752794001.597879": {
+          "replyCount": 1,
+          "latestReplyTs": "1752999846.952029"
+        },
+        "1752796982.776939": {
+          "replyCount": 3,
+          "latestReplyTs": "1752823852.583069"
+        },
+        "1753007412.295999": {
+          "replyCount": 12,
+          "latestReplyTs": "1753070199.429529"
+        },
+        "1753089798.628819": {
+          "replyCount": 4,
+          "latestReplyTs": "1753136787.990159"
+        },
+        "1753127794.968689": {
+          "replyCount": 6,
+          "latestReplyTs": "1753169111.175769"
+        },
+        "1753230198.767069": {
+          "replyCount": 2,
+          "latestReplyTs": "1753333387.664409"
+        },
+        "1753401821.450119": {
+          "replyCount": 2,
+          "latestReplyTs": "1753401972.986059"
+        },
+        "1753401846.210449": {
+          "replyCount": 1,
+          "latestReplyTs": "1753402380.959549"
+        },
+        "1753738823.470589": {
+          "replyCount": 1,
+          "latestReplyTs": "1753740813.714699"
+        },
+        "1753753883.429599": {
+          "replyCount": 2,
+          "latestReplyTs": "1753776137.603329"
+        },
+        "1753991476.856069": {
+          "replyCount": 1,
+          "latestReplyTs": "1754201532.566749"
+        },
+        "1754014505.384729": {
+          "replyCount": 3,
+          "latestReplyTs": "1754133781.715779"
+        },
+        "1754030772.568459": {
+          "replyCount": 4,
+          "latestReplyTs": "1754031078.852729"
+        },
+        "1754031469.080399": {
+          "replyCount": 2,
+          "latestReplyTs": "1754084487.329149"
+        },
+        "1754188752.658409": {
+          "replyCount": 2,
+          "latestReplyTs": "1754203475.604639"
+        },
+        "1754212168.828339": {
+          "replyCount": 1,
+          "latestReplyTs": "1754215251.148349"
+        },
+        "1754362054.624659": {
+          "replyCount": 10,
+          "latestReplyTs": "1754427269.148119"
+        },
+        "1754380459.241469": {
+          "replyCount": 6,
+          "latestReplyTs": "1754385679.628159"
+        },
+        "1754386365.128039": {
+          "replyCount": 1,
+          "latestReplyTs": "1754420603.959369"
+        },
+        "1754559822.170349": {
+          "replyCount": 1,
+          "latestReplyTs": "1754905926.649519"
+        },
+        "1754563169.052139": {
+          "replyCount": 3,
+          "latestReplyTs": "1754631824.354889"
+        },
+        "1754594631.535809": {
+          "replyCount": 3,
+          "latestReplyTs": "1754642355.899439"
+        },
+        "1754600865.449669": {
+          "replyCount": 7,
+          "latestReplyTs": "1754629195.813359"
+        },
+        "1754600987.446339": {
+          "replyCount": 4,
+          "latestReplyTs": "1754644906.918539"
+        },
+        "1754902096.399029": {
+          "replyCount": 5,
+          "latestReplyTs": "1754989041.142669"
+        },
+        "1754989672.926229": {
+          "replyCount": 7,
+          "latestReplyTs": "1754991085.278229"
+        },
+        "1755071690.264059": {
+          "replyCount": 6,
+          "latestReplyTs": "1755078345.714659"
+        },
+        "1755126129.528009": {
+          "replyCount": 1,
+          "latestReplyTs": "1755154316.463569"
+        },
+        "1755126549.661749": {
+          "replyCount": 2,
+          "latestReplyTs": "1755128321.472229"
+        },
+        "1755161192.277699": {
+          "replyCount": 2,
+          "latestReplyTs": "1755161358.510569"
+        },
+        "1755296726.137999": {
+          "replyCount": 1,
+          "latestReplyTs": "1755315102.387179"
+        },
+        "1755395107.222969": {
+          "replyCount": 1,
+          "latestReplyTs": "1755395170.241219"
+        },
+        "1755463268.865159": {
+          "replyCount": 3,
+          "latestReplyTs": "1755498376.415489"
+        },
+        "1755675888.170339": {
+          "replyCount": 4,
+          "latestReplyTs": "1755677745.959039"
+        },
+        "1755676464.246789": {
+          "replyCount": 5,
+          "latestReplyTs": "1756116413.995909"
+        },
+        "1755899575.212909": {
+          "replyCount": 3,
+          "latestReplyTs": "1755904621.816799"
+        },
+        "1755910369.491639": {
+          "replyCount": 10,
+          "latestReplyTs": "1755911710.305289"
+        },
+        "1756071919.125449": {
+          "replyCount": 3,
+          "latestReplyTs": "1756202831.112949"
+        },
+        "1756951110.064589": {
+          "replyCount": 4,
+          "latestReplyTs": "1757107605.190449"
+        },
+        "1757325144.099559": {
+          "replyCount": 8,
+          "latestReplyTs": "1757364767.058559"
+        },
+        "1757500862.755859": {
+          "replyCount": 2,
+          "latestReplyTs": "1757532836.253529"
+        },
+        "1757533114.844729": {
+          "replyCount": 1,
+          "latestReplyTs": "1757533184.125519"
+        },
+        "1757533278.036299": {
+          "replyCount": 4,
+          "latestReplyTs": "1757559801.593119"
+        },
+        "1757576538.990439": {
+          "replyCount": 1,
+          "latestReplyTs": "1757576572.508249"
+        },
+        "1757589620.856499": {
+          "replyCount": 1,
+          "latestReplyTs": "1757794777.212519"
+        },
+        "1758093722.902949": {
+          "replyCount": 4,
+          "latestReplyTs": "1758095029.249319"
+        },
+        "1759475519.592899": {
+          "replyCount": 4,
+          "latestReplyTs": "1759549818.663729"
+        },
+        "1759821003.247029": {
+          "replyCount": 9,
+          "latestReplyTs": "1760154423.677919"
+        },
+        "1760209663.183699": {
+          "replyCount": 27,
+          "latestReplyTs": "1760340749.906879"
+        },
+        "1760212131.874959": {
+          "replyCount": 8,
+          "latestReplyTs": "1760214549.034039"
+        },
+        "1760462341.080949": {
+          "replyCount": 7,
+          "latestReplyTs": "1760516471.080429"
+        },
+        "1760485382.700299": {
+          "replyCount": 1,
+          "latestReplyTs": "1760486201.458489"
+        },
+        "1760558462.986839": {
+          "replyCount": 41,
+          "latestReplyTs": "1762334184.877169"
+        },
+        "1760639661.456959": {
+          "replyCount": 2,
+          "latestReplyTs": "1760640165.263939"
+        },
+        "1760682897.957229": {
+          "replyCount": 12,
+          "latestReplyTs": "1760743763.825219"
+        },
+        "1761185871.156219": {
+          "replyCount": 18,
+          "latestReplyTs": "1761206596.300179"
+        },
+        "1762144052.569739": {
+          "replyCount": 9,
+          "latestReplyTs": "1762161435.536959"
+        },
+        "1762331935.686059": {
+          "replyCount": 2,
+          "latestReplyTs": "1762334288.209339"
+        },
+        "1762460086.238249": {
+          "replyCount": 16,
+          "latestReplyTs": "1762462022.371379"
+        },
+        "1762754583.728689": {
+          "replyCount": 1,
+          "latestReplyTs": "1762755170.263439"
+        },
+        "1762757895.345879": {
+          "replyCount": 1,
+          "latestReplyTs": "1762758113.820359"
+        },
+        "1762767242.377359": {
+          "replyCount": 9,
+          "latestReplyTs": "1763367846.666539"
+        },
+        "1763008746.977829": {
+          "replyCount": 5,
+          "latestReplyTs": "1763024002.432269"
+        },
+        "1763168878.732789": {
+          "replyCount": 14,
+          "latestReplyTs": "1763363704.789179"
+        },
+        "1764064079.295199": {
+          "replyCount": 9,
+          "latestReplyTs": "1764146514.588959"
+        },
+        "1764146328.495969": {
+          "replyCount": 1,
+          "latestReplyTs": "1764146490.241809"
+        },
+        "1764146617.257649": {
+          "replyCount": 6,
+          "latestReplyTs": "1764222494.100129"
+        },
+        "1765274970.373499": {
+          "replyCount": 4,
+          "latestReplyTs": "1765355839.798209"
+        },
+        "1766980004.986789": {
+          "replyCount": 1,
+          "latestReplyTs": "1767038968.910629"
+        },
+        "1768898473.113749": {
+          "replyCount": 20,
+          "latestReplyTs": "1769157582.549529"
+        },
+        "1768982336.569869": {
+          "replyCount": 4,
+          "latestReplyTs": "1769160595.027409"
+        },
+        "1768983169.454859": {
+          "replyCount": 1,
+          "latestReplyTs": "1768983862.711129"
+        },
+        "1770622933.416149": {
+          "replyCount": 3,
+          "latestReplyTs": "1770627241.602929"
+        },
+        "1770623131.787589": {
+          "replyCount": 2,
+          "latestReplyTs": "1770623794.665949"
+        },
+        "1770623637.222699": {
+          "replyCount": 1,
+          "latestReplyTs": "1770623814.600229"
+        },
+        "1770631039.951999": {
+          "replyCount": 38,
+          "latestReplyTs": "1770873408.536409"
+        },
+        "1770681955.020939": {
+          "replyCount": 2,
+          "latestReplyTs": "1770709116.396399"
+        },
+        "1771370469.398729": {
+          "replyCount": 12,
+          "latestReplyTs": "1771482013.057549"
+        },
+        "1771566863.559269": {
+          "replyCount": 2,
+          "latestReplyTs": "1771667933.975109"
+        },
+        "1771572501.820849": {
+          "replyCount": 7,
+          "latestReplyTs": "1771668104.272169"
+        },
+        "1772657773.171989": {
+          "replyCount": 1,
+          "latestReplyTs": "1772657906.065439"
+        },
+        "1772667372.424359": {
+          "replyCount": 1,
+          "latestReplyTs": "1772670168.032629"
+        },
+        "1773648540.210749": {
+          "replyCount": 27,
+          "latestReplyTs": "1774223782.105489"
+        },
+        "1775954600.994589": {
+          "replyCount": 2,
+          "latestReplyTs": "1775963027.023029"
+        },
+        "1776301028.578999": {
+          "replyCount": 13,
+          "latestReplyTs": "1776666588.190889"
+        },
+        "1776934980.123549": {
+          "replyCount": 4,
+          "latestReplyTs": "1777436527.636919"
+        },
+        "1778546174.947839": {
+          "replyCount": 3,
+          "latestReplyTs": "1778550055.397669"
+        },
+        "1778732076.514649": {
+          "replyCount": 2,
+          "latestReplyTs": "1778742663.112729"
+        },
+        "1778750611.368209": {
+          "replyCount": 2,
+          "latestReplyTs": "1778751755.355579"
+        },
+        "1778750803.549189": {
+          "replyCount": 3,
+          "latestReplyTs": "1778751833.497039"
+        },
+        "1778753123.530129": {
+          "replyCount": 1,
+          "latestReplyTs": "1778755736.836149"
+        },
+        "1779696187.443179": {
+          "replyCount": 1,
+          "latestReplyTs": "1779957890.265829"
+        },
+        "1779955217.188689": {
+          "replyCount": 2,
+          "latestReplyTs": "1779967636.233969"
+        },
+        "1780556832.233329": {
+          "replyCount": 7,
+          "latestReplyTs": "1780866607.394019"
+        },
+        "1781088039.031839": {
+          "replyCount": 1,
+          "latestReplyTs": "1781088187.494589"
+        },
+        "1781160653.734989": {
+          "replyCount": 3,
+          "latestReplyTs": "1781166316.074859"
+        },
+        "1781161038.839809": {
+          "replyCount": 3,
+          "latestReplyTs": "1781174655.842799"
+        },
+        "1782118451.839579": {
+          "replyCount": 1,
+          "latestReplyTs": "1782120814.401229"
+        },
+        "1782549218.700009": {
+          "replyCount": 2,
+          "latestReplyTs": "1782553445.748099"
+        },
+        "1782725587.564679": {
+          "replyCount": 3,
+          "latestReplyTs": "1782798086.718499"
+        },
+        "1782728986.558269": {
+          "replyCount": 2,
+          "latestReplyTs": "1782798293.684819"
+        },
+        "1784633279.159559": {
+          "replyCount": 4,
+          "latestReplyTs": "1784672531.093539"
+        },
+        "1785101808.949619": {
+          "replyCount": 4,
+          "latestReplyTs": "1785200888.153689"
+        }
+      },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-05T04:30:12.946Z",
+      "lastSyncedCommit": "",
+      "digest": "READ THIS ONE, DO NOT SKIM. #marketing is where organisers post the authoritative event BLURB before a poster exists, so it can be the best source of copy for an event whose own channel only has logistics. 2026-08-05: the Les Mills fullDescription now on the site came from Nirmala's 24 Jul brief HERE (title, date, time, full address, two-paragraph blurb) - the event channel never carried it. Also here: Judge Spotlight captions for the hackathon, Les Mills poster iterations (option 2 chosen), and yesha's impact figures (86+ events, 5,800+ registrations, 3,673+ active members, 33+ partners, 12 years) which CONTRADICT lib/data/stats.ts - not reconciled, flagged only. Xero and HCLTech are named as later-2026 events with kickoff meetings pending: no dates, no content, not creatable yet - watch for them.",
+      "digestAt": "2026-08-05T04:30:12.945Z"
     },
     "CSHSGQWF6": {
       "name": "industry",
@@ -8353,6 +9765,152 @@
       "fingerprint": "",
       "lastSyncedAt": "2026-06-09T01:06:45.086Z",
       "lastSyncedCommit": ""
+    },
+    "D095L79FJHE": {
+      "name": "dm:Alyssa",
+      "type": "dm",
+      "mapping": {
+        "kind": "skip",
+        "reason": "1:1 DM with Alyssa. Website development work log, no event content."
+      },
+      "watermarkTs": "1768970329.124609",
+      "threads": {
+        "1763360890.505109": {
+          "replyCount": 1,
+          "latestReplyTs": "1763361216.143379"
+        }
+      },
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T04:31:28.646Z",
+      "lastSyncedCommit": "",
+      "digest": "Development-thread DM: auth/login logic changes, review logs, feature walkthroughs dating to late 2025. Scores on the event-signal heuristic because dev logs quote words like 'registration' and dates - that is a FALSE POSITIVE, not event content. Still read the delta rather than trusting this note if it ever surfaces again.",
+      "digestAt": "2026-08-05T04:31:28.644Z"
+    },
+    "D09BBKA114H": {
+      "name": "dm:Mahsa",
+      "type": "dm",
+      "mapping": {
+        "kind": "skip",
+        "reason": "1:1 DM with Mahsa (founder). Strategy and platform decisions, not event-page copy."
+      },
+      "watermarkTs": "1785410334.970819",
+      "threads": {
+        "1773970799.066189": {
+          "replyCount": 1,
+          "latestReplyTs": "1774007370.007559"
+        },
+        "1780451669.313409": {
+          "replyCount": 1,
+          "latestReplyTs": "1780466397.055669"
+        },
+        "1780646230.628629": {
+          "replyCount": 1,
+          "latestReplyTs": "1780646442.125879"
+        },
+        "1780646246.631399": {
+          "replyCount": 1,
+          "latestReplyTs": "1780646467.836959"
+        },
+        "1780814649.162259": {
+          "replyCount": 7,
+          "latestReplyTs": "1781470058.633929"
+        },
+        "1780814691.689639": {
+          "replyCount": 2,
+          "latestReplyTs": "1781001554.321169"
+        },
+        "1781336045.003549": {
+          "replyCount": 1,
+          "latestReplyTs": "1781346017.324369"
+        }
+      },
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T04:31:27.015Z",
+      "lastSyncedCommit": "",
+      "digest": "Founder DM. Content is platform strategy - Resend vs Mailchimp quota (she declined in Jul 2026: not a priority, Discord is the hackathon comms channel), website visual design sign-off, tooling demos. Note for the newsletter work: her 15 Jul reply is the standing decision on why Mailchimp has not been replaced. No event-page edits have come through here, but she does approve them elsewhere.",
+      "digestAt": "2026-08-05T04:31:27.014Z"
+    },
+    "D0AGK4GF97D": {
+      "name": "dm:Len Estioko",
+      "type": "dm",
+      "mapping": {
+        "kind": "skip",
+        "reason": "1:1 DM with Len Estioko (marketing). Not an event channel, but DOES carry ad-hoc page-change instructions - read the delta in full every run."
+      },
+      "watermarkTs": "1785836362.872489",
+      "threads": {
+        "1773291671.639489": {
+          "replyCount": 1,
+          "latestReplyTs": "1773907740.677629"
+        },
+        "1774059046.031639": {
+          "replyCount": 5,
+          "latestReplyTs": "1774061622.218709"
+        }
+      },
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T04:30:40.721Z",
+      "lastSyncedCommit": "",
+      "digest": "READ IN FULL, NEVER FROM THE DISCOVERY SNIPPET. On 2026-08-05 this DM was the ONLY place carrying 'Please take out Christine Yip as a mentor, she pulled out today' (4 Aug 21:34 NZST) - it appeared in no channel, and a first pass that judged this DM from its one-line discovery evidence ('dev work, not events') missed it and left a withdrawn mentor on a page due to be projected two days later. Len also relays hackathon slide feedback here. Mostly personal otherwise (a job referral and CVs) - that content is private, never quote or commit it.",
+      "digestAt": "2026-08-05T04:30:40.720Z"
+    },
+    "D0AHBGJ57CK": {
+      "name": "dm:Tharaneetharan Thavarasan",
+      "type": "dm",
+      "mapping": {
+        "kind": "skip",
+        "reason": "1:1 DM with Tharaneetharan Thavarasan. Participant-side technical mentoring requests, no page content."
+      },
+      "watermarkTs": "1785150399.298979",
+      "threads": {
+        "1778322817.264429": {
+          "replyCount": 1,
+          "latestReplyTs": "1778323382.814359"
+        },
+        "1778412400.404789": {
+          "replyCount": 1,
+          "latestReplyTs": "1778439902.125489"
+        },
+        "1778412514.768419": {
+          "replyCount": 1,
+          "latestReplyTs": "1778439933.775249"
+        }
+      },
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T04:31:25.422Z",
+      "lastSyncedCommit": "",
+      "digest": "AUT-side contact. 2026 traffic is a request for technical guidance for a student team building at the hackathon, answered with on-site help. No event-page instructions have ever come through here; still scanned each run in case that changes.",
+      "digestAt": "2026-08-05T04:31:25.421Z"
+    },
+    "D0BAVLBUYQY": {
+      "name": "dm:Nikita Kumari",
+      "type": "dm",
+      "mapping": {
+        "kind": "skip",
+        "reason": "1:1 DM with Nikita Kumari (events lead). Carries direct event-page edit requests - read the delta in full every run."
+      },
+      "watermarkTs": "1785374818.222099",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T04:30:42.263Z",
+      "lastSyncedCommit": "",
+      "digest": "READ IN FULL. Nikita sends page edits straight here rather than to the event channel. 2026-08-05 sync applied her 29 Jul request: keynote row merged to '5:50-6:10pm Keynote speaker session' (no name, no separate Q&A) - a previous pass removed the name but kept a Q&A row, which was not what she asked for. Her 19 Jun request (Peyvand 20 June About us / What to Expect rewrite) is already live. She also confirms registration counts and closures here.",
+      "digestAt": "2026-08-05T04:30:42.263Z"
+    },
+    "D0BBRULBB9A": {
+      "name": "dm:Nirmala Chinnappan",
+      "type": "dm",
+      "mapping": {
+        "kind": "skip",
+        "reason": "1:1 DM with Nirmala Chinnappan (events). Carries direct event-page edit requests - read the delta in full every run."
+      },
+      "watermarkTs": "1785879903.379449",
+      "threads": {},
+      "fingerprint": "",
+      "lastSyncedAt": "2026-08-05T04:30:43.841Z",
+      "lastSyncedCommit": "",
+      "digest": "READ IN FULL. Nirmala asks for page changes here as well as in channel. 2026-08-04: 'Can you publish the Les Mills event live? I have updated the banner in humanitix page' + 'give the above url to Register Now button' -> registrationUrl applied 5 Aug. 13 Jul: the four AI Hackathon judge profiles, sourced from the private Runsheet Google Sheet - already live. 3 Aug she asked where the published mentor list came from. Her outstanding ask is Les Mills SPEAKER profiles, still blocked on that private Sheet.",
+      "digestAt": "2026-08-05T04:30:43.840Z"
     }
   }
 }
