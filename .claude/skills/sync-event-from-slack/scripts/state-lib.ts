@@ -54,6 +54,75 @@ export interface ThreadState {
   latestReplyTs: string;
 }
 
+/** The two fields Slack returns on a parent message that has replies. */
+export interface ThreadFacts {
+  reply_count?: number;
+  latest_reply?: string;
+  ts: string;
+}
+
+/**
+ * Does this thread carry replies the manifest has no record of anyone reading?
+ *
+ * THE ONE PLACE THIS QUESTION IS ANSWERED. It used to be answered twice — once
+ * in `fetch-channel.ts`, wrongly, and not at all in `discover-channels.ts` —
+ * and on 4 August 2026 the two disagreed badly enough to hide the event owner's
+ * entire review of a deck due on a projector three days later.
+ *
+ * The rules that matter, both learned from that miss:
+ *
+ * 1. **An ABSENT `known` means zero replies seen, not "skip this one."** A
+ *    message posted with no replies is never recorded as a thread, so the first
+ *    reply it ever receives arrives on a thread the manifest has never heard
+ *    of. Requiring a prior record made exactly that case invisible.
+ * 2. **`latestReplyTs` is checked as well as `replyCount`.** A thread that
+ *    gains one reply and loses another holds its count while its latest moves.
+ */
+export function threadHasUnread(
+  current: ThreadFacts,
+  known: ThreadState | undefined,
+): boolean {
+  const replies = current.reply_count ?? 0;
+  if (replies <= 0) return false;
+  return (
+    replies > (known?.replyCount ?? 0) ||
+    Number(current.latest_reply ?? 0) > Number(known?.latestReplyTs ?? 0)
+  );
+}
+
+/**
+ * The thread half of a read receipt.
+ *
+ * `delivered` is the set of parents whose replies were actually handed to the
+ * caller this run. Everything else keeps whatever the manifest already had —
+ * including nothing, when the thread has never been seen.
+ *
+ * The temptation is to write the *current* state of every thread here, on the
+ * reasoning that the next run wants a complete picture. That is what
+ * `fetch-channel.ts` did, and it is why a delivery bug did not merely lose six
+ * replies but recorded them as read on the way past. A read receipt may only
+ * ever describe what was read.
+ */
+export function mergeThreadState(
+  parents: ThreadFacts[],
+  delivered: Set<string>,
+  prior: Record<string, ThreadState>,
+): Record<string, ThreadState> {
+  const out: Record<string, ThreadState> = {};
+  for (const p of parents) {
+    if ((p.reply_count ?? 0) <= 0) continue;
+    if (delivered.has(p.ts)) {
+      out[p.ts] = {
+        replyCount: p.reply_count ?? 0,
+        latestReplyTs: p.latest_reply ?? p.ts,
+      };
+    } else if (prior[p.ts]) {
+      out[p.ts] = prior[p.ts];
+    }
+  }
+  return out;
+}
+
 export interface ChannelState {
   name: string;
   type: ChannelType;

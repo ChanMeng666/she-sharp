@@ -35,10 +35,37 @@ Bot scopes: `channels:history`, `channels:read`, `channels:join`,
    @She Sharp Event Collector` — `channels:join` works on public channels only,
    and `conversations.join` rejects private ones outright.
 
-Threads have never been a blind spot: `fetch-channel.ts` expands every parent
-via `conversations.replies` and tracks per-thread `replyCount`/`latestReplyTs`,
-which is how a late reply on an old thread is caught even though it does not
-move the top-level watermark.
+**Threads were a third blind spot until 5 August 2026, and this document used to
+claim they were not.** A reply does not move its parent's `ts`, so a channel
+whose only new content was thread replies looked identical to a dead one: the
+triage peeked at the newest top-level message, called the channel quiet, hid it
+behind `--all`, and advanced its read position on the way past. Worse, a message
+posted with no replies was never recorded as a thread at all, so the first reply
+it ever received arrived on a thread the manifest had never heard of — and
+`fetch-channel.ts` skipped exactly that case while still writing the thread's
+current state into the manifest, marking the unread replies read.
+
+It cost the event owner's thirteen-item review of a deck that was due on a
+projector three days later. It surfaced only because a human pasted the Slack
+permalink.
+
+All three parts are fixed, and the rules now live in one place —
+`threadHasUnread()` and `mergeThreadState()` in `state-lib.ts`, used by both the
+triage and the fetch, with `state-lib.test.ts` asserting them:
+
+- **An absent thread record means zero replies seen, not "skip".**
+- **A read receipt may only describe what was actually delivered.** An
+  undelivered thread keeps the state it had, so a future delivery bug leaves the
+  thread looking unread and gets caught next run instead of covering its tracks.
+- **The triage reads a page, not one message**, compares `reply_count` and
+  `latest_reply` per parent, and scores the unread replies for event signal —
+  a channel whose whole event conversation happened inside one thread used to
+  score zero. A channel surfacing on replies alone is labelled
+  `incremental (thread replies)` so a reader who checks Slack by eye and sees no
+  new message knows why.
+
+Threads older than 200 parents back are out of the triage's view; `--state`
+walks the whole history and is the backstop for those.
 
 **DMs are in the default scan.** Discovery enumerates `im`/`mpim` alongside
 channels and scores them for event signal like any general channel; they appear
@@ -438,7 +465,14 @@ filename to `.jpg`. Do not re-encode the file.
 - **Thread subtlety:** a new reply on an *old* thread does not move the top-level
   watermark. `--state` catches it via per-thread `replyCount`/`latestReplyTs` in
   the manifest — so always fetch with `--state` for known channels, not a bare
-  `--since <ts>` that only filters top-level.
+  `--since <ts>` that only filters top-level. See the blind-spot note above for
+  what this got wrong until 5 Aug 2026 and what it cost.
+- **Run `npx tsx .claude/skills/sync-event-from-slack/scripts/state-lib.test.ts`
+  after touching anything that decides what is read.** It is offline, takes a
+  second, and every assertion in it is a real miss.
+- **Never widen a read receipt to "what exists" rather than "what was handed
+  over".** It is a tempting simplification, it looks harmless, and it converts
+  any delivery bug from a miss into a permanent silent loss.
 - **General-channel auto-scan:** discovery reads only messages past each general
   channel's watermark and surfaces a channel only when its event-signal score
   clears the threshold. A flagged general channel is a *candidate* — confirm the
