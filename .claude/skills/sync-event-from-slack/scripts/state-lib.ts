@@ -40,7 +40,7 @@ export const PUBLISHED_EVENT_FILES = [
 // Manifest types
 // ---------------------------------------------------------------------------
 
-export type ChannelType = "event" | "general";
+export type ChannelType = "event" | "general" | "dm";
 
 export type Mapping =
   // One channel can feed more than one event (e.g. a "13 & 20 June" planning
@@ -263,9 +263,20 @@ export function fingerprintForMapping(mapping: Mapping): string {
 // Channel classification
 // ---------------------------------------------------------------------------
 
-/** Event-planning channels are named `event…` by convention in this workspace. */
+/**
+ * Event-planning channels are named `event…` by convention in this workspace.
+ * Direct and group DMs get their own type: they carry no naming convention, so
+ * they can never be classified as event channels, but they are still scanned
+ * for event signal exactly like a general channel.
+ */
 export function classifyChannel(name: string): ChannelType {
+  if (/^dm:/.test(name) || /^mpdm-/i.test(name)) return "dm";
   return /^event[-_]?/i.test(name) ? "event" : "general";
+}
+
+/** Types whose new messages get scored for event signal (i.e. everything but event channels). */
+export function isSignalScanned(type: ChannelType): boolean {
+  return type === "general" || type === "dm";
 }
 
 // ---------------------------------------------------------------------------
