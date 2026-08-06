@@ -97,7 +97,7 @@ CRITICAL SCHEMA CONSISTENCY RULES — must obey all three:
 ${schemaBlock()}
 
 Always include a concise "summary" (≤ 80 chars) for the preview UI, e.g.
-"Add speaker Danubi Paim to IWD 2026".
+"Add speaker Danubia Paim to IWD 2026".
 
 CRITICAL NO-FABRICATION RULE:
 Never invent concrete values. URLs (Google Photos links, registration links,
