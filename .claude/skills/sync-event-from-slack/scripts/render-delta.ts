@@ -85,6 +85,58 @@ if (bookmarks.length) {
   for (const b of bookmarks) out.push(`• ${b.title ?? ""} ${b.link ?? ""}`.trim());
 }
 
+/*
+ * RUN SHEETS, SURFACED BEFORE THE MESSAGES.
+ *
+ * The run sheet is where the event is actually true — the agreed clock, the
+ * speaker bios, the room allocation, the checklist of what is still owed. Slack
+ * only carries the conversation about it. On 5 Aug 2026 a bio and a corrected
+ * job title sat in a linked sheet for days while the event's own digest read
+ * "STILL OWED"; nobody was withholding it, the sheet was simply never opened.
+ *
+ * A link buried in message #41 of a delta is a link nobody follows, so every
+ * Google Sheet or Doc in the channel — messages, pins and bookmarks alike — is
+ * collected to the top with the command that reads it. Ranked by how many times
+ * the channel refers to it, because the run sheet is the one people re-paste.
+ */
+const sheetLinks = (() => {
+  const seen = new Map<string, { url: string; hits: number; label: string }>();
+  const scan = (text: string, label: string) => {
+    for (const m of text.matchAll(
+      /https:\/\/docs\.google\.com\/(spreadsheets|document)\/d\/[^\s|<>"]+/g,
+    )) {
+      const url = m[0].replace(/[),.]+$/, "");
+      const id = url.match(/\/d\/(?:e\/)?([a-zA-Z0-9_-]{20,})/)?.[1] ?? url;
+      const prev = seen.get(id);
+      if (prev) prev.hits++;
+      else seen.set(id, { url, hits: 1, label });
+    }
+  };
+  for (const b of d.bookmarks ?? []) scan(`${b.title ?? ""} ${b.link ?? ""}`, "bookmark");
+  for (const m of d.pinned ?? []) scan(m.text ?? "", "pinned");
+  for (const m of d.messages ?? []) {
+    scan(m.text ?? "", "message");
+    for (const r of m.thread ?? []) scan(r.text ?? "", "thread reply");
+  }
+  return [...seen.values()].sort((a, b) => b.hits - a.hits);
+})();
+
+if (sheetLinks.length) {
+  out.push(`\n## RUN SHEETS & DOCS (${sheetLinks.length}) — READ THESE, THEY OUTRANK THE CHAT`);
+  for (const s of sheetLinks) {
+    const kind = /\/spreadsheets\//.test(s.url) ? "sheet" : "doc";
+    out.push(`• ${s.url}`);
+    out.push(`    first seen in a ${s.label}, referenced ${s.hits}×`);
+    if (kind === "sheet") {
+      out.push(
+        `    npx tsx .claude/skills/sync-event-from-slack/scripts/fetch-sheet.ts '${s.url}'`,
+      );
+    } else {
+      out.push(`    (Google Doc — open it, there is no CSV export for these)`);
+    }
+  }
+}
+
 const messages = d.messages ?? [];
 out.push(`\n## NEW MESSAGES (${messages.length})`);
 if (!messages.length) out.push("(none — no-op)");
