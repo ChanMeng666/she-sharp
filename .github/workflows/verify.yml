@@ -46,6 +46,12 @@ jobs:
       - name: Verify Slack read-position rules
         run: npx tsx .claude/skills/sync-event-from-slack/scripts/state-lib.test.ts
 
+      # The committed manifest must not claim the triage scored past content
+      # nobody read. This is the invariant four separate misses violated; it is
+      # pure data, so CI can hold it even though nothing here talks to Slack.
+      - name: Verify nothing is left unread
+        run: npx tsx .claude/skills/sync-event-from-slack/scripts/audit-read-state.ts
+
   typecheck-scripts:
     # `scripts/` is excluded from the root tsconfig and `.claude/**` is missed by
     # its `**/*.ts` glob (dot-directories don't match), so neither tree was

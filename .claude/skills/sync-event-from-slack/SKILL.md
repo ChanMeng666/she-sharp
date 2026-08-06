@@ -228,6 +228,36 @@ that changed (a confirmed date, a post-event photo album). Dumping the JSON with
 unchanged, there is nothing to sync — emit the UPDATE no-op line (Step 6) and skip
 to recording state (Step 7.4).
 
+### Step 1b — Read the run sheet (Layer B)
+
+**The run sheet outranks the chat.** Slack carries the conversation about the
+event; the Google Sheet carries the agreed clock, the speaker bios and titles,
+the room allocation, and the checklist of what is still owed. `render-delta.ts`
+now prints a **RUN SHEETS & DOCS** block above the messages, with the command
+for each link. Run it:
+
+```
+npx tsx .claude/skills/sync-event-from-slack/scripts/fetch-sheet.ts '<url>'
+npx tsx .../fetch-sheet.ts '<url>' --tab Speakers      # one tab by name
+npx tsx .../fetch-sheet.ts '<url>' --json              # machine-readable
+```
+
+No credential is involved: She Sharp's run sheets are link-viewable and Google
+serves those over the plain CSV export endpoint. A link with `#gid=` reads that
+tab; a link without one enumerates and reads **every** tab. A genuinely private
+sheet fails loudly with what to ask for — never guess at a sheet you cannot
+open, and never let a stale digest stand in for one.
+
+This exists because of a real miss. On 5 Aug 2026 the events lead asked by DM to
+"update Carolina Lobos' profile" and attached the run sheet. Her bio and a
+corrected job title had been sitting in its Speakers tab for days while the
+event's digest said "STILL OWED BY LES MILLS: Carolina Lobos's bio and
+photograph". Nobody was withholding anything — nothing in this skill could open
+a sheet, so nobody looked.
+
+**A run sheet can contradict the digest, and when it does the sheet wins.** It
+is also the first place to look when a digest lists something as owed.
+
 ### Step 2 — Identify assets
 
 Walk every message (top-level and threaded). Collect:
@@ -404,6 +434,17 @@ When the user approves:
    so run it **after** the JSON patch. Commit `state/sync-state.json` alongside
    the event change — it is the memory that makes future syncs cheap.
 
+### Step 7.5 — Prove nothing is unread
+
+```
+npx tsx .claude/skills/sync-event-from-slack/scripts/audit-read-state.ts
+```
+
+Exits non-zero and names every conversation the triage has scored past content
+nobody read. **Run it at the end of every sync.** If it lists anything, fetch
+that conversation, read the delta, and record it — the audit is the only thing
+that makes "did I miss something?" a question with an answer instead of a hope.
+
 ### Step 8 — Commit
 
 Ask the user to pick one, with sensible defaults:
@@ -517,6 +558,18 @@ filename to `.jpg`. Do not re-encode the file.
 - **Fingerprint drift:** if someone edits `events-custom.json` by hand, discovery
   shows the channel `fingerprint-stale`. Re-sync or re-run `update-state.ts` to
   re-baseline.
+- **Two positions, two writers, and only one of them means "read".**
+  `watermarkTs` is the READ position and only `update-state.ts --from <payload>`
+  moves it, because only a fetch payload is evidence anything was delivered.
+  `scannedTs` is the TRIAGE position and only `discover-channels.ts` moves it.
+  The gap between them is the unread backlog; `audit-read-state.ts` prints it
+  and exits non-zero.
+
+  For months there was one position written by both, which is why SKILL.md could
+  say "'quiet' is not 'read by the model'" while the schema had no way to
+  express it. **Four separate misses came out of that**, and the fourth was the
+  events lead asking for a page change. If you add a writer, it moves `scannedTs`
+  or it delivers content to the model — never both, never neither.
 - **Never hand-edit `state/sync-state.json`** — always go through `update-state.ts`
   so ordering stays deterministic and the fingerprint is recomputed correctly.
 
