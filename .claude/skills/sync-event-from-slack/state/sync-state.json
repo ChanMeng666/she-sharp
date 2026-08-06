@@ -481,6 +481,14 @@
       },
       "watermarkTs": "1777555714.364369",
       "threads": {
+        "1655105234.799889": {
+          "replyCount": 1,
+          "latestReplyTs": "1655105674.205589"
+        },
+        "1655166371.597339": {
+          "replyCount": 1,
+          "latestReplyTs": "1655166437.109989"
+        },
         "1655774342.002469": {
           "replyCount": 1,
           "latestReplyTs": "1655775113.275479"
@@ -547,7 +555,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
+      "lastSyncedAt": "2026-08-06T03:41:46.612Z",
       "lastSyncedCommit": ""
     },
     "C0438BZ7DL6": {
@@ -558,6 +566,18 @@
       },
       "watermarkTs": "1780559027.001549",
       "threads": {
+        "1724838477.772199": {
+          "replyCount": 1,
+          "latestReplyTs": "1724846543.882359"
+        },
+        "1725064450.779899": {
+          "replyCount": 14,
+          "latestReplyTs": "1725251562.898659"
+        },
+        "1725064590.516149": {
+          "replyCount": 3,
+          "latestReplyTs": "1725066738.216269"
+        },
         "1725078605.080239": {
           "replyCount": 3,
           "latestReplyTs": "1725078935.818769"
@@ -624,7 +644,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
+      "lastSyncedAt": "2026-08-06T03:41:46.612Z",
       "lastSyncedCommit": ""
     },
     "C0476MCR9B2": {
@@ -2821,10 +2841,59 @@
       "name": "socialmedia",
       "type": "general",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "Social-media coordination channel — post copy, Canva drafts, who is posting what to which platform. It carries no event of its own. Its unread delta (2023-09 → 2024-03, 12 threads) is the same historical backfill the 5 Aug 2026 thread-read fix surfaced everywhere else, and the event signal that flagged it is the 2024 International Women's Day breakfast with Woolworths, which happened two years ago."
       },
       "watermarkTs": "1777555727.098769",
       "threads": {
+        "1694507885.450179": {
+          "replyCount": 3,
+          "latestReplyTs": "1694508128.520229"
+        },
+        "1696449068.058909": {
+          "replyCount": 3,
+          "latestReplyTs": "1696449354.972319"
+        },
+        "1703372432.900039": {
+          "replyCount": 1,
+          "latestReplyTs": "1703372719.487569"
+        },
+        "1707207444.204179": {
+          "replyCount": 6,
+          "latestReplyTs": "1707274127.621539"
+        },
+        "1707276486.482139": {
+          "replyCount": 1,
+          "latestReplyTs": "1707293475.914729"
+        },
+        "1707386016.205459": {
+          "replyCount": 5,
+          "latestReplyTs": "1707436763.635149"
+        },
+        "1707613622.000779": {
+          "replyCount": 1,
+          "latestReplyTs": "1707626177.568689"
+        },
+        "1708112362.422439": {
+          "replyCount": 4,
+          "latestReplyTs": "1708151334.882139"
+        },
+        "1708484078.350759": {
+          "replyCount": 4,
+          "latestReplyTs": "1708650762.632179"
+        },
+        "1709855736.278889": {
+          "replyCount": 1,
+          "latestReplyTs": "1709855776.792269"
+        },
+        "1710012683.529819": {
+          "replyCount": 3,
+          "latestReplyTs": "1710014813.875329"
+        },
+        "1710740272.653149": {
+          "replyCount": 2,
+          "latestReplyTs": "1710740928.182289"
+        },
         "1710874717.388139": {
           "replyCount": 5,
           "latestReplyTs": "1712707607.219149"
@@ -2891,8 +2960,10 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:48:13.808Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-06T03:43:19.769Z",
+      "lastSyncedCommit": "",
+      "digest": "Social-media coordination channel (Facebook, Instagram, LinkedIn, TikTok) — post copy, Canva drafts, speaker-quote graphics, who posts what where. Not an event channel and never has been. Read position recorded 6 Aug 2026 after reading the 2023-09 → 2024-03 backlog that the thread-read fix surfaced; every message in it is promotion of events that had already been published, including the 2024 IWD breakfast with Woolworths. Reopen only if a genuinely new event is proposed here rather than promoted from here. Note for anyone reading it later: the channel is the best record of which events got social coverage, so it is worth consulting for a post-event gallery or an impact report even though it drives no site data itself.",
+      "digestAt": "2026-08-06T03:43:19.768Z"
     },
     "C05S10ENU4U": {
       "name": "school-and-google-events-committee",
@@ -3487,6 +3558,30 @@
       },
       "watermarkTs": "1777555693.918789",
       "threads": {
+        "1522914705.000469": {
+          "replyCount": 1,
+          "latestReplyTs": "1522914775.000329"
+        },
+        "1531874000.000010": {
+          "replyCount": 3,
+          "latestReplyTs": "1531900305.000031"
+        },
+        "1531890091.000171": {
+          "replyCount": 3,
+          "latestReplyTs": "1531892051.000056"
+        },
+        "1615243334.004600": {
+          "replyCount": 12,
+          "latestReplyTs": "1615255509.011200"
+        },
+        "1616717153.003600": {
+          "replyCount": 2,
+          "latestReplyTs": "1616793175.000700"
+        },
+        "1616717493.004500": {
+          "replyCount": 2,
+          "latestReplyTs": "1616720343.000400"
+        },
         "1616723091.000800": {
           "replyCount": 5,
           "latestReplyTs": "1616727672.005800"
@@ -3553,7 +3648,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:48:13.802Z",
+      "lastSyncedAt": "2026-08-06T03:41:46.607Z",
       "lastSyncedCommit": ""
     },
     "C06Q9FJNR": {
@@ -12766,7 +12861,7 @@
           }
         ]
       },
-      "watermarkTs": "1785920030.650789",
+      "watermarkTs": "1785975262.384849",
       "threads": {
         "1778118947.075649": {
           "replyCount": 1,
@@ -12911,13 +13006,17 @@
         "1785920030.650789": {
           "replyCount": 1,
           "latestReplyTs": "1785921117.053959"
+        },
+        "1785973957.959689": {
+          "replyCount": 2,
+          "latestReplyTs": "1785974405.987589"
         }
       },
       "fingerprint": "sha256:27e15142fff7d1628aeac47c85473dda47f72049c91438900828c008691364d9",
-      "lastSyncedAt": "2026-08-05T13:48:24.557Z",
+      "lastSyncedAt": "2026-08-06T03:43:38.128Z",
       "lastSyncedCommit": "",
-      "digest": "Aotearoa AI Hackathon Festival 2026, AUT City Campus, FRI 7 - SAT 8 AUG 2026 — RUNS TOMORROW as of this sync (6 Aug). Live at aihackathon.nz. REGISTRATION CLOSED 20 Jul (119 registered vs 100 stated capacity). The sidebar 'Register Now' button is HARDCODED in components/events/event-detail/event-sidebar-panel.tsx for any future event, so clearing registrationUrl only makes it inert, not hidden. KEYNOTE CONFIRMED 5 Aug: Rach Monks, Founder of AI for X and X-Bot Games; she supplied role, bio and photograph by email to events@shesharp.org.nz after Jacob Bell-Kay (AUT) brokered it — that email thread, NOT Slack, is the source. The 4-5 Aug Slack thread from Prasanth is SCREENSHOTS OF THAT SAME EMAIL being re-forwarded because it hit one recipient's spam; no new fact, do not re-open. Agenda row is a single '5:50-6:10pm Keynote speaker session' per Nikita's DM 29 Jul; the deck's Day One run sheet parses that same row from specialSections[1], so the two cannot drift. DECK KEYNOTE SLIDE: her headshot is a 2500x2500 square on saturated yellow, UNUSABLE full-bleed, so the slide uses a composed 16:9 plate (…-rach-monks-plate.jpg). It must stay a photo slide, not a person card, or lintRhythm rejects the run. MAHSA'S SLIDE REVIEW, 5 Aug 09:49 UTC — arrived as six replies on an OLD thread (parent 1785826569.040569) that fetch-channel.ts silently dropped; see the sync-state note. 13 numbered items, ALL AGAINST THE OLD 61-SLIDE NUMBERING. Items 1,2,3,4,13 plus the QR audit are DONE (deck now 60 slides): rail mark is 'SHE #' upright, not 'SHE ♯ SHARP'; title meta is two facts, AI Forum survives only in the partner logo row; Suzanne is 'Professor Suzanne Wilkinson' and NO LONGER credited with the H&S briefing (she does the AUT welcome only — the host reads safety); old slide 5 'Who to Find Today' DELETED with its Vishnu photograph git rm'd, and the 0800 AUT security number moved up into SAFETY_LINES so the deck did not lose its only emergency contact; featured problems reordered F&P Helpdesk → F&P Restoration → Woolworths with FPH_LOGO/WOOLWORTHS_LOGO chips (new optional `logo` on BulletsSlide and QrCtaSlide, rendered by SponsorMark in archive.tsx), and 'My Life My Voice' DELETED along with its video QR const. New SDG slide after challenge-themes uses the UN's 6x3 poster (2000x1200 webp from Wikimedia Commons) with the NEW PhotoSlide `fit: \"contain\"` — cover would drop a column at 4:3 and a row at 21:9, silently. STILL OPEN FROM HER LIST, needs her input: item 11 wants TWO MORE VENUES on the wayfinding slide (currently only WG306/WG308/WG808 in the Sir Paul Reeves Building — she did not name them); item 10 wants the keynote plate's yellow background changed to green to match AI Forum; and she said 'I'll tell you the rest tomorrow', i.e. on the event day itself. QR AUDIT RESULT (all nine destinations, signed-out iPhone UA): eight fine; the slide-27 'Pitch deck template' Circle.so link REDIRECTS TO A LOGIN WALL (login.circle.so/sign_in) for anyone not already in the TNZ Ecosystem Hub — decide before doors. Also: the deck's Discord invite Z5heYsa7W lands in #general (correct); the invite pinned in the Slack channel, hV3bts4bm, lands in #mentors-private and must NOT be broadcast to attendees. Christine Yip REMOVED from mentors 5 Aug (Len Estioko DM 4 Aug); mentors now 13. The deck reads mentors straight from events-custom.json, so a mentor edit changes the projector — always re-run deck.test.ts and lint-deck.ts. Sara Ghafoor agreed 27 Jul but supplied no bio/photo so is NOT listed; Lesley Gao withdrew 27 Jul. Summit date 8-9 Sep Wellington is CORRECT (Mahsa corrected it personally 22 Jul, commit 6103db5a); do not re-flip it. UPCOMING_SNAPSHOT is a hand-taken snapshot pointing at the Les Mills 3 Sep panel, which Nirmala confirmed published 5 Aug. REDACTION LANDMINES - VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE, READ THEM THERE AND NEVER WRITE THEM HERE, NOT EVEN AS A PATTERN PLUS SUFFIX LIST: three internal registration discount codes (AUT students, general AUT attendees, mentors/staff), exactly one of which is public because AUT printed it on their own A3 poster. Also keep out: the circle.so private checkout link, venue wifi username and password, the on-site supervisor's personal mobile (the 0800 IS fine), Drive/Sheets registration lists, the workbook's 100+ attendee and mentor emails, the five late-added participants' emails from Mahsa 2 Aug, and the personal Gmail/Outlook addresses visible in the 5 Aug email screenshots. Item 11 (the two extra work venues) was pushed back to Mahsa in-thread on 5 Aug and is STILL UNANSWERED — nothing may be invented for that slide. Items 1,2,3,4,9,10,12,13 all shipped in PR #100 (merged): rail is SHE # upright, title meta is two facts, Professor Suzanne no longer credited with H&S, Who-to-Find deleted with the 0800 moved into SAFETY_LINES, problems reordered F&P→F&P→Woolworths with sponsor marks and My Life My Voice removed, UN SDG grid added after the themes, pitch-template QR moved off the Circle.so login wall to shesharp.org.nz/docs/pitch-deck-template-2026.pdf, and the keynote plate rebuilt on the deck canvas by scripts/deck/build-keynote-plate.ts (NOT green - green would have taken its cue from AI Forum rather than this deck). Deck is 60 slides. OPEN: post-event gallery pass after 8 Aug (status → past, add galleryUrl).",
-      "digestAt": "2026-08-05T13:48:24.557Z"
+      "digest": "Aotearoa AI Hackathon Festival 2026, AUT City Campus, FRI 7 - SAT 8 AUG 2026 — RUNS TOMORROW as of this sync (6 Aug). Live at aihackathon.nz. REGISTRATION CLOSED 20 Jul (119 registered vs 100 stated capacity). The sidebar 'Register Now' button is HARDCODED in components/events/event-detail/event-sidebar-panel.tsx for any future event, so clearing registrationUrl only makes it inert, not hidden. KEYNOTE CONFIRMED 5 Aug: Rach Monks, Founder of AI for X and X-Bot Games; she supplied role, bio and photograph by email to events@shesharp.org.nz after Jacob Bell-Kay (AUT) brokered it — that email thread, NOT Slack, is the source. The 4-5 Aug Slack thread from Prasanth is SCREENSHOTS OF THAT SAME EMAIL being re-forwarded because it hit one recipient's spam; no new fact, do not re-open. Agenda row is a single '5:50-6:10pm Keynote speaker session' per Nikita's DM 29 Jul; the deck's Day One run sheet parses that same row from specialSections[1], so the two cannot drift. DECK KEYNOTE SLIDE: her headshot is a 2500x2500 square on saturated yellow, UNUSABLE full-bleed, so the slide uses a composed 16:9 plate (…-rach-monks-plate.jpg). It must stay a photo slide, not a person card, or lintRhythm rejects the run. MAHSA'S SLIDE REVIEW, 5 Aug 09:49 UTC — arrived as six replies on an OLD thread (parent 1785826569.040569) that fetch-channel.ts silently dropped; see the sync-state note. 13 numbered items, ALL AGAINST THE OLD 61-SLIDE NUMBERING. Items 1,2,3,4,13 plus the QR audit are DONE (deck now 60 slides): rail mark is 'SHE #' upright, not 'SHE ♯ SHARP'; title meta is two facts, AI Forum survives only in the partner logo row; Suzanne is 'Professor Suzanne Wilkinson' and NO LONGER credited with the H&S briefing (she does the AUT welcome only — the host reads safety); old slide 5 'Who to Find Today' DELETED with its Vishnu photograph git rm'd, and the 0800 AUT security number moved up into SAFETY_LINES so the deck did not lose its only emergency contact; featured problems reordered F&P Helpdesk → F&P Restoration → Woolworths with FPH_LOGO/WOOLWORTHS_LOGO chips (new optional `logo` on BulletsSlide and QrCtaSlide, rendered by SponsorMark in archive.tsx), and 'My Life My Voice' DELETED along with its video QR const. New SDG slide after challenge-themes uses the UN's 6x3 poster (2000x1200 webp from Wikimedia Commons) with the NEW PhotoSlide `fit: \"contain\"` — cover would drop a column at 4:3 and a row at 21:9, silently. STILL OPEN FROM HER LIST, needs her input: item 11 wants TWO MORE VENUES on the wayfinding slide (currently only WG306/WG308/WG808 in the Sir Paul Reeves Building — she did not name them); item 10 wants the keynote plate's yellow background changed to green to match AI Forum; and she said 'I'll tell you the rest tomorrow', i.e. on the event day itself. QR AUDIT RESULT (all nine destinations, signed-out iPhone UA): eight fine; the slide-27 'Pitch deck template' Circle.so link REDIRECTS TO A LOGIN WALL (login.circle.so/sign_in) for anyone not already in the TNZ Ecosystem Hub — decide before doors. Also: the deck's Discord invite Z5heYsa7W lands in #general (correct); the invite pinned in the Slack channel, hV3bts4bm, lands in #mentors-private and must NOT be broadcast to attendees. Christine Yip REMOVED from mentors 5 Aug (Len Estioko DM 4 Aug); mentors now 13. The deck reads mentors straight from events-custom.json, so a mentor edit changes the projector — always re-run deck.test.ts and lint-deck.ts. Sara Ghafoor agreed 27 Jul but supplied no bio/photo so is NOT listed; Lesley Gao withdrew 27 Jul. Summit date 8-9 Sep Wellington is CORRECT (Mahsa corrected it personally 22 Jul, commit 6103db5a); do not re-flip it. UPCOMING_SNAPSHOT is a hand-taken snapshot pointing at the Les Mills 3 Sep panel, which Nirmala confirmed published 5 Aug. REDACTION LANDMINES - VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE, READ THEM THERE AND NEVER WRITE THEM HERE, NOT EVEN AS A PATTERN PLUS SUFFIX LIST: three internal registration discount codes (AUT students, general AUT attendees, mentors/staff), exactly one of which is public because AUT printed it on their own A3 poster. Also keep out: the circle.so private checkout link, venue wifi username and password, the on-site supervisor's personal mobile (the 0800 IS fine), Drive/Sheets registration lists, the workbook's 100+ attendee and mentor emails, the five late-added participants' emails from Mahsa 2 Aug, and the personal Gmail/Outlook addresses visible in the 5 Aug email screenshots. Item 11 (the two extra work venues) was pushed back to Mahsa in-thread on 5 Aug and is STILL UNANSWERED — nothing may be invented for that slide. Items 1,2,3,4,9,10,12,13 all shipped in PR #100 (merged): rail is SHE # upright, title meta is two facts, Professor Suzanne no longer credited with H&S, Who-to-Find deleted with the 0800 moved into SAFETY_LINES, problems reordered F&P→F&P→Woolworths with sponsor marks and My Life My Voice removed, UN SDG grid added after the themes, pitch-template QR moved off the Circle.so login wall to shesharp.org.nz/docs/pitch-deck-template-2026.pdf, and the keynote plate rebuilt on the deck canvas by scripts/deck/build-keynote-plate.ts (NOT green - green would have taken its cue from AI Forum rather than this deck). Deck is 60 slides. Read again 6 Aug (11 messages): all Discord administration on the eve of the event — how to publish the mentor capability/availability matrix, where F&P should put the dummy data and example tickets they assembled (a resources channel, pinned), and granting Prasanth pin rights. No event fact changed and nothing reached the site or the deck; do not re-read that thread. OPEN: post-event gallery pass after 8 Aug (status → past, add galleryUrl).",
+      "digestAt": "2026-08-06T03:43:38.127Z"
     },
     "C0B5ZAXUKRQ": {
       "name": "mpdm-yeshakaniyawala--mahsa--chanmeng6666-1",
@@ -15111,10 +15210,10 @@
         "kind": "skip",
         "reason": "1:1 DM with Nirmala Chinnappan (events). Carries direct event-page edit requests - read the delta in full every run."
       },
-      "watermarkTs": "1785920273.268289",
+      "watermarkTs": "1785967140.970919",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-06T03:41:46.613Z",
       "lastSyncedCommit": "",
       "digest": "READ IN FULL. Nirmala asks for page changes here as well as in channel. 2026-08-04: 'Can you publish the Les Mills event live? I have updated the banner in humanitix page' + 'give the above url to Register Now button' -> registrationUrl applied 5 Aug. 13 Jul: the four AI Hackathon judge profiles, sourced from the private Runsheet Google Sheet - already live. 3 Aug she asked where the published mentor list came from. Her outstanding ask is Les Mills SPEAKER profiles, still blocked on that private Sheet.",
       "digestAt": "2026-08-05T04:30:43.840Z"
