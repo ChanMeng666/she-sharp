@@ -126,7 +126,10 @@ export function unreadConversations(
   for (const [id, c] of Object.entries(m.channels)) {
     const matters =
       c.mapping?.kind === "event" ||
-      (c.mapping?.kind === "skip" && c.mapping.alwaysRead);
+      (c.mapping?.kind === "skip" && c.mapping.alwaysRead) ||
+      // An unmapped 1:1 DM. Someone wrote to you and nobody has decided what
+      // that conversation is yet, so it cannot be assumed to be noise.
+      (c.type === "dm" && (!c.mapping || c.mapping.kind === "none"));
     if (!matters) continue;
     const scanned = scannedPosition(c);
     /*
