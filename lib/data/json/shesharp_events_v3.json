@@ -209,7 +209,7 @@
         "location": {
           "format": "in_person",
           "venueName": "Vector’s office",
-          "address": "110 Carlton Gore Road, Newmarket, Auckland 1023, New Zealand",
+          "address": "Level 6, 110 Carlton Gore Road, Newmarket, Auckland 1023, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8652009,174.77722&query_place_id=ChIJYVjkP3RIDW0RqkR_qut8Sm0",
@@ -377,7 +377,7 @@
                 "linkedin": ""
               },
               {
-                "name": "Suzy Clark",
+                "name": "Suzy Clarke",
                 "title": "Executive GM of Security, Xero",
                 "company": "",
                 "bio": "Suzy is the Executive GM of Security at Xero, responsible for improving the technical security of the business, their customers and partners. She has worked in the technology sector for 26 years, both in England and New Zealand. She has held senior technology roles at organisations in a range of different industries over the last 9 years. Outside of work Suzy enjoys playing tennis, football (aka soccer) and surfing.",
@@ -698,9 +698,9 @@
               },
               {
                 "name": "Isuru Fernando",
-                "title": "",
+                "title": "Advisor to World Economic Forum on AI Ethics & Human Design, Ex CTO of IBM, Ex Google Cloud AI Lead, currently NZ Digital Innovation Leader at Microsoft",
                 "company": "",
-                "bio": "Role: Advisor to World Economic Forum on AI Ethics & Human Design, Ex CTO of IBM, Ex Google Cloud AI Lead, currently NZ Digital Innovation Leader at MicrosoftIsuru works at the intersection of emerging technology and economic value to drive ambitious, sustainable growth. With an academic foundation in artificial intelligence, a strong practice in human-centred design, and experience leading multidisciplinary commercial teams, he brings empathy and insight to translating client needs and aspirations into meaningful outcomes. He is currently privileged to practise his craft at Microsoft.‍",
+                "bio": "Isuru works at the intersection of emerging technology and economic value to drive ambitious, sustainable growth. With an academic foundation in artificial intelligence, a strong practice in human-centred design, and experience leading multidisciplinary commercial teams, he brings empathy and insight to translating client needs and aspirations into meaningful outcomes. He is currently privileged to practise his craft at Microsoft.‍",
                 "image": "/img/scraped/speakers/686b6f0c2c7d0f5245da92de_Isuru_Fernandez_9283fc7d.jpg",
                 "linkedin": "https://www.linkedin.com/in/issyfernando"
               },
@@ -767,7 +767,7 @@
               },
               {
                 "name": "Justine Hinton",
-                "title": "",
+                "title": "Senior Account Manager, Softsource",
                 "company": "",
                 "bio": "Justine is a seasoned Senior Account Manager with over 13 years of experience in managing client relationships and driving business growth. She is passionate about delivering tailored solutions that exceed client expectations. Working closely with cross-functional teams, Justine develops strategic plans that align with business goals and support long-term success. Her client-centric approach centers on deeply understanding client needs and offering insights that enhance operational outcomes. Known for building strong, lasting partnerships, she improves client satisfaction and drives revenue growth. Justine is keen to connect with like-minded professionals and explore new opportunities for collaboration.‍",
                 "image": "/img/scraped/speakers/686b71b0049053d3559cdcb4_Justine_Hinton__732119d4.jpg",
@@ -807,9 +807,9 @@
               },
               {
                 "name": "Isuru Fernando",
-                "title": "",
+                "title": "Advisor to World Economic Forum on AI Ethics & Human Design, Ex CTO of IBM, Ex Google Cloud AI Lead, currently NZ Digital Innovation Leader at Microsoft",
                 "company": "",
-                "bio": "Role: Advisor to World Economic Forum on AI Ethics & Human Design, Ex CTO of IBM, Ex Google Cloud AI Lead, currently NZ Digital Innovation Leader at MicrosoftIsuru works at the intersection of emerging technology and economic value to drive ambitious, sustainable growth. With an academic foundation in artificial intelligence, a strong practice in human-centred design, and experience leading multidisciplinary commercial teams, he brings empathy and insight to translating client needs and aspirations into meaningful outcomes. He is currently privileged to practise his craft at Microsoft.‍",
+                "bio": "Isuru works at the intersection of emerging technology and economic value to drive ambitious, sustainable growth. With an academic foundation in artificial intelligence, a strong practice in human-centred design, and experience leading multidisciplinary commercial teams, he brings empathy and insight to translating client needs and aspirations into meaningful outcomes. He is currently privileged to practise his craft at Microsoft.‍",
                 "image": "/img/scraped/speakers/686b6f0c2c7d0f5245da92de_Isuru_Fernandez_9283fc7d.jpg",
                 "linkedin": "https://www.linkedin.com/in/issyfernando"
               },
@@ -5290,7 +5290,7 @@
               },
               {
                 "name": "Divya Kumar",
-                "title": "Strategy Consultant - HCL Tech",
+                "title": "Strategy Consultant - HCLTech",
                 "company": "",
                 "bio": "Divya is a strategy consultant at HCLTech, working with clients in APAC to align their business objectives with tech initiatives, thereby improving organisational efficiencies. She is an IT engineer and has an MBA, and has worked across Financial Services and diversified industries.",
                 "image": "/img/scraped/speakers/65238fe6a9f45e134cbffae0_Screen_Shot_2023-10-09_at_164b757f.png",
@@ -9126,7 +9126,7 @@
               },
               {
                 "name": "Divya Kumar",
-                "title": "Strategy Consultant - HCL Tech",
+                "title": "Strategy Consultant - HCLTech",
                 "company": "",
                 "bio": "Divya is a strategy consultant at HCLTech, working with clients in APAC to align their business objectives with tech initiatives, thereby improving organisational efficiencies. She is an IT engineer and has an MBA, and has worked across Financial Services and diversified industries.",
                 "image": "/img/scraped/speakers/65238fe6a9f45e134cbffae0_Screen_Shot_2023-10-09_at_164b757f.png",
@@ -12127,7 +12127,7 @@
         "location": {
           "format": "in_person",
           "venueName": "Vector’s office",
-          "address": "110 Carlton Gore Road, Newmarket, Auckland 1023, New Zealand",
+          "address": "Level 6, 110 Carlton Gore Road, Newmarket, Auckland 1023, New Zealand",
           "city": "",
           "country": "New Zealand",
           "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8652009,174.77722&query_place_id=ChIJYVjkP3RIDW0RqkR_qut8Sm0",
