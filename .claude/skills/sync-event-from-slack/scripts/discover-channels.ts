@@ -80,6 +80,13 @@ const skipRecord = flags.has("--no-record");
  */
 const GROWN_THREAD_PEEK_CAP = 8;
 
+/**
+ * How many pages of history the thread check walks for a conversation that
+ * matters. 25 × 200 = 5,000 parents, past the full history of every channel in
+ * this workspace, so in practice it means "all of it" with a stop built in.
+ */
+const THREAD_SCAN_MAX_PAGES = 25;
+
 /** A thread carrying replies the manifest has no record of anyone reading. */
 interface GrownThread {
   ts: string;
@@ -148,10 +155,18 @@ async function newMessagesSince(
   oldest: string | undefined,
   grown: GrownThread[] = [],
   cap = 60,
-): Promise<{ count: number; texts: string[]; hasImage: boolean; latestTs: string }> {
+): Promise<{
+  count: number;
+  texts: string[];
+  hasImage: boolean;
+  latestTs: string;
+  /** The cap stopped the scan before the delta ran out. */
+  truncated: boolean;
+}> {
   const texts: string[] = [];
   let hasImage = false;
   let count = 0;
+  let truncated = false;
   let latestTs = oldest ?? "0";
   let cursor: string | undefined;
   try {
@@ -169,9 +184,9 @@ async function newMessagesSince(
         if ((m as any).text) texts.push((m as any).text);
         if (((m as any).files ?? []).some((f: any) => /^image\//.test(f.mimetype ?? ""))) hasImage = true;
         if (Number(ts) > Number(latestTs)) latestTs = ts;
-        if (count >= cap) break;
+        if (count >= cap) { truncated = true; break; }
       }
-      cursor = count >= cap ? undefined : r.response_metadata?.next_cursor || undefined;
+      cursor = truncated ? undefined : r.response_metadata?.next_cursor || undefined;
     } while (cursor);
   } catch {
     /* not_in_channel etc. — treated as no readable content */
@@ -194,7 +209,7 @@ async function newMessagesSince(
     }
   }
 
-  return { count, texts, hasImage, latestTs };
+  return { count, texts, hasImage, latestTs, truncated };
 }
 
 // --- fuzzy event matching for backfill ------------------------------------
@@ -247,6 +262,13 @@ interface Row {
   evidence: string;
   /** New content is thread replies only — no parent moved, so no ts changed. */
   repliesOnly: boolean;
+  /**
+   * The scan hit its cap before the delta ran out, so the signal score was
+   * computed on a subset. Such a row is NEVER quiet: advancing a scan position
+   * past messages nothing looked at is the same class of lie the two-position
+   * split exists to stop.
+   */
+  scanTruncated: boolean;
   /** Grown threads this run actually read. Only quiet rows record them. */
   grownThreads: GrownThread[];
   fingerprintStale: boolean;
@@ -270,6 +292,8 @@ function isQuiet(action: string): boolean {
 
 function decideAction(r: Row): string {
   if (r.archived) return "archived";
+  // A partial scan cannot conclude anything, including "nothing here".
+  if (r.scanTruncated) return `read in full (scan truncated at ${r.newCount})`;
   /*
    * ALWAYS-READ WINS OVER EVERY OTHER RULE, INCLUDING THE SIGNAL GATE.
    *
@@ -372,6 +396,7 @@ async function main() {
     let evidence = "";
     let latestTs = watermark ?? "0";
     let repliesOnly = false;
+    let scanTruncated = false;
     let grownThreads: GrownThread[] = [];
 
     // Read history wherever it is actually reachable. On a user token that
@@ -391,17 +416,38 @@ async function main() {
        * also have a new top-level message; a channel with replies alone would
        * never have appeared in the table at all.
        *
-       * A page of 200 costs the same one call and carries `reply_count` and
+       * A page of 200 costs one call and carries `reply_count` and
        * `latest_reply` for every parent on it, which is an exact comparison
-       * against what the manifest says was read. Threads older than 200 parents
-       * back are still out of view here — `fetch-channel.ts --state` walks the
-       * whole history and is the backstop for those.
+       * against what the manifest says was read.
+       *
+       * HOW FAR BACK. One page was the first version, with a note that
+       * `fetch-channel.ts --state` was the backstop for older threads. That was
+       * circular: the fetch only runs on a conversation the triage surfaced, so
+       * a thread older than the window could never surface itself. Conversations
+       * where being wrong actually costs something — a mapped event, or a
+       * `skip` marked `alwaysRead` — are now walked to the end of their history.
+       * Everything else keeps the single cheap page, because 220 conversations
+       * paged in full on every run is a rate-limit wall, and `verify-coverage.ts`
+       * is the tool that checks those to the last message on demand.
        */
       let peek = "0";
       const grown: GrownThread[] = [];
+      const deepScan =
+        mapping?.kind === "event" || (mapping?.kind === "skip" && mapping.alwaysRead);
       try {
-        const r = await slack.conversations.history({ channel: c.id, limit: 200 });
-        const page = (r.messages ?? []) as any[];
+        const page: any[] = [];
+        let pcur: string | undefined;
+        let pages = 0;
+        do {
+          const r = await slack.conversations.history({
+            channel: c.id,
+            limit: 200,
+            cursor: pcur,
+          });
+          page.push(...((r.messages ?? []) as any[]));
+          pcur = r.response_metadata?.next_cursor || undefined;
+          pages++;
+        } while (deepScan && pcur && pages < THREAD_SCAN_MAX_PAGES);
         peek = page[0]?.ts ?? "0";
         const knownThreads = cs?.threads ?? {};
         for (const m of page) {
@@ -442,6 +488,7 @@ async function main() {
         if (needBodies) {
           const res = await newMessagesSince(c.id, watermark, grown);
           newCount = res.count;
+          scanTruncated = res.truncated;
           hasNew = res.count > 0 || threadGrew;
           if (Number(res.latestTs) > Number(latestTs)) latestTs = res.latestTs;
           if (isSignalScanned(type) && res.texts.length) {
@@ -499,6 +546,7 @@ async function main() {
       signalHits,
       evidence,
       repliesOnly,
+      scanTruncated,
       grownThreads,
       fingerprintStale,
       staleStatus,
