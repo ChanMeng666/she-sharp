@@ -487,6 +487,23 @@ filename to `.jpg`. Do not re-encode the file.
   and every run re-read them from the beginning.)*
 - **Commit `state/sync-state.json` after a discovery run**, not just after a
   sync — it now carries read positions that a discovery run alone produces.
+- **`skip` answers "does this feed a page?", not "is this worth opening?"** A 1:1
+  DM with the events lead feeds no page, so `skip` is right — and it is also
+  where "please update Carolina Lobos' profile on the website" arrives. On
+  5 Aug 2026 exactly that message was hidden and its read position advanced, in
+  a conversation whose own recorded reason said *"read the delta in full every
+  run"*. Four DMs said something equivalent and all four were being swept past.
+  Mark those `--always-read`:
+  ```
+  npx tsx .../update-state.ts --channel <id> --name <n> --watermark <ts>     --mapping skip --reason "<why>" --always-read
+  ```
+  The flag is sticky, keeps the conversation out of the `create?` pool, and
+  forces it into the table as `read in full (always-read)` on any new content —
+  **beating the signal gate**, which scores a line like that one at zero because
+  it names no venue, date or ticket. Seven conversations carry it today: the
+  1:1 DMs with Nirmala, Nikita, Len, Alyssa and Mahsa, and the two hackathon
+  mentor group DMs, because a roster change is a page change. Clear it with
+  `--no-always-read`. Use it for any conversation where a person sends work.
 - **Skip stickiness:** a `skip` mapping stays skipped until new activity arrives
   (then it shows `skip→review`). Record *why* you skipped in `--reason`. On a
   general channel or a DM the bar is higher — only a delta that scores as event

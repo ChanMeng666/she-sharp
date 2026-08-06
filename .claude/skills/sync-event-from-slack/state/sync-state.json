@@ -13128,7 +13128,8 @@
       "type": "dm",
       "mapping": {
         "kind": "skip",
-        "reason": "Group DM: hackathon mentor recruitment ops (Nikita, Prasanth, Nirmala, Lesley). Roster/logistics, no page copy."
+        "reason": "Group DM: hackathon mentor recruitment ops (Nikita, Prasanth, Nirmala, Lesley). Roster/logistics, no page copy.",
+        "alwaysRead": true
       },
       "watermarkTs": "1785272548.448119",
       "threads": {
@@ -13138,7 +13139,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T04:31:22.214Z",
+      "lastSyncedAt": "2026-08-06T04:17:28.685Z",
       "lastSyncedCommit": "",
       "digest": "Hackathon 2026 mentor-recruitment working group. Everything here is upstream of the page: F&P mentor confirmations from Nicholas Fourie, chasing mentors to submit bio+photo+availability, Discord setup (a PUBLIC intro invite and a PRIVATE mentors-only invite - only the participant one is on the site), Red Hat swag. Mentor names reach the page only after a bio and photo arrive. Contains the mentor Runsheet Google Sheet link and mentor PII - keep out.",
       "digestAt": "2026-08-05T04:31:22.213Z"
@@ -13170,18 +13171,19 @@
           "latestReplyTs": "1785721385.023369"
         }
       },
-      "fingerprint": "sha256:db82b85cc71043539a910f87a2a520fbfe8abedd160eec4d54df07d28780ccfd",
-      "lastSyncedAt": "2026-08-05T12:58:46.393Z",
+      "fingerprint": "sha256:0a72bf89009fe2a635b563486b38a54ef068858ff029f11a7221d9dd4b9354fc",
+      "lastSyncedAt": "2026-08-06T04:21:14.129Z",
       "lastSyncedCommit": "",
-      "digest": "Les Mills x She Sharp panel 'No Pain, All Gain - Getting Fit for AI', Thu 3 Sep 2026 5:00-7:30pm NZST, Level 2, 200 Victoria Street West, Auckland Central 1010. PUBLISHED - Nirmala confirmed in-channel 5 Aug that the event page is live, and asked that its details go into the MYOB thank-you email (that email is the /send-event-emails skill's job, not this one). The page carries the public Humanitix registrationUrl, the organiser's own blurb from #marketing 24 Jul, the postcode, the agenda matching the run sheet, and all FOUR panellists. The hackathon deck's UPCOMING_SNAPSHOT points at this event's poster, so a title, date or poster change here must be hand-copied into lib/deck/decks/aotearoa-ai-hackathon-festival-2026.ts - it is a snapshot, not a live read. SPEAKER SOURCE was the 'Speakers' tab of 'Lesmills Event 03 September - Run Sheet.xlsx', a LOCAL file the user supplied - NOT reachable from Slack, do not expect to re-derive it from the channel. Panel: Keryn McKenzie (Senior Director - Data & AI), Carolina Lobos (Head of Finance), Ben Sullivan (Legal Counsel), Gemma Lynskey (Global Comms + Org Development Director) - all Les Mills International, all with LinkedIn verified 5 Aug against their own profiles. Employers were CONFIRMED from those profiles, not inferred: Keryn's run-sheet row and bio named none and the field was deliberately left blank until her profile confirmed it; Ben was corrected from 'Les Mills' to 'Les Mills International'. Titles the speakers supplied for this event are kept over their LinkedIn headlines. STILL OWED BY LES MILLS: Carolina Lobos's bio and photograph. Her run-sheet row had a name and nothing else; role and employer came from her own profile, and she is on the page without a bio because a confirmed panellist missing from 'Meet the Panel' is worse than one whose card is thin. Do NOT write a bio for her - the other three are their own words and an invented fourth would read as such. Also open: galleryUrl empty until after the event; the sheet's own 'Website & Humanitix event page' checklist still has every row FALSE, including 'Speakers bio added', which the 5 Aug sync completes. A deck exists at lib/deck/decks/event-lesmills-03-september-2026.ts with upcoming: [] and a TODO to snapshot the next event once one is published. REDACTION LANDMINES - VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE, NEVER WRITE THEM HERE, NOT EVEN AS A PATTERN PLUS SUFFIX LIST: a dozen private Humanitix registration links, one per sponsor organisation plus ambassador and ambassador-guest allocations, each keyed to its own access code. Publish only the plain public registration URL. Keep the internal Runsheet bookmark out too.",
-      "digestAt": "2026-08-05T12:58:46.392Z"
+      "digest": "Les Mills x She Sharp panel 'No Pain, All Gain - Getting Fit for AI', Thu 3 Sep 2026 5:00-7:30pm NZST, Level 2, 200 Victoria Street West, Auckland Central 1010. PUBLISHED - Nirmala confirmed in-channel 5 Aug that the event page is live, and asked that its details go into the MYOB thank-you email (that email is the /send-event-emails skill's job, not this one). The page carries the public Humanitix registrationUrl, the organiser's own blurb from #marketing 24 Jul, the postcode, the agenda matching the run sheet, and all FOUR panellists. The hackathon deck's UPCOMING_SNAPSHOT points at this event's poster, so a title, date or poster change here must be hand-copied into lib/deck/decks/aotearoa-ai-hackathon-festival-2026.ts - it is a snapshot, not a live read. SPEAKER SOURCE was the 'Speakers' tab of 'Lesmills Event 03 September - Run Sheet.xlsx', a LOCAL file the user supplied - NOT reachable from Slack, do not expect to re-derive it from the channel. Panel: Keryn McKenzie (Senior Director - Data & AI), Carolina Lobos (Head of Finance), Ben Sullivan (Legal Counsel), Gemma Lynskey (Global Comms + Org Development Director) - all Les Mills International, all with LinkedIn verified 5 Aug against their own profiles. Employers were CONFIRMED from those profiles, not inferred: Keryn's run-sheet row and bio named none and the field was deliberately left blank until her profile confirmed it; Ben was corrected from 'Les Mills' to 'Les Mills International'. Titles the speakers supplied for this event are kept over their LinkedIn headlines. CAROLINA LOBOS RESOLVED 6 Aug 2026. Nirmala asked by DM ('please update Carolina Lobos' profile on the website') and linked the run sheet; her Speakers tab now carries both a bio in her own words (701 chars) and a corrected role, 'Head of Finance - LM Media & Automation Lead', which is wider than the 'Head of Finance' taken from her LinkedIn profile in the earlier pass. Both applied; the separator was normalised to an en dash to match the sibling titles. Her Picture Link cell is STILL EMPTY - the photograph on the page came from elsewhere and is real, so nothing is owed there. The run sheet exports publicly: https://docs.google.com/spreadsheets/d/16V4PJHLUpW2eB0g2DywKTxjqmYT4UHDZ/export?format=csv&gid=1792873316 is the Speakers tab and needs no Drive login, which is how this was resolved without asking anyone to re-send a file. Also open: galleryUrl empty until after the event; the sheet's own 'Website & Humanitix event page' checklist still has every row FALSE, including 'Speakers bio added', which the 5 Aug sync completes. A deck exists at lib/deck/decks/event-lesmills-03-september-2026.ts with upcoming: [] and a TODO to snapshot the next event once one is published. REDACTION LANDMINES - VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE, NEVER WRITE THEM HERE, NOT EVEN AS A PATTERN PLUS SUFFIX LIST: a dozen private Humanitix registration links, one per sponsor organisation plus ambassador and ambassador-guest allocations, each keyed to its own access code. Publish only the plain public registration URL. Keep the internal Runsheet bookmark out too.",
+      "digestAt": "2026-08-06T04:21:14.128Z"
     },
     "C0BL35V8DFB": {
       "name": "mpdm-prasanth.pavithran--chanmeng6666--lesleygao.it--nikitakumari0318--nirmalac0503--esaraghafoor-1",
       "type": "dm",
       "mapping": {
         "kind": "skip",
-        "reason": "Group DM: hackathon mentor availability + ticketing. Roster changes only."
+        "reason": "Group DM: hackathon mentor availability + ticketing. Roster changes only.",
+        "alwaysRead": true
       },
       "watermarkTs": "1785185514.766339",
       "threads": {
@@ -13191,7 +13193,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T04:31:23.826Z",
+      "lastSyncedAt": "2026-08-06T04:18:02.221Z",
       "lastSyncedCommit": "",
       "digest": "Split off from the mentor-recruitment group DM on 27 Jul. Records two roster facts the page depends on: Lesley Gao WITHDREW as mentor (27 Jul, family commitment on 8 Aug) - she was never listed, so no action; Sara Ghafoor AGREED to mentor (27 Jul) but has never supplied bio/photo, so she is deliberately NOT listed. Also guest-code ticket purchases for named individuals - internal, never publish.",
       "digestAt": "2026-08-05T04:31:23.825Z"
@@ -14960,7 +14962,8 @@
       "type": "dm",
       "mapping": {
         "kind": "skip",
-        "reason": "1:1 DM with Alyssa. Website development work log, no event content."
+        "reason": "1:1 DM with Alyssa. Website development work log, no event content.",
+        "alwaysRead": true
       },
       "watermarkTs": "1768970329.124609",
       "threads": {
@@ -14970,7 +14973,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T04:31:28.646Z",
+      "lastSyncedAt": "2026-08-06T04:17:25.730Z",
       "lastSyncedCommit": "",
       "digest": "Development-thread DM: auth/login logic changes, review logs, feature walkthroughs dating to late 2025. Scores on the event-signal heuristic because dev logs quote words like 'registration' and dates - that is a FALSE POSITIVE, not event content. Still read the delta rather than trusting this note if it ever surfaces again.",
       "digestAt": "2026-08-05T04:31:28.644Z"
@@ -15016,7 +15019,8 @@
       "type": "dm",
       "mapping": {
         "kind": "skip",
-        "reason": "1:1 DM with Mahsa (founder). Strategy and platform decisions, not event-page copy."
+        "reason": "1:1 DM with Mahsa (founder). Strategy and platform decisions, not event-page copy.",
+        "alwaysRead": true
       },
       "watermarkTs": "1785410334.970819",
       "threads": {
@@ -15050,7 +15054,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T04:31:27.015Z",
+      "lastSyncedAt": "2026-08-06T04:17:27.197Z",
       "lastSyncedCommit": "",
       "digest": "Founder DM. Content is platform strategy - Resend vs Mailchimp quota (she declined in Jul 2026: not a priority, Discord is the hackathon comms channel), website visual design sign-off, tooling demos. Note for the newsletter work: her 15 Jul reply is the standing decision on why Mailchimp has not been replaced. No event-page edits have come through here, but she does approve them elsewhere.",
       "digestAt": "2026-08-05T04:31:27.014Z"
@@ -15117,7 +15121,8 @@
       "type": "dm",
       "mapping": {
         "kind": "skip",
-        "reason": "1:1 DM with Len Estioko (marketing). Not an event channel, but DOES carry ad-hoc page-change instructions - read the delta in full every run."
+        "reason": "1:1 DM with Len Estioko (marketing). Not an event channel, but DOES carry ad-hoc page-change instructions - read the delta in full every run.",
+        "alwaysRead": true
       },
       "watermarkTs": "1785836362.872489",
       "threads": {
@@ -15131,7 +15136,7 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T04:30:40.721Z",
+      "lastSyncedAt": "2026-08-06T04:17:24.269Z",
       "lastSyncedCommit": "",
       "digest": "READ IN FULL, NEVER FROM THE DISCOVERY SNIPPET. On 2026-08-05 this DM was the ONLY place carrying 'Please take out Christine Yip as a mentor, she pulled out today' (4 Aug 21:34 NZST) - it appeared in no channel, and a first pass that judged this DM from its one-line discovery evidence ('dev work, not events') missed it and left a withdrawn mentor on a page due to be projected two days later. Len also relays hackathon slide feedback here. Mostly personal otherwise (a job referral and CVs) - that content is private, never quote or commit it.",
       "digestAt": "2026-08-05T04:30:40.720Z"
@@ -15193,12 +15198,13 @@
       "type": "dm",
       "mapping": {
         "kind": "skip",
-        "reason": "1:1 DM with Nikita Kumari (events lead). Carries direct event-page edit requests - read the delta in full every run."
+        "reason": "1:1 DM with Nikita Kumari (events lead). Carries direct event-page edit requests - read the delta in full every run.",
+        "alwaysRead": true
       },
       "watermarkTs": "1785374818.222099",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T04:30:42.263Z",
+      "lastSyncedAt": "2026-08-06T04:17:22.809Z",
       "lastSyncedCommit": "",
       "digest": "READ IN FULL. Nikita sends page edits straight here rather than to the event channel. 2026-08-05 sync applied her 29 Jul request: keynote row merged to '5:50-6:10pm Keynote speaker session' (no name, no separate Q&A) - a previous pass removed the name but kept a Q&A row, which was not what she asked for. Her 19 Jun request (Peyvand 20 June About us / What to Expect rewrite) is already live. She also confirms registration counts and closures here.",
       "digestAt": "2026-08-05T04:30:42.263Z"
@@ -15208,12 +15214,13 @@
       "type": "dm",
       "mapping": {
         "kind": "skip",
-        "reason": "1:1 DM with Nirmala Chinnappan (events). Carries direct event-page edit requests - read the delta in full every run."
+        "reason": "1:1 DM with Nirmala Chinnappan (events). Carries direct event-page edit requests - read the delta in full every run.",
+        "alwaysRead": true
       },
       "watermarkTs": "1785967140.970919",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T03:41:46.613Z",
+      "lastSyncedAt": "2026-08-06T04:17:21.291Z",
       "lastSyncedCommit": "",
       "digest": "READ IN FULL. Nirmala asks for page changes here as well as in channel. 2026-08-04: 'Can you publish the Les Mills event live? I have updated the banner in humanitix page' + 'give the above url to Register Now button' -> registrationUrl applied 5 Aug. 13 Jul: the four AI Hackathon judge profiles, sourced from the private Runsheet Google Sheet - already live. 3 Aug she asked where the published mentor list came from. Her outstanding ask is Les Mills SPEAKER profiles, still blocked on that private Sheet.",
       "digestAt": "2026-08-05T04:30:43.840Z"
