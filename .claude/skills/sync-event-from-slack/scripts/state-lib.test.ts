@@ -22,6 +22,7 @@ import assert from "node:assert";
 import {
   mergeThreadState,
   threadHasUnread,
+  type Mapping,
   type ThreadState,
 } from "./state-lib";
 
@@ -126,6 +127,37 @@ check("delivering everything reproduces the full current state", () => {
     "200.0": { replyCount: 3, latestReplyTs: "230.0" },
     "300.0": { replyCount: 2, latestReplyTs: "320.0" },
   });
+});
+
+console.log("\nalways-read mappings");
+
+/**
+ * The triage's own rule, restated here so it cannot drift: a `skip` carrying
+ * `alwaysRead` must never be treated as settled. `decideAction` and `isQuiet`
+ * live in `discover-channels.ts`, which cannot be imported without a Slack
+ * token, so the invariant is asserted against the shapes they branch on.
+ */
+const settled = (action: string) =>
+  action.startsWith("no-op") || action === "archived" || action === "skip";
+
+check("a plain skip with new content stays settled", () => {
+  const m: Mapping = { kind: "skip", reason: "bot channel" };
+  assert.strictEqual(m.kind === "skip" && !!m.alwaysRead, false);
+  assert.strictEqual(settled("skip"), true);
+});
+
+check("an always-read skip with new content is NOT settled", () => {
+  // THE 5 AUGUST DM. `skip` was right — the DM feeds no page — and `skip` was
+  // also what hid "please update Carolina Lobos' profile" and advanced past it.
+  const m: Mapping = { kind: "skip", reason: "carries page edits", alwaysRead: true };
+  assert.strictEqual(m.kind === "skip" && m.alwaysRead === true, true);
+  assert.strictEqual(settled("read in full (always-read)"), false);
+});
+
+check("an always-read skip with nothing new is still settled", () => {
+  // Otherwise seven conversations sit in the table forever and the table stops
+  // being read, which is the failure this whole area keeps circling back to.
+  assert.strictEqual(settled("no-op"), true);
 });
 
 console.log(

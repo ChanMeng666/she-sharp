@@ -46,7 +46,24 @@ export type Mapping =
   // One channel can feed more than one event (e.g. a "13 & 20 June" planning
   // channel, or a month split into multiple sessions), hence an array.
   | { kind: "event"; events: { slug: string; eventId: number }[] }
-  | { kind: "skip"; reason: string }
+  /**
+   * `skip` answers "does this conversation feed a page on the site?" — and it
+   * was being read as "is this conversation worth opening?", which are not the
+   * same question.
+   *
+   * A 1:1 DM with the events lead feeds no page directly, so it is correctly
+   * `skip`; it is also where "please update Carolina Lobos' profile" arrives.
+   * On 5 Aug 2026 exactly that message was swept past and its read position
+   * advanced, in a conversation whose own recorded reason read "carries direct
+   * event-page edit requests — read the delta in full every run". Four DMs said
+   * something equivalent and all four were hidden.
+   *
+   * `alwaysRead` separates the two questions. It keeps the conversation out of
+   * the `create?` candidate pool while forcing it into the table on any new
+   * content, and it stops the triage advancing a read position for content
+   * nobody has read.
+   */
+  | { kind: "skip"; reason: string; alwaysRead?: boolean }
   | { kind: "none" };
 
 export interface ThreadState {
