@@ -36,6 +36,18 @@ export const NEWSLETTER_MANUAL: NewsletterIssue[] = [
     year: 2026,
     url: "https://mailchi.mp/d19ba8c843ff/xe8t2dvmn3-5867920",
   },
+  // Restoring a back issue rather than adding a new one. The legacy Webflow
+  // site had no card for June 2022, and `newsletters-archive.ts` used to read
+  // that absence as "no newsletter that month". It went out: the draft was
+  // proofread in-channel on 2022-06-27 (a headline typo and the footer social
+  // links were fixed) and sent that afternoon. The campaign still resolves and
+  // is titled "She Sharp Newsletter - June 2022".
+  {
+    id: "2022-06",
+    month: 6,
+    year: 2022,
+    url: "https://us3.campaign-archive.com/?u=1bcf1c40837f51b409973326f&id=24dba84a67",
+  },
 ];
 
 /**

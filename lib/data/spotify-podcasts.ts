@@ -1,6 +1,19 @@
 /**
  * Spotify podcast configuration for She Sharp
  *
+ * NAMING — the show's own name is "She Sharp Bytes". The team settled on it in
+ * April 2022 and every published link since carries `shesharpbytes`. This site
+ * calls it "She Sharp Talks" in six places (the podcasts page heading and
+ * description, the embed title, the nav description and the resources preview
+ * card). The Spotify show id below is correct and points at the same show, so
+ * nothing is broken — but the two names are not the same name, and which one
+ * to standardise on is a branding call nobody has made. Individual episode
+ * titles containing "Bytes" are correct history and should not be rewritten.
+ *
+ * The archive also records, in September 2024, that the organisation stopped
+ * making the podcast and moved social content to video and written formats.
+ * There are no 2024-or-later episodes here, which matches.
+ *
  * HOW TO ADD NEW EPISODES:
  * =========================
  * 1. Go to Spotify and find the episode you want to feature

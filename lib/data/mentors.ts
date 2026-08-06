@@ -260,10 +260,11 @@ export const mentors: Mentor[] = [
   {
     id: 'tracey-connor',
     name: 'Tracey Connor',
-    role: 'Digital Test and Release Manager',
-    company: 'Fonterra',
+    // Moved from Fonterra to NZTA; she told the team herself on 2026-02-13.
+    role: 'Chapter Lead of Engineering',
+    company: 'NZTA',
     image: '/img/scraped/site/mentorship/65efd23750b6ef0921c40f00_Tracey_Photo_7bcf37c6.jpg',
-    description: 'Tracey has 15+ years\’ experience as an IT people, thought and technical leader across Test, Release, Development, Build and DevOps capabilities and is experienced in resource planning, recruitment, and development of capabilities. She is an advocate of business-outcome delivery utilizing agile and lean delivery approaches with a passion for continuous delivery and automation. She loves designing and implementing Agile/DevOps delivery systems at scale. \n\nShe brings out the very best in people, loves diversity and relishes a challenge. Through adaptive leadership she enjoys nurturing, leading, building and developing high performing engineering teams. With a Green Belt in Lean Six Sigma, she recognizes continuous improvement as a team sport! Tracey has held international management positions at JP Morgan and Deloitte – her current role is building up a practice of awesome platform and release engineers at Fonterra.',
+    description: 'Tracey has 15+ years\’ experience as an IT people, thought and technical leader across Test, Release, Development, Build and DevOps capabilities and is experienced in resource planning, recruitment, and development of capabilities. She is an advocate of business-outcome delivery utilizing agile and lean delivery approaches with a passion for continuous delivery and automation. She loves designing and implementing Agile/DevOps delivery systems at scale. \n\nShe brings out the very best in people, loves diversity and relishes a challenge. Through adaptive leadership she enjoys nurturing, leading, building and developing high performing engineering teams. With a Green Belt in Lean Six Sigma, she recognizes continuous improvement as a team sport! Tracey has held international management positions at JP Morgan and Deloitte, and built up a practice of platform and release engineers at Fonterra. She is now Chapter Lead of Engineering at NZTA.',
     expertise: ['Test Management', 'Release Management', 'DevOps', 'Team Leadership', 'Quality Assurance'],
     industry: 'Technology',
     yearsOfExperience: 15,
