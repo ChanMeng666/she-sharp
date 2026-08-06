@@ -79,6 +79,11 @@ function main() {
 
   const type = (arg("--type") as "event" | "general") ?? classifyChannel(name);
 
+  // Loaded before the mapping is built: `--always-read` is sticky, so the skip
+  // branch has to see what the channel was already carrying.
+  const manifest = loadManifest();
+  const prev = manifest.channels[channelId];
+
   // Build the mapping.
   const kind = arg("--mapping") ?? "none";
   let mapping: Mapping;
@@ -93,13 +98,26 @@ function main() {
     fingerprint = fingerprintForMapping(mapping);
   } else if (kind === "skip") {
     const reason = arg("--reason") ?? "skipped";
-    mapping = { kind: "skip", reason };
+    /*
+     * `--always-read` keeps a conversation out of the create? pool while still
+     * forcing it into the triage on any new content. It exists for the DMs of
+     * the people who send work — they feed no page, so `skip` is right, but a
+     * skip that hides them is how "please update Carolina Lobos' profile" went
+     * unread for a day. Sticky: once set it survives later state writes unless
+     * `--no-always-read` clears it.
+     */
+    const flagged = process.argv.includes("--always-read");
+    const cleared = process.argv.includes("--no-always-read");
+    const previous =
+      prev?.mapping?.kind === "skip" ? prev.mapping.alwaysRead : undefined;
+    const alwaysRead = cleared ? false : flagged || previous;
+    mapping = alwaysRead
+      ? { kind: "skip", reason, alwaysRead: true }
+      : { kind: "skip", reason };
   } else {
     mapping = { kind: "none" };
   }
 
-  const manifest = loadManifest();
-  const prev = manifest.channels[channelId];
   const mergedThreads = { ...(prev?.threads ?? {}), ...threads };
 
   // Digest: explicit --digest/--digest-file wins; otherwise inherit the prior.
