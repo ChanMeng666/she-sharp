@@ -114,23 +114,23 @@ export function scannedPosition(c: ChannelState | undefined): string {
 /**
  * Conversations the triage has scored past content the model was never shown.
  *
- * This is the question "have I actually read everything?", made answerable.
- * It only counts conversations where being behind matters: a mapped event, or a
- * `skip` marked `alwaysRead`. A bot channel scored and dismissed is not a
- * backlog, which is the whole point of the signal gate.
+ * EVERY conversation counts. This used to exempt anything the signal gate had
+ * dismissed — bot channels, chatter, settled history — on the reasoning that a
+ * scored-and-dismissed channel is not a backlog. That reasoning assumes the
+ * heuristic is right about what matters, and it is a keyword heuristic: it
+ * scores "please update Carolina Lobos' profile on the website" at zero, and it
+ * cannot know that somebody decided an event date in #random.
+ *
+ * So the gate now decides PRIORITY, never whether something is read. Anything
+ * not delivered to the model by a real fetch is unread, and says so, however
+ * chatty the room. `mapping` still records what a conversation feeds; it no
+ * longer excuses anyone from reading it.
  */
 export function unreadConversations(
   m: Manifest,
 ): { id: string; name: string; type: ChannelType; watermarkTs: string; scannedTs: string }[] {
   const out = [];
   for (const [id, c] of Object.entries(m.channels)) {
-    const matters =
-      c.mapping?.kind === "event" ||
-      (c.mapping?.kind === "skip" && c.mapping.alwaysRead) ||
-      // An unmapped 1:1 DM. Someone wrote to you and nobody has decided what
-      // that conversation is yet, so it cannot be assumed to be noise.
-      (c.type === "dm" && (!c.mapping || c.mapping.kind === "none"));
-    if (!matters) continue;
     const scanned = scannedPosition(c);
     /*
      * A read position of "0" means NEVER READ, not "read up to the beginning of
@@ -141,7 +141,9 @@ export function unreadConversations(
      * so nothing ever looked at it again. Comparing scanned against read cannot
      * catch that on its own: both were "0".
      */
-    const neverRead = !c.watermarkTs || c.watermarkTs === "0";
+    // `readAt` is the honest test. `watermarkTs` alone cannot answer it for any
+    // entry written before the split, because the triage wrote that field too.
+    const neverRead = !c.readAt || !c.watermarkTs || c.watermarkTs === "0";
     if (neverRead || Number(scanned) > Number(c.watermarkTs)) {
       out.push({ id, name: c.name, type: c.type, watermarkTs: c.watermarkTs, scannedTs: scanned });
     }
@@ -245,6 +247,18 @@ export interface ChannelState {
    * the old single-position code meant.
    */
   scannedTs?: string;
+  /**
+   * When a real fetch payload last delivered this conversation's content to the
+   * model. Set ONLY by `update-state.ts --from <payload>`.
+   *
+   * Absent means never read — which is not the same as `watermarkTs: "0"`, and
+   * that is the whole reason it exists. Before the scanned/read split, the
+   * triage advanced the one position it had, so a conversation the heuristic had
+   * merely glanced at ended up with a watermark that looks exactly like a
+   * conversation somebody read end to end. No comparison of numbers already in
+   * the manifest can tell those apart; only recording the act can.
+   */
+  readAt?: string;
   threads: Record<string, ThreadState>; // parentTs -> thread watermark
   fingerprint: string; // sha256:… of the mapped event's salient fields ("" when none)
   lastSyncedAt: string;

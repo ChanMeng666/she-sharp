@@ -531,6 +531,14 @@ filename to `.jpg`. Do not re-encode the file.
 - **Never widen a read receipt to "what exists" rather than "what was handed
   over".** It is a tempting simplification, it looks harmless, and it converts
   any delivery bug from a miss into a permanent silent loss.
+- **THE SIGNAL GATE DECIDES PRIORITY, NEVER WHETHER SOMETHING IS READ.** Every
+  conversation must be delivered to the model by a real fetch, chatter channels
+  included — people decide event dates in #random, and a keyword heuristic
+  cannot know which room a decision happened in. `audit-read-state.ts` counts
+  every conversation, and `readAt` (set only by `update-state.ts --from`) is
+  what proves one was read. A watermark alone cannot: before the scanned/read
+  split the triage advanced the only position there was, so a channel it merely
+  glanced at looks identical to one somebody read end to end.
 - **General-channel auto-scan:** discovery reads only messages past each general
   channel's watermark and surfaces a channel only when its event-signal score
   clears the threshold. A flagged general channel is a *candidate* — confirm the
