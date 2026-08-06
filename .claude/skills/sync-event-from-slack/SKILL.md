@@ -562,6 +562,13 @@ filename to `.jpg`. Do not re-encode the file.
   1:1 DMs with Nirmala, Nikita, Len, Alyssa and Mahsa, and the two hackathon
   mentor group DMs, because a roster change is a page change. Clear it with
   `--no-always-read`. Use it for any conversation where a person sends work.
+- **An unmapped 1:1 DM always surfaces when it has new content.** The signal
+  heuristic was built for channels where event content has to be found in
+  chatter; a person writing to you directly is not that. Silencing a DM is still
+  possible and still explicit — map it `skip` with a reason, which is how
+  Slackbot and the self-DM stay out of the table. This inverted after a
+  full-workspace `verify-coverage.ts --all` sweep found a contributor's DM 30
+  replies behind, unread since September 2025.
 - **Skip stickiness:** a `skip` mapping stays skipped until new activity arrives
   (then it shows `skip→review`). Record *why* you skipped in `--reason`. On a
   general channel or a DM the bar is higher — only a delta that scores as event

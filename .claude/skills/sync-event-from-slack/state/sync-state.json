@@ -15160,10 +15160,76 @@
       "name": "dm:Lesley Gao",
       "type": "dm",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "1:1 DM with Lesley Gao, who works on the website itself — she opens PRs against this repo and edits pages directly. Marked always-read because that is exactly the traffic the event-signal heuristic cannot see: a request about a page names no venue, date or ticket and scores zero.",
+        "alwaysRead": true
       },
       "watermarkTs": "1785749472.664919",
       "threads": {
+        "1758529434.949409": {
+          "replyCount": 1,
+          "latestReplyTs": "1758530730.741179"
+        },
+        "1773912682.750629": {
+          "replyCount": 1,
+          "latestReplyTs": "1773915437.255139"
+        },
+        "1773915515.053849": {
+          "replyCount": 7,
+          "latestReplyTs": "1773916508.070149"
+        },
+        "1775375495.768049": {
+          "replyCount": 3,
+          "latestReplyTs": "1775382966.977639"
+        },
+        "1776733440.444019": {
+          "replyCount": 1,
+          "latestReplyTs": "1776733474.382129"
+        },
+        "1776733759.805659": {
+          "replyCount": 3,
+          "latestReplyTs": "1776733858.179759"
+        },
+        "1778489110.295239": {
+          "replyCount": 1,
+          "latestReplyTs": "1778489194.616049"
+        },
+        "1778489346.737159": {
+          "replyCount": 2,
+          "latestReplyTs": "1778489486.988159"
+        },
+        "1779617717.621769": {
+          "replyCount": 1,
+          "latestReplyTs": "1779617751.650399"
+        },
+        "1779695358.521719": {
+          "replyCount": 1,
+          "latestReplyTs": "1779695895.188569"
+        },
+        "1780302003.094869": {
+          "replyCount": 1,
+          "latestReplyTs": "1780302167.576309"
+        },
+        "1780302456.647589": {
+          "replyCount": 1,
+          "latestReplyTs": "1780302536.251659"
+        },
+        "1780832268.481719": {
+          "replyCount": 1,
+          "latestReplyTs": "1780832908.935579"
+        },
+        "1781345331.774319": {
+          "replyCount": 1,
+          "latestReplyTs": "1781356825.529579"
+        },
+        "1781423622.433529": {
+          "replyCount": 2,
+          "latestReplyTs": "1781424278.217759"
+        },
+        "1781423653.757859": {
+          "replyCount": 3,
+          "latestReplyTs": "1781424304.649269"
+        },
         "1782128177.418369": {
           "replyCount": 7,
           "latestReplyTs": "1782129187.173439"
@@ -15174,8 +15240,10 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-06T06:28:35.087Z",
+      "lastSyncedCommit": "",
+      "digest": "PERSONAL DM — READ IT, NEVER QUOTE IT. Lesley Gao is a website contributor (PRs against this repo, direct page edits). The conversation is informal and candid about colleagues and about organisational decisions; none of that may reach a digest, a commit message, an event page or a Slack post. Read the delta each run for work requests and record the OUTCOME, not the exchange.\nSite-relevant facts extracted 6 Aug 2026, on the first full read of this DM: (1) The corporate-sponsorship tiers were example copy because no pricing had ever been set — she flagged in May 2026 that the prices should be hidden. VERIFIED RESOLVED 6 Aug 2026: components/ui/pricing-sponsorship.tsx now carries four tiers with names and descriptions and NO amounts, so nothing is owed here. (2) Webflow's body face p22-mackinac-pro is personal-use only and would have to be licensed for any other use — relevant if anyone proposes matching the old site's typography. (3) Brand direction in use is purple + navy blue, unchanged from the previous site.\nNothing else in this DM has ever produced a page change.",
+      "digestAt": "2026-08-06T06:28:35.086Z"
     },
     "D09FZHRC89W": {
       "name": "dm:Sara Ghafoor",

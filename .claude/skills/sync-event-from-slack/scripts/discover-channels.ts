@@ -329,6 +329,19 @@ function decideAction(r: Row): string {
   }
   // general + dm — scanned for event signal, never auto-created from.
   if (!r.readable) return "no-op (not readable)";
+  /*
+   * A 1:1 DM IS ADDRESSED TO YOU. The signal heuristic was built for channels
+   * where most traffic is chatter and the event content has to be found in it.
+   * A person writing to you directly is not that, and treating it as that is
+   * exactly how "please update Carolina Lobos' profile on the website" — no
+   * venue, no date, no ticket, score zero — was scanned past on 5 Aug 2026.
+   *
+   * So an unmapped DM with new content always surfaces. Silencing one is still
+   * possible and still explicit: map it `skip` with a reason, which is how
+   * Slackbot and the self-DM stay out of the table.
+   */
+  if (r.type === "dm" && (!r.mapping || r.mapping.kind === "none"))
+    return r.hasNew ? "read in full (dm)" : "no-op";
   // A skip here must be stickier than on an event channel. #contact-form-
   // notifications and every DM receive routine traffic forever, so resurfacing
   // on "any new message" would put them in the table every single run and train
