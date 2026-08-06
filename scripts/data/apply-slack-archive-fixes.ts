@@ -258,6 +258,72 @@ const findSpeaker = (event: EventRecord, name: string): Speaker | undefined => {
   }
 }
 
+// --------------------------------------------------------------- A20, id 92
+// Raquel asked on 2026-05-11 for the two recruiter bios added to the run sheet
+// to be put on the event page; nobody replied and it never happened. The
+// page's own copy meanwhile promised them — "As with every HER WAKA cohort,
+// RCSA will join the session" — so the description and the speaker list
+// disagreed. Values are the RCSA block of the June run sheet's Speakers tab.
+// No `image`: the run sheet links Drive files, and 12 of the 376 speakers on
+// this site already render fine without a photo.
+{
+  const speakers = get(92).detailPageData.speakers;
+  const existing = speakers.guest_speakers;
+  const rcsa: Speaker[] = [
+    {
+      name: "Lisa Cooley",
+      title: "Founder & Managing Director of BrightSpark",
+      company: "BrightSpark",
+      bio:
+        "With over 20 years’ experience in recruitment and 15 years in New " +
+        "Zealand’s tech and digital sector, Lisa brings deep expertise in " +
+        "hard-to-fill and specialist roles. She works closely with innovative " +
+        "companies and highly skilled candidates navigating competitive, " +
+        "short-market conditions. At the heart of Lisa’s work is helping " +
+        "people find roles that genuinely excite and fulfil them, while " +
+        "supporting businesses to thrive. A passionate advocate for " +
+        "people-first recruitment, Lisa runs jobseeker and graduate readiness " +
+        "workshops, champions Women in Tech, and supports inclusive hiring " +
+        "practices. She believes great recruitment can genuinely change lives.",
+      image: "",
+      linkedin: "",
+    },
+    {
+      name: "Sri Nanduri",
+      title: "Senior Consultant, Potentia",
+      company: "Potentia",
+      bio:
+        "Sri Nanduri is an experienced Auckland-based technology recruiter " +
+        "with over 8 years’ experience, specialising in Technology, " +
+        "Transformation and Digital roles within New Zealand. She has a " +
+        "strong background in senior client management, candidate placement " +
+        "and career coaching, helping professionals build personal brands and " +
+        "sharpen their interview skills. Sri stands out for her ability to " +
+        "find talent for niche, high-impact roles such as product management " +
+        "and technical leadership, having recruited product owners, senior " +
+        "data architects and testers.",
+      image: "",
+      linkedin: "",
+    },
+  ];
+
+  const group: SpeakerGroup = existing ?? { heading: "RCSA", speakers: [] };
+  let added = 0;
+  for (const speaker of rcsa) {
+    if (!group.speakers.some((s) => s.name === speaker.name)) {
+      group.speakers.push(speaker);
+      added++;
+    }
+  }
+  speakers.guest_speakers = group;
+  note(
+    "A20",
+    added
+      ? `id 92 added ${added} RCSA recruiter(s) from the June run sheet`
+      : "id 92 RCSA recruiters already listed"
+  );
+}
+
 // ---------------------------------------------------- A18, ids 88 / 89 / 92
 // The June run sheet's short description says "Note: This session is by
 // invitation only". Only id 90 carried it, and in April an outsider asked via
