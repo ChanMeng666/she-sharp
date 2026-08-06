@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "event": "aotearoa-ai-hackathon-festival-2026",
   "facts": [
     {
@@ -85,14 +85,14 @@
     },
     {
       "key": "national-panel-chair",
-      "value": "David Knox",
-      "note": "Chairs the national judging panel (Topologic). Named people are checked by exact name only — titles and organisations differ in voice between the two repos and are not worth pinning."
+      "value": "Albert Bifet",
+      "note": "Chairs the national judging panel (University of Waikato). Named people are checked by exact name only — titles and organisations differ in voice between the two repos and are not worth pinning. REVERSED IN v2: v1 had Knox as chair and Bifet as deputy. That was the wrong call. The AI Forum's own 'Aotearoa AI Hackathon Festival 2026 — Judging Panels' deck badges Bifet 'Chair' and Knox 'Deputy Chair' on the National Judging Panel slide, and it is the only source that states the roles at all — aihackathon.nz publishes no panel list. So the repo the v1 reconciliation 'corrected' had been right, and both repos then carried the swap. Do not flip this back without a newer AI Forum document that actually names the roles."
     },
     {
       "key": "national-panel-deputy",
-      "value": ["Albert Bifet", "deputy chair"],
-      "within": 80,
-      "note": "Deputy chair of the national judging panel (University of Waikato). Proximity-matched on purpose, and this is the fact that also protects national-panel-chair: both names appear in the same sentence, so pinning either name on its own would pass even if the two roles were swapped — which is precisely the drift that happened (one repo had Bifet as chair). Tying Bifet to 'deputy chair' makes a swap fail here."
+      "value": ["David Knox", "deputy chair"],
+      "within": 40,
+      "note": "Deputy chair of the national judging panel (Topologic). Proximity-matched on purpose, and this is the fact that also protects national-panel-chair: both names appear in the same sentence, so pinning either name on its own would pass even if the two roles were swapped. WINDOW TIGHTENED IN v2 from 80 to 40: at 80 the swap-detection this note claims did not actually work. Both repos write the two names in one ~95-character sentence, so an 80-character window reached 'deputy chair' from either name and the check stayed green whichever way round the roles were — which is how the v1 swap survived. 40 is wide enough for both repos' phrasings (the deputy's name is followed within ~20 characters by 'is/as deputy chair') and narrow enough that swapping the names fails. Verified by swapping them and watching the check go red in both repos; re-verify that way if you ever widen it."
     },
     {
       "key": "festival-window",
