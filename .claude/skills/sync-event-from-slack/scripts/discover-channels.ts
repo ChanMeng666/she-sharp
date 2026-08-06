@@ -254,13 +254,32 @@ interface Row {
   action: string;
 }
 
-/** Settled: nothing for a human or the model to do. Also gates watermark advance. */
+/**
+ * Settled: nothing for a human or the model to do. Also gates watermark advance.
+ *
+ * `read in full` is deliberately absent. It is the one action that means "the
+ * model has not seen this yet", so treating it as settled would advance a read
+ * position over content nobody read — which is exactly what happened to the
+ * events lead's DM on 5 Aug 2026.
+ */
 function isQuiet(action: string): boolean {
   return action.startsWith("no-op") || action === "archived" || action === "skip";
 }
 
 function decideAction(r: Row): string {
   if (r.archived) return "archived";
+  /*
+   * ALWAYS-READ WINS OVER EVERY OTHER RULE, INCLUDING THE SIGNAL GATE.
+   *
+   * These are the DMs of the people who send work. They feed no page, so they
+   * are correctly `skip` — and the signal heuristic scores a line like "please
+   * update Carolina Lobos' profile on the website" at zero, because it names no
+   * venue, no date and no ticket. Both facts were true on 5 Aug 2026 and the
+   * message sat unread for a day behind a mapping whose own reason said to read
+   * it in full every run.
+   */
+  if (r.mapping?.kind === "skip" && r.mapping.alwaysRead)
+    return r.hasNew ? "read in full (always-read)" : "no-op";
   if (r.type === "event") {
     if (!r.readable) return r.archived ? "archived" : "join+sync";
     if (r.mapping?.kind === "skip") return r.hasNew ? "skip→review (new msgs)" : "skip";
