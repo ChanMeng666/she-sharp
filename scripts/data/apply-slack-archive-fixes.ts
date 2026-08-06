@@ -267,6 +267,13 @@ const findSpeaker = (event: EventRecord, name: string): Speaker | undefined => {
 // disagreed. Values are the RCSA block of the June run sheet's Speakers tab.
 // No `image`: the run sheet links Drive files, and 12 of the 376 speakers on
 // this site already render fine without a photo.
+//
+// Two rendering constraints, both learned by breaking them: the speaker card
+// prints `[title, company].join(", ")`, so an employer already named in the
+// run sheet's Role column must not be repeated in `company` ("Senior
+// Consultant, Potentia, Potentia"). And the section heading passes through a
+// normaliser that title-cases any all-caps string over three characters, so a
+// bare "RCSA" heading renders as "Rcsa".
 {
   const speakers = get(92).detailPageData.speakers;
   const existing = speakers.guest_speakers;
@@ -274,7 +281,7 @@ const findSpeaker = (event: EventRecord, name: string): Speaker | undefined => {
     {
       name: "Lisa Cooley",
       title: "Founder & Managing Director of BrightSpark",
-      company: "BrightSpark",
+      company: "",
       bio:
         "With over 20 years’ experience in recruitment and 15 years in New " +
         "Zealand’s tech and digital sector, Lisa brings deep expertise in " +
@@ -292,7 +299,7 @@ const findSpeaker = (event: EventRecord, name: string): Speaker | undefined => {
     {
       name: "Sri Nanduri",
       title: "Senior Consultant, Potentia",
-      company: "Potentia",
+      company: "",
       bio:
         "Sri Nanduri is an experienced Auckland-based technology recruiter " +
         "with over 8 years’ experience, specialising in Technology, " +
@@ -308,20 +315,28 @@ const findSpeaker = (event: EventRecord, name: string): Speaker | undefined => {
     },
   ];
 
-  const group: SpeakerGroup = existing ?? { heading: "RCSA", speakers: [] };
+  const group: SpeakerGroup = existing ?? {
+    heading: "Joining Us from RCSA",
+    speakers: [],
+  };
   let added = 0;
   for (const speaker of rcsa) {
-    if (!group.speakers.some((s) => s.name === speaker.name)) {
+    const index = group.speakers.findIndex((s) => s.name === speaker.name);
+    if (index === -1) {
       group.speakers.push(speaker);
       added++;
+    } else {
+      // Upsert rather than skip, so re-running also repairs a bad earlier write.
+      group.speakers[index] = { ...group.speakers[index], ...speaker };
     }
   }
+  group.heading = "Joining Us from RCSA";
   speakers.guest_speakers = group;
   note(
     "A20",
     added
       ? `id 92 added ${added} RCSA recruiter(s) from the June run sheet`
-      : "id 92 RCSA recruiters already listed"
+      : "id 92 RCSA recruiters refreshed from the June run sheet"
   );
 }
 
