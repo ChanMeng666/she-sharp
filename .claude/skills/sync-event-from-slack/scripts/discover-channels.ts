@@ -51,8 +51,10 @@ import {
   saveManifest,
   loadPublishedEvents,
   parseEventDateMs,
+  scannedPosition,
   SIGNAL_THRESHOLD,
   threadHasUnread,
+  unreadConversations,
   type ChannelType,
   type Mapping,
   type PublishedEvent,
@@ -359,7 +361,9 @@ async function main() {
     const type = classifyChannel(c.name);
     const cs = manifest.channels[c.id];
     const mapping = cs?.mapping ?? null;
-    const watermark = cs?.watermarkTs;
+    // The triage compares against what IT has scored; whether the model has
+    // read it is a separate question, answered by the unread check below.
+    const watermark = scannedPosition(cs);
 
     let hasNew = false;
     let newCount = 0;
@@ -530,33 +534,37 @@ async function main() {
       if (!isQuiet(r.action)) continue;
       if (!r.readable && !r.archived) continue;
       const prev = manifest2.channels[r.id];
-      const ts = r.latestTs && r.latestTs !== "0" ? r.latestTs : prev?.watermarkTs ?? "0";
+      const ts = r.latestTs && r.latestTs !== "0" ? r.latestTs : scannedPosition(prev);
       if (ts === "0") continue;
       /*
-       * Thread replies this run READ and scored as nothing to act on.
+       * THE TRIAGE MOVES `scannedTs`. IT NEVER MOVES `watermarkTs`.
        *
-       * Same rule as the watermark, and it has to be: without it a grown thread
-       * on a settled channel is re-fetched and re-scored on every run forever,
-       * because nothing else ever records it. Only quiet rows reach here — an
-       * actionable row keeps its threads untouched so the per-channel fetch
-       * still sees them as unread.
+       * Scoring a message is not reading it. This block used to write the one
+       * position the manifest had, which meant a heuristic that had glanced at a
+       * DM could assert the model had read it — and on 5 Aug 2026 it did exactly
+       * that to "please update Carolina Lobos' profile on the website", a line
+       * that scores zero because it names no venue, date or ticket.
        *
-       * Note the asymmetry with `fetch-channel.ts`, which records only what it
-       * DELIVERED to the model. Triage records what it SCORED. That is a
-       * weaker guarantee, and it is the reason SKILL.md says a quiet DM is not
-       * the same as a DM the model has read.
+       * Thread state is still recorded here, because without it a grown thread
+       * on a settled channel is re-fetched and re-scored on every run forever.
+       * That is the one place the triage still claims more than it should, and
+       * it is bounded: it only ever happens on a row with no action, and
+       * `audit-read-state.ts` reports the top-level gap either way.
        */
       const threads = { ...(prev?.threads ?? {}) };
       for (const t of r.grownThreads) {
         threads[t.ts] = { replyCount: t.replyCount, latestReplyTs: t.latestReplyTs };
       }
       const threadsChanged = r.grownThreads.length > 0;
-      if (prev && prev.watermarkTs === ts && !threadsChanged) continue;
+      if (prev && scannedPosition(prev) === ts && !threadsChanged) continue;
       manifest2.channels[r.id] = {
         name: r.name,
         type: r.type,
         mapping: prev?.mapping ?? { kind: "none" },
-        watermarkTs: ts,
+        // Untouched. A conversation nobody has opened keeps its read position
+        // wherever the last real fetch left it, however often this runs.
+        watermarkTs: prev?.watermarkTs ?? ts,
+        scannedTs: ts,
         threads,
         fingerprint: prev?.fingerprint ?? "",
         lastSyncedAt: nowIso(),
@@ -568,7 +576,7 @@ async function main() {
     if (advanced) {
       saveManifest(manifest2);
       console.error(
-        `read position advanced for ${advanced} quiet conversation(s) — commit state/sync-state.json`,
+        `scan position advanced for ${advanced} quiet conversation(s) — commit state/sync-state.json`,
       );
     }
   }

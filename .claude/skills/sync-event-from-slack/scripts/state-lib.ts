@@ -103,6 +103,39 @@ export function readPayload(path: string): any {
   }
 }
 
+/**
+ * Where the triage has scored up to. Falls back to the read position for
+ * entries written before the two positions were separated.
+ */
+export function scannedPosition(c: ChannelState | undefined): string {
+  return c?.scannedTs || c?.watermarkTs || "0";
+}
+
+/**
+ * Conversations the triage has scored past content the model was never shown.
+ *
+ * This is the question "have I actually read everything?", made answerable.
+ * It only counts conversations where being behind matters: a mapped event, or a
+ * `skip` marked `alwaysRead`. A bot channel scored and dismissed is not a
+ * backlog, which is the whole point of the signal gate.
+ */
+export function unreadConversations(
+  m: Manifest,
+): { id: string; name: string; type: ChannelType; watermarkTs: string; scannedTs: string }[] {
+  const out = [];
+  for (const [id, c] of Object.entries(m.channels)) {
+    const matters =
+      c.mapping?.kind === "event" ||
+      (c.mapping?.kind === "skip" && c.mapping.alwaysRead);
+    if (!matters) continue;
+    const scanned = scannedPosition(c);
+    if (Number(scanned) > Number(c.watermarkTs)) {
+      out.push({ id, name: c.name, type: c.type, watermarkTs: c.watermarkTs, scannedTs: scanned });
+    }
+  }
+  return out.sort((a, b) => a.name.localeCompare(b.name));
+}
+
 /** The two fields Slack returns on a parent message that has replies. */
 export interface ThreadFacts {
   reply_count?: number;
@@ -176,7 +209,29 @@ export interface ChannelState {
   name: string;
   type: ChannelType;
   mapping: Mapping;
-  watermarkTs: string; // latest top-level message ts already processed
+  /**
+   * READ position: the newest top-level ts whose content was actually handed to
+   * the model. Only `update-state.ts --from <payload>` may move it, because
+   * only a fetch payload is evidence that anything was delivered.
+   *
+   * This used to be the only position in the manifest, written by two actors
+   * with completely different levels of scrutiny — the cheap heuristic triage
+   * and the real fetch. SKILL.md said "'quiet' is not 'read by the model'" for
+   * months while the schema had no way to express the difference, so the
+   * sentence was a wish rather than a rule. Four separate misses came out of
+   * that, and the fourth was the events lead asking for a page change.
+   */
+  watermarkTs: string;
+  /**
+   * SCANNED position: the newest top-level ts the triage has scored. Advanced
+   * by `discover-channels.ts` on quiet rows, never by anything else.
+   *
+   * Always `>= watermarkTs`. The gap between the two IS the unread backlog, and
+   * `audit-read-state.ts` reports it. Absent on entries written before the
+   * split, where it is read as equal to `watermarkTs` — which is exactly what
+   * the old single-position code meant.
+   */
+  scannedTs?: string;
   threads: Record<string, ThreadState>; // parentTs -> thread watermark
   fingerprint: string; // sha256:… of the mapped event's salient fields ("" when none)
   lastSyncedAt: string;

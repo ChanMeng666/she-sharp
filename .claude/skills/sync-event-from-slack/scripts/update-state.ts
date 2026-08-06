@@ -126,11 +126,22 @@ function main() {
   const digest = digestArg !== undefined ? digestArg.trim() : prev?.digest ?? "";
   const digestAt = digestArg !== undefined && digestArg.trim() ? nowIso() : prev?.digestAt ?? "";
 
+  /*
+   * Recording a read also settles the scan: the model has now seen at least as
+   * much as the triage scored, so the two positions meet. They can only diverge
+   * again the next time the triage scores something nobody opened.
+   */
+  const scannedTs =
+    Number(prev?.scannedTs ?? 0) > Number(watermarkTs)
+      ? prev!.scannedTs!
+      : watermarkTs;
+
   const next: ChannelState = {
     name,
     type,
     mapping,
     watermarkTs,
+    scannedTs,
     threads: mergedThreads,
     fingerprint: fingerprint || (kind === "event" ? prev?.fingerprint ?? "" : ""),
     lastSyncedAt: nowIso(),
@@ -141,7 +152,7 @@ function main() {
   // Avoid timestamp churn: if nothing material changed, keep the prior entry
   // (incl. its lastSyncedAt) so a no-op re-record leaves the manifest byte-stable.
   const material = (c?: ChannelState) =>
-    c && JSON.stringify({ n: c.name, t: c.type, m: c.mapping, w: c.watermarkTs, th: c.threads, f: c.fingerprint, d: c.digest ?? "" });
+    c && JSON.stringify({ n: c.name, t: c.type, m: c.mapping, w: c.watermarkTs, s: c.scannedTs ?? "", th: c.threads, f: c.fingerprint, d: c.digest ?? "" });
   if (prev && material(prev) === material(next)) {
     process.stdout.write(`no change for ${channelId} (${name})\n`);
     return;
