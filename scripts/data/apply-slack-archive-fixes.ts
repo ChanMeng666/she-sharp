@@ -35,6 +35,7 @@ type EventRecord = {
     location: { venueName: string; address: string; city: string };
     speakers: Record<string, SpeakerGroup | undefined>;
     sponsors: { main: { name: string; logo: string; description: string }[] };
+    specialSections: { type: string; title: string; content: string[] }[];
   };
 };
 
@@ -339,6 +340,35 @@ const findSpeaker = (event: EventRecord, name: string): Speaker | undefined => {
     } else {
       note("A18", `id ${id} invitation-only notice already present`);
     }
+  }
+}
+
+// ---------------------------------------------- A6, ids 88 / 89 / 90 / 92
+// On 2026-04-27 Mahsa asked for the HER WAKA programme site to be added to
+// *all* Her Waka event pages. The reply asked for more detail and the thread
+// died there. The site is linked from the footer and the homepage programmes
+// section, but not from any of the four events it documents — which is where
+// a participant looking it up would go. `programming.chanmeng.org/docs/
+// 2026-her-waka/...` was its first home; it now serves from
+// herwaka.shesharp.org.nz, and both were checked as live before this landed.
+{
+  const HER_WAKA_URL = "https://herwaka.shesharp.org.nz/programme/about-her-waka";
+  const SECTION_TITLE = "About the HER WAKA Programme";
+
+  for (const id of [88, 89, 90, 92]) {
+    const sections = get(id).detailPageData.specialSections;
+    if (sections.some((s) => s.title === SECTION_TITLE)) {
+      note("A6", `id ${id} programme link already present`);
+      continue;
+    }
+    sections.push({
+      type: "related-links",
+      title: SECTION_TITLE,
+      content: [
+        `Read about HER WAKA, the monthly programme this session is part of :${HER_WAKA_URL}`,
+      ],
+    });
+    note("A6", `id ${id} linked the HER WAKA programme site`);
   }
 }
 
