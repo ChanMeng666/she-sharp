@@ -21,10 +21,15 @@ import assert from "node:assert";
 
 import {
   mergeThreadState,
+  scannedPosition,
   threadHasUnread,
+  unreadConversations,
+  type ChannelState,
+  type Manifest,
   type Mapping,
   type ThreadState,
 } from "./state-lib";
+import { parseCsv, parseSheetUrl } from "./fetch-sheet";
 
 let failures = 0;
 
@@ -158,6 +163,95 @@ check("an always-read skip with nothing new is still settled", () => {
   // Otherwise seven conversations sit in the table forever and the table stops
   // being read, which is the failure this whole area keeps circling back to.
   assert.strictEqual(settled("no-op"), true);
+});
+
+console.log("\nscanned vs read position");
+
+const channel = (over: Partial<ChannelState>): ChannelState => ({
+  name: "c", type: "event", mapping: { kind: "none" },
+  watermarkTs: "100", threads: {}, fingerprint: "",
+  lastSyncedAt: "", lastSyncedCommit: "", ...over,
+});
+const manifestOf = (channels: Record<string, ChannelState>): Manifest =>
+  ({ version: 1, channels }) as Manifest;
+
+check("an entry written before the split reads its scan position from the watermark", () => {
+  // The old code moved one position for both meanings, so equal is exactly what
+  // it meant. Defaulting to "0" instead would declare the whole workspace unread.
+  assert.strictEqual(scannedPosition(channel({ watermarkTs: "100" })), "100");
+});
+
+check("a mapped event scanned past its read position is unread", () => {
+  const m = manifestOf({
+    C1: channel({ mapping: { kind: "event", events: [{ slug: "s", eventId: 1 }] }, watermarkTs: "100", scannedTs: "200" }),
+  });
+  assert.deepStrictEqual(unreadConversations(m).map((c) => c.id), ["C1"]);
+});
+
+check("an always-read DM scanned past its read position is unread", () => {
+  // THE 5 AUGUST DM, in the shape the manifest now records it.
+  const m = manifestOf({
+    D1: channel({ type: "dm", mapping: { kind: "skip", reason: "edits", alwaysRead: true }, watermarkTs: "100", scannedTs: "200" }),
+  });
+  assert.strictEqual(unreadConversations(m).length, 1);
+});
+
+check("a plain skip scanned past its read position is NOT a backlog", () => {
+  // Bot channels and settled history are what the signal gate exists for; if
+  // these counted, the audit would cry wolf and stop being read.
+  const m = manifestOf({
+    C2: channel({ mapping: { kind: "skip", reason: "bot noise" }, watermarkTs: "100", scannedTs: "999" }),
+  });
+  assert.strictEqual(unreadConversations(m).length, 0);
+});
+
+check("caught up means not unread", () => {
+  const m = manifestOf({
+    C3: channel({ mapping: { kind: "event", events: [{ slug: "s", eventId: 1 }] }, watermarkTs: "200", scannedTs: "200" }),
+  });
+  assert.strictEqual(unreadConversations(m).length, 0);
+});
+
+console.log("\nrun-sheet links");
+
+check("a run-sheet URL yields its id and the tab the browser was showing", () => {
+  // `#gid=` must beat `?gid=` — a pasted link carries both and the fragment is
+  // the tab the person was actually looking at.
+  assert.deepStrictEqual(
+    parseSheetUrl("https://docs.google.com/spreadsheets/d/16V4PJHLUpW2eB0g2DywKTxjqmYT4UHDZ/edit?gid=111#gid=1792873316"),
+    { id: "16V4PJHLUpW2eB0g2DywKTxjqmYT4UHDZ", gid: "1792873316" },
+  );
+});
+
+check("a link with no tab yields the id alone, so every tab is read", () => {
+  assert.deepStrictEqual(
+    parseSheetUrl("https://docs.google.com/spreadsheets/d/16V4PJHLUpW2eB0g2DywKTxjqmYT4UHDZ/edit?usp=drive_link&rtpof=true"),
+    { id: "16V4PJHLUpW2eB0g2DywKTxjqmYT4UHDZ" },
+  );
+});
+
+check("a non-sheet URL is rejected rather than half-parsed", () => {
+  assert.strictEqual(parseSheetUrl("https://www.shesharp.org.nz/events/x"), null);
+});
+
+check("a bio containing commas and quotes survives the CSV", () => {
+  // Run-sheet bios are one long quoted field full of commas. Splitting on the
+  // comma would have given Carolina Lobos a bio ending at "With a background".
+  const rows = parseCsv(
+    'n,bio\r\n2,"Head of Finance, and Automation Lead, said ""yes"""\r\n',
+  );
+  assert.deepStrictEqual(rows[1], [
+    "2",
+    'Head of Finance, and Automation Lead, said "yes"',
+  ]);
+});
+
+check("a newline inside a quoted cell does not start a new row", () => {
+  // A run-sheet bio is often typed with line breaks in the cell. Splitting on
+  // every newline would turn one speaker into three malformed rows.
+  const rows = parseCsv('a,b\n1,"line one\nline two"\n');
+  assert.strictEqual(rows.length, 2);
+  assert.strictEqual(rows[1][1], "line one\nline two");
 });
 
 console.log(

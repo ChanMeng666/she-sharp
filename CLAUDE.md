@@ -689,7 +689,8 @@ BASE_URL=http://localhost:3000         # Application URL
   ```bash
   npx tsx lib/email/hardening.test.ts     # unsubscribe tokens, sender identities, gates, Svix signatures
   npx tsx lib/deck/deck.test.ts           # slide schema, copy + rhythm rules, feedback-code collisions
-  npx tsx .claude/skills/sync-event-from-slack/scripts/state-lib.test.ts   # Slack read-position rules
+  npx tsx .claude/skills/sync-event-from-slack/scripts/state-lib.test.ts     # Slack read-position + run-sheet parsing
+  npx tsx .claude/skills/sync-event-from-slack/scripts/audit-read-state.ts   # nothing scored-but-unread
   for f in lib/newsletter/*.test.ts; do npx tsx "$f"; done
   ```
 - **CI** (`.github/workflows/verify.yml`, on PRs to `main`) runs `verify-image-paths` (which also carries `check-hackathon-facts` and the Slack read-position test), `typecheck-scripts`, and `deck-checks`. The email and newsletter suites are **not** in CI — run those locally before pushing.

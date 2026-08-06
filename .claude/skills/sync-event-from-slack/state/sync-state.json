@@ -1276,9 +1276,11 @@
       "name": "website-team",
       "type": "general",
       "mapping": {
-        "kind": "none"
+        "kind": "skip",
+        "reason": "#website-team is the declared intake for website work orders as of 6 Aug 2026 — Chan asked the team in-channel to post update requests here instead of by DM. It is mapped skip because it plans no event of its own, and always-read because that is exactly the traffic the event-signal heuristic cannot see: \"please update Carolina Lobos' profile on the website\" names no venue, no date and no ticket, so it scores zero.",
+        "alwaysRead": true
       },
-      "watermarkTs": "1782508061.325029",
+      "watermarkTs": "1785990598.416129",
       "threads": {
         "1693110156.197929": {
           "replyCount": 2,
@@ -2262,10 +2264,10 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-07-20T10:21:40.571Z",
+      "lastSyncedAt": "2026-08-06T04:47:30.803Z",
       "lastSyncedCommit": "",
-      "digest": "Internal website/ops coordination (billing, tickets). Not a site event channel. Flagged by general-signal auto-scan 2026-07-20; reviewed and confirmed no event. Un-skip only if a real event planning thread starts here.",
-      "digestAt": "2026-07-20T10:04:27.709Z"
+      "digest": "THE WORK-ORDER INTAKE. On 6 Aug 2026 Chan asked the team, in-channel and by DM, to stop sending website update requests privately and post them here so they can be tracked. Everything before that is internal website/ops coordination (billing, tickets) and planned no event; everything after it should be treated as a queue of page changes to action. Marked always-read for that reason and not because of anything it has said yet — the signal heuristic scores a request like \"please update X's profile\" at zero, which is precisely how the same request went unread for a day in a DM on 5 Aug. Read the delta in full; do not judge this channel from the one-line triage evidence. A request here may point at a Google Sheet run sheet — read it with fetch-sheet.ts rather than trusting a digest that says something is still owed.",
+      "digestAt": "2026-08-06T04:47:30.802Z"
     },
     "C05LRKE5UCF": {
       "name": "events-2023-september-twnz",
@@ -15217,10 +15219,10 @@
         "reason": "1:1 DM with Nirmala Chinnappan (events). Carries direct event-page edit requests - read the delta in full every run.",
         "alwaysRead": true
       },
-      "watermarkTs": "1785967140.970919",
+      "watermarkTs": "1785990559.616139",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T04:17:21.291Z",
+      "lastSyncedAt": "2026-08-06T04:47:47.574Z",
       "lastSyncedCommit": "",
       "digest": "READ IN FULL. Nirmala asks for page changes here as well as in channel. 2026-08-04: 'Can you publish the Les Mills event live? I have updated the banner in humanitix page' + 'give the above url to Register Now button' -> registrationUrl applied 5 Aug. 13 Jul: the four AI Hackathon judge profiles, sourced from the private Runsheet Google Sheet - already live. 3 Aug she asked where the published mentor list came from. Her outstanding ask is Les Mills SPEAKER profiles, still blocked on that private Sheet.",
       "digestAt": "2026-08-05T04:30:43.840Z"
