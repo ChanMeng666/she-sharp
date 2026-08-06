@@ -129,7 +129,17 @@ export function unreadConversations(
       (c.mapping?.kind === "skip" && c.mapping.alwaysRead);
     if (!matters) continue;
     const scanned = scannedPosition(c);
-    if (Number(scanned) > Number(c.watermarkTs)) {
+    /*
+     * A read position of "0" means NEVER READ, not "read up to the beginning of
+     * time" — and the two were indistinguishable here until `verify-coverage.ts`
+     * walked Slack and found a mapped event channel sitting on 173 unread
+     * messages and 20 unrecorded threads. It had been mapped without a fetch
+     * payload and then archived, and `archived` counts as settled in the triage,
+     * so nothing ever looked at it again. Comparing scanned against read cannot
+     * catch that on its own: both were "0".
+     */
+    const neverRead = !c.watermarkTs || c.watermarkTs === "0";
+    if (neverRead || Number(scanned) > Number(c.watermarkTs)) {
       out.push({ id, name: c.name, type: c.type, watermarkTs: c.watermarkTs, scannedTs: scanned });
     }
   }

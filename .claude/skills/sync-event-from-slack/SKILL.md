@@ -436,14 +436,31 @@ When the user approves:
 
 ### Step 7.5 — Prove nothing is unread
 
+Two checks, and they answer different questions. Run the first every time.
+
 ```
-npx tsx .claude/skills/sync-event-from-slack/scripts/audit-read-state.ts
+npx tsx .../audit-read-state.ts        # free, offline, in CI
+npx tsx .../verify-coverage.ts         # asks Slack; slow; the definitive one
+npx tsx .../verify-coverage.ts --all   # every conversation, not just the ones that matter
 ```
 
-Exits non-zero and names every conversation the triage has scored past content
-nobody read. **Run it at the end of every sync.** If it lists anything, fetch
-that conversation, read the delta, and record it — the audit is the only thing
-that makes "did I miss something?" a question with an answer instead of a hope.
+`audit-read-state.ts` compares two numbers already in the manifest: the scan
+position against the read position, plus "never read at all". It is free, so it
+runs in CI and at the end of every sync — **but it can only catch a gap the
+triage noticed.**
+
+`verify-coverage.ts` pages the entire history of each conversation and expands
+every thread, then counts what is not behind the read position. It is the only
+check that can catch a gap **nothing** noticed, and it earned its place
+immediately: it found a mapped event channel holding 173 unread messages and 20
+unrecorded threads. That channel had been mapped without a fetch payload and
+then archived — the triage treats `archived` as settled, and in the audit
+"never read" and "read to the beginning of time" were both `"0"`. Both holes are
+closed now; the point is that neither was visible until something walked Slack
+itself.
+
+Run `verify-coverage.ts` after any bulk change, before trusting a quiet table,
+and whenever someone says a message was missed.
 
 ### Step 8 — Commit
 
