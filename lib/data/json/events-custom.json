@@ -189,6 +189,11 @@
               "name": "Ministry of Education",
               "logo": "/img/sponsors/MOE.png",
               "description": ""
+            },
+            {
+              "name": "Little Engineers",
+              "logo": "/img/sponsors/little-engineers.jpg",
+              "description": ""
             }
           ],
           "other": []
@@ -295,7 +300,8 @@
           "Andrea Halal, Tech Marketing Leader at Ideqa and creator of Big Leap Energy, will share how she rebuilt her network and professional credibility after moving to New Zealand with no local connections. Drawing on nine years of marketing experience across TV, production, advertising, brand management, and B2B marketing, Andrea will walk participants through the practical steps for building visibility and trust when you are new, relocating, or pivoting.",
           "Expect a grounded, strategy-driven session on using LinkedIn as a career tool (not a highlight reel), on why positioning matters as much as performance, and on how relationships quietly compound over time.",
           "As with every HER WAKA cohort, RCSA will join the session to share insights on the current New Zealand job market and offer practical guidance on job-seeking.",
-          "HER WAKA is a dynamic, employment-focused programme delivered by SheSharp in Auckland for Ministry of Social Development clients who are ready to strengthen their pathway into work. Running monthly from March to June 2026, each session is a cohesive, repeatable event designed to build job readiness, confidence, and practical understanding of the New Zealand labour market."
+          "HER WAKA is a dynamic, employment-focused programme delivered by SheSharp in Auckland for Ministry of Social Development clients who are ready to strengthen their pathway into work. Running monthly from March to June 2026, each session is a cohesive, repeatable event designed to build job readiness, confidence, and practical understanding of the New Zealand labour market.",
+          "NOTE: This event is strictly by invitation only."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -346,7 +352,7 @@
     },
     {
       "slug": "making-linkedin-work-for-you-with-stuart-little",
-      "title": "Making Linkedin Work for You",
+      "title": "Making LinkedIn Work for You",
       "date": "May 15, 2026",
       "coverImage": {
         "url": "/img/events/event-aut-linkedin-15-may-2026-cover.jpg",
@@ -387,7 +393,7 @@
                 "name": "Stuart Little",
                 "title": "Creative Strategist and Director of Agency8",
                 "company": "",
-                "bio": "Stuart Little, Creative Lead for the THRIVE and Director of Agency8. Through his work supporting professionals, businesses and large-scale programmes across New Zealand, Stuart brings a real-world perspective on how LinkedIn is actually being used today to identify, assess and connect with talent for a changed market.",
+                "bio": "Stuart Little is a Creative Strategist and Director of Agency8. Through his work supporting professionals, businesses and large-scale programmes across New Zealand, Stuart brings a real-world perspective on how LinkedIn is actually being used today to identify, assess and connect with talent for a changed market.",
                 "image": "/img/events/event-aut-linkedin-15-may-2026-stuart-little.jpg",
                 "linkedin": "https://www.linkedin.com/in/stuart-little"
               },
@@ -463,15 +469,15 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "",
-          "address": "",
+          "venueName": "AWS",
+          "address": "Level 13, PwC Tower, Commercial Bay, Auckland",
           "city": "Auckland",
           "country": "New Zealand"
         },
         "fullDescription": [
           "Our “From Burnout to Balance” breakfast event is going to be an enlightening morning where we delve into two vital aspects of well-being. As women, we wear many hats - we are professionals, mothers, partners, and more. It is this dance of roles that showcases our adaptability, but also puts us at a greater risk of burnout. In addition, the boundaries between work and personal life are becoming increasingly blurred.",
           "Our incredible speakers will guide you on a journey towards achieving equilibrium in the fast-paced world of technology, looking at actionable strategies to harmonise professional ambitions with self-care.",
-          "Brigette McGregor-Macdonald will speak to discovering the power of mindfulness and provide key techniques that empower you to stay centred, enhance focus, and build resilience against burnout.‍ Maya Lee will dive into the critical connection between nutrition, health and stress management, providing insights into putting your health first for peak performance, optimising energy levels and warding off burnout. It is time to invest in your well-being, embrace balance, and unlock your full potential in both your professional and personal life.",
+          "Brigette McGregor-Macdonald will speak to discovering the power of mindfulness and provide key techniques that empower you to stay centred, enhance focus, and build resilience against burnout.‍ Maja Lee will dive into the critical connection between nutrition, health and stress management, providing insights into putting your health first for peak performance, optimising energy levels and warding off burnout. It is time to invest in your well-being, embrace balance, and unlock your full potential in both your professional and personal life.",
           "Join us as we change the narrative from ‘Burnout’ to ‘Balance’."
         ],
         "speakers": {
@@ -597,7 +603,7 @@
             "heading": "Meet Our Speakers",
             "speakers": [
               {
-                "name": "Danubi Paim (Dani)",
+                "name": "Danubia Paim (Dani)",
                 "title": "Founder, Property Besties",
                 "company": "Property Besties",
                 "bio": "Dani Paim bought her first property at 19 with no safety net — just determination and fear. Today she's the founder of Property Besties, New Zealand's most collaborative property investor community (100+ members), and Wealth & Wellness Co., helping women build financial independence without sacrificing what matters most. A former financial advisor, Dani saw women needed clarity, confidence and community — not more information. She left the 9–5 to create supportive, values-driven spaces. She's coached 200+ Kiwis and is on a mission to help 1,000 women invest in property while living fully now, not just at retirement.",
@@ -794,7 +800,8 @@
           "This session will help participants understand how AI is influencing job opportunities, recruitment trends, and the skills that matter most right now.",
           "HER WAKA is more than an event — it is a practical, supportive step toward sustainable employment and long-term workforce participation.",
           "🌟 March 2026 Theme: AI & The Future of Work — our March HER WAKA session focuses on Artificial Intelligence and the evolving tech job market in 2026.",
-          "Join us and take your next step forward with confidence. ✨"
+          "Join us and take your next step forward with confidence. ✨",
+          "NOTE: This event is strictly by invitation only."
         ],
         "speakers": {
           "panel_speakers": {
@@ -839,9 +846,9 @@
               },
               {
                 "name": "Paul Kelly",
-                "title": "Business Manager - Randstad Digital",
+                "title": "Business Manager and Principal Consultant, Absolute IT",
                 "company": "Absolute IT",
-                "bio": "Paul Kelly is Business Manager for Auckland at Randstad Digital, brings over a decade of experience in recruitment, particularly within the banking, finance, insurance, and government industries. He is passionate about connecting top talent with leading organisations and has a proven ability to build strong relationships with both clients and candidates.",
+                "bio": "As Business Manager and Principal Consultant, Paul manages Absolute IT’s Auckland office while remaining an active recruiter. He joined the team in 2021 after a decade in Sales and Relationship Management. He enjoys the fast paced and ever-changing tech industry — like recruitment, no two days are ever the same. Building genuine, long-term relationships is central to how he works, and getting to know clients on a personal level helps him understand what they need and how he can connect them with the right people.",
                 "image": "/img/events/her-waka-paul-kelly.png",
                 "linkedin": "https://www.linkedin.com/in/paul-kelly-1b0756b8/"
               },
@@ -862,7 +869,7 @@
                 "name": "Dr. Mahsa McCauley",
                 "title": "Associate Professor at AUT and Chair AI Forum",
                 "company": "AUT",
-                "bio": "Dr. Mahsa McCauley is Founder and Director of She Sharp Charitable Trust. As Chair of AI Forum NZ and Associate Professor of AI at AUT, she researches AI, machine learning, IoT and cybersecurity. She serves on boards of NZTech, EdTechNZ and World Summit Awards, advancing AI strategy, education and SDG projects.",
+                "bio": "Dr. Mahsa McCauley is Founder and Director of She Sharp Charitable Trust. As Chair of AI Forum NZ and Associate Professor of AI at AUT, she researches AI, machine learning, IoT and cybersecurity. She serves on boards of NZTech, EdTechNZ and World Summit Awards, advancing AI strategy, education and SDG projects. Appointed Communication and Information Commissioner for NZ National Commission for UNESCO in January 2026, she leads efforts to uphold freedom of expression, expand information access and foster ethical ecosystems.",
                 "image": "/img/scraped/photos/69ae758e75cb901b6270b2d2_LSS02450-EDITWEBRES_Original_ac1bbcde.jpg",
                 "linkedin": ""
               }
@@ -904,20 +911,20 @@
     {
       "id": 89,
       "slug": "her-waka-april-2026",
-      "title": "Her Waka (April 2026) — #IAmRemarkable & Vibe Coding",
+      "title": "Her Waka (April 2026) — #IAmRemarkable",
       "date": "April 7, 2026",
       "coverImage": {
         "url": "/img/events/her-waka-april-2026-cover.png",
-        "alt": "Her Waka April 2026 — #IAmRemarkable & Vibe Coding, delivered by SheSharp in Auckland"
+        "alt": "Her Waka April 2026 — #IAmRemarkable, delivered by SheSharp in Auckland"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka-april-2026",
-      "shortDescription": "The second HER WAKA cohort focuses on building confidence through the #IAmRemarkable workshop and exploring Vibe Coding — using free AI tools to build a personal website through natural conversation.",
+      "shortDescription": "The second HER WAKA cohort focuses on building confidence through the #IAmRemarkable workshop, followed by a recruiter networking activity.",
       "attendees": 32,
       "checkedIn": 24,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/her-waka-april-2026",
-        "title": "Her Waka (April 2026) — #IAmRemarkable & Vibe Coding",
-        "subtitle": "#IAmRemarkable & Vibe Coding",
+        "title": "Her Waka (April 2026) — #IAmRemarkable",
+        "subtitle": "#IAmRemarkable",
         "date": "April 7, 2026",
         "time": "12:00pm - 2:00pm NZST",
         "location": {
@@ -929,7 +936,7 @@
         },
         "fullDescription": [
           "The second cohort of the HER WAKA series continues with a session focused on building confidence, celebrating achievements, and exploring practical AI tools.",
-          "We will begin with #IAmRemarkable, a global movement that encourages everyone, especially those from underrepresented groups, to celebrate their achievements and challenge the stigma around self-promotion. In this engaging 50-minute workshop, She Sharp Founder and Director Dr Mahsa McCauley (Mohaghegh) will guide participants through practical exercises to help recognise achievements, own your story, and confidently share your impact.",
+          "We will begin with #IAmRemarkable, a global movement that encourages everyone, especially those from underrepresented groups, to celebrate their achievements and challenge the stigma around self-promotion. In this engaging 55-minute workshop, She Sharp Founder and Director Dr Mahsa McCauley (Mohaghegh) will guide participants through practical exercises to help recognise achievements, own your story, and confidently share your impact.",
           "In the second half of the session, participants will take part in a 30-minute recruiter networking activity, where 2–3 tables will be set up to allow small groups to connect directly with recruiters. Each participant will have a few minutes at each table to introduce themselves, ask questions, and practise real-world conversations in a supportive environment.",
           "🌟 HER WAKA",
           "Navigating pathways into sustainable employment",
@@ -937,7 +944,8 @@
           "HER WAKA is a dynamic, employment-focused programme delivered by SheSharp in Auckland for Ministry of Social Development clients who are ready to strengthen their pathway into work. Running monthly from March to June 2026, each session is a cohesive, repeatable event designed to build job readiness, confidence, and practical understanding of the New Zealand labour market.",
           "Each two-hour programme brings together up to 25 participants in a supportive, high-impact environment that blends inspiration, practical skills, and direct employer insight. Through real conversations and structured learning, participants gain clarity on how to position themselves confidently and competitively in today's job market.",
           "HER WAKA is more than an event. It is a practical, supportive step toward sustainable employment and long-term workforce participation.",
-          "Join us and take your next step forward with confidence. ✨"
+          "Join us and take your next step forward with confidence. ✨",
+          "NOTE: This event is strictly by invitation only."
         ],
         "speakers": {
           "keynote_speakers": {
@@ -950,14 +958,6 @@
                 "bio": "Dr. Mahsa McCauley is Founder and Director of She Sharp Charitable Trust. As Chair of AI Forum NZ and Associate Professor of AI at AUT, she researches AI, machine learning, IoT and cybersecurity. She serves on boards of NZTech, EdTechNZ and World Summit Awards, advancing AI strategy, education and SDG projects. Appointed Communication and Information Commissioner for NZ National Commission for UNESCO in January 2026, she leads efforts to uphold freedom of expression, expand information access and foster ethical ecosystems.",
                 "image": "/img/events/her-waka-april-2026-dr-mahsa-mccauley.jpg",
                 "linkedin": "https://www.linkedin.com/in/mahsamohaghegh/"
-              },
-              {
-                "name": "Chan Meng",
-                "title": "Senior AI/ML Infrastructure and Full-Stack Engineer",
-                "company": "Gavigo / Sanicle",
-                "bio": "Chan Meng is a Senior AI/ML Infrastructure and Full-Stack Engineer specialising in generative AI, autonomous agentic systems, and scalable cloud-native applications. She is a Founding Engineer at Gavigo and CTO at Sanicle, leading end-to-end technical delivery using Next.js, Node.js, Python, Docker, and Kubernetes. Her work includes advanced RAG architectures, LLM orchestration, and microservices. With a Master's in Applied Computing and a background in mathematics education, Chan combines strong technical expertise with leadership, speaking globally at events including UN CSW69 and mentoring women in STEM.",
-                "image": "/img/events/her-waka-april-2026-chan-meng.png",
-                "linkedin": "https://www.linkedin.com/in/chanmeng666/"
               }
             ]
           },
@@ -974,7 +974,7 @@
               },
               {
                 "name": "Anabella Bianchi",
-                "title": "Director Consultant of Elevate Consulting",
+                "title": "Director and Principal Consultant - Elevate Consulting",
                 "company": "Elevate Consulting",
                 "bio": "Born in Argentina and settled in NZ since 2005, I have worked in the resourcing industry for nearly 20 years dealing with a wide range of industries and sectors both within NZ and internationally. Each role has given me skills, knowledge, experience and passion to deliver exceptional performance and an ability to refine and enhance a smarter and better working environment. In the last nine years, I joined the ICT industry and I am extremely passionate about helping our customers with the best resourcing options and their projects' roadmaps to make them successful.",
                 "image": "/img/scraped/photos/69cfad1b40cc58b2326b8b4b_Anabella Bianchi 2.jpg",

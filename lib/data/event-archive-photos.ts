@@ -24,10 +24,10 @@ export const eventArchivePhotos: Record<string, EventArchivePhoto[]> = {
     { src: "/img/events/archive/her-waka-june-2026/4.webp", width: 1280, height: 853, alt: "Her Waka (June 2026) — Personal Branding & Growth Tips — She Sharp event photo 4" },
   ],
   "making-linkedin-work-for-you-with-stuart-little": [
-    { src: "/img/events/archive/making-linkedin-work-for-you-with-stuart-little/1.webp", width: 1280, height: 853, alt: "Making Linkedin Work for You — She Sharp event photo 1" },
-    { src: "/img/events/archive/making-linkedin-work-for-you-with-stuart-little/2.webp", width: 1280, height: 853, alt: "Making Linkedin Work for You — She Sharp event photo 2" },
-    { src: "/img/events/archive/making-linkedin-work-for-you-with-stuart-little/3.webp", width: 1280, height: 853, alt: "Making Linkedin Work for You — She Sharp event photo 3" },
-    { src: "/img/events/archive/making-linkedin-work-for-you-with-stuart-little/4.webp", width: 1280, height: 853, alt: "Making Linkedin Work for You — She Sharp event photo 4" },
+    { src: "/img/events/archive/making-linkedin-work-for-you-with-stuart-little/1.webp", width: 1280, height: 853, alt: "Making LinkedIn Work for You — She Sharp event photo 1" },
+    { src: "/img/events/archive/making-linkedin-work-for-you-with-stuart-little/2.webp", width: 1280, height: 853, alt: "Making LinkedIn Work for You — She Sharp event photo 2" },
+    { src: "/img/events/archive/making-linkedin-work-for-you-with-stuart-little/3.webp", width: 1280, height: 853, alt: "Making LinkedIn Work for You — She Sharp event photo 3" },
+    { src: "/img/events/archive/making-linkedin-work-for-you-with-stuart-little/4.webp", width: 1280, height: 853, alt: "Making LinkedIn Work for You — She Sharp event photo 4" },
   ],
   "she-sharp-and-academyex-international-womens-day-2026": [
     { src: "/img/events/archive/she-sharp-and-academyex-international-womens-day-2026/1.webp", width: 1280, height: 853, alt: "She Sharp & academyEX: International Women's Day 2026 — She Sharp event photo 1" },
@@ -48,10 +48,10 @@ export const eventArchivePhotos: Record<string, EventArchivePhoto[]> = {
     { src: "/img/events/archive/her-waka/4.webp", width: 1280, height: 853, alt: "HER WAKA — Navigating Pathways into Sustainable Employment — She Sharp event photo 4" },
   ],
   "her-waka-april-2026": [
-    { src: "/img/events/archive/her-waka-april-2026/1.webp", width: 1280, height: 853, alt: "Her Waka (April 2026) — #IAmRemarkable & Vibe Coding — She Sharp event photo 1" },
-    { src: "/img/events/archive/her-waka-april-2026/2.webp", width: 1280, height: 853, alt: "Her Waka (April 2026) — #IAmRemarkable & Vibe Coding — She Sharp event photo 2" },
-    { src: "/img/events/archive/her-waka-april-2026/3.webp", width: 1280, height: 853, alt: "Her Waka (April 2026) — #IAmRemarkable & Vibe Coding — She Sharp event photo 3" },
-    { src: "/img/events/archive/her-waka-april-2026/4.webp", width: 1280, height: 853, alt: "Her Waka (April 2026) — #IAmRemarkable & Vibe Coding — She Sharp event photo 4" },
+    { src: "/img/events/archive/her-waka-april-2026/1.webp", width: 1280, height: 853, alt: "Her Waka (April 2026) — #IAmRemarkable — She Sharp event photo 1" },
+    { src: "/img/events/archive/her-waka-april-2026/2.webp", width: 1280, height: 853, alt: "Her Waka (April 2026) — #IAmRemarkable — She Sharp event photo 2" },
+    { src: "/img/events/archive/her-waka-april-2026/3.webp", width: 1280, height: 853, alt: "Her Waka (April 2026) — #IAmRemarkable — She Sharp event photo 3" },
+    { src: "/img/events/archive/her-waka-april-2026/4.webp", width: 1280, height: 853, alt: "Her Waka (April 2026) — #IAmRemarkable — She Sharp event photo 4" },
   ],
   "her-waka-may-2026": [
     { src: "/img/events/archive/her-waka-may-2026/1.webp", width: 1280, height: 853, alt: "Her Waka (May 2026) — Cybersecurity Workshop — She Sharp event photo 1" },

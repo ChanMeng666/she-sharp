@@ -61,7 +61,7 @@ export const tieredSponsors: TieredSponsor[] = [
     tier: "bronze",
   },
   {
-    name: "metlifecare",
+    name: "Metlifecare",
     logo: "/img/sponsors/metlifecare.svg",
     description: "Metlifecare retirement villages",
     url: "https://www.metlifecare.co.nz/",
