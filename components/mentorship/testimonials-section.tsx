@@ -69,16 +69,24 @@ export function TestimonialsSection() {
                   <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground mb-1">
                     {current.mentee.name}
                   </h3>
-                  <p className="text-base text-ink-600">{current.mentee.role}</p>
-                  <p className="text-base text-ink-600">
-                    {current.mentee.company}
-                  </p>
+                  {current.mentee.role && (
+                    <p className="text-base text-ink-600">
+                      {current.mentee.role}
+                    </p>
+                  )}
+                  {current.mentee.company && (
+                    <p className="text-base text-ink-600">
+                      {current.mentee.company}
+                    </p>
+                  )}
                 </div>
 
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-sm text-ink-600 w-full md:w-auto">
-                  <Calendar className="w-4 h-4 text-brand" />
-                  {current.mentee.journey}
-                </span>
+                {current.mentee.journey && (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-sm text-ink-600 w-full md:w-auto">
+                    <Calendar className="w-4 h-4 text-brand" />
+                    {current.mentee.journey}
+                  </span>
+                )}
 
                 <div className="w-full md:flex-1 md:text-right">
                   <p className="text-label text-brand mb-2 flex items-center gap-2 justify-start md:justify-end">
@@ -88,10 +96,16 @@ export function TestimonialsSection() {
                   <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground mb-1">
                     {current.mentor.name}
                   </h3>
-                  <p className="text-base text-ink-600">{current.mentor.role}</p>
-                  <p className="text-base text-ink-600">
-                    {current.mentor.company}
-                  </p>
+                  {current.mentor.role && (
+                    <p className="text-base text-ink-600">
+                      {current.mentor.role}
+                    </p>
+                  )}
+                  {current.mentor.company && (
+                    <p className="text-base text-ink-600">
+                      {current.mentor.company}
+                    </p>
+                  )}
                 </div>
               </div>
 
