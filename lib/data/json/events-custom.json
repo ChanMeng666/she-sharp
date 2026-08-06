@@ -141,7 +141,7 @@
         "registrationUrl": "https://events.humanitix.com/youth-tech-series-electronics-workshop",
         "images": [],
         "category": "workshop",
-        "status": "past",
+        "status": "completed",
         "isFeatured": false
       }
     },
@@ -265,7 +265,7 @@
         "registrationUrl": "https://events.humanitix.com/ai-electronics-workshop",
         "images": [],
         "category": "workshop",
-        "status": "past",
+        "status": "completed",
         "isFeatured": false
       }
     },
@@ -550,7 +550,7 @@
         "humanitixUrl": "https://events.humanitix.com/she-sharp-and-techwomen-nz-from-burnout-to-balance",
         "images": [],
         "category": "",
-        "status": "past",
+        "status": "completed",
         "isFeatured": false
       }
     },
