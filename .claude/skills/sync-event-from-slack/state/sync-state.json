@@ -2281,11 +2281,94 @@
           }
         ]
       },
-      "watermarkTs": "0",
-      "threads": {},
+      "watermarkTs": "1700714961.122199",
+      "threads": {
+        "1691735254.589729": {
+          "replyCount": 8,
+          "latestReplyTs": "1692831276.729579"
+        },
+        "1692260498.702319": {
+          "replyCount": 1,
+          "latestReplyTs": "1692764898.574659"
+        },
+        "1692764785.412549": {
+          "replyCount": 1,
+          "latestReplyTs": "1692775545.774269"
+        },
+        "1692764817.262609": {
+          "replyCount": 6,
+          "latestReplyTs": "1692790432.100949"
+        },
+        "1692841318.009619": {
+          "replyCount": 1,
+          "latestReplyTs": "1692841679.768219"
+        },
+        "1693210820.351809": {
+          "replyCount": 1,
+          "latestReplyTs": "1693213579.708199"
+        },
+        "1693299106.094909": {
+          "replyCount": 1,
+          "latestReplyTs": "1693995581.784769"
+        },
+        "1693483336.881689": {
+          "replyCount": 3,
+          "latestReplyTs": "1693782680.606999"
+        },
+        "1693513715.415469": {
+          "replyCount": 1,
+          "latestReplyTs": "1693519421.017609"
+        },
+        "1693551271.757359": {
+          "replyCount": 1,
+          "latestReplyTs": "1693569547.574549"
+        },
+        "1693701435.360269": {
+          "replyCount": 22,
+          "latestReplyTs": "1693785692.107229"
+        },
+        "1693787432.741989": {
+          "replyCount": 1,
+          "latestReplyTs": "1693912694.726779"
+        },
+        "1693994385.239849": {
+          "replyCount": 7,
+          "latestReplyTs": "1693994929.556649"
+        },
+        "1694686310.221729": {
+          "replyCount": 2,
+          "latestReplyTs": "1694734705.991929"
+        },
+        "1694688212.589949": {
+          "replyCount": 2,
+          "latestReplyTs": "1694746584.992159"
+        },
+        "1694725771.971739": {
+          "replyCount": 1,
+          "latestReplyTs": "1694731379.529479"
+        },
+        "1694936825.093309": {
+          "replyCount": 6,
+          "latestReplyTs": "1694990185.210779"
+        },
+        "1694985471.281939": {
+          "replyCount": 3,
+          "latestReplyTs": "1694992019.630109"
+        },
+        "1695285567.855649": {
+          "replyCount": 3,
+          "latestReplyTs": "1695330961.722869"
+        },
+        "1695336185.516709": {
+          "replyCount": 3,
+          "latestReplyTs": "1695627985.282929"
+        }
+      },
       "fingerprint": "sha256:d5169b40123be1bfff3172ff6c57e167991b02a958e088f8061bbdbc586f9397",
-      "lastSyncedAt": "2026-06-09T01:45:17.341Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-06T06:18:29.832Z",
+      "lastSyncedCommit": "",
+      "digest": "From Burnout to Balance — She Sharp x Tech Women NZ x AWS, September 2023, published as /events/from-burnout-to-balance (eventId 86). Channel archived 23 Nov 2023 by Shae. READ IN FULL 6 Aug 2026, and only because verify-coverage.ts walked Slack rather than trusting the manifest: this channel had been mapped to its event on 9 Jun 2026 with watermarkTs \"0\" — mapped without a fetch payload, then archived — so 173 messages and 20 threads had never been read by anything, and neither the triage (which treats `archived` as settled) nor audit-read-state (where \"never read\" and \"read to the beginning of time\" were both \"0\") could see it. Both now can. Nothing in the content needs the site: sold-out event, run sheet was a Google DOC not a sheet (docs have no CSV export — open them by hand), slides went to Canva and the Drive asset folder. The one loose end is historical: post-event photographs at drive.google.com/drive/folders/1kzPZwNkB0KlrEYftFAl4QXocIGoI0Axr, uploaded by Mike into his personal Drive on 21 Sep 2023 with a note that he would migrate them to the She Sharp Drive later, and a request from Maisie and Shae for a Google Photos album link instead because they did not want to link a Drive folder in the newsletter. If a 2023 gallery is ever wanted, that folder is where it is — assume the migration never happened.",
+      "digestAt": "2026-08-06T06:18:29.832Z"
     },
     "C05LZH9ET38": {
       "name": "events-2023-october-aut-school",

@@ -205,6 +205,18 @@ check("a plain skip scanned past its read position is NOT a backlog", () => {
   assert.strictEqual(unreadConversations(m).length, 0);
 });
 
+check("a mapped event that was never read at all is unread", () => {
+  // THE ARCHIVED CHANNEL. Mapped to its event without a fetch payload, then
+  // archived — so "never read" and "read to the beginning of time" were both
+  // "0", and comparing scanned against read could not tell them apart. It sat
+  // on 173 messages and 20 unrecorded threads until verify-coverage.ts walked
+  // Slack and asked.
+  const m = manifestOf({
+    C9: channel({ mapping: { kind: "event", events: [{ slug: "s", eventId: 1 }] }, watermarkTs: "0" }),
+  });
+  assert.deepStrictEqual(unreadConversations(m).map((c) => c.id), ["C9"]);
+});
+
 check("caught up means not unread", () => {
   const m = manifestOf({
     C3: channel({ mapping: { kind: "event", events: [{ slug: "s", eventId: 1 }] }, watermarkTs: "200", scannedTs: "200" }),
