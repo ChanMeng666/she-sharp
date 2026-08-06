@@ -318,12 +318,12 @@
             ]
           },
           "guest_speakers": {
-            "heading": "RCSA",
+            "heading": "Joining Us from RCSA",
             "speakers": [
               {
                 "name": "Lisa Cooley",
                 "title": "Founder & Managing Director of BrightSpark",
-                "company": "BrightSpark",
+                "company": "",
                 "bio": "With over 20 years’ experience in recruitment and 15 years in New Zealand’s tech and digital sector, Lisa brings deep expertise in hard-to-fill and specialist roles. She works closely with innovative companies and highly skilled candidates navigating competitive, short-market conditions. At the heart of Lisa’s work is helping people find roles that genuinely excite and fulfil them, while supporting businesses to thrive. A passionate advocate for people-first recruitment, Lisa runs jobseeker and graduate readiness workshops, champions Women in Tech, and supports inclusive hiring practices. She believes great recruitment can genuinely change lives.",
                 "image": "",
                 "linkedin": ""
@@ -331,7 +331,7 @@
               {
                 "name": "Sri Nanduri",
                 "title": "Senior Consultant, Potentia",
-                "company": "Potentia",
+                "company": "",
                 "bio": "Sri Nanduri is an experienced Auckland-based technology recruiter with over 8 years’ experience, specialising in Technology, Transformation and Digital roles within New Zealand. She has a strong background in senior client management, candidate placement and career coaching, helping professionals build personal brands and sharpen their interview skills. Sri stands out for her ability to find talent for niche, high-impact roles such as product management and technical leadership, having recruited product owners, senior data architects and testers.",
                 "image": "",
                 "linkedin": ""
