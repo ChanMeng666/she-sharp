@@ -1,76 +1,60 @@
 // Page-specific testimonials data
-export const testimonialsByPage = {
-  home: [
-    {
-      id: "home-1",
-      name: "Sarah Chen",
-      role: "Software Engineer",
-      company: "Microsoft",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "She Sharp gave me the confidence and network I needed to transition into tech. The mentorship programme was life-changing!",
-      tags: ["Career Transition", "Mentorship"],
-      featured: true,
-    },
-    {
-      id: "home-2",
-      name: "Emma Wilson",
-      role: "Data Scientist",
-      company: "Datacom",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "Through She Sharp events, I connected with amazing women who became both friends and professional contacts.",
-      tags: ["Networking", "Community"],
-    },
-    {
-      id: "home-3",
-      name: "Priya Patel",
-      role: "Product Manager",
-      company: "Xero",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "The workshops helped me level up my career. I went from junior developer to product manager in two years!",
-      tags: ["Skills Development", "Career Growth"],
-    },
-    {
-      id: "home-4",
-      name: "Jessica Kim",
-      role: "Cloud Architect",
-      company: "AWS",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "She Sharp's support during my university years shaped my career path. Now I'm giving back as a mentor!",
-      tags: ["University", "Giving Back"],
-    },
-    {
-      id: "home-5",
-      name: "Maria Rodriguez",
-      role: "UX Designer",
-      company: "Trade Me",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "Finding role models who looked like me in tech was powerful. She Sharp showed me that I belong here.",
-      tags: ["Role Models", "Belonging"],
-    },
-    {
-      id: "home-6",
-      name: "Aisha Mohammed",
-      role: "Security Engineer",
-      company: "Spark NZ",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "The hackathons pushed me out of my comfort zone. I discovered my passion for cybersecurity at a She Sharp event!",
-      tags: ["Technical Skills", "Discovery"],
-    },
-  ],
+//
+// Editorial rules for this file — every one of them exists because it was
+// broken once:
+//
+// 1. Every person here must be a real person who said this. The home, events,
+//    donate, about and media groups used to hold seventeen invented people
+//    ("Sarah Chen, Software Engineer, Microsoft" and so on) who endorsed real,
+//    named companies. They were removed in full. A registered charity putting
+//    fictional endorsements of real employers on its public site is worse than
+//    an empty section, and no component was rendering them anyway.
+// 2. Never invent an employer to fill a field. The two real testimonials below
+//    shipped with placeholder company names ("Tech Innovations Ltd", "Global
+//    Tech Corp", "Innovation Hub NZ") attached to real people. `role` and
+//    `company` are optional for exactly this reason — leave them out rather
+//    than guess. Anshu Maharaj's are kept because `lib/data/mentors.ts`
+//    corroborates them.
+// 3. Testimonials on the mentorship page must be about She Sharp's own
+//    programme. In March 2024 an AUT programme's testimonial was used here and
+//    had to be pulled — it implied She Sharp had run mentorship when it had
+//    not.
+// 4. Get the person's consent before quoting them by name. Take extra care
+//    with anyone who was a student at the time.
+
+export interface MentorshipTestimonialPerson {
+  name: string;
+  /** Omit rather than guess — see rule 2 above. */
+  role?: string;
+  /** Omit rather than guess — see rule 2 above. */
+  company?: string;
+  journey?: string;
+  image?: string;
+}
+
+export interface MentorshipTestimonial {
+  id: string;
+  mentee: MentorshipTestimonialPerson;
+  mentor: MentorshipTestimonialPerson;
+  quote: string;
+  fullStory: string;
+  author: string;
+}
+
+export const testimonialsByPage: {
+  mentorship: MentorshipTestimonial[];
+} = {
   mentorship: [
     {
       id: "mentor-1",
       mentee: {
         name: "Fay Fialho",
-        role: "Product Manager",
-        company: "Tech Innovations Ltd",
         journey: "6 months in the programme",
         image: "/img/scraped/avatars/dicebear-fay.svg",
       },
       mentor: {
         name: "Meeta Patel",
-        role: "Senior Director",
-        company: "Global Tech Corp",
+        role: "Technical Advisor",
         image: "/img/scraped/avatars/dicebear-meeta.svg",
       },
       quote:
@@ -84,7 +68,6 @@ export const testimonialsByPage = {
       mentee: {
         name: "Shweta Sharma",
         role: "Product Owner",
-        company: "Innovation Hub NZ",
         journey: "Completed 2024 Cohort",
         image: "/img/scraped/avatars/dicebear-shweta.svg",
       },
@@ -100,119 +83,6 @@ export const testimonialsByPage = {
       fullStory:
         "What a successful completion of She Sharp first mentorship cohort of 2024! This initiative has truly been a taonga (treasure) for both mentors and mentees, offering invaluable opportunities for growth, guidance, and connection. A shoutout to my incredible She Sharp mentor, Anshu Maharaj, whose support has been instrumental in my journey, enabling me to grow in my Product Owner role. This journey so far has allowed me to grow but has also empowered me to build an efficient toolbox. It has equipped me with the skills and insights needed to navigate challenges with confidence, and I aim to continue applying these tools to make an impact in all aspects moving forward.",
       author: "Shweta Sharma",
-    },
-  ],
-  events: [
-    {
-      id: "event-1",
-      name: "Jessica Liu",
-      role: "Frontend Developer",
-      company: "Startup Hub",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "THRIVE 2024 was incredible! I made connections that led directly to my current role.",
-      event: "THRIVE Conference 2024",
-      tags: ["Networking", "Career Opportunity"],
-    },
-    {
-      id: "event-2",
-      name: "Amanda Torres",
-      role: "Data Analyst",
-      company: "Finance Corp",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "The React workshop gave me practical skills I use every day. The hands-on approach was perfect!",
-      event: "React Fundamentals Workshop",
-      tags: ["Skills Training", "Practical Learning"],
-    },
-    {
-      id: "event-3",
-      name: "Sophie Anderson",
-      role: "Cybersecurity Specialist",
-      company: "Security First",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "She Sharp events create a safe space to learn and grow. I've attended 10+ events and each one has been valuable.",
-      event: "Multiple Events",
-      tags: ["Community", "Continuous Learning"],
-    },
-  ],
-  donate: [
-    {
-      id: "donor-1",
-      name: "Michael Thompson",
-      role: "CEO",
-      company: "Tech Innovations Ltd",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "Supporting She Sharp is an investment in the future of tech. We've seen incredible talent emerge from their programmes.",
-      type: "Corporate Sponsor",
-      tags: ["Corporate Giving", "Talent Pipeline"],
-    },
-    {
-      id: "donor-2",
-      name: "Grace Lee",
-      role: "Alumni & Donor",
-      company: "Google",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "She Sharp helped me early in my career. Now I donate monthly to ensure other women get the same opportunities.",
-      type: "Individual Donor",
-      tags: ["Alumni", "Giving Back"],
-    },
-    {
-      id: "beneficiary-1",
-      name: "Nina Patel",
-      role: "Scholarship Recipient",
-      company: "University Student",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "The scholarship allowed me to attend coding bootcamp. I'm now pursuing my dream of becoming a software engineer!",
-      type: "Beneficiary",
-      tags: ["Education", "Opportunity"],
-    },
-  ],
-  about: [
-    {
-      id: "about-1",
-      name: "Dr. Sarah Mitchell",
-      role: "Board Member",
-      company: "She Sharp",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "Our mission to bridge the gender gap in STEM drives everything we do. Seeing our impact grow year after year is incredibly rewarding.",
-      tags: ["Mission", "Leadership"],
-    },
-    {
-      id: "about-2",
-      name: "Tom Chen",
-      role: "Volunteer Coordinator",
-      company: "She Sharp",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "The dedication of our volunteers is inspiring. Together, we're creating real change in the tech industry.",
-      tags: ["Volunteering", "Community Impact"],
-    },
-    {
-      id: "about-3",
-      name: "Rebecca Jones",
-      role: "Partner",
-      company: "Innovation Partners",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "She Sharp's approach to empowering women in tech is both practical and impactful. We're proud to be long-term partners.",
-      tags: ["Partnership", "Long-term Impact"],
-    },
-  ],
-  media: [
-    {
-      id: "media-1",
-      name: "Lisa Wang",
-      role: "Podcast Guest",
-      company: "AI Startup",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "Sharing my story on the She Sharp podcast was empowering. It's amazing to inspire other women through this platform.",
-      tags: ["Podcast", "Storytelling"],
-    },
-    {
-      id: "media-2",
-      name: "Karen Smith",
-      role: "Newsletter Subscriber",
-      company: "Tech Professional",
-      image: "/img/scraped/avatars/dicebear-placeholder.svg",
-      quote: "The monthly newsletter keeps me connected to the community and informed about opportunities. It's a must-read!",
-      tags: ["Newsletter", "Community Updates"],
     },
   ],
 };
