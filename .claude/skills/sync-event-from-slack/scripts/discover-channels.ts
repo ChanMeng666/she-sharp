@@ -445,8 +445,10 @@ async function main() {
        */
       let peek = "0";
       const grown: GrownThread[] = [];
-      const deepScan =
-        mapping?.kind === "event" || (mapping?.kind === "skip" && mapping.alwaysRead);
+      // Every conversation, not just the ones that look important. A thread in
+      // a chatter channel is where an event date gets decided as easily as
+      // anywhere else, and the heuristic cannot know which.
+      const deepScan = true;
       try {
         const page: any[] = [];
         let pcur: string | undefined;

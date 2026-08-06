@@ -145,6 +145,9 @@ function main() {
     threads: mergedThreads,
     fingerprint: fingerprint || (kind === "event" ? prev?.fingerprint ?? "" : ""),
     lastSyncedAt: nowIso(),
+    // Only a payload is evidence the content reached the model. `--channel`
+    // + `--watermark` by hand records a mapping, not a read.
+    ...(fromFile ? { readAt: nowIso() } : prev?.readAt ? { readAt: prev.readAt } : {}),
     lastSyncedCommit: arg("--commit") ?? prev?.lastSyncedCommit ?? "",
     ...(digest ? { digest, digestAt } : {}),
   };
@@ -152,7 +155,7 @@ function main() {
   // Avoid timestamp churn: if nothing material changed, keep the prior entry
   // (incl. its lastSyncedAt) so a no-op re-record leaves the manifest byte-stable.
   const material = (c?: ChannelState) =>
-    c && JSON.stringify({ n: c.name, t: c.type, m: c.mapping, w: c.watermarkTs, s: c.scannedTs ?? "", th: c.threads, f: c.fingerprint, d: c.digest ?? "" });
+    c && JSON.stringify({ n: c.name, t: c.type, m: c.mapping, w: c.watermarkTs, s: c.scannedTs ?? "", r: c.readAt ? "y" : "", th: c.threads, f: c.fingerprint, d: c.digest ?? "" });
   if (prev && material(prev) === material(next)) {
     process.stdout.write(`no change for ${channelId} (${name})\n`);
     return;
