@@ -789,9 +789,9 @@
               },
               {
                 "name": "Libby Lavrova",
-                "title": "Data & AI Tech Specialist",
-                "company": "",
-                "bio": "Libby is passionate about co-creating magical and intelligent experiences with all types of New Zealand based organisations through the IBM Ecosystem.Over her 8 year career at IBM, Libby spent four years as a Cognitive Engineer in the Telco industry and for the past two years has been a Data & AI Partner Technical Specialist.Libby dedicates her time to being essential to her business partners, listening and ideating on the problem their customers have and dreaming up together the best solution with Data & AI at the centre of it all.",
+                "title": "Data / AI Partner Technical Specialist",
+                "company": "IBM",
+                "bio": "Libby is passionate about co-creating magical and intelligent experiences with all types of New Zealand based organisations through the IBM Ecosystem. Over her 8 year career at IBM, Libby spent four years as a Cognitive Engineer in the Telco industry and for the past two years has been a Data & AI Partner Technical Specialist.Libby dedicates her time to being essential to her business partners, listening and ideating on the problem their customers have and dreaming up together the best solution with Data & AI at the centre of it all.",
                 "image": "/img/scraped/speakers/66eba9db021d85dadb5ab595_IMG_1237_5595123d.jpg",
                 "linkedin": "https://www.linkedin.com/in/libby-lavrova-243b33153/"
               },
@@ -1287,7 +1287,7 @@
         "alt": "ethnic advantage pic"
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/ethnic-advantage-conference",
-      "shortDescription": "She Sharp will be at theEthnic Advantage Conference 2025, a powerful one-day event bringing together over 300 ethnic community leaders, service providers, faith leaders, government agencies, and more to explore the role of ethnic communities in social cohesion and resilience.",
+      "shortDescription": "She Sharp will be at the Ethnic Advantage Conference 2025, a powerful one-day event bringing together over 300 ethnic community leaders, service providers, faith leaders, government agencies, and more to explore the role of ethnic communities in social cohesion and resilience.",
       "attendees": null,
       "checkedIn": null,
       "detailPageData": {
@@ -1295,16 +1295,16 @@
         "title": "Ethnic Advantage Conference",
         "subtitle": "Come Meet She Sharp at the Ethnic Advantage Conference!",
         "date": "",
-        "time": "",
+        "time": "8:30am - 5:30pm",
         "location": {
-          "format": "online",
-          "venueName": "",
+          "format": "in_person",
+          "venueName": "Aotea Centre",
           "address": "",
-          "city": "",
+          "city": "Auckland",
           "country": "New Zealand"
         },
         "fullDescription": [
-          "She Sharp will be at theEthnic Advantage Conference 2025, a powerful one-day event bringing together over 300 ethnic community leaders, service providers, faith leaders, government agencies, and more to explore the role of ethnic communities in social cohesion and resilience.",
+          "She Sharp will be at the Ethnic Advantage Conference 2025, a powerful one-day event bringing together over 300 ethnic community leaders, service providers, faith leaders, government agencies, and more to explore the role of ethnic communities in social cohesion and resilience.",
           "Visit our She Sharp stall during registration and break times to learn more about our mission to empower women in STEM, upcoming opportunities, and how you can get involved.",
           "We look forward to connecting with you!",
           "She Sharp will be at the Ethnic Advantage Conference 2025, a powerful one-day event bringing together over 300 ethnic community leaders, service providers, faith leaders, government representatives and advocates committed to a stronger, more inclusive Aotearoa."
@@ -2842,9 +2842,9 @@
               },
               {
                 "name": "Libby Lavrova",
-                "title": "Data & AI Tech Specialist",
-                "company": "",
-                "bio": "Libby is passionate about co-creating magical and intelligent experiences with all types of New Zealand based organisations through the IBM Ecosystem.Over her 8 year career at IBM, Libby spent four years as a Cognitive Engineer in the Telco industry and for the past two years has been a Data & AI Partner Technical Specialist.Libby dedicates her time to being essential to her business partners, listening and ideating on the problem their customers have and dreaming up together the best solution with Data & AI at the centre of it all.",
+                "title": "Data / AI Partner Technical Specialist",
+                "company": "IBM",
+                "bio": "Libby is passionate about co-creating magical and intelligent experiences with all types of New Zealand based organisations through the IBM Ecosystem. Over her 8 year career at IBM, Libby spent four years as a Cognitive Engineer in the Telco industry and for the past two years has been a Data & AI Partner Technical Specialist.Libby dedicates her time to being essential to her business partners, listening and ideating on the problem their customers have and dreaming up together the best solution with Data & AI at the centre of it all.",
                 "image": "/img/scraped/speakers/66eba9db021d85dadb5ab595_IMG_1237_5595123d.jpg",
                 "linkedin": "https://www.linkedin.com/in/libby-lavrova-243b33153/"
               },
@@ -2885,7 +2885,27 @@
           ],
           "other": []
         },
-        "specialSections": [],
+        "specialSections": [
+          {
+            "type": "agenda",
+            "title": "How the Evening Ran",
+            "content": [
+              "5:00pm — Registration, arrival and networking over dinner",
+              "5:50pm — Guests seated",
+              "5:55pm — Opening: karakia, health and safety, welcome",
+              "6:00pm — Keynote: Dr Mahsa McCauley, Founder and Chair of She Sharp",
+              "6:10pm — Frances Valintine CNZM, Founder and Board Director, academyEX",
+              "6:20pm — Libby Lavrova, Data / AI Partner Technical Specialist, IBM",
+              "6:30pm — Alexia Hilbertidou, Founder, GirlBoss New Zealand",
+              "6:40pm — Aravind Subramanian, Partner in Deloitte's Technology practice",
+              "6:50pm — Rochelle Moffitt, Founder and CEO, Tickled Pink",
+              "7:00pm — Audience Q&A",
+              "7:10pm — Ambassador acknowledgements and the highlights video",
+              "7:20pm — Closing: what's next, thank you to our sponsors, feedback, karakia and a group photo",
+              "7:30pm – 8:00pm — Networking and the photo booth"
+            ]
+          }
+        ],
         "photos": [
           {
             "url": "/img/scraped/photos/671b32ca898cf47916e7f70b_Anniversary-144-p-2000.jpg",
