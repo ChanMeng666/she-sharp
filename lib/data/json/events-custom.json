@@ -1285,7 +1285,7 @@
         "title": "Aotearoa AI Hackathon Festival 2026, hosted by AUT in partnership with She Sharp and the AI Forum",
         "subtitle": "Two-Day AI Hackathon",
         "date": "August 7, 2026",
-        "time": "Fri 7 Aug, 5:00pm – Sat 8 Aug 2026 (NZST)",
+        "time": "Fri 7 Aug 5:00–8:00pm · Sat 8 Aug 7:30am–8:00pm (NZST)",
         "location": {
           "format": "in_person",
           "venueName": "AUT City Campus",
@@ -1554,7 +1554,7 @@
             "title": "How Teams Are Judged",
             "content": [
               "Each venue has a panel of three to four judges: a host representative, a sponsor or business representative, and a member of the AI Forum Executive Council.",
-              "Each team delivers a live 5-minute pitch to the panel.",
+              "Each team delivers a live 5-minute pitch to the panel, followed by a short Q&A with the judges.",
               "Judges score four equally-weighted criteria (1–5 each):",
               "Inspiration — a clearly defined problem, a solution that solves it, and real impact for New Zealand and the world.",
               "Technology — the solution must use AI; demonstrate feasibility, engineering quality, and how the technology solves the problem (a working prototype is highly recommended).",
@@ -1582,7 +1582,7 @@
             "title": "National Judging Panel",
             "content": [
               "The national panel watches every venue's winning pitch video, scores it against the same scorecards used at each venue, and selects the one winner who pitches on stage at the Aotearoa AI Summit. The same panel awards the AI Technical Brilliance Prize, which can go to any venue winner — not only the national winner.",
-              "David Knox (Topologic) chairs the panel and Albert Bifet (University of Waikato) is deputy chair. They are joined by Prof Yun Sing Koh and Prof Karin Bryan (University of Auckland), Nicholas Fourie (Fisher & Paykel Healthcare), Dr Mahsa McCauley (AUT, Chair of AI Forum New Zealand), Dr Karaitiana Taiuru (AI, data and emerging technology ethics, governance and research; Chair of Kāhui Māori), Shivonne Llondt (AWS) and Nicola Voice (Sustainability Lead, Woolworths New Zealand).",
+              "Albert Bifet (University of Waikato) chairs the panel and David Knox (Topologic) is deputy chair. They are joined by Prof Yun Sing Koh and Prof Karin Bryan (University of Auckland), Nicholas Fourie (Fisher & Paykel Healthcare), Dr Mahsa McCauley (AUT, Chair of AI Forum New Zealand), Dr Karaitiana Taiuru (AI, data and emerging technology ethics, governance and research; Chair of Kāhui Māori), Shivonne Llondt (AWS) and Nicola Voice (Sustainability Lead, Woolworths New Zealand).",
               "Dr Mahsa McCauley and Nicholas Fourie sit on both the AUT City Campus venue panel and the national panel."
             ]
           },
@@ -1601,6 +1601,7 @@
             "type": "bullets",
             "title": "The Challenge — Five Real-World Themes",
             "content": [
+              "This year's theme is AI for Good — Building Solutions that Matter. Every solution should tackle a real-world challenge aligned to one of the five UN Sustainable Development Goal categories: People, Planet, Prosperity, Peace or Partnership.",
               "Tackling food insecurity in a food-exporting nation",
               "Enhancing digital accessibility for all communities",
               "Upskilling the workforce for an AI-driven future",
@@ -1612,7 +1613,7 @@
             "type": "info",
             "title": "How the National Festival Works",
             "content": [
-              "The Aotearoa AI Hackathon Festival runs as a series of 48-hour hackathons hosted at venues across Aotearoa New Zealand between 3 and 10 August 2026.",
+              "The Aotearoa AI Hackathon Festival runs as a series of two-day hackathons hosted at venues across Aotearoa New Zealand between 3 and 10 August 2026 — each venue picks its own two days within that window.",
               "Every venue records its team pitches and selects a local winner. A national judging panel then reviews the winning pitches and selects the finalists.",
               "Four national finalists are invited to pitch live at the Aotearoa AI Summit on 8–9 September 2026 in Wellington, where the Summit audience votes for the winning solution and the award-winning team is announced."
             ]
@@ -1622,7 +1623,7 @@
             "title": "Prizes & Awards",
             "content": [
               "Every venue winning team: $250",
-              "National winner invited to pitch at the Aotearoa AI Summit 2026",
+              "Four national finalists invited to pitch at the Aotearoa AI Summit 2026",
               "National — TAIAO Prize (Summit audience vote): $1,000",
               "National — Technical Brilliance (national judging panel): $1,000",
               "Prizes supported by AWS and provided via AI Forum New Zealand",
@@ -1905,7 +1906,7 @@
           {
             "title": "Prepare Your Pitch",
             "paragraphs": [
-              "On day two, each team delivers a live 5-minute pitch to the local judging panel. Venue winners advance to national judging, and one winner pitches at the Aotearoa AI Summit on 8–9 September 2026 at Tākina in Wellington.",
+              "On day two, each team delivers a live 5-minute pitch to the local judging panel, followed by a short Q&A. Venue winners advance to national judging, and the four national finalists pitch at the Aotearoa AI Summit on 8–9 September 2026 at Tākina in Wellington, where the Summit audience votes for the overall winner.",
               "Download the official pitch deck template from the Community Hub to structure your solution, impact and next steps — and see “Your 5-Minute Pitch, Section by Section” above for how the five minutes are meant to break down."
             ],
             "links": [
@@ -1941,7 +1942,7 @@
             "paragraphs": [
               "The event is hosted in person at AUT City Campus, 55 Wellesley Street East, in the heart of Auckland's CBD — well served by public transport and within walking distance of the city centre. Look for the Sir Paul Reeves Building, known on campus as the WG Building.",
               "Registration and all catering are in WG306. The event kicks off in WG308 on Friday, and that is also where the pitches and awards take place on Saturday. Please allow time to find parking and sign in before 5:00pm on Friday.",
-              "Please bring your own laptop and charger. Power, Wi-Fi, mentoring and refreshments are provided on site across both days."
+              "Please bring your laptop and charger, a reusable water bottle, and a notebook and pen if you like working on paper. Power, Wi-Fi, mentoring, and food and drinks are provided on site across both days."
             ],
             "images": [
               {
