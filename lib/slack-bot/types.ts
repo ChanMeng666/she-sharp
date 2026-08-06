@@ -8,7 +8,7 @@ import type { EventV3 } from "@/types/event";
 export interface ImageTask {
   /** Public path where the image should be placed (e.g., /img/events/<slug>-<desc>.<ext>). */
   path: string;
-  /** Human-readable purpose (e.g., "Speaker photo: Danubi Paim"). */
+  /** Human-readable purpose (e.g., "Speaker photo: Danubia Paim"). */
   description: string;
   /** True if the path already exists on disk and does not need to be placed. */
   alreadyExists?: boolean;
