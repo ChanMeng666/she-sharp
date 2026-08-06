@@ -422,11 +422,9 @@
             "type": "workshop_preparation",
             "title": "Get Ready for the Workshop",
             "content": [
-              "Get Ready for the Workshop",
-              "Get Ready for the Workshop",
-              "Get a quick look at how the Secure Code Warrior platform works and what to expect during the workshop. :https://secure-code-warrior.wistia.com/medias/iuwtu89k00",
-              "Hear directly why secure coding training is relevant for developers and teams. :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
-              "See how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change.:https://www.youtube.com/watch?v=TC9j-sjxK84"
+              "How to Play in a Tournament — get a quick look at how the Secure Code Warrior platform works and what to expect during the workshop :https://secure-code-warrior.wistia.com/medias/iuwtu89k00",
+              "Why Secure Coding Matters — hear directly why secure coding training is relevant for developers and teams :https://secure-code-warrior.wistia.com/medias/ln443qckgl",
+              "Real-World Impact: Zip's Story — see how Zip used Secure Code Warrior Tournaments to boost security awareness and drive cultural change :https://www.youtube.com/watch?v=TC9j-sjxK84"
             ]
           },
           {
