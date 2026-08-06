@@ -18,8 +18,30 @@
  * All other links are kept exactly as served by the live site. Note February
  * 2026 still points to the March 2026 campaign on the source site; this mirrors
  * the legacy data and can be corrected later via `newsletters-manual.ts`.
- * Gaps (e.g. no February 2025, November 2025, June 2022) reflect months the
- * organization did not publish a newsletter card.
+ *
+ * Gaps here mean the legacy site had no card for that month. That is NOT the
+ * same as "no newsletter went out", and this comment used to claim it was.
+ * Corrected against the Slack archive:
+ * - June 2022 WAS published. The draft was proofread in-channel on 2022-06-27
+ *   and sent that afternoon; the campaign is titled "She Sharp Newsletter -
+ *   June 2022" and still resolves. It is restored in `newsletters-manual.ts`.
+ *   The legacy site was missing four issues in this stretch, and this was the
+ *   last of them not to be recovered.
+ * - February 2025 is unresolved. The February issue was written, laid out,
+ *   reviewed and confirmed sent, but the most likely explanation is that it
+ *   went out at the end of February under the name
+ *   `she-sharp-newsletter-march2025` — i.e. it is the `2025-03` entry below,
+ *   not a missing issue. Needs a human to check the send date in Mailchimp.
+ * - November 2025 genuinely did not go out; the founder noticed in December.
+ *
+ * KNOWN BROKEN: the seven 2021 entries pointing at
+ * `shesharp.org.nz/wp-content/uploads/2021/...` are all dead. The WordPress
+ * site they were hosted on is gone: five return 403 and two return a soft-404
+ * HTML page under a `.pdf` URL, which is worse — the browser renders a web
+ * page instead of downloading the issue. Every 2021 issue had a proper PDF;
+ * recovering them means pulling the originals out of the 2021 UpdraftPlus
+ * backup and self-hosting them under `/docs/`. Until someone does, these seven
+ * covers open onto nothing.
  */
 
 import type { NewsletterIssue } from "@/types/newsletter";
