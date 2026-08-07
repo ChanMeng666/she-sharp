@@ -664,7 +664,7 @@ const TONIGHT_LOGISTICS: Slide[] = [
     themes: [
       { tag: "Network", title: "AUTwifi" },
       { tag: "Username", title: "ai-hack-a-thon@guest" },
-      { tag: "Password", title: "46533572" },
+      { tag: "Password", title: "69244539" },
     ],
     note: "Leave this up through registration. Read the username aloud one hyphen at a time — it is the field everyone mistypes — and say the password twice.",
   },
