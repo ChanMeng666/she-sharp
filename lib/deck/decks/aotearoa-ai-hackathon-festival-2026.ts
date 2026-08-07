@@ -165,6 +165,23 @@ const ASSISTANT_QR: QrBlock = {
 };
 
 /*
+ * Live Q&A, and it gets a slide of its own rather than a place in a row of
+ * codes: a question happens in the thirty seconds after someone thinks of it,
+ * so the code has to be on screen at that moment and big enough to scan from
+ * the back of WG308.
+ *
+ * The event id is unguessable and unmemorable, which is the whole reason this
+ * is a code and not a link read aloud. It is a public Slido room — anyone with
+ * the URL can post — so nothing here is a credential; if that ever changes,
+ * this slide is the first thing to pull.
+ */
+const SLIDO_QR: QrBlock = {
+  url: "https://app.sli.do/event/q4y61zo6W3hgj5MCTGKJp7/live/questions",
+  label: "Ask a question",
+  caption: "app.sli.do",
+};
+
+/*
  * She Sharp's own copy of the template, not the Community Hub page.
  *
  * This pointed at the TNZ Ecosystem Hub until the pre-event QR audit on 5 Aug
@@ -719,6 +736,30 @@ const TONIGHT_LOGISTICS: Slide[] = [
  * It reads better here anyway, as the bridge out of the welcome and into the
  * event itself.
  */
+/*
+ * Straight after the keynote, which is when the room has the most to ask and
+ * the least appetite for putting a hand up in front of a hundred people.
+ *
+ * Dark, because it follows a dark photo slide and precedes a light one — and
+ * because a code reads best out of a dark field at projector distance.
+ */
+const SLIDO_QA: Slide = {
+  id: "ask-a-question",
+  type: "qr-cta",
+  section: "Day One — Friday 7 August",
+  tone: "dark",
+  eyebrow: "No hand up needed",
+  title: "Ask Your Questions Here",
+  lead: "Post a question, upvote someone else's, and we work through them live",
+  points: [
+    "Scan once and leave the tab open",
+    "Type your question the moment you think of it",
+    "Upvote a question to push it up the list",
+  ],
+  qr: SLIDO_QR,
+  note: "Leave this up while questions come in. Read the top-voted one first — it is the room telling you what it wants answered, and it saves you choosing.",
+};
+
 const TWO_DAY_FORMAT: Slide = {
   id: "two-day-format",
   type: "bullets",
@@ -786,6 +827,7 @@ const OPENING_WITH_LOGISTICS: Slide[] = insertAfter(
     ...TONIGHT_LOGISTICS,
   ),
   "keynote-speaker",
+  SLIDO_QA,
   TWO_DAY_FORMAT,
 );
 
