@@ -961,8 +961,8 @@
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/ai-hackathon-festival-2025",
       "shortDescription": "AI Forum is hosting the 2025 AI Hackathon across Aotearoa.",
-      "attendees": null,
-      "checkedIn": null,
+      "attendees": 98,
+      "checkedIn": 69,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/ai-hackathon-festival-2025",
         "title": "AI Hackathon Festival 2025",
@@ -1534,7 +1534,7 @@
       "detailPageUrl": "https://www.shesharp.org.nz/events/iamremarkable",
       "shortDescription": "#IAmRemarkable is a global movement that empowers everyone, including under represented groups, to celebrate their achievements in the workplace and beyond, while challenging the social perception around self-promotion. At the heart of our movement is a 60 minute workshop open to everyone, hosted by our very own She Sharp founder and director- Dr Mahsa McCauley (Mohaghegh).",
       "attendees": 63,
-      "checkedIn": 24,
+      "checkedIn": 31,
       "detailPageData": {
         "url": "https://www.shesharp.org.nz/events/iamremarkable",
         "title": "#IAmRemarkable",
