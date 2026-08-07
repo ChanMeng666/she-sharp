@@ -91,9 +91,11 @@
   position: absolute;
   inset-block-start: 50%;
   inset-inline-start: 50%;
-  /* Both custom properties set inline by `useStageScale()`. */
+  /* Both custom properties set inline by `useStageScale()`. The height is a
+     variable rather than a literal only so a PORTRAIT display can flow it; on
+     every landscape display, and in print, it resolves to the authored 1080. */
   inline-size: var(--deck-stage-w, 1920px);
-  block-size: 1080px;
+  block-size: var(--deck-stage-h, 1080px);
   transform: translate(-50%, -50%) scale(var(--deck-scale, 1));
   transform-origin: center;
   container-type: inline-size;
@@ -196,6 +198,135 @@
     --dt-script: 66px;
     --deck-gap-lg: 40px;
     --deck-gap-xl: 56px;
+  }
+}
+
+/* PORTRAIT STAGES — a phone held upright. `useStageScale()` fixes the width at
+   900 and flows the height, so this is the only query that sees a stage
+   narrower than a 4:3 projector.
+
+   THIS BLOCK MUST STAY BELOW THE 1560px ONE. A 900px stage matches both, the
+   selectors have identical specificity, and source order is the only thing that
+   decides. Move it up and the narrow-projector scale wins silently — the same
+   family of failure as writing a container query against `.deck-stage` itself.
+
+   The type does NOT shrink in proportion to the stage. It cannot: the type is
+   sized in design px and the whole stage is scaled to about 0.43 on a phone, so
+   design px that look generous here arrive small on the glass. These values are
+   tuned so the rendered result is legible in the hand, not so the proportions
+   match a projector. */
+@container deck (max-width: 1000px) {
+  .deck-slide {
+    --dt-mega: 200px;
+    --dt-display: 84px;
+    --dt-stat: 128px;
+    --dt-stat-minor: 60px;
+    --dt-title: 58px;
+    --dt-subtitle: 38px;
+    --dt-bullet: 36px;
+    --dt-lead: 34px;
+    --dt-body: 34px;
+    --dt-label: 30px;
+    --dt-kicker: 30px;
+    --dt-script: 52px;
+
+    /* The overscan inset exists for HDMI to a TV. A phone has no overscan, and
+       96px of it on a 900px stage is a fifth of the width spent on nothing. */
+    --deck-pad-x: 48px;
+    --deck-pad-y: 40px;
+    --deck-content-max: 900px;
+    --deck-gap-lg: 36px;
+    --deck-gap-xl: 44px;
+
+    /* Six rows on the authored 166px pitch fill 992px, which is exactly 1080
+       minus the rail — and about two thirds of the way down a portrait stage,
+       leaving the wall stopping in mid-air with a gradient below it. A portrait
+       stage has no single height to hard-code against (it is the display's
+       aspect, and a tall phone and a short one differ by hundreds of px), so
+       the pitch is DERIVED from the same number the stage was built with. Six
+       rows then land on the bottom edge at every portrait height, exactly as
+       they do at 1080. The width follows at the wall's authored 1.6:1 crop. */
+    --deck-tile-h: calc(
+      (var(--deck-stage-h, 1080px) - var(--deck-rail-h)) / 6 -
+        var(--deck-wall-gap)
+    );
+    --deck-tile-w: calc(var(--deck-tile-h) * 1.6);
+    --deck-band-h: var(--deck-tile-h);
+  }
+
+  /* Three tiles, not the six the small-display media query leaves. A portrait
+     tile is roughly 490px wide against a 900px stage, so three already reach
+     both edges of a full-bleed wall; the rest would render, decode and
+     composite entirely outside the clip. Both rules only ever set
+     `display: none`, so their overlap is harmless whichever order they cascade
+     in. */
+  .deck-wall-row > :nth-child(n + 4) {
+    display: none;
+  }
+
+  /* People grids reflow. `people-slide.tsx` derives its column count against a
+     1230px content column and writes it as an inline style, so this needs both
+     `!important` and the density — a track that fits a name-only tile is half
+     what a name-role-org tile needs. `auto-fit` from here on: the count is
+     small enough that a ragged last row reads as a list, not as a broken grid.
+     Portraits follow the track on their own — `PersonTile` sizes them
+     `min(100%, cap)` precisely so they can. */
+  .deck-people-grid {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(var(--deck-people-min), 1fr)
+    ) !important;
+  }
+
+  .deck-people-grid[data-density="sm"] {
+    --deck-people-min: 180px;
+  }
+
+  .deck-people-grid[data-density="md"] {
+    --deck-people-min: 240px;
+  }
+
+  .deck-people-grid[data-density="lg"] {
+    --deck-people-min: 300px;
+  }
+
+  /* The QR sits beside the copy in a fixed 340px track. On a 900px stage that
+     leaves the copy about 420px, so the ask — the whole reason the slide
+     exists — competes with its own explanation. Stack instead: copy, then
+     code. */
+  .deck-qr-cta {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* Run sheets fold back to one column. `agenda-slide.tsx` splits any day
+     longer than seven rows in two, because a 1080-high stage has no room for
+     more; a portrait stage has nearly twice the height and barely half the
+     width, so the constraint that forced the split does not apply and the split
+     itself is what breaks. Thirteen rows at the 68px minimum is 884px, which
+     fits the portrait safe area with room to spare. */
+  .deck-sheet-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* …and the rows tighten to pay for it. A run sheet is the longest slide in
+     any deck, so it is the one that runs out of stage first. Two numbers do the
+     work: the type drops a step, and the time column widens. The second is the
+     one that mattered — "5:00–5:30pm" at 34px needs about 215px and the split
+     layout hands it a 208px basis, so EVERY time wrapped to two lines and every
+     row cost 117px instead of 70. Fourteen rows of that is 650px of pure
+     wrapping, which is what pushed the day-two sheet off the bottom. */
+  .deck-sheet-time,
+  .deck-sheet-item {
+    font-size: 30px;
+  }
+
+  .deck-sheet-time {
+    flex-basis: 230px !important;
+  }
+
+  .deck-sheet-row {
+    min-block-size: 62px;
+    gap: var(--deck-gap-sm);
   }
 }
 
@@ -1016,14 +1147,26 @@
 
 /* One row. `width: max-content` lets the row be wider than the stage, which is
    the whole point — it drifts. Rows must be emitted TWICE by the layout (the
-   same tile list back to back) so a -50% translate loops seamlessly. */
+   same tile list back to back) so a -50% translate loops seamlessly.
+
+   NO `will-change: transform` HERE, AND NEVER AGAIN.
+   ---------------------------------------------------------------------------
+   Every slide in the deck stays mounted, so this selector matches ~100 rows at
+   once, and each one is `max-content` wide — 40 tiles on a 263px pitch is over
+   10,000 design px. `will-change` promoted all of them to compositing layers
+   unconditionally, including the hundred-odd rows belonging to slides nobody
+   was looking at. On 7 Aug 2026 that was enough backing store to get the tab
+   killed outright by iOS ("A problem repeatedly occurred" is jetsam, not a JS
+   error). A running CSS transform animation self-promotes in both Blink and
+   WebKit, so the declaration bought nothing even on the visible slide.
+   If an old venue laptop ever stutters, add it inside the ACTIVE-SLIDE
+   selector in the ambient-loop block below — not here. */
 .deck-wall-row {
   display: flex;
   gap: var(--deck-wall-gap);
   block-size: var(--deck-tile-h);
   margin-block-end: var(--deck-wall-gap);
   inline-size: max-content;
-  will-change: transform;
 }
 
 .deck-wall-row > * {
@@ -1331,16 +1474,29 @@
 
 /* Ambient loops. Gated on `data-motion` so the viewer can stop them outright;
    the wall is a designed still composition without them. `--wall-seconds`
-   differs per row so the field never reads as one sliding sheet. */
-.deck-stage[data-motion="on"] .deck-wall-row {
+   differs per row so the field never reads as one sliding sheet.
+
+   SCOPED TO THE ACTIVE SLIDE, deliberately.
+   ---------------------------------------------------------------------------
+   Without the `[data-active="true"]` step these selectors matched every row and
+   every plate in the deck — roughly a hundred infinite compositor animations
+   running forever on slides that were `visibility: hidden`. `visibility` does
+   not stop a running animation, and the cost is paid per frame regardless.
+   Re-entering a slide now restarts its drift from `translate3d(0,0,0)` instead
+   of resuming. That is invisible: the cross-fade at the top of this file
+   transitions `opacity` only, so an outgoing slide is hidden in the same frame
+   it loses `data-active` and nobody ever sees the reset. */
+.deck-stage[data-motion="on"] .deck-slide[data-active="true"] .deck-wall-row {
   animation: deck-wall-drift-l var(--wall-seconds, 190s) linear infinite;
 }
 
-.deck-stage[data-motion="on"] .deck-wall-row-reverse {
+.deck-stage[data-motion="on"]
+  .deck-slide[data-active="true"]
+  .deck-wall-row-reverse {
   animation-name: deck-wall-drift-r;
 }
 
-.deck-stage[data-motion="on"] .deck-plate img {
+.deck-stage[data-motion="on"] .deck-slide[data-active="true"] .deck-plate img {
   transform-origin: 60% 60%;
   animation: deck-swell 60s ease-in-out infinite;
 }
@@ -1496,8 +1652,10 @@
   display: grid;
   place-items: center;
   padding: 32px;
-  background: rgb(4 3 10 / 0.82);
-  backdrop-filter: blur(6px);
+  /* No `backdrop-filter` here. Behind an 0.88 scrim it was invisible, and it
+     cost a full-viewport GPU pass on the very first thing a first-time visitor
+     renders — which on a phone is the first thing rendered at all. */
+  background: rgb(4 3 10 / 0.88);
 }
 
 .deck-coach-card {
@@ -1751,3 +1909,52 @@ body.deck-low-power .deck-stage * {
    still describing a mechanism the file no longer has — which is worse than no
    comment, because it reads as load-bearing. If entrances ever return to CSS,
    they need the runtime hand-off restored with them. */
+
+/* --------------------------------------------------------------------------
+   Small displays
+
+   The one and only `@media` query in this file that is not `print` or
+   `prefers-reduced-motion`, and the exception to the ban on real-viewport units
+   inside the stage. That ban is about units that silently fail to scale with
+   the stage transform; this block asks about the physical display, which is
+   exactly the axis it wants.
+
+   It is a media query rather than a JS device check on purpose: it applies
+   before the first paint, so there is never a window in which four thousand
+   images are requested and then thrown away, and the server-rendered markup is
+   identical either way, so there is nothing to mismatch on hydration.
+
+   The thresholds keep a 1024x768 data projector and a 1366x768 laptop (viewport
+   height about 650) on the full path, and catch every phone in both
+   orientations — a landscape iPhone is under 400px tall. A desktop user who
+   shrinks a window below either threshold gets the reduced fidelity too, which
+   is the intended behaviour and not an accident.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px), (max-height: 620px) {
+  /* Ten tiles per row instead of forty. A row is emitted twice and overfills a
+     21:9 stage twice over, because the drift needs somewhere to run; with the
+     drift off (below) the row only has to reach the stage's far edge once.
+     `display: none` is what makes this worth doing — a lazy image in a
+     display:none subtree is never fetched, never decoded and never given a
+     layer, which no amount of post-hydration JavaScript can achieve.
+
+     TEN, because the count is in DESIGN px and this query is in DEVICE px, and
+     the two are not the same axis. A phone in landscape is short enough to
+     match here while still driving the widest stage the deck draws — 2337 design
+     px at 844x390. Six tiles is 1578 of pitch, so the wall stopped two thirds
+     across and the last third was bare gradient. Ten tiles is 2630, which clears
+     the 2520 of a 21:9 stage. Portrait re-cuts this to three below, where the
+     stage really is narrow. */
+  .deck-wall-row > :nth-child(n + 11) {
+    display: none;
+  }
+
+  /* No host, no clicker, no room: on a phone the ambient drift is pure cost.
+     The wall is a designed still composition without it — that is the whole
+     premise of the `L` switch, which a phone cannot reach. */
+  .deck-stage[data-motion="on"] .deck-slide[data-active="true"] .deck-wall-row,
+  .deck-stage[data-motion="on"] .deck-slide[data-active="true"] .deck-plate img {
+    animation: none;
+  }
+}

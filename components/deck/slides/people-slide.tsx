@@ -150,8 +150,17 @@ export function PeopleSlideLayout({ slide }: { slide: PeopleSlide }) {
             )}
           </div>
 
+          {/* The class and `data-density` exist so `deck.css` can restate the
+              track list on a PORTRAIT stage. The count above is derived against
+              a 1230px content column, and a phone has about 800 — eight across
+              there gives every caption a 90px track and breaks names one
+              character to a line. It has to be `!important` in the stylesheet
+              because this is an inline style, and the density has to travel as
+              an attribute because a track minimum that suits name-only tiles is
+              far too narrow for name-role-org ones. */}
           <ul
-            className="grid"
+            className="deck-people-grid grid"
+            data-density={density}
             style={{
               gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
               columnGap: gap,

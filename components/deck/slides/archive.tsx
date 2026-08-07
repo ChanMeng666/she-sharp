@@ -37,14 +37,23 @@ export const PANEL_SAFE_PAD = `calc(100% - ${PANEL_SPLIT} + var(--deck-pad-x))`;
 /**
  * Height of a sheer incision that stops on a tile edge.
  *
- * Five rows of 166px pitch less the trailing gap. Below it the last row of the
+ * Five rows of tile pitch less the trailing gap. Below it the last row of the
  * wall runs at full strength, which is what stops a section divider reading as
  * a scrim laid over a photograph rather than as a panel cut into one.
+ *
+ * DERIVED, not a literal. It was 826 — five rows of the authored 166px pitch —
+ * and that number silently stopped meaning "five rows" the moment a portrait
+ * stage retuned the pitch to fill a taller wall. The incision then covered two
+ * fifths of the stage instead of five sixths, and copy below it landed straight
+ * on the photographs, unreadable. The expression evaluates to exactly 826 at the
+ * authored pitch, so no landscape stage moves by a pixel.
  */
-export const INCISION_5_ROWS = 826;
+export const INCISION_5_ROWS =
+  "calc(5 * (var(--deck-tile-h) + var(--deck-wall-gap)) - var(--deck-wall-gap))";
 
 /** Bottom padding that keeps safe-area content clear of that last full row. */
-export const INCISION_5_ROWS_PAD = "calc(166px + var(--deck-pad-y))";
+export const INCISION_5_ROWS_PAD =
+  "calc(var(--deck-tile-h) + var(--deck-wall-gap) + var(--deck-pad-y))";
 
 /** Bottom padding that keeps safe-area content clear of a foot band. */
 export const BAND_PAD = "calc(var(--deck-band-h) + var(--deck-gap-md))";
