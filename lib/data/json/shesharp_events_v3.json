@@ -1183,6 +1183,36 @@
               "29 July — Accessible Futures: Honouring Indigenous Custodianship in the Digital Age",
               "31 July — Agentic Frameworks"
             ]
+          },
+          {
+            "type": "prizes",
+            "title": "The Winning Teams",
+            "content": [
+              "Winner — Team Robin",
+              "Runner-up — LinkClick",
+              "Highly Commended — ThreadLight"
+            ]
+          },
+          {
+            "type": "judging",
+            "title": "The Judging Panel",
+            "content": [
+              "Dr Mahsa McCauley — Founder and Chair, She Sharp",
+              "Michael Fielding",
+              "Maria Mingallon",
+              "Richard Copus"
+            ]
+          },
+          {
+            "type": "bullets",
+            "title": "The Festival in Numbers",
+            "content": [
+              "11 teams competing over two days",
+              "14 mentors and 11 volunteers on the floor",
+              "4 judges",
+              "Opened by Suzanne Wilkinson, Dean of AUT's Faculty of Design and Creative Technologies",
+              "Keynote by Alejandro Davila, Founder of CONICAL and writer of New Zealand's first VR film, The Green Fairy"
+            ]
           }
         ],
         "photos": [],
@@ -3249,6 +3279,14 @@
               "Climate Change Mitigation",
               "Impacts of Changing Land Use"
             ]
+          },
+          {
+            "type": "prizes",
+            "title": "The Winning Teams",
+            "content": [
+              "Winner — Carbon Cutters: an app that shifts household electricity use to off-peak hours to improve energy efficiency",
+              "Runner-up — AgriSmart: AI-driven insights connecting farm activity with the health of nearby waterways"
+            ]
           }
         ],
         "photos": [
@@ -3736,6 +3774,16 @@
             "content": [
               "Learning Resources: A wide range of learning resources is available for students, including free Azure for Students credits worth USD 100.",
               "Where to look for datasets? Access a diverse range of datasets, suitable for various use cases, including Free Public Data Sets for Analysis, Google Dataset Search, health statistics datasets, Kaggle healthcare datasets, LINZ Data Service, Machinehack, NZ Datasets and OpenML."
+            ]
+          },
+          {
+            "type": "prizes",
+            "title": "The Winning Teams",
+            "content": [
+              "Overall Winner — Team Kaiteriteri: automatically updating user guides and administrative documents, and summarising them",
+              "Best Pitch — Team Bethells: using AI to cut the time spent reviewing training forms",
+              "Best Technical Solution — Team CX Obsessed: analysing supermarket customer feedback into visual reports with actionable improvements",
+              "People's Choice — The Mini-Maxers: sentiment analysis, classification, automated replies and summaries"
             ]
           }
         ],

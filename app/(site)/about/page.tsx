@@ -7,6 +7,7 @@ import { ArchiveMosaicSection } from "@/components/about/archive-mosaic-section"
 import { useScrollToHash } from "@/hooks/use-scroll-to-hash";
 import { FounderQuote } from "@/components/about/founder-quote";
 import { OurJourneyVideo } from "@/components/about/our-journey-video";
+import { ValuesSection } from "@/components/about/values-section";
 
 export default function AboutPage() {
   useScrollToHash();
@@ -17,6 +18,10 @@ export default function AboutPage() {
       <SmoothScrollHero />
       <FounderQuote />
       <OurJourneyVideo />
+
+      <div id="values">
+        <ValuesSection />
+      </div>
 
       <div id="timeline">
         <TimelineSection />
