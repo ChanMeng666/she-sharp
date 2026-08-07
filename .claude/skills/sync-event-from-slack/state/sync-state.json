@@ -21,6 +21,442 @@
       },
       "watermarkTs": "1785460260.522289",
       "threads": {
+        "1611043608.000300": {
+          "replyCount": 1,
+          "latestReplyTs": "1614130830.002100"
+        },
+        "1614334340.000800": {
+          "replyCount": 3,
+          "latestReplyTs": "1616016256.001600"
+        },
+        "1614334390.001400": {
+          "replyCount": 3,
+          "latestReplyTs": "1614399609.003100"
+        },
+        "1614506644.007300": {
+          "replyCount": 1,
+          "latestReplyTs": "1614507072.010200"
+        },
+        "1614584835.001500": {
+          "replyCount": 9,
+          "latestReplyTs": "1614587356.005500"
+        },
+        "1614587620.008400": {
+          "replyCount": 1,
+          "latestReplyTs": "1614652366.009600"
+        },
+        "1614587723.009200": {
+          "replyCount": 1,
+          "latestReplyTs": "1614587863.009300"
+        },
+        "1615709697.001800": {
+          "replyCount": 10,
+          "latestReplyTs": "1615965560.004400"
+        },
+        "1615710151.003600": {
+          "replyCount": 2,
+          "latestReplyTs": "1615857193.000100"
+        },
+        "1615970269.005600": {
+          "replyCount": 1,
+          "latestReplyTs": "1615970315.006100"
+        },
+        "1617767309.000100": {
+          "replyCount": 3,
+          "latestReplyTs": "1617767769.001100"
+        },
+        "1618215318.001100": {
+          "replyCount": 7,
+          "latestReplyTs": "1618293681.000100"
+        },
+        "1618296502.002600": {
+          "replyCount": 1,
+          "latestReplyTs": "1618296573.002800"
+        },
+        "1618297536.004500": {
+          "replyCount": 1,
+          "latestReplyTs": "1618297572.005000"
+        },
+        "1620168372.003900": {
+          "replyCount": 1,
+          "latestReplyTs": "1620168561.005400"
+        },
+        "1620168392.004800": {
+          "replyCount": 2,
+          "latestReplyTs": "1620214657.005800"
+        },
+        "1620370079.000500": {
+          "replyCount": 4,
+          "latestReplyTs": "1620383159.000100"
+        },
+        "1620778651.000700": {
+          "replyCount": 1,
+          "latestReplyTs": "1620778727.000800"
+        },
+        "1622752998.003100": {
+          "replyCount": 2,
+          "latestReplyTs": "1622763840.000400"
+        },
+        "1628132364.002600": {
+          "replyCount": 6,
+          "latestReplyTs": "1628134558.005300"
+        },
+        "1628132384.003300": {
+          "replyCount": 2,
+          "latestReplyTs": "1628134246.004100"
+        },
+        "1629676457.002400": {
+          "replyCount": 2,
+          "latestReplyTs": "1629677371.003200"
+        },
+        "1630036432.000600": {
+          "replyCount": 1,
+          "latestReplyTs": "1630039024.004000"
+        },
+        "1630040938.005100": {
+          "replyCount": 14,
+          "latestReplyTs": "1630048537.021500"
+        },
+        "1632191954.004700": {
+          "replyCount": 1,
+          "latestReplyTs": "1632192021.005600"
+        },
+        "1632195973.006100": {
+          "replyCount": 1,
+          "latestReplyTs": "1632200801.007100"
+        },
+        "1634631146.001600": {
+          "replyCount": 4,
+          "latestReplyTs": "1634635318.003000"
+        },
+        "1639965186.004200": {
+          "replyCount": 1,
+          "latestReplyTs": "1639965374.006300"
+        },
+        "1646951078.007909": {
+          "replyCount": 9,
+          "latestReplyTs": "1646969164.789509"
+        },
+        "1647298708.708219": {
+          "replyCount": 7,
+          "latestReplyTs": "1647299438.273599"
+        },
+        "1647410695.295289": {
+          "replyCount": 2,
+          "latestReplyTs": "1647417227.565569"
+        },
+        "1647754285.050299": {
+          "replyCount": 4,
+          "latestReplyTs": "1647763714.264169"
+        },
+        "1647894741.541269": {
+          "replyCount": 1,
+          "latestReplyTs": "1647984908.287189"
+        },
+        "1649217187.859749": {
+          "replyCount": 2,
+          "latestReplyTs": "1649217500.401139"
+        },
+        "1650331918.629619": {
+          "replyCount": 1,
+          "latestReplyTs": "1650333357.532769"
+        },
+        "1651008912.834749": {
+          "replyCount": 1,
+          "latestReplyTs": "1651008921.798879"
+        },
+        "1652131679.852129": {
+          "replyCount": 7,
+          "latestReplyTs": "1652682817.741759"
+        },
+        "1652588199.102659": {
+          "replyCount": 2,
+          "latestReplyTs": "1652672934.905189"
+        },
+        "1652840098.791929": {
+          "replyCount": 6,
+          "latestReplyTs": "1652908879.724359"
+        },
+        "1654651187.302169": {
+          "replyCount": 1,
+          "latestReplyTs": "1654651322.303249"
+        },
+        "1655717638.720139": {
+          "replyCount": 2,
+          "latestReplyTs": "1655789120.083529"
+        },
+        "1656291531.993669": {
+          "replyCount": 4,
+          "latestReplyTs": "1656299887.375179"
+        },
+        "1658822501.295319": {
+          "replyCount": 1,
+          "latestReplyTs": "1658864700.844489"
+        },
+        "1658891339.378639": {
+          "replyCount": 1,
+          "latestReplyTs": "1658903984.670919"
+        },
+        "1661412256.961199": {
+          "replyCount": 1,
+          "latestReplyTs": "1661476513.552789"
+        },
+        "1661412311.240909": {
+          "replyCount": 5,
+          "latestReplyTs": "1661415127.356879"
+        },
+        "1663621270.131829": {
+          "replyCount": 4,
+          "latestReplyTs": "1663629416.453389"
+        },
+        "1663650688.326339": {
+          "replyCount": 1,
+          "latestReplyTs": "1663708038.423369"
+        },
+        "1663650722.019659": {
+          "replyCount": 4,
+          "latestReplyTs": "1663650821.118429"
+        },
+        "1666043769.235819": {
+          "replyCount": 6,
+          "latestReplyTs": "1666046545.978829"
+        },
+        "1666923035.794039": {
+          "replyCount": 1,
+          "latestReplyTs": "1666926896.832619"
+        },
+        "1666926988.943419": {
+          "replyCount": 6,
+          "latestReplyTs": "1666986098.465069"
+        },
+        "1667162962.751249": {
+          "replyCount": 1,
+          "latestReplyTs": "1667163431.204599"
+        },
+        "1669322396.551509": {
+          "replyCount": 2,
+          "latestReplyTs": "1669323684.949179"
+        },
+        "1670297558.805999": {
+          "replyCount": 1,
+          "latestReplyTs": "1670347921.602879"
+        },
+        "1670361557.258099": {
+          "replyCount": 5,
+          "latestReplyTs": "1670725744.655759"
+        },
+        "1670739314.022629": {
+          "replyCount": 1,
+          "latestReplyTs": "1670885868.551959"
+        },
+        "1671655487.475089": {
+          "replyCount": 1,
+          "latestReplyTs": "1671659049.904549"
+        },
+        "1671655577.664219": {
+          "replyCount": 1,
+          "latestReplyTs": "1671659065.858499"
+        },
+        "1676490932.764619": {
+          "replyCount": 1,
+          "latestReplyTs": "1676680988.144909"
+        },
+        "1676612703.905749": {
+          "replyCount": 2,
+          "latestReplyTs": "1676680977.492439"
+        },
+        "1676836249.434769": {
+          "replyCount": 1,
+          "latestReplyTs": "1676851488.227439"
+        },
+        "1676840183.565089": {
+          "replyCount": 3,
+          "latestReplyTs": "1676863760.064419"
+        },
+        "1676927739.813769": {
+          "replyCount": 1,
+          "latestReplyTs": "1676934686.473369"
+        },
+        "1679523658.426279": {
+          "replyCount": 2,
+          "latestReplyTs": "1679526758.270929"
+        },
+        "1682024629.283339": {
+          "replyCount": 1,
+          "latestReplyTs": "1682024708.420149"
+        },
+        "1684794244.065169": {
+          "replyCount": 4,
+          "latestReplyTs": "1685049327.829819"
+        },
+        "1696326695.818109": {
+          "replyCount": 1,
+          "latestReplyTs": "1696394787.026729"
+        },
+        "1700732398.931859": {
+          "replyCount": 1,
+          "latestReplyTs": "1700732455.027129"
+        },
+        "1719228440.265889": {
+          "replyCount": 2,
+          "latestReplyTs": "1719626048.367359"
+        },
+        "1719643617.859869": {
+          "replyCount": 1,
+          "latestReplyTs": "1719722865.185059"
+        },
+        "1722297460.387259": {
+          "replyCount": 3,
+          "latestReplyTs": "1722303977.698779"
+        },
+        "1740368592.624739": {
+          "replyCount": 2,
+          "latestReplyTs": "1740459184.019319"
+        },
+        "1740456836.003389": {
+          "replyCount": 5,
+          "latestReplyTs": "1740635898.652159"
+        },
+        "1740521239.884329": {
+          "replyCount": 2,
+          "latestReplyTs": "1740600463.742259"
+        },
+        "1740634015.322279": {
+          "replyCount": 11,
+          "latestReplyTs": "1740639336.142939"
+        },
+        "1740634115.993729": {
+          "replyCount": 3,
+          "latestReplyTs": "1740637227.178379"
+        },
+        "1740765857.891139": {
+          "replyCount": 1,
+          "latestReplyTs": "1740765961.741729"
+        },
+        "1741987179.428479": {
+          "replyCount": 1,
+          "latestReplyTs": "1742251999.792119"
+        },
+        "1742266595.603469": {
+          "replyCount": 5,
+          "latestReplyTs": "1742329184.857019"
+        },
+        "1742520813.927329": {
+          "replyCount": 1,
+          "latestReplyTs": "1742529876.893729"
+        },
+        "1742527922.522839": {
+          "replyCount": 2,
+          "latestReplyTs": "1742529827.208809"
+        },
+        "1750913799.049119": {
+          "replyCount": 1,
+          "latestReplyTs": "1750917005.583029"
+        },
+        "1750936579.509619": {
+          "replyCount": 1,
+          "latestReplyTs": "1751179023.405099"
+        },
+        "1751099191.731329": {
+          "replyCount": 2,
+          "latestReplyTs": "1751271585.042179"
+        },
+        "1751160281.458869": {
+          "replyCount": 1,
+          "latestReplyTs": "1751500521.054059"
+        },
+        "1751179831.040589": {
+          "replyCount": 1,
+          "latestReplyTs": "1751180680.729169"
+        },
+        "1751180014.509839": {
+          "replyCount": 2,
+          "latestReplyTs": "1751530766.827719"
+        },
+        "1751188373.700009": {
+          "replyCount": 7,
+          "latestReplyTs": "1751547525.735979"
+        },
+        "1753864822.169699": {
+          "replyCount": 17,
+          "latestReplyTs": "1753955843.909439"
+        },
+        "1755645423.352889": {
+          "replyCount": 3,
+          "latestReplyTs": "1755645861.461739"
+        },
+        "1756426143.983749": {
+          "replyCount": 1,
+          "latestReplyTs": "1756426181.814509"
+        },
+        "1756461267.336939": {
+          "replyCount": 1,
+          "latestReplyTs": "1756461401.281899"
+        },
+        "1758528445.375219": {
+          "replyCount": 1,
+          "latestReplyTs": "1758528555.396109"
+        },
+        "1759179450.372669": {
+          "replyCount": 2,
+          "latestReplyTs": "1759193702.162719"
+        },
+        "1759785793.627019": {
+          "replyCount": 27,
+          "latestReplyTs": "1761178858.732539"
+        },
+        "1760399301.344679": {
+          "replyCount": 19,
+          "latestReplyTs": "1760736960.145329"
+        },
+        "1760399683.710969": {
+          "replyCount": 3,
+          "latestReplyTs": "1761900325.807919"
+        },
+        "1760422569.765859": {
+          "replyCount": 1,
+          "latestReplyTs": "1760422695.041569"
+        },
+        "1761504259.099449": {
+          "replyCount": 1,
+          "latestReplyTs": "1761516936.929469"
+        },
+        "1761556936.008049": {
+          "replyCount": 8,
+          "latestReplyTs": "1761710382.558419"
+        },
+        "1761670879.488579": {
+          "replyCount": 1,
+          "latestReplyTs": "1761672960.011569"
+        },
+        "1766033710.887659": {
+          "replyCount": 2,
+          "latestReplyTs": "1766037321.039419"
+        },
+        "1766363103.858799": {
+          "replyCount": 1,
+          "latestReplyTs": "1766381754.009609"
+        },
+        "1766434104.726309": {
+          "replyCount": 22,
+          "latestReplyTs": "1766524160.067239"
+        },
+        "1766470782.598829": {
+          "replyCount": 1,
+          "latestReplyTs": "1766481445.526919"
+        },
+        "1766488939.829329": {
+          "replyCount": 2,
+          "latestReplyTs": "1766489855.809879"
+        },
+        "1766490116.390479": {
+          "replyCount": 8,
+          "latestReplyTs": "1766538119.036219"
+        },
+        "1770623700.208899": {
+          "replyCount": 13,
+          "latestReplyTs": "1770681079.019159"
+        },
         "1772515159.092139": {
           "replyCount": 4,
           "latestReplyTs": "1772568084.035449"
@@ -59,8 +495,12 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-07T12:40:26.325Z",
+      "lastSyncedCommit": "",
+      "scannedTs": "1785460260.522289",
+      "readAt": "2026-08-07T12:40:26.325Z",
+      "digest": "Newsletter production channel, read in full 7 Aug 2026 (Jan 2021 - Feb 2026, 109 threads). PRODUCTION HISTORY ONLY - nothing in it changes the website, and the two things that looked like they might do not.\n\nNOTHING TO ACTION ON THE SITE. (1) Vic Arce's May 2023 note about two issues both numbered \"Edition 22\" and missing issues 11-14 was about the OLD WEBFLOW SITE's issue numbering. This repo does not use issue numbers: lib/data/newsletters-archive.ts is keyed \"YYYY-MM\" and already documents its own reconciled quirks (the mislabelled July 2024, November 2022 and September 2021 cards). Do not \"fix\" a numbering scheme the repo no longer has. (2) The AUT logo rule Nicole recorded 7 May 2021 - black box logo on white, white box logo on black, and the version WITHOUT \"UNIVERSITY\" - already matches the brand section of CLAUDE.md.\n\nSECURITY, AND IT IS LIVE. A plaintext Mailchimp password was posted in this channel on 25 Feb 2025 and a PINNED MESSAGE points at it (\"Creds to Mailchimp\"). A card expiry date and CVV were posted on 29 Jun 2025. Both are still readable by everyone in the workspace. Rotate the Mailchimp password, unpin, and treat that card as exposed. NEVER copy either value into this repo, a digest or a commit message - they are recorded here by LOCATION only, deliberately.\n\nHOW THE NEWSLETTER HAS ACTUALLY BEEN RUN. Mailchimp throughout, never Resend. Access has been the recurring bottleneck: the account has MFA and the code has repeatedly had to be relayed by hand from whoever held the phone (Shae -> Julia -> Moksha), which is why credentials kept being pasted into the channel. Ownership went Emily/Sarina (2021-22) -> Cassidy/Babra (2023) -> Shae (2024) -> Julia Shmykova (2025) -> Moksha (mid-2025 on), with Marriane Bentigan stepping in to send December 2025. Mahsa reviews and rewrites her own \"word from the founder\" section before every send, and has done since 2021.\n\nTHE RECURRING FAILURE IS THE DATE, NOT THE CONTENT. Five years of the same conversation: Mahsa asking where the issue is, the issue slipping past its intended day, and a request each time to fix a date in the month and hold it. August 2021 escalated. A schedule is the thing this programme has never solved, and it is the strongest argument for the Resend automation.\n\nONE REAL METRIC, AND IT IS OLD. Oct 2022: open rate about 40% of the mailing list, roughly 520 people, comparable to event mail. That is the only engagement figure anywhere in five years of this channel. Do not quote it as current - PUBLIC_CLAIMS_PROVENANCE.md rules apply.\n\nSPONSOR CONTENT WAS SOLICITED MONTHLY AND ALMOST NEVER ARRIVED. 2022 is a run of \"anything from the sponsors?\" answered by silence from everyone except MYOB. The 15th of the month was the stated deadline. Worth knowing before promising sponsors newsletter placement.\n\nCONTENT SOURCES THAT ARE NOT SLACK: the newsletter draft lives in a Google Doc per issue (five different doc links across the channel), and the Oct 2025 issue was drafted by Moksha, appended by Prasanth and rewritten by Mahsa in that order.",
+      "digestAt": "2026-08-07T12:40:26.324Z"
     },
     "C01NEKYP0CR": {
       "name": "t-shirts",
@@ -302,6 +742,38 @@
       },
       "watermarkTs": "1777555711.490919",
       "threads": {
+        "1646272731.925669": {
+          "replyCount": 2,
+          "latestReplyTs": "1646273007.606609"
+        },
+        "1649020032.171129": {
+          "replyCount": 2,
+          "latestReplyTs": "1649024835.855159"
+        },
+        "1649020062.099759": {
+          "replyCount": 3,
+          "latestReplyTs": "1649024128.797949"
+        },
+        "1649063114.555749": {
+          "replyCount": 2,
+          "latestReplyTs": "1649110811.263569"
+        },
+        "1650422086.120309": {
+          "replyCount": 1,
+          "latestReplyTs": "1650491164.893149"
+        },
+        "1650945049.511879": {
+          "replyCount": 1,
+          "latestReplyTs": "1650954086.848459"
+        },
+        "1655330437.573819": {
+          "replyCount": 1,
+          "latestReplyTs": "1655330464.749519"
+        },
+        "1655764662.818539": {
+          "replyCount": 8,
+          "latestReplyTs": "1655777667.202929"
+        },
         "1695595679.694229": {
           "replyCount": 4,
           "latestReplyTs": "1695627945.921259"
@@ -340,8 +812,10 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-07T12:37:39.332Z",
+      "lastSyncedCommit": "",
+      "scannedTs": "1777555711.490919",
+      "readAt": "2026-08-07T12:37:39.333Z"
     },
     "C0342CMEV7B": {
       "name": "design-brand",
@@ -566,6 +1040,10 @@
       },
       "watermarkTs": "1780559027.001549",
       "threads": {
+        "1724829085.208919": {
+          "replyCount": 2,
+          "latestReplyTs": "1724835202.541599"
+        },
         "1724838477.772199": {
           "replyCount": 1,
           "latestReplyTs": "1724846543.882359"
@@ -644,8 +1122,10 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T03:41:46.612Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-07T12:36:51.447Z",
+      "lastSyncedCommit": "",
+      "scannedTs": "1780559027.001549",
+      "readAt": "2026-08-07T12:36:51.448Z"
     },
     "C0476MCR9B2": {
       "name": "expo-2022-motat",
@@ -3643,6 +4123,14 @@
       },
       "watermarkTs": "1777555693.918789",
       "threads": {
+        "1497436575.622213": {
+          "replyCount": 1,
+          "latestReplyTs": "1497436638.635929"
+        },
+        "1522914409.000424": {
+          "replyCount": 1,
+          "latestReplyTs": "1522959894.000568"
+        },
         "1522914705.000469": {
           "replyCount": 1,
           "latestReplyTs": "1522914775.000329"
@@ -3733,8 +4221,10 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T03:41:46.607Z",
-      "lastSyncedCommit": ""
+      "lastSyncedAt": "2026-08-07T12:36:52.817Z",
+      "lastSyncedCommit": "",
+      "scannedTs": "1777555693.918789",
+      "readAt": "2026-08-07T12:36:52.818Z"
     },
     "C06Q9FJNR": {
       "name": "general",
@@ -12946,7 +13436,7 @@
           }
         ]
       },
-      "watermarkTs": "1786058509.805019",
+      "watermarkTs": "1786100387.722529",
       "threads": {
         "1778118947.075649": {
           "replyCount": 1,
@@ -13106,10 +13596,10 @@
         }
       },
       "fingerprint": "sha256:76244a2b0e8e07d98ce94682a147f8604cb7198f1e8a0c7be5f1ee89d87ce1ba",
-      "lastSyncedAt": "2026-08-07T03:59:21.761Z",
+      "lastSyncedAt": "2026-08-07T12:33:07.580Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1786058509.805019",
-      "readAt": "2026-08-07T03:59:21.761Z",
+      "scannedTs": "1786100387.722529",
+      "readAt": "2026-08-07T12:33:07.581Z",
       "digest": "Aotearoa AI Hackathon Festival 2026, AUT City Campus, FRI 7 - SAT 8 AUG 2026 — RUNNING TODAY as of this sync (7 Aug, doors 5pm). Live at aihackathon.nz. REGISTRATION CLOSED 20 Jul (119 registered vs 100 stated capacity). The sidebar 'Register Now' button is HARDCODED in components/events/event-detail/event-sidebar-panel.tsx for any future event, so clearing registrationUrl only makes it inert, not hidden.\n\nROOMS - THE SHEET AND THE WHATSAPP TABLE DISAGREE AND THE WHATSAPP TABLE WINS. The run-sheet Google Sheet (161d2jPcH_lFLUJQoQH0fFH47529qMqoE1P6XPjah7UY) 'Venue' cell lists the SAME five rooms for both days (WG308 + WG128/128A/129/100D). The room table Nikita circulated on WhatsApp and posted into the channel as IMG_2291.png on 4 Aug is per-day and is what Mahsa explicitly told us to use (\"use the run sheet on WhatsApp\"), and its Saturday block is the highlighted one. FRIDAY: WG308 (Wave Room) main conference, WG306 (Foyer) registration + catering, WG128/WG128A/WG129/WG100D collaboration. SATURDAY: WG308 main event, WG306 registration/catering/breaks, WG403+WG404 lecture theatres, WG607-609 + WG701-703 + WG801-803 + WG808 classrooms, and WG809 THE MENTOR ROOM. THE MENTOR ROOM MOVED: WG808 Friday, WG809 Saturday - the deck says so twice and the host note tells them to repeat it, because people walk to yesterday's room. This closes Mahsa's slide-review item 11, open and unanswered since 5 Aug. The Sheet's Saturday cell is stale; do not \"correct\" the site back to it.\n\nMENTORS ARE NOW 17. Added 7 Aug on Prasanth's 6 Aug message: Andreas Spanner (Chief Architect, Red Hat - full bio/LinkedIn/photo from the mentor registration CSV; REMOTE VIA DISCORD, and note his own form said Sat NOT AVAILABLE while Len's directory poster says remote both days, so his bio deliberately says \"remotely via Discord rather than at the venue\" without claiming days), Mandi Buswell (Principal Specialist Solution Architect, Red Hat - title and LinkedIn found by web search, not in Slack; photo was the 800x800 attached to Prasanth's message), Sara Ghafoor (Project Support Specialist, Entelar Group - bio and LinkedIn REUSED from lib/data/team.ts id 7; the poster misspells her \"Gafoor\", repo and LinkedIn say Ghafoor), Isha Sangrolkar (MCIS student, AUT - bio, LinkedIn and photo REUSED from the COMMENTED-OUT team.ts id 4 block; the poster says only \"Isha\"). KEMING WANG WAS KEPT DELIBERATELY - Len's 16-name Mentor Directory poster omits him and Prasanth did not mention him, so this is a poster gap, not a removal; if anyone asks why site=17 and poster=16, that is why. Christine Yip removed 5 Aug (Len DM 4 Aug). Lesley Gao withdrew 27 Jul. The deck reads mentors straight from events-custom.json, so a mentor edit changes the projector - always re-run deck.test.ts and lint-deck.ts.\n\nDECK IS NOW 65 SLIDES (was 60). Five added on 7 Aug: a third mentor slide (mentorSplit halves became mentorGroups thirds - Math.ceil(17/2)=9 breaks COPY_LIMITS.peopleCount.md=8), a dark photo beat 'mentors-are-for-asking' between mentor groups 2 and 3 (three people slides after the links slide is five consecutive information AND five consecutive light slides, both lint errors), 'venue-wayfinding-day-two' (the Saturday rooms, placed in the Day Two section deliberately so nobody reads tomorrow's rooms out on Friday night), 'pitch-deck-template' (Mahsa asked for a slide she could OPEN AND SHOW during the pitch talk), and 'the-morning-is-yours' dark photo before build-with-mentors (the Saturday rooms slide pushed that block from 4 to 5 consecutive content slides). Two lint traps hit and worth remembering: any insert into the Day Two run-sheet/rooms/team-photos/team-groupings/build-with-mentors block needs a HERO slide with it, because photo-grid is NOT a hero type (only title/section/karakia/break/photo/prizes are); and new run-sheet rows need a shortenLabels entry or agenda-label-length fails at 6 words.\n\nTHE PITCH DECK TEMPLATE NEEDS NO UPLOAD AND MUST NOT GET ONE. Verified by hash on 7 Aug: the Drive file Nikita posted in-thread (1bQF7xkT2I3CCbugkcKNmaVnFpc73l-t7), the maintainer's local Downloads copy, and public/docs/pitch-deck-template-2026.pdf are ONE file, md5 e5ec83348c743432a0ace1ba1470eb1b, 1237853 bytes. Vercel Blob was considered and rejected: shesharp.org.nz/docs/pitch-deck-template-2026.pdf already passed the 5 Aug signed-out QR audit, a second copy is a second thing to drift (this QR was moved here precisely because the Circle.so link silently hit a login wall), and the deck's offline story is same-origin. PITCH_TEMPLATE_QR is the single constant; the new slide reuses it rather than restating the URL.\n\nAGENDA CHANGES 7 AUG. Day 1 gained '7:15-7:20pm Fisher & Paykel Healthcare on their two challenge briefs' - Mark Modricker speaks 5 minutes to both F&P use cases, CONFIRMED BY EMAIL (Prasanth 6 Aug 22:07, events mailbox is the source, not Slack). Mentor intros, group photo and strategy planning each shifted 5 minutes later; the 8:00pm close is unchanged. That 5-minute placement is OUR slot, not the run sheet's - the run sheet has no row for it. A host note on problem-helpdesk tells whoever is driving to hand over to Mark and take the deck back after the restoration slide. Day 2 afternoon was rebuilt from the run sheet: 3:00-3:30 slides due + judges arrive + Mahsa briefs, 3:00-3:15 afternoon tea, 3:15-4:00 tech check (Tharanee), 4:00-6:30 presentations, 6:30-7:00 deliberation, 7:00-7:30 awards, 7:30 closing. PRESENTATIONS MOVED FROM 3:30 TO 4:00 AND TECH CHECK GREW FROM 15 TO 45 MINUTES - that is the substantive correction. The 8:00pm packdown row was deliberately NOT published: it is an organiser row, and the site omits Friday's 3pm setup for the same reason (it also would have broken agenda-rows, max 14).\n\nSTILL OPEN. (1) KEYNOTE TALK TITLE - Mahsa said on 4 Aug \"the title of the keynote speaker talk needs to be fixed\" and attached the keynote slide screenshot. NOBODY KNOWS WHICH THING SHE MEANT and the maintainer chose to leave it and follow up. Three candidates, all real: the kicker reads \"FIFTEEN MINUTES, THEN IT'S YOURS\" while the published agenda says 5:50-6:10pm (20 min) and the run sheet says 17:50-18:05 keynote plus 18:05-18:10 Q&A; her role line reads \"Founder of AI for X and X-Bot Games\" while the run sheet writes \"Founder: AI for X & X-Bot Games\"; or the talk has no title at all. DO NOT GUESS - ask her. (2) Item 10 from her review, the keynote plate's yellow background changed to green, still declined (green would take its cue from AI Forum rather than this deck). (3) Post-event gallery pass after 8 Aug: status -> past, add galleryUrl, and replace the two TODO placeholders in the deck (team-photos archive tiles, presentation-order's ten \"Team name\" rows).\n\nRUN SHEET CAVEAT: the Sheet's own day headers read \"Friday 15th August\" and \"Saturday 16th August\" - template residue from a previous event. The times were trusted, the headers were not. If the times ever look wrong, that is the reason to doubt them.\n\nREDACTION LANDMINES - VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE AND IN THE RUN SHEET, READ THEM THERE AND NEVER WRITE THEM HERE, NOT EVEN AS A PATTERN PLUS SUFFIX LIST: three internal registration discount codes (AUT students, general AUT attendees, mentors/staff), exactly one of which is public because AUT printed it on their own A3 poster. Also keep out: the circle.so private checkout link, venue wifi username and password (they are on the internal venue-wifi deck slide by an earlier deliberate decision - do not copy them into events-custom.json), the on-site supervisor's personal mobile (the 0800 AUT security number IS fine and lives in SAFETY_LINES), Drive/Sheets registration lists, the mentor CSV's phone numbers/emails/dietary requirements/t-shirt sizes, the run sheet's AUT sponsor-contact and speaker/judge email addresses and their Drive photo links, and the private Discord invite hV3bts4bm which lands in #mentors-private (the deck's Z5heYsa7W lands in #general and is the correct public one). A leak check was run against the rendered public page on 7 Aug and every one of these was absent.\n\nOTHER STANDING FACTS. Summit date 8-9 Sep Wellington is CORRECT (Mahsa corrected it personally 22 Jul, commit 6103db5a); do not re-flip it. UPCOMING_SNAPSHOT is a hand-taken snapshot pointing at the Les Mills 3 Sep panel, which Nirmala confirmed published 5 Aug. Sara Ghafoor agreed to mentor 27 Jul and is NOW LISTED as of 7 Aug (the old \"no bio/photo so not listed\" note is superseded - her bio and photo were in team.ts all along). Keynote source is Rach Monks' own email to events@shesharp.org.nz brokered by Jacob Bell-Kay, NOT Slack; the 4-5 Aug Prasanth thread is screenshots of that same email re-forwarded past a spam filter.",
       "digestAt": "2026-08-07T03:59:21.760Z"
     },
