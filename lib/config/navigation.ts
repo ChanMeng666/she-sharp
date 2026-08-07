@@ -18,6 +18,7 @@ import {
   UsersRound,
   BarChart3,
   Newspaper,
+  MapPin,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -61,6 +62,12 @@ export const navigationConfig: {
           href: "/about#team",
           description: "Meet the team behind She Sharp",
           icon: UsersRound,
+        },
+        {
+          title: "Where We've Been",
+          href: "/community",
+          description: "Expos, school visits and competitions we've turned up to",
+          icon: MapPin,
         },
       ],
     },
