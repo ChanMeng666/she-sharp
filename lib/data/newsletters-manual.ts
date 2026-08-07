@@ -31,6 +31,15 @@ export const NEWSLETTER_MANUAL: NewsletterIssue[] = [
   //   url: "https://mailchi.mp/shesharp/...",
   // },
   {
+    id: "2026-07",
+    month: 7,
+    year: 2026,
+    url: "https://mailchi.mp/841abfbfb88b/xe8t2dvmn3-5867935",
+  },
+  // Points at the *corrected* June send. Mailchimp shows two campaigns going
+  // out on 23 June: one still subject-lined "May 2026" and this one. The
+  // genuine May issue is the 31 May campaign, already in the archive.
+  {
     id: "2026-06",
     month: 6,
     year: 2026,
@@ -51,13 +60,35 @@ export const NEWSLETTER_MANUAL: NewsletterIssue[] = [
 ];
 
 /**
+ * Archive entries that were never real issues.
+ *
+ * `newsletters-archive.ts` is a frozen crawl of the legacy site and is not
+ * hand-edited, so a card that should never have existed is suppressed here
+ * instead — the crawl stays faithful and the correction stays visible and
+ * reversible.
+ */
+export const NEWSLETTER_RETRACTED: { id: string; reason: string }[] = [
+  {
+    id: "2026-02",
+    reason:
+      "Never sent. The legacy site's February 2026 card pointed at the March " +
+      "2026 campaign, and Mailchimp's own archive has no newsletter between " +
+      "24 December 2025 and 3 March 2026 — the February issue slipped and went " +
+      "out as March. Verified against the campaign archive 2026-08.",
+  },
+];
+
+const RETRACTED_IDS = new Set(NEWSLETTER_RETRACTED.map((entry) => entry.id));
+
+/**
  * Returns every newsletter issue (manual + archive), deduped by id (manual
- * wins) and sorted newest-first for display.
+ * wins), with retracted ids removed, sorted newest-first for display.
  */
 export function getAllNewsletters(): NewsletterIssue[] {
   const byId = new Map<string, NewsletterIssue>();
   for (const issue of NEWSLETTER_ARCHIVE) byId.set(issue.id, issue);
   for (const issue of NEWSLETTER_MANUAL) byId.set(issue.id, issue);
+  for (const id of RETRACTED_IDS) byId.delete(id);
 
   return Array.from(byId.values()).sort((a, b) =>
     b.year !== a.year ? b.year - a.year : b.month - a.month

@@ -15,9 +15,12 @@
  *   link `...2021-4693790`).
  * - The first "September 2021" card is really August 2021 (cover `aug`, link
  *   `August-2021-Newsletter.pdf`).
- * All other links are kept exactly as served by the live site. Note February
- * 2026 still points to the March 2026 campaign on the source site; this mirrors
- * the legacy data and can be corrected later via `newsletters-manual.ts`.
+ * All other links are kept exactly as served by the live site. February 2026
+ * points at the March 2026 campaign here because the source site did; it is
+ * suppressed at render time via NEWSLETTER_RETRACTED in
+ * `newsletters-manual.ts` rather than deleted, so this crawl stays faithful.
+ * Mailchimp's own archive has no newsletter between 24 December 2025 and
+ * 3 March 2026 — the February issue slipped and went out as March.
  *
  * Gaps here mean the legacy site had no card for that month. That is NOT the
  * same as "no newsletter went out", and this comment used to claim it was.
