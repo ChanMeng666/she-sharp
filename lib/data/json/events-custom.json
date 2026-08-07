@@ -1505,6 +1505,38 @@
                 "bio": "Keming Wang is Director & Principal Consultant at Klugent Limited, an independent Auckland consulting practice helping organisations make better decisions across strategy, planning, analytics, digital improvement, impact measurement and practical AI adoption. He works largely with health, community, education, not-for-profit and public-sector organisations, where a decision depends on connecting service reality, data, funding, technology, governance and implementation all at once. His expertise spans business analysis and process design, forecasting and scenario modelling, impact measurement and SROI, and AI governance and practical use-case design, with recent work in community commissioning and outcome measurement, primary care analytics, digital workflow design and AI enablement. His approach is to understand how the work actually happens before shaping process, data and reporting around it. He mentors across technical, subject-matter and business questions, at the venue on Friday and again on Saturday afternoon.",
                 "image": "/img/events/aotearoa-ai-hackathon-festival-2026-keming-wang.jpg",
                 "linkedin": "https://www.linkedin.com/in/keming-wang-099b0063/"
+              },
+              {
+                "name": "Andreas Spanner",
+                "title": "Chief Architect",
+                "company": "Red Hat",
+                "bio": "Andreas Spanner is Chief Architect at Red Hat, where his focus is everything distributed and federated: AI workloads and how they are managed, and software-defined industrial automation across the manufacturing, retail, transport and utilities sectors, including software-defined vehicles built through co-engineering partnerships with Red Hat’s CTO office. He is a maintainer, TAC member and contributor on Linux Foundation projects, among them SuperAI’s SuperBlueprint for distributed agentic workloads and LF Edge’s AIOps project, which is setting best practice for AIOps in distributed environments. With clients he pairs technology choices with talent strategy, organisational culture, delivery method and business process, on the view that a transformation fails if any one of those is left out. He mentors on technical and architecture questions, remotely via Discord rather than at the venue.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-andreas-spanner.jpg",
+                "linkedin": "https://www.linkedin.com/in/andreasspanner/"
+              },
+              {
+                "name": "Mandi Buswell",
+                "title": "Principal Specialist Solution Architect",
+                "company": "Red Hat",
+                "bio": "Mandi Buswell is a Principal Specialist Solution Architect at Red Hat in Auckland, with more than thirty years across the finance, hospitality, media and telecommunications sectors and a subject-matter expert on transformation, containers and application development. She was the Technology Award winner at the 2021 Women in ICT New Zealand Awards. Her mentoring covers solution architecture, AI, Kubernetes, open source and cloud-native technology, and she is at her most useful translating a complex business need into a modern technical solution and then leading the delivery of it. She mentors at the venue on Friday and across Saturday.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-mandi-buswell.jpg",
+                "linkedin": "https://www.linkedin.com/in/mandi-buswell/"
+              },
+              {
+                "name": "Sara Ghafoor",
+                "title": "Project Support Specialist",
+                "company": "Entelar Group",
+                "bio": "Sara Ghafoor is an electrical engineer turned AI enthusiast, working at Entelar Group on telecom site operations and major rollouts across New Zealand. She is also a She Sharp ambassador and its marketing lead, helping run the organisation’s events, mentorship and community work alongside partners including Google, Microsoft and Fonterra. Her background spans machine learning, medical imaging and generative AI, and she is drawn to technology that creates real-world impact. She mentors on the business side — project planning, product development, communication, presentations and marketing — at the venue on Friday and across Saturday.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-sara-ghafoor.jpg",
+                "linkedin": "https://www.linkedin.com/in/sara-ghafoor/"
+              },
+              {
+                "name": "Isha Sangrolkar",
+                "title": "Master of Computer and Information Sciences student",
+                "company": "AUT",
+                "bio": "Isha Sangrolkar is studying towards a Master of Computer and Information Sciences at AUT, having worked as a DevOps engineer at Persistent Systems in India before that. She came to She Sharp through the events Dr Mahsa runs at AUT, and is now one of its ambassadors and its website lead. She mentors on the technical side — software development, AI experimentation, rapid prototyping and learning a technology quickly enough to use it the same weekend — at the venue on Friday and across Saturday.",
+                "image": "/img/events/aotearoa-ai-hackathon-festival-2026-isha-sangrolkar.jpg",
+                "linkedin": "https://www.linkedin.com/in/isha-sangrolkar/"
               }
             ]
           }
@@ -1552,9 +1584,10 @@
               "6:10–6:50pm — Team forming",
               "6:50–7:05pm — Overview of day two",
               "7:05–7:15pm — Problems to solve, requirements & judging criteria",
-              "7:15–7:25pm — Mentor introductions",
-              "7:25–7:30pm — Group photo",
-              "7:30–8:00pm — Team strategy planning",
+              "7:15–7:20pm — Fisher & Paykel Healthcare on their two challenge briefs",
+              "7:20–7:30pm — Mentor introductions",
+              "7:30–7:35pm — Group photo",
+              "7:35–8:00pm — Team strategy planning",
               "8:00pm — Close of day one"
             ]
           },
@@ -1569,9 +1602,10 @@
               "1:00–1:15pm — Prepare for pitch practice",
               "1:15–2:00pm — Pitch practice with mentors",
               "2:00–3:00pm — Final pitch updates",
-              "3:00–3:15pm — Afternoon tea",
-              "3:15–3:30pm — Tech check",
-              "3:30–6:30pm — Final presentations to the judging panel",
+              "3:00–3:30pm — Slides to She Sharp, judges arrive & judge briefing",
+              "3:00–3:15pm — Afternoon tea (grab and go)",
+              "3:15–4:00pm — Tech check with the teams",
+              "4:00–6:30pm — Final presentations to the judging panel",
               "6:30–7:00pm — Judges' deliberation + networking + dinner",
               "7:00–7:30pm — Awards announcement",
               "7:30pm — Closing & group photo"
@@ -1990,7 +2024,8 @@
             "title": "About the Venue",
             "paragraphs": [
               "The event is hosted in person at AUT City Campus, 55 Wellesley Street East, in the heart of Auckland's CBD — well served by public transport and within walking distance of the city centre. Look for the Sir Paul Reeves Building, known on campus as the WG Building.",
-              "Registration and all catering are in WG306. The event kicks off in WG308 on Friday, and that is also where the pitches and awards take place on Saturday. Please allow time to find parking and sign in before 5:00pm on Friday.",
+              "Registration and all catering are in WG306, the foyer area, on both days. WG308 — the Wave Room — is the main room: the opening on Friday evening, and the pitches and awards on Saturday. Please allow time to find parking and sign in before 5:00pm on Friday.",
+              "Teams also get rooms of their own to work in. On Friday those are WG128, WG128A, WG129 and WG100D. On Saturday the working spaces move and open out: the lecture theatres WG403 and WG404, and the classrooms WG607–WG609, WG701–WG703, WG801–WG803 and WG808. The mentors are based in WG809 on Saturday — that is where to find them if nobody is roaming past your table.",
               "Please bring your laptop and charger, a reusable water bottle, and a notebook and pen if you like working on paper. Power, Wi-Fi, mentoring, and food and drinks are provided on site across both days."
             ],
             "images": [
