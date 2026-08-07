@@ -38,10 +38,30 @@ const nextConfig: NextConfig = {
       { source: '/get-involved', destination: '/join-our-team', permanent: true },
       { source: '/user-account', destination: '/dashboard/account', permanent: true },
       { source: '/access-denied', destination: '/', permanent: true },
-      { source: '/introducing-elina-ashimbayeva', destination: '/about', permanent: true },
+      // Plural variant — the redirect to /mentorship/mentorship-program was
+      // requested years ago, which means something external was linking here.
+      { source: '/mentorships', destination: '/mentorship', permanent: true },
+      { source: '/mentorships/:path*', destination: '/mentorship', permanent: true },
+      // Through 2021 every newsletter led with a full interview with a woman
+      // working in tech, published at /introducing-<name>/ with the newsletter
+      // carrying only a summary and a jump link. Ten of those pages existed;
+      // all ten died with the old site and the links are still sitting in
+      // years of sent email. They point at the newsletter archive rather than
+      // /about, because that is where the interviews ran.
+      //
+      // The pages themselves are recoverable from the Internet Archive, but
+      // republishing a five-year-old personal interview needs the subject's
+      // agreement first — that is a decision, not a migration.
+      { source: '/introducing-:name', destination: '/resources/newsletters', permanent: true },
       // Legacy event / conference URLs → current event slugs.
       { source: '/events-gec', destination: '/events/google-educator-conference', permanent: true },
       { source: '/conference/2024/google-educator2024', destination: '/events/google-educator-conference-2024', permanent: true },
+      { source: '/conference/google-educator', destination: '/events/google-educator-conference-2023', permanent: true },
+      { source: '/conference/schedule', destination: '/events/google-educator-conference-2023', permanent: true },
+      // Catch-all for the rest of the old /conference/<year>/<slug> namespace.
+      // Keep it AFTER the specific rules above — first match wins.
+      { source: '/conference', destination: '/events', permanent: true },
+      { source: '/conference/:path*', destination: '/events', permanent: true },
       {
         source: '/events/she-sharp-academyex-international-womens-day-2026',
         destination: '/events/she-sharp-and-academyex-international-womens-day-2026',
