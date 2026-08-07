@@ -144,7 +144,24 @@ export function unreadConversations(
     // `readAt` is the honest test. `watermarkTs` alone cannot answer it for any
     // entry written before the split, because the triage wrote that field too.
     const neverRead = !c.readAt || !c.watermarkTs || c.watermarkTs === "0";
-    if (neverRead || Number(scanned) > Number(c.watermarkTs)) {
+    /*
+     * A settled skip is allowed to be scanned past its read position.
+     *
+     * Bot channels and closed history accumulate traffic forever; counting each
+     * new line as backlog would make the audit cry wolf and stop being read,
+     * which is the one failure mode a gate cannot survive. The triage already
+     * reopens these as `skip→review` when a delta scores for event content.
+     *
+     * This exemption covers the scan gap ONLY — never `neverRead`. A skip that
+     * no payload has ever delivered is still a hole, because the signal gate
+     * decides priority and never whether something was read.
+     *
+     * `alwaysRead` opts back in: those are the conversations where a person
+     * sends work, and the 5 August DM is why the flag exists at all.
+     */
+    const settledSkip =
+      c.mapping?.kind === "skip" && !c.mapping.alwaysRead;
+    if (neverRead || (!settledSkip && Number(scanned) > Number(c.watermarkTs))) {
       out.push({ id, name: c.name, type: c.type, watermarkTs: c.watermarkTs, scannedTs: scanned });
     }
   }
@@ -311,6 +328,28 @@ export function saveManifest(m: Manifest): void {
       lastSyncedAt: c.lastSyncedAt,
       lastSyncedCommit: c.lastSyncedCommit,
     };
+    /*
+     * The scanned/read split has to survive the write, or it does not exist.
+     *
+     * This function rebuilds every entry from a fixed key list, and until
+     * 2026-08-07 that list omitted `scannedTs` and `readAt`. Both fields were
+     * being computed and assigned — `discover-channels.ts` sets `scannedTs`,
+     * `update-state.ts` sets `readAt` from a fetch payload — and both were
+     * dropped on the way to disk, every run, silently.
+     *
+     * The visible cost was `audit-read-state.ts`. `unreadConversations()` reads
+     * a missing `readAt` as NEVER READ, which is the correct reading, so with
+     * nothing ever persisted it reported all 110 conversations unread and
+     * exited non-zero on every invocation. A gate that is always red proves
+     * nothing and gets ignored — which is exactly the failure it was written to
+     * prevent. The quieter cost was the triage re-reading settled history from
+     * the old watermark, because its scan position never survived either.
+     *
+     * Emitted only when set, so entries that genuinely have neither stay
+     * byte-identical to their previous serialization.
+     */
+    if (c.scannedTs) entry.scannedTs = c.scannedTs;
+    if (c.readAt) entry.readAt = c.readAt;
     // Only emit digest fields when set — channels never given a digest stay
     // byte-identical to their pre-digest serialization.
     if (c.digest) {

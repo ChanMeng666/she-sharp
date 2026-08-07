@@ -167,10 +167,18 @@ check("an always-read skip with nothing new is still settled", () => {
 
 console.log("\nscanned vs read position");
 
+/*
+ * The default is a conversation somebody HAS read, which is why `readAt` is
+ * set here. Leaving it out made every fixture look never-read, so the two
+ * checks below that assert "not a backlog" could not pass whatever the code
+ * did — and they were failing on main for exactly that reason. A fixture for
+ * the never-read case says so explicitly, with `watermarkTs: "0"`.
+ */
 const channel = (over: Partial<ChannelState>): ChannelState => ({
   name: "c", type: "event", mapping: { kind: "none" },
   watermarkTs: "100", threads: {}, fingerprint: "",
-  lastSyncedAt: "", lastSyncedCommit: "", ...over,
+  lastSyncedAt: "", lastSyncedCommit: "",
+  readAt: "2026-08-05T00:00:00.000Z", ...over,
 });
 const manifestOf = (channels: Record<string, ChannelState>): Manifest =>
   ({ version: 1, channels }) as Manifest;
