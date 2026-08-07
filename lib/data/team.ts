@@ -7,13 +7,13 @@ export const teamMembers: TeamMember[] = [
     roles: ["Trustee", "Ambassador", "Founder and Chair"],
     linkedin: "https://nz.linkedin.com/in/mahsamohaghegh/",
     description:
-      "Dr. Mahsa McCauley is the founder and the director of She Sharp, an Associate Professor in the School of Computer, Engineering and Mathematical Sciences at Auckland University of Technology and Chair of the AI Forum New Zealand. An internationally recognised leader in AI and machine learning, Dr. McCauley also serves on the boards of NZTech, EdTechNZ and the AI Research Association, where she contributes to shaping the future of AI policy and research in New Zealand. Internationally, she has engaged as a Fulbright Scholar at North Carolina A&T State University, applying AI to agriculture and cybersecurity challenges.\n\nHer leadership and impact have earned numerous recognitions, including the YWCA Equal Pay Champion Award, Massey University Distinguished Alumni Award, and the Unsung Hero Award at the Women in Security Awards.",
+      "Dr. Mahsa McCauley is the founder and the director of She Sharp, Head of the Department of Computer and Information Sciences at Auckland University of Technology, and Chair of the AI Forum New Zealand. In January 2026 she was appointed Communication and Information Commissioner for the New Zealand National Commission for UNESCO, where she leads work to uphold freedom of expression, widen access to information and strengthen ethical information ecosystems in Aotearoa. An internationally recognised leader in AI and machine learning, Dr. McCauley also serves on the boards of NZTech, EdTechNZ and the World Summit Awards, where she contributes to shaping the future of AI policy and research in New Zealand. Internationally, she has engaged as a Fulbright Scholar at North Carolina A&T State University, applying AI to agriculture and cybersecurity challenges.\n\nHer leadership and impact have earned numerous recognitions, including the YWCA Equal Pay Champion Award, Massey University Distinguished Alumni Award, and the Unsung Hero Award at the Women in Security Awards.",
     image: "/img/team/Mahsa.png",
   },
   {
     id: 2,
     name: "Mike McCauley",
-    roles: ["Trustee", "Ambassador", "Assets Manager"],
+    roles: ["Trustee", "Ambassador", "Finance and Assets Manager"],
     linkedin: "https://nz.linkedin.com/in/mccauleymichae/",
     description:
       "Mike is a Digital Delivery Manager on the ICT Leadership team at Metlifecare, where he oversees the strategy and delivery of ICT solutions for new builds and property redevelopments. A dedicated advocate for women in tech, Mike has been a member of She Sharp since its inception in 2014. He oversees the charity's finances and physical assets, and is often seen taking photos at She Sharp events.\n\nOutside of his professional life, Mike enjoys time with his family, playing guitar, and has a passion for cooking and all things coffee.",
@@ -40,16 +40,16 @@ export const teamMembers: TeamMember[] = [
   {
     id: 5,
     name: "Meeta Patel",
-    roles: ["Ambassador", "Industry"],
+    roles: ["Ambassador", "Industry Lead"],
     linkedin: "https://www.linkedin.com/in/meeta-patel-53105928/",
     description:
-      "Dr. Meeta Patel is an experienced scientist with over 20 years of research expertise. As a Senior Scientist and Sustainability Lead at NanoLayr, she developed and implemented the company's sustainability strategy, including eco-friendly packaging. Her PhD in science and background in biopolymers have been invaluable. \n\nDr. Patel has built strong relationships with councils, universities, research institutes, community groups, and organisations, showcasing her collaboration skills. She is active in volunteering, organising community sports, and promoting STEM education. As an industry lead ambassador for SHE Sharp, she leverages her experience in professional and volunteer roles to foster collaboration.",
+      "Dr. Meeta Patel is an experienced scientist with over 20 years of research expertise. As a Senior Scientist and Sustainability Lead at NanoLayr, she developed and implemented the company's sustainability strategy, including eco-friendly packaging. Her PhD in science and background in biopolymers have been invaluable. \n\nDr. Patel has built strong relationships with councils, universities, research institutes, community groups, and organisations, showcasing her collaboration skills. She is active in volunteering, organising community sports, and promoting STEM education. As an industry lead ambassador for She Sharp, she leverages her experience in professional and volunteer roles to foster collaboration.",
     image: "/img/team/Meeta.png",
   },
   {
     id: 6,
     name: "Prasanth Pavithran",
-    roles: ["Ambassador", "Industry"],
+    roles: ["Ambassador", "Industry Lead", "Mentor"],
     linkedin: "https://www.linkedin.com/in/prasanth-pavithran-mba-a54ab912/",
     description:
       "Prasanth is an experienced Information Technology and Management professional with over 23 years of global expertise. Originally from Lutyens' Delhi, India, he has called New Zealand home for the past 17 years where he lives with his wife, two children, and their dog.\n\n Currently, he serves as a Senior Business Analyst in the Office of the Chief Technology Officer (OCTO) at Auckland University of Technology (AUT). His career includes past roles as a Capability Manager and management positions for large organisations.\n\n Beyond his professional endeavours, he contributes to the New Zealand community through coaching and mentoring young professionals for over a decade. His community involvement extends to Community Patrols NZ. He joined SheSharp to try and have a wider impact and make a difference for future generations.\n\nIn his personal time, Prasanth enjoys playing badminton and exploring creative writing. As a son, husband, father, and brother, he is committed to sharing his experience while honouring both his heritage and the place he now calls home.",
@@ -67,16 +67,16 @@ export const teamMembers: TeamMember[] = [
   {
     id: 8,
     name: "Chan Meng",
-    roles: ["Ambassador", "Website Team Lead"],
+    roles: ["Ambassador", "Website Team Lead", "AI Lead"],
     linkedin: "https://www.linkedin.com/in/chanmeng666/",
     description:
-      "Chan Meng is an AI Agent Architect and full-stack engineer based in Auckland, building at the intersection of AI, cultural technology, and women's health. As She Sharp's Senior Full Stack Engineer and Website Team Lead, she was recruited directly by founder Dr Mahsa Mohaghegh to lead the platform rebuild that now serves 2,200+ members. She holds a Master of Applied Computing with Distinction from Lincoln University, is a UN Women CSW 69 speaker, and received the Outstanding Mentor Award at the 2025 AI Hackathon Festival (AI Forum NZ × She Sharp × AUT). An earliest-ecosystem MCP server author, she architects production AI agents with Next.js, TypeScript, Python, and Kubernetes — and has mentored 800+ women into tech along the way.",
+      "Chan Meng is an AI Agent Architect and full-stack engineer based in Auckland, building at the intersection of AI, cultural technology, and women's health. As She Sharp's Senior Full Stack Engineer and Website Team Lead, she was recruited directly by founder Dr Mahsa Mohaghegh to lead the platform rebuild that now serves 3,500+ members. She holds a Master of Applied Computing with Distinction from Lincoln University, is a UN Women CSW 69 speaker, and received the Outstanding Mentor Award at the 2025 AI Hackathon Festival (AI Forum NZ × She Sharp × AUT). An earliest-ecosystem MCP server author, she architects production AI agents with Next.js, TypeScript, Python, and Kubernetes — and has mentored 800+ women into tech along the way.",
     image: "/img/team/Chan.png",
   },
   {
     id: 9,
     name: "Marriane Bentigan",
-    roles: ["Ambassador", "Marketing"],
+    roles: ["Ambassador", "Marketing Lead"],
     linkedin: "https://www.linkedin.com/in/marriane-bentigan-204203220/",
     description:
       "Marriane is a Marketing Specialist at PB Tech who loves bringing creativity and strategy together to make ideas come alive. With years of experience leading marketing programmes across Asia-Pacific, she's now happily growing her career in New Zealand. Passionate about giving back, she supports women in tech and uplifts communities where people feel welcome and inspired. \n\nOutside of work, Marriane is the full-time mediator between her two strong-willed boys and wife, a creative video professional—so her days are often filled with sibling banter, production talk, and the occasional strategic Costco run. Her energy is contagious, and she's always ready to cheer others on and be the hype bud you didn't know you needed.",
@@ -84,7 +84,7 @@ export const teamMembers: TeamMember[] = [
   }, {
     id: 10,
     name: "Gurleen Kaur",
-    roles: ["Ambassador", "Secretary"],
+    roles: ["Ambassador", "Secretary", "Content Creator"],
     linkedin: "https://www.linkedin.com/in/leen-kaur/",
     description:
       "Gurleen is a graduating student at Auckland University of Technology, pursuing a Bachelor of Computer and Information Sciences with a major in Software Development and a minor in Data Science. Passionate about empowering women in tech, she volunteers with She Sharp's marketing team, contributing through video editing, content creation, and leveraging her skills in tools like CapCut and Canva. \n\nWith hands-on experience in projects like AI games, web development, and managing YouTube channels with over 10 million views, Gurleen is dedicated to bridging the gender gap in STEM while honing her expertise in programming and data analysis.",
@@ -93,7 +93,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: 11,
     name: "Yesha Kaniyawala",
-    roles: ["Ambassador", "Website Maintenance"],
+    roles: ["Ambassador", "Website Engineer"],
     linkedin: "https://www.linkedin.com/in/yeshakaniyawalasoftwareengineer/",
     description:
       "Yesha is an AI/Software Engineer at Possibl.ai who brings passion and real-world experience to She Sharp. Based in Auckland, she loves building AI-enhanced solutions and has worked across diverse tech stacks from web development to machine learning. \n\nAs a She Sharp Ambassador, Yesha is excited to support other women in tech through mentorship and website development, using her own experiences navigating the industry to help create a more inclusive and supportive STEM community.",
@@ -112,7 +112,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: 13,
     name: "Lesley Gao",
-    roles: ["Ambassador", "Website Maintenance"],
+    roles: ["Ambassador", "Product Designer", "Website Engineer"],
     linkedin: "https://www.linkedin.com/in/lesley-gao/",
     description:
       "Lesley Gao is a Product Designer with a background in journalism, web development, and UX/UI design. She has worked across SaaS products, onboarding experiences, and support platforms, including the design and development of the She Sharp website. \n\nShe enjoy simplifying complex workflows and turning them into intuitive digital experiences. Lesley is also passionate about supporting communities and initiatives that empower and connect women in tech across Aotearoa.\n\nOutside of work, she enjoys hiking Auckland’s trails, photography, solving jigsaw puzzles, and building Lego.",
@@ -133,7 +133,7 @@ export const teamMembers: TeamMember[] = [
     roles: ["Ambassador", "Events Coordinator"],
     linkedin: "https://www.linkedin.com/in/tharaneetharan-thavarasan-52754940",
     description:
-      "Tharaneetharan is a motivated and adaptable IT professional with a strong background in ERP systems, Business Analysis, and Data Analytics. He recently completed a Master of Information Technology, specializing in Data Science and Artificial Intelligence from AIS, New Zealand. He is passionate about learning emerging technologies and exploring how Data Analytics and Artificial Intelligence can be applied to solve real-world business challenges and create meaningful value for organizations. . As an ERP professional, he has worked as a Functional Consultant across SAP FICO, Microsoft Dynamics AX, and Microsoft Dynamics 365 Finance & Operations.\n\nAs a She Sharp Ambassador, Tharaneetharan is excited to support women in technology through event coordination, community engagement, and event support activities. He also contributes to monthly newsletter preparation. Outside of work, he enjoys travelling, photography, reading books, listening to music, and playing sports.",
+      "Tharaneetharan is a motivated and adaptable IT professional with a strong background in ERP systems, Business Analysis, and Data Analytics. He recently completed a Master of Information Technology, specializing in Data Science and Artificial Intelligence from the Auckland Institute of Studies (AIS), New Zealand. He is passionate about learning emerging technologies and exploring how Data Analytics and Artificial Intelligence can be applied to solve real-world business challenges and create meaningful value for organisations. As an ERP professional, he has worked as a Functional Consultant across SAP FICO, Microsoft Dynamics AX, and Microsoft Dynamics 365 Finance & Operations.\n\nAs a She Sharp Ambassador, Tharaneetharan is excited to support women in technology through event coordination, community engagement, and event support activities. He also contributes to monthly newsletter preparation. Outside of work, he enjoys travelling, photography, reading books, listening to music, and playing sports.",
     image: "/img/team/Tharanee.png",
   },
   {
