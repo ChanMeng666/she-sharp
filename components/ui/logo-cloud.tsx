@@ -12,6 +12,8 @@ interface LogoCloudProps {
   duration?: number;
   durationOnHover?: number;
   gap?: number;
+  /** Scroll right-to-left instead of left-to-right. */
+  reverse?: boolean;
 }
 
 export function LogoCloud({
@@ -19,6 +21,7 @@ export function LogoCloud({
   duration = 90,
   durationOnHover = 160,
   gap = 56,
+  reverse = false,
 }: LogoCloudProps) {
   return (
     <div
@@ -34,6 +37,7 @@ export function LogoCloud({
         gap={gap}
         duration={duration}
         durationOnHover={durationOnHover}
+        reverse={reverse}
       >
         {logos.map((logo, index) => (
           <div
