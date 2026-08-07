@@ -506,31 +506,30 @@ const AUT_WELCOME: Slide = {
   type: "people",
   section: "Welcome",
   tone: "light",
-  eyebrow: "Over to Suzanne",
+  eyebrow: "Over to Tek",
   title: "Greetings from AUT",
-  // She opens on behalf of the university and nothing else. The safety briefing
-  // was attributed to her here until Mahsa corrected it on 5 Aug 2026 — putting
-  // a Dean's name against a duty she has not agreed to perform is the kind of
-  // error the room only discovers when nobody steps forward.
-  lead: "Suzanne opens the weekend on behalf of AUT",
+  // He opens on behalf of the university and nothing else. The safety briefing
+  // was attributed to this slide's speaker until Mahsa corrected it on
+  // 5 Aug 2026 — putting a name against a duty they have not agreed to perform
+  // is the kind of error the room only discovers when nobody steps forward.
+  lead: "Tek opens the weekend on behalf of AUT",
   people: [
     {
-      // "Professor" is carried on the name rather than folded into the role.
-      // It is the title she holds, it is the one Mahsa asked for by name, and
-      // the role line is already at its word limit without it.
-      name: "Professor Suzanne Wilkinson",
-      // Full title is "Dean of Faculty of Design and Creative Technologies",
-      // which is nine words against a six-word limit and reads as a job
-      // description rather than an introduction at 38px.
-      role: "Dean, Design and Creative Technologies",
+      // "Professor" is carried on the name rather than folded into the role:
+      // it is the title he holds, and the role line is already at its word
+      // limit without it.
+      name: "Professor Tek Tjing Lie",
+      // Full title is "Head of School, Engineering, Computer and Mathematical
+      // Sciences", which is eight words against a six-word limit and reads as
+      // a job description rather than an introduction at 38px.
+      role: "Head of School, Engineering & Sciences",
       org: "Auckland University of Technology",
-      image:
-        "/img/events/aotearoa-ai-hackathon-festival-2026-suzanne-wilkinson.jpg",
+      image: "/img/events/aotearoa-ai-hackathon-festival-2026-tek-tjing-lie.jpg",
     },
   ],
   density: "lg",
   shape: "card",
-  note: "Hand over to Suzanne here for AUT's welcome, then take the room back. She does NOT read the safety briefing on the next slide — that is yours.",
+  note: "Hand over to Professor Lie here for AUT's welcome, then take the room back. He does NOT read the safety briefing on the next slide — that is yours.",
 };
 
 /**
@@ -577,7 +576,11 @@ const KEYNOTE_SLIDE: Slide = {
   type: "photo",
   section: "Welcome",
   tone: "dark",
-  eyebrow: "Fifteen minutes, then it's yours",
+  // No kicker. It read "Fifteen minutes, then it's yours" until 7 Aug 2026,
+  // which asserted a duration the published agenda (5:50–6:10pm) and the run
+  // sheet (17:50–18:05 plus Q&A) do not agree on. Removed rather than
+  // corrected: nobody has settled which of the three clocks is right, and a
+  // slide behind the speaker is the worst place to guess.
   title: "Rach Monks",
   lead: "Founder of AI for X and X-Bot Games",
   image: KEYNOTE_PLATE,
@@ -604,6 +607,82 @@ const KEYNOTE_SLIDE: Slide = {
  *
  * Do not restore this slide without asking Mahsa first.
  */
+
+/**
+ * Tonight's housekeeping: wifi, rooms, the run sheet, the shape of the weekend.
+ *
+ * These four sat after the chapter divider until 7 Aug 2026 and now run
+ * straight after the safety briefing, because they are what the room is
+ * already asking each other about while the host is still talking — and a
+ * person who has just sat down wants the wifi and the room number before they
+ * want the organisational preamble.
+ */
+const TONIGHT_LOGISTICS: Slide[] = [
+  /* Housekeeping first, and in this order, because it is what the room is
+     already asking each other about while the host is still talking.
+
+     `themes` rather than a list: the layout sets `tag` small above `title`
+     large, which is the label-above-value shape a password needs to survive
+     being copied onto a phone from three metres away. There is no wifi slide
+     type and this does not need one.
+
+     These credentials are the venue's guest account for the weekend, supplied
+     in the AUT mentor briefing. They belong on the projector in a room that
+     has already walked past reception — not on the public event page. */
+  {
+    id: "venue-wifi",
+    type: "themes",
+    section: "Day One — Friday 7 August",
+    eyebrow: "Get online first",
+    title: "Venue Wi-Fi",
+    lead: "AUT guest network, and the same login both days",
+    themes: [
+      { tag: "Network", title: "AUTwifi" },
+      { tag: "Username", title: "ai-hack-a-thon@guest" },
+      { tag: "Password", title: "46533572" },
+    ],
+    note: "Leave this up through registration. Read the username aloud one hyphen at a time — it is the field everyone mistypes — and say the password twice.",
+  },
+  {
+    id: "venue-wayfinding",
+    type: "bullets",
+    section: "Day One — Friday 7 August",
+    eyebrow: "Tonight's rooms",
+    title: "Where to Find Things",
+    lead: "Every room is in the Sir Paul Reeves Building, the WG building",
+    items: [
+      "WG308, the Wave Room — tonight's opening and keynote",
+      "WG306, the foyer — registration, dinner and coffee",
+      "WG128, WG128A, WG129 and WG100D — team spaces",
+    ],
+    note: "Point in the direction of each room as you say it. Tomorrow's rooms are different and there are more of them — that slide comes in the morning, do not read it tonight.",
+  },
+  {
+    id: "day-one-run-sheet",
+    type: "agenda",
+    section: "Day One — Friday 7 August",
+    eyebrow: "Doors at five, dinner first",
+    title: "Tonight",
+    lead: "Three hours, and you will leave with a team",
+    items: DAY_ONE,
+    columns: 2,
+    note: "Read only the next three rows. People photograph the slide for the rest.",
+  },
+  {
+    id: "two-day-format",
+    type: "bullets",
+    section: "Day One — Friday 7 August",
+    eyebrow: "Tonight and all tomorrow",
+    title: "How the Two Days Run",
+    items: [
+      "Friday night: welcome, themes, team forming, build begins",
+      "Saturday: build, pitch practice, pitches, winner announced",
+      "Venue winners go forward to national judging",
+      "One winner to pitch at the Aotearoa AI Summit",
+    ],
+    note: "Set expectations for the whole weekend before anyone commits to a team.",
+  },
+];
 
 const OPENING_SLIDES: Slide[] = insertAfter(
   insertAfter(
@@ -633,6 +712,29 @@ const OPENING_SLIDES: Slide[] = insertAfter(
   KEYNOTE_SLIDE,
 );
 
+/*
+ * Tonight's housekeeping goes in directly after the safety briefing, ahead of
+ * the She Sharp introduction, the impact figures and the sponsor wall.
+ *
+ * The chapter divider travels up with it, and that is load-bearing rather than
+ * decorative. Dropped straight after the safety slide, the four housekeeping
+ * slides make a run of six consecutive light information slides out of the
+ * welcome, and leave the divider stranded against the next one — three
+ * full-frame slides in a row. `lintRhythm` rejects both. Moving the divider to
+ * open the housekeeping fixes all three errors at once and reads correctly
+ * besides: safety, then the event's own title card, then what the room is
+ * already whispering about — wifi, rooms, and what happens tonight.
+ */
+const OPENING_WITH_LOGISTICS: Slide[] = insertAfter(
+  insertAfter(
+    OPENING_SLIDES.filter((slide) => slide.id !== "event-opening"),
+    "health-and-safety",
+    OPENING_SLIDES.find((slide) => slide.id === "event-opening")!,
+  ),
+  "event-opening",
+  ...TONIGHT_LOGISTICS,
+);
+
 // --- Deck ------------------------------------------------------------------
 
 export const aotearoaAiHackathonFestival2026Deck: Deck = {
@@ -650,75 +752,11 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
     },
   },
   slides: [
-    // 1–11 — She Sharp opening, generated from live site data, plus AUT's own
-    // welcome and the keynote slot.
-    ...OPENING_SLIDES,
+    // She Sharp's opening, generated from live site data, plus AUT's own
+    // welcome, tonight's housekeeping and the keynote slot.
+    ...OPENING_WITH_LOGISTICS,
 
-    // --- 12–37 — Day one ---------------------------------------------------
-    /* Housekeeping first, and in this order, because it is what the room is
-       already asking each other about while the host is still talking.
-
-       `themes` rather than a list: the layout sets `tag` small above `title`
-       large, which is the label-above-value shape a password needs to survive
-       being copied onto a phone from three metres away. There is no wifi slide
-       type and this does not need one.
-
-       These credentials are the venue's guest account for the weekend, supplied
-       in the AUT mentor briefing. They belong on the projector in a room that
-       has already walked past reception — not on the public event page. */
-    {
-      id: "venue-wifi",
-      type: "themes",
-      section: "Day One — Friday 7 August",
-      eyebrow: "Get online first",
-      title: "Venue Wi-Fi",
-      lead: "AUT guest network, and the same login both days",
-      themes: [
-        { tag: "Network", title: "AUTwifi" },
-        { tag: "Username", title: "ai-hack-a-thon@guest" },
-        { tag: "Password", title: "46533572" },
-      ],
-      note: "Leave this up through registration. Read the username aloud one hyphen at a time — it is the field everyone mistypes — and say the password twice.",
-    },
-    {
-      id: "venue-wayfinding",
-      type: "bullets",
-      section: "Day One — Friday 7 August",
-      eyebrow: "Tonight's rooms",
-      title: "Where to Find Things",
-      lead: "Every room is in the Sir Paul Reeves Building, the WG building",
-      items: [
-        "WG308, the Wave Room — tonight's opening and keynote",
-        "WG306, the foyer — registration, dinner and coffee",
-        "WG128, WG128A, WG129 and WG100D — team spaces",
-      ],
-      note: "Point in the direction of each room as you say it. Tomorrow's rooms are different and there are more of them — that slide comes in the morning, do not read it tonight.",
-    },
-    {
-      id: "day-one-run-sheet",
-      type: "agenda",
-      section: "Day One — Friday 7 August",
-      eyebrow: "Doors at five, dinner first",
-      title: "Tonight",
-      lead: "Three hours, and you will leave with a team",
-      items: DAY_ONE,
-      columns: 2,
-      note: "Read only the next three rows. People photograph the slide for the rest.",
-    },
-    {
-      id: "two-day-format",
-      type: "bullets",
-      section: "Day One — Friday 7 August",
-      eyebrow: "Tonight and all tomorrow",
-      title: "How the Two Days Run",
-      items: [
-        "Friday night: welcome, themes, team forming, build begins",
-        "Saturday: build, pitch practice, pitches, winner announced",
-        "Venue winners go forward to national judging",
-        "One winner to pitch at the Aotearoa AI Summit",
-      ],
-      note: "Set expectations for the whole weekend before anyone commits to a team.",
-    },
+    // --- Day one -----------------------------------------------------------
     {
       id: "section-the-challenge",
       type: "section",
@@ -971,6 +1009,17 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       shape: "circle",
       note: "Same again — stand, name, next. One more group after this.",
     },
+    {
+      id: "meet-the-mentors-3",
+      type: "people",
+      section: "Day One — Friday 7 August",
+      eyebrow: "And the rest of them",
+      title: "Meet the Mentors",
+      people: mentorGroups[2],
+      density: "md",
+      shape: "circle",
+      note: "Last group. Andreas Spanner is remote on Discord, so say so rather than looking for him in the room. Then hand over for the introductions.",
+    },
     /* A dark beat in the middle of seventeen names.
        Three people slides after the links slide is five information slides in a
        row and five light ones, which `lintRhythm` rejects and a room feels
@@ -987,17 +1036,6 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       image: archivePlate(61),
       overlay: "gradient",
       note: "Say it plainly: the mentors are here to be interrupted, and the teams who ask early finish. Then straight into the last group.",
-    },
-    {
-      id: "meet-the-mentors-3",
-      type: "people",
-      section: "Day One — Friday 7 August",
-      eyebrow: "And the rest of them",
-      title: "Meet the Mentors",
-      people: mentorGroups[2],
-      density: "md",
-      shape: "circle",
-      note: "Last group. Andreas Spanner is remote on Discord, so say so rather than looking for him in the room. Then hand over for the introductions.",
     },
     {
       id: "how-mentors-help",
