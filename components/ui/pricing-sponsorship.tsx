@@ -45,8 +45,13 @@ const features = [
   "Featured in annual impact report",
 ]
 
+// Figures shown to prospective sponsors, so these are the ones most worth
+// keeping defensible — a sponsor who checks them and finds them inflated is a
+// sponsor lost. "70–90" is the measured range: 2022 sold 631 tickets across
+// 7–9 events, and the seven 2025 events averaged 79 registrations (555 total)
+// with 383 checking in. The previous "95+" was above the top of that range.
 const EVENT_STATS = [
-  { value: "95+", label: "Attendees per event" },
+  { value: "70–90", label: "Attendees per event" },
   { value: "8", label: "Events per year" },
   { value: "80+", label: "Events held since 2014" },
 ]
