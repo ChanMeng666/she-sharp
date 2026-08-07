@@ -105,8 +105,14 @@ export function AgendaSlideLayout({ slide }: { slide: AgendaSlide }) {
             )}
           </div>
 
+          {/* The class lets `deck.css` fold this back to one column on a
+              PORTRAIT stage. The split exists because a 1080-high stage fits
+              only seven rows; a portrait stage is nearly twice that and has the
+              room to spare, while its width does not — two columns there leave
+              each label about 170px beside a 208px time, so "Problems,
+              requirements & judging criteria" ran off the edge of the screen. */}
           <div
-            className={cn("grid")}
+            className={cn("deck-sheet-grid grid")}
             style={
               {
                 gridTemplateColumns: twoColumns

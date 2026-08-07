@@ -100,7 +100,7 @@ export function DeckViewport({
   const [idle, setIdle] = useState(false);
 
   const reducedMotion = usePrefersReducedMotion();
-  const { scale, stageWidth } = useStageScale(viewportRef, {
+  const { scale, stageWidth, stageHeight } = useStageScale(viewportRef, {
     aspectLock,
     fit,
     zoom,
@@ -280,6 +280,16 @@ export function DeckViewport({
 
   // ------------------------------------------------------------------ coach
 
+  /* Whether this is a finger rather than a mouse. Resolved in an effect and
+     defaulted to `false`, so the server-rendered markup and the first client
+     render always agree; the chip relabels itself a frame later, which nobody
+     is looking at yet. Not a viewport width — an iPad in landscape drives a
+     desktop-sized stage and still has no keyboard. */
+  const [touchInput, setTouchInput] = useState(false);
+  useEffect(() => {
+    setTouchInput(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
+
   /* Shown once per browser, on mount, before anyone has pressed anything. A
      help panel behind a `?` nobody knows about is not discoverable, and an
      undiscoverable control may as well not exist — the overview grid and the
@@ -329,9 +339,15 @@ export function DeckViewport({
     wake();
     document.addEventListener("pointermove", wake);
     document.addEventListener("keydown", wake);
+    // `pointerdown` is what carries this on a touch screen. With only the other
+    // two, a phone fires neither, `data-idle` latches three seconds after load
+    // and the `? keys` chip — the only visible route to the controls — is hidden
+    // for the rest of the session with no way to bring it back.
+    document.addEventListener("pointerdown", wake);
     return () => {
       document.removeEventListener("pointermove", wake);
       document.removeEventListener("keydown", wake);
+      document.removeEventListener("pointerdown", wake);
       if (idleTimer.current !== null) window.clearTimeout(idleTimer.current);
     };
   }, [wake]);
@@ -655,6 +671,7 @@ export function DeckViewport({
         <DeckStage
           deck={deck}
           stageWidth={stageWidth}
+          stageHeight={stageHeight}
           scale={scale}
           motion={motionOn}
         >
@@ -694,16 +711,21 @@ export function DeckViewport({
         {/* The keys are useless if nothing says they exist. This rides the same
             idle fade as the rest of the chrome, so the host — who is touching
             the machine — sees it, and the room, which is looking at a still
-            projection three seconds later, does not. */}
+            projection three seconds later, does not.
+
+            On a touch screen it opens the SLIDE LIST instead. A keyboard
+            reference is the one panel a phone can do nothing with, and this chip
+            is the only visible route to any control there — so it has to lead to
+            the control that matters, which is jumping to a slide. */}
         <button
           type="button"
           className="deck-chrome deck-keyhint"
           data-autohide="true"
           data-no-advance
-          onClick={() => setHelpOpen(true)}
-          aria-label="Show keyboard shortcuts"
+          onClick={() => (touchInput ? setOverviewOpen(true) : setHelpOpen(true))}
+          aria-label={touchInput ? "Show all slides" : "Show keyboard shortcuts"}
         >
-          <span aria-hidden="true">?</span> keys
+          <span aria-hidden="true">?</span> {touchInput ? "slides" : "keys"}
         </button>
 
         {coachOpen && (
@@ -764,6 +786,12 @@ export function DeckViewport({
  * move, jump when running late, and kill the motion when the laptop struggles.
  * The rest stay in the `?` panel, which the corner hint now points at.
  *
+ * ON A TOUCH SCREEN IT TEACHES SOMETHING ELSE. A phone has no arrow key, no `F`,
+ * no `O` and no `L`, so the keyboard card was four instructions none of which
+ * could be carried out — worse than no card, because it reads as "this page is
+ * not for you". The gestures below are the ones the pointer handler already
+ * implements; they were simply never named anywhere.
+ *
  * Dismissed by literally any key or click, because it may already be on the
  * projector when the host opens it.
  */
@@ -774,12 +802,27 @@ function DeckCoach({
   total: number;
   onDismiss: () => void;
 }) {
-  const keys: { key: string; what: string }[] = [
-    { key: "→", what: "Next slide. Space works too" },
-    { key: "F", what: "Fullscreen — do this before you start" },
-    { key: "O", what: `All ${total} slides, click one to jump` },
-    { key: "L", what: "Static mode, if the laptop struggles" },
-  ];
+  // Read in an effect, not during render: the server has no `matchMedia`, and
+  // branching on it inline would make the first client render disagree with the
+  // markup React is hydrating.
+  const [touch, setTouch] = useState(false);
+  useEffect(() => {
+    setTouch(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
+
+  const keys: { key: string; what: string }[] = touch
+    ? [
+        { key: "›", what: "Tap the right of the screen for the next slide" },
+        { key: "‹", what: "Tap the left quarter to go back" },
+        { key: "↔", what: "Swipe works too, either direction" },
+        { key: "?", what: `Tap the corner for all ${total} slides` },
+      ]
+    : [
+        { key: "→", what: "Next slide. Space works too" },
+        { key: "F", what: "Fullscreen — do this before you start" },
+        { key: "O", what: `All ${total} slides, click one to jump` },
+        { key: "L", what: "Static mode, if the laptop struggles" },
+      ];
 
   return (
     <div
@@ -800,7 +843,13 @@ function DeckCoach({
           ))}
         </ul>
         <p className="deck-coach-foot">
-          <kbd>?</kbd> for everything else · press any key to begin
+          {touch ? (
+            <>Tap anywhere to begin</>
+          ) : (
+            <>
+              <kbd>?</kbd> for everything else · press any key to begin
+            </>
+          )}
         </p>
       </div>
     </div>

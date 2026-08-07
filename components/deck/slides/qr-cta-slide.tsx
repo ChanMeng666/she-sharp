@@ -64,7 +64,7 @@ export function QrCtaSlideLayout({ slide }: { slide: QrCtaSlide }) {
         }}
       >
         <div
-          className="deck-content grid flex-1 grid-cols-[minmax(0,1fr)_auto] items-center"
+          className="deck-qr-cta deck-content grid flex-1 grid-cols-[minmax(0,1fr)_auto] items-center"
           style={{ gap: "var(--deck-gap-xl)" }}
         >
           <div className="flex flex-col" style={{ gap: "var(--deck-gap-md)" }}>

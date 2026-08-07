@@ -107,7 +107,7 @@ export function SlideFrame({
   children,
 }: SlideFrameProps) {
   const ref = useRef<HTMLElement | null>(null);
-  useFitContent(ref, slide.id);
+  useFitContent(ref, slide.id, active);
   useSlideMotion(ref, slide.type, active, motion);
 
   return (
@@ -246,12 +246,27 @@ function useSlideMotion(
  * on a 4:3 projector. The floor at 72% is deliberate: past that the type is too
  * small to read from the back of the room, and the honest answer is to cut a
  * line rather than to shrink it, so the overflow is logged for the author.
+ *
+ * ONLY THE ACTIVE SLIDE MEASURES. Every slide is mounted, so an ungated version
+ * put one ResizeObserver per slide on the ONE shared `.deck-stage` element, plus
+ * a `load` listener on every image in the deck — roughly seventy observers and
+ * four thousand listeners, each of whose callbacks reads `scrollHeight` and so
+ * forces a synchronous layout of the whole stage. Every tile that finished
+ * decoding triggered one. Gating on `active` also measures at a better moment:
+ * on entry the fonts and this slide's images have actually loaded, whereas at
+ * mount they had not. The trade is that the dev overflow warning below now
+ * appears when you visit the offending slide rather than all at once on load —
+ * the multi-screen preview pass steps through every slide anyway, so nothing
+ * goes unreported.
  */
 function useFitContent(
   ref: React.RefObject<HTMLElement | null>,
   slideId: string,
+  active: boolean,
 ) {
   useEffect(() => {
+    if (!active) return;
+
     const slide = ref.current;
     const safe = slide?.querySelector<HTMLElement>(".deck-safe");
     if (!slide || !safe) return;
@@ -297,5 +312,5 @@ function useFitContent(
       observer.disconnect();
       images.forEach((image) => image.removeEventListener("load", schedule));
     };
-  }, [ref, slideId]);
+  }, [ref, slideId, active]);
 }
