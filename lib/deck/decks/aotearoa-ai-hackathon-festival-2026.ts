@@ -165,19 +165,30 @@ const ASSISTANT_QR: QrBlock = {
 };
 
 /*
- * Live Q&A, and it gets a slide of its own rather than a place in a row of
- * codes: a question happens in the thirty seconds after someone thinks of it,
- * so the code has to be on screen at that moment and big enough to scan from
- * the back of WG308.
+ * The opening Slido poll, on its own slide rather than in a row of codes: a
+ * one-tap answer only happens while the code is on screen and big enough to
+ * scan from the back of WG308.
  *
- * The event id is unguessable and unmemorable, which is the whole reason this
- * is a code and not a link read aloud. It is a public Slido room — anyone with
- * the URL can post — so nothing here is a credential; if that ever changes,
- * this slide is the first thing to pull.
+ * TWO THINGS TO CHECK BEFORE DOORS, both of which look fine from the machine
+ * building the deck and fail on the floor:
+ *
+ * 1. This is Slido's `/embed/polls/<id>` URL, not the participant
+ *    `/live/questions` room it replaced on 7 Aug 2026. Embed URLs are built to
+ *    be iframed inside someone else's page, so a phone opening one directly
+ *    gets the bare widget with none of the Slido chrome around it. Open it on
+ *    a signed-out phone before the room does — this is the same class of
+ *    failure as the Circle.so login wall the 5 Aug QR audit caught.
+ * 2. It is 97 characters against the 62 of the room URL, which pushes the code
+ *    to roughly 49×49 modules. On this layout the code is drawn large and one
+ *    to a slide, so it should still scan, but the modules are appreciably
+ *    smaller than every other code in the deck.
+ *
+ * Public poll — anyone with the URL can answer, so nothing here is a
+ * credential. If that changes, this slide is the first thing to pull.
  */
 const SLIDO_QR: QrBlock = {
-  url: "https://app.sli.do/event/q4y61zo6W3hgj5MCTGKJp7/live/questions",
-  label: "Ask a question",
+  url: "https://app.sli.do/event/q4y61zo6W3hgj5MCTGKJp7/embed/polls/d549555c-839d-4c66-a6ce-a62ef693b7fe",
+  label: "How are you feeling?",
   caption: "app.sli.do",
 };
 
@@ -737,27 +748,26 @@ const TONIGHT_LOGISTICS: Slide[] = [
  * event itself.
  */
 /*
- * Straight after the keynote, which is when the room has the most to ask and
- * the least appetite for putting a hand up in front of a hundred people.
+ * Straight after the keynote, which is the point in the evening the room has
+ * most to say and least appetite for saying it out loud.
  *
  * Dark, because it follows a dark photo slide and precedes a light one — and
  * because a code reads best out of a dark field at projector distance.
  */
 const SLIDO_QA: Slide = {
-  id: "ask-a-question",
+  id: "how-are-you-feeling",
   type: "qr-cta",
   section: "Day One — Friday 7 August",
   tone: "dark",
-  eyebrow: "No hand up needed",
-  title: "Ask Your Questions Here",
-  lead: "Post a question, upvote someone else's, and we work through them live",
+  eyebrow: "One tap, no typing",
+  title: "How Are You Feeling?",
+  lead: "Scan, pick the answer that fits, and see where the rest of the room is",
   points: [
-    "Scan once and leave the tab open",
-    "Type your question the moment you think of it",
-    "Upvote a question to push it up the list",
+    "Scan the code and answer in one tap",
+    "It opens in your browser, nothing to install",
   ],
   qr: SLIDO_QR,
-  note: "Leave this up while questions come in. Read the top-voted one first — it is the room telling you what it wants answered, and it saves you choosing.",
+  note: "Have the Slido presenter view open on your own machine — the results do not appear on this slide. Leave the code up until the answers stop climbing, then read the shape of the room back to it before moving on.",
 };
 
 const TWO_DAY_FORMAT: Slide = {
