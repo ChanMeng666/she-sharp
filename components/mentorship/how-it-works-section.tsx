@@ -113,6 +113,53 @@ const MENTOR_STEPS: Step[] = [
   },
 ];
 
+/**
+ * The three things applicants most often get wrong, stated before they apply
+ * rather than in a rejection email.
+ *
+ * The first two come from real refusals: a seventeen-year-old had to be turned
+ * away over guardian consent, and the programme runs in New Zealand. The third
+ * is the programme's most persistent misunderstanding — mentees arrive
+ * expecting their mentor to find them a job, and She Sharp has been clear for
+ * years that it does not do job placement or referrals.
+ */
+const ELIGIBILITY = [
+  {
+    title: "You need to be in New Zealand",
+    body: "The programme is run for people based in Aotearoa New Zealand. Mentors and mentees meet here, in person or online.",
+  },
+  {
+    title: "Mentees must be 18 or over",
+    body: "We are not set up to take applicants under 18, and cannot handle the guardian consent that would require.",
+  },
+  {
+    title: "This is mentoring, not job placement",
+    body: "Your mentor is here to share experience, sharpen your thinking and open your view of the industry. She Sharp does not place people into roles, pass CVs to employers or make referrals — for anyone.",
+  },
+];
+
+function EligibilityPanel() {
+  return (
+    <Reveal className="mt-16 rounded-[16px] border border-border bg-white p-6 sm:p-8">
+      <h3 className="text-xl md:text-2xl font-bold text-foreground">
+        Before you apply
+      </h3>
+      <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-3">
+        {ELIGIBILITY.map((rule) => (
+          <div key={rule.title}>
+            <dt className="text-base font-semibold text-foreground">
+              {rule.title}
+            </dt>
+            <dd className="mt-2 text-sm leading-relaxed text-ink-600">
+              {rule.body}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </Reveal>
+  );
+}
+
 function StepGrid({ steps }: { steps: Step[] }) {
   const cols =
     steps.length >= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3";
@@ -205,6 +252,8 @@ export function HowItWorksSection() {
             <StepGrid steps={MENTOR_STEPS} />
           </TabsContent>
         </Tabs>
+
+        <EligibilityPanel />
 
         <div className="mt-16 flex flex-col items-start gap-4">
           {applicationsOpen ? (
