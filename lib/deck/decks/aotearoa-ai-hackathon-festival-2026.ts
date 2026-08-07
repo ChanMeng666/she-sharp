@@ -1390,23 +1390,39 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "team-groupings",
       type: "agenda",
       section: "Day Two — Saturday 8 August",
-      eyebrow: "Find your table first",
+      eyebrow: "Find your name, then sit",
       title: "Today's Teams",
-      lead: "Who formed last night, and where they are sitting",
+      lead: "Thirteen teams formed on Friday night",
+      /* THESE ARE THE DISCORD CHANNEL NAMES, VERBATIM, AND THAT IS DELIBERATE.
+         They are lowercase and hyphenated because Slack and Discord force that,
+         and the obvious tidy-up — "Kai Sense AI", "KPI: Kaitiaki Positive
+         Impact" — is a guess at what each team meant, made by someone who was
+         not in the room when they named themselves. It is also the wrong guess
+         to make on a projector: a team spends the weekend inside a channel with
+         this exact string at the top of it, so the string is the thing they will
+         scan for. Retype them only from a list the teams themselves confirm.
+
+         The numerals are a reading index, nothing more. There is no table
+         allocation for day two — the slide used to promise one ("where they are
+         sitting", "Team 1 — table") and there has never been any data behind
+         that, so the copy now says what the slide actually knows. */
       items: [
-        { time: "Team 1", label: "Team name — table" },
-        { time: "Team 2", label: "Team name — table" },
-        { time: "Team 3", label: "Team name — table" },
-        { time: "Team 4", label: "Team name — table" },
-        { time: "Team 5", label: "Team name — table" },
-        { time: "Team 6", label: "Team name — table" },
-        { time: "Team 7", label: "Team name — table" },
-        { time: "Team 8", label: "Team name — table" },
-        { time: "Team 9", label: "Team name — table" },
-        { time: "Team 10", label: "Team name — table" },
+        { time: "01", label: "kpi-kaitiaki-positive-impact" },
+        { time: "02", label: "caffeine" },
+        { time: "03", label: "kailine" },
+        { time: "04", label: "arara" },
+        { time: "05", label: "blunt" },
+        { time: "06", label: "route" },
+        { time: "07", label: "devacces" },
+        { time: "08", label: "kanorao" },
+        { time: "09", label: "fantastic6" },
+        { time: "10", label: "kaitiakidata" },
+        { time: "11", label: "kai-sense-ai" },
+        { time: "12", label: "super-five" },
+        { time: "13", label: "5-senses" },
       ],
       columns: 2,
-      note: "PLACEHOLDER — fill in the real team names and tables after Friday night, and delete any rows you do not need. Read the names out and let each team wave.",
+      note: "Read the names out and let each team wave. These are the Discord channel names exactly as the teams wrote them — say them as written rather than tidying them up. No tables are allocated today, so do not send anyone looking for one. If a team has renamed itself or merged overnight, fix the row before you project it.",
     },
     /* A hero between the morning's logistics and the morning's work.
        The run sheet, the rooms, the team photographs and the team groupings are
