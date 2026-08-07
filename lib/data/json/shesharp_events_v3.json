@@ -2917,6 +2917,13 @@
         },
         "specialSections": [
           {
+            "type": "youtube",
+            "title": "The Evening, in Full",
+            "content": [
+              "https://www.youtube.com/watch?v=9HT-O-MHhTs"
+            ]
+          },
+          {
             "type": "agenda",
             "title": "How the Evening Ran",
             "content": [
