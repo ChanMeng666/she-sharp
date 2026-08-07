@@ -387,6 +387,58 @@ const findSpeaker = (event: EventRecord, name: string): Speaker | undefined => {
   }
 }
 
+// -------------------------------------------- A21, ids 90 / 91 / 92 / 95 / 96
+// Attendance was never backfilled after these events ran. Two conventions
+// apply and both are easy to get backwards:
+//
+//   `attendees`  = REGISTRATIONS. This is the number the site displays, decided
+//                  in April 2026 — it is the larger figure and matches how the
+//                  organisation has reported since 2020.
+//   `checkedIn`  = people who actually turned up.
+//
+// Only figures with a record behind them go in. Events with no number in the
+// archive (ids 93 and 94, and the two 2024 hackathons in the v3 file) stay
+// null rather than being estimated.
+{
+  const ATTENDANCE: Record<number, { attendees: number; source: string }> = {
+    90: {
+      attendees: 14,
+      source:
+        "14 of 25 registered two days out; the 5 previously here was a stale partial",
+    },
+    91: {
+      attendees: 100,
+      source:
+        "registration closed at the 100 cap (99 on 12 May), plus two walk-ins",
+    },
+    92: {
+      attendees: 23,
+      source:
+        "23 attended, from the list Nirmala supplied; registrations were not recorded separately",
+    },
+    95: { attendees: 86, source: "registration closed at 86 on 29 July, 4pm" },
+    96: {
+      attendees: 125,
+      source:
+        "119 at close (28 mentors + 91 entrants) plus five of last year's winners and one late mentor added by hand",
+    },
+  };
+
+  for (const [rawId, entry] of Object.entries(ATTENDANCE)) {
+    const id = Number(rawId);
+    const event = get(id) as EventRecord & { attendees: number | null };
+    if (event.attendees === entry.attendees) {
+      note("A21", `id ${id} attendees already ${entry.attendees}`);
+      continue;
+    }
+    event.attendees = entry.attendees;
+    note(
+      "A21",
+      `id ${id} attendees -> ${entry.attendees} (${entry.source})`
+    );
+  }
+}
+
 writeEventJson(FILE, data);
 console.log(log.map((line) => `  ${line}`).join("\n"));
 console.log(`\nWrote ${FILE}`);
