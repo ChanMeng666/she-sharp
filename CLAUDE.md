@@ -391,7 +391,7 @@ The archive is ~400 photographs and they are overwhelmingly **the same shot**: s
 
 ### The stage is fluid, not fixed 16:9
 
-Design height is a constant 1080; width flows with the display, clamped to 4:3–21:9, so every venue screen fills edge to edge with no letterboxing (portrait falls back to a centred 4:3). Four layout rules follow, and all four fail *silently* — see `styles/components/deck.css`:
+Design height is a constant 1080; width flows with the display, clamped to 4:3–21:9, so every venue screen fills edge to edge with no letterboxing. **A portrait display inverts the axes** — see the phone section below. Four layout rules follow, and all four fail *silently* — see `styles/components/deck.css`:
 
 1. **Never `vw`/`vh`/`dvh` inside `.deck-stage`** — they resolve against the real viewport, not the scaled stage, so they do not scale. This bans the site's `.text-display-*` utilities in here. Use `cqi` or fixed design px, and the `.deck-*` type classes rather than Tailwind `text-*`.
 2. The stage is centred with `translate(-50%, -50%) scale()`, **not** flex/grid alignment — grid parks an oversized item at the start edge.
@@ -399,6 +399,23 @@ Design height is a constant 1080; width flows with the display, clamped to 4:3�
 4. **Responsive `--dt-*` overrides land on `.deck-slide`, never on `.deck-stage`** — the stage *is* the named container, and an element cannot match a container query against its own container. Writing it on `.deck-stage` compiles, never applies, and silently leaves a 4:3 projector running the 21:9 type scale.
 
 Layouts prefer `repeat(auto-fit, minmax(Npx, 1fr))` over breakpoints, and Tailwind container-query variants (`@max-[1560px]/deck:`) where auto-fit will not do. `useFitContent()` in `slide-frame.tsx` scales an overflowing slide down as a **last resort** — treat any slide that triggers it as a defect to fix by cutting copy, splitting the slide or changing the layout, in that order. Shrinking type is not the fix.
+
+### The deck on a phone
+
+Fixed 2026-08-07. iOS Safari used to kill the tab outright ("A problem repeatedly occurred" is jetsam, not a JS error) because **all 67 slides stay mounted and only `visibility` hides them** — so every hidden slide kept its compositing layers, its running animations and its images. Three things were paying that bill and **all three were bugs on venue laptops too**: an unconditional `will-change: transform` on ~100 `max-content`-wide `.deck-wall-row`s, ambient drift scoped to `.deck-stage` instead of the active slide, and one `ResizeObserver` per slide on the single shared `.deck-stage` plus a `load` listener on all ~4,100 images, each forcing a full-stage synchronous layout. Running compositor animations went from ~100 to ≤6 and nothing about the projector's geometry changed.
+
+Four rules now, each of which fails silently:
+
+1. **Never put `will-change` on `.deck-wall-row`.** If an old laptop stutters, add it inside the *active-slide* ambient-loop selector.
+2. **Ambient loops stay scoped to `.deck-slide[data-active="true"]`.** Safe because the cross-fade transitions `opacity` only — an outgoing slide is hidden in the same frame, so the drift restarting is never on screen.
+3. **`@container deck (max-width: 1000px)` must stay BELOW the 1560px block.** A 900px stage matches both at equal specificity and source order decides. Same failure family as rule 4 above.
+4. **Tile-truncation counts are in DESIGN px; the `@media` query is in DEVICE px.** A phone in landscape matches the query while driving a 2337px stage, so the media block leaves **ten** tiles per row (2630 of pitch, clearing a 21:9 stage) and the portrait container query re-cuts to three. Six looked right and left the wall stopping two thirds across.
+
+`useStageScale()` takes a **portrait branch gated on `lock === null && width < height`** — fixed design *width* 900, height flows, clamped 1080–2400. That gate is the only thing between a phone fix and the venue screen; do not loosen it. `--deck-stage-h` carries the result, and `--deck-tile-h` is then *derived* from it (`(stage-h − rail) / 6`) so six rows still land on the bottom edge — a literal pitch stops meaning "six rows" the moment the stage height moves, which is also why `INCISION_5_ROWS` is now a `calc()` off the tile pitch rather than `826`.
+
+Layouts that compute a track count in JS and write it **inline** need a class plus an `!important` restatement in that container query — the people grid (`data-density` decides the track minimum), the run sheet (folds to one column, and its time column widens to 230px or every time wraps to two lines), and the QR CTA (stacks). Checked with `sweep.mjs`-style walks of all 67 slides at 390×844, 360×640, 412×915, 844×390, 1024×768, 1920×1080 and 2560×1080; the two projector shapes must stay **byte-identical to `main`**, which is the regression test that matters.
+
+The first-run coach card and the `? keys` chip both branch on `matchMedia("(pointer: coarse)")` — read in an effect, never during render. On touch the card teaches taps and swipes (the keyboard card taught four keys a phone does not have) and the chip opens the **overview**, not the keyboard reference. `wake()` must keep listening for `pointerdown`: without it a phone never fires `pointermove` or `keydown`, `data-idle` latches after three seconds and the chip — the only visible route to any control — is gone for the session.
 
 ### Copy, rhythm and the kicker are all enforced
 
