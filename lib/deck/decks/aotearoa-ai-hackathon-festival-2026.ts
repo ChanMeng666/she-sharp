@@ -519,11 +519,16 @@ const AUT_WELCOME: Slide = {
       // it is the title he holds, and the role line is already at its word
       // limit without it.
       name: "Professor Tek Tjing Lie",
-      // Full title is "Head of School, Engineering, Computer and Mathematical
-      // Sciences", which is eight words against a six-word limit and reads as
-      // a job description rather than an introduction at 38px.
-      role: "Head of School, Engineering & Sciences",
-      org: "Auckland University of Technology",
+      // The school and the faculty ride on `org`, not `role`.
+      //
+      // His full AUT title is "Head of School - Engineering, Computer &
+      // Mathematical Sciences", which is nine words against `personRoleWords`
+      // of six. `org` carries no word limit, so the split puts the post in
+      // `role` and both the school and the faculty underneath it — the same
+      // two lines his AUT profile shows, without raising a limit that exists
+      // to keep a role legible at 38px from the back of a lecture theatre.
+      role: "Head of School",
+      org: "Engineering, Computer & Mathematical Sciences — Design & Creative Technologies",
       image: "/img/events/aotearoa-ai-hackathon-festival-2026-tek-tjing-lie.jpg",
     },
   ],
@@ -617,6 +622,26 @@ const KEYNOTE_SLIDE: Slide = {
  * person who has just sat down wants the wifi and the room number before they
  * want the organisational preamble.
  */
+/*
+ * Saturday's rooms, written once and projected twice.
+ *
+ * The room table is the single thing most likely to send someone to the wrong
+ * floor, so it is shown on Friday night as a preview and again on Saturday
+ * morning as the live version. One `items` array feeds both: two copies of a
+ * room list are two things to forget to update, and the mentor room already
+ * moves between the days.
+ *
+ * Verified against AUT's own "AI Hackathon Information Hub" on 7 Aug 2026,
+ * which agrees room for room and adds only that the photo booth shares WG306.
+ */
+const SATURDAY_ROOMS = [
+  "WG308, the Wave Room — pitches and awards",
+  "WG306, the foyer — registration, catering and breaks",
+  "WG403 and WG404 — lecture theatres for teams",
+  "WG607–609, WG701–703, WG801–803 and WG808 — team rooms",
+  "WG809 — the mentor room, all day",
+];
+
 const TONIGHT_LOGISTICS: Slide[] = [
   /* Housekeeping first, and in this order, because it is what the room is
      already asking each other about while the host is still talking.
@@ -644,20 +669,6 @@ const TONIGHT_LOGISTICS: Slide[] = [
     note: "Leave this up through registration. Read the username aloud one hyphen at a time — it is the field everyone mistypes — and say the password twice.",
   },
   {
-    id: "venue-wayfinding",
-    type: "bullets",
-    section: "Day One — Friday 7 August",
-    eyebrow: "Tonight's rooms",
-    title: "Where to Find Things",
-    lead: "Every room is in the Sir Paul Reeves Building, the WG building",
-    items: [
-      "WG308, the Wave Room — tonight's opening and keynote",
-      "WG306, the foyer — registration, dinner and coffee",
-      "WG128, WG128A, WG129 and WG100D — team spaces",
-    ],
-    note: "Point in the direction of each room as you say it. Tomorrow's rooms are different and there are more of them — that slide comes in the morning, do not read it tonight.",
-  },
-  {
     id: "day-one-run-sheet",
     type: "agenda",
     section: "Day One — Friday 7 August",
@@ -669,20 +680,59 @@ const TONIGHT_LOGISTICS: Slide[] = [
     note: "Read only the next three rows. People photograph the slide for the rest.",
   },
   {
-    id: "two-day-format",
+    id: "venue-wayfinding",
     type: "bullets",
     section: "Day One — Friday 7 August",
-    eyebrow: "Tonight and all tomorrow",
-    title: "How the Two Days Run",
+    eyebrow: "Tonight's rooms",
+    title: "Where to Find Things",
+    lead: "Every room is in the Sir Paul Reeves Building, the WG building",
     items: [
-      "Friday night: welcome, themes, team forming, build begins",
-      "Saturday: build, pitch practice, pitches, winner announced",
-      "Venue winners go forward to national judging",
-      "One winner to pitch at the Aotearoa AI Summit",
+      "WG308, the Wave Room — tonight's opening and keynote",
+      "WG306, the foyer — registration, dinner and coffee",
+      "WG128, WG128A, WG129 and WG100D — team spaces",
     ],
-    note: "Set expectations for the whole weekend before anyone commits to a team.",
+    note: "Point in the direction of each room as you say it. Tomorrow's rooms are different — the next slide is the preview, and it comes round again in the morning.",
+  },
+  /* Saturday's rooms, shown tonight as a look-ahead. Same list as the live
+     version in the morning; only the kicker, lead and host note change, because
+     tonight the room is being warned and tomorrow it is being directed. */
+  {
+    id: "venue-wayfinding-day-two-preview",
+    type: "bullets",
+    section: "Day One — Friday 7 August",
+    eyebrow: "Different rooms tomorrow",
+    title: "Where to Find Things Tomorrow",
+    lead: "The whole building opens up, and the mentors move",
+    items: SATURDAY_ROOMS,
+    note: "Do not walk them through it line by line tonight — say only that tomorrow is different, that the mentor room moves to WG809, and that this slide comes round again in the morning.",
   },
 ];
+
+/*
+ * The shape of the weekend, and it sits on its own between the keynote and the
+ * Challenge chapter rather than at the end of the housekeeping.
+ *
+ * Housekeeping now runs to four slides — wifi, tonight's run sheet, tonight's
+ * rooms, tomorrow's rooms — which is exactly `consecutiveContent`. Leaving this
+ * one on the end made five in a row, five light in a row, and three bullet
+ * slides in a row: three separate lint errors for one slide in the wrong place.
+ * It reads better here anyway, as the bridge out of the welcome and into the
+ * event itself.
+ */
+const TWO_DAY_FORMAT: Slide = {
+  id: "two-day-format",
+  type: "bullets",
+  section: "Day One — Friday 7 August",
+  eyebrow: "Tonight and all tomorrow",
+  title: "How the Two Days Run",
+  items: [
+    "Friday night: welcome, themes, team forming, build begins",
+    "Saturday: build, pitch practice, pitches, winner announced",
+    "Venue winners go forward to national judging",
+    "One winner to pitch at the Aotearoa AI Summit",
+  ],
+  note: "Set expectations for the whole weekend before anyone commits to a team.",
+};
 
 const OPENING_SLIDES: Slide[] = insertAfter(
   insertAfter(
@@ -727,12 +777,16 @@ const OPENING_SLIDES: Slide[] = insertAfter(
  */
 const OPENING_WITH_LOGISTICS: Slide[] = insertAfter(
   insertAfter(
-    OPENING_SLIDES.filter((slide) => slide.id !== "event-opening"),
-    "health-and-safety",
-    OPENING_SLIDES.find((slide) => slide.id === "event-opening")!,
+    insertAfter(
+      OPENING_SLIDES.filter((slide) => slide.id !== "event-opening"),
+      "health-and-safety",
+      OPENING_SLIDES.find((slide) => slide.id === "event-opening")!,
+    ),
+    "event-opening",
+    ...TONIGHT_LOGISTICS,
   ),
-  "event-opening",
-  ...TONIGHT_LOGISTICS,
+  "keynote-speaker",
+  TWO_DAY_FORMAT,
 );
 
 // --- Deck ------------------------------------------------------------------
@@ -1248,14 +1302,8 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       eyebrow: "More rooms than last night",
       title: "Where to Find Things Today",
       lead: "Your team has a room — check Discord for which one",
-      items: [
-        "WG308, the Wave Room — pitches and awards",
-        "WG306, the foyer — registration, catering and breaks",
-        "WG403 and WG404 — lecture theatres for teams",
-        "WG607–609, WG701–703, WG801–803 and WG808 — team rooms",
-        "WG809 — the mentor room, all day",
-      ],
-      note: "The mentor room has moved: WG808 last night, WG809 today. Say that twice — people will walk to yesterday's room.",
+      items: SATURDAY_ROOMS,
+      note: "The mentor room has moved: WG808 last night, WG809 today. Say that twice — people will walk to yesterday's room. They saw this slide as a preview on Friday night, so this is the repeat, not the first telling.",
     },
     /* Two placeholders that only Friday night can fill.
 
