@@ -43,6 +43,17 @@ export function PhotoSlideLayout({ slide }: { slide: PhotoSlide }) {
                sizes to the image's intrinsic height and the percentage cap on
                the child then constrains nothing. */
             gridTemplateRows: hasCopy ? "auto minmax(0, 1fr)" : "minmax(0, 1fr)",
+            /* And `minmax(0, 1fr)` is itself worthless without this. A flex item
+               keeps `min-block-size: auto`, so `flex: 1 1 0%` cannot shrink it
+               below its own content — the grid had no definite height, the `1fr`
+               row therefore resolved to the image's intrinsic height, and the
+               image's `block-size: 100%` resolved against nothing and fell back
+               to its intrinsic ratio too. A 2000x1200 diagram came out 984px
+               tall in a 992px safe area beside a 185px heading, overflowed by
+               281px, and `useFitContent()` shrank the whole slide to 78% on
+               every projector. Same trap the `.deck-poster` comment in
+               `deck.css` describes. */
+            minBlockSize: 0,
           }}
         >
           {hasCopy && (
@@ -53,7 +64,9 @@ export function PhotoSlideLayout({ slide }: { slide: PhotoSlide }) {
             </div>
           )}
 
-          <div className="grid" style={{ placeItems: "center", minBlockSize: 0 }}>
+          {/* `.deck-contain-box` gives the image a definite box to resolve its
+              percentage height against; see the note on it in `deck.css`. */}
+          <div className="deck-contain-box">
             <DeckImage image={slide.image} fit="contain" priority />
           </div>
         </div>
