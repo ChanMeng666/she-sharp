@@ -1221,6 +1221,35 @@
   object-fit: contain;
 }
 
+/* The box a `fit: "contain"` diagram is fitted inside — the same trap, and the
+   same cure, as `.deck-poster` below.
+
+   `.deck-img` carries `block-size: 100%`, and a percentage block size needs an
+   ancestor the browser treats as DEFINITE. In a grid cell inside a flex column
+   it is not, so the declaration silently fell back to the image's intrinsic
+   ratio: the SDG diagram, 2000x1200, rendered 984px tall in a 992px safe area
+   that also had to hold a 185px heading. It overflowed by 281px and
+   `useFitContent()` scaled the whole slide to 78% on every projector — which is
+   the mechanism that is supposed to catch authors writing one line too many,
+   firing instead on a layout that could not do arithmetic.
+
+   `position: absolute; inset: 0` is definite, so the image resolves against the
+   box and `object-fit: contain` letterboxes inside it. Centred rather than
+   top-aligned: a diagram is being read, not cropped, so its spare space belongs
+   equally above and below it. */
+.deck-contain-box {
+  position: relative;
+  min-block-size: 0;
+}
+
+.deck-contain-box > .deck-img {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-position: 50% 50% !important;
+}
+
 /* A single full-colour photograph as the subject: a fixed frame, cropped from
    the bottom, a 2px radius and no shadow. */
 .deck-frame {
