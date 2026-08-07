@@ -84,11 +84,36 @@ is not generated from this repository.
 - **She Sharp is not GST-registered** (confirmed February 2026). Any invoicing,
   sponsorship or donation page that implies otherwise is wrong.
 - **Charity registration number CC57025** is correctly shown in the footer, the
-  terms of service and the volunteer code of conduct. The *year* of
-  registration is not stated anywhere and should not be until someone reads it
-  off the Charities Register — the only figure in the archive is the founder's
-  "2019 from memory", alongside a trust deed finalised in April 2019 and donee
-  status confirmed in October 2019.
+  terms of service and the volunteer code of conduct.
+
+## Settled from the Charities Register
+
+Read off `register.charities.govt.nz/Charity/CC57025` on 2026-08-07, which
+resolves three things the organisation's own records could not agree on. Held
+in `lib/config/footer.ts` → `charityInfo`.
+
+| Fact | Value |
+|---|---|
+| Legal name | **She Sharp** — two words |
+| Status | **Registered**, nationwide |
+| Registered since | **4 June 2019** |
+| Registration number | CC57025 |
+| NZBN | 9429047458970 |
+
+- **She Sharp is a registered charity.** A 2024 sponsorship draft described it
+  as a "non-charitable organisation"; that was simply wrong. The archive also
+  carries "She Sharp Charitable Trust" from supplier paperwork — the registered
+  legal name is "She Sharp".
+- **The name is two words.** A 2016 meeting resolved to use "SheSharp" as one
+  word, but the entity was never registered that way, and a 2023 brand
+  guideline independently landed on "She Sharp". Prose should use "She Sharp";
+  "She#" is the visual mark, not the name.
+- **The founder's "2019 from memory" was right**, and the exact date is now on
+  record. Note that founding (2014) and charity registration (2019) are
+  eighteen months and one legal step apart — `foundingDate` in the
+  Organization schema is the former and must not be changed to the latter.
+- The register also lists a **postal address that is a private residence**. It
+  is deliberately not reproduced in this codebase.
 
 ## Related
 
