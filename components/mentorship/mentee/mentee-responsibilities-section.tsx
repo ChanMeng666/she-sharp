@@ -62,6 +62,35 @@ export function MenteeResponsibilitiesSection() {
         </div>
 
         <ResponsibilitiesAccordion items={menteeFeatures} />
+
+        {/*
+          Stated here rather than left for a rejection email. The age and
+          location limits come from real refusals — a seventeen-year-old had to
+          be turned away over guardian consent — and the last line is the
+          programme's most persistent misunderstanding: mentees arrive
+          expecting their mentor to find them a job.
+        */}
+        <div className="mt-12 max-w-3xl rounded-[16px] border border-border bg-white p-6 sm:p-8">
+          <h3 className="text-lg md:text-xl font-bold text-foreground">
+            Who can apply
+          </h3>
+          <ul className="mt-4 space-y-3 text-sm md:text-base text-ink-600">
+            <li className="flex items-start gap-3">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+              You need to be based in Aotearoa New Zealand.
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+              You need to be 18 or over.
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+              This is mentoring, not job placement. Your mentor is here to
+              share experience and sharpen your thinking — She Sharp does not
+              place people into roles, pass CVs to employers or make referrals.
+            </li>
+          </ul>
+        </div>
       </Container>
     </Section>
   );

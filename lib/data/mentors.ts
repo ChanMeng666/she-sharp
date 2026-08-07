@@ -14,8 +14,6 @@ export const mentors: Mentor[] = [
     languages: ['English', 'Hindi'],
     linkedIn: 'https://www.linkedin.com/in/aishvarya-s-416bb910a/',
     availability: 'available',
-    menteeCount: 5,
-    rating: 4.9,
   },
   {
     id: 'alana-hoponoa',
@@ -30,8 +28,6 @@ export const mentors: Mentor[] = [
     languages: ['English'],
     linkedIn: 'https://www.linkedin.com/in/alana-hoponoa/',
     availability: 'available',
-    menteeCount: 3,
-    rating: 4.8,
   },
   {
     id: 'anshu-maharaj',
@@ -46,8 +42,6 @@ export const mentors: Mentor[] = [
     languages: ['English', 'Hindi'],
     linkedIn: 'https://www.linkedin.com/in/anshu-maharaj-4b715a27/',
     availability: 'busy',
-    menteeCount: 8,
-    rating: 5.0,
   },
   {
     id: 'donna-chamberlain',
@@ -62,8 +56,6 @@ export const mentors: Mentor[] = [
     languages: ['English'],
     linkedIn: 'https://www.linkedin.com/in/donna-chamberlain-9408162/',
     availability: 'available',
-    menteeCount: 4,
-    rating: 4.7,
   },
   {
     id: 'farhan-sattar',
@@ -78,8 +70,6 @@ export const mentors: Mentor[] = [
     languages: ['English', 'Urdu'],
     linkedIn: 'https://www.linkedin.com/in/farhansattar/',
     availability: 'available',
-    menteeCount: 12,
-    rating: 4.9,
   },
   {
     id: 'kriv-naicker',
@@ -94,8 +84,6 @@ export const mentors: Mentor[] = [
     languages: ['English'],
     linkedIn: 'https://www.linkedin.com/in/kriv-naicker/',
     availability: 'available',
-    menteeCount: 6,
-    rating: 5.0,
   },
   {
     id: 'laura-rutherfurd',
@@ -110,8 +98,6 @@ export const mentors: Mentor[] = [
     languages: ['English'],
     linkedIn: 'https://www.linkedin.com/in/laura-rutherfurd-338ab81b/',
     availability: 'available',
-    menteeCount: 3,
-    rating: 4.8,
   },
   {
     id: 'mahsa-mccauley',
@@ -126,8 +112,6 @@ export const mentors: Mentor[] = [
     languages: ['English', 'Persian'],
     linkedIn: 'https://www.linkedin.com/in/mahsamohaghegh/',
     availability: 'busy',
-    menteeCount: 20,
-    rating: 5.0,
   },
   {
     id: 'meena-vallabh',
@@ -142,8 +126,6 @@ export const mentors: Mentor[] = [
     languages: ['English', 'Hindi'],
     linkedIn: 'https://www.linkedin.com/in/meena-vallabh-213ba255/',
     availability: 'available',
-    menteeCount: 4,
-    rating: 4.9,
   },
   {
     id: 'meeta-patel',
@@ -158,8 +140,6 @@ export const mentors: Mentor[] = [
     languages: ['English', 'Gujarati'],
     linkedIn: 'https://www.linkedin.com/in/meeta-patel-53105928/',
     availability: 'available',
-    menteeCount: 2,
-    rating: 4.7,
   },
   {
     id: 'mehwish-hasan',
@@ -174,8 +154,6 @@ export const mentors: Mentor[] = [
     languages: ['English', 'Urdu'],
     linkedIn: 'https://www.linkedin.com/in/mehwishhasan55/',
     availability: 'available',
-    menteeCount: 7,
-    rating: 4.8,
   },
   {
     id: 'midu-chandra',
@@ -190,8 +168,6 @@ export const mentors: Mentor[] = [
     languages: ['English'],
     linkedIn: 'https://www.linkedin.com/in/miduchandra/',
     availability: 'busy',
-    menteeCount: 9,
-    rating: 4.9,
   },
   {
     id: 'prasanth-pavithran',
@@ -206,8 +182,6 @@ export const mentors: Mentor[] = [
     languages: ['English', 'Malayalam'],
     linkedIn: 'https://www.linkedin.com/in/prasanth-pavithran-mba-a54ab912/',
     availability: 'available',
-    menteeCount: 5,
-    rating: 4.8,
   },
   {
     id: 'shree-jaiswal',
@@ -222,8 +196,6 @@ export const mentors: Mentor[] = [
     languages: ['English', 'Hindi'],
     linkedIn: 'https://www.linkedin.com/in/shree-jaiswal-375b4337/',
     availability: 'available',
-    menteeCount: 4,
-    rating: 4.7,
   },
   {
     id: 'shweta-sharma',
@@ -238,8 +210,6 @@ export const mentors: Mentor[] = [
     languages: ['English', 'Hindi'],
     linkedIn: 'https://linkedin.com/in/shweta-sharma',
     availability: 'available',
-    menteeCount: 6,
-    rating: 4.9,
   },
   {
     id: 'steffie-lopez',
@@ -254,8 +224,6 @@ export const mentors: Mentor[] = [
     languages: ['English', 'Spanish'],
     linkedIn: 'https://www.linkedin.com/in/stephaniechoy/',
     availability: 'busy',
-    menteeCount: 3,
-    rating: 5.0,
   },
   {
     id: 'tracey-connor',
@@ -271,8 +239,6 @@ export const mentors: Mentor[] = [
     languages: ['English'],
     linkedIn: 'https://www.linkedin.com/in/tracey-connor-6573ab6/',
     availability: 'available',
-    menteeCount: 5,
-    rating: 4.8,
   },
   {
     id: 'yvonne-weidemann',
@@ -287,8 +253,6 @@ export const mentors: Mentor[] = [
     languages: ['English', 'German'],
     linkedIn: 'https://www.linkedin.com/in/yvonne-weidemann-icp-apo-icp-apm-a5a11a35/',
     availability: 'available',
-    menteeCount: 2,
-    rating: 4.6,
   },
 ];
 
