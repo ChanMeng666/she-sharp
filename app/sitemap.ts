@@ -15,6 +15,7 @@ const STATIC_ROUTES: Array<{
 }> = [
   { path: "/", priority: 1.0, changeFrequency: "weekly" },
   { path: "/about", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/community", priority: 0.5, changeFrequency: "yearly" },
   { path: "/events", priority: 0.9, changeFrequency: "weekly" },
   {
     path: "/events/google-educator-conference",
