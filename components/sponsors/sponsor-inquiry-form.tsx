@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { SPONSORSHIP_EMAIL } from "@/lib/config/contact-addresses";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -61,6 +62,23 @@ export function SponsorInquiryForm() {
             <p className="mt-4 text-sm leading-relaxed text-white/75 sm:mt-5 sm:text-base">
               Get in touch to learn more about becoming a She Sharp sponsor. Our
               partnerships team will reach out shortly.
+            </p>
+            {/*
+              industry@ is the organisation's sponsorship address — a routing
+              decision made in 2023 and re-confirmed in 2026, but one this site
+              had never surfaced anywhere. Some sponsors would rather email a
+              person than fill in a form, and until now the only address on
+              offer was the general one.
+            */}
+            <p className="mt-4 text-sm leading-relaxed text-white/75 sm:text-base">
+              Prefer email? Write to{" "}
+              <a
+                href={`mailto:${SPONSORSHIP_EMAIL}`}
+                className="font-medium text-mint underline underline-offset-4 hover:text-white"
+              >
+                {SPONSORSHIP_EMAIL}
+              </a>
+              .
             </p>
           </div>
 
