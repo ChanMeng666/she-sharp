@@ -276,6 +276,23 @@ export interface ChannelState {
    * the manifest can tell those apart; only recording the act can.
    */
   readAt?: string;
+  /**
+   * How this entry's `readAt` was established, when it was NOT a fetch payload.
+   *
+   * Absent is the normal case and means the ordinary thing: `update-state.ts`
+   * saw a payload and recorded the read. It is set only by the one-time
+   * `backfill-read-receipts.ts`, for entries whose receipt was destroyed by the
+   * `saveManifest` bug rather than never earned — and only after that script
+   * walked the conversation in Slack and proved every message and every reply
+   * already sits behind the recorded position.
+   *
+   * It exists so nobody has to take that on trust. A `readAt` with this field
+   * set is a weaker claim than one without: "no unread content, verified on
+   * this date" rather than "a human was shown this". Anything auditing the
+   * manifest should be able to tell the two apart, and before this field it
+   * could not.
+   */
+  readAtSource?: string;
   threads: Record<string, ThreadState>; // parentTs -> thread watermark
   fingerprint: string; // sha256:… of the mapped event's salient fields ("" when none)
   lastSyncedAt: string;
@@ -350,6 +367,9 @@ export function saveManifest(m: Manifest): void {
      */
     if (c.scannedTs) entry.scannedTs = c.scannedTs;
     if (c.readAt) entry.readAt = c.readAt;
+    // Same rule, and the same reason it is on this list at all: a field that
+    // does not survive the write does not exist.
+    if (c.readAtSource) entry.readAtSource = c.readAtSource;
     // Only emit digest fields when set — channels never given a digest stay
     // byte-identical to their pre-digest serialization.
     if (c.digest) {
