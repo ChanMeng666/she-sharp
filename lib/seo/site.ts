@@ -22,6 +22,12 @@ export const CHARITY_REGISTRATION = footerConfig.charityInfo.registrationNumber;
 export const CHARITY_REGISTRATION_URL =
   footerConfig.charityInfo.registrationLink;
 
+/** Legal name exactly as it appears on the Charities Register. */
+export const LEGAL_NAME = footerConfig.charityInfo.name;
+
+/** NZ Business Number, from the same register entry. */
+export const NZBN = footerConfig.charityInfo.nzbn;
+
 /** Absolute social profile URLs (excludes the Mailchimp archive). */
 export const SOCIAL_LINKS = footerConfig.socialLinks
   .filter((link) => link.name !== "Mailchimp")

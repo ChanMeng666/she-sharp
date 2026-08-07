@@ -14,6 +14,8 @@ import {
   SOCIAL_LINKS,
   CHARITY_REGISTRATION,
   CHARITY_REGISTRATION_URL,
+  LEGAL_NAME,
+  NZBN,
   absoluteUrl,
 } from "@/lib/seo/site";
 
@@ -38,11 +40,19 @@ export function organizationSchema() {
     "@type": ["NGO", "Organization"],
     "@id": ORGANIZATION_ID,
     name: SITE_NAME,
+    // The legal name on the Charities Register is "She Sharp" — same as the
+    // display name — so `legalName` is not decorative here: it tells a machine
+    // reader that "She#", the visual mark, is the alternate and not the
+    // registered entity.
+    legalName: LEGAL_NAME,
     alternateName: "She# (She Sharp)",
     url: SITE_URL,
     logo: absoluteUrl("/logos/she-sharp-logo-purple-dark-500x500.png"),
     image: absoluteUrl("/og-cover.png"),
     description: SITE_DESCRIPTION,
+    // When the organisation started, NOT when it became a registered charity
+    // (4 June 2019) — the two are eighteen months and one legal step apart and
+    // must not be conflated.
     foundingDate: "2014",
     slogan: "Connecting Women in Technology",
     areaServed: {
@@ -53,12 +63,19 @@ export function organizationSchema() {
       "@type": "PostalAddress",
       addressCountry: "NZ",
     },
-    identifier: {
-      "@type": "PropertyValue",
-      propertyID: "NZ Charities Register",
-      value: CHARITY_REGISTRATION,
-      url: CHARITY_REGISTRATION_URL,
-    },
+    identifier: [
+      {
+        "@type": "PropertyValue",
+        propertyID: "NZ Charities Register",
+        value: CHARITY_REGISTRATION,
+        url: CHARITY_REGISTRATION_URL,
+      },
+      {
+        "@type": "PropertyValue",
+        propertyID: "NZBN",
+        value: NZBN,
+      },
+    ],
     sameAs: SOCIAL_LINKS,
   };
 }

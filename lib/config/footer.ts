@@ -90,9 +90,29 @@ export const footerConfig = {
     { name: "Terms of Service", href: "/terms-of-service" },
   ] as FooterLink[],
 
+  /**
+   * Read off the New Zealand Charities Register, not from memory. Verified
+   * 2026-08 at register.charities.govt.nz/Charity/CC57025.
+   *
+   * `name` is the LEGAL name as registered — "She Sharp", two words. That
+   * settles a question the organisation's own records could not: a 2016
+   * meeting resolved to use "SheSharp" as one word, but the entity was never
+   * registered that way. So prose should say "She Sharp"; "She#" is the
+   * visual mark, not the name.
+   *
+   * It also settles a second one. A 2024 sponsorship draft described She Sharp
+   * as a "non-charitable organisation". It is a registered charity and has
+   * been since 4 June 2019 — status Registered, nationwide.
+   *
+   * The register also lists a postal address. It is a private residence and is
+   * deliberately not reproduced here or anywhere else in this codebase.
+   */
   charityInfo: {
     name: "She Sharp",
     registrationNumber: "CC57025",
     registrationLink: "https://register.charities.govt.nz/Charity/CC57025",
+    /** ISO date the charity was entered on the register. */
+    registeredSince: "2019-06-04",
+    nzbn: "9429047458970",
   },
 };
