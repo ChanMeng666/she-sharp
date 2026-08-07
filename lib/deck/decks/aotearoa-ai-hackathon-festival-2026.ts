@@ -354,8 +354,19 @@ const mentorTiles = mentors.map((mentor) => ({
   image: mentor.image || undefined,
 }));
 
-/** Split point for the two mentor slides, balanced and within the density cap. */
-const mentorSplit = Math.ceil(mentorTiles.length / 2);
+/**
+ * Split points for the mentor slides, balanced and within the density cap.
+ *
+ * Thirds rather than halves since the roster reached seventeen on 6 August:
+ * `Math.ceil(17 / 2)` is nine, and `COPY_LIMITS.peopleCount.md` caps a slide at
+ * eight, so halving would fail the linter rather than merely look crowded.
+ */
+const mentorGroupSize = Math.ceil(mentorTiles.length / 3);
+const mentorGroups = [
+  mentorTiles.slice(0, mentorGroupSize),
+  mentorTiles.slice(mentorGroupSize, mentorGroupSize * 2),
+  mentorTiles.slice(mentorGroupSize * 2),
+].filter((group) => group.length > 0);
 
 /**
  * Judge titles, shortened to the six-word role limit.
@@ -432,6 +443,8 @@ const DAY_ONE = shortenLabels(
       "Opening, welcome & safety briefing",
     "Problems to solve, requirements & judging criteria":
       "Problems, requirements & judging criteria",
+    "Fisher & Paykel Healthcare on their two challenge briefs":
+      "F&P on their two briefs",
   },
 );
 
@@ -440,6 +453,9 @@ const DAY_TWO = shortenLabels(
   {
     "Team build with mentor support (pitch prep from 10:00am)":
       "Team build with mentor support",
+    "Slides to She Sharp, judges arrive & judge briefing":
+      "Slides due, judges arrive",
+    "Final presentations to the judging panel": "Final presentations to judges",
   },
 );
 
@@ -668,15 +684,15 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "venue-wayfinding",
       type: "bullets",
       section: "Day One — Friday 7 August",
-      eyebrow: "Three rooms, all weekend",
+      eyebrow: "Tonight's rooms",
       title: "Where to Find Things",
-      lead: "All three rooms are in the Sir Paul Reeves Building",
+      lead: "Every room is in the Sir Paul Reeves Building, the WG building",
       items: [
-        "WG306 — registration, dinner and every coffee break",
-        "WG308 — tonight's opening, tomorrow's pitches and awards",
-        "WG808 — the mentor room, all weekend",
+        "WG308, the Wave Room — tonight's opening and keynote",
+        "WG306, the foyer — registration, dinner and coffee",
+        "WG128, WG128A, WG129 and WG100D — team spaces",
       ],
-      note: "Point in the direction of each room as you say it. WG808 is where the mentors are based — teams should know where to find them before tomorrow morning.",
+      note: "Point in the direction of each room as you say it. Tomorrow's rooms are different and there are more of them — that slide comes in the morning, do not read it tonight.",
     },
     {
       id: "day-one-run-sheet",
@@ -794,7 +810,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       tone: "dark",
       title: "Featured Problems",
       subtitle:
-        "Four briefs written by the organisations that actually have them",
+        "Three briefs written by the organisations that actually have them",
       background: archivePlate(25),
       note: "Say that these are real problems from real organisations, and that a team is free to bring its own instead.",
     },
@@ -813,7 +829,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       ],
       qr: HELPDESK_VIDEO_QR,
       logo: FPH_LOGO,
-      note: "F&P maps this to SDGs 8, 9 and 10 for inclusion, 12 for removing rework, and 3 through the products themselves. They judge on whether the design is genuinely underpinned by their Culture of Care.",
+      note: "Mark Modricker from F&P speaks to this brief and the next one — five minutes for both, confirmed by email on 6 August. Hand over here and take the deck back after the restoration slide. F&P maps this to SDGs 8, 9 and 10 for inclusion, 12 for removing rework, and 3 through the products themselves. They judge on whether the design is genuinely underpinned by their Culture of Care.",
     },
     {
       id: "problem-restoration",
@@ -928,33 +944,60 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
         "Post your table number in your team's Discord channel so we can find you.",
       note: "Leave this up while teams settle. Everything after tonight — the afternoon agenda, the lunch call, the pitch order — is announced on Discord first.",
     },
-    /* The mentors across two slides rather than one, however many there are.
-       At `md` density a single slide of thirteen has to shrink itself to about
-       74% on a 4:3 projector to fit, which puts the names below the 28px the
-       back of the room can read. `mentorSplit` halves the roster and
-       `COPY_LIMITS.peopleCount` enforces the eight-per-slide cap. */
+    /* The mentors across three slides rather than one, however many there are.
+       At `md` density a single slide of seventeen has to shrink itself well
+       below the 28px the back of the room can read, and `COPY_LIMITS.peopleCount`
+       caps a slide at eight anyway. `mentorGroups` splits the roster in thirds. */
     {
       id: "meet-the-mentors-1",
       type: "people",
       section: "Day One — Friday 7 August",
-      eyebrow: "First of two groups",
+      eyebrow: "First of three groups",
       title: "Meet the Mentors",
       lead: "Ask early and ask often — this is what they are here for",
-      people: mentorTiles.slice(0, mentorSplit),
+      people: mentorGroups[0],
       density: "md",
       shape: "circle",
-      note: "Ask each mentor to stand as you say their name. Keep it moving — the second group is on the next slide.",
+      note: "Ask each mentor to stand as you say their name. Keep it moving — there are two more slides of them.",
     },
     {
       id: "meet-the-mentors-2",
       type: "people",
       section: "Day One — Friday 7 August",
-      eyebrow: "And the rest of them",
+      eyebrow: "Second of three",
       title: "Meet the Mentors",
-      people: mentorTiles.slice(mentorSplit),
+      people: mentorGroups[1],
       density: "md",
       shape: "circle",
-      note: "Second group of mentors. Then hand over for the introductions.",
+      note: "Same again — stand, name, next. One more group after this.",
+    },
+    /* A dark beat in the middle of seventeen names.
+       Three people slides after the links slide is five information slides in a
+       row and five light ones, which `lintRhythm` rejects and a room feels
+       before the linter does. Splitting the roster with a photograph fixes both
+       and gives the host somewhere to say the one thing the names cannot. */
+    {
+      id: "mentors-are-for-asking",
+      type: "photo",
+      section: "Day One — Friday 7 August",
+      tone: "dark",
+      eyebrow: "Ask before you are stuck",
+      title: "None of them mind being interrupted",
+      lead: "Waiting until you are stuck costs you the hour you needed",
+      image: archivePlate(61),
+      overlay: "gradient",
+      note: "Say it plainly: the mentors are here to be interrupted, and the teams who ask early finish. Then straight into the last group.",
+    },
+    {
+      id: "meet-the-mentors-3",
+      type: "people",
+      section: "Day One — Friday 7 August",
+      eyebrow: "And the rest of them",
+      title: "Meet the Mentors",
+      people: mentorGroups[2],
+      density: "md",
+      shape: "circle",
+      note: "Last group. Andreas Spanner is remote on Discord, so say so rather than looking for him in the room. Then hand over for the introductions.",
     },
     {
       id: "how-mentors-help",
@@ -1009,6 +1052,27 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       lead: "Five minutes, four sections, one first impression",
       items: PITCH_SECTIONS,
       note: "Tell teams to describe the problem they actually solved, not the one they set out to solve.",
+    },
+    /* The template gets its own slide rather than sharing the links slide.
+       Mahsa asked for one she could open and show from the front of the room
+       while talking about the pitch, and a QR sitting third in a row of three is
+       not that. Same `PITCH_TEMPLATE_QR` constant, so this cannot drift from the
+       destination the 5 August signed-out QR audit actually checked. */
+    {
+      id: "pitch-deck-template",
+      type: "qr-cta",
+      section: "Day One — Friday 7 August",
+      tone: "dark",
+      eyebrow: "Not a blank page",
+      title: "The Pitch Deck Template",
+      lead: "The slide order the judges are expecting, ready to fill in",
+      points: [
+        "Same four sections as the five minutes you just saw",
+        "Download it tonight — the venue wifi is busiest tomorrow",
+        "Bring a PDF copy in case the laptop fights you",
+      ],
+      qr: PITCH_TEMPLATE_QR,
+      note: "Open it on screen and scroll through it once. Leave the slide up long enough for the back row to scan the code.",
     },
     {
       id: "meet-the-judges",
@@ -1128,10 +1192,32 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       section: "Day Two — Saturday 8 August",
       eyebrow: "Coffee from half seven",
       title: "Today",
-      lead: "Presentations start at 3:30pm and awards at 7:00pm",
+      lead: "Presentations start at 4:00pm and awards at 7:00pm",
       items: DAY_TWO,
       columns: 2,
-      note: "Point at the 3:30pm row. Everything before it is negotiable, that one is not.",
+      note: "Point at the 3:00pm row — slides are due to She Sharp then — and at 4:00pm. Everything before those is negotiable, those two are not.",
+    },
+    /* Saturday has its own rooms, and more of them: the whole building opens up
+       and the mentors move from WG808 to WG809. This slide is deliberately here
+       rather than beside the Friday one, so nobody reads tomorrow's rooms out on
+       Friday night. Source is the room table Nikita circulated on WhatsApp and
+       posted into the channel on 4 August — not the `Venue` cell of the run
+       sheet, which still lists Friday's rooms for both days. */
+    {
+      id: "venue-wayfinding-day-two",
+      type: "bullets",
+      section: "Day Two — Saturday 8 August",
+      eyebrow: "More rooms than last night",
+      title: "Where to Find Things Today",
+      lead: "Your team has a room — check Discord for which one",
+      items: [
+        "WG308, the Wave Room — pitches and awards",
+        "WG306, the foyer — registration, catering and breaks",
+        "WG403 and WG404 — lecture theatres for teams",
+        "WG607–609, WG701–703, WG801–803 and WG808 — team rooms",
+        "WG809 — the mentor room, all day",
+      ],
+      note: "The mentor room has moved: WG808 last night, WG809 today. Say that twice — people will walk to yesterday's room.",
     },
     /* Two placeholders that only Friday night can fill.
 
@@ -1183,6 +1269,23 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       ],
       columns: 2,
       note: "PLACEHOLDER — fill in the real team names and tables after Friday night, and delete any rows you do not need. Read the names out and let each team wave.",
+    },
+    /* A hero between the morning's logistics and the morning's work.
+       The run sheet, the rooms, the team photographs and the team groupings are
+       four content slides back to back, which is the cap — the Saturday rooms
+       slide added on 7 August pushed it to five. This is the breath, and it is
+       also the last thing said before the room goes quiet and starts building. */
+    {
+      id: "the-morning-is-yours",
+      type: "photo",
+      section: "Day Two — Saturday 8 August",
+      tone: "dark",
+      eyebrow: "Four hours, then lunch",
+      title: "Build the thing you can show",
+      lead: "A demo of one working piece beats a description of ten",
+      image: archivePlate(97),
+      overlay: "gradient",
+      note: "Say it before they scatter: something on screen at 4:00pm matters more than the feature list. Then let them go.",
     },
     {
       id: "build-with-mentors",
