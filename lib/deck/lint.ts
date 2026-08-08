@@ -57,6 +57,17 @@ export const COPY_LIMITS = {
   /** Images in a photo grid. */
   photoGridMax: 5,
   photoGridMin: 3,
+  /**
+   * Teams on one roll-call grid.
+   *
+   * Not the same judgement as `photoGridMax`. That cap is compositional — a
+   * sixth frame stops an editorial mosaic reading as one picture. This one is
+   * legibility: at sixteen the cells on a 4:3 projector are down to about the
+   * width of a name, and past that the grid should split by section rather than
+   * shrink. Completeness is the point of this slide, so the limit sits well
+   * above any realistic team count.
+   */
+  teamGridMax: 16,
   /** Codes on the contact slide — more and none of them scan. */
   contactQrMax: 3,
   /** Facts under a title-slide headline. */
@@ -584,6 +595,34 @@ export function lintSlide(slide: Slide, index: number): LintIssue[] {
           message: `Team "${slide.team}" has no photograph. A team slide with an empty frame reads, from the floor, as that team having been forgotten.`,
         });
       }
+      break;
+
+    case "team-grid":
+      checkTitle(slide.title, id, index, issues);
+      checkLead(slide.lead, id, index, issues);
+      checkCount(
+        slide.teams.length,
+        COPY_LIMITS.teamGridMax,
+        "team-grid-count",
+        "Teams on the roll-call grid",
+        id,
+        index,
+        issues,
+      );
+      /* A roll-call with a hole in it is worse than no roll-call: the room
+         reads the gap as a team having been dropped, and the team it belongs
+         to is sitting in front of it. */
+      slide.teams
+        .filter((team) => !team.image.src)
+        .forEach((team) => {
+          issues.push({
+            slideId: id,
+            slideIndex: index,
+            rule: "team-grid-missing-photo",
+            severity: "error",
+            message: `Team "${team.name}" is on the roll-call grid with no photograph. Leave them off the grid rather than showing an empty cell.`,
+          });
+        });
       break;
 
     case "stats":

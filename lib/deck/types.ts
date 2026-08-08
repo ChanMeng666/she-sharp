@@ -234,6 +234,23 @@ export interface TeamPhotoSlide extends SlideBase {
   lead?: string;
 }
 
+/**
+ * Every team at once — the roll-call before the pitches begin.
+ *
+ * Deliberately NOT a `photo-grid`, which caps at five because it is an editorial
+ * mosaic and a sixth frame stops it reading as a composition. This is the
+ * opposite intent: a contact sheet, where completeness IS the composition and
+ * leaving a team out is the only way to get it wrong. Names sit under the
+ * photographs because the room is looking for itself.
+ */
+export interface TeamGridSlide extends SlideBase {
+  type: "team-grid";
+  title: string;
+  lead?: string;
+  /** One entry per team. Names are the teams' own strings, never tidied. */
+  teams: { name: string; image: DeckImage }[];
+}
+
 export interface StatsSlide extends SlideBase {
   type: "stats";
   title: string;
@@ -356,6 +373,7 @@ export type Slide =
   | PhotoSlide
   | PhotoGridSlide
   | TeamPhotoSlide
+  | TeamGridSlide
   | StatsSlide
   | LogosSlide
   | ThemesSlide

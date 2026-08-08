@@ -668,6 +668,44 @@ export const MOTION_RECIPES: Record<SlideType, MotionRecipe> = {
     ],
   },
 
+  /* The whole field, arriving as one roll-call. */
+  "team-grid": {
+    name: "roll-call",
+    meaning:
+      "Every team lands in reading order, forty milliseconds apart — quick " +
+      "enough that the grid reads as one gesture rather than a queue, " +
+      "sequential enough that each team gets its own instant of arriving. " +
+      "Nobody should be able to tell who was first.",
+    moves: [
+      {
+        select: `${SEL.kicker}, ${SEL.title}, ${SEL.lead}`,
+        from: rise(18),
+        duration: DECK_DUR.slow1,
+        easing: DECK_EASE.entry,
+        stagger: 100,
+      },
+      {
+        select: SEL.tile,
+        from: FADE,
+        to: LIT,
+        duration: DECK_DUR.slow1,
+        easing: DECK_EASE.entry,
+        delay: 200,
+        stagger: 40,
+        limit: 16,
+      },
+      {
+        select: SEL.label,
+        from: rise(8),
+        duration: DECK_DUR.slow1,
+        easing: DECK_EASE.entry,
+        delay: 300,
+        stagger: 40,
+        limit: 16,
+      },
+    ],
+  },
+
   /* Marks on a chip, laid onto the page in rows. */
   logos: {
     name: "chips-settle",
