@@ -1206,65 +1206,136 @@ const TEAM_PRESENTATION_SLIDES: Slide[] = PITCH_ORDER.flatMap(
 // --- Awards ----------------------------------------------------------------
 
 /**
- * The result, and the three team names are looked up rather than retyped.
+ * A placed team, looked up in `TEAMS` rather than retyped.
  *
- * Same guard as `PITCH_ORDER`: a name here that is not a real team is a build
- * failure instead of a wrong team's name on the projector at the one moment of
- * the weekend nobody in the room will misremember. The strings stay in the
- * teams' own Discord spelling for the reason set out on `TEAMS` — this is the
+ * Same guard as `PITCH_ORDER`, and it carries the photograph out with the name
+ * so the two cannot be paired up wrongly by hand: a name here that is not a real
+ * team is a build failure instead of a wrong team on the projector at the one
+ * moment of the weekend nobody in the room will misremember. The strings stay in
+ * the teams' own Discord spelling for the reason set out on `TEAMS` — it is the
  * string they have lived inside for two days, and tidying it up here would be
  * somebody else's guess at what they meant.
  */
-function winningTeam(name: string): string {
-  if (!TEAMS.some((team) => team.name === name)) {
+function placedTeam(name: string): { name: string; photo: string } {
+  const team = TEAMS.find((entry) => entry.name === name);
+  if (!team) {
     throw new Error(
       `Award names "${name}", which is not a team in TEAMS. Use the team's own Discord string.`,
     );
   }
-  return name;
+  if (!team.photo) {
+    throw new Error(
+      `Team "${name}" has been placed but has no photograph. An award slide with an empty frame is worse than no slide.`,
+    );
+  }
+  return { name: team.name, photo: team.photo };
 }
 
 /**
- * The reveal, read right to left by the host and left to right by the room.
+ * One page each, in the order the host reads them out.
  *
- * `amount` carries the placing rather than a figure: only the venue winner has
- * a cash prize behind it, and putting "$250" beside two blanks would read as
- * the runners-up having won nothing. "Winner" is six characters, which is
- * exactly `KNOCKOUT_MAX_CHARS`, so it cuts out of the archive wall while the
- * two numerals sit in accent ink — the hierarchy expressed in kind rather than
- * in size, the same way the Friday prize board does it.
+ * `team-photo` rather than a `prizes` board, because a board sets three teams
+ * side by side and the whole point of an award is that the room looks at one
+ * team at a time. It is also the only layout in the deck that never crops — see
+ * `team-photo-slide.tsx` — and these are the same portrait phone frames the
+ * pitch block uses, so the winner's own photograph arrives whole rather than
+ * cut off at the chest.
+ *
+ * The placing rides on `index`, which the layout sets large and in the accent
+ * above the name — the same slot that carried "1st", "2nd" through the pitch
+ * order, so the block reads as the answer to it.
+ *
+ * `tone: "light"` is the one deliberate break from the pitch block, which uses
+ * this identical layout twelve times in a row in the dark. These three are the
+ * brightest pages in the deck because they are the only ones that are good news,
+ * and the switch is what stops a winner's slide looking like their turn to
+ * present coming round again. It also keeps the dark run inside `rhythm-tone-run`
+ * between the prize board and the closing recap.
  */
-const WINNERS_SLIDE: Slide = {
+const AWARDS: { placing: string; team: string; lead: string; note: string }[] = [
+  {
+    placing: "Runner-up One",
+    team: "kaitiakidata",
+    lead: "A prize for every member of the team",
+    note: "First of the three. Call the team to the front and wait for them before you read the name — the applause is the slide, not the projector.",
+  },
+  {
+    placing: "Runner-up Two",
+    team: "kpi-kaitiaki-positive-impact",
+    lead: "A prize for every member of the team",
+    note: "Second of the three. Same again: get them to the front first, then read the name as it is written.",
+  },
+  {
+    placing: "Winner",
+    team: "kailine",
+    lead: "The $250 venue prize, and through to the national panel",
+    note: "The winner. Let the room have this one — hold the slide through the applause and the photographs. Their recorded pitch is what the national panel sees, and the national winner pitches at the Aotearoa AI Summit in September.",
+  },
+];
+
+const WINNER_SLIDES: Slide[] = AWARDS.map(({ placing, team, lead, note }) => {
+  const placed = placedTeam(team);
+  return {
+    id: `award-${placed.name}`,
+    type: "team-photo",
+    section: "Day Two — Saturday 8 August",
+    tone: "light",
+    eyebrow: "Decided in this room",
+    index: placing,
+    team: placed.name,
+    lead,
+    image: {
+      src: placed.photo,
+      alt: `The ${placed.name} team, ${placing.toLowerCase()} at the Aotearoa AI Hackathon Festival 2026.`,
+    },
+    note,
+  };
+});
+
+/**
+ * All three together, once each has had their own page.
+ *
+ * The recap the room photographs and the slide that stays up while people come
+ * forward — three separate reveals leave nothing on screen showing the result as
+ * a whole. It is also the full-frame beat that has to sit between the awards and
+ * the generated tail: `buildClosingSlides()` ends on three information slides,
+ * and three team pages running straight into them is a run of six that
+ * `rhythm-content-run` rejects.
+ *
+ * `amount` carries the placing rather than a figure — only the winner has cash
+ * behind it, and "$250" beside two blanks would read as the runners-up having
+ * won nothing.
+ */
+const WINNERS_BOARD: Slide = {
   id: "winners",
   type: "prizes",
   section: "Day Two — Saturday 8 August",
   tone: "dark",
-  eyebrow: "Decided in this room",
+  eyebrow: "Twelve teams, two days",
   title: "The Winners",
-  lead: "Two days, twelve teams, and one going forward to national judging",
   prizes: [
     {
       amount: "Winner",
-      name: winningTeam("kailine"),
+      name: placedTeam("kailine").name,
       detail: "$250, and through to the national panel",
       scope: "venue",
     },
     {
       amount: "2nd",
-      name: winningTeam("kaitiakidata"),
-      detail: "First runner-up",
+      name: placedTeam("kaitiakidata").name,
+      detail: "Runner-up one",
       scope: "venue",
     },
     {
       amount: "3rd",
-      name: winningTeam("kpi-kaitiaki-positive-impact"),
-      detail: "Second runner-up",
+      name: placedTeam("kpi-kaitiaki-positive-impact").name,
+      detail: "Runner-up two",
       scope: "venue",
     },
   ],
   footnote:
     "The winning team's recorded pitch goes to the national panel, and the national winner pitches at the Aotearoa AI Summit in September.",
-  note: "Announce them in reverse order — third, second, then the winner — and pause for applause after each. Read the names exactly as they are written; these are the teams' own Discord handles.",
+  note: "All three together after the individual pages. Leave it up while the teams come forward and the photographs are taken — nothing new is said here.",
 };
 
 /**
@@ -1328,7 +1399,8 @@ const CLOSING_SLIDES: Slide[] = insertAfter(
   CLOSING_MOOD_CHECK,
   AUT_VENTURES_AWARD_CLOSE,
   PRIZES_FINAL,
-  WINNERS_SLIDE,
+  ...WINNER_SLIDES,
+  WINNERS_BOARD,
 );
 
 // --- Deck ------------------------------------------------------------------
