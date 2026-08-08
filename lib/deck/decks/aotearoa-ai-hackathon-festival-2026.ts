@@ -1203,6 +1203,134 @@ const TEAM_PRESENTATION_SLIDES: Slide[] = PITCH_ORDER.flatMap(
   },
 );
 
+// --- Awards ----------------------------------------------------------------
+
+/**
+ * The result, and the three team names are looked up rather than retyped.
+ *
+ * Same guard as `PITCH_ORDER`: a name here that is not a real team is a build
+ * failure instead of a wrong team's name on the projector at the one moment of
+ * the weekend nobody in the room will misremember. The strings stay in the
+ * teams' own Discord spelling for the reason set out on `TEAMS` — this is the
+ * string they have lived inside for two days, and tidying it up here would be
+ * somebody else's guess at what they meant.
+ */
+function winningTeam(name: string): string {
+  if (!TEAMS.some((team) => team.name === name)) {
+    throw new Error(
+      `Award names "${name}", which is not a team in TEAMS. Use the team's own Discord string.`,
+    );
+  }
+  return name;
+}
+
+/**
+ * The reveal, read right to left by the host and left to right by the room.
+ *
+ * `amount` carries the placing rather than a figure: only the venue winner has
+ * a cash prize behind it, and putting "$250" beside two blanks would read as
+ * the runners-up having won nothing. "Winner" is six characters, which is
+ * exactly `KNOCKOUT_MAX_CHARS`, so it cuts out of the archive wall while the
+ * two numerals sit in accent ink — the hierarchy expressed in kind rather than
+ * in size, the same way the Friday prize board does it.
+ */
+const WINNERS_SLIDE: Slide = {
+  id: "winners",
+  type: "prizes",
+  section: "Day Two — Saturday 8 August",
+  tone: "dark",
+  eyebrow: "Decided in this room",
+  title: "The Winners",
+  lead: "Two days, twelve teams, and one going forward to national judging",
+  prizes: [
+    {
+      amount: "Winner",
+      name: winningTeam("kailine"),
+      detail: "$250, and through to the national panel",
+      scope: "venue",
+    },
+    {
+      amount: "2nd",
+      name: winningTeam("kaitiakidata"),
+      detail: "First runner-up",
+      scope: "venue",
+    },
+    {
+      amount: "3rd",
+      name: winningTeam("kpi-kaitiaki-positive-impact"),
+      detail: "Second runner-up",
+      scope: "venue",
+    },
+  ],
+  footnote:
+    "The winning team's recorded pitch goes to the national panel, and the national winner pitches at the Aotearoa AI Summit in September.",
+  note: "Announce them in reverse order — third, second, then the winner — and pause for applause after each. Read the names exactly as they are written; these are the teams' own Discord handles.",
+};
+
+/**
+ * The Slido poll again, at the end rather than the beginning.
+ *
+ * Same code and same question as the Friday-night slide, which is the point:
+ * the room answered it before any of this happened, and answering it again
+ * after two days is the only before-and-after this event collects.
+ */
+const CLOSING_MOOD_CHECK: Slide = {
+  ...SLIDO_QA,
+  id: "how-are-you-feeling-close",
+  section: "Day Two — Saturday 8 August",
+  eyebrow: "Same question as Friday",
+  note: "Same poll as Friday night, so put the two results side by side in the presenter view and read the change back to the room. Leave the code up until the answers stop climbing.",
+};
+
+/** AUT Ventures' award again, for the team that has just won it. */
+const AUT_VENTURES_AWARD_CLOSE: Slide = {
+  ...AUT_VENTURES_AWARD,
+  id: "aut-ventures-award-close",
+  eyebrow: "For the winning team",
+  note: "Say it directly to the team that just won: twenty-one hours of professional support from AUT Ventures, and it is not restricted to AUT teams. From Michael Fielding, Chief Executive of AUT Ventures.",
+};
+
+/** The prize board one last time, immediately before the names are read out. */
+const PRIZES_FINAL: Slide = {
+  id: "prizes-final",
+  type: "prizes",
+  section: "Day Two — Saturday 8 August",
+  tone: "dark",
+  eyebrow: "Two of these, tonight",
+  title: "Prizes & Awards",
+  prizes: PRIZE_AWARDS,
+  footnote:
+    "The national winner pitches at the Aotearoa AI Summit in September.",
+  note: "The board one last time before the names. Say that the two venue prizes are decided and the two national ones are judged from the recordings over the coming weeks. Then straight into the winners.",
+};
+
+/**
+ * The closing sequence, with the awards spliced in after the thanks.
+ *
+ * The order is the one the organisers asked for on the night: thank the room,
+ * take its temperature, restate what is on offer, then read the result. The
+ * generated tail — what's coming up, feedback, ambassador, karakia — follows
+ * unchanged, so the deck still ends where every She Sharp deck ends.
+ */
+const CLOSING_SLIDES: Slide[] = insertAfter(
+  buildClosingSlides({
+    thanksLogos: [{ label: "Hosts, partners and sponsors", logos: PARTNER_LOGOS }],
+    thanksNames: [
+      ...judges.map((judge) => judge.name),
+      ...mentors.map((mentor) => mentor.name),
+    ],
+    upcoming: UPCOMING_SNAPSHOT,
+    eventSlug: EVENT_SLUG,
+    karakia: CLOSING_KARAKIA,
+    karakiaImage: CLOSING_KARAKIA_PLATE,
+  }),
+  "thank-you",
+  CLOSING_MOOD_CHECK,
+  AUT_VENTURES_AWARD_CLOSE,
+  PRIZES_FINAL,
+  WINNERS_SLIDE,
+);
+
 // --- Deck ------------------------------------------------------------------
 
 export const aotearoaAiHackathonFestival2026Deck: Deck = {
@@ -1982,19 +2110,9 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       note: "Start it as the judges leave. Tell the room to stay — awards are at 7:00pm and the closing karakia follows. Do not chase the panel for a result.",
     },
 
-    // 55–60 — She Sharp closing, generated from live site data.
-    ...buildClosingSlides({
-      thanksLogos: [
-        { label: "Hosts, partners and sponsors", logos: PARTNER_LOGOS },
-      ],
-      thanksNames: [
-        ...judges.map((judge) => judge.name),
-        ...mentors.map((mentor) => mentor.name),
-      ],
-      upcoming: UPCOMING_SNAPSHOT,
-      eventSlug: EVENT_SLUG,
-      karakia: CLOSING_KARAKIA,
-      karakiaImage: CLOSING_KARAKIA_PLATE,
-    }),
+    // She Sharp's closing, generated from live site data, with the mood check,
+    // the AUT Ventures award, the prize board and the result spliced in after
+    // the thanks.
+    ...CLOSING_SLIDES,
   ],
 };
