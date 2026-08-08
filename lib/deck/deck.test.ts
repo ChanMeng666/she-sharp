@@ -26,6 +26,8 @@ import {
 } from "@/lib/data/feedback-codes";
 import type { EventV3 } from "@/types/event";
 
+import type { Slide } from "./types";
+
 import { buildClosingSlides, buildOpeningSlides } from "./boilerplate";
 import {
   deckMetaFrom,
@@ -437,6 +439,59 @@ for (const raw of customEventsV3 as { slug: string }[]) {
 check(
   `every event in events-custom.json plans a rhythm-clean deck (${(customEventsV3 as unknown[]).length} events)`,
   corpusFailures === 0,
+);
+
+/* --- The `cycle` fold -----------------------------------------------------
+ *
+ * `SlideBase.cycle` is an escape hatch in a build gate, which is exactly the
+ * kind of thing that quietly grows until the gate means nothing. These assert
+ * the three properties that keep it narrow: it folds a consecutive run of ONE
+ * name, an unmarked run is still a run, and two different names next to each
+ * other are still two steps.
+ *
+ * The last one matters most. Folding by "has a cycle" rather than by "has THIS
+ * cycle" would let two unrelated blocks merge into one step and silently hide a
+ * real run between them.
+ */
+const cycleSlide = (id: string, cycle?: string): Slide => ({
+  id,
+  type: "team-photo",
+  cycle,
+  team: id,
+  image: { src: "/img/events/aotearoa-ai-hackathon-festival-2026-team-arara.webp", alt: id },
+  note: "Test fixture.",
+});
+
+/** A run long enough to break `consecutiveContent` (max 4) unless it folds. */
+const runOf = (count: number, cycle: string | undefined, prefix: string): Slide[] =>
+  Array.from({ length: count }, (_, i) => cycleSlide(`${prefix}-${i + 1}`, cycle));
+
+const lintOf = (slides: Slide[]) =>
+  lintDeck({ ...decks[0], slides }).filter((issue) => issue.rule.startsWith("rhythm-"));
+
+check(
+  "six slides sharing one cycle fold to a single step",
+  lintOf(runOf(6, "block", "a")).length === 0,
+);
+check(
+  "the same six without a cycle still report a content run",
+  lintOf(runOf(6, undefined, "b")).some((issue) => issue.rule === "rhythm-content-run"),
+);
+check(
+  "two different cycles side by side stay two steps, not one",
+  lintOf([
+    ...runOf(3, "first", "c"),
+    ...runOf(3, "second", "d"),
+    ...runOf(3, "third", "e"),
+    ...runOf(3, "fourth", "f"),
+    ...runOf(3, "fifth", "g"),
+  ]).some((issue) => issue.rule === "rhythm-content-run"),
+);
+check(
+  "a folded run reports the first slide of its cycle, not an arbitrary member",
+  lintOf([...runOf(6, "block", "h"), ...runOf(5, undefined, "i")]).every(
+    (issue) => !issue.slideId.startsWith("h-") || issue.slideId === "h-1",
+  ),
 );
 
 /* Titles are the fact most often projected wrong, because a bad cut still

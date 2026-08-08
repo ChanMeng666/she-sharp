@@ -841,6 +841,141 @@ const OPENING_WITH_LOGISTICS: Slide[] = insertAfter(
   TWO_DAY_FORMAT,
 );
 
+/*
+ * THE THIRTEEN TEAMS, AND THE ONE LIST THEY ALL COME FROM.
+ *
+ * These strings are the Discord channel names, verbatim, and that is deliberate.
+ * They are lowercase and hyphenated because Discord forces that, and the obvious
+ * tidy-up — "Kai Sense AI", "KPI: Kaitiaki Positive Impact" — is a guess at what
+ * each team meant, made by someone who was not in the room when they named
+ * themselves. It is also the wrong guess to make on a projector: a team spends
+ * the weekend inside a channel with this exact string at the top of it, so the
+ * string is the thing they will scan for. Retype them only from a list the teams
+ * themselves confirm.
+ *
+ * `super-6` was `super-five` until 8 Aug, when Marriane Bentigan asked in the
+ * event channel for it to change "as they are 6 in the team now". Their own
+ * photograph is filed under `Super 6` and has six people in it. The numeral is
+ * theirs, not a house style — do not spell it back out to `super-six`.
+ *
+ * ONE LIST, TWO SLIDES. The roster slide and the per-team photograph slides are
+ * both generated from here. They were separate before the photographs existed,
+ * and separate is how a team gets renamed on the roster and stays wrong on their
+ * own slide — visible to precisely the people it is about, and to nobody
+ * checking the file.
+ *
+ * The numerals are a reading index and nothing more. There is no table
+ * allocation for day two, and this is not the pitch order either — that is drawn
+ * at random on the Saturday afternoon and posted to Discord.
+ *
+ * BLUNT HAS NO PHOTOGRAPH. Twelve arrived in Slack on the Friday night; blunt's
+ * was deleted at source before it could be fetched (`files.info` →
+ * `file_deleted`), so they are on the roster and have no slide of their own.
+ * `photo: null` says that on purpose rather than by omission: if the file turns
+ * up, add the path here and the slide builds itself. Left as-is, the block runs
+ * twelve deep and the roster still reads thirteen.
+ *
+ * THE PATHS ARE WRITTEN OUT IN FULL AND MUST STAY THAT WAY. Building them as
+ * `/img/events/${EVENT_SLUG}-team-${slug}.webp` is tidier to read and defeats
+ * `scripts/verify-image-paths.ts`, which scans the source for string literals —
+ * a computed path is one unresolvable reference instead of twelve checked ones,
+ * so a photograph that never got copied into `public/` would sail through the CI
+ * gate and turn up as a fallback panel on the projector.
+ */
+const TEAMS: { index: string; name: string; photo: string | null }[] = [
+  {
+    index: "01",
+    name: "kpi-kaitiaki-positive-impact",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kpi-kaitiaki-positive-impact.webp",
+  },
+  {
+    index: "02",
+    name: "caffeine",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-caffeine.webp",
+  },
+  {
+    index: "03",
+    name: "kailine",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kailine.webp",
+  },
+  {
+    index: "04",
+    name: "arara",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-arara.webp",
+  },
+  { index: "05", name: "blunt", photo: null },
+  {
+    index: "06",
+    name: "route",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-route.webp",
+  },
+  {
+    index: "07",
+    name: "devacces",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-devacces.webp",
+  },
+  {
+    index: "08",
+    name: "kanorao",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kanorao.webp",
+  },
+  {
+    index: "09",
+    name: "fantastic6",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-fantastic6.webp",
+  },
+  {
+    index: "10",
+    name: "kaitiakidata",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kaitiakidata.webp",
+  },
+  {
+    index: "11",
+    name: "kai-sense-ai",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kai-sense-ai.webp",
+  },
+  {
+    index: "12",
+    name: "super-6",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-super-6.webp",
+  },
+  {
+    index: "13",
+    name: "5-senses",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-5-senses.webp",
+  },
+];
+
+/**
+ * One slide per team, for the host to jump into as each team is called up.
+ *
+ * `cycle` is what makes this legal, and the reason is in `SlideBase.cycle`: the
+ * rhythm rules count consecutive slides, and these are never consecutive in the
+ * room — between any two of them sits a five-minute pitch and a round of
+ * questions. Twelve full-frame slides in a row is a true statement about the
+ * array and a false one about the evening.
+ *
+ * The photographs are portrait phone shots and are never cropped; `team-photo`
+ * exists for that reason alone. See the layout for what a `photo` slide would
+ * have thrown away.
+ */
+const TEAM_PHOTO_SLIDES: Slide[] = TEAMS.filter((team) => team.photo).map(
+  (team) => ({
+    id: `team-${team.name}`,
+    type: "team-photo",
+    section: "Day Two — Saturday 8 August",
+    cycle: "team-presentations",
+    eyebrow: "Up next",
+    team: team.name,
+    index: team.index,
+    image: {
+      src: team.photo!,
+      alt: `The ${team.name} team at the Aotearoa AI Hackathon Festival 2026.`,
+    },
+    note: `Call ${team.name} up, then press Space on the pitch clock. Read the name as it is written — these are the teams' own Discord handles.`,
+  }),
+);
+
 // --- Deck ------------------------------------------------------------------
 
 export const aotearoaAiHackathonFestival2026Deck: Deck = {
@@ -1357,17 +1492,16 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       items: SATURDAY_ROOMS,
       note: "The mentor room has moved: WG808 last night, WG809 today. Say that twice — people will walk to yesterday's room. They saw this slide as a preview on Friday night, so this is the repeat, not the first telling.",
     },
-    /* Two placeholders that only Friday night can fill.
+    /* Filled 8 August with the real thing. This was four archive tiles standing
+       in for photographs that only Friday night could produce; Marriane sent
+       twelve of the thirteen overnight.
 
-       TODO(day-one): replace the four archive tiles with the team photographs
-       taken during the group photo at the end of day one — save them as
-       `/img/events/aotearoa-ai-hackathon-festival-2026-teams-1.jpg` and so on —
-       and fill the roster below with the real team names and tables.
-
-       They stand as archive frames rather than empty boxes on purpose: if
-       nobody gets to the photographs before Saturday morning, the deck still
-       projects something deliberate instead of announcing that it was not
-       finished. */
+       Five of the twelve, not all twelve — a `photo-grid` caps at five and is a
+       composition rather than a contact sheet. Every team gets its own full
+       slide later, in the final-presentations block, which is the slide that is
+       actually about them. This one is the morning's "we are all here" beat
+       while people are still finding a seat, so it is a texture: the duotone
+       applies, and which five appear carries no meaning at all. */
     {
       id: "team-photos",
       type: "photo-grid",
@@ -1376,11 +1510,23 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       eyebrow: "Taken at the group photo",
       title: "The Teams",
       lead: "Everyone who formed a team on Friday night",
-      images: pickWallTiles(4, 31).map((src) => ({
-        src,
-        alt: "Placeholder frame from the She Sharp archive, standing in for a day-one team photograph.",
-      })),
-      note: "PLACEHOLDER — replace with Friday night's team photographs before Saturday morning. Leave it up while people find their tables.",
+      images: TEAMS.filter((team) => team.photo)
+        .slice(0, 5)
+        .map((team) => ({
+          src: team.photo!,
+          alt: `The ${team.name} team on Friday night at the Aotearoa AI Hackathon Festival 2026.`,
+          /* THE ONE PLACE IN THIS DECK WHERE THE HOUSE CROP IS WRONG.
+             `DeckImage` crops from the bottom by default — right for the
+             archive, which is wide group shots where a centred crop takes the
+             tops of heads off. These are portrait phone frames of a team
+             standing in a room, so their top third is ceiling tiles and strip
+             lighting: keeping it is what removes the people. Biased below
+             centre so the mosaic cells hold faces instead of a suspended
+             ceiling. The full-slide `team-photo` version needs none of this —
+             it never crops at all. */
+          focus: "50% 64%",
+        })),
+      note: "Leave it up while people find their tables. Every team has their own slide during the final presentations.",
     },
     /* A run sheet rather than a card grid, because the venue plans for up to
        ten teams and a `themes` slide caps at six. The number column carries the
@@ -1393,34 +1539,11 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       eyebrow: "Find your name, then sit",
       title: "Today's Teams",
       lead: "Thirteen teams formed on Friday night",
-      /* THESE ARE THE DISCORD CHANNEL NAMES, VERBATIM, AND THAT IS DELIBERATE.
-         They are lowercase and hyphenated because Slack and Discord force that,
-         and the obvious tidy-up — "Kai Sense AI", "KPI: Kaitiaki Positive
-         Impact" — is a guess at what each team meant, made by someone who was
-         not in the room when they named themselves. It is also the wrong guess
-         to make on a projector: a team spends the weekend inside a channel with
-         this exact string at the top of it, so the string is the thing they will
-         scan for. Retype them only from a list the teams themselves confirm.
-
-         The numerals are a reading index, nothing more. There is no table
-         allocation for day two — the slide used to promise one ("where they are
-         sitting", "Team 1 — table") and there has never been any data behind
-         that, so the copy now says what the slide actually knows. */
-      items: [
-        { time: "01", label: "kpi-kaitiaki-positive-impact" },
-        { time: "02", label: "caffeine" },
-        { time: "03", label: "kailine" },
-        { time: "04", label: "arara" },
-        { time: "05", label: "blunt" },
-        { time: "06", label: "route" },
-        { time: "07", label: "devacces" },
-        { time: "08", label: "kanorao" },
-        { time: "09", label: "fantastic6" },
-        { time: "10", label: "kaitiakidata" },
-        { time: "11", label: "kai-sense-ai" },
-        { time: "12", label: "super-five" },
-        { time: "13", label: "5-senses" },
-      ],
+      /* Generated from `TEAMS`, which is where the naming rule and the reason
+         these strings are never tidied up now live. Both this roster and the
+         per-team slides in the final-presentations block read from that one
+         array, so a rename cannot land on one and miss the other. */
+      items: TEAMS.map((team) => ({ time: team.index, label: team.name })),
       columns: 2,
       note: "Read the names out and let each team wave. These are the Discord channel names exactly as the teams wrote them — say them as written rather than tidying them up. No tables are allocated today, so do not send anyone looking for one. If a team has renamed itself or merged overnight, fix the row before you project it.",
     },
@@ -1597,6 +1720,30 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       background: archivePlate(115),
       note: "Call the first team up. Hold the room to time — the recording is what goes to national judging.",
     },
+    /* One slide per team, between the chapter divider and the pitch clock.
+
+       THE HOST DOES NOT PAGE THROUGH THIS BLOCK, AND THE ORDER IN THE ARRAY IS
+       NOT THE ORDER OF THE EVENING. The pitch order is drawn at random on the
+       Saturday afternoon and posted to Discord, so nothing here can predict it.
+       The working loop is: press O, pick the team who is up, call them, press O
+       again, back to the pitch clock, Space. They are in roster order because
+       that is the order the overview grid shows and the same order the room saw
+       on the roster slide two hours earlier — a host hunting for "kanorao"
+       under pressure is scanning, and scanning wants a stable order rather than
+       a meaningful one.
+
+       That access pattern is also why the whole block carries one `cycle` name:
+       see `TEAM_PHOTO_SLIDES` and `SlideBase.cycle`.
+
+       IT SITS AHEAD OF THE PITCH CLOCK FOR A RHYTHM REASON, NOT A NARRATIVE
+       ONE, so do not "tidy" it to after. A `team-photo` is an information
+       layout — a contained portrait beside a name — so the folded block counts
+       as one content step. Placed after the clock it lands directly against the
+       four information slides `buildClosingSlides()` always ends on and makes a
+       run of five, which `rhythm-content-run` rejects. Here it is bracketed by
+       two full-frame slides and nothing runs. */
+    ...TEAM_PHOTO_SLIDES,
+
     /* The pitch clock, and the only slide in the deck meant to be returned to
        over and over. The countdown re-arms every time the slide becomes
        current, so jumping away to announce the next team and back is the
