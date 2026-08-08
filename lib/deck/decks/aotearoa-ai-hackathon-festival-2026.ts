@@ -842,7 +842,7 @@ const OPENING_WITH_LOGISTICS: Slide[] = insertAfter(
 );
 
 /*
- * THE THIRTEEN TEAMS, AND THE ONE LIST THEY ALL COME FROM.
+ * THE TWELVE TEAMS, AND THE ONE LIST THEY ALL COME FROM.
  *
  * These strings are the Discord channel names, verbatim, and that is deliberate.
  * They are lowercase and hyphenated because Discord forces that, and the obvious
@@ -864,16 +864,20 @@ const OPENING_WITH_LOGISTICS: Slide[] = insertAfter(
  * own slide — visible to precisely the people it is about, and to nobody
  * checking the file.
  *
- * The numerals are a reading index and nothing more. There is no table
- * allocation for day two, and this is not the pitch order either — that is drawn
- * at random on the Saturday afternoon and posted to Discord.
+ * The numerals are a reading index and nothing more — not a table allocation,
+ * and not the pitch order. `PITCH_ORDER` below is the pitch order, and it is
+ * kept as its own list precisely so the two cannot be confused.
  *
- * BLUNT HAS NO PHOTOGRAPH. Twelve arrived in Slack on the Friday night; blunt's
- * was deleted at source before it could be fetched (`files.info` →
- * `file_deleted`), so they are on the roster and have no slide of their own.
- * `photo: null` says that on purpose rather than by omission: if the file turns
- * up, add the path here and the slide builds itself. Left as-is, the block runs
- * twelve deep and the roster still reads thirteen.
+ * BLUNT WITHDREW ON THE SATURDAY and has been removed outright — off the roster,
+ * off the pitch order, no slide. Thirteen teams formed on the Friday night; this
+ * list is the twelve that are still in, renumbered so the roster has no gap at
+ * five. Their photograph never arrived either (deleted at source before it could
+ * be fetched), which is why nothing has to be deleted from `public/`.
+ *
+ * `photo` stays nullable even though every remaining team has one. A team can
+ * turn up on the roster before their photograph does, and the slide builder and
+ * the `team-photo-missing` lint rule already handle it; re-deriving that path
+ * later costs more than leaving it.
  *
  * THE PATHS ARE WRITTEN OUT IN FULL AND MUST STAY THAT WAY. Building them as
  * `/img/events/${EVENT_SLUG}-team-${slug}.webp` is tidier to read and defeats
@@ -903,48 +907,101 @@ const TEAMS: { index: string; name: string; photo: string | null }[] = [
     name: "arara",
     photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-arara.webp",
   },
-  { index: "05", name: "blunt", photo: null },
   {
-    index: "06",
+    index: "05",
     name: "route",
     photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-route.webp",
   },
   {
-    index: "07",
+    index: "06",
     name: "devacces",
     photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-devacces.webp",
   },
   {
-    index: "08",
+    index: "07",
     name: "kanorao",
     photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kanorao.webp",
   },
   {
-    index: "09",
+    index: "08",
     name: "fantastic6",
     photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-fantastic6.webp",
   },
   {
-    index: "10",
+    index: "09",
     name: "kaitiakidata",
     photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kaitiakidata.webp",
   },
   {
-    index: "11",
+    index: "10",
     name: "kai-sense-ai",
     photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kai-sense-ai.webp",
   },
   {
-    index: "12",
+    index: "11",
     name: "super-6",
     photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-super-6.webp",
   },
   {
-    index: "13",
+    index: "12",
     name: "5-senses",
     photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-5-senses.webp",
   },
 ];
+
+/*
+ * THE PITCH ORDER, AS GIVEN BY THE ORGANISERS ON THE SATURDAY.
+ *
+ * Its own list, deliberately, even though it currently happens to run in the
+ * same sequence as `TEAMS`. They are different facts: the roster numerals are a
+ * reading index, and this is who stands up when. Deriving one from the other
+ * would mean that reordering the roster silently reorders the afternoon, and a
+ * team would find that out by being called in the wrong place.
+ *
+ * The strings are looked up in `TEAMS` rather than retyped, so a name here that
+ * does not match a real team is a build failure instead of a slide nobody can
+ * find themselves on. That guard is the point: the order arrived typed by hand
+ * as "Devaccess", "Konorao", "Kaitakidata" and "Super-six", none of which are
+ * the teams' own strings — those are approximations of a name, and the whole
+ * naming rule above exists because approximations are what the room cannot scan
+ * for. The canonical spelling wins every time.
+ */
+const PITCH_ORDER: string[] = [
+  "kpi-kaitiaki-positive-impact",
+  "caffeine",
+  "kailine",
+  "arara",
+  "route",
+  "devacces",
+  "kanorao",
+  "fantastic6",
+  "kaitiakidata",
+  "kai-sense-ai",
+  "super-6",
+  "5-senses",
+];
+
+/** Ordinal for a pitch slot: 1 → "1st". The slide's own number column. */
+function ordinal(position: number): string {
+  const suffix =
+    position % 10 === 1 && position % 100 !== 11
+      ? "st"
+      : position % 10 === 2 && position % 100 !== 12
+        ? "nd"
+        : position % 10 === 3 && position % 100 !== 13
+          ? "rd"
+          : "th";
+  return `${position}${suffix}`;
+}
+
+const PITCH_ORDER_ROWS = PITCH_ORDER.map((name, i) => {
+  if (!TEAMS.some((team) => team.name === name)) {
+    throw new Error(
+      `Pitch order names "${name}", which is not a team in TEAMS. Use the team's own Discord string, and remove a team here when they withdraw.`,
+    );
+  }
+  return { time: ordinal(i + 1), label: name };
+});
 
 /**
  * One slide per team, for the host to jump into as each team is called up.
@@ -1538,7 +1595,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       section: "Day Two — Saturday 8 August",
       eyebrow: "Find your name, then sit",
       title: "Today's Teams",
-      lead: "Thirteen teams formed on Friday night",
+      lead: "Twelve teams are with us today",
       /* Generated from `TEAMS`, which is where the naming rule and the reason
          these strings are never tidied up now live. Both this roster and the
          per-team slides in the final-presentations block read from that one
@@ -1670,7 +1727,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
         "Send your slides to She Sharp by 3:00pm",
         "One person per team for the tech check",
         "Every pitch is recorded for the national panel",
-        "Presentation order is drawn and posted on Discord",
+        "Presentation order goes up after the tech check",
         "Five minutes each, and the clock does not stop",
       ],
       note: "The recording is the only thing the national panel sees, so a pitch that overruns is a pitch that gets cut. Say that plainly.",
@@ -1690,23 +1747,12 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       id: "presentation-order",
       type: "agenda",
       section: "Day Two — Saturday 8 August",
-      eyebrow: "Drawn at random today",
+      eyebrow: "Find yourself, then count",
       title: "Presentation Order",
-      lead: "Drawn at random and posted on Discord this afternoon",
-      items: [
-        { time: "1st", label: "Team name" },
-        { time: "2nd", label: "Team name" },
-        { time: "3rd", label: "Team name" },
-        { time: "4th", label: "Team name" },
-        { time: "5th", label: "Team name" },
-        { time: "6th", label: "Team name" },
-        { time: "7th", label: "Team name" },
-        { time: "8th", label: "Team name" },
-        { time: "9th", label: "Team name" },
-        { time: "10th", label: "Team name" },
-      ],
+      lead: "Be ready two teams before you are called",
+      items: PITCH_ORDER_ROWS,
       columns: 2,
-      note: "PLACEHOLDER — fill in once the order is drawn, and delete any rows you do not need. Leave it up so the next team knows to get ready.",
+      note: "Leave it up while the room finds itself. Say the ready-two-teams-early line out loud — it is the one thing that keeps the afternoon on time. Twelve teams, not thirteen: blunt withdrew.",
     },
     {
       id: "section-final-presentations",
