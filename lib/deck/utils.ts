@@ -24,6 +24,10 @@ export function slideDefaultTone(slide: Slide): SlideTone {
        chapter they belong to: the final-presentations divider is dark, and the
        pitch clock between them is dark. */
     case "team-photo":
+    /* Same reason as the single team photograph: the grid is photographs on a
+       canvas, and a projector throwing white around them is what makes them
+       look like a mistake. */
+    case "team-grid":
       return "dark";
     default:
       return "light";

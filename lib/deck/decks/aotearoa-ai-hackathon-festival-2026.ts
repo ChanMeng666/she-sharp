@@ -33,7 +33,14 @@ import {
   type KarakiaText,
 } from "../boilerplate";
 import { DEFAULT_CLOSING_KARAKIA, DEFAULT_OPENING_KARAKIA } from "../karakia";
-import type { Deck, DeckImage, DeckLogo, QrBlock, Slide } from "../types";
+import type {
+  Deck,
+  DeckImage,
+  DeckLogo,
+  PrizesSlide,
+  QrBlock,
+  Slide,
+} from "../types";
 import { insertAfter, parseTimedLines } from "../utils";
 import { pickWallTiles } from "../wall-tiles";
 
@@ -1004,6 +1011,45 @@ const PITCH_ORDER_ROWS = PITCH_ORDER.map((name, i) => {
 });
 
 /**
+ * The four prizes, shared by the Friday-night slide and the Saturday recap.
+ *
+ * `prizeCount` is 4 and the layout's column map stops there — a fifth prize
+ * falls back to two columns, which stacks into a second row about 190px taller
+ * than the stage has. That cap is why the AUT Ventures award is its own slide
+ * rather than a fifth row here.
+ */
+const PRIZE_AWARDS: PrizesSlide["prizes"] = [
+  {
+    amount: "$250",
+    name: "Venue winning team",
+    detail: "Announced here tomorrow evening",
+    scope: "venue",
+  },
+  // TODO(runner-up): swap "2nd" for the cash figure if there is one. The
+  // AI Forum's central pool covers the winning team only, and the run
+  // sheet records the runner-up prize as six gifts rather than an amount,
+  // so a dollar sign here would be invented.
+  {
+    amount: "2nd",
+    name: "Venue runner-up",
+    detail: "A prize for every team member",
+    scope: "venue",
+  },
+  {
+    amount: "$1,000",
+    name: "National TAIAO Prize",
+    detail: "Summit audience vote",
+    scope: "national",
+  },
+  {
+    amount: "$1,000",
+    name: "National Technical Brilliance",
+    detail: "National judging panel",
+    scope: "national",
+  },
+];
+
+/**
  * The judging panel, shared by the two slides that show it.
  *
  * One list because the panel is one fact. It is introduced on the Friday night
@@ -1019,28 +1065,97 @@ const JUDGE_PEOPLE = judges.map((judge) => ({
 }));
 
 /**
- * Each team's slide, and immediately after it that team's own pitch clock.
+ * The opening title card, shown a second time to open the pitches.
  *
- * ONE COUNTDOWN PER TEAM, NOT ONE SHARED COUNTDOWN. The deck used to carry a
- * single `pitch-clock` the host jumped back to twelve times, which works and
- * asks the person driving to remember a two-step loop — call the team, press O,
- * find the clock, press Space — twelve times, in front of a room, while also
- * running the afternoon. In pairs it is one keypress: the team is on screen,
- * arrow once, Space. The countdown re-arms whenever a `break` slide becomes
- * current, so a per-team clock resets by construction.
- *
- * `cycle` covers BOTH slides of every pair, and it has to. `SlideBase.cycle`
- * folds a consecutive run sharing one name into a single rhythm step; splitting
- * the names would leave twelve alternating unfolded steps, and while the type
- * runs would be fine the whole block is dark, so `rhythm-tone-run` (max 4)
- * would fail on a twenty-four slide stretch. The justification is unchanged and
- * still honest: the host enters this block one slide at a time, and between any
- * two entries the room watches a five-minute pitch and questions.
- *
- * The photographs are portrait phone shots and are never cropped; `team-photo`
- * exists for that reason alone.
+ * Spread from the real slide rather than retyped, so the event name, the date
+ * line and the partner logo row cannot drift between the two. Only the id and
+ * the chapter change — a deck cannot carry two slides with one id, and the
+ * overview groups by section.
  */
-/*
+const TITLE_SLIDE = OPENING_WITH_LOGISTICS.find((slide) => slide.id === "title");
+if (!TITLE_SLIDE) {
+  throw new Error(
+    "The opening title slide is missing, so the final-presentations reprise cannot be built from it.",
+  );
+}
+
+const TITLE_REPRISE: Slide = {
+  ...TITLE_SLIDE,
+  id: "title-reprise",
+  section: "Day Two — Saturday 8 August",
+  note: "The full title card again, to reset the room before the pitches. Hold it while people sit down, then move on — nothing new is said here.",
+};
+
+/**
+ * AUT Ventures' award, on its own slide rather than as a fifth prize.
+ *
+ * Not a preference: `prizeCount` is 4 and the prizes layout's column map stops
+ * at four, so a fifth entry falls back to two columns and stacks into a second
+ * row taller than the stage. Its own slide is also the better read — this is
+ * in-kind support rather than a cash amount, and the three line items are the
+ * substance of it, which the prize board has nowhere to put.
+ *
+ * SOURCE: Michael Fielding (Chief Executive, AUT Ventures), relayed by the
+ * organisers on the day. The wording of his mail is a proposal — "how does this
+ * sound", "let us know what you think" — so if it turns out the offer was still
+ * being agreed when this went up, this is the slide to pull.
+ */
+const AUT_VENTURES_AWARD: Slide = {
+  id: "aut-ventures-award",
+  type: "bullets",
+  section: "Day Two — Saturday 8 August",
+  eyebrow: "New this year",
+  title: "AUT Ventures Support",
+  lead: "For the winning team at every site, AUT or not",
+  items: [
+    "15 hours of Venture Analyst market research",
+    "5 hours of Venture Manager mentoring and connections",
+    "1 hour of Venture Principal strategic advice",
+  ],
+  logo: { name: "AUT Ventures", logo: "/img/sponsors/aut-ventures.png" },
+  note: "Twenty-one hours of professional support, and it is not restricted to AUT teams — say that part explicitly, because the room will assume otherwise. From Michael Fielding, Chief Executive of AUT Ventures.",
+};
+
+/**
+ * Every team on one wall, immediately before the first of them is called.
+ *
+ * The morning's `team-photos` slide is five photographs used as texture; this is
+ * the roll-call, and completeness is the whole point of it — see `TeamGridSlide`
+ * for why it is not a `photo-grid`.
+ *
+ * `focus` is set here for the same reason it is on the morning grid: these cells
+ * crop, and `DeckImage` crops from the bottom by default, which on portrait
+ * frames whose top third is ceiling tiles keeps the ceiling and loses the people.
+ */
+const ALL_TEAMS_GRID: Slide = {
+  id: "all-teams",
+  type: "team-grid",
+  section: "Day Two — Saturday 8 August",
+  eyebrow: "Two days of work",
+  title: "The Teams Pitching Today",
+  lead: "Every team that made it through to the pitches",
+  teams: TEAMS.filter((team) => team.photo).map((team) => ({
+    name: team.name,
+    image: {
+      src: team.photo!,
+      alt: `The ${team.name} team at the Aotearoa AI Hackathon Festival 2026.`,
+      focus: "50% 64%",
+    },
+  })),
+  note: "Let the room look at it for a moment before you call the first team — this is the only slide all weekend with everybody on it. Then straight into the running order.",
+};
+
+/**
+ * One slide per team, in pitch order, and nothing between them.
+ *
+ * NO COUNTDOWN IN THIS BLOCK, DELIBERATELY. Two earlier shapes are recorded here
+ * because both were built and both were dropped: a single shared `pitch-clock`
+ * the host jumped back to before each team, then a clock paired after every team
+ * slide. The organisers do not want either — the afternoon is timed from the
+ * floor rather than from the screen — so the block is now exactly what it says
+ * it is, a run of team portraits the host advances through. `judges-deliberate`
+ * is the only countdown left after the pitches begin.
+ *
  * BUILT FROM `PITCH_ORDER`, NOT FROM `TEAMS`, and the two are not interchangeable
  * even though they currently list the same twelve teams in the same sequence.
  * This block IS the afternoon: the order the slides sit in is the order the
@@ -1049,30 +1164,25 @@ const JUDGE_PEOPLE = judges.map((judge) => ({
  * by position would look identical today and silently mislabel every team the
  * first time the two lists diverge — which is the whole reason they are kept
  * apart.
+ *
+ * `cycle` is still required and still honest. Twelve consecutive dark slides
+ * break `rhythm-tone-run` (max 4) on their own, without a single clock among
+ * them, and the reason the count does not describe the room is unchanged: the
+ * host enters this block one slide at a time, and between any two entries it
+ * watches a five-minute pitch and a round of questions.
+ *
+ * The photographs are portrait phone shots and are never cropped; `team-photo`
+ * exists for that reason alone.
  */
 const TEAM_PRESENTATION_SLIDES: Slide[] = PITCH_ORDER.flatMap(
   (name, i): Slide[] => {
     const team = TEAMS.find((entry) => entry.name === name);
     const position = ordinal(i + 1);
 
-    const clock: Slide = {
-      id: `pitch-clock-${name}`,
-      type: "break",
-      section: "Day Two — Saturday 8 August",
-      cycle: "team-presentations",
-      eyebrow: "Space starts the clock",
-      title: "Pitch Clock",
-      lead: "Five minutes, and the judges ask questions after",
-      minutes: 5,
-      resumeLabel: "Next team, please",
-      note: `${name} is pitching, ${position}. Space starts and pauses; the clock re-arms every time you come back to this slide. Every pitch is recorded, so hold the time.`,
-    };
-
-    /* A team that pitches without a photograph still gets their clock. Their
-       name is on the roster and on the order slide, so the afternoon runs; only
-       the portrait is missing, and a slide with an empty frame in it would read
-       from the floor as that team having been forgotten. */
-    if (!team?.photo) return [clock];
+    /* A team pitching without a photograph gets no slide rather than an empty
+       frame — from the floor a blank cell reads as that team having been
+       forgotten, and their name is already on the roster and the order slide. */
+    if (!team?.photo) return [];
 
     return [
       {
@@ -1087,9 +1197,8 @@ const TEAM_PRESENTATION_SLIDES: Slide[] = PITCH_ORDER.flatMap(
           src: team.photo,
           alt: `The ${name} team at the Aotearoa AI Hackathon Festival 2026.`,
         },
-        note: `Call ${name} up — they are ${position}. Then press the right arrow once for their clock. Read the name as it is written; these are the teams' own Discord handles.`,
+        note: `Call ${name} up — they are ${position}. Read the name as it is written; these are the teams' own Discord handles. Arrow on to the next team once they are done.`,
       },
-      clock,
     ];
   },
 );
@@ -1493,36 +1602,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       // slot wasted.
       eyebrow: "Four of these exist",
       title: "Prizes & Awards",
-      prizes: [
-        {
-          amount: "$250",
-          name: "Venue winning team",
-          detail: "Announced here tomorrow evening",
-          scope: "venue",
-        },
-        // TODO(runner-up): swap "2nd" for the cash figure if there is one. The
-        // AI Forum's central pool covers the winning team only, and the run
-        // sheet records the runner-up prize as six gifts rather than an amount,
-        // so a dollar sign here would be invented.
-        {
-          amount: "2nd",
-          name: "Venue runner-up",
-          detail: "A prize for every team member",
-          scope: "venue",
-        },
-        {
-          amount: "$1,000",
-          name: "National TAIAO Prize",
-          detail: "Summit audience vote",
-          scope: "national",
-        },
-        {
-          amount: "$1,000",
-          name: "National Technical Brilliance",
-          detail: "National judging panel",
-          scope: "national",
-        },
-      ],
+      prizes: PRIZE_AWARDS,
       // Was three sentences and forty words, which pushed the slide past the
       // stage on a 4:3 projector and made it scale itself down to 79% — where
       // the labels fall under the 28px a room can read. Cut rather than shrunk:
@@ -1810,6 +1890,9 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       columns: 2,
       note: "Leave it up while the room finds itself. Say the ready-two-teams-early line out loud — it is the one thing that keeps the afternoon on time. Twelve teams, not thirteen: blunt withdrew.",
     },
+    /* The opening title card again, to reset the room before the pitches. */
+    TITLE_REPRISE,
+
     {
       id: "section-final-presentations",
       type: "section",
@@ -1822,6 +1905,35 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       background: archivePlate(115),
       note: "Call the first team up. Hold the room to time — the recording is what goes to national judging.",
     },
+    /* AUT Ventures between the divider and the prize board, and the position is
+       load-bearing rather than editorial.
+
+       `title`, `section` and `prizes` are all full-frame types, so the reprise
+       title card, the chapter divider and the prize board make three heroes in a
+       row and `rhythm-hero-run` (max 2) rejects the deck. An information slide
+       has to sit among them, and of the three slides added here this is the only
+       one whose position is not pinned by something else — the prize board is
+       asked to sit immediately before the judges, and the roll-call immediately
+       before the first team. So this one moves. It reads fine: the new award,
+       then the full board it is not on. */
+    AUT_VENTURES_AWARD,
+
+    /* The prize board again, unchanged, from the same `PRIZE_AWARDS` as the
+       Friday-night slide. Last thing the room sees before the panel it has to
+       convince. */
+    {
+      id: "prizes-reprise",
+      type: "prizes",
+      section: "Day Two — Saturday 8 August",
+      tone: "dark",
+      eyebrow: "Still to play for",
+      title: "Prizes & Awards",
+      prizes: PRIZE_AWARDS,
+      footnote:
+        "The national winner pitches at the Aotearoa AI Summit in September.",
+      note: "A recap, not a reveal — say it quickly. The venue prizes are decided in this room tonight; the national ones are judged from the recordings. AUT Ventures' support is on the slide before this one and is separate from all four.",
+    },
+
     /* The panel again, immediately before the pitches.
 
        The same four people as the Friday-night slide, from the same `judges`
@@ -1841,12 +1953,12 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       note: "Name them again as they sit down — most of the room met them on Friday night and has been heads-down since. Then call the first team.",
     },
 
-    /* Twelve team-and-clock pairs, in pitch order. See `TEAM_PRESENTATION_SLIDES`
-       for why the pairs exist, why the block is built from `PITCH_ORDER`, and
-       why every slide in it shares one `cycle` name.
+    /* The roll-call, then straight into the first team. */
+    ALL_TEAMS_GRID,
 
-       The host does not page through it: press O, pick the team who is up, call
-       them, arrow once, Space. */
+    /* Twelve team slides, in pitch order, with no countdown among them. See
+       `TEAM_PRESENTATION_SLIDES` for why the clocks were removed, why the block
+       is built from `PITCH_ORDER`, and why it shares one `cycle` name. */
     ...TEAM_PRESENTATION_SLIDES,
 
     /* The judges leave the room, and the deck has to hold the gap.
