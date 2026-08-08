@@ -17,6 +17,7 @@ import {
   HERO_TYPES as RHYTHM_HERO_TYPES,
   longestRunPerValue,
   toRhythmStep,
+  type RhythmStep,
 } from "./rhythm";
 import { checkAccentContrast } from "./theme";
 import { toneOf } from "./utils";
@@ -566,6 +567,25 @@ export function lintSlide(slide: Slide, index: number): LintIssue[] {
       }
       break;
 
+    case "team-photo":
+      /* The team name is checked as a title because that is what it is on
+         screen. It is deliberately NOT checked for capitalisation or spacing:
+         these are Discord channel names carried over verbatim, and a rule that
+         nudged "kai-sense-ai" towards "Kai Sense AI" would be the linter making
+         exactly the guess the deck's own comments forbid. */
+      checkTitle(slide.team, id, index, issues);
+      checkLead(slide.lead, id, index, issues);
+      if (!slide.image.src) {
+        issues.push({
+          slideId: id,
+          slideIndex: index,
+          rule: "team-photo-missing",
+          severity: "error",
+          message: `Team "${slide.team}" has no photograph. A team slide with an empty frame reads, from the floor, as that team having been forgotten.`,
+        });
+      }
+      break;
+
     case "stats":
       checkTitle(slide.title, id, index, issues);
       checkLead(slide.lead, id, index, issues);
@@ -830,35 +850,75 @@ export function lintRhythm(deck: Deck): LintIssue[] {
    * information slides, the global winner was always a content run, so a run
    * of three or four heroes could never win and `rhythm-hero-run` never fired.
    */
-  const steps = slides.map(toRhythmStep);
+  /*
+   * A cycle collapses to one step before the SEQUENCE rules count anything.
+   *
+   * `slide.cycle` marks a block the host enters one slide at a time rather than
+   * reads through — the per-team slides during final presentations, where the
+   * room watches a five-minute pitch and a round of questions between any two
+   * of them. Counting those twelve as twelve consecutive full-frame slides
+   * measures an experience nobody has. See `SlideBase.cycle`.
+   *
+   * Only these two rules fold, and only over a CONSECUTIVE run of one name.
+   * Every copy rule is still applied per slide above, and the dark-share and
+   * distinct-layout floors below still count each slide, because those measure
+   * the deck as a whole rather than the order it is read in.
+   *
+   * `sourceIndex` carries each folded step back to a real slide so a message
+   * still names the slide a reader can open. A folded step reports the FIRST
+   * slide of its cycle: "the team block" is the actionable unit, and pointing
+   * at the twelfth team's slide would send someone to edit an arbitrary member
+   * of a block that is fine.
+   */
+  const folded: { step: RhythmStep; sourceIndex: number }[] = [];
+  slides.forEach((slide, index) => {
+    const previous = folded[folded.length - 1];
+    if (
+      slide.cycle &&
+      previous &&
+      slides[previous.sourceIndex].cycle === slide.cycle
+    ) {
+      return;
+    }
+    folded.push({ step: toRhythmStep(slide), sourceIndex: index });
+  });
+
+  const steps = folded.map((entry) => entry.step);
+  const atFolded = (
+    foldedIndex: number,
+    rule: string,
+    message: string,
+    severity: LintIssue["severity"] = "error",
+  ) => at(folded[foldedIndex].sourceIndex, rule, message, severity);
+
   const byRegister = longestRunPerValue(steps, (step) =>
     HERO_TYPES.has(step.type) ? "hero" : "content",
   );
 
   const heroRun = byRegister.get("hero");
   if (heroRun && heroRun.length > COPY_LIMITS.consecutiveHero) {
-    at(
+    atFolded(
       heroRun.endsAt,
       "rhythm-hero-run",
-      `${heroRun.length} full-frame slides in a row (max ${COPY_LIMITS.consecutiveHero}), ending at slide ${heroRun.endsAt + 1}. Back-to-back statement slides stop landing.`,
+      `${heroRun.length} full-frame slides in a row (max ${COPY_LIMITS.consecutiveHero}), ending at slide ${folded[heroRun.endsAt].sourceIndex + 1}. Back-to-back statement slides stop landing.`,
     );
   }
 
   const contentRun = byRegister.get("content");
   if (contentRun && contentRun.length > COPY_LIMITS.consecutiveContent) {
-    at(
+    atFolded(
       contentRun.endsAt,
       "rhythm-content-run",
-      `${contentRun.length} information slides in a row (max ${COPY_LIMITS.consecutiveContent}), ending at slide ${contentRun.endsAt + 1}. Break the run with a section divider, a photograph or a break.`,
+      `${contentRun.length} information slides in a row (max ${COPY_LIMITS.consecutiveContent}), ending at slide ${folded[contentRun.endsAt].sourceIndex + 1}. Break the run with a section divider, a photograph or a break.`,
     );
   }
 
   for (const [tone, run] of longestRunPerValue(steps, (step) => step.tone)) {
     if (run.length > COPY_LIMITS.consecutiveTone) {
-      at(
+      atFolded(
         run.endsAt,
         "rhythm-tone-run",
-        `${run.length} ${tone} slides in a row (max ${COPY_LIMITS.consecutiveTone}), ending at slide ${run.endsAt + 1}. A deck with no light/dark alternation reads flat however good each slide is.`,
+        `${run.length} ${tone} slides in a row (max ${COPY_LIMITS.consecutiveTone}), ending at slide ${folded[run.endsAt].sourceIndex + 1}. A deck with no light/dark alternation reads flat however good each slide is.`,
       );
     }
   }

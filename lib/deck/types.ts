@@ -87,6 +87,29 @@ export interface SlideBase {
   note: string;
   /** Safe to skip when the event runs late. Dashed outline in the overview. */
   optional?: boolean;
+  /**
+   * Marks this slide as one turn of a repeating block, named by the string.
+   *
+   * The rhythm rules count runs of slides — no more than two full-frame
+   * statements in a row, no more than four of one tone — because a deck read
+   * front to back goes flat when the same register repeats. A cycle is the one
+   * shape that breaks the assumption behind that count: the host does not read
+   * it front to back. The team slides in the final-presentations block are
+   * entered one at a time, and between any two of them the room has watched a
+   * five-minute pitch and a round of questions. They are adjacent in the array
+   * and nowhere else.
+   *
+   * So the two SEQUENCE rules — `rhythm-hero-run` and `rhythm-tone-run` — fold a
+   * consecutive run sharing one cycle name into a single step. Nothing else
+   * changes: every copy rule still applies per slide, the dark-share and
+   * distinct-layout floors still count every slide individually, and a run of
+   * slides that merely look alike is still a run. Two different cycle names
+   * next to each other stay two steps.
+   *
+   * Use it for a block the host jumps INTO, never to quiet a linter complaining
+   * about a block the room will actually sit through end to end.
+   */
+  cycle?: string;
 }
 
 export interface TitleSlide extends SlideBase {
@@ -174,6 +197,41 @@ export interface PhotoGridSlide extends SlideBase {
   lead?: string;
   /** 3–5 images. More than 5 stops reading as a composition. */
   images: DeckImage[];
+}
+
+/**
+ * One team, their own photograph, and their name at display size.
+ *
+ * Why this is not a `photo` slide with a caption. The team photographs are
+ * portrait — 3:4, taken on a phone, the team standing in two rows — and the
+ * stage is 4:3 to 21:9. Bleeding a 3:4 source across a 16:9 frame keeps a
+ * horizontal band about 42% of the original height and throws the rest away,
+ * which on these particular frames cuts the front row off at the chest. Twelve
+ * photographs composed twelve different ways cannot be rescued by one `focus`
+ * value, and the failure is silent: the slide looks fine in the file and loses
+ * people on the projector.
+ *
+ * So the photograph keeps its own aspect and stands full height in its own
+ * column, and the space a landscape stage has left over — which is most of it —
+ * carries the team's name at the size the back of the room can read. The
+ * information here is *which team*, and the name is what answers that; the
+ * photograph is how the team recognises itself.
+ */
+export interface TeamPhotoSlide extends SlideBase {
+  type: "team-photo";
+  /**
+   * The team's name, verbatim. These are Discord channel names — lowercase,
+   * hyphenated — and tidying them is a guess at what a team meant made by
+   * someone who was not there when they named themselves. It is also the string
+   * they have been staring at all weekend, so it is what they will scan for.
+   */
+  team: string;
+  /** Reading index, e.g. `"12"`. Not a table number and not a pitch order. */
+  index?: string;
+  /** The team's own photograph. Portrait is expected; it is never cropped. */
+  image: DeckImage;
+  /** One short line, e.g. a challenge name. Kept optional — most have none. */
+  lead?: string;
 }
 
 export interface StatsSlide extends SlideBase {
@@ -297,6 +355,7 @@ export type Slide =
   | PeopleSlide
   | PhotoSlide
   | PhotoGridSlide
+  | TeamPhotoSlide
   | StatsSlide
   | LogosSlide
   | ThemesSlide

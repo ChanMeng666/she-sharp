@@ -628,6 +628,46 @@ export const MOTION_RECIPES: Record<SlideType, MotionRecipe> = {
     ],
   },
 
+  /* The team arrives, and only then are they named. */
+  "team-photo": {
+    name: "team-arrives",
+    meaning:
+      "The photograph comes in from the leading edge and settles first, then " +
+      "the number and the name land on top of it. That order is the slide's " +
+      "whole argument: the room is looking at six people, and the handle they " +
+      "have been building under all weekend is the label for them — not the " +
+      "other way round.",
+    moves: [
+      {
+        /* The box, not the image inside it. `.deck-contain-box > .deck-img` is
+           pinned `inset: 0` to letterbox correctly, and moving a pinned child
+           fights its own positioning; moving the container carries the picture
+           with it. Also keeps this clear of the never-animate-a-child-of-
+           something-already-moving rule. */
+        select: ".deck-contain-box",
+        from: write(28),
+        duration: DECK_DUR.slow2,
+        easing: DECK_EASE.exp,
+      },
+      {
+        select: `${SEL.kicker}, ${SEL.title}`,
+        from: rise(20),
+        duration: DECK_DUR.slow1,
+        easing: DECK_EASE.entry,
+        delay: 220,
+        stagger: 90,
+      },
+      {
+        select: `${SEL.display}, ${SEL.lead}`,
+        from: rise(24),
+        duration: DECK_DUR.slow2,
+        easing: DECK_EASE.exp,
+        delay: 300,
+        stagger: 110,
+      },
+    ],
+  },
+
   /* Marks on a chip, laid onto the page in rows. */
   logos: {
     name: "chips-settle",
