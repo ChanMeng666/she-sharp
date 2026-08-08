@@ -14,6 +14,7 @@ import { PrizesSlideLayout } from "./slides/prizes-slide";
 import { QrCtaSlideLayout } from "./slides/qr-cta-slide";
 import { SectionSlideLayout } from "./slides/section-slide";
 import { StatsSlideLayout } from "./slides/stats-slide";
+import { TeamPhotoSlideLayout } from "./slides/team-photo-slide";
 import { ThanksSlideLayout } from "./slides/thanks-slide";
 import { ThemesSlideLayout } from "./slides/themes-slide";
 import { TitleSlideLayout } from "./slides/title-slide";
@@ -45,6 +46,8 @@ export function SlideRenderer({ slide }: { slide: Slide }) {
       return <PhotoSlideLayout slide={slide} />;
     case "photo-grid":
       return <PhotoGridSlideLayout slide={slide} />;
+    case "team-photo":
+      return <TeamPhotoSlideLayout slide={slide} />;
     case "stats":
       return <StatsSlideLayout slide={slide} />;
     case "logos":
