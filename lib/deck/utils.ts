@@ -17,6 +17,13 @@ export function slideDefaultTone(slide: Slide): SlideTone {
     case "karakia":
     case "section":
     case "break":
+    /* A team photograph is pillarboxed by construction — portrait source, a
+       landscape stage — so the canvas around it is on screen either way, and a
+       projector throwing white either side of a photograph is the one that
+       makes the photograph look like a mistake. Dark also puts these inside the
+       chapter they belong to: the final-presentations divider is dark, and the
+       pitch clock between them is dark. */
+    case "team-photo":
       return "dark";
     default:
       return "light";
