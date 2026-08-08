@@ -1004,33 +1004,94 @@ const PITCH_ORDER_ROWS = PITCH_ORDER.map((name, i) => {
 });
 
 /**
- * One slide per team, for the host to jump into as each team is called up.
+ * The judging panel, shared by the two slides that show it.
  *
- * `cycle` is what makes this legal, and the reason is in `SlideBase.cycle`: the
- * rhythm rules count consecutive slides, and these are never consecutive in the
- * room — between any two of them sits a five-minute pitch and a round of
- * questions. Twelve full-frame slides in a row is a true statement about the
- * array and a false one about the evening.
+ * One list because the panel is one fact. It is introduced on the Friday night
+ * so teams know who they are building for, and shown again on the Saturday
+ * immediately before the pitches, when the room has had a night and a morning
+ * to forget four faces it saw once.
+ */
+const JUDGE_PEOPLE = judges.map((judge) => ({
+  name: judge.name,
+  role: JUDGE_ROLES[judge.name] ?? judge.title,
+  org: judge.company,
+  image: judge.image,
+}));
+
+/**
+ * Each team's slide, and immediately after it that team's own pitch clock.
+ *
+ * ONE COUNTDOWN PER TEAM, NOT ONE SHARED COUNTDOWN. The deck used to carry a
+ * single `pitch-clock` the host jumped back to twelve times, which works and
+ * asks the person driving to remember a two-step loop — call the team, press O,
+ * find the clock, press Space — twelve times, in front of a room, while also
+ * running the afternoon. In pairs it is one keypress: the team is on screen,
+ * arrow once, Space. The countdown re-arms whenever a `break` slide becomes
+ * current, so a per-team clock resets by construction.
+ *
+ * `cycle` covers BOTH slides of every pair, and it has to. `SlideBase.cycle`
+ * folds a consecutive run sharing one name into a single rhythm step; splitting
+ * the names would leave twelve alternating unfolded steps, and while the type
+ * runs would be fine the whole block is dark, so `rhythm-tone-run` (max 4)
+ * would fail on a twenty-four slide stretch. The justification is unchanged and
+ * still honest: the host enters this block one slide at a time, and between any
+ * two entries the room watches a five-minute pitch and questions.
  *
  * The photographs are portrait phone shots and are never cropped; `team-photo`
- * exists for that reason alone. See the layout for what a `photo` slide would
- * have thrown away.
+ * exists for that reason alone.
  */
-const TEAM_PHOTO_SLIDES: Slide[] = TEAMS.filter((team) => team.photo).map(
-  (team) => ({
-    id: `team-${team.name}`,
-    type: "team-photo",
-    section: "Day Two — Saturday 8 August",
-    cycle: "team-presentations",
-    eyebrow: "Up next",
-    team: team.name,
-    index: team.index,
-    image: {
-      src: team.photo!,
-      alt: `The ${team.name} team at the Aotearoa AI Hackathon Festival 2026.`,
-    },
-    note: `Call ${team.name} up, then press Space on the pitch clock. Read the name as it is written — these are the teams' own Discord handles.`,
-  }),
+/*
+ * BUILT FROM `PITCH_ORDER`, NOT FROM `TEAMS`, and the two are not interchangeable
+ * even though they currently list the same twelve teams in the same sequence.
+ * This block IS the afternoon: the order the slides sit in is the order the
+ * teams stand up in, and each slide shows the team's pitch position rather than
+ * their roster numeral. Driving it from `TEAMS` and indexing into `PITCH_ORDER`
+ * by position would look identical today and silently mislabel every team the
+ * first time the two lists diverge — which is the whole reason they are kept
+ * apart.
+ */
+const TEAM_PRESENTATION_SLIDES: Slide[] = PITCH_ORDER.flatMap(
+  (name, i): Slide[] => {
+    const team = TEAMS.find((entry) => entry.name === name);
+    const position = ordinal(i + 1);
+
+    const clock: Slide = {
+      id: `pitch-clock-${name}`,
+      type: "break",
+      section: "Day Two — Saturday 8 August",
+      cycle: "team-presentations",
+      eyebrow: "Space starts the clock",
+      title: "Pitch Clock",
+      lead: "Five minutes, and the judges ask questions after",
+      minutes: 5,
+      resumeLabel: "Next team, please",
+      note: `${name} is pitching, ${position}. Space starts and pauses; the clock re-arms every time you come back to this slide. Every pitch is recorded, so hold the time.`,
+    };
+
+    /* A team that pitches without a photograph still gets their clock. Their
+       name is on the roster and on the order slide, so the afternoon runs; only
+       the portrait is missing, and a slide with an empty frame in it would read
+       from the floor as that team having been forgotten. */
+    if (!team?.photo) return [clock];
+
+    return [
+      {
+        id: `team-${name}`,
+        type: "team-photo",
+        section: "Day Two — Saturday 8 August",
+        cycle: "team-presentations",
+        eyebrow: "Up next",
+        team: name,
+        index: position,
+        image: {
+          src: team.photo,
+          alt: `The ${name} team at the Aotearoa AI Hackathon Festival 2026.`,
+        },
+        note: `Call ${name} up — they are ${position}. Then press the right arrow once for their clock. Read the name as it is written; these are the teams' own Discord handles.`,
+      },
+      clock,
+    ];
+  },
 );
 
 // --- Deck ------------------------------------------------------------------
@@ -1417,12 +1478,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       eyebrow: "They see your idea once",
       title: "Meet the Judges",
       lead: "The panel you pitch to tomorrow afternoon",
-      people: judges.map((judge) => ({
-        name: judge.name,
-        role: JUDGE_ROLES[judge.name] ?? judge.title,
-        org: judge.company,
-        image: judge.image,
-      })),
+      people: JUDGE_PEOPLE,
       density: "lg",
       shape: "card",
       note: "Judges have very little time to absorb an unfamiliar idea — say so here, it changes how teams pitch.",
@@ -1597,9 +1653,9 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       title: "Today's Teams",
       lead: "Twelve teams are with us today",
       /* Generated from `TEAMS`, which is where the naming rule and the reason
-         these strings are never tidied up now live. Both this roster and the
-         per-team slides in the final-presentations block read from that one
-         array, so a rename cannot land on one and miss the other. */
+         these strings are never tidied up now live. `PITCH_ORDER` names are
+         checked against the same array at build time, so a rename here cannot
+         leave a team mislabelled in the afternoon block — it fails instead. */
       items: TEAMS.map((team) => ({ time: team.index, label: team.name })),
       columns: 2,
       note: "Read the names out and let each team wave. These are the Discord channel names exactly as the teams wrote them — say them as written rather than tidying them up. No tables are allocated today, so do not send anyone looking for one. If a team has renamed itself or merged overnight, fix the row before you project it.",
@@ -1766,44 +1822,52 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       background: archivePlate(115),
       note: "Call the first team up. Hold the room to time — the recording is what goes to national judging.",
     },
-    /* One slide per team, between the chapter divider and the pitch clock.
+    /* The panel again, immediately before the pitches.
 
-       THE HOST DOES NOT PAGE THROUGH THIS BLOCK, AND THE ORDER IN THE ARRAY IS
-       NOT THE ORDER OF THE EVENING. The pitch order is drawn at random on the
-       Saturday afternoon and posted to Discord, so nothing here can predict it.
-       The working loop is: press O, pick the team who is up, call them, press O
-       again, back to the pitch clock, Space. They are in roster order because
-       that is the order the overview grid shows and the same order the room saw
-       on the roster slide two hours earlier — a host hunting for "kanorao"
-       under pressure is scanning, and scanning wants a stable order rather than
-       a meaningful one.
-
-       That access pattern is also why the whole block carries one `cycle` name:
-       see `TEAM_PHOTO_SLIDES` and `SlideBase.cycle`.
-
-       IT SITS AHEAD OF THE PITCH CLOCK FOR A RHYTHM REASON, NOT A NARRATIVE
-       ONE, so do not "tidy" it to after. A `team-photo` is an information
-       layout — a contained portrait beside a name — so the folded block counts
-       as one content step. Placed after the clock it lands directly against the
-       four information slides `buildClosingSlides()` always ends on and makes a
-       run of five, which `rhythm-content-run` rejects. Here it is bracketed by
-       two full-frame slides and nothing runs. */
-    ...TEAM_PHOTO_SLIDES,
-
-    /* The pitch clock, and the only slide in the deck meant to be returned to
-       over and over. The countdown re-arms every time the slide becomes
-       current, so jumping away to announce the next team and back is the
-       reset. */
+       The same four people as the Friday-night slide, from the same `judges`
+       data — the room met them once, twenty-four hours and a whole build ago,
+       and is about to present to them. Only the framing changes: on Friday the
+       panel was who you are building for, here it is who is in the room. */
     {
-      id: "pitch-clock",
+      id: "meet-the-judges-again",
+      type: "people",
+      section: "Day Two — Saturday 8 August",
+      eyebrow: "They see your idea once",
+      title: "Meet the Judges",
+      lead: "The panel you are about to pitch to",
+      people: JUDGE_PEOPLE,
+      density: "lg",
+      shape: "card",
+      note: "Name them again as they sit down — most of the room met them on Friday night and has been heads-down since. Then call the first team.",
+    },
+
+    /* Twelve team-and-clock pairs, in pitch order. See `TEAM_PRESENTATION_SLIDES`
+       for why the pairs exist, why the block is built from `PITCH_ORDER`, and
+       why every slide in it shares one `cycle` name.
+
+       The host does not page through it: press O, pick the team who is up, call
+       them, arrow once, Space. */
+    ...TEAM_PRESENTATION_SLIDES,
+
+    /* The judges leave the room, and the deck has to hold the gap.
+
+       Not decoration and not padding — the run sheet gives deliberation its own
+       half hour (6:30–7:00) before the awards, and it was the one timed block on
+       the Saturday with no slide behind it. It also does load-bearing rhythm
+       work: `buildClosingSlides()` always ends on four consecutive information
+       slides, which is exactly the cap, so the folded team block landing
+       directly against them makes a run of five and `rhythm-content-run`
+       rejects it. A full-frame slide has to sit here. This is the honest one. */
+    {
+      id: "judges-deliberate",
       type: "break",
       section: "Day Two — Saturday 8 August",
-      eyebrow: "Reset between every team",
-      title: "Pitch Clock",
-      lead: "Five minutes, and the judges ask questions after",
-      minutes: 5,
-      resumeLabel: "Next team, please",
-      note: "Press O, pick this slide again, and the clock re-arms at five minutes. Space starts it as the team begins. Every pitch is recorded, so hold the time.",
+      eyebrow: "Every pitch is in",
+      title: "Judges Deliberate",
+      lead: "The panel scores in private while the room breathes",
+      minutes: 30,
+      resumeLabel: "Awards at 7:00pm",
+      note: "Start it as the judges leave. Tell the room to stay — awards are at 7:00pm and the closing karakia follows. Do not chase the panel for a result.",
     },
 
     // 55–60 — She Sharp closing, generated from live site data.
