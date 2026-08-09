@@ -86,7 +86,10 @@ curl -s "$B/" | grep -o '"@type":\["NGO"'        # Organization JSON-LD present
 - **Two properties, and the difference matters**:
   - `sc-domain:shesharp.org.nz` — DNS-verified, covers **every subdomain**. All issue history and every running validation lives here, so this is the one to use for VALIDATE FIX.
   - `https://www.shesharp.org.nz/` (added 2026-08-09, auto-verified off the domain property) — the main site only. Use it for day-to-day reporting: the domain property's Page indexing counts are dominated by `herwaka.shesharp.org.nz`'s Mintlify asset URLs.
-  - **Never compare numbers across the two.** The prefix property excludes apex and subdomains, which carried ~3.5% of clicks and ~3.9% of impressions in the three months to 2026-08-09 — a range difference, not a drop.
+  - `https://herwaka.shesharp.org.nz/` (added 2026-08-09, same auto-verification) — the HER WAKA docs site, 82 pages, sitemap submitted. Its indexing state was previously invisible inside the domain property.
+  - **Never compare numbers across the three.** The prefix properties exclude apex and other subdomains, which carried ~3.5% of clicks and ~3.9% of impressions in the three months to 2026-08-09 — a range difference, not a drop.
+  - A freshly added property shows "Processing data, please check again in a day or so", and its sitemap sits at **"Couldn't fetch"** until Google's first real read. Neither is an error: herwaka's `sitemap.xml` was verified independently as `200 text/xml`, unblocked by its robots.txt and advertised in it.
+- **Do not block `/mintlify-assets/` on herwaka** — see backlog item 12b for why that idea was rejected. Those are the JS files Googlebot needs to render the docs pages, and `.js` resources in "Crawled – currently not indexed" is the normal end state for a resource, not a defect.
 - **Open validations** (check before starting new work — do not disturb a running one):
 
   | Issue | State | Next check |
