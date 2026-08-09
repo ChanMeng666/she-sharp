@@ -817,7 +817,11 @@ community · inspiring · inclusion
   npx tsx .claude/skills/sync-event-from-slack/scripts/audit-read-state.ts   # nothing scored-but-unread (offline, in CI)
   npx tsx .claude/skills/sync-event-from-slack/scripts/verify-coverage.ts    # walks Slack itself; the definitive coverage check
   for f in lib/newsletter/*.test.ts; do npx tsx "$f"; done
+  npx tsx scripts/seo/verify-page-metadata.ts   # crawls the LIVE sitemap: duplicate titles/descriptions, missing h1, bad canonical, stray noindex
   ```
+  `verify-page-metadata` needs a running site (`--base http://localhost:3100`
+  against a local `next start`, otherwise production) and is therefore **not**
+  in CI. Run it after a deploy, or before a PR that touches metadata.
 - **CI** (`.github/workflows/verify.yml`, on PRs to `main`) runs `verify-image-paths` (which also carries `check-hackathon-facts` and the Slack read-position test), `typecheck-scripts`, and `deck-checks`. The email and newsletter suites are **not** in CI — run those locally before pushing.
 
 ### URL Construction Rules

@@ -73,11 +73,16 @@ const STATIC_ROUTES: Array<{
  * deriving lastModified and priority from each event's date.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
+  // No `lastModified` on static routes, and none on upcoming events.
+  //
+  // Both used to carry `new Date()`, which is the build timestamp — so every
+  // deploy told Google that 25 pages had just changed. GSC's own export on
+  // 2026-08-09 showed all of them stamped with the previous deploy's date. A
+  // lastmod that moves on every build is a lastmod Google learns to ignore
+  // site-wide, which costs the entries that DO carry a real date below.
+  // Omitting the field is honest; a fabricated date is not.
   const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => ({
     url: `${SITE_URL}${route.path}`,
-    lastModified: now,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
@@ -85,8 +90,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const eventEntries: MetadataRoute.Sitemap = getAllEvents().map((event) => {
     const upcoming = isFutureDate(event.date);
     const eventDate = parseDateString(event.date);
+    // A past event's own date is a real "last meaningfully changed" signal.
+    // An upcoming event has none, so it gets no lastmod rather than a fake one.
     const lastModified =
-      !Number.isNaN(eventDate.getTime()) && !upcoming ? eventDate : now;
+      !Number.isNaN(eventDate.getTime()) && !upcoming ? eventDate : undefined;
 
     return {
       url: `${SITE_URL}/events/${event.slug}`,

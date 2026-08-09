@@ -271,6 +271,15 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen mb-12 sm:mb-16 md:mb-20 lg:mb-24">
+      {/*
+        The design opens straight into the featured-event hero, so the page had
+        no h1 at all (confirmed by a crawl on 2026-08-09). Screen-reader-only
+        rather than visible, because neither hero branch has a slot for a page
+        title: with a featured event the largest heading is that event's name,
+        and without one it is the fallback panel's own heading.
+      */}
+      <h1 className="sr-only">Events &amp; workshops</h1>
+
       {/* Hero Section - Featured event with fallback image */}
       <FeaturedEventHero event={featuredEvent} />
 
