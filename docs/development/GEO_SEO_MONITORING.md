@@ -82,13 +82,18 @@ curl -s "$B/" | grep -o '"@type":\["NGO"'        # Organization JSON-LD present
 ### Search Console (manual, recurring)
 
 - **Google Search Console** (https://search.google.com/search-console): add/verify the `shesharp.org.nz` property, then **Sitemaps → submit `sitemap.xml`**. Monitor: Coverage/Indexing, Rich results (Event, Organization), impressions/clicks per query.
-- **Access**: Domain property `sc-domain:shesharp.org.nz`, reachable **only** from the `website@shesharp.org.nz` account, which lives in a different Chrome instance from the maintainer's usual profile. `?authuser=N` guessing does not find it — use `switch_browser` in `claude-in-chrome` and let the human pick the browser.
+- **Access**: reachable **only** from the `website@shesharp.org.nz` account, which lives in a different Chrome instance from the maintainer's usual profile. `?authuser=N` guessing does not find it — use `switch_browser` in `claude-in-chrome` and let the human pick the browser.
+- **Two properties, and the difference matters**:
+  - `sc-domain:shesharp.org.nz` — DNS-verified, covers **every subdomain**. All issue history and every running validation lives here, so this is the one to use for VALIDATE FIX.
+  - `https://www.shesharp.org.nz/` (added 2026-08-09, auto-verified off the domain property) — the main site only. Use it for day-to-day reporting: the domain property's Page indexing counts are dominated by `herwaka.shesharp.org.nz`'s Mintlify asset URLs.
+  - **Never compare numbers across the two.** The prefix property excludes apex and subdomains, which carried ~3.5% of clicks and ~3.9% of impressions in the three months to 2026-08-09 — a range difference, not a drop.
 - **Open validations** (check before starting new work — do not disturb a running one):
 
   | Issue | State | Next check |
   | --- | --- | --- |
   | Duplicate without user-selected canonical (4 URLs) | Validation started **2026-07-31**, `PENDING 4 / FAILED 0`. A prior run started 2026-07-07 **failed** 2026-07-25 (canonical-only, pre-308). | ~2026-08-14. If it fails again *with* the 308s live, escalate to exact-URL Removals, not more redirect edits. |
-  | Indexed, though blocked by robots.txt (`/user-account`) + Not found 404 (5 URLs) | Fixed 2026-08-09 (backlog item 3c). Start validation once the deploy is live. | ~2 weeks after deploy. |
+  | Indexed, though blocked by robots.txt (`/user-account`) | Fix deployed 2026-08-09 (backlog item 3c); validation started the same day, 1 URL. | ~2026-08-23. |
+  | Not found (404) — 16 URLs | Fix deployed 2026-08-09; new validation started the same day, `PENDING 16 / FAILED 0`. A prior run started 2026-07-07 failed 2026-07-11. | ~2026-08-23. **A partial failure here is expected and is not a regression**: only 5 of the 16 were ours to fix, 5 are `herwaka.shesharp.org.nz`, and the rest are pages that correctly 404. Judge it URL by URL, not by the bucket's overall status. |
 
 - **Exporting the Page indexing report**: the report-level export gives **counts only**. The per-reason URL lists are a separate export — click the reason row, then export from the drilldown (≤1,000 rows each). The 2026-08-09 analysis needed the drilldowns plus the Links → internal-links export and Performance → Pages; the summary alone is not enough to tell a defect from a subdomain's static assets.
 - **The domain property is not the site.** `sc-domain:` covers every subdomain, and `herwaka.shesharp.org.nz` (Mintlify docs) supplies most of the "not indexed" count. Before treating any number here as a site defect, split it by host. Backlog item 12a proposes a URL-prefix property so this stops being manual.
