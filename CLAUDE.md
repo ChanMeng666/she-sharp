@@ -723,10 +723,15 @@ source behind them is in `docs/development/PUBLIC_CLAIMS_PROVENANCE.md`.
 - **`lib/data/stats.ts` mixes two different metrics**: `members.current` is
   community members, `impact.workshopAttendees` is cumulative reach. Never
   present them as the same thing. The mailing list is a third number again.
-- **`event-feedback-notifications` in Slack is entirely test data.** Every
-  submitter is a computer-history figure — Ada Lovelace, Grace Hopper, Radia
-  Perlman — on an `@example.com` address. **Never backfill it into the site as
-  real feedback.**
+- **`event-feedback-notifications` in Slack is now a mix of test and real
+  data, and the two are trivially separable.** Everything up to `Feedback #34`
+  is sample data: every submitter is a computer-history figure — Ada Lovelace,
+  Grace Hopper, Radia Perlman — on an `@example.com` address. **From
+  `Feedback #35` (8 Aug 2026) it is real**: the first live responses came from
+  the Aotearoa AI Hackathon Festival, scanned from the deck's QR slide. Split
+  on the `@example.com` address, not on the date or the ID, and **never quote
+  a real respondent by name on the site** — the form promises nothing of the
+  kind. The database, not Slack, is the source for any aggregate.
 
 ### Things not to re-do or roll back
 
