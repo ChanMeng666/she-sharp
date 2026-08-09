@@ -359,22 +359,45 @@ failure.
 
 ---
 
-### ☐ 12. Two GSC-side follow-ups from the 2026-08-09 drilldown (no code)
+### ☑ 12. GSC property split — DONE 2026-08-09
 
-**12a. Add a URL-prefix property for `https://www.shesharp.org.nz/`.** Highest
-return of anything on this list and it takes two minutes. The existing
-`sc-domain:shesharp.org.nz` property covers every subdomain, so 78% of the
-"not indexed" count is `herwaka.shesharp.org.nz`'s Mintlify JS assets. A prefix
-property makes the Page indexing report describe the site this repo actually
-builds, instead of needing the host-by-host split done by hand in item 3c.
-Keep the domain property as well — it is the one that owns DNS verification and
-the whole-domain view.
+**12a. URL-prefix property `https://www.shesharp.org.nz/`** — added and
+auto-verified off the DNS-verified domain property; `sitemap.xml` submitted.
+The existing `sc-domain:shesharp.org.nz` covers every subdomain, so 78% of its
+"not indexed" count is `herwaka.shesharp.org.nz`'s Mintlify JS assets. The
+prefix property makes the Page indexing report describe the site this repo
+actually builds, instead of needing the host-by-host split done by hand in
+item 3c. The domain property stays — it owns DNS verification, the whole-domain
+view, and **all issue history and running validations**.
 
-**12b. `herwaka.shesharp.org.nz` robots.txt.** It has `Disallow: /_next/`, but
-the assets Google is crawling live at `/mintlify-assets/_next/…`, which that rule
-does not match. One `Disallow: /mintlify-assets/` on the Mintlify side would
-retire ~91 entries. Not this repo's to change — raise it with whoever maintains
-the docs site.
+**12c. URL-prefix property `https://herwaka.shesharp.org.nz/`** — added the same
+way, sitemap submitted (82 URLs). The docs site had 82 real pages whose indexing
+state nobody could see inside the domain property. Baseline pending: a new
+property shows "Processing data" for a day or so.
+
+⚠️ **Never compare counts across the three properties.** The prefix properties
+exclude apex and other subdomains, worth ~3.5% of clicks and ~3.9% of
+impressions in the three months to 2026-08-09.
+
+**12b — REJECTED, do not revive.** The original plan here was to add
+`Disallow: /mintlify-assets/` to herwaka's robots.txt, since its existing
+`Disallow: /_next/` does not match `/mintlify-assets/_next/…` and ~91 asset URLs
+were being crawled. **That would have been a net harm.**
+
+- Those files are the JavaScript Googlebot needs to **render** herwaka's pages.
+  Google's own guidance is to let it fetch JS and CSS; blocked resources mean it
+  evaluates a degraded version of the page.
+- `.js` resources sitting in "Crawled – currently not indexed" is the **normal**
+  end state for a resource file, not an error. Google crawls resources and never
+  indexes them.
+- herwaka is not a site worth sacrificing: 82 public pages with a full sitemap,
+  per-page canonicals and no noindex — programme information, employment rights,
+  the NZ IT market, an AI bootcamp. It is content She Sharp wants found.
+
+The trade was a real rendering penalty on a site we want indexed, in exchange
+for a cosmetically smaller number in a report. The number was already solved by
+12a: read the report from the right property rather than damaging what it
+measures.
 
 ---
 
