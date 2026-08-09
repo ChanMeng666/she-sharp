@@ -13,7 +13,15 @@ import { ParallaxImage } from "@/components/ui/parallax";
 import { curatedImages } from "@/public/img/curated";
 
 export const metadata: Metadata = {
-  title: "Mentorship Programme",
+  // "New Zealand" is in the title on purpose. This page takes ~2,800 search
+  // impressions a quarter for ~38 clicks, and the queries eating that budget
+  // split two ways: generic head terms ("mentorship", "mentorship programs")
+  // where a local charity at position 6-9 will never win the click, and
+  // location-qualified ones ("mentors nz", "nz mentors") where it should.
+  // Only the second group is winnable, so the title names the country.
+  // Kept short enough that "| She Sharp" still fits inside Google's ~60-char
+  // display width — 53 with the template applied.
+  title: "Mentorship Programme for Women in Tech NZ",
   description:
     "Join She Sharp's mentorship programme to connect with experienced professionals in STEM. Get guidance, support, and grow your career in technology.",
   alternates: { canonical: "/mentorship" },

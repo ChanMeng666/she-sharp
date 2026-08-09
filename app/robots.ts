@@ -3,19 +3,17 @@ import { SITE_URL } from "@/lib/seo/site";
 
 /**
  * Paths that should never be crawled or surfaced in search / AI answers.
- * Covers authenticated app surfaces, API routes, and auth flows.
+ * Covers authenticated app surfaces and auth callback routes.
+ *
+ * The sign-in/sign-up/password/verification pages are deliberately NOT here.
+ * They are kept out of search by `robots: { index: false }` in
+ * `app/(login)/layout.tsx` instead, because a Disallow stops crawlers reading
+ * the noindex — the same trap already documented for `/present/*`. GSC reported
+ * exactly this on 2026-08-09: `/user-account` 308s into this prefix, Googlebot
+ * could not complete the hop, and the URL sat in the index as "Indexed, though
+ * blocked by robots.txt".
  */
-const DISALLOWED_PATHS = [
-  "/dashboard/",
-  "/api/",
-  "/sign-in",
-  "/sign-up",
-  "/forgot-password",
-  "/reset-password",
-  "/verify-email",
-  "/verify-invitation",
-  "/auth/",
-];
+const DISALLOWED_PATHS = ["/dashboard/", "/api/", "/auth/"];
 
 /**
  * AI / LLM crawlers we explicitly welcome so the site can be cited in
