@@ -9,6 +9,7 @@ import {
   hasAnySpeakers,
   hasPhotos,
   hasSpecialSections,
+  parseDateString,
 } from "@/lib/data/events";
 import {
   EventHeader,
@@ -46,6 +47,25 @@ export async function generateStaticParams() {
   }));
 }
 
+/**
+ * Builds the SERP title for an event, appending the year when the event's own
+ * name does not already carry one.
+ *
+ * Twelve years of recurring events means several share a name verbatim —
+ * "International Women's Day" ran in 2021, 2023 and 2024, "She Celebrates" in
+ * 2022 and 2023 — which shipped three and two identical <title> tags. The
+ * on-page name is the organisation's own record and is left alone; only the
+ * search-facing title is disambiguated.
+ */
+function seoTitleFor(event: { title: string; date: string }): string {
+  if (/\b(19|20)\d{2}\b/.test(event.title)) return event.title;
+
+  const parsed = parseDateString(event.date);
+  if (Number.isNaN(parsed.getTime())) return event.title;
+
+  return `${event.title} ${parsed.getFullYear()}`;
+}
+
 export async function generateMetadata({
   params,
 }: EventPageProps): Promise<Metadata> {
@@ -64,7 +84,7 @@ export async function generateMetadata({
     "";
 
   return {
-    title: { absolute: `${event.title} | She Sharp` },
+    title: { absolute: `${seoTitleFor(event)} | She Sharp` },
     description,
     alternates: {
       canonical: `/events/${slug}`,

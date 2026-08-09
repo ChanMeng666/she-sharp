@@ -36,7 +36,12 @@ const nextConfig: NextConfig = {
       { source: '/mentorship/meet-our-mentors', destination: '/mentorship', permanent: true },
       { source: '/mentorship/become-a-mentor', destination: '/mentorship/mentor', permanent: true },
       { source: '/get-involved', destination: '/join-our-team', permanent: true },
-      { source: '/user-account', destination: '/dashboard/account', permanent: true },
+      // Points at /sign-in, NOT /dashboard/account. GSC reported /user-account
+      // as "Indexed, though blocked by robots.txt" (2026-08-09): the old target
+      // sits under the robots-disallowed /dashboard/ prefix, so Googlebot could
+      // never complete the hop and kept the stale URL in the index. /sign-in is
+      // crawlable and carries `noindex`, which lets the old URL drop out.
+      { source: '/user-account', destination: '/sign-in', permanent: true },
       { source: '/access-denied', destination: '/', permanent: true },
       // Plural variant — the redirect to /mentorship/mentorship-program was
       // requested years ago, which means something external was linking here.
@@ -58,6 +63,10 @@ const nextConfig: NextConfig = {
       { source: '/conference/2024/google-educator2024', destination: '/events/google-educator-conference-2024', permanent: true },
       { source: '/conference/google-educator', destination: '/events/google-educator-conference-2023', permanent: true },
       { source: '/conference/schedule', destination: '/events/google-educator-conference-2023', permanent: true },
+      // Was falling through to the /conference/:path* catch-all and landing on
+      // /events (GSC 404 drilldown, 2026-08-09). Its 2024 sibling already had a
+      // specific rule; this gives the 2023 edition the same treatment.
+      { source: '/conference/2023/google-educator2023', destination: '/events/google-educator-conference-2023', permanent: true },
       // Catch-all for the rest of the old /conference/<year>/<slug> namespace.
       // Keep it AFTER the specific rules above — first match wins.
       { source: '/conference', destination: '/events', permanent: true },
@@ -73,6 +82,22 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       { source: '/events/shesharp-ai-envirohack-2022-info', destination: '/events', permanent: true },
+      // Surfaced by the GSC "Not found (404)" drilldown, 2026-08-09. This one is
+      // a live event still in circulation under a slug the site never served —
+      // the page it should reach is the second most internally-linked event on
+      // the site, so the dead URL is costing real traffic.
+      {
+        source: '/events/she-sharp-myob-working-smarter-ai-myob-and-the-new-delivery-landscape',
+        destination: '/events/she-sharp-and-myob-working-smarter',
+        permanent: true,
+      },
+      // Remaining still-404 legacy URLs from the same drilldown. The WordPress
+      // /category/* namespace and /paypal-checkout both predate the Webflow
+      // site; /coming-soon was Webflow's placeholder page.
+      { source: '/category/donation', destination: '/donate', permanent: true },
+      { source: '/paypal-checkout', destination: '/donate', permanent: true },
+      { source: '/sponsors/contact', destination: '/sponsors/corporate-sponsorship', permanent: true },
+      { source: '/coming-soon', destination: '/', permanent: true },
       // Old WordPress newsletter PDFs → newsletters hub.
       { source: '/wp-content/uploads/2021/05/June-2021-Newsletter.pdf', destination: '/resources/newsletters', permanent: true },
       { source: '/wp-content/uploads/2021/08/August-2021-Newsletter.pdf', destination: '/resources/newsletters', permanent: true },

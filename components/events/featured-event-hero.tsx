@@ -35,6 +35,9 @@ function FallbackHero() {
       {/* Navy scrim — ambient veil kept light, deeper toward the base */}
       <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/40 to-foreground/25" />
       <div className="relative z-10 max-w-2xl px-6 text-center">
+        {/* h2, not h1 — the page-level h1 lives in app/(site)/events/page.tsx
+            so the heading order is identical whether or not a featured event
+            exists. */}
         <h2 className="text-display-md text-white mb-4">
           Events &amp; workshops
         </h2>

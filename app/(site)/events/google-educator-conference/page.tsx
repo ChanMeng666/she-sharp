@@ -5,7 +5,9 @@ import { Section } from "@/components/layout/section";
 import { CTASection } from "@/components/home/CTA-section";
 
 export const metadata: Metadata = {
-  title: { absolute: "Google Educator Conference | She Sharp" },
+  // "(CS4HS)" is load-bearing, not decoration: without it this series hub and
+  // the 2024 edition page shipped the same <title> (GSC crawl, 2026-08-09).
+  title: { absolute: "Google Educator Conference (CS4HS) | She Sharp" },
   description:
     "The Google Educator Conference (formerly CS4HS), brought to you by Google and She Sharp, upskills New Zealand's digital technology educators. Explore the 2023 and 2024 editions.",
   // Self-canonical; otherwise this page inherits the events layout's "/events"

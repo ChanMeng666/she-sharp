@@ -169,6 +169,116 @@ gets "Oops, you don't have access to this property".
 
 ---
 
+### ☑ 3c. Page-indexing drilldown — FIXED 2026-08-09
+
+**Symptom**: 140 indexed / **181 not indexed**, the largest bucket being
+`Crawled – currently not indexed` at **117**.
+
+**The headline number is mostly not this site.** Exporting the per-reason URL
+lists (the summary export has counts only — the drilldowns are a separate export
+per reason) broke the 117 down as:
+
+| Host | Count | What |
+| --- | --- | --- |
+| `herwaka.shesharp.org.nz` | **91** | Mintlify docs subdomain, `/mintlify-assets/_next/static/chunks/*.js` |
+| `www.shesharp.org.nz` | 24 | see below |
+| `hackathon.shesharp.org.nz` | 1 | |
+| apex `shesharp.org.nz` | 1 | |
+
+A `sc-domain:` property covers **every subdomain**, so 78% of the "problem" is a
+docs site this repo does not build. herwaka's own robots.txt has
+`Disallow: /_next/`, which does not match `/mintlify-assets/_next/…`.
+
+Of the 24 on `www`: 11 legacy Webflow `?<hash>_page=N` params (all last crawled
+Feb–Apr 2026, i.e. **before** the 07-31 `proxy.ts` fix), 6 tracking-param
+homepage variants (`?fbclid`, `?_ga`, `?__hstc`, `?trk`, `?c=`, `?hxchl`),
+2 `?s=` URLs, 2 legacy paths already redirecting but not yet re-crawled, one
+`/join-our-team/apply?type=volunteer`, and **2 real event pages**. The
+tracking-param variants all carry correct self-canonicals — "crawled, not
+indexed" is the *right* outcome for them, not a defect.
+
+⚠️ **A hypothesis worth not re-testing.** The first read of this data assumed
+the 117 were the ~90 event pages that receive zero internal links (the `/events`
+hub is a client component that server-renders only `EVENTS_PER_PAGE = 6` cards).
+The orphaning is real — GSC's own internal-links report lists **16 target pages
+totalling 1,273 links**, and the total matches exactly, so that is the full list,
+not a top-N. But it is **not** causing an indexing problem: 87 of 98 event pages
+draw search impressions at a median position of 9.8 (vs 9.0 for non-event pages),
+and only 2 event pages appear in the 117. Sitemap discovery is enough to get them
+indexed. Restructuring `/events` for crawlable links is a defensible ranking/UX
+project, but it is **not** the fix for this bucket — don't file it as one.
+
+**Not a problem** (verified, no change made):
+- `Page with redirect` (27): every entry is correct — http→https, apex→www,
+  Next's trailing-slash normalisation, or our own 308s. Validation will always
+  "fail" here, because a redirect never stops being a redirect.
+- `Alternative page with proper canonical tag` (1): `/events?type=workshop`
+  consolidating onto `/events`.
+- `?s={search_term_string}`: a Webflow/WordPress-era artefact in Google's URL
+  list, **not** emitted by us — `websiteSchema()` has no `SearchAction` and the
+  string appears nowhere in the repo.
+
+**Fixed**:
+- `next.config.ts` — `/user-account` now 308s to **`/sign-in`**, not
+  `/dashboard/account`. That was the whole cause of
+  `Indexed, though blocked by robots.txt` (1 URL): the target sits under the
+  robots-disallowed `/dashboard/` prefix, Googlebot could not complete the hop,
+  and the stale URL stayed in the index.
+- `app/robots.ts` — `DISALLOWED_PATHS` cut to `/dashboard/`, `/api/`, `/auth/`.
+  The six auth pages moved to `robots: { index: false, follow: true }` on
+  `app/(login)/layout.tsx`. **A Disallow stops crawlers reading a noindex** —
+  the same trap already documented for `/present/*`. The two changes are one
+  decision: unblock first, then noindex, or the URL can never leave the index.
+- `next.config.ts` — five still-live 404s from the drilldown got 308s:
+  `/events/she-sharp-myob-working-smarter-ai-myob-and-the-new-delivery-landscape`
+  → `/events/she-sharp-and-myob-working-smarter` (a **real event** circulating
+  under a slug the site never served, and the second most internally-linked
+  event page on the site), `/category/donation` and `/paypal-checkout` →
+  `/donate`, `/sponsors/contact` → `/sponsors/corporate-sponsorship`,
+  `/coming-soon` → `/`. Plus `/conference/2023/google-educator2023` promoted out
+  of the `/conference/:path*` catch-all onto its own edition page, matching 2024.
+  The other six reported 404s were **already fixed** — GSC's last-crawl dates
+  predate the 07-07 and 07-31 redirect work. Live-test before adding a rule.
+- `app/(site)/events/[slug]/page.tsx` — `seoTitleFor()` appends the year when an
+  event's own name lacks one. Twelve years of recurring events had shipped
+  **three** pages titled `International Women's Day | She Sharp` and two each for
+  `Google Educator Conference` and `She Celebrates`. The on-page name is the
+  organisation's own record and is untouched; only the SERP title changes.
+- `app/(site)/events/google-educator-conference/page.tsx` — series hub retitled
+  `Google Educator Conference (CS4HS)`, which is what stops it colliding with the
+  2024 edition.
+- `lib/data/json/shesharp_events_v3.json` — the 2023 and 2024 GEC entries shared
+  a `shortDescription` verbatim; each now names its own edition and date.
+- `app/(site)/events/page.tsx` — added an `sr-only` `<h1>`. The page had none:
+  the design opens on the featured-event hero, whose largest heading is that
+  event's name. `/sponsors/corporate-sponsorship` had none either; its visible
+  "Partner with purpose" was promoted from `<h2>`.
+- `app/sitemap.ts` — **static routes no longer emit `lastModified`**, and neither
+  do upcoming events. Both used to carry `new Date()`, i.e. the build timestamp,
+  so every deploy claimed 25 pages had just changed. A lastmod that moves on
+  every build is one Google learns to ignore site-wide, devaluing the past-event
+  entries that carry a real date.
+- `app/(site)/mentorship/page.tsx` — title now names New Zealand. The page takes
+  ~2,800 impressions/quarter for 38 clicks; the zero-click queries split into
+  generic head terms (unwinnable at position 6-9) and location-qualified ones
+  (`mentors nz`, `nz mentors`) that are.
+
+**Verified locally** (`next build` + `next start`, Googlebot UA): all 7 new or
+changed redirects resolve in one hop to a 200; `/sign-in` returns 200 with
+`noindex, follow`; robots.txt lists only the three real disallows; a full crawl
+of all 121 sitemap URLs shows **zero duplicate titles, zero duplicate
+descriptions, and exactly one `<h1>` per page**; sitemap still has 121 `<loc>`,
+0 static `lastmod`, 96 event `lastmod` with real dates.
+
+**Expected effect — read this before judging the next export.** What should
+disappear: the 1 robots-blocked URL, our 5 live 404s, and the 6 stale ones on
+re-crawl. **The 117 will barely move**, because 78% of it is a subdomain's static
+assets and ~20% is param URLs already handled correctly.
+
+**Two follow-ups that are not code** (see item 12 below).
+
+---
+
 ## P1 — Strengthen topical authority & structured data
 
 ### ☐ 4. FAQPage structured data on key pages — BLOCKED (needs FAQ content first)
@@ -234,6 +344,37 @@ crawler/LLM understanding.
 
 **Where**: Audit event/gallery/team images for meaningful `alt`; ensure key pages
 interlink with descriptive anchor text (not "click here").
+
+**Related, and bigger than this item**: GSC's internal-links report (2026-08-09)
+lists **16 target pages totalling 1,273 links** — the total matches exactly, so
+that is every internally-linked page on the domain. ~90 event pages receive
+none, because `/events` is a client component that server-renders only
+`EVENTS_PER_PAGE = 6` cards and reveals the rest on click. Fixing it means
+splitting the page into a server shell (rendering a real, **visible**,
+year-grouped archive of all 98 events) plus the existing client filter layer, and
+giving event detail pages sibling links instead of only `getUpcomingEvents(3)`.
+Worth doing for discovery and link equity — but see item 3c: it is **not** an
+indexing fix, and measuring it against the "not indexed" count will look like a
+failure.
+
+---
+
+### ☐ 12. Two GSC-side follow-ups from the 2026-08-09 drilldown (no code)
+
+**12a. Add a URL-prefix property for `https://www.shesharp.org.nz/`.** Highest
+return of anything on this list and it takes two minutes. The existing
+`sc-domain:shesharp.org.nz` property covers every subdomain, so 78% of the
+"not indexed" count is `herwaka.shesharp.org.nz`'s Mintlify JS assets. A prefix
+property makes the Page indexing report describe the site this repo actually
+builds, instead of needing the host-by-host split done by hand in item 3c.
+Keep the domain property as well — it is the one that owns DNS verification and
+the whole-domain view.
+
+**12b. `herwaka.shesharp.org.nz` robots.txt.** It has `Disallow: /_next/`, but
+the assets Google is crawling live at `/mintlify-assets/_next/…`, which that rule
+does not match. One `Disallow: /mintlify-assets/` on the Mintlify side would
+retire ~91 entries. Not this repo's to change — raise it with whoever maintains
+the docs site.
 
 ---
 

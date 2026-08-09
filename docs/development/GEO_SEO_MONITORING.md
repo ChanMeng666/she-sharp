@@ -45,18 +45,38 @@ Target queries to spot-check (run in ChatGPT, Claude, Perplexity, Google AI Over
 
 ### After each deploy (automated-ish, CLI)
 
+**The on-page checks are a script now** — `scripts/seo/verify-page-metadata.ts`.
+It crawls every URL in the deployed sitemap with a Googlebot UA and fails on:
+a non-200, a missing/duplicate `<title>`, a missing/duplicate meta description,
+anything other than exactly one `<h1>`, a missing or non-self-referencing
+canonical, or a `noindex` on a sitemapped URL. It also warns when more than five
+sitemap entries share one `lastmod` date, which is the signature of a build
+timestamp rather than a content date.
+
+```bash
+npx tsx scripts/seo/verify-page-metadata.ts                          # production
+npx tsx scripts/seo/verify-page-metadata.ts --base http://localhost:3100
+npx tsx scripts/seo/verify-page-metadata.ts --verbose                # per-URL warnings
+```
+
+Exit 1 means a defect. Content warnings (long descriptions, thin pages) are
+tallied by kind rather than listed, because they hit most event pages and would
+otherwise drown the errors; `--strict` promotes them to failures.
+
+It is **not** in CI on purpose: 121 live requests per PR is slow, flaky, and
+tests the deployed site rather than the diff. Run it after a deploy, or against
+a local `next start` when a PR touches metadata.
+
+Not covered by the script — still worth a glance after a deploy:
+
 ```bash
 B=https://www.shesharp.org.nz
 curl -s "$B/robots.txt"  | grep -E "ClaudeBot|GPTBot|Sitemap"
-curl -s "$B/sitemap.xml" | grep -c "<loc>"       # expect 120 (2026-07-31); grows with events
 curl -s "$B/sitemap.xml" | grep -c "apply"       # expect 0 — noindex routes must never be listed
+curl -s "$B/sign-in" | grep -o 'name="robots" content="[^"]*"'   # expect noindex — it is NOT robots.txt-blocked
 curl -s "$B/llms.txt"        | head -1
 curl -s "$B/llms-full.txt"   | grep -cE "Upcoming Events|Key Statistics"
 curl -s "$B/" | grep -o '"@type":\["NGO"'        # Organization JSON-LD present
-# Title sanity (no doubled "| She Sharp", no missing suffix):
-for p in / /events /events/<some-slug> /mentorship/mentor; do
-  curl -s "$B$p" | grep -o '<title>[^<]*</title>'
-done
 ```
 
 ### Search Console (manual, recurring)
@@ -68,6 +88,10 @@ done
   | Issue | State | Next check |
   | --- | --- | --- |
   | Duplicate without user-selected canonical (4 URLs) | Validation started **2026-07-31**, `PENDING 4 / FAILED 0`. A prior run started 2026-07-07 **failed** 2026-07-25 (canonical-only, pre-308). | ~2026-08-14. If it fails again *with* the 308s live, escalate to exact-URL Removals, not more redirect edits. |
+  | Indexed, though blocked by robots.txt (`/user-account`) + Not found 404 (5 URLs) | Fixed 2026-08-09 (backlog item 3c). Start validation once the deploy is live. | ~2 weeks after deploy. |
+
+- **Exporting the Page indexing report**: the report-level export gives **counts only**. The per-reason URL lists are a separate export — click the reason row, then export from the drilldown (≤1,000 rows each). The 2026-08-09 analysis needed the drilldowns plus the Links → internal-links export and Performance → Pages; the summary alone is not enough to tell a defect from a subdomain's static assets.
+- **The domain property is not the site.** `sc-domain:` covers every subdomain, and `herwaka.shesharp.org.nz` (Mintlify docs) supplies most of the "not indexed" count. Before treating any number here as a site defect, split it by host. Backlog item 12a proposes a URL-prefix property so this stops being manual.
 
 - **Bing Webmaster Tools** (https://www.bing.com/webmasters): submit the same sitemap (Bing powers ChatGPT/Copilot web results).
 

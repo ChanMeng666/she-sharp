@@ -84,9 +84,9 @@ export function SponsorshipPricing() {
             <p className="eyebrow-script mb-3 text-3xl sm:text-4xl">
               For our sponsors
             </p>
-            <h2 className="text-balance text-display-sm text-foreground">
+            <h1 className="text-balance text-display-sm text-foreground">
               Partner with purpose
-            </h2>
+            </h1>
             <p className="mx-auto mt-4 max-w-md text-balance text-lg text-muted-foreground">
               Join leading organisations in empowering women in STEM through
               strategic corporate partnerships.
