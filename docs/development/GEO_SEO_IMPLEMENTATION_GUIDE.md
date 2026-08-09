@@ -327,7 +327,7 @@ start small, expand if it helps.
 
 ---
 
-## ⚠️ The three metadata gotchas (these cost the most time)
+## ⚠️ The four metadata gotchas (these cost the most time)
 
 ### Gotcha #1 — Title template does NOT cascade through a titled intermediate layout
 
@@ -383,6 +383,28 @@ temporarily moving `MENTORSHIP_CONFIG.registrationDeadline` forward and running 
 dev server. When you touch metadata on a gated route, **open the gate and
 render it** — then revert the gate before committing.
 
+### Gotcha #4 — `Disallow` and `noindex` are alternatives, never a pair
+
+To keep a page out of search, make it **crawlable** and give it `noindex`. If you
+`Disallow` it in `robots.txt` instead, Google can still index the URL from
+external links while being unable to fetch the page and read the very directive
+that would remove it. GSC calls the result **"Indexed, though blocked by
+robots.txt"**, and there is no way out until you unblock.
+
+Two shapes of this bug, both seen here:
+
+- **Direct** — an auth or tooling path listed in `robots.txt` with no `noindex`
+  on the page. It gets indexed as a title-only husk.
+- **Via a redirect** — a legacy URL 308ing *into* a disallowed prefix. Googlebot
+  cannot complete the hop, so the **source** URL is what gets stuck. `/user-account`
+  → `/dashboard/account` did exactly this, and the dead login URL was still
+  drawing search impressions.
+
+**Order matters when fixing it**: remove the `Disallow` first, *then* rely on
+`noindex`. The reverse leaves the URL stuck, because the crawler still cannot see
+the new directive. And when a redirect is involved, point it at a destination
+Google is allowed to fetch.
+
 ---
 
 ## Step 4 — Verify locally (before deploy)
@@ -420,6 +442,38 @@ run the homepage + a detail page through Google's
 [Rich Results Test](https://search.google.com/test/rich-results) and the
 [Schema.org validator](https://validator.schema.org/).
 
+### Spot checks miss the defects that only exist between pages
+
+Everything above inspects one page at a time, and a whole class of defect is
+invisible that way: **duplicate titles and descriptions**. Each page looks fine
+alone; the problem is that three of them are identical. Nor will GSC tell you —
+self-referencing canonicals mean it files nothing under any duplicate bucket.
+
+Write a small crawler over your own sitemap instead. This project's is
+`scripts/seo/verify-page-metadata.ts` (~450 lines, no dependencies): it fetches
+every `<loc>` with a Googlebot UA and fails the run on a non-200, a missing or
+**duplicate** `<title>` or meta description, anything other than exactly one
+`<h1>`, a missing or non-self-referencing canonical, or a `noindex` on a
+sitemapped URL. It also warns when more than five sitemap entries share one
+`lastmod` date, which is the signature of a build timestamp rather than a
+content date.
+
+Three design notes worth copying:
+
+- **Keep it out of CI.** Hundreds of live requests per PR is slow and flaky, and
+  it tests the deployed site rather than the diff. Run it after a deploy, or
+  against a local `next start` via a `--base` flag.
+- **Compare canonicals against the sitemap's URL, not the request URL** — a
+  local run requests `localhost` while canonicals stay absolute against the
+  production origin, so the naive comparison flags every page.
+- **Tally warnings by kind; list only errors.** Content warnings (long
+  descriptions, thin pages) hit most pages on a real site, and printing them all
+  buries the handful of genuine defects. Put the per-URL list behind `--verbose`.
+
+Prove it works by running it against the **unfixed** site first. Ours exited 1
+with exactly the ten pages found by hand — which is what makes it a regression
+gate rather than decoration.
+
 ---
 
 ## Step 5 — Browser: Google Search Console + Bing
@@ -442,8 +496,25 @@ login, OAuth-consent, and DNS-save actions** — those are theirs to approve.
 ### 5a. Google Search Console — add & verify the property
 
 1. Go to <https://search.google.com/search-console>.
-2. **Prefer a Domain property** (e.g. `example.com`) over a URL-prefix property —
-   it covers http/https + all subdomains and is verified once via DNS.
+2. **Verify a Domain property** (e.g. `example.com`) — it covers http/https + all
+   subdomains and is verified once via DNS.
+
+   **Then add a URL-prefix property for each site you actually own.** "All
+   subdomains" is the domain property's strength for verification and its
+   weakness for reporting: every subdomain's URLs land in the same Page indexing
+   report, including ones built by other tools and other people. Here, a
+   Mintlify-hosted docs subdomain contributed **91 of 117** "Crawled – currently
+   not indexed" URLs — 78% of a figure that read as a defect in the main site,
+   and it took a per-reason CSV export split by host to see that.
+
+   A prefix property auto-verifies off the domain property (no new DNS record,
+   no file upload), so this costs two minutes per site. Keep the domain property:
+   **issue history and validations live only there**, and prefix properties added
+   later do not inherit them.
+
+   ⚠️ **Never compare counts across properties.** A prefix property excludes the
+   apex and other subdomains. Here that was ~3.5% of clicks and ~3.9% of
+   impressions — a scope difference that looks exactly like a traffic drop.
 3. Verification options, easiest first:
    - **DNS provider auto-detect / OAuth** — if the registrar is Cloudflare/Google
      Domains/etc., GSC offers a one-click "authorize via your DNS provider" flow.
@@ -494,6 +565,19 @@ GSC → **Pages** → click an issue → **Validation details**. The loop:
    and which sitemap scope) are the only way to see all the URLs and when each
    was last crawled. Last-crawled dates matter: a URL crawled *before* your fix
    shipped proves nothing about whether the fix works.
+
+   **The report-level export is counts only.** Exporting from the Page indexing
+   page itself gives you a table of reasons and totals and no URLs at all — the
+   drilldowns are a separate export per reason (≤1,000 rows each). A count
+   without its URLs cannot distinguish a defect from a subdomain's static assets,
+   so do not start diagnosing until you have them. Pull **Links → internal
+   links** and **Performance → Pages** at the same time; together they answer
+   "is this page orphaned?" and "does anyone actually reach it?", which is
+   usually what the count is really asking.
+
+   **Then live-test every URL before writing a single fix.** Of 16 reported 404s
+   here, **six were already fixed** — GSC's last-crawl dates simply predated
+   earlier redirect work. Adding rules for those would have been pure noise.
 2. **Ship the fix, then verify on production with `curl`** — not just locally.
 3. **URL Inspection → `TEST LIVE URL`** on a representative URL. The live test
    follows redirects and reports on the destination, so a working redirect shows
@@ -508,6 +592,21 @@ GSC → **Pages** → click an issue → **Validation details**. The loop:
    as **START NEW VALIDATION**. Success looks like `PENDING n / FAILED 0`.
 5. **Then leave it alone for 1–4 weeks.** The count does not drop immediately and
    may wobble. Re-running or re-editing mid-window just restarts the clock.
+
+> **Judge a validation URL by URL, not by the bucket's status.** A bucket mixes
+> URLs you fixed with URLs that are *correctly* in it, so the overall result can
+> read FAILED while every URL you touched passed. Of the 16 in this project's
+> 404 bucket, only 5 were ours to fix; 5 belonged to a subdomain and the rest
+> were pages that should 404 forever. Expecting the bucket to go green would
+> have produced a second round of pointless "fixes".
+
+> **Some buckets are not defects at all.** "Page with redirect" is the end state
+> of every intentional legacy 308 — a redirect never stops being a redirect, so
+> its validation always fails. Tracking-parameter URL variants with correct
+> self-canonicals land in "Crawled – currently not indexed", which is the
+> *desired* outcome. And `.js`/`.css` resources sit there permanently, because
+> Google crawls resources and never indexes them. Before fixing a bucket, decide
+> whether it is describing damage or describing success.
 
 > **Read the existing validation state before you diagnose.** Finding that a
 > prior validation had already been started and *failed* was the single most
@@ -536,8 +635,8 @@ See `GEO_SEO_MONITORING.md` for the KPI list and recurring checks. In short:
 ## Reusable checklist (copy into the next project)
 
 - [ ] `lib/seo/site.ts` single source of truth; matches `metadataBase`.
-- [ ] `app/robots.ts` — AI crawlers authorized, sitemap advertised, private paths disallowed.
-- [ ] `app/sitemap.ts` — static table + dynamic content; no 404/disabled URLs; **no `noindex` URLs** (sitemap membership and `robots` are one decision).
+- [ ] `app/robots.ts` — AI crawlers authorized, sitemap advertised, genuinely private paths disallowed. **Anything you merely want out of *search* gets `noindex` and stays crawlable** — and no redirect points into a disallowed prefix.
+- [ ] `app/sitemap.ts` — static table + dynamic content; no 404/disabled URLs; **no `noindex` URLs** (sitemap membership and `robots` are one decision); **`lastmod` omitted wherever there is no real content date** — never the build timestamp.
 - [ ] `public/llms.txt` + `app/llms-full.txt/route.ts`.
 - [ ] `components/seo/json-ld.tsx` + `lib/seo/schema.ts`; Org+WebSite site-wide; domain type on detail pages; BreadcrumbList; Person on team/about (only people shown on the page).
 - [ ] Root `title` template; child suffixes removed; **no root canonical**; home self-canonical; any `noindex` segment sets its **own** canonical.
@@ -547,7 +646,9 @@ See `GEO_SEO_MONITORING.md` for the KPI list and recurring checks. In short:
 - [ ] (If migrated) Middleware 308-strips the old CMS's **query params** (`?<hex>_page=`, `?replytocom=`, …) — canonicals alone do not clear these.
 - [ ] Gated/seasonal routes render-tested with the gate temporarily opened.
 - [ ] Local verify: build + curl (robots/sitemap/llms/manifest/JSON-LD/titles/canonicals); watch for stale-server.
+- [ ] **Sitemap-wide crawler** asserting no duplicate titles/descriptions, exactly one `<h1>`, self-canonicals — the between-page defects a per-page spot check cannot see. Prove it by running it against the unfixed site.
 - [ ] Production verify + Rich Results Test.
 - [ ] GSC: domain property verified, sitemap submitted (Success).
+- [ ] GSC: **a URL-prefix property per site you own**, so one subdomain's assets cannot dominate another's report. Never compare counts across properties.
 - [ ] Bing: imported from GSC, sitemap submitted.
 - [ ] Baseline AI-citation spot check recorded.
