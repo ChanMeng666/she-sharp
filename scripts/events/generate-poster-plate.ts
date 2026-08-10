@@ -17,13 +17,16 @@
  * to stage two by hand.
  *
  *   npx tsx scripts/events/generate-poster-plate.ts <event-slug> --probe
- *   npx tsx scripts/events/generate-poster-plate.ts <event-slug> [--n 4] [--size WxH]
+ *   npx tsx scripts/events/generate-poster-plate.ts <event-slug> --prompt-file <path>
+ *          [--n 4] [--size 2048x3072]
  *
- * `--probe` first, always. See PROBE below.
+ * `--probe` first, always. See PROBE below. A new event describes its picture in
+ * a prompt FILE rather than a new entry in `PROMPTS` — see the note at the
+ * prompt resolution below for why that stopped being a code change.
  */
 
 import "dotenv/config";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import OpenAI from "openai";
@@ -138,6 +141,10 @@ interface Cli {
   size: string;
   probe: boolean;
   variant: string;
+  /** Free-text prompt, for a one-off. */
+  prompt?: string;
+  /** Path to a prompt file — the normal path for a new event. */
+  promptFile?: string;
 }
 
 function parseCli(): Cli {
@@ -146,7 +153,11 @@ function parseCli(): Cli {
 
   if (!slug) {
     console.error(
-      "Usage: npx tsx scripts/events/generate-poster-plate.ts <event-slug> [--probe] [--n 4] [--size 1024x1536]",
+      [
+        "Usage: npx tsx scripts/events/generate-poster-plate.ts <event-slug>",
+        "       [--probe] [--n 4] [--size 2048x3072]",
+        "       [--prompt-file <path> | --prompt '<text>' | --variant <name>]",
+      ].join("\n"),
     );
     process.exit(1);
   }
@@ -162,6 +173,8 @@ function parseCli(): Cli {
     size: flag("size") ?? DEFAULT_SIZE,
     probe: argv.includes("--probe"),
     variant: flag("variant") ?? "fibre",
+    prompt: flag("prompt"),
+    promptFile: flag("prompt-file"),
   };
 }
 
@@ -377,16 +390,51 @@ async function main(): Promise<void> {
     return;
   }
 
-  const prompt = PROMPTS[cli.variant];
+  /*
+   * A prompt may come from a file, from the command line, or from the small set
+   * of variants kept below.
+   *
+   * `--prompt-file` is the normal path for a new event and the reason it exists
+   * is a real failure: `PROMPTS` used to be the ONLY source, so describing a
+   * different picture meant editing this script and committing a new entry per
+   * event. That is a code change to answer "what should this one look like",
+   * which puts the creative step behind the one door a non-technical organiser
+   * cannot open, and leaves the file accumulating one-off prompts forever.
+   *
+   * The committed variants stay, because a prompt that produced good artwork is
+   * worth keeping as a worked example — but they are now a library, not a gate.
+   */
+  const prompt = cli.promptFile
+    ? readFileSync(path.resolve(cli.promptFile), "utf8").trim()
+    : (cli.prompt ?? PROMPTS[cli.variant]);
+
   if (!prompt) {
     console.error(
-      `No prompt variant "${cli.variant}". Known: ${Object.keys(PROMPTS).join(", ")}`,
+      `No prompt. Pass --prompt-file <path> or --prompt "<text>", or use a known ` +
+        `variant with --variant: ${Object.keys(PROMPTS).join(", ")}.\n` +
+        `See .claude/skills/make-event-poster/references/plate-prompts.md for the shape that works.`,
     );
     process.exit(1);
   }
 
+  if (!/no people|no faces/i.test(prompt) || !/no text|no logos/i.test(prompt)) {
+    // A warning rather than a refusal: the house rules are a strong default, not
+    // a filter, and there may be a good reason to word them differently. But a
+    // plate generated without them comes back with invented signage on it often
+    // enough that silently proceeding wastes a generation and a few minutes.
+    console.warn(
+      "  ! this prompt does not carry the house rules (no people, no faces, no text, no logos).\n" +
+        "    Plates generated without them tend to come back with invented lettering.",
+    );
+  }
+
   mkdirSync(OUT_DIR, { recursive: true });
-  console.log(`${MODEL} · ${cli.size} · ${cli.n} candidates · "${cli.variant}"`);
+  const label = cli.promptFile
+    ? path.basename(cli.promptFile).replace(/\.[^.]+$/, "")
+    : cli.prompt
+      ? "custom"
+      : cli.variant;
+  console.log(`${MODEL} · ${cli.size} · ${cli.n} candidates · "${label}"`);
   console.log(`→ ${path.relative(ROOT, OUT_DIR)}\n`);
 
   const written: { index: number; bytes: Buffer }[] = [];
@@ -395,7 +443,7 @@ async function main(): Promise<void> {
   // than the batch, every candidate is on disk the moment it returns, and `n`
   // is one of the parameters whose support here is unverified.
   for (let i = 1; i <= cli.n; i++) {
-    const stem = `${cli.slug}-${cli.variant}-${String(i).padStart(2, "0")}`;
+    const stem = `${cli.slug}-${label}-${String(i).padStart(2, "0")}`;
     const png = path.join(OUT_DIR, `${stem}.png`);
 
     if (existsSync(png)) {
@@ -428,7 +476,7 @@ async function main(): Promise<void> {
   }
 
   if (written.length > 1) {
-    const sheet = path.join(OUT_DIR, `${cli.slug}-${cli.variant}-sheet.png`);
+    const sheet = path.join(OUT_DIR, `${cli.slug}-${label}-sheet.png`);
     await contactSheet(written, sheet);
     console.log(`\ncontact sheet → ${path.relative(ROOT, sheet)}`);
   }
