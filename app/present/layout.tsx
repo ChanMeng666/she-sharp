@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 
 // Deck styles are loaded only here, so the 26 public pages pay nothing for them.
+// Order matters: `deck-skins.css` overrides the house treatment per event and
+// must come second.
 import "@/styles/components/deck.css";
+import "@/styles/components/deck-skins.css";
 
 /**
  * Presentation decks are internal tooling for event hosts, not site content.

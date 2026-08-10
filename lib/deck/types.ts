@@ -88,6 +88,24 @@ export interface SlideBase {
   /** Safe to skip when the event runs late. Dashed outline in the overview. */
   optional?: boolean;
   /**
+   * Which side of the house/event line this slide sits on.
+   *
+   * `"house"` wears the She Sharp skin — the archive wall and the brand
+   * duotone — whatever skin the deck declares. It is stamped by
+   * `buildOpeningSlides()` and `buildClosingSlides()` onto the organisational
+   * slides, and it is not an aesthetic choice: the team, the impact figures,
+   * the sponsor wall and the thanks are the organisation's record of itself,
+   * and the duotone is the only thing making twelve years of photography read
+   * as one organisation. An event may not restyle them.
+   *
+   * Everything an event author writes defaults to the event's own skin. The
+   * chapter card that hands over from She Sharp to the event is deliberately on
+   * the event side — that card IS the handover.
+   *
+   * See `lib/deck/skins.ts`.
+   */
+  surface?: "house" | "event";
+  /**
    * Marks this slide as one turn of a repeating block, named by the string.
    *
    * The rhythm rules count runs of slides — no more than two full-frame
@@ -413,6 +431,49 @@ export interface DeckTheme {
   darkBackground?: DeckImage;
 }
 
+/**
+ * What fills the frame behind a statement slide.
+ *
+ * The extensible axis of a skin. `archive` is the house wall; `plate` is a
+ * field built from an event's own artwork, which is what a poster-led deck
+ * wants. A genuinely new kind is a branch in `components/deck/surfaces.tsx`
+ * plus a variant here.
+ *
+ * Lives in the schema rather than in `lib/deck/skins.ts` because `Deck` refers
+ * to it and `skins.ts` refers to `DeckImage`; declaring it there would make the
+ * two files import each other.
+ */
+export type SurfaceSpec =
+  | { kind: "archive" }
+  | {
+      /**
+       * One or more plates, panned per slide so no two show the same crop.
+       * Give it at least two: a single image repeated across eight statement
+       * slides reads as a stuck projector however far it is panned.
+       */
+      kind: "plate";
+      images: DeckImage[];
+      /** Adds the slow ambient drift. Off for a busy plate. */
+      drift?: boolean;
+    };
+
+/** A per-event visual identity. See `lib/deck/skins.ts` for the rules. */
+export interface DeckSkin {
+  /** Stable key; becomes `data-skin` and the CSS selector. */
+  key: string;
+  /** Human name, for the build report an organiser actually reads. */
+  name: string;
+  /** One line on what the look is and where it came from. */
+  description: string;
+  surface: SurfaceSpec;
+  /**
+   * Multiplies every entrance duration, delay and stagger. 1 is the house
+   * tempo. Clamped in `motion.ts`, so a skin cannot stall a slide the host is
+   * waiting on.
+   */
+  tempo?: number;
+}
+
 export interface Deck {
   /** Matches the event slug so `/present/<slug>` mirrors `/events/<slug>`. */
   slug: string;
@@ -421,5 +482,13 @@ export interface Deck {
   /** Back-reference into `lib/data/events.ts`. */
   eventSlug?: string;
   theme: DeckTheme;
+  /**
+   * This event's own visual identity, worn by every slide except the
+   * organisational ones. Omit and the whole deck wears the house skin, which is
+   * the right answer for an event with no artwork of its own yet.
+   *
+   * See `lib/deck/skins.ts` for what a skin may and may not change.
+   */
+  skin?: DeckSkin;
   slides: Slide[];
 }

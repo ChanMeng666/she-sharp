@@ -7,7 +7,8 @@ import {
 } from "@/components/deck/deck-controls";
 import type { BreakSlide } from "@/lib/deck/types";
 
-import { ArchiveBand, BAND_PAD, seedFrom } from "./archive";
+import { DeckSurfaceBand } from "@/components/deck/surfaces";
+import { BAND_PAD, seedFrom } from "./archive";
 
 /**
  * The break clock — the biggest type in the whole deck.
@@ -64,7 +65,7 @@ export function BreakSlideLayout({ slide }: { slide: BreakSlide }) {
           <div className="deck-scrim" aria-hidden="true" />
         </>
       ) : (
-        <ArchiveBand seed={seed} />
+        <DeckSurfaceBand slide={slide} seed={seed} />
       )}
 
       <div
