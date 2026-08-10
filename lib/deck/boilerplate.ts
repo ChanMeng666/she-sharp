@@ -211,7 +211,7 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
     ...(options.safetyExtras ?? []),
   ].slice(-COPY_LIMITS.bulletCount);
 
-  return [
+  const slides: Slide[] = [
     {
       id: "title",
       type: "title",
@@ -353,8 +353,28 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       subtitle: options.eventMeta?.join(" · "),
       background: options.chapterPlate,
       note: "Hand over to whoever is running the event itself. The She Sharp introduction is finished.",
+      // THE HANDOVER, and the one slide in this sequence that is NOT house.
+      // Everything above it is She Sharp introducing itself; this card is where
+      // the event's own identity arrives, so it is the first slide to wear the
+      // event's skin. See `lib/deck/skins.ts`.
+      surface: "event",
     },
   ];
+
+  return slides.map(asHouse);
+}
+
+/**
+ * Stamps a slide as organisational unless it has already claimed otherwise.
+ *
+ * Applied at the return rather than written onto fourteen slide literals, so a
+ * slide added to either sequence later is stamped without anybody remembering
+ * to. The organisational slides carry She Sharp's own record of itself — the
+ * team, the impact figures, the sponsor wall, the thanks — and an event may not
+ * restyle them; see the boundary described in `lib/deck/skins.ts`.
+ */
+function asHouse<T extends Slide>(slide: T): T {
+  return slide.surface ? slide : { ...slide, surface: "house" };
 }
 
 /**
@@ -477,7 +497,7 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
   };
   const feedbackQr: QrBlock = options.feedbackQr ?? feedbackQrFor(options.eventSlug);
 
-  return [
+  const slides: Slide[] = [
     {
       id: "thank-you",
       type: "thanks",
@@ -563,4 +583,6 @@ export function buildClosingSlides(options: ClosingOptions): Slide[] {
       note: "Leave this on screen while the room empties. Do not advance past it.",
     },
   ];
+
+  return slides.map(asHouse);
 }

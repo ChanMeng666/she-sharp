@@ -4,9 +4,8 @@ import { DeckQr } from "@/components/deck/deck-qr";
 import type { QrCtaSlide } from "@/lib/deck/types";
 import { toneOf } from "@/lib/deck/utils";
 
+import { DeckSurface, DeckSurfaceBand } from "@/components/deck/surfaces";
 import {
-  ArchiveBand,
-  ArchiveWall,
   BAND_PAD,
   INCISION_5_ROWS,
   INCISION_5_ROWS_PAD,
@@ -39,7 +38,7 @@ export function QrCtaSlideLayout({ slide }: { slide: QrCtaSlide }) {
     <>
       {onDark ? (
         <>
-          <ArchiveWall seed={seed} />
+          <DeckSurface slide={slide} seed={seed} />
           <div
             className="deck-incision deck-incision-sheer deck-edge-block-end"
             style={
@@ -54,7 +53,7 @@ export function QrCtaSlideLayout({ slide }: { slide: QrCtaSlide }) {
           />
         </>
       ) : (
-        <ArchiveBand seed={seed} />
+        <DeckSurfaceBand slide={slide} seed={seed} />
       )}
 
       <div

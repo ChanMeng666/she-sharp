@@ -7226,7 +7226,7 @@
         "kind": "skip",
         "reason": "Internal team meeting scheduling/notes. Not a site event channel."
       },
-      "watermarkTs": "1785742480.702639",
+      "watermarkTs": "1786165221.407629",
       "threads": {
         "1491795663.632100": {
           "replyCount": 2,
@@ -8814,10 +8814,10 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.293Z",
+      "lastSyncedAt": "2026-08-09T11:18:16.732Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
+      "scannedTs": "1786165221.407629",
+      "readAt": "2026-08-09T11:18:16.733Z",
       "digest": "Internal team meeting scheduling/notes. Not a site event channel. Flagged by general-signal auto-scan 2026-07-20; reviewed and confirmed no event. Un-skip only if a real event planning thread starts here.",
       "digestAt": "2026-07-20T10:04:47.512Z"
     },
@@ -12518,11 +12518,11 @@
           "latestReplyTs": "1772944172.094069"
         }
       },
-      "fingerprint": "sha256:81501051a00fec7bf479aa4617f3d4e862736e73424b4cbaff457da017989dd6",
-      "lastSyncedAt": "2026-06-09T01:01:18.088Z",
+      "fingerprint": "sha256:9bd54c0dd0d2489b34ddd7e621ddcd27c347aed0afb8000afd9d9b66d33ee58e",
+      "lastSyncedAt": "2026-08-09T11:15:50.457Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
+      "scannedTs": "1773305096.205889",
+      "readAt": "2026-08-09T11:15:50.458Z"
     },
     "C0ADWT94QTX": {
       "name": "ambassador-and-volunteer-application",
@@ -12953,11 +12953,11 @@
           "latestReplyTs": "1774493877.064439"
         }
       },
-      "fingerprint": "sha256:e0a7553aa6ad8cef9f5d5996d8b587f2eb070968ea472c15f5f2421d7db5b85d",
-      "lastSyncedAt": "2026-06-09T02:02:24.506Z",
+      "fingerprint": "sha256:d15b6b7826be904b6b36ad2cf222286b76969c59ec673b90604a46e27fb353c9",
+      "lastSyncedAt": "2026-08-09T11:15:55.514Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
+      "scannedTs": "1777003052.899939",
+      "readAt": "2026-08-09T11:15:55.515Z"
     },
     "C0AFX3C4H5Z": {
       "name": "event-msd-may5-2026",
@@ -13038,11 +13038,11 @@
           "latestReplyTs": "1778967265.229669"
         }
       },
-      "fingerprint": "sha256:8c59bdedb78295ed9aa11565a91afaae7f319b47b7f4c9826adede94d4ef7e15",
-      "lastSyncedAt": "2026-06-09T01:03:23.528Z",
+      "fingerprint": "sha256:2c68275ad1eedfca2ec20a2a19401014a7c7c1d3ebc59bd696d135124113e5ea",
+      "lastSyncedAt": "2026-08-09T11:16:00.226Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
+      "scannedTs": "1779780032.232479",
+      "readAt": "2026-08-09T11:16:00.226Z"
     },
     "C0AFZAW474L": {
       "name": "event-security-xero-october-2026",
@@ -13132,11 +13132,11 @@
           "latestReplyTs": "1775793277.387929"
         }
       },
-      "fingerprint": "sha256:23e7954ddefb145350642bdd7cf5196d6ae1e2784a2a331f60d53229f4b52b99",
-      "lastSyncedAt": "2026-06-09T01:03:00.524Z",
+      "fingerprint": "sha256:07c4cd11502da6e4022da283ca9b91bccb196b5b85574bee875c429cb1b1a48b",
+      "lastSyncedAt": "2026-08-09T11:16:05.025Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
+      "scannedTs": "1777003062.810939",
+      "readAt": "2026-08-09T11:16:05.026Z"
     },
     "C0AGGCHG2E5": {
       "name": "event-msd-june2-2026",
@@ -13201,11 +13201,11 @@
           "latestReplyTs": "1780858492.643809"
         }
       },
-      "fingerprint": "sha256:7dfce04f58c7ff901430c9bf5bd0b2ff0ecef000220d990205494286717bc818",
-      "lastSyncedAt": "2026-06-09T01:03:44.587Z",
+      "fingerprint": "sha256:8da7e345dd18d7777661f4259ec50478c835571c81cb997f0a199ba0a56879fd",
+      "lastSyncedAt": "2026-08-09T11:16:09.838Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
+      "scannedTs": "1780827125.561969",
+      "readAt": "2026-08-09T11:16:09.838Z"
     },
     "C0AGVRL0G5A": {
       "name": "contact-form-notifications",
@@ -13353,11 +13353,11 @@
           "latestReplyTs": "1782208129.670819"
         }
       },
-      "fingerprint": "sha256:c222dd6b227a74d6c097cadcbe6c5a7c631c4025d14c3b11b359b9b58cc48121",
-      "lastSyncedAt": "2026-07-20T10:03:59.767Z",
+      "fingerprint": "sha256:5d589599650e376159d3a8e5f68e789d19d11c216ed1ef75bbd7885637280713",
+      "lastSyncedAt": "2026-08-09T11:16:14.876Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
+      "scannedTs": "1782208102.364329",
+      "readAt": "2026-08-09T11:16:14.876Z",
       "digest": "Two Youth Tech Series workshops at Fruitvale Primary (13 & 20 June 2026), both past. Galleries published — 13 June: 7 webp; 20 June: 7 webp added 2026-06-22 from the event's public Google Drive folder. galleryUrl (the View Gallery button) = the curated Google Photos album, NOT the Drive folder: 20 June -> https://photos.app.goo.gl/jsB72BDGQWKt9Rbu7. Photos came from Drive via gdown, not Slack files. 2026-07-20 sync: 4 new messages, all post-event admin (Peyvand invoice PDF, the two workshop emailer PDFs, a reminder to email peyvandacademynz@gmail.com) — no page-relevant content, no-op. REDACTION LANDMINE: pinned message carries Humanitix ?accesscode= links (STUDENTS/PEYVAND/MOE/LITTLE ENGINEERS/AMBASSDORS) for both workshops — never publish. Open (still unresolved): set 13 June galleryUrl to its Google Photos album once the organiser posts that link.",
       "digestAt": "2026-07-20T10:03:59.766Z"
     },
@@ -13564,11 +13564,11 @@
           "latestReplyTs": "1779428054.318289"
         }
       },
-      "fingerprint": "sha256:be2036a02ed98ffc71e9651688a99632a81ddc63d9aeed2f3f06f65695f24a33",
-      "lastSyncedAt": "2026-06-09T01:02:09.857Z",
+      "fingerprint": "sha256:9137a4a8db795af8d436bc559987ab889d5bde9d585f7a1bc780e42bd8a6d24c",
+      "lastSyncedAt": "2026-08-09T11:16:20.487Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
+      "scannedTs": "1779428054.318289",
+      "readAt": "2026-08-09T11:16:20.488Z"
     },
     "C0B21HSF4VA": {
       "name": "event-ai-forum-ai-hackathon-2026",
@@ -13745,13 +13745,13 @@
           "latestReplyTs": "1786147648.844239"
         }
       },
-      "fingerprint": "sha256:76244a2b0e8e07d98ce94682a147f8604cb7198f1e8a0c7be5f1ee89d87ce1ba",
-      "lastSyncedAt": "2026-08-08T01:47:29.467Z",
+      "fingerprint": "sha256:b2f6b5d183a8d9a309635f461c6763b43e5a67333e7887b9ffccbad4eba0ea3b",
+      "lastSyncedAt": "2026-08-09T11:17:10.409Z",
       "lastSyncedCommit": "6505f959",
       "scannedTs": "1786146309.165979",
-      "readAt": "2026-08-08T01:47:29.467Z",
-      "digest": "Aotearoa AI Hackathon Festival 2026, AUT City Campus, FRI 7 - SAT 8 AUG 2026 - DAY TWO IS RUNNING AS OF THIS SYNC (8 Aug). Live at aihackathon.nz. Registration closed 20 Jul (119 registered vs 100 stated capacity). The sidebar 'Register Now' button is HARDCODED in components/events/event-detail/event-sidebar-panel.tsx, so clearing registrationUrl only makes it inert, not hidden.\n\nDECK IS NOW 79 SLIDES (was 67; this count has drifted four times, so re-count rather than quote it). Twelve added 8 Aug: one per team, in the final-presentations block. See TEAM SLIDES below.\n\nTEAM NAMES: super-five IS NOW super-6. Marriane Bentigan asked in-channel 7 Aug 20:46 UTC: \"please change team name super-5 to super-6 as they are 6 in the team now\". Their photograph is filed under \"Super 6\" and has six people in it. The numeral is theirs - do NOT spell it back to super-six, and do not restore super-five. Thirteen teams, unchanged otherwise: kpi-kaitiaki-positive-impact, caffeine, kailine, arara, blunt, route, devacces, kanorao, fantastic6, kaitiakidata, kai-sense-ai, super-6, 5-senses. THE STRINGS STAY VERBATIM - lowercase and hyphenated because Discord forces it, and tidying them into \"Kai Sense AI\" is a guess made by someone who was not in the room when they named themselves.\n\nONE LIST NOW FEEDS BOTH SLIDES. TEAMS in lib/deck/decks/aotearoa-ai-hackathon-festival-2026.ts generates the roster slide (47) AND the per-team photo slides. They were separate arrays before, which is how a team gets renamed on the roster and stays wrong on their own slide. Rename in TEAMS only.\n\nTEAM SLIDES AND THEIR PHOTOGRAPHS. Marriane posted the team photos 7 Aug 23:32-23:45 UTC, one message plus three thread replies, \"Please refer to the file name for name of the team\". TWELVE OF THIRTEEN ARRIVED. blunt's file (F0BNY1R836D) was DELETED AT SOURCE before it could be fetched - files.info returns file_deleted, and by its position in the alphabetical run (Arara -> ? -> Devacces) it is blunt's. blunt is on the roster and has no slide; TEAMS carries photo: null for them, and adding the path is the only step needed if the file is ever re-sent. The maintainer chose to ship twelve rather than hold the deck.\n\nPhotos are at public/img/events/aotearoa-ai-hackathon-festival-2026-team-<name>.webp, 12 files, 1.9 MB total, converted from the 1120x1492 JPEG originals (~5 MB) at height 1400 q80. THE PATHS ARE WRITTEN OUT AS FULL LITERALS IN TEAMS ON PURPOSE - building them by template interpolation defeats scripts/verify-image-paths.ts, which scans for string literals, and a photo missing from public/ would then pass CI and show as a fallback panel on the projector.\n\nNEW SLIDE TYPE team-photo, AND WHY IT HAD TO EXIST. The photographs are PORTRAIT phone frames (3:4) and the stage is 4:3 to 21:9. A photo slide bleeds edge to edge, which on a 3:4 source keeps a horizontal band about 42% of the original height and cuts the front row off at the chest; one focus value cannot rescue twelve differently-composed frames, and the loss is invisible in the file. So team-photo stands the photo full-height in its own column, never cropped, with the team name at display size beside it. Default tone dark (a projector throwing white either side of a photo is what makes the photo look like a mistake). Names over 14 chars drop from display to title size - only kpi-kaitiaki-positive-impact does, and it wraps at a hyphen to two lines on a 4:3 stage. Verified at 1920x1080, 4:3 and 21:9, and in ?print=1: no slide triggers useFitContent.\n\nNEW LINT ESCAPE HATCH SlideBase.cycle, USE IT SPARINGLY. Twelve consecutive team slides break rhythm-hero-run (max 2) and rhythm-tone-run (max 4). Slides sharing one cycle name now fold to a SINGLE step in those two SEQUENCE rules only - copy rules, dark-share and distinct-layout floors still count every slide. The justification is specific: the host jumps into this block one slide at a time and between any two of them the room watches a five-minute pitch and questions, so counting them as consecutive measures an experience nobody has. Do NOT use it to quiet a linter about a block the room actually sits through end to end.\n\nTHE TEAM BLOCK SITS AHEAD OF pitch-clock FOR A RHYTHM REASON, NOT A NARRATIVE ONE - do not \"tidy\" it to after. team-photo is an information layout, so the folded block is one CONTENT step; placed after the clock it lands against the four information slides buildClosingSlides() always ends on and makes a run of five, which rhythm-content-run rejects. Array order is roster order, not pitch order - the pitch order is drawn at random on Saturday afternoon and posted to Discord, so nothing in the repo can predict it. The host works it with O (overview) -> team -> O -> pitch clock -> Space.\n\nSLIDE 46 (team-photos grid) IS NO LONGER A PLACEHOLDER. It was four archive tiles standing in for Friday night; it now carries five of the real team photos as the morning's \"we are all here\" texture (photo-grid caps at 5, and which five appear carries no meaning). It needed focus: \"50% 64%\" - THE ONE PLACE IN THIS DECK WHERE THE HOUSE CROP IS WRONG. DeckImage crops from the bottom by default, correct for the archive's wide group shots; these portrait frames have ceiling tiles and strip lighting in their top third, so the default kept the ceiling and cut the people. Every team still gets its own uncropped full slide later.\n\nSTILL OPEN. (1) KEYNOTE TALK TITLE - Mahsa said 4 Aug \"the title of the keynote speaker talk needs to be fixed\" and nobody knows which of three real candidates she meant (kicker says FIFTEEN MINUTES vs published 20 min vs run sheet 17:50-18:05 plus Q&A; her role line punctuation; or the talk has no title). DO NOT GUESS - ask her. (2) Item 10 of her review, the keynote plate's yellow background to green, still declined. (3) presentation-order (slide 74) STILL HAS TEN \"Team name\" PLACEHOLDER ROWS waiting on the random draw - and there are thirteen teams, so whoever fills it must add rows, not just overwrite. (4) blunt's photograph. (5) Post-event gallery pass after today: status -> past, add galleryUrl.\n\nROOMS - THE WHATSAPP TABLE WINS over the run-sheet Sheet, which lists the same five rooms for both days. SATURDAY: WG308 main event, WG306 registration/catering/breaks, WG403 plus WG404 lecture theatres, WG607-609 plus WG701-703 plus WG801-803 plus WG808 classrooms, WG809 THE MENTOR ROOM. THE MENTOR ROOM MOVED: WG808 Friday, WG809 Saturday - the deck says so twice because people walk to yesterday's room.\n\nMENTORS ARE 17. Keming Wang kept deliberately (Len's 16-name poster omits him; that is a poster gap, not a removal). Christine Yip removed 5 Aug, Lesley Gao withdrew 27 Jul. The deck reads mentors straight from events-custom.json, so a mentor edit changes the projector - always re-run deck.test.ts and lint-deck.ts.\n\nRUN SHEET CAVEAT: the Sheet's day headers read \"Friday 15th August\"/\"Saturday 16th August\" - template residue. Times trusted, headers not.\n\nREDACTION LANDMINES - VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE AND THE RUN SHEET, READ THEM THERE, NEVER WRITE THEM HERE: three internal registration discount codes (AUT students, general AUT, mentors/staff), the circle.so private checkout link, venue wifi username and password (on the internal venue-wifi slide by an earlier deliberate decision - do not copy into events-custom.json), the supervisor's personal mobile (the 0800 AUT security number IS fine and lives in SAFETY_LINES), Drive/Sheets registration lists, the mentor CSV's phones/emails/dietary/t-shirt sizes, the run sheet's sponsor-contact and speaker/judge emails and Drive photo links, and the private Discord invite hV3bts4bm which lands in #mentors-private (the deck's Z5heYsa7W lands in #general and is the correct public one). NOTHING NEW ENTERED THE REPO THIS PASS - the only content taken was twelve photographs and one team rename.\n\nOTHER STANDING FACTS. Summit 8-9 Sep Wellington is CORRECT (Mahsa corrected it personally 22 Jul, commit 6103db5a). UPCOMING_SNAPSHOT is a hand-taken snapshot of the Les Mills 3 Sep panel - a title/date/poster change there must be hand-copied into this deck file. Keynote source is Rach Monks' own email to events@shesharp.org.nz, NOT Slack.",
-      "digestAt": "2026-08-08T01:47:29.466Z"
+      "readAt": "2026-08-09T11:17:10.409Z",
+      "digest": "Aotearoa AI Hackathon Festival 2026, AUT City Campus, FRI 7 - SAT 8 AUG 2026. THE EVENT IS OVER. Post-event pass done 9 Aug: detailPageData.status flipped upcoming -> completed (matches the other 11 events, which all use \"completed\", not \"past\"). Live at aihackathon.nz. Registration closed 20 Jul (119 registered vs 100 stated capacity; events-custom.json carries attendees=125, checkedIn=0). The sidebar 'Register Now' button is HARDCODED in components/events/event-detail/event-sidebar-panel.tsx, so clearing registrationUrl only makes it inert, not hidden.\n\ngalleryUrl IS STILL \"\" AND THAT IS CORRECT AS OF 9 AUG. Nobody has posted a Google Photos album for this event yet. The house rule is Google Photos album links only - not Drive folders (one album's photos were deleted when the photographer freed up personal storage) and not Dropbox. Album naming is \"{Title of the Event} @ {Company} - {Month | Year}\". Do not substitute a Drive link to close the gap; ask for the album.\n\nFIRST REAL EVENT FEEDBACK EVER COLLECTED CAME FROM THIS EVENT. Seven responses (Feedback #35-#41) landed in #event-feedback-notifications 8-9 Aug, all \"scanned from the deck\" - the QR slide worked. Ratings 5,5,5,4,2,4,4. This is the first live use of the feedback pipeline shipped 3 Aug; everything before #35 is sample data. The 3-day digest cron fires ~10-11 Aug. Substantive criticism worth carrying into the next hackathon: build time too short, a suspicion that some teams did not start from scratch, a request for a structured networking activity, and catering notes. NONE OF IT GOES ON THE SITE - names and emails are attached.\n\nDECK WAS 79 SLIDES at ship (this count has drifted five times now, so re-count rather than quote it).\n\nTEAM NAMES: super-five IS super-6. Marriane Bentigan asked in-channel 7 Aug 20:46 UTC: \"please change team name super-5 to super-6 as they are 6 in the team now\". Their photograph is filed under \"Super 6\" and has six people in it. The numeral is theirs - do NOT spell it back to super-six, and do not restore super-five. Thirteen teams: kpi-kaitiaki-positive-impact, caffeine, kailine, arara, blunt, route, devacces, kanorao, fantastic6, kaitiakidata, kai-sense-ai, super-6, 5-senses. THE STRINGS STAY VERBATIM - lowercase and hyphenated because Discord forces it, and tidying them into \"Kai Sense AI\" is a guess made by someone who was not in the room when they named themselves.\n\nONE LIST FEEDS BOTH SLIDES. TEAMS in lib/deck/decks/aotearoa-ai-hackathon-festival-2026.ts generates the roster slide AND the per-team photo slides. They were separate arrays before, which is how a team gets renamed on the roster and stays wrong on their own slide. Rename in TEAMS only.\n\nTWELVE OF THIRTEEN TEAM PHOTOS ARRIVED. blunt's file (F0BNY1R836D) was DELETED AT SOURCE before it could be fetched - files.info returns file_deleted, and by its position in the alphabetical run (Arara -> ? -> Devacces) it is blunt's. blunt is on the roster and has no slide; TEAMS carries photo: null for them, and adding the path is the only step needed if the file is ever re-sent. Photos are at public/img/events/aotearoa-ai-hackathon-festival-2026-team-<name>.webp, 12 files, 1.9 MB, converted from 1120x1492 JPEG at height 1400 q80. THE PATHS ARE FULL LITERALS IN TEAMS ON PURPOSE - template interpolation defeats scripts/verify-image-paths.ts, which scans for string literals.\n\nSLIDE TYPE team-photo EXISTS BECAUSE THE PHOTOS ARE PORTRAIT (3:4) AND THE STAGE IS 4:3 TO 21:9. Full-bleed on a 3:4 source keeps a band about 42% of the original height and cuts the front row off at the chest, and one focus value cannot rescue twelve differently-composed frames. team-photo stands the photo full-height in its own column, uncropped. The team-photos grid slide needed focus: \"50% 64%\" - THE ONE PLACE IN THIS DECK WHERE THE HOUSE CROP IS WRONG, because these portrait frames have ceiling tiles and strip lighting in their top third.\n\nSlideBase.cycle LINT ESCAPE HATCH, USE SPARINGLY. Twelve consecutive team slides break rhythm-hero-run (max 2) and rhythm-tone-run (max 4). Slides sharing one cycle name fold to a SINGLE step in those two SEQUENCE rules only. Justification is specific: the host jumps in one slide at a time and between any two the room watches a five-minute pitch. Do NOT use it to quiet a linter about a block the room sits through end to end.\n\nCLOSED SINCE LAST SYNC, do not re-open as questions: the event ran, so the keynote talk title (three candidate readings, never resolved with Mahsa), the declined yellow-to-green keynote plate, and the presentation-order placeholder rows are all moot. STILL GENUINELY OPEN: (1) blunt's photograph; (2) the Google Photos album for galleryUrl; (3) checkedIn is still 0 and real attendance would come from Humanitix, not Slack - do not infer it.\n\nROOMS - THE WHATSAPP TABLE WON over the run-sheet Sheet, which listed the same five rooms for both days. THE MENTOR ROOM MOVED: WG808 Friday, WG809 Saturday.\n\nMENTORS ARE 17. Keming Wang kept deliberately (Len's 16-name poster omits him; that is a poster gap, not a removal). Christine Yip removed 5 Aug, Lesley Gao withdrew 27 Jul. The deck reads mentors straight from events-custom.json, so a mentor edit changes the projector - always re-run deck.test.ts and lint-deck.ts.\n\nRUN SHEET CAVEAT: the Sheet's day headers read \"Friday 15th August\"/\"Saturday 16th August\" - template residue. Times trusted, headers not.\n\nREDACTION LANDMINES - VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE AND THE RUN SHEET, READ THEM THERE, NEVER WRITE THEM HERE: three internal registration discount codes (AUT students, general AUT, mentors/staff), the circle.so private checkout link, venue wifi username and password, the supervisor's personal mobile (the 0800 AUT security number IS fine and lives in SAFETY_LINES), Drive/Sheets registration lists, the mentor CSV's phones/emails/dietary/t-shirt sizes, the run sheet's sponsor-contact and speaker/judge emails and Drive photo links, and the private Discord invite that lands in #mentors-private (the deck's public one is different and correct). NOTHING NEW ENTERED THE REPO THIS PASS - the only change was status -> completed.\n\nOTHER STANDING FACTS. Summit 8-9 Sep Wellington is CORRECT (Mahsa corrected it personally 22 Jul, commit 6103db5a). UPCOMING_SNAPSHOT is a hand-taken snapshot of the Les Mills 3 Sep panel - a title/date/poster change there must be hand-copied into this deck file. Keynote source is Rach Monks' own email to events@shesharp.org.nz, NOT Slack.",
+      "digestAt": "2026-08-09T11:17:10.408Z"
     },
     "C0B5ZAXUKRQ": {
       "name": "mpdm-yeshakaniyawala--mahsa--chanmeng6666-1",
@@ -13912,11 +13912,11 @@
           "latestReplyTs": "1785721385.023369"
         }
       },
-      "fingerprint": "sha256:0a72bf89009fe2a635b563486b38a54ef068858ff029f11a7221d9dd4b9354fc",
-      "lastSyncedAt": "2026-08-06T04:21:14.129Z",
+      "fingerprint": "sha256:fe8b03c025162a0001d7ecc7cf8069adea48dda5076437c267388ea402d15807",
+      "lastSyncedAt": "2026-08-09T11:16:25.043Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
+      "scannedTs": "1785927933.350319",
+      "readAt": "2026-08-09T11:16:25.044Z",
       "digest": "Les Mills x She Sharp panel 'No Pain, All Gain - Getting Fit for AI', Thu 3 Sep 2026 5:00-7:30pm NZST, Level 2, 200 Victoria Street West, Auckland Central 1010. PUBLISHED - Nirmala confirmed in-channel 5 Aug that the event page is live, and asked that its details go into the MYOB thank-you email (that email is the /send-event-emails skill's job, not this one). The page carries the public Humanitix registrationUrl, the organiser's own blurb from #marketing 24 Jul, the postcode, the agenda matching the run sheet, and all FOUR panellists. The hackathon deck's UPCOMING_SNAPSHOT points at this event's poster, so a title, date or poster change here must be hand-copied into lib/deck/decks/aotearoa-ai-hackathon-festival-2026.ts - it is a snapshot, not a live read. SPEAKER SOURCE was the 'Speakers' tab of 'Lesmills Event 03 September - Run Sheet.xlsx', a LOCAL file the user supplied - NOT reachable from Slack, do not expect to re-derive it from the channel. Panel: Keryn McKenzie (Senior Director - Data & AI), Carolina Lobos (Head of Finance), Ben Sullivan (Legal Counsel), Gemma Lynskey (Global Comms + Org Development Director) - all Les Mills International, all with LinkedIn verified 5 Aug against their own profiles. Employers were CONFIRMED from those profiles, not inferred: Keryn's run-sheet row and bio named none and the field was deliberately left blank until her profile confirmed it; Ben was corrected from 'Les Mills' to 'Les Mills International'. Titles the speakers supplied for this event are kept over their LinkedIn headlines. CAROLINA LOBOS RESOLVED 6 Aug 2026. Nirmala asked by DM ('please update Carolina Lobos' profile on the website') and linked the run sheet; her Speakers tab now carries both a bio in her own words (701 chars) and a corrected role, 'Head of Finance - LM Media & Automation Lead', which is wider than the 'Head of Finance' taken from her LinkedIn profile in the earlier pass. Both applied; the separator was normalised to an en dash to match the sibling titles. Her Picture Link cell is STILL EMPTY - the photograph on the page came from elsewhere and is real, so nothing is owed there. The run sheet exports publicly: https://docs.google.com/spreadsheets/d/16V4PJHLUpW2eB0g2DywKTxjqmYT4UHDZ/export?format=csv&gid=1792873316 is the Speakers tab and needs no Drive login, which is how this was resolved without asking anyone to re-send a file. Also open: galleryUrl empty until after the event; the sheet's own 'Website & Humanitix event page' checklist still has every row FALSE, including 'Speakers bio added', which the 5 Aug sync completes. A deck exists at lib/deck/decks/event-lesmills-03-september-2026.ts with upcoming: [] and a TODO to snapshot the next event once one is published. REDACTION LANDMINES - VALUES LIVE IN THE CHANNEL'S PINNED MESSAGE, NEVER WRITE THEM HERE, NOT EVEN AS A PATTERN PLUS SUFFIX LIST: a dozen private Humanitix registration links, one per sponsor organisation plus ambassador and ambassador-guest allocations, each keyed to its own access code. Publish only the plain public registration URL. Keep the internal Runsheet bookmark out too.",
       "digestAt": "2026-08-06T04:21:14.128Z"
     },
@@ -13950,15 +13950,15 @@
         "kind": "skip",
         "reason": "Bot channel: event-feedback form notifications (app A0BM5AQ09RV). Not an event-planning channel despite the event- prefix."
       },
-      "watermarkTs": "1785832702.675919",
+      "watermarkTs": "1786255283.872089",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T04:30:09.783Z",
+      "lastSyncedAt": "2026-08-09T11:14:40.195Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
-      "digest": "Slack app 'event-feedback-notifications' posts here; wired 3 Aug 2026. The 11 messages present are SAMPLE data Chan Meng generated to test the pipeline end to end (he says so explicitly in the last message) - the names are computing pioneers, the emails are @example.com. Nothing here is real attendee feedback and nothing here is a site event.",
-      "digestAt": "2026-08-05T04:30:09.783Z"
+      "scannedTs": "1786255283.872089",
+      "readAt": "2026-08-09T11:14:40.195Z",
+      "digest": "Slack app 'event-feedback-notifications' posts here; wired 3 Aug 2026. NO LONGER ALL TEST DATA. Feedback #1-#34 are Chan Meng's sample rows (computing pioneers on @example.com). FROM #35 IT IS REAL: seven live responses arrived 8-9 Aug 2026 from the Aotearoa AI Hackathon Festival, all 'scanned from the deck', ratings 5,5,5,4,2,4,4 (mean ~4.1). Split test from real on the @example.com address, never on date or id. The one 2/5 is substantive, not noise: mentors praised, but 'hackathon time was too short to build something and I feel some team didn't just do the project from scratch'. Two more asked for networking activity and better catering. NOTHING FROM HERE GOES ON THE SITE - names and emails are attached and the form promised no publication; the database is the source for any aggregate, and the 3-day digest cron fires ~10-11 Aug.",
+      "digestAt": "2026-08-09T11:14:40.194Z"
     },
     "C0L3U3Z7H": {
       "name": "goodies",

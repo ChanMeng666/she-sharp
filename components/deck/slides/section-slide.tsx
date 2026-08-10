@@ -3,8 +3,8 @@ import type { CSSProperties } from "react";
 import type { SectionSlide } from "@/lib/deck/types";
 import { buildMosaic } from "@/lib/deck/wall";
 
+import { DeckSurface } from "@/components/deck/surfaces";
 import {
-  ArchiveWall,
   INCISION_5_ROWS,
   INCISION_5_ROWS_PAD,
   Kicker,
@@ -37,7 +37,7 @@ export function SectionSlideLayout({ slide }: { slide: SectionSlide }) {
 
   return (
     <>
-      <ArchiveWall seed={seed} />
+      <DeckSurface slide={slide} seed={seed} />
 
       <div
         className="deck-incision deck-incision-sheer deck-edge-block-end"
