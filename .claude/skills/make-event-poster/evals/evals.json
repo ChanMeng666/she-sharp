@@ -1,0 +1,46 @@
+{
+  "skill_name": "make-event-poster",
+  "evals": [
+    {
+      "id": 0,
+      "name": "humanitix-and-linkedin",
+      "prompt": "hey we've got the Les Mills panel coming up on the 3rd of Sept (it's already on the website, slug is event-lesmills-03-september-2026) and I need to get the event live on Humanitix today. can you make me the banner image for the Humanitix page, plus something I can post on LinkedIn about it?",
+      "expected_output": "A 3200x1600 JPEG for Humanitix and a 1080x1350 image for LinkedIn, both carrying the correct event title, date, time and venue read from events-custom.json.",
+      "files": [],
+      "assertions": [
+        "Produced a 3200\u00d71600 Humanitix banner",
+        "Humanitix banner is JPEG or PNG, not WebP (Humanitix rejects WebP)",
+        "Humanitix banner is under Humanitix's 10 MB limit",
+        "Produced a 1080\u00d71350 (4:5) image for LinkedIn",
+        "Told the user which file goes to which platform"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "instagram-story-safe-area",
+      "prompt": "can you make an instagram story graphic for the les mills event (event-lesmills-03-september-2026)? last time we made one, the date ended up hidden behind instagram's own buttons along the bottom, so please make sure that doesn't happen again",
+      "expected_output": "A 1080x1920 image whose text all sits clear of the top and bottom ~250px where Instagram draws its UI.",
+      "files": [],
+      "assertions": [
+        "Produced a 1080\u00d71920 (9:16) story image",
+        "Top 250px (Instagram's account row) carries no type \u2014 heuristic: <0.4% near-white pixels",
+        "Bottom 250px (Instagram's reply bar) carries no type \u2014 heuristic: <0.4% near-white pixels",
+        "Explained how the safe area was respected"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "full-flow-new-event",
+      "prompt": "we need artwork for the MYOB event - 'Working Smarter: AI, MYOB, and the New Delivery' (slug she-sharp-and-myob-working-smarter). there's no poster for it at all yet, nothing. can you design something from scratch and give me what I need for humanitix and for instagram?",
+      "expected_output": "A newly generated textless plate, then a 3200x1600 JPEG Humanitix banner and 1080x1350 / 1080x1920 social images built from it, with facts read from the event record.",
+      "files": [],
+      "assertions": [
+        "Generated a new plate image from scratch",
+        "Produced a 3200\u00d71600 Humanitix banner",
+        "Humanitix banner is JPEG or PNG, not WebP",
+        "Produced an Instagram-native size (1080\u00d71350 or 1080\u00d71920)",
+        "Stated the visual concept"
+      ]
+    }
+  ]
+}
