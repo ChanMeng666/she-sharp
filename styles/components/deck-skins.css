@@ -1,0 +1,300 @@
+/* ============================================================================
+   DECK SKINS — the per-event visual identity layer.
+
+   Loaded after `deck.css`, and everything here hangs off `[data-skin="<key>"]`
+   on `.deck-slide`. The attribute is per SLIDE, not per stage, because both
+   skins coexist inside one deck: the organisational slides wear the house while
+   the event's own chapters wear the event's. `lib/deck/skins.ts` owns that rule
+   and `slide-frame.tsx` stamps the attribute.
+
+   WHAT MAY LIVE IN THIS FILE
+     - surface treatment (the ground behind a statement slide)
+     - palette beyond the accent pair
+     - geometry: panel edges, rules, radii, chip shapes
+     - ambient loops
+     - type personality: tracking, case, weight relationships
+
+   WHAT MAY NOT, EVER — every one of these fails silently on a projector or a
+   phone, and each is documented where it is enforced in `deck.css`:
+     - `vw` / `vh` / `dvh` anywhere inside the stage. Use `cqi` or design px
+     - anything that changes `.deck-stage`, `.deck-safe`, `.deck-slot` geometry
+     - `will-change` on a repeating row
+     - an ambient loop that is not scoped to `[data-active="true"]`
+     - responsive `--dt-*` overrides on `.deck-stage` rather than `.deck-slide`
+
+   A NEW SKIN IS ONE BLOCK IN THIS FILE plus an entry in `lib/deck/skins.ts`.
+   ==========================================================================*/
+
+/* ---------------------------------------------------------------- house ---
+   The house skin needs no rules: `deck.css` IS the house skin. The selector is
+   written out only so the next person can see that the omission is deliberate
+   rather than an oversight, and so a future house-only override has a home. */
+.deck-slide[data-skin="house"] {
+  /* intentionally empty */
+}
+
+/* =============================================================== FIBRE =====
+   Les Mills — "No Pain, All Gain: Getting Fit for AI", 3 September 2026.
+
+   Taken from the event's own poster: a braid of fibre-optic strands lit from
+   within, magenta over cyan on near-black, shot macro so the edges fall away
+   into bokeh. Where the house skin is hard-edged — tiles, incisions, square
+   chips — this one is continuous: light travelling along a filament, panels
+   that fade rather than cut, and rules that are gradients rather than lines.
+
+   The two are meant to be recognisably the same deck, so the type scale, the
+   safe area, the rail and the kicker are all untouched. What changes is the
+   ground, the edges and the tempo.
+   ==========================================================================*/
+
+.deck-slide[data-skin="fibre"] {
+  /* The canvas runs a touch cooler and deeper than the house near-black, which
+     is what stops the magenta in the plates reading as a colour cast on it. */
+  --deck-canvas-dark: #07060f;
+
+  /* Panels are translucent glass rather than opaque cuts, so the light behind
+     them stays visible — the plate is the subject, not wallpaper. */
+  --fibre-panel: color-mix(in srgb, #07060f 82%, transparent);
+  --fibre-panel-soft: color-mix(in srgb, #07060f 62%, transparent);
+  --fibre-edge: color-mix(in srgb, var(--deck-spark) 34%, transparent);
+}
+
+/* --- The plate field ---------------------------------------------------- */
+
+/*
+ * The ground of a statement slide on a plate skin.
+ *
+ * The plate is panned per slide from that slide's own seed — see
+ * `platePlacement()` — so eight statement slides show eight different parts of
+ * the braid rather than one identical crop eight times. The scrim is a
+ * pseudo-element rather than a filter on the image: a filter would also dim the
+ * highlight the whole plate exists for.
+ */
+.deck-plate-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--deck-canvas-dark);
+}
+
+.deck-plate-field :is(img, .deck-img) {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  /* `object-position` is NOT set here. `DeckImage` writes it inline from
+     `DeckImage.focus`, and an inline style beats this file — see the note on
+     `platePlacement()` in `lib/deck/skins.ts`, which is where the pan is
+     actually decided. A rule here would compile and silently lose. */
+}
+
+/*
+ * Two scrims, not one, and they do different jobs.
+ *
+ * The first is a flat hold-down that guarantees a floor of contrast anywhere on
+ * the slide. The second is a directional wash into the leading edge, where the
+ * copy is set — the same move `event-header.tsx` makes on the website, and the
+ * same one the poster's own floor gradient makes.
+ */
+.deck-plate-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--deck-canvas-dark) 92%, transparent) 0%,
+      color-mix(in srgb, var(--deck-canvas-dark) 74%, transparent) 38%,
+      transparent 78%
+    ),
+    color-mix(in srgb, var(--deck-canvas-dark) 34%, transparent);
+}
+
+/*
+ * Ambient drift. Two gates, and both are load-bearing.
+ *
+ * `[data-motion="on"]` is the `L` static-mode switch a host presses when the
+ * venue laptop stutters — every other ambient loop in `deck.css` hangs off the
+ * same gate, and a loop that skips it is a loop static mode does not stop.
+ *
+ * `[data-active="true"]` is the memory one. Every slide in a deck stays mounted
+ * and is hidden by `visibility` alone, so an unscoped loop keeps a compositing
+ * layer and a running animation alive on every slide at once — which is what
+ * used to make iOS Safari kill the tab outright. The cross-fade transitions
+ * opacity only, so an outgoing slide is hidden in the same frame and the loop
+ * restarting is never on screen. Same rule, same reason, as `.deck-wall-row`.
+ */
+.deck-stage[data-motion="on"]
+  .deck-slide[data-active="true"]
+  .deck-plate-drift
+  :is(img, .deck-img) {
+  animation: fibre-drift 38s ease-in-out infinite alternate;
+}
+
+@keyframes fibre-drift {
+  from {
+    transform: scale(1.06) translate3d(-0.8%, 0, 0);
+  }
+  to {
+    transform: scale(1.11) translate3d(0.8%, -0.6%, 0);
+  }
+}
+
+/* --- The band, for light slides ---------------------------------------- */
+
+/*
+ * How the fibre survives on a light ground.
+ *
+ * The house transposes its wall to a single strip of tiles; this transposes the
+ * plate to a strip of the same braid. Without it a light slide in a fibre deck
+ * has no family resemblance to the dark ones on either side of it, which is
+ * exactly the failure the band exists to prevent. Height matches
+ * `--deck-band-h` so the safe-area padding the layouts already reserve is
+ * correct without change.
+ */
+.deck-plate-band {
+  position: absolute;
+  inset-inline: 0;
+  block-size: var(--deck-band-h);
+  overflow: hidden;
+  background: var(--deck-canvas-dark);
+}
+
+.deck-plate-band :is(img, .deck-img) {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  /* `object-position` is NOT set here. `DeckImage` writes it inline from
+     `DeckImage.focus`, and an inline style beats this file — see the note on
+     `platePlacement()` in `lib/deck/skins.ts`, which is where the pan is
+     actually decided. A rule here would compile and silently lose. */
+}
+
+/* A hairline of the spark colour where the band meets the paper, so the strip
+   reads as an edge of the deck rather than as a photograph that got cropped. */
+.deck-plate-band::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  block-size: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--fibre-edge) 22%,
+    var(--fibre-edge) 78%,
+    transparent
+  );
+}
+
+/* --- Geometry: panels fade, they do not cut ---------------------------- */
+
+/*
+ * The house incision is a hard-edged opaque block cut into the tile grid, and
+ * it stops on a tile edge because the grid is what it is cut into. A plate has
+ * no grid, so the same hard edge reads as a rectangle dropped on a photograph.
+ * Here the panel is glass: it holds the type down without claiming to be a
+ * separate object.
+ */
+.deck-slide[data-skin="fibre"] .deck-incision {
+  background: linear-gradient(
+    180deg,
+    var(--fibre-panel) 0%,
+    var(--fibre-panel) 62%,
+    var(--fibre-panel-soft) 88%,
+    transparent 100%
+  );
+  backdrop-filter: blur(2px);
+}
+
+.deck-slide[data-skin="fibre"] .deck-incision-sheer {
+  background: linear-gradient(
+    180deg,
+    var(--fibre-panel-soft) 0%,
+    color-mix(in srgb, #07060f 40%, transparent) 70%,
+    transparent 100%
+  );
+}
+
+/* Rules become the light in the fibre: brightest in the middle, gone at the
+   ends, rather than a ruled line from margin to margin. */
+.deck-slide[data-skin="fibre"] .deck-rule {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--deck-spark) 46%, transparent) 30%,
+    color-mix(in srgb, var(--deck-spark) 46%, transparent) 70%,
+    transparent
+  );
+}
+
+/* The kicker's leading dash is the same idea at small scale. */
+.deck-slide[data-skin="fibre"] .deck-kicker::before {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--deck-spark) 80%, transparent),
+    transparent
+  );
+}
+
+/* --- Type personality --------------------------------------------------- */
+
+/*
+ * Slightly wider tracking on the kicker and the labels than the house uses.
+ *
+ * The house sets its small caps tight against a busy tile wall, where tracking
+ * would let the photographs through between the letters. A plate ground is
+ * calm, and the extra air is what makes the small type read as deliberate
+ * rather than as leftover. The DISPLAY sizes are untouched — those are the
+ * scale the stage rules depend on.
+ */
+.deck-slide[data-skin="fibre"] :is(.deck-kicker, .deck-label, .deck-eyebrow) {
+  letter-spacing: 0.22em;
+}
+
+/* --- Chips ------------------------------------------------------------- */
+
+/*
+ * The white logo chip stays white. It is the one element in the deck that must
+ * not take a skin: a multi-colour sponsor SVG survives both tones only because
+ * it sits on white, and a partner's mark is not ours to restyle for a theme.
+ * Only the corner softens, to match the panels.
+ */
+.deck-slide[data-skin="fibre"] .deck-logo-chip {
+  border-radius: 14px;
+}
+
+/* --- Narrow stages ------------------------------------------------------ */
+
+/*
+ * MUST STAY BELOW the rules above, and the 1000px block must stay below the
+ * 1560px one — a 900px stage matches both at equal specificity and source order
+ * decides. Same failure family as the container-query ordering rule in
+ * `deck.css`: it compiles, it never applies, and a 4:3 projector silently runs
+ * the wide treatment.
+ */
+@container deck (max-width: 1560px) {
+  .deck-slide[data-skin="fibre"] :is(.deck-kicker, .deck-label, .deck-eyebrow) {
+    letter-spacing: 0.18em;
+  }
+}
+
+@container deck (max-width: 1000px) {
+  .deck-slide[data-skin="fibre"] :is(.deck-kicker, .deck-label, .deck-eyebrow) {
+    letter-spacing: 0.14em;
+  }
+
+  /* The backdrop blur is the first thing to go on a small or old machine: it is
+     the most expensive rule in this file and the least visible at this size. */
+  .deck-slide[data-skin="fibre"] .deck-incision {
+    backdrop-filter: none;
+  }
+}
+
+/* Static mode is already handled by the `data-motion` gate on the drift rule
+   above — the deck's own switch turns the attribute off. This is the OS-level
+   preference, which has to win regardless of the switch. */
+@media (prefers-reduced-motion: reduce) {
+  .deck-plate-drift :is(img, .deck-img) {
+    animation: none !important;
+  }
+}

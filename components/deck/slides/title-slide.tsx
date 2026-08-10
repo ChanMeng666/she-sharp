@@ -3,8 +3,8 @@ import { Fragment, type CSSProperties } from "react";
 import { DeckImage } from "@/components/deck/deck-image";
 import type { TitleSlide } from "@/lib/deck/types";
 
+import { DeckSurface } from "@/components/deck/surfaces";
 import {
-  ArchiveWall,
   Kicker,
   PANEL_SAFE_PAD,
   PANEL_SPLIT,
@@ -43,7 +43,7 @@ export function TitleSlideLayout({ slide }: { slide: TitleSlide }) {
   if (isEnd) {
     return (
       <>
-        <ArchiveWall seed={seed} />
+        <DeckSurface slide={slide} seed={seed} />
 
         {/* A sheer cut rather than an opaque one: the room is leaving, and the
             last thing on the screen should be the archive still running. */}
@@ -79,7 +79,7 @@ export function TitleSlideLayout({ slide }: { slide: TitleSlide }) {
 
   return (
     <>
-      <ArchiveWall seed={seed} />
+      <DeckSurface slide={slide} seed={seed} />
 
       {/* The panel is a bare surface; the type lives in `.deck-safe` above it so
           the stage-overflow guard in `SlideFrame` can still measure and rescue

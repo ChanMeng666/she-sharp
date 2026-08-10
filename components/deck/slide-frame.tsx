@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 
+import { useSlideSkin } from "@/components/deck/surfaces";
 import { playSlideMotion, type MotionHandle } from "@/lib/deck/motion";
 import type { Slide } from "@/lib/deck/types";
 import { slideAriaLabel, slideLabel, toneOf } from "@/lib/deck/utils";
@@ -107,14 +108,19 @@ export function SlideFrame({
   children,
 }: SlideFrameProps) {
   const ref = useRef<HTMLElement | null>(null);
+  const skin = useSlideSkin(slide);
   useFitContent(ref, slide.id, active);
-  useSlideMotion(ref, slide.type, active, motion);
+  useSlideMotion(ref, slide.type, active, motion, skin.tempo);
 
   return (
     <section
       ref={ref}
       className="deck-slide"
       data-tone={toneOf(slide)}
+      // Every skin rule in `deck-skins.css` hangs off this. It is on the SLIDE
+      // rather than on the stage because the two skins coexist inside one deck:
+      // the organisational slides wear the house while the event's wear its own.
+      data-skin={skin.key}
       data-active={active}
       role="group"
       aria-roledescription="slide"
@@ -212,6 +218,7 @@ function useSlideMotion(
   type: Slide["type"],
   active: boolean,
   motion: boolean,
+  tempo: number | undefined,
 ) {
   useEffect(() => {
     const element = ref.current;
@@ -222,14 +229,14 @@ function useSlideMotion(
     // it becomes active in is also the frame the cross-fade starts, and an SVG
     // ring has no length until it has been laid out at least once.
     const raf = requestAnimationFrame(() => {
-      handle = playSlideMotion(element, type);
+      handle = playSlideMotion(element, type, tempo);
     });
 
     return () => {
       cancelAnimationFrame(raf);
       handle?.stop();
     };
-  }, [ref, type, active, motion]);
+  }, [ref, type, active, motion, tempo]);
 }
 
 /**

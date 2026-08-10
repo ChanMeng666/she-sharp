@@ -5,7 +5,12 @@ import { toneOf } from "@/lib/deck/utils";
 import { buildMosaic } from "@/lib/deck/wall";
 import { cn } from "@/lib/utils";
 
-import { ArchiveWall, Kicker, knockoutStyle, seedFrom } from "./archive";
+import { DeckSurface } from "@/components/deck/surfaces";
+import {
+  Kicker,
+  knockoutStyle,
+  seedFrom,
+} from "./archive";
 
 /**
  * Column count per prize count, as complete class strings for Tailwind's scanner.
@@ -61,7 +66,7 @@ export function PrizesSlideLayout({ slide }: { slide: PrizesSlide }) {
 
   return (
     <>
-      <ArchiveWall seed={seed} />
+      <DeckSurface slide={slide} seed={seed} />
 
       {/* Starts one tile row down and runs to the bottom edge — the inverse of
           the section divider's cut, so two dark wall slides in the same deck do

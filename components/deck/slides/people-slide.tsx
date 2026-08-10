@@ -2,7 +2,8 @@ import { DeckImage } from "@/components/deck/deck-image";
 import type { PeopleSlide, PersonItem } from "@/lib/deck/types";
 import { cn } from "@/lib/utils";
 
-import { ArchiveBand, BAND_PAD, Kicker, seedFrom } from "./archive";
+import { DeckSurfaceBand } from "@/components/deck/surfaces";
+import { BAND_PAD, Kicker, seedFrom } from "./archive";
 
 type Density = "sm" | "md" | "lg";
 
@@ -132,7 +133,7 @@ export function PeopleSlideLayout({ slide }: { slide: PeopleSlide }) {
 
   return (
     <>
-      {showBand && <ArchiveBand seed={seed} />}
+      {showBand && <DeckSurfaceBand slide={slide} seed={seed} />}
 
       <div
         className="deck-safe"
