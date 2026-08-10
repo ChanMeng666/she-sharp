@@ -453,7 +453,13 @@ The first-run coach card and the `? keys` chip both branch on `matchMedia("(poin
 
 Long-form material — bios, IP terms, rules, the full venue list — stays on the event page and is reached by a QR slide.
 
-**Accents are a pair.** Brand purple `#9b2e83` is only 2.92:1 on the near-black canvas, so dark slides use `#c846ab` (4.61:1). Per-event customisation = `theme.accent` plus that event's photos.
+**Accents are a pair.** Brand purple `#9b2e83` is only 2.92:1 on the near-black canvas, so dark slides use `#c846ab` (4.61:1).
+
+**Every event gets its own look, and the poster decides it.** Until Aug 2026 per-event customisation was `theme.accent` plus that event's photos, so the Les Mills panel evening came out looking like the two-day hackathon. A deck now carries a `skin` (`lib/deck/skins.ts`): a **surface** (`archive` = the house wall, or `plate` = a field built from the event's own artwork, panned per slide), a palette, geometry, a motion `tempo`, and type personality. The look itself is a `[data-skin="<key>"]` block in `styles/components/deck-skins.css`; a new skin is that block plus a `DeckSkin`, and only a genuinely new *surface kind* touches `components/deck/surfaces.tsx`.
+
+**The house/event boundary is fixed and is not aesthetic.** `SlideBase.surface` decides it, and `buildOpeningSlides()`/`buildClosingSlides()` stamp `"house"` on their own slides so an author cannot forget. The organisational sequence — karakia, team, impact, sponsors, thanks — keeps the archive wall and the brand duotone in every deck forever, because that grade is the only thing making twelve years of photography shot across four stops of colour temperature read as one organisation. The event's skin begins at the `event-opening` chapter card, which is deliberately stamped `"event"`: that card *is* the handover. A skin may change how a deck looks and never what it may say — the copy limits, rhythm rules, contrast floor, stage geometry and eighteen slide types are outside its reach.
+
+**`object-position` cannot be set from `deck-skins.css`.** `DeckImage` writes it inline from `DeckImage.focus`, and inline beats any stylesheet. A `--plate-pos` custom property compiled cleanly and did nothing: every band showed the plate's top strip, which on a poster plate is the empty near-black the prompt asked for — a black bar from a correct-looking rule. The pan travels on `focus`; see `platePlacement()`.
 
 ### Motion
 
