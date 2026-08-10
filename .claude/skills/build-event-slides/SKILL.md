@@ -1,6 +1,6 @@
 ---
 name: build-event-slides
-description: Build the presentation deck for one She Sharp in-person event — generating it from the event's own data, then confirming, trimming, linting, previewing and deploying a slide deck at `/present/<event-slug>`. Use whenever someone wants slides or a presentation for an event — phrases like "make slides for the AUT event", "we need a presentation for Thursday's meetup", "build the deck for our next event", "update the hackathon deck", "presentation for the panel night", "event slides", "给 X 活动做幻灯片", "活动幻灯片", "把这场活动的 PPT 做出来" — or anything about a projector, a run sheet on screen, a title slide, an opening or closing karakia, or a deck for a host to click through. Also covers correcting an event fact so the website and the slides stay in agreement. The run sheet, speakers, hosts and sponsors come from `lib/data/json/events-custom.json` and are read live, so a correction goes into the event data rather than into the deck. Covers the fixed organisational sequence, the evening-event template, the accent colour taken from the poster, where photos live, the enforced copy limits, the multi-screen preview pass, and the merge-to-deploy path. Assumes the event is already in the repo — `sync-event-from-slack` puts it there.
+description: Build the presentation deck for one She Sharp in-person event — generating it from the event's own data, then confirming, trimming, linting, previewing and deploying a slide deck at `/present/<event-slug>`. Use whenever someone wants slides or a presentation for an event — phrases like "make slides for the AUT event", "we need a presentation for Thursday's meetup", "build the deck for our next event", "update the hackathon deck", "presentation for the panel night", "event slides", "给 X 活动做幻灯片", "活动幻灯片", "把这场活动的 PPT 做出来" — or anything about a projector, a run sheet on screen, a title slide, an opening or closing karakia, or a deck for a host to click through. Also covers correcting an event fact so the website and the slides stay in agreement. The run sheet, speakers, hosts and sponsors come from `lib/data/json/events-custom.json` and are read live, so a correction goes into the event data rather than into the deck. Every event gets its own visual design, led by its poster: covers generating the poster with gpt-image-2, designing that event's skin (surface, palette, geometry, motion, type), and the boundary where She Sharp's own organisational slides keep the house archive look. Also covers the fixed organisational sequence, the evening-event template, the accent colour taken from the poster, where photos live, the enforced copy limits, the multi-screen preview pass, and the merge-to-deploy path. Assumes the event is already in the repo — `sync-event-from-slack` puts it there.
 ---
 
 # Build the slide deck for one event
@@ -9,7 +9,7 @@ The person you are working with runs She Sharp events. They do not write code an
 they must never be asked to. They know the room, the run sheet, the speakers and
 the sponsors. Your job is to get that out of their head and onto a projector.
 
-Four facts shape everything below.
+Five facts shape everything below.
 
 - **The event data is the single source of truth, and the deck is a view of
   it.** Title, date, time, venue, speakers, sponsors, run sheet and poster live
@@ -21,13 +21,23 @@ Four facts shape everything below.
   follow. See *Correcting a fact* below — this is the rule the whole skill turns
   on.
 - **A deck is plain data.** One file under `lib/deck/decks/`, generated from the
-  event and registered automatically, rendered at `/present/<slug>`. Nobody
-  hand-writes HTML or CSS, and the author never sees either.
-- **The deck is built out of She Sharp's own photographs.** Not a white canvas
-  with a purple accent — twelve years of real rooms, used as mass. One
-  photograph shown as a subject keeps its colours; photographs used many at a
-  time go purple. `references/slide-types.md` explains why, and it is worth
-  understanding rather than just obeying.
+  event and registered automatically, rendered at `/present/<slug>`. **The
+  author never writes or reads HTML or CSS.** You may; they may not.
+- **Every event gets its own look, and the poster decides it.** This is the
+  change that matters most, and it is a correction: the first two decks shared
+  one visual system, so a Les Mills panel evening came out looking like a
+  two-day AI hackathon. A deck now carries a **skin** — its own surface,
+  palette, geometry, motion tempo and type personality — designed from that
+  event's poster. `references/skins.md` is the whole of it, and Step 3 below is
+  where you do it.
+- **She Sharp's own slides are not the event's to restyle.** The organisational
+  sequence — the karakia, the team, the impact figures, the sponsor wall, the
+  thanks — keeps the archive wall and the brand purple in every deck, forever.
+  Twelve years of real rooms used as mass is the organisation's record of
+  itself, and the duotone is the only thing making photography shot across four
+  stops of colour temperature read as one thing. The event's skin begins at the
+  chapter card that hands over to it. `references/slide-types.md` explains the
+  archive doctrine; `references/skins.md` explains the boundary.
 - **The limits are enforced, not suggested.** `lib/deck/lint.ts` fails a deck
   whose title runs to nine words, and it also fails a deck that is *shaped*
   badly — too many similar slides in a row, too few dark ones, a kicker that
@@ -69,6 +79,8 @@ answering twenty questions. Follow `references/content-checklist.md`.
 | Which event? | Whatever they said — Step 1 resolves it and reads it back |
 | Run sheet, speakers, hosts, sponsors | Already in the event data. **Read back, don't ask.** A correction goes into the JSON |
 | Accent colour | `scripts/deck/accent-from-poster.ts` ranks the poster's colours; you pick and say which in plain words |
+| The poster | Theirs if they have one. If not, **you make one** — Step 3, two commands. It is what the look is decided from |
+| This event's look | **Yours to design**, from the poster, per `references/skins.md`. Read it back in plain words; never show them CSS |
 | Break length | Taken from the run sheet's own timings, never a default |
 | Karakia | She Sharp's standing pair, already in the deck. **Don't ask** |
 | Table prompts, what to say | **Ask.** These exist nowhere and only they know them |
@@ -189,7 +201,25 @@ its own mihi, or a guest who will read something else. Then take their text
 verbatim, macrons as given, and pass it as `karakia:` to `buildOpeningSlides()`
 or `buildClosingSlides()`.
 
-## Step 3 — Set the colours
+## Step 3 — Design this event's look
+
+Two halves: the accent pair, then the skin. **Do them in that order and do them
+after the poster exists** — the poster is where the concept is decided, it is
+cheap to iterate on, and the organiser can say yes or no to it long before any
+front-end does.
+
+No poster yet? Make one. It is two commands, and it is the cheapest way to have
+the "what should this look like" conversation:
+
+```powershell
+npx tsx scripts/events/generate-poster-plate.ts <event-slug> --probe
+npx tsx scripts/events/generate-poster-plate.ts <event-slug> --n 4
+npx tsx scripts/events/build-event-poster.ts <event-slug> --plate tmp/plates/<chosen>.png
+```
+
+Show the poster. Get a yes. Then continue.
+
+### 3a — The accent pair
 
 Every deck carries an accent pair: one colour for light slides, one for dark.
 The pair is not decoration. She Sharp's brand purple `#9b2e83` scores 2.92:1
@@ -235,6 +265,42 @@ purple**, whatever the poster says. Expect to explain that once:
 > walls stay purple — that's the organisation's colour rather than this event's,
 > and it's what makes twelve years of photos taken in twelve different lighting
 > conditions read as one thing.
+
+### 3b — The skin
+
+**Read `references/skins.md` before writing any of it.** It has the boundary,
+the three places a skin lives, and the traps — including the one where
+`object-position` set in CSS compiles cleanly and silently loses to an inline
+style, so every band shows a black bar.
+
+The short version:
+
+1. **Name the concept in one sentence**, from the poster. *"A braid of
+   fibre-optic strands lit from within."* If you cannot, there is no skin yet
+   and the house skin is the honest answer — say so and move on.
+2. **Declare a `DeckSkin`** in the deck file: a surface (`archive`, or `plate`
+   with **at least two** of the event's images), and a `tempo` if the concept
+   wants the entrances slower or quicker than the house.
+3. **Write the `[data-skin="<key>"]` block** in
+   `styles/components/deck-skins.css` — panels, rules, tracking, ambient loops.
+   This is where the look actually is.
+4. **Check the light slides, not just the chapter cards.** Most of a deck is
+   light. A skin that only shows up on the dark statements is a skin nobody
+   sees.
+
+**What you may not touch, ever**, because each fails silently in front of a
+room: the stage geometry, `vw`/`vh`/`dvh` anywhere inside the stage, the 1080
+design height, the copy and rhythm limits, the accent contrast floor, the white
+logo chip, or an ambient loop missing either the `[data-active="true"]` or the
+`[data-motion="on"]` gate. `references/skins.md` says why for each.
+
+**Explain the skin to the author in plain words, never in CSS:**
+
+> Your poster is a braid of lit fibre, so the slides are built out of it — the
+> chapter cards sit on the braid itself, and the pale slides carry a strip of it
+> along the bottom where the other decks have a row of photos. The She Sharp
+> slides in the opening and the thank-yous keep the usual photo wall; that part
+> is the organisation's rather than this event's.
 
 ## Step 4 — Collect the assets
 
@@ -568,24 +634,35 @@ faster — only the PDF does that — but it fixes a slide show that stutters.
    someone who is also listening to a person talk, and the rhythm limits are
    what stops a deck that is correct slide by slide from being unwatchable end
    to end.
-5. **Never generate a person, a taonga, or anything that could pass for a real
-   She Sharp photograph.** Generated imagery is whenua only — land, water,
-   plants, light. No carving, no woven pattern, no moko, no iwi motif. *Why:*
-   imitating taonga is appropriation whoever holds the pen, and a convincing
-   fake event photo destroys the credibility of the twelve years of real ones
-   sitting next to it. The archive is real and must stay real.
-6. **Nothing goes on a slide that the room does not need in order to act on it
+5. **Never generate a person, a face, or a taonga; never anything that could
+   pass for a real She Sharp photograph.** For a karakia or a chapter of quiet
+   the subject is narrower still — whenua only: land, water, plants, light. For
+   an event's own artwork the subject is open, because that is the poster's
+   concept and a fitness company talking about AI is not served by a photograph
+   of harakeke. What never moves: no people, no taonga (no carving, no woven
+   pattern, no moko, no iwi motif), nothing mistakable for the archive, and no
+   text or logos inside the generated image. *Why:* imitating taonga is
+   appropriation whoever holds the pen, and a convincing fake event photo
+   destroys the credibility of the twelve years of real ones sitting next to it.
+   The archive is real and must stay real — an abstract macro of lit glass could
+   never be mistaken for a room at AUT, which is exactly why it is safe.
+6. **A skin may change how a deck looks and never what it may say.** The copy
+   limits, the rhythm rules, the accent contrast floor, the stage geometry and
+   the eighteen slide types are outside every skin's reach. *Why:* those are
+   what survive being read from three metres by someone who is also listening to
+   a person talk, and a skin is a look — it has no standing to overrule them.
+7. **Nothing goes on a slide that the room does not need in order to act on it
    right now.** Speaker bios, terms and conditions, long rules and full
    schedules live on the event page and are reached by a QR code. *Why:* every
    sentence the audience is reading is a sentence they are not hearing.
-7. **Every slide carries a host note, and every slide carries a kicker.** The
+8. **Every slide carries a host note, and every slide carries a kicker.** The
    note is for the person clicking; the kicker is for the room. *Why:* the deck
    is clicked through by a volunteer who may see it for the first time that
    morning, and a slide whose only labels repeat each other reads as though
    nobody wrote it.
-8. **Verify locally before merging.** There are no preview deploys. *Why:* the
+9. **Verify locally before merging.** There are no preview deploys. *Why:* the
    next place the deck renders after your laptop is production.
-9. **Repo conventions apply.** English for all on-screen strings and code
+10. **Repo conventions apply.** English for all on-screen strings and code
    comments; Conventional Commits; no new files under `docs/`. *Why:* this deck
    ships in the same repository as the public website.
 

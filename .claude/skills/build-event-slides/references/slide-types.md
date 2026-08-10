@@ -12,7 +12,25 @@ are hackathon challenges, workshop tracks or panel topics.
 
 ## What the deck is made of
 
-This deck is not built out of design. It is built out of **She Sharp's own
+**Two things, and the line between them is fixed.**
+
+The **organisational sequence** — the karakia, who we are, the team, the impact
+figures, the sponsor wall, the thanks, the closing — is built out of She Sharp's
+own photographs, under the brand purple, in every deck, forever. That is the
+doctrine set out in the rest of this section, and no event may restyle it.
+
+**Everything from the chapter card onwards is the event's**, and it wears that
+event's own skin — a surface, palette, geometry, motion tempo and type
+personality designed from the event's poster. See `references/skins.md`. A Les
+Mills panel evening and a two-day AI hackathon should not look like the same
+deck, and until August 2026 they did.
+
+So read what follows as the rule for the house half, and as the *reason the
+house half exists* — the archive is what the event's own look is set against.
+
+### Why the archive, for the house half
+
+This half is not built out of design. It is built out of **She Sharp's own
 photographs**, and the reason matters enough to say plainly.
 
 Taken one at a time, the archive is not good. It is group shots in meeting rooms

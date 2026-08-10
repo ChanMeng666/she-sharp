@@ -327,10 +327,19 @@ mostly clear. Put the type in the clear part.
 
 ### What may be generated, and what may not
 
-The scope is narrow on purpose, and it is a rule rather than a preference.
+The scope depends on what the image is *for*, and three of the four rules never
+move.
 
-**Generate whenua only** — land, water, plants, light. That is what the karakia
-itself speaks about, and it is the whole permitted subject.
+**For a karakia, a ceremony or a chapter of quiet — whenua only:** land, water,
+plants, light. That is what the karakia itself speaks about, and it is the whole
+permitted subject for that slot. `public/img/plates/` holds six.
+
+**For an event's own artwork — the subject is open**, because that is the
+event's poster concept and a fitness company talking about AI is not served by a
+photograph of harakeke. This is the one place the scope widened, in August 2026,
+when every event started carrying its own skin. See `references/skins.md`. The
+three rules below still apply in full, and so does: no text and no logos inside
+the generated image — those are set in code, where they can be corrected.
 
 **Never people.** **Never taonga**: no carving, no woven pattern, no moko, no
 motif belonging to any iwi. Generating those is appropriation dressed up as art
