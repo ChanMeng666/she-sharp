@@ -3,7 +3,8 @@ import type { CSSProperties } from "react";
 import type { AgendaSlide, TimedItem } from "@/lib/deck/types";
 import { cn } from "@/lib/utils";
 
-import { ArchiveBand, BAND_PAD, Kicker, seedFrom } from "./archive";
+import { DeckSurfaceBand } from "@/components/deck/surfaces";
+import { BAND_PAD, Kicker, seedFrom } from "./archive";
 
 /**
  * One run-sheet row.
@@ -87,7 +88,7 @@ export function AgendaSlideLayout({ slide }: { slide: AgendaSlide }) {
 
   return (
     <>
-      {showBand && <ArchiveBand seed={seed} />}
+      {showBand && <DeckSurfaceBand slide={slide} seed={seed} />}
 
       <div
         className="deck-safe"

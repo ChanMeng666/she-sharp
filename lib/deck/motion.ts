@@ -1122,12 +1122,28 @@ const SWEEP_MARGIN = 500;
  * @param type The slide's discriminant, which selects the recipe.
  * @returns A handle whose `stop()` reveals everything immediately.
  */
+/**
+ * How far a skin may stretch or compress the entrance recipes.
+ *
+ * A skin sets the CHARACTER of the motion, not whether the host can get on with
+ * the evening. Below 0.6 the entrances stop reading as entrances; above 1.6 the
+ * room is watching furniture arrive while somebody waits to speak. Both ends are
+ * clamped rather than validated, because the failure is a projector running
+ * slow in front of an audience and there is nobody there to read an error.
+ */
+const TEMPO_RANGE = { min: 0.6, max: 1.6 } as const;
+
 export function playSlideMotion(
   slide: HTMLElement,
   type: SlideType,
+  tempo = 1,
 ): MotionHandle {
   const recipe = MOTION_RECIPES[type];
   if (!recipe) return NOOP;
+
+  const rate = Number.isFinite(tempo)
+    ? Math.min(TEMPO_RANGE.max, Math.max(TEMPO_RANGE.min, tempo))
+    : 1;
 
   // No Web Animations API means no motion — and, because nothing was ever
   // hidden, a fully composed slide. That is the correct outcome, not a bug.
@@ -1177,16 +1193,20 @@ export function playSlideMotion(
       const targets = resolve(slide, move, claimed);
       if (targets.length === 0) continue;
 
-      const base = (move.chain ? chainEnd : 0) + (move.delay ?? 0);
-      const duration = move.duration ?? DECK_DUR.slow1;
+      // The skin's tempo scales the whole recipe — duration, delay and stagger
+      // together — so a slower skin reads as one deliberate movement rather than
+      // as long elements arriving on top of quick ones. `chainEnd` is already
+      // scaled, being accumulated from these same values.
+      const base = (move.chain ? chainEnd : 0) + (move.delay ?? 0) * rate;
+      const duration = (move.duration ?? DECK_DUR.slow1) * rate;
       const easing = move.easing ?? DECK_EASE.entry;
       let moveEnd = base;
 
       targets.forEach((element, position) => {
         const delay =
           base +
-          position * (move.stagger ?? 0) +
-          (move.jitter ? Math.random() * move.jitter : 0);
+          position * (move.stagger ?? 0) * rate +
+          (move.jitter ? Math.random() * move.jitter * rate : 0);
 
         const end = delay + duration;
         if (end > moveEnd) moveEnd = end;

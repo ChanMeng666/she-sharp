@@ -3,7 +3,12 @@ import { toneOf } from "@/lib/deck/utils";
 import { buildMosaic } from "@/lib/deck/wall";
 import { cn } from "@/lib/utils";
 
-import { ArchiveBand, Kicker, knockoutStyle, seedFrom } from "./archive";
+import { DeckSurfaceBand } from "@/components/deck/surfaces";
+import {
+  Kicker,
+  knockoutStyle,
+  seedFrom,
+} from "./archive";
 
 /** Longest value the photo knockout stays legible at. Beyond it, solid ink. */
 const KNOCKOUT_MAX_CHARS = 5;
@@ -42,7 +47,7 @@ export function StatsSlideLayout({ slide }: { slide: StatsSlide }) {
 
   return (
     <>
-      <ArchiveBand seed={seed} place="start" />
+      <DeckSurfaceBand slide={slide} seed={seed} place="start" />
 
       <div
         className="deck-safe"

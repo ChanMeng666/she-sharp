@@ -3,7 +3,8 @@ import { DeckQr } from "@/components/deck/deck-qr";
 import type { UpcomingSlide } from "@/lib/deck/types";
 import { cn } from "@/lib/utils";
 
-import { ArchiveBand, BAND_PAD, Kicker, seedFrom } from "./archive";
+import { DeckSurfaceBand } from "@/components/deck/surfaces";
+import { BAND_PAD, Kicker, seedFrom } from "./archive";
 
 /**
  * Column count per event count, as complete class strings for Tailwind's scanner.
@@ -55,7 +56,7 @@ export function UpcomingSlideLayout({ slide }: { slide: UpcomingSlide }) {
 
   return (
     <>
-      {showBand && <ArchiveBand seed={seed} />}
+      {showBand && <DeckSurfaceBand slide={slide} seed={seed} />}
 
       <div
         className="deck-safe"

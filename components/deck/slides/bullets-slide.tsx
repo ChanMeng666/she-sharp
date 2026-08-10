@@ -2,7 +2,8 @@ import { DeckImage } from "@/components/deck/deck-image";
 import type { BulletsSlide } from "@/lib/deck/types";
 import { cn } from "@/lib/utils";
 
-import { ArchiveBand, BAND_PAD, Kicker, SponsorMark, seedFrom } from "./archive";
+import { DeckSurfaceBand } from "@/components/deck/surfaces";
+import { BAND_PAD, Kicker, SponsorMark, seedFrom } from "./archive";
 
 /**
  * The marker on the leading edge of a bullet.
@@ -79,7 +80,7 @@ export function BulletsSlideLayout({ slide }: { slide: BulletsSlide }) {
 
   return (
     <>
-      <ArchiveBand seed={seed} />
+      <DeckSurfaceBand slide={slide} seed={seed} />
 
       <div className="deck-safe" style={{ paddingBlockEnd: BAND_PAD }}>
         <div
