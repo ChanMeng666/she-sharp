@@ -264,31 +264,10 @@
     display: none;
   }
 
-  /* People grids reflow. `people-slide.tsx` derives its column count against a
-     1230px content column and writes it as an inline style, so this needs both
-     `!important` and the density — a track that fits a name-only tile is half
-     what a name-role-org tile needs. `auto-fit` from here on: the count is
-     small enough that a ragged last row reads as a list, not as a broken grid.
-     Portraits follow the track on their own — `PersonTile` sizes them
-     `min(100%, cap)` precisely so they can. */
-  .deck-people-grid {
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(var(--deck-people-min), 1fr)
-    ) !important;
-  }
-
-  .deck-people-grid[data-density="sm"] {
-    --deck-people-min: 180px;
-  }
-
-  .deck-people-grid[data-density="md"] {
-    --deck-people-min: 240px;
-  }
-
-  .deck-people-grid[data-density="lg"] {
-    --deck-people-min: 300px;
-  }
+  /* The people grid reflows here too, but its rules live beside the component
+     further down this file, because the phone's rectangle has to be declared
+     AFTER the landscape one to win — the two are the same selector and source
+     order is all that separates them. */
 
   /* The QR sits beside the copy in a fixed 340px track. On a 900px stage that
      leaves the copy about 420px, so the ask — the whole reason the slide
@@ -1320,6 +1299,44 @@
   background: var(--slide-surface);
 }
 
+/* The people grid's rectangle, and the portrait cap inside it.
+
+   Both numbers are planned per slide in `lib/deck/people-layout.ts` and arrive
+   as custom properties on the `<ul>`; this is where they are spent, which is
+   what lets the portrait stage substitute the phone's pair below by ordinary
+   cascade instead of shouting `!important` at an inline style. The fallbacks
+   are what some future caller who sets neither would get, not a default worth
+   relying on. */
+.deck-people-grid {
+  grid-template-columns: repeat(var(--deck-people-columns, 3), minmax(0, 1fr));
+  --deck-person: var(--deck-person-size, 148px);
+  --deck-people-last: var(--deck-people-last-wide, auto);
+}
+
+/* A last row of one is centred rather than left hanging in the first column.
+   Only when the plan says so: an odd count in two columns cannot be balanced,
+   which is what a phone makes of a fifteen-person team, but three people in a
+   row of three must stay where they are. */
+.deck-people-grid > li:last-child {
+  grid-column: var(--deck-people-last, auto);
+}
+
+/* The phone's rectangle. MUST STAY BELOW the rule above: identical selector,
+   identical specificity, and a 900px stage matches the query — so source order
+   is the only thing that decides, and getting it wrong hands a phone a 4:3
+   projector's five columns at 145px each. That is the same failure family as
+   the ordering rule at the top of this file, and it fails just as silently. */
+@container deck (max-width: 1000px) {
+  .deck-people-grid {
+    grid-template-columns: repeat(
+      var(--deck-people-columns-phone, 2),
+      minmax(0, 1fr)
+    );
+    --deck-person: var(--deck-person-size-phone, 120px);
+    --deck-people-last: var(--deck-people-last-phone, auto);
+  }
+}
+
 /* The organisation line under a portrait.
 
    `.deck-label` is uppercase at 0.18em, which makes it roughly a fifth wider
@@ -1329,6 +1346,22 @@
    that tracking buys nothing and costs a line of wrapping. */
 .deck-person-org {
   letter-spacing: 0.08em;
+}
+
+/* …and on a narrow stage it goes entirely, because there it can cost a column.
+
+   A tracked word is unbreakable at its TRACKED width, so the tracking is part
+   of what sets the pitch of the whole grid. On a 4:3 projector a people tile is
+   283px and "INTERNATIONAL" is 228px of letters; 0.08em adds 29px of air to it
+   and a skin that opens the tracking further adds 70 (see the exemption in
+   `deck-skins.css`, which is where that word actually broke). Honouring a width
+   like that means fewer columns, more rows and smaller photographs — so the air
+   goes first. `lib/deck/people-layout.ts` plans the narrow and portrait scales
+   with `orgTrack: 0` to match; change one and the other is wrong. */
+@container deck (max-width: 1560px) {
+  .deck-person-org {
+    letter-spacing: normal;
+  }
 }
 
 /* Sponsor marks are a mixed bag of dark and light SVGs. On dark slides they sit
