@@ -393,6 +393,12 @@ export const eventLesmills03September2026Deck: Deck = {
   title: deckTitleFrom(event),
   subtitle: deckSubtitleFrom(event),
   eventSlug: EVENT_SLUG,
+  /*
+   * Set to `drift` for now — Step 1 of the weave change is a no-op by
+   * construction, and this deck moves to its own arrangement in the next
+   * commit, once there is one to move to.
+   */
+  archive: "drift",
   skin: FIBRE_SKIN,
   /*
    * The neon pink off the poster headline, run through

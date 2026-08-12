@@ -41,38 +41,95 @@
  * a genuinely new kind — a branch in `components/deck/surfaces.tsx`.
  */
 
-import type { DeckImage, DeckSkin, SurfaceSpec } from "./types";
+import type { ArchiveWeaveKey, DeckImage, DeckSkin, SurfaceSpec } from "./types";
 
 export type { DeckSkin, SurfaceSpec };
 
-/**
- * The house skin: the archive wall, the purple duotone, hard-edged incisions.
- *
- * Not a fallback and not a legacy option. This is She Sharp's own visual record
- * and it is what every organisational slide wears, in every deck, forever. A
- * deck that declares no skin of its own wears it throughout, which is the right
- * outcome for an event with no artwork yet.
- */
-export const houseSkin: DeckSkin = {
-  key: "house",
-  name: "She Sharp House",
-  description:
-    "Twelve years of the archive used as mass, under the brand purple duotone.",
-  surface: { kind: "archive" },
+/** Every weave, in the order a scaffold should offer them. */
+export const ARCHIVE_WEAVES: readonly ArchiveWeaveKey[] = [
+  "drift",
+  "contact-sheet",
+  "mosaic",
+] as const;
+
+/** One line on what each weave says, for the ledger an author actually reads. */
+export const ARCHIVE_WEAVE_NOTES: Readonly<Record<ArchiveWeaveKey, string>> = {
+  drift: "Six rows of archive drifting past each other. Restless, continuous.",
+  "contact-sheet":
+    "One strict, motionless grid of the archive. Ordered, still, documentary.",
+  mosaic:
+    "An irregular grid of the archive, cut on the same rows. Editorial, uneven.",
 };
+
+/**
+ * The house skin, one per weave.
+ *
+ * Frozen at module load rather than built per call, so the identity is stable:
+ * `useSlideSkin` returns one of these on every organisational slide of every
+ * render, and a fresh object each time would defeat memoisation everywhere
+ * downstream for no gain.
+ *
+ * All three are the SAME skin — She Sharp's own visual record, the archive under
+ * the brand purple duotone. They differ only in how that archive is laid out,
+ * which is the axis a deck is allowed to choose. Nothing here is a per-event
+ * palette, geometry or type change; those belong to a `DeckSkin` the event
+ * declares, and they never reach an organisational slide.
+ */
+export const HOUSE_SKINS: Readonly<Record<ArchiveWeaveKey, DeckSkin>> =
+  Object.freeze(
+    Object.fromEntries(
+      ARCHIVE_WEAVES.map((weave) => [
+        weave,
+        Object.freeze({
+          key: "house",
+          name: "She Sharp House",
+          description:
+            "Twelve years of the archive used as mass, under the brand purple duotone.",
+          surface: { kind: "archive", weave },
+        } satisfies DeckSkin),
+      ]),
+    ) as Record<ArchiveWeaveKey, DeckSkin>,
+  );
+
+/**
+ * The house skin in its original arrangement.
+ *
+ * Kept as a named export, and kept identical to `HOUSE_SKINS.drift`, because it
+ * is the `SkinContext` default and the answer for anything rendering a layout
+ * outside a stage. Not a fallback and not a legacy option: this is what every
+ * organisational slide wears, in every deck, forever.
+ */
+export const houseSkin: DeckSkin = HOUSE_SKINS.drift;
+
+/** The house skin arranged as `weave`. */
+export function houseSkinFor(weave: ArchiveWeaveKey): DeckSkin {
+  return HOUSE_SKINS[weave] ?? houseSkin;
+}
 
 /**
  * Resolves the skin a given slide wears.
  *
  * `surface: "house"` is stamped by the boilerplate onto the organisational
  * slides. Everything else — every slide an event author writes — is the event's.
+ *
+ * `weave` is the DECK's arrangement, and it reaches two places. An
+ * organisational slide takes it outright. An event skin takes it only if that
+ * skin chose the archive surface and named no weave of its own — an event with
+ * no artwork inherits the deck's arrangement rather than silently reverting to
+ * the drift, which would put the twins back on any deck that declared no skin.
  */
 export function skinForSlide(
   surface: "house" | "event" | undefined,
   eventSkin: DeckSkin | undefined,
+  weave: ArchiveWeaveKey = "drift",
 ): DeckSkin {
-  if (surface === "house") return houseSkin;
-  return eventSkin ?? houseSkin;
+  if (surface === "house" || !eventSkin) return houseSkinFor(weave);
+
+  if (eventSkin.surface.kind === "archive" && !eventSkin.surface.weave) {
+    return { ...eventSkin, surface: { kind: "archive", weave } };
+  }
+
+  return eventSkin;
 }
 
 /**
