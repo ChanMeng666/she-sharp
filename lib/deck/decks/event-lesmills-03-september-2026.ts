@@ -563,10 +563,39 @@ export const eventLesmills03September2026Deck: Deck = {
    */
   theme: {
     accent: {
-      onLight: "#b749a9",
-      onDark: "#ca53bb",
+      /*
+       * ONE accent, not a pair, because this deck has no light register to
+       * speak of. The house pair exists because brand purple scores 2.92:1 on
+       * the dark canvas and has to be lightened there; here both grounds are
+       * near-black, so the same lit magenta is correct on both and a darker
+       * `onLight` would be unreadable on the very slides it was meant for.
+       */
+      onLight: "#e070cf",
+      onDark: "#e070cf",
       spark: "#5ee7f5",
     },
+    /*
+     * The canvases the deck ACTUALLY renders, declared so
+     * `checkAccentContrast()` measures against them.
+     *
+     * These mirror `--deck-canvas-dark` and `--deck-paper` in the
+     * `[data-skin="fibre"]` block, and the duplication is the point: without
+     * them the checker measures this magenta against a white page that never
+     * appears anywhere in the deck, passes it, and tells us nothing. Keep the
+     * two in step — a colour changed in the stylesheet and not here turns the
+     * one check that can catch an unreadable slide into a rubber stamp.
+     */
+    darkCanvas: "#05060b",
+    lightCanvas: "#14172a",
+    /*
+     * Both registers are dark, so both take the same near-white ink — and it
+     * has to be said here, not only in CSS. `deck.test.ts` asserts body text
+     * clears 7:1 against its own canvas, and it reads this: the first dark
+     * build declared the canvases and left the ink implicit, so the check
+     * measured the house navy `#1f1e44` against `#14172a` and reported 1.12:1.
+     * It was right. The title slide had come out invisible.
+     */
+    ink: { onLight: "#e8f1f7", onDark: "#e8f1f7" },
   },
   slides: [
     ...buildOpeningSlides({

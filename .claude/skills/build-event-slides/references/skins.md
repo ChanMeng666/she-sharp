@@ -6,40 +6,63 @@ so the Les Mills panel evening came out looking like a two-day AI hackathon.
 
 What follows is how far that freedom goes, where it stops, and how to use it.
 
-## The one boundary, and it is not aesthetic
+## The one boundary, and it is about content
 
-**The organisational sequence keeps the house skin. The event's own chapters
-wear the event's.**
+**The organisational slides keep She Sharp's own photographs. Everything else
+about how they look is the event's.**
 
-| Wears the house, always | Wears the event's skin |
+| Never the event's | Always the event's |
 |---|---|
-| Title, opening karakia, health & safety | The chapter card that hands over |
-| We are She Sharp, the team, the impact figures | Everything after it |
-| The sponsor wall, Stay Connected | The run sheet, the speakers, the tables |
-| Thanks, upcoming, feedback QR, ambassador QR, closing karakia | The break, the closing photograph |
+| Which photographs appear on the organisational slides — twelve years of real rooms, from the archive | The ground, the ink, the grade, the edges, the type personality |
+| Which organisational slides exist, and in what order | The event's own chapters, entirely |
+| The white logo chip a partner's mark sits on | The accent, the kicker colour, the tempo |
 
-The archive wall and the purple duotone are the only thing making twelve years
-of photography — shot in twelve different rooms under four stops of colour
-temperature — read as one organisation. They are She Sharp's record of itself.
-An event may not restyle them, any more than it may restyle the charity number.
+**This was drawn in the wrong place once, and it is worth knowing why.** The
+boundary used to be around *treatment*: organisational slides wore the house
+skin outright. But the organisational sequence is fifteen slides of a
+twenty-five slide deck, so an event's design reached ten and the rest were the
+same paper, the same navy ink, the same purple grade and the same type as every
+deck ever built. Two decks came out looking like one. A weave was added so the
+archive could be *arranged* differently, and they still came out looking like
+one — because the arrangement was never what the room was reading. It was
+reading the palette.
 
-The crossover is the chapter card, and that is deliberate: it is where the deck
-stops being about She Sharp and starts being about the evening, so it is the
-first slide to carry the evening's own identity.
+So the archive photographs stay, and their treatment does not. The grade in
+particular: its job is to make photography shot across four stops of colour
+temperature read as one thing, and it does that in **any** hue. Brand purple was
+the convention, not the mechanism. A deck that regrades the archive to its own
+light still shows every one of those rooms, still shows them all as one, and no
+longer looks like the deck before it.
 
 You do not have to do anything to get this right. `buildOpeningSlides()` and
-`buildClosingSlides()` stamp their own slides, and every slide you write in the
-deck file is the event's by default.
+`buildClosingSlides()` stamp their own slides, `skinForSlide()` keeps their
+surface and gives them your palette, and every slide you write in the deck file
+is the event's by default.
+
+**If you move the ground, you must move the ink with it — in the CSS *and* in
+`theme.ink`.** `deck.test.ts` asserts body text clears 7:1 against its own
+canvas and it reads the theme, not the stylesheet. The first dark skin declared
+its canvases and left the ink implicit; the check measured the house navy
+against a near-black ground, reported 1.12:1, and was right — the title slide
+had come out invisible. Same for `theme.darkCanvas` / `theme.lightCanvas`: if
+they do not match what the CSS renders, the one check that can catch an
+unreadable slide becomes a rubber stamp.
 
 ## What a skin controls
 
 - **The surface** — what fills the frame behind a statement slide, and what the
   thin band on a light slide is a strip of.
-- **The palette** — canvases and the ink ramp, beyond the accent pair.
+- **The palette** — both canvases, the ink ramp, the hairlines and the rules.
+  A skin may take the whole deck dark, or the whole deck pale; `data-tone` is a
+  *contrast relationship*, not a literal colour, so the rhythm rules stay
+  meaningful as long as the two registers still differ from each other.
+- **The archive grade** — `--deck-duo-shadow` and `--deck-duo-highlight`. See
+  the boundary above.
 - **The geometry** — panel edges, rules, radii, chip corners.
 - **The motion tempo** — how fast and how smoothly the entrances play.
-- **The type personality** — tracking, case, the weight relationships in the
-  small type.
+- **The type personality** — tracking, case, weight. **Not the sizes**: `--dt-*`
+  is the stage's contract with every layout, and a skin that changes them
+  overflows a slide it has never seen.
 
 ## What a skin may never control
 

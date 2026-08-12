@@ -123,7 +123,34 @@ export function skinForSlide(
   eventSkin: DeckSkin | undefined,
   weave: ArchiveWeaveKey = "drift",
 ): DeckSkin {
-  if (surface === "house" || !eventSkin) return houseSkinFor(weave);
+  if (!eventSkin) return houseSkinFor(weave);
+
+  /*
+   * THE BOUNDARY IS ABOUT CONTENT, NOT TREATMENT — corrected 12 Aug 2026.
+   *
+   * This used to return the house skin outright for an organisational slide,
+   * which meant an event's design reached ten slides of a twenty-five slide
+   * deck and the other fifteen were the same paper, the same navy ink, the same
+   * purple grade and the same type as every other deck ever built. Two decks
+   * came out looking like one, a weave was added to vary the arrangement, and
+   * they STILL came out looking like one — because the arrangement was never
+   * what the room was reading. It was reading the palette.
+   *
+   * So an organisational slide now keeps the house SURFACE — the archive
+   * photographs, She Sharp's own record, which no event may swap for its own
+   * artwork — and wears the event's palette, geometry, type and grade like
+   * every other slide. `data-skin` therefore names the event on all of them,
+   * and one `[data-skin]` block dresses the whole deck.
+   *
+   * What that protects is the thing actually worth protecting: every deck still
+   * shows the same twelve years of real rooms, in the same order, on the same
+   * slides. What it gives up is the assumption that one purple is the only way
+   * to make them cohere — the grade's JOB is to unify four stops of colour
+   * temperature, and it does that in any hue. The hue was convention.
+   */
+  if (surface === "house") {
+    return { ...eventSkin, surface: houseSkinFor(weave).surface };
+  }
 
   if (eventSkin.surface.kind === "archive" && !eventSkin.surface.weave) {
     return { ...eventSkin, surface: { kind: "archive", weave } };

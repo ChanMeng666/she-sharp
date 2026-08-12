@@ -427,6 +427,18 @@ export interface DeckTheme {
   darkCanvas?: string;
   /** Defaults to `#ffffff`. */
   lightCanvas?: string;
+  /**
+   * Body ink per register, when a skin has moved it.
+   *
+   * Defaults to the house pair — navy on paper, white on near-black. A skin
+   * that changes the ground almost always has to change the ink with it, and
+   * `deck.test.ts` asserts body text clears 7:1 against its own canvas. That
+   * assertion reads THIS, so a deck that moves the ink in CSS and not here
+   * fails loudly instead of shipping unreadable copy. Which is what happened:
+   * the first dark build of the Les Mills skin measured the house navy against
+   * a near-black canvas at 1.12:1 and the check caught it.
+   */
+  ink?: { onLight: string; onDark: string };
   /** Optional plate behind dark slides; the CSS light-burst is used when absent. */
   darkBackground?: DeckImage;
 }
