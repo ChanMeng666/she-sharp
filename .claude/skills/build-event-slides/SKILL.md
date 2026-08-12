@@ -33,14 +33,15 @@ Five facts shape everything below.
   short deck, so the Les Mills evening and the two-day hackathon still came out
   looking like the same deck with a different accent. Step 3 is where you do
   both, and neither is optional.
-- **She Sharp's own slides are not the event's to restyle.** The organisational
-  sequence — the karakia, the team, the impact figures, the sponsor wall, the
-  thanks — keeps the archive wall and the brand purple in every deck, forever.
-  Twelve years of real rooms used as mass is the organisation's record of
-  itself, and the duotone is the only thing making photography shot across four
-  stops of colour temperature read as one thing. The event's skin begins at the
-  chapter card that hands over to it. `references/slide-types.md` explains the
-  archive doctrine; `references/skins.md` explains the boundary.
+- **She Sharp's own slides keep She Sharp's own photographs — and nothing else
+  about them is fixed.** The organisational sequence always shows the same
+  twelve years of real rooms, on the same slides, in the same order. What those
+  photographs are *lit by* is the event's: a deck may take the whole thing dark,
+  and may regrade the archive into its own colour. The grade's job is to make
+  photography shot across four stops of colour temperature read as one thing,
+  and it does that in any hue — brand purple was the convention, not the
+  mechanism. Drawing this line around *treatment* instead of *content* is what
+  made the first two decks look identical. `references/skins.md` has the table.
 - **The limits are enforced, not suggested.** `lib/deck/lint.ts` fails a deck
   whose title runs to nine words, and it also fails a deck that is *shaped*
   badly — too many similar slides in a row, too few dark ones, a kicker that
