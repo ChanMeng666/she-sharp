@@ -187,6 +187,27 @@ const FIBRE_SKIN: DeckSkin = {
     ],
     drift: true,
   },
+  /*
+   * NO PHOTO WALL ANYWHERE IN THIS DECK.
+   *
+   * The archive used as mass — a wall, a grid, a band of small frames — is the
+   * house deck's signature device, and the hackathon deck has spent it. A
+   * second deck using the same device reads as the same deck whatever colour it
+   * is and however the tiles are arranged; that is a fact about the device, and
+   * it is why regrading it and then rearranging it both failed to make these
+   * two decks distinguishable.
+   *
+   * So She Sharp's own slides here stand on a ground drawn in code: black with
+   * light running through it, the poster's subject at the poster's distance.
+   *
+   * WHAT THIS COSTS, said plainly: the organisational sequence no longer shows
+   * twelve years of rooms behind the team, the figures and the thanks. What it
+   * keeps is every photograph that is actually being LOOKED at — the community
+   * hero, the closing frame, four panellists' faces — because a single
+   * photograph is a different device from photography used as texture, and it
+   * is the one that was carrying the meaning.
+   */
+  houseSurface: { kind: "field" },
   tempo: 1.25,
   /* Declared, though `geometryOf()` would infer the same from the plate
      surface. The `[data-skin="fibre"]` block replaces the house's opaque cuts
