@@ -128,16 +128,76 @@
 /* --------------------------------------------------------------------------
    Degradation.
 
-   ORDER IS LOAD-BEARING: 1560 then 1000, wide to narrow. A 900px stage matches
-   both container queries at equal specificity and source order decides the
-   winner. Getting this backwards compiles cleanly and silently runs the wide
-   treatment on a 4:3 projector.
+   ORDER IS LOAD-BEARING, TWICE OVER.
+
+   Between the two container queries: 1560 then 1000, wide to narrow. A 900px
+   stage matches both at equal specificity and source order decides. Getting it
+   backwards compiles cleanly and silently runs the wide treatment on a 4:3
+   projector.
+
+   And between the `@media` block and the `@container` blocks: **media first**.
+   Both can match at once — a portrait phone is 390 device px driving a 900
+   design-px stage — and the container query is the one that knows the real
+   stage, so it must win.
+
+   That ordering is not cosmetic, because `display: none` does not undo. The two
+   truncations are different selectors, so where both match they UNION rather
+   than override: portrait took the media block's five columns and the container
+   block's eighteen-cell cut, which is 3.6 rows, and left a third of the stage
+   as bare gradient. With media first the container's column count wins and its
+   cut is the tighter of the two, so the pair agree by construction. Any new
+   breakpoint must keep `cells === cols × 6` on its own AND stay consistent with
+   every block that can match alongside it.
 
    Cell counts are exact, never approximate: columns × 6 rows for the contact
    sheet, and a multiple of three cells for the mosaic. A count that does not
    tile leaves a ragged bottom row, which reads as a broken grid rather than as
    a designed one.
    -------------------------------------------------------------------------- */
+
+/* The small-DEVICE query, and the counts here are generous on purpose.
+   ---------------------------------------------------------------------------
+   `@container` is measured in the stage's own design px; `@media` is measured
+   in device px, and they are not the same axis. A phone in landscape is short
+   enough to match `max-height: 620px` while driving the widest stage the deck
+   ever draws — 2337 design px at 844×390. Cutting to a portrait-sized grid here
+   would leave the wall stopping two thirds of the way across with bare gradient
+   after it, which is the exact bug deck.css records at its own `TEN,` note.
+
+   `display: none` rather than opacity or visibility, because a lazy image in a
+   `display: none` subtree is never fetched, never decoded and never given a
+   layer — which is the whole saving, and no amount of post-hydration JavaScript
+   achieves it. */
+@media (max-width: 900px), (max-height: 620px) {
+  /* COLUMNS AND COUNT MOVE TOGETHER, ALWAYS.
+     -------------------------------------------------------------------------
+     This block first cut the cell count without touching `--weave-cols`, and
+     the result was a wall that stopped three quarters of the way down with bare
+     gradient under it — at 844x390, the landscape phone, which is the one shape
+     this query exists for.
+
+     The drifting wall gets away with a bare count because it truncates within a
+     row: six rows survive however many tiles each loses. A grid is one flow, so
+     hiding the tail removes whole ROWS from the bottom instead. The invariant
+     here is therefore `cells === cols × 6`, and every breakpoint above obeys
+     it: 8x6=48 at base, 6x6=36, 3x6=18. Five columns of six is 30 — the saving
+     this block wanted — and it still reaches the bottom edge. */
+  .deck-weave-contact-sheet .deck-weave-grid {
+    --weave-cols: 5;
+  }
+  .deck-weave-contact-sheet .deck-weave-grid > :nth-child(n + 31) {
+    display: none;
+  }
+
+  /* The mosaic counts in periods of three cells filling four columns, so its
+     count is `cols / 4 × 3 × 6`: four columns is 18 cells, not 24. */
+  .deck-weave-mosaic .deck-weave-grid {
+    --weave-cols: 4;
+  }
+  .deck-weave-mosaic .deck-weave-grid > :nth-child(n + 19) {
+    display: none;
+  }
+}
 
 @container deck (max-width: 1560px) {
   .deck-weave-contact-sheet .deck-weave-grid {
@@ -164,28 +224,6 @@
     --weave-cols: 4;
   }
   .deck-weave-mosaic .deck-weave-grid > :nth-child(n + 19) {
-    display: none;
-  }
-}
-
-/* The small-DEVICE query, and the counts here are generous on purpose.
-   ---------------------------------------------------------------------------
-   `@container` is measured in the stage's own design px; `@media` is measured
-   in device px, and they are not the same axis. A phone in landscape is short
-   enough to match `max-height: 620px` while driving the widest stage the deck
-   ever draws — 2337 design px at 844×390. Cutting to a portrait-sized grid here
-   would leave the wall stopping two thirds of the way across with bare gradient
-   after it, which is the exact bug deck.css records at its own `TEN,` note.
-
-   `display: none` rather than opacity or visibility, because a lazy image in a
-   `display: none` subtree is never fetched, never decoded and never given a
-   layer — which is the whole saving, and no amount of post-hydration JavaScript
-   achieves it. */
-@media (max-width: 900px), (max-height: 620px) {
-  .deck-weave-contact-sheet .deck-weave-grid > :nth-child(n + 31) {
-    display: none;
-  }
-  .deck-weave-mosaic .deck-weave-grid > :nth-child(n + 25) {
     display: none;
   }
 }
