@@ -111,6 +111,43 @@ function PlateField({
   );
 }
 
+/**
+ * A ground drawn entirely in CSS — the way out of the photo wall.
+ *
+ * Six spans and no images. The look lives in `deck-skins.css` keyed on
+ * `[data-field]`, so a second event wanting a code-drawn ground writes a
+ * variant there rather than a component here. The spans exist because a
+ * gradient field needs separate elements to animate and layer independently;
+ * `::before`/`::after` on one node runs out at two.
+ */
+function FieldGround({
+  spec,
+  seed,
+  band = false,
+}: {
+  spec: Extract<SurfaceSpec, { kind: "field" }>;
+  seed: number;
+  band?: boolean;
+}) {
+  return (
+    <div
+      className={cn("deck-field", band && "deck-field-band")}
+      data-field={spec.variant ?? "default"}
+      /* The seed varies each slide's phase so eight statement slides are not
+         one identical gradient. It is a plain custom property rather than a
+         class, because the value is continuous. */
+      style={{ "--field-seed": String(seed % 360) } as CSSProperties}
+      aria-hidden="true"
+    >
+      <span className="deck-field-wash" />
+      <span className="deck-field-strand deck-field-strand-a" />
+      <span className="deck-field-strand deck-field-strand-b" />
+      <span className="deck-field-strand deck-field-strand-c" />
+      <span className="deck-field-grain" />
+    </div>
+  );
+}
+
 /** The full-bleed ground of a statement slide. */
 export function DeckSurface({
   slide,
@@ -124,6 +161,8 @@ export function DeckSurface({
   switch (skin.surface.kind) {
     case "plate":
       return <PlateField spec={skin.surface} seed={seed} />;
+    case "field":
+      return <FieldGround spec={skin.surface} seed={seed} />;
     case "archive":
     default:
       return <ArchiveWall seed={seed} weave={skin.surface.weave} />;
@@ -148,6 +187,30 @@ export function DeckSurfaceBand({
   place?: "start" | "end";
 }) {
   const skin = useSlideSkin(slide);
+
+  /* A field's band is a bar of light, not a strip of anything. Every surface
+     owes a band — a light slide with no band has no family resemblance to the
+     dark ones either side of it — and for this one the band is the only place
+     the ground appears at all on a pale slide. */
+  if (skin.surface.kind === "field") {
+    const style: CSSProperties =
+      place === "end"
+        ? { insetBlockEnd: 0 }
+        : { insetBlockStart: "var(--deck-rail-h)" };
+
+    return (
+      <div
+        className={cn(
+          "deck-band",
+          place === "end" ? "deck-edge-block-start" : "deck-edge-block-end",
+        )}
+        style={style}
+        aria-hidden="true"
+      >
+        <FieldGround spec={skin.surface} seed={seed} band />
+      </div>
+    );
+  }
 
   if (skin.surface.kind === "plate") {
     const { image } = platePlacement(skin.surface, seed);

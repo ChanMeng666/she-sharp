@@ -149,7 +149,10 @@ export function skinForSlide(
    * temperature, and it does that in any hue. The hue was convention.
    */
   if (surface === "house") {
-    return { ...eventSkin, surface: houseSkinFor(weave).surface };
+    return {
+      ...eventSkin,
+      surface: eventSkin.houseSurface ?? houseSkinFor(weave).surface,
+    };
   }
 
   if (eventSkin.surface.kind === "archive" && !eventSkin.surface.weave) {
