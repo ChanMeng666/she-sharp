@@ -128,13 +128,108 @@ export function buildWallBand(seed = 0): WallRow {
 }
 
 /**
- * A bounded block of tiles for `.deck-mosaic`, in reading order.
+ * A bounded block of tiles, in reading order.
  *
- * A mosaic is static — no drift — so it takes exactly the tiles it shows and
- * is not doubled.
+ * NOT the mosaic weave, despite the name and the comment this once carried.
+ * Its three callers — `section-slide.tsx`, `stats-slide.tsx`, `prizes-slide.tsx`
+ * — all call it as `buildMosaic(1, seed)[0]` to pick the single archive frame
+ * that fills a photo-knockout numeral. Changing its walk changes that numeral on
+ * six slides across both shipped decks, so it is left exactly as it is; the
+ * weave builders below are new functions rather than a generalisation of this
+ * one.
  */
 export function buildMosaic(count: number, seed = 0): string[] {
   return pickWallTiles(count, seed * 23);
+}
+
+/* -------------------------------------------------------------------------
+   The still weaves
+
+   Both lay the archive on the SAME grid the drifting wall uses — six rows of
+   `--deck-tile-h` on the house gutter — so `INCISION_5_ROWS` still lands on a
+   cell edge and the layouts that write it inline never learn a weave exists.
+   Neither is doubled and neither drifts: they are compositions, not loops.
+   ------------------------------------------------------------------------- */
+
+/** Columns at the widest stage. Every narrower step divides into this. */
+export const WEAVE_COLS_FULL = 8;
+
+/** Rows of a full-bleed weave. The wall's own six. */
+export const WEAVE_ROWS_FULL = WALL_ROWS_FULL;
+
+/**
+ * One cell of a still weave.
+ *
+ * `span` is COLUMNS, and only ever 1 or 2. There is no row span and there must
+ * never be one: a cell two rows tall crossing the row-5/row-6 boundary is cut
+ * through the middle by `INCISION_5_ROWS`, and the invariant that would prevent
+ * it cannot survive the column count changing per breakpoint.
+ */
+export interface WeaveCell {
+  src: string;
+  span: 1 | 2;
+}
+
+/**
+ * A strict, uniform field — the contact sheet.
+ *
+ * Exactly `cols × rows` cells, so the grid tiles with no ragged last row at any
+ * breakpoint. A ragged bottom row reads as a broken grid rather than a designed
+ * one, which is the whole difference between this weave and an accident.
+ */
+export function buildContactSheet(options: BuildWallOptions & { cols?: number } = {}): WeaveCell[] {
+  const { rows = WEAVE_ROWS_FULL, cols = WEAVE_COLS_FULL, seed = 0 } = options;
+  return pickWallTiles(rows * cols, seed * 23).map((src) => ({ src, span: 1 }));
+}
+
+/**
+ * An irregular field cut on the same rows — the mosaic.
+ *
+ * THE PATTERN HAS A PERIOD OF THREE CELLS FILLING FOUR COLUMNS (2 + 1 + 1), and
+ * that is not decoration. It means the pattern tiles exactly at any column count
+ * that is a multiple of four, so a breakpoint can step 8 → 4 by hiding a whole
+ * number of periods and the bottom row still lands flush. A pattern chosen for
+ * looks alone would have to be re-derived for every column count, and would be
+ * wrong at one of them without anybody noticing until it was projected.
+ *
+ * Which cells are wide is a fixed walk off the seed — never `Math.random()`, for
+ * the hydration reason at the top of this file.
+ */
+export function buildMosaicWeave(options: BuildWallOptions & { cols?: number } = {}): WeaveCell[] {
+  const { rows = WEAVE_ROWS_FULL, cols = WEAVE_COLS_FULL, seed = 0 } = options;
+
+  const periods = (rows * cols) / 4;
+  const cells: WeaveCell[] = [];
+  const tiles = pickWallTiles(periods * 3, seed * 23);
+
+  for (let i = 0; i < periods; i += 1) {
+    /* Which of the three slots in this period is the wide one. Stepping by a
+       number coprime with 3 keeps neighbouring rows from lining their wide
+       cells up into an accidental column. */
+    const wide = (seed + i * 2) % 3;
+    for (let slot = 0; slot < 3; slot += 1) {
+      cells.push({ src: tiles[i * 3 + slot], span: slot === wide ? 2 : 1 });
+    }
+  }
+
+  return cells;
+}
+
+/**
+ * One row of a still band, for a light slide.
+ *
+ * Every surface owes a band — a light slide with no band has no family
+ * resemblance to the dark ones either side of it. The mosaic keeps its uneven
+ * rhythm here; the contact sheet stays uniform.
+ */
+export function buildStillBand(
+  seed: number,
+  weave: "mosaic" | "contact-sheet",
+  cols = WEAVE_COLS_FULL,
+): WeaveCell[] {
+  return weave === "mosaic"
+    ? buildMosaicWeave({ rows: 1, cols, seed })
+    : buildContactSheet({ rows: 1, cols, seed });
 }
 
 /** How many photographs the pool holds; useful for an on-slide credit line. */

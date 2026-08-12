@@ -1410,6 +1410,16 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
   title: "Aotearoa AI Hackathon Festival 2026",
   subtitle: "AUT City Campus · 7–8 August 2026",
   eventSlug: EVENT_SLUG,
+  /*
+   * The drifting wall — six rows of the archive sliding past each other.
+   *
+   * This deck keeps it, and not only because it is the original. Two build days
+   * across a weekend is the one event in the register with genuine restlessness
+   * to it, and a ground that never settles is the right reading of that. It is
+   * also the regression baseline for the whole weave change: nothing about this
+   * deck may move.
+   */
+  archive: "drift",
   // Taken from the event poster: near-black canvas, magenta-purple headline,
   // electric-cyan light burst.
   theme: {

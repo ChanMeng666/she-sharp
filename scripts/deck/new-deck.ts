@@ -33,10 +33,14 @@ import {
   deckTitleFrom,
   loadEventForDeck,
 } from "@/lib/deck/event-source";
+import { getAllDecks } from "@/lib/deck/registry";
+import { ARCHIVE_WEAVES } from "@/lib/deck/skins";
+import { unusedWeaves } from "@/lib/deck/style-library";
 import {
   type EveningPlan,
   planEveningEvent,
 } from "@/lib/deck/templates/evening-event";
+import type { Deck } from "@/lib/deck/types";
 import type { EventV3 } from "@/types/event";
 
 import { syncRegistry } from "./sync-registry";
@@ -149,10 +153,39 @@ function comment(text: string, indent = "    "): string {
   ].join("\n");
 }
 
+/**
+ * The `archive:` line, filled in with a weave nothing else is using.
+ *
+ * A REAL VALUE, NEVER A `// TODO`. The whole reason `Deck.archive` is required
+ * is that "leave it and get the default" is the shape that produced two
+ * identical-looking decks; writing `archive: "TODO"` here would recreate it one
+ * level up, and a comment is invisible to `placeholder-copy` (which scans
+ * on-screen strings, not source). So the scaffold makes the choice, says which
+ * ones were free, and leaves the author to disagree.
+ */
+function weaveBlock(taken: readonly Deck[]): string {
+  const free = unusedWeaves(taken, ARCHIVE_WEAVES);
+  const chosen = free[0] ?? ARCHIVE_WEAVES[0];
+  const note = free.length
+    ? `Still unused: ${free.join(", ")}.`
+    : `Every weave is in use — this one repeats ${
+        taken.find((deck) => deck.archive === chosen)?.slug ?? "another deck"
+      }, so this deck's accent must sit in a different part of the colour wheel or \`deck.test.ts\` will fail.`;
+
+  return [
+    `  // How She Sharp's own slides arrange the archive. Picked because nothing`,
+    `  // else was using it — ${note}`,
+    `  // See \`.claude/skills/build-event-slides/references/weaves.md\`; change it`,
+    `  // if this event says otherwise, and say why here.`,
+    `  archive: ${literal(chosen)},`,
+  ].join("\n");
+}
+
 function template(
   event: EventV3,
   plan: EveningPlan,
   themeBlock: string = DEFAULT_THEME_BLOCK,
+  weave: string = `  archive: "drift",`,
 ): string {
   const slug = event.slug;
   const title = deckTitleFrom(event);
@@ -258,6 +291,7 @@ export const ${exportName(slug)}: Deck = {
     subtitle ? `\n  subtitle: deckSubtitleFrom(event),` : ""
   }
   eventSlug: EVENT_SLUG,
+${weave}
 ${themeBlock}
   slides: [
     ...buildOpeningSlides({
@@ -350,9 +384,49 @@ function main(): void {
    * overwrite would silently put the house purple back over a decision
    * somebody made by looking at a poster.
    */
-  const existingTheme = existsSync(target)
-    ? extractThemeBlock(readFileSync(target, "utf8"))
+  const existingSource = existsSync(target)
+    ? readFileSync(target, "utf8")
     : undefined;
+  const existingTheme = existingSource
+    ? extractThemeBlock(existingSource)
+    : undefined;
+
+  /*
+   * The weave survives a regeneration for the same reason the accent does: it
+   * is a decision made by looking at the event, and nothing in the event data
+   * holds it. Resetting it would also, on a second deck, silently reintroduce
+   * the collision the field exists to prevent.
+   */
+  const existingWeave = existingSource
+    ? /^[ \t]*archive:\s*"[a-z-]+",?$/m.exec(existingSource)?.[0]
+    : undefined;
+
+  /*
+   * A skin cannot be carried across by lifting one line.
+   *
+   * `skin: FIBRE_SKIN` is a reference to module-level declarations — the
+   * `DeckSkin`, its plates, and their imports — and carrying the field without
+   * them produces a file that does not compile, or worse, one that compiles
+   * against something stale. Rather than guess at which declarations belong to
+   * it, refuse: an author who has written a skin is told to move it by hand,
+   * which is a loud failure instead of a silent loss. `extractThemeBlock`'s own
+   * docstring makes the same argument about the accent.
+   */
+  if (existingSource && /^\s*skin:\s*\w+,/m.test(existingSource)) {
+    console.error(
+      `lib/deck/decks/${slug}.ts declares a skin, and --force cannot carry it across.`,
+    );
+    console.error(
+      "A skin is a reference to declarations further up the file, so lifting the",
+    );
+    console.error(
+      "one line would leave it pointing at nothing. Copy the skin, its images and",
+    );
+    console.error("their imports out by hand first, then re-run.");
+    process.exit(1);
+  }
+
+  const decks = getAllDecks().filter((deck) => deck.slug !== slug);
 
   const plan = planEveningEvent({
     event,
@@ -362,13 +436,32 @@ function main(): void {
   });
 
   mkdirSync(dirname(target), { recursive: true });
-  writeFileSync(target, template(event, plan, existingTheme), "utf8");
+  writeFileSync(
+    target,
+    template(event, plan, existingTheme, existingWeave ?? weaveBlock(decks)),
+    "utf8",
+  );
 
   const { slugs } = syncRegistry();
 
   if (existingTheme) {
     console.log("Kept the accent colour from the deck that was already there.");
   }
+  if (existingWeave) {
+    console.log("Kept the archive weave from the deck that was already there.");
+  }
+
+  /* The occupancy table, printed where the decision is being made rather than
+     in a document somebody has to remember to open. */
+  const free = unusedWeaves(decks, ARCHIVE_WEAVES);
+  console.log("");
+  console.log("Archive weaves in use:");
+  for (const deck of decks) {
+    console.log(`  ${deck.archive.padEnd(15)} ${deck.slug}`);
+  }
+  console.log(
+    free.length ? `  still unused:   ${free.join(", ")}` : "  none are free.",
+  );
 
   console.log(
     `Wrote lib/deck/decks/${slug}.ts — ${plan.slides.length} event slides ` +
