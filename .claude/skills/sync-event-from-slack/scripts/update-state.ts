@@ -22,11 +22,18 @@
  * longer requires echoing its mapping back on the command line. Use
  * `--mapping none` to actually clear one.
  *
+ * Batch:
+ *   --batch <file.json>          an array of argv arrays, applied in one process
+ *                                against one loaded manifest. All-or-nothing.
+ *
  * Other flags:
  *   --from <fetch-output.json>   pull channel id/name, watermark, threadState
  *   --channel <id> --name <n> --watermark <ts>   (manual, when no --from)
  *   --type event|general         (default: inferred from name)
  *   --commit <sha>               record the commit that carried this sync
+ *   --read-source "<text>"       qualify this receipt: the position is recorded,
+ *                                but the claim is narrower than "somebody read
+ *                                every message". Use for bulk registration.
  *   --digest "<text>"            sediment what was understood this run (event
  *                                state + open items); carried back next run so
  *                                Slack isn't re-read. Repeat to read from a file
@@ -39,6 +46,7 @@ import {
   fingerprintForMapping,
   loadManifest,
   nowIso,
+  carryReadReceipt,
   readPayload,
   saveManifest,
   shouldInheritMapping,
@@ -48,23 +56,34 @@ import {
 } from "./state-lib";
 import { readFileSync } from "node:fs";
 
-function arg(name: string): string | undefined {
-  const i = process.argv.indexOf(name);
-  return i >= 0 ? process.argv[i + 1] : undefined;
+function argFrom(argv: string[], name: string): string | undefined {
+  const i = argv.indexOf(name);
+  return i >= 0 ? argv[i + 1] : undefined;
 }
 
 /** Collect repeated --slug / --event-id pairs (positional pairing by order). */
-function collectEvents(): { slug: string; eventId: number }[] {
+function collectEvents(argv: string[]): { slug: string; eventId: number }[] {
   const slugs: string[] = [];
   const ids: number[] = [];
-  for (let i = 0; i < process.argv.length; i++) {
-    if (process.argv[i] === "--slug") slugs.push(process.argv[i + 1]);
-    if (process.argv[i] === "--event-id") ids.push(Number(process.argv[i + 1]));
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i] === "--slug") slugs.push(argv[i + 1]);
+    if (argv[i] === "--event-id") ids.push(Number(argv[i + 1]));
   }
   return slugs.map((slug, i) => ({ slug, eventId: ids[i] }));
 }
 
-function main() {
+/**
+ * Apply ONE state write to an in-memory manifest. Does not save.
+ *
+ * Takes its argv explicitly so `--batch` can run hundreds of these in a single
+ * process against a single loaded manifest, instead of paying a tsx startup and
+ * a 500 KB parse-and-write per conversation.
+ */
+function applyOne(
+  argv: string[],
+  manifest: ReturnType<typeof loadManifest>,
+): { changed: boolean; label: string; summary?: unknown } {
+  const arg = (name: string) => argFrom(argv, name);
   const fromFile = arg("--from");
   let channelId = arg("--channel");
   let name = arg("--name");
@@ -80,15 +99,13 @@ function main() {
   }
 
   if (!channelId || !name || !watermarkTs) {
-    console.error("Need --channel, --name, --watermark (or --from <fetch-output.json>)");
-    process.exit(2);
+    throw new Error("Need --channel, --name, --watermark (or --from <fetch-output.json>)");
   }
 
   const type = (arg("--type") as "event" | "general") ?? classifyChannel(name);
 
-  // Loaded before the mapping is built: `--always-read` is sticky, so the skip
-  // branch has to see what the channel was already carrying.
-  const manifest = loadManifest();
+  // `--always-read` is sticky, so the skip branch has to see what the channel
+  // was already carrying — hence prev is read before the mapping is built.
   const prev = manifest.channels[channelId];
 
   /*
@@ -120,10 +137,9 @@ function main() {
     mapping = prev!.mapping;
     fingerprint = mapping.kind === "event" ? fingerprintForMapping(mapping) : "";
   } else if (kind === "event") {
-    const evs = collectEvents();
+    const evs = collectEvents(argv);
     if (!evs.length || evs.some((e) => !e.slug || !Number.isFinite(e.eventId))) {
-      console.error("--mapping event requires at least one --slug + --event-id pair");
-      process.exit(2);
+      throw new Error("--mapping event requires at least one --slug + --event-id pair");
     }
     mapping = { kind: "event", events: evs };
     fingerprint = fingerprintForMapping(mapping);
@@ -147,8 +163,8 @@ function main() {
      * unread for a day. Sticky: once set it survives later state writes unless
      * `--no-always-read` clears it.
      */
-    const flagged = process.argv.includes("--always-read");
-    const cleared = process.argv.includes("--no-always-read");
+    const flagged = argv.includes("--always-read");
+    const cleared = argv.includes("--no-always-read");
     const previous =
       prev?.mapping?.kind === "skip" ? prev.mapping.alwaysRead : undefined;
     const alwaysRead = cleared ? false : flagged || previous;
@@ -186,40 +202,97 @@ function main() {
     threads: mergedThreads,
     fingerprint: fingerprint || (kind === "event" ? prev?.fingerprint ?? "" : ""),
     lastSyncedAt: nowIso(),
-    // Only a payload is evidence the content reached the model. `--channel`
-    // + `--watermark` by hand records a mapping, not a read.
-    ...(fromFile ? { readAt: nowIso() } : prev?.readAt ? { readAt: prev.readAt } : {}),
+    // Only a payload is evidence the content reached the model; `--channel`
+    // + `--watermark` by hand records a mapping, not a read. The rule, and why
+    // readAtSource travels with the receipt, is in carryReadReceipt().
+    ...carryReadReceipt(prev, !!fromFile, nowIso(), arg("--read-source")),
     lastSyncedCommit: arg("--commit") ?? prev?.lastSyncedCommit ?? "",
     ...(digest ? { digest, digestAt } : {}),
   };
 
   // Avoid timestamp churn: if nothing material changed, keep the prior entry
   // (incl. its lastSyncedAt) so a no-op re-record leaves the manifest byte-stable.
+  /* `readAt` is compared as presence, not value, so a re-record does not churn a
+     timestamp. `readAtSource` is compared by VALUE: it is the qualifier on the
+     claim, and a write that narrows or widens what the manifest asserts about a
+     conversation is material by definition. Leaving it out made
+     `--read-source` a silent no-op. */
   const material = (c?: ChannelState) =>
-    c && JSON.stringify({ n: c.name, t: c.type, m: c.mapping, w: c.watermarkTs, s: c.scannedTs ?? "", r: c.readAt ? "y" : "", th: c.threads, f: c.fingerprint, d: c.digest ?? "" });
+    c && JSON.stringify({ n: c.name, t: c.type, m: c.mapping, w: c.watermarkTs, s: c.scannedTs ?? "", r: c.readAt ? "y" : "", rs: c.readAtSource ?? "", th: c.threads, f: c.fingerprint, d: c.digest ?? "" });
   if (prev && material(prev) === material(next)) {
-    process.stdout.write(`no change for ${channelId} (${name})\n`);
-    return;
+    return { changed: false, label: `${channelId} (${name})` };
   }
   manifest.channels[channelId] = next;
-  saveManifest(manifest);
 
-  process.stdout.write(
-    JSON.stringify(
-      {
-        channel: channelId,
-        name,
-        type,
-        mapping,
-        watermarkTs,
-        threadCount: Object.keys(next.threads).length,
-        fingerprint: next.fingerprint,
-        digest: next.digest ?? "",
-      },
-      null,
-      2,
-    ) + "\n",
-  );
+  return {
+    changed: true,
+    label: `${channelId} (${name})`,
+    summary: {
+      channel: channelId,
+      name,
+      type,
+      mapping,
+      watermarkTs,
+      threadCount: Object.keys(next.threads).length,
+      fingerprint: next.fingerprint,
+      digest: next.digest ?? "",
+    },
+  };
+}
+
+/**
+ * `--batch <file.json>` — an array of argv arrays, applied in order.
+ *
+ *   [ ["--from","raw/C1.json"],
+ *     ["--from","raw/C2.json","--mapping","skip","--reason","…"] ]
+ *
+ * One process, one manifest load, one save. Recording 105 conversations used to
+ * mean 105 tsx startups and 105 round trips through a 500 KB JSON file for what
+ * is purely local work.
+ *
+ * It also takes the reasons off the command line entirely, which is the point:
+ * these strings contain apostrophes, and passing them through a shell made their
+ * correctness depend on which shell was running. JSON has one quoting rule.
+ *
+ * All-or-nothing. An entry that throws aborts before anything is written, so a
+ * malformed batch cannot leave the manifest half-updated — the failure mode
+ * would otherwise be a partially-recorded ingest that every gate calls clean.
+ */
+function main() {
+  const argv = process.argv.slice(2);
+  const batchFile = argFrom(argv, "--batch");
+  const manifest = loadManifest();
+
+  if (batchFile) {
+    const entries = JSON.parse(readFileSync(batchFile, "utf8")) as string[][];
+    if (!Array.isArray(entries) || entries.some((e) => !Array.isArray(e))) {
+      console.error("--batch expects a JSON array of argv arrays");
+      process.exit(2);
+    }
+    let changed = 0;
+    entries.forEach((entry, i) => {
+      try {
+        if (applyOne(entry, manifest).changed) changed++;
+      } catch (e: any) {
+        console.error(`entry ${i + 1}/${entries.length} failed: ${e?.message ?? e}`);
+        console.error("nothing was written — fix the batch and re-run");
+        process.exit(2);
+      }
+    });
+    if (changed) saveManifest(manifest);
+    process.stdout.write(
+      `${changed} of ${entries.length} entries changed; ${entries.length - changed} already current.\n`,
+    );
+    return;
+  }
+
+  const r = applyOne(argv, manifest);
+  if (!r.changed) {
+    process.stdout.write(`no change for ${r.label}\n`);
+    return;
+  }
+  saveManifest(manifest);
+  process.stdout.write(JSON.stringify(r.summary, null, 2) + "\n");
 }
 
 main();
