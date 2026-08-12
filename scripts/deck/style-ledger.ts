@@ -41,7 +41,7 @@ for (const [axis, meaning] of Object.entries(STYLE_AXES)) {
   console.log(`  ${pad(axis, 10)} ${meaning}`);
 }
 
-const cols = ["weave", "surface", "geometry", "tempo", "hue"] as const;
+const cols = ["houseGround", "surface", "geometry", "tempo", "hue"] as const;
 const slugWidth = Math.max(4, ...prints.map((p) => p.slug.length));
 
 console.log("");
@@ -60,7 +60,9 @@ for (const print of prints) {
    find out is how a step gets skipped. */
 console.log("\nWEAVES\n");
 for (const weave of ARCHIVE_WEAVES) {
-  const takenBy = prints.filter((p) => p.weave === weave).map((p) => p.slug);
+  const takenBy = prints
+    .filter((p) => p.houseGround === `archive:${weave}`)
+    .map((p) => p.slug);
   const status = takenBy.length ? `taken — ${takenBy.join(", ")}` : "FREE";
   console.log(`  ${pad(weave, 15)} ${pad(status, 46)} ${ARCHIVE_WEAVE_NOTES[weave]}`);
 }
