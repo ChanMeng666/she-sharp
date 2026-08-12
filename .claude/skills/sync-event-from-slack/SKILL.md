@@ -203,6 +203,21 @@ npx tsx .claude/skills/sync-event-from-slack/scripts/fetch-channel.ts <channel> 
 returns only the delta. For a brand-new channel (CREATE), omit `--state` for a
 full fetch. Always pipe stdout to a file (output can exceed tool context limits).
 
+**Prefer `--out <path>` over a shell redirect when the destination matters.**
+`> file` truncates the target *before* the script runs, so a crash or a
+rate-limit abort leaves an empty file where a good transcript was; `--out`
+writes to a temp file and renames. For many conversations use one process:
+
+```
+npx tsx .../fetch-channel.ts --many ids.txt --out-dir <archive>/raw --skip-existing
+```
+
+`--many` shares the Slack client and the resolved user directory across the whole
+list instead of re-paying per process, keeps going when one conversation fails,
+and exits with the failure count — so re-running the identical command retries
+only what failed. Measured on a six-conversation sample: 27.5s → 14.2s, and the
+payloads are byte-identical to the one-process-each version.
+
 The JSON includes a `_meta` block (`mode`, `since`, `newWatermarkTs`,
 `threadState`, `newCount`, `priorDigest`), `channel` metadata, `pinned` messages
 (always included — canonical), `bookmarks`, a `users` dictionary (id → name), and
@@ -429,7 +444,16 @@ When the user approves:
    # re-recording a read on a channel that is ALREADY mapped: omit --mapping
    npx tsx .claude/skills/sync-event-from-slack/scripts/update-state.ts \
      --from /tmp/channel.json
+
+   # many at once: one process, one manifest load, all-or-nothing
+   npx tsx .claude/skills/sync-event-from-slack/scripts/update-state.ts \
+     --batch /tmp/state-writes.json     # [["--from","raw/C1.json"], …]
    ```
+   **`--from` asserts that the content reached you.** When you are registering
+   conversations in bulk without reading every message — the archived-channel
+   sweep, say — say so with `--read-source "<why this claim is narrower>"`. The
+   position is still recorded; the manifest just stops overstating what anyone
+   actually read. `backfill-read-receipts.ts` uses the same field.
    **Omitting `--mapping` keeps the channel's existing mapping** — events,
    reason and always-read included — so a plain "record that I read this" is
    safe on an already-mapped channel. It used to default to `none`, which meant
