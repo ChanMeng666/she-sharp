@@ -112,6 +112,66 @@ export function scannedPosition(c: ChannelState | undefined): string {
 }
 
 /**
+ * Should a state write KEEP the mapping the channel already has?
+ *
+ * Yes whenever the caller did not name one and the channel has one. Recording a
+ * read is not a statement about mapping, and `update-state.ts` used to treat a
+ * missing `--mapping` as `none` — so the ordinary act of writing down "I have
+ * read this" silently deleted an event linkage, or a `skip` whose reason was a
+ * paragraph of context nobody could reconstruct.
+ *
+ * It lives here, next to the other read-position rules, because the alternative
+ * is a second copy of the question inside a CLI argument parser where no test
+ * can reach it. That is the same shape as the `threadHasUnread` split that cost
+ * an event owner's deck review: when this question has two implementations they
+ * eventually disagree, and the disagreement is silent.
+ */
+export function shouldInheritMapping(
+  prev: ChannelState | undefined,
+  explicitKind: string | undefined,
+): boolean {
+  return explicitKind === undefined && !!prev?.mapping;
+}
+
+/**
+ * The read-receipt fields a state write should carry.
+ *
+ * `delivered` means a fetch payload reached the model — the only evidence that
+ * counts as a read. Recording one stamps a fresh `readAt` and deliberately drops
+ * `readAtSource`: that field is a CAVEAT on a weaker claim (backfill checked
+ * that nothing was unread; nobody was shown anything), and a real delivery
+ * retires the caveat.
+ *
+ * Without a delivery the previous receipt is carried forward whole. Carrying
+ * `readAt` while dropping `readAtSource` is the failure this exists to prevent —
+ * it silently promotes "verified quiet on this date" into "this was read", so
+ * the manifest ends up claiming more than anyone checked, in the one file whose
+ * job is to be honest about what has been read.
+ *
+ * `saveManifest` emits both only when set, so a caller that rebuilds an entry
+ * and forgets one has deleted it, not left it alone. Third instance of that
+ * shape in this codebase; hence one function and a test.
+ */
+export function carryReadReceipt(
+  prev: ChannelState | undefined,
+  delivered: boolean,
+  now: string,
+  source?: string,
+): { readAt?: string; readAtSource?: string } {
+  /* An explicit source qualifies THIS write: the position is recorded, but the
+     claim behind it is narrower than "a human was shown every message". Bulk
+     registration is the case that needs it — a payload proves the text was
+     transcribed, not that anyone read it, and conflating the two is how a
+     manifest starts overstating what is known. */
+  if (delivered) return source ? { readAt: now, readAtSource: source } : { readAt: now };
+  if (!prev?.readAt) return {};
+  return {
+    readAt: prev.readAt,
+    ...(source ?? prev.readAtSource ? { readAtSource: source ?? prev.readAtSource } : {}),
+  };
+}
+
+/**
  * Conversations the triage has scored past content the model was never shown.
  *
  * EVERY conversation counts. This used to exempt anything the signal gate had

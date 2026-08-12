@@ -632,6 +632,16 @@ async function main() {
         fingerprint: prev?.fingerprint ?? "",
         lastSyncedAt: nowIso(),
         lastSyncedCommit: prev?.lastSyncedCommit ?? "",
+        // Carried, for the third time in this codebase. This literal rebuilds
+        // the entry from scratch, and `saveManifest` emits `readAt` only when
+        // it is set — so a field omitted here is a read receipt DELETED from
+        // disk, not merely left alone. Advancing a scan position must never
+        // erase the record of a read: `unreadConversations()` treats a missing
+        // `readAt` as never-read, so dropping it turns `audit-read-state.ts`
+        // red on a conversation that was in fact read. Same failure as
+        // 2f061338 and 27410c76, one layer up.
+        ...(prev?.readAt ? { readAt: prev.readAt } : {}),
+        ...(prev?.readAtSource ? { readAtSource: prev.readAtSource } : {}),
         ...(prev?.digest ? { digest: prev.digest, digestAt: prev.digestAt ?? "" } : {}),
       };
       advanced++;

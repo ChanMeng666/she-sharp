@@ -23,6 +23,9 @@
 
 import "dotenv/config";
 import { WebClient, type Logger } from "@slack/web-api";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { CACHE_DIR } from "./state-lib";
 
 /**
  * EVERY LOG LINE GOES TO STDERR. STDOUT IS THE PAYLOAD.
@@ -117,11 +120,49 @@ export function announceIdentity(): void {
   );
 }
 
+/** Disk cache for the workspace user directory. See `loadUserNames`. */
+const USERS_CACHE = resolve(CACHE_DIR, "users.json");
+const USERS_TTL_MS =
+  Number(process.env.SLACK_USERS_CACHE_TTL_MIN || 360) * 60 * 1000;
+
+/** In-process memo, so two calls in one script never page the directory twice. */
+let usersMemo: Map<string, string> | undefined;
+
 /**
- * Workspace user directory, fetched once. DM conversations carry only a user
- * ID, so a name map is what turns `D0123ABC` into `dm:nirmala` in the tables.
+ * Workspace user directory. DM conversations carry only a user ID, so a name
+ * map is what turns `D0123ABC` into `dm:nirmala` in the tables.
+ *
+ * CACHED ON DISK, because this is called once per `fetch-channel.ts` PROCESS and
+ * pages the entire directory each time. Fetching 105 conversations therefore
+ * walked the whole workspace 105 times — `users.list` is Tier 2 (20/min), so it
+ * was minutes of pure waste per run and it competed for the same rate-limit
+ * budget as the work that mattered.
+ *
+ * Staleness is cosmetic and self-correcting. The map is used for display names
+ * and for the DM label; the manifest and the archive are keyed by channel ID, so
+ * a name that lags behind by a few hours mislabels a row and corrupts nothing.
+ * A person who joins mid-window simply shows as their ID until the TTL expires —
+ * which is exactly what happened before this cache existed, for everyone.
+ *
+ * Every failure path degrades to the network: an unreadable, unparseable or
+ * expired cache just refetches, and a cache that cannot be written is ignored.
+ * Override the window with `SLACK_USERS_CACHE_TTL_MIN`; 0 forces a refetch.
  */
 export async function loadUserNames(): Promise<Map<string, string>> {
+  if (usersMemo) return usersMemo;
+
+  if (USERS_TTL_MS > 0) {
+    try {
+      const raw = JSON.parse(readFileSync(USERS_CACHE, "utf8"));
+      if (Date.now() - Date.parse(raw.fetchedAt) < USERS_TTL_MS && raw.users) {
+        usersMemo = new Map(Object.entries(raw.users as Record<string, string>));
+        return usersMemo;
+      }
+    } catch {
+      /* missing, malformed or unreadable — fall through and refetch */
+    }
+  }
+
   const names = new Map<string, string>();
   let cursor: string | undefined;
   do {
@@ -134,6 +175,22 @@ export async function loadUserNames(): Promise<Map<string, string>> {
     }
     cursor = r.response_metadata?.next_cursor || undefined;
   } while (cursor);
+
+  try {
+    mkdirSync(CACHE_DIR, { recursive: true });
+    writeFileSync(
+      USERS_CACHE,
+      JSON.stringify(
+        { fetchedAt: new Date().toISOString(), users: Object.fromEntries(names) },
+        null,
+        1,
+      ),
+    );
+  } catch {
+    /* a cache that cannot be written is not an error, only a slower next run */
+  }
+
+  usersMemo = names;
   return names;
 }
 
