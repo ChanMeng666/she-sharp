@@ -728,6 +728,25 @@
   .deck-slide[data-skin="fibre"] :is(.deck-kicker, .deck-label, .deck-eyebrow) {
     letter-spacing: 0.2em;
   }
+
+  /*
+   * …except the organisation line under a portrait, which gives its tracking up
+   * entirely here. This is geometry, not taste. On a narrow stage a people tile
+   * is about 280px wide and a tracked word is unbreakable at its tracked width,
+   * so the tracking alone decides whether it fits: "LES MILLS INTERNATIONAL" at
+   * 0.2em wants 297px of a 283px column, and all four panellists were captioned
+   * "INTERNATIONA / L" on every 4:3 screen. Honouring the width instead would
+   * have folded a panel of four into two rows of two and halved the portraits.
+   *
+   * It must be a rule of its own rather than a `:not()` on the line above: the
+   * base skin rule sets 0.26em at every width, so exempting the line here would
+   * leave it WIDER than it started. It also has to out-specify `deck.css`, and
+   * `lib/deck/people-layout.ts` plans the grid assuming this is zero — see the
+   * `orgTrack` field there. The three travel together.
+   */
+  .deck-slide[data-skin="fibre"] .deck-person-org {
+    letter-spacing: normal;
+  }
 }
 
 @container deck (max-width: 1000px) {
@@ -743,6 +762,11 @@
 
   .deck-slide[data-skin="fibre"] :is(.deck-kicker, .deck-label, .deck-eyebrow) {
     letter-spacing: 0.15em;
+  }
+
+  /* Same exemption, same reason — a phone's tile is narrower still. */
+  .deck-slide[data-skin="fibre"] .deck-person-org {
+    letter-spacing: normal;
   }
 
   /* The backdrop blur is the first thing to go on a small or old machine: it is

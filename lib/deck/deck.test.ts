@@ -42,6 +42,7 @@ import { DEFAULT_CLOSING_KARAKIA, DEFAULT_OPENING_KARAKIA } from "./karakia";
 import { getAllDecks, getDeckSlugs } from "./registry";
 import { lintDeckSet } from "./style-library";
 import { COPY_LIMITS, hasErrors, lintDeck } from "./lint";
+import { overflowingWords, planPeopleGrid, stageOverflow } from "./people-layout";
 import { rhythmViolations, toRhythmStep } from "./rhythm";
 import { planEveningEvent } from "./templates/evening-event";
 import { checkAccentContrast, contrastRatio, DEFAULT_DARK_CANVAS, DEFAULT_LIGHT_CANVAS } from "./theme";
@@ -160,6 +161,47 @@ for (const deck of decks) {
     `every run-sheet row has a time and a label${emptyRows.length ? ` (bad: ${emptyRows.join("; ")})` : ""}`,
     emptyRows.length === 0,
   );
+
+  // --- 6. People grids -----------------------------------------------------
+  //
+  // Nobody's name gets broken inside the word. The column count is planned from
+  // the widest word each caption carries, so this asserts the plan honoured it
+  // at all three type scales — the 4:3 projector, the wide stages, and a phone
+  // held upright, which sets people captions LARGER than either projector does
+  // and so fits fewer of them across.
+  //
+  // It also asserts the grid still lands inside the safe area, because the two
+  // are one trade: wider columns mean more rows, and rows are what run off the
+  // bottom of a projector. Overflowing here means `useFitContent()` would scale
+  // the slide down in front of the room.
+
+  const peopleSlides = deck.slides.filter((slide) => slide.type === "people");
+
+  for (const slide of peopleSlides) {
+    const density = slide.density ?? "md";
+    const grid = planPeopleGrid(slide.people, density, slide.title, slide.lead);
+    const broken = overflowingWords(slide.people, density, grid);
+    check(
+      `${slide.id}: every caption word fits its column${
+        broken.length ? ` (broken: ${[...new Set(broken)].join(", ")})` : ""
+      }`,
+      broken.length === 0,
+    );
+
+    const over = stageOverflow(
+      slide.people,
+      density,
+      grid,
+      slide.title,
+      slide.lead,
+    );
+    check(
+      `${slide.id}: ${grid.columns} x ${grid.rows} of ${grid.portrait}px fits the stage${
+        over ? ` (over by ${over}px — split the roster)` : ""
+      }`,
+      over === 0,
+    );
+  }
 
   // --- 7. Host notes -------------------------------------------------------
 
