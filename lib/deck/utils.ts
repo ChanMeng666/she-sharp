@@ -156,6 +156,20 @@ export function collectDeckImages(deck: Deck): string[] {
 
   if (deck.theme.darkBackground) pushImage(deck.theme.darkBackground);
 
+  /* THE SKIN'S PLATES, which nothing used to look at.
+     ------------------------------------------------------------------------
+     A plate surface is the ground of every statement slide the event owns, but
+     it is declared on the skin rather than on a slide, so this walk went
+     straight past it. A mistyped path there renders `deck-image.tsx`'s designed
+     gradient failure state — a coloured panel with words on it — on eight
+     slides at once, and `verify-image-paths.ts` reported the deck clean.
+
+     It went unnoticed while the only plates in the repository were also used as
+     slide backgrounds, which is to say by luck. */
+  if (deck.skin?.surface.kind === "plate") {
+    deck.skin.surface.images.forEach(pushImage);
+  }
+
   for (const slide of deck.slides) {
     switch (slide.type) {
       case "title":

@@ -40,6 +40,7 @@ import {
 } from "./event-source";
 import { DEFAULT_CLOSING_KARAKIA, DEFAULT_OPENING_KARAKIA } from "./karakia";
 import { getAllDecks, getDeckSlugs } from "./registry";
+import { lintDeckSet } from "./style-library";
 import { COPY_LIMITS, hasErrors, lintDeck } from "./lint";
 import { rhythmViolations, toRhythmStep } from "./rhythm";
 import { planEveningEvent } from "./templates/evening-event";
@@ -633,6 +634,26 @@ const deckFiles = readdirSync(join(process.cwd(), "lib", "deck", "decks"))
 check(
   `every deck file is registered (${deckFiles.length} files)`,
   JSON.stringify(deckFiles) === JSON.stringify([...getDeckSlugs()].sort()),
+);
+
+/* THE ONLY CHECK THAT LOOKS AT MORE THAN ONE DECK.
+   ---------------------------------------------------------------------------
+   Every rule above asks whether a deck is well made. None of them could ask
+   whether it looks like the deck next to it, and on 12 August 2026 that was the
+   live defect: two decks, both passing everything here, and the organiser's
+   first reaction on seeing the second was that it was the first.
+
+   The distance is split into house and event rather than averaged, for the
+   reason recorded in `style-library.ts` — averaged, that exact pair scores 3 of
+   5 and passes, because they genuinely differ on the ten slides the event owns
+   while being identical on the fourteen it does not. */
+const setIssues = lintDeckSet(decks);
+for (const issue of setIssues) {
+  console.log(`    ${issue.rule}: ${issue.message}`);
+}
+check(
+  `no two decks are too close to tell apart (${decks.length} decks)`,
+  setIssues.length === 0,
 );
 
 console.log(

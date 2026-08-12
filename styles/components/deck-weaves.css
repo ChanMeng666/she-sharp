@@ -1,0 +1,191 @@
+/* ==========================================================================
+   ARCHIVE WEAVES — how the archive is arranged, as against what is in it.
+
+   `deck.css` owns the drifting wall (`.deck-wall-row` and its keyframes) and
+   the purple duotone. This file owns the still arrangements, and it is a
+   separate file for one reason: the review question that matters while this
+   lands is "did the hackathon deck move?", and the answer should be readable
+   from a diff. `deck.css` gets exactly one edit for all of this — `.deck-cell`
+   appended to the duotone selector list — and nothing here can reach the drift.
+
+   THE GRID IS THE WALL'S OWN GRID. Six rows of `--deck-tile-h` on the house
+   gutter fill 992px, which is 1080 minus the rail, exactly:
+
+       6 × 162 + 5 × 4 = 992
+
+   and five rows land on 826px, which is what `INCISION_5_ROWS` computes and
+   what `section-slide.tsx` and `qr-cta-slide.tsx` write as an inline
+   `blockSize`. So a chapter card's translucent cut still stops on a cell edge
+   with the bottom row at full strength, on every weave, without those layouts
+   knowing a weave exists.
+
+   THIS IS WHY THE GUTTER IS NOT A DESIGN CHOICE. Widening it to 16px needs
+   6 × 162 + 5 × 16 = 1052px for six rows: the bottom row is clipped, the
+   incision lands mid-photograph, and both failures are invisible until the deck
+   is on a stage. A contact sheet's identity is uniformity, not air.
+
+   FOUR RULES, ALL OF WHICH FAIL SILENTLY — see the same list in deck.css:
+     - no `vw` / `vh` / `dvh`: the stage is `transform: scale()`d
+     - no `will-change` on a repeating element: ~100 slides stay mounted
+     - ambient loops need BOTH `[data-motion="on"]` and `[data-active="true"]`
+     - the narrow container query must come AFTER the wide one; equal
+       specificity means source order decides
+   The still weaves have no ambient loop at all, so the third rule costs them
+   nothing — which is most of why `contact-sheet` was the cheapest to build.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   The grid
+   -------------------------------------------------------------------------- */
+
+/* Positioned exactly like `.deck-wall-rows`: below the rail by default, flush
+   when the slide has none. `grid-auto-rows` rather than an explicit
+   `grid-template-rows` so one rule serves both the six-row wall and the
+   one-row band. */
+.deck-weave-grid {
+  position: absolute;
+  inset-block-start: var(--deck-rail-h);
+  inset-inline: 0;
+  display: grid;
+  /* `minmax(0, 1fr)` is load-bearing. With `auto` tracks the column sizes to
+     the image's intrinsic width and the cell's own sizing constrains nothing —
+     the same trap already recorded on `.deck-mosaic` in deck.css. */
+  grid-template-columns: repeat(var(--weave-cols, 8), minmax(0, 1fr));
+  grid-auto-rows: var(--deck-tile-h);
+  gap: var(--deck-wall-gap);
+  overflow: hidden;
+}
+
+.deck-wall-flush .deck-weave-grid {
+  inset-block-start: 0;
+}
+
+/* The band: the same grid reduced to one row, filling the band box. Height
+   stays `--deck-band-h` because every layout reserves `BAND_PAD` for exactly
+   that, and type lands on the photographs the moment it does not. */
+.deck-band .deck-weave-grid {
+  inset: 0;
+  grid-auto-rows: var(--deck-band-h);
+}
+
+/* ONE CELL. Deliberately NOT `.deck-slot`.
+   ---------------------------------------------------------------------------
+   `SEL.plate` in `lib/deck/motion.ts` is `.deck-bleed, .deck-slot > img, …`,
+   and the `stats` and `photo` recipes give it a twelve-second scale push. The
+   drifting wall escapes that only because its children are bare `<span>`s. Name
+   these `.deck-slot` and every one of forty archive tiles gets a slow zoom on
+   slides that never asked for one — on old venue laptops, all at once. */
+.deck-cell {
+  overflow: hidden;
+  /* No `will-change`, and never. See the shouted note on `.deck-wall-row`. */
+}
+
+.deck-cell > img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  /* Crops from the top: the archive is group photographs, and the browser
+     default takes the tops off people's heads. */
+  object-position: 50% 0%;
+}
+
+/* --------------------------------------------------------------------------
+   CONTACT SHEET — one strict, motionless grid.
+
+   Every cell the same size, the house gutter, no drift. It is the still weave,
+   and stillness is the point rather than a saving: a deck whose event chapters
+   already carry a moving ground needs its organisational slides to hold
+   position, or nothing in the deck is ever at rest.
+   -------------------------------------------------------------------------- */
+
+.deck-weave-contact-sheet .deck-weave-grid {
+  --weave-cols: 8;
+}
+
+/* --------------------------------------------------------------------------
+   MOSAIC — an irregular grid cut on the same rows.
+
+   COLUMN SPANS ONLY, NEVER ROW SPANS. A cell two rows tall straddling the
+   row-5/row-6 boundary is cut through the middle by `INCISION_5_ROWS`, and the
+   invariant that would prevent it cannot be maintained once the column count
+   changes per breakpoint. A column span leaves every cell edge a row edge by
+   construction, so there is nothing to police.
+
+   The pattern has a period of three cells filling four columns (2 + 1 + 1), so
+   it tiles exactly at any column count that is a multiple of four. That is why
+   this weave steps 8 → 4 while the contact sheet steps 8 → 6 → 4 → 3.
+   -------------------------------------------------------------------------- */
+
+.deck-weave-mosaic .deck-weave-grid {
+  --weave-cols: 8;
+}
+
+.deck-cell[data-span="2"] {
+  grid-column: span 2;
+}
+
+/* --------------------------------------------------------------------------
+   Degradation.
+
+   ORDER IS LOAD-BEARING: 1560 then 1000, wide to narrow. A 900px stage matches
+   both container queries at equal specificity and source order decides the
+   winner. Getting this backwards compiles cleanly and silently runs the wide
+   treatment on a 4:3 projector.
+
+   Cell counts are exact, never approximate: columns × 6 rows for the contact
+   sheet, and a multiple of three cells for the mosaic. A count that does not
+   tile leaves a ragged bottom row, which reads as a broken grid rather than as
+   a designed one.
+   -------------------------------------------------------------------------- */
+
+@container deck (max-width: 1560px) {
+  .deck-weave-contact-sheet .deck-weave-grid {
+    --weave-cols: 6;
+  }
+  .deck-weave-contact-sheet .deck-weave-grid > :nth-child(n + 37) {
+    display: none;
+  }
+}
+
+@container deck (max-width: 1000px) {
+  /* Portrait. `deck.css` re-derives `--deck-tile-h` from the stage height here
+     so six rows still land on the bottom edge, and this grid inherits that
+     automatically — the rows are `grid-auto-rows: var(--deck-tile-h)`, so the
+     pitch follows without a second number to keep in step. */
+  .deck-weave-contact-sheet .deck-weave-grid {
+    --weave-cols: 3;
+  }
+  .deck-weave-contact-sheet .deck-weave-grid > :nth-child(n + 19) {
+    display: none;
+  }
+
+  .deck-weave-mosaic .deck-weave-grid {
+    --weave-cols: 4;
+  }
+  .deck-weave-mosaic .deck-weave-grid > :nth-child(n + 19) {
+    display: none;
+  }
+}
+
+/* The small-DEVICE query, and the counts here are generous on purpose.
+   ---------------------------------------------------------------------------
+   `@container` is measured in the stage's own design px; `@media` is measured
+   in device px, and they are not the same axis. A phone in landscape is short
+   enough to match `max-height: 620px` while driving the widest stage the deck
+   ever draws — 2337 design px at 844×390. Cutting to a portrait-sized grid here
+   would leave the wall stopping two thirds of the way across with bare gradient
+   after it, which is the exact bug deck.css records at its own `TEN,` note.
+
+   `display: none` rather than opacity or visibility, because a lazy image in a
+   `display: none` subtree is never fetched, never decoded and never given a
+   layer — which is the whole saving, and no amount of post-hydration JavaScript
+   achieves it. */
+@media (max-width: 900px), (max-height: 620px) {
+  .deck-weave-contact-sheet .deck-weave-grid > :nth-child(n + 31) {
+    display: none;
+  }
+  .deck-weave-mosaic .deck-weave-grid > :nth-child(n + 25) {
+    display: none;
+  }
+}
