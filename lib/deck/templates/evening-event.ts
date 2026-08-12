@@ -79,6 +79,11 @@ import {
   speakerGroupsFrom,
 } from "../event-source";
 import { COPY_LIMITS } from "../lint";
+import {
+  TEMPLATE_BULLETS,
+  TEMPLATE_EYEBROWS,
+  TEMPLATE_TITLES,
+} from "./default-copy";
 import { type RhythmStep, rhythmViolations } from "../rhythm";
 import type { SlideTone, SlideType } from "../types";
 
@@ -236,7 +241,7 @@ function peopleSlides(
         id: lit(`meet-${group.key.replace(/_/g, "-")}`),
         type: lit("people"),
         section: lit(section),
-        eyebrow: lit(index === 0 ? "Please welcome them" : "And with them"),
+        eyebrow: lit(index === 0 ? TEMPLATE_EYEBROWS.speakersFirst : TEMPLATE_EYEBROWS.speakersRest),
         title: lit(group.heading),
         people: `SPEAKERS[${index}]?.people ?? []`,
         density: lit(density),
@@ -324,8 +329,8 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
             id: lit("tonight-run-sheet"),
             type: lit("agenda"),
             section: lit(section),
-            eyebrow: lit("Up again at the break"),
-            title: lit("How Tonight Runs"),
+            eyebrow: lit(TEMPLATE_EYEBROWS.runSheet),
+            title: lit(TEMPLATE_TITLES.runSheet),
             items: "RUN_SHEET_ROWS",
             note: lit(
               "The most-looked-at slide of the night. Leave it up while people " +
@@ -358,8 +363,8 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
             id: lit("tonights-host"),
             type: lit("logos"),
             section: lit(section),
-            eyebrow: lit("They opened the doors"),
-            title: lit("Tonight's Hosts"),
+            eyebrow: lit(TEMPLATE_EYEBROWS.hosts),
+            title: lit(TEMPLATE_TITLES.hosts),
             lead: lit("Thank you for the room, the food and the evening"),
             groups: `[{ label: "Hosting with She Sharp", logos: PARTNERS, size: "lg" }]`,
             note: lit(
@@ -425,7 +430,7 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
             id: lit("what-well-explore"),
             type: lit("bullets"),
             section: lit(mainLabel),
-            eyebrow: lit("Ask about any of these"),
+            eyebrow: lit(TEMPLATE_EYEBROWS.list),
             title: lit(list.title),
             items: `[\n${kept.map((item) => `        ${lit(item)},`).join("\n")}\n      ]`,
             note: lit(
@@ -449,7 +454,7 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
           id: lit("the-room"),
           type: lit("photo"),
           section: lit(mainLabel),
-          eyebrow: lit("Look around a moment"),
+          eyebrow: lit(TEMPLATE_EYEBROWS.supportingPhoto),
           image: "CHAPTER_BEAT",
           overlay: lit("gradient"),
           note: lit(
@@ -472,7 +477,7 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
           id: lit("section-main-act"),
           type: lit("section"),
           section: lit(mainLabel),
-          eyebrow: lit("Phones down for this bit"),
+          eyebrow: lit(TEMPLATE_EYEBROWS.mainAct),
           index: lit("02"),
           title: lit(mainLabel),
           note: lit("Hand over to the host or the facilitator here."),
@@ -496,15 +501,11 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
         id: lit("how-the-tables-work"),
         type: lit("bullets"),
         section: lit(tablesLabel),
-        eyebrow: lit("Talk to someone new"),
-        title: lit("At Your Table"),
+        eyebrow: lit(TEMPLATE_EYEBROWS.tables),
+        title: lit(TEMPLATE_TITLES.tables),
         items:
           "[\n" +
-          [
-            "One person writes, everyone talks",
-            "Start with what you already do",
-            "Two minutes to report back",
-          ]
+          [...TEMPLATE_BULLETS.tables]
             .map((item) => `        ${lit(item)},`)
             .join("\n") +
           "\n      ]",
@@ -538,8 +539,8 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
           id: lit("table-discussion"),
           type: lit("break"),
           section: lit(tablesLabel),
-          eyebrow: lit("Space starts the clock"),
-          title: lit("Over to You"),
+          eyebrow: lit(TEMPLATE_EYEBROWS.tableClock),
+          title: lit(TEMPLATE_TITLES.tableClock),
           lead: lit("Talk it through, then we will hear from every table"),
           minutes: "TABLE_MINUTES",
           resumeLabel: lit("Back together"),
@@ -574,7 +575,7 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
           id: lit("section-the-tables"),
           type: lit("section"),
           section: lit(tablesLabel),
-          eyebrow: lit("Everyone talks now"),
+          eyebrow: lit(TEMPLATE_EYEBROWS.tableRoom),
           index: lit("03"),
           title: lit(tablesLabel),
           note: lit("Get people turned towards each other before you explain the task."),
@@ -598,15 +599,11 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
             id: lit("readouts"),
             type: lit("bullets"),
             section: lit(tablesLabel),
-            eyebrow: lit("One voice per table"),
-            title: lit("What Did You Find?"),
+            eyebrow: lit(TEMPLATE_EYEBROWS.readouts),
+            title: lit(TEMPLATE_TITLES.readouts),
             items:
               "[\n" +
-              [
-                "One thing you agreed on",
-                "One thing you disagreed on",
-                "One thing you will try",
-              ]
+              [...TEMPLATE_BULLETS.readouts]
                 .map((item) => `        ${lit(item)},`)
                 .join("\n") +
               "\n      ]",
@@ -635,10 +632,10 @@ export function planEveningEvent(options: EveningOptions): EveningPlan {
       id: lit(photoRow ? "group-photo" : "close-networking"),
       type: lit("photo"),
       section: lit(section),
-      eyebrow: lit(photoRow ? "Squeeze in, please" : "Doors open till the end"),
+      eyebrow: lit(photoRow ? TEMPLATE_EYEBROWS.finalePhoto : TEMPLATE_EYEBROWS.finaleOpen),
       image: "CLOSING_PHOTO",
       overlay: lit("scrim"),
-      title: lit(photoRow ? "Everyone Together" : "Stay and Talk"),
+      title: lit(photoRow ? TEMPLATE_TITLES.finalePhoto : TEMPLATE_TITLES.finaleOpen),
       lead: lit(finaleLead),
       note: lit(
         photoRow

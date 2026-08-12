@@ -63,6 +63,7 @@ const RULE_TITLES: Record<string, string> = {
   "missing-image": "Image file does not exist",
   "feedback-qr-event-mismatch": "Feedback code belongs to a different event",
   "feedback-qr-external": "Feedback code goes somewhere we do not run",
+  "template-default-copy": "Most of this deck is still the template's words",
 };
 
 /** What to actually do about each rule. One instruction, no theory. */
@@ -81,6 +82,8 @@ const RULE_FIXES: Record<string, string> = {
     "Fix the event slug at the top of the deck file — the feedback code is built from it, so it is the deck that is pointed at the wrong event, not the code.",
   "feedback-qr-external":
     "Delete the custom link so the code falls back to this event's own feedback form. Keep it only if a partner is genuinely running the survey.",
+  "template-default-copy":
+    "Rewrite the kickers and titles on the event's own slides. The scaffold writes workable ones so a fresh deck is readable, but they were composed for a generic evening — keeping them is what makes two decks sound alike. The good ones come from the asides the organiser dropped during the interview.",
   "eyebrow-length": "Shorten the kicker to 5 words or fewer.",
   "title-length": `Shorten the title to ${COPY_LIMITS.titleWords} words or fewer.`,
   "lead-length": `Shorten the supporting line to ${COPY_LIMITS.leadWords} words or fewer, or move the detail into the host note.`,

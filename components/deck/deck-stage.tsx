@@ -224,7 +224,9 @@ export function DeckStage({
           layouts, because a layout is handed its slide and nothing else. Which
           skin a given slide actually wears is decided per slide — organisational
           ones always wear the house. See `lib/deck/skins.ts`. */}
-      <DeckSkinProvider skin={deck.skin}>{children}</DeckSkinProvider>
+      <DeckSkinProvider skin={deck.skin} weave={deck.archive}>
+        {children}
+      </DeckSkinProvider>
     </div>
   );
 }

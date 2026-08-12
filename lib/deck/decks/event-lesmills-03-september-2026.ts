@@ -95,6 +95,62 @@ const FIBRE_BREAK: DeckImage = {
 };
 
 /**
+ * Four more frames of the same subject, and the reason there are four.
+ *
+ * The two above are the poster's braid photographed twice, and across eight
+ * statement slides they read as one picture the projector keeps returning to —
+ * the failure `SurfaceSpec.plate` warns about, arrived at from the other side.
+ * Panning further does not fix it; a plate panned far enough to look like a
+ * different picture is a plate whose subject has left the frame.
+ *
+ * So these are four different photographs of fibre rather than four crops of
+ * one: a fan of strands receding, the bundle cut and seen end-on, a single
+ * filament crossing an empty field, and the light thrown completely out of
+ * focus. Each puts its clear space somewhere different — right, left, top,
+ * centre — which is what lets `platePlacement()` keep type off the subject on a
+ * slide it knows nothing about.
+ *
+ * The cross-section earns its place twice. Hundreds of individually lit fibres
+ * packed into one bundle is, without being asked to be, a picture of four people
+ * from four jobs in one company, which is the entire argument of the evening.
+ *
+ * All four: gpt-image-2, 1536×1024, under the house rules that govern every
+ * generated asset here — no people, nothing imitating taonga, no text, no
+ * branding, and nothing that could be mistaken for a real She Sharp photograph.
+ * That last one is the important one, and abstract macro glass is exactly why
+ * this subject is safe: nothing in twelve years of the archive looks remotely
+ * like it.
+ */
+function fibrePlate(name: string, alt: string): DeckImage {
+  const base = `/img/events/event-lesmills-03-september-2026-${name}`;
+  return {
+    src: `${base}-1920.webp`,
+    srcSet: `${base}-1920.webp 1920w, ${base}-1280.webp 1280w`,
+    alt,
+  };
+}
+
+const FIBRE_STRANDS = fibrePlate(
+  "fibre-strandfield",
+  "A fan of fine glass filaments spreading from the left edge, each carrying a point of magenta or cyan light, against near-black.",
+);
+
+const FIBRE_SECTION = fibrePlate(
+  "fibre-crosssection",
+  "A bundle of optical fibres cut and seen end-on, the face a dense disc of hundreds of separately lit points in magenta, cyan and white.",
+);
+
+const FIBRE_FILAMENT = fibrePlate(
+  "fibre-filament",
+  "A single glass filament crossing a wide dark field low in the frame, lit from within in cyan, everything above it empty.",
+);
+
+const FIBRE_SCATTER = fibrePlate(
+  "fibre-scatter",
+  "Points of magenta and cyan light thrown completely out of focus across a near-black field, sparsest at the centre.",
+);
+
+/**
  * This evening's skin. She Sharp's own slides keep the archive wall.
  *
  * `surface: "plate"` puts the braid behind every statement slide the evening
@@ -119,8 +175,24 @@ const FIBRE_SKIN: DeckSkin = {
   name: "Fibre",
   description:
     "The event poster's braid of lit fibre-optic strands — magenta over cyan on near-black, glass panels, gradient rules.",
-  surface: { kind: "plate", images: [FIBRE_CHAPTER, FIBRE_BREAK], drift: true },
+  surface: {
+    kind: "plate",
+    images: [
+      FIBRE_CHAPTER,
+      FIBRE_STRANDS,
+      FIBRE_SECTION,
+      FIBRE_BREAK,
+      FIBRE_FILAMENT,
+      FIBRE_SCATTER,
+    ],
+    drift: true,
+  },
   tempo: 1.25,
+  /* Declared, though `geometryOf()` would infer the same from the plate
+     surface. The `[data-skin="fibre"]` block replaces the house's opaque cuts
+     with backdrop-blurred glass and its ruled lines with gradients of light in
+     the fibre, so the value is a fact about this deck rather than a guess. */
+  geometry: "glass",
 };
 
 /**
@@ -153,11 +225,14 @@ const PARTNERS = partnerLogosFrom(event);
    the failure we want. */
 const RUN_SHEET = runSheetFrom(event);
 
+/* ONLY the labels that genuinely overrun. This table used to hold four entries,
+   three of which mapped a string to itself; the fifth row of the run sheet was
+   not in it at all and passed through untouched. Identity entries make the table
+   look like it is doing the job its comment describes while the one real
+   shortening hides among them, so a label that starts overrunning later gets
+   added to a list nobody trusts. */
 const RUN_SHEET_LABELS: Record<string, string> = {
-  "Registration, networking and food": "Registration, networking and food",
-  "Kickoff and panel discussion": "Kickoff and panel discussion",
   "Roundtable discussions based on panel topics": "Roundtables on the panel's topics",
-  "Networking and event close": "Networking and event close",
 };
 
 const RUN_SHEET_ROWS = RUN_SHEET.items.map((row) => ({
@@ -226,6 +301,16 @@ const LINKEDIN_QR: QrBlock = {
   caption: "linkedin.com/company/shesharpnz",
 };
 
+/* This evening's own page, where the four bios and their LinkedIn links live.
+   Built from the compile-time site URL for the reason `feedbackUrlForSlug()`
+   exists: a projected code that encoded `localhost` would scan perfectly on the
+   laptop that made it and fail on every phone in the room. */
+const EVENT_PAGE_QR: QrBlock = {
+  url: `https://www.shesharp.org.nz/events/${EVENT_SLUG}`,
+  label: "Tonight's panel",
+  caption: `shesharp.org.nz/events/${EVENT_SLUG}`,
+};
+
 // --- The evening -----------------------------------------------------------
 
 const EVENING: Slide[] = [
@@ -233,8 +318,8 @@ const EVENING: Slide[] = [
     id: "tonight-run-sheet",
     type: "agenda",
     section: "No Pain, All Gain",
-    eyebrow: "Up again at the break",
-    title: "How Tonight Runs",
+    eyebrow: "Grab a plate, then sit",
+    title: "The Shape of Tonight",
     /* NO LEAD, and this is a layout constraint rather than a style choice. The
        agenda layout sets the lead in a narrow column, so an eleven-word one
        wrapped to two lines and pushed the fifth row — "Networking and event
@@ -250,9 +335,9 @@ const EVENING: Slide[] = [
     id: "tonights-host",
     type: "logos",
     section: "No Pain, All Gain",
-    eyebrow: "They opened the doors",
-    title: "Tonight's Hosts",
-    lead: "Thank you for the room, the food and the evening",
+    eyebrow: "We are in their building",
+    title: "Thank You, Les Mills",
+    lead: "The room, the food and four of tonight's voices",
     groups: [{ label: "Hosting with She Sharp", logos: PARTNERS, size: "lg" }],
     note: "Name Les Mills and the person from Les Mills who is in the room. All four panellists work there, so say that now — it is the reason the panel spans four different jobs.",
   },
@@ -261,7 +346,7 @@ const EVENING: Slide[] = [
     id: "section-main-act",
     type: "section",
     section: "Meet the Panel",
-    eyebrow: "Phones down for this bit",
+    eyebrow: "The evening starts here",
     index: "02",
     title: "Meet the Panel",
     // A real She Sharp room behind the handover: the deck stops being about the
@@ -275,8 +360,8 @@ const EVENING: Slide[] = [
     id: "meet-panel-speakers",
     type: "people",
     section: "Meet the Panel",
-    eyebrow: "Please welcome them",
-    title: "Meet the Panel",
+    eyebrow: "Catch them at the break",
+    title: "The Four of Them",
     lead: "Four jobs, one company, one question between them",
     people: PANEL,
     density: "lg",
@@ -284,27 +369,74 @@ const EVENING: Slide[] = [
     note: "Read the names out. Say each person's role, not their biography — the full bios are on the event page behind the closing QR code. The point to land: data, finance, legal and communications are all on this panel, which is the whole argument of the evening.",
   },
 
+  /*
+   * THE FOUR ANGLES, as cards rather than as a list.
+   *
+   * The event page's "What You'll Explore" is six bullets, and it was set here
+   * as six bullets, which is what a template does with a list. But the argument
+   * of this evening is not a list of topics — it is that one question looks
+   * completely different from four desks in the same company, and the four desks
+   * are exactly who is on the panel. `themes` says that and `bullets` cannot:
+   * cards sit side by side as peers, where bullets rank.
+   *
+   * Kept deliberately abstract — a domain, not a name. Tagging each card with a
+   * panellist would couple this slide to `SPEAKERS`, and a replacement panellist
+   * would leave a card carrying somebody who is not in the room, silently. The
+   * names are on the slide before this one, read live.
+   */
   {
     id: "what-well-explore",
-    type: "bullets",
+    type: "themes",
     section: "Meet the Panel",
-    eyebrow: "Ask about any of these",
-    title: "What You'll Explore",
-    items: [
-      "How AI is impacting different roles across an organisation",
-      "Legal and privacy implications of AI",
-      "Commercial impact of AI",
-      "Communication and change management",
-      "Technical perspectives and real use cases",
+    eyebrow: "Bring one of these",
+    title: "One Question, Four Desks",
+    lead: "The same decision, seen from four jobs",
+    themes: [
+      {
+        title: "Data & AI",
+        detail: "What the technology can actually do today",
+      },
+      {
+        title: "Commercial",
+        detail: "What it costs and what it returns",
+      },
+      {
+        title: "Legal & Privacy",
+        detail: "What you may and may not feed it",
+      },
+      {
+        title: "People & Change",
+        detail: "How a company takes any of it up",
+      },
     ],
-    note: "These came from the event page, shortened to fit. Say them as an invitation to ask questions, not as a syllabus. The event page lists a sixth — AI from a fitness company's perspective — which is left off here because five is the limit and the room is standing in the fitness company.",
+    note: "Do not read the four cards out — the room can read. Say instead that these are the four jobs on the panel, and that the interesting part is where they disagree. The event page lists two more angles, including AI from a fitness company's perspective; that one is standing in front of them, so leave it for the panel to say.",
+  },
+
+  /*
+   * The bios, at the moment the room wants them.
+   *
+   * The panel slide's own note says the full bios are on the event page behind
+   * the closing QR code — which is forty minutes and eleven slides too late.
+   * Someone deciding whether to go and talk to Ben at the break wants his
+   * background now, while he is speaking. Same destination, offered when it is
+   * useful rather than when the deck happens to end.
+   */
+  {
+    id: "panel-bios",
+    type: "qr-cta",
+    section: "Meet the Panel",
+    eyebrow: "Look them up now",
+    title: "Their Full Backgrounds",
+    lead: "Every panellist's bio and LinkedIn, on the event page",
+    qr: EVENT_PAGE_QR,
+    note: "Leave this up for a few seconds before you hand over to the facilitator, and say it once: the bios are on the page, so nobody has to write a name down.",
   },
 
   {
     id: "section-the-tables",
     type: "section",
     section: "Over To The Room",
-    eyebrow: "Everyone talks now",
+    eyebrow: "Turn your chairs around",
     index: "03",
     title: "Over To The Room",
     background: archiveFrame(9),
@@ -327,12 +459,12 @@ const EVENING: Slide[] = [
     id: "how-the-tables-work",
     type: "bullets",
     section: "Over To The Room",
-    eyebrow: "Talk to someone new",
-    title: "At Your Table",
+    eyebrow: "Nobody presents, everybody talks",
+    title: "How This Works",
     items: [
-      "One person writes, everyone talks",
-      "Start with what you already do",
-      "Two minutes to report back",
+      "Pick the answer you disagreed with",
+      "Everyone speaks before anyone speaks twice",
+      "Agree one line to read out",
     ],
     note: "PLACEHOLDER UNTIL THE NIGHT — the prompts come out of the panel, so say them aloud rather than expecting them on screen. Read these three mechanics slowly, then say how long they have and start the clock on the next slide.",
   },
@@ -347,12 +479,16 @@ const EVENING: Slide[] = [
     id: "table-discussion",
     type: "break",
     section: "Over To The Room",
-    eyebrow: "Space starts the clock",
-    title: "Over to You",
+    eyebrow: "The clock is on screen",
+    title: "Your Turn",
     lead: "Talk it through, then we will hear from every table",
     minutes: TABLE_MINUTES,
     resumeLabel: "Back together",
-    background: FIBRE_BREAK,
+    /* The out-of-focus frame, chosen for what is NOT in it. A countdown sets a
+       two-character numeral at the largest size in the deck, and this is the
+       only plate in the family whose centre is empty — the braid frames put
+       their subject exactly where the clock goes. */
+    background: FIBRE_SCATTER,
     note: "Press Space to start the countdown and Space again to pause it. The clock on the wall is what gets a room back on time — do not try to do it by voice.",
   },
 
@@ -360,12 +496,12 @@ const EVENING: Slide[] = [
     id: "readouts",
     type: "bullets",
     section: "Over To The Room",
-    eyebrow: "One voice per table",
-    title: "What Did You Find?",
+    eyebrow: "Thirty seconds a table",
+    title: "What Came Up",
     items: [
-      "One thing you agreed on",
-      "One thing you disagreed on",
-      "One thing you will try",
+      "The line your table agreed on",
+      "The thing you could not settle",
+      "One thing you will try on Monday",
     ],
     note: "Keep each table to under a minute. Repeat the good ones back to the room so the people at the back hear them, and note them down — this is the only record of the discussion anyone will have.",
   },
@@ -379,10 +515,10 @@ const EVENING: Slide[] = [
     id: "close-networking",
     type: "photo",
     section: "No Pain, All Gain",
-    eyebrow: "Doors open till the end",
+    eyebrow: "Food and drink still out",
     image: CLOSING_PHOTO,
     overlay: "scrim",
-    title: "Stay and Talk",
+    title: "Stay a While",
     lead: "Networking and event close",
     note: "Leave this up while people talk. It is the last thing they see before the thank-yous, and the food and drink are still out.",
   },
@@ -393,6 +529,22 @@ export const eventLesmills03September2026Deck: Deck = {
   title: deckTitleFrom(event),
   subtitle: deckSubtitleFrom(event),
   eventSlug: EVENT_SLUG,
+  /*
+   * The contact sheet — one strict, motionless grid of the archive.
+   *
+   * The reasoning is structural rather than a preference. This evening's own
+   * slides already carry a moving ground: `FIBRE_SKIN` sets `drift: true` and
+   * `fibre-drift` swells the plate over 38 seconds. Put the drifting archive
+   * wall on the organisational slides as well and nothing in the deck is ever
+   * still — twenty-four slides of something always sliding. Holding the house
+   * slides motionless says the true thing instead: the organisation is the fixed
+   * point and the evening is what is in motion.
+   *
+   * It is also as far from the hackathon as the archive gets. Theirs drifts
+   * horizontally; this does not move at all, which is the difference a room
+   * actually registers between two decks.
+   */
+  archive: "contact-sheet",
   skin: FIBRE_SKIN,
   /*
    * The neon pink off the poster headline, run through

@@ -1001,6 +1001,9 @@
 .deck-duotone .deck-frame,
 .deck-duotone .deck-plate,
 .deck-duotone .deck-wall-row > *,
+/* The still weaves' cell. See `styles/components/deck-weaves.css` — the grade
+   is the house's and is the same on every arrangement, which is the point. */
+.deck-duotone .deck-cell,
 .deck-duotone .deck-duotone-cell {
   background-color: var(--deck-duo-shadow, #9b2e83);
 }

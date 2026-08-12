@@ -24,12 +24,15 @@ Five facts shape everything below.
   event and registered automatically, rendered at `/present/<slug>`. **The
   author never writes or reads HTML or CSS.** You may; they may not.
 - **Every event gets its own look, and the poster decides it.** This is the
-  change that matters most, and it is a correction: the first two decks shared
-  one visual system, so a Les Mills panel evening came out looking like a
-  two-day AI hackathon. A deck now carries a **skin** — its own surface,
-  palette, geometry, motion tempo and type personality — designed from that
-  event's poster. `references/skins.md` is the whole of it, and Step 3 below is
-  where you do it.
+  change that matters most, and it is a correction, made twice. A deck carries a
+  **skin** — its own surface, palette, geometry, motion tempo and type
+  personality — designed from that event's poster (`references/skins.md`). And a
+  deck carries a **weave**, which is how She Sharp's own slides arrange the
+  archive (`references/weaves.md`). The skin was not enough on its own: it
+  cannot reach the organisational sequence, and that sequence is over half of a
+  short deck, so the Les Mills evening and the two-day hackathon still came out
+  looking like the same deck with a different accent. Step 3 is where you do
+  both, and neither is optional.
 - **She Sharp's own slides are not the event's to restyle.** The organisational
   sequence — the karakia, the team, the impact figures, the sponsor wall, the
   thanks — keeps the archive wall and the brand purple in every deck, forever.
@@ -266,7 +269,42 @@ purple**, whatever the poster says. Expect to explain that once:
 > and it's what makes twelve years of photos taken in twelve different lighting
 > conditions read as one thing.
 
-### 3b — The skin
+### 3b — The weave, and you do not get to skip this one
+
+**Read `references/weaves.md`.** It is short.
+
+Every deck picks how She Sharp's own slides arrange the archive — `drift`,
+`contact-sheet` or `mosaic`. This is the axis that made the first two decks look
+like twins: the organisational sequence is over half of a short deck, and until
+August 2026 it was the same drifting photo wall in every deck ever built,
+whatever else the deck did.
+
+See what is already taken:
+
+```powershell
+npx tsx scripts/deck/style-ledger.ts
+```
+
+It prints every registered deck against every axis, and the weaves nothing has
+claimed. **Take an unused one unless you can say why this event needs a weave a
+neighbouring deck already has** — and if you do take a used one, the accent has
+to be in a different part of the colour wheel, or `deck.test.ts` fails the build
+with `deck-set-house-twins`.
+
+Two questions decide it: what is this event like, and what is the rest of this
+deck already doing? The second is the one people skip. Les Mills went to
+`contact-sheet` because its own slides already sit on a drifting plate — a
+second moving ground would mean nothing in the deck is ever still.
+
+`scripts/deck/new-deck.ts` writes a free weave into the scaffold for you, so
+this step is usually confirming a choice rather than making one. Say it out loud
+to the author anyway, in their words, not the key:
+
+> The She Sharp slides in your deck use the usual wall of past-event photos, but
+> laid out as a still grid rather than the slow-moving rows the hackathon deck
+> uses — so the two don't look like the same night.
+
+### 3c — The skin
 
 **Read `references/skins.md` before writing any of it.** It has the boundary,
 the three places a skin lives, and the traps — including the one where
@@ -389,15 +427,19 @@ sheet, the host's logos, the speakers, what the event says people will get out
 of it, the table-discussion block with a countdown set to the number of minutes
 the run sheet actually allows, the readouts, and a closing photograph.
 
-**Your job is now subtraction, not authorship.** Read the deck, delete the
-blocks tonight does not have, and write the parts only a person can:
+**Your job on the STRUCTURE is subtraction.** Read the deck, delete the blocks
+tonight does not have, and do not add slides the run sheet cannot justify.
+
+**Your job on the WORDS is authorship**, and that is not the same job. The
+template's copy is scaffolding written for a generic evening; leaving it in place
+is how two decks end up sounding alike. Write the parts only a person can:
 
 - **Replace every PLACEHOLDER note.** The template marks the slides it could not
   fill — the table prompts, most obviously, because nobody writes those down
   before the night. `placeholder-copy` fails the build if a TODO reaches a
   slide, but a *note* may say PLACEHOLDER, so it is on you to catch those.
-- **Write a kicker for each slide** (below). The template ships workable ones;
-  the good ones come from the interview.
+- **Write a kicker for each slide in the middle** (below). The template ships
+  generic ones and the checker fails a deck that keeps more than four of them.
 - **Mark what can be dropped** — `optional: true` on anything skippable when the
   event runs late.
 - **Delete freely.** Everything in the middle is optional except the closing
@@ -462,8 +504,25 @@ than it needed to be.
 **The organisational slides arrive with kickers already on them**, written
 generically enough to be true at any She Sharp event — "Please find a seat",
 "Stand if you are able". Leave those alone where they fit, and replace them
-where this event can say something better. The event-specific slides in the
-middle of the deck have nothing, and every one of them is yours to write.
+where this event can say something better. They are *supposed* to be the same in
+every deck: they are the organisation's voice rather than this event's.
+
+**The event-specific slides in the middle arrive with kickers too, and those are
+a different matter entirely.** The template writes "Up again at the break",
+"Talk to someone new", "Space starts the clock" — sentences composed for a
+generic Tuesday, not for your evening. They are placeholders that read like
+finished copy, which is the most expensive kind.
+
+This is not a hypothetical. The Les Mills deck shipped with **every one** of the
+template's ten eyebrows untouched; the hackathon deck, written before the
+template existed, contains none of them and has sixty-one of its own. That
+difference is most of why the two decks read as the same deck, and it cost
+nothing to create and nothing to fix.
+
+`template-default-copy` now fails a deck that keeps more than four of them.
+Four rather than zero, because a few are genuinely the right words — "Space
+starts the clock" is a literal instruction about the keyboard. The rest are
+yours to write.
 
 ### Watch the shape, not just the slides
 
@@ -477,18 +536,23 @@ out where the day actually turns.
 
 ## Step 6 — Check it
 
-Three commands, in this order:
+Four commands, in this order:
 
 ```powershell
 npx tsx scripts/deck/lint-deck.ts aotearoa-ai-hackathon-festival-2026
+npx tsx scripts/deck/style-ledger.ts
 npx tsx scripts/verify-image-paths.ts
 npx tsx lib/deck/deck.test.ts
 ```
 
 - **`lint-deck.ts`** enforces the copy limits, unique slide ids, the host note,
-  the kicker rules, the accent contrast, and the **shape of the deck** — runs of
-  similar slides, the share of dark slides, and how many different layouts you
-  used.
+  the kicker rules, the accent contrast, how much of the template's own copy
+  survived, and the **shape of the deck** — runs of similar slides, the share of
+  dark slides, and how many different layouts you used.
+- **`style-ledger.ts`** is the only check that looks at more than one deck. It
+  prints every registered deck against the five axes its look is made of and
+  says which pairs are too close to tell apart. It never fails on its own —
+  `deck.test.ts` is the gate — but it is the one that tells you *what to change*.
 - **`verify-image-paths.ts`** is the CI gate. Every `/img/...` path written in
   `lib/`, `app/` or `components/` must resolve to a real file under `public/`.
   A typo here fails the pull request, so catch it now.
@@ -796,9 +860,14 @@ styling choice; find the missing image.
 `next dev` server. Stop it, restart, and reload once.
 
 **`scripts/deck/new-deck.ts` is missing** — the scaffolding script has not
-landed on this branch. Copy the nearest existing deck under `lib/deck/decks/`,
-rename the slug, strip the event-specific slides, and continue from Step 5. Say
-so in your report; do not hand-build the organisational frame from scratch.
+landed on this branch. **Stop and say so.** Get the branch that has it.
+
+Do *not* copy the nearest existing deck and rename the slug, which is what this
+section used to advise. It reliably produces the defect this whole skill now
+exists to prevent: you inherit that deck's weave, its accent, its skin and its
+kickers, and every one of those is a decision that should have been made for
+*this* event. `deck-set-house-twins` will fail the build if you do, which is the
+cheap version of finding out. The expensive version is a projector.
 
 ## What this skill does *not* do
 
