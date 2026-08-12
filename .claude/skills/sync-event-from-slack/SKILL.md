@@ -203,6 +203,21 @@ npx tsx .claude/skills/sync-event-from-slack/scripts/fetch-channel.ts <channel> 
 returns only the delta. For a brand-new channel (CREATE), omit `--state` for a
 full fetch. Always pipe stdout to a file (output can exceed tool context limits).
 
+**Prefer `--out <path>` over a shell redirect when the destination matters.**
+`> file` truncates the target *before* the script runs, so a crash or a
+rate-limit abort leaves an empty file where a good transcript was; `--out`
+writes to a temp file and renames. For many conversations use one process:
+
+```
+npx tsx .../fetch-channel.ts --many ids.txt --out-dir <archive>/raw --skip-existing
+```
+
+`--many` shares the Slack client and the resolved user directory across the whole
+list instead of re-paying per process, keeps going when one conversation fails,
+and exits with the failure count — so re-running the identical command retries
+only what failed. Measured on a six-conversation sample: 27.5s → 14.2s, and the
+payloads are byte-identical to the one-process-each version.
+
 The JSON includes a `_meta` block (`mode`, `since`, `newWatermarkTs`,
 `threadState`, `newCount`, `priorDigest`), `channel` metadata, `pinned` messages
 (always included — canonical), `bookmarks`, a `users` dictionary (id → name), and
@@ -425,7 +440,31 @@ When the user approves:
      --digest "<why skipped; what would change that>"
    npx tsx .claude/skills/sync-event-from-slack/scripts/update-state.ts \
      --from /tmp/channel.json --mapping none
+
+   # re-recording a read on a channel that is ALREADY mapped: omit --mapping
+   npx tsx .claude/skills/sync-event-from-slack/scripts/update-state.ts \
+     --from /tmp/channel.json
+
+   # many at once: one process, one manifest load, all-or-nothing
+   npx tsx .claude/skills/sync-event-from-slack/scripts/update-state.ts \
+     --batch /tmp/state-writes.json     # [["--from","raw/C1.json"], …]
    ```
+   **`--from` asserts that the content reached you.** When you are registering
+   conversations in bulk without reading every message — the archived-channel
+   sweep, say — say so with `--read-source "<why this claim is narrower>"`. The
+   position is still recorded; the manifest just stops overstating what anyone
+   actually read. `backfill-read-receipts.ts` uses the same field.
+   **Omitting `--mapping` keeps the channel's existing mapping** — events,
+   reason and always-read included — so a plain "record that I read this" is
+   safe on an already-mapped channel. It used to default to `none`, which meant
+   that write silently deleted the mapping; the workaround was to read the
+   current reason out of the manifest and echo it back through a shell, and on
+   12 August 2026 that came one step from committing 41 reasons with their
+   apostrophes eaten, because PowerShell escapes a quote by doubling it and bash
+   does not. Clearing is now something you have to say: `--mapping none`. For
+   prose that fights the command line, `--reason-file <path>` mirrors
+   `--digest-file`.
+
    A good digest names the event, its date/venue, what is already published, the
    redaction landmines (codes/private links to keep out), and the next open item.
    Omitting `--digest` keeps the prior one; `--digest ""` clears it. Pass long
@@ -436,18 +475,34 @@ When the user approves:
 
 ### Step 7.5 — Prove nothing is unread
 
-Two checks, and they answer different questions. Run the first every time.
+Three checks, and they answer different questions. Run the first two every time.
 
 ```
-npx tsx .../audit-read-state.ts        # free, offline, in CI
-npx tsx .../verify-coverage.ts         # asks Slack; slow; the definitive one
-npx tsx .../verify-coverage.ts --all   # every conversation, not just the ones that matter
+npx tsx .../audit-read-state.ts                  # free, offline, in CI
+npx tsx .../verify-coverage.ts --enumerate-only  # ~7s: is anything MISSING entirely?
+npx tsx .../verify-coverage.ts                   # asks Slack; slow; the definitive one
+npx tsx .../verify-coverage.ts --all             # every conversation, not just the ones that matter
 ```
+
+**The two questions are not the same, and confusing them hid 97 conversations
+for a year.** "Is everything I know about fully read?" is answered by iterating
+the manifest — which is what `audit-read-state.ts` and the coverage walk both
+do. "Does Slack hold a conversation I have never heard of?" cannot be answered
+that way at all: a gate that iterates the record can only confirm the record is
+self-consistent with itself.
+
+On 12 August 2026 all three gates were green while 97 archived channels — twelve
+years of `events-2021-*` through `events-2024-*` — were in neither the manifest
+nor the archive. `conversations.list` omits archived channels unless asked, and
+`isReadable()` calls them unreadable on top of that. Nothing was wrong with any
+individual check; they were all asking the same question, and it was the wrong
+one. `--enumerate-only` asks the other one, in seconds, so it can run on every
+sync rather than only in the rare full sweep.
 
 `audit-read-state.ts` compares two numbers already in the manifest: the scan
 position against the read position, plus "never read at all". It is free, so it
 runs in CI and at the end of every sync — **but it can only catch a gap the
-triage noticed.**
+triage noticed, in a conversation the manifest already knows about.**
 
 `verify-coverage.ts` pages the entire history of each conversation and expands
 every thread, then counts what is not behind the read position. It is the only

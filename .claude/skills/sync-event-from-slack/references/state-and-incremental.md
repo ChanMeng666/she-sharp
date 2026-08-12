@@ -37,6 +37,21 @@ Keyed by **channel id** (stable across renames). One entry per channel:
 Always written via `scripts/update-state.ts` (atomic, deterministically ordered)
 — never hand-edit it, or git diffs and the no-op short-circuit drift.
 
+**Omitting `--mapping` inherits the existing mapping.** Recording a read is not a
+statement about mapping, so a plain `update-state.ts --from <payload>` on an
+already-mapped channel leaves its events / reason / always-read alone. It used to
+default to `none` and silently delete them. `--mapping none` still clears, and
+`shouldInheritMapping()` in `state-lib.ts` is the single implementation of that
+question, with assertions in `state-lib.test.ts`.
+
+**The manifest cannot tell you what is missing from the manifest.** Every gate
+built on it — `audit-read-state.ts`, and the coverage walk's target list —
+iterates its key set, so a conversation that was never enumerated is invisible to
+all of them at once. That is not a bug in any of them; it is the shape of the
+question. `verify-coverage.ts --enumerate-only` asks the other question against
+`conversations.list` with `exclude_archived: false`, in about seven seconds. Run
+it every sync.
+
 ## Digest — the sediment that stops re-reading Slack
 
 `digest` is a few sentences capturing what was **understood** about the channel's

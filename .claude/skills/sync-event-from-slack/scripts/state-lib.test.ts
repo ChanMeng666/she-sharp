@@ -20,8 +20,10 @@
 import assert from "node:assert";
 
 import {
+  carryReadReceipt,
   mergeThreadState,
   scannedPosition,
+  shouldInheritMapping,
   threadHasUnread,
   unreadConversations,
   type ChannelState,
@@ -272,6 +274,92 @@ check("a newline inside a quoted cell does not start a new row", () => {
   const rows = parseCsv('a,b\n1,"line one\nline two"\n');
   assert.strictEqual(rows.length, 2);
   assert.strictEqual(rows[1][1], "line one\nline two");
+});
+
+console.log("\nshouldInheritMapping");
+
+/*
+ * THE 12 AUGUST CASE. `update-state.ts` defaulted a missing `--mapping` to
+ * `none`, so recording a read on an already-mapped channel silently deleted the
+ * mapping — an event linkage, or a skip reason nobody could reconstruct. The
+ * damage was invisible: the write succeeded, the manifest stayed valid, and the
+ * only symptom was an event page that no longer had an owning channel.
+ */
+
+const skipWithReason: ChannelState = {
+  name: "marketing",
+  type: "general",
+  mapping: { kind: "skip", reason: "Marketing coordination channel: posters, captions." },
+  watermarkTs: "100",
+  threads: {},
+  fingerprint: "",
+  lastSyncedAt: "",
+  lastSyncedCommit: "",
+};
+
+check("omitting --mapping keeps what the channel already has", () => {
+  assert.strictEqual(shouldInheritMapping(skipWithReason, undefined), true);
+});
+
+check("naming a mapping overrides the existing one", () => {
+  assert.strictEqual(shouldInheritMapping(skipWithReason, "event"), false);
+});
+
+check("clearing is explicit — --mapping none still clears", () => {
+  // The escape hatch has to keep working, or the only way to unmap a channel is
+  // to hand-edit the manifest, which is the thing update-state.ts exists to stop.
+  assert.strictEqual(shouldInheritMapping(skipWithReason, "none"), false);
+});
+
+check("a channel with no prior state inherits nothing", () => {
+  assert.strictEqual(shouldInheritMapping(undefined, undefined), false);
+});
+
+console.log("\ncarryReadReceipt");
+
+/*
+ * `saveManifest` emits readAt/readAtSource only when set, so a caller that
+ * rebuilds an entry and omits one has DELETED it. That shape has now caused
+ * three separate bugs; these assertions pin the rule down in one place.
+ */
+
+const backfilled: ChannelState = {
+  name: "recruitment",
+  type: "general",
+  mapping: { kind: "none" },
+  watermarkTs: "100",
+  threads: {},
+  fingerprint: "",
+  lastSyncedAt: "",
+  lastSyncedCommit: "",
+  readAt: "2026-08-07T12:49:55.008Z",
+  readAtSource: "backfill-read-receipts.ts — verified against Slack on 2026-08-07",
+};
+
+check("a manual write carries the receipt AND its caveat", () => {
+  // Keeping readAt while dropping readAtSource promotes "verified quiet" into
+  // "somebody read this" — the manifest claiming more than anyone checked.
+  const r = carryReadReceipt(backfilled, false, "2026-08-12T00:00:00.000Z");
+  assert.strictEqual(r.readAt, backfilled.readAt);
+  assert.strictEqual(r.readAtSource, backfilled.readAtSource);
+});
+
+check("a real delivery stamps a fresh receipt and retires the caveat", () => {
+  const r = carryReadReceipt(backfilled, true, "2026-08-12T00:00:00.000Z");
+  assert.strictEqual(r.readAt, "2026-08-12T00:00:00.000Z");
+  assert.strictEqual(r.readAtSource, undefined, "a delivered read needs no caveat");
+});
+
+check("a never-read channel gains no receipt from a manual write", () => {
+  const fresh: ChannelState = { ...backfilled, readAt: undefined, readAtSource: undefined };
+  assert.deepStrictEqual(carryReadReceipt(fresh, false, "2026-08-12T00:00:00.000Z"), {});
+});
+
+check("an unqualified prior receipt stays unqualified", () => {
+  const plain: ChannelState = { ...backfilled, readAtSource: undefined };
+  const r = carryReadReceipt(plain, false, "2026-08-12T00:00:00.000Z");
+  assert.strictEqual(r.readAt, plain.readAt);
+  assert.ok(!("readAtSource" in r), "no caveat invented where there was none");
 });
 
 console.log(
