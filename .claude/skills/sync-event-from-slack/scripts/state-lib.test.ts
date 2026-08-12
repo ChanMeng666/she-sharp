@@ -22,6 +22,7 @@ import assert from "node:assert";
 import {
   mergeThreadState,
   scannedPosition,
+  shouldInheritMapping,
   threadHasUnread,
   unreadConversations,
   type ChannelState,
@@ -272,6 +273,45 @@ check("a newline inside a quoted cell does not start a new row", () => {
   const rows = parseCsv('a,b\n1,"line one\nline two"\n');
   assert.strictEqual(rows.length, 2);
   assert.strictEqual(rows[1][1], "line one\nline two");
+});
+
+console.log("\nshouldInheritMapping");
+
+/*
+ * THE 12 AUGUST CASE. `update-state.ts` defaulted a missing `--mapping` to
+ * `none`, so recording a read on an already-mapped channel silently deleted the
+ * mapping — an event linkage, or a skip reason nobody could reconstruct. The
+ * damage was invisible: the write succeeded, the manifest stayed valid, and the
+ * only symptom was an event page that no longer had an owning channel.
+ */
+
+const skipWithReason: ChannelState = {
+  name: "marketing",
+  type: "general",
+  mapping: { kind: "skip", reason: "Marketing coordination channel: posters, captions." },
+  watermarkTs: "100",
+  threads: {},
+  fingerprint: "",
+  lastSyncedAt: "",
+  lastSyncedCommit: "",
+};
+
+check("omitting --mapping keeps what the channel already has", () => {
+  assert.strictEqual(shouldInheritMapping(skipWithReason, undefined), true);
+});
+
+check("naming a mapping overrides the existing one", () => {
+  assert.strictEqual(shouldInheritMapping(skipWithReason, "event"), false);
+});
+
+check("clearing is explicit — --mapping none still clears", () => {
+  // The escape hatch has to keep working, or the only way to unmap a channel is
+  // to hand-edit the manifest, which is the thing update-state.ts exists to stop.
+  assert.strictEqual(shouldInheritMapping(skipWithReason, "none"), false);
+});
+
+check("a channel with no prior state inherits nothing", () => {
+  assert.strictEqual(shouldInheritMapping(undefined, undefined), false);
 });
 
 console.log(
