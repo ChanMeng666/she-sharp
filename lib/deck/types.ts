@@ -443,8 +443,39 @@ export interface DeckTheme {
  * to it and `skins.ts` refers to `DeckImage`; declaring it there would make the
  * two files import each other.
  */
+/**
+ * How the archive is ARRANGED — as against which photographs are in it.
+ *
+ * The pool, the purple duotone and the 166px vertical pitch are fixed; this
+ * chooses the composition laid out on that grid. It exists because the
+ * arrangement was the one axis every deck shared: the organisational slides are
+ * over half of a short deck and they were all the same drifting marquee, so two
+ * decks with different skins still read as the same deck.
+ *
+ * A deck picks exactly one and wears it on every house slide, which makes the
+ * weave that deck's silhouette. `lib/deck/style-library.ts` enforces that two
+ * decks do not pick the same one while an unused one is left.
+ *
+ * ADDING ONE is a builder in `lib/deck/wall.ts`, a branch in
+ * `components/deck/slides/archive.tsx`, and a block in
+ * `styles/components/deck-weaves.css`. Whatever it does, it owes a full-bleed
+ * form AND a band form, and its vertical pitch must stay `--deck-tile-h` —
+ * `INCISION_5_ROWS` derives a panel height from it and is written as an inline
+ * style, so a weave that redefines the pitch moves a panel on slides it has
+ * never heard of.
+ */
+export type ArchiveWeaveKey = "drift" | "mosaic" | "contact-sheet";
+
 export type SurfaceSpec =
-  | { kind: "archive" }
+  | {
+      kind: "archive";
+      /**
+       * Omit on a deck's own skin and it inherits `Deck.archive`. Set it only
+       * when an event with no artwork wants an arrangement of its own on its
+       * chapters while the house slides keep the deck's.
+       */
+      weave?: ArchiveWeaveKey;
+    }
   | {
       /**
        * One or more plates, panned per slide so no two show the same crop.
@@ -482,6 +513,22 @@ export interface Deck {
   /** Back-reference into `lib/data/events.ts`. */
   eventSlug?: string;
   theme: DeckTheme;
+  /**
+   * How She Sharp's own slides arrange the archive in this deck. **Required.**
+   *
+   * Required rather than optional-with-a-default, and that is the whole point.
+   * The defect this field answers was produced by exactly the shape "omit it and
+   * get the house behaviour": `skin` is optional, both shipped decks omitted or
+   * half-used it, and both came out as the same drifting wall. An optional
+   * field with a sensible default is a decision nobody makes. A required union
+   * puts the decision in the file the author reads and hands the checking to
+   * `tsc`, which is the one reviewer that never forgets.
+   *
+   * It cannot be checked by `placeholder-copy` either way: that rule scans
+   * on-screen strings (`onScreenStrings()` in `lint.ts`) and a scaffold's
+   * `// TODO` comment is not one.
+   */
+  archive: ArchiveWeaveKey;
   /**
    * This event's own visual identity, worn by every slide except the
    * organisational ones. Omit and the whole deck wears the house skin, which is

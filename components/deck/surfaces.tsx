@@ -16,42 +16,67 @@
 
 "use client";
 
-import { createContext, useContext, type CSSProperties } from "react";
+import { createContext, useContext, useMemo, type CSSProperties } from "react";
 
 import { DeckImage as DeckImg } from "@/components/deck/deck-image";
 import { ArchiveBand, ArchiveWall } from "@/components/deck/slides/archive";
-import { houseSkin, platePlacement, skinForSlide } from "@/lib/deck/skins";
-import type { DeckSkin, Slide, SurfaceSpec } from "@/lib/deck/types";
+import { platePlacement, skinForSlide } from "@/lib/deck/skins";
+import type {
+  ArchiveWeaveKey,
+  DeckSkin,
+  Slide,
+  SurfaceSpec,
+} from "@/lib/deck/types";
 import { cn } from "@/lib/utils";
 
 /**
- * The deck's event skin, published by `DeckStage`.
+ * The deck's event skin and its archive weave, published by `DeckStage`.
  *
  * Context rather than a prop because a layout is handed its slide and nothing
  * else — the same constraint that forces `seedFrom()` to derive from the id.
- * Defaults to the house skin so a layout rendered outside a stage (a test, the
- * overview grid) still has a ground rather than throwing.
+ * Defaults to the house skin in its original arrangement, so a layout rendered
+ * outside a stage still has a ground rather than throwing. (Nothing does that
+ * today: both `deck-viewport.tsx` and `deck-print.tsx` wrap in `DeckStage`. The
+ * default is insurance, not a code path.)
+ *
+ * ONE context carrying both, not two. The weave and the event skin are read
+ * together on every single slide, by the same hook, and two providers would be
+ * two subscriptions for one decision.
  */
-const SkinContext = createContext<DeckSkin>(houseSkin);
+interface DeckSkinScope {
+  eventSkin: DeckSkin | undefined;
+  weave: ArchiveWeaveKey;
+}
+
+const SkinContext = createContext<DeckSkinScope>({
+  eventSkin: undefined,
+  weave: "drift",
+});
 
 export function DeckSkinProvider({
   skin,
+  weave,
   children,
 }: {
   skin: DeckSkin | undefined;
+  weave: ArchiveWeaveKey;
   children: React.ReactNode;
 }) {
-  return (
-    <SkinContext.Provider value={skin ?? houseSkin}>
-      {children}
-    </SkinContext.Provider>
+  const value = useMemo<DeckSkinScope>(
+    () => ({ eventSkin: skin, weave }),
+    [skin, weave],
   );
+
+  return <SkinContext.Provider value={value}>{children}</SkinContext.Provider>;
 }
 
 /** The skin this slide wears — the event's, unless it is an organisational one. */
 export function useSlideSkin(slide: Pick<Slide, "surface">): DeckSkin {
-  const eventSkin = useContext(SkinContext);
-  return skinForSlide(slide.surface, eventSkin);
+  const { eventSkin, weave } = useContext(SkinContext);
+  return useMemo(
+    () => skinForSlide(slide.surface, eventSkin, weave),
+    [slide.surface, eventSkin, weave],
+  );
 }
 
 /**
