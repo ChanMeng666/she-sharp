@@ -152,10 +152,32 @@ interface NormalizedMessage {
 
 const userCache = new Map<string, { real_name: string; display_name: string }>();
 
+/**
+ * The workspace directory, seeded once and shared across runs via the disk
+ * cache in `slack-client.ts`.
+ *
+ * Without it every message author cost a `users.info` call, and `userCache` is
+ * module-scoped — so fetching 105 conversations in 105 processes re-resolved the
+ * same people 105 times over. The directory answers almost all of them from one
+ * cached read; `users.info` stays as the fallback for ids the directory does not
+ * carry (bots, deactivated accounts, external users in shared channels).
+ *
+ * Deliberately lazy: a run that resolves nobody should not pay for it either.
+ */
+let directory: Promise<Map<string, string>> | undefined;
+
 async function resolveUser(id: string | undefined): Promise<string> {
   if (!id) return "";
   const cached = userCache.get(id);
   if (cached) return cached.display_name || cached.real_name || id;
+
+  directory ??= loadUserNames();
+  const known = (await directory).get(id);
+  if (known) {
+    userCache.set(id, { real_name: known, display_name: "" });
+    return known;
+  }
+
   try {
     const r = await slack.users.info({ user: id });
     const real = (r.user as any)?.real_name ?? "";

@@ -112,6 +112,28 @@ export function scannedPosition(c: ChannelState | undefined): string {
 }
 
 /**
+ * Should a state write KEEP the mapping the channel already has?
+ *
+ * Yes whenever the caller did not name one and the channel has one. Recording a
+ * read is not a statement about mapping, and `update-state.ts` used to treat a
+ * missing `--mapping` as `none` — so the ordinary act of writing down "I have
+ * read this" silently deleted an event linkage, or a `skip` whose reason was a
+ * paragraph of context nobody could reconstruct.
+ *
+ * It lives here, next to the other read-position rules, because the alternative
+ * is a second copy of the question inside a CLI argument parser where no test
+ * can reach it. That is the same shape as the `threadHasUnread` split that cost
+ * an event owner's deck review: when this question has two implementations they
+ * eventually disagree, and the disagreement is silent.
+ */
+export function shouldInheritMapping(
+  prev: ChannelState | undefined,
+  explicitKind: string | undefined,
+): boolean {
+  return explicitKind === undefined && !!prev?.mapping;
+}
+
+/**
  * Conversations the triage has scored past content the model was never shown.
  *
  * EVERY conversation counts. This used to exempt anything the signal gate had

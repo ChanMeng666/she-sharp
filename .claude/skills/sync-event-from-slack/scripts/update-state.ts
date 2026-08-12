@@ -13,8 +13,14 @@
  *
  * Mapping forms:
  *   --mapping event  --slug <slug> --event-id <n>            (repeatable for multi-event channels)
- *   --mapping skip   --reason "<why>"
+ *   --mapping skip   --reason "<why>" | --reason-file <path>
  *   --mapping none
+ *
+ * OMIT --mapping to KEEP the channel's existing mapping untouched — reason,
+ * events and always-read included. That is the safe default for a plain "record
+ * that I have read this" write, and it means re-recording a mapped channel no
+ * longer requires echoing its mapping back on the command line. Use
+ * `--mapping none` to actually clear one.
  *
  * Other flags:
  *   --from <fetch-output.json>   pull channel id/name, watermark, threadState
@@ -35,6 +41,7 @@ import {
   nowIso,
   readPayload,
   saveManifest,
+  shouldInheritMapping,
   type ChannelState,
   type Mapping,
   type ThreadState,
@@ -84,11 +91,35 @@ function main() {
   const manifest = loadManifest();
   const prev = manifest.channels[channelId];
 
-  // Build the mapping.
-  const kind = arg("--mapping") ?? "none";
+  /*
+   * Build the mapping.
+   *
+   * OMITTING `--mapping` INHERITS THE PREVIOUS ONE. It used to default to
+   * `none`, which meant a routine "record that I read this" on an already-mapped
+   * channel silently rewrote its mapping to none — destroying an event linkage,
+   * or a `skip` whose reason was a paragraph of hard-won context, with no
+   * warning and no diff anybody would think to check.
+   *
+   * The old default also made every re-record dangerous in a subtler way: the
+   * safe workaround was to read the current mapping out of the manifest and echo
+   * it back on the command line, which meant piping long human prose containing
+   * apostrophes through a shell. On 12 August 2026 that came within one step of
+   * committing 41 mangled reasons to a public repo, because PowerShell escapes a
+   * quote by doubling it and bash does not.
+   *
+   * Clearing a mapping is now something you have to say: `--mapping none`.
+   */
+  const kindArg = arg("--mapping");
+  const kind = kindArg ?? (prev?.mapping?.kind ?? "none");
+  const inheriting = shouldInheritMapping(prev, kindArg);
   let mapping: Mapping;
   let fingerprint = "";
-  if (kind === "event") {
+  if (inheriting) {
+    /* Inherit wholesale — reason, events and alwaysRead included. Re-deriving
+       any of it from flags that were not passed is how the field gets dropped. */
+    mapping = prev!.mapping;
+    fingerprint = mapping.kind === "event" ? fingerprintForMapping(mapping) : "";
+  } else if (kind === "event") {
     const evs = collectEvents();
     if (!evs.length || evs.some((e) => !e.slug || !Number.isFinite(e.eventId))) {
       console.error("--mapping event requires at least one --slug + --event-id pair");
@@ -97,7 +128,17 @@ function main() {
     mapping = { kind: "event", events: evs };
     fingerprint = fingerprintForMapping(mapping);
   } else if (kind === "skip") {
-    const reason = arg("--reason") ?? "skipped";
+    /* `--reason-file` mirrors `--digest-file`, and exists for the same reason:
+       these are sentences written for a human, they contain apostrophes and em
+       dashes, and putting them on a command line makes their correctness a
+       property of which shell happens to be running. A file has no such
+       property. An explicit `--reason` still wins. */
+    const reasonFile = arg("--reason-file");
+    const reason =
+      arg("--reason") ??
+      (reasonFile ? readFileSync(reasonFile, "utf8").trim() : undefined) ??
+      (prev?.mapping?.kind === "skip" ? prev.mapping.reason : undefined) ??
+      "skipped";
     /*
      * `--always-read` keeps a conversation out of the create? pool while still
      * forcing it into the triage on any new content. It exists for the DMs of
