@@ -129,8 +129,18 @@ for (const deck of decks) {
     );
   }
 
+  /* Ink against the canvas it is actually printed on. A skin that moves the
+     ground has to move the ink with it and declare both here, or this measures
+     one deck's ink against another deck's canvas — which is how a near-black
+     headline on a near-black ground passed review once. */
   for (const [tone, pair] of Object.entries(TONE_INK)) {
-    const ratio = contrastRatio(pair.ink, deck.theme[tone === "dark" ? "darkCanvas" : "lightCanvas"] ?? pair.canvas);
+    const dark = tone === "dark";
+    const ink = dark
+      ? (deck.theme.ink?.onDark ?? pair.ink)
+      : (deck.theme.ink?.onLight ?? pair.ink);
+    const canvas =
+      (dark ? deck.theme.darkCanvas : deck.theme.lightCanvas) ?? pair.canvas;
+    const ratio = contrastRatio(ink, canvas);
     check(
       `${tone} ink on its canvas is ${ratio.toFixed(2)}:1 (need ${INK_CONTRAST_TARGET}:1)`,
       ratio >= INK_CONTRAST_TARGET,
