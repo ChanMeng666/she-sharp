@@ -39,6 +39,26 @@ You do not have to do anything to get this right. `buildOpeningSlides()` and
 surface and gives them your palette, and every slide you write in the deck file
 is the event's by default.
 
+### Three tokens that are not what their names say
+
+All three cost a rebuild to find. Check them whenever a skin moves a ground.
+
+- **`theme.lightCanvas` drives the ink over photographs, not a canvas.**
+  `themeToCssVars()` emits it as `--deck-canvas-light`, and every consumer —
+  `karakia-slide`, `break-slide`, `photo-slide` — uses it as *the light colour to
+  set type in over a picture*. Nothing uses it as a background. Declare a dark
+  value there and the opening karakia becomes near-black type over a photograph
+  of the sea. Set the honest value for the contrast checker, then restate
+  `--deck-canvas-light` as ink in your skin block.
+- **`--deck-paper` becomes the INK on a dark slide.** `deck.css` sets
+  `--slide-ink: var(--deck-paper)` there — an elegant inversion, and the wrong
+  one to inherit if you have moved paper somewhere dark.
+- **`--deck-content-max` is measured against by a layout.** `people-slide.tsx`
+  derives its column count assuming ~1230px. Narrow the measure for air and a
+  fifteen-person team grid keeps its eight columns and breaks names mid-word:
+  "McCaule/y", "Prasant/h". Get your composition from alignment and ground
+  instead — nothing measures against those.
+
 **If you move the ground, you must move the ink with it — in the CSS *and* in
 `theme.ink`.** `deck.test.ts` asserts body text clears 7:1 against its own
 canvas and it reads the theme, not the stylesheet. The first dark skin declared

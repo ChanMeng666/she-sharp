@@ -101,6 +101,23 @@
   --deck-mint: var(--fibre-cyan);
   --deck-peri: #7ab6ff;
 
+  /*
+   * `--deck-canvas-light` IS NOT A CANVAS, whatever it is called.
+   *
+   * Every consumer in the repository uses it as the colour of type laid OVER a
+   * photograph — `karakia-slide.tsx`, `break-slide.tsx`, `photo-slide.tsx` —
+   * and nothing uses it as a background; `deck.css` even notes that
+   * `--deck-paper` deliberately does not read it. But `themeToCssVars()` emits
+   * it from `theme.lightCanvas`, so declaring this deck's real light ground
+   * there — a dark slate, which the contrast check genuinely needs — turned the
+   * opening karakia into near-black type over a photograph of the sea, and the
+   * countdown and every photo caption with it. Three slide types, silently.
+   *
+   * So `theme.lightCanvas` keeps the honest value for the checker, and the
+   * token that actually drives ink is restated here as ink.
+   */
+  --deck-canvas-light: #eef4f8;
+
   --deck-canvas-dark: #05060b;
   /* The light register. `deck.css` invites overriding `--deck-paper` directly
      for an event that wants a different ground; this is that invitation taken
@@ -327,7 +344,285 @@
   );
 }
 
-/* --- The plate surface --------------------------------------------------- */
+
+/* --- Composition: a different page, not a different palette -------------- */
+
+/*
+ * THE HOUSE PAGE IS OPTICALLY CENTRED. `deck.css` centres the content column in
+ * the safe area, which is the right default: it stops a five-bullet slide
+ * reading as unfinished. Every deck built on it has the same architecture — a
+ * stack of type floating in the middle of the stage.
+ *
+ * THIS PAGE IS ANCHORED LOW. Type sits on the bottom third and the ground is
+ * left open above it, which is the poster's own architecture and reads as a
+ * lit sign rather than a page. It is the single change that makes a slide
+ * recognisable as this deck from across a room, before any colour registers.
+ *
+ * `justify-content` only — no padding, no size, nothing structural. The safe
+ * area's inset is overscan protection for an LED wall that eats its edges and
+ * is not a design surface.
+ */
+.deck-slide[data-skin="fibre"] .deck-safe > .deck-content.flex-col {
+  justify-content: flex-end;
+}
+
+/*
+ * THE MEASURE IS NOT A SKIN'S TO NARROW, and this is a scar.
+ *
+ * A 1220px column was set here to give the type more air. `people-slide.tsx`
+ * derives its column COUNT against a 1230px content column and writes it as an
+ * inline style — deck.css records that number in its own comment — so the
+ * fifteen-person team grid kept eight columns in a column too narrow for them
+ * and broke names mid-word: "McCaule/y", "Prasant/h", "Tharane/etharan". A
+ * layout that computes against a token is a layout a skin can silently break,
+ * and nothing catches it: it lints clean and only exists on a rendered stage.
+ *
+ * The composition difference comes from the low anchor, the kicker rule and the
+ * ground instead, none of which any layout measures against.
+ */
+
+/*
+ * The kicker leads with a rule that crosses the whole column rather than a
+ * dash beside the words, so every slide opens on a line of light. The house
+ * dash sits inline before the text; this one is a block above it.
+ */
+.deck-slide[data-skin="fibre"] .deck-kicker {
+  display: block;
+  padding-block-start: 22px;
+  border-block-start: 1px solid transparent;
+  border-image: linear-gradient(
+      90deg,
+      var(--fibre-cyan) 0%,
+      rgb(224 112 207 / 0.5) 46%,
+      rgb(224 112 207 / 0) 100%
+    )
+    1;
+}
+
+.deck-slide[data-skin="fibre"] .deck-kicker::before {
+  display: none;
+}
+
+/*
+ * The title slide's partner block pins itself with `mt-auto`, which its own
+ * comment calls "the one thing that beats the optical centring". It absorbs all
+ * the free space, so the low anchor above has nothing left to move and the
+ * headline stays at the top of the stage — the house composition, on a deck
+ * that is meant to have left it.
+ *
+ * Released here, so the whole stack travels to the foot together: kicker, then
+ * headline, then the date, then the partner mark, reading bottom-up out of an
+ * open field. That is the poster's own arrangement.
+ */
+.deck-slide[data-skin="fibre"] .deck-safe .mt-auto {
+  margin-block-start: 0;
+}
+
+/*
+ * The title panel, unpicked.
+ *
+ * `title-slide.tsx` lays an opaque panel over the leading two thirds and marks
+ * its trailing edge with a rule. Cut into a wall of photographs that reads as a
+ * window; laid over a drawn field it is an arbitrary vertical seam across the
+ * middle of the stage, which is exactly how it looked. The panel goes, and the
+ * edge becomes what every other line in this deck is — light in a filament,
+ * brightest in the middle and gone at both ends.
+ */
+.deck-slide[data-skin="fibre"] .deck-incision.deck-edge-inline-end {
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.deck-slide[data-skin="fibre"] .deck-edge-inline-end::after {
+  background: linear-gradient(
+    180deg,
+    rgb(94 231 245 / 0) 0%,
+    rgb(94 231 245 / 0.3) 38%,
+    rgb(224 112 207 / 0.22) 72%,
+    rgb(224 112 207 / 0) 100%
+  );
+}
+
+/* --- The field: a ground drawn in code ----------------------------------- */
+
+/*
+ * NO PHOTOGRAPHS. The archive used as mass — a wall, a grid, a band of small
+ * frames — is the house deck's signature and the hackathon deck has spent it.
+ * A second deck using it reads as the same deck however it is coloured or
+ * arranged, which is a fact about the device rather than about the palette, and
+ * is why recolouring and rearranging both failed to fix it.
+ *
+ * What replaces it is the poster's own subject built from gradients: a black
+ * field with light running through it. The archive is not gone from this deck —
+ * a single photograph of a real room, looked at as a photograph, is a different
+ * device and stays on the slides that show one. What has gone is photography
+ * used as texture.
+ */
+.deck-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--deck-canvas-dark);
+}
+
+.deck-field > span {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+/* The wash: a wide, low-contrast bloom that keeps the frame from reading as a
+   flat black rectangle. Positioned off the seed so no two slides bloom in the
+   same place. */
+.deck-field-wash {
+  inset: 0;
+  background:
+    radial-gradient(
+      74% 58% at calc(18% + (var(--field-seed) * 0.14%)) 12%,
+      rgb(10 88 120 / 0.5) 0%,
+      rgb(10 88 120 / 0) 68%
+    ),
+    radial-gradient(
+      58% 48% at calc(88% - (var(--field-seed) * 0.1%)) 96%,
+      rgb(224 112 207 / 0.26) 0%,
+      rgb(224 112 207 / 0) 70%
+    );
+}
+
+/*
+ * The strands. Three long, very shallow diagonals of light — the filament seen
+ * at a distance rather than the braid seen close. Each is a single gradient on
+ * a rotated block, which is why they are separate elements: one node cannot
+ * carry three different rotations.
+ */
+.deck-field-strand {
+  inset-inline: -30%;
+  block-size: 2px;
+  transform-origin: center;
+  filter: blur(0.4px);
+}
+
+.deck-field-strand-a {
+  inset-block-start: calc(26% + (var(--field-seed) * 0.03%));
+  transform: rotate(-7deg);
+  background: linear-gradient(
+    90deg,
+    rgb(94 231 245 / 0) 0%,
+    rgb(94 231 245 / 0.62) 34%,
+    rgb(255 255 255 / 0.5) 52%,
+    rgb(94 231 245 / 0.28) 70%,
+    rgb(94 231 245 / 0) 100%
+  );
+  box-shadow: 0 0 26px rgb(94 231 245 / 0.34);
+}
+
+.deck-field-strand-b {
+  inset-block-start: calc(58% - (var(--field-seed) * 0.04%));
+  transform: rotate(4deg);
+  block-size: 1px;
+  background: linear-gradient(
+    90deg,
+    rgb(224 112 207 / 0) 8%,
+    rgb(224 112 207 / 0.55) 42%,
+    rgb(224 112 207 / 0) 88%
+  );
+  box-shadow: 0 0 22px rgb(224 112 207 / 0.3);
+}
+
+.deck-field-strand-c {
+  inset-block-start: calc(78% + (var(--field-seed) * 0.02%));
+  transform: rotate(-3deg);
+  block-size: 1px;
+  opacity: 0.6;
+  background: linear-gradient(
+    90deg,
+    rgb(122 182 255 / 0) 20%,
+    rgb(122 182 255 / 0.45) 56%,
+    rgb(122 182 255 / 0) 96%
+  );
+}
+
+/*
+ * Grain. Without it a pure-gradient ground bands visibly on an 8-bit projector,
+ * which is the one artefact that makes a designed field look like a broken
+ * render. An SVG turbulence data URI rather than an image file: it is 200 bytes,
+ * it never 404s, and it costs no request.
+ */
+.deck-field-grain {
+  inset: 0;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/*
+ * THE BAND. On a pale slide the field survives as a bar of light rather than a
+ * strip of photographs, which is the whole point of this skin. The strands are
+ * repositioned into the band's own 162px rather than scaled down, because a
+ * shallow diagonal scaled to a sixth of its height is a horizontal line.
+ */
+.deck-field-band {
+  background: linear-gradient(
+    180deg,
+    rgb(5 6 11 / 0) 0%,
+    rgb(8 30 44 / 0.92) 42%,
+    var(--deck-canvas-dark) 100%
+  );
+}
+
+.deck-field-band .deck-field-wash {
+  background: radial-gradient(
+    62% 150% at calc(30% + (var(--field-seed) * 0.2%)) 100%,
+    rgb(10 88 120 / 0.62) 0%,
+    rgb(10 88 120 / 0) 72%
+  );
+}
+
+.deck-field-band .deck-field-strand-a {
+  inset-block-start: 44%;
+  transform: rotate(-2deg);
+}
+
+.deck-field-band .deck-field-strand-b {
+  inset-block-start: 68%;
+  transform: rotate(1.4deg);
+}
+
+.deck-field-band .deck-field-strand-c {
+  display: none;
+}
+
+.deck-field-band .deck-field-grain {
+  opacity: 0.1;
+}
+
+/*
+ * The knockout, refilled.
+ *
+ * `.deck-knockout` clips a photograph into its letterforms, and on the house
+ * deck that photograph is an archive frame — the same device as the wall, at
+ * the largest size in the deck. On this one the glyphs are filled with the
+ * field's own light instead, so a 420px chapter numeral is made of the same
+ * thing as the ground behind it. `--deck-knockout-src` is still written inline
+ * by `knockoutStyle()`; overriding the whole stack here is what takes it out.
+ */
+.deck-slide[data-skin="fibre"] .deck-knockout {
+  background-image:
+    linear-gradient(
+      104deg,
+      var(--fibre-cyan) 0%,
+      #ffffff 26%,
+      var(--fibre-magenta) 62%,
+      #7ab6ff 100%
+    );
+  background-blend-mode: normal;
+  background-size: cover;
+  background-position: center;
+}
+
+
+/* --- The plate surface (the event's own artwork) ------------------------- */
 
 .deck-plate-field {
   position: absolute;
@@ -350,11 +645,6 @@
   object-fit: cover;
 }
 
-/*
- * Two scrims: a directional wash holding the leading edge down where the type
- * goes, and a flat hold so a bright crossing of the braid never fights a
- * headline.
- */
 .deck-plate-field::after {
   content: "";
   position: absolute;
@@ -395,11 +685,6 @@
   }
 }
 
-/*
- * The plate reduced to a strip, for a light slide. The height is
- * `--deck-band-h` and must stay that: every layout reserves `BAND_PAD` for
- * exactly that number, and type lands on the picture the moment it does not.
- */
 .deck-plate-band {
   position: absolute;
   inset-inline: 0;
@@ -415,7 +700,6 @@
   object-fit: cover;
 }
 
-/* The strip's own edge — the filament again, not a border. */
 .deck-plate-band::after {
   content: "";
   position: absolute;
@@ -447,6 +731,16 @@
 }
 
 @container deck (max-width: 1000px) {
+  /*
+   * Portrait. The low anchor is released back to centred: on a stage more than
+   * twice as tall as it is wide, content pinned to the bottom third leaves two
+   * thirds of empty ground above it and reads as a rendering fault rather than
+   * as composition.
+   */
+  .deck-slide[data-skin="fibre"] .deck-safe > .deck-content.flex-col {
+    justify-content: center;
+  }
+
   .deck-slide[data-skin="fibre"] :is(.deck-kicker, .deck-label, .deck-eyebrow) {
     letter-spacing: 0.15em;
   }
