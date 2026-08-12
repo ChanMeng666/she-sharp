@@ -162,3 +162,10 @@ name a borrowed archive photograph.
 Say so plainly: *"This one runs on She Sharp's own look — there's no artwork for
 it yet, and the archive is the strongest thing we have."* A deck in the house
 skin is not a failure. A deck in a half-built bespoke skin is.
+
+**This applies to the SKIN and never to the weave.** A deck with no artwork still
+picks how the archive is arranged — see `references/weaves.md` — and that choice
+is enforced by the type system, because it is the axis that produced the twins in
+the first place. Taking the house skin is a decision about this event's identity.
+Taking the same weave as the deck next to it is not a decision at all; it is the
+default, and the default is what went wrong.

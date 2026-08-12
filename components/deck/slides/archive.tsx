@@ -15,7 +15,15 @@
 import type { CSSProperties, ReactNode } from "react";
 
 import { DeckImage } from "@/components/deck/deck-image";
-import { buildWallBand, buildWallRows } from "@/lib/deck/wall";
+import type { ArchiveWeaveKey } from "@/lib/deck/types";
+import {
+  type WeaveCell,
+  buildContactSheet,
+  buildMosaicWeave,
+  buildStillBand,
+  buildWallBand,
+  buildWallRows,
+} from "@/lib/deck/wall";
 import { cn } from "@/lib/utils";
 
 /**
@@ -100,29 +108,100 @@ function WallRowTiles({
 }
 
 /**
- * The full-bleed archive wall: the ground of every dark slide that carries one.
+ * A field of still cells — the ground of the weaves that do not drift.
+ *
+ * `.deck-cell` and NOT `.deck-slot`, deliberately: `SEL.plate` in `motion.ts`
+ * matches `.deck-slot > img` and the `stats` and `photo` recipes give it a slow
+ * scale push, which on forty archive tiles at once is a bill an old venue laptop
+ * pays for nothing. The drifting wall escapes that only because its children are
+ * bare spans, and this keeps the same property.
+ */
+function WeaveCells({ cells }: { cells: WeaveCell[] }) {
+  return (
+    <div className="deck-weave-grid">
+      {cells.map((cell, index) => (
+        <span
+          key={`${cell.src}-${index}`}
+          className="deck-cell"
+          data-span={cell.span === 2 ? "2" : undefined}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={cell.src} alt="" decoding="async" loading="lazy" draggable={false} />
+        </span>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * The full-bleed archive: the ground of every dark slide that carries one.
  *
  * Six rows on a 166px pitch starting below the running header fill the stage
- * exactly, so the bottom edge never slices a tile.
+ * exactly, so the bottom edge never slices a tile — and every weave keeps that
+ * grid, because `INCISION_5_ROWS` is computed from it and written as an inline
+ * style by layouts that have never heard of a weave.
+ *
+ * The weave changes the arrangement and nothing else. The photographs, the
+ * purple duotone and the pitch are the organisation's own record and are not a
+ * deck's to restyle; see `lib/deck/skins.ts`.
  */
-export function ArchiveWall({ seed }: { seed: number }) {
+export function ArchiveWall({
+  seed,
+  weave = "drift",
+}: {
+  seed: number;
+  weave?: ArchiveWeaveKey;
+}) {
+  return (
+    <div
+      className={cn(
+        "deck-wall deck-duotone deck-duotone-ground",
+        `deck-weave-${weave}`,
+      )}
+      aria-hidden="true"
+    >
+      {weave === "drift" ? (
+        <DriftRows seed={seed} />
+      ) : (
+        <WeaveCells
+          cells={
+            weave === "mosaic"
+              ? buildMosaicWeave({ seed })
+              : buildContactSheet({ seed })
+          }
+        />
+      )}
+    </div>
+  );
+}
+
+function DriftBandRow({ seed }: { seed: number }) {
+  const row = buildWallBand(seed);
+
+  return (
+    <div className="deck-wall-rows">
+      <WallRowTiles
+        tiles={row.tiles}
+        seconds={row.seconds}
+        reverse={row.reverse}
+      />
+    </div>
+  );
+}
+
+function DriftRows({ seed }: { seed: number }) {
   const rows = buildWallRows({ seed });
 
   return (
-    <div
-      className="deck-wall deck-duotone deck-duotone-ground"
-      aria-hidden="true"
-    >
-      <div className="deck-wall-rows">
-        {rows.map((row, index) => (
-          <WallRowTiles
-            key={index}
-            tiles={row.tiles}
-            seconds={row.seconds}
-            reverse={row.reverse}
-          />
-        ))}
-      </div>
+    <div className="deck-wall-rows">
+      {rows.map((row, index) => (
+        <WallRowTiles
+          key={index}
+          tiles={row.tiles}
+          seconds={row.seconds}
+          reverse={row.reverse}
+        />
+      ))}
     </div>
   );
 }
@@ -137,17 +216,18 @@ export function ArchiveWall({ seed }: { seed: number }) {
 export function ArchiveBand({
   seed,
   place = "end",
+  weave = "drift",
 }: {
   seed: number;
   /** `end` sits on the bottom edge, `start` directly under the header. */
   place?: "start" | "end";
+  weave?: ArchiveWeaveKey;
 }) {
-  const row = buildWallBand(seed);
-
   return (
     <div
       className={cn(
         "deck-band deck-wall-flush deck-duotone deck-duotone-flat",
+        `deck-weave-${weave}`,
         place === "end" ? "deck-edge-block-start" : "deck-edge-block-end",
       )}
       style={
@@ -157,13 +237,11 @@ export function ArchiveBand({
       }
       aria-hidden="true"
     >
-      <div className="deck-wall-rows">
-        <WallRowTiles
-          tiles={row.tiles}
-          seconds={row.seconds}
-          reverse={row.reverse}
-        />
-      </div>
+      {weave === "drift" ? (
+        <DriftBandRow seed={seed} />
+      ) : (
+        <WeaveCells cells={buildStillBand(seed, weave)} />
+      )}
     </div>
   );
 }

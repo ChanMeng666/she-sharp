@@ -126,7 +126,7 @@ export function DeckSurface({
       return <PlateField spec={skin.surface} seed={seed} />;
     case "archive":
     default:
-      return <ArchiveWall seed={seed} />;
+      return <ArchiveWall seed={seed} weave={skin.surface.weave} />;
   }
 }
 
@@ -170,5 +170,11 @@ export function DeckSurfaceBand({
     );
   }
 
-  return <ArchiveBand seed={seed} place={place} />;
+  return (
+    <ArchiveBand
+      seed={seed}
+      place={place}
+      weave={skin.surface.kind === "archive" ? skin.surface.weave : undefined}
+    />
+  );
 }

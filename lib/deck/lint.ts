@@ -19,6 +19,13 @@ import {
   toRhythmStep,
   type RhythmStep,
 } from "./rhythm";
+/* The template's own copy, so the checker and the planner read one list. It
+   lives in its own module because `evening-event.ts` imports COPY_LIMITS from
+   here — putting the strings there would close the cycle. */
+import {
+  TEMPLATE_DEFAULT_COPY,
+  TEMPLATE_DEFAULT_COPY_BUDGET,
+} from "./templates/default-copy";
 import { checkAccentContrast } from "./theme";
 import { toneOf } from "./utils";
 
@@ -847,6 +854,7 @@ export function lintDeck(deck: Deck): LintIssue[] {
   });
 
   issues.push(...lintRhythm(deck));
+  issues.push(...lintTemplateCopy(deck));
   issues.push(...lintFeedbackQr(deck));
 
   checkAccentContrast(deck.theme).forEach((check) => {
@@ -862,6 +870,60 @@ export function lintDeck(deck: Deck): LintIssue[] {
   });
 
   return issues;
+}
+
+/**
+ * How much of the template's own voice is still in the deck.
+ *
+ * The evening-event template writes a workable kicker and title on every middle
+ * slide so a scaffold is readable the moment it is generated. They are
+ * placeholders that read like finished copy, which is the most expensive kind of
+ * placeholder: nothing about them looks unfinished, so nothing prompts anyone to
+ * replace them, and two decks built from the same template say the same things
+ * in the same order. That is not hypothetical — it is precisely what happened
+ * between the Les Mills and hackathon decks, and it did as much to make them
+ * read as one deck as the shared visual system did.
+ *
+ * SCOPED TO THE EVENT'S OWN SLIDES. The organisational sequence's kickers
+ * ("Please find a seat", "Stand if you are able") are *supposed* to be identical
+ * in every deck — they are the organisation's voice, not the template's, and
+ * rewriting them per event would be the actual mistake.
+ *
+ * DISTINCT strings, not occurrences, so a deck is not punished twice for one
+ * unedited line appearing on two slides.
+ */
+export function lintTemplateCopy(deck: Deck): LintIssue[] {
+  const survivors = new Map<string, { id: string; index: number }>();
+
+  deck.slides.forEach((slide, index) => {
+    if (slide.surface === "house") return;
+
+    for (const [, text] of onScreenStrings(slide)) {
+      const key = text.trim().toLowerCase();
+      if (TEMPLATE_DEFAULT_COPY.has(key) && !survivors.has(key)) {
+        survivors.set(key, { id: slide.id, index });
+      }
+    }
+  });
+
+  if (survivors.size <= TEMPLATE_DEFAULT_COPY_BUDGET) return [];
+
+  const worst = [...survivors.values()].at(-1)!;
+  const examples = [...survivors.keys()].slice(0, 4).map((t) => `"${t}"`).join(", ");
+
+  return [
+    {
+      slideId: worst.id,
+      slideIndex: worst.index,
+      rule: "template-default-copy",
+      severity: "error",
+      message:
+        `${survivors.size} of the template's own lines are still in this deck ` +
+        `(at most ${TEMPLATE_DEFAULT_COPY_BUDGET} may stay): ${examples}… ` +
+        `They were written for a generic evening, not this one — rewrite the ` +
+        `kickers from what the organiser said during the interview.`,
+    },
+  ];
 }
 
 /**

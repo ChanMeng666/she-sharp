@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 
 // Deck styles are loaded only here, so the 26 public pages pay nothing for them.
-// Order matters: `deck-skins.css` overrides the house treatment per event and
-// must come second.
+// Order matters, and it is three deep now: `deck.css` is the house system,
+// `deck-weaves.css` arranges the archive within it, and `deck-skins.css`
+// overrides per event and must come last.
 import "@/styles/components/deck.css";
+import "@/styles/components/deck-weaves.css";
 import "@/styles/components/deck-skins.css";
 
 /**

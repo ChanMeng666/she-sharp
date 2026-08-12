@@ -503,7 +503,28 @@ export interface DeckSkin {
    * waiting on.
    */
   tempo?: number;
+  /**
+   * How this skin makes edges — `cut`, `glass`, `ruled` or `soft`.
+   *
+   * Declared rather than derived, and unverifiable, because the edges live in
+   * `deck-skins.css` and TypeScript cannot read a stylesheet. That is not a new
+   * compromise: `description` above has always been prose nothing checks. It
+   * earns its place by appearing in the style ledger, where it is one of the
+   * axes two decks have to differ on — a value nobody can check is still a
+   * decision somebody has to make.
+   *
+   * Omit and `geometryOf()` infers it from the surface: an archive wall is cut,
+   * a plate field is glass.
+   */
+  geometry?: GeometryFamily;
 }
+
+/**
+ * The edge language of a skin. Lives here rather than in `style-library.ts` for
+ * the same reason `SurfaceSpec` does: `DeckSkin` refers to it, and declaring it
+ * there would make the two files import each other.
+ */
+export type GeometryFamily = "cut" | "glass" | "ruled" | "soft";
 
 export interface Deck {
   /** Matches the event slug so `/present/<slug>` mirrors `/events/<slug>`. */
