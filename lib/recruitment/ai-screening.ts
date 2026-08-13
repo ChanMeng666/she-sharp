@@ -217,31 +217,3 @@ export async function screenVolunteerApplication(
 
   return result;
 }
-
-/**
- * Screens multiple applications in batch with rate limiting.
- */
-export async function batchScreenApplications(
-  submissionIds: number[],
-  adminUserId: number
-): Promise<Map<number, AIScreeningResult | { error: string }>> {
-  const results = new Map<number, AIScreeningResult | { error: string }>();
-
-  for (const id of submissionIds) {
-    try {
-      const result = await screenVolunteerApplication(id, adminUserId);
-      results.set(id, result);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      console.error(`AI screening failed for submission ${id}:`, message);
-      results.set(id, { error: message });
-    }
-
-    // Rate limit: small delay between calls
-    if (submissionIds.indexOf(id) < submissionIds.length - 1) {
-      await new Promise(resolve => setTimeout(resolve, 200));
-    }
-  }
-
-  return results;
-}
