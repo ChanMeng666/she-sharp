@@ -29,6 +29,13 @@ import {
   Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
+import {
+  industryOptions,
+  labelMap,
+  menteeTypeOptions,
+  meetingFormatOptions,
+  nzCities,
+} from '@/lib/mentorship/vocab';
 
 interface Relationship {
   id: number;
@@ -141,27 +148,10 @@ interface MenteeDetails {
 }
 
 // City options mapping (value -> label)
-const cityOptionsMap: Record<string, string> = {
-  'auckland': 'Auckland',
-  'wellington': 'Wellington',
-  'christchurch': 'Christchurch',
-  'hamilton': 'Hamilton',
-  'tauranga': 'Tauranga',
-  'dunedin': 'Dunedin',
-  'palmerston_north': 'Palmerston North',
-  'napier_hastings': 'Napier-Hastings',
-  'nelson': 'Nelson',
-  'rotorua': 'Rotorua',
-  'other_nz': 'Other (New Zealand)',
-  'international': 'International',
-};
+const cityOptionsMap: Record<string, string> = labelMap(nzCities);
 
 // Meeting format options mapping (value -> label)
-const meetingFormatOptionsMap: Record<string, string> = {
-  'online': 'Online (Virtual meetings only)',
-  'in_person': 'In-Person (Face-to-face meetings)',
-  'hybrid': 'Hybrid (Both online and in-person)',
-};
+const meetingFormatOptionsMap: Record<string, string> = labelMap(meetingFormatOptions);
 
 // Years of experience mapping (value -> label)
 const yearsExperienceMap: Record<number, string> = {
@@ -207,30 +197,10 @@ const meetingFrequencyMap: Record<string, string> = {
 };
 
 // Industry options mapping (value -> label)
-const industryOptionsMap: Record<string, string> = {
-  'engineering': 'Engineering',
-  'it_cs': 'Information Technology (IT) and Computer Science',
-  'healthcare': 'Healthcare and Medicine',
-  'biotech': 'Biotechnology and Life Sciences',
-  'renewable_energy': 'Renewable Energy',
-  'agriculture': 'Agriculture and Food Science',
-  'environmental': 'Environmental Science and Sustainability',
-  'telecom': 'Telecommunications',
-  'robotics': 'Robotics and Automation',
-  'manufacturing': 'Manufacturing and Materials Science',
-  'aerospace': 'Aerospace and Defense',
-  'finance': 'Finance and Banking',
-  'consulting': 'Consulting',
-  'education': 'Education',
-  'other': 'Other',
-};
+const industryOptionsMap: Record<string, string> = labelMap(industryOptions);
 
 // Preferred mentee types mapping (value -> label)
-const menteeTypesMap: Record<string, string> = {
-  'undergraduate': 'Undergraduate/Graduate',
-  'postgraduate': 'Post Graduate',
-  'professional': 'Professional',
-};
+const menteeTypesMap: Record<string, string> = labelMap(menteeTypeOptions);
 
 export default function MentorshipDashboard() {
   const [relationships, setRelationships] = useState<Relationship[]>([]);
