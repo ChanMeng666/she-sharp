@@ -20,6 +20,7 @@ import {
   programmes,
 } from '@/lib/db/schema';
 import { eq, and, ne, notInArray, desc, sql, asc } from 'drizzle-orm';
+import { resolvePhoto } from '@/lib/mentorship/resolve';
 import type {
   MentorMatchInput,
   MenteeMatchInput,
@@ -912,13 +913,19 @@ export async function getPendingMatches(): Promise<MatchSuggestionWithDetails[]>
     // Priority: form fullName > users.name > 'Unknown'
     mentorName: r.mentorForm?.fullName || r.mentorName || 'Unknown',
     mentorEmail: r.mentorForm?.email || r.mentorEmail || '',
-    // Priority: form photoUrl > profile photoUrl > users.image
-    mentorImage: r.mentorForm?.photoUrl || r.mentorProfile?.photoUrl || r.mentorImage || null,
+    mentorImage: resolvePhoto({
+      formPhotoUrl: r.mentorForm?.photoUrl,
+      profilePhotoUrl: r.mentorProfile?.photoUrl,
+      userImage: r.mentorImage,
+    }),
     // Priority: form fullName > users.name > 'Unknown'
     menteeName: r.menteeForm?.fullName || r.menteeName || 'Unknown',
     menteeEmail: r.menteeForm?.email || r.menteeEmail || '',
-    // Priority: form photoUrl > profile photoUrl > users.image
-    menteeImage: r.menteeForm?.photoUrl || r.menteeProfile?.photoUrl || r.menteeImage || null,
+    menteeImage: resolvePhoto({
+      formPhotoUrl: r.menteeForm?.photoUrl,
+      profilePhotoUrl: r.menteeProfile?.photoUrl,
+      userImage: r.menteeImage,
+    }),
     overallScore: parseFloat(r.match.overallScore) || 0,
     mbtiCompatibilityScore: r.match.mbtiCompatibilityScore ? parseFloat(r.match.mbtiCompatibilityScore) : null,
     skillMatchScore: r.match.skillMatchScore ? parseFloat(r.match.skillMatchScore) : null,
@@ -1123,7 +1130,11 @@ export async function getUnmatchedMentors(): Promise<{
     userId: m.userId,
     name: m.name || 'Unknown',
     email: m.email,
-    image: m.formPhotoUrl || m.profilePhotoUrl || m.image || null,
+    image: resolvePhoto({
+      formPhotoUrl: m.formPhotoUrl,
+      profilePhotoUrl: m.profilePhotoUrl,
+      userImage: m.image,
+    }),
     company: m.formCompany || m.company,
     jobTitle: m.formJobTitle || m.jobTitle,
     yearsExperience: m.formYearsExperience ?? m.yearsExperience,
@@ -1200,7 +1211,11 @@ export async function getUnmatchedMentees(): Promise<{
         userId: m.userId,
         name: m.name || 'Unknown',
         email: m.email,
-        image: m.formPhotoUrl || m.profilePhotoUrl || m.image || null,
+        image: resolvePhoto({
+          formPhotoUrl: m.formPhotoUrl,
+          profilePhotoUrl: m.profilePhotoUrl,
+          userImage: m.image,
+        }),
         careerStage: m.formCurrentStage || m.careerStage,
         currentJobTitle: m.formCurrentJobTitle || null,
         currentIndustry: m.formCurrentIndustry || null,

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
-import { mentorFormSubmissions, users } from '@/lib/db/schema';
+import { mentorFormSubmissions, mentorProfiles, users } from '@/lib/db/schema';
 import { eq, and, or, desc, sql, isNotNull } from 'drizzle-orm';
+import { resolvePhoto } from '@/lib/mentorship/resolve';
 
 /**
  * GET /api/admin/mentors/applications
@@ -69,9 +70,12 @@ export const GET = withRoles(
           userName: users.name,
           userEmail: users.email,
           userImage: users.image,
+          // Middle tier of the dual-table fallback chain
+          profilePhotoUrl: mentorProfiles.photoUrl,
         })
         .from(mentorFormSubmissions)
         .leftJoin(users, eq(mentorFormSubmissions.userId, users.id))
+        .leftJoin(mentorProfiles, eq(mentorFormSubmissions.userId, mentorProfiles.userId))
         .where(statusCondition)
         .orderBy(desc(mentorFormSubmissions.submittedAt));
 
@@ -109,7 +113,11 @@ export const GET = withRoles(
           user: {
             name: app.fullName || app.userName || 'Unknown',
             email: app.email || app.userEmail || 'No email',
-            image: app.photoUrl || app.userImage,
+            image: resolvePhoto({
+              formPhotoUrl: app.photoUrl,
+              profilePhotoUrl: app.profilePhotoUrl,
+              userImage: app.userImage,
+            }),
           },
           expertiseAreas,
           yearsExperience: app.yearsExperience || 0,

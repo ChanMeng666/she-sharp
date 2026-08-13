@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
 import { mentorProfiles, mentorFormSubmissions, users, userRoles } from '@/lib/db/schema';
 import { eq, and, ilike, or, sql, gte, lte } from 'drizzle-orm';
+import { resolvePhoto } from '@/lib/mentorship/resolve';
 
 export async function GET(request: NextRequest) {
   try {
@@ -98,7 +99,11 @@ export async function GET(request: NextRequest) {
       userId: m.userId,
       name: m.name,
       email: m.email,
-      image: m.formPhotoUrl || m.profilePhotoUrl || m.userImage || null,
+      image: resolvePhoto({
+        formPhotoUrl: m.formPhotoUrl,
+        profilePhotoUrl: m.profilePhotoUrl,
+        userImage: m.userImage,
+      }),
       expertiseAreas: m.expertiseAreas,
       yearsExperience: m.formYearsExperience ?? m.yearsExperience,
       jobTitle: m.formJobTitle || m.profileJobTitle,

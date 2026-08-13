@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
-import { menteeFormSubmissions, users, programmes } from '@/lib/db/schema';
+import { menteeFormSubmissions, menteeProfiles, users, programmes } from '@/lib/db/schema';
 import { eq, or, desc, and } from 'drizzle-orm';
+import { resolvePhoto } from '@/lib/mentorship/resolve';
 
 /**
  * GET /api/admin/mentees/applications
@@ -66,9 +67,12 @@ export const GET = withRoles(
           programmeName: programmes.name,
           userEmail: users.email,
           userImage: users.image,
+          // Middle tier of the dual-table fallback chain
+          profilePhotoUrl: menteeProfiles.photoUrl,
         })
         .from(menteeFormSubmissions)
         .leftJoin(users, eq(menteeFormSubmissions.userId, users.id))
+        .leftJoin(menteeProfiles, eq(menteeFormSubmissions.userId, menteeProfiles.userId))
         .leftJoin(programmes, eq(menteeFormSubmissions.programmeId, programmes.id))
         .where(
           programmeIdFilter
@@ -103,7 +107,11 @@ export const GET = withRoles(
           user: {
             name: app.fullName || app.userName || 'Unknown',
             email: app.email || app.userEmail || 'No email',
-            image: app.photoUrl || app.userImage,
+            image: resolvePhoto({
+              formPhotoUrl: app.photoUrl,
+              profilePhotoUrl: app.profilePhotoUrl,
+              userImage: app.userImage,
+            }),
           },
           bio: app.bio || '',
           city: app.city || '',

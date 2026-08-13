@@ -3,6 +3,7 @@ import { db } from '@/lib/db/drizzle';
 import { menteeProfiles, users, userRoles, mentorshipRelationships, menteeFormSubmissions } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { getUser } from '@/lib/db/queries';
+import { resolvePhoto } from '@/lib/mentorship/resolve';
 
 export async function GET(
   request: NextRequest,
@@ -88,7 +89,11 @@ export async function GET(
       userId: menteeProfile.userId,
       name: user.name,
       email: user.email,
-      image: menteeForm?.photoUrl || menteeProfile.photoUrl || user.image || null,
+      image: resolvePhoto({
+        formPhotoUrl: menteeForm?.photoUrl,
+        profilePhotoUrl: menteeProfile.photoUrl,
+        userImage: user.image,
+      }),
       learningGoals: menteeProfile.learningGoals || [],
       careerStage: menteeForm?.currentStage || menteeProfile.careerStage || null,
       preferredExpertiseAreas: menteeProfile.preferredExpertiseAreas || [],
