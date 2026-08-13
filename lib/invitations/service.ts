@@ -273,80 +273,6 @@ export async function useInvitationCode(
 }
 
 /**
- * Revokes an invitation code (admin action).
- */
-export async function revokeInvitationCode(
-  codeId: number,
-  revokedBy: number,
-  reason?: string
-): Promise<boolean> {
-  const [code] = await db
-    .select()
-    .from(invitationCodes)
-    .where(eq(invitationCodes.id, codeId))
-    .limit(1);
-
-  if (!code) {
-    return false;
-  }
-
-  await db
-    .update(invitationCodes)
-    .set({
-      status: 'revoked',
-      notes: reason ? `${code.notes || ''}\nRevoked: ${reason}` : code.notes,
-      updatedAt: new Date(),
-    })
-    .where(eq(invitationCodes.id, codeId));
-
-  // Log activity
-  await db.insert(activityLogs).values({
-    userId: revokedBy,
-    action: 'REVOKE_INVITATION_CODE' as any,
-    entityType: 'invitation_code',
-    entityId: codeId,
-    metadata: { reason },
-  });
-
-  return true;
-}
-
-/**
- * Gets invitation codes with pagination and filtering.
- */
-export async function getInvitationCodes(options: {
-  status?: 'active' | 'used' | 'expired' | 'revoked';
-  codeType?: 'payment' | 'mentor_approved' | 'mentee_approved' | 'admin_generated';
-  generatedBy?: number;
-  limit?: number;
-  offset?: number;
-}) {
-  const { status, codeType, generatedBy, limit = 50, offset = 0 } = options;
-
-  const conditions = [];
-
-  if (status) {
-    conditions.push(eq(invitationCodes.status, status));
-  }
-  if (codeType) {
-    conditions.push(eq(invitationCodes.codeType, codeType));
-  }
-  if (generatedBy) {
-    conditions.push(eq(invitationCodes.generatedBy, generatedBy));
-  }
-
-  const query = db
-    .select()
-    .from(invitationCodes)
-    .where(conditions.length > 0 ? and(...conditions) : undefined)
-    .orderBy(sql`${invitationCodes.createdAt} DESC`)
-    .limit(limit)
-    .offset(offset);
-
-  return query;
-}
-
-/**
  * Gets code usage history for a specific code.
  */
 export async function getCodeUsageHistory(codeId: number) {
@@ -529,20 +455,4 @@ export async function createTestInvitationCode(
     notes: options?.notes || 'Test invitation code for testing purposes',
     targetRole: options?.targetRole,
   });
-}
-
-/**
- * Gets statistics about invitation codes.
- */
-export async function getInvitationCodeStats() {
-  const stats = await db
-    .select({
-      status: invitationCodes.status,
-      codeType: invitationCodes.codeType,
-      count: sql<number>`count(*)::int`,
-    })
-    .from(invitationCodes)
-    .groupBy(invitationCodes.status, invitationCodes.codeType);
-
-  return stats;
 }
