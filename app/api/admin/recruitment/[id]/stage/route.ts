@@ -3,6 +3,31 @@ import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { volunteerFormSubmissions, activityLogs, ActivityType } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+const VALID_STAGES = [
+  'new',
+  'contacted',
+  'screening',
+  'interview_requested',
+  'interview_scheduled',
+  'approved',
+  'rejected',
+  'onboarding',
+  'nda_sent',
+  'nda_signed',
+  'active',
+] as const;
+
+const updateStageSchema = z.object({
+  stage: z.enum(VALID_STAGES, {
+    errorMap: () => ({
+      message: `Invalid stage. Must be one of: ${VALID_STAGES.join(', ')}`,
+    }),
+  }),
+  notes: z.string().nullish(),
+});
 
 /**
  * PATCH /api/admin/recruitment/[id]/stage
@@ -22,29 +47,11 @@ export const PATCH = withRoles(
         );
       }
 
-      const body = await req.json();
-      const { stage, notes } = body;
-
-      const validStages = [
-        'new',
-        'contacted',
-        'screening',
-        'interview_requested',
-        'interview_scheduled',
-        'approved',
-        'rejected',
-        'onboarding',
-        'nda_sent',
-        'nda_signed',
-        'active',
-      ];
-
-      if (!stage || !validStages.includes(stage)) {
-        return NextResponse.json(
-          { error: `Invalid stage. Must be one of: ${validStages.join(', ')}` },
-          { status: 400 }
-        );
+      const parsed = updateStageSchema.safeParse(await req.json());
+      if (!parsed.success) {
+        return invalidBody(parsed.error);
       }
+      const { stage, notes } = parsed.data;
 
       const adminUserId = context.user?.id;
       const adminName = context.user?.name || 'Admin';

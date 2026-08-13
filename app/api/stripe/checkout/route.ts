@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createCheckoutSession } from '@/lib/stripe/service';
 import { getUser } from '@/lib/db/queries';
 import { getBaseUrl } from '@/lib/email/service';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+const checkoutSchema = z.object({
+  email: z.string().email('Email is required'),
+  formSubmissionId: z.coerce.number().int().positive().nullish(),
+});
 
 /**
  * POST /api/stripe/checkout
@@ -9,15 +16,11 @@ import { getBaseUrl } from '@/lib/email/service';
  */
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { email, formSubmissionId } = body;
-
-    if (!email) {
-      return NextResponse.json(
-        { error: 'Email is required' },
-        { status: 400 }
-      );
+    const parsed = checkoutSchema.safeParse(await request.json());
+    if (!parsed.success) {
+      return invalidBody(parsed.error);
     }
+    const { email, formSubmissionId } = parsed.data;
 
     // Check if user is logged in
     const user = await getUser();
@@ -26,7 +29,7 @@ export async function POST(request: NextRequest) {
     const session = await createCheckoutSession({
       email,
       userId: user?.id,
-      formSubmissionId,
+      formSubmissionId: formSubmissionId ?? undefined,
       successUrl: `${baseUrl}/mentorship/mentee/success`,
       cancelUrl: formSubmissionId
         ? `${baseUrl}/mentorship/mentee/payment?id=${formSubmissionId}`

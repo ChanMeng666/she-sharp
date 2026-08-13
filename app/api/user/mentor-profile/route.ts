@@ -7,9 +7,53 @@ import {
   userRoles,
   activityLogs,
   ActivityType,
+  genderEnum,
+  meetingFormatEnum,
+  bioMethodEnum,
+  mbtiTypeEnum,
 } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { resolvePhoto } from '@/lib/mentorship/resolve';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+const optionalText = z.string().nullish();
+const optionalNumber = z.number().nullish();
+const optionalStringArray = z.array(z.string()).nullish();
+
+/**
+ * The fields this handler actually reads off the body. Every one is optional
+ * because the dashboard form saves partial profiles and the handler supplies its
+ * own defaults; unknown keys are stripped rather than rejected.
+ */
+const mentorProfileSchema = z.object({
+  expertiseAreas: optionalStringArray,
+  yearsExperience: optionalNumber,
+  jobTitle: optionalText,
+  company: optionalText,
+  bio: optionalText,
+  linkedinUrl: optionalText,
+  availabilityHoursPerMonth: optionalNumber,
+  maxMentees: optionalNumber,
+  isAcceptingMentees: z.boolean().optional(),
+  photoUrl: optionalText,
+  mbtiType: z.enum(mbtiTypeEnum.enumValues).nullish(),
+  fullName: optionalText,
+  gender: z.enum(genderEnum.enumValues).nullish(),
+  phone: optionalText,
+  city: optionalText,
+  preferredMeetingFormat: z.enum(meetingFormatEnum.enumValues).nullish(),
+  bioMethod: z.enum(bioMethodEnum.enumValues).nullish(),
+  softSkillsBasic: optionalStringArray,
+  softSkillsExpert: optionalStringArray,
+  industrySkillsBasic: optionalStringArray,
+  industrySkillsExpert: optionalStringArray,
+  expectedMenteeGoalsLongTerm: optionalText,
+  expectedMenteeGoalsShortTerm: optionalText,
+  programExpectations: optionalText,
+  preferredMenteeTypes: optionalStringArray,
+  preferredIndustries: optionalStringArray,
+});
 
 export const GET = withRoles({}, async (_request: NextRequest, { user }: AuthedContext) => {
   try {
@@ -81,7 +125,11 @@ export const GET = withRoles({}, async (_request: NextRequest, { user }: AuthedC
 
 export const POST = withRoles({}, async (request: Request, { user }: AuthedContext) => {
   try {
-    const data = await request.json();
+    const parsed = mentorProfileSchema.safeParse(await request.json());
+    if (!parsed.success) {
+      return invalidBody(parsed.error);
+    }
+    const data = parsed.data;
 
     // Prepare data for mentor_profiles table
     const profileData = {

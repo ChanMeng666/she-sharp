@@ -3,6 +3,15 @@ import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { volunteerFormSubmissions, activityLogs, ActivityType } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+const reviewSchema = z.object({
+  decision: z.enum(['approved', 'rejected'], {
+    errorMap: () => ({ message: 'Invalid decision. Must be "approved" or "rejected"' }),
+  }),
+  notes: z.string().nullish(),
+});
 
 /**
  * POST /api/admin/recruitment/[id]/review
@@ -22,15 +31,11 @@ export const POST = withRoles(
         );
       }
 
-      const body = await req.json();
-      const { decision, notes } = body;
-
-      if (!decision || !['approved', 'rejected'].includes(decision)) {
-        return NextResponse.json(
-          { error: 'Invalid decision. Must be "approved" or "rejected"' },
-          { status: 400 }
-        );
+      const parsed = reviewSchema.safeParse(await req.json());
+      if (!parsed.success) {
+        return invalidBody(parsed.error);
       }
+      const { decision, notes } = parsed.data;
 
       const adminUserId = context.user?.id;
       if (!adminUserId) {

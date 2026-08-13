@@ -3,6 +3,14 @@ import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { userRoles, activityLogs, ActivityType, mentorProfiles, menteeProfiles } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+const roleBodySchema = z.object({
+  roleType: z.enum(['mentor', 'mentee', 'admin'], {
+    errorMap: () => ({ message: 'Invalid role type' }),
+  }),
+});
 
 /**
  * Ensure profile exists for the given role
@@ -75,14 +83,11 @@ export const GET = withRoles({}, async (_request: NextRequest, { user }: AuthedC
 
 export const POST = withRoles({}, async (request: Request, { user }: AuthedContext) => {
   try {
-    const { roleType } = await request.json();
-
-    if (!['mentor', 'mentee', 'admin'].includes(roleType)) {
-      return NextResponse.json(
-        { error: 'Invalid role type' },
-        { status: 400 }
-      );
+    const parsed = roleBodySchema.safeParse(await request.json());
+    if (!parsed.success) {
+      return invalidBody(parsed.error);
     }
+    const { roleType } = parsed.data;
 
     // Check if role already exists
     const existingRole = await db
@@ -164,7 +169,11 @@ export const POST = withRoles({}, async (request: Request, { user }: AuthedConte
 
 export const DELETE = withRoles({}, async (request: Request, { user }: AuthedContext) => {
   try {
-    const { roleType } = await request.json();
+    const parsed = roleBodySchema.safeParse(await request.json());
+    if (!parsed.success) {
+      return invalidBody(parsed.error);
+    }
+    const { roleType } = parsed.data;
 
     // Deactivate role
     await db

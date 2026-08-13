@@ -3,6 +3,17 @@ import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { users, userRoles, activityLogs } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+// The handler branches on `action` and otherwise copies only `name`/`phone`
+// onto the user row, so unknown keys are stripped rather than rejected.
+const updateUserSchema = z.object({
+  action: z.enum(['suspend', 'unsuspend', 'toggle_test_user', 'verify_email']).optional(),
+  reason: z.string().optional(),
+  name: z.string().optional(),
+  phone: z.string().nullish(),
+});
 
 /**
  * GET /api/admin/users/[id]
@@ -87,7 +98,11 @@ export const PATCH = withRoles(
         );
       }
 
-      const body = await req.json();
+      const parsed = updateUserSchema.safeParse(await req.json());
+      if (!parsed.success) {
+        return invalidBody(parsed.error);
+      }
+      const body = parsed.data;
       const { action, ...updateData } = body;
 
       // Check if user exists
@@ -209,7 +224,7 @@ export const PATCH = withRoles(
       }
 
       // General update (for editing user details)
-      const allowedFields = ['name', 'phone'];
+      const allowedFields = ['name', 'phone'] as const;
       const filteredUpdate: Record<string, any> = {};
 
       for (const field of allowedFields) {

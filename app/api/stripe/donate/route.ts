@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripeClient } from "@/lib/stripe/config";
 import { getBaseUrl } from "@/lib/email/service";
+import { z } from "zod";
+import { invalidBody } from "@/lib/api/validation";
 
-const VALID_AMOUNTS = [10, 25, 50, 100];
+const VALID_AMOUNTS = [10, 25, 50, 100] as const;
+
+const donateSchema = z.object({
+  amount: z.number().refine((v) => (VALID_AMOUNTS as readonly number[]).includes(v), {
+    message: "Invalid donation amount. Please choose $10, $25, $50, or $100.",
+  }),
+});
 
 /**
  * POST /api/stripe/donate
@@ -10,16 +18,11 @@ const VALID_AMOUNTS = [10, 25, 50, 100];
  */
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { amount } = body;
-
-    // Validate amount
-    if (!amount || !VALID_AMOUNTS.includes(amount)) {
-      return NextResponse.json(
-        { error: "Invalid donation amount. Please choose $10, $25, $50, or $100." },
-        { status: 400 }
-      );
+    const parsed = donateSchema.safeParse(await request.json());
+    if (!parsed.success) {
+      return invalidBody(parsed.error);
     }
+    const { amount } = parsed.data;
 
     const stripe = getStripeClient();
     const baseUrl = getBaseUrl();
