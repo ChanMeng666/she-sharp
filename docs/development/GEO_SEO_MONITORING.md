@@ -10,6 +10,7 @@ monitor and maintain it.
 | --- | --- | --- |
 | `robots.txt` | `app/robots.ts` | Allows crawling (minus dashboard/api/auth), explicitly authorizes AI crawlers, advertises the sitemap. |
 | `sitemap.xml` | `app/sitemap.ts` | Static routes + every event slug, with priority/changefreq. |
+| `manifest.webmanifest` | `app/manifest.ts` | PWA manifest; theme colour is brand purple `#9b2e83`. |
 | `llms.txt` | `public/llms.txt` | Static "AI usage guide" describing the org and key pages. |
 | `llms-full.txt` | `app/llms-full.txt/route.ts` | Dynamic full index (all events, team, stats, press) regenerated hourly. |
 | JSON-LD (site) | `app/layout.tsx` + `lib/seo/schema.ts` | Organization/NGO + WebSite structured data. |
@@ -22,6 +23,17 @@ monitor and maintain it.
 `lib/seo/site.ts` is the single source of truth for the canonical origin,
 organization facts, and social links. Keep it in sync with `metadataBase`
 (`app/layout.tsx`) and `footerConfig` (`lib/config/footer.ts`).
+
+**How the 121 sitemap URLs break down** (as of 2026-08-09): 24 `STATIC_ROUTES` +
+97 event slugs. Note that **98** of them *look* like `/events/<slug>` — the
+hand-written `/events/google-educator-conference` series hub is a static route,
+not an event. Expect the arithmetic to look off by one for that reason.
+
+**What is deliberately absent from the sitemap**, and must stay absent:
+`/mentorship/{mentor,mentee}/apply`, `/events/*/feedback`, `/f/*` and
+`/present/*`. All are `noindex`, and a `noindex` URL in the sitemap is exactly
+the contradiction GSC reports as *Submitted URL marked 'noindex'*. Do not re-add
+the apply routes when the registration window reopens.
 
 ## Core KPIs (GEO)
 
@@ -83,7 +95,7 @@ curl -s "$B/" | grep -o '"@type":\["NGO"'        # Organization JSON-LD present
 
 - **Google Search Console** (https://search.google.com/search-console): add/verify the `shesharp.org.nz` property, then **Sitemaps → submit `sitemap.xml`**. Monitor: Coverage/Indexing, Rich results (Event, Organization), impressions/clicks per query.
 - **Access**: reachable **only** from the `website@shesharp.org.nz` account, which lives in a different Chrome instance from the maintainer's usual profile. `?authuser=N` guessing does not find it — use `switch_browser` in `claude-in-chrome` and let the human pick the browser.
-- **Two properties, and the difference matters**:
+- **Three properties, and the difference matters**:
   - `sc-domain:shesharp.org.nz` — DNS-verified, covers **every subdomain**. All issue history and every running validation lives here, so this is the one to use for VALIDATE FIX.
   - `https://www.shesharp.org.nz/` (added 2026-08-09, auto-verified off the domain property) — the main site only. Use it for day-to-day reporting: the domain property's Page indexing counts are dominated by `herwaka.shesharp.org.nz`'s Mintlify asset URLs.
   - `https://herwaka.shesharp.org.nz/` (added 2026-08-09, same auto-verification) — the HER WAKA docs site, 82 pages, sitemap submitted. Its indexing state was previously invisible inside the domain property.
@@ -182,6 +194,13 @@ Sharp appearing in the broad "women in tech NZ" answer.
   'noindex'*. The apply routes were previously listed and merely filtered out
   while the registration window was closed; they are now gone entirely, because
   the filter would have re-added them (as noindex URLs) the moment it reopened.
+- **The third and most dangerous instance of that trap is
+  `/events/[slug]/feedback`.** Its parent, `app/(site)/events/layout.tsx`,
+  canonicalises to `/events` — so a feedback page shipping `noindex` with only
+  the inherited canonical points Google's noindex at the **events hub**, not at
+  the form. It therefore sets `noindex, follow` **plus its own canonical**, and
+  stays out of `app/sitemap.ts`. Getting this wrong de-indexes the hub, and the
+  symptom appears nowhere near the file you changed.
 - **Gated pages hide metadata bugs:** a route that `redirect()`s (e.g. the two
   mentorship apply pages outside the registration window) emits no `<head>` at
   all, so its metadata is unverifiable in the normal state. To check it,
