@@ -9,6 +9,7 @@ import {
   ActivityType,
 } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
+import { resolvePhoto } from '@/lib/mentorship/resolve';
 
 export async function GET() {
   try {
@@ -44,7 +45,12 @@ export async function GET() {
       profileCompletedAt: profile?.profileCompletedAt,
 
       // From mentee_form_submissions (additional fields)
-      photoUrl: formData?.photoUrl || profile?.photoUrl || '',
+      photoUrl:
+        resolvePhoto({
+          formPhotoUrl: formData?.photoUrl,
+          profilePhotoUrl: profile?.photoUrl,
+          userImage: user.image,
+        }) ?? '',
       fullName: formData?.fullName || user.name || '',
       gender: formData?.gender || '',
       age: formData?.age || null,

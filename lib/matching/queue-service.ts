@@ -12,6 +12,7 @@ import {
   users,
 } from '@/lib/db/schema';
 import { eq, and, desc, asc, sql, ne } from 'drizzle-orm';
+import { resolvePhoto } from '@/lib/mentorship/resolve';
 import type {
   QueueStatus,
   QueueEntryWithDetails,
@@ -258,7 +259,11 @@ export async function getWaitingQueue(
     menteeUserId: e.queue.menteeUserId,
     menteeName: e.userName || 'Unknown',
     menteeEmail: e.userEmail,
-    menteeImage: e.menteeForm?.photoUrl || e.profilePhotoUrl || e.userImage || null,
+    menteeImage: resolvePhoto({
+      formPhotoUrl: e.menteeForm?.photoUrl,
+      profilePhotoUrl: e.profilePhotoUrl,
+      userImage: e.userImage,
+    }),
     joinedAt: e.queue.joinedAt,
     status: e.queue.status as QueueStatus,
     priority: e.queue.priority || 0,
