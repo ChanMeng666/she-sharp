@@ -8,17 +8,13 @@ import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { CurtainReveal } from "@/components/ui/reveal";
 import { curatedImages } from "@/public/img/curated";
-import type { EventV3 } from "@/types/event";
-import {
-  formatEventDate,
-  getDaysUntilEvent,
-  getEventDisplayTime,
-} from "@/lib/data/events";
+import type { EventListItem } from "@/lib/data/event-list-item";
+import { daysUntilDate, formatDateString } from "@/lib/data/event-utils";
 
 const FALLBACK_HERO = curatedImages["hero-conference-crowd"];
 
 interface FeaturedEventHeroProps {
-  event?: EventV3;
+  event?: EventListItem;
 }
 
 function FallbackHero() {
@@ -56,16 +52,15 @@ function FallbackHero() {
   );
 }
 
-function FeaturedEventContent({ event }: { event: EventV3 }) {
-  const daysUntil = getDaysUntilEvent(event);
-  const displayTime = getEventDisplayTime(event);
-  const location = event.detailPageData.location;
-  const locationLabel = location?.venueName
-    ? `${location.venueName}${location.city ? `, ${location.city}` : ""}`
-    : location?.city || null;
+function FeaturedEventContent({ event }: { event: EventListItem }) {
+  const daysUntil = daysUntilDate(event.date);
+  const displayTime = event.displayTime;
+  const locationLabel = event.venueName
+    ? `${event.venueName}${event.city ? `, ${event.city}` : ""}`
+    : event.city || null;
 
-  const registerHref = event.detailPageData.registrationUrl || `/events/${event.slug}`;
-  const isExternal = !!event.detailPageData.registrationUrl;
+  const registerHref = event.registrationUrl || `/events/${event.slug}`;
+  const isExternal = !!event.registrationUrl;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 mt-12 items-center">
@@ -91,7 +86,7 @@ function FeaturedEventContent({ event }: { event: EventV3 }) {
           <div className="flex items-center gap-3">
             <Calendar className="w-5 h-5 shrink-0 text-ink-500" />
             <span className="text-base md:text-lg">
-              {formatEventDate(event, "full")}
+              {formatDateString(event.date, "full")}
             </span>
           </div>
           {displayTime && (
@@ -138,8 +133,8 @@ function FeaturedEventContent({ event }: { event: EventV3 }) {
       <div className="order-1 lg:order-2">
         <CurtainReveal className="relative w-full aspect-4/5 overflow-hidden rounded-[32px] border border-border">
           <Image
-            src={event.coverImage.url}
-            alt={event.coverImage.alt || event.title}
+            src={event.imageUrl}
+            alt={event.imageAlt || event.title}
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 50vw"

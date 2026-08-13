@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/ui/reveal";

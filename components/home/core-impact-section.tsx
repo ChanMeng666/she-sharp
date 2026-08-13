@@ -6,7 +6,10 @@ import { Section } from "@/components/layout/section";
 import { useInView } from "@/hooks/use-in-view";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { Reveal } from "@/components/ui/reveal";
-import { homeImpactData, type ImpactItem } from "@/lib/data/stats";
+// Type-only: a value import of lib/data/stats would drag its
+// getEventsHeldCount() call — and therefore the whole event archive — into this
+// client component's bundle. The homepage passes `items` in already.
+import type { ImpactItem } from "@/lib/data/stats";
 
 const parseTargetValue = (
   value: string
@@ -53,11 +56,7 @@ const AnimatedNumber: React.FC<{ target: number; animate: boolean }> = ({
  * Renders the homepage impact band. `items` is supplied by the server so the
  * date-derived event count is identical on both sides of hydration.
  */
-export function CoreImpactSection({
-  items = homeImpactData,
-}: {
-  items?: ImpactItem[];
-}) {
+export function CoreImpactSection({ items }: { items: ImpactItem[] }) {
   const { ref, inView } = useInView();
   const reduceMotion = usePrefersReducedMotion();
   const animate = inView && !reduceMotion;

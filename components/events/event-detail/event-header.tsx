@@ -4,7 +4,7 @@ import Image from "next/image";
 import { EventV3 } from "@/types/event";
 import { cn } from "@/lib/utils";
 import { EventCountdown } from "./event-countdown";
-import { isFutureDate, formatEventDate } from "@/lib/data/events";
+import { isFutureDate, formatEventDate } from "@/lib/data/event-utils";
 import { Calendar, MapPin, Video } from "lucide-react";
 
 interface EventHeaderProps {

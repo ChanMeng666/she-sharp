@@ -5,21 +5,27 @@ import { EventCard } from './event-card';
 import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
 
-interface EventListProps {
-  events: EventV3[];
+/**
+ * Generic over the item type so the /events browse page can pass its slim
+ * projection (see lib/data/event-list-item.ts) rather than full event records.
+ * Callers that omit `renderCard` still get the default EventCard and therefore
+ * still have to supply full EventV3 records.
+ */
+interface EventListProps<T> {
+  events: T[];
   columns?: 1 | 2 | 3 | 4;
   emptyMessage?: string;
   className?: string;
-  renderCard?: (event: EventV3, index: number) => ReactNode;
+  renderCard: (event: T, index: number) => ReactNode;
 }
 
-export function EventList({
+export function EventList<T>({
   events,
   columns = 3,
   emptyMessage = 'No events found',
   className,
   renderCard,
-}: EventListProps) {
+}: EventListProps<T>) {
   if (events.length === 0) {
     return (
       <div className="text-center py-12">
@@ -39,13 +45,7 @@ export function EventList({
         className
       )}
     >
-      {events.map((event, index) =>
-        renderCard ? (
-          renderCard(event, index)
-        ) : (
-          <EventCard key={event.slug} event={event} />
-        )
-      )}
+      {events.map((event, index) => renderCard(event, index))}
     </div>
   );
 }
@@ -97,6 +97,7 @@ export function EventSection({
         events={events}
         columns={columns}
         emptyMessage={emptyMessage}
+        renderCard={(event) => <EventCard key={event.slug} event={event} />}
       />
     </section>
   );
