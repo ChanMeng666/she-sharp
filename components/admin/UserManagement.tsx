@@ -87,25 +87,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
+import { industryOptions, labelMap } from '@/lib/mentorship/vocab';
 
-// Industry mapping (matches mentee application form)
-const INDUSTRY_OPTIONS: Record<string, string> = {
-  engineering: 'Engineering',
-  it_cs: 'Information Technology (IT) and Computer Science',
-  healthcare: 'Healthcare and Medicine',
-  biotech: 'Biotechnology and Life Sciences',
-  renewable_energy: 'Renewable Energy',
-  agriculture: 'Agriculture and Food Science',
-  environmental: 'Environmental Science and Sustainability',
-  telecom: 'Telecommunications',
-  robotics: 'Robotics and Automation',
-  manufacturing: 'Manufacturing and Materials Science',
-  aerospace: 'Aerospace and Defense',
-  finance: 'Finance and Banking',
-  consulting: 'Consulting',
-  education: 'Education',
-  other: 'Other',
-};
+// Industry mapping, shared with the mentor/mentee application forms.
+const INDUSTRY_OPTIONS: Record<string, string> = labelMap(industryOptions);
 
 const formatIndustry = (industry: string | null): string => {
   if (!industry) return 'N/A';

@@ -41,120 +41,16 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import Link from "next/link";
-
-// New Zealand cities
-const nzCities = [
-  { value: "auckland", label: "Auckland" },
-  { value: "wellington", label: "Wellington" },
-  { value: "christchurch", label: "Christchurch" },
-  { value: "hamilton", label: "Hamilton" },
-  { value: "tauranga", label: "Tauranga" },
-  { value: "dunedin", label: "Dunedin" },
-  { value: "palmerston_north", label: "Palmerston North" },
-  { value: "napier_hastings", label: "Napier-Hastings" },
-  { value: "nelson", label: "Nelson" },
-  { value: "rotorua", label: "Rotorua" },
-  { value: "other_nz", label: "Other (New Zealand)" },
-  { value: "international", label: "International" },
-];
-
-const genderOptions = [
-  { value: "female", label: "Female" },
-  { value: "male", label: "Male" },
-  { value: "non_binary", label: "Non-binary" },
-  { value: "prefer_not_to_say", label: "Prefer not to say" },
-  { value: "other", label: "Other" },
-];
-
-const meetingFormatOptions = [
-  { value: "online", label: "Online (Virtual meetings only)" },
-  { value: "in_person", label: "In-Person (Face-to-face meetings)" },
-  { value: "hybrid", label: "Hybrid (Both online and in-person)" },
-];
-
-const industryOptions = [
-  { value: "engineering", label: "Engineering" },
-  { value: "it_cs", label: "Information Technology (IT) and Computer Science" },
-  { value: "healthcare", label: "Healthcare and Medicine" },
-  { value: "biotech", label: "Biotechnology and Life Sciences" },
-  { value: "renewable_energy", label: "Renewable Energy" },
-  { value: "agriculture", label: "Agriculture and Food Science" },
-  { value: "environmental", label: "Environmental Science and Sustainability" },
-  { value: "telecom", label: "Telecommunications" },
-  { value: "robotics", label: "Robotics and Automation" },
-  { value: "manufacturing", label: "Manufacturing and Materials Science" },
-  { value: "aerospace", label: "Aerospace and Defense" },
-  { value: "finance", label: "Finance and Banking" },
-  { value: "consulting", label: "Consulting" },
-  { value: "education", label: "Education" },
-  { value: "other", label: "Other" },
-];
-
-const softSkillsOptions = [
-  "Communication",
-  "Leadership",
-  "Problem Solving",
-  "Time Management",
-  "Critical Thinking",
-  "Teamwork",
-  "Adaptability",
-  "Creativity",
-  "Emotional Intelligence",
-  "Conflict Resolution",
-  "Negotiation",
-  "Presentation",
-  "Networking",
-  "Active Listening",
-  "Decision Making",
-];
-
-const industrySkillsOptions = [
-  "Software Development",
-  "Data Science",
-  "Product Management",
-  "UX/UI Design",
-  "Cloud Computing",
-  "DevOps",
-  "Cybersecurity",
-  "Machine Learning",
-  "Mobile Development",
-  "Web Development",
-  "Database Management",
-  "System Architecture",
-  "Project Management",
-  "Agile/Scrum",
-  "Business Analysis",
-  "Quality Assurance",
-  "Customer Service",
-  "Event Planning",
-  "Research",
-  "Technical Writing",
-];
-
-const mbtiTypes = [
-  "INTJ",
-  "INTP",
-  "ENTJ",
-  "ENTP",
-  "INFJ",
-  "INFP",
-  "ENFJ",
-  "ENFP",
-  "ISTJ",
-  "ISFJ",
-  "ESTJ",
-  "ESFJ",
-  "ISTP",
-  "ISFP",
-  "ESTP",
-  "ESFP",
-];
-
-const menteeTypeOptions = [
-  { value: "undergraduate", label: "Undergraduate/Graduate" },
-  { value: "postgraduate", label: "Post Graduate" },
-  { value: "professional", label: "Professional" },
-];
+import {
+  genderOptions,
+  industryOptions,
+  industrySkillsOptions,
+  mbtiTypes,
+  menteeTypeOptions,
+  meetingFormatOptions,
+  nzCities,
+  softSkillsOptions,
+} from "@/lib/mentorship/vocab";
 
 const bioMethodOptions = [
   { value: "self_written", label: "Create my own bio" },
