@@ -10,7 +10,6 @@ in exactly one file, and all pages/components derive from it automatically.
 lib/data/json/
   ├── events-custom.json        → Custom/manual events (you edit this)
   ├── shesharp_events_v3.json   → Scraped events (auto-generated, do NOT edit)
-  ├── humanitix_events.json     → Humanitix enrichment data (script-only)
   ├── shesharp_podcasts_with_local_images.json  → Podcast episodes
   └── shesharp_news_press_with_local_images.json → Press/news items
 

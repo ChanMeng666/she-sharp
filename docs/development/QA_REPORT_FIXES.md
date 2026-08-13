@@ -252,6 +252,14 @@ This pass was prompted by spot-checking `shesharp-techweek-envision-the-future` 
 
 ### Tooling
 
+> **These scripts are no longer in the repo.** They were one-shot backfills
+> against a cached copy of the old Webflow site; that cache is gone, the pass
+> they served finished on 2026-04-25 with a clean audit, and nothing ever
+> re-ran them. They were removed on 2026-08-13 so `scripts/` only holds tooling
+> that is still runnable. The descriptions below stay as the record of what the
+> pass did — recover the files from git history (`git log --diff-filter=D --
+> scripts/`) if one is ever needed again.
+
 - **`scripts/audit_bullet_lists.py`** — fetches every old-site event page (with an on-disk cache under `scripts/.cache/old-site-html/`), extracts every visible `<li>`, `<h3>/<h4>`, and inline dash-bulleted paragraph, then checks whether each text appears in the new-site JSON (`title`, `subtitle`, `shortDescription`, `fullDescription`, `specialSections`, `speakers`, `organizers`, `sponsors`). Items that fail the substring match are reported as suspected dropped content.
   - Hardened against shared-template chrome (FAQ accordions, "Upcoming Event" cards, gallery tiles, Webflow `w-condition-invisible` placeholders, site header/footer nav) so those don't flag.
   - Whitespace-safe, punctuation-safe normalization so `long-term` and `long term` match; em-dash collapses to a single space; trailing whitespace from stripped punctuation is re-collapsed.
@@ -420,6 +428,10 @@ Key new or modified files grouped by concern:
 - `app/api/dashboard/overview/route.ts`
 
 **Scripts & assets**
+
+*(The Python scripts listed here were removed from the repo on 2026-08-13 as
+completed one-shots — see the note in §3.bis. The assets remain.)*
+
 - `scripts/extract_sponsors.py` *(new)*
 - `scripts/audit_bullet_lists.py` *(new, 2026-04-25)* — repo-wide bullet-list coverage audit
 - `scripts/patch_sponsor_descriptions.py` *(new, 2026-04-25)* — heuristic sponsor bio extractor
