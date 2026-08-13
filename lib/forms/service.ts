@@ -14,10 +14,373 @@ import {
   type MenteeFormSubmission,
   ActivityType,
 } from '@/lib/db/schema';
-import { eq, and, sql } from 'drizzle-orm';
+import { eq, and, sql, type SQL } from 'drizzle-orm';
 import { createMentorApprovalCode, createMenteeApprovalCode } from '@/lib/invitations/service';
 import { sendInvitationCodeEmail } from '@/lib/email/service';
 import { programmes } from '@/lib/db/schema';
+
+// =========================================================
+// Shared mentor/mentee plumbing
+//
+// The two application flows are the same workflow over two tables. Everything
+// that differs — which table, which columns a profile is built from, whether an
+// approval stamps a verification date — lives in the `FormKind` config below,
+// so the workflow itself exists once. The public `*MentorForm` / `*MenteeForm`
+// exports are thin wrappers because their callers import them by name.
+// =========================================================
+
+type SubmissionTable = typeof mentorFormSubmissions | typeof menteeFormSubmissions;
+type FormSubmission = MentorFormSubmission | MenteeFormSubmission;
+type FormDraft = Partial<NewMentorFormSubmission> | Partial<NewMenteeFormSubmission>;
+
+type ProfileTable = typeof mentorProfiles | typeof menteeProfiles;
+type ProfileValues =
+  | Omit<typeof mentorProfiles.$inferInsert, 'userId'>
+  | Omit<typeof menteeProfiles.$inferInsert, 'userId'>;
+
+type MentorFormValues = typeof mentorFormSubmissions.$inferInsert;
+type MenteeFormValues = typeof menteeFormSubmissions.$inferInsert;
+
+/** How one role binds to the schema. Everything role-specific is here. */
+interface FormKind<TForm extends FormSubmission> {
+  /** Used in the error logs: "Error saving mentor form:". */
+  label: 'mentor' | 'mentee';
+  table: SubmissionTable;
+  profileTable: ProfileTable;
+  entityType: 'mentor_form' | 'mentee_form';
+  roleType: 'mentor' | 'mentee';
+  submitActivity: ActivityType;
+  /** Checked before a form may move to `submitted`. */
+  requiredFields: string[];
+  /**
+   * Mentor approvals record who verified the mentor and when; mentee approvals
+   * carry no verification, so an already-active role is left untouched.
+   */
+  stampsRoleVerification: boolean;
+  approvalCodeType: 'mentor_approved' | 'mentee_approved';
+  approvalMessage: string;
+  /** Issues the invitation code an approved applicant registers with. */
+  createApprovalCode(
+    form: TForm,
+    email: string,
+    reviewerId: number,
+    notes: string | undefined,
+    isTestUser: boolean | undefined
+  ): Promise<{ code: string; expiresAt: Date | null }>;
+  /** Maps an approved form onto that role's profile columns. */
+  buildProfile(form: TForm, reviewerId: number): ProfileValues;
+}
+
+/**
+ * Reads a single form row. The caller passes a table and a predicate over that
+ * same table, so it — not this helper — knows the row type; the assertion
+ * restores what the union parameter type discards.
+ */
+async function findForm<TForm extends FormSubmission>(
+  table: SubmissionTable,
+  where: SQL
+): Promise<TForm | null> {
+  const [form] = await db.select().from(table).where(where).limit(1);
+  return (form as TForm | undefined) || null;
+}
+
+/**
+ * Activates a role, creating it if the user has never held it.
+ *
+ * `stampVerification` is the one real difference between the two roles: a
+ * mentor approval records the verification date every time, a mentee approval
+ * records none and leaves an already-active role alone.
+ */
+async function activateRole(
+  userId: number,
+  roleType: 'mentor' | 'mentee',
+  stampVerification: boolean
+): Promise<void> {
+  const [existingRole] = await db
+    .select()
+    .from(userRoles)
+    .where(and(eq(userRoles.userId, userId), eq(userRoles.roleType, roleType)))
+    .limit(1);
+
+  if (!existingRole) {
+    await db.insert(userRoles).values({
+      userId,
+      roleType,
+      isActive: true,
+      ...(stampVerification ? { verifiedAt: new Date() } : {}),
+    });
+    return;
+  }
+
+  if (stampVerification) {
+    await db
+      .update(userRoles)
+      .set({ isActive: true, verifiedAt: new Date() })
+      .where(eq(userRoles.id, existingRole.id));
+  } else if (!existingRole.isActive) {
+    await db
+      .update(userRoles)
+      .set({ isActive: true })
+      .where(eq(userRoles.id, existingRole.id));
+  }
+}
+
+/** Creates or updates the role profile keyed on `userId`. */
+async function upsertProfile(
+  table: ProfileTable,
+  userId: number,
+  values: ProfileValues
+): Promise<void> {
+  const [existingProfile] = await db
+    .select()
+    .from(table)
+    .where(eq(table.userId, userId))
+    .limit(1);
+
+  if (!existingProfile) {
+    await db.insert(table).values({ userId, ...values });
+  } else {
+    await db.update(table).set(values).where(eq(table.userId, userId));
+  }
+}
+
+/** Gets a form submission for a user. */
+async function getForm<TForm extends FormSubmission>(
+  kind: FormKind<TForm>,
+  userId: number
+): Promise<TForm | null> {
+  return findForm<TForm>(kind.table, eq(kind.table.userId, userId));
+}
+
+/** Saves form data (draft or partial save). */
+async function saveForm<TForm extends FormSubmission>(
+  kind: FormKind<TForm>,
+  userId: number,
+  data: FormDraft
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const existing = await getForm(kind, userId);
+
+    if (!existing) {
+      await db.insert(kind.table).values({
+        userId,
+        ...data,
+        status: 'in_progress',
+        lastSavedAt: new Date(),
+      });
+    } else {
+      await db
+        .update(kind.table)
+        .set({
+          ...data,
+          status: existing.status === 'not_started' ? 'in_progress' : existing.status,
+          lastSavedAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .where(eq(kind.table.userId, userId));
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error(`Error saving ${kind.label} form:`, error);
+    return { success: false, error: 'Failed to save form' };
+  }
+}
+
+/** Submits a form for review. */
+async function submitForm<TForm extends FormSubmission>(
+  kind: FormKind<TForm>,
+  userId: number
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const form = await getForm(kind, userId);
+    if (!form) {
+      return { success: false, error: 'Form not found' };
+    }
+
+    // Validate required fields
+    for (const field of kind.requiredFields) {
+      if (!form[field as keyof TForm]) {
+        return { success: false, error: `Missing required field: ${field}` };
+      }
+    }
+
+    await db
+      .update(kind.table)
+      .set({
+        status: 'submitted',
+        submittedAt: new Date(),
+        updatedAt: new Date(),
+      })
+      .where(eq(kind.table.userId, userId));
+
+    // Log activity
+    await db.insert(activityLogs).values({
+      userId,
+      action: kind.submitActivity,
+      entityType: kind.entityType,
+      entityId: form.id,
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error(`Error submitting ${kind.label} form:`, error);
+    return { success: false, error: 'Failed to submit form' };
+  }
+}
+
+/**
+ * Reviews a submitted form (admin action). An approval either issues an
+ * invitation code — when the applicant has no account yet — or activates the
+ * role and writes the profile on the account they already have.
+ */
+async function reviewForm<TForm extends FormSubmission>(
+  kind: FormKind<TForm>,
+  formId: number,
+  reviewerId: number,
+  decision: 'approved' | 'rejected',
+  notes?: string,
+  isTestUser?: boolean
+): Promise<{ success: boolean; invitationCode?: string; error?: string }> {
+  try {
+    const form = await findForm<TForm>(kind.table, eq(kind.table.id, formId));
+
+    if (!form) {
+      return { success: false, error: 'Form not found' };
+    }
+
+    if (form.status !== 'submitted') {
+      return { success: false, error: 'Form is not in submitted status' };
+    }
+
+    await db
+      .update(kind.table)
+      .set({
+        status: decision,
+        reviewedAt: new Date(),
+        reviewedBy: reviewerId,
+        reviewNotes: notes,
+        updatedAt: new Date(),
+      })
+      .where(eq(kind.table.id, formId));
+
+    // Log activity
+    await db.insert(activityLogs).values({
+      userId: reviewerId,
+      action: ActivityType.REVIEW_APPLICATION,
+      entityType: kind.entityType,
+      entityId: formId,
+      metadata: { decision, notes },
+    });
+
+    // If approved and user not registered, generate invitation code
+    if (decision === 'approved' && form.email && !form.userId) {
+      const invitationCode = await kind.createApprovalCode(
+        form,
+        form.email,
+        reviewerId,
+        notes,
+        isTestUser
+      );
+
+      // Send email with invitation code
+      await sendInvitationCodeEmail(form.email, {
+        invitationCode: invitationCode.code,
+        codeType: kind.approvalCodeType,
+        expiresAt: invitationCode.expiresAt || undefined,
+        message: kind.approvalMessage,
+      });
+
+      return { success: true, invitationCode: invitationCode.code };
+    }
+
+    // If approved and user exists, activate the role and write the profile
+    if (decision === 'approved' && form.userId) {
+      await activateRole(form.userId, kind.roleType, kind.stampsRoleVerification);
+      await upsertProfile(kind.profileTable, form.userId, kind.buildProfile(form, reviewerId));
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error(`Error reviewing ${kind.label} form:`, error);
+    return { success: false, error: 'Failed to review form' };
+  }
+}
+
+const mentorForms: FormKind<MentorFormSubmission> = {
+  label: 'mentor',
+  table: mentorFormSubmissions,
+  profileTable: mentorProfiles,
+  entityType: 'mentor_form',
+  roleType: 'mentor',
+  submitActivity: ActivityType.SUBMIT_MENTOR_FORM,
+  requiredFields: ['fullName', 'phone', 'jobTitle', 'company', 'bio'],
+  stampsRoleVerification: true,
+  approvalCodeType: 'mentor_approved',
+  approvalMessage:
+    'Your mentor application has been approved! Use this code to complete your registration.',
+  createApprovalCode: (form, email, reviewerId, notes, isTestUser) =>
+    createMentorApprovalCode(
+      email,
+      reviewerId,
+      form.id, // Link to mentor form submission
+      notes,
+      isTestUser
+    ),
+  buildProfile: (form, reviewerId) => ({
+    bio: form.bio,
+    company: form.company,
+    jobTitle: form.jobTitle,
+    yearsExperience: form.yearsExperience,
+    linkedinUrl: form.linkedinUrl,
+    maxMentees: form.maxMentees,
+    availabilityHoursPerMonth: form.availabilityHoursPerMonth,
+    mbtiType: form.mbtiType,
+    photoUrl: form.photoUrl,
+    formSubmissionId: form.id,
+    verifiedAt: new Date(),
+    verifiedBy: reviewerId,
+    expertiseAreas: [
+      ...(form.softSkillsExpert || []),
+      ...(form.industrySkillsExpert || []),
+    ],
+  }),
+};
+
+const menteeForms: FormKind<MenteeFormSubmission> = {
+  label: 'mentee',
+  table: menteeFormSubmissions,
+  profileTable: menteeProfiles,
+  entityType: 'mentee_form',
+  roleType: 'mentee',
+  submitActivity: ActivityType.SUBMIT_MENTEE_FORM,
+  requiredFields: ['fullName', 'phone', 'longTermGoals', 'shortTermGoals'],
+  stampsRoleVerification: false,
+  approvalCodeType: 'mentee_approved',
+  approvalMessage:
+    'Your mentee application has been approved! Use this code to complete your registration.',
+  createApprovalCode: (form, email, reviewerId, notes, isTestUser) =>
+    createMenteeApprovalCode(
+      email,
+      reviewerId,
+      form.id,
+      notes,
+      undefined, // programmeId
+      isTestUser
+    ),
+  buildProfile: (form) => ({
+    bio: form.bio,
+    careerStage: form.currentStage,
+    learningGoals: [form.longTermGoals, form.shortTermGoals].filter(Boolean) as string[],
+    preferredExpertiseAreas: form.preferredIndustries || [],
+    preferredMeetingFrequency: form.preferredMeetingFrequency,
+    currentChallenge: form.whyMentor,
+    mbtiType: form.mbtiType,
+    photoUrl: form.photoUrl,
+    formSubmissionId: form.id,
+    profileCompletedAt: new Date(),
+  }),
+};
 
 // =======================
 // Mentor Form Operations
@@ -27,13 +390,7 @@ import { programmes } from '@/lib/db/schema';
  * Gets or creates a mentor form submission for a user.
  */
 export async function getMentorForm(userId: number): Promise<MentorFormSubmission | null> {
-  const [form] = await db
-    .select()
-    .from(mentorFormSubmissions)
-    .where(eq(mentorFormSubmissions.userId, userId))
-    .limit(1);
-
-  return form || null;
+  return getForm(mentorForms, userId);
 }
 
 /**
@@ -43,33 +400,7 @@ export async function saveMentorForm(
   userId: number,
   data: Partial<NewMentorFormSubmission>
 ): Promise<{ success: boolean; error?: string }> {
-  try {
-    const existing = await getMentorForm(userId);
-
-    if (!existing) {
-      await db.insert(mentorFormSubmissions).values({
-        userId,
-        ...data,
-        status: 'in_progress',
-        lastSavedAt: new Date(),
-      });
-    } else {
-      await db
-        .update(mentorFormSubmissions)
-        .set({
-          ...data,
-          status: existing.status === 'not_started' ? 'in_progress' : existing.status,
-          lastSavedAt: new Date(),
-          updatedAt: new Date(),
-        })
-        .where(eq(mentorFormSubmissions.userId, userId));
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error('Error saving mentor form:', error);
-    return { success: false, error: 'Failed to save form' };
-  }
+  return saveForm(mentorForms, userId, data);
 }
 
 /**
@@ -78,42 +409,7 @@ export async function saveMentorForm(
 export async function submitMentorForm(
   userId: number
 ): Promise<{ success: boolean; error?: string }> {
-  try {
-    const form = await getMentorForm(userId);
-    if (!form) {
-      return { success: false, error: 'Form not found' };
-    }
-
-    // Validate required fields
-    const requiredFields = ['fullName', 'phone', 'jobTitle', 'company', 'bio'];
-    for (const field of requiredFields) {
-      if (!form[field as keyof MentorFormSubmission]) {
-        return { success: false, error: `Missing required field: ${field}` };
-      }
-    }
-
-    await db
-      .update(mentorFormSubmissions)
-      .set({
-        status: 'submitted',
-        submittedAt: new Date(),
-        updatedAt: new Date(),
-      })
-      .where(eq(mentorFormSubmissions.userId, userId));
-
-    // Log activity
-    await db.insert(activityLogs).values({
-      userId,
-      action: ActivityType.SUBMIT_MENTOR_FORM,
-      entityType: 'mentor_form',
-      entityId: form.id,
-    });
-
-    return { success: true };
-  } catch (error) {
-    console.error('Error submitting mentor form:', error);
-    return { success: false, error: 'Failed to submit form' };
-  }
+  return submitForm(mentorForms, userId);
 }
 
 /**
@@ -126,134 +422,37 @@ export async function reviewMentorForm(
   notes?: string,
   isTestUser?: boolean
 ): Promise<{ success: boolean; invitationCode?: string; error?: string }> {
-  try {
-    const [form] = await db
-      .select()
-      .from(mentorFormSubmissions)
-      .where(eq(mentorFormSubmissions.id, formId))
-      .limit(1);
+  return reviewForm(mentorForms, formId, reviewerId, decision, notes, isTestUser);
+}
 
-    if (!form) {
-      return { success: false, error: 'Form not found' };
-    }
+// =======================
+// Mentee Form Operations
+// =======================
 
-    if (form.status !== 'submitted') {
-      return { success: false, error: 'Form is not in submitted status' };
-    }
+/**
+ * Gets or creates a mentee form submission for a user.
+ */
+export async function getMenteeForm(userId: number): Promise<MenteeFormSubmission | null> {
+  return getForm(menteeForms, userId);
+}
 
-    await db
-      .update(mentorFormSubmissions)
-      .set({
-        status: decision,
-        reviewedAt: new Date(),
-        reviewedBy: reviewerId,
-        reviewNotes: notes,
-        updatedAt: new Date(),
-      })
-      .where(eq(mentorFormSubmissions.id, formId));
+/**
+ * Saves mentee form data (draft or partial save).
+ */
+export async function saveMenteeForm(
+  userId: number,
+  data: Partial<NewMenteeFormSubmission>
+): Promise<{ success: boolean; error?: string }> {
+  return saveForm(menteeForms, userId, data);
+}
 
-    // Log activity
-    await db.insert(activityLogs).values({
-      userId: reviewerId,
-      action: ActivityType.REVIEW_APPLICATION,
-      entityType: 'mentor_form',
-      entityId: formId,
-      metadata: { decision, notes },
-    });
-
-    // If approved and user not registered, generate invitation code
-    if (decision === 'approved' && form.email && !form.userId) {
-      const invitationCode = await createMentorApprovalCode(
-        form.email,
-        reviewerId,
-        form.id,  // Link to mentor form submission
-        notes,
-        isTestUser
-      );
-
-      // Send email with invitation code
-      await sendInvitationCodeEmail(form.email, {
-        invitationCode: invitationCode.code,
-        codeType: 'mentor_approved',
-        expiresAt: invitationCode.expiresAt || undefined,
-        message: 'Your mentor application has been approved! Use this code to complete your registration.',
-      });
-
-      return { success: true, invitationCode: invitationCode.code };
-    }
-
-    // If approved and user exists, activate mentor role
-    if (decision === 'approved' && form.userId) {
-      // Check if mentor role already exists
-      const [existingRole] = await db
-        .select()
-        .from(userRoles)
-        .where(
-          and(
-            eq(userRoles.userId, form.userId),
-            eq(userRoles.roleType, 'mentor')
-          )
-        )
-        .limit(1);
-
-      if (!existingRole) {
-        await db.insert(userRoles).values({
-          userId: form.userId,
-          roleType: 'mentor',
-          isActive: true,
-          verifiedAt: new Date(),
-        });
-      } else {
-        await db
-          .update(userRoles)
-          .set({ isActive: true, verifiedAt: new Date() })
-          .where(eq(userRoles.id, existingRole.id));
-      }
-
-      // Create or update mentor profile
-      const [existingProfile] = await db
-        .select()
-        .from(mentorProfiles)
-        .where(eq(mentorProfiles.userId, form.userId))
-        .limit(1);
-
-      const profileData = {
-        bio: form.bio,
-        company: form.company,
-        jobTitle: form.jobTitle,
-        yearsExperience: form.yearsExperience,
-        linkedinUrl: form.linkedinUrl,
-        maxMentees: form.maxMentees,
-        availabilityHoursPerMonth: form.availabilityHoursPerMonth,
-        mbtiType: form.mbtiType,
-        photoUrl: form.photoUrl,
-        formSubmissionId: form.id,
-        verifiedAt: new Date(),
-        verifiedBy: reviewerId,
-        expertiseAreas: [
-          ...(form.softSkillsExpert || []),
-          ...(form.industrySkillsExpert || []),
-        ],
-      };
-
-      if (!existingProfile) {
-        await db.insert(mentorProfiles).values({
-          userId: form.userId,
-          ...profileData,
-        });
-      } else {
-        await db
-          .update(mentorProfiles)
-          .set(profileData)
-          .where(eq(mentorProfiles.userId, form.userId));
-      }
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error('Error reviewing mentor form:', error);
-    return { success: false, error: 'Failed to review form' };
-  }
+/**
+ * Submits mentee form for review.
+ */
+export async function submitMenteeForm(
+  userId: number
+): Promise<{ success: boolean; error?: string }> {
+  return submitForm(menteeForms, userId);
 }
 
 /**
@@ -266,227 +465,18 @@ export async function reviewMenteeForm(
   notes?: string,
   isTestUser?: boolean
 ): Promise<{ success: boolean; invitationCode?: string; error?: string }> {
-  try {
-    const [form] = await db
-      .select()
-      .from(menteeFormSubmissions)
-      .where(eq(menteeFormSubmissions.id, formId))
-      .limit(1);
-
-    if (!form) {
-      return { success: false, error: 'Form not found' };
-    }
-
-    if (form.status !== 'submitted') {
-      return { success: false, error: 'Form is not in submitted status' };
-    }
-
-    await db
-      .update(menteeFormSubmissions)
-      .set({
-        status: decision,
-        reviewedAt: new Date(),
-        reviewedBy: reviewerId,
-        reviewNotes: notes,
-        updatedAt: new Date(),
-      })
-      .where(eq(menteeFormSubmissions.id, formId));
-
-    // Log activity
-    await db.insert(activityLogs).values({
-      userId: reviewerId,
-      action: ActivityType.REVIEW_APPLICATION,
-      entityType: 'mentee_form',
-      entityId: formId,
-      metadata: { decision, notes },
-    });
-
-    // If approved and user not registered, generate invitation code
-    if (decision === 'approved' && form.email && !form.userId) {
-      const invitationCode = await createMenteeApprovalCode(
-        form.email,
-        reviewerId,
-        form.id,
-        notes,
-        undefined, // programmeId
-        isTestUser
-      );
-
-      await sendInvitationCodeEmail(form.email, {
-        invitationCode: invitationCode.code,
-        codeType: 'mentee_approved',
-        expiresAt: invitationCode.expiresAt || undefined,
-        message: 'Your mentee application has been approved! Use this code to complete your registration.',
-      });
-
-      return { success: true, invitationCode: invitationCode.code };
-    }
-
-    // If approved and user exists, activate mentee role and create profile
-    if (decision === 'approved' && form.userId) {
-      const [existingRole] = await db
-        .select()
-        .from(userRoles)
-        .where(
-          and(
-            eq(userRoles.userId, form.userId),
-            eq(userRoles.roleType, 'mentee')
-          )
-        )
-        .limit(1);
-
-      if (!existingRole) {
-        await db.insert(userRoles).values({
-          userId: form.userId,
-          roleType: 'mentee',
-          isActive: true,
-        });
-      } else if (!existingRole.isActive) {
-        await db
-          .update(userRoles)
-          .set({ isActive: true })
-          .where(eq(userRoles.id, existingRole.id));
-      }
-
-      // Create or update mentee profile
-      const [existingProfile] = await db
-        .select()
-        .from(menteeProfiles)
-        .where(eq(menteeProfiles.userId, form.userId))
-        .limit(1);
-
-      const profileData = {
-        bio: form.bio,
-        careerStage: form.currentStage,
-        learningGoals: [form.longTermGoals, form.shortTermGoals].filter(Boolean) as string[],
-        preferredExpertiseAreas: form.preferredIndustries || [],
-        preferredMeetingFrequency: form.preferredMeetingFrequency,
-        currentChallenge: form.whyMentor,
-        mbtiType: form.mbtiType,
-        photoUrl: form.photoUrl,
-        formSubmissionId: form.id,
-        profileCompletedAt: new Date(),
-      };
-
-      if (!existingProfile) {
-        await db.insert(menteeProfiles).values({
-          userId: form.userId,
-          ...profileData,
-        });
-      } else {
-        await db
-          .update(menteeProfiles)
-          .set(profileData)
-          .where(eq(menteeProfiles.userId, form.userId));
-      }
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error('Error reviewing mentee form:', error);
-    return { success: false, error: 'Failed to review form' };
-  }
-}
-
-// =======================
-// Mentee Form Operations
-// =======================
-
-/**
- * Gets or creates a mentee form submission for a user.
- */
-export async function getMenteeForm(userId: number): Promise<MenteeFormSubmission | null> {
-  const [form] = await db
-    .select()
-    .from(menteeFormSubmissions)
-    .where(eq(menteeFormSubmissions.userId, userId))
-    .limit(1);
-
-  return form || null;
-}
-
-/**
- * Saves mentee form data (draft or partial save).
- */
-export async function saveMenteeForm(
-  userId: number,
-  data: Partial<NewMenteeFormSubmission>
-): Promise<{ success: boolean; error?: string }> {
-  try {
-    const existing = await getMenteeForm(userId);
-
-    if (!existing) {
-      await db.insert(menteeFormSubmissions).values({
-        userId,
-        ...data,
-        status: 'in_progress',
-        lastSavedAt: new Date(),
-      });
-    } else {
-      await db
-        .update(menteeFormSubmissions)
-        .set({
-          ...data,
-          status: existing.status === 'not_started' ? 'in_progress' : existing.status,
-          lastSavedAt: new Date(),
-          updatedAt: new Date(),
-        })
-        .where(eq(menteeFormSubmissions.userId, userId));
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error('Error saving mentee form:', error);
-    return { success: false, error: 'Failed to save form' };
-  }
-}
-
-/**
- * Submits mentee form for review.
- */
-export async function submitMenteeForm(
-  userId: number
-): Promise<{ success: boolean; error?: string }> {
-  try {
-    const form = await getMenteeForm(userId);
-    if (!form) {
-      return { success: false, error: 'Form not found' };
-    }
-
-    // Validate required fields
-    const requiredFields = ['fullName', 'phone', 'longTermGoals', 'shortTermGoals'];
-    for (const field of requiredFields) {
-      if (!form[field as keyof MenteeFormSubmission]) {
-        return { success: false, error: `Missing required field: ${field}` };
-      }
-    }
-
-    await db
-      .update(menteeFormSubmissions)
-      .set({
-        status: 'submitted',
-        submittedAt: new Date(),
-        updatedAt: new Date(),
-      })
-      .where(eq(menteeFormSubmissions.userId, userId));
-
-    // Log activity
-    await db.insert(activityLogs).values({
-      userId,
-      action: ActivityType.SUBMIT_MENTEE_FORM,
-      entityType: 'mentee_form',
-      entityId: form.id,
-    });
-
-    return { success: true };
-  } catch (error) {
-    console.error('Error submitting mentee form:', error);
-    return { success: false, error: 'Failed to submit form' };
-  }
+  return reviewForm(menteeForms, formId, reviewerId, decision, notes, isTestUser);
 }
 
 // =======================
 // Public Form Submissions
+//
+// The two public endpoints are NOT a mirrored pair and are deliberately left
+// apart: the mentee flow resolves a programme, charges for it and keeps the
+// programme's mentee count in step, and the two disagree on what an existing
+// submission means (a mentor application in progress falls through to a second
+// row, a mentee application is always updated in place). Folding them together
+// would move all of that into per-role callbacks and leave nothing shared.
 // =======================
 
 export interface PublicMentorFormData {
@@ -524,6 +514,42 @@ export interface PublicMentorFormData {
 }
 
 /**
+ * Maps the validated HTTP payload onto mentor submission columns.
+ *
+ * The route validates these as free strings while the columns are Postgres
+ * enums, so the enum-backed fields are narrowed here — one place rather than
+ * once per insert and once per update.
+ */
+function mentorFormValues(data: PublicMentorFormData) {
+  return {
+    fullName: data.fullName,
+    phone: data.phone,
+    gender: data.gender as MentorFormValues['gender'],
+    city: data.city,
+    preferredMeetingFormat: data.preferredMeetingFormat as MentorFormValues['preferredMeetingFormat'],
+    mbtiType: data.mbtiType as MentorFormValues['mbtiType'],
+    jobTitle: data.jobTitle,
+    company: data.company,
+    yearsExperience: data.yearsExperience,
+    linkedinUrl: data.linkedinUrl,
+    bioMethod: data.bioMethod as MentorFormValues['bioMethod'],
+    bio: data.bio,
+    photoUrl: data.photoUrl,
+    softSkillsBasic: data.softSkillsBasic,
+    softSkillsExpert: data.softSkillsExpert,
+    industrySkillsBasic: data.industrySkillsBasic,
+    industrySkillsExpert: data.industrySkillsExpert,
+    maxMentees: data.maxMentees,
+    availabilityHoursPerMonth: data.availabilityHoursPerMonth,
+    expectedMenteeGoalsLongTerm: data.expectedMenteeGoalsLongTerm,
+    expectedMenteeGoalsShortTerm: data.expectedMenteeGoalsShortTerm,
+    programExpectations: data.programExpectations,
+    preferredMenteeTypes: data.preferredMenteeTypes,
+    preferredIndustries: data.preferredIndustries,
+  };
+}
+
+/**
  * Submits a public mentor application (no authentication required).
  * Creates a form submission with email instead of userId.
  */
@@ -550,30 +576,7 @@ export async function submitPublicMentorForm(
         await db
           .update(mentorFormSubmissions)
           .set({
-            fullName: data.fullName,
-            phone: data.phone,
-            gender: data.gender as any,
-            city: data.city,
-            preferredMeetingFormat: data.preferredMeetingFormat as any,
-            mbtiType: data.mbtiType as any,
-            jobTitle: data.jobTitle,
-            company: data.company,
-            yearsExperience: data.yearsExperience,
-            linkedinUrl: data.linkedinUrl,
-            bioMethod: data.bioMethod as 'self_written' | 'ai_generated' | 'already_sent' | undefined,
-            bio: data.bio,
-            photoUrl: data.photoUrl,
-            softSkillsBasic: data.softSkillsBasic,
-            softSkillsExpert: data.softSkillsExpert,
-            industrySkillsBasic: data.industrySkillsBasic,
-            industrySkillsExpert: data.industrySkillsExpert,
-            maxMentees: data.maxMentees,
-            availabilityHoursPerMonth: data.availabilityHoursPerMonth,
-            expectedMenteeGoalsLongTerm: data.expectedMenteeGoalsLongTerm,
-            expectedMenteeGoalsShortTerm: data.expectedMenteeGoalsShortTerm,
-            programExpectations: data.programExpectations,
-            preferredMenteeTypes: data.preferredMenteeTypes,
-            preferredIndustries: data.preferredIndustries,
+            ...mentorFormValues(data),
             status: 'submitted',
             submittedAt: new Date(),
             reviewedAt: null,
@@ -592,30 +595,7 @@ export async function submitPublicMentorForm(
       .insert(mentorFormSubmissions)
       .values({
         email: data.email,
-        fullName: data.fullName,
-        phone: data.phone,
-        gender: data.gender as any,
-        city: data.city,
-        preferredMeetingFormat: data.preferredMeetingFormat as any,
-        mbtiType: data.mbtiType as any,
-        jobTitle: data.jobTitle,
-        company: data.company,
-        yearsExperience: data.yearsExperience,
-        linkedinUrl: data.linkedinUrl,
-        bioMethod: data.bioMethod as 'self_written' | 'ai_generated' | 'already_sent' | undefined,
-        bio: data.bio,
-        photoUrl: data.photoUrl,
-        softSkillsBasic: data.softSkillsBasic,
-        softSkillsExpert: data.softSkillsExpert,
-        industrySkillsBasic: data.industrySkillsBasic,
-        industrySkillsExpert: data.industrySkillsExpert,
-        maxMentees: data.maxMentees,
-        availabilityHoursPerMonth: data.availabilityHoursPerMonth,
-        expectedMenteeGoalsLongTerm: data.expectedMenteeGoalsLongTerm,
-        expectedMenteeGoalsShortTerm: data.expectedMenteeGoalsShortTerm,
-        programExpectations: data.programExpectations,
-        preferredMenteeTypes: data.preferredMenteeTypes,
-        preferredIndustries: data.preferredIndustries,
+        ...mentorFormValues(data),
         status: 'submitted',
         submittedAt: new Date(),
       })
@@ -634,13 +614,10 @@ export async function submitPublicMentorForm(
 export async function getPublicMentorFormByEmail(
   email: string
 ): Promise<MentorFormSubmission | null> {
-  const [form] = await db
-    .select()
-    .from(mentorFormSubmissions)
-    .where(eq(mentorFormSubmissions.email, email))
-    .limit(1);
-
-  return form || null;
+  return findForm<MentorFormSubmission>(
+    mentorFormSubmissions,
+    eq(mentorFormSubmissions.email, email)
+  );
 }
 
 // =======================
@@ -678,6 +655,34 @@ export interface PublicMenteeFormData {
   photoUrl?: string;
   // Programme
   programmeSlug?: string;
+}
+
+/** Maps the validated HTTP payload onto mentee submission columns. */
+function menteeFormValues(data: PublicMenteeFormData) {
+  return {
+    fullName: data.fullName,
+    phone: data.phone,
+    gender: data.gender as MenteeFormValues['gender'],
+    age: data.age,
+    bio: data.bio,
+    city: data.city,
+    preferredMeetingFormat: data.preferredMeetingFormat as MenteeFormValues['preferredMeetingFormat'],
+    currentStage: data.currentStage as MenteeFormValues['currentStage'],
+    currentJobTitle: data.currentJobTitle,
+    currentIndustry: data.currentIndustry,
+    preferredIndustries: data.preferredIndustries,
+    softSkillsBasic: data.softSkillsBasic,
+    industrySkillsBasic: data.industrySkillsBasic,
+    softSkillsExpert: data.softSkillsExpert,
+    industrySkillsExpert: data.industrySkillsExpert,
+    longTermGoals: data.longTermGoals,
+    shortTermGoals: data.shortTermGoals,
+    whyMentor: data.whyMentor,
+    programExpectations: data.programExpectations,
+    mbtiType: data.mbtiType as MenteeFormValues['mbtiType'],
+    preferredMeetingFrequency: data.preferredMeetingFrequency,
+    photoUrl: data.photoUrl,
+  };
 }
 
 /**
@@ -767,28 +772,7 @@ export async function submitPublicMenteeForm(
       await db
         .update(menteeFormSubmissions)
         .set({
-          fullName: data.fullName,
-          phone: data.phone,
-          gender: data.gender as any,
-          age: data.age,
-          bio: data.bio,
-          city: data.city,
-          preferredMeetingFormat: data.preferredMeetingFormat as any,
-          currentStage: data.currentStage as any,
-          currentJobTitle: data.currentJobTitle,
-          currentIndustry: data.currentIndustry,
-          preferredIndustries: data.preferredIndustries,
-          softSkillsBasic: data.softSkillsBasic,
-          industrySkillsBasic: data.industrySkillsBasic,
-          softSkillsExpert: data.softSkillsExpert,
-          industrySkillsExpert: data.industrySkillsExpert,
-          longTermGoals: data.longTermGoals,
-          shortTermGoals: data.shortTermGoals,
-          whyMentor: data.whyMentor,
-          programExpectations: data.programExpectations,
-          mbtiType: data.mbtiType as any,
-          preferredMeetingFrequency: data.preferredMeetingFrequency,
-          photoUrl: data.photoUrl,
+          ...menteeFormValues(data),
           programmeId,
           paymentCompleted: !requiresPayment,
           paymentCompletedAt: !requiresPayment ? new Date() : null,
@@ -817,28 +801,7 @@ export async function submitPublicMenteeForm(
       .insert(menteeFormSubmissions)
       .values({
         email: data.email,
-        fullName: data.fullName,
-        phone: data.phone,
-        gender: data.gender as any,
-        age: data.age,
-        bio: data.bio,
-        city: data.city,
-        preferredMeetingFormat: data.preferredMeetingFormat as any,
-        currentStage: data.currentStage as any,
-        currentJobTitle: data.currentJobTitle,
-        currentIndustry: data.currentIndustry,
-        preferredIndustries: data.preferredIndustries,
-        softSkillsBasic: data.softSkillsBasic,
-        industrySkillsBasic: data.industrySkillsBasic,
-        softSkillsExpert: data.softSkillsExpert,
-        industrySkillsExpert: data.industrySkillsExpert,
-        longTermGoals: data.longTermGoals,
-        shortTermGoals: data.shortTermGoals,
-        whyMentor: data.whyMentor,
-        programExpectations: data.programExpectations,
-        mbtiType: data.mbtiType as any,
-        preferredMeetingFrequency: data.preferredMeetingFrequency,
-        photoUrl: data.photoUrl,
+        ...menteeFormValues(data),
         programmeId,
         status: 'submitted',
         submittedAt: new Date(),
@@ -868,13 +831,10 @@ export async function submitPublicMenteeForm(
 export async function getPublicMenteeFormByEmail(
   email: string
 ): Promise<MenteeFormSubmission | null> {
-  const [form] = await db
-    .select()
-    .from(menteeFormSubmissions)
-    .where(eq(menteeFormSubmissions.email, email))
-    .limit(1);
-
-  return form || null;
+  return findForm<MenteeFormSubmission>(
+    menteeFormSubmissions,
+    eq(menteeFormSubmissions.email, email)
+  );
 }
 
 /**
@@ -883,11 +843,5 @@ export async function getPublicMenteeFormByEmail(
 export async function getMenteeFormById(
   id: number
 ): Promise<MenteeFormSubmission | null> {
-  const [form] = await db
-    .select()
-    .from(menteeFormSubmissions)
-    .where(eq(menteeFormSubmissions.id, id))
-    .limit(1);
-
-  return form || null;
+  return findForm<MenteeFormSubmission>(menteeFormSubmissions, eq(menteeFormSubmissions.id, id));
 }
