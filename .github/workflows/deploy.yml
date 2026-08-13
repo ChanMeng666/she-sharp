@@ -29,6 +29,19 @@ jobs:
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
+      # `vercel build` runs `next build` in this working directory, so Next.js
+      # picks up `.next/cache` from here — without it every deploy re-compiles
+      # from cold. Keyed on the lockfile plus every TS/TSX source so a source
+      # change still restores the previous cache via `restore-keys` instead of
+      # missing outright.
+      - name: Restore Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
+
       - name: Pull Vercel Environment
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
