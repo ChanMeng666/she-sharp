@@ -6,6 +6,8 @@ import { Toaster } from '@/components/ui/sonner';
 import { Providers } from './providers';
 import { JsonLd } from '@/components/seo/json-ld';
 import { organizationSchema, websiteSchema } from '@/lib/seo/schema';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.shesharp.org.nz'),
@@ -72,6 +74,14 @@ export default function RootLayout({
           <CookieBanner />
           <Toaster />
         </Providers>
+        {/*
+          Field telemetry. Both are client components that inject a script tag,
+          so they do not read request data and cannot opt a segment out of
+          static rendering — the public site must stay prerendered. No env vars
+          are needed; the Vercel platform injects the endpoint at runtime.
+        */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
