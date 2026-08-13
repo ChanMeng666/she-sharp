@@ -3,6 +3,7 @@ import { db } from '@/lib/db/drizzle';
 import { mentorshipRelationships, users, mentorProfiles, menteeProfiles, mentorFormSubmissions, menteeFormSubmissions, programmes } from '@/lib/db/schema';
 import { eq, or } from 'drizzle-orm';
 import { getUser } from '@/lib/db/queries';
+import { resolvePhoto } from '@/lib/mentorship/resolve';
 
 export async function GET(request: NextRequest) {
   try {
@@ -52,7 +53,11 @@ export async function GET(request: NextRequest) {
           mentorDataMap.set(mentorId, {
             name: result.name,
             email: result.email,
-            image: result.formPhotoUrl || result.profilePhotoUrl || result.userImage || null,
+            image: resolvePhoto({
+              formPhotoUrl: result.formPhotoUrl,
+              profilePhotoUrl: result.profilePhotoUrl,
+              userImage: result.userImage,
+            }),
             jobTitle: result.formJobTitle || result.profileJobTitle || null,
             company: result.formCompany || result.profileCompany || null,
           });
@@ -83,7 +88,11 @@ export async function GET(request: NextRequest) {
           menteeDataMap.set(menteeId, {
             name: result.name,
             email: result.email,
-            image: result.formPhotoUrl || result.profilePhotoUrl || result.userImage || null,
+            image: resolvePhoto({
+              formPhotoUrl: result.formPhotoUrl,
+              profilePhotoUrl: result.profilePhotoUrl,
+              userImage: result.userImage,
+            }),
             learningGoals: result.learningGoals as string[] | null,
           });
         }
