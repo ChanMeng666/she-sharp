@@ -237,7 +237,16 @@ export const InflectedCard: React.FC<InflectedCardProps> = ({
               onMouseEnter={handleButtonMouseEnter}
               onMouseLeave={handleButtonMouseLeave}
             >
-              <a
+              {/*
+                A <span>, not an <a>: this circular arrow is decoration, it
+                carries no href and no handler, and every caller wraps the whole
+                card in its own <a>. An anchor here nested one <a> inside
+                another, which the HTML parser is not allowed to keep — it
+                closes the outer anchor at the inner one, so the browser's DOM
+                could never match React's tree and /events failed hydration on
+                the first card, regenerating the list client-side.
+              */}
+              <span
                 className="inflected-iconBox"
                 style={{
                   '--button-bg': buttonBackgroundColor,
@@ -253,7 +262,7 @@ export const InflectedCard: React.FC<InflectedCardProps> = ({
                     ? buttonIconHoverColor
                     : buttonIconColor,
                 })}
-              </a>
+              </span>
             </div>
           </div>
         </div>
