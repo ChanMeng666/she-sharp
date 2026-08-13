@@ -3,6 +3,20 @@ import { db } from '@/lib/db/drizzle';
 import { meetings, mentorshipRelationships, users, mentorProfiles, menteeProfiles, mentorFormSubmissions, menteeFormSubmissions, activityLogs, ActivityType } from '@/lib/db/schema';
 import { eq, and, or, gte, lte, desc, asc } from 'drizzle-orm';
 import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+// `coerce` on the id keeps the pre-existing contract: the dashboard sends a
+// number, but a string id used to reach drizzle unchanged and still worked.
+const createMeetingSchema = z.object({
+  relationshipId: z.coerce.number().int().positive({
+    message: 'Relationship ID and scheduled time are required',
+  }),
+  scheduledAt: z.string().min(1, 'Relationship ID and scheduled time are required'),
+  durationMinutes: z.number().int().positive().nullish(),
+  meetingType: z.enum(['intro', 'regular', 'milestone', 'final']).nullish(),
+  meetingLink: z.string().nullish(),
+});
 
 export const GET = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
@@ -150,16 +164,11 @@ export const GET = withRoles({}, async (request: NextRequest, { user }: AuthedCo
 
 export const POST = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const data = await request.json();
-    const { relationshipId, scheduledAt, durationMinutes, meetingType, meetingLink } = data;
-
-    // Validate required fields
-    if (!relationshipId || !scheduledAt) {
-      return NextResponse.json(
-        { error: 'Relationship ID and scheduled time are required' },
-        { status: 400 }
-      );
+    const parsed = createMeetingSchema.safeParse(await request.json());
+    if (!parsed.success) {
+      return invalidBody(parsed.error);
     }
+    const { relationshipId, scheduledAt, durationMinutes, meetingType, meetingLink } = parsed.data;
 
     // Check if user is part of this relationship
     const [relationship] = await db

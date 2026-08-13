@@ -3,6 +3,19 @@ import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { mentorshipRelationships } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+const updateRelationshipSchema = z.object({
+  status: z
+    .enum(['active', 'paused', 'completed', 'terminated'], {
+      errorMap: () => ({
+        message: 'Invalid status. Must be one of: active, paused, completed, terminated',
+      }),
+    })
+    .nullish(),
+  endReason: z.string().nullish(),
+});
 
 // Admin-only endpoint to update a specific relationship
 export const PATCH = withRoles(
@@ -22,17 +35,11 @@ export const PATCH = withRoles(
         );
       }
 
-      const body = await req.json();
-      const { status, endReason } = body;
-
-      // Validate status if provided
-      const validStatuses = ['active', 'paused', 'completed', 'terminated'];
-      if (status && !validStatuses.includes(status)) {
-        return NextResponse.json(
-          { error: 'Invalid status. Must be one of: active, paused, completed, terminated' },
-          { status: 400 }
-        );
+      const parsed = updateRelationshipSchema.safeParse(await req.json());
+      if (!parsed.success) {
+        return invalidBody(parsed.error);
       }
+      const { status, endReason } = parsed.data;
 
       // Check if relationship exists
       const [existingRelationship] = await db

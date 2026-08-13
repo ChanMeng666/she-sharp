@@ -3,6 +3,16 @@ import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { users, userRoles, adminPermissions } from '@/lib/db/schema';
 import { eq, sql, desc, isNull, and } from 'drizzle-orm';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+const updateRoleSchema = z.object({
+  userId: z.coerce.number().int().positive({ message: 'userId and roleType are required' }),
+  roleType: z.enum(['mentor', 'mentee', 'admin'], {
+    errorMap: () => ({ message: 'userId and roleType are required' }),
+  }),
+  isActive: z.boolean().optional(),
+});
 
 // Admin-only user roles endpoint
 export const GET = withRoles(
@@ -130,15 +140,11 @@ export const PUT = withRoles(
   },
   async (req: NextRequest) => {
     try {
-      const body = await req.json();
-      const { userId, roleType, isActive } = body;
-
-      if (!userId || !roleType) {
-        return NextResponse.json(
-          { error: 'userId and roleType are required' },
-          { status: 400 }
-        );
+      const parsed = updateRoleSchema.safeParse(await req.json());
+      if (!parsed.success) {
+        return invalidBody(parsed.error);
       }
+      const { userId, roleType, isActive } = parsed.data;
 
       // Check if role exists
       const existingRole = await db

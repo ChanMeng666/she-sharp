@@ -3,6 +3,15 @@ import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { volunteerFormSubmissions } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+const updateApplicationSchema = z.object({
+  adminNotes: z.string().nullish(),
+  interviewNotes: z.string().nullish(),
+  interviewScheduledAt: z.string().nullish(),
+  interviewRequestedBy: z.string().max(100).nullish(),
+});
 
 /**
  * GET /api/admin/recruitment/[id]
@@ -64,7 +73,11 @@ export const PATCH = withRoles(
         );
       }
 
-      const body = await req.json();
+      const parsed = updateApplicationSchema.safeParse(await req.json());
+      if (!parsed.success) {
+        return invalidBody(parsed.error);
+      }
+      const body = parsed.data;
       const allowedFields = [
         'adminNotes',
         'interviewNotes',
