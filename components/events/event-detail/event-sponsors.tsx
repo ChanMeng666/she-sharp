@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { EventV3, EventSponsorV3 } from "@/types/event";
-import { hasAnySponsors } from "@/lib/data/events";
+import { hasAnySponsors } from "@/lib/data/event-utils";
 import {
   Tooltip,
   TooltipContent,

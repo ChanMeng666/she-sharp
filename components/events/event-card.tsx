@@ -10,7 +10,7 @@ import {
   formatEventDate,
   getEventDisplayTime,
   isPastEvent,
-} from "@/lib/data/events";
+} from "@/lib/data/event-utils";
 import { cn } from "@/lib/utils";
 import {
   Tooltip,
@@ -51,7 +51,6 @@ export function EventCard({
             src={event.coverImage.url}
             alt={event.coverImage.alt || event.title}
             fill
-            unoptimized
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className={cn(
               "object-cover transition-transform duration-300",
