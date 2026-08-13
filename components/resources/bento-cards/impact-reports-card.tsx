@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import type { ImpactReport } from "@/types/impact-report";
 
@@ -15,10 +16,12 @@ export function ImpactReportsCard({ reports }: ImpactReportsCardProps) {
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-background">
       <div className="relative aspect-[16/10] overflow-hidden">
-        <img
+        <Image
           src="/img/impact.jpg"
           alt="She Sharp community celebrating their impact"
-          className="h-full w-full object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover"
         />
       </div>
       <div className="flex flex-1 flex-col p-6 md:p-8">

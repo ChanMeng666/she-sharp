@@ -3,7 +3,8 @@
 import { EventV3 } from "@/types/event";
 import { Button } from "@/components/ui/button";
 import { CurtainReveal } from "@/components/ui/reveal";
-import { curatedImages, toSrcSet } from "@/public/img/curated";
+import { curatedImages } from "@/public/img/curated";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Heart, Users, Sparkles } from "lucide-react";
 
@@ -84,14 +85,13 @@ export function EventSponsorship({ event }: EventSponsorshipProps) {
               {/* Right: real community photo in a hairline frame */}
               <div className="hidden lg:block shrink-0 w-[360px] xl:w-[420px]">
                 <CurtainReveal className="overflow-hidden rounded-[32px] border border-white/15">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={SPONSOR_PHOTO.src}
-                    srcSet={toSrcSet(SPONSOR_PHOTO)}
+                    width={SPONSOR_PHOTO.width}
+                    height={SPONSOR_PHOTO.height}
                     sizes="420px"
                     alt={SPONSOR_PHOTO.alt}
                     className="w-full h-full object-cover aspect-4/3"
-                    loading="lazy"
                   />
                 </CurtainReveal>
               </div>

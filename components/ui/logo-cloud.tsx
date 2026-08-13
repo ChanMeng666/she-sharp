@@ -44,10 +44,18 @@ export function LogoCloud({
             key={index}
             className="flex items-center justify-center shrink-0 w-[100px] md:w-[120px] h-[40px] md:h-[48px]"
           >
+            {/* Raw <img> on purpose: the sponsor wall is overwhelmingly SVG
+                (45 of 48 logos), which the image optimizer rejects unless
+                `dangerouslyAllowSVG` is enabled, and `w-auto h-auto` inside a
+                fixed box needs each logo's own intrinsic size. Lazy loading and
+                async decoding are the wins available without next/image. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="max-w-full max-h-full w-auto h-auto object-contain grayscale transition duration-300 hover:grayscale-0"
               src={logo.src}
               alt={logo.alt}
+              loading="lazy"
+              decoding="async"
             />
           </div>
         ))}

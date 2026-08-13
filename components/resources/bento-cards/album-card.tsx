@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { CurtainReveal } from "@/components/ui/reveal";
 import type { GalleryAlbum } from "@/types/gallery";
@@ -31,28 +32,34 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
           {hasMosaic ? (
             <div className="grid h-full w-full grid-cols-3 grid-rows-2 gap-1 bg-background">
               <div className="relative col-span-2 row-span-2 overflow-hidden bg-muted">
-                <img
+                <Image
                   src={album.coverImage}
                   alt={album.title}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  fill
+                  sizes="(max-width: 640px) 60vw, (max-width: 1024px) 30vw, 300px"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                 />
               </div>
               {album.thumbnails.slice(0, 2).map((thumb, i) => (
                 <div key={i} className="relative overflow-hidden bg-muted">
-                  <img
+                  <Image
                     src={thumb}
                     alt=""
                     aria-hidden="true"
-                    className="absolute inset-0 h-full w-full object-cover"
+                    fill
+                    sizes="(max-width: 640px) 30vw, (max-width: 1024px) 15vw, 150px"
+                    className="object-cover"
                   />
                 </div>
               ))}
             </div>
           ) : (
-            <img
+            <Image
               src={album.coverImage}
               alt={album.title}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              fill
+              sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 450px"
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
             />
           )}
         </CurtainReveal>

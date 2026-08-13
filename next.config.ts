@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
     clientSegmentCache: true,
   },
   images: {
+    // AVIF first, WebP second. The optimizer picks the first format the
+    // requesting browser accepts, so older clients still get WebP and the
+    // rest fall back to the original encoding.
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -18,6 +22,40 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+  },
+  /**
+   * Cache headers for the static asset folders under `public/`.
+   *
+   * Next.js sends `Cache-Control: public, max-age=0, must-revalidate` for
+   * everything in `public/` by default, so every photo, logo and video was
+   * re-validated on every navigation. These files change rarely, so a day of
+   * browser cache plus a week of stale-while-revalidate is a large win.
+   *
+   * Deliberately SHORT-lived and deliberately NOT `immutable`: the filenames
+   * are not content-hashed, and a follow-up PR recompresses and renames the
+   * asset pool. `immutable` (and a year-long max-age) can only be added once
+   * the URLs carry a fingerprint, otherwise a re-encoded photo would be stuck
+   * in browser caches with no way to bust it.
+   *
+   * `/docs/*` is left alone on purpose — the PDFs are a separate migration.
+   */
+  async headers() {
+    const assetCacheControl =
+      'public, max-age=86400, stale-while-revalidate=604800';
+    return [
+      {
+        source: '/img/:path*',
+        headers: [{ key: 'Cache-Control', value: assetCacheControl }],
+      },
+      {
+        source: '/logos/:path*',
+        headers: [{ key: 'Cache-Control', value: assetCacheControl }],
+      },
+      {
+        source: '/video/:path*',
+        headers: [{ key: 'Cache-Control', value: assetCacheControl }],
+      },
+    ];
   },
   /**
    * Permanent redirects from the legacy (pre-migration) URL structure to the
