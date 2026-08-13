@@ -1,5 +1,10 @@
 import type { NextConfig } from 'next';
 
+import {
+  PITCH_DECK_TEMPLATE_2026_PATH,
+  PITCH_DECK_TEMPLATE_2026_PDF,
+} from './lib/config/assets';
+
 const nextConfig: NextConfig = {
   experimental: {
     ppr: 'incremental',
@@ -150,6 +155,25 @@ const nextConfig: NextConfig = {
       // Catch-all for any remaining legacy /media/* path → resources hub.
       { source: '/media', destination: '/resources', permanent: true },
       { source: '/media/:path*', destination: '/resources', permanent: true },
+      // Not a legacy URL — an indirection that exists to keep a QR code dense.
+      //
+      // The pitch-deck PDF moved to Vercel Blob, but the hackathon deck projects
+      // its URL as a QR sharing a slide with two other codes, so each is drawn
+      // small. At level M the short URL below encodes to 33×33 while the 89-byte
+      // Blob URL needs 41×41 — a quarter off the module size in the same
+      // physical square. The slide therefore keeps the short URL and this rule
+      // does the hop. See `lib/config/assets.ts` for the measurements.
+      //
+      // `redirects()` runs BEFORE the filesystem, so this wins over the copy
+      // still sitting in `public/docs/` (verified locally) and keeps working
+      // unchanged once that copy is deleted. `permanent` is right here because
+      // a document URL never needs re-pointing — unlike a feedback code, where
+      // a cached 308 on someone's phone would be unrecoverable.
+      {
+        source: PITCH_DECK_TEMPLATE_2026_PATH,
+        destination: PITCH_DECK_TEMPLATE_2026_PDF,
+        permanent: true,
+      },
     ];
   },
 };

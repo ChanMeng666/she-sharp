@@ -5,6 +5,7 @@ import { motion, useReducedMotion, type Variants } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
+import { HOME_HERO_VIDEO } from "@/lib/config/assets";
 import { curatedImages } from "@/public/img/curated";
 
 // One-shot staggered rise for the stacked headline lines on first paint.
@@ -43,7 +44,7 @@ export function HeroSection() {
         poster={poster}
         className="absolute inset-0 -z-20 h-full w-full object-cover"
       >
-        <source src="/video/home-page-hero.mp4" type="video/mp4" />
+        <source src={HOME_HERO_VIDEO} type="video/mp4" />
       </video>
 
       {/* Flat navy scrim keeps the white type legible over the footage. */}
