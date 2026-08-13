@@ -683,29 +683,6 @@ export async function processWaitingQueue(): Promise<BatchMatchingResult> {
 }
 
 /**
- * Get match suggestions for a mentee
- */
-export async function getMatchSuggestions(menteeUserId: number) {
-  return db
-    .select({
-      match: aiMatchResults,
-      mentorName: users.name,
-      mentorEmail: users.email,
-      mentorProfile: mentorProfiles,
-    })
-    .from(aiMatchResults)
-    .innerJoin(users, eq(aiMatchResults.mentorUserId, users.id))
-    .leftJoin(mentorProfiles, eq(aiMatchResults.mentorUserId, mentorProfiles.userId))
-    .where(
-      and(
-        eq(aiMatchResults.menteeUserId, menteeUserId),
-        eq(aiMatchResults.status, 'pending_review')
-      )
-    )
-    .orderBy(desc(sql`CAST(${aiMatchResults.overallScore} AS DECIMAL)`));
-}
-
-/**
  * Approve or reject a match suggestion
  */
 export async function reviewMatchSuggestion(
