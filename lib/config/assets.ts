@@ -39,17 +39,36 @@ export const IMPACT_REPORT_2024_PDF = `${BLOB_BASE}/docs/she-sharp-impact-report
 export const IMPACT_REPORT_2025_PDF = `${BLOB_BASE}/docs/she-sharp-impact-report-2025.pdf`;
 
 /**
- * AI Forum's six-page hackathon pitch template.
+ * AI Forum's six-page hackathon pitch template — where the file actually lives.
  *
- * This one is a QR destination on a projected slide, so it must be an absolute
- * URL — `lintDeck()` requires it, and a relative path would resolve against
- * nothing on an attendee's phone. Blob satisfies that as well as the old
- * `shesharp.org.nz/docs/...` form did.
- *
- * FILENAME IS LOAD-BEARING for the deck: the code shares a slide with two
- * others so each is drawn small, and a longer URL means smaller modules.
+ * This is the DESTINATION of the redirect below, not the URL anything links to.
+ * The only consumer is `next.config.ts`'s `redirects()`.
  */
 export const PITCH_DECK_TEMPLATE_2026_PDF = `${BLOB_BASE}/docs/pitch-deck-template-2026.pdf`;
+
+/**
+ * The short, public, QR-facing URL for the same PDF. 308s to the Blob URL.
+ *
+ * URL LENGTH IS LOAD-BEARING and is the entire reason this indirection exists.
+ * The hackathon deck projects this as a QR code sharing a slide with two others,
+ * so each is drawn small. Measured with `qrcode` at level M:
+ *
+ *   this URL (61 bytes)          → version 4, 33×33
+ *   the Blob URL above (89 bytes) → version 6, 41×41
+ *
+ * Encoding Blob directly would cost a quarter of the module size in the same
+ * physical square. `redirects()` is evaluated before the filesystem, so the hop
+ * works whether or not the `public/docs/` copy still exists.
+ *
+ * The two impact reports deliberately have no equivalent — they are ordinary
+ * text links where nothing reads the URL off a wall, so they point at Blob
+ * directly and skip the redirect.
+ */
+export const PITCH_DECK_TEMPLATE_2026_URL =
+  "https://www.shesharp.org.nz/docs/pitch-deck-template-2026.pdf";
+
+/** Same-origin path form of the above — the `source` half of the redirect. */
+export const PITCH_DECK_TEMPLATE_2026_PATH = "/docs/pitch-deck-template-2026.pdf";
 
 // --- Video (video/mp4, Cache-Control: public, max-age=31536000) ---
 
