@@ -180,7 +180,7 @@ const scrollingSponsorLogosSecondRow: ScrollingSponsorLogo[] = [
   { name: "Les Mills", logo: "/img/sponsors/lesmills_logo.svg" },
   { name: "academyEX", logo: "/img/sponsors/academyex.svg" },
   { name: "Metlifecare", logo: "/img/sponsors/metlifecare.svg" },
-  { name: "Ministry of Education", logo: "/img/sponsors/MOE.png" },
+  { name: "Ministry of Education", logo: "/img/sponsors/MOE.webp" },
   { name: "Peyvand Academy", logo: "/img/sponsors/peyvand-academy.jpg" },
   { name: "Little Engineers", logo: "/img/sponsors/little-engineers.jpg" },
   { name: "Grid AKL", logo: "/img/sponsors/grid-akl.svg" },

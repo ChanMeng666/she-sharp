@@ -81,7 +81,7 @@
     slug: "moe",
     name: "Ministry of Education",
     short-name: "Ministry of Education",
-    logo: "/img/sponsors/MOE.png",
+    logo: "/img/sponsors/MOE.webp",
     url: "https://www.education.govt.nz/",
     backed: "Backed the Youth Tech Series in West Auckland alongside Peyvand Academy.",
     events: 2,

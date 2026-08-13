@@ -156,57 +156,57 @@
     "role": "card"
   },
   "team-mahsa-large": {
-    "src": "public/img/team/Mahsa.png",
+    "src": "public/img/team/Mahsa.webp",
     "role": "portrait",
     "width": 900,
     "height": 900
   },
   "team-mike": {
-    "src": "public/img/team/Mike.png",
+    "src": "public/img/team/Mike.webp",
     "role": "portrait"
   },
   "team-raquel": {
-    "src": "public/img/team/Raquel.png",
+    "src": "public/img/team/Raquel.webp",
     "role": "portrait"
   },
   "team-meeta": {
-    "src": "public/img/team/Meeta.png",
+    "src": "public/img/team/Meeta.webp",
     "role": "portrait"
   },
   "team-prasanth": {
-    "src": "public/img/team/Prasanth-Pavithran.png",
+    "src": "public/img/team/Prasanth-Pavithran.webp",
     "role": "portrait"
   },
   "team-sara": {
-    "src": "public/img/Sara.png",
+    "src": "public/img/Sara.webp",
     "role": "portrait"
   },
   "team-chan": {
-    "src": "public/img/team/Chan.png",
+    "src": "public/img/team/Chan.webp",
     "role": "portrait"
   },
   "team-marriane": {
-    "src": "public/img/team/Marriane.png",
+    "src": "public/img/team/Marriane.webp",
     "role": "portrait"
   },
   "team-gurleen": {
-    "src": "public/img/team/Gurleen.png",
+    "src": "public/img/team/Gurleen.webp",
     "role": "portrait"
   },
   "team-yesha": {
-    "src": "public/img/team/Yesha.png",
+    "src": "public/img/team/Yesha.webp",
     "role": "portrait"
   },
   "team-len": {
-    "src": "public/img/team/Len.png",
+    "src": "public/img/team/Len.webp",
     "role": "portrait"
   },
   "team-lesley": {
-    "src": "public/img/team/Lesley.png",
+    "src": "public/img/team/Lesley.webp",
     "role": "portrait"
   },
   "team-nikita": {
-    "src": "public/img/team/Nikita.png",
+    "src": "public/img/team/Nikita.webp",
     "role": "portrait"
   },
   "team-tharanee": {
@@ -257,7 +257,7 @@
     "role": "svg-raster"
   },
   "logo-moe": {
-    "src": "public/img/sponsors/MOE.png",
+    "src": "public/img/sponsors/MOE.webp",
     "role": "raster-logo",
     "trim": false
   },

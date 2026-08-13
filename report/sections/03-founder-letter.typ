@@ -36,7 +36,7 @@
             // previously rendered `team-mahsa-large`, so the founder's portrait
             // appeared twice, three pages apart, in identical framing. This is
             // sourced from public/img/MahsaMcCauley.png; the team grid keeps
-            // public/img/team/Mahsa.png.
+            // public/img/team/Mahsa.webp.
             image(photo("founder-portrait"), width: 100%, height: 100%, fit: "cover"),
           )
         }))
