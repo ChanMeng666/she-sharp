@@ -22,6 +22,7 @@
  *   - the national judging panel roster
  */
 
+import { PITCH_DECK_TEMPLATE_2026_URL } from "@/lib/config/assets";
 import { getEventBySlug } from "@/lib/data/events";
 import type { TimedItem } from "@/lib/deck/types";
 import { curatedImages, toSrcSet } from "@/public/img/curated";
@@ -211,17 +212,31 @@ const SLIDO_QR: QrBlock = {
  * Google Form.
  *
  * The PDF is AI Forum's six-page template — CONNECT, PROBLEM, BIG IDEA, FUTURE
- * IMPACT, with the per-section timings the pitch slides already teach. It is
- * committed under `public/docs/` rather than uploaded to Blob storage so it is
- * versioned with the deck that points at it and needs no token to serve.
+ * IMPACT, with the per-section timings the pitch slides already teach. The file
+ * itself now serves from Vercel Blob, but this URL deliberately stays the short
+ * `shesharp.org.nz` one and reaches it through a 308 in `next.config.ts`.
  *
- * FILENAME IS LOAD-BEARING. This code shares a slide with two others, so each
- * is drawn small; the descriptive name `ai-hackathon-pitch-deck-template-2026`
- * pushes the URL to 73 bytes and the symbol to 41×41, while this one fits 37×37
- * in the same physical square. Lengthen it and the modules get smaller.
+ * URL LENGTH IS LOAD-BEARING, which is the whole reason for the indirection.
+ * This code shares a slide with two others, so each is drawn small. Measured
+ * with the deck's own `qrcode` at level M:
+ *
+ *   https://www.shesharp.org.nz/docs/...      61 bytes → version 4, 33×33
+ *   https://<store>.public.blob.../docs/...   89 bytes → version 6, 41×41
+ *
+ * Encoding the Blob URL directly would shrink the modules by a quarter in the
+ * same physical square, and push past the 73-byte/41×41 point at which a merely
+ * descriptive filename was once rejected. So the slide keeps the short URL and
+ * `redirects()` does the hop — it is evaluated BEFORE the filesystem, so the
+ * redirect wins whether or not the `public/docs/` copy still exists (verified
+ * locally against a build that still had the file). `permanent: true` is safe
+ * here in a way it would not be for a feedback code: this is a document URL
+ * nobody needs to re-point, and the QR itself never changes.
+ *
+ * `lintDeck()`'s only requirement on a non-feedback QR is that the URL is
+ * non-empty, so an absolute same-origin URL satisfies it exactly as before.
  */
 const PITCH_TEMPLATE_QR: QrBlock = {
-  url: "https://www.shesharp.org.nz/docs/pitch-deck-template-2026.pdf",
+  url: PITCH_DECK_TEMPLATE_2026_URL,
   label: "Pitch deck template",
   caption: "shesharp.org.nz/docs",
 };
