@@ -57,6 +57,9 @@ export async function applyInvitationCode(
   }
 
   // Consume the invitation code
+  // `useInvitationCode` is a database helper, not a React hook — the `use`
+  // prefix is what trips the rule, so it is a false positive here.
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const useResult = await useInvitationCode(codeString, userId, undefined, undefined);
   if (!useResult.success) {
     return { success: false, error: useResult.error || 'Failed to use invitation code.' };

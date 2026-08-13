@@ -9,6 +9,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "typecheck:scripts": "tsc -p tsconfig.scripts.json",
     "db:seed": "npx tsx lib/db/seed.ts",
@@ -126,12 +127,15 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.6",
     "@resvg/resvg-js": "^2.6.2",
     "@types/canvas-confetti": "^1.9.0",
     "@types/deep-diff": "^1.0.5",
     "@types/qrcode": "^1.5.6",
     "baseline-browser-mapping": "^2.9.4",
     "csv-parse": "^6.2.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "15.6.0-canary.58",
     "mammoth": "^1.12.0",
     "prettier": "^3.6.2",
     "sharp": "^0.35.3"
