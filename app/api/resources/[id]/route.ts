@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
-import { resources, resourceAccessLogs, adminPermissions } from '@/lib/db/schema';
+import { resources, adminPermissions } from '@/lib/db/schema';
 import { eq, sql } from 'drizzle-orm';
 import { getUser } from '@/lib/db/queries';
 
@@ -43,15 +43,8 @@ export async function GET(
       );
     }
 
-    // Log access if user is authenticated
+    // Increment view count if user is authenticated
     if (user) {
-      await db.insert(resourceAccessLogs).values({
-        resourceId,
-        userId: user.id,
-        action: 'view',
-      });
-
-      // Increment view count
       await db
         .update(resources)
         .set({
@@ -119,14 +112,6 @@ export async function PUT(
         { status: 404 }
       );
     }
-
-    // Log the update
-    await db.insert(resourceAccessLogs).values({
-      resourceId,
-      userId: user.id,
-      action: 'update',
-      ipAddress: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || undefined,
-    });
 
     return NextResponse.json({
       message: 'Resource updated successfully',
