@@ -45,6 +45,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { Spinner } from "@/components/ui/spinner";
+import { apiGet, apiPost, apiPut, isApiError } from '@/lib/api/client';
 
 interface ProgrammeStats {
   menteeApplications: number;
@@ -123,8 +124,7 @@ export default function ProgrammeManagementPage() {
 
   const fetchProgrammes = useCallback(async () => {
     try {
-      const res = await fetch('/api/admin/programmes');
-      const data = await res.json();
+      const data = await apiGet<{ programmes?: Programme[] }>('/api/admin/programmes');
       setProgrammesList(data.programmes || []);
     } catch (error) {
       console.error('Error fetching programmes:', error);
@@ -187,18 +187,18 @@ export default function ProgrammeManagementPage() {
         partnerOrganisation: formPartner || null,
       };
 
-      if (editingProgramme) {
-        await fetch(`/api/admin/programmes/${editingProgramme.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
-        });
-      } else {
-        await fetch('/api/admin/programmes', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
-        });
+      try {
+        if (editingProgramme) {
+          await apiPut(`/api/admin/programmes/${editingProgramme.id}`, body);
+        } else {
+          await apiPost('/api/admin/programmes', body);
+        }
+      } catch (error) {
+        // This never inspected the response, so a rejected save has always
+        // closed the dialog and refetched as if it had worked. Surfacing it is
+        // a UX fix, not a plumbing change — left for a follow-up.
+        if (!isApiError(error)) throw error;
+        console.error('Programme save rejected by the API:', error);
       }
 
       setShowCreateDialog(false);
@@ -215,8 +215,9 @@ export default function ProgrammeManagementPage() {
     setShowMentorsDialog(true);
     setMentorsLoading(true);
     try {
-      const res = await fetch(`/api/admin/programmes/${p.id}/mentors`);
-      const data = await res.json();
+      const data = await apiGet<{ mentors?: ProgrammeMentor[] }>(
+        `/api/admin/programmes/${p.id}/mentors`
+      );
       setProgrammeMentors(data.mentors || []);
     } catch (error) {
       console.error('Error fetching mentors:', error);
@@ -229,9 +230,14 @@ export default function ProgrammeManagementPage() {
     if (!selectedProgramme) return;
     setCompleting(true);
     try {
-      await fetch(`/api/admin/programmes/${selectedProgramme.id}/complete`, {
-        method: 'POST',
-      });
+      try {
+        await apiPost(`/api/admin/programmes/${selectedProgramme.id}/complete`);
+      } catch (error) {
+        // Same as `handleSave`: the response was never checked, so a rejected
+        // completion still closes the dialog. Preserved deliberately.
+        if (!isApiError(error)) throw error;
+        console.error('Programme completion rejected by the API:', error);
+      }
       setShowCompleteDialog(false);
       fetchProgrammes();
     } catch (error) {

@@ -41,6 +41,7 @@ import { Spinner } from "@/components/ui/spinner";
 // `MentorDetails.image` / `MenteeDetails.image` already carry the API-resolved
 // form -> profile -> users.image chain, so they are the last tier here.
 import { resolvePhoto } from '@/lib/mentorship/resolve';
+import { apiGet, apiPost, isApiError } from '@/lib/api/client';
 
 interface Relationship {
   id: number;
@@ -231,46 +232,47 @@ export default function MentorshipDashboard() {
   }, []);
 
   const fetchMentorshipData = async () => {
-    try {
-      const rolesResponse = await fetch('/api/user/roles');
-      if (rolesResponse.ok) {
-        const rolesData = await rolesResponse.json();
-        const roles = rolesData.activeRoles || [];
-        if (roles.includes('mentor') && roles.includes('mentee')) {
-          setUserRole('both');
-        } else if (roles.includes('mentor')) {
-          setUserRole('mentor');
-        } else {
-          setUserRole('mentee');
-        }
-      }
+    // Two independent `if (response.ok)` blocks before this: a failing roles
+    // call left the default role in place and still loaded relationships. Kept
+    // independent so that stays true.
+    const [rolesResult, relationshipsResult] = await Promise.allSettled([
+      apiGet<{ activeRoles?: string[] }>('/api/user/roles'),
+      apiGet<{ active?: Relationship[]; pending?: Relationship[] }>('/api/mentorship/relationships'),
+    ]);
 
-      const relationshipsResponse = await fetch('/api/mentorship/relationships');
-      if (relationshipsResponse.ok) {
-        const data = await relationshipsResponse.json();
-        setRelationships(data.active || []);
-        setPendingApplications(data.pending || []);
+    if (rolesResult.status === 'fulfilled') {
+      const roles = rolesResult.value.activeRoles || [];
+      if (roles.includes('mentor') && roles.includes('mentee')) {
+        setUserRole('both');
+      } else if (roles.includes('mentor')) {
+        setUserRole('mentor');
+      } else {
+        setUserRole('mentee');
       }
-    } catch (error) {
-      console.error('Failed to fetch mentorship data:', error);
-      toast.error('Failed to load mentorship data');
-    } finally {
-      setIsLoading(false);
     }
+
+    if (relationshipsResult.status === 'fulfilled') {
+      setRelationships(relationshipsResult.value.active || []);
+      setPendingApplications(relationshipsResult.value.pending || []);
+    }
+
+    const failure = [rolesResult, relationshipsResult].find((r) => r.status === 'rejected');
+    if (failure && failure.status === 'rejected' && !isApiError(failure.reason)) {
+      console.error('Failed to fetch mentorship data:', failure.reason);
+      toast.error('Failed to load mentorship data');
+    }
+
+    setIsLoading(false);
   };
 
   const fetchMentorDetails = async (mentorUserId: number) => {
     setIsLoadingMentorDetails(true);
     setIsMentorSheetOpen(true);
     try {
-      const response = await fetch(`/api/mentors/${mentorUserId}?byUserId=true&includeFormData=true`);
-      if (response.ok) {
-        const data = await response.json();
-        setSelectedMentorDetails(data.mentor);
-      } else {
-        toast.error('Failed to load mentor details');
-        setIsMentorSheetOpen(false);
-      }
+      const data = await apiGet<{ mentor: MentorDetails }>(
+        `/api/mentors/${mentorUserId}?byUserId=true&includeFormData=true`
+      );
+      setSelectedMentorDetails(data.mentor);
     } catch (error) {
       console.error('Failed to fetch mentor details:', error);
       toast.error('Failed to load mentor details');
@@ -284,14 +286,10 @@ export default function MentorshipDashboard() {
     setIsLoadingMenteeDetails(true);
     setIsMenteeSheetOpen(true);
     try {
-      const response = await fetch(`/api/mentees/${menteeUserId}?byUserId=true&includeFormData=true`);
-      if (response.ok) {
-        const data = await response.json();
-        setSelectedMenteeDetails(data.mentee);
-      } else {
-        toast.error('Failed to load mentee details');
-        setIsMenteeSheetOpen(false);
-      }
+      const data = await apiGet<{ mentee: MenteeDetails }>(
+        `/api/mentees/${menteeUserId}?byUserId=true&includeFormData=true`
+      );
+      setSelectedMenteeDetails(data.mentee);
     } catch (error) {
       console.error('Failed to fetch mentee details:', error);
       toast.error('Failed to load mentee details');
@@ -304,28 +302,24 @@ export default function MentorshipDashboard() {
   const handleApplicationAction = async (relationshipId: number, action: 'approve' | 'reject') => {
     setIsProcessing(true);
     try {
-      const response = await fetch('/api/mentorship/approve', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          relationshipId,
-          action,
-          feedback: feedbackMessage,
-        }),
+      await apiPost('/api/mentorship/approve', {
+        relationshipId,
+        action,
+        feedback: feedbackMessage,
       });
 
-      if (response.ok) {
-        toast.success(`Application ${action}d successfully`);
-        setSelectedApplication(null);
-        setFeedbackMessage('');
-        fetchMentorshipData();
-      } else {
-        const error = await response.json();
-        toast.error(error.message || `Failed to ${action} application`);
-      }
+      toast.success(`Application ${action}d successfully`);
+      setSelectedApplication(null);
+      setFeedbackMessage('');
+      fetchMentorshipData();
     } catch (error) {
       console.error(`Failed to ${action} application:`, error);
-      toast.error(`Failed to ${action} application`);
+      // This route returns `{ error }`, and the toast has always read `.message`
+      // off the body — so the fallback is what a mentor actually sees.
+      const bodyMessage = isApiError(error)
+        ? (error.body as { message?: string } | null)?.message
+        : undefined;
+      toast.error(bodyMessage || `Failed to ${action} application`);
     } finally {
       setIsProcessing(false);
     }

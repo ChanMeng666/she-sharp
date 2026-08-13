@@ -67,6 +67,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn, getAvatarInitials } from '@/lib/utils';
+import { apiGet, apiPatch, isApiError } from '@/lib/api/client';
 
 // Experience years mapping (matches mentor application form)
 const EXPERIENCE_OPTIONS: Record<number, string> = {
@@ -197,15 +198,13 @@ export default function MentorRelationshipsPage() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/admin/mentors/relationships?limit=100');
-      if (!response.ok) {
-        throw new Error('Failed to fetch relationships');
-      }
-      const data: ApiResponse = await response.json();
+      const data = await apiGet<ApiResponse>('/api/admin/mentors/relationships?limit=100');
       setRelationships(data.relationships);
       setStats(data.stats);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      // The old code threw a fixed 'Failed to fetch relationships' on any
+      // non-2xx rather than showing the server's message. Kept.
+      setError(isApiError(err) ? 'Failed to fetch relationships' : err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
     }
@@ -280,22 +279,15 @@ export default function MentorRelationshipsPage() {
 
     setProcessing(true);
     try {
-      const response = await fetch(`/api/admin/mentors/relationships/${selectedRelationship.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus }),
+      await apiPatch(`/api/admin/mentors/relationships/${selectedRelationship.id}`, {
+        status: newStatus,
       });
 
-      if (response.ok) {
-        setSuccessMessage(`Relationship status updated to ${newStatus}`);
-        setStatusDialogOpen(false);
-        fetchRelationships();
-      } else {
-        const data = await response.json();
-        setError(data.error || 'Failed to update status');
-      }
+      setSuccessMessage(`Relationship status updated to ${newStatus}`);
+      setStatusDialogOpen(false);
+      fetchRelationships();
     } catch (err) {
-      setError('Failed to update relationship status');
+      setError(isApiError(err) ? err.message || 'Failed to update status' : 'Failed to update relationship status');
     } finally {
       setProcessing(false);
     }
@@ -306,25 +298,16 @@ export default function MentorRelationshipsPage() {
 
     setProcessing(true);
     try {
-      const response = await fetch(`/api/admin/mentors/relationships/${selectedRelationship.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          status: 'completed',
-          endReason: endReason || 'Ended by admin'
-        }),
+      await apiPatch(`/api/admin/mentors/relationships/${selectedRelationship.id}`, {
+        status: 'completed',
+        endReason: endReason || 'Ended by admin',
       });
 
-      if (response.ok) {
-        setSuccessMessage('Relationship ended successfully');
-        setEndDialogOpen(false);
-        fetchRelationships();
-      } else {
-        const data = await response.json();
-        setError(data.error || 'Failed to end relationship');
-      }
+      setSuccessMessage('Relationship ended successfully');
+      setEndDialogOpen(false);
+      fetchRelationships();
     } catch (err) {
-      setError('Failed to end relationship');
+      setError(isApiError(err) ? err.message || 'Failed to end relationship' : 'Failed to end relationship');
     } finally {
       setProcessing(false);
     }
