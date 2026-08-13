@@ -17,7 +17,6 @@ import type {
   QueueEntryWithDetails,
   QueueProcessingResult,
 } from './types';
-import { invalidateQueueCache } from './cache';
 
 // Queue configuration
 const QUEUE_EXPIRY_DAYS = parseInt(process.env.MATCHING_QUEUE_EXPIRY_DAYS || '90');
@@ -70,7 +69,6 @@ export async function addToWaitingQueue(
     .returning();
 
   // Invalidate cache
-  await invalidateQueueCache();
 
   const position = await getQueuePosition(menteeUserId);
   return { success: true, queuePosition: position, queueEntryId: entry.id };
@@ -150,7 +148,6 @@ export async function updateQueueStatus(
     .set(updateData)
     .where(eq(menteeWaitingQueue.menteeUserId, menteeUserId));
 
-  await invalidateQueueCache();
 }
 
 /**
@@ -170,7 +167,6 @@ export async function removeFromQueue(menteeUserId: number): Promise<void> {
       )
     );
 
-  await invalidateQueueCache();
 }
 
 /**
@@ -190,7 +186,6 @@ export async function cancelQueueEntry(menteeUserId: number): Promise<void> {
       )
     );
 
-  await invalidateQueueCache();
 }
 
 /**
@@ -370,7 +365,6 @@ export async function expireOldQueueEntries(): Promise<number> {
     .returning({ id: menteeWaitingQueue.id });
 
   if (result.length > 0) {
-    await invalidateQueueCache();
   }
 
   return result.length;
@@ -397,7 +391,6 @@ export async function updateQueuePriority(
       )
     );
 
-  await invalidateQueueCache();
 }
 
 /**

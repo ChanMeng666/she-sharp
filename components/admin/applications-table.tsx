@@ -11,55 +11,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Eye, Brain, Loader2 } from 'lucide-react';
+import { Eye, Brain } from 'lucide-react';
+import { Spinner } from '@/components/ui/spinner';
 import Link from 'next/link';
 import type { Application } from '@/components/admin/recruitment-dashboard';
+import {
+  getStageBadgeClass,
+  getTypeBadgeClass,
+  formatRecruitmentType,
+  formatRecruitmentStage as formatStage,
+} from '@/lib/recruitment/stages';
 
 interface ApplicationsTableProps {
   applications: Application[];
   onRefresh: () => void;
 }
 
-// Stage badge styling
-function getStageBadgeClass(stage: string): string {
-  switch (stage) {
-    case 'new': return 'bg-gray-100 text-gray-700';
-    case 'contacted': return 'bg-blue-100 text-blue-700';
-    case 'screening': return 'bg-yellow-100 text-yellow-700';
-    case 'interview_requested': return 'bg-indigo-100 text-indigo-700';
-    case 'interview_scheduled': return 'bg-purple-100 text-purple-700';
-    case 'approved': return 'bg-green-100 text-green-700';
-    case 'rejected': return 'bg-red-100 text-red-700';
-    case 'onboarding': return 'bg-orange-100 text-orange-700';
-    case 'nda_sent': return 'bg-sky-100 text-sky-700';
-    case 'nda_signed': return 'bg-teal-100 text-teal-700';
-    case 'active': return 'bg-emerald-100 text-emerald-700';
-    default: return 'bg-gray-100 text-gray-700';
-  }
-}
-
-// Type badge styling
-function getTypeBadgeClass(type: string): string {
-  switch (type) {
-    case 'ambassador': return 'bg-purple-100 text-purple-700';
-    case 'volunteer': return 'bg-blue-100 text-blue-700';
-    case 'ex_ambassador': return 'bg-amber-100 text-amber-700';
-    default: return 'bg-gray-100 text-gray-700';
-  }
-}
-
-function formatType(type: string): string {
-  switch (type) {
-    case 'ambassador': return 'Ambassador';
-    case 'volunteer': return 'Volunteer';
-    case 'ex_ambassador': return 'Ex-Amb';
-    default: return type;
-  }
-}
-
-function formatStage(stage: string): string {
-  return stage.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-}
+// The table's type column is narrow, so it renders the abbreviated labels.
+const formatType = (type: string) => formatRecruitmentType(type, { short: true });
 
 function getAIScoreBadge(result: Application['aiScreeningResult']) {
   if (!result) return <span className="text-xs text-muted-foreground">--</span>;
@@ -153,7 +122,7 @@ export default function ApplicationsTable({ applications, onRefresh }: Applicati
             onClick={handleBulkUpdate}
             disabled={!bulkStage || bulkUpdating}
           >
-            {bulkUpdating && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+            {bulkUpdating && <Spinner className="mr-2" />}
             Update
           </Button>
           <Button

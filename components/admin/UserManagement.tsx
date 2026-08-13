@@ -86,7 +86,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/lib/utils';
+import { cn, getAvatarInitials } from '@/lib/utils';
 import { industryOptions, labelMap } from '@/lib/mentorship/vocab';
 
 // Industry mapping, shared with the mentor/mentee application forms.
@@ -609,16 +609,6 @@ export default function UserManagement() {
     }
   };
 
-  const getInitials = (name: string | null) => {
-    if (!name) return 'U';
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'admin':
@@ -1017,7 +1007,7 @@ export default function UserManagement() {
                         <Avatar className="w-10 h-10 shrink-0">
                           <AvatarImage src={user.image || undefined} alt={user.name || ''} />
                           <AvatarFallback className="bg-muted text-foreground">
-                            {getInitials(user.name)}
+                            {getAvatarInitials(user.name)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">
@@ -1247,7 +1237,7 @@ export default function UserManagement() {
                                 <Avatar className="w-10 h-10">
                                   <AvatarImage src={user.image || undefined} alt={user.name || ''} />
                                   <AvatarFallback className="bg-muted text-foreground">
-                                    {getInitials(user.name)}
+                                    {getAvatarInitials(user.name)}
                                   </AvatarFallback>
                                 </Avatar>
                                 <div>
@@ -1577,7 +1567,7 @@ export default function UserManagement() {
                 <div className="flex items-center space-x-3 p-3 bg-muted rounded-lg">
                   <Avatar className="w-10 h-10">
                     <AvatarImage src={actionUser.image || undefined} alt={actionUser.name || ''} />
-                    <AvatarFallback>{getInitials(actionUser.name)}</AvatarFallback>
+                    <AvatarFallback>{getAvatarInitials(actionUser.name)}</AvatarFallback>
                   </Avatar>
                   <div>
                     <p className="font-medium">{actionUser.name || 'Unknown User'}</p>
@@ -1620,7 +1610,7 @@ export default function UserManagement() {
                 <div className="flex items-center space-x-3 p-3 bg-muted rounded-lg mb-4">
                   <Avatar className="w-10 h-10">
                     <AvatarImage src={editingUser.image || undefined} alt={editingUser.name || ''} />
-                    <AvatarFallback>{getInitials(editingUser.name)}</AvatarFallback>
+                    <AvatarFallback>{getAvatarInitials(editingUser.name)}</AvatarFallback>
                   </Avatar>
                   <div>
                     <p className="font-medium">{editingUser.name || 'Unknown User'}</p>

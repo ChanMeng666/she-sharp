@@ -15,9 +15,11 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PasswordInput } from "@/components/ui/password-strength";
 import { OAuthButtons } from "@/components/ui/oauth-buttons";
 import { HintIcon } from "@/components/ui/hint-icon";
-import { Loader2, CheckCircle2, Info } from "lucide-react";
+import { CheckCircle2, Info } from "lucide-react";
+
 import { signIn, signUp } from "./actions";
 import { ActionState } from "@/lib/auth/middleware";
+import { Spinner } from "@/components/ui/spinner";
 
 export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
   const router = useRouter();
@@ -304,7 +306,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                 >
                   {pending ? (
                     <>
-                      <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                      <Spinner className="mr-2" />
                       Processing...
                     </>
                   ) : mode === "signin" ? (
@@ -349,7 +351,7 @@ export function Login({ mode = "signin" }: { mode?: "signin" | "signup" }) {
                         className="shrink-0"
                       >
                         {isValidating ? (
-                          <Loader2 className="animate-spin h-4 w-4" />
+                          <Spinner />
                         ) : isCodeValidated ? (
                           <CheckCircle2 className="h-4 w-4 text-green-600" />
                         ) : (

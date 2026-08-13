@@ -17,7 +17,6 @@ import {
   Users,
   Search,
   RefreshCw,
-  Loader2,
   Inbox,
   Phone,
   ClipboardCheck,
@@ -26,8 +25,10 @@ import {
   UserCheck,
   Zap,
 } from 'lucide-react';
+
 import ApplicationsTable from '@/components/admin/applications-table';
 import RecruitmentPipeline from '@/components/admin/recruitment-pipeline';
+import { Spinner } from "@/components/ui/spinner";
 
 // Application type matching the volunteer_form_submissions schema
 export interface Application {
@@ -217,7 +218,7 @@ export default function RecruitmentDashboard() {
           {/* Table */}
           {loading ? (
             <div className="flex justify-center items-center py-20">
-              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+              <Spinner size="lg" className="text-muted-foreground" />
             </div>
           ) : applications.length === 0 ? (
             <Card>
@@ -240,7 +241,7 @@ export default function RecruitmentDashboard() {
         <TabsContent value="pipeline">
           {loading ? (
             <div className="flex justify-center items-center py-20">
-              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+              <Spinner size="lg" className="text-muted-foreground" />
             </div>
           ) : (
             <RecruitmentPipeline
