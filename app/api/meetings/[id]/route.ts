@@ -2,18 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
 import { meetings, mentorshipRelationships, activityLogs, ActivityType } from '@/lib/db/schema';
 import { eq, and, or } from 'drizzle-orm';
-import { getUser } from '@/lib/db/queries';
+import { withRoles, type AuthedRouteContext } from '@/lib/auth/role-middleware';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+// Signed-in only: every handler here then checks the caller is the mentor or
+// mentee on the meeting's relationship — an ownership test `withRoles` cannot
+// express, so it stays in the handler.
+export const GET = withRoles(
+  {},
+  async (request: NextRequest, { params, user }: AuthedRouteContext<{ id: string }>) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { id } = await params;
     const meetingId = parseInt(id);
 
@@ -79,18 +76,12 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const PUT = withRoles(
+  {},
+  async (request: NextRequest, { params, user }: AuthedRouteContext<{ id: string }>) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { id } = await params;
     const meetingId = parseInt(id);
 
@@ -224,18 +215,12 @@ export async function PUT(
       { status: 500 }
     );
   }
-}
+});
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const DELETE = withRoles(
+  {},
+  async (request: NextRequest, { params, user }: AuthedRouteContext<{ id: string }>) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { id } = await params;
     const meetingId = parseInt(id);
 
@@ -292,4 +277,4 @@ export async function DELETE(
       { status: 500 }
     );
   }
-}
+});

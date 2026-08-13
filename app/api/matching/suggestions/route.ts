@@ -1,41 +1,15 @@
-import { NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
+import { NextRequest, NextResponse } from 'next/server';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import { getMatchSuggestions, generateMatchesForMentee } from '@/lib/matching/service';
-import { db } from '@/lib/db/drizzle';
-import { userRoles } from '@/lib/db/schema';
-import { eq, and } from 'drizzle-orm';
 
 /**
  * GET /api/matching/suggestions
  * Gets match suggestions for the current user (if they're a mentee).
  */
-export async function GET() {
+export const GET = withRoles(
+  { requiredRoles: ['mentee'] },
+  async (_request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    // Check if user is a mentee
-    const [menteeRole] = await db
-      .select()
-      .from(userRoles)
-      .where(
-        and(
-          eq(userRoles.userId, user.id),
-          eq(userRoles.roleType, 'mentee'),
-          eq(userRoles.isActive, true)
-        )
-      )
-      .limit(1);
-
-    if (!menteeRole) {
-      return NextResponse.json(
-        { error: 'Only mentees can view match suggestions' },
-        { status: 403 }
-      );
-    }
-
     const suggestions = await getMatchSuggestions(user.id);
 
     // If no suggestions, try to generate new ones
@@ -81,4 +55,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});

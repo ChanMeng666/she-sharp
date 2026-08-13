@@ -2,16 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
 import { mentorshipRelationships, users, mentorProfiles, menteeProfiles, mentorFormSubmissions, menteeFormSubmissions, programmes } from '@/lib/db/schema';
 import { eq, or } from 'drizzle-orm';
-import { getUser } from '@/lib/db/queries';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import { resolvePhoto } from '@/lib/mentorship/resolve';
 
-export async function GET(request: NextRequest) {
+export const GET = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Get all relationships where user is either mentor or mentee - simplified query
     const allRelationships = await db
       .select()
@@ -174,4 +169,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

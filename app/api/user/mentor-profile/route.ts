@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
+import { NextRequest, NextResponse } from 'next/server';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import {
   mentorProfiles,
@@ -11,13 +11,8 @@ import {
 import { eq, and } from 'drizzle-orm';
 import { resolvePhoto } from '@/lib/mentorship/resolve';
 
-export async function GET() {
+export const GET = withRoles({}, async (_request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Get mentor profile
     const [profile] = await db
       .select()
@@ -82,15 +77,10 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});
 
-export async function POST(request: Request) {
+export const POST = withRoles({}, async (request: Request, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const data = await request.json();
 
     // Prepare data for mentor_profiles table
@@ -256,4 +246,4 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-}
+});

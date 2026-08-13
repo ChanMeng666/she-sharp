@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
-import { isUserAdmin } from '@/lib/auth/permissions';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import {
   runBatchMatching,
   runManualGroupMatching,
@@ -54,18 +53,8 @@ function safeSerialize<T>(obj: T): T {
  * - includeQueue: 'true' | 'false' - Include queue statistics
  * - includeUnmatched: 'true' | 'false' - Include unmatched mentors and mentees
  */
-export async function GET(request: NextRequest) {
+export const GET = withRoles({ requiredRoles: ['admin'] }, async (request: NextRequest) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const isAdmin = await isUserAdmin(user.id);
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
-
     const { searchParams } = new URL(request.url);
     const view = searchParams.get('view') || 'list';
     const includeQueue = searchParams.get('includeQueue') === 'true';
@@ -158,7 +147,7 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * POST /api/admin/matching
@@ -170,17 +159,10 @@ export async function GET(request: NextRequest) {
  * - notifyOnMatch?: boolean - Send email notifications (default: false)
  * - preFilterThreshold?: number - Minimum pre-filter score (default: 30)
  */
-export async function POST(request: NextRequest) {
+export const POST = withRoles(
+  { requiredRoles: ['admin'] },
+  async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const isAdmin = await isUserAdmin(user.id);
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
 
     // Parse request body
     let body: Record<string, unknown> = {};
@@ -256,7 +238,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * PUT /api/admin/matching
@@ -267,17 +249,10 @@ export async function POST(request: NextRequest) {
  * - decision: 'approved' | 'rejected' - The review decision
  * - notes?: string - Optional review notes
  */
-export async function PUT(request: NextRequest) {
+export const PUT = withRoles(
+  { requiredRoles: ['admin'] },
+  async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const isAdmin = await isUserAdmin(user.id);
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
 
     const body = await request.json();
     const { matchId, decision, notes } = body;
@@ -316,7 +291,7 @@ export async function PUT(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * DELETE /api/admin/matching
@@ -326,17 +301,10 @@ export async function PUT(request: NextRequest) {
  * - matchIds: number[] - Array of match IDs to reject
  * - reason?: string - Optional rejection reason
  */
-export async function DELETE(request: NextRequest) {
+export const DELETE = withRoles(
+  { requiredRoles: ['admin'] },
+  async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const isAdmin = await isUserAdmin(user.id);
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
 
     const body = await request.json();
     const { matchIds, reason } = body;
@@ -369,4 +337,4 @@ export async function DELETE(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

@@ -19,21 +19,10 @@ export async function isUserAdmin(userId: number): Promise<boolean> {
   return adminRole.length > 0;
 }
 
-export async function getUserRoles(userId: number): Promise<string[]> {
-  const roles = await db
-    .select({
-      roleType: userRoles.roleType,
-    })
-    .from(userRoles)
-    .where(
-      and(
-        eq(userRoles.userId, userId),
-        eq(userRoles.isActive, true)
-      )
-    );
-
-  return roles.map(r => r.roleType);
-}
+// `getUserRoles` used to be duplicated here. The canonical implementation lives
+// in `@/lib/auth/role-middleware` (same query, narrower `UserRole[]` return);
+// re-exported so this module stays a single import site for role helpers.
+export { getUserRoles } from '@/lib/auth/role-middleware';
 
 export async function getUserRole(userId: number, roleType: 'admin' | 'mentor' | 'mentee'): Promise<boolean> {
   const role = await db
