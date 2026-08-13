@@ -4,7 +4,7 @@ import { MentorshipHeroSection } from "@/components/mentorship/mentorship-hero-s
 import { BenefitsSection } from "@/components/mentorship/benefits-section";
 import { Trophy, Rocket, Users } from "lucide-react";
 import { MenteeResponsibilitiesSection } from "@/components/mentorship/mentee/mentee-responsibilities-section";
-import { BecomeMenteeCTASection } from "@/components/mentorship/mentee/become-mentee-cta-section";
+import { BecomeCTASection } from "@/components/mentorship/become-cta-section";
 import { StickyApplyBar } from "@/components/mentorship/sticky-apply-bar";
 import { MENTEE_VIDEO } from "@/lib/config/assets";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
@@ -57,7 +57,7 @@ export default function MenteeApplicationPage() {
 
       <MenteeResponsibilitiesSection />
 
-      <BecomeMenteeCTASection />
+      <BecomeCTASection role="mentee" />
 
       {applicationsOpen && (
         <StickyApplyBar

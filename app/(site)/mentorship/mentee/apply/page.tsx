@@ -28,7 +28,6 @@ import { PhotoUpload } from "@/components/forms/photo-upload";
 import { WarpBackground } from "@/components/ui/warp-background";
 import {
   Check,
-  Loader2,
   ChevronRight,
   ChevronLeft,
   User,
@@ -42,6 +41,7 @@ import {
   Plus,
   X,
 } from "lucide-react";
+
 import Link from "next/link";
 import {
   careerStageOptions as currentStageOptions,
@@ -54,6 +54,7 @@ import {
   nzCities,
   softSkillsOptions,
 } from "@/lib/mentorship/vocab";
+import { Spinner } from "@/components/ui/spinner";
 
 interface FormData {
   // Step 1: Photo & Basic Info
@@ -1666,7 +1667,7 @@ function MenteeApplyForm() {
                     >
                       {loading ? (
                         <>
-                          <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                          <Spinner className="mr-2" />
                           Submitting...
                         </>
                       ) : (
@@ -1713,7 +1714,7 @@ export default function MenteeApplyPage() {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-brand" />
+          <Spinner size="lg" className="text-brand" />
         </div>
       }
     >

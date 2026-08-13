@@ -54,7 +54,6 @@ import {
 import {
   getCachedMentorProfiles,
   setCachedMentorProfiles,
-  invalidateStatsCache,
   invalidateAllMatchCaches,
 } from './cache';
 
@@ -631,7 +630,6 @@ export async function runBatchMatching(
     }
 
     // Invalidate caches
-    await invalidateStatsCache();
 
     return {
       runId: run.id,
@@ -1367,7 +1365,6 @@ export async function runManualGroupMatching(
       })
       .where(eq(aiMatchingRuns.id, run.id));
 
-    await invalidateStatsCache();
 
     return {
       runId: run.id,

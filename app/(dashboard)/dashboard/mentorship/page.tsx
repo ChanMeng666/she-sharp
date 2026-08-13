@@ -26,8 +26,8 @@ import {
   Sparkles,
   GraduationCap,
   Globe,
-  Loader2
 } from 'lucide-react';
+
 import { toast } from 'sonner';
 import {
   industryOptions,
@@ -36,6 +36,8 @@ import {
   meetingFormatOptions,
   nzCities,
 } from '@/lib/mentorship/vocab';
+import { getAvatarInitials } from '@/lib/utils';
+import { Spinner } from "@/components/ui/spinner";
 // `MentorDetails.image` / `MenteeDetails.image` already carry the API-resolved
 // form -> profile -> users.image chain, so they are the last tier here.
 import { resolvePhoto } from '@/lib/mentorship/resolve';
@@ -329,16 +331,6 @@ export default function MentorshipDashboard() {
     }
   };
 
-  const getInitials = (name?: string) => {
-    if (!name) return 'U';
-    return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
   const getRoleLabel = () => {
     if (userRole === 'both') return 'Mentor & Mentee';
     return userRole.charAt(0).toUpperCase() + userRole.slice(1);
@@ -407,7 +399,7 @@ export default function MentorshipDashboard() {
                             src={userRole === 'mentee' ? relationship.mentorImage : relationship.menteeImage}
                           />
                           <AvatarFallback>
-                            {getInitials(userRole === 'mentee' ? relationship.mentorName : relationship.menteeName)}
+                            {getAvatarInitials(userRole === 'mentee' ? relationship.mentorName : relationship.menteeName)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="min-w-0">
@@ -474,7 +466,7 @@ export default function MentorshipDashboard() {
                             src={userRole === 'mentor' ? application.menteeImage : application.mentorImage}
                           />
                           <AvatarFallback>
-                            {getInitials(userRole === 'mentor' ? application.menteeName : application.mentorName)}
+                            {getAvatarInitials(userRole === 'mentor' ? application.menteeName : application.mentorName)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="min-w-0">
@@ -622,7 +614,7 @@ export default function MentorshipDashboard() {
           {/* Scrollable Content */}
           {isLoadingMentorDetails ? (
             <div className="flex items-center justify-center flex-1 py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+              <Spinner size="lg" className="text-muted-foreground" />
             </div>
           ) : selectedMentorDetails ? (
             <div className="flex-1 overflow-y-auto">
@@ -632,7 +624,7 @@ export default function MentorshipDashboard() {
                     <div className="flex items-start gap-3 sm:gap-5">
                       <Avatar className="h-20 w-20 border-2 border-brand/20 shadow-md">
                         <AvatarImage src={resolvePhoto({ formPhotoUrl: selectedMentorDetails.formData?.photoUrl, userImage: selectedMentorDetails.image }) ?? undefined} />
-                        <AvatarFallback className="text-lg bg-brand/10 text-brand">{getInitials(selectedMentorDetails.name)}</AvatarFallback>
+                        <AvatarFallback className="text-lg bg-brand/10 text-brand">{getAvatarInitials(selectedMentorDetails.name)}</AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-2xl font-semibold mb-1">
@@ -887,7 +879,7 @@ export default function MentorshipDashboard() {
           {/* Scrollable Content */}
           {isLoadingMenteeDetails ? (
             <div className="flex items-center justify-center flex-1 py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+              <Spinner size="lg" className="text-muted-foreground" />
             </div>
           ) : selectedMenteeDetails ? (
             <div className="flex-1 overflow-y-auto">
@@ -897,7 +889,7 @@ export default function MentorshipDashboard() {
                   <div className="flex items-start gap-3 sm:gap-5">
                     <Avatar className="h-20 w-20 border-2 border-periwinkle/20 shadow-md">
                       <AvatarImage src={resolvePhoto({ formPhotoUrl: selectedMenteeDetails.formData?.photoUrl, userImage: selectedMenteeDetails.image }) ?? undefined} />
-                      <AvatarFallback className="text-lg bg-periwinkle/10 text-periwinkle">{getInitials(selectedMenteeDetails.name)}</AvatarFallback>
+                      <AvatarFallback className="text-lg bg-periwinkle/10 text-periwinkle">{getAvatarInitials(selectedMenteeDetails.name)}</AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
                       <h3 className="text-2xl font-semibold mb-1">

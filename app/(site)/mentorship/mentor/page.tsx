@@ -3,7 +3,7 @@
 import { MentorshipHeroSection } from "@/components/mentorship/mentorship-hero-section";
 import { BenefitsSection } from "@/components/mentorship/benefits-section";
 import { Trophy, Rocket, Users } from "lucide-react";
-import { BecomeMentorCTASection } from "@/components/mentorship/mentor/become-mentor-cta-section";
+import { BecomeCTASection } from "@/components/mentorship/become-cta-section";
 import { MentorResponsibilitiesSection } from "@/components/mentorship/mentor/mentor-responsibilities-section";
 import { StickyApplyBar } from "@/components/mentorship/sticky-apply-bar";
 import { MENTOR_VIDEO } from "@/lib/config/assets";
@@ -56,7 +56,7 @@ export default function BecomeMentorPage() {
 
       <MentorResponsibilitiesSection />
 
-      <BecomeMentorCTASection />
+      <BecomeCTASection role="mentor" />
 
       {applicationsOpen && (
         <StickyApplyBar

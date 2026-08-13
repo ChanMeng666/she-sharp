@@ -135,34 +135,6 @@ export async function invalidateAllMatchCaches(): Promise<void> {
 }
 
 /**
- * Invalidate queue position cache
- */
-export async function invalidateQueueCache(): Promise<void> {
-  const client = getRedis();
-  if (!client) return;
-
-  try {
-    await client.del(`${CACHE_PREFIX.QUEUE}:positions`);
-  } catch (error) {
-    console.error('Redis invalidate queue error:', error);
-  }
-}
-
-/**
- * Invalidate statistics cache
- */
-export async function invalidateStatsCache(): Promise<void> {
-  const client = getRedis();
-  if (!client) return;
-
-  try {
-    await client.del(`${CACHE_PREFIX.STATS}:matching`);
-  } catch (error) {
-    console.error('Redis invalidate stats error:', error);
-  }
-}
-
-/**
  * Check if Redis is available
  */
 export function isRedisAvailable(): boolean {

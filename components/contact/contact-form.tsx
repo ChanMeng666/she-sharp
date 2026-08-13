@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 
 interface FormData {
   fullName: string;
@@ -234,7 +235,7 @@ export function ContactForm() {
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                <Spinner className="mr-2" />
                 Sending...
               </>
             ) : (

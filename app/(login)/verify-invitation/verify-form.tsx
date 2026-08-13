@@ -7,9 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
-import { Loader2, Mail, ShieldCheck } from 'lucide-react';
+import { Mail, ShieldCheck } from 'lucide-react';
+
 import { verifyOAuthInvitationCode } from './actions';
 import { ActionState } from '@/lib/auth/middleware';
+import { Spinner } from "@/components/ui/spinner";
 
 interface VerifyInvitationFormProps {
   userEmail: string;
@@ -113,7 +115,7 @@ export function VerifyInvitationForm({ userEmail, userName }: VerifyInvitationFo
               >
                 {pending ? (
                   <>
-                    <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                    <Spinner className="mr-2" />
                     Verifying...
                   </>
                 ) : (
