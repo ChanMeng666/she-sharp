@@ -18,6 +18,20 @@
  * What belongs in this file and nowhere else: the accent pair, the chosen
  * imagery, the kicker on each slide, and the host note that says what to say.
  *
+ * THE LOOK IS NOT THIS FILE'S EITHER, AND THAT IS THE CORRECTION. This evening
+ * spent three rounds acquiring a visual identity of its own — a new accent, then
+ * a different archive weave, then a wholly bespoke dark skin built from
+ * generated artwork — and each round was measured against the hackathon deck, a
+ * deck that had never made a design decision at all. What was actually missing
+ * was the organisation's own editorial system, which the website has had since
+ * July 2026 and the projector had never seen. So this deck wears
+ * `EDITORIAL_SKIN`: paper and navy ink, hairline rules, script eyebrows,
+ * outline numerals, the brand colour as punctuation. It is a DEFAULT rather than
+ * this evening's own look, and every regular She Sharp evening after it should
+ * wear the same one. A bespoke skin is for an event whose poster can be
+ * described in one sentence; a two-hour panel is not that event, and pretending
+ * otherwise is what cost three rounds.
+ *
  * DELIBERATELY NOT ON SCREEN — it is on the event page, which the closing QR
  * reaches in one scan, and every sentence the room reads is a sentence it is
  * not hearing:
@@ -42,7 +56,8 @@ import {
   speakerGroupsFrom,
 } from "../event-source";
 import { DEFAULT_CLOSING_KARAKIA, DEFAULT_OPENING_KARAKIA } from "../karakia";
-import type { Deck, DeckImage, DeckSkin, QrBlock, Slide } from "../types";
+import { EDITORIAL_SKIN } from "../skins";
+import type { Deck, DeckImage, QrBlock, Slide } from "../types";
 import { archiveFrame } from "../wall-tiles";
 import { deckPlates, plateSrcSet } from "@/public/img/plates";
 
@@ -58,174 +73,21 @@ const CLOSING_KARAKIA: KarakiaText = DEFAULT_CLOSING_KARAKIA;
 // --- Imagery ---------------------------------------------------------------
 
 /**
- * The evening's own picture: a lit braid of fibre-optic strands, twisted like
- * the fascicles of a muscle.
+ * The two karakia plates: whenua, and deliberately not the archive.
  *
- * Generated with gpt-image-2 at 2048×3072 and cropped to the deck's 3:2, from
- * the same four candidates the event's new poster was built from — so the
- * projector and the poster are one piece of art direction rather than two. It
- * is the only honest picture available for this evening: a fitness company
- * talking about AI, in a deck whose photographic archive contains neither a gym
- * nor a panel that has happened yet.
+ * A karakia is a practice rather than a design slot. Everywhere else in the deck
+ * the ground is twelve years of She Sharp rooms, because everywhere else
+ * something is being offered; the two moments that open and close the evening
+ * sit on land and water instead, which is what the karakia themselves speak
+ * about. `whenua-pounamu-sea` is chosen for the opening because the opening
+ * karakia's own second line is "Kia whakapapa pounamu te moana" — may the sea be
+ * like greenstone. Harakeke at dusk answers it at the end of the night rather
+ * than repeating it.
  *
- * IT IS NOT A PHOTOGRAPH AND MUST NEVER BE CAPTIONED AS ONE. Nothing in the She
- * Sharp archive looks like this, which is exactly why it is safe to use: it
- * could not be mistaken for a real event photograph, and the archive's whole
- * value is that it is true. It carries no people, nothing that imitates taonga,
- * and no branding.
- *
- * Two different frames, not one used twice. The chapter card and the countdown
- * are forty minutes apart, and repeating the image would make the second read
- * as the deck looping rather than moving.
- */
-const FIBRE_CHAPTER: DeckImage = {
-  src: "/img/events/event-lesmills-03-september-2026-fibre-chapter-1920.webp",
-  srcSet:
-    "/img/events/event-lesmills-03-september-2026-fibre-chapter-1920.webp 1920w, " +
-    "/img/events/event-lesmills-03-september-2026-fibre-chapter-1280.webp 1280w",
-  alt: "A braid of fibre-optic strands lit from within in magenta and cyan, twisted like muscle fibre against near-black.",
-};
-
-const FIBRE_BREAK: DeckImage = {
-  src: "/img/events/event-lesmills-03-september-2026-fibre-break-1920.webp",
-  srcSet:
-    "/img/events/event-lesmills-03-september-2026-fibre-break-1920.webp 1920w, " +
-    "/img/events/event-lesmills-03-september-2026-fibre-break-1280.webp 1280w",
-  alt: "A denser braid of lit fibre-optic strands, magenta over cyan, receding into deep bokeh.",
-};
-
-/**
- * Four more frames of the same subject, and the reason there are four.
- *
- * The two above are the poster's braid photographed twice, and across eight
- * statement slides they read as one picture the projector keeps returning to —
- * the failure `SurfaceSpec.plate` warns about, arrived at from the other side.
- * Panning further does not fix it; a plate panned far enough to look like a
- * different picture is a plate whose subject has left the frame.
- *
- * So these are four different photographs of fibre rather than four crops of
- * one: a fan of strands receding, the bundle cut and seen end-on, a single
- * filament crossing an empty field, and the light thrown completely out of
- * focus. Each puts its clear space somewhere different — right, left, top,
- * centre — which is what lets `platePlacement()` keep type off the subject on a
- * slide it knows nothing about.
- *
- * The cross-section earns its place twice. Hundreds of individually lit fibres
- * packed into one bundle is, without being asked to be, a picture of four people
- * from four jobs in one company, which is the entire argument of the evening.
- *
- * All four: gpt-image-2, 1536×1024, under the house rules that govern every
- * generated asset here — no people, nothing imitating taonga, no text, no
- * branding, and nothing that could be mistaken for a real She Sharp photograph.
- * That last one is the important one, and abstract macro glass is exactly why
- * this subject is safe: nothing in twelve years of the archive looks remotely
- * like it.
- */
-function fibrePlate(name: string, alt: string): DeckImage {
-  const base = `/img/events/event-lesmills-03-september-2026-${name}`;
-  return {
-    src: `${base}-1920.webp`,
-    srcSet: `${base}-1920.webp 1920w, ${base}-1280.webp 1280w`,
-    alt,
-  };
-}
-
-const FIBRE_STRANDS = fibrePlate(
-  "fibre-strandfield",
-  "A fan of fine glass filaments spreading from the left edge, each carrying a point of magenta or cyan light, against near-black.",
-);
-
-const FIBRE_SECTION = fibrePlate(
-  "fibre-crosssection",
-  "A bundle of optical fibres cut and seen end-on, the face a dense disc of hundreds of separately lit points in magenta, cyan and white.",
-);
-
-const FIBRE_FILAMENT = fibrePlate(
-  "fibre-filament",
-  "A single glass filament crossing a wide dark field low in the frame, lit from within in cyan, everything above it empty.",
-);
-
-const FIBRE_SCATTER = fibrePlate(
-  "fibre-scatter",
-  "Points of magenta and cyan light thrown completely out of focus across a near-black field, sparsest at the centre.",
-);
-
-/**
- * This evening's skin. She Sharp's own slides keep the archive wall.
- *
- * `surface: "plate"` puts the braid behind every statement slide the evening
- * owns — the chapter cards, the countdown, the closing frame — panned per slide
- * from that slide's own seed so no two show the same crop. Two plates rather
- * than one: a single image across a deck's statement slides reads as a stuck
- * projector however far it is panned.
- *
- * `tempo: 1.25` slows every entrance by a quarter. The house recipes are cut
- * for a hard-edged tile wall, where a fast arrival reads as precision; light
- * travelling along a filament wants to be watched rather than snapped into
- * place. `motion.ts` clamps the range, so this cannot stall a waiting host.
- *
- * The look itself — glass panels instead of cut incisions, rules that are the
- * light in the fibre rather than ruled lines, wider tracking on the small caps
- * — is the `[data-skin="fibre"]` block in `styles/components/deck-skins.css`.
- * Nothing here touches the stage geometry, the copy limits or the type scale;
- * a skin changes how a deck looks, never what it is allowed to say.
- */
-const FIBRE_SKIN: DeckSkin = {
-  key: "fibre",
-  name: "Fibre",
-  description:
-    "The event poster's braid of lit fibre-optic strands — magenta over cyan on near-black, glass panels, gradient rules.",
-  surface: {
-    kind: "plate",
-    images: [
-      FIBRE_CHAPTER,
-      FIBRE_STRANDS,
-      FIBRE_SECTION,
-      FIBRE_BREAK,
-      FIBRE_FILAMENT,
-      FIBRE_SCATTER,
-    ],
-    drift: true,
-  },
-  /*
-   * NO PHOTO WALL ANYWHERE IN THIS DECK.
-   *
-   * The archive used as mass — a wall, a grid, a band of small frames — is the
-   * house deck's signature device, and the hackathon deck has spent it. A
-   * second deck using the same device reads as the same deck whatever colour it
-   * is and however the tiles are arranged; that is a fact about the device, and
-   * it is why regrading it and then rearranging it both failed to make these
-   * two decks distinguishable.
-   *
-   * So She Sharp's own slides here stand on a ground drawn in code: black with
-   * light running through it, the poster's subject at the poster's distance.
-   *
-   * WHAT THIS COSTS, said plainly: the organisational sequence no longer shows
-   * twelve years of rooms behind the team, the figures and the thanks. What it
-   * keeps is every photograph that is actually being LOOKED at — the community
-   * hero, the closing frame, four panellists' faces — because a single
-   * photograph is a different device from photography used as texture, and it
-   * is the one that was carrying the meaning.
-   */
-  houseSurface: { kind: "field" },
-  tempo: 1.25,
-  /* Declared, though `geometryOf()` would infer the same from the plate
-     surface. The `[data-skin="fibre"]` block replaces the house's opaque cuts
-     with backdrop-blurred glass and its ruled lines with gradients of light in
-     the fibre, so the value is a fact about this deck rather than a guess. */
-  geometry: "glass",
-};
-
-/**
- * The two karakia plates: whenua, and deliberately not the fibre.
- *
- * A karakia is a practice rather than a design slot. The fibre is this event's
- * artwork and it belongs to the parts of the deck that are about the event; the
- * two moments that open and close the evening sit on land and water, which is
- * what the karakia themselves speak about. `whenua-pounamu-sea` is chosen for
- * the opening because the opening karakia's own second line is "Kia whakapapa
- * pounamu te moana" — may the sea be like greenstone. Harakeke at dusk answers
- * it at the end of the night rather than repeating it.
+ * These are generated plates, and they exist because the archive contains no
+ * landscape, coastline, sky or dawn at all. Their scope is declared in the
+ * manifest and is not negotiable: whenua only, never people, never taonga,
+ * nothing mistakable for a real She Sharp event.
  */
 function whenuaPlate(key: "whenua-pounamu-sea" | "whenua-harakeke-dusk"): DeckImage {
   return {
@@ -505,11 +367,13 @@ const EVENING: Slide[] = [
     lead: "Talk it through, then we will hear from every table",
     minutes: TABLE_MINUTES,
     resumeLabel: "Back together",
-    /* The out-of-focus frame, chosen for what is NOT in it. A countdown sets a
-       two-character numeral at the largest size in the deck, and this is the
-       only plate in the family whose centre is empty — the braid frames put
-       their subject exactly where the clock goes. */
-    background: FIBRE_SCATTER,
+    /* NO PLATE, deliberately. A countdown sets a two-character numeral at the
+       largest size in the deck and the room reads it from across a hall, so the
+       ground behind it wants to be empty — plain navy, with the archive
+       surviving as a band along the foot. It is also what puts the rail back to
+       its solid bar: `railVariant()` goes sheer only on a backed break slide,
+       and a sheer rail over flat colour is a header that has quietly lost its
+       ground. */
     note: "Press Space to start the countdown and Space again to pause it. The clock on the wall is what gets a room back on time — do not try to do it by voice.",
   },
 
@@ -551,72 +415,83 @@ export const eventLesmills03September2026Deck: Deck = {
   subtitle: deckSubtitleFrom(event),
   eventSlug: EVENT_SLUG,
   /*
-   * The contact sheet — one strict, motionless grid of the archive.
+   * The mosaic — an irregular grid of the archive, cut on the same rows.
    *
-   * The reasoning is structural rather than a preference. This evening's own
-   * slides already carry a moving ground: `FIBRE_SKIN` sets `drift: true` and
-   * `fibre-drift` swells the plate over 38 seconds. Put the drifting archive
-   * wall on the organisational slides as well and nothing in the deck is ever
-   * still — twenty-four slides of something always sliding. Holding the house
-   * slides motionless says the true thing instead: the organisation is the fixed
-   * point and the evening is what is in motion.
+   * The weave the ledger's own note describes as "Editorial, uneven", which is
+   * what this deck is, and the one no deck had claimed. The earlier choice here
+   * was the contact sheet, argued for as stillness against a plate that drifted;
+   * that plate is gone and its argument went with it, so the honest reason is
+   * the plain one — a mosaic is how the website lays photographs out, and the
+   * arrangement is the axis a deck is allowed to choose.
    *
-   * It is also as far from the hackathon as the archive gets. Theirs drifts
-   * horizontally; this does not move at all, which is the difference a room
-   * actually registers between two decks.
+   * `EDITORIAL_SKIN` declares no weave of its own, so this value reaches the
+   * event's statement slides as well as She Sharp's: one silhouette for the
+   * whole deck rather than two. It is also the axis `style-library.ts` measures
+   * against the hackathon, which drifts.
    */
-  archive: "contact-sheet",
-  skin: FIBRE_SKIN,
+  archive: "mosaic",
   /*
-   * The neon pink off the poster headline, run through
-   * `accentFromBrandColour()` so it clears the contrast floor on both canvases.
+   * The house default for a regular evening, not this evening's own look. See
+   * `lib/deck/skins.ts` — the two knobs an event actually turns are the accent
+   * pair below and the weave above.
+   */
+  skin: EDITORIAL_SKIN,
+  /*
+   * The website's own two colours, one per register.
    *
-   * Not the navy, which covers half the poster — a background is the one colour
-   * never to take. `npx tsx scripts/deck/accent-from-poster.ts` ranks the
-   * candidates; this was the second, and it is the colour the poster is actually
-   * about. The event's redesigned poster was then built on this exact pair
-   * rather than the other way round, so the two agree by construction.
-   *
-   * `spark` is the cyan that runs through the fibre imagery, and it does the
-   * same job on both artefacts: the poster sets "Getting Fit for AI" in it, and
-   * here it lights the rules and the countdown ring. The magenta is reserved for
-   * the things the room is meant to act on.
+   * Not a colour lifted off the event poster, and that is the whole point of a
+   * default skin: the deck speaks in She Sharp's voice at every regular evening,
+   * and an event changes the accent only when its own artwork genuinely beats
+   * the house pair. Every ratio below was computed with `contrastRatio()` in
+   * `lib/deck/theme.ts` against the canvas the colour actually renders on.
    */
   theme: {
     accent: {
+      /* Brand purple on the paper register — 6.16:1 on `#f4f4fa`, floor 4.5. */
+      onLight: "#9b2e83",
       /*
-       * ONE accent, not a pair, because this deck has no light register to
-       * speak of. The house pair exists because brand purple scores 2.92:1 on
-       * the dark canvas and has to be lightened there; here both grounds are
-       * near-black, so the same lit magenta is correct on both and a darker
-       * `onLight` would be unreadable on the very slides it was meant for.
+       * Mint on navy — 12.98:1, and the reason the house `#c846ab` cannot be
+       * used here. That purple-mid is tuned for the near-black canvas and
+       * scores only 3.71:1 on `#1f1e44`, which is below the floor for body text
+       * and would fail exactly where the accent does its work. Mint is also
+       * what `deck.css` already sets a dark kicker in, so the deck's kicker and
+       * its accent become one colour rather than two.
        */
-      onLight: "#e070cf",
-      onDark: "#e070cf",
-      spark: "#5ee7f5",
+      onDark: "#b1f6e9",
+      /* Periwinkle, decorative only — gradients, hairlines, the timer ring. */
+      spark: "#8982ff",
     },
     /*
-     * The canvases the deck ACTUALLY renders, declared so
-     * `checkAccentContrast()` measures against them.
+     * The one ground this deck moves: the site's navy stat band, in place of the
+     * house near-black. Declared here rather than in CSS because
+     * `themeToCssVars()` emits it as `--deck-canvas-dark` inline AND because
+     * `checkAccentContrast()` reads it — a canvas changed in the stylesheet and
+     * not here turns the one check that can catch an unreadable slide into a
+     * rubber stamp.
      *
-     * These mirror `--deck-canvas-dark` and `--deck-paper` in the
-     * `[data-skin="fibre"]` block, and the duplication is the point: without
-     * them the checker measures this magenta against a white page that never
-     * appears anywhere in the deck, passes it, and tells us nothing. Keep the
-     * two in step — a colour changed in the stylesheet and not here turns the
-     * one check that can catch an unreadable slide into a rubber stamp.
+     * `theme.ts` warns that navy washes out on a projector, which is why the
+     * fallback if it does is to deepen toward `#1a1938`: every ratio here only
+     * rises, and the accent hue does not move.
      */
-    darkCanvas: "#05060b",
-    lightCanvas: "#14172a",
+    darkCanvas: "#1f1e44",
     /*
-     * Both registers are dark, so both take the same near-white ink — and it
-     * has to be said here, not only in CSS. `deck.test.ts` asserts body text
-     * clears 7:1 against its own canvas, and it reads this: the first dark
-     * build declared the canvases and left the ink implicit, so the check
-     * measured the house navy `#1f1e44` against `#14172a` and reported 1.12:1.
-     * It was right. The title slide had come out invisible.
+     * The paper register, stated at the value `--deck-paper` already holds.
+     * `themeToCssVars()` emits this as `--deck-canvas-light`, which despite its
+     * name is used everywhere in the repo as the colour of TYPE laid over a
+     * photograph — the karakia, the countdown, photo captions. Both readings
+     * want a near-white here, so the one value is correct in both roles and no
+     * CSS restatement is needed. On a skin that moves the light ground somewhere
+     * dark, they come apart; this one does not.
      */
-    ink: { onLight: "#e8f1f7", onDark: "#e8f1f7" },
+    lightCanvas: "#f4f4fa",
+    /*
+     * The house ink pair, said out loud. `deck.test.ts` asserts body text clears
+     * 7:1 against its own canvas and it reads THIS rather than the stylesheet,
+     * so leaving it implicit on a deck that has moved a canvas is how an
+     * unreadable slide ships. Navy on paper and paper on navy are the same two
+     * colours swapped: 14.44:1 in both directions.
+     */
+    ink: { onLight: "#1f1e44", onDark: "#f4f4fa" },
   },
   slides: [
     ...buildOpeningSlides({
@@ -632,8 +507,12 @@ export const eventLesmills03September2026Deck: Deck = {
       // line is the one most likely to be needed.
       safetyExtras: [],
       heroImage: whenuaPlate("whenua-pounamu-sea"),
-      // The first time the evening's own identity appears on the projector.
-      chapterPlate: FIBRE_CHAPTER,
+      // NO CHAPTER PLATE. The handover card falls back to the archive wall with
+      // its numeral drawn in outline over it, which under this skin IS the
+      // handover: `01` stops being a window cut into twelve years of She Sharp
+      // rooms and becomes a line of ink laid over them. An event with artwork
+      // worth projecting passes it here; this evening's artwork is its poster,
+      // and a poster is not a slide.
       contactQrs: [WEBSITE_QR, EVENTS_QR, LINKEDIN_QR],
     }),
 

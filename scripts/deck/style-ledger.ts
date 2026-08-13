@@ -31,6 +31,14 @@ import { getAllDecks } from "@/lib/deck/registry";
 const decks = getAllDecks();
 const prints = decks.map(deckFingerprint);
 
+/* The gate's own answer, computed once and reused for the per-pair flag below.
+   Recomputing the thresholds here would be a second definition of "too close",
+   and it would already be wrong: a pair of decks wearing the same skin answers
+   to a different floor, and a report that contradicts the gate is worse than no
+   report. */
+const issues = lintDeckSet(decks);
+const flagged = new Set(issues.map((issue) => issue.slugs.join(" / ")));
+
 function pad(text: string, width: number): string {
   return text.length >= width ? text : text + " ".repeat(width - text.length);
 }
@@ -86,6 +94,9 @@ if (prints.length > 1) {
   console.log(
     "  event = the event's own chapters (surface, geometry, tempo, hue) — floor 2\n",
   );
+  console.log(
+    "  two decks in the SAME skin are judged on house alone, and must score 2\n",
+  );
 
   for (let i = 0; i < prints.length; i += 1) {
     for (let j = i + 1; j < prints.length; j += 1) {
@@ -93,13 +104,11 @@ if (prints.length > 1) {
       const b = prints[j];
       const h = houseDistance(a, b);
       const e = eventDistance(a, b);
-      const flag = h < 1 || e < 2 ? "  <-- TOO CLOSE" : "";
+      const flag = flagged.has(`${a.slug} / ${b.slug}`) ? "  <-- TOO CLOSE" : "";
       console.log(`  house ${h}   event ${e}   ${a.slug} / ${b.slug}${flag}`);
     }
   }
 }
-
-const issues = lintDeckSet(decks);
 
 if (issues.length) {
   console.log("\nWHAT TO FIX\n");

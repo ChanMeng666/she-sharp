@@ -165,12 +165,25 @@ function comment(text: string, indent = "    "): string {
  */
 function weaveBlock(taken: readonly Deck[]): string {
   const free = unusedWeaves(taken, ARCHIVE_WEAVES);
+
+  /*
+   * When every weave is taken there is nothing free to pick, and picking
+   * nothing is not an option — `Deck.archive` is required and a missing line
+   * would not compile. So it falls back to the first weave and says, in the
+   * scaffold itself, what the author now has to do by hand. A silent repeat is
+   * the one outcome ruled out: it is the exact shape that produced the twins.
+   */
   const chosen = free[0] ?? ARCHIVE_WEAVES[0];
   const note = free.length
     ? `Still unused: ${free.join(", ")}.`
-    : `Every weave is in use — this one repeats ${
+    : `EVERY WEAVE IS IN USE — this one repeats ${
         taken.find((deck) => deck.archive === chosen)?.slug ?? "another deck"
-      }, so this deck's accent must sit in a different part of the colour wheel or \`deck.test.ts\` will fail.`;
+      }, which \`deck.test.ts\` accepts only if this deck's accent hue differs ` +
+      `from that deck's. Against another deck wearing the same skin it will ` +
+      `fail whatever the accent does, because a same-skin pair must differ on ` +
+      `the weave AND the hue — see \`lintDeckSet()\`. Either give this event a ` +
+      `skin of its own or add a fourth weave (\`references/weaves.md\` has the ` +
+      `three steps).`;
 
   return [
     `  // How She Sharp's own slides arrange the archive. Picked because nothing`,
@@ -180,6 +193,36 @@ function weaveBlock(taken: readonly Deck[]): string {
     `  archive: ${literal(chosen)},`,
   ].join("\n");
 }
+
+/**
+ * The skin a scaffolded deck wears, and why it is written in rather than left
+ * out.
+ *
+ * `skin` is optional on `Deck`, so omitting it compiles — and what it compiles
+ * to is the house wall in the house type, which is what every deck looked like
+ * before August 2026 and is the reason `style-library.ts` exists. A regular
+ * two-hour evening has no visual concept of its own and should not be made to
+ * invent one, so the scaffold answers the question instead of asking it: the
+ * organisation's own editorial system, the same one the website has used since
+ * July 2026.
+ *
+ * It is a default, not a decision, and the comment says so where the author will
+ * read it — in the file, next to the line, rather than in a reference they would
+ * have to know to open.
+ */
+const EDITORIAL_SKIN_BLOCK = [
+  `  // The house look for a regular She Sharp evening: the website's editorial`,
+  `  // system on the projector — paper and navy ink, hairline rules, a line of`,
+  `  // script where a slide introduces itself, chapter numerals drawn as`,
+  `  // outlines. The two knobs this event turns are the weave and the accent`,
+  `  // above; everything else is the same voice at every event, on purpose.`,
+  `  //`,
+  `  // Replace it with a bespoke \`DeckSkin\` only when this event's poster gives`,
+  `  // you a concept you can say in one sentence — see`,
+  `  // \`.claude/skills/build-event-slides/references/skins.md\`. A deck in a`,
+  `  // half-built bespoke skin is worse than one in this.`,
+  `  skin: EDITORIAL_SKIN,`,
+].join("\n");
 
 function template(
   event: EventV3,
@@ -254,6 +297,7 @@ import {
   ${imports},
 } from "../event-source";
 import { DEFAULT_CLOSING_KARAKIA, DEFAULT_OPENING_KARAKIA } from "../karakia";
+import { EDITORIAL_SKIN } from "../skins";
 import type { Deck, DeckImage, QrBlock } from "../types";
 import { archiveFrame } from "../wall-tiles";
 
@@ -293,6 +337,7 @@ export const ${exportName(slug)}: Deck = {
   eventSlug: EVENT_SLUG,
 ${weave}
 ${themeBlock}
+${EDITORIAL_SKIN_BLOCK}
   slides: [
     ...buildOpeningSlides({
       eventTitle: deckTitleFrom(event),
@@ -402,27 +447,45 @@ function main(): void {
     : undefined;
 
   /*
-   * A skin cannot be carried across by lifting one line.
+   * A BESPOKE skin cannot be carried across by lifting one line.
    *
-   * `skin: FIBRE_SKIN` is a reference to module-level declarations — the
+   * `skin: SOME_SKIN` is usually a reference to module-level declarations — the
    * `DeckSkin`, its plates, and their imports — and carrying the field without
    * them produces a file that does not compile, or worse, one that compiles
    * against something stale. Rather than guess at which declarations belong to
    * it, refuse: an author who has written a skin is told to move it by hand,
    * which is a loud failure instead of a silent loss. `extractThemeBlock`'s own
    * docstring makes the same argument about the accent.
+   *
+   * `skin: EDITORIAL_SKIN` is the one case that does not have that problem, and
+   * it is now the common case: the scaffold writes it, it is backed by an
+   * import from `lib/deck/skins.ts` rather than by anything declared in the deck
+   * file, and the regenerated file emits the same import and the same line. So
+   * it survives verbatim, and refusing on it would have made `--force` useless
+   * on every deck this script has ever produced — which is the opposite of the
+   * guard's purpose. The test is the WHOLE line, not the presence of the
+   * identifier: a deck that spreads the default into something of its own
+   * (`{ ...EDITORIAL_SKIN, tempo: 0.8 }`) is bespoke and is refused like any
+   * other.
    */
-  if (existingSource && /^\s*skin:\s*\w+,/m.test(existingSource)) {
+  const declaredSkin = existingSource
+    ? /^[ \t]*skin:.*$/m.exec(existingSource)?.[0]
+    : undefined;
+  if (declaredSkin && declaredSkin.trim() !== "skin: EDITORIAL_SKIN,") {
     console.error(
-      `lib/deck/decks/${slug}.ts declares a skin, and --force cannot carry it across.`,
+      `lib/deck/decks/${slug}.ts declares a skin of its own, and --force cannot carry it across.`,
     );
     console.error(
-      "A skin is a reference to declarations further up the file, so lifting the",
+      "A bespoke skin is a reference to declarations further up the file, so",
     );
     console.error(
-      "one line would leave it pointing at nothing. Copy the skin, its images and",
+      "lifting the one line would leave it pointing at nothing. Copy the skin, its",
     );
-    console.error("their imports out by hand first, then re-run.");
+    console.error("images and their imports out by hand first, then re-run.");
+    console.error(
+      "(The scaffolded `skin: EDITORIAL_SKIN,` is carried across automatically —",
+    );
+    console.error("it is an import, not a local declaration.)");
     process.exit(1);
   }
 

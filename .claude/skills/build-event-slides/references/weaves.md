@@ -34,7 +34,7 @@ that is what a room notices from ten metres.
 | `mosaic` | A grid on the same rows, but cells are one or two columns wide in an uneven rhythm. Motionless. | Editorial, composed, less formal. |
 
 **Taken so far:** `drift` — Aotearoa AI Hackathon Festival 2026.
-`contact-sheet` — Les Mills, 3 September 2026.
+`mosaic` — Les Mills, 3 September 2026. `contact-sheet` is unclaimed.
 
 Run `npx tsx scripts/deck/style-ledger.ts` for the live list. Do not guess from
 this table; it is prose and it will go stale.
@@ -44,10 +44,15 @@ this table; it is prose and it will go stale.
 Ask what the *event* is like, then ask what the rest of *this deck* is already
 doing. The second question is the one people forget, and it decided Les Mills:
 
-> Its event slides already sit on a drifting plate of fibre-optic light. Put the
-> drifting archive on the organisational slides too and nothing in twenty-four
-> slides is ever still. A motionless house sequence says the true thing instead
-> — the organisation is the fixed point, the evening is what is moving.
+> It is a two-hour panel evening in She Sharp's own editorial look — paper,
+> navy ink and hairline rules. `mosaic` is the arrangement that belongs to that
+> voice: a still grid, but cut unevenly, the way a page is laid out rather than
+> the way a contact sheet is printed. `drift` would have put restless motion
+> under type that is deliberately at rest.
+
+*(An earlier version of that deck chose `contact-sheet`, to hold the house
+sequence still against event slides that sat on a drifting plate of fibre-optic
+light. The plate is gone and so is the reason; the weave moved with it.)*
 
 Two useful prompts:
 
@@ -60,6 +65,12 @@ And one rule that overrides taste: **a weave no other deck is using beats a
 better-argued weave that a neighbouring deck already has.** `deck.test.ts` fails
 the build when two decks share a weave *and* an accent hue sector, because that
 combination is precisely what makes two decks read as one.
+
+**If the two decks wear the same skin, sharing either one is enough to fail.**
+Most decks now take the Editorial Paper default (see `references/skins.md`), and
+a same-skin pair has already agreed on the surface, the geometry and the tempo —
+the weave and the accent are all that is left, so both have to move. In practice
+that means: take a free weave.
 
 ## Writing it
 

@@ -294,8 +294,8 @@ with `deck-set-house-twins`.
 
 Two questions decide it: what is this event like, and what is the rest of this
 deck already doing? The second is the one people skip. Les Mills went to
-`contact-sheet` because its own slides already sit on a drifting plate — a
-second moving ground would mean nothing in the deck is ever still.
+`mosaic` because the rest of that deck is editorial — paper, hairline rules,
+type at rest — and `mosaic` is a still grid cut the way a page is laid out.
 
 `scripts/deck/new-deck.ts` writes a free weave into the scaffold for you, so
 this step is usually confirming a choice rather than making one. Say it out loud
@@ -307,16 +307,37 @@ to the author anyway, in their words, not the key:
 
 ### 3c — The skin
 
-**Read `references/skins.md` before writing any of it.** It has the boundary,
-the three places a skin lives, and the traps — including the one where
-`object-position` set in CSS compiles cleanly and silently loses to an inline
-style, so every band shows a black bar.
+**Read `references/skins.md`.** Its first section is the default; the rest is
+the system underneath, including the trap where `object-position` set in CSS
+compiles cleanly and silently loses to an inline style, so every band shows a
+black bar.
 
-The short version:
+**For a regular 2–3 hour evening — a panel, a talk, a workshop — this step is
+confirming the default or arguing your way out of it, not designing anything.**
+`scripts/deck/new-deck.ts` scaffolds `skin: EDITORIAL_SKIN,` into the deck: She
+Sharp's own editorial system on the projector, paper and navy ink, hairline
+rules, a line of script where a statement slide introduces itself, chapter
+numerals drawn as outlines. The two things this event turns are the **accent
+pair** (off the poster, and only if it genuinely beats purple and mint — it must
+clear 4.5:1 on both canvases) and the **archive weave** from 3b. Nothing else.
+Tell the author what they have got:
 
-1. **Name the concept in one sentence**, from the poster. *"A braid of
-   fibre-optic strands lit from within."* If you cannot, there is no skin yet
-   and the house skin is the honest answer — say so and move on.
+> Your slides use She Sharp's own editorial look — the same paper, navy and
+> hairline rules as the website — so the night reads as a She Sharp night. The
+> photo wall on the She Sharp slides is unchanged.
+
+**A bespoke skin is for two kinds of event**, both named in
+`references/skins.md`: one whose poster gives you a concept you can say in one
+sentence, and a flagship or multi-day event that must not read as a regular
+evening. If neither applies, do not build one. A deck in a half-built bespoke
+skin is worse than a deck in the default — that is the lesson of the Fibre skin,
+built for the Les Mills evening in August 2026, argued over for three rounds and
+deleted in full.
+
+When one **is** warranted:
+
+1. **Name the concept in one sentence**, from the poster. If you cannot, you do
+   not have a concept, and the default is the honest answer — say so and move on.
 2. **Declare a `DeckSkin`** in the deck file: a surface (`archive`, or `plate`
    with **at least two** of the event's images), and a `tempo` if the concept
    wants the entrances slower or quicker than the house.
@@ -333,10 +354,16 @@ design height, the copy and rhythm limits, the accent contrast floor, the white
 logo chip, or an ambient loop missing either the `[data-active="true"]` or the
 `[data-motion="on"]` gate. `references/skins.md` says why for each.
 
-**Explain the skin to the author in plain words, never in CSS:**
+**Two decks in the same skin** are meant to look related, so `deck.test.ts` asks
+them for something else instead: they must differ on **both** the archive weave
+and the accent hue sector, and it stops asking about surface, geometry and tempo
+— a shared skin fixes those. Run `npx tsx scripts/deck/style-ledger.ts` before
+settling either.
 
-> Your poster is a braid of lit fibre, so the slides are built out of it — the
-> chapter cards sit on the braid itself, and the pale slides carry a strip of it
+**Explain a bespoke skin to the author in plain words, never in CSS:**
+
+> Your poster is a coastline at dawn, so the slides are built out of it — the
+> chapter cards sit on the water itself, and the pale slides carry a strip of it
 > along the bottom where the other decks have a row of photos. The She Sharp
 > slides in the opening and the thank-yous keep the usual photo wall; that part
 > is the organisation's rather than this event's.
@@ -713,7 +740,7 @@ faster — only the PDF does that — but it fixes a slide show that stutters.
    never be mistaken for a room at AUT, which is exactly why it is safe.
 6. **A skin may change how a deck looks and never what it may say.** The copy
    limits, the rhythm rules, the accent contrast floor, the stage geometry and
-   the eighteen slide types are outside every skin's reach. *Why:* those are
+   the twenty slide types are outside every skin's reach. *Why:* those are
    what survive being read from three metres by someone who is also listening to
    a person talk, and a skin is a look — it has no standing to overrule them.
 7. **Nothing goes on a slide that the room does not need in order to act on it
@@ -881,7 +908,7 @@ cheap version of finding out. The expensive version is a projector.
 - **Email anyone** about the event.
 - **Publish the deck as a public page.** `/present/*` is `noindex`, absent from
   the sitemap, and internal tooling for hosts.
-- **Design new slide layouts.** It uses the eighteen types that exist. A genuine
+- **Design new slide layouts.** It uses the twenty types that exist. A genuine
   new one is a code change and belongs to a developer.
 - **Change the copy limits, the type scale or the stage behaviour.**
 - **Produce a PowerPoint or Google Slides file.** The deliverable is a URL plus
