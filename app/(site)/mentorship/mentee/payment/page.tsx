@@ -5,7 +5,6 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
-  Loader2,
   Check,
   CreditCard,
   Shield,
@@ -13,7 +12,9 @@ import {
   ChevronLeft,
   Sparkles,
 } from 'lucide-react';
+
 import Link from 'next/link';
+import { Spinner } from "@/components/ui/spinner";
 
 interface FormSummary {
   id: number;
@@ -125,7 +126,7 @@ function PaymentContent() {
       >
       <div className="absolute inset-0 glass-overlay"></div>
         <div className="text-center relative z-10">
-          <Loader2 className="h-8 w-8 animate-spin text-foreground mx-auto mb-4" />
+          <Spinner size="lg" className="text-foreground mx-auto mb-4" />
           <p className="text-gray-600">Loading your application...</p>
         </div>
       </div>
@@ -256,7 +257,7 @@ function PaymentContent() {
               >
                 {checkoutLoading ? (
                   <>
-                    <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                    <Spinner className="mr-2" />
                     Processing...
                   </>
                 ) : (
@@ -305,7 +306,7 @@ export default function PaymentPage() {
           }}
           >
           <div className="absolute inset-0 glass-overlay"></div>
-          <Loader2 className="h-8 w-8 animate-spin text-foreground relative z-10" />
+          <Spinner size="lg" className="text-foreground relative z-10" />
         </div>
       }
     >

@@ -66,7 +66,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
+import { cn, getAvatarInitials } from '@/lib/utils';
 
 // Experience years mapping (matches mentor application form)
 const EXPERIENCE_OPTIONS: Record<number, string> = {
@@ -532,7 +532,7 @@ export default function MentorRelationshipsPage() {
                           <Avatar className="w-8 h-8">
                             <AvatarImage src={relationship.mentor.avatar || ''} />
                             <AvatarFallback className="text-xs">
-                              {relationship.mentor.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                              {getAvatarInitials(relationship.mentor.name)}
                             </AvatarFallback>
                           </Avatar>
                           <div>
@@ -549,7 +549,7 @@ export default function MentorRelationshipsPage() {
                           <Avatar className="w-8 h-8">
                             <AvatarImage src={relationship.mentee.avatar || ''} />
                             <AvatarFallback className="text-xs">
-                              {relationship.mentee.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                              {getAvatarInitials(relationship.mentee.name)}
                             </AvatarFallback>
                           </Avatar>
                           <div>
@@ -602,7 +602,7 @@ export default function MentorRelationshipsPage() {
                         <Avatar className="w-10 h-10">
                           <AvatarImage src={relationship.mentor.avatar || ''} />
                           <AvatarFallback className="text-xs">
-                            {relationship.mentor.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                            {getAvatarInitials(relationship.mentor.name)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="space-y-0.5">
@@ -640,7 +640,7 @@ export default function MentorRelationshipsPage() {
                         <Avatar className="w-10 h-10">
                           <AvatarImage src={relationship.mentee.avatar || ''} />
                           <AvatarFallback className="text-xs">
-                            {relationship.mentee.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                            {getAvatarInitials(relationship.mentee.name)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="space-y-0.5">
@@ -806,7 +806,7 @@ export default function MentorRelationshipsPage() {
                   <Avatar className="w-12 h-12 shrink-0">
                     <AvatarImage src={selectedRelationship.mentor.avatar || ''} />
                     <AvatarFallback>
-                      {selectedRelationship.mentor.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                      {getAvatarInitials(selectedRelationship.mentor.name)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0 space-y-1">
@@ -860,7 +860,7 @@ export default function MentorRelationshipsPage() {
                   <Avatar className="w-12 h-12 shrink-0">
                     <AvatarImage src={selectedRelationship.mentee.avatar || ''} />
                     <AvatarFallback>
-                      {selectedRelationship.mentee.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                      {getAvatarInitials(selectedRelationship.mentee.name)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0 space-y-1">

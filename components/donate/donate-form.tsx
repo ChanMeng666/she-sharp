@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Spinner } from "@/components/ui/spinner";
 
 const DONATION_AMOUNTS = [10, 25, 50, 100];
 
@@ -82,7 +84,7 @@ export function DonateForm({ className }: { className?: string }) {
       >
         {loading ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Spinner className="mr-2" />
             Processing...
           </>
         ) : (

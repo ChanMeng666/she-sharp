@@ -22,7 +22,8 @@ import {
   MultiStepFormWrapper,
   type FormStep,
 } from '@/components/forms/multi-step-form-wrapper';
-import { User, Briefcase, Heart, Clock, Loader2 } from 'lucide-react';
+import { User, Briefcase, Heart, Clock } from 'lucide-react';
+import { Spinner } from "@/components/ui/spinner";
 
 const STATUS_OPTIONS = [
   { value: 'high_school_student', label: 'High School Student' },
@@ -692,7 +693,7 @@ export default function VolunteerApplyPage() {
     <Suspense
       fallback={
         <div className="flex min-h-screen items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-foreground" />
+          <Spinner size="lg" className="text-foreground" />
         </div>
       }
     >

@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { SPONSORSHIP_EMAIL } from "@/lib/config/contact-addresses";
+import { Spinner } from "@/components/ui/spinner";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -179,7 +180,7 @@ export function SponsorInquiryForm() {
               >
                 {status === "submitting" ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Spinner className="mr-2" />
                     Sending…
                   </>
                 ) : (

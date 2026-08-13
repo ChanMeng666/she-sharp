@@ -18,6 +18,10 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { useSortable } from '@dnd-kit/sortable';
+import {
+  getTypeBadgeClass,
+  formatRecruitmentType as formatType,
+} from '@/lib/recruitment/stages';
 import { CSS } from '@dnd-kit/utilities';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useMediaQuery } from '@/hooks/use-media-query';
@@ -38,34 +42,6 @@ const PIPELINE_COLUMNS = [
   { key: 'onboarding', label: 'Onboarding', color: 'border-t-orange-400' },
   { key: 'active', label: 'Active', color: 'border-t-emerald-400' },
 ] as const;
-
-// Type badge colors
-function getTypeBadgeClass(type: string): string {
-  switch (type) {
-    case 'ambassador':
-      return 'bg-purple-100 text-purple-700';
-    case 'volunteer':
-      return 'bg-blue-100 text-blue-700';
-    case 'ex_ambassador':
-      return 'bg-amber-100 text-amber-700';
-    default:
-      return 'bg-gray-100 text-gray-700';
-  }
-}
-
-// Format type label
-function formatType(type: string): string {
-  switch (type) {
-    case 'ambassador':
-      return 'Ambassador';
-    case 'volunteer':
-      return 'Volunteer';
-    case 'ex_ambassador':
-      return 'Ex-Ambassador';
-    default:
-      return type;
-  }
-}
 
 // Relative date formatting
 function formatRelativeDate(dateStr: string | null): string {

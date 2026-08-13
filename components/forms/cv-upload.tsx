@@ -4,7 +4,8 @@ import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { HintIcon } from '@/components/ui/hint-icon';
-import { FileText, X, Loader2, AlertCircle } from 'lucide-react';
+import { FileText, X, AlertCircle } from 'lucide-react';
+import { Spinner } from "@/components/ui/spinner";
 
 interface CVUploadProps {
   value?: string;
@@ -169,7 +170,7 @@ export function CVUpload({
 
           {uploading ? (
             <div className="flex flex-col items-center gap-2">
-              <Loader2 className="h-10 w-10 text-foreground animate-spin" />
+              <Spinner size="xl" className="text-foreground" />
               <p className="text-sm text-muted-foreground">Uploading...</p>
             </div>
           ) : (

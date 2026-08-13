@@ -23,7 +23,6 @@ import {
 } from '@/components/ui/dialog';
 import {
   ArrowLeft,
-  Loader2,
   CheckCircle,
   XCircle,
   Brain,
@@ -36,6 +35,13 @@ import {
   Calendar,
   AlertCircle,
 } from 'lucide-react';
+import { Spinner } from '@/components/ui/spinner';
+import {
+  getStageBadgeClass,
+  getTypeBadgeClass,
+  formatRecruitmentType as formatType,
+  formatRecruitmentStage as formatStage,
+} from '@/lib/recruitment/stages';
 import Link from 'next/link';
 
 interface ApplicationData {
@@ -91,47 +97,6 @@ interface ApplicationData {
 
 interface ApplicationDetailProps {
   id: number;
-}
-
-// Stage badge styling
-function getStageBadgeClass(stage: string): string {
-  switch (stage) {
-    case 'new': return 'bg-gray-100 text-gray-700';
-    case 'contacted': return 'bg-blue-100 text-blue-700';
-    case 'screening': return 'bg-yellow-100 text-yellow-700';
-    case 'interview_requested': return 'bg-indigo-100 text-indigo-700';
-    case 'interview_scheduled': return 'bg-purple-100 text-purple-700';
-    case 'approved': return 'bg-green-100 text-green-700';
-    case 'rejected': return 'bg-red-100 text-red-700';
-    case 'onboarding': return 'bg-orange-100 text-orange-700';
-    case 'nda_sent': return 'bg-sky-100 text-sky-700';
-    case 'nda_signed': return 'bg-teal-100 text-teal-700';
-    case 'active': return 'bg-emerald-100 text-emerald-700';
-    default: return 'bg-gray-100 text-gray-700';
-  }
-}
-
-// Type badge styling
-function getTypeBadgeClass(type: string): string {
-  switch (type) {
-    case 'ambassador': return 'bg-purple-100 text-purple-700';
-    case 'volunteer': return 'bg-blue-100 text-blue-700';
-    case 'ex_ambassador': return 'bg-amber-100 text-amber-700';
-    default: return 'bg-gray-100 text-gray-700';
-  }
-}
-
-function formatType(type: string): string {
-  switch (type) {
-    case 'ambassador': return 'Ambassador';
-    case 'volunteer': return 'Volunteer';
-    case 'ex_ambassador': return 'Ex-Ambassador';
-    default: return type;
-  }
-}
-
-function formatStage(stage: string): string {
-  return stage.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
 
 export default function ApplicationDetail({ id }: ApplicationDetailProps) {
@@ -258,7 +223,7 @@ export default function ApplicationDetail({ id }: ApplicationDetailProps) {
   if (loading) {
     return (
       <div className="flex justify-center items-center py-20">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <Spinner size="lg" className="text-muted-foreground" />
       </div>
     );
   }
@@ -639,7 +604,7 @@ export default function ApplicationDetail({ id }: ApplicationDetailProps) {
                 className="w-full"
               >
                 {updatingStage ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  <Spinner className="mr-2" />
                 ) : (
                   <Calendar className="h-4 w-4 mr-2" />
                 )}
@@ -678,7 +643,7 @@ export default function ApplicationDetail({ id }: ApplicationDetailProps) {
                 disabled={screeningLoading}
               >
                 {screeningLoading ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  <Spinner className="mr-2" />
                 ) : (
                   <Brain className="h-4 w-4 mr-2 text-brand" />
                 )}
@@ -706,7 +671,7 @@ export default function ApplicationDetail({ id }: ApplicationDetailProps) {
                 className="w-full"
               >
                 {savingNotes ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  <Spinner className="mr-2" />
                 ) : (
                   <Save className="h-4 w-4 mr-2" />
                 )}
@@ -795,7 +760,7 @@ export default function ApplicationDetail({ id }: ApplicationDetailProps) {
               disabled={submittingReview || (reviewAction === 'reject' && !reviewNotes.trim())}
               variant={reviewAction === 'approve' ? 'default' : 'destructive'}
             >
-              {submittingReview && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+              {submittingReview && <Spinner className="mr-2" />}
               {reviewAction === 'approve' ? 'Approve' : 'Reject'}
             </Button>
           </DialogFooter>

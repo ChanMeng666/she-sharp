@@ -5,19 +5,40 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const getInitials = (str: string): string => {
-  if (typeof str !== "string" || !str.trim()) return "?"
+/**
+ * Builds uppercase initials from a person's name.
+ *
+ * @param str The name to reduce. Nullish or blank input yields the fallback.
+ * @param opts.max Keep at most this many initials (avatar chips use 2).
+ * @param opts.fallback Rendered when there is no usable name. Defaults to "?".
+ */
+export const getInitials = (
+  str: string | null | undefined,
+  opts?: { max?: number; fallback?: string }
+): string => {
+  const fallback = opts?.fallback ?? "?"
+  if (typeof str !== "string" || !str.trim()) return fallback
 
-  return (
-    str
-      .trim()
-      .split(/\s+/)
-      .filter(Boolean)
-      .map((word) => word[0])
-      .join("")
-      .toUpperCase() || "?"
-  )
+  const initials = str
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase()
+
+  if (!initials) return fallback
+
+  return opts?.max === undefined ? initials : initials.slice(0, opts.max)
 }
+
+/**
+ * Initials for an `<AvatarFallback>`: at most two, uppercase, "U" when unknown.
+ *
+ * This is what every avatar in the dashboard had reimplemented locally.
+ */
+export const getAvatarInitials = (name: string | null | undefined): string =>
+  getInitials(name, { max: 2, fallback: "U" })
 
 export function formatCurrency(
   amount: number,

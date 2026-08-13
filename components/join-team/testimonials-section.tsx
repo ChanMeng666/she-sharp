@@ -6,39 +6,8 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, MessageSquareQuote } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { joinTeamTestimonials as testimonials } from "@/lib/data/testimonials";
 
-type Testimonial = {
-    name: string;
-    role: string;
-    content: string;
-};
-
-const testimonials: Testimonial[] = [
-    {
-        name: "Shein Delos Angeles",
-        role: "Event Volunteer",
-        content:
-            "I volunteered to help with the She Sharp Tomorrow Expo and I enjoyed every step of the way. I was one of the volunteers who helped set up and talk to people about She Sharp's agenda and it was a blast! I wanted to commend this organisation for giving me an opportunity to meet people around tech and to know some people that are now my friends. I'm looking forward to the next upcoming event!",
-    },
-    {
-        name: "Vic Arce",
-        role: "Previous Ambassador",
-        content:
-            "Working with She# has been such a remarkable experience. I feel lucky to have had the opportunity to be surrounded by highly motivated people who want to make a difference for women. I once spoke with a friend who described the She# team as people who eat passion for breakfast - a very amusing description which I found true in the months I've been with the team.",
-    },
-    {
-        name: "Aneela Lala",
-        role: "Previous Ambassador",
-        content:
-            "As an Ambassador for She Sharp, I have had the privilege of collaborating with fabulous like-minded Wahine, connecting with amazing people from diverse STEM fields and sharing my passion for STEM and inclusivity with so many talented, successful and inspiring Women in Industry. In addition, She Sharp has allowed me to step outside of my comfort zone (as an introvert), by providing a supportive safety net of Ambassadors who challenge my own limiting beliefs about my capabilities and encourage me to grow.",
-    },
-    {
-        name: "Yinghui (Maxie) Ouyang",
-        role: "Event Volunteer",
-        content:
-            "Being a volunteer at She Sharp has been an enlightening and fulfilling experience. The She Sharp team really take care of you and make sure you get access to the benefits as if you are a participant of each event. Networking is a great example of that. I've met more women in tech from the first event than I have in months. They go out of their way to make sure the volunteers are seen and appreciated for their hard work.",
-    },
-];
 
 export function JoinTeamTestimonialsSection() {
     const [currentIndex, setCurrentIndex] = useState(0);

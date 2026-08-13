@@ -4,7 +4,8 @@ import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Home, Loader2 } from "lucide-react";
+import { CheckCircle, Home } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 
 const impactMessages: Record<number, string> = {
   10: "Your $10 donation helps provide workshop materials for students and subsidize event tickets.",
@@ -61,7 +62,7 @@ export default function DonateSuccessPage() {
     <Suspense
       fallback={
         <div className="flex min-h-screen items-center justify-center bg-background">
-          <Loader2 className="h-8 w-8 animate-spin text-brand" />
+          <Spinner size="lg" className="text-brand" />
         </div>
       }
     >

@@ -36,7 +36,6 @@ import {
 } from '@/components/ui/alert-dialog';
 import {
   Plus,
-  Loader2,
   Users,
   Calendar,
   Building2,
@@ -45,6 +44,7 @@ import {
   UserPlus,
   AlertTriangle,
 } from 'lucide-react';
+import { Spinner } from "@/components/ui/spinner";
 
 interface ProgrammeStats {
   menteeApplications: number;
@@ -252,7 +252,7 @@ export default function ProgrammeManagementPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 animate-spin text-brand" />
+        <Spinner size="lg" className="text-brand" />
       </div>
     );
   }
@@ -502,7 +502,7 @@ export default function ProgrammeManagementPage() {
               Cancel
             </Button>
             <Button onClick={handleSave} disabled={saving || !formName || !formSlug}>
-              {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+              {saving && <Spinner className="mr-2" />}
               {editingProgramme ? 'Update' : 'Create'}
             </Button>
           </DialogFooter>
@@ -523,7 +523,7 @@ export default function ProgrammeManagementPage() {
 
           {mentorsLoading ? (
             <div className="flex justify-center py-8">
-              <Loader2 className="h-6 w-6 animate-spin" />
+              <Spinner size="md" />
             </div>
           ) : programmeMentors.length > 0 ? (
             <div className="space-y-3 max-h-[400px] overflow-y-auto">
@@ -576,7 +576,7 @@ export default function ProgrammeManagementPage() {
               disabled={completing}
               className="bg-orange-600 hover:bg-orange-700"
             >
-              {completing && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+              {completing && <Spinner className="mr-2" />}
               Complete Programme
             </AlertDialogAction>
           </AlertDialogFooter>

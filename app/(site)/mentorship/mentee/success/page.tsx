@@ -5,8 +5,10 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, Mail, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
+import { CheckCircle2, Mail, ArrowRight, AlertCircle } from 'lucide-react';
+
 import Link from 'next/link';
+import { Spinner } from "@/components/ui/spinner";
 
 function PaymentSuccessContent() {
   const searchParams = useSearchParams();
@@ -36,7 +38,7 @@ function PaymentSuccessContent() {
         }}
       >
         <div className="absolute inset-0 glass-overlay"></div>
-        <Loader2 className="h-8 w-8 animate-spin text-foreground relative z-10" />
+        <Spinner size="lg" className="text-foreground relative z-10" />
       </div>
     );
   }
@@ -272,7 +274,7 @@ export default function PaymentSuccessPage() {
         }}
       >
         <div className="absolute inset-0 glass-overlay"></div>
-        <Loader2 className="h-8 w-8 animate-spin text-foreground relative z-10" />
+        <Spinner size="lg" className="text-foreground relative z-10" />
       </div>
     }>
       <PaymentSuccessContent />
