@@ -133,10 +133,16 @@ function YouTubeEmbeds({ items }: { items: string[] }) {
 /**
  * Self-hosted video files (as opposed to the YouTube embeds above).
  *
- * Each item is pipe-delimited: "/video/path.mp4|Accessible label|/poster.jpg",
+ * Each item is pipe-delimited: "<video src>|Accessible label|/poster.jpg",
  * matching the delimiter convention used by CollaborationLogos. The poster is
  * optional but strongly preferred — without it the player sits on a black
  * rectangle until the user presses play.
+ *
+ * The video src is an absolute Vercel Blob URL (see `lib/config/assets.ts`);
+ * the poster stays a same-origin `/img/` path so `next/image`-adjacent tooling
+ * and `scripts/verify-image-paths.ts` still see it. JSON cannot import the
+ * constants, so the URL is written out in `shesharp_events_v3.json` and the two
+ * are changed together.
  *
  * Deliberately NOT autoplaying: these are content videos rather than the
  * decorative loops elsewhere on the site, so playback stays under the reader's

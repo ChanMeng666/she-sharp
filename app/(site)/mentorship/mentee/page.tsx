@@ -6,6 +6,7 @@ import { Trophy, Rocket, Users } from "lucide-react";
 import { MenteeResponsibilitiesSection } from "@/components/mentorship/mentee/mentee-responsibilities-section";
 import { BecomeMenteeCTASection } from "@/components/mentorship/mentee/become-mentee-cta-section";
 import { StickyApplyBar } from "@/components/mentorship/sticky-apply-bar";
+import { MENTEE_VIDEO } from "@/lib/config/assets";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
 
 export default function MenteeApplicationPage() {
@@ -24,7 +25,7 @@ export default function MenteeApplicationPage() {
         titlePanelDark
         image="/img/mentees.jpg"
         imageAlt="She Sharp mentorship programme"
-        video="/video/Mentee-Video.mp4"
+        video={MENTEE_VIDEO}
         detailEyebrow="Your growth"
         detailTitle="Learn and be inspired by our empowering mentors in STEM"
         detailDescription="Gain valuable advice, inspiration, and empowerment from our amazing mentors in STEM to support your personal and professional development journey."
