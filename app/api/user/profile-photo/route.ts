@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
+import { NextRequest, NextResponse } from 'next/server';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { mentorProfiles, menteeProfiles, mentorFormSubmissions, menteeFormSubmissions, userRoles } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
@@ -9,13 +9,8 @@ import { eq, and } from 'drizzle-orm';
  * Returns the current user's profile photo URL based on their active roles.
  * Priority: formSubmission.photoUrl > profile.photoUrl > users.image
  */
-export async function GET() {
+export const GET = withRoles({}, async (_request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Get user's active roles
     const roles = await db
       .select()
@@ -95,4 +90,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});

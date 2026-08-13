@@ -1,38 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
-import { isUserAdmin } from '@/lib/auth/permissions';
+import { withRoles, type AuthedRouteContext } from '@/lib/auth/role-middleware';
 import { completeProgramme, getProgrammeById } from '@/lib/programmes/service';
 
-export async function POST(
-  _request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const user = await getUser();
-    if (!user || !(await isUserAdmin(user.id))) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+export const POST = withRoles(
+  { requiredRoles: ['admin'] },
+  async (_request: NextRequest, { params, user }: AuthedRouteContext<{ id: string }>) => {
+    try {
+      const { id } = await params;
+      const programmeId = parseInt(id);
+
+      const programme = await getProgrammeById(programmeId);
+      if (!programme) {
+        return NextResponse.json({ error: 'Programme not found' }, { status: 404 });
+      }
+
+      if (programme.status === 'completed' || programme.status === 'archived') {
+        return NextResponse.json({ error: 'Programme is already completed or archived' }, { status: 400 });
+      }
+
+      const result = await completeProgramme(programmeId, user.id);
+
+      return NextResponse.json({
+        success: true,
+        ...result,
+      });
+    } catch (error) {
+      console.error('Error completing programme:', error);
+      return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
-
-    const { id } = await params;
-    const programmeId = parseInt(id);
-
-    const programme = await getProgrammeById(programmeId);
-    if (!programme) {
-      return NextResponse.json({ error: 'Programme not found' }, { status: 404 });
-    }
-
-    if (programme.status === 'completed' || programme.status === 'archived') {
-      return NextResponse.json({ error: 'Programme is already completed or archived' }, { status: 400 });
-    }
-
-    const result = await completeProgramme(programmeId, user.id);
-
-    return NextResponse.json({
-      success: true,
-      ...result,
-    });
-  } catch (error) {
-    console.error('Error completing programme:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-}
+);

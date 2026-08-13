@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
-import { db } from '@/lib/db/drizzle';
-import { userRoles, adminPermissions } from '@/lib/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import {
   createAdminCode,
   getInvitationCodes,
@@ -11,41 +8,11 @@ import {
 } from '@/lib/invitations/service';
 
 /**
- * Verifies if user has admin permissions.
- */
-async function verifyAdminAccess(userId: number): Promise<boolean> {
-  // Check if user has admin role
-  const adminRole = await db
-    .select()
-    .from(userRoles)
-    .where(
-      and(
-        eq(userRoles.userId, userId),
-        eq(userRoles.roleType, 'admin'),
-        eq(userRoles.isActive, true)
-      )
-    )
-    .limit(1);
-
-  return adminRole.length > 0;
-}
-
-/**
  * GET /api/admin/invitation-codes
  * List invitation codes with filtering and pagination.
  */
-export async function GET(request: NextRequest) {
+export const GET = withRoles({ requiredRoles: ['admin'] }, async (request: NextRequest) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const isAdmin = await verifyAdminAccess(user.id);
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
-
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status') as 'active' | 'used' | 'expired' | 'revoked' | null;
     const codeType = searchParams.get('codeType') as 'payment' | 'mentor_approved' | 'admin_generated' | null;
@@ -73,24 +40,16 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * POST /api/admin/invitation-codes
  * Create a new admin-generated invitation code.
  */
-export async function POST(request: NextRequest) {
+export const POST = withRoles(
+  { requiredRoles: ['admin'] },
+  async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const isAdmin = await verifyAdminAccess(user.id);
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
-
     const body = await request.json();
     const { maxUses, expiresInDays, recipientEmail, notes } = body;
 
@@ -113,24 +72,16 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * DELETE /api/admin/invitation-codes
  * Revoke an invitation code.
  */
-export async function DELETE(request: NextRequest) {
+export const DELETE = withRoles(
+  { requiredRoles: ['admin'] },
+  async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const isAdmin = await verifyAdminAccess(user.id);
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
-
     const body = await request.json();
     const { codeId, reason } = body;
 
@@ -152,4 +103,4 @@ export async function DELETE(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

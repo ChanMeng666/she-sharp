@@ -1,16 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
 import { mentorshipRelationships, mentorProfiles, activityLogs, ActivityType } from '@/lib/db/schema';
-import { eq, and, sql } from 'drizzle-orm';
-import { getUser } from '@/lib/db/queries';
+import { eq, sql } from 'drizzle-orm';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 
-export async function POST(request: NextRequest) {
+// Signed-in only: the "is this user the mentor on this relationship?" test is an
+// ownership check against a row, which `withRoles` cannot express, so it stays
+// in the handler.
+export const POST = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { relationshipId, action, feedback } = await request.json();
 
     if (!relationshipId || !action) {
@@ -140,4 +138,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
