@@ -47,7 +47,7 @@ function getOpenAI(): OpenAI {
 /**
  * Error types for matching
  */
-export class AIMatchingError extends Error {
+class AIMatchingError extends Error {
   constructor(
     message: string,
     public readonly code: string,
@@ -131,7 +131,7 @@ function parseAIResponse(content: string): AIMatchResponse {
 /**
  * Generate AI match analysis for a mentor-mentee pair
  */
-export async function generateAIMatch(
+async function generateAIMatch(
   mentor: MentorMatchInput,
   mentee: MenteeMatchInput,
   options: OpenAIServiceOptions = {}
@@ -224,45 +224,9 @@ export async function generateAIMatch(
 }
 
 /**
- * Generate AI matches for multiple pairs (batch processing)
- */
-export async function generateAIMatchesBatch(
-  pairs: Array<{ mentor: MentorMatchInput; mentee: MenteeMatchInput }>,
-  options: OpenAIServiceOptions & { maxConcurrent?: number } = {}
-): Promise<Map<string, { result: AIMatchResponse; usage: TokenUsage; processingTime: number; fromCache: boolean }>> {
-  const { maxConcurrent = 5, ...aiOptions } = options;
-  const results = new Map<string, { result: AIMatchResponse; usage: TokenUsage; processingTime: number; fromCache: boolean }>();
-
-  // Process in batches to respect rate limits
-  for (let i = 0; i < pairs.length; i += maxConcurrent) {
-    const batch = pairs.slice(i, i + maxConcurrent);
-
-    const batchPromises = batch.map(async (pair) => {
-      const key = `${pair.mentor.userId}:${pair.mentee.userId}`;
-      try {
-        const result = await generateAIMatch(pair.mentor, pair.mentee, aiOptions);
-        results.set(key, result);
-      } catch (error) {
-        console.error(`AI matching failed for pair ${key}:`, error);
-        // Don't add to results, will be handled as missing
-      }
-    });
-
-    await Promise.all(batchPromises);
-
-    // Small delay between batches to be nice to the API
-    if (i + maxConcurrent < pairs.length) {
-      await sleep(100);
-    }
-  }
-
-  return results;
-}
-
-/**
  * Fallback rule-based scoring when AI is unavailable
  */
-export function calculateFallbackScore(
+function calculateFallbackScore(
   mentor: MentorMatchInput,
   mentee: MenteeMatchInput
 ): AIMatchResponse {
