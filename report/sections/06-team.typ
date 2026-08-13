@@ -21,7 +21,7 @@
 // an unknown member rather than handing a bad path to `image()`.
 //
 // NOTE also that `data/team.typ` exports its own `team-photo(m)` returning the
-// SITE path (/img/team/Mahsa.png — which is not even repo-root-correct, it is
+// SITE path (/img/team/Mahsa.webp — which is not even repo-root-correct, it is
 // missing the /public prefix). This file deliberately imports `team-photo` from
 // lib/assets.typ instead, which resolves the CONVERTED square JPEG. The two
 // functions share a name and have different signatures; do not import both.

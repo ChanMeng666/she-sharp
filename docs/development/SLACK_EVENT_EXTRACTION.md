@@ -263,7 +263,7 @@ All event images use this pattern:
 Examples:
 - `/img/events/iwd-2026-ana-ivanovic-tongue.jpg`
 - `/img/events/iwd-2026-academyex-logo.svg`
-- `/img/events/iwd-2026-banner.png`
+- `/img/events/iwd-2026-banner.webp`
 
 ---
 
