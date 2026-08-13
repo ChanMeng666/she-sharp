@@ -1,16 +1,11 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { heading, sans, brandScript } from '@/lib/fonts';
-import { getUser } from '@/lib/db/queries';
-import { serializeData } from '@/lib/utils';
-import { SWRConfig } from 'swr';
 import { CookieBanner } from '@/components/cookie-banner';
 import { Toaster } from '@/components/ui/sonner';
 import { Providers } from './providers';
 import { JsonLd } from '@/components/seo/json-ld';
 import { organizationSchema, websiteSchema } from '@/lib/seo/schema';
-
-export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.shesharp.org.nz'),
@@ -60,22 +55,6 @@ export const viewport: Viewport = {
   maximumScale: 1
 };
 
-/**
- * Helper to serialize async data for SWR fallback.
- * Wraps the promise to serialize Date objects to ISO strings.
- */
-async function getSerializedUser() {
-  try {
-    const user = await getUser();
-    return serializeData(user);
-  } catch {
-    // This promise is created eagerly in the root layout, so a session or
-    // database failure here would surface as an unhandled rejection on every
-    // route. A logged-out visitor is the correct fallback.
-    return null;
-  }
-}
-
 export default function RootLayout({
   children
 }: {
@@ -89,19 +68,9 @@ export default function RootLayout({
       <body className="min-h-[100dvh]">
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Providers>
-          <SWRConfig
-            value={{
-              fallback: {
-                // Serialize data to convert Date objects to ISO strings
-                // This prevents "Received an instance of Date" serialization errors
-                '/api/user': getSerializedUser(),
-              }
-            }}
-          >
-            {children}
-            <CookieBanner />
-            <Toaster />
-          </SWRConfig>
+          {children}
+          <CookieBanner />
+          <Toaster />
         </Providers>
       </body>
     </html>
