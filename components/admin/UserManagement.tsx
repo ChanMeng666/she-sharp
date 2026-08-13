@@ -1,203 +1,54 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import {
-  Search,
-  MoreVertical,
-  UserX,
-  Download,
   ChevronLeft,
   ChevronRight,
-  ChevronDown,
-  ChevronUp,
-  Edit,
-  Trash2,
-  Shield,
-  Eye,
-  FlaskConical,
-  MapPin,
-  Briefcase,
-  GraduationCap,
-  CheckCircle,
   Clock,
-  Brain,
-  Users,
-  Star,
-  MessageSquare,
-  Ban,
+  Download,
+  FlaskConical,
+  GraduationCap,
   RefreshCw,
-  UserPlus,
-  Link as LinkIcon,
-  Check,
-  X,
-  Phone,
-  CreditCard,
-  Calendar,
-  MailCheck,
+  Shield,
+  Star,
+  Trash2,
+  UserX,
+  Users,
 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Switch } from '@/components/ui/switch';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
-import { cn, getAvatarInitials } from '@/lib/utils';
-import { industryOptions, labelMap } from '@/lib/mentorship/vocab';
-import { apiDelete, apiGet, apiPatch, apiPost, apiPut, isApiError } from '@/lib/api/client';
-
-// Industry mapping, shared with the mentor/mentee application forms.
-const INDUSTRY_OPTIONS: Record<string, string> = labelMap(industryOptions);
-
-const formatIndustry = (industry: string | null): string => {
-  if (!industry) return 'N/A';
-  return INDUSTRY_OPTIONS[industry] || industry;
-};
-
-// Unified User interface matching the new API response
-interface MentorInfo {
-  isVerified: boolean;
-  verifiedAt: string | null;
-  isAccepting: boolean;
-  maxMentees: number;
-  currentMentees: number;
-  yearsExperience: number | null;
-  expertise: string[];
-  bio: string | null;
-  linkedinUrl: string | null;
-  activeMentees: number;
-  totalMentees: number;
-  totalSessions: number;
-  avgRating: number | null;
-  status: 'active' | 'busy' | 'paused';
-}
-
-interface MenteeInfo {
-  careerStage: string | null;
-  currentIndustry: string | null;
-  learningGoals: string[];
-  bio: string | null;
-}
-
-interface ApplicationInfo {
-  id: number;
-  type: 'mentor' | 'mentee';
-  status: 'pending' | 'under_review';
-  submittedAt: string | null;
-  yearsExperience?: number;
-  expertise?: string[];
-  availabilityHoursPerMonth?: number;
-  bio?: string;
-  linkedinUrl?: string;
-  reviewNotes?: string;
-  maxMentees?: number;
-}
-
-interface UnifiedUser {
-  id: number;
-  recordType: 'registered_user' | 'public_application';
-  recordId: string;
-  userId: number | null;
-  applicationId: number | null;
-  name: string | null;
-  email: string;
-  image: string | null;
-  phone: string | null;
-  isTestUser: boolean;
-  emailVerifiedAt: string | null;
-  roles: string[];
-  membershipTier: 'free' | 'basic' | 'premium';
-  accountStatus: 'active' | 'inactive' | 'suspended' | 'pending_registration';
-  createdAt: string;
-  lastLoginAt: string | null;
-  company: string | null;
-  jobTitle: string | null;
-  city: string | null;
-  mbtiType: string | null;
-  applicationStatus: 'none' | 'pending' | 'approved' | 'rejected';
-  applicationInfo: ApplicationInfo | null;
-  mentorInfo: MentorInfo | null;
-  menteeInfo: MenteeInfo | null;
-}
-
-interface Stats {
-  totalUsers: number;
-  testUsers: number;
-  totalPublicApplications: number;
-  pendingApplications: number;
-  byRole: { admin: number; mentor: number; mentee: number };
-  byStatus: { active: number; inactive: number; suspended: number; pending_registration: number };
-}
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
+import type { UnifiedUser } from '@/types/admin';
+import { useAdminUsers } from './use-admin-users';
+import { UserFilters } from './user-filters';
+import { UserListCards } from './user-list-cards';
+import { UserListTable } from './user-list-table';
+import {
+  EditUserDialog,
+  ReviewApplicationDialog,
+  UserActionDialog,
+} from './user-dialogs';
 
 export default function UserManagement() {
-  // Read URL search params for initial filter values
-  const searchParams = useSearchParams();
-  const initialRole = searchParams.get('role') || 'all';
-  const initialStatus = searchParams.get('status') || 'all';
-  const initialMembership = searchParams.get('membership') || 'all';
-  const initialApplication = searchParams.get('application') || 'all';
-  const initialUserType = searchParams.get('userType') || 'all';
+  const admin = useAdminUsers();
+  const {
+    users,
+    stats,
+    loading,
+    totalCount,
+    totalPages,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    fetchUsers,
+    selectedUsers,
+    setSelectedUsers,
+    handleBulkAction,
+    bulkActionLoading,
+  } = admin;
 
-  const [users, setUsers] = useState<UnifiedUser[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [roleFilter, setRoleFilter] = useState<string>(initialRole);
-  const [statusFilter, setStatusFilter] = useState<string>(initialStatus);
-  const [membershipFilter, setMembershipFilter] = useState<string>(initialMembership);
-  const [applicationFilter, setApplicationFilter] = useState<string>(initialApplication);
-  const [userTypeFilter, setUserTypeFilter] = useState<string>(initialUserType);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState<Stats | null>(null);
-  const [sortBy, setSortBy] = useState<string>('createdAt');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [updatingRole, setUpdatingRole] = useState<string | null>(null);
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
 
   // Review dialog state
@@ -205,209 +56,17 @@ export default function UserManagement() {
   const [reviewAction, setReviewAction] = useState<'approve' | 'reject'>('approve');
   const [reviewNotes, setReviewNotes] = useState('');
   const [reviewingUser, setReviewingUser] = useState<UnifiedUser | null>(null);
-  const [submittingReview, setSubmittingReview] = useState(false);
   const [reviewIsTestUser, setReviewIsTestUser] = useState(false);
 
   // User action dialog state
   const [actionDialogOpen, setActionDialogOpen] = useState(false);
   const [actionType, setActionType] = useState<'suspend' | 'delete' | null>(null);
   const [actionUser, setActionUser] = useState<UnifiedUser | null>(null);
-  const [processingAction, setProcessingAction] = useState(false);
-
-  // Bulk action state
-  const [bulkActionLoading, setBulkActionLoading] = useState(false);
 
   // Edit user dialog state
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<UnifiedUser | null>(null);
   const [editFormData, setEditFormData] = useState({ name: '', phone: '' });
-  const [savingEdit, setSavingEdit] = useState(false);
-
-  const itemsPerPage = 10;
-
-  const fetchUsers = useCallback(async () => {
-    try {
-      setLoading(true);
-      const params = new URLSearchParams({
-        page: currentPage.toString(),
-        limit: itemsPerPage.toString(),
-        sortBy,
-        sortOrder,
-      });
-
-      if (roleFilter !== 'all') params.append('role', roleFilter);
-      if (statusFilter !== 'all') params.append('status', statusFilter);
-      if (membershipFilter !== 'all') params.append('membership', membershipFilter);
-      if (applicationFilter !== 'all') params.append('application', applicationFilter);
-      if (userTypeFilter !== 'all') params.append('userType', userTypeFilter);
-      if (searchQuery) params.append('search', searchQuery);
-
-      const data = await apiGet<{
-        users?: UnifiedUser[];
-        totalPages?: number;
-        total?: number;
-        stats?: Stats;
-      }>(`/api/admin/users?${params}`);
-
-      setUsers(data.users || []);
-      setTotalPages(data.totalPages || 1);
-      setTotalCount(data.total || 0);
-      setStats(data.stats || null);
-    } catch (error) {
-      console.error('Failed to fetch users:', error);
-      // A non-2xx used to fall through the old `if (response.ok)` silently,
-      // leaving the previous page on screen; only a transport failure cleared
-      // the table. Preserved rather than "fixed" — that is a UX call, not this
-      // change's business.
-      if (!isApiError(error)) {
-        setUsers([]);
-        setTotalPages(1);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [currentPage, roleFilter, statusFilter, membershipFilter, applicationFilter, userTypeFilter, sortBy, sortOrder, searchQuery]);
-
-  useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
-
-  // Sync URL params to state when they change
-  useEffect(() => {
-    const urlRole = searchParams.get('role') || 'all';
-    const urlStatus = searchParams.get('status') || 'all';
-    const urlMembership = searchParams.get('membership') || 'all';
-    const urlApplication = searchParams.get('application') || 'all';
-
-    const urlUserType = searchParams.get('userType') || 'all';
-
-    if (urlRole !== roleFilter) setRoleFilter(urlRole);
-    if (urlStatus !== statusFilter) setStatusFilter(urlStatus);
-    if (urlMembership !== membershipFilter) setMembershipFilter(urlMembership);
-    if (urlApplication !== applicationFilter) setApplicationFilter(urlApplication);
-    if (urlUserType !== userTypeFilter) setUserTypeFilter(urlUserType);
-  }, [searchParams]);
-
-  // Handle role toggle
-  const handleRoleToggle = async (userId: number, roleType: string, currentlyHasRole: boolean) => {
-    setUpdatingRole(`${userId}-${roleType}`);
-    try {
-      await apiPut('/api/admin/users/roles', { userId, roleType, isActive: !currentlyHasRole });
-
-      // Update local state
-      setUsers(prev => prev.map(user => {
-        if (user.id === userId && user.recordType === 'registered_user') {
-          const newRoles = currentlyHasRole
-            ? user.roles.filter(r => r !== roleType)
-            : [...user.roles, roleType];
-          return { ...user, roles: newRoles };
-        }
-        return user;
-      }));
-    } catch (error) {
-      console.error('Failed to update role:', error);
-    } finally {
-      setUpdatingRole(null);
-    }
-  };
-
-  // Handle toggle test user status
-  const [togglingTestUser, setTogglingTestUser] = useState<number | null>(null);
-  const handleToggleTestUser = async (user: UnifiedUser) => {
-    setTogglingTestUser(user.id);
-    try {
-      const data = await apiPatch<{ isTestUser: boolean }>(`/api/admin/users/${user.id}`, {
-        action: 'toggle_test_user',
-      });
-
-      setUsers(prev => prev.map(u => {
-        if (u.id === user.id) {
-          return { ...u, isTestUser: data.isTestUser };
-        }
-        return u;
-      }));
-      // Refresh to update stats
-      fetchUsers();
-    } catch (error) {
-      console.error('Failed to toggle test user status:', error);
-    } finally {
-      setTogglingTestUser(null);
-    }
-  };
-
-  // Handle verify email
-  const [verifyingEmail, setVerifyingEmail] = useState<number | null>(null);
-  const handleVerifyEmail = async (user: UnifiedUser) => {
-    setVerifyingEmail(user.id);
-    try {
-      await apiPatch(`/api/admin/users/${user.id}`, { action: 'verify_email' });
-
-      setUsers(prev => prev.map(u => {
-        if (u.id === user.id) {
-          return { ...u, emailVerifiedAt: new Date().toISOString() };
-        }
-        return u;
-      }));
-      fetchUsers();
-    } catch (error) {
-      console.error('Failed to verify email:', error);
-    } finally {
-      setVerifyingEmail(null);
-    }
-  };
-
-  // Handle application review
-  const openReviewDialog = (user: UnifiedUser, action: 'approve' | 'reject') => {
-    setReviewingUser(user);
-    setReviewAction(action);
-    setReviewNotes('');
-    setReviewIsTestUser(false);
-    setReviewDialogOpen(true);
-  };
-
-  const handleReviewSubmit = async () => {
-    if (!reviewingUser?.applicationInfo) return;
-
-    setSubmittingReview(true);
-    try {
-      const appType = reviewingUser.applicationInfo.type === 'mentee' ? 'mentees' : 'mentors';
-      await apiPost(`/api/admin/${appType}/applications/${reviewingUser.applicationInfo.id}/review`, {
-        action: reviewAction,
-        notes: reviewNotes,
-        ...(reviewAction === 'approve' && reviewIsTestUser ? { isTestUser: true } : {}),
-      });
-
-      setReviewDialogOpen(false);
-      fetchUsers(); // Refresh the list
-    } catch (error) {
-      console.error('Failed to process application:', error);
-      // This has always read `.message` off the body, and these routes return
-      // `{ error }` — so the fallback is what the admin actually sees. Reading
-      // `error.message` here instead would be a UX change, not a refactor.
-      const bodyMessage = isApiError(error)
-        ? (error.body as { message?: string } | null)?.message
-        : undefined;
-      alert(bodyMessage || 'Failed to process application');
-    } finally {
-      setSubmittingReview(false);
-    }
-  };
-
-  const handleSelectAll = (checked: boolean) => {
-    if (checked) {
-      setSelectedUsers(users.map(u => u.recordId));
-    } else {
-      setSelectedUsers([]);
-    }
-  };
-
-  const handleSelectUser = (recordId: string, checked: boolean) => {
-    if (checked) {
-      setSelectedUsers([...selectedUsers, recordId]);
-    } else {
-      setSelectedUsers(selectedUsers.filter(id => id !== recordId));
-    }
-  };
 
   const toggleRowExpansion = (recordId: string) => {
     const newExpanded = new Set(expandedRows);
@@ -419,103 +78,32 @@ export default function UserManagement() {
     setExpandedRows(newExpanded);
   };
 
-  const handleBulkAction = async (action: string) => {
-    if (selectedUsers.length === 0) return;
-
-    setBulkActionLoading(true);
-    try {
-      switch (action) {
-        case 'export': {
-          try {
-            const result = await apiPost<{ data: any[] }>('/api/admin/users/bulk', {
-              action: 'export',
-              recordIds: selectedUsers,
-            });
-
-            // Create CSV and download
-            const csvContent = convertToCSV(result.data);
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `users_export_${new Date().toISOString().split('T')[0]}.csv`;
-            link.click();
-          } catch (error) {
-            // A failed export has always been silent here (no `else` branch on
-            // the old `response.ok`). Left silent; making it speak is a UX
-            // change for a separate PR.
-            if (!isApiError(error)) throw error;
-            console.error('Bulk export failed:', error);
-          }
-          break;
-        }
-        case 'suspend': {
-          if (!confirm(`Are you sure you want to suspend ${selectedUsers.length} user(s)?`)) {
-            break;
-          }
-          try {
-            const result = await apiPost<{ message: string }>('/api/admin/users/bulk', {
-              action: 'suspend',
-              recordIds: selectedUsers,
-            });
-            alert(result.message);
-            fetchUsers();
-            setSelectedUsers([]);
-          } catch (error) {
-            if (!isApiError(error)) throw error;
-            alert(error.message || 'Failed to suspend users');
-          }
-          break;
-        }
-        case 'delete': {
-          if (!confirm(`Are you sure you want to delete ${selectedUsers.length} user(s)? This action cannot be undone.`)) {
-            break;
-          }
-          try {
-            const result = await apiPost<{ message: string }>('/api/admin/users/bulk', {
-              action: 'delete',
-              recordIds: selectedUsers,
-            });
-            alert(result.message);
-            fetchUsers();
-            setSelectedUsers([]);
-          } catch (error) {
-            if (!isApiError(error)) throw error;
-            alert(error.message || 'Failed to delete users');
-          }
-          break;
-        }
-      }
-    } catch (error) {
-      console.error('Bulk action error:', error);
-      alert('An error occurred while performing the action');
-    } finally {
-      setBulkActionLoading(false);
-    }
+  const openReviewDialog = (user: UnifiedUser, action: 'approve' | 'reject') => {
+    setReviewingUser(user);
+    setReviewAction(action);
+    setReviewNotes('');
+    setReviewIsTestUser(false);
+    setReviewDialogOpen(true);
   };
 
-  // Convert data to CSV format
-  const convertToCSV = (data: any[]) => {
-    if (data.length === 0) return '';
-    const headers = Object.keys(data[0]);
-    const csvRows = [headers.join(',')];
-    for (const row of data) {
-      const values = headers.map(h => {
-        const val = row[h];
-        return typeof val === 'string' ? `"${val.replace(/"/g, '""')}"` : val;
-      });
-      csvRows.push(values.join(','));
-    }
-    return csvRows.join('\n');
+  const handleReviewSubmit = async () => {
+    if (!reviewingUser) return;
+    const reviewed = await admin.submitReview(reviewingUser, reviewAction, reviewNotes, reviewIsTestUser);
+    if (reviewed) setReviewDialogOpen(false);
   };
 
-  // Open user action dialog
   const openUserActionDialog = (user: UnifiedUser, action: 'suspend' | 'delete') => {
     setActionUser(user);
     setActionType(action);
     setActionDialogOpen(true);
   };
 
-  // Open edit user dialog
+  const handleUserAction = async () => {
+    if (!actionUser || !actionType) return;
+    const done = await admin.runUserAction(actionUser, actionType);
+    if (done) setActionDialogOpen(false);
+  };
+
   const openEditDialog = (user: UnifiedUser) => {
     setEditingUser(user);
     setEditFormData({
@@ -525,247 +113,11 @@ export default function UserManagement() {
     setEditDialogOpen(true);
   };
 
-  // Handle edit user save
   const handleEditSave = async () => {
     if (!editingUser) return;
-
-    setSavingEdit(true);
-    try {
-      await apiPatch(`/api/admin/users/${editingUser.id}`, {
-        name: editFormData.name,
-        phone: editFormData.phone,
-      });
-
-      setEditDialogOpen(false);
-      fetchUsers();
-    } catch (error) {
-      if (isApiError(error)) {
-        alert(error.message || 'Failed to update user');
-      } else {
-        console.error('Edit user error:', error);
-        alert('An error occurred while updating user');
-      }
-    } finally {
-      setSavingEdit(false);
-    }
+    const saved = await admin.saveUser(editingUser.id, editFormData);
+    if (saved) setEditDialogOpen(false);
   };
-
-  // Handle individual user suspend/delete
-  const handleUserAction = async () => {
-    if (!actionUser || !actionType) return;
-
-    setProcessingAction(true);
-    try {
-      if (actionType === 'suspend') {
-        try {
-          await apiPatch(`/api/admin/users/${actionUser.id}`, { action: 'suspend' });
-          setActionDialogOpen(false);
-          fetchUsers();
-        } catch (error) {
-          if (!isApiError(error)) throw error;
-          alert(error.message || 'Failed to suspend user');
-        }
-      } else if (actionType === 'delete') {
-        try {
-          await apiDelete(`/api/admin/users/${actionUser.id}`);
-          setActionDialogOpen(false);
-          fetchUsers();
-        } catch (error) {
-          if (!isApiError(error)) throw error;
-          alert(error.message || 'Failed to delete user');
-        }
-      }
-    } catch (error) {
-      console.error('User action error:', error);
-      alert('An error occurred');
-    } finally {
-      setProcessingAction(false);
-    }
-  };
-
-  const getRoleBadgeColor = (role: string) => {
-    switch (role) {
-      case 'admin':
-        return 'bg-badge-admin-bg text-badge-admin-fg';
-      case 'mentor':
-        return 'bg-badge-mentor-bg text-badge-mentor-fg';
-      case 'mentee':
-        return 'bg-badge-mentee-bg text-badge-mentee-fg';
-      default:
-        return 'bg-muted text-muted-foreground';
-    }
-  };
-
-  const getMembershipBadgeColor = (tier: string) => {
-    switch (tier) {
-      case 'premium':
-        return 'bg-brand text-brand-foreground';
-      case 'basic':
-        return 'bg-badge-info-bg text-badge-info-fg';
-      case 'free':
-        return 'bg-muted text-muted-foreground';
-      default:
-        return 'bg-muted text-muted-foreground';
-    }
-  };
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'active':
-        return <Badge className="bg-badge-success-bg text-badge-success-fg text-xs"><CheckCircle className="w-3 h-3 mr-1 text-badge-success-icon" />Active</Badge>;
-      case 'inactive':
-        return <Badge className="bg-muted text-muted-foreground text-xs">Inactive</Badge>;
-      case 'suspended':
-        return <Badge className="bg-destructive/10 text-destructive text-xs"><Ban className="w-3 h-3 mr-1" />Suspended</Badge>;
-      case 'pending_registration':
-        return <Badge className="bg-badge-info-bg text-badge-info-fg text-xs"><UserPlus className="w-3 h-3 mr-1" />Pending Registration</Badge>;
-      default:
-        return null;
-    }
-  };
-
-  const getApplicationBadge = (status: string) => {
-    switch (status) {
-      case 'approved':
-        return <Badge className="bg-badge-success-bg text-badge-success-fg text-xs"><CheckCircle className="w-3 h-3 mr-1 text-badge-success-icon" />Approved</Badge>;
-      case 'pending':
-        return <Badge className="bg-badge-info-bg text-badge-info-fg text-xs"><Clock className="w-3 h-3 mr-1" />Pending</Badge>;
-      case 'rejected':
-        return <Badge className="bg-destructive/10 text-destructive text-xs"><X className="w-3 h-3 mr-1" />Rejected</Badge>;
-      default:
-        return null;
-    }
-  };
-
-  const getMentorStatusBadge = (status: string) => {
-    // These indicate whether the mentor is accepting new mentees, not account status
-    const variants = {
-      active: { text: 'Accepting', className: 'bg-mint/20 text-mint-dark border border-mint/30', icon: <UserPlus className="w-3 h-3 mr-1" /> },
-      busy: { text: 'At Capacity', className: 'bg-badge-warning-bg text-badge-warning-fg', icon: <Clock className="w-3 h-3 mr-1" /> },
-      paused: { text: 'Not Accepting', className: 'bg-muted text-muted-foreground', icon: <Ban className="w-3 h-3 mr-1" /> },
-    };
-    const variant = variants[status as keyof typeof variants] || variants.paused;
-    return <Badge className={cn("text-xs", variant.className)}>{variant.icon}{variant.text}</Badge>;
-  };
-
-  // Render expanded row content
-  const renderExpandedContent = (user: UnifiedUser) => (
-    <TableRow className="bg-muted/30">
-      <TableCell colSpan={8} className="p-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Profile Details */}
-          <div className="space-y-3">
-            <h4 className="font-semibold text-sm text-brand uppercase tracking-wide flex items-center gap-2">
-              <Eye className="w-4 h-4" />
-              Profile Details
-            </h4>
-
-            {(user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio) && (
-              <div>
-                <p className="text-xs text-navy font-medium mb-1">Bio</p>
-                <p className="text-sm text-muted-foreground whitespace-pre-wrap break-words">
-                  {user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio}
-                </p>
-              </div>
-            )}
-
-            {(user.mentorInfo?.expertise || user.applicationInfo?.expertise) && (
-              <div>
-                <p className="text-xs text-periwinkle font-medium mb-1">Expertise</p>
-                <div className="flex flex-wrap gap-1">
-                  {(user.mentorInfo?.expertise || user.applicationInfo?.expertise || []).map((skill, idx) => (
-                    <Badge key={idx} variant="secondary" className="text-xs bg-badge-mentee-bg text-badge-mentee-fg">{skill}</Badge>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {(user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl) && (
-              <div className="flex items-center gap-2 text-sm">
-                <LinkIcon className="w-3 h-3 text-info" />
-                <a
-                  href={user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl || '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-info hover:underline break-words"
-                >
-                  LinkedIn Profile
-                </a>
-              </div>
-            )}
-
-            {user.applicationInfo && (
-              <div className="pt-2 border-t">
-                <p className="text-xs text-info font-medium mb-1">Application ({user.applicationInfo.type})</p>
-                <div className="space-y-1 text-sm">
-                  <p>Status: <Badge variant="outline" className="ml-1 text-xs">{user.applicationInfo.status}</Badge></p>
-                  {user.applicationInfo.submittedAt && (
-                    <p className="text-muted-foreground text-xs">
-                      Submitted: {new Date(user.applicationInfo.submittedAt).toLocaleDateString()}
-                    </p>
-                  )}
-                  {user.applicationInfo.availabilityHoursPerMonth && (
-                    <p className="text-muted-foreground text-xs">
-                      Availability: {user.applicationInfo.availabilityHoursPerMonth}h/month
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Metrics & Activity */}
-          <div className="space-y-3">
-            <h4 className="font-semibold text-sm text-navy uppercase tracking-wide flex items-center gap-2">
-              <Briefcase className="w-4 h-4" />
-              Metrics & Activity
-            </h4>
-
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Joined</span>
-                <span>{new Date(user.createdAt).toLocaleDateString()}</span>
-              </div>
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Last Active</span>
-                <span>{user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}</span>
-              </div>
-            </div>
-
-            {user.mentorInfo && user.mentorInfo.isVerified && (
-              <div className="pt-2 border-t space-y-2">
-                <p className="text-xs text-brand font-medium mb-1">Mentor Metrics</p>
-                <div className="flex items-center gap-2 text-sm">
-                  <Star className="w-4 h-4 text-brand fill-brand" />
-                  <span className="font-medium">{user.mentorInfo.avgRating?.toFixed(1) || 'N/A'}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Users className="w-4 h-4 text-periwinkle" />
-                  <span>{user.mentorInfo.activeMentees} active / {user.mentorInfo.totalMentees} total mentees</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MessageSquare className="w-4 h-4 text-info" />
-                  <span>{user.mentorInfo.totalSessions} sessions</span>
-                </div>
-              </div>
-            )}
-
-            {user.menteeInfo && (
-              <div className="pt-2 border-t space-y-2">
-                <p className="text-xs text-periwinkle font-medium mb-1">Mentee Info</p>
-                {user.menteeInfo.careerStage && (
-                  <p className="text-sm">Career Stage: <span className="capitalize">{user.menteeInfo.careerStage.replace(/_/g, ' ')}</span></p>
-                )}
-                {user.menteeInfo.currentIndustry && (
-                  <p className="text-sm text-muted-foreground">Industry: {formatIndustry(user.menteeInfo.currentIndustry)}</p>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      </TableCell>
-    </TableRow>
-  );
 
   return (
     <TooltipProvider>
@@ -826,81 +178,21 @@ export default function UserManagement() {
           </CardHeader>
           <CardContent>
             {/* Filters */}
-            <div className="flex flex-col gap-4 mb-6">
-              <div className="relative w-full">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
-                <Input
-                  type="search"
-                  placeholder="Search by name or email..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && fetchUsers()}
-                  className="pl-10"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:flex lg:gap-2 gap-2">
-                <Select value={roleFilter} onValueChange={(v) => { setRoleFilter(v); setCurrentPage(1); }}>
-                  <SelectTrigger className="w-full lg:w-32">
-                    <SelectValue placeholder="All Roles" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Roles</SelectItem>
-                    <SelectItem value="admin">Admin</SelectItem>
-                    <SelectItem value="mentor">Mentor</SelectItem>
-                    <SelectItem value="mentee">Mentee</SelectItem>
-                    <SelectItem value="no_role">No Role</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setCurrentPage(1); }}>
-                  <SelectTrigger className="w-full lg:w-40">
-                    <SelectValue placeholder="All Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
-                    <SelectItem value="suspended">Suspended</SelectItem>
-                    <SelectItem value="pending_registration">Pending Registration</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={membershipFilter} onValueChange={(v) => { setMembershipFilter(v); setCurrentPage(1); }}>
-                  <SelectTrigger className="w-full lg:w-32">
-                    <SelectValue placeholder="All Tiers" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Tiers</SelectItem>
-                    <SelectItem value="premium">Premium</SelectItem>
-                    <SelectItem value="basic">Basic</SelectItem>
-                    <SelectItem value="free">Free</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={applicationFilter} onValueChange={(v) => { setApplicationFilter(v); setCurrentPage(1); }}>
-                  <SelectTrigger className="w-full lg:w-40">
-                    <SelectValue placeholder="Application" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
-                    <SelectItem value="has_pending">Has Pending</SelectItem>
-                    <SelectItem value="no_application">No Application</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={userTypeFilter} onValueChange={(v) => { setUserTypeFilter(v); setCurrentPage(1); }}>
-                  <SelectTrigger className="w-full lg:w-36">
-                    <SelectValue placeholder="User Type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Users</SelectItem>
-                    <SelectItem value="real">Real Users</SelectItem>
-                    <SelectItem value="test">Test Users</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+            <UserFilters
+              searchQuery={admin.searchQuery}
+              onSearchQueryChange={admin.setSearchQuery}
+              onSearchSubmit={fetchUsers}
+              roleFilter={admin.roleFilter}
+              onRoleFilterChange={(v) => { admin.setRoleFilter(v); setCurrentPage(1); }}
+              statusFilter={admin.statusFilter}
+              onStatusFilterChange={(v) => { admin.setStatusFilter(v); setCurrentPage(1); }}
+              membershipFilter={admin.membershipFilter}
+              onMembershipFilterChange={(v) => { admin.setMembershipFilter(v); setCurrentPage(1); }}
+              applicationFilter={admin.applicationFilter}
+              onApplicationFilterChange={(v) => { admin.setApplicationFilter(v); setCurrentPage(1); }}
+              userTypeFilter={admin.userTypeFilter}
+              onUserTypeFilterChange={(v) => { admin.setUserTypeFilter(v); setCurrentPage(1); }}
+            />
 
             {/* Bulk Actions */}
             {selectedUsers.length > 0 && (
@@ -969,436 +261,34 @@ export default function UserManagement() {
             ) : (
               <>
                 {/* Mobile Card View */}
-                <div className="block lg:hidden space-y-3">
-                  {users.map((user) => (
-                    <Card key={user.recordId} className="p-4">
-                      <div className="flex items-start gap-2 mb-3">
-                        <Checkbox
-                          className="mt-1 shrink-0"
-                          checked={selectedUsers.includes(user.recordId)}
-                          onCheckedChange={(checked) => handleSelectUser(user.recordId, checked as boolean)}
-                        />
-                        <Avatar className="w-10 h-10 shrink-0">
-                          <AvatarImage src={user.image || undefined} alt={user.name || ''} />
-                          <AvatarFallback className="bg-muted text-foreground">
-                            {getAvatarInitials(user.name)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-foreground break-words">
-                            {user.name || 'Unknown User'}
-                            {user.isTestUser && <Badge variant="outline" className="ml-2 text-orange-600 border-orange-400 text-xs">TEST</Badge>}
-                          </p>
-                          <p className="text-sm text-muted-foreground break-all">{user.email}</p>
-                          {(user.jobTitle || user.company) && (
-                            <p className="text-xs text-muted-foreground break-words mt-0.5">
-                              {user.jobTitle}{user.jobTitle && user.company ? ' @ ' : ''}{user.company}
-                            </p>
-                          )}
-                        </div>
-                        <Button variant="ghost" size="icon" className="shrink-0 h-8 w-8" onClick={() => toggleRowExpansion(user.recordId)}>
-                          {expandedRows.has(user.recordId) ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                        </Button>
-                      </div>
-
-                      {/* Summary badges */}
-                      <div className="flex flex-wrap items-center gap-1.5 mb-2">
-                        {user.roles.length > 0 ? user.roles.map((role) => (
-                          <Badge key={role} variant="secondary" className={cn('text-xs', getRoleBadgeColor(role))}>
-                            {role}
-                          </Badge>
-                        )) : <Badge variant="secondary" className="text-xs">No roles</Badge>}
-                        {getStatusBadge(user.accountStatus)}
-                        <Badge variant="secondary" className={cn('text-xs', getMembershipBadgeColor(user.membershipTier))}>
-                          {user.membershipTier}
-                        </Badge>
-                        {user.recordType === 'public_application' && (
-                          <Badge className="bg-muted text-foreground text-xs">
-                            <UserPlus className="w-3 h-3 mr-1" />
-                            Pending
-                          </Badge>
-                        )}
-                        {user.applicationStatus === 'pending' && getApplicationBadge(user.applicationStatus)}
-                        {user.mentorInfo?.isVerified && getMentorStatusBadge(user.mentorInfo.status)}
-                      </div>
-
-                      {/* Quick info row */}
-                      <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                        <span>Joined {new Date(user.createdAt).toLocaleDateString()}</span>
-                        <span>Active: {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}</span>
-                        {user.city && (
-                          <span className="flex items-center gap-0.5">
-                            <MapPin className="w-3 h-3" />
-                            {user.city}
-                          </span>
-                        )}
-                        {user.mbtiType && (
-                          <Badge className="text-[10px] px-1.5 py-0 bg-badge-mentee-bg text-badge-mentee-fg border border-periwinkle/30">
-                            <Brain className="w-2.5 h-2.5 mr-0.5" />
-                            {user.mbtiType}
-                          </Badge>
-                        )}
-                      </div>
-
-                      {/* Expanded content - matches desktop */}
-                      {expandedRows.has(user.recordId) && (
-                        <div className="mt-4 pt-4 border-t space-y-4">
-                          {/* Profile Details */}
-                          {(user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio) && (
-                            <div>
-                              <p className="text-xs text-navy font-medium mb-1">Bio</p>
-                              <p className="text-sm text-muted-foreground whitespace-pre-wrap break-words">
-                                {user.mentorInfo?.bio || user.menteeInfo?.bio || user.applicationInfo?.bio}
-                              </p>
-                            </div>
-                          )}
-
-                          {(user.mentorInfo?.expertise || user.applicationInfo?.expertise) && (
-                            <div>
-                              <p className="text-xs text-periwinkle font-medium mb-1">Expertise</p>
-                              <div className="flex flex-wrap gap-1">
-                                {(user.mentorInfo?.expertise || user.applicationInfo?.expertise || []).map((skill, idx) => (
-                                  <Badge key={idx} variant="secondary" className="text-xs bg-badge-mentee-bg text-badge-mentee-fg">{skill}</Badge>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {(user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl) && (
-                            <div className="flex items-center gap-2 text-sm">
-                              <LinkIcon className="w-3 h-3 text-info" />
-                              <a
-                                href={user.mentorInfo?.linkedinUrl || user.applicationInfo?.linkedinUrl || '#'}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-info hover:underline break-words"
-                              >
-                                LinkedIn Profile
-                              </a>
-                            </div>
-                          )}
-
-                          {/* Mentor metrics */}
-                          {user.mentorInfo && user.mentorInfo.isVerified && (
-                            <div className="pt-2 border-t space-y-1.5">
-                              <p className="text-xs text-brand font-medium">Mentor Metrics</p>
-                              <div className="grid grid-cols-3 gap-2 text-xs">
-                                <div className="flex items-center gap-1">
-                                  <Star className="w-3 h-3 text-brand fill-brand" />
-                                  <span className="font-medium">{user.mentorInfo.avgRating?.toFixed(1) || 'N/A'}</span>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                  <Users className="w-3 h-3 text-periwinkle" />
-                                  <span>{user.mentorInfo.activeMentees}/{user.mentorInfo.totalMentees} mentees</span>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                  <MessageSquare className="w-3 h-3 text-info" />
-                                  <span>{user.mentorInfo.totalSessions} sessions</span>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Mentee info */}
-                          {user.menteeInfo && (
-                            <div className="pt-2 border-t space-y-1.5">
-                              <p className="text-xs text-periwinkle font-medium">Mentee Info</p>
-                              {user.menteeInfo.careerStage && (
-                                <p className="text-xs">Career Stage: <span className="capitalize">{user.menteeInfo.careerStage.replace(/_/g, ' ')}</span></p>
-                              )}
-                              {user.menteeInfo.currentIndustry && (
-                                <p className="text-xs text-muted-foreground">Industry: {formatIndustry(user.menteeInfo.currentIndustry)}</p>
-                              )}
-                            </div>
-                          )}
-
-                          {/* Application info */}
-                          {user.applicationInfo && (
-                            <div className="pt-2 border-t space-y-1.5">
-                              <p className="text-xs text-info font-medium">Application ({user.applicationInfo.type})</p>
-                              <div className="text-xs space-y-1">
-                                <p>Status: <Badge variant="outline" className="ml-1 text-xs">{user.applicationInfo.status}</Badge></p>
-                                {user.applicationInfo.submittedAt && (
-                                  <p className="text-muted-foreground">
-                                    Submitted: {new Date(user.applicationInfo.submittedAt).toLocaleDateString()}
-                                  </p>
-                                )}
-                                {user.applicationInfo.availabilityHoursPerMonth && (
-                                  <p className="text-muted-foreground">
-                                    Availability: {user.applicationInfo.availabilityHoursPerMonth}h/month
-                                  </p>
-                                )}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Application actions */}
-                          {user.applicationStatus === 'pending' && user.applicationInfo && (
-                            <div className="flex gap-2 pt-2">
-                              <Button
-                                size="sm"
-                                variant="default"
-                                className="flex-1"
-                                onClick={() => openReviewDialog(user, 'approve')}
-                              >
-                                <Check className="w-4 h-4 mr-1" />
-                                Approve
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="destructive"
-                                className="flex-1"
-                                onClick={() => openReviewDialog(user, 'reject')}
-                              >
-                                <X className="w-4 h-4 mr-1" />
-                                Reject
-                              </Button>
-                            </div>
-                          )}
-
-                          {/* Quick actions */}
-                          <div className="flex gap-2 pt-2">
-                            {user.recordType === 'registered_user' && (
-                              <Button variant="outline" size="sm" onClick={() => openEditDialog(user)}>
-                                <Edit className="w-3 h-3 mr-1" />
-                                Edit
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </Card>
-                  ))}
-                </div>
+                <UserListCards
+                  users={users}
+                  selectedUsers={selectedUsers}
+                  expandedRows={expandedRows}
+                  onSelectUser={admin.handleSelectUser}
+                  onToggleExpansion={toggleRowExpansion}
+                  onReview={openReviewDialog}
+                  onEdit={openEditDialog}
+                />
 
                 {/* Desktop Table View */}
-                <div className="hidden lg:block overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="w-10"></TableHead>
-                        <TableHead className="w-12">
-                          <Checkbox
-                            checked={selectedUsers.length === users.length && users.length > 0}
-                            onCheckedChange={handleSelectAll}
-                          />
-                        </TableHead>
-                        <TableHead>User</TableHead>
-                        <TableHead>Roles</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Membership</TableHead>
-                        <TableHead>Activity</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {users.map((user) => (
-                        <React.Fragment key={user.recordId}>
-                          <TableRow className={cn(expandedRows.has(user.recordId) && "border-b-0")}>
-                            <TableCell>
-                              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => toggleRowExpansion(user.recordId)}>
-                                {expandedRows.has(user.recordId) ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                              </Button>
-                            </TableCell>
-                            <TableCell>
-                              <Checkbox
-                                checked={selectedUsers.includes(user.recordId)}
-                                onCheckedChange={(checked) => handleSelectUser(user.recordId, checked as boolean)}
-                              />
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex items-center space-x-3">
-                                <Avatar className="w-10 h-10">
-                                  <AvatarImage src={user.image || undefined} alt={user.name || ''} />
-                                  <AvatarFallback className="bg-muted text-foreground">
-                                    {getAvatarInitials(user.name)}
-                                  </AvatarFallback>
-                                </Avatar>
-                                <div>
-                                  <div className="flex items-center gap-2">
-                                    <p className="font-medium text-foreground">{user.name || 'Unknown User'}</p>
-                                    {user.isTestUser && (
-                                      <Badge variant="outline" className="text-orange-600 border-orange-400 text-xs">TEST</Badge>
-                                    )}
-                                    {user.recordType === 'public_application' && (
-                                      <Badge className="bg-muted text-foreground text-xs">
-                                        <UserPlus className="w-3 h-3 mr-1" />
-                                        Pending Reg
-                                      </Badge>
-                                    )}
-                                  </div>
-                                  <p className="text-sm text-muted-foreground">{user.email}</p>
-                                  {(user.jobTitle || user.company) && (
-                                    <p className="text-xs text-muted-foreground mt-0.5">
-                                      {user.jobTitle}{user.jobTitle && user.company ? ' @ ' : ''}{user.company}
-                                    </p>
-                                  )}
-                                  {(user.city || user.mbtiType) && (
-                                    <div className="flex items-center gap-2 mt-1">
-                                      {user.city && (
-                                        <span className="flex items-center gap-0.5 text-xs text-info">
-                                          <MapPin className="w-3 h-3" />
-                                          {user.city}
-                                        </span>
-                                      )}
-                                      {user.mbtiType && (
-                                        <Badge className="text-xs px-1.5 py-0 bg-badge-mentee-bg text-badge-mentee-fg border border-periwinkle/30">
-                                          <Brain className="w-2.5 h-2.5 mr-0.5" />
-                                          {user.mbtiType}
-                                        </Badge>
-                                      )}
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex flex-wrap gap-1">
-                                {user.roles.length > 0 ? user.roles.map((role) => (
-                                  <Badge key={role} variant="secondary" className={cn('text-xs', getRoleBadgeColor(role))}>
-                                    {role}
-                                  </Badge>
-                                )) : <span className="text-xs text-muted-foreground">None</span>}
-                              </div>
-                              {user.mentorInfo?.isVerified && (
-                                <div className="mt-1">
-                                  {getMentorStatusBadge(user.mentorInfo.status)}
-                                </div>
-                              )}
-                            </TableCell>
-                            <TableCell>
-                              <div className="space-y-1">
-                                {getStatusBadge(user.accountStatus)}
-                                {user.applicationStatus === 'pending' && getApplicationBadge(user.applicationStatus)}
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              <Badge variant="secondary" className={cn('text-xs', getMembershipBadgeColor(user.membershipTier))}>
-                                {user.membershipTier}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              <div className="text-sm space-y-0.5">
-                                <p className="text-muted-foreground text-xs">
-                                  Joined: {new Date(user.createdAt).toLocaleDateString()}
-                                </p>
-                                <p className="text-muted-foreground text-xs">
-                                  Active: {user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'}
-                                </p>
-                              </div>
-                            </TableCell>
-                            <TableCell className="text-right">
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button variant="ghost" size="icon">
-                                    <MoreVertical className="w-4 h-4" />
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end" className="w-56">
-                                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuItem onClick={() => toggleRowExpansion(user.recordId)}>
-                                    <Eye className="w-4 h-4 mr-2" />
-                                    View Details
-                                  </DropdownMenuItem>
-                                  {user.recordType === 'registered_user' && (
-                                    <>
-                                      <DropdownMenuItem onClick={() => openEditDialog(user)}>
-                                        <Edit className="w-4 h-4 mr-2" />
-                                        Edit User
-                                      </DropdownMenuItem>
-                                      <DropdownMenuSeparator />
-                                      <DropdownMenuSub>
-                                        <DropdownMenuSubTrigger>
-                                          <Shield className="w-4 h-4 mr-2" />
-                                          Manage Roles
-                                        </DropdownMenuSubTrigger>
-                                        <DropdownMenuSubContent>
-                                          {(['admin', 'mentor', 'mentee'] as const).map((roleType) => {
-                                            const hasRole = user.roles.includes(roleType);
-                                            const isUpdating = updatingRole === `${user.id}-${roleType}`;
-                                            return (
-                                              <div
-                                                key={roleType}
-                                                className="flex items-center justify-between px-2 py-1.5"
-                                              >
-                                                <span className="capitalize text-sm">{roleType}</span>
-                                                <Switch
-                                                  checked={hasRole}
-                                                  disabled={isUpdating}
-                                                  onCheckedChange={() => handleRoleToggle(user.id, roleType, hasRole)}
-                                                />
-                                              </div>
-                                            );
-                                          })}
-                                        </DropdownMenuSubContent>
-                                      </DropdownMenuSub>
-                                    </>
-                                  )}
-                                  {user.applicationStatus === 'pending' && user.applicationInfo && (
-                                    <>
-                                      <DropdownMenuSeparator />
-                                      <DropdownMenuItem
-                                        onClick={() => openReviewDialog(user, 'approve')}
-                                      >
-                                        <Check className="w-4 h-4 mr-2" />
-                                        Approve Application
-                                      </DropdownMenuItem>
-                                      <DropdownMenuItem
-                                        onClick={() => openReviewDialog(user, 'reject')}
-                                      >
-                                        <X className="w-4 h-4 mr-2" />
-                                        Reject Application
-                                      </DropdownMenuItem>
-                                    </>
-                                  )}
-                                  {user.recordType === 'registered_user' && (
-                                    <>
-                                      {!user.emailVerifiedAt && (
-                                        <>
-                                          <DropdownMenuSeparator />
-                                          <DropdownMenuItem
-                                            onClick={() => handleVerifyEmail(user)}
-                                            disabled={verifyingEmail === user.id}
-                                          >
-                                            <MailCheck className="w-4 h-4 mr-2" />
-                                            Verify Email
-                                          </DropdownMenuItem>
-                                        </>
-                                      )}
-                                      <DropdownMenuSeparator />
-                                      <DropdownMenuItem
-                                        onClick={() => handleToggleTestUser(user)}
-                                        disabled={togglingTestUser === user.id}
-                                      >
-                                        <FlaskConical className="w-4 h-4 mr-2" />
-                                        {user.isTestUser ? 'Remove Test User Mark' : 'Mark as Test User'}
-                                      </DropdownMenuItem>
-                                      <DropdownMenuSeparator />
-                                      <DropdownMenuItem
-                                        onClick={() => openUserActionDialog(user, 'suspend')}
-                                      >
-                                        <Ban className="w-4 h-4 mr-2" />
-                                        Suspend Account
-                                      </DropdownMenuItem>
-                                      <DropdownMenuItem
-                                        onClick={() => openUserActionDialog(user, 'delete')}
-                                      >
-                                        <Trash2 className="w-4 h-4 mr-2" />
-                                        Delete User
-                                      </DropdownMenuItem>
-                                    </>
-                                  )}
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </TableCell>
-                          </TableRow>
-                          {expandedRows.has(user.recordId) && renderExpandedContent(user)}
-                        </React.Fragment>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
+                <UserListTable
+                  users={users}
+                  selectedUsers={selectedUsers}
+                  expandedRows={expandedRows}
+                  updatingRole={admin.updatingRole}
+                  verifyingEmail={admin.verifyingEmail}
+                  togglingTestUser={admin.togglingTestUser}
+                  onSelectAll={admin.handleSelectAll}
+                  onSelectUser={admin.handleSelectUser}
+                  onToggleExpansion={toggleRowExpansion}
+                  onRoleToggle={admin.handleRoleToggle}
+                  onVerifyEmail={admin.handleVerifyEmail}
+                  onToggleTestUser={admin.handleToggleTestUser}
+                  onReview={openReviewDialog}
+                  onEdit={openEditDialog}
+                  onUserAction={openUserActionDialog}
+                />
 
                 {/* Pagination */}
                 <div className="flex items-center justify-between mt-6">
@@ -1452,181 +342,37 @@ export default function UserManagement() {
           </CardContent>
         </Card>
 
-        {/* Review Dialog */}
-        <Dialog open={reviewDialogOpen} onOpenChange={setReviewDialogOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
-                {reviewAction === 'approve' ? 'Approve Application' : 'Reject Application'}
-              </DialogTitle>
-              <DialogDescription>
-                {reviewAction === 'approve'
-                  ? `Are you sure you want to approve ${reviewingUser?.name || 'this user'}'s ${reviewingUser?.applicationInfo?.type || 'mentor'} application?`
-                  : `Are you sure you want to reject ${reviewingUser?.name || 'this user'}'s ${reviewingUser?.applicationInfo?.type || 'mentor'} application?`
-                }
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="review-notes" className={cn(
-                  "flex items-center gap-2",
-                  reviewAction === 'approve' ? "text-brand" : "text-destructive"
-                )}>
-                  {reviewAction === 'approve' ? (
-                    <CheckCircle className="w-4 h-4" />
-                  ) : (
-                    <X className="w-4 h-4" />
-                  )}
-                  {reviewAction === 'approve' ? 'Notes (optional)' : 'Reason for rejection (required)'}
-                </Label>
-                <Textarea
-                  id="review-notes"
-                  placeholder={reviewAction === 'approve'
-                    ? 'Add any notes about this approval...'
-                    : 'Please provide a reason for rejecting this application...'
-                  }
-                  value={reviewNotes}
-                  onChange={(e) => setReviewNotes(e.target.value)}
-                  className="mt-2"
-                  rows={4}
-                />
-              </div>
-              {reviewAction === 'approve' && (
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="review-test-user"
-                    checked={reviewIsTestUser}
-                    onCheckedChange={(checked) => setReviewIsTestUser(checked === true)}
-                  />
-                  <Label
-                    htmlFor="review-test-user"
-                    className="text-sm text-muted-foreground cursor-pointer"
-                  >
-                    Mark as test user
-                  </Label>
-                </div>
-              )}
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setReviewDialogOpen(false)}>
-                Cancel
-              </Button>
-              <Button
-                onClick={handleReviewSubmit}
-                disabled={submittingReview || (reviewAction === 'reject' && !reviewNotes.trim())}
-                variant={reviewAction === 'reject' ? 'destructive' : 'default'}
-              >
-                {submittingReview ? 'Processing...' : reviewAction === 'approve' ? 'Approve' : 'Reject'}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <ReviewApplicationDialog
+          open={reviewDialogOpen}
+          onOpenChange={setReviewDialogOpen}
+          action={reviewAction}
+          user={reviewingUser}
+          notes={reviewNotes}
+          onNotesChange={setReviewNotes}
+          isTestUser={reviewIsTestUser}
+          onIsTestUserChange={setReviewIsTestUser}
+          submitting={admin.submittingReview}
+          onSubmit={handleReviewSubmit}
+        />
 
-        {/* User Action Confirmation Dialog */}
-        <Dialog open={actionDialogOpen} onOpenChange={setActionDialogOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
-                {actionType === 'suspend' ? 'Suspend User' : 'Delete User'}
-              </DialogTitle>
-              <DialogDescription>
-                {actionType === 'suspend'
-                  ? `Are you sure you want to suspend ${actionUser?.name || 'this user'}? They will no longer be able to access their account.`
-                  : `Are you sure you want to delete ${actionUser?.name || 'this user'}? This action cannot be undone.`
-                }
-              </DialogDescription>
-            </DialogHeader>
-            {actionUser && (
-              <div className="py-4">
-                <div className="flex items-center space-x-3 p-3 bg-muted rounded-lg">
-                  <Avatar className="w-10 h-10">
-                    <AvatarImage src={actionUser.image || undefined} alt={actionUser.name || ''} />
-                    <AvatarFallback>{getAvatarInitials(actionUser.name)}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-medium">{actionUser.name || 'Unknown User'}</p>
-                    <p className="text-sm text-muted-foreground">{actionUser.email}</p>
-                  </div>
-                </div>
-              </div>
-            )}
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setActionDialogOpen(false)} disabled={processingAction}>
-                Cancel
-              </Button>
-              <Button
-                onClick={handleUserAction}
-                disabled={processingAction}
-                variant="destructive"
-              >
-                {processingAction
-                  ? 'Processing...'
-                  : actionType === 'suspend'
-                    ? 'Suspend User'
-                    : 'Delete User'
-                }
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <UserActionDialog
+          open={actionDialogOpen}
+          onOpenChange={setActionDialogOpen}
+          actionType={actionType}
+          user={actionUser}
+          processing={admin.processingAction}
+          onConfirm={handleUserAction}
+        />
 
-        {/* Edit User Dialog */}
-        <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Edit User</DialogTitle>
-              <DialogDescription>
-                Update user information for {editingUser?.name || 'this user'}
-              </DialogDescription>
-            </DialogHeader>
-            {editingUser && (
-              <div className="space-y-4 py-4">
-                <div className="flex items-center space-x-3 p-3 bg-muted rounded-lg mb-4">
-                  <Avatar className="w-10 h-10">
-                    <AvatarImage src={editingUser.image || undefined} alt={editingUser.name || ''} />
-                    <AvatarFallback>{getAvatarInitials(editingUser.name)}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-medium">{editingUser.name || 'Unknown User'}</p>
-                    <p className="text-sm text-muted-foreground">{editingUser.email}</p>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-name" className="text-navy flex items-center gap-2">
-                    <Users className="w-4 h-4" />
-                    Name
-                  </Label>
-                  <Input
-                    id="edit-name"
-                    value={editFormData.name}
-                    onChange={(e) => setEditFormData(prev => ({ ...prev, name: e.target.value }))}
-                    placeholder="User name"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-phone" className="text-periwinkle flex items-center gap-2">
-                    <Phone className="w-4 h-4" />
-                    Phone
-                  </Label>
-                  <Input
-                    id="edit-phone"
-                    value={editFormData.phone}
-                    onChange={(e) => setEditFormData(prev => ({ ...prev, phone: e.target.value }))}
-                    placeholder="Phone number"
-                  />
-                </div>
-              </div>
-            )}
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setEditDialogOpen(false)} disabled={savingEdit}>
-                Cancel
-              </Button>
-              <Button onClick={handleEditSave} disabled={savingEdit}>
-                {savingEdit ? 'Saving...' : 'Save Changes'}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <EditUserDialog
+          open={editDialogOpen}
+          onOpenChange={setEditDialogOpen}
+          user={editingUser}
+          formData={editFormData}
+          onFormDataChange={setEditFormData}
+          saving={admin.savingEdit}
+          onSave={handleEditSave}
+        />
       </div>
     </TooltipProvider>
   );
