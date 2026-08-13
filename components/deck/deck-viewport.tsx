@@ -7,13 +7,16 @@ import {
   useMemo,
   useRef,
   useState,
-  type PointerEvent as ReactPointerEvent,
 } from "react";
 
+import { useDeckKeyboard } from "@/hooks/use-deck-keyboard";
+import { useDeckPreload } from "@/hooks/use-deck-preload";
+import { useDeckSwipe } from "@/hooks/use-deck-swipe";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useWakeLock } from "@/hooks/use-wake-lock";
 import { ENTRANCES_ATTR, ENTRANCES_JS } from "@/lib/deck/motion";
 import type { Deck } from "@/lib/deck/types";
-import { collectDeckImages, slideAriaLabel, toneOf } from "@/lib/deck/utils";
+import { slideAriaLabel, toneOf } from "@/lib/deck/utils";
 
 import { DeckControlsContext, type DeckControls } from "./deck-controls";
 import { DeckHelp } from "./deck-help";
@@ -25,18 +28,6 @@ import { SlideRenderer } from "./slide-renderer";
 
 /** Milliseconds of stillness before the cursor and the chrome fade away. */
 const IDLE_DELAY = 3000;
-
-/** Images warmed at a time. Six keeps the connection busy without queueing. */
-const PRELOAD_BATCH = 6;
-
-/** Minimum horizontal travel, in px, before a drag counts as a swipe. */
-const SWIPE_DISTANCE = 60;
-
-/** Travel above which a pointer release is a drag rather than a tap. */
-const TAP_SLOP = 10;
-
-/** Fraction of the viewport width that pages backwards when clicked. */
-const BACK_ZONE = 0.25;
 
 /**
  * Where the low-power choice is remembered.
@@ -63,14 +54,6 @@ export interface DeckViewportProps {
   fit: "fill" | "contain";
   /** Multiplier from `?zoom=`, for screens that crop the edges. */
   zoom: number;
-}
-
-/** Whether the keyboard currently belongs to a text field rather than the deck. */
-function isTypingTarget(): boolean {
-  const active = document.activeElement;
-  if (!(active instanceof HTMLElement)) return false;
-  const tag = active.tagName;
-  return tag === "INPUT" || tag === "TEXTAREA" || active.isContentEditable;
 }
 
 /**
@@ -354,274 +337,35 @@ export function DeckViewport({
 
   // --------------------------------------------------------------- keyboard
 
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      // Leave browser and OS shortcuts alone, and leave text fields alone —
-      // the overview has no input today, but the help dialog is one edit away.
-      if (event.ctrlKey || event.metaKey || event.altKey) return;
-      if (isTypingTarget()) return;
-
-      const key = event.key;
-
-      if (key === "Escape") {
-        if (overviewOpen) {
-          event.preventDefault();
-          setOverviewOpen(false);
-        } else if (helpOpen) {
-          event.preventDefault();
-          setHelpOpen(false);
-        } else if (blackout) {
-          event.preventDefault();
-          setBlackout(false);
-        }
-        // Nothing open: let the browser leave full screen.
-        return;
-      }
-
-      // Blackout is a panic key. Whatever comes next just brings the deck back.
-      if (blackout) {
-        event.preventDefault();
-        setBlackout(false);
-        return;
-      }
-
-      if (key === "o" || key === "O") {
-        event.preventDefault();
-        setHelpOpen(false);
-        setOverviewOpen((open) => !open);
-        return;
-      }
-
-      if (key === "?") {
-        event.preventDefault();
-        setOverviewOpen(false);
-        setHelpOpen((open) => !open);
-        return;
-      }
-
-      // Above the dialog guard on purpose: the help overlay is where the switch
-      // is documented and where its current state is shown, so a host who has
-      // just opened it to find the key must be able to press the key.
-      if (key === "l" || key === "L") {
-        // Venue laptops are often old, and a stuttering deck reads worse from
-        // the room than a static one. One key, mid-talk, no menu.
-        event.preventDefault();
-        toggleLowPower();
-        return;
-      }
-
-      // A dialog owns the screen; everything below moves the deck underneath it.
-      if (overviewOpen || helpOpen) return;
-
-      switch (key) {
-        case " ":
-          // Always swallow Space: unhandled, it scrolls the page behind the
-          // fixed viewport. On a break slide it drives the countdown instead of
-          // advancing, so the host can time a break without leaving the slide.
-          event.preventDefault();
-          if (breakSlide) toggleTimer();
-          else goNext();
-          return;
-
-        case "ArrowRight":
-        case "ArrowDown":
-        case "PageDown":
-        case "Enter":
-          event.preventDefault();
-          goNext();
-          return;
-
-        case "ArrowLeft":
-        case "ArrowUp":
-        case "PageUp":
-        case "Backspace":
-          event.preventDefault();
-          goPrevious();
-          return;
-
-        case "Home":
-          event.preventDefault();
-          goTo(0);
-          return;
-
-        case "End":
-          event.preventDefault();
-          goTo(total - 1);
-          return;
-
-        case "f":
-        case "F":
-          event.preventDefault();
-          toggleFullscreen();
-          return;
-
-        case "b":
-        case "B":
-          event.preventDefault();
-          setBlackout(true);
-          return;
-
-        default:
-          return;
-      }
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [
-    blackout,
+  useDeckKeyboard({
+    total,
     breakSlide,
+    overviewOpen,
+    setOverviewOpen,
+    helpOpen,
+    setHelpOpen,
+    blackout,
+    setBlackout,
     goNext,
     goPrevious,
     goTo,
-    helpOpen,
-    overviewOpen,
     toggleFullscreen,
     toggleLowPower,
     toggleTimer,
-    total,
-  ]);
+  });
 
   // ---------------------------------------------------------------- pointer
 
-  const pointerStart = useRef<{ x: number; y: number } | null>(null);
-
-  const handlePointerDown = useCallback((event: ReactPointerEvent) => {
-    pointerStart.current = { x: event.clientX, y: event.clientY };
-  }, []);
-
-  // Click and swipe are resolved together on pointerup rather than through a
-  // separate click handler, so a touch never fires both.
-  const handlePointerUp = useCallback(
-    (event: ReactPointerEvent) => {
-      const start = pointerStart.current;
-      pointerStart.current = null;
-      if (!start) return;
-
-      if (blackout) {
-        setBlackout(false);
-        return;
-      }
-
-      const target = event.target;
-      if (
-        target instanceof Element &&
-        target.closest("a, button, [data-no-advance]")
-      ) {
-        return;
-      }
-
-      const dx = event.clientX - start.x;
-      const dy = event.clientY - start.y;
-
-      if (
-        Math.abs(dx) > SWIPE_DISTANCE &&
-        Math.abs(dx) > Math.abs(dy) * 1.5
-      ) {
-        if (dx < 0) goNext();
-        else goPrevious();
-        return;
-      }
-
-      // A drag that was not a swipe is someone steadying the trackpad, not a tap.
-      if (Math.abs(dx) > TAP_SLOP || Math.abs(dy) > TAP_SLOP) return;
-
-      const rect = viewportRef.current?.getBoundingClientRect();
-      if (rect && event.clientX - rect.left < rect.width * BACK_ZONE) {
-        goPrevious();
-      } else {
-        goNext();
-      }
-    },
-    [blackout, goNext, goPrevious],
-  );
+  const { onPointerDown: handlePointerDown, onPointerUp: handlePointerUp } =
+    useDeckSwipe({ viewportRef, blackout, setBlackout, goNext, goPrevious });
 
   // ------------------------------------------------------------- preloading
 
-  const images = useMemo(() => collectDeckImages(deck), [deck]);
-  const [loaded, setLoaded] = useState(0);
-
-  useEffect(() => {
-    if (images.length === 0) return;
-    let cancelled = false;
-
-    const schedule = (task: () => void) => {
-      if (typeof window.requestIdleCallback === "function") {
-        window.requestIdleCallback(task);
-      } else {
-        window.setTimeout(task, 0);
-      }
-    };
-
-    const runBatch = (start: number) => {
-      if (cancelled || start >= images.length) return;
-      const batch = images.slice(start, start + PRELOAD_BATCH);
-      let settled = 0;
-
-      batch.forEach((src) => {
-        const image = new window.Image();
-        image.decoding = "async";
-        const settle = () => {
-          if (cancelled) return;
-          setLoaded((count) => count + 1);
-          settled += 1;
-          // A 404 counts as settled: one missing asset must not leave the host
-          // staring at "41 / 65" and wondering whether it is safe to start.
-          if (settled === batch.length) {
-            schedule(() => runBatch(start + PRELOAD_BATCH));
-          }
-        };
-        image.onload = settle;
-        image.onerror = settle;
-        image.src = src;
-      });
-    };
-
-    schedule(() => runBatch(0));
-    return () => {
-      cancelled = true;
-    };
-  }, [images]);
-
-  const preloading = images.length > 0 && loaded < images.length;
+  const { loaded, total: imageCount, preloading } = useDeckPreload(deck);
 
   // -------------------------------------------------------------- wake lock
 
-  useEffect(() => {
-    let sentinel: WakeLockSentinel | null = null;
-    let disposed = false;
-
-    const acquire = async () => {
-      if (!("wakeLock" in navigator)) return;
-      if (sentinel && !sentinel.released) return;
-      try {
-        const next = await navigator.wakeLock.request("screen");
-        if (disposed) {
-          void next.release().catch(() => {});
-          return;
-        }
-        sentinel = next;
-      } catch {
-        // Rejects on a non-secure origin, in a background tab, and on any
-        // browser that has the API but not the permission. None are fatal.
-      }
-    };
-
-    void acquire();
-
-    // The lock is dropped whenever the tab is hidden — including by the display
-    // sleeping once — so it has to be taken again every time we come back.
-    const onVisibility = () => {
-      if (document.visibilityState === "visible") void acquire();
-    };
-    document.addEventListener("visibilitychange", onVisibility);
-
-    return () => {
-      disposed = true;
-      document.removeEventListener("visibilitychange", onVisibility);
-      void sentinel?.release().catch(() => {});
-    };
-  }, []);
+  useWakeLock();
 
   // ------------------------------------------------------- layout neutralise
 
@@ -704,7 +448,7 @@ export function DeckViewport({
             // someone is trying to open an event is worse than silence.
             aria-live="off"
           >
-            Loading assets {loaded} / {images.length}
+            Loading assets {loaded} / {imageCount}
           </div>
         )}
 

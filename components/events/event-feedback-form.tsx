@@ -10,6 +10,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Spinner } from "@/components/ui/spinner";
+import {
+  DEVICE_HEADER,
+  deviceId,
+  draftKey,
+  readStorage,
+  removeStorage,
+  submittedKey,
+  writeStorage,
+} from "@/lib/forms/feedback-device";
 
 /** Where the attendee came from. Mirrors the `source` enum on the API. */
 export type FeedbackSource = "deck_qr" | "event_page" | "direct_link" | "email";
@@ -53,13 +62,6 @@ const EMPTY_ANSWERS: Answers = {
   website: "",
 };
 
-/**
- * Per-person rate-limit key. A whole venue shares one NAT'd IP, so the API
- * keys on this instead; it is generated once per browser and never leaves
- * `localStorage`.
- */
-const DEVICE_ID_KEY = "she-sharp-device-id";
-
 const RATING_SCALE = [1, 2, 3, 4, 5];
 
 const ATTEND_AGAIN_OPTIONS: { value: "yes" | "maybe" | "no"; label: string }[] =
@@ -74,55 +76,6 @@ const INTEREST_OPTIONS: { value: FeedbackInterest; label: string }[] = [
   { value: "volunteering", label: "Volunteering & ambassadors" },
   { value: "newsletter", label: "Monthly newsletter" },
 ];
-
-/**
- * Every storage read is wrapped: Safari in private mode throws on access to
- * `localStorage`, and a thrown exception here would take the whole form down
- * on the one device class most likely to be scanning a QR code.
- */
-function readStorage(store: "local" | "session", key: string): string | null {
-  try {
-    const target = store === "local" ? window.localStorage : window.sessionStorage;
-    return target.getItem(key);
-  } catch {
-    return null;
-  }
-}
-
-function writeStorage(store: "local" | "session", key: string, value: string) {
-  try {
-    const target = store === "local" ? window.localStorage : window.sessionStorage;
-    target.setItem(key, value);
-  } catch {
-    // Nothing to do — losing the draft or the device id degrades the
-    // experience, it does not break the form.
-  }
-}
-
-function removeStorage(store: "local" | "session", key: string) {
-  try {
-    const target = store === "local" ? window.localStorage : window.sessionStorage;
-    target.removeItem(key);
-  } catch {
-    // See above.
-  }
-}
-
-function deviceId(): string {
-  const existing = readStorage("local", DEVICE_ID_KEY);
-  if (existing) return existing;
-
-  const generated =
-    typeof crypto !== "undefined" && "randomUUID" in crypto
-      ? crypto.randomUUID()
-      : `d-${Date.now()}-${Math.random().toString(36).slice(2)}`;
-
-  writeStorage("local", DEVICE_ID_KEY, generated);
-  return generated;
-}
-
-const submittedKey = (slug: string) => `she-sharp-feedback:${slug}`;
-const draftKey = (slug: string) => `she-sharp-feedback-draft:${slug}`;
 
 /**
  * Post-event feedback, designed to be finished one-handed in under a minute
@@ -292,7 +245,7 @@ export function EventFeedbackForm({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-ss-device": deviceId(),
+          [DEVICE_HEADER]: deviceId(),
         },
         body: JSON.stringify({
           eventSlug,
