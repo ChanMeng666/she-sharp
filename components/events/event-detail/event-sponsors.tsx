@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { EventV3, EventSponsorV3 } from "@/types/event";
 import { hasAnySponsors } from "@/lib/data/events";
 import {
@@ -23,6 +24,38 @@ function isLogoOnly(sponsor: EventSponsorV3): boolean {
   return !sponsor.description && !sponsor.image;
 }
 
+/**
+ * A sponsor logo, sized by height with `w-auto` so each mark keeps its own
+ * proportions.
+ *
+ * `width`/`height` are a hint that only reserves space before the file lands —
+ * `w-auto` hands the final width back to the logo's intrinsic ratio, so the
+ * rendered lock-up is unchanged. SVG marks are passed through `unoptimized`:
+ * the image optimizer rejects `image/svg+xml` unless `dangerouslyAllowSVG` is
+ * enabled, and a vector file has nothing to gain from re-encoding anyway.
+ */
+function SponsorLogo({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className: string;
+}) {
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={440}
+      height={220}
+      sizes="440px"
+      unoptimized={src.toLowerCase().endsWith(".svg")}
+      className={className}
+    />
+  );
+}
+
 interface SponsorLogoGridProps {
   sponsors: EventSponsorV3[];
   logoSizeClass?: string;
@@ -38,8 +71,7 @@ function SponsorLogoGrid({
         <Tooltip key={`${sponsor.name}-${index}`}>
           <TooltipTrigger asChild>
             <div className="flex items-center justify-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <SponsorLogo
                 src={sponsor.logo}
                 alt={sponsor.name}
                 className={`${logoSizeClass} w-auto max-w-[220px] object-contain grayscale opacity-80 transition duration-300 hover:grayscale-0 hover:opacity-100`}
@@ -62,10 +94,12 @@ function SponsorRow({ sponsor, id, logoSizeClass = "h-28 md:h-36 lg:h-44" }: Spo
       {hasDetails && (
         <div className="flex-1 min-w-0 text-center sm:text-left">
           {sponsor.image && (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
+            <Image
               src={sponsor.image}
               alt={sponsor.imageAlt || sponsor.name}
+              width={96}
+              height={96}
+              sizes="96px"
               className="h-24 w-24 rounded-full object-cover mb-3 mx-auto sm:mx-0"
             />
           )}
@@ -84,8 +118,7 @@ function SponsorRow({ sponsor, id, logoSizeClass = "h-28 md:h-36 lg:h-44" }: Spo
 
       {/* Right: logo */}
       <div className="shrink-0 flex items-center justify-center">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <SponsorLogo
           src={sponsor.logo}
           alt={sponsor.name}
           className={`${logoSizeClass} w-auto object-contain grayscale opacity-80 transition duration-300 hover:grayscale-0 hover:opacity-100`}
@@ -225,10 +258,14 @@ export function EventSponsors({ event, className }: EventSponsorsProps) {
         {/* Sponsors banner image (legacy conference pages) */}
         {event.detailPageData.sponsorsImage && (
           <div className="mt-12 w-full overflow-hidden rounded-[32px] border border-border">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            {/* Banner dimensions are not in the data; `h-auto` restores the
+                banner's own aspect ratio once it loads. */}
+            <Image
               src={event.detailPageData.sponsorsImage.url}
               alt={event.detailPageData.sponsorsImage.alt}
+              width={1600}
+              height={900}
+              sizes="(max-width: 1024px) 100vw, 1024px"
               className="w-full h-auto rounded-2xl"
             />
           </div>

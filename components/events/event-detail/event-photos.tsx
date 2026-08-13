@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { EventV3 } from "@/types/event";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,20 @@ function spanForIndex(index: number): string {
     default:
       return "";
   }
+}
+
+/**
+ * Rendered width hint for the optimizer, mirroring `spanForIndex()`. The grid
+ * is 2 columns below `md` and 4 above, so a single tile is 50vw / 25vw and a
+ * double-width tile is 100vw / 50vw. Capped at the widest the tile can ever be
+ * inside the page container so ultrawide displays do not fetch a needlessly
+ * large file.
+ */
+function sizesForIndex(index: number): string {
+  const wide = index % 6 === 0 || index % 6 === 5;
+  return wide
+    ? "(max-width: 767px) 100vw, (max-width: 1536px) 50vw, 768px"
+    : "(max-width: 767px) 50vw, (max-width: 1536px) 25vw, 384px";
 }
 
 interface EventPhotosProps {
@@ -87,15 +102,14 @@ export function EventPhotos({ event, archivePhotos, className }: EventPhotosProp
                 type="button"
                 onClick={() => lightbox.openAt(index)}
                 aria-label={`View photo ${index + 1} of ${tiles.length}`}
-                className="group block h-full w-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                className="group relative block h-full w-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={photo.src}
                   alt={photo.alt}
-                  width={photo.width}
-                  height={photo.height}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  fill
+                  sizes={sizesForIndex(index)}
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 />
               </button>
             </CurtainReveal>

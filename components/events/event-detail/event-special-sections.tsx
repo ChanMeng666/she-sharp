@@ -191,11 +191,16 @@ function CollaborationLogos({ items }: { items: string[] }) {
   return (
     <div className="flex flex-wrap gap-8 md:gap-12 items-center">
       {logos.map((logo, i) => {
-        // eslint-disable-next-line @next/next/no-img-element
+        // Partner logos are vector art sized by height with `w-auto`, so they
+        // stay a raw <img>: the optimizer rejects SVG without
+        // `dangerouslyAllowSVG`, and a fixed width would break the lock-up.
         const img = (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={logo.src}
             alt={logo.alt}
+            loading="lazy"
+            decoding="async"
             className="h-14 sm:h-16 md:h-20 w-auto object-contain"
           />
         );

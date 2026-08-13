@@ -1,4 +1,5 @@
 import { EventV3 } from "@/types/event";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/layout/container";
@@ -38,11 +39,15 @@ export function EventInfoSections({ event }: EventInfoSectionsProps) {
               {section.images && section.images.length > 0 && (
                 <div className="mt-5 flex flex-wrap gap-4">
                   {section.images.map((image, k) => (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
+                    /* Fixed 128px row height; `w-auto` keeps each image's own
+                       aspect ratio, so the hint dimensions never distort it. */
+                    <Image
                       key={k}
                       src={image.url}
                       alt={image.alt}
+                      width={480}
+                      height={320}
+                      sizes="480px"
                       className="h-32 w-auto rounded-[12px] object-cover"
                     />
                   ))}

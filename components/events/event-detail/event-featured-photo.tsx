@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { EventV3 } from "@/types/event";
 import { cn } from "@/lib/utils";
 
@@ -31,12 +32,20 @@ export function EventFeaturedPhoto({
           className
         )}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        {/*
+          The event photo set carries no dimensions, so `width`/`height` are a
+          3:2 hint (the archive's own ratio) used only to reserve space before
+          the file arrives. `h-auto` hands the final height back to the image's
+          own aspect ratio once it loads, so the rendered geometry is exactly
+          what the raw <img> produced.
+        */}
+        <Image
           src={featured.url}
           alt={featured.alt || `${event.title} group photo`}
+          width={1600}
+          height={1067}
+          sizes="(max-width: 1024px) 100vw, 1024px"
           className="w-full h-auto object-cover"
-          loading="lazy"
         />
         {featured.alt && (
           <figcaption className="sr-only">{featured.alt}</figcaption>

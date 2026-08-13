@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { newsPressItems } from "@/lib/data/news-press";
@@ -16,10 +17,12 @@ export function PressHighlightCard() {
       <article className="flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-background transition-colors duration-300 group-hover:border-foreground/30">
         <div className="relative aspect-[16/10] overflow-hidden">
           {featured && (
-            <img
+            <Image
               src={featured.coverImage}
               alt={featured.title}
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
             />
           )}
         </div>
