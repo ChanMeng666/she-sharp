@@ -1,40 +1,15 @@
 import { NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
+import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
-import { 
-  mentorProfiles, 
-  eventRegistrations, 
+import {
+  mentorProfiles,
   users,
-  userRoles,
   mentorshipRelationships
 } from '@/lib/db/schema';
-import { eq, and, isNull, count } from 'drizzle-orm';
+import { eq, isNull, count } from 'drizzle-orm';
 
-export async function GET() {
+export const GET = withRoles({ requiredRoles: ['admin'] }, async () => {
   try {
-    const user = await getUser();
-    
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    // Check admin permissions
-    const adminRole = await db
-      .select()
-      .from(userRoles)
-      .where(
-        and(
-          eq(userRoles.userId, user.id),
-          eq(userRoles.roleType, 'admin'),
-          eq(userRoles.isActive, true)
-        )
-      )
-      .limit(1);
-
-    if (!adminRole.length) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
-
     // Fetch pending mentor applications
     const pendingMentors = await db
       .select({ count: count() })
@@ -61,4 +36,4 @@ export async function GET() {
     console.error('Failed to fetch pending counts:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-}
+});

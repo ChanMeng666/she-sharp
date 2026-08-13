@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { activityLogs, ActivityType } from '@/lib/db/schema';
 import { comparePasswords } from '@/lib/auth/session';
@@ -17,13 +17,8 @@ const updatePasswordSchema = z.object({
  * POST /api/user/update-password
  * Updates user password with validation, strength check, and history tracking.
  */
-export async function POST(request: NextRequest) {
+export const POST = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const body = await request.json();
     const validation = updatePasswordSchema.safeParse(body);
 
@@ -120,4 +115,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

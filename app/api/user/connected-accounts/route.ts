@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
+import { NextRequest, NextResponse } from 'next/server';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { accounts, users } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -16,13 +16,8 @@ interface ConnectedAccount {
  * GET /api/user/connected-accounts
  * Returns OAuth accounts connected to the user.
  */
-export async function GET() {
+export const GET = withRoles({}, async (_request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Get connected OAuth accounts
     const connectedAccounts = await db
       .select({
@@ -56,4 +51,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});

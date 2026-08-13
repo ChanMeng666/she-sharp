@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
-import { isUserAdmin } from '@/lib/auth/permissions';
+import { withRoles } from '@/lib/auth/role-middleware';
 import {
   getWaitingQueue,
   getQueueStats,
@@ -46,17 +45,8 @@ function safeSerialize<T>(obj: T): T {
  * - limit?: number - Number of entries to return (default: 50)
  * - offset?: number - Pagination offset (default: 0)
  */
-export async function GET(request: NextRequest) {
+export const GET = withRoles({ requiredRoles: ['admin'] }, async (request: NextRequest) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const isAdmin = await isUserAdmin(user.id);
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
 
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get('limit') || '50');
@@ -92,7 +82,7 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * POST /api/admin/matching/queue
@@ -103,17 +93,8 @@ export async function GET(request: NextRequest) {
  * - menteeUserId?: number - Required for update_priority
  * - priority?: number - Required for update_priority
  */
-export async function POST(request: NextRequest) {
+export const POST = withRoles({ requiredRoles: ['admin'] }, async (request: NextRequest) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const isAdmin = await isUserAdmin(user.id);
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
 
     const body = await request.json();
     const { action, menteeUserId, priority } = body;
@@ -159,7 +140,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * DELETE /api/admin/matching/queue
@@ -168,17 +149,8 @@ export async function POST(request: NextRequest) {
  * Request body:
  * - menteeUserId: number - The mentee to remove from queue
  */
-export async function DELETE(request: NextRequest) {
+export const DELETE = withRoles({ requiredRoles: ['admin'] }, async (request: NextRequest) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const isAdmin = await isUserAdmin(user.id);
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
 
     const body = await request.json();
     const { menteeUserId } = body;
@@ -204,4 +176,4 @@ export async function DELETE(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

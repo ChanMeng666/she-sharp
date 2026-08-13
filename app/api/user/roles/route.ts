@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
+import { NextRequest, NextResponse } from 'next/server';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { userRoles, activityLogs, ActivityType, mentorProfiles, menteeProfiles } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
@@ -39,13 +39,8 @@ async function ensureProfileExists(userId: number, roleType: string): Promise<vo
   }
 }
 
-export async function GET() {
+export const GET = withRoles({}, async (_request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Get user's active roles
     const roles = await db
       .select()
@@ -76,15 +71,10 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});
 
-export async function POST(request: Request) {
+export const POST = withRoles({}, async (request: Request, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { roleType } = await request.json();
 
     if (!['mentor', 'mentee', 'admin'].includes(roleType)) {
@@ -170,15 +160,10 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-}
+});
 
-export async function DELETE(request: Request) {
+export const DELETE = withRoles({}, async (request: Request, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { roleType } = await request.json();
 
     // Deactivate role
@@ -202,4 +187,4 @@ export async function DELETE(request: Request) {
       { status: 500 }
     );
   }
-}
+});

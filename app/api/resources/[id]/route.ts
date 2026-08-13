@@ -3,6 +3,7 @@ import { db } from '@/lib/db/drizzle';
 import { resources, adminPermissions } from '@/lib/db/schema';
 import { eq, sql } from 'drizzle-orm';
 import { getUser } from '@/lib/db/queries';
+import { withRoles, type AuthedRouteContext } from '@/lib/auth/role-middleware';
 
 export async function GET(
   request: NextRequest,
@@ -63,16 +64,14 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+// NOTE: gated on the `admin_permissions.canManageContent` column read directly,
+// where a MISSING row denies access. `withRoles`' `requiredAdminPermissions`
+// treats a missing row as "all defaults granted", so the permission test stays
+// in the handler and `withRoles` supplies the signed-in user only.
+export const PUT = withRoles(
+  {},
+  async (request: NextRequest, { params, user }: AuthedRouteContext<{ id: string }>) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Check if user is admin
     const [adminRole] = await db
       .select()
@@ -124,18 +123,12 @@ export async function PUT(
       { status: 500 }
     );
   }
-}
+});
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const DELETE = withRoles(
+  {},
+  async (_request: NextRequest, { params, user }: AuthedRouteContext<{ id: string }>) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Check if user is admin
     const [adminRole] = await db
       .select()
@@ -170,4 +163,4 @@ export async function DELETE(
       { status: 500 }
     );
   }
-}
+});

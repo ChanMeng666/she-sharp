@@ -2,15 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
 import { activityLogs, users, adminPermissions } from '@/lib/db/schema';
 import { eq, and, gte, lte, desc, sql } from 'drizzle-orm';
-import { getUser } from '@/lib/db/queries';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 
-export async function GET(request: NextRequest) {
+// NOTE: the `scope=all` gate below and the export gate in POST read the
+// `admin_permissions.canViewAllData` column directly, where a MISSING row denies
+// access. `withRoles`' `requiredAdminPermissions` treats a missing row as "all
+// defaults granted", so it cannot express these checks — `withRoles` supplies
+// the signed-in user and the permission tests stay in the handlers.
+export const GET = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '50');
@@ -132,16 +132,11 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 // Export activity logs (admin only)
-export async function POST(request: NextRequest) {
+export const POST = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Check if user is admin
     const [adminRole] = await db
       .select()
@@ -245,4 +240,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
