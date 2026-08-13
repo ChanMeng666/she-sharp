@@ -79,6 +79,35 @@ jobs:
       - name: Type-check scripts and skill tooling
         run: pnpm typecheck:scripts
 
+  lint:
+    # The repo had no ESLint config at all until this job existed, so nothing
+    # caught the whole class of defect a linter sees: an unused disable
+    # directive, a stray `require` in app code, a hook called outside a
+    # component. The gate is errors-only — the presets' large legacy violation
+    # counts are demoted to warnings in `eslint.config.mjs` and paid down
+    # separately, so this job fails on new breakage rather than on history.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      # No `version:` here on purpose — `packageManager` in package.json is the
+      # single source, so a local machine and CI cannot drift apart.
+      - name: Install pnpm
+        uses: pnpm/action-setup@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
   deck-checks:
     # A deck fails in front of a room, at the worst possible moment. Two of the
     # things `deck.test.ts` asserts cannot be caught any other way: the feedback
