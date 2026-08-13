@@ -210,11 +210,12 @@ interface StageScale {
   /**
    * `--dt-label`, plus the tracking `.deck-person-org` has at this scale.
    *
-   * A skin may open the tracking further, and one does — `fibre` sets 0.26em
-   * on every label. It is allowed to do that at the wide scale, where the
-   * number only decides how many lines an organisation wraps to, and it is
-   * excluded from the narrow and portrait scales, where the number decides
-   * whether a word fits at all. See the exemption in `deck-skins.css`.
+   * A skin may open `.deck-label` tracking further, and one once did at 0.26em.
+   * That is allowed at the wide scale, where the number only decides how many
+   * lines an organisation wraps to, and never at the narrow and portrait
+   * scales, where it decides whether a word fits at all — so such a skin owes
+   * `deck-skins.css` an exemption on `.deck-person-org` in both container
+   * queries AND the matching value here. No skin opens it today.
    */
   org: number;
   orgTrack: number;

@@ -26,7 +26,7 @@ import {
 } from "@/lib/data/feedback-codes";
 import type { EventV3 } from "@/types/event";
 
-import type { Slide } from "./types";
+import type { Deck, DeckSkin, Slide } from "./types";
 
 import { buildClosingSlides, buildOpeningSlides } from "./boilerplate";
 import {
@@ -40,6 +40,7 @@ import {
 } from "./event-source";
 import { DEFAULT_CLOSING_KARAKIA, DEFAULT_OPENING_KARAKIA } from "./karakia";
 import { getAllDecks, getDeckSlugs } from "./registry";
+import { EDITORIAL_SKIN } from "./skins";
 import { lintDeckSet } from "./style-library";
 import { COPY_LIMITS, hasErrors, lintDeck } from "./lint";
 import { overflowingWords, planPeopleGrid, stageOverflow } from "./people-layout";
@@ -707,6 +708,102 @@ check(
   `no two decks are too close to tell apart (${decks.length} decks)`,
   setIssues.length === 0,
 );
+
+/* --- The same-skin pair ---------------------------------------------------
+ *
+ * `EDITORIAL_SKIN` is what `new-deck.ts` scaffolds, so from here on most decks
+ * declare it, and two decks that declare it share a surface, a geometry and a
+ * tempo by construction — three of the four axes `eventDistance` counts. Held
+ * to the ordinary floor, the second editorial deck would fail on the day it was
+ * generated and the only way out would be to abandon the default and invent a
+ * concept the event does not have, which is the exact outcome the default was
+ * written to prevent.
+ *
+ * So a same-key pair is judged on what two evenings inside one system can
+ * honestly vary — the archive weave and the accent hue — and has to vary BOTH.
+ * These fixtures pin the branch, because the failure it guards against is
+ * invisible until a third deck exists: the registry check above cannot see it
+ * (today's two decks are a mixed pair) and by the time it can, someone is
+ * mid-way through building a deck for a real evening.
+ *
+ * Hue sectors, from `hueSector()`: #c846ab is 5, #b1f6e9 is 2.
+ */
+{
+  const fixture = (
+    slug: string,
+    archive: Deck["archive"],
+    onDark: string,
+    skin?: DeckSkin,
+  ): Deck => ({
+    slug,
+    title: slug,
+    archive,
+    theme: { accent: { onLight: "#9b2e83", onDark, spark: "#5ee7f5" } },
+    ...(skin ? { skin } : {}),
+    slides: [],
+  });
+
+  /** A skin that overrides nothing, so it fingerprints exactly like no skin. */
+  const plain = (key: string): DeckSkin => ({
+    key,
+    name: key,
+    description: "Test fixture.",
+    surface: { kind: "archive" },
+  });
+
+  const rules = (...pair: Deck[]) => lintDeckSet(pair).map((issue) => issue.rule);
+
+  check(
+    "two decks in one skin pass when the weave and the hue both differ",
+    rules(
+      fixture("a", "drift", "#c846ab", EDITORIAL_SKIN),
+      fixture("b", "mosaic", "#b1f6e9", EDITORIAL_SKIN),
+    ).length === 0,
+  );
+  check(
+    "two decks in one skin fail on a shared weave, however far apart the accents",
+    rules(
+      fixture("a", "drift", "#c846ab", EDITORIAL_SKIN),
+      fixture("b", "drift", "#b1f6e9", EDITORIAL_SKIN),
+    ).join() === "deck-set-house-twins",
+  );
+  check(
+    "two decks in one skin fail on a shared hue, however different the weaves",
+    rules(
+      fixture("a", "drift", "#c846ab", EDITORIAL_SKIN),
+      fixture("b", "mosaic", "#c846ab", EDITORIAL_SKIN),
+    ).join() === "deck-set-house-twins",
+  );
+  check(
+    "the same-skin failure names the weave and the accent, not the four axes",
+    lintDeckSet([
+      fixture("a", "drift", "#c846ab", EDITORIAL_SKIN),
+      fixture("b", "drift", "#b1f6e9", EDITORIAL_SKIN),
+    ])[0]?.message.includes("must differ on BOTH") === true,
+  );
+
+  /*
+   * And the pairs that are NOT a same-skin pair keep the floors they always
+   * had. Both of these would pass the same-skin rule — house distance 2 in the
+   * first, 1 in the second against a floor that never applies — and both are
+   * still caught, which is the property worth pinning: the branch is keyed on
+   * the skin, and nothing else about it moved.
+   */
+  check(
+    "a skinned deck beside an unskinned one still answers to the event floor",
+    rules(
+      fixture("a", "drift", "#c846ab", plain("solo")),
+      fixture("b", "mosaic", "#b1f6e9"),
+    ).join() === "deck-set-too-close",
+  );
+  check(
+    "two different bespoke skins still answer to both ordinary floors",
+    rules(
+      fixture("a", "drift", "#c846ab", plain("one")),
+      fixture("b", "mosaic", "#c846ab", plain("two")),
+    ).join() === "deck-set-too-close",
+  );
+}
 
 console.log(
   failures === 0

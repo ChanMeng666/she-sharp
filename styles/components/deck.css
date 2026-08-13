@@ -1353,11 +1353,12 @@
    A tracked word is unbreakable at its TRACKED width, so the tracking is part
    of what sets the pitch of the whole grid. On a 4:3 projector a people tile is
    283px and "INTERNATIONAL" is 228px of letters; 0.08em adds 29px of air to it
-   and a skin that opens the tracking further adds 70 (see the exemption in
-   `deck-skins.css`, which is where that word actually broke). Honouring a width
-   like that means fewer columns, more rows and smaller photographs — so the air
-   goes first. `lib/deck/people-layout.ts` plans the narrow and portrait scales
-   with `orgTrack: 0` to match; change one and the other is wrong. */
+   and a skin that opens the tracking further adds 70 — which is how that word
+   once broke, captioned "INTERNATIONA / L" on every 4:3 screen. Honouring a
+   width like that means fewer columns, more rows and smaller photographs — so
+   the air goes first. `lib/deck/people-layout.ts` plans the narrow and portrait
+   scales with `orgTrack: 0` to match; change one and the other is wrong, and a
+   skin that opens `.deck-label` tracking owes both an exemption here. */
 @container deck (max-width: 1560px) {
   .deck-person-org {
     letter-spacing: normal;
