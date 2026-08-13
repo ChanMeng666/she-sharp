@@ -1,15 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
-import { isUserAdmin } from '@/lib/auth/permissions';
+import { withRoles } from '@/lib/auth/role-middleware';
 import { getAllProgrammes, createProgramme, getProgrammeStats } from '@/lib/programmes/service';
 
-export async function GET() {
+export const GET = withRoles({ requiredRoles: ['admin'] }, async () => {
   try {
-    const user = await getUser();
-    if (!user || !(await isUserAdmin(user.id))) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-    }
-
     const programmesList = await getAllProgrammes();
 
     const programmesWithStats = await Promise.all(
@@ -24,15 +18,10 @@ export async function GET() {
     console.error('Error fetching programmes:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-}
+});
 
-export async function POST(request: NextRequest) {
+export const POST = withRoles({ requiredRoles: ['admin'] }, async (request: NextRequest) => {
   try {
-    const user = await getUser();
-    if (!user || !(await isUserAdmin(user.id))) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-    }
-
     const body = await request.json();
     const { name, slug, description, status, startDate, endDate, applicationDeadline, maxMentees, requiresPayment, partnerOrganisation } = body;
 
@@ -58,4 +47,4 @@ export async function POST(request: NextRequest) {
     console.error('Error creating programme:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-}
+});

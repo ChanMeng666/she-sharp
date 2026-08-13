@@ -3,6 +3,7 @@ import { db } from '@/lib/db/drizzle';
 import { resources, adminPermissions } from '@/lib/db/schema';
 import { eq, ilike, and, or, desc, asc, sql } from 'drizzle-orm';
 import { getUser } from '@/lib/db/queries';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 
 export async function GET(request: NextRequest) {
   try {
@@ -119,13 +120,12 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+// NOTE: gated on the `admin_permissions.canManageContent` column read directly,
+// where a MISSING row denies access. `withRoles`' `requiredAdminPermissions`
+// treats a missing row as "all defaults granted", so the permission test stays
+// in the handler and `withRoles` supplies the signed-in user only.
+export const POST = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Check if user is admin
     const [adminRole] = await db
       .select()
@@ -179,4 +179,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

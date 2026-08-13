@@ -1,10 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUser } from '@/lib/db/queries';
 import { db } from '@/lib/db/drizzle';
-import { userRoles, adminPermissions } from '@/lib/db/schema';
+import { userRoles, adminPermissions, type User } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 
 export type UserRole = 'mentor' | 'mentee' | 'admin';
+
+/**
+ * Context handed to every `withRoles` handler: the route's own context plus the
+ * authenticated user resolved by the middleware.
+ */
+export interface AuthedContext {
+  user: User;
+}
+
+/**
+ * Context for a dynamic route handler wrapped in `withRoles`: the authenticated
+ * user plus the route segment params Next.js supplies.
+ */
+export interface AuthedRouteContext<TParams> extends AuthedContext {
+  params: Promise<TParams>;
+}
 export type AdminPermission = 
   | 'canViewAllData'
   | 'canEditUsers' 

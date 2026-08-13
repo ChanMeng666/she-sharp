@@ -1,14 +1,9 @@
-import { NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
+import { NextRequest, NextResponse } from 'next/server';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import { getMentorProgrammes } from '@/lib/programmes/service';
 
-export async function GET() {
+export const GET = withRoles({}, async (_request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const results = await getMentorProgrammes(user.id);
 
     return NextResponse.json({
@@ -33,4 +28,4 @@ export async function GET() {
     console.error('Error fetching mentor programme assignments:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-}
+});

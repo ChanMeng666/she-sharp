@@ -2,15 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
 import { meetings, mentorshipRelationships, users, mentorProfiles, menteeProfiles, mentorFormSubmissions, menteeFormSubmissions, activityLogs, ActivityType } from '@/lib/db/schema';
 import { eq, and, or, gte, lte, desc, asc } from 'drizzle-orm';
-import { getUser } from '@/lib/db/queries';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 
-export async function GET(request: NextRequest) {
+export const GET = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { searchParams } = new URL(request.url);
     const startDate = searchParams.get('startDate');
     const endDate = searchParams.get('endDate');
@@ -151,15 +146,10 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
-export async function POST(request: NextRequest) {
+export const POST = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const data = await request.json();
     const { relationshipId, scheduledAt, durationMinutes, meetingType, meetingLink } = data;
 
@@ -242,4 +232,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { users, mentorProfiles, menteeProfiles, userRoles, activityLogs, ActivityType } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
@@ -21,13 +21,8 @@ const updateProfileSchema = z.object({
  * - For mentor/mentee: updates profile tables with photoUrl
  * - For admin: simplified update (no photo)
  */
-export async function POST(request: NextRequest) {
+export const POST = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const body = await request.json();
     const validation = updateProfileSchema.safeParse(body);
 
@@ -133,4 +128,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

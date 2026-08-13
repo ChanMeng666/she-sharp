@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { getUser } from '@/lib/db/queries';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import { comparePasswords } from '@/lib/auth/session';
 import { z } from 'zod';
 import { processUserDeletion } from '@/lib/user/deletion-service';
@@ -18,13 +18,8 @@ const deleteAccountSchema = z.object({
  * Supports both password verification (for password users) and
  * email confirmation (for OAuth users).
  */
-export async function DELETE(request: NextRequest) {
+export const DELETE = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const body = await request.json();
     const validation = deleteAccountSchema.safeParse(body);
 
@@ -94,4 +89,4 @@ export async function DELETE(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

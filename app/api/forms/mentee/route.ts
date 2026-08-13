@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUser } from '@/lib/db/queries';
+import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
 import {
   getMenteeForm,
   saveMenteeForm,
@@ -10,13 +10,8 @@ import {
  * GET /api/forms/mentee
  * Gets the current user's mentee form.
  */
-export async function GET() {
+export const GET = withRoles({}, async (_request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const form = await getMenteeForm(user.id);
     return NextResponse.json({ form });
   } catch (error) {
@@ -26,19 +21,14 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * POST /api/forms/mentee
  * Saves mentee form data.
  */
-export async function POST(request: NextRequest) {
+export const POST = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const data = await request.json();
     const result = await saveMenteeForm(user.id, data);
 
@@ -54,19 +44,14 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * PUT /api/forms/mentee
  * Submits mentee form.
  */
-export async function PUT() {
+export const PUT = withRoles({}, async (_request: NextRequest, { user }: AuthedContext) => {
   try {
-    const user = await getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const result = await submitMenteeForm(user.id);
 
     if (!result.success) {
@@ -81,4 +66,4 @@ export async function PUT() {
       { status: 500 }
     );
   }
-}
+});
