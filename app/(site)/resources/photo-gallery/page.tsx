@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { GalleryAlbumsGrid } from "@/components/resources";
+import { galleryAlbums } from "@/lib/data/gallery-albums";
 
 export const metadata: Metadata = {
   title: "Photo Gallery",
@@ -9,6 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default function PhotoGalleryPage() {
-  return <GalleryAlbumsGrid />;
+  return <GalleryAlbumsGrid albums={galleryAlbums} />;
 }
 

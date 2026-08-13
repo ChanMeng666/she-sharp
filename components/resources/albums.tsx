@@ -4,7 +4,11 @@ import { useState, useMemo, useEffect } from "react";
 import { Search, X, Calendar } from "lucide-react";
 import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
-import { galleryAlbums } from "@/lib/data/gallery-albums";
+// Type-only: lib/data/gallery-albums builds its list from the event archive, so
+// a value import here would put all 97 event records in the client bundle — and
+// this file is re-exported by components/resources/index.ts, which would spread
+// that cost to every page importing anything from that barrel.
+import type { GalleryAlbum } from "@/types/gallery";
 import { AlbumCard } from "./bento-cards";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -26,7 +30,11 @@ const extractYear = (dateString: string): number | null => {
 
 const ALBUMS_PER_PAGE = 9;
 
-export function GalleryAlbumsGrid() {
+export function GalleryAlbumsGrid({
+  albums: galleryAlbums,
+}: {
+  albums: GalleryAlbum[];
+}) {
   // Search and filter state
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
@@ -42,7 +50,7 @@ export function GalleryAlbumsGrid() {
       if (year) years.add(year);
     });
     return Array.from(years).sort((a, b) => b - a);
-  }, []);
+  }, [galleryAlbums]);
 
   // Filter albums based on all criteria
   const filteredAlbums = useMemo(() => {
@@ -59,7 +67,7 @@ export function GalleryAlbumsGrid() {
 
       return matchesSearch && matchesYear;
     });
-  }, [searchQuery, selectedYears]);
+  }, [galleryAlbums, searchQuery, selectedYears]);
 
   // Reset displayed count when filters change
   useEffect(() => {

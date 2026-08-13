@@ -19,7 +19,7 @@ import {
   hasPhotos,
   isFutureDate,
   isPastEvent,
-} from "@/lib/data/events";
+} from "@/lib/data/event-utils";
 import { cn } from "@/lib/utils";
 
 interface EventSidebarPanelProps {

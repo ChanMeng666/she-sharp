@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { ArrowRight, MapPin, Clock, Video, Users } from "lucide-react";
 import { InflectedCard } from "@/components/ui/inflected-card";
-import { EventV3 } from "@/types/event";
-import { getEventDisplayTime, parseDateString } from "@/lib/data/events";
+import type { EventListItem } from "@/lib/data/event-list-item";
+import { parseDateString } from "@/lib/data/event-utils";
 import { cn } from "@/lib/utils";
 import {
   Tooltip,
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 
 interface EventInflectedCardProps {
-  event: EventV3;
+  event: EventListItem;
   className?: string;
 }
 
@@ -22,20 +22,19 @@ export function EventInflectedCard({
   className,
 }: EventInflectedCardProps) {
   const eventHref = `/events/${event.slug}`;
-  const displayImage = event.coverImage?.url || "/logos/she-sharp-logo.svg";
+  const displayImage = event.imageUrl || "/logos/she-sharp-logo.svg";
 
   const eventDate = parseDateString(event.date);
   const dayOfWeek = eventDate.toLocaleDateString("en-US", { weekday: "long" });
   const month = eventDate.toLocaleDateString("en-US", { month: "short" });
   const day = eventDate.getDate();
   const year = eventDate.getFullYear();
-  const displayTime = getEventDisplayTime(event);
+  const displayTime = event.displayTime;
 
-  const location = event.detailPageData.location;
-  const isOnline = location.format === "online";
+  const isOnline = event.locationFormat === "online";
   const locationStr = isOnline
     ? "Online"
-    : location.venueName || location.city || "";
+    : event.venueName || event.city || "";
 
   return (
     <Link

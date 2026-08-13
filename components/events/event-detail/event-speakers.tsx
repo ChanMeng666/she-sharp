@@ -3,7 +3,7 @@
 import { EventV3, EventSpeakerGroup, EventSpeakerV3 } from "@/types/event";
 import { MemberCard, MemberCardData } from "@/components/ui/member-card";
 import { cn } from "@/lib/utils";
-import { hasAnySpeakers, isUpcomingEvent } from "@/lib/data/events";
+import { hasAnySpeakers, isUpcomingEvent } from "@/lib/data/event-utils";
 
 interface EventSpeakersProps {
   event: EventV3;
