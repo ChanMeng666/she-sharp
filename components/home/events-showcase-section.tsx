@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
@@ -111,7 +109,9 @@ function SimpleEventCard({ event }: { event: EventV3 }) {
           fill
           className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          unoptimized={displayImage.startsWith("/img/")}
+          // Only the logo fallback bypasses the optimizer — it refuses SVG
+          // unless dangerouslyAllowSVG is on, which it deliberately is not.
+          unoptimized={displayImage.toLowerCase().endsWith(".svg")}
         />
       </CurtainReveal>
 

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { CurtainReveal } from "@/components/ui/reveal";
 import { Lightbox, useLightbox, type LightboxImage } from "@/components/ui/lightbox";
 import type { EventArchivePhoto } from "@/lib/data/event-archive-photos";
-import { hasPhotos } from "@/lib/data/events";
+import { hasPhotos } from "@/lib/data/event-utils";
 
 // Repeating span pattern that gives the gallery an asymmetric editorial rhythm
 // without needing per-photo dimensions.

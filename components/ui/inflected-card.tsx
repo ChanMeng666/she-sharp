@@ -149,7 +149,9 @@ export const InflectedCard: React.FC<InflectedCardProps> = ({
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 loading="lazy"
                 quality={85}
-                unoptimized={image.startsWith('/img/')}
+                // Only SVG bypasses the optimizer — it refuses SVG unless
+                // dangerouslyAllowSVG is on, which it deliberately is not.
+                unoptimized={image.toLowerCase().endsWith('.svg')}
                 style={{
                   objectFit: 'cover',
                   objectPosition: 'center top',

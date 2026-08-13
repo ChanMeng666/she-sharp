@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { EventV3 } from "@/types/event";
-import { getEventStartTime, parseDateString } from "@/lib/data/events";
+import { getEventStartTime, parseDateString } from "@/lib/data/event-utils";
 
 interface EventCountdownProps {
   event: EventV3;

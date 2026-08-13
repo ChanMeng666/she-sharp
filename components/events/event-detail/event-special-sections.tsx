@@ -1,5 +1,3 @@
-"use client";
-
 import { EventSpecialSection } from "@/types/event";
 import { cn } from "@/lib/utils";
 import { ExternalLink, Video, ListChecks } from "lucide-react";
