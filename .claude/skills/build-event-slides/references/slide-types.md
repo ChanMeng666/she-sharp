@@ -2,7 +2,7 @@
 
 Every slide in a She Sharp deck is one of the types below. There is no free-form
 slide and no "just put a text box here" — which is why the decks look like one
-thing rather than eighteen things.
+thing rather than twenty things.
 
 Pick the layout that matches the **shape** of what you are saying, not the
 subject. Five things you want the room to weigh up are `themes`, whether they
@@ -19,11 +19,13 @@ figures, the sponsor wall, the thanks, the closing — is built out of She Sharp
 own photographs, under the brand purple, in every deck, forever. That is the
 doctrine set out in the rest of this section, and no event may restyle it.
 
-**Everything from the chapter card onwards is the event's**, and it wears that
-event's own skin — a surface, palette, geometry, motion tempo and type
-personality designed from the event's poster. See `references/skins.md`. A Les
-Mills panel evening and a two-day AI hackathon should not look like the same
-deck, and until August 2026 they did.
+**Everything from the chapter card onwards is the event's**, and it wears a
+skin — a surface, palette, geometry, motion tempo and type personality. For a
+regular evening that skin is Editorial Paper, She Sharp's own editorial voice,
+and `new-deck.ts` writes it in; an event with a poster concept it can say in one
+sentence, or a flagship that must not read as a regular evening, gets one of its
+own. See `references/skins.md`. A Les Mills panel evening and a two-day AI
+hackathon should not look like the same deck, and until August 2026 they did.
 
 So read what follows as the rule for the house half, and as the *reason the
 house half exists* — the archive is what the event's own look is set against.

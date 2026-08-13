@@ -43,586 +43,383 @@
   /* intentionally empty */
 }
 
-/* ============================================================ NIGHT SHIFT ===
-   Les Mills — "No Pain, All Gain: Getting Fit for AI", 3 September 2026.
+/* ======================================================== EDITORIAL PAPER ===
+   The default look for a regular She Sharp evening — the website's own
+   editorial system, put on a projector.
 
-   THE HOUSE DECK IS A PRINTED SYSTEM. Paper ground, navy ink, photographs
-   graded into brand purple, hard cuts, a solid running header. Daylight, and an
-   editorial voice. It is the right system for She Sharp and it is not this
-   evening.
+   WHERE IT COMES FROM. `lib/deck/skins.ts` carries the full reasoning; in one
+   line, the public site was rebuilt in July 2026 as paper, navy ink, hairline
+   rules, `(01)` chapter numbers, a script line where a page introduces itself
+   and the brand colour used as punctuation — and none of it had ever reached
+   `/present`, where every deck instead wore the house wall.
 
-   THIS ONE IS AN EMITTED SYSTEM. A gym after hours with the lights down: the
-   ground is black, the ink is light, and the photographs are lit by the same
-   fibre the poster is made of — cyan where the house deck is in shadow, magenta
-   where it is bright. Nothing is printed on anything.
+   ONLY ONE GROUND MOVES, AND IT MOVES FROM THE DECK FILE. The dark register
+   goes from the house near-black `#0b0a14` to the site's navy stat band
+   `#1f1e44`, which arrives inline from `theme.darkCanvas` through
+   `themeToCssVars()`. The light register needs nothing: `deck.css` already sets
+   `--deck-paper: #f4f4fa` and `--deck-navy: #1f1e44`, which is to say the house
+   light slide has always been the website's paper with the website's ink on it.
+   So there is no palette block below — only the four literals `deck.css`
+   computed from the ground that moved, which would otherwise lay near-black
+   panels across a navy slide.
 
-   WHY THIS BLOCK IS FOUR TIMES THE SIZE IT WAS. The first version changed the
-   ground behind statement slides, the panel edges, the rules and the tracking,
-   and deliberately left "the type scale, the safe area, the rail and the kicker
-   untouched" so the two decks would be "recognisably the same deck". They were.
-   From the back of a room they read as one design in two accent colours,
-   because what a room sees at that distance is the palette — the ground, the
-   ink and the grade — and none of it had changed. A later attempt varied how
-   the archive was ARRANGED and changed nothing either, for the same reason: the
-   arrangement was never what was being read.
+   THE ARCHIVE GRADE IS UNTOUCHED. `--deck-duo-shadow` and `--deck-duo-highlight`
+   are not overridden anywhere in this block, so every photograph in every deck
+   built on this skin is still the brand purple duotone. That grade is what makes
+   four stops of colour temperature read as one organisation, and this skin is a
+   DEFAULT — it will end up on most decks — which makes it the last place to
+   start regrading twelve years of photography.
 
-   WHAT IS DELIBERATELY UNTOUCHED is the part that matters. Same organisational
-   sequence, same photographs from the same twelve years, same order, same
-   layouts, same copy limits, same stage geometry, same 1080 design height, same
-   type sizes. This is the same deck saying the same things in the same order,
-   lit differently.
-
-   BOTH REGISTERS ARE DARK, AND THEY STILL ALTERNATE. `data-tone` is a contrast
-   relationship rather than a literal colour, so moving the whole deck down the
-   value scale leaves the rhythm rules meaningful: a "light" slide is a lifted
-   slate, a "dark" slide is near-black, and the deck still breathes between them.
-   `theme.lightCanvas` in the deck file carries the same value, so
-   `checkAccentContrast()` measures the accent against the ground it is actually
-   on rather than against a white page that never renders.
+   NO AMBIENT LOOPS, and that is not an omission. Paper does not drift; stillness
+   is this skin's treatment of the ground. It is also why this section ends at
+   the container queries with no `prefers-reduced-motion` block — there is
+   nothing here to reduce. Entrances still play, and they still belong to
+   `motion.ts`.
    ==========================================================================*/
 
-.deck-slide[data-skin="fibre"] {
-  --fibre-ink: #e8f1f7;
-  --fibre-cyan: #5ee7f5;
-  --fibre-magenta: #e070cf;
-
+.deck-slide[data-skin="editorial"] {
   /*
-   * The house's two supporting colours, moved onto this event's axis.
-   *
-   * `deck.css` calls them "a constant of the language rather than a per-event
-   * colour", and they are — for the house language. They are not decoration
-   * either: `--deck-mint` and `--deck-peri` are the two ends of the colour pass
-   * that `.deck-knockout` blends over a photograph, so leaving them alone left
-   * the one chapter numeral and the one impact figure in mint-and-periwinkle
-   * while the rest of the deck had moved to cyan and magenta. The knockout is
-   * the largest element in the whole deck; it cannot be the only thing still
-   * wearing the old palette.
+   * A deliberate middle value. The site's cards are 32px, which reads as a card
+   * system; `deck.css` is 4px because it is a print system and says so. 8px is
+   * what is still visible from the back of a room, still reads as an edge
+   * rather than a pill, and survives the ~0.43 scale a portrait phone applies
+   * to the whole stage — where 4px simply disappears.
    */
-  --deck-mint: var(--fibre-cyan);
-  --deck-peri: #7ab6ff;
-
-  /*
-   * `--deck-canvas-light` IS NOT A CANVAS, whatever it is called.
-   *
-   * Every consumer in the repository uses it as the colour of type laid OVER a
-   * photograph — `karakia-slide.tsx`, `break-slide.tsx`, `photo-slide.tsx` —
-   * and nothing uses it as a background; `deck.css` even notes that
-   * `--deck-paper` deliberately does not read it. But `themeToCssVars()` emits
-   * it from `theme.lightCanvas`, so declaring this deck's real light ground
-   * there — a dark slate, which the contrast check genuinely needs — turned the
-   * opening karakia into near-black type over a photograph of the sea, and the
-   * countdown and every photo caption with it. Three slide types, silently.
-   *
-   * So `theme.lightCanvas` keeps the honest value for the checker, and the
-   * token that actually drives ink is restated here as ink.
-   */
-  --deck-canvas-light: #eef4f8;
-
-  --deck-canvas-dark: #05060b;
-  /* The light register. `deck.css` invites overriding `--deck-paper` directly
-     for an event that wants a different ground; this is that invitation taken
-     at its word, in the other direction. */
-  --deck-paper: #14172a;
-  --deck-navy: var(--fibre-ink);
-
-  /* THE GRADE — cyan in the shadows, magenta in the highlights.
-
-     The purple duotone exists so that twelve years of photography shot across
-     four stops of colour temperature read as one thing. That job is done by ANY
-     single consistent grade: brand purple was the convention, not the
-     mechanism. Regrading to this event's own light keeps the unification —
-     every archive photograph in this deck is still one colour — and it is the
-     single biggest reason the deck no longer looks like the last one.
-
-     `--deck-duo-shadow` shows through the dark end, because the image is
-     screened over it; `--deck-duo-highlight` (per register, below) multiplies
-     over the light end. */
-  --deck-duo-shadow: #0a5878;
-  --deck-duo-contrast: 1.34;
-
-  /* Signage, not print. The house radius is 2-4px because it is a print system;
-     a light fitting has no rounded corners at all. */
-  --deck-radius: 0px;
-  --deck-radius-sm: 0px;
+  --deck-radius: 8px;
+  --deck-radius-sm: 3px;
 }
 
-/* --- The two registers, restated ---------------------------------------- */
+/* --- The two registers --------------------------------------------------- */
 
 /*
- * `deck.css` derives every `--slide-*` from paper, navy and the dark canvas, so
- * the three overrides above do most of this. What has to be restated is
- * everything it wrote as a literal `rgb()` computed from navy: the soft inks,
- * the hairlines and the rules would otherwise stay dark-on-dark, which is not
- * subtle but invisible.
- */
-.deck-slide[data-skin="fibre"][data-tone="light"] {
-  --slide-ink: var(--fibre-ink);
-  --slide-ink-soft: rgb(232 241 247 / 0.72);
-  --slide-ink-faint: rgb(232 241 247 / 0.42);
-  --slide-hairline: rgb(232 241 247 / 0.16);
-  --slide-rule: rgb(94 231 245 / 0.5);
-  --slide-surface: rgb(232 241 247 / 0.05);
-  --slide-accent: var(--fibre-magenta);
-  --slide-on-accent: #05060b;
-  --slide-kicker: var(--fibre-cyan);
-  --slide-rail-bg: transparent;
-  --slide-panel-bg: rgb(20 23 42 / 0.86);
-  --deck-duo-highlight: #ffd2f0;
-}
-
-.deck-slide[data-skin="fibre"][data-tone="dark"] {
-  /*
-   * RESTATED, and this one is not tidiness — it is the bug that made the title
-   * slide unreadable on the first build.
-   *
-   * `deck.css` sets `--slide-ink: var(--deck-paper)` on a dark slide: the paper
-   * colour BECOMES the ink when the ground goes dark, which is an elegant
-   * inversion and exactly the wrong one to inherit here, because this skin
-   * moves paper to a dark slate. The headline came out #14172a on #05060b —
-   * dark on dark, invisible, while the one accent word beside it read
-   * perfectly. Anything deriving from paper or navy has to be restated when a
-   * skin moves either of them.
-   */
-  --slide-ink: var(--fibre-ink);
-  --slide-ink-soft: rgb(232 241 247 / 0.7);
-  --slide-ink-faint: rgb(232 241 247 / 0.4);
-  --slide-hairline: rgb(232 241 247 / 0.14);
-  --slide-rule: rgb(224 112 207 / 0.55);
-  --slide-surface: rgb(232 241 247 / 0.06);
-  --slide-accent: var(--fibre-magenta);
-  --slide-on-accent: #05060b;
-  --slide-kicker: var(--fibre-cyan);
-  --slide-rail-bg: transparent;
-  --slide-panel-bg: rgb(5 6 11 / 0.82);
-  --deck-duo-highlight: #ffe4f6;
-}
-
-/* --- The running header ------------------------------------------------- */
-
-/*
- * The house rail is a solid bar with a hairline under it. On a dark deck that
- * is a black stripe laid across a photograph, so here it is a fade to nothing
- * plus one line of cyan: the ground runs to the top edge of the stage and the
- * header floats on it. It is still the one fixed point on the screen, and it is
- * still never animated — see the `NEVER` list in `motion.ts`.
- */
-.deck-slide[data-skin="fibre"] .deck-rail {
-  background: linear-gradient(
-    180deg,
-    rgb(5 6 11 / 0.72) 0%,
-    rgb(5 6 11 / 0.28) 62%,
-    rgb(5 6 11 / 0) 100%
-  );
-  border-block-end: 1px solid rgb(94 231 245 / 0.28);
-}
-
-/* --- Type ---------------------------------------------------------------- */
-
-/*
- * The house display is Bricolage at 800, set tight — a headline. Lit signage is
- * lighter and more open, so the display drops two weights. The SIZES are
- * untouched, deliberately: `--dt-*` is the stage's contract with every layout
- * and `useFitContent()` treats an overflow as a defect rather than a fallback.
- */
-.deck-slide[data-skin="fibre"] :is(.deck-display, .deck-title) {
-  font-weight: 600;
-  letter-spacing: -0.005em;
-}
-
-.deck-slide[data-skin="fibre"] .deck-mega {
-  font-weight: 500;
-}
-
-/*
- * The kicker carries most of the voice: cyan, widely tracked, and led by a line
- * of light rather than a dash of ink.
- */
-.deck-slide[data-skin="fibre"] :is(.deck-kicker, .deck-label, .deck-eyebrow) {
-  letter-spacing: 0.26em;
-  font-weight: 600;
-}
-
-.deck-slide[data-skin="fibre"] .deck-kicker::before {
-  background: linear-gradient(
-    90deg,
-    var(--fibre-cyan) 0%,
-    rgb(94 231 245 / 0) 100%
-  );
-}
-
-/*
- * The figures glow, and only the figures. A 224px numeral reads as a lit sign;
- * the same shadow under 32px body copy reads as a printing fault, which is why
- * this is scoped to the two largest classes in the deck rather than to the
- * accent colour generally.
- */
-/*
- * NOT on a knockout glyph. `.deck-knockout` fills its letterforms with an
- * archive photograph via `background-clip: text`, so a text-shadow renders
- * BEHIND a transparent glyph and reads as a smear around the number rather than
- * as light coming off it — which is what the first build did to "3500+".
- */
-.deck-slide[data-skin="fibre"]
-  :is(.deck-stat, .deck-mega):not(.deck-knockout) {
-  text-shadow: 0 0 46px rgb(224 112 207 / 0.42);
-}
-
-/* --- Geometry ------------------------------------------------------------ */
-
-/*
- * Panels are glass, not cuts. The house incision is an opaque sheet laid over
- * the wall; this is a gradient that thickens toward its own edge, so the
- * photographs stay visible through it and the edge is a fade rather than a line.
- */
-.deck-slide[data-skin="fibre"] .deck-incision {
-  background: linear-gradient(
-    180deg,
-    rgb(5 6 11 / 0.9) 0%,
-    rgb(5 6 11 / 0.74) 55%,
-    rgb(5 6 11 / 0.4) 100%
-  );
-  backdrop-filter: blur(3px);
-}
-
-.deck-slide[data-skin="fibre"] .deck-incision-sheer {
-  background: linear-gradient(
-    180deg,
-    rgb(5 6 11 / 0.74) 0%,
-    rgb(5 6 11 / 0.5) 60%,
-    rgb(5 6 11 / 0.16) 100%
-  );
-}
-
-/*
- * Rules are the light inside a filament: brightest in the middle, gone at both
- * ends. A ruled line has two hard ends; this system has none.
- */
-.deck-slide[data-skin="fibre"] .deck-rule {
-  block-size: 1px;
-  border: 0;
-  background: linear-gradient(
-    90deg,
-    rgb(94 231 245 / 0) 0%,
-    rgb(94 231 245 / 0.55) 30%,
-    rgb(224 112 207 / 0.55) 70%,
-    rgb(224 112 207 / 0) 100%
-  );
-}
-
-/*
- * A portrait is a light source too. The house avatar is a hard circle on paper;
- * here it takes a thin cyan edge so a face reads as lit rather than cut out.
- */
-.deck-slide[data-skin="fibre"] .deck-avatar {
-  box-shadow: 0 0 0 1px rgb(94 231 245 / 0.34), 0 0 28px rgb(94 231 245 / 0.14);
-}
-
-/*
- * The white logo chip stays white. It is the one element that must not take a
- * skin: a multi-colour sponsor SVG survives any ground only because it sits on
- * white, and a partner's mark is not ours to restyle for a theme. Here it is
- * also simply correct — the event's own poster sets Les Mills in white on black
- * for the same reason.
- */
-.deck-slide[data-skin="fibre"] .deck-logo-chip {
-  border-radius: 0;
-}
-
-/*
- * The band's own hold-down, regraded.
+ * `deck.css` derives almost every `--slide-*` from paper, navy and the dark
+ * canvas, and this skin moves only the last of the three — so the ink ramp, the
+ * soft inks and the whole light register still resolve correctly and are absent
+ * below. What has to be restated is what `deck.css` wrote as a LITERAL computed
+ * from the old near-black: leave those and a navy deck carries black furniture.
  *
- * `deck.css` darkens a band by multiplying navy over it, which is the right
- * neutral under a purple grade and desaturates a cyan one back to silver — the
- * band came out looking like brushed metal rather than lit glass. Same job, in
- * this deck's colour.
+ * `--editorial-stop` is introduced here rather than in the block above because
+ * it is the one colour that genuinely differs between the registers: mint is
+ * the punctuation on navy and is not a colour on paper, where purple is.
  */
-.deck-slide[data-skin="fibre"] .deck-duotone-flat::before {
-  background: linear-gradient(
-    180deg,
-    rgb(4 32 46 / 0.3) 0%,
-    rgb(4 32 46 / 0.52) 100%
-  );
+.deck-slide[data-skin="editorial"][data-tone="dark"] {
+  --slide-rail-bg: rgb(31 30 68 / 0.95);
+  --slide-panel-bg: rgb(31 30 68 / 0.9);
+
+  /* The incision edge. `deck.css` makes it magenta — the house's assertive
+     rule — and here it is the mint this deck's `accent.onDark` already is, so
+     the loudest 1px in the deck and the accent are one colour rather than two. */
+  --slide-rule: rgb(177 246 233 / 0.5);
+
+  /* Slightly stronger than the house 0.16. A hairline carries more of the
+     composition in a ruled system than in a cut one, and navy is a lighter
+     ground than near-black, so the same alpha reads fainter on it. */
+  --slide-hairline: rgb(244 244 250 / 0.22);
+
+  --editorial-stop: var(--deck-mint);
 }
 
+.deck-slide[data-skin="editorial"][data-tone="light"] {
+  --slide-hairline: rgb(31 30 68 / 0.22);
+  --editorial-stop: var(--slide-accent);
+}
 
-/* --- Composition: a different page, not a different palette -------------- */
+/* The sheer rail is the fourth literal — `rgb(11 10 20 / 0.58)` in `deck.css`,
+   the scrim that keeps the chapter label legible where the rail crosses a
+   full-colour plate. Same job, this deck's ground. */
+.deck-slide[data-skin="editorial"][data-rail="sheer"] .deck-rail {
+  --slide-rail-bg: rgb(31 30 68 / 0.58);
+}
+
+/* --- The running header --------------------------------------------------- */
 
 /*
- * THE HOUSE PAGE IS OPTICALLY CENTRED. `deck.css` centres the content column in
- * the safe area, which is the right default: it stops a five-bullet slide
- * reading as unfinished. Every deck built on it has the same architecture — a
- * stack of type floating in the middle of the stage.
+ * The rail keeps the house's solid bar: an editorial page has a running head and
+ * this already is one. Two changes, both small.
  *
- * THIS PAGE IS ANCHORED LOW. Type sits on the bottom third and the ground is
- * left open above it, which is the poster's own architecture and reads as a
- * lit sign rather than a page. It is the single change that makes a slide
- * recognisable as this deck from across a room, before any colour registers.
- *
- * `justify-content` only — no padding, no size, nothing structural. The safe
- * area's inset is overscan protection for an LED wall that eats its edges and
- * is not a design surface.
+ * First, the line under it becomes structure rather than accent. `deck.css`
+ * paints the rail's `::after` in `--slide-rule`, which puts the deck's loudest
+ * 1px on the one element nobody should ever notice. Overriding that existing
+ * pseudo-element rather than adding a border is deliberate — a border would draw
+ * a SECOND line one pixel below the first.
  */
-.deck-slide[data-skin="fibre"] .deck-safe > .deck-content.flex-col {
-  justify-content: flex-end;
+.deck-slide[data-skin="editorial"] .deck-rail::after {
+  background: var(--slide-hairline);
 }
 
 /*
- * THE MEASURE IS NOT A SKIN'S TO NARROW, and this is a scar.
- *
- * A 1220px column was set here to give the type more air. `people-slide.tsx`
- * derives its column COUNT against a 1230px content column and writes it as an
- * inline style — deck.css records that number in its own comment — so the
- * fifteen-person team grid kept eight columns in a column too narrow for them
- * and broke names mid-word: "McCaule/y", "Prasant/h", "Tharane/etharan". A
- * layout that computes against a token is a layout a skin can silently break,
- * and nothing catches it: it lints clean and only exists on a rendered stage.
- *
- * The composition difference comes from the low anchor, the kicker rule and the
- * ground instead, none of which any layout measures against.
+ * Second, the position is parenthesised: `(07) / 38`. The oldest editorial mark
+ * for a number that is a reference rather than a quantity, and the only reason
+ * `SlideRail` wraps the position in a span of its own. `deck.css` already sets
+ * `tabular-nums` on `.deck-rail-meta`, which is what stops the brackets shifting
+ * as the digits change, so it is not restated here.
  */
-
-/*
- * The kicker leads with a rule that crosses the whole column rather than a
- * dash beside the words, so every slide opens on a line of light. The house
- * dash sits inline before the text; this one is a block above it.
- */
-.deck-slide[data-skin="fibre"] .deck-kicker {
-  display: block;
-  padding-block-start: 22px;
-  border-block-start: 1px solid transparent;
-  border-image: linear-gradient(
-      90deg,
-      var(--fibre-cyan) 0%,
-      rgb(224 112 207 / 0.5) 46%,
-      rgb(224 112 207 / 0) 100%
-    )
-    1;
+.deck-slide[data-skin="editorial"] .deck-rail-count::before {
+  content: "(";
 }
 
-.deck-slide[data-skin="fibre"] .deck-kicker::before {
+.deck-slide[data-skin="editorial"] .deck-rail-count::after {
+  content: ")";
+}
+
+/* --- Type ----------------------------------------------------------------- */
+
+/*
+ * ALMOST EMPTY, AND THAT IS THE DECISION.
+ *
+ * Bricolage Grotesque at 800 IS the She Sharp editorial voice — it is what the
+ * website sets its own headlines in. A skin that reaches for a different weight
+ * here is not personalising a deck, it is leaving the system: the previous event
+ * skin dropped the display to 600, and what it bought was a deck that no longer
+ * looked like She Sharp. Editorial Paper reclaims the house type rather than
+ * replacing it, so the only declaration in this section is the kicker's
+ * tracking, and the personality is carried by the devices below.
+ *
+ * `.deck-label` IS NOT TOUCHED, at any width. `lib/deck/people-layout.ts` plans
+ * a people grid against its tracking (the `orgTrack` field) and writes the
+ * column count as an inline style, so opening it here breaks names mid-word on
+ * slides this file has never heard of — all four panellists captioned
+ * "INTERNATIONA / L", on every 4:3 screen, lint-clean. The scar is recorded at
+ * `.deck-person-org` in `deck.css`.
+ */
+.deck-slide[data-skin="editorial"] .deck-kicker {
+  letter-spacing: 0.24em;
+}
+
+/* --- Geometry: ruled ------------------------------------------------------ */
+
+/*
+ * The incision stops being a lid and becomes a page.
+ *
+ * `deck.css` cuts an OPAQUE panel into the wall. Here the panel is the slide's
+ * own ground at 92% with a hairline along each long edge, so the wall reads
+ * faintly through it and the panel is marked by its rules rather than by its
+ * weight. That is the whole of "ruled": an edge in this skin is a line, never a
+ * shadow and never a blur.
+ *
+ * Set through `--incision-bg` rather than `background`, because layouts pass
+ * their own value through that same custom property and overriding the
+ * shorthand would silently discard it.
+ *
+ * WHERE A LAYOUT ALSO ASKS FOR AN ACCENT EDGE — `.deck-edge-block-start` /
+ * `-end`, which the chapter card and the closing title both use — the hairline
+ * sits directly under the accent rule and the two read as one thick-thin pair.
+ * That is a ruled system's own idiom rather than a collision, but it is the one
+ * thing in this block to judge on a rendered stage rather than in the file.
+ */
+.deck-slide[data-skin="editorial"] .deck-incision {
+  --incision-bg: color-mix(in srgb, var(--slide-bg) 92%, transparent);
+  border-block: 1px solid var(--slide-hairline);
+}
+
+/*
+ * The sheer cut: same construction, more of the wall showing. It also has to be
+ * restated for a second reason — `deck.css` writes it as `rgb(11 10 20 / 0.66)`,
+ * a literal of the old near-black, and that rule is NOT tone-scoped, so left
+ * alone it lays a black sheet across a navy chapter card.
+ */
+.deck-slide[data-skin="editorial"] .deck-incision-sheer {
+  --incision-bg: color-mix(in srgb, var(--slide-bg) 74%, transparent);
+}
+
+/*
+ * `.deck-rule` needs nothing here. `deck.css` already draws it as a flat 1px of
+ * `--slide-hairline` across the full width — two hard ends, no fade — which is
+ * exactly what a ruled system wants. Noted rather than restated: a declaration
+ * that sets a property to the value it already had looks like it is doing the
+ * job its comment describes, and hides the ones that are.
+ */
+
+/* A portrait gets a rule, not a glow. Zero blur and zero spread, so this is a
+   1px ring rather than the elevation the file header bans. */
+.deck-slide[data-skin="editorial"] .deck-avatar {
+  box-shadow: 0 0 0 1px var(--slide-hairline);
+}
+
+/*
+ * The white logo chip stays white — a partner's mark is not ours to restyle for
+ * a theme, and a multi-colour sponsor SVG survives both grounds only because it
+ * sits on white. What it takes here is an edge: on the paper register a white
+ * chip on `#f4f4fa` has no boundary at all, and this skin's answer to a boundary
+ * is a line.
+ */
+.deck-slide[data-skin="editorial"] .deck-logo-chip {
+  border: 1px solid var(--slide-hairline);
+  border-radius: var(--deck-radius);
+}
+
+/* --- Signature devices ---------------------------------------------------- */
+
+/*
+ * THE SCRIPT EYEBROW, on the four slides that can carry it.
+ *
+ * On the website a page introduces itself in one handwritten line above its
+ * heading. `deck.css` already holds that voice as `.deck-eyebrow` — Carattere at
+ * `--dt-script` — and in twelve months only the stats slide has ever used it.
+ * Here it becomes the kicker on the deck's STATEMENT slides: the title, the
+ * chapter cards, the countdown and the karakia, which are the slides where the
+ * deck is speaking rather than informing.
+ *
+ * THE TYPE SCOPING IS LOAD-BEARING, not tidiness. `lib/deck/people-layout.ts`
+ * budgets a flat `KICKER_HEIGHT = 36` when it plans a grid and writes the result
+ * as an inline style, so an 84px kicker on a people slide would overflow a
+ * layout that had already decided how many portraits fit. The four types named
+ * here never plan against their own furniture, which is what makes the script
+ * safe. `data-type` on `.deck-slide` exists for this rule and for nothing else.
+ *
+ * `line-height: 1` matches `.deck-eyebrow`, the same face at the same size:
+ * Carattere's own metrics carry its descenders, and the kicker's 1.2 would open
+ * a hundred-pixel line box above a chapter numeral.
+ *
+ * Motion is unchanged — `motion.ts` already selects `.deck-kicker, .deck-eyebrow`
+ * for the same recipe, so the script line enters exactly as the label did.
+ */
+.deck-slide[data-skin="editorial"]:is(
+    [data-type="title"],
+    [data-type="section"],
+    [data-type="break"],
+    [data-type="karakia"]
+  )
+  .deck-kicker {
+  font-family: var(--font-brand-script);
+  font-size: var(--dt-script);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--slide-accent);
+}
+
+/* The house kicker is led by a 64px dash of ink. A script line is not a label
+   and does not want announcing; the full stop after it is punctuation enough. */
+.deck-slide[data-skin="editorial"]:is(
+    [data-type="title"],
+    [data-type="section"],
+    [data-type="break"],
+    [data-type="karakia"]
+  )
+  .deck-kicker::before {
   display: none;
 }
 
 /*
- * The title slide's partner block pins itself with `mt-auto`, which its own
- * comment calls "the one thing that beats the optical centring". It absorbs all
- * the free space, so the low anchor above has nothing left to move and the
- * headline stays at the top of the stage — the house composition, on a deck
- * that is meant to have left it.
+ * OUTLINE NUMERALS — the site's `.text-outline`, and this skin's handover
+ * moment.
  *
- * Released here, so the whole stack travels to the foot together: kicker, then
- * headline, then the date, then the partner mark, reading bottom-up out of an
- * open field. That is the poster's own arrangement.
- */
-.deck-slide[data-skin="fibre"] .deck-safe .mt-auto {
-  margin-block-start: 0;
-}
-
-/*
- * The title panel, unpicked.
+ * `.deck-knockout` fills a numeral with a photograph through four stacked
+ * background layers and `background-clip: text`, and `knockoutStyle()` writes
+ * only the image URL inline — so the whole stack can be taken out from here.
+ * The `background: none` shorthand is what does it: it resets the image layers,
+ * the blend modes, the last-resort `background-color` AND the clip in one
+ * declaration, leaving a glyph with no fill at all. The stroke is then the only
+ * thing that paints.
  *
- * `title-slide.tsx` lays an opaque panel over the leading two thirds and marks
- * its trailing edge with a rule. Cut into a wall of photographs that reads as a
- * window; laid over a drawn field it is an arbitrary vertical seam across the
- * middle of the stage, which is exactly how it looked. The panel goes, and the
- * edge becomes what every other line in this deck is — light in a filament,
- * brightest in the middle and gone at both ends.
- */
-.deck-slide[data-skin="fibre"] .deck-incision.deck-edge-inline-end {
-  background: transparent;
-  backdrop-filter: none;
-}
-
-.deck-slide[data-skin="fibre"] .deck-edge-inline-end::after {
-  background: linear-gradient(
-    180deg,
-    rgb(94 231 245 / 0) 0%,
-    rgb(94 231 245 / 0.3) 38%,
-    rgb(224 112 207 / 0.22) 72%,
-    rgb(224 112 207 / 0) 100%
-  );
-}
-
-/* --- The field: a ground drawn in code ----------------------------------- */
-
-/*
- * NO PHOTOGRAPHS. The archive used as mass — a wall, a grid, a band of small
- * frames — is the house deck's signature and the hackathon deck has spent it.
- * A second deck using it reads as the same deck however it is coloured or
- * arranged, which is a fact about the device rather than about the palette, and
- * is why recolouring and rearranging both failed to fix it.
+ * A chapter numeral drawn in ink OVER the wall rather than cut OUT of it is the
+ * loudest single difference between this skin and the house, and it lands on
+ * `01` — the card that hands over from She Sharp to the event.
  *
- * What replaces it is the poster's own subject built from gradients: a black
- * field with light running through it. The archive is not gone from this deck —
- * a single photograph of a real room, looked at as a photograph, is a different
- * device and stays on the slides that show one. What has gone is photography
- * used as texture.
+ * The stroke does not scale with the type, which is why it is restated in both
+ * container queries below: 4px around a 420px numeral is a line, and the same
+ * 4px around the 200px numeral a phone gets is a slab.
  */
-.deck-field {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: var(--deck-canvas-dark);
+.deck-slide[data-skin="editorial"] :is(.deck-knockout, .deck-knockout-ink) {
+  background: none;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 4px var(--slide-ink);
 }
 
-.deck-field > span {
-  position: absolute;
-  display: block;
-  pointer-events: none;
-}
-
-/* The wash: a wide, low-contrast bloom that keeps the frame from reading as a
-   flat black rectangle. Positioned off the seed so no two slides bloom in the
-   same place. */
-.deck-field-wash {
-  inset: 0;
-  background:
-    radial-gradient(
-      74% 58% at calc(18% + (var(--field-seed) * 0.14%)) 12%,
-      rgb(10 88 120 / 0.5) 0%,
-      rgb(10 88 120 / 0) 68%
-    ),
-    radial-gradient(
-      58% 48% at calc(88% - (var(--field-seed) * 0.1%)) 96%,
-      rgb(224 112 207 / 0.26) 0%,
-      rgb(224 112 207 / 0) 70%
-    );
+/* The same guard `deck.css` gives `.deck-outline`: with no `-webkit-text-stroke`
+   there is no outline to draw, and a transparent fill would leave the largest
+   element on the slide blank rather than merely unstyled. */
+@supports not ((-webkit-text-stroke: 4px currentColor)) {
+  .deck-slide[data-skin="editorial"] :is(.deck-knockout, .deck-knockout-ink) {
+    color: var(--slide-ink);
+    -webkit-text-fill-color: var(--slide-ink);
+    opacity: 0.34;
+  }
 }
 
 /*
- * The strands. Three long, very shallow diagonals of light — the filament seen
- * at a distance rather than the braid seen close. Each is a single gradient on
- * a rotated block, which is why they are separate elements: one node cannot
- * carry three different rotations.
- */
-.deck-field-strand {
-  inset-inline: -30%;
-  block-size: 2px;
-  transform-origin: center;
-  filter: blur(0.4px);
-}
-
-.deck-field-strand-a {
-  inset-block-start: calc(26% + (var(--field-seed) * 0.03%));
-  transform: rotate(-7deg);
-  background: linear-gradient(
-    90deg,
-    rgb(94 231 245 / 0) 0%,
-    rgb(94 231 245 / 0.62) 34%,
-    rgb(255 255 255 / 0.5) 52%,
-    rgb(94 231 245 / 0.28) 70%,
-    rgb(94 231 245 / 0) 100%
-  );
-  box-shadow: 0 0 26px rgb(94 231 245 / 0.34);
-}
-
-.deck-field-strand-b {
-  inset-block-start: calc(58% - (var(--field-seed) * 0.04%));
-  transform: rotate(4deg);
-  block-size: 1px;
-  background: linear-gradient(
-    90deg,
-    rgb(224 112 207 / 0) 8%,
-    rgb(224 112 207 / 0.55) 42%,
-    rgb(224 112 207 / 0) 88%
-  );
-  box-shadow: 0 0 22px rgb(224 112 207 / 0.3);
-}
-
-.deck-field-strand-c {
-  inset-block-start: calc(78% + (var(--field-seed) * 0.02%));
-  transform: rotate(-3deg);
-  block-size: 1px;
-  opacity: 0.6;
-  background: linear-gradient(
-    90deg,
-    rgb(122 182 255 / 0) 20%,
-    rgb(122 182 255 / 0.45) 56%,
-    rgb(122 182 255 / 0) 96%
-  );
-}
-
-/*
- * Grain. Without it a pure-gradient ground bands visibly on an 8-bit projector,
- * which is the one artefact that makes a designed field look like a broken
- * render. An SVG turbulence data URI rather than an image file: it is 200 bytes,
- * it never 404s, and it costs no request.
- */
-.deck-field-grain {
-  inset: 0;
-  opacity: 0.16;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 140px 140px;
-}
-
-/*
- * THE BAND. On a pale slide the field survives as a bar of light rather than a
- * strip of photographs, which is the whole point of this skin. The strands are
- * repositioned into the band's own 162px rather than scaled down, because a
- * shallow diagonal scaled to a sixth of its height is a horizontal line.
- */
-.deck-field-band {
-  background: linear-gradient(
-    180deg,
-    rgb(5 6 11 / 0) 0%,
-    rgb(8 30 44 / 0.92) 42%,
-    var(--deck-canvas-dark) 100%
-  );
-}
-
-.deck-field-band .deck-field-wash {
-  background: radial-gradient(
-    62% 150% at calc(30% + (var(--field-seed) * 0.2%)) 100%,
-    rgb(10 88 120 / 0.62) 0%,
-    rgb(10 88 120 / 0) 72%
-  );
-}
-
-.deck-field-band .deck-field-strand-a {
-  inset-block-start: 44%;
-  transform: rotate(-2deg);
-}
-
-.deck-field-band .deck-field-strand-b {
-  inset-block-start: 68%;
-  transform: rotate(1.4deg);
-}
-
-.deck-field-band .deck-field-strand-c {
-  display: none;
-}
-
-.deck-field-band .deck-field-grain {
-  opacity: 0.1;
-}
-
-/*
- * The knockout, refilled.
+ * THE FULL STOP. Every kicker ends in a dot — mint on navy, purple on paper, via
+ * `--editorial-stop`. It is the site's rule that the brand colour is punctuation
+ * rather than decoration, made literal.
  *
- * `.deck-knockout` clips a photograph into its letterforms, and on the house
- * deck that photograph is an archive frame — the same device as the wall, at
- * the largest size in the deck. On this one the glyphs are filled with the
- * field's own light instead, so a 420px chapter numeral is made of the same
- * thing as the ground behind it. `--deck-knockout-src` is still written inline
- * by `knockoutStyle()`; overriding the whole stack here is what takes it out.
+ * `.deck-kicker` is a flex row with a 24px gap whose `::before` is the leading
+ * dash, so `::after` is free and becomes the last flex item. The negative margin
+ * is arithmetic on that gap: 24px is the right distance for a rule that leads a
+ * line and far too much for a stop that closes one, so the gap is cancelled and
+ * 0.14em put back.
+ *
+ * Sized in `em` so it tracks whatever the kicker is set at — about 10px beside a
+ * 30px label, 27px beside the 84px script. The floor is for the phone, where the
+ * whole stage is scaled to roughly 0.43 and anything under 8px design px arrives
+ * as a smudge. It is written here rather than in the narrow container query
+ * because `--dt-kicker` never drops below 30px, so a rule down there would be a
+ * no-op dressed as a fix.
  */
-.deck-slide[data-skin="fibre"] .deck-knockout {
-  background-image:
-    linear-gradient(
-      104deg,
-      var(--fibre-cyan) 0%,
-      #ffffff 26%,
-      var(--fibre-magenta) 62%,
-      #7ab6ff 100%
-    );
-  background-blend-mode: normal;
-  background-size: cover;
-  background-position: center;
+.deck-slide[data-skin="editorial"] .deck-kicker::after {
+  content: "";
+  flex: 0 0 auto;
+  inline-size: max(8px, 0.32em);
+  block-size: max(8px, 0.32em);
+  margin-inline-start: calc(0.14em - 24px);
+  border-radius: 50%;
+  background: var(--editorial-stop);
 }
 
+/* --- Narrow stages -------------------------------------------------------- */
 
-/* --- The plate surface (the event's own artwork) ------------------------- */
+/*
+ * DESCENDING WIDTH ORDER, and the 1000px block must stay below the 1560px one: a
+ * 900px stage matches both, the selectors are identical in specificity, and
+ * source order is the only thing that decides. Same failure family as writing a
+ * container query against `.deck-stage` itself — it compiles, it never applies,
+ * and a 4:3 projector silently runs the wide treatment.
+ *
+ * Both blocks do the same two things. The stroke thins because it is an absolute
+ * width around type that has shrunk. The kicker's tracking closes because
+ * tracked caps are unbreakable at their tracked width, so on a narrow stage the
+ * tracking alone decides whether a line fits.
+ *
+ * Neither reaches the script kicker: that rule out-specifies these, because
+ * `:is([data-type=…])` adds an attribute selector to it. Deliberate — a script
+ * line has no tracking to give up.
+ */
+@container deck (max-width: 1560px) {
+  .deck-slide[data-skin="editorial"] :is(.deck-knockout, .deck-knockout-ink) {
+    -webkit-text-stroke-width: 3px;
+  }
+
+  .deck-slide[data-skin="editorial"] .deck-kicker {
+    letter-spacing: 0.18em;
+  }
+}
+
+@container deck (max-width: 1000px) {
+  .deck-slide[data-skin="editorial"] :is(.deck-knockout, .deck-knockout-ink) {
+    -webkit-text-stroke-width: 2px;
+  }
+
+  .deck-slide[data-skin="editorial"] .deck-kicker {
+    letter-spacing: 0.12em;
+  }
+}
+
+/* ============================================================== PLATE FIELD ===
+   The generic `plate` surface: an event's own artwork as the ground, full bleed
+   or reduced to a band, panned per slide by `platePlacement()`.
+
+   NO DECK CONSUMES THIS TODAY. It is kept as the infrastructure a poster-led
+   deck needs — the other two thirds are the `plate` variant of `SurfaceSpec` in
+   `lib/deck/types.ts` and `PlateField` in `components/deck/surfaces.tsx` — and
+   what such a deck waits on is the artwork, never this file.
+
+   EVERY COLOUR HERE IS A TOKEN. The scrims resolve against `--deck-canvas-dark`
+   and the band's edge against `--deck-spark`, both of which `themeToCssVars()`
+   emits per deck, so the plate takes the palette of whichever skin wears it
+   rather than carrying one of its own.
+   ==========================================================================*/
 
 .deck-plate-field {
   position: absolute;
@@ -635,8 +432,8 @@
  * `object-position` is NOT set here, deliberately. `DeckImage` writes it inline
  * from `DeckImage.focus`, an inline style beats any stylesheet, and a
  * `--plate-pos` custom property was written once, compiled cleanly and did
- * nothing at all — every band showed the plate's top strip, which on these
- * plates is the empty near-black the prompt asked for. A black bar, from a rule
+ * nothing at all — every band showed the plate's top strip, which on a poster
+ * plate is the empty near-black the prompt asked for. A black bar, from a rule
  * that looked correct. The pan travels on `focus`; see `platePlacement()`.
  */
 .deck-plate-field :is(img, .deck-img) {
@@ -653,11 +450,11 @@
   background:
     linear-gradient(
       100deg,
-      rgb(5 6 11 / 0.92) 0%,
-      rgb(5 6 11 / 0.72) 38%,
-      rgb(5 6 11 / 0) 78%
+      color-mix(in srgb, var(--deck-canvas-dark) 92%, transparent) 0%,
+      color-mix(in srgb, var(--deck-canvas-dark) 72%, transparent) 38%,
+      transparent 78%
     ),
-    rgb(5 6 11 / 0.3);
+    color-mix(in srgb, var(--deck-canvas-dark) 30%, transparent);
 }
 
 /*
@@ -673,10 +470,10 @@
   .deck-slide[data-active="true"]
   .deck-plate-drift
   :is(img, .deck-img) {
-  animation: fibre-drift 38s ease-in-out infinite alternate;
+  animation: plate-drift 38s ease-in-out infinite alternate;
 }
 
-@keyframes fibre-drift {
+@keyframes plate-drift {
   from {
     transform: scale(1.06) translate3d(-0.8%, 0, 0);
   }
@@ -700,6 +497,9 @@
   object-fit: cover;
 }
 
+/* The band's leading edge. Two pixels of the deck's own spark, faded at both
+   ends, so a strip of artwork reads as an edge of the design rather than as a
+   photograph that has been cropped off. */
 .deck-plate-band::after {
   content: "";
   position: absolute;
@@ -708,72 +508,11 @@
   block-size: 2px;
   background: linear-gradient(
     90deg,
-    rgb(94 231 245 / 0) 0%,
-    rgb(94 231 245 / 0.6) 42%,
-    rgb(224 112 207 / 0.6) 72%,
-    rgb(224 112 207 / 0) 100%
+    transparent 0%,
+    color-mix(in srgb, var(--deck-spark) 60%, transparent) 42%,
+    color-mix(in srgb, var(--deck-spark) 60%, transparent) 72%,
+    transparent 100%
   );
-}
-
-/* --- Narrow stages ------------------------------------------------------- */
-
-/*
- * MUST STAY BELOW the rules above, and the 1000px block must stay below the
- * 1560px one — a 900px stage matches both at equal specificity and source order
- * decides. Same failure family as the container-query ordering rule in
- * `deck.css`: it compiles, it never applies, and a 4:3 projector silently runs
- * the wide treatment.
- */
-@container deck (max-width: 1560px) {
-  .deck-slide[data-skin="fibre"] :is(.deck-kicker, .deck-label, .deck-eyebrow) {
-    letter-spacing: 0.2em;
-  }
-
-  /*
-   * …except the organisation line under a portrait, which gives its tracking up
-   * entirely here. This is geometry, not taste. On a narrow stage a people tile
-   * is about 280px wide and a tracked word is unbreakable at its tracked width,
-   * so the tracking alone decides whether it fits: "LES MILLS INTERNATIONAL" at
-   * 0.2em wants 297px of a 283px column, and all four panellists were captioned
-   * "INTERNATIONA / L" on every 4:3 screen. Honouring the width instead would
-   * have folded a panel of four into two rows of two and halved the portraits.
-   *
-   * It must be a rule of its own rather than a `:not()` on the line above: the
-   * base skin rule sets 0.26em at every width, so exempting the line here would
-   * leave it WIDER than it started. It also has to out-specify `deck.css`, and
-   * `lib/deck/people-layout.ts` plans the grid assuming this is zero — see the
-   * `orgTrack` field there. The three travel together.
-   */
-  .deck-slide[data-skin="fibre"] .deck-person-org {
-    letter-spacing: normal;
-  }
-}
-
-@container deck (max-width: 1000px) {
-  /*
-   * Portrait. The low anchor is released back to centred: on a stage more than
-   * twice as tall as it is wide, content pinned to the bottom third leaves two
-   * thirds of empty ground above it and reads as a rendering fault rather than
-   * as composition.
-   */
-  .deck-slide[data-skin="fibre"] .deck-safe > .deck-content.flex-col {
-    justify-content: center;
-  }
-
-  .deck-slide[data-skin="fibre"] :is(.deck-kicker, .deck-label, .deck-eyebrow) {
-    letter-spacing: 0.15em;
-  }
-
-  /* Same exemption, same reason — a phone's tile is narrower still. */
-  .deck-slide[data-skin="fibre"] .deck-person-org {
-    letter-spacing: normal;
-  }
-
-  /* The backdrop blur is the first thing to go on a small or old machine: it is
-     the most expensive rule in this file and the least visible at this size. */
-  .deck-slide[data-skin="fibre"] .deck-incision {
-    backdrop-filter: none;
-  }
 }
 
 /* Static mode is already handled by the `data-motion` gate on the drift rule

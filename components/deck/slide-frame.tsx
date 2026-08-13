@@ -121,6 +121,13 @@ export function SlideFrame({
       // rather than on the stage because the two skins coexist inside one deck:
       // the organisational slides wear the house while the event's wear its own.
       data-skin={skin.key}
+      // The slide's own kind, so a skin can reach the STATEMENT slides — title,
+      // chapter card, countdown, karakia — without reaching the ones that
+      // measure their own furniture. `lib/deck/people-layout.ts` budgets a fixed
+      // 36px for the kicker, so a skin that sets the kicker in 84px script may
+      // only do it on layouts that never plan a grid against it. Renders nothing
+      // and costs nothing until a `[data-skin]` block asks for it.
+      data-type={slide.type}
       data-active={active}
       role="group"
       aria-roledescription="slide"
@@ -172,7 +179,14 @@ function SlideRail({
         SHE <i className="deck-rail-sharp">#</i>
       </span>
       <span className="deck-rail-meta">
-        {position} / {total}
+        {/* The position is wrapped so a skin can punctuate it — Editorial Paper
+            parenthesises it into `(07)` through `::before`/`::after` content.
+            The separator and the total stay bare text nodes: the wrapper adds
+            no box of its own inside an inline flow, so the rendered line is
+            byte-identical without a skin selector asking for otherwise. */}
+        <span className="deck-rail-count">{position}</span>
+        {" / "}
+        {total}
         {/* Only when there is a chapter — a dangling separator looks like a bug. */}
         {chapter ? ` · ${chapter.toUpperCase()}` : ""}
       </span>

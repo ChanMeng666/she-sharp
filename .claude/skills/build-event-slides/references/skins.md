@@ -1,10 +1,92 @@
 # Designing this event's skin
 
-Every event gets its own look. That is the point of this file, and it is a
-change from how the first two decks were built — they shared one visual system,
-so the Les Mills panel evening came out looking like a two-day AI hackathon.
+Most events do not need one. The first section says what they get instead; the
+rest of the file is for the events that do.
 
-What follows is how far that freedom goes, where it stops, and how to use it.
+## The default for a regular evening: Editorial Paper
+
+She Sharp's public site was rebuilt in July 2026 around a visual system it
+already has a name for, and since August 2026 that system is what a deck wears
+unless someone decides otherwise. **Editorial Paper** puts it on the projector:
+a paper ground under navy ink, hairline rules instead of shadows, a line of
+Carattere script where a statement slide introduces itself, chapter numerals
+drawn as outlines rather than filled, page numbers set as `(07)` on the rail,
+and the accent used as punctuation — a mint or purple full stop after the
+kicker — rather than as decoration. The organisational slides keep the archive
+photo wall under the brand purple duotone, untouched; Editorial Paper is type,
+rule and radius, and the wall behind it stays She Sharp's.
+
+**`scripts/deck/new-deck.ts` writes it in for you.** A scaffolded deck arrives
+with `import { EDITORIAL_SKIN } from "../skins";` and `skin: EDITORIAL_SKIN,`
+already on it, so this is a decision to confirm rather than one to make. Say it
+to the author in their words:
+
+> Your slides use She Sharp's own editorial look — the same paper, navy and
+> hairline rules as the website, so the night reads as a She Sharp night rather
+> than as a one-off. The photo wall on the She Sharp slides is unchanged.
+
+**Why a default at all.** A two-hour panel evening has no visual concept of its
+own and should not be made to invent one. The attempt to give the Les Mills
+evening a bespoke identity took three rounds before anybody could say what it
+was *for*, and every round was measuring itself against the hackathon deck —
+which had never made a design decision either, so "different from that" was
+never a brief. A shared editorial voice is the honest answer to "what does a
+normal She Sharp evening look like", and it is a better answer than a different
+half-built concept every month.
+
+### The knobs inside the default
+
+Two, and there is no third.
+
+1. **The accent pair.** The default is brand purple on paper and mint on navy.
+   Take the event's own accent off its poster —
+   `npx tsx scripts/deck/accent-from-poster.ts <slug>` — and use it **only if it
+   genuinely beats purple and mint**, which is a higher bar than "it is this
+   event's colour". It has to clear **4.5:1 on both canvases**, `onDark` lighter
+   than `onLight`, and it has to land in a hue sector no neighbouring deck is
+   using: `deck.test.ts` fails the build when two decks in this skin share both
+   the weave and the hue sector. Run `npx tsx scripts/deck/style-ledger.ts` and
+   look before you choose.
+2. **The archive weave** — how the organisational slides arrange the wall. See
+   `references/weaves.md`. The scaffold picks a free one.
+
+Everything else is the same at every event on purpose. Do not open the type
+scale, the geometry or the tempo to make one evening feel special; that is what
+the deviation below is for.
+
+### When to deviate
+
+- **The event's poster gives you a concept you can say in one sentence**, and
+  the sentence is about the evening rather than about the artwork. *"Night water
+  under the bridge lights, because the whole thing runs after dark."* If you can
+  say it, build the skin — the rest of this file is how. If you cannot, you do
+  not have a concept, you have a preference, and Editorial Paper is the better
+  deck. See the bar under **The order of work**: it has been failed before.
+- **A flagship or multi-day event that must not read as a regular evening.** A
+  hackathon festival, a conference, an awards night. These earn their own look
+  because the room already knows they are not a Tuesday panel, and a deck that
+  says otherwise is telling the room the wrong thing.
+
+Anything else — "the last deck used it", "it would be nice to vary it" — is not
+a reason. **A deck in a half-built bespoke skin is worse than a deck in this
+one.** That sentence is older than Editorial Paper and it is the whole reason
+Editorial Paper exists.
+
+### Two decks in one skin
+
+Two evenings wearing Editorial Paper are meant to look related — that is what a
+house system is. `lintDeckSet()` therefore stops asking a same-skin pair to
+differ on surface, geometry and tempo (they cannot; they share a skin) and
+instead requires them to differ on **both** the archive weave and the accent hue
+sector. One alone is the same night in a different colour, or the same colour in
+a different order. If you run out of room, the answer is a fourth weave or a
+skin of its own for that event — not a colour nobody chose.
+
+---
+
+The rest of this file is the system underneath. The next three sections apply to
+every deck including one wearing the default; from **The order of work** onwards
+it is about building a bespoke skin for an event that cleared the bar above.
 
 ## The one boundary, and it is about content
 
@@ -103,6 +185,9 @@ Each of these fails **silently**, on a projector or a phone, in front of a room.
 
 ## The order of work
 
+*From here on: building a bespoke skin. If this event is taking Editorial Paper,
+you are done — go back to the two knobs.*
+
 **The poster comes first.** It is where the concept is decided, it is cheap to
 iterate on, and the organiser can look at it and say yes or no long before any
 front-end exists.
@@ -110,28 +195,59 @@ front-end exists.
 1. Generate the poster with `scripts/events/generate-poster-plate.ts` and
    compose it with `scripts/events/build-event-poster.ts`. Show it. Get a yes.
 2. Take the accent off the poster — `scripts/deck/accent-from-poster.ts`.
-3. Name the concept in one sentence. *"A braid of fibre-optic strands lit from
-   within."* If you cannot, there is no skin yet, and the honest answer is the
-   house skin.
+3. Name the concept in one sentence. If you cannot, there is no skin yet, and
+   the honest answer is Editorial Paper.
 4. Build the skin from that sentence, in the three places below.
 5. Preview at four shapes, as always.
 
+**The sentence is a bar, not a formality, and it has been failed.** The Les
+Mills evening got a "Fibre" skin in August 2026 — six generated plates, a `field`
+surface kind and some seven hundred lines of CSS, off a sentence (*"a braid of
+fibre-optic strands lit from within"*) that described the poster rather than the
+evening. It went three rounds, satisfied nobody, and was deleted in full when
+Editorial Paper replaced it. Two things it taught, both of which are now rules
+elsewhere in this file: a concept has to be about the event and not only about
+its artwork, and a bespoke skin costs the same to build whether or not the event
+needed one.
+
 ## The three places a skin lives
 
-**One.** A `DeckSkin` in the deck file (or `lib/deck/skins.ts` if it will be
-reused):
+**One.** A `DeckSkin`. When the deck is taking the default it is an import and
+one line, and the scaffold has already written both:
 
 ```ts
-const FIBRE_SKIN: DeckSkin = {
-  key: "fibre",
-  name: "Fibre",
-  description: "The poster's braid of lit fibre-optic strands.",
+import { EDITORIAL_SKIN } from "../skins";
+
+export const myEventDeck: Deck = {
+  // …
+  skin: EDITORIAL_SKIN,
+};
+```
+
+A bespoke one is declared in the deck file — or in `lib/deck/skins.ts` if it
+will be reused, which is what happened to Editorial Paper once it stopped being
+one event's idea:
+
+```ts
+const HARBOUR_SKIN: DeckSkin = {
+  key: "harbour",
+  name: "Harbour",
+  description: "The poster's night water under the bridge lights.",
   surface: { kind: "plate", images: [PLATE_A, PLATE_B], drift: true },
+  geometry: "glass",
   tempo: 1.25,
 };
 ```
 
-Then `skin: FIBRE_SKIN` on the deck.
+Then `skin: HARBOUR_SKIN` on the deck. Note what is NOT in either of these: no
+sizes, no copy, no slide types. A skin is a look.
+
+**`--force` and the scaffold.** `new-deck.ts` regenerates a deck around
+`skin: EDITORIAL_SKIN,` without comment — it is an import, so the line means the
+same thing in the new file. It **refuses outright** on any other skin
+declaration, because a bespoke skin refers to plates and constants further up
+the file that a one-line lift would leave pointing at nothing. Move it out by
+hand first.
 
 **Two.** A `[data-skin="<key>"]` block in
 `styles/components/deck-skins.css`. This is where the look actually is —
@@ -151,8 +267,9 @@ statement slides reads as a stuck projector however far it is panned.
 
 ## Traps, all of them real
 
-- **`object-position` cannot be set from the stylesheet.** `DeckImage` writes it
-  inline from `DeckImage.focus`, and an inline style beats any stylesheet. A
+- **`object-position` cannot be set from the stylesheet.** Found building the
+  Fibre skin, and it outlived it. `DeckImage` writes it inline from
+  `DeckImage.focus`, and an inline style beats any stylesheet. A
   `--plate-pos` custom property was written, compiled cleanly, and did nothing —
   every band showed the top strip of the plate, which on a poster plate is the
   empty near-black the prompt asked for. A black bar, from a rule that looked
@@ -196,19 +313,20 @@ photograph of harakeke. What does not change:
 Say in the preview which slides carry generated artwork, exactly as you would
 name a borrowed archive photograph.
 
-## When the honest answer is the house skin
+## When the honest answer is Editorial Paper
 
 - The event has no poster and nobody has time to make one.
 - The concept cannot be said in a sentence.
-- It is a recurring organisational event — the house skin *is* its identity.
+- It is a recurring organisational event — the house voice *is* its identity.
 
-Say so plainly: *"This one runs on She Sharp's own look — there's no artwork for
-it yet, and the archive is the strongest thing we have."* A deck in the house
-skin is not a failure. A deck in a half-built bespoke skin is.
+Say so plainly: *"This one runs on She Sharp's own editorial look — there's no
+artwork specific to it yet, and that look is the strongest thing we have."* A
+deck in Editorial Paper is not a failure. A deck in a half-built bespoke skin is,
+and the Fibre skin is the proof.
 
 **This applies to the SKIN and never to the weave.** A deck with no artwork still
 picks how the archive is arranged — see `references/weaves.md` — and that choice
 is enforced by the type system, because it is the axis that produced the twins in
-the first place. Taking the house skin is a decision about this event's identity.
-Taking the same weave as the deck next to it is not a decision at all; it is the
-default, and the default is what went wrong.
+the first place. Taking Editorial Paper is a decision about this event's
+identity. Taking the same weave as the deck next to it is not a decision at all;
+it is the default, and the default is what went wrong.

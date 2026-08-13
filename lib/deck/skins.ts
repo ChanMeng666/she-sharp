@@ -33,7 +33,7 @@
  * projector or a phone, and the rules are documented where they are enforced:
  * the stage geometry (`styles/components/deck.css`), the 1080 design height,
  * the copy and rhythm limits (`lib/deck/lint.ts`), the accent contrast floor,
- * or the eighteen slide types. A skin changes how a deck LOOKS, never what it
+ * or the twenty slide types. A skin changes how a deck LOOKS, never what it
  * is allowed to say or how it is measured.
  *
  * ADDING ONE is three things and no more: a `SurfaceSpec` here, a
@@ -105,6 +105,72 @@ export const houseSkin: DeckSkin = HOUSE_SKINS.drift;
 export function houseSkinFor(weave: ArchiveWeaveKey): DeckSkin {
   return HOUSE_SKINS[weave] ?? houseSkin;
 }
+
+/**
+ * Editorial Paper — the reusable look for a regular She Sharp evening.
+ *
+ * WHERE IT COMES FROM. The public site was rebuilt in July 2026 around a system
+ * it already has a name for: a paper ground, navy ink, hairline rules, chapters
+ * numbered `(01)`, a line of Carattere script where a page introduces itself,
+ * display type set either solid or as an outline, and purple used as
+ * punctuation rather than as decoration. None of it had ever reached the
+ * projector. Every deck instead wore the house wall, so the organisation's own
+ * editorial voice stopped at the edge of `/present`.
+ *
+ * WHY THIS IS A DEFAULT AND NOT ONE MORE BESPOKE SKIN. A two-hour evening panel
+ * has no visual concept of its own and should not be made to invent one — the
+ * attempt to give the Les Mills evening a bespoke identity took three rounds
+ * before anyone could say what it was for, and each round was measuring itself
+ * against a deck that had never made a design decision either. So this is the
+ * answer to "what does a normal She Sharp evening look like": the same editorial
+ * voice at every event, with the accent pair and the archive weave as the two
+ * knobs an event actually turns. A bespoke skin is for an event whose poster can
+ * be described in one sentence.
+ *
+ * WHAT IT DELIBERATELY DOES NOT TOUCH. The archive grade. `--deck-duo-shadow`
+ * and `--deck-duo-highlight` stay exactly as `deck.css` sets them, so every
+ * photograph in every deck built on this skin is still the brand purple duotone.
+ * That grade is the only thing making four stops of colour temperature read as
+ * one organisation, and a default skin — one that will end up on most decks — is
+ * the last place to start regrading it. Editorial Paper is type, rule and
+ * radius; the wall behind it stays She Sharp's.
+ *
+ * The look itself is the `[data-skin="editorial"]` block in
+ * `styles/components/deck-skins.css`.
+ */
+export const EDITORIAL_SKIN: DeckSkin = {
+  key: "editorial",
+  name: "Editorial Paper",
+  description:
+    "The website's editorial system on the projector — paper and navy ink, hairline rules, script eyebrows, outline numerals, mint full stops.",
+  /*
+   * No `weave` and no `houseSurface`, and both omissions are the point.
+   *
+   * Without a weave the statement slides inherit `Deck.archive` — the deck's own
+   * arrangement — rather than declaring a second one, so a deck wearing this
+   * skin has ONE silhouette rather than two (see `skinForSlide()`). Without a
+   * `houseSurface` the organisational slides keep the photo wall, which is where
+   * a default skin has to leave them: they are She Sharp's record of itself.
+   */
+  surface: { kind: "archive" },
+  /*
+   * Just inside the "slow" band (`tempoBand()` splits at 1.1), which is true
+   * before it is useful. True: the house recipes are cut for a hard-edged tile
+   * wall, where a fast arrival reads as precision, and a page turns more slowly
+   * than a wall cuts. Useful: tempo is one of the four axes `style-library.ts`
+   * measures between two decks, and a deck that varies nothing measurable is a
+   * deck that reads as the last one.
+   */
+  tempo: 1.15,
+  /*
+   * Declared rather than inferred — `geometryOf()` would call an archive surface
+   * `cut`, which is the house's own answer. Here every edge is a line: the
+   * incision is a page laid on the wall with a hairline top and bottom, the
+   * portrait ring is a rule rather than a glow, and the logo chip takes a border
+   * instead of a shadow.
+   */
+  geometry: "ruled",
+};
 
 /**
  * Resolves the skin a given slide wears.
