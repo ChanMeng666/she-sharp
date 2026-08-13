@@ -916,6 +916,6 @@ The following fields are deprecated but kept for backward compatibility:
 
 ## Related Documentation
 
-- [Database Version Control Guide](DATABASE_VERSION_CONTROL.md)
-- [Migration Quick Start](MIGRATION_QUICK_START.md)
-- [Schema Changes Guide](../CLAUDE.md#adding-a-database-table)
+- [Mentor/Mentee Data Guide](MENTOR_MENTEE_DATA_GUIDE.md) — the dual-table fallback chain
+- [Architecture](../ARCHITECTURE.md) — the schema barrel and why `relations.ts` is a leaf
+- [CLAUDE.md](../../CLAUDE.md) — binding rules, including the dual-table rule
