@@ -52,7 +52,7 @@
       "title": "Youth Tech Series — Electronics Workshop",
       "date": "June 20, 2026",
       "coverImage": {
-        "url": "/img/events/peyvand-academy-20-june-2026-cover.png",
+        "url": "/img/events/peyvand-academy-20-june-2026-cover.webp",
         "alt": "Youth Tech Series — Electronics Workshop, delivered by SheSharp in partnership with Peyvand Academy, the Ministry of Education, and Little Engineers"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/peyvand-academy-20-june-2026",
@@ -87,7 +87,7 @@
             },
             {
               "name": "Ministry of Education",
-              "logo": "/img/sponsors/MOE.png",
+              "logo": "/img/sponsors/MOE.webp",
               "description": ""
             },
             {
@@ -151,7 +151,7 @@
       "title": "Youth Tech Series — AI & Electronics Workshop",
       "date": "June 13, 2026",
       "coverImage": {
-        "url": "/img/events/peyvand-academy-13-june-2026-cover.png",
+        "url": "/img/events/peyvand-academy-13-june-2026-cover.webp",
         "alt": "Youth Tech Series — AI & Electronics Workshop, delivered by SheSharp in partnership with Peyvand Academy and the Ministry of Education"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/peyvand-academy-13-june-2026",
@@ -187,7 +187,7 @@
             },
             {
               "name": "Ministry of Education",
-              "logo": "/img/sponsors/MOE.png",
+              "logo": "/img/sponsors/MOE.webp",
               "description": ""
             },
             {
@@ -275,7 +275,7 @@
       "title": "Her Waka (June 2026) — Personal Branding & Growth Tips",
       "date": "June 2, 2026",
       "coverImage": {
-        "url": "/img/events/her-waka-june-2026-cover.png",
+        "url": "/img/events/her-waka-june-2026-cover.webp",
         "alt": "Her Waka June 2026 — Personal Branding & Growth Tips, delivered by SheSharp, Ministry of Social Development and academyEX"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka-june-2026",
@@ -482,7 +482,7 @@
       "title": "From Burnout to Balance",
       "date": "September 20, 2023",
       "coverImage": {
-        "url": "/img/scraped/galleries/034_From_Burnout_to_Balance.png",
+        "url": "/img/scraped/galleries/034_From_Burnout_to_Balance.webp",
         "alt": "From Burnout to Balance event cover"
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/from-burnout-to-balance",
@@ -525,7 +525,7 @@
                 "title": "Customer Performance Marketing Lead, Sky TV",
                 "company": "",
                 "bio": "Maja is a mindful marketing leader, with a track record of driving marketing transformation for global and local brands. After the birth of her daughter, Valentina, Maja founded Foodie Babe, a baby food company focused on vegetables and spices, and she's on a mission to cultivate healthy and adventurous eaters. Currently leading the performance marketing team at Sky TV, Maja loves her work and thrives on connecting fans with top-notch sports and entertainment. She's dedicated to promoting a vibrant and healthy lifestyle, driven by her passion for nutrition, movement, and mindfulness.",
-                "image": "/img/scraped/speakers/64f48f36bca35ec50e95a6ff_Screen Shot 2023-09-03 at 9.50.12 PM.png",
+                "image": "/img/scraped/speakers/64f48f36bca35ec50e95a6ff_Screen Shot 2023-09-03 at 9.50.12 PM.webp",
                 "linkedin": "https://www.linkedin.com/in/maja-lee/"
               }
             ]
@@ -536,7 +536,7 @@
           "main": [
             {
               "name": "Techwomen NZ | AWS",
-              "logo": "/img/scraped/sponsors/64f48d1839f5ae1e373687e7_Group 2.png",
+              "logo": "/img/scraped/sponsors/64f48d1839f5ae1e373687e7_Group 2.webp",
               "description": "The TechWomen community is a group of passionate New Zealand tech, digital and ICT focused individuals from a diverse range of organisations that work together, to support the growth of women in tech roles.\n\nAmazon Web Services (AWS) is the world's most comprehensive and broadly adopted cloud, offering over 200 fully featured services from data centers globally.‍"
             }
           ],
@@ -588,7 +588,7 @@
       "title": "She Sharp & academyEX: International Women's Day 2026",
       "date": "March 6, 2026",
       "coverImage": {
-        "url": "/img/events/iwd-2026-banner.png",
+        "url": "/img/events/iwd-2026-banner.webp",
         "alt": "She Sharp & academyEX International Women's Day 2026 - Together We Can Forge Gender Equality Collectively"
       },
       "detailPageUrl": "https://www.shesharp.org.nz/events/she-sharp-and-academyex-international-womens-day-2026",
@@ -643,7 +643,7 @@
                 "title": "Co-Founder WE Mana & The Table",
                 "company": "WE Mana & The Table",
                 "bio": "Wyndi Tagi is a business strategist, speaker, and community builder passionate about helping people live with purpose and lead with mana. After building and successfully exiting her accounting firm, she now supports purpose-driven founders to grow sustainable businesses without losing themselves in the process. As founder of The Table, a global community for culturally aligned business owners, Wyndi creates spaces where women belong, build, and become. She believes in the power of \"Give To Gain\" — that when women share wisdom, courage, and support, everyone rises.",
-                "image": "/img/events/iwd-2026-wyndi-tagi.png",
+                "image": "/img/events/iwd-2026-wyndi-tagi.webp",
                 "linkedin": "https://www.linkedin.com/in/wynditagi/"
               },
               {
@@ -712,7 +712,7 @@
       "title": "Own Your Energy with Candice Murray – Presented by She Sharp & Metlifecare",
       "date": "April 16, 2026",
       "coverImage": {
-        "url": "/img/events/she-sharp-candice-murray-own-your-energy-cover.png",
+        "url": "/img/events/she-sharp-candice-murray-own-your-energy-cover.webp",
         "alt": "She Sharp & Candice Murray: Own your Energy! workshop banner"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/she-sharp-candice-murray-own-your-energy",
@@ -800,7 +800,7 @@
       "title": "HER WAKA — Navigating Pathways into Sustainable Employment",
       "date": "March 25, 2026",
       "coverImage": {
-        "url": "/img/events/her-waka-cover.png",
+        "url": "/img/events/her-waka-cover.webp",
         "alt": "HER WAKA — Navigating pathways into sustainable employment, delivered by SheSharp in Auckland"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka",
@@ -848,7 +848,7 @@
                 "title": "Senior AI/ML Infrastructure and Full-Stack Engineer",
                 "company": "Gavigo / Sanicle",
                 "bio": "Chan Meng is a Senior AI/ML Infrastructure and Full-Stack Engineer specialising in generative AI, autonomous agentic systems, and scalable cloud-native applications. She is a Founding Engineer at Gavigo and CTO at Sanicle. Her work includes advanced RAG architectures, LLM orchestration, and microservices. With a Master's in Applied Computing and a background in mathematics education, Chan combines strong technical expertise with leadership, speaking globally at events including UN CSW69 and mentoring women in STEM.",
-                "image": "/img/events/her-waka-chan-meng.png",
+                "image": "/img/events/her-waka-chan-meng.webp",
                 "linkedin": "https://www.linkedin.com/in/chanmeng666/"
               },
               {
@@ -877,7 +877,7 @@
                 "title": "Business Manager and Principal Consultant, Absolute IT",
                 "company": "Absolute IT",
                 "bio": "As Business Manager and Principal Consultant, Paul manages Absolute IT’s Auckland office while remaining an active recruiter. He joined the team in 2021 after a decade in Sales and Relationship Management. He enjoys the fast paced and ever-changing tech industry — like recruitment, no two days are ever the same. Building genuine, long-term relationships is central to how he works, and getting to know clients on a personal level helps him understand what they need and how he can connect them with the right people.",
-                "image": "/img/events/her-waka-paul-kelly.png",
+                "image": "/img/events/her-waka-paul-kelly.webp",
                 "linkedin": "https://www.linkedin.com/in/paul-kelly-1b0756b8/"
               },
               {
@@ -885,7 +885,7 @@
                 "title": "Business Manager for Auckland - Randstad Digital",
                 "company": "Randstad Digital",
                 "bio": "As the Business Manager for Auckland, Neekee is responsible for driving growth and overseeing daily operations, delivering exceptional results for clients and candidates. Before joining Randstad Digital, Neekee held senior leadership roles in the recruitment industry, where she honed her skills in sales, business development and team management. She holds a Master's degree in Business Management from Massey University and has an in-depth understanding of Auckland's job market.",
-                "image": "/img/events/her-waka-neekee-reshamwala.png",
+                "image": "/img/events/her-waka-neekee-reshamwala.webp",
                 "linkedin": "https://www.linkedin.com/in/neekee-r-270a9185/"
               }
             ]
@@ -949,7 +949,7 @@
       "title": "Her Waka (April 2026) — #IAmRemarkable",
       "date": "April 7, 2026",
       "coverImage": {
-        "url": "/img/events/her-waka-april-2026-cover.png",
+        "url": "/img/events/her-waka-april-2026-cover.webp",
         "alt": "Her Waka April 2026 — #IAmRemarkable, delivered by SheSharp in Auckland"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka-april-2026",
@@ -1078,7 +1078,7 @@
       "title": "Her Waka (May 2026) — Cybersecurity Workshop",
       "date": "May 5, 2026",
       "coverImage": {
-        "url": "/img/events/her-waka-may-2026-cover.png",
+        "url": "/img/events/her-waka-may-2026-cover.webp",
         "alt": "Her Waka May 2026 — Cybersecurity Workshop, delivered by SheSharp, Ministry of Social Development and academyEX"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka-may-2026",
@@ -1145,7 +1145,7 @@
                 "title": "Client Relationship & Delivery Partner at Younity",
                 "company": "",
                 "bio": "I’ve spent the past 10+ years in tech recruitment, partnering with businesses to connect them with great people but what really drives me is helping individuals find where they belong in tech. I’m naturally curious. I love understanding how technology works and learning from the people behind it but I’m equally passionate about the human side of it all. With everything changing across AI and emerging tech, I believe there’s never been a more important time to create inclusive pathways into the industry. That’s why being part of “Her Waka” really matters to us at Younity, helping more women step into tech, build confidence, and see where they fit.‍For me, it’s simple: everyone has a place; we just need to help uncover it.",
-                "image": "/img/scraped/speakers/69f7eed04c62383cc0e11ce0_Sian Clements.png",
+                "image": "/img/scraped/speakers/69f7eed04c62383cc0e11ce0_Sian Clements.webp",
                 "linkedin": ""
               },
               {
@@ -1153,7 +1153,7 @@
                 "title": "Senior Consultant, Potentia",
                 "company": "",
                 "bio": "With two decades of recruitment experience, I’ve done it all, agency, in-house, hybrid.\n\nI’m a connector at heart; of people, ideas, and opportunities. I use my network intentionally, challenge what doesn’t make sense, and care about doing recruitment well. Being in these shoes, I've learnt empathy, adaptability, and how to truly understand people as individuals.\n\nAs a specialist in Permanent IT recruitment at Potentia, I look beyond transactions and instead partner with businesses and talent to make smart, impactful, human decisions.\n\nThe right hire doesn’t just fill a role, it changes a business. And the right move doesn’t just increase salary…it changes a life.",
-                "image": "/img/scraped/speakers/69f7ef145de29c4a79285c9d_Jen Martin.png",
+                "image": "/img/scraped/speakers/69f7ef145de29c4a79285c9d_Jen Martin.webp",
                 "linkedin": ""
               }
             ]
@@ -1215,7 +1215,7 @@
       "title": "Working Smarter: AI, MYOB, and the New Delivery Landscape",
       "date": "July 30, 2026",
       "coverImage": {
-        "url": "/img/events/she-sharp-and-myob-working-smarter-cover.png",
+        "url": "/img/events/she-sharp-and-myob-working-smarter-cover.webp",
         "alt": "Working Smarter: AI, MYOB, and the New Delivery Landscape event cover"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/she-sharp-and-myob-working-smarter",
@@ -1249,7 +1249,7 @@
                 "title": "Senior Product Manager",
                 "company": "MYOB",
                 "bio": "Jean Fulop is a Senior Product Manager who's spent her career at the crossroads of technology and people and has the scars and wins to show for it. \n\nShe's the kind of PM who gets stuck in — into the messy customer problems, the awkward questions nobody's asking, and the gap between what teams build and what people need. Right now, she's deep in the world of AI for the ANZ mid market, and she'll be the first to tell you it's a lot more interesting than the headlines suggest.",
-                "image": "/img/events/she-sharp-and-myob-working-smarter-jean-fulop.png",
+                "image": "/img/events/she-sharp-and-myob-working-smarter-jean-fulop.webp",
                 "linkedin": "https://www.linkedin.com/in/jean-fulop-46873b30/"
               },
               {
@@ -1257,7 +1257,7 @@
                 "title": "Domain Expert, CA",
                 "company": "MYOB",
                 "bio": "Marion Nicholas (CA) is a Domain Expert at MYOB, working in a development team delivering accounting workflows and practice software across AU and NZ. Bringing a curious, \"why\"-driven mindset, she helps translate complex challenges into practical, customer-led solutions.",
-                "image": "/img/events/she-sharp-and-myob-working-smarter-marion-nicholas.png",
+                "image": "/img/events/she-sharp-and-myob-working-smarter-marion-nicholas.webp",
                 "linkedin": "https://nz.linkedin.com/in/marion-nicholas"
               },
               {
@@ -1322,7 +1322,7 @@
       "title": "Aotearoa AI Hackathon Festival 2026 — AUT City Campus",
       "date": "August 7, 2026",
       "coverImage": {
-        "url": "/img/events/aotearoa-ai-hackathon-festival-2026-cover.png",
+        "url": "/img/events/aotearoa-ai-hackathon-festival-2026-cover.webp",
         "alt": "Aotearoa AI Hackathon Festival 2026 event cover"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/aotearoa-ai-hackathon-festival-2026",

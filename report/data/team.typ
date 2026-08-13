@@ -16,10 +16,10 @@
 //   founder  true for the single larger portrait
 //
 // ⚠️  SARA GHAFOOR'S PORTRAIT IS NOT IN public/img/team/.
-//     lib/data/team.ts gives her image as "/img/Sara.png" — one directory up
+//     lib/data/team.ts gives her image as "/img/Sara.webp" — one directory up
 //     from every other member. Her record below carries `dir: "/img"`; everyone
 //     else carries `dir: "/img/team"`. Resolve the path as `dir + "/" + file +
-//     ".png"` rather than assuming the directory, or her portrait silently
+//     ".webp"` rather than assuming the directory, or her portrait silently
 //     renders as a missing box.
 // =============================================================================
 
@@ -71,7 +71,7 @@
     file: "Prasanth-Pavithran",
     founder: false,
   ),
-  // ⚠️  Portrait lives at /img/Sara.png, NOT /img/team/Sara.png.
+  // ⚠️  Portrait lives at /img/Sara.webp, NOT /img/team/Sara.webp.
   (
     prefix: "",
     first: "Sara",
@@ -179,7 +179,7 @@
 }
 
 /// Repo-relative portrait path. Always use this rather than assuming /img/team.
-#let team-photo(m) = m.dir + "/" + m.file + ".png"
+#let team-photo(m) = m.dir + "/" + m.file + ".webp"
 
 #let founder = team.filter(m => m.founder).first()
 #let ambassadors = team.filter(m => not m.founder)
