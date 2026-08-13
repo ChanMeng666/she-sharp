@@ -194,9 +194,15 @@ export function CurtainReveal({
       }
     : undefined;
 
+  // The clip wrapper is `relative` so that it, not some ancestor, is the anchor
+  // for absolutely positioned children — chiefly `next/image` with `fill`, which
+  // warns in dev when its direct parent is `static`. The wrapper is sized
+  // `h-full w-full` with no padding or border of its own, so its box is
+  // identical to the padding box the image was already anchoring to; adding
+  // `relative` re-anchors without moving anything.
   return (
     <div ref={ref} className={cn(className)}>
-      <div className="h-full w-full" style={innerStyle}>
+      <div className="relative h-full w-full" style={innerStyle}>
         {children}
       </div>
     </div>
