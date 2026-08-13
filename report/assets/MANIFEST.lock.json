@@ -404,7 +404,7 @@
     "outBytes": 77550
   },
   "team-mahsa": {
-    "src": "public/img/team/Mahsa.png",
+    "src": "public/img/team/Mahsa.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 387236,
@@ -414,7 +414,7 @@
     "outBytes": 31614
   },
   "team-mahsa-large": {
-    "src": "public/img/team/Mahsa.png",
+    "src": "public/img/team/Mahsa.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 387236,
@@ -424,7 +424,7 @@
     "outBytes": 81752
   },
   "team-mike": {
-    "src": "public/img/team/Mike.png",
+    "src": "public/img/team/Mike.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 327706,
@@ -434,7 +434,7 @@
     "outBytes": 27843
   },
   "team-raquel": {
-    "src": "public/img/team/Raquel.png",
+    "src": "public/img/team/Raquel.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 684324,
@@ -444,7 +444,7 @@
     "outBytes": 44474
   },
   "team-meeta": {
-    "src": "public/img/team/Meeta.png",
+    "src": "public/img/team/Meeta.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 555552,
@@ -454,7 +454,7 @@
     "outBytes": 39911
   },
   "team-prasanth": {
-    "src": "public/img/team/Prasanth-Pavithran.png",
+    "src": "public/img/team/Prasanth-Pavithran.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 561944,
@@ -464,7 +464,7 @@
     "outBytes": 25199
   },
   "team-sara": {
-    "src": "public/img/Sara.png",
+    "src": "public/img/Sara.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 47579,
@@ -474,7 +474,7 @@
     "outBytes": 19551
   },
   "team-chan": {
-    "src": "public/img/team/Chan.png",
+    "src": "public/img/team/Chan.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 336147,
@@ -484,7 +484,7 @@
     "outBytes": 29712
   },
   "team-marriane": {
-    "src": "public/img/team/Marriane.png",
+    "src": "public/img/team/Marriane.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 322138,
@@ -494,7 +494,7 @@
     "outBytes": 30192
   },
   "team-gurleen": {
-    "src": "public/img/team/Gurleen.png",
+    "src": "public/img/team/Gurleen.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 487081,
@@ -504,7 +504,7 @@
     "outBytes": 31978
   },
   "team-yesha": {
-    "src": "public/img/team/Yesha.png",
+    "src": "public/img/team/Yesha.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 347483,
@@ -514,7 +514,7 @@
     "outBytes": 31130
   },
   "team-len": {
-    "src": "public/img/team/Len.png",
+    "src": "public/img/team/Len.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 823581,
@@ -524,7 +524,7 @@
     "outBytes": 31091
   },
   "team-lesley": {
-    "src": "public/img/team/Lesley.png",
+    "src": "public/img/team/Lesley.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 1035434,
@@ -534,7 +534,7 @@
     "outBytes": 32709
   },
   "team-nikita": {
-    "src": "public/img/team/Nikita.png",
+    "src": "public/img/team/Nikita.webp",
     "role": "portrait",
     "sourceMtimeMs": 1785554043178.808,
     "sourceSize": 739154,
@@ -654,7 +654,7 @@
     "outBytes": 47212
   },
   "logo-moe": {
-    "src": "public/img/sponsors/MOE.png",
+    "src": "public/img/sponsors/MOE.webp",
     "role": "raster-logo",
     "sourceMtimeMs": 1779421345823.4885,
     "sourceSize": 10216,
