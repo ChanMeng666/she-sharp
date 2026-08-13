@@ -3,6 +3,35 @@ import { db } from '@/lib/db/drizzle';
 import { meetings, mentorshipRelationships, activityLogs, ActivityType } from '@/lib/db/schema';
 import { eq, and, or } from 'drizzle-orm';
 import { withRoles, type AuthedRouteContext } from '@/lib/auth/role-middleware';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+// Every field is optional: the handler branches on `status` and otherwise
+// applies whichever of the reschedule fields are present.
+const updateMeetingSchema = z.object({
+  status: z.enum(['scheduled', 'completed', 'cancelled', 'no_show']).nullish(),
+  actualStartTime: z.coerce.date().nullish(),
+  actualEndTime: z.coerce.date().nullish(),
+  topicsDiscussed: z.array(z.string()).nullish(),
+  goalsSet: z.array(z.string()).nullish(),
+  actionItems: z
+    .array(
+      z.object({
+        task: z.string(),
+        deadline: z.string().optional(),
+        completed: z.boolean().optional(),
+      })
+    )
+    .nullish(),
+  notes: z.string().nullish(),
+  feedback: z.string().nullish(),
+  rating: z.number().int().nullish(),
+  reason: z.string().nullish(),
+  scheduledAt: z.string().nullish(),
+  durationMinutes: z.number().int().positive().nullish(),
+  meetingLink: z.string().nullish(),
+  meetingType: z.enum(['intro', 'regular', 'milestone', 'final']).nullish(),
+});
 
 // Signed-in only: every handler here then checks the caller is the mentor or
 // mentee on the meeting's relationship — an ownership test `withRoles` cannot
@@ -92,7 +121,11 @@ export const PUT = withRoles(
       );
     }
 
-    const data = await request.json();
+    const parsed = updateMeetingSchema.safeParse(await request.json());
+    if (!parsed.success) {
+      return invalidBody(parsed.error);
+    }
+    const data = parsed.data;
 
     // Get meeting
     const [meeting] = await db

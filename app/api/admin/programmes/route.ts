@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withRoles } from '@/lib/auth/role-middleware';
 import { getAllProgrammes, createProgramme, getProgrammeStats } from '@/lib/programmes/service';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+const createProgrammeSchema = z.object({
+  name: z.string().min(1, 'Name and slug are required'),
+  slug: z.string().min(1, 'Name and slug are required'),
+  description: z.string().nullish(),
+  status: z.enum(['draft', 'active', 'closed', 'completed', 'archived']).nullish(),
+  startDate: z.string().nullish(),
+  endDate: z.string().nullish(),
+  applicationDeadline: z.string().nullish(),
+  maxMentees: z.number().int().nullish(),
+  requiresPayment: z.boolean().optional(),
+  partnerOrganisation: z.string().nullish(),
+});
 
 export const GET = withRoles({ requiredRoles: ['admin'] }, async () => {
   try {
@@ -22,12 +37,11 @@ export const GET = withRoles({ requiredRoles: ['admin'] }, async () => {
 
 export const POST = withRoles({ requiredRoles: ['admin'] }, async (request: NextRequest) => {
   try {
-    const body = await request.json();
-    const { name, slug, description, status, startDate, endDate, applicationDeadline, maxMentees, requiresPayment, partnerOrganisation } = body;
-
-    if (!name || !slug) {
-      return NextResponse.json({ error: 'Name and slug are required' }, { status: 400 });
+    const parsed = createProgrammeSchema.safeParse(await request.json());
+    if (!parsed.success) {
+      return invalidBody(parsed.error);
     }
+    const { name, slug, description, status, startDate, endDate, applicationDeadline, maxMentees, requiresPayment, partnerOrganisation } = parsed.data;
 
     const programme = await createProgramme({
       name,

@@ -1,8 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
-import { users, userRoles, activityLogs, mentorFormSubmissions } from '@/lib/db/schema';
+import { users, userRoles, activityLogs, mentorFormSubmissions, userRoleEnum } from '@/lib/db/schema';
 import { eq, inArray, sql, and, isNull } from 'drizzle-orm';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+// `action` stays a free string so an unrecognised value still falls through to
+// the handler's own `Unknown action: <x>` 400 rather than a generic one.
+const bulkActionSchema = z.object({
+  action: z.string().min(1, 'Action is required'),
+  userIds: z.array(z.coerce.number().int()).optional(),
+  recordIds: z.array(z.string()).optional(),
+  roleType: z
+    .enum(userRoleEnum.enumValues, {
+      errorMap: () => ({ message: 'Valid roleType is required' }),
+    })
+    .optional(),
+});
 
 /**
  * POST /api/admin/users/bulk
@@ -16,15 +31,12 @@ export const POST = withRoles(
   async (req: NextRequest, context: any) => {
     try {
       const adminUserId = context.user?.id;
-      const body = await req.json();
-      const { action, userIds, recordIds } = body;
-
-      if (!action) {
-        return NextResponse.json(
-          { error: 'Action is required' },
-          { status: 400 }
-        );
+      const parsed = bulkActionSchema.safeParse(await req.json());
+      if (!parsed.success) {
+        return invalidBody(parsed.error);
       }
+      const body = parsed.data;
+      const { action, userIds, recordIds } = body;
 
       // Parse record IDs to separate users and applications
       const parsedRecords = (recordIds || []).map((recordId: string) => {
@@ -219,7 +231,8 @@ export const POST = withRoles(
 
         case 'add_role': {
           const { roleType } = body;
-          if (!roleType || !['admin', 'mentor', 'mentee'].includes(roleType)) {
+          // The schema already rejects anything outside the role enum.
+          if (!roleType) {
             return NextResponse.json(
               { error: 'Valid roleType is required' },
               { status: 400 }
@@ -291,7 +304,8 @@ export const POST = withRoles(
 
         case 'remove_role': {
           const { roleType } = body;
-          if (!roleType || !['admin', 'mentor', 'mentee'].includes(roleType)) {
+          // The schema already rejects anything outside the role enum.
+          if (!roleType) {
             return NextResponse.json(
               { error: 'Valid roleType is required' },
               { status: 400 }

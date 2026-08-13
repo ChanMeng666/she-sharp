@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateInvitationCode } from '@/lib/invitations/service';
+import { z } from 'zod';
+
+const validateCodeSchema = z.object({
+  code: z.string().min(1, 'Invitation code is required'),
+  email: z.string().nullish(),
+});
 
 /**
  * POST /api/invitation-codes/validate
@@ -8,15 +14,19 @@ import { validateInvitationCode } from '@/lib/invitations/service';
  */
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { code, email } = body;
-
-    if (!code) {
+    const parsed = validateCodeSchema.safeParse(await request.json());
+    if (!parsed.success) {
+      // Keeps the `valid: false` envelope every caller of this endpoint reads.
       return NextResponse.json(
-        { valid: false, error: 'Invitation code is required' },
+        {
+          valid: false,
+          error: parsed.error.errors.map((e) => e.message).join(', '),
+          details: parsed.error.flatten().fieldErrors,
+        },
         { status: 400 }
       );
     }
+    const { code, email } = parsed.data;
 
     const result = await validateInvitationCode(code);
 

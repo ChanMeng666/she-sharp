@@ -34,6 +34,7 @@ import {
   nzCities,
   softSkillsOptions,
 } from '@/lib/mentorship/vocab';
+import { apiGet, apiPost, isApiError } from '@/lib/api/client';
 
 interface ProfileData {
   // Basic info
@@ -95,8 +96,7 @@ function MenteeProgrammeBadge() {
   const [programmeName, setProgrammeName] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/user/mentee-profile')
-      .then(res => res.ok ? res.json() : null)
+    apiGet<{ profile?: { programmeName?: string } }>('/api/user/mentee-profile')
       .then(data => {
         if (data?.profile?.programmeName) {
           setProgrammeName(data.profile.programmeName);
@@ -133,19 +133,19 @@ export default function MenteeProfilePage() {
 
   const fetchProfile = async () => {
     try {
-      const response = await fetch('/api/user/mentee-profile');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.profile) {
-          setProfile({
-            ...initialProfile,
-            ...data.profile,
-          });
-        }
+      const data = await apiGet<{ profile?: Partial<ProfileData> }>('/api/user/mentee-profile');
+      if (data.profile) {
+        setProfile({
+          ...initialProfile,
+          ...data.profile,
+        });
       }
     } catch (error) {
       console.error('Failed to fetch mentee profile:', error);
-      toast.error('Failed to load profile');
+      // A non-2xx used to fall through the `if (response.ok)` silently. Kept.
+      if (!isApiError(error)) {
+        toast.error('Failed to load profile');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -164,22 +164,17 @@ export default function MenteeProfilePage() {
 
     setIsSaving(true);
     try {
-      const response = await fetch('/api/user/mentee-profile', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(profile),
-      });
-
-      if (response.ok) {
-        toast.success('Profile saved successfully!');
-        router.push('/dashboard/mentorship');
-      } else {
-        const error = await response.json();
-        toast.error(error.message || 'Failed to save profile');
-      }
+      await apiPost('/api/user/mentee-profile', profile);
+      toast.success('Profile saved successfully!');
+      router.push('/dashboard/mentorship');
     } catch (error) {
       console.error('Failed to save profile:', error);
-      toast.error('Failed to save profile');
+      // The route returns `{ error }`; this toast has always read `.message`
+      // off the body, so the fallback is what the mentee sees.
+      const bodyMessage = isApiError(error)
+        ? (error.body as { message?: string } | null)?.message
+        : undefined;
+      toast.error(bodyMessage || 'Failed to save profile');
     } finally {
       setIsSaving(false);
     }

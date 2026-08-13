@@ -37,6 +37,7 @@ import {
   nzCities,
   softSkillsOptions,
 } from '@/lib/mentorship/vocab';
+import { apiGet, apiPost, isApiError } from '@/lib/api/client';
 
 // Must match the values used in the mentor application form (/mentorship/mentor)
 const yearsExperienceOptions = [
@@ -144,8 +145,7 @@ function ProgrammeAssignmentsSection() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    fetch('/api/user/mentor-profile/programmes')
-      .then(res => res.ok ? res.json() : { assignments: [] })
+    apiGet<{ assignments?: ProgrammeAssignment[] }>('/api/user/mentor-profile/programmes')
       .then(data => setAssignments(data.assignments || []))
       .catch(() => {})
       .finally(() => setLoaded(true));
@@ -223,23 +223,23 @@ export default function MentorProfilePage() {
 
   const fetchProfile = async () => {
     try {
-      const response = await fetch('/api/user/mentor-profile');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.profile) {
-          setProfile({
-            ...initialProfile,
-            ...data.profile,
-            // Convert number values to strings for Select components
-            yearsExperience: data.profile.yearsExperience != null ? String(data.profile.yearsExperience) : '',
-            availabilityHoursPerMonth: data.profile.availabilityHoursPerMonth != null ? String(data.profile.availabilityHoursPerMonth) : '',
-            maxMentees: data.profile.maxMentees != null ? String(data.profile.maxMentees) : '',
-          });
-        }
+      const data = await apiGet<{ profile?: Record<string, any> }>('/api/user/mentor-profile');
+      if (data.profile) {
+        setProfile({
+          ...initialProfile,
+          ...data.profile,
+          // Convert number values to strings for Select components
+          yearsExperience: data.profile.yearsExperience != null ? String(data.profile.yearsExperience) : '',
+          availabilityHoursPerMonth: data.profile.availabilityHoursPerMonth != null ? String(data.profile.availabilityHoursPerMonth) : '',
+          maxMentees: data.profile.maxMentees != null ? String(data.profile.maxMentees) : '',
+        });
       }
     } catch (error) {
       console.error('Failed to fetch mentor profile:', error);
-      toast.error('Failed to load profile');
+      // A non-2xx used to fall through the `if (response.ok)` silently. Kept.
+      if (!isApiError(error)) {
+        toast.error('Failed to load profile');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -248,22 +248,17 @@ export default function MentorProfilePage() {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      const response = await fetch('/api/user/mentor-profile', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(profile),
-      });
-
-      if (response.ok) {
-        toast.success('Profile saved successfully!');
-        router.push('/dashboard/mentorship');
-      } else {
-        const error = await response.json();
-        toast.error(error.message || 'Failed to save profile');
-      }
+      await apiPost('/api/user/mentor-profile', profile);
+      toast.success('Profile saved successfully!');
+      router.push('/dashboard/mentorship');
     } catch (error) {
       console.error('Failed to save profile:', error);
-      toast.error('Failed to save profile');
+      // The route returns `{ error }`; this toast has always read `.message`
+      // off the body, so the fallback is what the mentor sees.
+      const bodyMessage = isApiError(error)
+        ? (error.body as { message?: string } | null)?.message
+        : undefined;
+      toast.error(bodyMessage || 'Failed to save profile');
     } finally {
       setIsSaving(false);
     }
