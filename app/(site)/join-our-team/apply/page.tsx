@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import {
   AMBASSADOR_GOOGLE_FORM_URL,
@@ -22,7 +22,7 @@ import {
   MultiStepFormWrapper,
   type FormStep,
 } from '@/components/forms/multi-step-form-wrapper';
-import { User, Briefcase, Heart, Clock } from 'lucide-react';
+import { User, Briefcase, Heart, Clock, Loader2 } from 'lucide-react';
 
 const STATUS_OPTIONS = [
   { value: 'high_school_student', label: 'High School Student' },
@@ -115,7 +115,7 @@ const AMBASSADOR_STEPS: FormStep[] = [
   },
 ];
 
-export default function VolunteerApplyPage() {
+function VolunteerApplyContent() {
   const searchParams = useSearchParams();
   const formType = searchParams.get('type') === 'volunteer' ? 'volunteer' : 'ambassador';
   const isAmbassador = formType === 'ambassador';
@@ -678,5 +678,25 @@ export default function VolunteerApplyPage() {
       }. We will review your application and get back to you within 5-7 business days.`}
       backLink={{ href: '/join-our-team', label: 'Back to Join Our Team' }}
     />
+  );
+}
+
+/**
+ * Wraps the form in a Suspense boundary so the page can be prerendered.
+ * `useSearchParams()` opts a client component out of static rendering unless a
+ * boundary exists above it — the same pattern every other search-param page in
+ * this app already uses.
+ */
+export default function VolunteerApplyPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-foreground" />
+        </div>
+      }
+    >
+      <VolunteerApplyContent />
+    </Suspense>
   );
 }
