@@ -879,17 +879,9 @@ Get or update meeting details, add notes and feedback
 
 ### Events System
 
-#### GET `/api/events`
-Browse upcoming events with filtering
-
-#### GET `/api/events/[id]`
-Get detailed event information
-
-#### POST `/api/events/[id]/register`
-Register for an event
-
-#### GET `/api/events/my-registrations`
-Get user's event registrations
+Public event content is served from the static data in `lib/data/` and ticketing
+is handled by Humanitix; there is no event API. Post-event feedback is collected
+by `POST /api/event-feedback`.
 
 ### Resources
 
