@@ -15,6 +15,35 @@ import {
 } from '@/lib/matching/service';
 import { isOpenAIConfigured } from '@/lib/matching/openai-service';
 import { isRedisAvailable, getCacheInfo } from '@/lib/matching/cache';
+import { z } from 'zod';
+import { invalidBody, readOptionalJson } from '@/lib/api/validation';
+
+// An absent/empty body is a valid "run the regular batch" request, so every
+// field is optional and `readOptionalJson` keeps a missing body a `{}`.
+const runMatchingSchema = z.object({
+  mentorUserIds: z.array(z.coerce.number().int()).optional(),
+  menteeUserIds: z.array(z.coerce.number().int()).optional(),
+  limit: z.number().int().positive().optional(),
+  maxCandidatesPerMentee: z.number().int().positive().optional(),
+  notifyOnMatch: z.boolean().optional(),
+  preFilterThreshold: z.number().optional(),
+  programmeId: z.coerce.number().int().positive().optional(),
+});
+
+const reviewMatchSchema = z.object({
+  matchId: z.coerce.number().int().positive({ message: 'Match ID and decision are required' }),
+  decision: z.enum(['approved', 'rejected'], {
+    errorMap: () => ({ message: 'Invalid decision. Must be "approved" or "rejected"' }),
+  }),
+  notes: z.string().nullish(),
+});
+
+const bulkRejectSchema = z.object({
+  matchIds: z
+    .array(z.coerce.number().int())
+    .nonempty({ message: 'matchIds array is required' }),
+  reason: z.string().nullish(),
+});
 
 /**
  * Helper to safely serialize data for JSON response
@@ -164,21 +193,19 @@ export const POST = withRoles(
   async (request: NextRequest, { user }: AuthedContext) => {
   try {
 
-    // Parse request body
-    let body: Record<string, unknown> = {};
-    try {
-      body = await request.json();
-    } catch {
-      // Empty body is fine for regular batch matching
+    // Parse request body — an empty body is fine for regular batch matching
+    const parsed = runMatchingSchema.safeParse(await readOptionalJson(request));
+    if (!parsed.success) {
+      return invalidBody(parsed.error);
     }
+    const body = parsed.data;
 
     // Check if this is a manual group matching request
     if (body.mentorUserIds && body.menteeUserIds) {
-      const mentorUserIds = body.mentorUserIds as number[];
-      const menteeUserIds = body.menteeUserIds as number[];
+      const mentorUserIds = body.mentorUserIds;
+      const menteeUserIds = body.menteeUserIds;
 
-      if (!Array.isArray(mentorUserIds) || !Array.isArray(menteeUserIds) ||
-          mentorUserIds.length === 0 || menteeUserIds.length === 0) {
+      if (mentorUserIds.length === 0 || menteeUserIds.length === 0) {
         return NextResponse.json(
           { error: 'mentorUserIds and menteeUserIds must be non-empty arrays' },
           { status: 400 }
@@ -254,24 +281,13 @@ export const PUT = withRoles(
   async (request: NextRequest, { user }: AuthedContext) => {
   try {
 
-    const body = await request.json();
-    const { matchId, decision, notes } = body;
-
-    if (!matchId || !decision) {
-      return NextResponse.json(
-        { error: 'Match ID and decision are required' },
-        { status: 400 }
-      );
+    const parsed = reviewMatchSchema.safeParse(await request.json());
+    if (!parsed.success) {
+      return invalidBody(parsed.error);
     }
+    const { matchId, decision, notes } = parsed.data;
 
-    if (!['approved', 'rejected'].includes(decision)) {
-      return NextResponse.json(
-        { error: 'Invalid decision. Must be "approved" or "rejected"' },
-        { status: 400 }
-      );
-    }
-
-    const result = await reviewMatchSuggestion(matchId, decision, user.id, notes);
+    const result = await reviewMatchSuggestion(matchId, decision, user.id, notes ?? undefined);
 
     if (!result.success) {
       return NextResponse.json({ error: result.error }, { status: 400 });
@@ -306,18 +322,14 @@ export const DELETE = withRoles(
   async (request: NextRequest, { user }: AuthedContext) => {
   try {
 
-    const body = await request.json();
-    const { matchIds, reason } = body;
-
-    if (!matchIds || !Array.isArray(matchIds) || matchIds.length === 0) {
-      return NextResponse.json(
-        { error: 'matchIds array is required' },
-        { status: 400 }
-      );
+    const parsed = bulkRejectSchema.safeParse(await request.json());
+    if (!parsed.success) {
+      return invalidBody(parsed.error);
     }
+    const { matchIds, reason } = parsed.data;
 
     const results = await Promise.all(
-      matchIds.map(id => reviewMatchSuggestion(id, 'rejected', user.id, reason))
+      matchIds.map(id => reviewMatchSuggestion(id, 'rejected', user.id, reason ?? undefined))
     );
 
     const successful = results.filter(r => r.success).length;

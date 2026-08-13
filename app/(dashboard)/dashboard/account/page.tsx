@@ -40,6 +40,7 @@ import {
   Info,
   Trash2,
 } from 'lucide-react';
+import { apiDelete, apiGet, apiPost, isApiError } from '@/lib/api/client';
 
 interface ConnectedAccount {
   provider: string;
@@ -109,56 +110,51 @@ function AccountPageContent() {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch('/api/user');
-      if (response.ok) {
-        const userData = await response.json();
-        setUser(userData);
-        setName(userData.name || '');
-        setEmail(userData.email || '');
-        setPhone(userData.phone || '');
-        setAge(userData.age || '');
-        setGender(userData.gender || '');
-        setIsVerified(!!userData.emailVerifiedAt);
-      } else {
-        setError('Failed to load user data');
-      }
+      const userData = await apiGet<Record<string, any>>('/api/user');
+      setUser(userData);
+      setName(userData.name || '');
+      setEmail(userData.email || '');
+      setPhone(userData.phone || '');
+      setAge(userData.age || '');
+      setGender(userData.gender || '');
+      setIsVerified(!!userData.emailVerifiedAt);
     } catch (err) {
-      setError('An error occurred while loading user data');
+      setError(isApiError(err) ? 'Failed to load user data' : 'An error occurred while loading user data');
     } finally {
       setIsLoading(false);
     }
   };
 
   const fetchRolesAndPhoto = async () => {
-    try {
-      const [rolesRes, photoRes] = await Promise.all([
-        fetch('/api/user/roles'),
-        fetch('/api/user/profile-photo'),
-      ]);
+    // `allSettled`, not `all`: each of these two used to be checked with its own
+    // `response.ok` and ignored independently, so a failing roles call must not
+    // also throw away a successful photo.
+    const [rolesResult, photoResult] = await Promise.allSettled([
+      apiGet<{ activeRoles?: string[] }>('/api/user/roles'),
+      apiGet<{ photoUrl?: string }>('/api/user/profile-photo'),
+    ]);
 
-      if (rolesRes.ok) {
-        const rolesData = await rolesRes.json();
-        setActiveRoles(rolesData.activeRoles || []);
-      }
+    if (rolesResult.status === 'fulfilled') {
+      setActiveRoles(rolesResult.value.activeRoles || []);
+    } else {
+      console.error('Error fetching roles:', rolesResult.reason);
+    }
 
-      if (photoRes.ok) {
-        const photoData = await photoRes.json();
-        setCurrentPhotoUrl(photoData.photoUrl || '');
-        setPhotoUrl(photoData.photoUrl || undefined);
-      }
-    } catch (err) {
-      console.error('Error fetching roles/photo:', err);
+    if (photoResult.status === 'fulfilled') {
+      setCurrentPhotoUrl(photoResult.value.photoUrl || '');
+      setPhotoUrl(photoResult.value.photoUrl || undefined);
+    } else {
+      console.error('Error fetching photo:', photoResult.reason);
     }
   };
 
   const fetchConnectedAccounts = async () => {
     try {
-      const response = await fetch('/api/user/connected-accounts');
-      if (response.ok) {
-        const data = await response.json();
-        setConnectedAccounts(data.accounts || []);
-        setHasPassword(data.hasPassword);
-      }
+      const data = await apiGet<{ accounts?: ConnectedAccount[]; hasPassword: boolean }>(
+        '/api/user/connected-accounts'
+      );
+      setConnectedAccounts(data.accounts || []);
+      setHasPassword(data.hasPassword);
     } catch (err) {
       console.error('Error fetching connected accounts:', err);
     }
@@ -183,26 +179,19 @@ function AccountPageContent() {
         }
       }
 
-      const response = await fetch('/api/user/update-profile', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(profileData),
-      });
+      const data = await apiPost<{ message?: string; emailChanged?: boolean }>(
+        '/api/user/update-profile',
+        profileData
+      );
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage(data.message || 'Profile updated successfully');
-        if (data.emailChanged) {
-          setIsVerified(false);
-        }
-        // Refresh photo
-        fetchRolesAndPhoto();
-      } else {
-        setError(data.error || 'Failed to update profile');
+      setMessage(data.message || 'Profile updated successfully');
+      if (data.emailChanged) {
+        setIsVerified(false);
       }
+      // Refresh photo
+      fetchRolesAndPhoto();
     } catch (err) {
-      setError('An error occurred while updating profile');
+      setError(isApiError(err) ? err.message || 'Failed to update profile' : 'An error occurred while updating profile');
     } finally {
       setIsUpdating(false);
     }
@@ -226,28 +215,18 @@ function AccountPageContent() {
     setMessage('');
 
     try {
-      const response = await fetch('/api/user/update-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          currentPassword,
-          newPassword,
-          confirmPassword
-        }),
+      await apiPost('/api/user/update-password', {
+        currentPassword,
+        newPassword,
+        confirmPassword,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage('Password updated successfully');
-        setCurrentPassword('');
-        setNewPassword('');
-        setConfirmPassword('');
-      } else {
-        setError(data.error || 'Failed to update password');
-      }
+      setMessage('Password updated successfully');
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
     } catch (err) {
-      setError('An error occurred while updating password');
+      setError(isApiError(err) ? err.message || 'Failed to update password' : 'An error occurred while updating password');
     } finally {
       setIsUpdating(false);
     }
@@ -259,19 +238,14 @@ function AccountPageContent() {
     setMessage('');
 
     try {
-      const response = await fetch('/api/auth/resend-verification', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: user?.email }),
-      });
-
-      if (response.ok) {
-        setMessage('Verification email sent! Please check your inbox.');
-      } else {
-        setError('Failed to send verification email');
-      }
+      await apiPost('/api/auth/resend-verification', { email: user?.email });
+      setMessage('Verification email sent! Please check your inbox.');
     } catch (err) {
-      setError('An error occurred while sending verification email');
+      setError(
+        isApiError(err)
+          ? 'Failed to send verification email'
+          : 'An error occurred while sending verification email'
+      );
     } finally {
       setIsSendingVerification(false);
     }
@@ -287,20 +261,10 @@ function AccountPageContent() {
         ? { password: deletePassword }
         : { emailConfirm: deleteEmailConfirm };
 
-      const response = await fetch('/api/user/delete-account', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-
-      if (response.ok) {
-        router.push('/sign-in');
-      } else {
-        const data = await response.json();
-        setError(data.error || 'Failed to delete account');
-      }
+      await apiDelete('/api/user/delete-account', body);
+      router.push('/sign-in');
     } catch (err) {
-      setError('An error occurred while deleting account');
+      setError(isApiError(err) ? err.message || 'Failed to delete account' : 'An error occurred while deleting account');
     } finally {
       setIsUpdating(false);
       setShowDeleteDialog(false);

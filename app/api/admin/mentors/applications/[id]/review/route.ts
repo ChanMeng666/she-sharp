@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withRoles } from '@/lib/auth/role-middleware';
 import { reviewMentorForm } from '@/lib/forms/service';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+const reviewApplicationSchema = z.object({
+  action: z.enum(['approve', 'reject'], {
+    errorMap: () => ({ message: 'Invalid action. Must be "approve" or "reject"' }),
+  }),
+  notes: z.string().nullish(),
+  isTestUser: z.boolean().optional(),
+});
 
 /**
  * POST /api/admin/mentors/applications/[id]/review
@@ -24,15 +34,11 @@ export const POST = withRoles(
         );
       }
 
-      const body = await req.json();
-      const { action, notes, isTestUser } = body;
-
-      if (!action || !['approve', 'reject'].includes(action)) {
-        return NextResponse.json(
-          { error: 'Invalid action. Must be "approve" or "reject"' },
-          { status: 400 }
-        );
+      const parsed = reviewApplicationSchema.safeParse(await req.json());
+      if (!parsed.success) {
+        return invalidBody(parsed.error);
       }
+      const { action, notes, isTestUser } = parsed.data;
 
       // Get the admin user ID from context
       const adminUserId = context.user?.id;
@@ -46,7 +52,7 @@ export const POST = withRoles(
 
       // Use the forms service to handle the review
       const decision = action === 'approve' ? 'approved' : 'rejected';
-      const result = await reviewMentorForm(applicationId, adminUserId, decision, notes, isTestUser);
+      const result = await reviewMentorForm(applicationId, adminUserId, decision, notes ?? undefined, isTestUser);
 
       if (!result.success) {
         return NextResponse.json(

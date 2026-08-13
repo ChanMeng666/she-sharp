@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withRoles, type AuthedRouteContext } from '@/lib/auth/role-middleware';
 import { assignMentorToProgramme, removeMentorFromProgramme, getProgrammeMentors } from '@/lib/programmes/service';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+const assignMentorsSchema = z.object({
+  mentorUserIds: z
+    .array(z.coerce.number().int())
+    .nonempty({ message: 'mentorUserIds array is required' }),
+  maxMentees: z.number().int().positive().optional(),
+});
 
 export const GET = withRoles(
   { requiredRoles: ['admin'] },
@@ -34,12 +43,11 @@ export const POST = withRoles(
   async (request: NextRequest, { params, user }: AuthedRouteContext<{ id: string }>) => {
     try {
       const { id } = await params;
-      const body = await request.json();
-      const { mentorUserIds, maxMentees } = body;
-
-      if (!mentorUserIds || !Array.isArray(mentorUserIds) || mentorUserIds.length === 0) {
-        return NextResponse.json({ error: 'mentorUserIds array is required' }, { status: 400 });
+      const parsed = assignMentorsSchema.safeParse(await request.json());
+      if (!parsed.success) {
+        return invalidBody(parsed.error);
       }
+      const { mentorUserIds, maxMentees } = parsed.data;
 
       const results = await Promise.all(
         mentorUserIds.map((mentorId: number) =>

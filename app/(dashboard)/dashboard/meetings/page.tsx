@@ -13,6 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from 'sonner';
+import { apiGet, apiPost, apiPut, isApiError } from '@/lib/api/client';
 
 interface Meeting {
   id: number;
@@ -40,12 +41,14 @@ interface Meeting {
   };
 }
 
+interface MeetingsData {
+  upcoming: Meeting[];
+  past: Meeting[];
+  cancelled: Meeting[];
+}
+
 export default function MeetingsPage() {
-  const [meetings, setMeetings] = useState<{
-    upcoming: Meeting[];
-    past: Meeting[];
-    cancelled: Meeting[];
-  }>({ upcoming: [], past: [], cancelled: [] });
+  const [meetings, setMeetings] = useState<MeetingsData>({ upcoming: [], past: [], cancelled: [] });
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('upcoming');
   const [showScheduleDialog, setShowScheduleDialog] = useState(false);
@@ -58,14 +61,15 @@ export default function MeetingsPage() {
 
   const fetchMeetings = async () => {
     try {
-      const response = await fetch('/api/meetings');
-      if (response.ok) {
-        const data = await response.json();
-        setMeetings(data);
-      }
+      const data = await apiGet<MeetingsData>('/api/meetings');
+      setMeetings(data);
     } catch (error) {
       console.error('Error fetching meetings:', error);
-      toast.error('Failed to load meetings');
+      // A non-2xx used to be swallowed by `if (response.ok)`; only a transport
+      // failure toasted. Preserved.
+      if (!isApiError(error)) {
+        toast.error('Failed to load meetings');
+      }
     } finally {
       setLoading(false);
     }
@@ -73,12 +77,9 @@ export default function MeetingsPage() {
 
   const fetchRelationships = async () => {
     try {
-      const response = await fetch('/api/mentorship/relationships');
-      if (response.ok) {
-        const data = await response.json();
-        // Only active relationships can schedule meetings
-        setRelationships(data.active || []);
-      }
+      const data = await apiGet<{ active?: any[] }>('/api/mentorship/relationships');
+      // Only active relationships can schedule meetings
+      setRelationships(data.active || []);
     } catch (error) {
       console.error('Error fetching relationships:', error);
     }
@@ -86,40 +87,21 @@ export default function MeetingsPage() {
 
   const handleScheduleMeeting = async (data: any) => {
     try {
-      const response = await fetch('/api/meetings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        toast.success('Meeting scheduled successfully');
-        setShowScheduleDialog(false);
-        fetchMeetings();
-      } else {
-        const error = await response.json();
-        toast.error(error.error || 'Failed to schedule meeting');
-      }
+      await apiPost('/api/meetings', data);
+      toast.success('Meeting scheduled successfully');
+      setShowScheduleDialog(false);
+      fetchMeetings();
     } catch (error) {
       console.error('Error scheduling meeting:', error);
-      toast.error('Failed to schedule meeting');
+      toast.error(isApiError(error) ? error.message || 'Failed to schedule meeting' : 'Failed to schedule meeting');
     }
   };
 
   const handleCancelMeeting = async (meetingId: number) => {
     try {
-      const response = await fetch(`/api/meetings/${meetingId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'cancelled' }),
-      });
-
-      if (response.ok) {
-        toast.success('Meeting cancelled');
-        fetchMeetings();
-      } else {
-        toast.error('Failed to cancel meeting');
-      }
+      await apiPut(`/api/meetings/${meetingId}`, { status: 'cancelled' });
+      toast.success('Meeting cancelled');
+      fetchMeetings();
     } catch (error) {
       console.error('Error cancelling meeting:', error);
       toast.error('Failed to cancel meeting');
@@ -128,18 +110,9 @@ export default function MeetingsPage() {
 
   const handleCompleteMeeting = async (meetingId: number, data: any) => {
     try {
-      const response = await fetch(`/api/meetings/${meetingId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'completed', ...data }),
-      });
-
-      if (response.ok) {
-        toast.success('Meeting marked as completed');
-        fetchMeetings();
-      } else {
-        toast.error('Failed to update meeting');
-      }
+      await apiPut(`/api/meetings/${meetingId}`, { status: 'completed', ...data });
+      toast.success('Meeting marked as completed');
+      fetchMeetings();
     } catch (error) {
       console.error('Error completing meeting:', error);
       toast.error('Failed to update meeting');

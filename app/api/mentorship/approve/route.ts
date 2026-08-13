@@ -3,27 +3,30 @@ import { db } from '@/lib/db/drizzle';
 import { mentorshipRelationships, mentorProfiles, activityLogs, ActivityType } from '@/lib/db/schema';
 import { eq, sql } from 'drizzle-orm';
 import { withRoles, type AuthedContext } from '@/lib/auth/role-middleware';
+import { z } from 'zod';
+import { invalidBody } from '@/lib/api/validation';
+
+const approveSchema = z.object({
+  relationshipId: z.coerce
+    .number()
+    .int()
+    .positive({ message: 'Relationship ID and action are required' }),
+  action: z.enum(['approve', 'reject'], {
+    errorMap: () => ({ message: 'Invalid action. Must be "approve" or "reject"' }),
+  }),
+  feedback: z.string().nullish(),
+});
 
 // Signed-in only: the "is this user the mentor on this relationship?" test is an
 // ownership check against a row, which `withRoles` cannot express, so it stays
 // in the handler.
 export const POST = withRoles({}, async (request: NextRequest, { user }: AuthedContext) => {
   try {
-    const { relationshipId, action, feedback } = await request.json();
-
-    if (!relationshipId || !action) {
-      return NextResponse.json(
-        { error: 'Relationship ID and action are required' },
-        { status: 400 }
-      );
+    const parsed = approveSchema.safeParse(await request.json());
+    if (!parsed.success) {
+      return invalidBody(parsed.error);
     }
-
-    if (!['approve', 'reject'].includes(action)) {
-      return NextResponse.json(
-        { error: 'Invalid action. Must be "approve" or "reject"' },
-        { status: 400 }
-      );
-    }
+    const { relationshipId, action, feedback } = parsed.data;
 
     // Get the relationship
     const [relationship] = await db
