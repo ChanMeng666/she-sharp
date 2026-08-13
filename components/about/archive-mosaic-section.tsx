@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import {
   curatedImages,
-  toSrcSet,
   type CuratedImageKey,
 } from "@/public/img/curated";
 import { Container } from "@/components/layout/container";
@@ -52,13 +52,12 @@ function MosaicTile({ imgKey, index }: { imgKey: CuratedImageKey; index: number 
     <div
       className={`relative w-full overflow-hidden border border-border ${ASPECTS[index % ASPECTS.length]} ${RADII[index % RADII.length]}`}
     >
-      <img
+      <Image
         src={img.src}
-        srcSet={toSrcSet(img)}
+        fill
         sizes="(max-width: 768px) 45vw, 300px"
         alt={img.alt}
-        loading="lazy"
-        className="h-full w-full object-cover"
+        className="object-cover"
       />
     </div>
   );

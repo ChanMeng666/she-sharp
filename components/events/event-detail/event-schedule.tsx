@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { EventV3 } from "@/types/event";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
@@ -32,10 +33,14 @@ export function EventSchedule({ event }: EventScheduleProps) {
 
         {schedule.bannerImage && (
           <div className="mb-8 overflow-hidden rounded-[32px] border border-border">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            {/* Banner dimensions are not in the data; `h-auto` keeps the
+                banner's own aspect ratio once it loads. */}
+            <Image
               src={schedule.bannerImage}
               alt="Conference schedule banner"
+              width={1600}
+              height={900}
+              sizes="100vw"
               className="w-full h-auto"
             />
           </div>
