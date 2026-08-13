@@ -72,13 +72,14 @@ export function MemberCard({
         >
           <div className="flex flex-col h-full p-6 sm:p-8">
             <div className="relative mb-6">
-              <div className="w-32 h-32 mx-auto rounded-full overflow-hidden ring-2 ring-border">
+              <div className="relative w-32 h-32 mx-auto rounded-full overflow-hidden ring-2 ring-border">
                 {hasImage ? (
-                  <img
+                  <Image
                     src={member.image}
                     alt={`${member.name}, ${member.title}`}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    fill
+                    sizes="128px"
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
                     onError={() => setImageError(true)}
                   />
                 ) : (

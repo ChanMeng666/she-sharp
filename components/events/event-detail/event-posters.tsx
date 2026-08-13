@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { EventV3 } from "@/types/event";
 import { cn } from "@/lib/utils";
 import { CurtainReveal } from "@/components/ui/reveal";
@@ -50,11 +51,18 @@ export function EventPosters({ event, className }: EventPostersProps) {
                 aria-label={`View poster ${index + 1} of ${tiles.length} full size`}
                 className="group block w-full cursor-pointer overflow-hidden rounded-[16px] border border-border bg-background focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                {/*
+                  Posters carry no dimensions in the event data, so
+                  `width`/`height` are a portrait hint used only to reserve
+                  space; `h-auto` lets the poster's own aspect ratio take over
+                  on load, keeping the artwork uncropped as before.
+                */}
+                <Image
                   src={poster.src}
                   alt={poster.alt}
-                  loading="lazy"
+                  width={1000}
+                  height={1414}
+                  sizes="(max-width: 640px) 100vw, 448px"
                   className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
                 />
               </button>

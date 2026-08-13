@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
@@ -15,10 +16,12 @@ export function PhotoGalleryPreviewCard() {
     <Link href="/resources/photo-gallery" className="group block h-full">
       <article className="flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-background transition-colors duration-300 group-hover:border-foreground/30">
         <div className="relative aspect-[16/10] overflow-hidden">
-          <img
+          <Image
             src={COVER_IMAGE}
             alt="She Sharp community members gathered at an event"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
           />
         </div>
         <div className="flex flex-1 flex-col p-6 md:p-8">

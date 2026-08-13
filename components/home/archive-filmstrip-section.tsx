@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import {
   curatedImages,
-  toSrcSet,
   type CuratedImageKey,
 } from "@/public/img/curated";
 import { Container } from "@/components/layout/container";
@@ -74,13 +74,12 @@ function Tile({ imgKey, index }: { imgKey: CuratedImageKey; index: number }) {
     <div
       className={`relative h-40 shrink-0 overflow-hidden rounded-xl border border-border md:h-56 ${WIDTHS[index % WIDTHS.length]}`}
     >
-      <img
+      <Image
         src={img.src}
-        srcSet={toSrcSet(img)}
+        fill
         sizes="(max-width: 768px) 40vw, 320px"
         alt=""
-        loading="lazy"
-        className="h-full w-full object-cover"
+        className="object-cover"
       />
       {year && (
         <span className="text-label absolute left-2 top-2 rounded-xl bg-white/90 px-2 py-0.5 text-[11px] tracking-normal text-foreground">
