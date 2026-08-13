@@ -32,33 +32,33 @@ const nextConfig: NextConfig = {
    * Cache headers for the static asset folders under `public/`.
    *
    * Next.js sends `Cache-Control: public, max-age=0, must-revalidate` for
-   * everything in `public/` by default, so every photo, logo and video was
-   * re-validated on every navigation. These files change rarely, so a day of
-   * browser cache plus a week of stale-while-revalidate is a large win.
+   * everything in `public/` by default, so every photo and logo was
+   * re-validated on every navigation.
    *
-   * Deliberately SHORT-lived and deliberately NOT `immutable`: the filenames
-   * are not content-hashed, and a follow-up PR recompresses and renames the
-   * asset pool. `immutable` (and a year-long max-age) can only be added once
-   * the URLs carry a fingerprint, otherwise a re-encoded photo would be stuck
-   * in browser caches with no way to bust it.
+   * These were deliberately short-lived and non-`immutable` while the asset
+   * pool was still being recompressed and renamed — a re-encoded photo served
+   * from a year-long cache under an unchanged URL would have been unbustable.
+   * That work has landed: the bytes behind every `/img/*` and `/logos/*` URL
+   * are final, and the convention from here on is a NEW FILENAME whenever an
+   * asset's content changes, which is what makes `immutable` safe without a
+   * hash in the path. Anything that re-encodes an image in place must rename
+   * it in the same commit.
    *
-   * `/docs/*` is left alone on purpose — the PDFs are a separate migration.
+   * There is no `/video/*` rule any more: the videos moved to Vercel Blob and
+   * `public/video/` no longer exists, so the rule matched nothing. `/docs/*`
+   * is likewise gone from `public/` — see the `/docs` redirect below, which is
+   * the one piece of that migration still served from here.
    */
   async headers() {
-    const assetCacheControl =
-      'public, max-age=86400, stale-while-revalidate=604800';
+    const immutableAssetCacheControl = 'public, max-age=31536000, immutable';
     return [
       {
         source: '/img/:path*',
-        headers: [{ key: 'Cache-Control', value: assetCacheControl }],
+        headers: [{ key: 'Cache-Control', value: immutableAssetCacheControl }],
       },
       {
         source: '/logos/:path*',
-        headers: [{ key: 'Cache-Control', value: assetCacheControl }],
-      },
-      {
-        source: '/video/:path*',
-        headers: [{ key: 'Cache-Control', value: assetCacheControl }],
+        headers: [{ key: 'Cache-Control', value: immutableAssetCacheControl }],
       },
     ];
   },
@@ -164,9 +164,9 @@ const nextConfig: NextConfig = {
       // physical square. The slide therefore keeps the short URL and this rule
       // does the hop. See `lib/config/assets.ts` for the measurements.
       //
-      // `redirects()` runs BEFORE the filesystem, so this wins over the copy
-      // still sitting in `public/docs/` (verified locally) and keeps working
-      // unchanged once that copy is deleted. `permanent` is right here because
+      // `redirects()` runs BEFORE the filesystem, so this already won over the
+      // copy that used to sit in `public/docs/`; that copy is now deleted and
+      // this rule is the only thing serving the path. `permanent` is right because
       // a document URL never needs re-pointing — unlike a feedback code, where
       // a cached 308 on someone's phone would be unrecoverable.
       {
