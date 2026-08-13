@@ -6,6 +6,7 @@ import { Trophy, Rocket, Users } from "lucide-react";
 import { BecomeMentorCTASection } from "@/components/mentorship/mentor/become-mentor-cta-section";
 import { MentorResponsibilitiesSection } from "@/components/mentorship/mentor/mentor-responsibilities-section";
 import { StickyApplyBar } from "@/components/mentorship/sticky-apply-bar";
+import { MENTOR_VIDEO } from "@/lib/config/assets";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
 
 export default function BecomeMentorPage() {
@@ -23,7 +24,7 @@ export default function BecomeMentorPage() {
         }
         image="/img/mentors.jpg"
         imageAlt="She Sharp mentorship programme"
-        video="/video/Mentor-Video.mp4"
+        video={MENTOR_VIDEO}
         detailEyebrow="Your impact"
         detailTitle="Share your wisdom and inspire more women in STEM"
         detailDescription="Use your experience to guide, inspire, and empower women, fostering their personal and career growth journeys to achieve success and fulfilment in STEM fields."

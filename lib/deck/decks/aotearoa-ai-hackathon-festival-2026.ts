@@ -22,6 +22,7 @@
  *   - the national judging panel roster
  */
 
+import { PITCH_DECK_TEMPLATE_2026_PDF } from "@/lib/config/assets";
 import { getEventBySlug } from "@/lib/data/events";
 import type { TimedItem } from "@/lib/deck/types";
 import { curatedImages, toSrcSet } from "@/public/img/curated";
@@ -211,17 +212,25 @@ const SLIDO_QR: QrBlock = {
  * Google Form.
  *
  * The PDF is AI Forum's six-page template — CONNECT, PROBLEM, BIG IDEA, FUTURE
- * IMPACT, with the per-section timings the pitch slides already teach. It is
- * committed under `public/docs/` rather than uploaded to Blob storage so it is
- * versioned with the deck that points at it and needs no token to serve.
+ * IMPACT, with the per-section timings the pitch slides already teach. It now
+ * serves from Vercel Blob (`lib/config/assets.ts`) rather than `public/docs/`,
+ * which is still an absolute, token-free, publicly cacheable URL — the two
+ * properties a projected QR needs. `lintDeck()`'s only requirement on a
+ * non-feedback QR is that the URL is non-empty.
  *
- * FILENAME IS LOAD-BEARING. This code shares a slide with two others, so each
- * is drawn small; the descriptive name `ai-hackathon-pitch-deck-template-2026`
- * pushes the URL to 73 bytes and the symbol to 41×41, while this one fits 37×37
- * in the same physical square. Lengthen it and the modules get smaller.
+ * URL LENGTH IS LOAD-BEARING, and this move costs some of it. This code shares
+ * a slide with two others, so each is drawn small. Measured with the deck's own
+ * `qrcode` at level M: the old `shesharp.org.nz` path was 61 bytes and fitted
+ * 33×33, the Blob URL is 89 bytes and needs 41×41 — smaller modules in the same
+ * physical square, and past the 73-byte/41×41 point a descriptive filename was
+ * once rejected for. It is a margin loss rather than a failure, and this deck's
+ * event has already run, so it ships as-is. A future deck that needs the denser
+ * symbol back should keep a short `shesharp.org.nz/docs/...` URL here and add a
+ * 308 in `next.config.ts` pointing at the Blob URL — `redirects()` is evaluated
+ * before the filesystem, so that works whether or not the `public/` copy exists.
  */
 const PITCH_TEMPLATE_QR: QrBlock = {
-  url: "https://www.shesharp.org.nz/docs/pitch-deck-template-2026.pdf",
+  url: PITCH_DECK_TEMPLATE_2026_PDF,
   label: "Pitch deck template",
   caption: "shesharp.org.nz/docs",
 };

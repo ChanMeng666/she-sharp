@@ -6,6 +6,7 @@ import { MentorsListSection } from "@/components/mentorship/mentors/mentors-list
 import { MentorshipHeroSection } from "@/components/mentorship/mentorship-hero-section";
 import { MentorshipBenefits } from "@/components/mentorship/mentorship-benefits-section";
 import { MentorshipCTASection } from "@/components/mentorship/mentorship-cta-section";
+import { MENTORSHIP_VIDEO } from "@/lib/config/assets";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
 import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 import { GeoHead, GEO_INSTRUCTIONS } from "@/components/seo/geo-head";
@@ -44,7 +45,7 @@ export default function MentorshipPage() {
         }
         image="/img/gallery/home-page-ai-hackathon-2025-mentorship.jpg"
         imageAlt="Women in technology mentorship programme group photo"
-        video="/video/Mentorship.mp4"
+        video={MENTORSHIP_VIDEO}
         detailEyebrow="Why it matters"
         detailTitle="Empowering women in STEM"
         detailTitleHighlight="through mentoring."
