@@ -79,7 +79,12 @@ crawlers** (listing them individually gives you a per-bot throttle lever later).
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo/site";
 
-const DISALLOW = ["/dashboard/", "/api/", "/sign-in", "/sign-up", "/auth/"];
+// Keep this list to genuinely private prefixes. Auth PAGES are NOT here on
+// purpose — see Gotcha #4 below: a Disallow stops a crawler reading the very
+// `noindex` that would keep the page out of the index. They carry
+// `robots: { index: false }` on `app/(login)/layout.tsx` instead. (This repo
+// listed `/sign-in` and `/sign-up` here until 2026-08-09.)
+const DISALLOW = ["/dashboard/", "/api/", "/auth/"];
 const AI_CRAWLERS = [
   "GPTBot", "OAI-SearchBot", "ChatGPT-User",      // OpenAI
   "ClaudeBot", "anthropic-ai", "Claude-Web",      // Anthropic

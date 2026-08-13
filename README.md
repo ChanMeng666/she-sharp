@@ -430,7 +430,10 @@ pnpm type-check       # Run TypeScript compiler
 
 #### Adding a Database Table
 
-1. Define the schema in `lib/db/schema.ts`:
+1. Define the table in the right domain file under `lib/db/schema/`
+   (`users.ts`, `mentorship.ts`, `events.ts`, `engagement.ts`, `system.ts`).
+   `lib/db/schema.ts` is a barrel that re-exports all of them, so import sites
+   keep using `@/lib/db/schema`:
    ```typescript
    export const yourTable = pgTable('your_table', {
      id: serial('id').primaryKey(),
@@ -445,41 +448,19 @@ pnpm type-check       # Run TypeScript compiler
    pnpm db:migrate
    ```
 
-#### Database Version Control
+#### Migrations
 
-The project includes a comprehensive database version control system built on top of Drizzle ORM:
-
-1. **Before making schema changes**, create a snapshot:
-   ```bash
-   pnpm db:snapshot "before-feature-xyz"
-   ```
-
-2. **Check migration status** before deployment:
-   ```bash
-   pnpm db:status
-   ```
-
-3. **Apply migrations safely** with automatic backup:
-   ```bash
-   pnpm db:migrate:safe
-   ```
-
-4. **Create checkpoints** for stable versions:
-   ```bash
-   pnpm db:version checkpoint "v1.0-stable"
-   ```
-
-5. **View available snapshots** for rollback:
-   ```bash
-   pnpm db:version list-snapshots
-   ```
+Migrations are plain Drizzle. `pnpm db:generate` writes a new SQL file to
+`lib/db/migrations/`; review it before applying, because a generated migration
+will happily drop a column it thinks you removed.
 
 > [!TIP]
-> **Best Practice**: Always create snapshots before major database changes. The snapshot system works even with remote databases (like Neon) by storing migration state and schema information in JSON format.
+> On pnpm 11, run `npx drizzle-kit migrate` instead of `pnpm db:migrate` — pnpm
+> 11 tries to purge `node_modules` first.
 
-For detailed documentation, see:
-- [Database Version Control Guide](docs/database/DATABASE_VERSION_CONTROL.md)
-- [Migration Quick Start](docs/database/MIGRATION_QUICK_START.md)
+For the table-by-table reference, see the
+[Database Schema Guide](docs/database/DATABASE_SCHEMA.md) and the
+[Mentor/Mentee Data Guide](docs/database/MENTOR_MENTEE_DATA_GUIDE.md).
 
 ## 🧠 Core Business Logic
 
@@ -689,54 +670,36 @@ graph LR
 ```
 she-sharp/
 ├── app/                          # Next.js App Router
-│   ├── (dashboard)/             # Protected dashboard routes
-│   │   ├── dashboard/          # Main dashboard
-│   │   ├── team/              # Team management
-│   │   └── settings/          # User settings
-│   ├── (login)/                # Authentication pages
-│   │   ├── sign-in/          # Sign in page
-│   │   └── sign-up/          # Sign up page
-│   ├── (site)/                 # Public website
-│   │   ├── about/            # About pages
-│   │   ├── events/           # Events listing
-│   │   ├── mentorship/       # Mentorship program
-│   │   ├── media/            # Media hub
-│   │   └── support/          # Support/donation
-│   ├── api/                    # API routes
-│   │   ├── auth/             # Authentication endpoints
-│   │   ├── chat/             # AI chatbot endpoint
-│   │   ├── stripe/           # Payment endpoints
-│   │   └── user/             # User management
-│   └── layout.tsx              # Root layout
-├── components/                  # React components
-│   ├── chatbot/                # AI chatbot UI
-│   ├── layout/                 # Layout components
-│   ├── sections/               # Page sections
-│   └── ui/                     # shadcn/ui components
-├── lib/                        # Core utilities
-│   ├── auth/                   # Authentication logic
-│   ├── db/                     # Database configuration
-│   │   ├── schema.ts         # Database schema
-│   │   ├── queries.ts        # Database queries
-│   │   ├── drizzle.ts        # Drizzle client
-│   │   ├── migrations/       # Database migrations
-│   │   ├── snapshots/        # Database snapshots
-│   │   ├── migration-manager.ts # Version control
-│   │   └── snapshot-manager.ts  # Snapshot management
-│   ├── data/                   # Static data
-│   └── payments/               # Stripe integration
-├── scripts/                    # Utility scripts
-│   ├── db-version.ts          # Version control CLI
-│   ├── db-snapshot.ts         # Snapshot creation
-│   └── migrate-with-backup.ts # Safe migration
-├── public/                     # Static assets
-│   ├── images/                # Image files
-│   └── logos/                 # Logo assets
-├── styles/                     # Global styles
-│   └── globals.css            # Tailwind imports
-├── docs/                       # Documentation
-├── data/                       # Static content data
-└── middleware.ts              # Next.js middleware
+│   ├── (dashboard)/dashboard/   # Protected member + admin area
+│   ├── (login)/                 # Sign in/up, password reset, verification
+│   ├── (site)/                  # Public website
+│   │   ├── about/               # About pages
+│   │   ├── events/              # Events listing + /events/[slug]
+│   │   ├── mentorship/          # Mentorship program
+│   │   ├── resources/           # Media hub (press, podcasts, newsletters, gallery)
+│   │   └── donate/              # Donation flow
+│   ├── present/[deck]/          # Projected event slide decks
+│   ├── f/[code]/                # Short feedback-code redirector
+│   ├── api/                     # API route handlers
+│   └── layout.tsx               # Root layout (static — see docs/ARCHITECTURE.md)
+├── components/                   # React components, mirroring the site
+│   ├── chatbot/ deck/ events/ admin/ mentorship/ …
+│   ├── layout/                  # Header, footer, container, section
+│   └── ui/                      # shadcn/ui + custom primitives
+├── lib/                         # Core logic
+│   ├── auth/                    # Sessions, roles, withRoles()
+│   ├── db/                      # Drizzle client, queries, migrations
+│   │   └── schema/              # Schema split by domain (barrel at schema.ts)
+│   ├── data/                    # Static site content (+ json/ sources)
+│   ├── mentorship/ matching/ forms/ email/ newsletter/ deck/ …
+│   └── config/assets.ts         # Vercel Blob URLs for PDFs and video
+├── scripts/                     # Utility + verification scripts
+├── public/                      # Static assets (img/, logos/, icons/, brand/)
+├── styles/                      # Design tokens, component and utility CSS
+├── emails/                      # React Email templates
+├── report/                      # Typst funder report (outside the Next build)
+├── docs/                        # Documentation — start at docs/ARCHITECTURE.md
+└── proxy.ts                     # Next.js middleware (not middleware.ts)
 ```
 
 </details>
@@ -835,15 +798,9 @@ Browse available mentors with filtering options
 #### GET `/api/mentors/[id]`
 Get detailed mentor information
 
-#### POST `/api/mentorship/apply`
-Apply for mentorship relationship
-```json
-{
-  "mentorId": 123,
-  "message": "I would love to learn from your experience",
-  "goals": "Improve technical leadership skills"
-}
-```
+#### POST `/api/forms/mentee` · `/api/forms/mentor`
+Submit a mentee or mentor application (public variants at `…/public` for
+unauthenticated applicants)
 
 #### POST `/api/mentorship/approve`
 Approve or reject mentorship application (mentors only)
@@ -882,14 +839,6 @@ Get or update meeting details, add notes and feedback
 Public event content is served from the static data in `lib/data/` and ticketing
 is handled by Humanitix; there is no event API. Post-event feedback is collected
 by `POST /api/event-feedback`.
-
-### Resources
-
-#### GET `/api/resources`
-Browse learning resources with access control
-
-#### GET `/api/resources/[id]/download`
-Download resource (with permission checks)
 
 ### Dashboard & Analytics
 
@@ -937,8 +886,8 @@ Send message to AI assistant
 #### GET `/api/admin/analytics`
 Get platform analytics (admin only)
 
-#### GET `/api/admin/permissions`
-Manage admin permissions (admin only)
+#### GET/POST `/api/admin/users`
+List, filter and update platform users (admin only)
 
 ## 💾 Database Schema
 
@@ -1616,19 +1565,17 @@ A:
 A: Yes! The project can be deployed to any platform that supports Next.js, including Railway, Render, AWS, or self-hosted servers.
 
 **Q: How do I manage database migrations safely?**
-A: The project includes a comprehensive database version control system:
-1. Always check status before migrations: `pnpm db:status`
-2. Create snapshots before major changes: `pnpm db:snapshot "description"`
-3. Use safe migration: `pnpm db:migrate:safe` (creates automatic backup)
-4. Create checkpoints for stable versions: `pnpm db:version checkpoint "v1.0"`
-5. Review the [Database Version Control Guide](docs/database/DATABASE_VERSION_CONTROL.md)
+A: Migrations are plain Drizzle.
+1. Edit the right domain file under `lib/db/schema/`
+2. `pnpm db:generate` to write the migration SQL
+3. **Read the generated SQL** — a generated migration will happily drop a column
+   it thinks you removed
+4. `pnpm db:migrate` to apply (`npx drizzle-kit migrate` on pnpm 11)
 
 **Q: How do I rollback database changes?**
-A: 
-1. List available snapshots: `pnpm db:version list-snapshots`
-2. Generate rollback SQL: `pnpm db:version rollback-sql <migration-tag>`
-3. For complex rollbacks, restore from snapshots following the guide
-4. Always test rollback procedures in staging first
+A: There is no automated rollback. Take a Neon branch or backup before a
+destructive migration, and write the inverse migration by hand. Always test on a
+branch first.
 
 **Q: How do I contribute to the project?**
 A: Please read our [Contributing Guidelines](#contributing) and follow the development process. We welcome all contributions!

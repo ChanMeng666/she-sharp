@@ -8,7 +8,15 @@ This guide covers how to generate QR codes for She Sharp deployment pages, suppo
 |-----------|---------|
 | `lib/data/qr-codes.ts` | Predefined QR code targets config |
 | `app/api/qr/route.ts` | Server-side QR image generation API |
-| `components/ui/qr-code.tsx` | Reusable React component for web display |
+| `components/deck/deck-qr.tsx` | Slide-facing codes for `/present/*` (see the last section) |
+
+> **The `QRCodeDisplay` React component no longer exists.** `components/ui/qr-code.tsx`
+> was deleted once nothing on the site rendered it — the only live in-app QR path
+> today is the deck one. The two remaining ways to produce a code are the
+> **`/api/qr` endpoint** (section 2) and the **branded print script** (section 3),
+> both of which are unaffected. Section 1 below is kept as the record of what the
+> component did, in case a page needs an inline code again; reinstating it means
+> writing the component back, not importing it.
 
 > **There is a second QR path in this repo.** Presentation decks (`/present/*`)
 > do not use any of the above — they render their own codes in
@@ -24,9 +32,9 @@ This guide covers how to generate QR codes for She Sharp deployment pages, suppo
 - **`qrcode`** — Server-side PNG/SVG generation (API + scripts)
 - **`@resvg/resvg-js`** — SVG-to-PNG conversion (dev dependency, for branded print assets)
 
-## 1. Using the React Component
+## 1. Using the React Component (removed — kept for reference)
 
-For embedding QR codes in web pages:
+The shape the component had, for anyone reinstating it:
 
 ```tsx
 import { QRCodeDisplay } from '@/components/ui/qr-code';
@@ -195,7 +203,7 @@ Use `buildTargetUrl(baseUrl, target)` to construct the full URL from a target co
 - **Error correction level H** (30%): Required for center logo overlay while maintaining scan reliability.
 - **Brand color `#9b2e83`**: Sufficient contrast on white background for reliable scanning.
 - **Nested `<svg>` for QR embedding**: Always use `<svg x y width height viewBox>` instead of `<g transform clip-path>` when embedding QR paths in a composed SVG. The `clip-path` + `transform` combination causes rendering issues in browsers.
-- **URL construction**: The component accepts full URLs directly. Callers should use `getBaseUrl()` from `lib/email/service.ts` when building URLs programmatically.
+- **URL construction**: `/api/qr` takes a full URL. Callers should use `getBaseUrl()` from `lib/email/service.ts` when building URLs programmatically — except for deck/QR destinations printed or projected, which use the compile-time `SITE_URL` so a code can never encode `localhost`.
 - **Print assets**: For print use, generate at 2048px+ width. The API endpoint caps at 2048px; use the `@resvg/resvg-js` script approach for larger sizes.
 
 ## Existing Assets
@@ -217,7 +225,7 @@ try to "fix" back:
 | | Web / print (this guide) | Deck slide |
 |---|---|---|
 | Source | `lib/data/qr-codes.ts` targets, or an explicit URL | `QrBlock.url` in the deck data |
-| Rendering | `QRCodeDisplay`, or `/api/qr` for print assets | `qrcode.react` inline, `DECK_QR_MODE = "generate"` |
+| Rendering | `/api/qr` (the `QRCodeDisplay` component is gone) | `qrcode.react` inline, `DECK_QR_MODE = "generate"` |
 | Error correction | **H** (30%) | **M** |
 | Committed image | Yes, for print | No — `QrBlock.image` is an escape hatch only |
 

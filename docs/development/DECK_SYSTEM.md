@@ -1,0 +1,91 @@
+# Event Presentation Decks
+
+> Moved from CLAUDE.md 2026-08-13. This is the full narrative record of the
+> `/present/*` deck system: why it looks the way it does, and the rules whose
+> violation fails silently. CLAUDE.md keeps only the four stage-CSS rules in
+> one-line form and points here.
+
+Slide decks for in-person events, projected from `/present/<event-slug>`. Shipped 2026-08-01 (PR #90), rebuilt on the photographic archive the same day (PR #91). First deck: `/present/aotearoa-ai-hackathon-festival-2026` (**38 slides**).
+
+**A deck is data.** `lib/deck/types.ts` is a discriminated union of 18 slide types; `components/deck/slide-renderer.tsx` maps each to one layout in `components/deck/slides/` behind a `never` guard, so a new slide type without a layout is a compile error. `lib/deck/boilerplate.ts` generates the fixed organisational sequence (title → karakia → H&S → we-are-She-Sharp → team → impact → sponsors → contact QRs → … → thanks → upcoming → feedback QR → ambassador QR → closing karakia) **from live site data** (`lib/data/team.ts`, `stats.ts`, `sponsors.ts`, `lib/config/footer.ts`), so a new event deck is one file in `lib/deck/decks/` plus one line in `lib/deck/registry.ts`.
+
+**Non-technical organisers use the `/build-event-slides` skill** (`.claude/skills/build-event-slides/`). They never touch TypeScript.
+
+## The visual language is the archive
+
+The first version was white canvas, navy ink, purple accent, with photography as a plate beside the text. It was competent and anonymous, and it was rejected on exactly that basis.
+
+The archive is ~400 photographs and they are overwhelmingly **the same shot**: sixty to a hundred and fifty women in a fluorescent-lit meeting room, everyone facing camera. Individually weak — no negative space, faces small, white balance spanning four stops. Collectively, twelve years of it, the whole story. So the archive is used as **mass**: tile walls, mosaics, bands, words cut out of the wall, never a single hero image.
+
+- `lib/deck/wall-tiles.ts` — **118 tiles at 520px WebP, 2.8 MB for the whole pool**, plus `pickWallTiles(count, offset)` which steps through rather than slices, so a wall stays mixed across eras. At source resolution one wall slide was ~31 MB of transfer and ~1 GB of decoded bitmap; a 4898×3265 photograph was being drawn into a tile 259px wide. **Never point the wall at full-resolution originals.**
+- **Photographs used en masse are duotoned; a single photograph used as the subject stays full colour.** The grade is mandatory, not stylistic — the pool spans about four stops of colour temperature across three eras (2015–18 magenta flash, 2019–23 green fluorescent, 2024–26 warm tungsten) and does not read as one deck untreated.
+- **Photo-knockout type works at display scale on short words and numerals only.** A giant `01` reads; the word `Aotearoa` was unreadable mush.
+- `public/img/plates/` — six generated backgrounds (gpt-image-2) with a typed manifest. They exist because the archive contains **no landscape, coastline, sky or dawn at all**. Scope is declared in the manifest and is not negotiable: **whenua only, never people, never taonga, nothing mistakable for a real She Sharp event.** Where a real photograph will do the job it does the job — the opening karakia uses She Sharp's own koru photograph even though a generated plate measured better for setting type over.
+
+## The stage is fluid, not fixed 16:9
+
+Design height is a constant 1080; width flows with the display, clamped to 4:3–21:9, so every venue screen fills edge to edge with no letterboxing. **A portrait display inverts the axes** — see the phone section below. Four layout rules follow, and all four fail *silently* — see `styles/components/deck.css`:
+
+1. **Never `vw`/`vh`/`dvh` inside `.deck-stage`** — they resolve against the real viewport, not the scaled stage, so they do not scale. This bans the site's `.text-display-*` utilities in here. Use `cqi` or fixed design px, and the `.deck-*` type classes rather than Tailwind `text-*`.
+2. The stage is centred with `translate(-50%, -50%) scale()`, **not** flex/grid alignment — grid parks an oversized item at the start edge.
+3. Grid tracks must be `minmax(0, 1fr)` before a percentage `max-block-size` on a child means anything.
+4. **Responsive `--dt-*` overrides land on `.deck-slide`, never on `.deck-stage`** — the stage *is* the named container, and an element cannot match a container query against its own container. Writing it on `.deck-stage` compiles, never applies, and silently leaves a 4:3 projector running the 21:9 type scale.
+
+Layouts prefer `repeat(auto-fit, minmax(Npx, 1fr))` over breakpoints, and Tailwind container-query variants (`@max-[1560px]/deck:`) where auto-fit will not do. `useFitContent()` in `slide-frame.tsx` scales an overflowing slide down as a **last resort** — treat any slide that triggers it as a defect to fix by cutting copy, splitting the slide or changing the layout, in that order. Shrinking type is not the fix.
+
+## The deck on a phone
+
+Fixed 2026-08-07. iOS Safari used to kill the tab outright ("A problem repeatedly occurred" is jetsam, not a JS error) because **all 67 slides stay mounted and only `visibility` hides them** — so every hidden slide kept its compositing layers, its running animations and its images. Three things were paying that bill and **all three were bugs on venue laptops too**: an unconditional `will-change: transform` on ~100 `max-content`-wide `.deck-wall-row`s, ambient drift scoped to `.deck-stage` instead of the active slide, and one `ResizeObserver` per slide on the single shared `.deck-stage` plus a `load` listener on all ~4,100 images, each forcing a full-stage synchronous layout. Running compositor animations went from ~100 to ≤6 and nothing about the projector's geometry changed.
+
+Four rules now, each of which fails silently:
+
+1. **Never put `will-change` on `.deck-wall-row`.** If an old laptop stutters, add it inside the *active-slide* ambient-loop selector.
+2. **Ambient loops stay scoped to `.deck-slide[data-active="true"]`.** Safe because the cross-fade transitions `opacity` only — an outgoing slide is hidden in the same frame, so the drift restarting is never on screen.
+3. **`@container deck (max-width: 1000px)` must stay BELOW the 1560px block.** A 900px stage matches both at equal specificity and source order decides. Same failure family as rule 4 above.
+4. **Tile-truncation counts are in DESIGN px; the `@media` query is in DEVICE px.** A phone in landscape matches the query while driving a 2337px stage, so the media block leaves **ten** tiles per row (2630 of pitch, clearing a 21:9 stage) and the portrait container query re-cuts to three. Six looked right and left the wall stopping two thirds across.
+
+`useStageScale()` takes a **portrait branch gated on `lock === null && width < height`** — fixed design *width* 900, height flows, clamped 1080–2400. That gate is the only thing between a phone fix and the venue screen; do not loosen it. `--deck-stage-h` carries the result, and `--deck-tile-h` is then *derived* from it (`(stage-h − rail) / 6`) so six rows still land on the bottom edge — a literal pitch stops meaning "six rows" the moment the stage height moves, which is also why `INCISION_5_ROWS` is now a `calc()` off the tile pitch rather than `826`.
+
+Layouts that compute a track count in JS and write it **inline** need a class plus an `!important` restatement in that container query — the people grid (`data-density` decides the track minimum), the run sheet (folds to one column, and its time column widens to 230px or every time wraps to two lines), and the QR CTA (stacks). Checked with `sweep.mjs`-style walks of all 67 slides at 390×844, 360×640, 412×915, 844×390, 1024×768, 1920×1080 and 2560×1080; the two projector shapes must stay **byte-identical to `main`**, which is the regression test that matters.
+
+The first-run coach card and the `? keys` chip both branch on `matchMedia("(pointer: coarse)")` — read in an effect, never during render. On touch the card teaches taps and swipes (the keyboard card taught four keys a phone does not have) and the chip opens the **overview**, not the keyboard reference. `wake()` must keep listening for `pointerdown`: without it a phone never fires `pointermove` or `keydown`, `data-idle` latches after three seconds and the chip — the only visible route to any control — is gone for the session.
+
+The keyboard, swipe, preload and wake-lock behaviours each live in their own hook — `hooks/use-deck-keyboard.ts`, `use-deck-swipe.ts`, `use-deck-preload.ts`, `use-wake-lock.ts` — rather than inside `deck-viewport.tsx`.
+
+## Copy, rhythm and the kicker are all enforced
+
+`lib/deck/lint.ts` fails the build, and `lib/deck/deck.test.ts` asserts it. Three families of rule:
+
+- **Copy** — title ≤7 words, lead ≤18 words and one sentence, ≤5 bullets of ≤10 words with no full stops, run-sheet labels ≤6 words, people per slide by density (`sm` 20 / `md` 8 / `lg` 4), accent contrast ≥4.5:1 on its own canvas.
+- **Rhythm** — ≤2 consecutive full-frame slides, ≤4 consecutive information slides, ≤4 consecutive slides of one tone, ≥25% dark in a deck of 12+, ≥8 distinct layouts in a deck of 10+. *A deck can pass every copy rule slide by slide and still be unwatchable; the shipped deck had eight consecutive light information slides.* Fix a run by inserting a divider or a photographic beat, not by recolouring one slide.
+- **The kicker** — `slide.eyebrow` names *this* slide; `slide.section` names the chapter and repeats. The linter rejects one restating the other (`echoes()` catches "Day One" vs "Day one begins"). Good ones tell the room what to do: "Stand if you are able", "Doors at five, dinner on arrival". They arrive as asides during the interview, not by asking for them.
+
+Long-form material — bios, IP terms, rules, the full venue list — stays on the event page and is reached by a QR slide.
+
+**Accents are a pair.** Brand purple `#9b2e83` is only 2.92:1 on the near-black canvas, so dark slides use `#c846ab` (4.61:1).
+
+**Every event gets its own look, and the poster decides it.** Until Aug 2026 per-event customisation was `theme.accent` plus that event's photos, so the Les Mills panel evening came out looking like the two-day hackathon. A deck now carries a `skin` (`lib/deck/skins.ts`): a **surface** (`archive` = the house wall, or `plate` = a field built from the event's own artwork, panned per slide), a palette, geometry, a motion `tempo`, and type personality. The look itself is a `[data-skin="<key>"]` block in `styles/components/deck-skins.css`; a new skin is that block plus a `DeckSkin`, and only a genuinely new *surface kind* touches `components/deck/surfaces.tsx`.
+
+**The house/event boundary is fixed and is not aesthetic.** `SlideBase.surface` decides it, and `buildOpeningSlides()`/`buildClosingSlides()` stamp `"house"` on their own slides so an author cannot forget. The organisational sequence — karakia, team, impact, sponsors, thanks — keeps the archive wall and the brand duotone in every deck forever, because that grade is the only thing making twelve years of photography shot across four stops of colour temperature read as one organisation. The event's skin begins at the `event-opening` chapter card, which is deliberately stamped `"event"`: that card *is* the handover. A skin may change how a deck looks and never what it may say — the copy limits, rhythm rules, contrast floor, stage geometry and eighteen slide types are outside its reach.
+
+**`object-position` cannot be set from `deck-skins.css`.** `DeckImage` writes it inline from `DeckImage.focus`, and inline beats any stylesheet. A `--plate-pos` custom property compiled cleanly and did nothing: every band showed the plate's top strip, which on a poster plate is the empty near-black the prompt asked for — a black bar from a correct-looking rule. The pan travels on `focus`; see `platePlacement()`.
+
+## Motion
+
+`lib/deck/motion.ts` owns **entrances**, one semantic recipe per slide type (the wall fills tile by tile, figures count up, run-sheet rows reveal in reading order, the karakia is the slowest thing in the deck). `deck.css` owns **ambient loops** only (wall drift, plate swell). Keeping both in CSS once produced a visible flicker: a CSS entrance holds `opacity: 0` through its delay with `backwards` fill, so a shorter scripted entrance finishing first made the element blank and rise twice. **Do not re-add entrance animations to CSS.**
+
+`L` toggles a low-power static mode (persisted in `localStorage`, defaults to the OS reduce-motion setting) for old venue laptops. It stops motion, not image loading.
+
+## Everything else
+
+- **Checks**: `npx tsx lib/deck/deck.test.ts`, `npx tsx scripts/deck/lint-deck.ts [slug]` (a report an organiser can act on), `npx tsx scripts/verify-image-paths.ts`.
+- **Scaffold**: `npx tsx scripts/deck/new-deck.ts <event-slug>`.
+- **Host controls are discoverable, and that is deliberate.** A `?` panel nobody knows to press is not a feature — before this, no host had ever opened the overview grid or the static-mode switch because nothing on screen said they existed. Two affordances now carry it, both for the person at the laptop and never for the room: a **first-run card** (`DeckCoach`, once per browser via `localStorage`, dismissed by any key or click because the deck may already be on the projector) showing the four keys that matter, and a persistent **`? keys` chip** that rides the same idle fade as the rest of the chrome — visible while someone is touching the machine, gone three seconds later. Neither appears in `?print=1`. **Any new control needs a visible route to it or it does not exist.**
+- **Host controls**: arrows/Space next, `O` overview + jump, `F` fullscreen, `B` blackout, `L` static mode, `?` help. **Space starts/pauses the countdown on `break` slides instead of advancing.** `?print=1` renders all slides at 960×540 for a Ctrl+P PDF backup, and is the only place `slide.note` appears. `?aspect=4:3` locks the stage aspect — the fastest way to test a narrow projector without resizing a window.
+- **QR codes are generated from the URL in the browser** (`DECK_QR_MODE = "generate"`), so a link and its code cannot drift apart and generation never touches the network. `QrBlock.image` remains an escape hatch for a pre-made code. **A URL you do not have yet is `""`, never a guess** — the slide then shows a "Link not set yet" panel and the linter reports it. See `docs/features/QR_CODE_GENERATION.md` for how the deck path differs from the web/print path.
+- **The feedback code is derived, not pasted.** `feedbackQrFor()` in `boilerplate.ts` builds it from the required `ClosingOptions.eventSlug` via `lib/data/feedback-codes.ts`, and `lintDeck()` re-checks it against the deck's own slug — `feedback-qr-event-mismatch` is an **error**, because a code pointing at last month's event looks perfectly correct from the front of the room while collecting the wrong data. That check was impossible while the destination was a Google Form URL, which is exactly why `feedbackQr` used to be required-with-no-default; the requirement moved to `eventSlug` rather than disappearing. It encodes the short `/f/<code>` alias, not `/events/<slug>/feedback`: 36 bytes fits a 29×29 code at level `M` while the long path needs 37×37 — same projector area, 28% larger modules, and short enough to read aloud.
+- **A Google Form with a file-upload question always forces sign-in** and there is no setting to disable it. This is why `AMBASSADOR_FORM_URL` points at `shesharp.org.nz/join-our-team` rather than at the form. **Open every QR destination in a signed-out browser before an event** — the person building the deck is always signed in and is the one person who cannot see this class of problem. (The feedback form is no longer a Google Form for the same reason, plus two others: the per-event form had no safe default, and its answers landed in one person's Drive instead of the database.)
+- **Offline**: every slide stays mounted and all images preload with a visible progress chip; after first load the deck makes zero network calls. Reloading is the only thing that needs the venue wifi.
+- **SEO**: `/present/*` is `noindex`, must stay **out of `app/sitemap.ts`**, and must **not** be added to `robots.ts` `DISALLOWED_PATHS` (a Disallow stops crawlers reading the noindex).
+- **Root-layout side effects**: the cookie banner carries `data-cookie-banner` so `deck.css` can hide it under `html[data-present]`; `scrollbar-gutter: stable` is overridden there too. The root layout no longer forces dynamic rendering, so rendering mode is now each segment's own business — the public site prerenders statically, `/present/[deck]` is server-rendered on demand (no `generateStaticParams`), and the dashboard is dynamic because its own layout awaits `getUser()` and `cookies()`.
+- **The archive's one real gap**: there is no photograph anywhere of a mentor and mentee one to one — the flagship programme has no picture of itself. Worth asking someone to take one at the next event.

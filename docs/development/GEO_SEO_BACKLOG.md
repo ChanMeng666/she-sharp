@@ -69,6 +69,10 @@ Otherwise the canonical-side signals on `.org.nz` will consolidate it over time.
 - **Done**: Deleted all **15 junk sitemap entries** (individual page paths wrongly
   submitted as sitemaps on 2026-05-04). The Sitemaps list now shows only
   `sitemap.xml` — Success, 119 URLs (GSC will re-fetch to 121 on its own).
+- **Done**: submitted the same `sitemap.xml` to **Bing Webmaster Tools**. Bing
+  powers ChatGPT and Copilot web results, so this is a GEO step, not just an SEO
+  one. (Recorded here because the monitoring doc carried it only as a standing
+  instruction, which read as still outstanding.)
 - **Skipped (by decision)**: temporary Removals for the 5 old dead URLs — the 301s
   are the durable fix. Revisit only if old URLs still rank prominently in ~2–3
   weeks, using exact-URL (not prefix) removals.
