@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
-import { resources, resourceAccessLogs, userMemberships } from '@/lib/db/schema';
+import { resources, userMemberships } from '@/lib/db/schema';
 import { eq, and, gte, isNull, or, sql } from 'drizzle-orm';
 import { getUser } from '@/lib/db/queries';
 
@@ -111,16 +111,8 @@ export async function GET(
       // This would require querying the userRoles table
     }
 
-    // Log download
+    // Increment download count
     if (user) {
-      await db.insert(resourceAccessLogs).values({
-        resourceId,
-        userId: user.id,
-        action: 'download',
-        ipAddress: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || undefined,
-      });
-
-      // Increment download count
       await db
         .update(resources)
         .set({

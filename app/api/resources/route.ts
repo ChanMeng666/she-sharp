@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
-import { resources, resourceAccessLogs, adminPermissions } from '@/lib/db/schema';
+import { resources, adminPermissions } from '@/lib/db/schema';
 import { eq, ilike, and, or, desc, asc, sql } from 'drizzle-orm';
 import { getUser } from '@/lib/db/queries';
 
