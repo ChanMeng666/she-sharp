@@ -31,7 +31,6 @@ import {
   XCircle,
   Clock,
   RefreshCw,
-  Loader2,
   AlertCircle,
   Brain,
   Target,
@@ -57,6 +56,8 @@ import {
   Star,
   FlaskConical,
 } from 'lucide-react';
+import { getAvatarInitials } from '@/lib/utils';
+import { Spinner } from "@/components/ui/spinner";
 
 interface MentorProfileDetails {
   bio?: string | null;
@@ -378,15 +379,6 @@ export default function MatchingManagementPage() {
     }
   };
 
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
   const formatMeetingPreference = (format?: string | null) => {
     if (!format) return 'Not specified';
     switch (format) {
@@ -414,7 +406,7 @@ export default function MatchingManagementPage() {
                   <Avatar className="h-10 w-10 sm:h-12 sm:w-12 border-2 border-muted shrink-0">
                     <AvatarImage src={match.mentorImage || undefined} alt={match.mentorName} />
                     <AvatarFallback className="bg-muted text-foreground font-semibold">
-                      {getInitials(match.mentorName)}
+                      {getAvatarInitials(match.mentorName)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="min-w-0">
@@ -451,7 +443,7 @@ export default function MatchingManagementPage() {
                   <Avatar className="h-10 w-10 sm:h-12 sm:w-12 border-2 border-muted shrink-0">
                     <AvatarImage src={match.menteeImage || undefined} alt={match.menteeName} />
                     <AvatarFallback className="bg-muted text-foreground font-semibold">
-                      {getInitials(match.menteeName)}
+                      {getAvatarInitials(match.menteeName)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="min-w-0">
@@ -794,7 +786,7 @@ export default function MatchingManagementPage() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-6 flex justify-center items-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 animate-spin text-foreground" />
+        <Spinner size="lg" className="text-foreground" />
       </div>
     );
   }
@@ -832,7 +824,7 @@ export default function MatchingManagementPage() {
             >
               {isRunning ? (
                 <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  <Spinner className="mr-2" />
                   Running AI Matching...
                 </>
               ) : (
@@ -1023,7 +1015,7 @@ export default function MatchingManagementPage() {
                               <Avatar className="h-10 w-10 border">
                                 <AvatarImage src={mentor.image || undefined} alt={mentor.name} />
                                 <AvatarFallback className="bg-muted text-foreground font-semibold">
-                                  {getInitials(mentor.name)}
+                                  {getAvatarInitials(mentor.name)}
                                 </AvatarFallback>
                               </Avatar>
                               <div>
@@ -1095,7 +1087,7 @@ export default function MatchingManagementPage() {
                               <Avatar className="h-10 w-10 border">
                                 <AvatarImage src={mentee.image || undefined} alt={mentee.name} />
                                 <AvatarFallback className="bg-muted text-foreground font-semibold">
-                                  {getInitials(mentee.name)}
+                                  {getAvatarInitials(mentee.name)}
                                 </AvatarFallback>
                               </Avatar>
                               <div>
@@ -1164,7 +1156,7 @@ export default function MatchingManagementPage() {
                     <Button onClick={runBatchMatching} disabled={isRunning} variant="brand">
                       {isRunning ? (
                         <>
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          <Spinner className="mr-2" />
                           Running...
                         </>
                       ) : (
@@ -1207,7 +1199,7 @@ export default function MatchingManagementPage() {
                           <Avatar className="h-6 w-6 border">
                             <AvatarImage src={mentor.mentorImage || undefined} alt={mentor.mentorName} />
                             <AvatarFallback className="bg-muted text-foreground text-xs font-semibold">
-                              {getInitials(mentor.mentorName)}
+                              {getAvatarInitials(mentor.mentorName)}
                             </AvatarFallback>
                           </Avatar>
                           {mentor.mentorName}
@@ -1262,7 +1254,7 @@ export default function MatchingManagementPage() {
                           <Avatar className="h-10 w-10 border">
                             <AvatarImage src={entry.menteeImage || undefined} alt={entry.menteeName} />
                             <AvatarFallback className="bg-muted text-foreground font-semibold">
-                              {getInitials(entry.menteeName)}
+                              {getAvatarInitials(entry.menteeName)}
                             </AvatarFallback>
                           </Avatar>
                           <div>

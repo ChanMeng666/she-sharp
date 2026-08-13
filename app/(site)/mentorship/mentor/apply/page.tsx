@@ -27,7 +27,6 @@ import { PhotoUpload } from "@/components/forms/photo-upload";
 import { WarpBackground } from "@/components/ui/warp-background";
 import {
   Check,
-  Loader2,
   Sparkles,
   Award,
   Clock,
@@ -40,6 +39,7 @@ import {
   MapPin,
   CheckCircle2,
 } from "lucide-react";
+
 import Link from "next/link";
 import {
   genderOptions,
@@ -51,6 +51,7 @@ import {
   nzCities,
   softSkillsOptions,
 } from "@/lib/mentorship/vocab";
+import { Spinner } from "@/components/ui/spinner";
 
 const bioMethodOptions = [
   { value: "self_written", label: "Create my own bio" },
@@ -1338,7 +1339,7 @@ export default function MentorApplyPage() {
                     >
                       {loading ? (
                         <>
-                          <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                          <Spinner className="mr-2" />
                           Submitting...
                         </>
                       ) : (
