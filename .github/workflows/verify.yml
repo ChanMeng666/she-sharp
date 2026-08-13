@@ -79,6 +79,37 @@ jobs:
       - name: Type-check scripts and skill tooling
         run: pnpm typecheck:scripts
 
+  typecheck:
+    # `pnpm typecheck` existed in package.json but nothing ever ran it, so the
+    # only thing compiling app code was the production deploy — i.e. after
+    # merge, when a type break is already on `main`. `typecheck-scripts` above
+    # covers the two trees the root tsconfig skips; this one covers everything
+    # it does not: `app/`, `components/`, `lib/`, `hooks/`, `types/`, `proxy.ts`.
+    # Deliberately a bare `tsc --noEmit` with no build in front of it — the
+    # generated `.next/types` route types are the build's job, and paying for a
+    # full Next build here would make the gate slower than the deploy it guards.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      # No `version:` here on purpose — `packageManager` in package.json is the
+      # single source, so a local machine and CI cannot drift apart.
+      - name: Install pnpm
+        uses: pnpm/action-setup@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type-check the app
+        run: pnpm typecheck
+
   lint:
     # The repo had no ESLint config at all until this job existed, so nothing
     # caught the whole class of defect a linter sees: an unused disable
