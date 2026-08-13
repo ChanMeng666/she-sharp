@@ -1,10 +1,5 @@
 {
   "private": true,
-  "pnpm": {
-    "overrides": {
-      "baseline-browser-mapping": "^2.9.3"
-    }
-  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -23,7 +18,6 @@
     "@ai-sdk/gateway": "^3.0.133",
     "@ai-sdk/openai": "^3.0.74",
     "@ai-sdk/react": "^3.0.210",
-    "@auth/drizzle-adapter": "^1.10.0",
     "@date-fns/tz": "^1.5.0",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/modifiers": "^9.0.0",
@@ -60,9 +54,6 @@
     "@react-email/components": "^1.0.12",
     "@react-email/render": "^2.1.0",
     "@slack/web-api": "^7.15.1",
-    "@stripe/stripe-js": "^8.5.3",
-    "@tabler/icons-react": "^3.35.0",
-    "@tanstack/react-table": "^8.21.3",
     "@uidotdev/usehooks": "^2.4.1",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.35.7",
@@ -79,9 +70,6 @@
     "deep-diff": "^1.0.2",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
-    "embla-carousel-autoplay": "^8.6.0",
-    "embla-carousel-react": "^8.6.0",
-    "input-otp": "^1.4.2",
     "jose": "^6.0.11",
     "lucide-react": "^0.511.0",
     "motion": "^12.23.24",
@@ -89,7 +77,6 @@
     "next": "15.6.0-canary.58",
     "next-auth": "5.0.0-beta.29",
     "next-themes": "^0.4.6",
-    "ogl": "^1.0.11",
     "openai": "^6.9.1",
     "pg": "^8.16.3",
     "postgres": "^3.4.5",
@@ -97,9 +84,7 @@
     "qrcode.react": "^4.2.0",
     "radix-ui": "^1.4.2",
     "react": "19.1.2",
-    "react-day-picker": "^9.8.0",
     "react-dom": "19.1.2",
-    "react-resizable-panels": "^3.0.6",
     "react-use-measure": "^2.1.7",
     "recharts": "^3.1.2",
     "resend": "^4.7.0",
@@ -110,11 +95,8 @@
     "swr": "^2.3.3",
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.179.1",
     "tw-animate-css": "^1.3.0",
-    "vaul": "^1.1.2",
-    "zod": "^3.25.76",
-    "zustand": "^5.0.8"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.6",
@@ -126,8 +108,6 @@
     "@types/qrcode": "^1.5.6",
     "@types/react": "19.1.4",
     "@types/react-dom": "19.1.5",
-    "@types/three": "^0.179.0",
-    "autoprefixer": "^10.4.21",
     "baseline-browser-mapping": "^2.9.4",
     "csv-parse": "^6.2.0",
     "drizzle-kit": "^0.31.1",
