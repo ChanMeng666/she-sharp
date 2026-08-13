@@ -94,6 +94,13 @@ Create `app/api/<path>/route.ts`, then:
 4. Call it from the browser with **`apiFetch()`** (`lib/api/client.ts`), which
    throws `ApiError` on a non-2xx. Do not add new raw `fetch()` calls.
 
+**There is no universal response envelope.** Success payloads keep their domain
+shape (`{ mentors, pagination }`, the report object itself); errors are
+`{ error }`, plus `details` when they come from `invalidBody()`.
+**Query params have no validation convention** — GET routes read
+`request.nextUrl.searchParams` by hand and clamp inline. Follow the nearest
+existing route; CSV responses go through `toCsv()` in `lib/export/csv.ts`.
+
 **`requiredAdminPermissions` is default-GRANT.** A missing `admin_permissions`
 row means "all permissions", because every column defaults to `true`. Routes that
 need default-DENY do the check inline and say so at the site — do not fold one of

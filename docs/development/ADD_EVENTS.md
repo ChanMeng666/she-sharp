@@ -62,7 +62,7 @@ automatically affect:
   "title": "My New Event",
   "date": "March 5, 2026",
   "coverImage": {
-    "url": "/img/my-new-event.jpg",
+    "url": "/img/my-new-event.webp",
     "alt": "My New Event poster"
   },
   "detailPageUrl": "https://www.shesharp.org.nz/events/my-new-event",
@@ -113,7 +113,7 @@ automatically affect:
 | `slug` | URL-safe identifier, lowercase with hyphens | `women-in-ai-2026` |
 | `title` | Event title shown on cards and detail page | `Women in AI 2026` |
 | `date` | Format: `Month Day, Year` | `March 5, 2026` |
-| `coverImage.url` | Poster image path | `/img/my-event.jpg` |
+| `coverImage.url` | Poster image path (WebP) | `/img/my-event.webp` |
 | `shortDescription` | One sentence for event cards | |
 | `detailPageData.time` | Include timezone | `5:30pm - 7:00pm NZDT` |
 | `detailPageData.location` | Venue details | See example above |
@@ -130,13 +130,41 @@ automatically affect:
 | `detailPageData.speakers` | Speaker section on event detail page |
 | `detailPageData.humanitixUrl` | Used to match/merge with scraped Humanitix data |
 
+### Which image field does what
+
+Three fields hold images and they are not interchangeable:
+
+| Field | What it is used for |
+|-------|--------------------|
+| `coverImage` | The **hero**. Rendered by `EventHeader` full-bleed at the top of `/events/[slug]`, again as the framed poster in the left column, on every event card, and as the Open Graph share image. Every event needs one. |
+| `detailPageData.photos[]` | Photos **from the event**. The first one becomes the featured photo below the header (`EventFeaturedPhoto`); the rest fill the photo grid (`EventPhotos`). Past events only. |
+| `detailPageData.posters[]` | Portrait promo artwork, shown whole and never cropped, in its own "Event poster" section. |
+
+`detailPageData.images[]` exists in the type and in the template but **nothing
+renders it** — it is a leftover from the scraped data. Leave it as `[]`.
+
 ### Tips
 
 - **Date format** must be `Month Day, Year` — sorting depends on this.
 - **Slug** must be unique across all events.
-- **Cover image**: place files in `public/img/` and reference as `/img/filename.jpg`.
 - **Location format** values: `in_person`, `online`, or `hybrid`.
 - **Gallery**: just set `galleryUrl` — the gallery page picks it up automatically. No need to edit any other file.
+
+### Image rules
+
+- **Format and size**: images are **WebP, ≤1600px** on the long edge (≤2560px
+  only where a presentation deck references the same file). Place files in
+  `public/img/` and reference them as `/img/filename.webp`.
+- **After changing any image reference, run
+  `npx tsx scripts/verify-image-paths.ts`.** It checks that every path in
+  `events-custom.json` resolves to a real file under `public/`, and it **gates
+  CI** — a typo'd filename fails the PR.
+- **Never overwrite an image in place.** `/img/*` and `/logos/*` are served with
+  `Cache-Control: public, max-age=31536000, immutable` (see `next.config.ts`),
+  so a browser that has seen a URL will not fetch it again for a year. Changing
+  an image's **content** means a **new filename** — rename in the same commit
+  that re-encodes it, and update the JSON to match. (Fixing only the `alt` text
+  is fine; that is not the file.)
 
 ---
 
