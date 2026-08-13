@@ -490,24 +490,6 @@ export type SurfaceSpec =
     }
   | {
       /**
-       * A ground drawn in code — no photographs at all.
-       *
-       * The archive used as MASS is the house deck's signature: a wall, a grid
-       * or a band of many small frames. It is unmistakable, and once one event
-       * has used it, a second event using it reads as the same deck however it
-       * is coloured or arranged. This is the way out for a deck that needs to
-       * own a different ground entirely.
-       *
-       * It does not mean the archive is gone from the deck — a single
-       * photograph of a real room, looked at as a photograph, is a different
-       * device and stays. What goes is photography used as texture.
-       */
-      kind: "field";
-      /** Selects the `[data-field]` treatment in `deck-skins.css`. */
-      variant?: string;
-    }
-  | {
-      /**
        * One or more plates, panned per slide so no two show the same crop.
        * Give it at least two: a single image repeated across eight statement
        * slides reads as a stuck projector however far it is panned.
@@ -537,7 +519,7 @@ export interface DeckSkin {
    * Set it when the archive-as-mass has already been spent. The photo wall is
    * one specific device, and a second deck using it is a second deck that looks
    * like the first — that is not a colour problem and no amount of regrading or
-   * rearranging fixes it. A deck that declares a `field` here gives up the
+   * rearranging fixes it. A deck that declares a `plate` here gives up the
    * photo wall entirely and has to earn its organisational slides some other
    * way, which is a real cost and the reason this is opt-in.
    */

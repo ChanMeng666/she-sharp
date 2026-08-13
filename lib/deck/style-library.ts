@@ -21,6 +21,22 @@
  * organisational slide can vary (the ground behind it and the accent hue) and
  * fails at zero, and `eventDistance` scores the rest.
  *
+ * TWO DECKS WEARING THE SAME SKIN ARE A DIFFERENT QUESTION. `EDITORIAL_SKIN` is
+ * the scaffold's default, so most decks from here on will declare it, and by
+ * construction two of them share a surface, a geometry and a tempo — three of
+ * the four axes `eventDistance` counts. Held to the same floor, the second
+ * editorial deck would fail `deck-set-too-close` the moment it was generated,
+ * and the only way out would be to abandon the default and invent a bespoke
+ * concept the event does not have. That is exactly the outcome the default was
+ * written to prevent, so a same-key pair is measured on what two evenings inside
+ * one system can honestly vary — the arrangement of the archive and the accent —
+ * and is required to vary BOTH. A shared system is not the defect; a shared
+ * system with nothing distinguishing the two nights is.
+ *
+ * The rule keys on the skin's `key` and not on "both decks have a skin": two
+ * DIFFERENT bespoke skins have nothing in common by construction and are held to
+ * the ordinary floors, as is any pair where either deck declares no skin at all.
+ *
  * WHAT IS NOT HERE. No taste, no ranking, no "which deck is better". These are
  * five enumerable axes with small ranges; the check says two decks are not the
  * same, never that either is good. Judging that is a person's job at Step 7 of
@@ -116,10 +132,20 @@ export interface DeckFingerprint {
    * as different on an axis neither of them uses.
    */
   houseGround: string;
-  surface: "archive" | "plate" | "field";
+  surface: "archive" | "plate";
   geometry: GeometryFamily;
   tempo: TempoBand;
   hue: number;
+  /**
+   * The skin's `key`, or `undefined` when the deck declares no skin.
+   *
+   * Not an axis — nothing is measured against it and it is absent from the
+   * ledger's table. It is the flag that says which floors a pair is held to, for
+   * the reason in the module header: two decks inside one design system vary the
+   * arrangement and the accent, and demanding they also vary surface, geometry
+   * and tempo is demanding they leave the system.
+   */
+  skin: string | undefined;
 }
 
 export function deckFingerprint(deck: Deck): DeckFingerprint {
@@ -134,6 +160,7 @@ export function deckFingerprint(deck: Deck): DeckFingerprint {
     geometry: geometryOf(deck.skin),
     tempo: tempoBand(deck.skin?.tempo),
     hue: hueSector(deck.theme.accent.onDark),
+    skin: deck.skin?.key,
   };
 }
 
@@ -174,8 +201,20 @@ export function eventDistance(a: DeckFingerprint, b: DeckFingerprint): number {
  * should wear the house skin rather than a half-built bespoke one. Demanding 3
  * would push authors into inventing a concept they do not have, which is a
  * worse deck than an honest house-skinned one.
+ *
+ * `houseSameSkin: 2` — the whole of `houseDistance`, so both the weave and the
+ * accent hue must differ. It replaces the other two when both decks declare the
+ * same skin, and it is the strictest number in this file precisely because such
+ * a pair has already agreed on everything else. Two axes out of two is
+ * reachable: three weaves and six hue sectors make eighteen combinations, and a
+ * scaffold handed a free weave plus an accent off the poster lands on a fresh
+ * pair without anyone having to think about it.
  */
-export const STYLE_DISTANCE_FLOOR = { house: 1, event: 2 } as const;
+export const STYLE_DISTANCE_FLOOR = {
+  house: 1,
+  event: 2,
+  houseSameSkin: 2,
+} as const;
 
 export interface DeckSetIssue {
   rule: "deck-set-house-twins" | "deck-set-too-close";
@@ -189,6 +228,11 @@ export interface DeckSetIssue {
  *
  * Pure over fingerprints so the ledger, the test and the scaffold share one
  * definition rather than three that drift.
+ *
+ * Two branches, and which one a pair takes is decided by the skin key alone —
+ * see the module header. A same-skin pair answers to `houseSameSkin` and to
+ * nothing else; every other pair answers to both ordinary floors, exactly as it
+ * did before the default skin existed.
  */
 export function lintDeckSet(decks: readonly Deck[]): DeckSetIssue[] {
   const prints = decks.map(deckFingerprint);
@@ -198,6 +242,40 @@ export function lintDeckSet(decks: readonly Deck[]): DeckSetIssue[] {
     for (let j = i + 1; j < prints.length; j += 1) {
       const a = prints[i];
       const b = prints[j];
+
+      if (a.skin !== undefined && a.skin === b.skin) {
+        /*
+         * One system, two evenings. `deck-set-too-close` is not asked, because
+         * the answer is known and is the point: they share a surface, a
+         * geometry and a tempo because they share a skin. What is left is the
+         * arrangement of the archive and the accent, and both have to move —
+         * one of them alone is the same night in a different colour, or the
+         * same colour in a different order, and neither reads as a different
+         * event from the back of a room.
+         */
+        if (houseDistance(a, b) < STYLE_DISTANCE_FLOOR.houseSameSkin) {
+          const same = [
+            a.houseGround === b.houseGround
+              ? `both standing on "${a.houseGround}"`
+              : undefined,
+            a.hue === b.hue ? `both accent hue sector ${a.hue}` : undefined,
+          ].filter(Boolean);
+
+          issues.push({
+            rule: "deck-set-house-twins",
+            severity: "error",
+            slugs: [a.slug, b.slug],
+            message:
+              `"${a.slug}" and "${b.slug}" both wear the "${a.skin}" skin, so the ` +
+              `two things left to tell them apart are the archive weave and the ` +
+              `accent hue — and they must differ on BOTH. Here they are ` +
+              `${same.join(" and ")}. Give one of them a different \`archive:\` ` +
+              `weave, an accent from a different part of the colour wheel, or a ` +
+              `skin of its own if this event has a concept worth one.`,
+          });
+        }
+        continue;
+      }
 
       if (houseDistance(a, b) < STYLE_DISTANCE_FLOOR.house) {
         issues.push({
