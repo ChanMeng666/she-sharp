@@ -3,6 +3,7 @@ import { withRoles } from '@/lib/auth/role-middleware';
 import { db } from '@/lib/db/drizzle';
 import { mentorProfiles, users, userRoles, mentorshipRelationships, meetings, mentorFormSubmissions } from '@/lib/db/schema';
 import { eq, sql, desc, isNotNull, and, count } from 'drizzle-orm';
+import { resolvePhoto } from '@/lib/mentorship/resolve';
 
 // Admin-only verified mentors endpoint
 export const GET = withRoles(
@@ -95,7 +96,11 @@ export const GET = withRoles(
 
         // Prioritize form data over profile/user data
         const displayName = mentor.formFullName || mentor.name;
-        const displayPhoto = mentor.formPhotoUrl || mentor.photoUrl || mentor.image;
+        const displayPhoto = resolvePhoto({
+          formPhotoUrl: mentor.formPhotoUrl,
+          profilePhotoUrl: mentor.photoUrl,
+          userImage: mentor.image,
+        });
 
         // Combine skills from form and profile
         const formSkills = [

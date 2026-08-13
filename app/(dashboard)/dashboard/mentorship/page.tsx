@@ -38,6 +38,9 @@ import {
 } from '@/lib/mentorship/vocab';
 import { getAvatarInitials } from '@/lib/utils';
 import { Spinner } from "@/components/ui/spinner";
+// `MentorDetails.image` / `MenteeDetails.image` already carry the API-resolved
+// form -> profile -> users.image chain, so they are the last tier here.
+import { resolvePhoto } from '@/lib/mentorship/resolve';
 
 interface Relationship {
   id: number;
@@ -620,7 +623,7 @@ export default function MentorshipDashboard() {
                   <div className="bg-surface-purple rounded-xl p-6">
                     <div className="flex items-start gap-3 sm:gap-5">
                       <Avatar className="h-20 w-20 border-2 border-brand/20 shadow-md">
-                        <AvatarImage src={selectedMentorDetails.formData?.photoUrl || selectedMentorDetails.image || undefined} />
+                        <AvatarImage src={resolvePhoto({ formPhotoUrl: selectedMentorDetails.formData?.photoUrl, userImage: selectedMentorDetails.image }) ?? undefined} />
                         <AvatarFallback className="text-lg bg-brand/10 text-brand">{getAvatarInitials(selectedMentorDetails.name)}</AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
@@ -885,7 +888,7 @@ export default function MentorshipDashboard() {
                 <div className="bg-periwinkle-light rounded-xl p-6">
                   <div className="flex items-start gap-3 sm:gap-5">
                     <Avatar className="h-20 w-20 border-2 border-periwinkle/20 shadow-md">
-                      <AvatarImage src={selectedMenteeDetails.formData?.photoUrl || selectedMenteeDetails.image || undefined} />
+                      <AvatarImage src={resolvePhoto({ formPhotoUrl: selectedMenteeDetails.formData?.photoUrl, userImage: selectedMenteeDetails.image }) ?? undefined} />
                       <AvatarFallback className="text-lg bg-periwinkle/10 text-periwinkle">{getAvatarInitials(selectedMenteeDetails.name)}</AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
