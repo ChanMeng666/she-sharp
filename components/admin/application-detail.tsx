@@ -43,6 +43,7 @@ import {
   formatRecruitmentStage as formatStage,
 } from '@/lib/recruitment/stages';
 import Link from 'next/link';
+import { apiGet, apiPatch, apiPost } from '@/lib/api/client';
 
 interface ApplicationData {
   id: number;
@@ -121,15 +122,10 @@ export default function ApplicationDetail({ id }: ApplicationDetailProps) {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch(`/api/admin/recruitment/${id}`);
-      if (response.ok) {
-        const data = await response.json();
-        setApplication(data.application);
-        setSelectedStage(data.application.recruitmentStage);
-        setAdminNotes(data.application.adminNotes || '');
-      } else {
-        setError('Failed to load application details.');
-      }
+      const data = await apiGet<{ application: ApplicationData }>(`/api/admin/recruitment/${id}`);
+      setApplication(data.application);
+      setSelectedStage(data.application.recruitmentStage);
+      setAdminNotes(data.application.adminNotes || '');
     } catch (err) {
       console.error('Failed to fetch application:', err);
       setError('Failed to load application details.');
@@ -143,14 +139,8 @@ export default function ApplicationDetail({ id }: ApplicationDetailProps) {
     if (!application || selectedStage === application.recruitmentStage) return;
     setUpdatingStage(true);
     try {
-      const response = await fetch(`/api/admin/recruitment/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ recruitmentStage: selectedStage }),
-      });
-      if (response.ok) {
-        setApplication(prev => prev ? { ...prev, recruitmentStage: selectedStage } : null);
-      }
+      await apiPatch(`/api/admin/recruitment/${id}`, { recruitmentStage: selectedStage });
+      setApplication(prev => prev ? { ...prev, recruitmentStage: selectedStage } : null);
     } catch (err) {
       console.error('Failed to update stage:', err);
     } finally {
@@ -162,14 +152,8 @@ export default function ApplicationDetail({ id }: ApplicationDetailProps) {
   const handleSaveNotes = async () => {
     setSavingNotes(true);
     try {
-      const response = await fetch(`/api/admin/recruitment/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ adminNotes }),
-      });
-      if (response.ok) {
-        setApplication(prev => prev ? { ...prev, adminNotes } : null);
-      }
+      await apiPatch(`/api/admin/recruitment/${id}`, { adminNotes });
+      setApplication(prev => prev ? { ...prev, adminNotes } : null);
     } catch (err) {
       console.error('Failed to save notes:', err);
     } finally {
@@ -181,12 +165,8 @@ export default function ApplicationDetail({ id }: ApplicationDetailProps) {
   const handleAIScreening = async () => {
     setScreeningLoading(true);
     try {
-      const response = await fetch(`/api/admin/recruitment/${id}/ai-screen`, {
-        method: 'POST',
-      });
-      if (response.ok) {
-        await fetchApplication();
-      }
+      await apiPost(`/api/admin/recruitment/${id}/ai-screen`);
+      await fetchApplication();
     } catch (err) {
       console.error('Failed to run AI screening:', err);
     } finally {
@@ -200,19 +180,13 @@ export default function ApplicationDetail({ id }: ApplicationDetailProps) {
     setSubmittingReview(true);
     try {
       const newStage = reviewAction === 'approve' ? 'approved' : 'rejected';
-      const response = await fetch(`/api/admin/recruitment/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          recruitmentStage: newStage,
-          reviewNotes: reviewNotes,
-        }),
+      await apiPatch(`/api/admin/recruitment/${id}`, {
+        recruitmentStage: newStage,
+        reviewNotes: reviewNotes,
       });
-      if (response.ok) {
-        setReviewDialog(false);
-        setReviewNotes('');
-        await fetchApplication();
-      }
+      setReviewDialog(false);
+      setReviewNotes('');
+      await fetchApplication();
     } catch (err) {
       console.error('Failed to submit review:', err);
     } finally {

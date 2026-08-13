@@ -88,6 +88,7 @@ import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn, getAvatarInitials } from '@/lib/utils';
 import { industryOptions, labelMap } from '@/lib/mentorship/vocab';
+import { apiDelete, apiGet, apiPatch, apiPost, apiPut, isApiError } from '@/lib/api/client';
 
 // Industry mapping, shared with the mentor/mentee application forms.
 const INDUSTRY_OPTIONS: Record<string, string> = labelMap(industryOptions);
@@ -241,19 +242,27 @@ export default function UserManagement() {
       if (userTypeFilter !== 'all') params.append('userType', userTypeFilter);
       if (searchQuery) params.append('search', searchQuery);
 
-      const response = await fetch(`/api/admin/users?${params}`);
+      const data = await apiGet<{
+        users?: UnifiedUser[];
+        totalPages?: number;
+        total?: number;
+        stats?: Stats;
+      }>(`/api/admin/users?${params}`);
 
-      if (response.ok) {
-        const data = await response.json();
-        setUsers(data.users || []);
-        setTotalPages(data.totalPages || 1);
-        setTotalCount(data.total || 0);
-        setStats(data.stats || null);
-      }
+      setUsers(data.users || []);
+      setTotalPages(data.totalPages || 1);
+      setTotalCount(data.total || 0);
+      setStats(data.stats || null);
     } catch (error) {
       console.error('Failed to fetch users:', error);
-      setUsers([]);
-      setTotalPages(1);
+      // A non-2xx used to fall through the old `if (response.ok)` silently,
+      // leaving the previous page on screen; only a transport failure cleared
+      // the table. Preserved rather than "fixed" — that is a UX call, not this
+      // change's business.
+      if (!isApiError(error)) {
+        setUsers([]);
+        setTotalPages(1);
+      }
     } finally {
       setLoading(false);
     }
@@ -283,24 +292,18 @@ export default function UserManagement() {
   const handleRoleToggle = async (userId: number, roleType: string, currentlyHasRole: boolean) => {
     setUpdatingRole(`${userId}-${roleType}`);
     try {
-      const response = await fetch('/api/admin/users/roles', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, roleType, isActive: !currentlyHasRole }),
-      });
+      await apiPut('/api/admin/users/roles', { userId, roleType, isActive: !currentlyHasRole });
 
-      if (response.ok) {
-        // Update local state
-        setUsers(prev => prev.map(user => {
-          if (user.id === userId && user.recordType === 'registered_user') {
-            const newRoles = currentlyHasRole
-              ? user.roles.filter(r => r !== roleType)
-              : [...user.roles, roleType];
-            return { ...user, roles: newRoles };
-          }
-          return user;
-        }));
-      }
+      // Update local state
+      setUsers(prev => prev.map(user => {
+        if (user.id === userId && user.recordType === 'registered_user') {
+          const newRoles = currentlyHasRole
+            ? user.roles.filter(r => r !== roleType)
+            : [...user.roles, roleType];
+          return { ...user, roles: newRoles };
+        }
+        return user;
+      }));
     } catch (error) {
       console.error('Failed to update role:', error);
     } finally {
@@ -313,23 +316,18 @@ export default function UserManagement() {
   const handleToggleTestUser = async (user: UnifiedUser) => {
     setTogglingTestUser(user.id);
     try {
-      const response = await fetch(`/api/admin/users/${user.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'toggle_test_user' }),
+      const data = await apiPatch<{ isTestUser: boolean }>(`/api/admin/users/${user.id}`, {
+        action: 'toggle_test_user',
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        setUsers(prev => prev.map(u => {
-          if (u.id === user.id) {
-            return { ...u, isTestUser: data.isTestUser };
-          }
-          return u;
-        }));
-        // Refresh to update stats
-        fetchUsers();
-      }
+      setUsers(prev => prev.map(u => {
+        if (u.id === user.id) {
+          return { ...u, isTestUser: data.isTestUser };
+        }
+        return u;
+      }));
+      // Refresh to update stats
+      fetchUsers();
     } catch (error) {
       console.error('Failed to toggle test user status:', error);
     } finally {
@@ -342,21 +340,15 @@ export default function UserManagement() {
   const handleVerifyEmail = async (user: UnifiedUser) => {
     setVerifyingEmail(user.id);
     try {
-      const response = await fetch(`/api/admin/users/${user.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'verify_email' }),
-      });
+      await apiPatch(`/api/admin/users/${user.id}`, { action: 'verify_email' });
 
-      if (response.ok) {
-        setUsers(prev => prev.map(u => {
-          if (u.id === user.id) {
-            return { ...u, emailVerifiedAt: new Date().toISOString() };
-          }
-          return u;
-        }));
-        fetchUsers();
-      }
+      setUsers(prev => prev.map(u => {
+        if (u.id === user.id) {
+          return { ...u, emailVerifiedAt: new Date().toISOString() };
+        }
+        return u;
+      }));
+      fetchUsers();
     } catch (error) {
       console.error('Failed to verify email:', error);
     } finally {
@@ -379,26 +371,23 @@ export default function UserManagement() {
     setSubmittingReview(true);
     try {
       const appType = reviewingUser.applicationInfo.type === 'mentee' ? 'mentees' : 'mentors';
-      const response = await fetch(`/api/admin/${appType}/applications/${reviewingUser.applicationInfo.id}/review`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: reviewAction,
-          notes: reviewNotes,
-          ...(reviewAction === 'approve' && reviewIsTestUser ? { isTestUser: true } : {}),
-        }),
+      await apiPost(`/api/admin/${appType}/applications/${reviewingUser.applicationInfo.id}/review`, {
+        action: reviewAction,
+        notes: reviewNotes,
+        ...(reviewAction === 'approve' && reviewIsTestUser ? { isTestUser: true } : {}),
       });
 
-      if (response.ok) {
-        setReviewDialogOpen(false);
-        fetchUsers(); // Refresh the list
-      } else {
-        const error = await response.json();
-        alert(error.message || 'Failed to process application');
-      }
+      setReviewDialogOpen(false);
+      fetchUsers(); // Refresh the list
     } catch (error) {
       console.error('Failed to process application:', error);
-      alert('Failed to process application');
+      // This has always read `.message` off the body, and these routes return
+      // `{ error }` — so the fallback is what the admin actually sees. Reading
+      // `error.message` here instead would be a UX change, not a refactor.
+      const bodyMessage = isApiError(error)
+        ? (error.body as { message?: string } | null)?.message
+        : undefined;
+      alert(bodyMessage || 'Failed to process application');
     } finally {
       setSubmittingReview(false);
     }
@@ -437,14 +426,12 @@ export default function UserManagement() {
     try {
       switch (action) {
         case 'export': {
-          const response = await fetch('/api/admin/users/bulk', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'export', recordIds: selectedUsers }),
-          });
+          try {
+            const result = await apiPost<{ data: any[] }>('/api/admin/users/bulk', {
+              action: 'export',
+              recordIds: selectedUsers,
+            });
 
-          if (response.ok) {
-            const result = await response.json();
             // Create CSV and download
             const csvContent = convertToCSV(result.data);
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -452,6 +439,12 @@ export default function UserManagement() {
             link.href = URL.createObjectURL(blob);
             link.download = `users_export_${new Date().toISOString().split('T')[0]}.csv`;
             link.click();
+          } catch (error) {
+            // A failed export has always been silent here (no `else` branch on
+            // the old `response.ok`). Left silent; making it speak is a UX
+            // change for a separate PR.
+            if (!isApiError(error)) throw error;
+            console.error('Bulk export failed:', error);
           }
           break;
         }
@@ -459,20 +452,17 @@ export default function UserManagement() {
           if (!confirm(`Are you sure you want to suspend ${selectedUsers.length} user(s)?`)) {
             break;
           }
-          const response = await fetch('/api/admin/users/bulk', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'suspend', recordIds: selectedUsers }),
-          });
-
-          if (response.ok) {
-            const result = await response.json();
+          try {
+            const result = await apiPost<{ message: string }>('/api/admin/users/bulk', {
+              action: 'suspend',
+              recordIds: selectedUsers,
+            });
             alert(result.message);
             fetchUsers();
             setSelectedUsers([]);
-          } else {
-            const error = await response.json();
-            alert(error.error || 'Failed to suspend users');
+          } catch (error) {
+            if (!isApiError(error)) throw error;
+            alert(error.message || 'Failed to suspend users');
           }
           break;
         }
@@ -480,20 +470,17 @@ export default function UserManagement() {
           if (!confirm(`Are you sure you want to delete ${selectedUsers.length} user(s)? This action cannot be undone.`)) {
             break;
           }
-          const response = await fetch('/api/admin/users/bulk', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'delete', recordIds: selectedUsers }),
-          });
-
-          if (response.ok) {
-            const result = await response.json();
+          try {
+            const result = await apiPost<{ message: string }>('/api/admin/users/bulk', {
+              action: 'delete',
+              recordIds: selectedUsers,
+            });
             alert(result.message);
             fetchUsers();
             setSelectedUsers([]);
-          } else {
-            const error = await response.json();
-            alert(error.error || 'Failed to delete users');
+          } catch (error) {
+            if (!isApiError(error)) throw error;
+            alert(error.message || 'Failed to delete users');
           }
           break;
         }
@@ -544,25 +531,20 @@ export default function UserManagement() {
 
     setSavingEdit(true);
     try {
-      const response = await fetch(`/api/admin/users/${editingUser.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: editFormData.name,
-          phone: editFormData.phone,
-        }),
+      await apiPatch(`/api/admin/users/${editingUser.id}`, {
+        name: editFormData.name,
+        phone: editFormData.phone,
       });
 
-      if (response.ok) {
-        setEditDialogOpen(false);
-        fetchUsers();
-      } else {
-        const error = await response.json();
-        alert(error.error || 'Failed to update user');
-      }
+      setEditDialogOpen(false);
+      fetchUsers();
     } catch (error) {
-      console.error('Edit user error:', error);
-      alert('An error occurred while updating user');
+      if (isApiError(error)) {
+        alert(error.message || 'Failed to update user');
+      } else {
+        console.error('Edit user error:', error);
+        alert('An error occurred while updating user');
+      }
     } finally {
       setSavingEdit(false);
     }
@@ -575,30 +557,22 @@ export default function UserManagement() {
     setProcessingAction(true);
     try {
       if (actionType === 'suspend') {
-        const response = await fetch(`/api/admin/users/${actionUser.id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'suspend' }),
-        });
-
-        if (response.ok) {
+        try {
+          await apiPatch(`/api/admin/users/${actionUser.id}`, { action: 'suspend' });
           setActionDialogOpen(false);
           fetchUsers();
-        } else {
-          const error = await response.json();
-          alert(error.error || 'Failed to suspend user');
+        } catch (error) {
+          if (!isApiError(error)) throw error;
+          alert(error.message || 'Failed to suspend user');
         }
       } else if (actionType === 'delete') {
-        const response = await fetch(`/api/admin/users/${actionUser.id}`, {
-          method: 'DELETE',
-        });
-
-        if (response.ok) {
+        try {
+          await apiDelete(`/api/admin/users/${actionUser.id}`);
           setActionDialogOpen(false);
           fetchUsers();
-        } else {
-          const error = await response.json();
-          alert(error.error || 'Failed to delete user');
+        } catch (error) {
+          if (!isApiError(error)) throw error;
+          alert(error.message || 'Failed to delete user');
         }
       }
     } catch (error) {

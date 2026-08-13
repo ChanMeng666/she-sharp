@@ -30,6 +30,7 @@ import {
   BrainCircuit
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { apiGet, apiPost } from '@/lib/api/client';
 
 interface UserData {
   id: number;
@@ -56,26 +57,23 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
   }, []);
 
   const fetchUserAndRoles = async () => {
-    try {
-      const [userResponse, roleResponse] = await Promise.all([
-        fetch('/api/user'),
-        fetch('/api/user/role')
-      ]);
+    // `allSettled`, not `all`: a signed-out visitor gets a 401 from
+    // `/api/user/role` while `/api/user` may still answer (and vice versa), and
+    // each response used to be checked and ignored on its own.
+    const [userResult, roleResult] = await Promise.allSettled([
+      apiGet<UserData>('/api/user'),
+      apiGet<{ isAdmin?: boolean }>('/api/user/role'),
+    ]);
 
-      if (userResponse.ok) {
-        const userData = await userResponse.json();
-        setUser(userData);
-      }
-
-      if (roleResponse.ok) {
-        const roleData = await roleResponse.json();
-        setIsAdmin(roleData.isAdmin || false);
-      }
-    } catch (error) {
-      console.error('Failed to fetch user:', error);
-    } finally {
-      setIsLoading(false);
+    if (userResult.status === 'fulfilled') {
+      setUser(userResult.value);
     }
+
+    if (roleResult.status === 'fulfilled') {
+      setIsAdmin(roleResult.value.isAdmin || false);
+    }
+
+    setIsLoading(false);
   };
 
   const handleSignOut = async () => {
@@ -88,11 +86,9 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
       });
       
       // Clear custom session
-      await fetch('/api/auth/signout', { 
-        method: 'POST',
-        credentials: 'include'
-      });
-      
+      await apiPost('/api/auth/signout', undefined, { credentials: 'include' });
+
+
       // Use the complete signout endpoint that clears everything and redirects
       window.location.href = '/api/auth/signout-complete';
     } catch (error) {
