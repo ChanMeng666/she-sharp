@@ -171,25 +171,6 @@ export async function removeFromQueue(menteeUserId: number): Promise<void> {
 }
 
 /**
- * Cancel queue entry
- */
-export async function cancelQueueEntry(menteeUserId: number): Promise<void> {
-  await db
-    .update(menteeWaitingQueue)
-    .set({
-      status: 'cancelled',
-      updatedAt: new Date(),
-    })
-    .where(
-      and(
-        eq(menteeWaitingQueue.menteeUserId, menteeUserId),
-        eq(menteeWaitingQueue.status, 'waiting')
-      )
-    );
-
-}
-
-/**
  * Increment match attempts for a queue entry
  */
 export async function incrementMatchAttempts(menteeUserId: number): Promise<void> {
