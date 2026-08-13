@@ -4,6 +4,8 @@
 //   (b) paragraphs with phrases like "such as:", "including:", "focus on:", "key topics:", followed by a short sentence
 //   (c) events whose fullDescription seems unusually short vs. other data signals
 
+// This file is plain CommonJS run directly with `node`, so `require` is correct.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs');
 const events = JSON.parse(
   fs.readFileSync('lib/data/json/shesharp_events_v3.json', 'utf8')

@@ -430,8 +430,8 @@ export async function runBatchMatching(
   let cacheHits = 0;
   let totalTokens = 0;
   let totalApiCalls = 0;
-  let processingTimes: number[] = [];
-  let scores: number[] = [];
+  const processingTimes: number[] = [];
+  const scores: number[] = [];
 
   try {
     // Get mentees to process (from queue or unmatched)

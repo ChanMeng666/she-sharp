@@ -162,7 +162,7 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  let res = NextResponse.next();
+  const res = NextResponse.next();
 
   if (sessionCookie && request.method === 'GET') {
     try {
