@@ -37,23 +37,6 @@ export async function getMentorForm(userId: number): Promise<MentorFormSubmissio
 }
 
 /**
- * Creates a new mentor form submission.
- */
-export async function createMentorForm(userId: number): Promise<MentorFormSubmission> {
-  const existing = await getMentorForm(userId);
-  if (existing) {
-    return existing;
-  }
-
-  const [form] = await db
-    .insert(mentorFormSubmissions)
-    .values({ userId, status: 'not_started' })
-    .returning();
-
-  return form;
-}
-
-/**
  * Saves mentor form data (draft or partial save).
  */
 export async function saveMentorForm(
@@ -423,23 +406,6 @@ export async function getMenteeForm(userId: number): Promise<MenteeFormSubmissio
 }
 
 /**
- * Creates a new mentee form submission.
- */
-export async function createMenteeForm(userId: number): Promise<MenteeFormSubmission> {
-  const existing = await getMenteeForm(userId);
-  if (existing) {
-    return existing;
-  }
-
-  const [form] = await db
-    .insert(menteeFormSubmissions)
-    .values({ userId, status: 'not_started' })
-    .returning();
-
-  return form;
-}
-
-/**
  * Saves mentee form data (draft or partial save).
  */
 export async function saveMenteeForm(
@@ -517,55 +483,6 @@ export async function submitMenteeForm(
     console.error('Error submitting mentee form:', error);
     return { success: false, error: 'Failed to submit form' };
   }
-}
-
-// =======================
-// Admin Operations
-// =======================
-
-/**
- * Gets pending mentor applications for admin review.
- */
-export async function getPendingMentorApplications() {
-  return db
-    .select()
-    .from(mentorFormSubmissions)
-    .where(eq(mentorFormSubmissions.status, 'submitted'))
-    .orderBy(mentorFormSubmissions.submittedAt);
-}
-
-/**
- * Gets all mentor applications with optional status filter.
- */
-export async function getMentorApplications(status?: string) {
-  if (status) {
-    return db
-      .select()
-      .from(mentorFormSubmissions)
-      .where(eq(mentorFormSubmissions.status, status as any))
-      .orderBy(mentorFormSubmissions.createdAt);
-  }
-  return db
-    .select()
-    .from(mentorFormSubmissions)
-    .orderBy(mentorFormSubmissions.createdAt);
-}
-
-/**
- * Gets all mentee applications with optional status filter.
- */
-export async function getMenteeApplications(status?: string) {
-  if (status) {
-    return db
-      .select()
-      .from(menteeFormSubmissions)
-      .where(eq(menteeFormSubmissions.status, status as any))
-      .orderBy(menteeFormSubmissions.createdAt);
-  }
-  return db
-    .select()
-    .from(menteeFormSubmissions)
-    .orderBy(menteeFormSubmissions.createdAt);
 }
 
 // =======================
@@ -970,21 +887,6 @@ export async function getMenteeFormById(
     .select()
     .from(menteeFormSubmissions)
     .where(eq(menteeFormSubmissions.id, id))
-    .limit(1);
-
-  return form || null;
-}
-
-/**
- * Gets a mentor form submission by ID.
- */
-export async function getMentorFormById(
-  id: number
-): Promise<MentorFormSubmission | null> {
-  const [form] = await db
-    .select()
-    .from(mentorFormSubmissions)
-    .where(eq(mentorFormSubmissions.id, id))
     .limit(1);
 
   return form || null;
