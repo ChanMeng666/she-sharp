@@ -32,7 +32,7 @@ can say "stop" or "show me that again" at any point.
 
 ## 1. What you'll be able to do
 
-Six skills live inside this project. Each one is a written procedure the AI
+Seven skills live inside this project. Each one is a written procedure the AI
 follows, so it does the task the same careful way every time.
 
 | Skill | What it does | Who usually needs it |
@@ -43,11 +43,14 @@ follows, so it does the task the same careful way every time.
 | `/email-the-community` | Sends one announcement to the whole mailing list | Anyone doing comms |
 | `/monthly-newsletter` | Builds and schedules the monthly newsletter | Newsletter editor |
 | `/sync-event-from-slack` | Turns an event-planning Slack channel into a page on the website | Event organisers |
+| `/tweak-event-slides` | Makes one small change to slides that already exist, and puts it live in about four minutes | Event organisers, on the day |
 
-The first four are the email skills and are the focus of this guide. The last two
-are included because they are part of the same toolkit — and because
+The first four are the email skills and are the focus of this guide. The last
+three are included because they are part of the same toolkit — and because
 `/send-event-emails` depends on `/sync-event-from-slack` having put the event on
-the website first.
+the website first. `/tweak-event-slides` is the odd one out: it is the only skill
+here that changes the live website without stopping to ask, which is deliberate,
+and it is only for the small change you need on screen in the next five minutes.
 
 ---
 
