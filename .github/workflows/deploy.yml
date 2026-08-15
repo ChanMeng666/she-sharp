@@ -30,10 +30,19 @@ jobs:
         run: npm install -g vercel@latest
 
       # `vercel build` runs `next build` in this working directory, so Next.js
-      # picks up `.next/cache` from here — without it every deploy re-compiles
-      # from cold. Keyed on the lockfile plus every TS/TSX source so a source
-      # change still restores the previous cache via `restore-keys` instead of
-      # missing outright.
+      # picks up `.next/cache` from here. Keyed on the lockfile plus every
+      # TS/TSX source so a source change still restores the previous cache via
+      # `restore-keys` instead of missing outright.
+      #
+      # What this actually restores, measured 2026-08-15: `.tsbuildinfo` (the
+      # incremental tsc state), the telemetry `config.json`, and the image
+      # optimiser folder — ~180 KB compressed, nothing else. There is no
+      # Turbopack compile cache in here because `turbopackPersistentCaching` is
+      # off, no webpack cache because the build is Turbopack, and **no font
+      # data**: `next/font/google` under Turbopack lives in Rust
+      # (`next_core::next_font::google`) and re-fetches from Google on every
+      # build with no on-disk cache. The 2026-08-13 font 404 was blamed on this
+      # step; it could not have been the cause, and the step is left alone.
       - name: Restore Next.js build cache
         uses: actions/cache@v4
         with:
@@ -45,8 +54,54 @@ jobs:
       - name: Pull Vercel Environment
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
+      # Retried, and retried ONLY for one specific upstream failure.
+      #
+      # `next/font/google` reaches out to Google at build time: it fetches the
+      # stylesheet from fonts.googleapis.com, then fetches each `.woff2` the
+      # stylesheet names from fonts.gstatic.com. Google serves that stylesheet
+      # with `Cache-Control: private, max-age=86400, stale-while-revalidate=604800`,
+      # so an edge may hand back a week-old copy — and Google 404s the old
+      # gstatic filenames the moment it rebuilds a font binary. When the two
+      # disagree the woff2 fetch 404s, Turbopack cannot create the font module,
+      # and the build dies with "Module not found: Can't resolve
+      # '@vercel/turbopack-next/internal/font/google/font'". That is what broke
+      # the 2026-08-13 deploy (run 31741566251): the three Bricolage Grotesque
+      # URLs in that log are dead, while the same request today returns
+      # different, live URLs. Nothing in this repo changed.
+      #
+      # Next has no retry knob for this, so the retry is here. Waiting between
+      # attempts is the point: the first request is what triggers Google's
+      # background revalidation, so a later attempt is the one that can get a
+      # fresh stylesheet. Any failure that does not carry the font-fetch
+      # signature exits immediately — a genuine compile error must not be
+      # rebuilt three times before it is reported.
+      #
+      # The durable fix is to stop fetching at build time at all: self-host the
+      # three families with `next/font/local`. That is a separate change.
       - name: Build Project
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          log="$RUNNER_TEMP/vercel-build.log"
+          attempt=1
+          max=3
+          while true; do
+            echo "::group::vercel build --prod (attempt $attempt/$max)"
+            if vercel build --prod --token=${{ secrets.VERCEL_TOKEN }} 2>&1 | tee "$log"; then
+              echo "::endgroup::"
+              exit 0
+            fi
+            echo "::endgroup::"
+            if ! grep -qE 'fonts\.gstatic\.com|internal/font/google' "$log"; then
+              echo "Build failed for a reason unrelated to next/font/google. Not retrying."
+              exit 1
+            fi
+            if [ "$attempt" -ge "$max" ]; then
+              echo "::error::next/font/google could not fetch a Google font file after $max attempts. Google is serving a stylesheet whose .woff2 files no longer exist; see the comment above this step."
+              exit 1
+            fi
+            echo "::warning::next/font/google font fetch failed (attempt $attempt/$max). Waiting 60s for Google to revalidate its stylesheet, then retrying."
+            attempt=$((attempt + 1))
+            sleep 60
+          done
 
       - name: Deploy to Vercel
         run: |
