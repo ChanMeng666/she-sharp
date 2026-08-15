@@ -34,6 +34,7 @@ export const footerConfig = {
       title: "Events",
       links: [
         { name: "All Events", href: "/events" },
+        { name: "Event Slides", href: "/slides" },
       ],
     },
     {

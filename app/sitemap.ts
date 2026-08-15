@@ -41,6 +41,9 @@ const STATIC_ROUTES: Array<{
   // canonical" — and indexing it would invite feedback from people who never
   // attended. Note the event loop below only ever emits /events/<slug>, so
   // there is nothing to remove; this note exists to stop it being added.
+  // The deck archive itself IS indexable — it is an ordinary site page. Only
+  // the /present/* decks it links to carry the noindex noted above.
+  { path: "/slides", priority: 0.6, changeFrequency: "monthly" },
   { path: "/resources", priority: 0.7, changeFrequency: "weekly" },
   { path: "/resources/in-the-press", priority: 0.6, changeFrequency: "monthly" },
   { path: "/resources/podcasts", priority: 0.6, changeFrequency: "monthly" },

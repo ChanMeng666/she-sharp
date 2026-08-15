@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   Calendar,
   Clock,
@@ -11,8 +12,10 @@ import {
   Check,
   Users,
   GraduationCap,
+  Presentation,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { deckForEvent } from "@/lib/deck/index-meta";
 import { EventV3 } from "@/types/event";
 import {
   formatEventDate,
@@ -103,6 +106,13 @@ export function EventSidebarPanel({
   const hasLocalPhotos = hasPhotos(event);
   const showViewPhotosFallback =
     isPast && hasLocalPhotos && !event.detailPageData.galleryUrl;
+
+  // The slides projected at this event, when one was built. Resolved from a
+  // generated manifest rather than a field on the event: a deck's slug IS its
+  // event slug, so the link is derived and the two cannot drift. The manifest
+  // deliberately imports no deck — see `lib/deck/index-meta.ts` — which is what
+  // keeps this client component's bundle to a few hundred bytes.
+  const deck = deckForEvent(event.slug);
 
   const handleCopyAddress = async () => {
     const fullAddress = [location.venueName, location.address, location.city]
@@ -299,6 +309,20 @@ export function EventSidebarPanel({
               onClick={handleViewPhotos}
             >
               View Photos
+            </Button>
+          )}
+
+          {/* The deck that was projected in the room. `outline` on purpose —
+              registering or seeing the photos is what most visitors came for,
+              and this must not compete with whichever of those is above it. A
+              real Link rather than the `window.open` its neighbours use,
+              because `/present/<slug>` is an internal route. */}
+          {deck && (
+            <Button asChild size="lg" variant="outline" className="w-full">
+              <Link href={`/present/${deck.slug}`}>
+                <Presentation className="w-4 h-4" />
+                View the slides
+              </Link>
             </Button>
           )}
         </div>

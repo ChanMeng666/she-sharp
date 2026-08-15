@@ -38,6 +38,7 @@ import {
   minutesOf,
   runSheetFrom,
 } from "./event-source";
+import { DECK_INDEX, deckForEvent } from "./index-meta";
 import { DEFAULT_CLOSING_KARAKIA, DEFAULT_OPENING_KARAKIA } from "./karakia";
 import { getAllDecks, getDeckSlugs } from "./registry";
 import { EDITORIAL_SKIN } from "./skins";
@@ -688,6 +689,30 @@ check(
   `every deck file is registered (${deckFiles.length} files)`,
   JSON.stringify(deckFiles) === JSON.stringify([...getDeckSlugs()].sort()),
 );
+
+/* `index-meta.ts` is what the public site reads — the event page's "View the
+   slides" button and the `/slides` archive both come from it, and neither can
+   import a deck to check itself (see that file's docblock). So nothing but this
+   assertion stands between an edited deck and an archive page quoting last
+   week's title or a slide count that is two short. Regenerate with
+   `npx tsx scripts/deck/sync-registry.ts`. */
+const expectedIndex = decks.map((deck) => ({
+  slug: deck.slug,
+  eventSlug: deck.eventSlug ?? deck.slug,
+  title: deck.title,
+  ...(deck.subtitle === undefined ? {} : { subtitle: deck.subtitle }),
+  slideCount: deck.slides.length,
+}));
+check(
+  `index-meta.ts matches the registered decks (${DECK_INDEX.length} entries)`,
+  JSON.stringify(DECK_INDEX) === JSON.stringify(expectedIndex),
+);
+for (const entry of DECK_INDEX) {
+  check(
+    `${entry.slug} — deckForEvent("${entry.eventSlug}") finds it`,
+    deckForEvent(entry.eventSlug)?.slug === entry.slug,
+  );
+}
 
 /* THE ONLY CHECK THAT LOOKS AT MORE THAN ONE DECK.
    ---------------------------------------------------------------------------
