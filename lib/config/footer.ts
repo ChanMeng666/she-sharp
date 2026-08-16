@@ -85,10 +85,23 @@ export const footerConfig = {
     },
   ] as SocialLink[],
 
+  /**
+   * All seven policy pages, and it must stay all seven.
+   *
+   * Only the first three were listed here, which left the other four reachable
+   * solely by landing on a policy page and using the `LegalNav` cross-links
+   * inside it — two clicks, named nowhere at the top level. An accessibility
+   * statement nobody can find is the one kind of page where being hard to reach
+   * is itself the failure.
+   */
   legalLinks: [
     { name: "Privacy Policy", href: "/privacy-policy" },
     { name: "Cookie Policy", href: "/cookie-policy" },
     { name: "Terms of Service", href: "/terms-of-service" },
+    { name: "Accessibility", href: "/accessibility" },
+    { name: "Security Policy", href: "/security-policy" },
+    { name: "Code of Conduct", href: "/code-of-conduct" },
+    { name: "Ambassador Code", href: "/volunteers/code-of-conduct" },
   ] as FooterLink[],
 
   /**

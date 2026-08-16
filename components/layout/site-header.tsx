@@ -215,6 +215,9 @@ export function SiteHeader() {
                           >
                             <Link
                               href={child.href}
+                              {...(child.href.startsWith("http")
+                                ? { target: "_blank", rel: "noopener noreferrer" }
+                                : {})}
                               onClick={(e) => handleSmoothScroll(e, child.href)}
                             >
                               {child.icon && (
@@ -447,6 +450,9 @@ export function SiteHeader() {
                                 <Link
                                   key={child.title}
                                   href={child.href}
+                                  {...(child.href.startsWith("http")
+                                    ? { target: "_blank", rel: "noopener noreferrer" }
+                                    : {})}
                                   className="group flex items-center gap-3 rounded-[12px] px-3 py-2.5 transition-colors duration-150 hover:bg-muted"
                                   onClick={(e) => {
                                     handleSmoothScroll(e, child.href);

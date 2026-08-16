@@ -266,8 +266,11 @@ export function SiteFooter() {
                 >
                   {link.name}
                 </Link>
+                {/* Was `md:mx-8`, which spent 4rem per gap and fitted three
+                    links across. Seven need the row to breathe instead of
+                    wrapping into a column. */}
                 {index < footerConfig.legalLinks.length - 1 && (
-                  <span className="mx-1 md:mx-8 text-white/80">•</span>
+                  <span className="mx-1 md:mx-3 text-white/40">•</span>
                 )}
               </div>
             ))}

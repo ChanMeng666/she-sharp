@@ -19,6 +19,8 @@ import {
   BarChart3,
   Newspaper,
   MapPin,
+  Presentation,
+  Compass,
 } from "lucide-react";
 
 export interface NavigationItem {
@@ -83,6 +85,12 @@ export const navigationConfig: {
           icon: Calendar,
         },
         {
+          title: "Event Slides",
+          href: "/slides",
+          description: "The decks we projected at each event, kept online after the night",
+          icon: Presentation,
+        },
+        {
           title: "Google Educator Conference",
           href: "/events/google-educator-conference",
           description: "Highlights from our Google Educator (CS4HS) conferences",
@@ -97,14 +105,18 @@ export const navigationConfig: {
       ],
     },
     {
-      title: "Mentorship",
+      // Named for the category, not for the one programme that used to be the
+      // only entry here. HER WAKA runs on its own subdomain and was reachable
+      // from the footer alone, so a visitor scanning the header learned about
+      // exactly one of the two things She Sharp actually runs.
+      title: "Programmes",
       href: "/mentorship",
       icon: GraduationCap,
       children: [
         {
-          title: "About the Programme",
+          title: "Mentorship Programme",
           href: "/mentorship",
-          description: "Learn about our mentorship programme",
+          description: "How mentor and mentee matching works, and who it is for",
           icon: BookOpen,
         },
         {
@@ -124,6 +136,12 @@ export const navigationConfig: {
           href: "/mentorship#mentors-list",
           description: "Browse profiles of our experienced mentors",
           icon: UsersRound,
+        },
+        {
+          title: "HER WAKA",
+          href: "https://herwaka.shesharp.org.nz/",
+          description: "Our programme for wāhine navigating pathways into tech",
+          icon: Compass,
         },
       ],
     },
