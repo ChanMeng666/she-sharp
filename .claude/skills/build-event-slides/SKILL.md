@@ -564,15 +564,28 @@ out where the day actually turns.
 
 ## Step 6 — Check it
 
-Four commands, in this order:
+Five commands, in this order:
 
 ```powershell
+npx tsx scripts/deck/sync-registry.ts
 npx tsx scripts/deck/lint-deck.ts aotearoa-ai-hackathon-festival-2026
 npx tsx scripts/deck/style-ledger.ts
 npx tsx scripts/verify-image-paths.ts
 npx tsx lib/deck/deck.test.ts
 ```
 
+- **`sync-registry.ts`** regenerates the two derived files, `registry.ts` and
+  `index-meta.ts`. **Run it here, after the words are final — not back at Step 5.**
+  `new-deck.ts` already wrote the registry entry when it scaffolded the deck, but
+  it deliberately did not write the manifest: at that moment the title, subtitle
+  and slide count are still the generator's placeholders, and Step 5 is where you
+  change all three. `index-meta.ts` is what the public site reads — the "View the
+  slides" button on the event page and the `/slides` archive both come from it,
+  and neither can import a deck to check itself. Skip this and `deck.test.ts`
+  fails on the next line with `index-meta.ts matches the registered decks`; ship
+  it stale some other way and the archive quotes a placeholder title under the
+  real deck. **Commit `lib/deck/index-meta.ts` along with the deck file** — see
+  Step 8.
 - **`lint-deck.ts`** enforces the copy limits, unique slide ids, the host note,
   the kicker rules, the accent contrast, how much of the template's own copy
   survived, and the **shape of the deck** — runs of similar slides, the share of
@@ -655,7 +668,7 @@ git checkout -b feat/deck-aut-panel-night-2026
 git add lib/data/json/events-custom.json
 git commit -m "fix(events): correct Gemma Lynskey's title for the Les Mills panel"
 
-git add lib/deck/decks/aut-panel-night-2026.ts lib/deck/registry.ts public/img/decks/aut-panel-night-2026
+git add lib/deck/decks/aut-panel-night-2026.ts lib/deck/registry.ts lib/deck/index-meta.ts public/img/decks/aut-panel-night-2026
 git commit -m "feat(deck): add slides for AUT panel night 2026"
 git push -u origin feat/deck-aut-panel-night-2026
 gh pr create --fill
@@ -825,8 +838,19 @@ every combination of present and absent blocks is asserted in `deck.test.ts`.
 
 **`/present/<slug>` 404s** — the deck is not registered. `new-deck.ts` does this
 for you; if you created the file by hand, run
-`npx tsx scripts/deck/sync-registry.ts`, which regenerates `registry.ts` from
-whatever is in `lib/deck/decks/`. Never hand-edit that file.
+`npx tsx scripts/deck/sync-registry.ts`, which regenerates `registry.ts` — and
+`index-meta.ts` with it — from whatever is in `lib/deck/decks/`. Never hand-edit
+either file.
+
+**`FAIL - index-meta.ts matches the registered decks`** — the manifest the public
+site reads is stale, almost always because Step 6's first command was skipped or
+was run before the copy was finished. Run
+`npx tsx scripts/deck/sync-registry.ts` and commit `lib/deck/index-meta.ts` with
+the deck. Never hand-edit it either.
+
+**The deck is live but no event page links to it** — same cause, one step later:
+the "View the slides" button reads `index-meta.ts`, so a deck missing from the
+manifest is a deck only someone with the URL can reach. Regenerate and push.
 
 **The slide shows a name or a time that the website does not** — someone typed a
 fact into the deck instead of correcting the event data. Find the literal, put
