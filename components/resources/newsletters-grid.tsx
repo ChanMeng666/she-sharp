@@ -13,7 +13,9 @@ interface NewslettersGridProps {
 
 /**
  * Responsive grid of newsletter issues with a year filter. Each card shows a
- * CSS-generated cover that links out to the issue's Mailchimp campaign.
+ * CSS-generated cover that opens the issue itself — a Mailchimp campaign for
+ * everything up to July 2026, and the on-site render at
+ * `/resources/newsletters/<id>` for issues built in this repo since.
  *
  * The cover theme is fixed by each issue's position in the full list, so a
  * given newsletter keeps its color even while the grid is filtered.

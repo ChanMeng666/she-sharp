@@ -35,7 +35,11 @@ export interface NewsletterIssue {
   month: number;
   /** Four-digit year. */
   year: number;
-  /** Mailchimp campaign link the cover opens. */
+  /**
+   * Where the cover opens: a Mailchimp campaign link for issues sent from
+   * Mailchimp, or a site-relative `/resources/newsletters/<id>` for issues
+   * built and rendered in this repo (August 2026 onwards).
+   */
   url: string;
   /** Optional explicit cover theme index; when omitted the grid rotates by position. */
   theme?: number;

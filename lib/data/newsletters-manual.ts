@@ -11,9 +11,16 @@
  *     id: "2026-06",        // "YYYY-MM" (zero-padded month) — must be unique
  *     month: 6,             // 1-12
  *     year: 2026,
- *     url: "https://...",   // the Mailchimp campaign link for this issue
+ *     url: "https://...",   // where the cover opens (see below)
  *     // theme: 0,          // optional: pin a cover color (0-5); omit to auto-rotate
  *   },
+ *
+ * `url` used to mean "the Mailchimp campaign link", and for every issue up to
+ * and including July 2026 it still does. From August 2026 an issue built in this
+ * repo instead points at its own on-site render,
+ * `/resources/newsletters/<id>` — the same HTML its subscribers received, served
+ * by `app/(site)/resources/newsletters/[issue]/route.ts`. Both forms work: the
+ * grid opens whatever is here in a new tab.
  *
  * Entries here override archive entries with the same id.
  */
@@ -30,6 +37,16 @@ export const NEWSLETTER_MANUAL: NewsletterIssue[] = [
   //   year: 2026,
   //   url: "https://mailchi.mp/shesharp/...",
   // },
+  // The first issue archived as an on-site render rather than a Mailchimp
+  // campaign: August 2026 was built in this repo, so the copy this site serves
+  // IS the issue. The route stays `noindex` and out of `app/sitemap.ts` — it is
+  // linked from here, not published to search.
+  {
+    id: "2026-08",
+    month: 8,
+    year: 2026,
+    url: "/resources/newsletters/2026-08",
+  },
   {
     id: "2026-07",
     month: 7,

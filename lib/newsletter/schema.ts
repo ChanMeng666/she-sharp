@@ -206,8 +206,16 @@ export const autoSchema = z.object({
    * Photo highlights of the month. Populated by the local photo pipeline
    * (`scripts/newsletter/photos.ts`) during the review loop — the serverless
    * cron leaves it empty (it cannot run ffmpeg/harvesting).
+   *
+   * The ceiling is 13 rather than a round number because `PhotoStrip` leads
+   * with one full-width photo and pairs the rest into rows of two: only an ODD
+   * count fills every row, and 13 is `1 + 2×6`. An even count leaves a visible
+   * gap in the final row. Raised from 6 for the August 2026 hackathon issue —
+   * the event photography is what the newsletter recruits on, so the section
+   * was deliberately given room to be the body of the email rather than a
+   * garnish.
    */
-  photoStrip: z.array(stripPhotoSchema).max(6).default([]),
+  photoStrip: z.array(stripPhotoSchema).max(13).default([]),
   /** "View all photos" link — the month's Google Photos album, if any. */
   photoAlbumUrl: z.string().url().nullable().default(null),
 });
